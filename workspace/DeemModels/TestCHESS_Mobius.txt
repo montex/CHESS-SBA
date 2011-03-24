@@ -1,0 +1,56 @@
+_______________________________Simulator Results______________________________
+Date:                        Thu Mar 10 12:49:50 CET 2011
+
+____________________________Simulator Configuration___________________________
+Simulation Type:             Terminating
+Project Name:                TestPerDEEM
+Study Name:                  StudyTest01
+Random Number Generator:     Lagged Fibonacci
+Random Number Seed:          31415
+Maximum Batches:             1000000000
+Minimum Batches:             1000000
+Data Reporting Frequency:    1000
+Display Update Frequency:    1000
+BuildType:                   Optimize
+Runname:                     Results
+Output File:                 Results_output.txt
+Results File:                Results_results
+Jackknife Variance:          On
+Processors Per Experiment:   1
+Maximize Processor Usage:    false
+Processors Selected for Simulation: 
+        iridium              i386
+
+_________________________________Experiment 1_________________________________
+Start Time:                  Thu Mar 10 12:49:42 CET 2011
+Finish Time:                 Thu Mar 10 12:49:50 CET 2011
+Elapsed Running Time:        7.239
+Total CPU Time:              6.104381
+Batches Completed:           1000000
+Experiment Name:             Experiment 1
+Global Variable Settings:    
+        double               Param1                   0.5                    
+        double               Param2                   20.0                   
+        double               TestTime                 10.0                   
+
+
+_________________________________Mean Results_________________________________
+Name                  Time               Mean                     Confidence Interval
+p_Instantaneous       10.0              1.0000000000E00   +/-   0.0000000000E00 
+p_Exponential         10.0              9.9331300000E-01  +/-   2.0994464279E-04
+p_Deterministic       10.0              1.0000000000E00   +/-   0.0000000000E00 
+p_Gaussian            10.0              9.9999300000E-01  +/-   6.8154349314E-06
+p_Uniform             10.0              4.8708000000E-01  +/-   1.2875705696E-03
+p_Gamma               10.0              6.2082700000E-01  +/-   1.2498275003E-03
+p_Weibull             10.0              5.0684500000E-01  +/-   1.2878799423E-03
+
+
+_______________________________Variance Results_______________________________
+
+
+_______________________________Interval Results_______________________________
+
+
+_____________________________Distribution Results_____________________________
+
+<END_MOBIUS_RESULTS>

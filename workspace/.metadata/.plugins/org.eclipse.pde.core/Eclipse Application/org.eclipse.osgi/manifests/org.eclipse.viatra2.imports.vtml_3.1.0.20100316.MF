@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Generated-from: 1272536730000;type=2
+Bundle-ManifestVersion: 2
+Bundle-Name: VIATRA2 R3 VTML Importer Plug-in
+Bundle-SymbolicName: org.eclipse.viatra2.imports.vtml; singleton:=true
+Bundle-Version: 3.1.0.20100316
+Bundle-ClassPath: org.eclipse.viatra2.imports.vtml.jar
+Bundle-Activator: org.eclipse.viatra2.imports.vtml.VtmlPlugin
+Bundle-Vendor: BUTE-FTSRG / Andras Balogh
+Bundle-Localization: plugin
+Export-Package: org.eclipse.viatra2.imports.vtml
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.viatra2.core2
+Eclipse-LazyStart: true

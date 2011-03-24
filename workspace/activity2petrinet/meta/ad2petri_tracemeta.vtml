@@ -1,0 +1,7 @@
+import uml.metamodel.uml;
+import petrinet.metamodel;
+
+// TRACE METAMODEL
+relation(netTrace, net, 'Activity');
+relation(transitionTrace, transition, 'ActivityNode');
+relation(placeTraceEdge, place, 'ActivityEdge');

@@ -1,0 +1,6 @@
+query DEEM2String_query = DEEM!Net.allInstances()->
+	select(e | e.oclIsTypeOf(DEEM!Net))->
+	collect(x | x.toString().writeTo('C:/tmp/' + x.Name + '.deem'));
+
+uses DEEM2String;
+

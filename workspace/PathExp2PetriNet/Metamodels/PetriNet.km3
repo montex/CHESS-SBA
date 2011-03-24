@@ -1,0 +1,41 @@
+package PetriNet {
+
+	abstract class Element {
+		attribute name : String;
+	}
+
+	class PetriNet extends Element {
+		reference places[1-*] container : Place;
+		reference transitions[*] container : Transition;
+		reference arcs [*] container : Arc;
+	}
+
+	class Place extends Element {
+		reference incoming [*] : TransToPlaceArc oppositeOf target;
+		reference outgoing [*] : PlaceToTransArc oppositeOf source;
+	}
+
+	class Transition extends Element {
+		reference incoming [1-*] : PlaceToTransArc oppositeOf target;
+		reference outgoing [1-*] : TransToPlaceArc oppositeOf source;
+	}
+	
+	abstact class Arc {
+		attribute weight : Integer;
+	}
+	
+	class PlaceToTransArc extends Arc {
+		reference source : Place oppositeOf outgoing;
+		reference target : Transition oppositeOf incoming;
+	}
+
+	class TransToPlaceArc extends Arc {
+		reference source : Transition oppositeOf outgoing;
+		reference target : Place oppositeOf incoming;
+	}
+}
+
+package PrimitiveTypes {
+	datatype String;
+	datatype Integer;
+}

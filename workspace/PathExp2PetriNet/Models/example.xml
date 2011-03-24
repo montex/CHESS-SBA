@@ -1,0 +1,69 @@
+<pnml xmlns="http://www.example.org/pnpl">
+  <net id="n1" type="http://www.example.org/pnpl/PTNet">
+    <name>
+      <text></text>
+    </name>
+    <place id="1">
+      <name>
+        <text></text>
+      </name>
+    </place>
+    <place id="2">
+      <name>
+        <text></text>
+      </name>
+    </place>
+    <place id="3">
+      <name>
+        <text></text>
+      </name>
+    </place>
+    <place id="4">
+      <name>
+        <text></text>
+      </name>
+    </place>
+    <place id="5">
+      <name>
+        <text></text>
+      </name>
+    </place>
+    <place id="6">
+      <name>
+        <text></text>
+      </name>
+    </place>
+    <place id="7">
+      <name>
+        <text></text>
+      </name>
+    </place>
+    <transition id="8"/>
+    <transition id="9"/>
+    <transition id="10"/>
+    <transition id="11"/>
+    <transition id="12"/>
+    <transition id="13"/>
+    <transition id="14"/>
+    <transition id="15"/>
+    <transition id="16"/>
+    <arc id="17" source="3" target="9"/>
+    <arc id="18" source="12" target="5"/>
+    <arc id="19" source="4" target="10"/>
+    <arc id="20" source="8" target="7"/>
+    <arc id="21" source="13" target="7"/>
+    <arc id="22" source="9" target="5"/>
+    <arc id="23" source="3" target="12"/>
+    <arc id="24" source="7" target="16"/>
+    <arc id="25" source="7" target="13"/>
+    <arc id="26" source="15" target="6"/>
+    <arc id="27" source="1" target="14"/>
+    <arc id="28" source="2" target="11"/>
+    <arc id="29" source="14" target="3"/>
+    <arc id="30" source="10" target="2"/>
+    <arc id="31" source="5" target="15"/>
+    <arc id="32" source="16" target="3"/>
+    <arc id="33" source="11" target="1"/>
+    <arc id="34" source="2" target="8"/>
+  </net>
+</pnml>

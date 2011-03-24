@@ -1,0 +1,103 @@
+<NDFile-'1.2'>
+
+
+NET:"unnamed",800,600;
+COLORS:White,Black,Black,Black,Black,Black;
+
+VARIABLE:"Time","Real";
+VARIABLE:"Param1","Real";
+VARIABLE:"Param2","Real";
+
+STUDY:"TestCHESS",0,"not_def",10,0,"not_def",0.5,0,"not_def",20;
+
+PLACE:"StartInstantaneous",96,158,1,0;
+PLACE:"StartExponential",107,280,1,0;
+PLACE:"StartDeterministic",117,555,1,0;
+PLACE:"StartGaussian",95,216,1,0;
+PLACE:"StartUniform",115,346,1,0;
+PLACE:"StartGamma",113,395,1,0;
+PLACE:"StartWeibull",105,535,1,0;
+PLACE:"EndInstantaneous",454,150,0,0;
+PLACE:"EndExponential",460,278,0,0;
+PLACE:"EndDeterministic",480,448,0,0;
+PLACE:"EndGaussian",479,228,0,0;
+PLACE:"EndUniform",482,326,0,0;
+PLACE:"EndGamma",478,392,0,0;
+PLACE:"EndWeibull",475,539,0,0;
+
+TRANS:"t_Instantaneous",318,163,V,Immediate,1,1,'', '',
+      (
+       1.000000e+00
+      );
+
+TRANS:"t_Exponential",325,287,V,Timed,1,1,'', 'VAR(Param1)',
+      (
+       1.000000e+00
+      );
+
+TRANS:"t_Deterministic",299,435,V,Timed,1,0,'', 'VAR(Param1)',
+      (
+       1.000000e+00
+      );
+
+TRANS:"t_Gaussian",314,220,V,Timed,1,11,'', 'VAR(Param1)',
+      (
+       1.000000,
+       1.000000e+00
+      );
+
+TRANS:"t_Uniform",304,342,V,Timed,1,13,'', 'VAR(Param1)',
+      (
+       1.000000,
+       1.000000e+00
+      );
+
+TRANS:"t_Gamma",307,397,V,Timed,1,6,'', 'VAR(Param1)',
+      (
+       1.000000,
+       1.000000e+00
+      );
+
+TRANS:"t_Weibull",329,528,V,Timed,1,14,'', 'VAR(Param1)',
+      (
+       1.000000,
+       1.000000e+00
+      );
+
+IARC:"StartInstantaneous","t_Instantaneous",1,0,'',
+     (133,171,313,177),1;
+OARC:"EndInstantaneous","t_Instantaneous",1,1,'',
+     (447,169,332,177),1;
+IARC:"StartExponential","t_Exponential",1,0,'',
+     (144,294,320,301),1;
+OARC:"EndExponential","t_Exponential",1,1,'',
+     (452,296,339,301),1;
+IARC:"StartDeterministic","t_Deterministic",1,0,'',
+     (150,556,285,462),1;
+OARC:"EndDeterministic","t_Deterministic",1,1,'',
+     (472,459,313,450),1;
+IARC:"StartGaussian","t_Gaussian",1,0,'',
+     (132,229,309,234),1;
+OARC:"EndGaussian","t_Gaussian",1,1,'',
+     (471,241,328,235),1;
+IARC:"StartUniform","t_Uniform",1,0,'',
+     (152,358,299,357),1;
+OARC:"EndUniform","t_Uniform",1,1,'',
+     (474,345,318,356),1;
+IARC:"StartGamma","t_Gamma",1,0,'',
+     (150,409,302,411),1;
+OARC:"EndGamma","t_Gamma",1,1,'',
+     (470,409,321,411),1;
+IARC:"StartWeibull","t_Weibull",1,0,'',
+     (151,498,301,548),1;
+OARC:"EndWeibull","t_Weibull",1,1,'',
+     (475,507,328,491),1;
+
+RES_FUNC:"p_Instantaneous",'IF(MARK(EndInstantaneous)>0)THEN(1)ELSE(0)',0;
+RES_FUNC:"p_Exponential",'IF(MARK(EndExponential)>0)THEN(1)ELSE(0)',0;
+RES_FUNC:"p_Deterministic",'IF(MARK(EndDeterministic)>0)THEN(1)ELSE(0)',0;
+RES_FUNC:"p_Gaussian",'IF(MARK(EndGaussian)>0)THEN(1)ELSE(0)',0;
+RES_FUNC:"p_Uniform",'IF(MARK(EndUniform)>0)THEN(1)ELSE(0)',0;
+RES_FUNC:"p_Gamma",'IF(MARK(EndGamma)>0)THEN(1)ELSE(0)',0;
+RES_FUNC:"p_Weibull",'IF(MARK(EndWeibull)>0)THEN(1)ELSE(0)',0;
+

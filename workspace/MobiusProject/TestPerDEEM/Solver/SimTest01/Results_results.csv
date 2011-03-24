@@ -1,0 +1,45 @@
+Simulator Results
+Date:, Thu Mar 10 12:49:50 CET 2011
+
+Simulator Configuration
+Simulation Type:,Terminating
+Project Name:,TestPerDEEM
+Study Name:,StudyTest01
+Random Number Generator:,Lagged Fibonacci
+Random Number Seed:,31415
+Maximum Batches:,1000000000
+Minimum Batches:,1000000
+Data Reporting Frequency:,1000
+Display Update Frequency:,1000
+BuildType:,Optimize
+Runname:,Results
+Output File:,Results_output.txt
+Results File:,Results_results
+Jackknife Variance:,On
+Processors Per Experiment:,1
+Maximize Processor Usage:,false
+Processors Selected for Simulation:
+iridium,i386
+
+Experiment 1
+Experiment 1,Start Time:,Thu Mar 10 12:49:42 CET 2011
+Experiment 1,Finish Time:,Thu Mar 10 12:49:50 CET 2011
+Experiment 1,Elapsed Running Time:,7.239
+Experiment 1,Total CPU Time:,6.104381
+Experiment 1,Batches Completed:,1000000
+Experiment 1,Experiment Name:,Experiment 1
+Experiment 1,Global Variable Settings:
+Experiment 1,double,Param1,0.5
+Experiment 1,double,Param2,20.0
+Experiment 1,double,TestTime,10.0
+Experiment 1, Results
+Experiment 1,Result Type,Name,Start Time,End Time,Mean,,Confidence Interval,Failed To Converge
+Experiment 1,Mean,p_Instantaneous,10.0,10.0,1.0000000000E00 ,+/-,0.0000000000E00 
+Experiment 1,Mean,p_Exponential,10.0,10.0,9.9331300000E-01,+/-,2.0994464279E-04
+Experiment 1,Mean,p_Deterministic,10.0,10.0,1.0000000000E00 ,+/-,0.0000000000E00 
+Experiment 1,Mean,p_Gaussian,10.0,10.0,9.9999300000E-01,+/-,6.8154349314E-06
+Experiment 1,Mean,p_Uniform,10.0,10.0,4.8708000000E-01,+/-,1.2875705696E-03
+Experiment 1,Mean,p_Gamma,10.0,10.0,6.2082700000E-01,+/-,1.2498275003E-03
+Experiment 1,Mean,p_Weibull,10.0,10.0,5.0684500000E-01,+/-,1.2878799423E-03
+
+<END_MOBIUS_RESULTS>

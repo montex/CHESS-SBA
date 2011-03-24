@@ -1,0 +1,349 @@
+<pnml>
+ <net id="n0" type="http://www.informatik.hu-berlin.de/top/pntd/ptNetb">
+  <place id="Merge2F">
+   <name>
+    <text>Merge2F</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="Fork2D">
+   <name>
+    <text>Fork2D</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="F2Final">
+   <name>
+    <text>F2Final</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="Decision2Fork">
+   <name>
+    <text>Decision2Fork</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="Decision2C">
+   <name>
+    <text>Decision2C</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="Initial2Decision">
+   <name>
+    <text>Initial2Decision</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="Join2Merge">
+   <name>
+    <text>Join2Merge</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="ActionB">
+   <name>
+    <text>ActionB</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="ActionD">
+   <name>
+    <text>ActionD</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="C2Merge">
+   <name>
+    <text>C2Merge</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="B2Merge">
+   <name>
+    <text>B2Merge</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="InitialActivations">
+   <name>
+    <text>InitialActivations</text>
+   </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+  </place> 
+  <place id="Fork2E">
+   <name>
+    <text>Fork2E</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="ActionF">
+   <name>
+    <text>ActionF</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="ActionE">
+   <name>
+    <text>ActionE</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="E2Join">
+   <name>
+    <text>E2Join</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="ActionA">
+   <name>
+    <text>ActionA</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="A2B">
+   <name>
+    <text>A2B</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="D2Join">
+   <name>
+    <text>D2Join</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="ActionC">
+   <name>
+    <text>ActionC</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="Decision2A">
+   <name>
+    <text>Decision2A</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <transition id="ActionCExit">
+   <name>
+    <text>ActionCExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionAExit">
+   <name>
+    <text>ActionAExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionBExit">
+   <name>
+    <text>ActionBExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="Final">
+   <name>
+    <text>Final</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionCEnter">
+   <name>
+    <text>ActionCEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="MergeNode0">
+   <name>
+    <text>MergeNode0</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="DecisionNode2">
+   <name>
+    <text>DecisionNode2</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionFExit">
+   <name>
+    <text>ActionFExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionEEnter">
+   <name>
+    <text>ActionEEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionEExit">
+   <name>
+    <text>ActionEExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionFEnter">
+   <name>
+    <text>ActionFEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="Initial">
+   <name>
+    <text>Initial</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="MergeNode1">
+   <name>
+    <text>MergeNode1</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionDExit">
+   <name>
+    <text>ActionDExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="Fork">
+   <name>
+    <text>Fork</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="DecisionNode0">
+   <name>
+    <text>DecisionNode0</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="MergeNode2">
+   <name>
+    <text>MergeNode2</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionAEnter">
+   <name>
+    <text>ActionAEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionDEnter">
+   <name>
+    <text>ActionDEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="DecisionNode1">
+   <name>
+    <text>DecisionNode1</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionBEnter">
+   <name>
+    <text>ActionBEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="Join">
+   <name>
+    <text>Join</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <arc id="uN2466_10" source="C2Merge" target="MergeNode2" type="InputArc"/>
+  <arc id="uN2331_10" source="InitialActivations" target="Initial" type="InputArc"/>
+  <arc id="uN2413_10" source="ActionC" target="ActionCExit" type="InputArc"/>
+  <arc id="uN2473_10" source="Initial2Decision" target="DecisionNode0" type="InputArc"/>
+  <arc id="uN2383_10" source="ActionE" target="ActionEExit" type="InputArc"/>
+  <arc id="uN2446_10" source="Decision2A" target="ActionAEnter" type="InputArc"/>
+  <arc id="uN2431_10" source="A2B" target="ActionBEnter" type="InputArc"/>
+  <arc id="uN2487_10" source="Initial2Decision" target="DecisionNode2" type="InputArc"/>
+  <arc id="uN2371_10" source="Merge2F" target="ActionFEnter" type="InputArc"/>
+  <arc id="uN2386_10" source="Fork2E" target="ActionEEnter" type="InputArc"/>
+  <arc id="uN2351_10" source="Decision2Fork" target="Fork" type="InputArc"/>
+  <arc id="uN2342_10" source="E2Join" target="Join" type="InputArc"/>
+  <arc id="uN2443_10" source="ActionA" target="ActionAExit" type="InputArc"/>
+  <arc id="uN2401_10" source="Fork2D" target="ActionDEnter" type="InputArc"/>
+  <arc id="uN2480_10" source="Initial2Decision" target="DecisionNode1" type="InputArc"/>
+  <arc id="uN2368_10" source="ActionF" target="ActionFExit" type="InputArc"/>
+  <arc id="uN2343_10" source="D2Join" target="Join" type="InputArc"/>
+  <arc id="uN2416_10" source="Decision2C" target="ActionCEnter" type="InputArc"/>
+  <arc id="uN2428_10" source="ActionB" target="ActionBExit" type="InputArc"/>
+  <arc id="uN2357_10" source="F2Final" target="Final" type="InputArc"/>
+  <arc id="uN2398_10" source="ActionD" target="ActionDExit" type="InputArc"/>
+  <arc id="uN2452_10" source="B2Merge" target="MergeNode0" type="InputArc"/>
+  <arc id="uN2459_10" source="Join2Merge" target="MergeNode1" type="InputArc"/>
+  <arc id="uN2485_10" source="DecisionNode2" target="Decision2C" type="OutArc"/>
+  <arc id="uN2382_10" source="ActionEEnter" target="ActionE" type="OutArc"/>
+  <arc id="uN2412_10" source="ActionCEnter" target="ActionC" type="OutArc"/>
+  <arc id="uN2442_10" source="ActionAEnter" target="ActionA" type="OutArc"/>
+  <arc id="uN2417_10" source="ActionCExit" target="C2Merge" type="OutArc"/>
+  <arc id="uN2341_10" source="Join" target="Join2Merge" type="OutArc"/>
+  <arc id="uN2478_10" source="DecisionNode1" target="Decision2A" type="OutArc"/>
+  <arc id="uN2397_10" source="ActionDEnter" target="ActionD" type="OutArc"/>
+  <arc id="uN2471_10" source="DecisionNode0" target="Decision2Fork" type="OutArc"/>
+  <arc id="uN2349_10" source="Fork" target="Fork2E" type="OutArc"/>
+  <arc id="uN2427_10" source="ActionBEnter" target="ActionB" type="OutArc"/>
+  <arc id="uN2450_10" source="MergeNode0" target="Merge2F" type="OutArc"/>
+  <arc id="uN2335_10" source="Initial" target="Initial2Decision" type="OutArc"/>
+  <arc id="uN2372_10" source="ActionFExit" target="F2Final" type="OutArc"/>
+  <arc id="uN2464_10" source="MergeNode2" target="Merge2F" type="OutArc"/>
+  <arc id="uN2457_10" source="MergeNode1" target="Merge2F" type="OutArc"/>
+  <arc id="uN2387_10" source="ActionEExit" target="E2Join" type="OutArc"/>
+  <arc id="uN2432_10" source="ActionBExit" target="B2Merge" type="OutArc"/>
+  <arc id="uN2402_10" source="ActionDExit" target="D2Join" type="OutArc"/>
+  <arc id="uN2350_10" source="Fork" target="Fork2D" type="OutArc"/>
+  <arc id="uN2447_10" source="ActionAExit" target="A2B" type="OutArc"/>
+  <arc id="uN2367_10" source="ActionFEnter" target="ActionF" type="OutArc"/>
+ </net>
+</pnml>

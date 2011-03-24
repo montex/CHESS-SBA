@@ -1,0 +1,229 @@
+<pnml>
+ <net id="n0" type="http://www.informatik.hu-berlin.de/top/pntd/ptNetb">
+  <place id="uN1602_10">
+   <name>
+    <text>uN1602_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="uN1566_10">
+   <name>
+    <text>uN1566_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="uN1578_10">
+   <name>
+    <text>uN1578_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="uN1584_10">
+   <name>
+    <text>uN1584_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="OpaqueAction">
+   <name>
+    <text>OpaqueAction</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="uN1554_10">
+   <name>
+    <text>uN1554_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="uN1596_10">
+   <name>
+    <text>uN1596_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="uN1542_10Activations">
+   <name>
+    <text>uN1542_10Activations</text>
+   </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+  </place> 
+  <place id="uN1560_10">
+   <name>
+    <text>uN1560_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="uN1548_10">
+   <name>
+    <text>uN1548_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="OpaqueActionuN1528_10">
+   <name>
+    <text>OpaqueActionuN1528_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="uN1572_10">
+   <name>
+    <text>uN1572_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="OpaqueActionuN1489_10">
+   <name>
+    <text>OpaqueActionuN1489_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="uN1590_10">
+   <name>
+    <text>uN1590_10</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <transition id="OpaqueActionExit">
+   <name>
+    <text>OpaqueActionExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="OpaqueActionuN1528_10Enter">
+   <name>
+    <text>OpaqueActionuN1528_10Enter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="DecisionNode1">
+   <name>
+    <text>DecisionNode1</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="OpaqueActionEnter">
+   <name>
+    <text>OpaqueActionEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="OpaqueActionuN1489_10Enter">
+   <name>
+    <text>OpaqueActionuN1489_10Enter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="DecisionNode0">
+   <name>
+    <text>DecisionNode0</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="MergeNode0">
+   <name>
+    <text>MergeNode0</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="uN1542_10">
+   <name>
+    <text>uN1542_10</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="uN1536_10">
+   <name>
+    <text>uN1536_10</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="uN1519_10">
+   <name>
+    <text>uN1519_10</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="OpaqueActionuN1489_10Exit">
+   <name>
+    <text>OpaqueActionuN1489_10Exit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="MergeNode1">
+   <name>
+    <text>MergeNode1</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="OpaqueActionuN1528_10Exit">
+   <name>
+    <text>OpaqueActionuN1528_10Exit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="uN1513_10">
+   <name>
+    <text>uN1513_10</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <arc id="uN2055_10" source="uN1548_10" target="DecisionNode0" type="InputArc"/>
+  <arc id="uN2032_10" source="OpaqueAction" target="OpaqueActionExit" type="InputArc"/>
+  <arc id="uN1983_10" source="uN1560_10" target="uN1513_10" type="InputArc"/>
+  <arc id="uN2062_10" source="uN1548_10" target="DecisionNode1" type="InputArc"/>
+  <arc id="uN2020_10" source="uN1554_10" target="OpaqueActionuN1528_10Enter" type="InputArc"/>
+  <arc id="uN2035_10" source="uN1572_10" target="OpaqueActionEnter" type="InputArc"/>
+  <arc id="uN1965_10" source="uN1542_10Activations" target="uN1542_10" type="InputArc"/>
+  <arc id="uN2002_10" source="OpaqueActionuN1489_10" target="OpaqueActionuN1489_10Exit" type="InputArc"/>
+  <arc id="uN1990_10" source="uN1584_10" target="uN1519_10" type="InputArc"/>
+  <arc id="uN2041_10" source="uN1590_10" target="MergeNode0" type="InputArc"/>
+  <arc id="uN2017_10" source="OpaqueActionuN1528_10" target="OpaqueActionuN1528_10Exit" type="InputArc"/>
+  <arc id="uN1975_10" source="uN1602_10" target="uN1536_10" type="InputArc"/>
+  <arc id="uN2005_10" source="uN1566_10" target="OpaqueActionuN1489_10Enter" type="InputArc"/>
+  <arc id="uN2048_10" source="uN1596_10" target="MergeNode1" type="InputArc"/>
+  <arc id="uN1991_10" source="uN1578_10" target="uN1519_10" type="InputArc"/>
+  <arc id="uN2060_10" source="DecisionNode1" target="uN1560_10" type="OutArc"/>
+  <arc id="uN2021_10" source="OpaqueActionuN1528_10Exit" target="uN1590_10" type="OutArc"/>
+  <arc id="uN1982_10" source="uN1513_10" target="uN1566_10" type="OutArc"/>
+  <arc id="uN2006_10" source="OpaqueActionuN1489_10Exit" target="uN1584_10" type="OutArc"/>
+  <arc id="uN2016_10" source="OpaqueActionuN1528_10Enter" target="OpaqueActionuN1528_10" type="OutArc"/>
+  <arc id="uN2039_10" source="MergeNode0" target="uN1602_10" type="OutArc"/>
+  <arc id="uN1989_10" source="uN1519_10" target="uN1596_10" type="OutArc"/>
+  <arc id="uN2053_10" source="DecisionNode0" target="uN1554_10" type="OutArc"/>
+  <arc id="uN2031_10" source="OpaqueActionEnter" target="OpaqueAction" type="OutArc"/>
+  <arc id="uN2036_10" source="OpaqueActionExit" target="uN1578_10" type="OutArc"/>
+  <arc id="uN1981_10" source="uN1513_10" target="uN1572_10" type="OutArc"/>
+  <arc id="uN2046_10" source="MergeNode1" target="uN1602_10" type="OutArc"/>
+  <arc id="uN2001_10" source="OpaqueActionuN1489_10Enter" target="OpaqueActionuN1489_10" type="OutArc"/>
+  <arc id="uN1969_10" source="uN1542_10" target="uN1548_10" type="OutArc"/>
+ </net>
+</pnml>

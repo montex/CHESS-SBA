@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="ASCII"?>
+<Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="XML" name="pnml">
+  <children xsi:type="Attribute" name="xmlns" value="http://www.example.org/pnpl"/>
+  <children xsi:type="Element" name="net">
+    <children xsi:type="Attribute" name="id" value="n1"/>
+    <children xsi:type="Attribute" name="type" value="http://www.example.org/pnpl/PTNet"/>
+    <children xsi:type="Element" name="name">
+      <children xsi:type="Element" name="text">
+        <children xsi:type="Text" value=""/>
+      </children>
+    </children>
+    <children xsi:type="Element" name="place">
+      <children xsi:type="Attribute" name="id" value="1"/>
+      <children xsi:type="Element" name="name">
+        <children xsi:type="Element" name="text">
+          <children xsi:type="Text" value=""/>
+        </children>
+      </children>
+    </children>
+    <children xsi:type="Element" name="place">
+      <children xsi:type="Attribute" name="id" value="2"/>
+      <children xsi:type="Element" name="name">
+        <children xsi:type="Element" name="text">
+          <children xsi:type="Text" value=""/>
+        </children>
+      </children>
+    </children>
+    <children xsi:type="Element" name="place">
+      <children xsi:type="Attribute" name="id" value="3"/>
+      <children xsi:type="Element" name="name">
+        <children xsi:type="Element" name="text">
+          <children xsi:type="Text" value=""/>
+        </children>
+      </children>
+    </children>
+    <children xsi:type="Element" name="place">
+      <children xsi:type="Attribute" name="id" value="4"/>
+      <children xsi:type="Element" name="name">
+        <children xsi:type="Element" name="text">
+          <children xsi:type="Text" value=""/>
+        </children>
+      </children>
+    </children>
+    <children xsi:type="Element" name="place">
+      <children xsi:type="Attribute" name="id" value="5"/>
+      <children xsi:type="Element" name="name">
+        <children xsi:type="Element" name="text">
+          <children xsi:type="Text" value=""/>
+        </children>
+      </children>
+    </children>
+    <children xsi:type="Element" name="place">
+      <children xsi:type="Attribute" name="id" value="6"/>
+      <children xsi:type="Element" name="name">
+        <children xsi:type="Element" name="text">
+          <children xsi:type="Text" value=""/>
+        </children>
+      </children>
+    </children>
+    <children xsi:type="Element" name="place">
+      <children xsi:type="Attribute" name="id" value="7"/>
+      <children xsi:type="Element" name="name">
+        <children xsi:type="Element" name="text">
+          <children xsi:type="Text" value=""/>
+        </children>
+      </children>
+    </children>
+    <children xsi:type="Element" name="transition">
+      <children xsi:type="Attribute" name="id" value="8"/>
+    </children>
+    <children xsi:type="Element" name="transition">
+      <children xsi:type="Attribute" name="id" value="9"/>
+    </children>
+    <children xsi:type="Element" name="transition">
+      <children xsi:type="Attribute" name="id" value="10"/>
+    </children>
+    <children xsi:type="Element" name="transition">
+      <children xsi:type="Attribute" name="id" value="11"/>
+    </children>
+    <children xsi:type="Element" name="transition">
+      <children xsi:type="Attribute" name="id" value="12"/>
+    </children>
+    <children xsi:type="Element" name="transition">
+      <children xsi:type="Attribute" name="id" value="13"/>
+    </children>
+    <children xsi:type="Element" name="transition">
+      <children xsi:type="Attribute" name="id" value="14"/>
+    </children>
+    <children xsi:type="Element" name="transition">
+      <children xsi:type="Attribute" name="id" value="15"/>
+    </children>
+    <children xsi:type="Element" name="transition">
+      <children xsi:type="Attribute" name="id" value="16"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="17"/>
+      <children xsi:type="Attribute" name="source" value="3"/>
+      <children xsi:type="Attribute" name="target" value="9"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="18"/>
+      <children xsi:type="Attribute" name="source" value="12"/>
+      <children xsi:type="Attribute" name="target" value="5"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="19"/>
+      <children xsi:type="Attribute" name="source" value="4"/>
+      <children xsi:type="Attribute" name="target" value="10"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="20"/>
+      <children xsi:type="Attribute" name="source" value="8"/>
+      <children xsi:type="Attribute" name="target" value="7"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="21"/>
+      <children xsi:type="Attribute" name="source" value="13"/>
+      <children xsi:type="Attribute" name="target" value="7"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="22"/>
+      <children xsi:type="Attribute" name="source" value="9"/>
+      <children xsi:type="Attribute" name="target" value="5"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="23"/>
+      <children xsi:type="Attribute" name="source" value="3"/>
+      <children xsi:type="Attribute" name="target" value="12"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="24"/>
+      <children xsi:type="Attribute" name="source" value="7"/>
+      <children xsi:type="Attribute" name="target" value="16"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="25"/>
+      <children xsi:type="Attribute" name="source" value="7"/>
+      <children xsi:type="Attribute" name="target" value="13"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="26"/>
+      <children xsi:type="Attribute" name="source" value="15"/>
+      <children xsi:type="Attribute" name="target" value="6"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="27"/>
+      <children xsi:type="Attribute" name="source" value="1"/>
+      <children xsi:type="Attribute" name="target" value="14"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="28"/>
+      <children xsi:type="Attribute" name="source" value="2"/>
+      <children xsi:type="Attribute" name="target" value="11"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="29"/>
+      <children xsi:type="Attribute" name="source" value="14"/>
+      <children xsi:type="Attribute" name="target" value="3"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="30"/>
+      <children xsi:type="Attribute" name="source" value="10"/>
+      <children xsi:type="Attribute" name="target" value="2"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="31"/>
+      <children xsi:type="Attribute" name="source" value="5"/>
+      <children xsi:type="Attribute" name="target" value="15"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="32"/>
+      <children xsi:type="Attribute" name="source" value="16"/>
+      <children xsi:type="Attribute" name="target" value="3"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="33"/>
+      <children xsi:type="Attribute" name="source" value="11"/>
+      <children xsi:type="Attribute" name="target" value="1"/>
+    </children>
+    <children xsi:type="Element" name="arc">
+      <children xsi:type="Attribute" name="id" value="34"/>
+      <children xsi:type="Attribute" name="source" value="2"/>
+      <children xsi:type="Attribute" name="target" value="8"/>
+    </children>
+  </children>
+</Root>

@@ -1,0 +1,312 @@
+<NDFile-'1.2'>
+
+NET:"org.eclipse.m2m.atl.engine.emfvm.lib.OclUndefined@9b3326",0,0;
+COLORS:White,Black,Black,Black,Black,Black;
+PLACE:"failed_punta0",0,0,0,0;
+PLACE:"faultyPlace_punta_inchiosto_secco1",0,0,0,0;
+PLACE:"numberOfTransientFaultyPlace_punta_inchiosto_secco2",0,0,0,0;
+PLACE:"faultyPlace_punta_deformazione_sfera3",0,0,0,0;
+PLACE:"numberOfTransientFaultyPlace_punta_deformazione_sfera4",0,0,0,0;
+PLACE:"erroneusPlace_punta_inchiostro_non_passa5",0,0,0,0;
+PLACE:"detect_error_Place_punta_inchiostro_non_passa6",0,0,0,0;
+PLACE:"failureModePlace_punta_non_scrive7",0,0,0,0;
+PLACE:"logicResult_punta_logic_errore_non_scrive8",0,0,0,0;
+PLACE:"logicResult_punta_logic_errore_non_scrive9",0,0,0,0;
+PLACE:"logicResult_punta_logic_errore_non_scrive10",0,0,0,0;
+PLACE:"activated_punta_faultsGeneratesError_errore_non_scrive11",0,0,0,0;
+PLACE:"active_punta_faultsGeneratesError_errore_non_scrive12",0,0,0,0;
+PLACE:"errorsActivation_punta_faultsGeneratesError_errore_non_scrive13",0,0,0,0;
+PLACE:"logicResult_punta_logic_14",0,0,0,0;
+PLACE:"activated_punta_errorsProducesFailures_15",0,0,0,0;
+PLACE:"active_punta_errorsProducesFailures_16",0,0,0,0;
+PLACE:"errorsActivation_punta_errorsProducesFailures_17",0,0,0,0;
+
+
+TRANS:"T0",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T1",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T2",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T3",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T4",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T5",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T6",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T7",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T8",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T9",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T10",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T11",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T12",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T13",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T14",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T15",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T16",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T17",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T18",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T19",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T20",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T21",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T22",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T23",0,0,V,Timed,1,Exponential,'', '',
+ (
+  9.0
+  );
+TRANS:"T24",0,0,V,Timed,1,Exponential,'', '',
+ (
+  1.0
+  );
+TRANS:"T25",0,0,V,Timed,1,Exponential,'', '',
+ (
+  0.2
+  );
+TRANS:"T26",0,0,V,Timed,1,Exponential,'', '',
+ (
+  0.01
+  );
+TRANS:"T27",0,0,V,Timed,1,Exponential,'', '',
+ (
+  1.0
+  );
+TRANS:"T28",0,0,V,Timed,1,Exponential,'', '',
+ (
+  46.0
+  );
+
+
+IARC:"numberOfTransientFaultyPlace_punta_inchiosto_secco2","T24",1,Normal,''
+ (0,0,0,0),1;
+IARC:"faultyPlace_punta_inchiosto_secco1","T24",1,Normal,''
+ (0,0,0,0),1;
+IARC:"faultyPlace_punta_inchiosto_secco1","T0",1,Normal,''
+ (0,0,0,0),1;
+IARC:"failed_punta0","T0",1,Normal,''
+ (0,0,0,0),1;
+IARC:"numberOfTransientFaultyPlace_punta_inchiosto_secco2","T1",1,Normal,''
+ (0,0,0,0),1;
+IARC:"failed_punta0","T1",1,Normal,''
+ (0,0,0,0),1;
+IARC:"numberOfTransientFaultyPlace_punta_deformazione_sfera4","T26",1,Normal,''
+ (0,0,0,0),1;
+IARC:"faultyPlace_punta_deformazione_sfera3","T26",1,Normal,''
+ (0,0,0,0),1;
+IARC:"faultyPlace_punta_deformazione_sfera3","T2",1,Normal,''
+ (0,0,0,0),1;
+IARC:"failed_punta0","T2",1,Normal,''
+ (0,0,0,0),1;
+IARC:"numberOfTransientFaultyPlace_punta_deformazione_sfera4","T3",1,Normal,''
+ (0,0,0,0),1;
+IARC:"failed_punta0","T3",1,Normal,''
+ (0,0,0,0),1;
+IARC:"erroneusPlace_punta_inchiostro_non_passa5","T4",1,Normal,''
+ (0,0,0,0),1;
+IARC:"failed_punta0","T4",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive9","T5",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive9","T6",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive10","T6",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive10","T7",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive8","T8",1,Normal,''
+ (0,0,0,0),1;
+IARC:"faultyPlace_punta_deformazione_sfera3","T11",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive10","T12",1,Normal,''
+ (0,0,0,0),1;
+IARC:"faultyPlace_punta_inchiosto_secco1","T11",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive10","T12",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive8","T13",1,Normal,''
+ (0,0,0,0),1;
+IARC:"activated_punta_faultsGeneratesError_errore_non_scrive11","T14",1,Normal,''
+ (0,0,0,0),1;
+IARC:"active_punta_faultsGeneratesError_errore_non_scrive12","T15",1,Normal,''
+ (0,0,0,0),1;
+IARC:"active_punta_faultsGeneratesError_errore_non_scrive12","T16",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive8","T16",1,Normal,''
+ (0,0,0,0),1;
+IARC:"errorsActivation_punta_faultsGeneratesError_errore_non_scrive13","T27",1,Normal,''
+ (0,0,0,0),1;
+IARC:"erroneusPlace_punta_inchiostro_non_passa5","T17",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_14","T18",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_14","T19",1,Normal,''
+ (0,0,0,0),1;
+IARC:"activated_punta_errorsProducesFailures_15","T20",1,Normal,''
+ (0,0,0,0),1;
+IARC:"active_punta_errorsProducesFailures_16","T21",1,Normal,''
+ (0,0,0,0),1;
+IARC:"active_punta_errorsProducesFailures_16","T22",1,Normal,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_14","T22",1,Normal,''
+ (0,0,0,0),1;
+IARC:"errorsActivation_punta_errorsProducesFailures_17","T28",1,Normal,''
+ (0,0,0,0),1;
+IARC:"failed_punta0","T23",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"failed_punta0","T25",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive8","T5",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive10","T5",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive8","T6",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive8","T7",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive9","T7",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive10","T8",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive9","T8",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive10","T11",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"faultyPlace_punta_deformazione_sfera3","T11",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive10","T11",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"faultyPlace_punta_inchiosto_secco1","T11",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"activated_punta_faultsGeneratesError_errore_non_scrive11","T13",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_errore_non_scrive8","T14",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_14","T17",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"erroneusPlace_punta_inchiostro_non_passa5","T17",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"activated_punta_errorsProducesFailures_15","T19",1,Inhibitor,''
+ (0,0,0,0),1;
+IARC:"logicResult_punta_logic_14","T20",1,Inhibitor,''
+ (0,0,0,0),1;
+
+
+OARC:"T0","failed_punta0",1,1,''
+ (0,0,0,0),1;
+OARC:"T1","failed_punta0",1,1,''
+ (0,0,0,0),1;
+OARC:"T2","failed_punta0",1,1,''
+ (0,0,0,0),1;
+OARC:"T3","failed_punta0",1,1,''
+ (0,0,0,0),1;
+OARC:"T4","failed_punta0",1,1,''
+ (0,0,0,0),1;
+OARC:"T5","logicResult_punta_logic_errore_non_scrive8",1,1,''
+ (0,0,0,0),1;
+OARC:"T5","logicResult_punta_logic_errore_non_scrive9",1,1,''
+ (0,0,0,0),1;
+OARC:"T6","logicResult_punta_logic_errore_non_scrive8",1,1,''
+ (0,0,0,0),1;
+OARC:"T6","logicResult_punta_logic_errore_non_scrive9",1,1,''
+ (0,0,0,0),1;
+OARC:"T6","logicResult_punta_logic_errore_non_scrive10",1,1,''
+ (0,0,0,0),1;
+OARC:"T7","logicResult_punta_logic_errore_non_scrive8",1,1,''
+ (0,0,0,0),1;
+OARC:"T7","logicResult_punta_logic_errore_non_scrive10",1,1,''
+ (0,0,0,0),1;
+OARC:"T11","logicResult_punta_logic_errore_non_scrive10",1,1,''
+ (0,0,0,0),1;
+OARC:"T11","faultyPlace_punta_deformazione_sfera3",1,1,''
+ (0,0,0,0),1;
+OARC:"T11","logicResult_punta_logic_errore_non_scrive10",1,1,''
+ (0,0,0,0),1;
+OARC:"T11","faultyPlace_punta_inchiosto_secco1",1,1,''
+ (0,0,0,0),1;
+OARC:"T13","logicResult_punta_logic_errore_non_scrive8",1,1,''
+ (0,0,0,0),1;
+OARC:"T13","activated_punta_faultsGeneratesError_errore_non_scrive11",1,1,''
+ (0,0,0,0),1;
+OARC:"T13","active_punta_faultsGeneratesError_errore_non_scrive12",1,1,''
+ (0,0,0,0),1;
+OARC:"T16","logicResult_punta_logic_errore_non_scrive8",1,1,''
+ (0,0,0,0),1;
+OARC:"T16","errorsActivation_punta_faultsGeneratesError_errore_non_scrive13",1,1,''
+ (0,0,0,0),1;
+OARC:"T17","logicResult_punta_logic_14",1,1,''
+ (0,0,0,0),1;
+OARC:"T17","erroneusPlace_punta_inchiostro_non_passa5",1,1,''
+ (0,0,0,0),1;
+OARC:"T19","logicResult_punta_logic_14",1,1,''
+ (0,0,0,0),1;
+OARC:"T19","activated_punta_errorsProducesFailures_15",1,1,''
+ (0,0,0,0),1;
+OARC:"T19","active_punta_errorsProducesFailures_16",1,1,''
+ (0,0,0,0),1;
+OARC:"T22","logicResult_punta_logic_14",1,1,''
+ (0,0,0,0),1;
+OARC:"T22","errorsActivation_punta_errorsProducesFailures_17",1,1,''
+ (0,0,0,0),1;

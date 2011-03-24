@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Sistema xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://if.dsi.unifi.it/Modeling/DIM" Name="penna">
+  <components Name="punta">
+    <FailureModes Name="non_scrive"/>
+    <Errors Name="inchiostro_non_passa"/>
+    <Faults xsi:type="InternalFault" Name="inchiosto_secco" PermanenceProbability="0.4">
+      <Occurrence xsi:type="Exponential" Sistema="/" Rate="9.0"/>
+      <TransientTime xsi:type="Exponential" Sistema="/" Rate="1.0"/>
+    </Faults>
+    <Faults xsi:type="InternalFault" Name="deformazione_sfera" PermanenceProbability="1.0">
+      <Occurrence xsi:type="Exponential" Sistema="/" Rate="0.2"/>
+      <TransientTime xsi:type="Exponential" Sistema="/" Rate="0.01"/>
+    </Faults>
+    <FaultsGeneratesErrors Source="//@components.0/@Faults.1 //@components.0/@Faults.0" Destination="//@components.0/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="(deformazione_sfera) OR (inchiostro_secco)" Name="errore_non_scrive">
+      <ActivationDelay xsi:type="Exponential" Sistema="/" Rate="1.0"/>
+      <PropagationLogic xsi:type="FaultsExpressionOrNode" faultsGenerateErrors="//@components.0/@FaultsGeneratesErrors.0">
+        <FaultsExpression1 xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.0/@FaultsGeneratesErrors.0" Fault="//@components.0/@Faults.1"/>
+        <FaultsExpression2 xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.0/@FaultsGeneratesErrors.0" Fault="//@components.0/@Faults.0"/>
+      </PropagationLogic>
+    </FaultsGeneratesErrors>
+    <ErrorsGeneratesFailures component="//@components.0" Name="" PropagationLogicStringFormat="(non_scrive)" Source="//@components.0/@Errors.0" Destination="//@components.0/@FailureModes.0">
+      <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.0/@ErrorsGeneratesFailures.0" Error="//@components.0/@Errors.0"/>
+      <PropagationDelay xsi:type="Exponential" Sistema="/" Rate="46.0"/>
+    </ErrorsGeneratesFailures>
+  </components>
+</Sistema>

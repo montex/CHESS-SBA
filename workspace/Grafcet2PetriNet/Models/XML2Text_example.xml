@@ -1,0 +1,130 @@
+<pnml xmlns="http://www.informatik.hu-berlin.de/top/pnml/ptNetb">
+  <name>
+    <text>exemple1</text>
+  </name>
+  <net id="1:1-126:2" type="http://www.informatik.hu-berlin.de/top/pntd/ptNetb">
+    <name>
+      <text>exemple1</text>
+    </name>
+    <place id="s2">
+      <name>
+        <text>s2</text>
+      </name>
+    </place>
+    <place id="s4">
+      <name>
+        <text>s4</text>
+      </name>
+    </place>
+    <place id="s3">
+      <name>
+        <text>s3</text>
+      </name>
+    </place>
+    <place id="s6">
+      <name>
+        <text>s6</text>
+      </name>
+    </place>
+    <place id="s1">
+      <name>
+        <text>s1</text>
+      </name>
+    </place>
+    <place id="s5">
+      <name>
+        <text>s5</text>
+      </name>
+    </place>
+    <transition id="t3">
+      <name>
+        <text>t3</text>
+      </name>
+    </transition>
+    <transition id="t4">
+      <name>
+        <text>t4</text>
+      </name>
+    </transition>
+    <transition id="t5">
+      <name>
+        <text>t5</text>
+      </name>
+    </transition>
+    <transition id="t1">
+      <name>
+        <text>t1</text>
+      </name>
+    </transition>
+    <transition id="t2">
+      <name>
+        <text>t2</text>
+      </name>
+    </transition>
+    <arc id="st1" source="s1" target="t1">
+      <name>
+        <text>st1</text>
+      </name>
+    </arc>
+    <arc id="ts6" source="t4" target="s6">
+      <name>
+        <text>ts6</text>
+      </name>
+    </arc>
+    <arc id="st2" source="s2" target="t2">
+      <name>
+        <text>st2</text>
+      </name>
+    </arc>
+    <arc id="st3" source="s3" target="t3">
+      <name>
+        <text>st3</text>
+      </name>
+    </arc>
+    <arc id="ts2" source="t1" target="s3">
+      <name>
+        <text>ts2</text>
+      </name>
+    </arc>
+    <arc id="ts1" source="t1" target="s2">
+      <name>
+        <text>ts1</text>
+      </name>
+    </arc>
+    <arc id="st6" source="s5" target="t5">
+      <name>
+        <text>st6</text>
+      </name>
+    </arc>
+    <arc id="st4" source="s4" target="t4">
+      <name>
+        <text>st4</text>
+      </name>
+    </arc>
+    <arc id="ts5" source="t3" target="s5">
+      <name>
+        <text>ts5</text>
+      </name>
+    </arc>
+    <arc id="ts4" source="t2" target="s5">
+      <name>
+        <text>ts4</text>
+      </name>
+    </arc>
+    <arc id="ts7" source="t5" target="s6">
+      <name>
+        <text>ts7</text>
+      </name>
+    </arc>
+    <arc id="st5" source="s5" target="t4">
+      <name>
+        <text>st5</text>
+      </name>
+    </arc>
+    <arc id="ts3" source="t2" target="s4">
+      <name>
+        <text>ts3</text>
+      </name>
+    </arc>
+  </net>
+</pnml>

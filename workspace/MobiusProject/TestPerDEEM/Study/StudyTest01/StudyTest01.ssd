@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<class id="Mobius.Studies.SetStudy.SetStudyInterface">
+	<int id="ClassVersion">1</int>
+	<class id="Mobius.Studies.Common.BaseStudyInterface">
+		<int id="ClassVersion">1</int>
+		<class id="Mobius.BaseClasses.BaseInterfaceClass">
+			<int id="ClassVersion">3</int>
+			<string id="ModelName">StudyTest01</string>
+			<class id="Mobius.Studies.SetStudy.SetStudyEditor">
+				<int id="ClassVersion">2</int>
+				<class id="Mobius.Studies.Common.BaseStudyEditor">
+					<int id="ClassVersion">4</int>
+					<class id="Mobius.BaseClasses.BaseEditorClass">
+						<int id="ClassVersion">3</int>
+						<boolean id="HasPanel">false</boolean>
+						<vector id="LocalGlobalNamesList">
+						</vector>
+						<vector id="LocalGlobalTypesList">
+						</vector>
+						<boolean id="DisplayToolTips">true</boolean>
+					</class>
+					<string id="FullPath">
+						/home/montex/Projects/CHESS/MobiusProject/TestPerDEEM/Study/
+						StudyTest01/
+					</string>
+					<string id="PVModelName">RewTest01</string>
+					<vector id="ActiveExpVector">
+						<boolean id="0">true</boolean>
+					</vector>
+					<vector id="GVNameVector">
+						<string id="0">Param1</string>
+						<string id="1">Param2</string>
+						<string id="2">TestTime</string>
+					</vector>
+					<vector id="GVTypeStringVector">
+						<string id="0">double</string>
+						<string id="1">double</string>
+						<string id="2">double</string>
+					</vector>
+				</class>
+				<int id="VectorLength">1</int>
+				<int id="NumOfGVs">3</int>
+				<string id="Name">Experiment 1</string>
+				<vector id="GVValueVector">
+					<string id="0">0.5</string>
+					<string id="1">20.0</string>
+					<string id="2">10.0</string>
+				</vector>
+			</class>
+			<class id="Mobius.Studies.SetStudy.SetStudyInfoClass">
+				<int id="ClassVersion">1</int>
+				<class id="Mobius.Studies.SetStudy.SetStudyInfoClass">
+					<int id="ClassVersion">1</int>
+					<class id="Mobius.BaseClasses.BaseInfoClass">
+						<int id="ClassVersion">2</int>
+					</class>
+				</class>
+			</class>
+			<boolean id="Valid">true</boolean>
+		</class>
+	</class>
+</class>

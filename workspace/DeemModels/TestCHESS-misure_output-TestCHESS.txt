@@ -1,0 +1,44 @@
+
+FILE_NAME: TestCHESS
+NET_NAME: unnamed
+
+
+Simulation parameters:
+
+  - Min number of replications  10000
+  - Max number of replications  10000000
+  - Confidence level  99.00%
+  - Half-lenght confidence interval  1.00%
+
+  - Random number generator seeds:  6657
+
+STUDY_NAME: TestCHESS 
+
+Variables Setting:
+  Time = 1.000000e+01
+  Param1 = 5.000000e-01
+  Param2 = 2.000000e+01
+
+
+ VARIABLE CASE #0:
+
+
+ Computation time (real):	0 h : 0 m : 0 s.
+ CPU time (user):		0 h : 0 m : 0 s. 
+
+ Rew measure:
+
+ -> p_Instantaneous  1.000000e+00	 [ 1.000000e+00 , 1.000000e+00 ]  (Half-lenght confidence interval = 0.00%) (Number of samples: 57987)
+
+ -> p_Exponential  9.934468e-01	 [ 9.926674e-01 , 9.942262e-01 ]  (Half-lenght confidence interval = 0.08%) (Number of samples: 57987)
+
+ -> p_Deterministic  1.000000e+00	 [ 1.000000e+00 , 1.000000e+00 ]  (Half-lenght confidence interval = 0.00%) (Number of samples: 57987)
+
+ -> p_Gaussian  6.857572e-01	 [ 6.812731e-01 , 6.902412e-01 ]  (Half-lenght confidence interval = 0.65%) (Number of samples: 57987)
+
+ -> p_Uniform  4.852467e-01	 [ 4.804191e-01 , 4.900743e-01 ]  (Half-lenght confidence interval = 0.99%) (Number of samples: 57987)
+
+ -> p_Gamma  1.000000e+00	 [ 1.000000e+00 , 1.000000e+00 ]  (Half-lenght confidence interval = 0.00%) (Number of samples: 57987)
+
+ -> p_Weibull  5.065963e-01	 [ 5.017670e-01 , 5.114256e-01 ]  (Half-lenght confidence interval = 0.95%) (Number of samples: 57987)
+

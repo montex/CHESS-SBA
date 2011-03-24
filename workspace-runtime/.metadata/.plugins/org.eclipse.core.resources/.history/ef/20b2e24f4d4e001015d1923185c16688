@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Sistema xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://if.dsi.unifi.it/Modeling/DIM" Name="Example">
+  <components Name="c1">
+    <Faults xsi:type="InternalFault"/>
+  </components>
+  <components Name="c2"/>
+  <components Name="nodeA">
+    <Faults xsi:type="InternalFault">
+      <Occurrence xsi:type="Exponential" Sistema="/"/>
+    </Faults>
+  </components>
+  <components Name="bus"/>
+  <components Name="nodeB"/>
+</Sistema>

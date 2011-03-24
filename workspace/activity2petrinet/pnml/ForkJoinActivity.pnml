@@ -1,0 +1,279 @@
+<pnml>
+ <net id="n0" type="http://www.informatik.hu-berlin.de/top/pntd/ptNetb">
+  <place id="F2Final">
+   <name>
+    <text>F2Final</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="ActionB">
+   <name>
+    <text>ActionB</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="D2Join">
+   <name>
+    <text>D2Join</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="Fork2B">
+   <name>
+    <text>Fork2B</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="E2Join">
+   <name>
+    <text>E2Join</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="InitialActivations">
+   <name>
+    <text>InitialActivations</text>
+   </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+  </place> 
+  <place id="Fork2D">
+   <name>
+    <text>Fork2D</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="A2Fork">
+   <name>
+    <text>A2Fork</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="Fork2E">
+   <name>
+    <text>Fork2E</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="Initial2A">
+   <name>
+    <text>Initial2A</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="ActionA">
+   <name>
+    <text>ActionA</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="C2Join">
+   <name>
+    <text>C2Join</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="Join2F">
+   <name>
+    <text>Join2F</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="B2C">
+   <name>
+    <text>B2C</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="ActionC">
+   <name>
+    <text>ActionC</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="ActionF">
+   <name>
+    <text>ActionF</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="Action D">
+   <name>
+    <text>Action D</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <place id="ActionE">
+   <name>
+    <text>ActionE</text>
+   </name>
+   <initialMarking>
+    <text>0</text>
+   </initialMarking>
+  </place> 
+  <transition id="Action DEnter">
+   <name>
+    <text>Action DEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="Join">
+   <name>
+    <text>Join</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionBEnter">
+   <name>
+    <text>ActionBEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionCEnter">
+   <name>
+    <text>ActionCEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionFEnter">
+   <name>
+    <text>ActionFEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionBExit">
+   <name>
+    <text>ActionBExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="Fork">
+   <name>
+    <text>Fork</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionAExit">
+   <name>
+    <text>ActionAExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="Initial">
+   <name>
+    <text>Initial</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionCExit">
+   <name>
+    <text>ActionCExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionEEnter">
+   <name>
+    <text>ActionEEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="Action DExit">
+   <name>
+    <text>Action DExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionEExit">
+   <name>
+    <text>ActionEExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="Final">
+   <name>
+    <text>Final</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionFExit">
+   <name>
+    <text>ActionFExit</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <transition id="ActionAEnter">
+   <name>
+    <text>ActionAEnter</text>
+   </name>
+   <priority> 1 </priority>
+  </transition> 
+  <arc id="uN2203_10" source="Fork2D" target="Action DEnter" type="InputArc"/>
+  <arc id="uN2150_10" source="D2Join" target="Join" type="InputArc"/>
+  <arc id="uN2248_10" source="B2C" target="ActionCEnter" type="InputArc"/>
+  <arc id="uN2218_10" source="Join2F" target="ActionFEnter" type="InputArc"/>
+  <arc id="uN2170_10" source="ActionB" target="ActionBExit" type="InputArc"/>
+  <arc id="uN2173_10" source="Fork2B" target="ActionBEnter" type="InputArc"/>
+  <arc id="uN2159_10" source="A2Fork" target="Fork" type="InputArc"/>
+  <arc id="uN2149_10" source="E2Join" target="Join" type="InputArc"/>
+  <arc id="uN2141_10" source="F2Final" target="Final" type="InputArc"/>
+  <arc id="uN2230_10" source="ActionE" target="ActionEExit" type="InputArc"/>
+  <arc id="uN2131_10" source="InitialActivations" target="Initial" type="InputArc"/>
+  <arc id="uN2233_10" source="Fork2E" target="ActionEEnter" type="InputArc"/>
+  <arc id="uN2245_10" source="ActionC" target="ActionCExit" type="InputArc"/>
+  <arc id="uN2148_10" source="C2Join" target="Join" type="InputArc"/>
+  <arc id="uN2215_10" source="ActionF" target="ActionFExit" type="InputArc"/>
+  <arc id="uN2188_10" source="Initial2A" target="ActionAEnter" type="InputArc"/>
+  <arc id="uN2200_10" source="Action D" target="Action DExit" type="InputArc"/>
+  <arc id="uN2185_10" source="ActionA" target="ActionAExit" type="InputArc"/>
+  <arc id="uN2147_10" source="Join" target="Join2F" type="OutArc"/>
+  <arc id="uN2244_10" source="ActionCEnter" target="ActionC" type="OutArc"/>
+  <arc id="uN2249_10" source="ActionCExit" target="C2Join" type="OutArc"/>
+  <arc id="uN2174_10" source="ActionBExit" target="B2C" type="OutArc"/>
+  <arc id="uN2219_10" source="ActionFExit" target="F2Final" type="OutArc"/>
+  <arc id="uN2156_10" source="Fork" target="Fork2E" type="OutArc"/>
+  <arc id="uN2214_10" source="ActionFEnter" target="ActionF" type="OutArc"/>
+  <arc id="uN2199_10" source="Action DEnter" target="Action D" type="OutArc"/>
+  <arc id="uN2157_10" source="Fork" target="Fork2D" type="OutArc"/>
+  <arc id="uN2135_10" source="Initial" target="Initial2A" type="OutArc"/>
+  <arc id="uN2169_10" source="ActionBEnter" target="ActionB" type="OutArc"/>
+  <arc id="uN2229_10" source="ActionEEnter" target="ActionE" type="OutArc"/>
+  <arc id="uN2158_10" source="Fork" target="Fork2B" type="OutArc"/>
+  <arc id="uN2189_10" source="ActionAExit" target="A2Fork" type="OutArc"/>
+  <arc id="uN2204_10" source="Action DExit" target="D2Join" type="OutArc"/>
+  <arc id="uN2184_10" source="ActionAEnter" target="ActionA" type="OutArc"/>
+  <arc id="uN2234_10" source="ActionEExit" target="E2Join" type="OutArc"/>
+ </net>
+</pnml>

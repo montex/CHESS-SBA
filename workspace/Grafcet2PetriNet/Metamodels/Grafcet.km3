@@ -1,0 +1,71 @@
+-- @name		GRAFCET
+-- @version		1.0
+-- @domains		GRAFCET
+-- @authors		Pierrick Guyard (pielepsy@gmail.com)
+-- @date		2005/06/29
+-- @description		This basic meta-model describes GRAFCET. Grafcet is a french discrete system model.  The GRAFCET represents graphically the operation of an automatism by: Steps with associated action, transitions between steps, Directed connections between the steps and the transitions.
+
+
+package Grafcet {
+
+	abstract class LocatedElement {
+		attribute location : String;
+	}
+
+	abstract class NamedElement extends LocatedElement {
+		attribute name : String;
+	}
+	
+	class Grafcet extends NamedElement {
+		reference elements[*] container : Element oppositeOf grafcet;
+		reference connections[*] container : Connection oppositeOf grafcet;
+	}
+	
+	-- @begin elements
+	
+	abstract class Element extends NamedElement {
+		reference grafcet : Grafcet oppositeOf elements;
+	}
+
+	class Step extends Element {
+		attribute isInitial : Boolean;
+		attribute isActive : Boolean;
+		attribute action : String;
+		reference incomingConnections[*] : TransitionToStep oppositeOf to;
+		reference outgoingConnections[*] : StepToTransition oppositeOf from;
+	}
+	
+	class Transition extends Element {
+		attribute condition : String;
+		reference incomingConnections[*] : StepToTransition oppositeOf to;
+		reference outgoingConnections[*] : TransitionToStep oppositeOf from;
+		
+	}
+
+	-- @end elements	
+	
+	
+	--@begin connections
+	
+	abstract class Connection extends NamedElement {
+		reference grafcet : Grafcet oppositeOf connections;	
+	}
+	
+	class StepToTransition extends Connection {
+		reference from : Step oppositeOf outgoingConnections;
+		reference to : Transition oppositeOf incomingConnections;
+	}
+	
+	class TransitionToStep extends Connection {
+		reference from : Transition oppositeOf outgoingConnections;
+		reference to : Step oppositeOf incomingConnections;
+	}
+	
+	--@end connections
+
+}
+
+package PrimitiveTypes {
+	datatype String;
+	datatype Boolean;
+}

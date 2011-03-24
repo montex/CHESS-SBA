@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ASCII"?>
+<PathExp xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="PathExp" name="">
+  <states incoming="//@transitions.2 //@transitions.3" outgoing="//@transitions.6 //@transitions.3"/>
+  <states incoming="//@transitions.4" outgoing="//@transitions.5"/>
+  <states incoming="//@transitions.7 //@transitions.8" outgoing="//@transitions.1"/>
+  <states incoming="//@transitions.5 //@transitions.6" outgoing="//@transitions.7 //@transitions.8"/>
+  <states outgoing="//@transitions.0"/>
+  <states incoming="//@transitions.0" outgoing="//@transitions.4 //@transitions.2"/>
+  <states incoming="//@transitions.1"/>
+  <transitions name="f" source="//@states.4" target="//@states.5"/>
+  <transitions name="s" source="//@states.2" target="//@states.6"/>
+  <transitions name="k" source="//@states.5" target="//@states.0"/>
+  <transitions name="m" source="//@states.0" target="//@states.0"/>
+  <transitions name="g" source="//@states.5" target="//@states.1"/>
+  <transitions name="h" source="//@states.1" target="//@states.3"/>
+  <transitions name="n" source="//@states.0" target="//@states.3"/>
+  <transitions name="p" source="//@states.3" target="//@states.2"/>
+  <transitions name="q" source="//@states.3" target="//@states.2"/>
+</PathExp>

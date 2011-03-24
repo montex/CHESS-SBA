@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<bundle bundleID="1557" localization="plugin" name="CHESS ML profile" project="it.unipd.chess.chessmlprofile" provider="UPD">
+		<library name="."/>
+	</bundle>
+	<bundle bundleID="1561" class="it.unipd.chess.propertysheet.Activator" localization="OSGI-INF/l10n/bundle" name="diagram listener example" project="it.unipd.chess.tabbedproperties" provider="unipd.it"/>
+	<bundle bundleID="1552" localization="plugin" name="%pluginName" project="it.unifi.rcl.transformations.idm" provider="%providerName">
+		<library name="."/>
+	</bundle>
+	<bundle bundleID="1564" class="org.chess.commands.Activator" localization="OSGI-INF/l10n/bundle" name="Commands" project="org.chess.commands" provider="intecs"/>
+	<bundle bundleID="1553" class="DependabilityintermediateModel.provider.IM2EditPlugin$Implementation" localization="plugin" name="%pluginName" project="it.unifi.rcl.transformations.idm.edit" provider="%providerName">
+		<library name="."/>
+	</bundle>
+	<bundle bundleID="1554" localization="plugin" name="%pluginName" project="it.unifi.rcl.transformations.idm.tests" provider="%providerName">
+		<library name="."/>
+	</bundle>
+	<bundle bundleID="1556" class="it.unipd.chess.Activator" localization="OSGI-INF/l10n/bundle" name="CHESS core plugin" project="it.unipd.chess" provider="UPD"/>
+	<bundle bundleID="1562" class="it.unipd.chess.validator.Activator" localization="OSGI-INF/l10n/bundle" name="OCL Validator" project="it.unipd.chess.validator"/>
+	<bundle bundleID="1559" class="it.unipd.chess.help.Activator" localization="OSGI-INF/l10n/bundle" name="CHESS Help" project="it.unipd.chess.help"/>
+	<bundle bundleID="1565" class="org.chess.diagram.palette.Activator" localization="OSGI-INF/l10n/bundle" name="org.chess.diagram.palette" project="org.chess.diagram.palette" provider="Intecs"/>
+	<bundle bundleID="1555" class="DependabilityintermediateModel.presentation.IM2EditorPlugin$Implementation" localization="plugin" name="%pluginName" project="it.unifi.rcl.transformations.idm.editor" provider="%providerName">
+		<library name="."/>
+	</bundle>
+	<bundle bundleID="1563" class="it.unipd.chess.validator.livebatch.Activator" localization="OSGI-INF/l10n/bundle" name="OCL Validator" project="it.unipd.chess.validator.livebatch"/>
+	<bundle bundleID="1558" class="it.unipd.chess.editor.Activator" localization="OSGI-INF/l10n/bundle" name="CHESS Editor" project="it.unipd.chess.editor" provider="unipd.it"/>
+	<bundle bundleID="1560" class="it.unipd.chess.newmodelwizard.Activator" localization="OSGI-INF/l10n/bundle" name="Model Wizard" project="it.unipd.chess.newmodelwizard" provider="UPD"/>
+</map>

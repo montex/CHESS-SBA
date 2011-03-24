@@ -1,0 +1,28 @@
+package TextualPathExp {
+
+	class TextualPathExp {
+		reference path container : Path;
+	}
+	
+	class Path {
+		reference transitions [1-*] ordered container : Transition;
+	}
+	
+	abstract class Transition {
+		attribute isMultiple : Boolean;
+	}
+	
+	class AlternativeTrans extends Transition {
+		reference altPaths [1-*] ordered container : Path;
+	}
+	
+	class PrimitiveTrans extends Transition {
+		attribute name : String;
+	}
+
+}
+
+package PrimitiveTypes {
+	datatype String;
+	datatype Boolean;
+}

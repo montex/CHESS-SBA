@@ -1,0 +1,25 @@
+package PathExp {
+
+	abstract class Element {
+		attribute name : String;
+	}
+
+	class PathExp extends Element {
+		reference states [1-*] container : State;
+		reference transitions [*] container : Transition;
+	}
+
+	class State {
+		reference incoming [*] : Transition oppositeOf target;
+		reference outgoing [*] : Transition oppositeOf source;
+	}
+
+	class Transition extends Element {
+		reference source : State oppositeOf outgoing;
+		reference target : State oppositeOf incoming;
+	}
+}
+
+package PrimitiveTypes {
+	datatype String;
+}

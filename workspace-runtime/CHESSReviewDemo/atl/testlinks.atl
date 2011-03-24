@@ -1,0 +1,10 @@
+--module testlinks;
+
+query test_parent = IM2!Fault.allInstances()->
+	iterate(i; acc:String=''| acc + i.toString()).writeTo('/home/montex/Desktop/atloutput');
+	
+helper context IM2!Fault def: toString():String = 
+	'Sono un guasto! Mi chiamo <' + self.Name + '> e faccio parte del componente <'
+	+ IM2!Component.allInstances()->select(s | s.Faults->includes(self))->asSequence()->first().Name	
+	+ '> \n';
+

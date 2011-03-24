@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<class id="Mobius.Solvers.Simulators.SimInterfaceClass">
+	<int id="ClassVersion">1</int>
+	<class id="Mobius.BaseClasses.BaseInterfaceClass">
+		<int id="ClassVersion">3</int>
+		<string id="ModelName">SimTest01</string>
+		<class id="Mobius.Solvers.Simulators.Simulator">
+			<int id="ClassVersion">1</int>
+			<class id="Mobius.BaseClasses.BaseEditorClass">
+				<int id="ClassVersion">3</int>
+				<boolean id="HasPanel">false</boolean>
+				<vector id="LocalGlobalNamesList">
+				</vector>
+				<vector id="LocalGlobalTypesList">
+				</vector>
+				<boolean id="DisplayToolTips">true</boolean>
+			</class>
+		</class>
+		<class id="Mobius.Solvers.Simulators.SimInfoClass">
+			<int id="ClassVersion">9</int>
+			<class id="Mobius.Solvers.Common.BaseSolverInfo">
+				<int id="ClassVersion">1</int>
+				<class id="Mobius.BaseClasses.BaseInfoClass">
+					<int id="ClassVersion">2</int>
+				</class>
+				<string id="PlotTemplate"></string>
+			</class>
+			<boolean id="UsingJackknife">true</boolean>
+			<string id="ArchiveFile"></string>
+			<byte id="RandomNumberGenerator">0</byte>
+			<long id="RandomNumberSeed">31415</long>
+			<long id="MaximumBatches">1000000000</long>
+			<long id="MinimumBatches">1000000</long>
+			<long id="ReportFrequency">1000</long>
+			<byte id="BuildType">0</byte>
+			<byte id="TraceLevel">1</byte>
+			<string id="Runname">Results</string>
+			<int id="DisplayUpdateFrequency">1000</int>
+			<boolean id="MaximizeProcessorUsage">false</boolean>
+			<int id="ProcessorsPerExperiment">1</int>
+			<int id="NumMachines">1</int>
+			<string id="MachineName">iridium</string>
+			<int id="NumGroups">0</int>
+			<string id="StudyName">StudyTest01</string>
+			<boolean id="TerminatingSimulation">true</boolean>
+			<boolean id="StoreOutput">false</boolean>
+			<boolean id="OutputASCII">false</boolean>
+			<boolean id="OutputBinary">false</boolean>
+			<boolean id="EnableMobiusTrace">false</boolean>
+			<boolean id="EnableXMLTrace">false</boolean>
+		</class>
+		<boolean id="Valid">true</boolean>
+	</class>
+</class>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ASCII"?>
+<PetriNet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="PetriNet" name="">
+  <places name="" incoming="//@arcs.11 //@arcs.15" outgoing="//@arcs.7 //@arcs.6"/>
+  <places name="" incoming="//@arcs.9" outgoing="//@arcs.5"/>
+  <places name="" incoming="//@arcs.13 //@arcs.10" outgoing="//@arcs.8"/>
+  <places name="" incoming="//@arcs.14 //@arcs.16" outgoing="//@arcs.4 //@arcs.1"/>
+  <places name="" outgoing="//@arcs.3"/>
+  <places name="" incoming="//@arcs.12" outgoing="//@arcs.0 //@arcs.2"/>
+  <places name="" incoming="//@arcs.17"/>
+  <transitions name="" incoming="//@arcs.3" outgoing="//@arcs.12"/>
+  <transitions name="" incoming="//@arcs.8" outgoing="//@arcs.17"/>
+  <transitions name="" incoming="//@arcs.2" outgoing="//@arcs.11"/>
+  <transitions name="" incoming="//@arcs.6" outgoing="//@arcs.15"/>
+  <transitions name="" incoming="//@arcs.0" outgoing="//@arcs.9"/>
+  <transitions name="" incoming="//@arcs.5" outgoing="//@arcs.14"/>
+  <transitions name="" incoming="//@arcs.7" outgoing="//@arcs.16"/>
+  <transitions name="" incoming="//@arcs.4" outgoing="//@arcs.13"/>
+  <transitions name="" incoming="//@arcs.1" outgoing="//@arcs.10"/>
+  <arcs xsi:type="PlaceToTransArc" weight="1" source="//@places.5" target="//@transitions.4"/>
+  <arcs xsi:type="PlaceToTransArc" weight="1" source="//@places.3" target="//@transitions.8"/>
+  <arcs xsi:type="PlaceToTransArc" weight="1" source="//@places.5" target="//@transitions.2"/>
+  <arcs xsi:type="PlaceToTransArc" weight="1" source="//@places.4" target="//@transitions.0"/>
+  <arcs xsi:type="PlaceToTransArc" weight="1" source="//@places.3" target="//@transitions.7"/>
+  <arcs xsi:type="PlaceToTransArc" weight="1" source="//@places.1" target="//@transitions.5"/>
+  <arcs xsi:type="PlaceToTransArc" weight="1" source="//@places.0" target="//@transitions.3"/>
+  <arcs xsi:type="PlaceToTransArc" weight="1" source="//@places.0" target="//@transitions.6"/>
+  <arcs xsi:type="PlaceToTransArc" weight="1" source="//@places.2" target="//@transitions.1"/>
+  <arcs xsi:type="TransToPlaceArc" weight="1" source="//@transitions.4" target="//@places.1"/>
+  <arcs xsi:type="TransToPlaceArc" weight="1" source="//@transitions.8" target="//@places.2"/>
+  <arcs xsi:type="TransToPlaceArc" weight="1" source="//@transitions.2" target="//@places.0"/>
+  <arcs xsi:type="TransToPlaceArc" weight="1" source="//@transitions.0" target="//@places.5"/>
+  <arcs xsi:type="TransToPlaceArc" weight="1" source="//@transitions.7" target="//@places.2"/>
+  <arcs xsi:type="TransToPlaceArc" weight="1" source="//@transitions.5" target="//@places.3"/>
+  <arcs xsi:type="TransToPlaceArc" weight="1" source="//@transitions.3" target="//@places.0"/>
+  <arcs xsi:type="TransToPlaceArc" weight="1" source="//@transitions.6" target="//@places.3"/>
+  <arcs xsi:type="TransToPlaceArc" weight="1" source="//@transitions.1" target="//@places.6"/>
+</PetriNet>

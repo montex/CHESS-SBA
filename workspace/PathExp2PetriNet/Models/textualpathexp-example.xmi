@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<TextualPathExp xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="TextualPathExp">
+  <path>
+    <transitions xsi:type="PrimitiveTrans" isMultiple="false" name="f"/>
+    <transitions xsi:type="AlternativeTrans" isMultiple="false">
+      <altPaths>
+        <transitions xsi:type="PrimitiveTrans" isMultiple="false" name="g"/>
+        <transitions xsi:type="PrimitiveTrans" isMultiple="false" name="h"/>
+      </altPaths>
+      <altPaths>
+        <transitions xsi:type="PrimitiveTrans" isMultiple="false" name="k"/>
+        <transitions xsi:type="PrimitiveTrans" isMultiple="true" name="m"/>
+        <transitions xsi:type="PrimitiveTrans" isMultiple="false" name="n"/>
+      </altPaths>
+    </transitions>
+    <transitions xsi:type="AlternativeTrans" isMultiple="false">
+      <altPaths>
+        <transitions xsi:type="PrimitiveTrans" isMultiple="false" name="p"/>
+      </altPaths>
+      <altPaths>
+        <transitions xsi:type="PrimitiveTrans" isMultiple="false" name="q"/>
+      </altPaths>
+    </transitions>
+    <transitions xsi:type="PrimitiveTrans" isMultiple="false" name="s"/>
+  </path>
+</TextualPathExp>

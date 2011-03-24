@@ -1,0 +1,12 @@
+source.. = src/
+output.. = bin/
+bin.includes = plugin.xml,\
+               META-INF/,\
+               .,\
+               bin/,\
+               build.properties,\
+               resources/,\
+               readme.txt,\
+               schema/
+src.includes = schema/,\
+               readme.txt

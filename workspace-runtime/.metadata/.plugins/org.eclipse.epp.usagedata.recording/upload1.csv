@@ -1,0 +1,276 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.eclipse.papyrus.collaborationuse.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.collaborationuse.editor.xtext",1300705187145
+started,bundle,org.eclipse.xtext.ui,1.0.2.v201102150722,"org.eclipse.xtext.ui",1300705187185
+started,bundle,org.eclipse.xtext.builder,1.0.2.v201102150722,"org.eclipse.xtext.builder",1300705187499
+started,bundle,org.eclipse.xtext.ui.shared,1.0.2.v201102150722,"org.eclipse.xtext.ui.shared",1300705188058
+started,bundle,org.eclipse.papyrus.common.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.common.editor.xtext",1300705188121
+started,bundle,org.eclipse.papyrus.common.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.common.editor.xtext.ui",1300705189515
+started,bundle,org.eclipse.papyrus.collaborationuse.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.collaborationuse.editor.xtext.ui",1300705189758
+started,bundle,org.eclipse.papyrus.connectionpointreference.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.connectionpointreference.editor.xtext",1300705189800
+started,bundle,org.eclipse.papyrus.connectionpointreference.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.connectionpointreference.editor.xtext.ui",1300705190092
+started,bundle,org.eclipse.papyrus.message.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.message.editor.xtext",1300705190128
+started,bundle,org.eclipse.papyrus.message.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.message.editor.xtext.ui",1300705190288
+started,bundle,org.eclipse.papyrus.parameter.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.parameter.editor.xtext",1300705190303
+started,bundle,org.eclipse.papyrus.parameter.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.parameter.editor.xtext.ui",1300705190465
+started,bundle,org.eclipse.papyrus.parsers,0.7.2.v201101191114,"org.eclipse.papyrus.parsers",1300705190470
+started,bundle,org.eclipse.papyrus.property.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.property.editor.xtext",1300705190489
+started,bundle,org.eclipse.papyrus.property.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.property.editor.xtext.ui",1300705190694
+started,bundle,org.eclipse.papyrus.state.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.state.editor.xtext",1300705190722
+started,bundle,org.eclipse.papyrus.state.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.state.editor.xtext.ui",1300705190914
+started,bundle,org.eclipse.papyrus.transition.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.transition.editor.xtext",1300705190931
+started,bundle,org.eclipse.papyrus.transition.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.transition.editor.xtext.ui",1300705191153
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1300705194613
+started,bundle,org.eclipse.gmf.runtime.emf.clipboard.core,1.4.0.v20100430-1518,"org.eclipse.gmf.runtime.emf.clipboard.core",1300705196424
+activated,view,org.eclipse.papyrus.modelexplorer,0.7.2.v201101191114,"org.eclipse.papyrus.modelexplorer.modelexplorer",1300705202702
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705208247
+error,log,,,"Uncaught exception during pre-commit trigger processing",1300705209191
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705209224
+started,bundle,org.eclipse.papyrus.ui.toolbox,0.7.2.v201101191114,"org.eclipse.papyrus.ui.toolbox",1300705226071
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705241611
+activated,editor,it.unipd.chess.editor,0.9.0.qualifier,"it.unipd.chess.editor",1300705241908
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705242218
+activated,view,org.eclipse.papyrus.modelexplorer,0.7.2.v201101191114,"org.eclipse.papyrus.modelexplorer.modelexplorer",1300705243519
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1300705250674
+activated,editor,it.unipd.chess.editor,0.9.0.qualifier,"it.unipd.chess.editor",1300705251468
+closed,editor,it.unipd.chess.editor,0.9.0.qualifier,"it.unipd.chess.editor",1300705251543
+activated,view,org.eclipse.papyrus.modelexplorer,0.7.2.v201101191114,"org.eclipse.papyrus.modelexplorer.modelexplorer",1300705256238
+started,bundle,org.eclipse.papyrus.profile,0.7.2.v201101191114,"org.eclipse.papyrus.profile",1300705258871
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705259086
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705260409
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705280961
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705285894
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705291853
+activated,editor,it.unipd.chess.editor,0.9.0.qualifier,"it.unipd.chess.editor",1300705294775
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705294899
+executed,command,org.eclipse.ui,3.6.2.M20110203-1100,"org.eclipse.ui.file.save",1300705296903
+activated,view,org.eclipse.papyrus.modelexplorer,0.7.2.v201101191114,"org.eclipse.papyrus.modelexplorer.modelexplorer",1300705298358
+error,log,,,"Received wrong transfer data. ",1300705299514
+error,log,,,"Received wrong transfer data. ",1300705299518
+error,log,,,"Received wrong transfer data. ",1300705299520
+error,log,,,"Received wrong transfer data. ",1300705299523
+error,log,,,"Received wrong transfer data. ",1300705299525
+error,log,,,"Received wrong transfer data. ",1300705299526
+error,log,,,"Received wrong transfer data. ",1300705299533
+error,log,,,"Received wrong transfer data. ",1300705299534
+error,log,,,"Received wrong transfer data. ",1300705299543
+error,log,,,"Received wrong transfer data. ",1300705299545
+error,log,,,"Received wrong transfer data. ",1300705299553
+error,log,,,"Received wrong transfer data. ",1300705299555
+error,log,,,"Received wrong transfer data. ",1300705299558
+error,log,,,"Received wrong transfer data. ",1300705299560
+error,log,,,"Received wrong transfer data. ",1300705299568
+error,log,,,"Received wrong transfer data. ",1300705299570
+error,log,,,"Received wrong transfer data. ",1300705299574
+error,log,,,"Received wrong transfer data. ",1300705299577
+error,log,,,"Received wrong transfer data. ",1300705299583
+error,log,,,"Received wrong transfer data. ",1300705299586
+error,log,,,"Received wrong transfer data. ",1300705299590
+error,log,,,"Received wrong transfer data. ",1300705299594
+error,log,,,"Received wrong transfer data. ",1300705299602
+error,log,,,"Received wrong transfer data. ",1300705299606
+error,log,,,"Received wrong transfer data. ",1300705299610
+error,log,,,"Received wrong transfer data. ",1300705299613
+error,log,,,"Received wrong transfer data. ",1300705299618
+error,log,,,"Received wrong transfer data. ",1300705299632
+error,log,,,"Received wrong transfer data. ",1300705299635
+error,log,,,"Received wrong transfer data. ",1300705299637
+error,log,,,"Received wrong transfer data. ",1300705299640
+error,log,,,"Received wrong transfer data. ",1300705299652
+error,log,,,"Received wrong transfer data. ",1300705299654
+error,log,,,"Received wrong transfer data. ",1300705299656
+error,log,,,"Received wrong transfer data. ",1300705299661
+error,log,,,"Received wrong transfer data. ",1300705299663
+error,log,,,"Received wrong transfer data. ",1300705299669
+error,log,,,"Received wrong transfer data. ",1300705299670
+error,log,,,"Received wrong transfer data. ",1300705299677
+error,log,,,"Received wrong transfer data. ",1300705299678
+error,log,,,"Received wrong transfer data. ",1300705299686
+error,log,,,"Received wrong transfer data. ",1300705299689
+error,log,,,"Received wrong transfer data. ",1300705299694
+error,log,,,"Received wrong transfer data. ",1300705299696
+error,log,,,"Received wrong transfer data. ",1300705299704
+error,log,,,"Received wrong transfer data. ",1300705299707
+error,log,,,"Received wrong transfer data. ",1300705299710
+error,log,,,"Received wrong transfer data. ",1300705299712
+error,log,,,"Received wrong transfer data. ",1300705299721
+error,log,,,"Received wrong transfer data. ",1300705299726
+error,log,,,"Received wrong transfer data. ",1300705299735
+error,log,,,"Received wrong transfer data. ",1300705299742
+error,log,,,"Received wrong transfer data. ",1300705299744
+error,log,,,"Received wrong transfer data. ",1300705299745
+error,log,,,"Received wrong transfer data. ",1300705299750
+error,log,,,"Received wrong transfer data. ",1300705299751
+error,log,,,"Received wrong transfer data. ",1300705299757
+error,log,,,"Received wrong transfer data. ",1300705299758
+error,log,,,"Received wrong transfer data. ",1300705299767
+error,log,,,"Received wrong transfer data. ",1300705299769
+error,log,,,"Received wrong transfer data. ",1300705299775
+error,log,,,"Received wrong transfer data. ",1300705299777
+error,log,,,"Received wrong transfer data. ",1300705299785
+error,log,,,"Received wrong transfer data. ",1300705299796
+error,log,,,"Received wrong transfer data. ",1300705299810
+error,log,,,"Received wrong transfer data. ",1300705299811
+error,log,,,"Received wrong transfer data. ",1300705299813
+error,log,,,"Received wrong transfer data. ",1300705299814
+error,log,,,"Received wrong transfer data. ",1300705299863
+error,log,,,"Received wrong transfer data. ",1300705299866
+error,log,,,"Received wrong transfer data. ",1300705299917
+error,log,,,"Received wrong transfer data. ",1300705299918
+error,log,,,"Received wrong transfer data. ",1300705299966
+error,log,,,"Received wrong transfer data. ",1300705299967
+error,log,,,"Received wrong transfer data. ",1300705299982
+error,log,,,"Received wrong transfer data. ",1300705299984
+error,log,,,"Received wrong transfer data. ",1300705300009
+error,log,,,"Received wrong transfer data. ",1300705300011
+error,log,,,"Received wrong transfer data. ",1300705300014
+error,log,,,"Received wrong transfer data. ",1300705300016
+error,log,,,"Received wrong transfer data. ",1300705300034
+error,log,,,"Received wrong transfer data. ",1300705300036
+error,log,,,"Received wrong transfer data. ",1300705300041
+error,log,,,"Received wrong transfer data. ",1300705300048
+error,log,,,"Received wrong transfer data. ",1300705300051
+error,log,,,"Received wrong transfer data. ",1300705300053
+error,log,,,"Received wrong transfer data. ",1300705300068
+error,log,,,"Received wrong transfer data. ",1300705300085
+error,log,,,"Received wrong transfer data. ",1300705300094
+error,log,,,"Received wrong transfer data. ",1300705300097
+error,log,,,"Received wrong transfer data. ",1300705300103
+error,log,,,"Received wrong transfer data. ",1300705300106
+error,log,,,"Received wrong transfer data. ",1300705300143
+error,log,,,"Received wrong transfer data. ",1300705300145
+error,log,,,"Received wrong transfer data. ",1300705300146
+activated,editor,it.unipd.chess.editor,0.9.0.qualifier,"it.unipd.chess.editor",1300705300925
+started,bundle,org.eclipse.papyrus.properties.tabbed.core,0.7.2.v201101191114,"org.eclipse.papyrus.properties.tabbed.core",1300705308628
+started,bundle,org.eclipse.papyrus.tabbedproperties.core,0.7.2.v201101191114,"org.eclipse.papyrus.tabbedproperties.core",1300705308638
+started,bundle,org.eclipse.papyrus.properties.runtime,0.7.2.v201101191114,"org.eclipse.papyrus.properties.runtime",1300705308707
+error,log,,,"Ignoring provider org.eclipse.papyrus.properties.tabbed.core.view.XMLPropertyTabViewProvider since it threw an exception or error in the provides() method",1300705309114
+started,bundle,org.eclipse.papyrus.properties.tabbed.profile,0.7.2.v201101191114,"org.eclipse.papyrus.properties.tabbed.profile",1300705309146
+started,bundle,org.eclipse.gmf.runtime.common.ui.services.properties,1.3.0.v20100115-2350,"org.eclipse.gmf.runtime.common.ui.services.properties",1300705309189
+started,bundle,org.eclipse.gmf.runtime.diagram.ui.properties,1.4.0.v20100430-1518,"org.eclipse.gmf.runtime.diagram.ui.properties",1300705309201
+started,bundle,org.eclipse.papyrus.tabbedproperties.appearance,0.7.2.v201101191114,"org.eclipse.papyrus.tabbedproperties.appearance",1300705309214
+started,bundle,org.eclipse.papyrus.diagram.common.groups,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.common.groups",1300705309239
+started,bundle,it.unipd.chess.tabbedproperties,0.0.1.qualifier,"it.unipd.chess.tabbedproperties",1300705309345
+error,log,,,"Ignoring provider org.eclipse.papyrus.properties.runtime.controller.predefined.PredefinedPropertyControllerProvider since it threw an exception or error in the provides() method",1300705309474
+started,bundle,org.eclipse.papyrus.properties.runtime.uml,0.7.2.v201101191114,"org.eclipse.papyrus.properties.runtime.uml",1300705309522
+opened,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1300705310164
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1300705310365
+started,bundle,org.eclipse.gmf.runtime.emf.ui.properties,1.4.0.v20100304-2359,"org.eclipse.gmf.runtime.emf.ui.properties",1300705314335
+activated,editor,it.unipd.chess.editor,0.9.0.qualifier,"it.unipd.chess.editor",1300705321700
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1300705326088
+activated,editor,it.unipd.chess.editor,0.9.0.qualifier,"it.unipd.chess.editor",1300705326899
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.PropertySheet",1300705340779
+activated,view,org.eclipse.papyrus.modelexplorer,0.7.2.v201101191114,"org.eclipse.papyrus.modelexplorer.modelexplorer",1300705342424
+activated,view,org.eclipse.ui.views,3.5.1.M20110202-0800,"org.eclipse.ui.views.ContentOutline",1300705343499
+activated,view,org.eclipse.papyrus.modelexplorer,0.7.2.v201101191114,"org.eclipse.papyrus.modelexplorer.modelexplorer",1300705343967
+executed,command,org.eclipse.papyrus.uml.modelexplorer,0.7.2.v201101191114,"org.eclipse.papyrus.uml.modelexplorer.StateMachineCreateCommand",1300705376338
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705385053
+activated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705386641
+deactivated,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705386837
+closed,workbench,org.eclipse.ui.workbench,3.6.2.M20110210-1200,"",1300705390086
+stopped,bundle,com.cea.papyrus.extensionpoints.dnd,1.12.3.200912231359,"com.cea.papyrus.extensionpoints.dnd",1300705392338
+stopped,bundle,com.cea.papyrus.extensionpoints.editors,1.12.3.200912231359,"com.cea.papyrus.extensionpoints.editors",1300705392339
+stopped,bundle,com.cea.papyrus.extensionpoints.lang,1.12.3.200912231359,"com.cea.papyrus.extensionpoints.lang",1300705392339
+stopped,bundle,com.cea.papyrus.extensionpoints.transformation,1.12.3.200912231359,"com.cea.papyrus.extensionpoints.transformation",1300705392339
+stopped,bundle,com.cea.papyrus.extensionpoints.uml2,1.12.3.200912231359,"com.cea.papyrus.extensionpoints.uml2",1300705392339
+stopped,bundle,org.eclipse.papyrus.collaborationuse.editor.xtext.generator,0.7.2.v201101191114,"org.eclipse.papyrus.collaborationuse.editor.xtext.generator",1300705392340
+stopped,bundle,org.eclipse.papyrus.collaborationuse.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.collaborationuse.editor.xtext.ui",1300705392342
+stopped,bundle,org.eclipse.papyrus.collaborationuse.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.collaborationuse.editor.xtext",1300705392343
+stopped,bundle,org.eclipse.papyrus.common.editor.xtext.generator,0.7.2.v201101191114,"org.eclipse.papyrus.common.editor.xtext.generator",1300705392344
+stopped,bundle,org.eclipse.papyrus.parameter.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.parameter.editor.xtext.ui",1300705392374
+stopped,bundle,org.eclipse.papyrus.common.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.common.editor.xtext.ui",1300705392375
+stopped,bundle,org.eclipse.papyrus.parameter.editor.xtext.generator,0.7.2.v201101191114,"org.eclipse.papyrus.parameter.editor.xtext.generator",1300705392375
+stopped,bundle,org.eclipse.papyrus.parameter.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.parameter.editor.xtext",1300705392375
+stopped,bundle,org.eclipse.papyrus.common.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.common.editor.xtext",1300705392375
+stopped,bundle,org.eclipse.papyrus.connectionpointreference.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.connectionpointreference.editor.xtext.ui",1300705392375
+stopped,bundle,org.eclipse.papyrus.connectionpointreference.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.connectionpointreference.editor.xtext",1300705392375
+stopped,bundle,org.eclipse.papyrus.message.editor.xtext.generator,0.7.2.v201101191114,"org.eclipse.papyrus.message.editor.xtext.generator",1300705392378
+stopped,bundle,org.eclipse.papyrus.message.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.message.editor.xtext.ui",1300705392378
+stopped,bundle,org.eclipse.papyrus.message.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.message.editor.xtext",1300705392378
+stopped,bundle,org.eclipse.papyrus.property.editor.xtext.generator,0.7.2.v201101191114,"org.eclipse.papyrus.property.editor.xtext.generator",1300705392378
+stopped,bundle,org.eclipse.papyrus.property.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.property.editor.xtext.ui",1300705392378
+stopped,bundle,org.eclipse.papyrus.property.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.property.editor.xtext",1300705392378
+stopped,bundle,org.eclipse.papyrus.state.editor.xtext.generator,0.7.2.v201101191114,"org.eclipse.papyrus.state.editor.xtext.generator",1300705392379
+stopped,bundle,org.eclipse.papyrus.state.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.state.editor.xtext.ui",1300705392379
+stopped,bundle,org.eclipse.papyrus.state.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.state.editor.xtext",1300705392379
+stopped,bundle,org.eclipse.papyrus.transition.editor.xtext.generator,0.7.2.v201101191114,"org.eclipse.papyrus.transition.editor.xtext.generator",1300705392379
+stopped,bundle,org.eclipse.papyrus.transition.editor.xtext.ui,0.7.2.v201101191114,"org.eclipse.papyrus.transition.editor.xtext.ui",1300705392379
+stopped,bundle,org.eclipse.papyrus.transition.editor.xtext,0.7.2.v201101191114,"org.eclipse.papyrus.transition.editor.xtext",1300705392379
+stopped,bundle,org.eclipse.papyrus.marte.vsl.ui,0.7.2.v201101192155,"org.eclipse.papyrus.marte.vsl.ui",1300705392379
+stopped,bundle,org.eclipse.papyrus.marte.vsl,0.7.2.v201101192155,"org.eclipse.papyrus.marte.vsl",1300705392379
+stopped,bundle,org.eclipse.xtext.xbase.ui,1.0.2.v201102150722,"org.eclipse.xtext.xbase.ui",1300705392379
+stopped,bundle,org.eclipse.xtext.xbase,1.0.2.v201102150722,"org.eclipse.xtext.xbase",1300705392379
+stopped,bundle,org.eclipse.xtext.xtext.ui,1.0.2.v201102150722,"org.eclipse.xtext.xtext.ui",1300705392380
+stopped,bundle,org.eclipse.emf.mwe2.language.ui,1.0.1.v201008251317,"org.eclipse.emf.mwe2.language.ui",1300705392380
+stopped,bundle,org.eclipse.emf.mwe2.language,1.0.1.v201008251317,"org.eclipse.emf.mwe2.language",1300705392380
+stopped,bundle,org.eclipse.ocl.examples.xtext.completeocl.ui,3.0.1.R30x_v201008251030,"org.eclipse.ocl.examples.xtext.completeocl.ui",1300705392380
+stopped,bundle,org.eclipse.ocl.examples.xtext.oclinecore.ui,3.0.1.R30x_v201008251030,"org.eclipse.ocl.examples.xtext.oclinecore.ui",1300705392380
+stopped,bundle,org.eclipse.ocl.examples.xtext.essentialocl.ui,3.0.1.R30x_v201008251030,"org.eclipse.ocl.examples.xtext.essentialocl.ui",1300705392383
+stopped,bundle,org.eclipse.ocl.examples.xtext.oclstdlib.ui,3.0.1.R30x_v201008251030,"org.eclipse.ocl.examples.xtext.oclstdlib.ui",1300705392384
+stopped,bundle,org.eclipse.ocl.examples.xtext.completeocl,3.0.1.R30x_v201008251030,"org.eclipse.ocl.examples.xtext.completeocl",1300705392384
+stopped,bundle,org.eclipse.ocl.examples.xtext.oclinecore,3.0.2.R30x_v201101110610,"org.eclipse.ocl.examples.xtext.oclinecore",1300705392384
+stopped,bundle,org.eclipse.ocl.examples.xtext.essentialocl,3.0.2.R30x_v201101110610,"org.eclipse.ocl.examples.xtext.essentialocl",1300705392384
+stopped,bundle,org.eclipse.ocl.examples.xtext.oclstdlib,3.0.1.R30x_v201008251030,"org.eclipse.ocl.examples.xtext.oclstdlib",1300705392384
+stopped,bundle,org.eclipse.ocl.examples.xtext.base,3.0.1.R30x_v201008251030,"org.eclipse.ocl.examples.xtext.base",1300705392384
+stopped,bundle,org.eclipse.xtext.gmf.glue,0.7.2.v201101191114,"org.eclipse.xtext.gmf.glue",1300705392384
+stopped,bundle,org.eclipse.xtext.xtend,1.0.1.v201008251220,"org.eclipse.xtext.xtend",1300705392384
+stopped,bundle,org.eclipse.xtext.common.types.ui,1.0.2.v201102150722,"org.eclipse.xtext.common.types.ui",1300705392384
+stopped,bundle,org.eclipse.xtext.ui.ecore,1.0.2.v201102150722,"org.eclipse.xtext.ui.ecore",1300705392385
+stopped,bundle,org.eclipse.xtext.ui.shared,1.0.2.v201102150722,"org.eclipse.xtext.ui.shared",1300705392385
+stopped,bundle,org.eclipse.xtext.builder,1.0.2.v201102150722,"org.eclipse.xtext.builder",1300705392385
+stopped,bundle,org.eclipse.xtext.ui.junit,1.0.1.v201008251220,"org.eclipse.xtext.ui.junit",1300705392385
+stopped,bundle,org.eclipse.xtext.ui.junit,1.0.2.v201102150722,"org.eclipse.xtext.ui.junit",1300705392385
+stopped,bundle,org.eclipse.xtext.generator,1.0.2.v201102150722,"org.eclipse.xtext.generator",1300705392385
+stopped,bundle,org.eclipse.xtext.common.types,1.0.2.v201102150722,"org.eclipse.xtext.common.types",1300705392385
+stopped,bundle,org.eclipse.xtext.ecore,1.0.2.v201102150722,"org.eclipse.xtext.ecore",1300705392386
+stopped,bundle,org.eclipse.xtext.ui,1.0.2.v201102150722,"org.eclipse.xtext.ui",1300705392386
+stopped,bundle,org.eclipse.xtext.xtend,1.0.2.v201102150722,"org.eclipse.xtext.xtend",1300705392386
+stopped,bundle,org.eclipse.xtext,1.0.2.v201102150722,"org.eclipse.xtext",1300705392386
+stopped,bundle,org.eclipse.mylyn.ide.ant,3.4.0.v20100608-0100-e3x,"org.eclipse.mylyn.ide.ant",1300705392386
+stopped,bundle,org.eclipse.gmf.codegen.ui,1.1.200.v20100302-2359,"org.eclipse.gmf.codegen.ui",1300705392386
+stopped,bundle,org.eclipse.mylyn.pde.ui,3.4.0.v20100608-0100-e3x,"org.eclipse.mylyn.pde.ui",1300705392386
+stopped,bundle,it.unipd.chess.newmodelwizard,0.5.0.qualifier,"it.unipd.chess.newmodelwizard",1300705392386
+stopped,bundle,it.unipd.chess.validator,0.5.0.qualifier,"it.unipd.chess.validator",1300705392386
+stopped,bundle,it.unipd.chess.validator.livebatch,0.1.0.qualifier,"it.unipd.chess.validator.livebatch",1300705392386
+stopped,bundle,org.chess.commands,0.0.1.qualifier,"org.chess.commands",1300705392386
+stopped,bundle,it.unipd.chess.editor,0.9.0.qualifier,"it.unipd.chess.editor",1300705392386
+stopped,bundle,org.eclipse.papyrus.diagram.activity,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.activity",1300705392387
+stopped,bundle,org.eclipse.papyrus.tests,0.7.2.v201101191114,"org.eclipse.papyrus.tests",1300705392387
+stopped,bundle,org.eclipse.papyrus.diagram.clazz.test,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.clazz.test",1300705392387
+stopped,bundle,org.eclipse.papyrus.sysml.diagram.blockdefinition,0.7.2.v201101191114,"org.eclipse.papyrus.sysml.diagram.blockdefinition",1300705392387
+stopped,bundle,org.eclipse.papyrus.sysml.diagram.requirement,0.7.2.v201101191114,"org.eclipse.papyrus.sysml.diagram.requirement",1300705392387
+stopped,bundle,org.eclipse.papyrus.uml.diagram.pkg,0.7.2.v201101191114,"org.eclipse.papyrus.uml.diagram.pkg",1300705392387
+stopped,bundle,it.unipd.chess,0.9.0.qualifier,"it.unipd.chess",1300705392387
+stopped,bundle,org.eclipse.papyrus.diagram.clazz,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.clazz",1300705392390
+stopped,bundle,org.eclipse.papyrus.diagram.common.groups,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.common.groups",1300705392390
+stopped,bundle,org.eclipse.papyrus.diagram.communication,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.communication",1300705392390
+stopped,bundle,org.eclipse.papyrus.sysml.diagram.internalblock,0.7.2.v201101191114,"org.eclipse.papyrus.sysml.diagram.internalblock",1300705392390
+stopped,bundle,org.eclipse.papyrus.diagram.composite,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.composite",1300705392390
+stopped,bundle,org.eclipse.papyrus.diagram.menu,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.menu",1300705392390
+stopped,bundle,org.eclipse.papyrus.diagram.profile,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.profile",1300705392390
+stopped,bundle,org.eclipse.papyrus.diagram.sequence,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.sequence",1300705392390
+stopped,bundle,org.eclipse.papyrus.diagram.statemachine,1.0.0.v201101191114,"org.eclipse.papyrus.diagram.statemachine",1300705392390
+stopped,bundle,org.eclipse.papyrus.diagram.usecase,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.usecase",1300705392390
+stopped,bundle,org.eclipse.papyrus.perspective,0.7.2.v201101191114,"org.eclipse.papyrus.perspective",1300705392390
+stopped,bundle,it.unipd.chess.tabbedproperties,0.0.1.qualifier,"it.unipd.chess.tabbedproperties",1300705392390
+stopped,bundle,org.eclipse.papyrus.profile,0.7.2.v201101191114,"org.eclipse.papyrus.profile",1300705392390
+stopped,bundle,org.eclipse.papyrus.properties.tabbed.profile,0.7.2.v201101191114,"org.eclipse.papyrus.properties.tabbed.profile",1300705392390
+stopped,bundle,org.eclipse.papyrus.properties.tabbed.sysml,0.7.2.v201101191114,"org.eclipse.papyrus.properties.tabbed.sysml",1300705392390
+stopped,bundle,org.eclipse.papyrus.sysml.diagram.common,0.7.2.v201101191114,"org.eclipse.papyrus.sysml.diagram.common",1300705392390
+stopped,bundle,org.eclipse.papyrus.sysml.diagram.parametric,0.7.2.v201101191114,"org.eclipse.papyrus.sysml.diagram.parametric",1300705392391
+stopped,bundle,org.eclipse.papyrus.sysml.modelexplorer,0.7.2.v201101191114,"org.eclipse.papyrus.sysml.modelexplorer",1300705392391
+stopped,bundle,org.eclipse.papyrus.tabbedproperties.appearance,0.7.2.v201101191114,"org.eclipse.papyrus.tabbedproperties.appearance",1300705392391
+stopped,bundle,org.eclipse.papyrus.uml.modelexplorer,0.7.2.v201101191114,"org.eclipse.papyrus.uml.modelexplorer",1300705392391
+stopped,bundle,org.eclipse.papyrus.uml.service.types,0.7.2.v201101191114,"org.eclipse.papyrus.uml.service.types",1300705392391
+stopped,bundle,org.eclipse.papyrus.marte.static.profile,0.7.2.v201101192155,"org.eclipse.papyrus.marte.static.profile",1300705392391
+stopped,bundle,org.chess.diagram.palette,0.0.1.qualifier,"org.chess.diagram.palette",1300705392392
+stopped,bundle,org.eclipse.papyrus.diagram.common,0.7.2.v201101191114,"org.eclipse.papyrus.diagram.common",1300705392392
+stopped,bundle,org.eclipse.pde.api.tools.ui,1.0.201.v20100820_r361,"org.eclipse.pde.api.tools.ui",1300705392392
+stopped,bundle,org.eclipse.pde.ds.ui,1.0.100.v20100601,"org.eclipse.pde.ds.ui",1300705392392
+stopped,bundle,org.eclipse.pde.runtime,3.4.200.v20100601,"org.eclipse.pde.runtime",1300705392392
+stopped,bundle,org.eclipse.pde.ua.ui,1.0.100.v20100504,"org.eclipse.pde.ua.ui",1300705392392
+stopped,bundle,org.eclipse.pde.ui.templates,3.4.200.v20100601,"org.eclipse.pde.ui.templates",1300705392392
+stopped,bundle,org.eclipse.m2m.qvt.oml.ui,2.1.0.v20091116-1630,"org.eclipse.m2m.qvt.oml.ui",1300705392392
+stopped,bundle,org.eclipse.m2m.qvt.oml.debug.ui,1.0.1.v20100917-1530,"org.eclipse.m2m.qvt.oml.debug.ui",1300705392395
+stopped,bundle,org.eclipse.pde.ui,3.6.1.v20110210_r362,"org.eclipse.pde.ui",1300705392408
+stopped,bundle,org.eclipse.ant.ui,3.5.0.v20100427,"org.eclipse.ant.ui",1300705392408
+stopped,bundle,org.eclipse.compare.core,3.5.100.I20100526-0800,"org.eclipse.compare.core",1300705392428

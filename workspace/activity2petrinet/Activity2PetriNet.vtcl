@@ -1,0 +1,258 @@
+namespace ad2petri;
+
+import uml.metamodel.uml;
+import petrinet.metamodel;
+
+machine Activity2PetriNet {
+	
+	// ENTRY POINT
+	
+	rule main() = call transform();	
+	
+	rule transform() = seq {
+		let Net = undef in 
+		forall Activity with apply transformActivity(Activity, Net) do 
+			try seq {
+				call checkTransformation(Activity);
+				println("*** UML Activity " + name(Activity) + " has been transformed into Petri-net " + fqn(Net));
+			}
+			else println("*** Cound not transform UML Activity: " + name(Activity));
+		println("--- Transformation terminated. ");			
+	}
+	
+	// TRANSFORM ACTIVITIES
+	
+	gtrule transformActivity(out Activity, out PetriNet) = {
+		precondition pattern unmappedActivity(Activity)	= {
+			'Activity'(Activity);
+			neg find activityMapping(Activity, NoPetriNet);
+		}
+		postcondition find activityMapping(Activity, PetriNet)
+		action {
+			move(PetriNet, petrinet.models);
+			call copyName(Activity, PetriNet);
+
+			call activityTransformationSequence(Activity, PetriNet);
+		}
+	}
+	
+	pattern activityMapping(Activity, PetriNet) = {
+		'Activity'(Activity);
+		net(PetriNet);
+		net.netTrace(Trace, PetriNet, Activity);
+	}
+		
+	// TRANSFORMATION SEQUENCE OF ACTIVITY ELEMENTS 
+	
+	rule activityTransformationSequence(in Activity, in PetriNet) = seq {
+		forall X in Activity with apply transformControlFlow(X, PetriNet) do 
+			println("Transformed ControlFlow " + fqn(X));
+		
+		forall X in Activity with apply transformInitialNode(X, PetriNet) do 
+			println("Transformed InitialNode " + fqn(X));
+		forall X in Activity with apply transformForkJoinFinalNode(X, PetriNet) do 
+			println("Transformed Fork/Join/FinalNode " + fqn(X));
+		forall X in Activity with apply transformExecutableNode(X, PetriNet) do 
+			println("Transformed ExecutableNode " + fqn(X));
+		//forall X in Activity with apply transformDecisionMergeNode(X, PetriNet) do 
+		//	println("Transformed Decision/MergeNode " + fqn(X));	
+	}
+	
+	// check whether anything remained that we could not transform
+	rule checkTransformation(in Activity) = 
+		let Error = 0 in seq {
+			forall X in Activity with find untransformedActivityNode(X) do seq {
+				println("ERROR - Could not transform activity node: " + fqn(X));
+				update Error = 1;
+			}
+			forall X in Activity with find untransformedActivityEdge(X) do seq {
+				println("ERROR - Could not transform activity edge: " + fqn(X));
+				update Error = 1;
+			}
+			if (Error > 0) fail;			
+		}
+	
+	pattern untransformedActivityNode(ActivityNode) = {
+		'ActivityNode'(ActivityNode);
+		neg find activityNodeTransitionMapping(ActivityNode, PetriTransition);
+	}
+	pattern untransformedActivityEdge(ActivityEdge) = {
+		'ActivityEdge'(ActivityEdge);
+		neg find activityEdgeMapping(ActivityEdge, PetriPlace);
+	}
+	pattern activityNodeTransitionMapping(ActivityNode, PetriTransition) = {
+		'ActivityNode'(ActivityNode);
+		transition(PetriTransition);
+		transition.transitionTrace(Trace, PetriTransition, ActivityNode);
+	}
+	pattern activityNodePlaceMapping(ActivityNode, PetriPlace) = {
+		'ActivityNode'(ActivityNode);
+		place(PetriPlace);
+		place.placeTraceNode(Trace, PetriPlace, ActivityNode);
+	}				
+	pattern activityEdgeMapping(ActivityEdge, PetriPlace) = {
+		'ActivityEdge'(ActivityEdge);
+		place(PetriPlace);
+		place.placeTraceEdge(Trace, PetriPlace, ActivityEdge);
+	}
+
+	// MISC. TRANSFORMATION HELPERS
+	
+	pattern placeOfNet(PetriPlace, PetriNet) = {
+		net(PetriNet);
+		place(PetriPlace);
+		net.places(Places, PetriNet, PetriPlace);
+	}
+	pattern transitionOfNet(PetriTransition, PetriNet) = {
+		net(PetriNet);
+		transition(PetriTransition);
+		net.transitions(Transitions, PetriNet, PetriTransition);
+	}		
+	pattern transitionPlaceArc(PetriTransition, PetriPlace) = {
+		transition(PetriTransition);
+		transition.inArc(InArc, PetriTransition, PetriPlace);
+		place(PetriPlace);	
+	} 
+	pattern placeTransitionArc(PetriPlace, PetriTransition) = {
+		transition(PetriTransition);
+		place.outArc(OutArc, PetriPlace, PetriTransition);
+		place(PetriPlace);	
+	} 
+	pattern placeMarked(PetriPlace, Token) = {
+		token(Token);
+		place(PetriPlace);
+		place.marking(Marking, PetriPlace, Token);
+	}
+	
+	pattern placeOfOutgoingEdge(ActivityNode, PetriPlace) = {
+			'ActivityNode'(ActivityNode);
+			'ActivityNode'.outgoing(OutGoing, ActivityNode, ActivityEdge);
+			'ActivityEdge'(ActivityEdge);
+			place.placeTraceEdge(Trace, PetriPlace, ActivityEdge);
+			place(PetriPlace);
+	}	
+	pattern placeOfIncomingEdge(ActivityNode, PetriPlace) = {
+			'ActivityNode'(ActivityNode);
+			'ActivityNode'.incoming(InComing, ActivityNode, ActivityEdge);
+			'ActivityEdge'(ActivityEdge);
+			place.placeTraceEdge(Trace, PetriPlace, ActivityEdge);
+			place(PetriPlace);
+	}	
+	
+	gtrule connectNodeToOutgoing(in ActivityNode, in PetriTransition, out EdgePlace) = {
+		precondition find placeOfOutgoingEdge(ActivityNode, EdgePlace)
+		postcondition find transitionPlaceArc(PetriTransition, EdgePlace)	
+	}	
+	gtrule connectNodeToIncoming(in ActivityNode, in PetriTransition, out EdgePlace) = {
+		precondition find placeOfIncomingEdge(ActivityNode, EdgePlace)
+		postcondition find placeTransitionArc(EdgePlace, PetriTransition)	
+	}	
+	rule copyName(in SrcUML, in TrgPetri) = 
+	let NameStr = undef, NameEdge = undef in seq {
+		rename(TrgPetri, name(SrcUML));
+		new (datatypes.'String'(NameStr) in TrgPetri);
+		new (namedElement.name(NameEdge, TrgPetri, NameStr)); 
+		setValue(NameStr, name(SrcUML));
+	}
+	
+	// TRANSFORM Control Flow
+	
+	gtrule transformControlFlow(out ControlFlow, in PetriNet) = {
+		precondition pattern unmappedControlFlow(ControlFlow) = {
+			'ControlFlow'(ControlFlow);
+			neg find activityEdgeMapping(ControlFlow, NoPetriPlace);
+		}
+		postcondition pattern mappedControlFlow(ControlFlow, PetriPlace, PetriNet) = {
+			'ControlFlow'(ControlFlow);
+			find activityEdgeMapping(ControlFlow, PetriPlace);
+			find placeOfNet(PetriPlace, PetriNet);
+		}
+		action {
+			call copyName(ControlFlow, PetriPlace);
+		}
+	}	
+	
+	
+	// TRANSFORM Executable Nodes
+
+	gtrule transformExecutableNode(out ActivityNode, in PetriNet) = {
+		precondition pattern unmappedExecutableNode(ActivityNode) = {
+			'ExecutableNode'(ActivityNode);
+			neg find activityNodeTransitionMapping(ActivityNode, NoPetriTransition);
+		}
+		postcondition pattern mappedExecutableNode(ActivityNode, PetriTransitionEnter, PetriPlaceDuring, PetriTransitionExit, PetriNet) = {
+			'ExecutableNode'(ActivityNode);
+			
+			find activityNodeTransitionMapping(ActivityNode, PetriTransitionEnter);
+			find transitionOfNet(PetriTransitionEnter, PetriNet);
+			
+			find transitionPlaceArc(PetriTransitionEnter, PetriPlaceDuring);
+			
+			find activityNodePlaceMapping(ActivityNode, PetriPlaceDuring);
+			find placeOfNet(PetriPlaceDuring, PetriNet);			
+			
+			find placeTransitionArc(PetriPlaceDuring, PetriTransitionExit);
+			
+			find activityNodeTransitionMapping(ActivityNode, PetriTransitionExit);
+			find transitionOfNet(PetriTransitionExit, PetriNet);
+	
+		}
+		action {
+			call copyName(ActivityNode, PetriPlaceDuring);
+			rename(PetriTransitionEnter, name(PetriPlaceDuring) + "Enter");
+			rename(PetriTransitionExit,  name(PetriPlaceDuring) + "Exit");
+			forall EdgePlace with apply connectNodeToIncoming(ActivityNode, PetriTransitionEnter, EdgePlace) do skip;
+			forall EdgePlace with apply connectNodeToOutgoing(ActivityNode, PetriTransitionExit, EdgePlace) do skip;
+			
+		}
+	}		
+	
+	
+	// TRANSFORM Initial/Final Nodes
+		
+	gtrule transformInitialNode(out ActivityNode, in PetriNet) = {
+		precondition pattern unmappedInitialNode(ActivityNode) = {
+			'InitialNode'(ActivityNode);
+			neg find activityNodeTransitionMapping(ActivityNode, NoPetriTransition);
+		}
+		postcondition pattern mappedInitialNode(ActivityNode, PetriPlace, PetriTransition, PetriNet) = {
+			'InitialNode'(ActivityNode);
+			
+			find activityNodePlaceMapping(ActivityNode, PetriPlace);
+			find placeOfNet(PetriPlace, PetriNet);			
+			find placeMarked(PetriPlace, Token);
+			
+			find placeTransitionArc(PetriPlace, PetriTransition);
+			
+			find activityNodeTransitionMapping(ActivityNode, PetriTransition);
+			find transitionOfNet(PetriTransition, PetriNet);
+			
+			
+		}
+		action {
+			call copyName(ActivityNode, PetriTransition);			
+			rename(PetriPlace, name(PetriTransition)+"Activations");
+			forall EdgePlace with apply connectNodeToOutgoing(ActivityNode, PetriTransition, EdgePlace) do skip;
+		}
+	}		
+
+	// TRANSFORM Fork/Join/Final Nodes
+		
+	gtrule transformForkJoinFinalNode(out ActivityNode, in PetriNet) = {
+		precondition pattern unmappedForkJoinFinalNode(ActivityNode) = {
+			ad2petri.helpermetamodel.forkJoinFinalNode(ActivityNode);
+			neg find activityNodeTransitionMapping(ActivityNode, NoPetriTransition);
+		}
+		postcondition pattern mappedForkJoinFinalNode(ActivityNode, PetriTransition, PetriNet) = {
+			ad2petri.helpermetamodel.forkJoinFinalNode(ActivityNode);
+			find activityNodeTransitionMapping(ActivityNode, PetriTransition);
+			find transitionOfNet(PetriTransition, PetriNet);
+		}
+		action {
+			call copyName(ActivityNode, PetriTransition);
+			forall EdgePlace with apply connectNodeToOutgoing(ActivityNode, PetriTransition, EdgePlace) do skip;
+			forall EdgePlace with apply connectNodeToIncoming(ActivityNode, PetriTransition, EdgePlace) do skip;			
+		}
+	}
+
+}

@@ -1,0 +1,117 @@
+namespace petrinet;
+
+import petrinet.metamodel;
+
+
+@incremental
+machine petrinet2PNML{
+	
+// 'Transition' is a transition of the petri net 'PN'.
+	pattern petriTransition(PN, Transition) =
+	{
+		net(PN);
+		transition(Transition);
+		net.transitions(X, PN, Transition);
+	}
+	
+	pattern petriPlace(PN,Place) =
+	{	
+		net(PN);
+		place(Place);
+		net.places(X2, PN, Place);
+	}
+	
+	// 'Place' is a source place for transition 'Transition'.
+	pattern sourcePlace(Transition, Place, OutArc) =
+	{
+		net(PN);
+		transition(Transition);
+		net.transitions(X1, PN, Transition);
+		place(Place);
+		net.places(X2, PN, Place);
+		place.outArc(OutArc, Place, Transition);
+	}
+	
+	// 'Place' is a target place for transition 'Transition'.
+	pattern targetPlace(Transition, Place, InArc) =
+	{
+		net(PN);
+		transition(Transition);
+		net.transitions(X1, PN, Transition);
+		place(Place);
+		net.places(X2, PN, Place);
+		transition.inArc(InArc, Transition, Place);
+	}
+
+	// 'Place' contains a token 'Token' linked to it
+	pattern placeWithToken(Place, Token) =
+	{
+		place(Place);
+		token(Token) in Place;
+		place.marking(X, Place, Token);
+	}
+		
+	rule generatePlaces(in PN, in Buf) = seq {
+	
+		forall P below PN with find petriPlace(PN,P) do let TokenCounter = 0 in seq
+		{
+			forall Token below P with find placeWithToken(P,Token) do update TokenCounter = TokenCounter+1;
+		
+			println(Buf,"  <place id=\""+name(P)+"\">");
+	        println(Buf,"   <name>");
+	        println(Buf,"    <text>"+name(P)+"</text>");
+	        println(Buf,"   </name>");
+	        println(Buf,"   <initialMarking>");
+	        println(Buf,"    <text>"+ TokenCounter + "</text>");
+	        println(Buf,"   </initialMarking>");
+	        println(Buf,"  </place> ");
+		
+		}
+	}
+	
+	rule generateTransitions(in PN, in Buf) = seq {
+	
+		forall T below PN with find petriTransition(PN,T) do seq
+		{ 
+		
+			println(Buf,"  <transition id=\""+name(T)+"\">");
+	        println(Buf,"   <name>");
+	        println(Buf,"    <text>"+name(T)+"</text>");
+	        println(Buf,"   </name>");
+	        println(Buf,"   <priority> 1 </priority>");
+	        println(Buf,"  </transition> ");
+						
+		}
+	}
+	
+	rule generateArcs(in PN, in Buf) = seq {
+		forall T below PN, Place below PN, OutArc below PN with find sourcePlace(T, Place, OutArc) do
+			println(Buf,"  <arc id=\""+name(OutArc)+"\" source=\""+name(Place)+"\" target=\""+name(T)+"\" type=\"InputArc\"/>");
+			
+		forall T below PN, Place below PN, InArc below PN with find targetPlace(T, Place, InArc) do
+			println(Buf,"  <arc id=\""+name(InArc)+"\" source=\""+name(T)+"\" target=\""+name(Place)+"\" type=\"OutArc\"/>");	
+	}
+	
+	
+	rule main(in PetriNet) = 
+	let Net = ref(PetriNet) in 
+	let NetName = name(Net) in 
+	//let Buf = getBuffer("file://ViatraLabSession/activity2petrinet/pnml/" + NetName + ".pnml")
+	let URI = "core://" + NetName + ".pnml" in
+	let Buf = getBuffer(URI) in		
+	seq {
+		println(Buf,"<pnml>"); 
+	   	println(Buf," <net id=\"n0\" type=\"http://www.informatik.hu-berlin.de/top/pntd/ptNetb\">"); 
+				
+		call generatePlaces(Net, Buf);
+		call generateTransitions(Net, Buf); 
+		call generateArcs(Net, Buf); 
+		
+		println(Buf," </net>"); 
+	   	println(Buf,"</pnml>");
+	}
+	
+	
+		
+	
+}

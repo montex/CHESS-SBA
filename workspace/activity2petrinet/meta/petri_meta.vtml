@@ -1,0 +1,29 @@
+entity(petrinet) {
+	entity(metamodel) {
+		entity(namedElement){ 
+			relation(name, namedElement, datatypes.'String'); isAggregation(namedElement.name, true);	
+		}	
+		
+		entity(net){
+			 supertypeOf(namedElement, net);		
+		}
+		
+		entity(place){
+			supertypeOf(namedElement, place);
+			relation(places, net, place); isAggregation(net.places, true);	
+		}
+			
+		entity(transition){
+			supertypeOf(namedElement, transition);
+			relation(transitions, net, transition); isAggregation(net.transitions, true);		
+		}
+			
+		entity(token) {
+			relation(marking, place, token); isAggregation(place.marking, true);
+		}
+		
+		relation(inArc, transition, place);
+		relation(outArc, place, transition);
+	}	
+	entity(models);	
+}
