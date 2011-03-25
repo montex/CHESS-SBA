@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Meta-model for PNML specification -->
-<!-- Provided by www.pnml.org -->
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ptnet"
@@ -55,6 +53,7 @@
     <eLiterals name="COREMODEL" literal="http://www.pnml.org/version-2009/grammar/pnmlcoremodel"/>
     <eLiterals name="SYMNET" value="2" literal="http://www.pnml.org/version-2009/grammar/snnet"/>
     <eLiterals name="HLPN" value="3" literal="http://www.pnml.org/version-2009/grammar/highlevelnet"/>
+    <eLiterals name="GSPN" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Page" eSuperTypes="#//PnObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="objects" ordered="false"
@@ -332,5 +331,61 @@
   <eClassifiers xsi:type="ecore:EClass" name="AnyObject" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="containerToolInfo" eType="#//ToolInfo"
         changeable="false" eOpposite="#//ToolInfo/toolInfoModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GSPNTransition" eSuperTypes="#//Transition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Cases" upperBound="-1"
+        eType="#//Case" containment="true" eOpposite="#//Case/Transition"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="GSPNTransitionType">
+    <eLiterals name="immediate"/>
+    <eLiterals name="timed" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="GSPNArcType">
+    <eLiterals name="normal"/>
+    <eLiterals name="inhibitor" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GSPNArc" eSuperTypes="#//Arc">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//GSPNArcType"
+        defaultValueLiteral="normal"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GSPNImmediateTransition" eSuperTypes="#//GSPNTransition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Priority" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Probability" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble" defaultValueLiteral="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GSPNTimedTransition" eSuperTypes="#//GSPNTransition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Distribution" lowerBound="1"
+        eType="#//Distribution" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Case" eSuperTypes="#//Node">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Probability" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Transition" lowerBound="1"
+        eType="#//GSPNTransition" eOpposite="#//GSPNTransition/Cases"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Distribution" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Deterministic" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Exponential" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Rate" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Gaussian" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Mean" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Variance" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Uniform" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Lower" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Upper" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Gamma" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Alpha" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Beta" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Weibull" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Alpha" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Beta" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
 </ecore:EPackage>
