@@ -1,5 +1,5 @@
--- @path GSPN=/GSPN/model/placeTransition.ecore
--- @path IM2=/IntermediateModel v2/model/IM2.ecore
+-- @path GSPN=CHESSReviewDemo/metamodels/placeTransition.ecore
+-- @path IM2=CHESSReviewDemo/metamodels/IM2.ecore
 
 module im22pnml;
 
@@ -411,6 +411,7 @@ rule ComponentInternalFault {
 				id<-'internal_fault_'+componente.Name+'_'+fault.Name+'_from_occurrence_to_tmp_occurred_place',
 				source<-fault.Occurrence,
 				target<-tmp_occurred_place,
+				type<-#normal,
 				inscription<-from_occurrence_to_tmp_occurred_place_arc_annotation,
 				containerPage<-thisModule.getPage(sistema)
 		),
@@ -433,6 +434,7 @@ rule ComponentInternalFault {
 				id<-'internal_fault_'+componente.Name+'_'+fault.Name+'_from_tmp_occurred_place_to_permanent_fault',
 				source<-tmp_occurred_place,
 				target<-permanent_fault_case,
+				type<-#normal,
 				inscription<-from_tmp_occurred_place_to_permanent_fault_arc_annotation,
 				containerPage<-thisModule.getPage(sistema)
 		),
@@ -453,6 +455,7 @@ rule ComponentInternalFault {
 				id<-'internal_fault_'+componente.Name+'_'+fault.Name+'_from_tmp_occurred_place_to_transient_fault',
 				source<-tmp_occurred_place,
 				target<-transient_fault_case,
+				type<-#normal,
 				inscription<-from_tmp_occurred_place_to_transient_fault_arc_annotation,
 				containerPage<-thisModule.getPage(sistema)
 		),
@@ -466,6 +469,7 @@ rule ComponentInternalFault {
 				id<-'permanent_faultyPlace_'+componente.Name+'_'+fault.Name+'_to_tmp_faultyPlace',
 				source<-permanent_fault_case,
 				target<-faulty_place,
+				type<-#normal,
 				inscription <- transaction_to_permanent_fault_to_arc_annotation,
 				containerPage <- thisModule.getPage(sistema)
 		),
@@ -478,6 +482,7 @@ rule ComponentInternalFault {
 				id<-'transient_faultyPlace_'+componente.Name+'_'+fault.Name+'_to_tmp_faultyPlace',
 				source<-transient_fault_case,
 				target<-faulty_place,
+				type<-#normal,
 				inscription <- transaction_to_transient_fault_to_arc_annotation,
 				containerPage <- thisModule.getPage(sistema)
 		),
@@ -490,6 +495,7 @@ rule ComponentInternalFault {
 				id<-'transient_faultyPlace_'+componente.Name+'_'+fault.Name+'_to_numberOfFaults',
 				source<-transient_fault_case,
 				target<-numberOfTransientFault_place,
+				type<-#normal,
 				inscription <- transaction_to_transient_fault_to_numberOfFaults_arc_annotation,
 				containerPage <- thisModule.getPage(sistema)
 		),
@@ -504,6 +510,7 @@ transaction_remove_transient_fault_from_numberOfTransientFault_arc_annotation : 
 				id<-'remove_transient_fault_'+componente.Name+'_'+fault.Name+'_arc_from_numberOfTransientFault',
 				source<-numberOfTransientFault_place,
 				target<-fault.TransientDuration,
+				type<-#normal,
 				inscription <- transaction_remove_transient_fault_from_numberOfTransientFault_arc_annotation,
 				containerPage <- thisModule.getPage(sistema)
 		),
@@ -515,6 +522,7 @@ transaction_remove_transient_fault_from_numberOfTransientFault_arc_annotation : 
 				id<-'remove_transient_fault_'+componente.Name+'_'+fault.Name+'_arc_from_faulty',
 				source<-faulty_place,
 				target<-fault.TransientDuration,
+				type<-#normal,
 				inscription<-transaction_remove_transient_fault_from_faulty_arc_annotation,
 				containerPage <- thisModule.getPage(sistema)
 		)
@@ -571,6 +579,7 @@ rule ComponentExternalFault {
 				id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_from_failureModePlace_'+fault.Source.Name,
 				source<-fault.Source,
 				target<-transaction_to_fault,
+				type<-#normal,
 				inscription<-transaction_to_fault_from_failureMode_arc_annotation,
 				containerPage <- sistema
 		),
@@ -582,6 +591,7 @@ rule ComponentExternalFault {
 				id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_to_failureModePlace',
 				source<-transaction_to_fault,
 				target<-fault.Source,
+				type<-#normal,
 				inscription<-transaction_to_fault_to_failureMode_arc_annotation,
 				containerPage <- sistema
 		),
@@ -593,6 +603,7 @@ rule ComponentExternalFault {
 				id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_to_faultyPlace',
 				source<-transaction_to_fault,
 				target<-faulty_place,
+				type<-#normal,
 				inscription<-transaction_to_fault_to_faultyPlace_arc_annotation,
 				containerPage <- sistema
 		),
@@ -647,6 +658,7 @@ erroneus_place_markup : GSPN!PTMarking (
 			id<-'erroneusPlace_'+componente.Name+'_'+error.Name+'_to_vanishing_transition',
 			source<-erroneus_place,
 			target<-vanisishing_transition,
+			type<-#normal,
 			inscription<-vanishing_transition_from_arc_annotation,
 			containerPage <- sistema
 		),
@@ -787,6 +799,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T0_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T0,
+				type<-#normal,
 				inscription<-transaction_T0_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -798,6 +811,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T0_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T0,
+				type<-#normal,
 				inscription<-transaction_T0_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -821,6 +835,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T0_to_gate1_place_arc',
 				source<-transaction_T0,
 				target<-faultsExpressionNode.FaultsExpression1,
+				type<-#normal,
 				inscription<-transaction_T0_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -854,6 +869,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T1_to_logic_result_arc',
 				source<-transaction_T1,
 				target<-logicResult_place,
+				type<-#normal,
 				inscription<-transaction_T1_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -865,6 +881,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T1_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T1,
+				type<-#normal,
 				inscription<-transaction_T1_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -876,6 +893,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T1_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T1,
+				type<-#normal,
 				inscription<-transaction_T1_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -887,6 +905,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T1_to_gate1_place_arc',
 				source<-transaction_T1,
 				target<-faultsExpressionNode.FaultsExpression1,
+				type<-#normal,
 				inscription<-transaction_T1_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -898,6 +917,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T1_to_gate2_place_arc',
 				source<-transaction_T1,
 				target<-faultsExpressionNode.FaultsExpression2,
+				type<-#normal,
 				inscription<-transaction_T1_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -918,6 +938,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T2_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T2,
+				type<-#normal,
 				inscription<-transaction_T2_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -929,6 +950,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T2_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T2,
+				type<-#normal,
 				inscription<-transaction_T2_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -952,6 +974,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T2_to_gate2_place_arc',
 				source<-transaction_T2,
 				target<-faultsExpressionNode.FaultsExpression2,
+				type<-#normal,
 				inscription<-transaction_T2_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -971,6 +994,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_andnode_transaction_T3_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T3,
+				type<-#normal,
 				inscription<-transaction_T3_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1044,6 +1068,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T0_to_logic_result_arc',
 				source<-transaction_T0,
 				target<-logicResult_place,
+				type<-#normal,
 				inscription<-transaction_T0_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1055,6 +1080,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T0_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T0,
+				type<-#normal,
 				inscription<-transaction_T0_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1078,6 +1104,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T0_to_gate1_place_arc',
 				source<-transaction_T0,
 				target<-faultsExpressionNode.FaultsExpression1,
+				type<-#normal,
 				inscription<-transaction_T0_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1111,6 +1138,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T1_to_logic_result_arc',
 				source<-transaction_T1,
 				target<-logicResult_place,
+				type<-#normal,
 				inscription<-transaction_T1_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1122,6 +1150,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T1_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T1,
+				type<-#normal,
 				inscription<-transaction_T1_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1133,6 +1162,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T1_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T1,
+				type<-#normal,
 				inscription<-transaction_T1_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1144,6 +1174,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T1_to_gate1_place_arc',
 				source<-transaction_T1,
 				target<-faultsExpressionNode.FaultsExpression1,
+				type<-#normal,
 				inscription<-transaction_T1_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1155,6 +1186,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T1_to_gate2_place_arc',
 				source<-transaction_T1,
 				target<-faultsExpressionNode.FaultsExpression2,
+				type<-#normal,
 				inscription<-transaction_T1_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1188,6 +1220,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T2_to_logic_result_arc',
 				source<-transaction_T2,
 				target<-logicResult_place,
+				type<-#normal,
 				inscription<-transaction_T2_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1199,6 +1232,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T2_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T2,
+				type<-#normal,
 				inscription<-transaction_T2_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1222,6 +1256,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T2_to_gate2_place_arc',
 				source<-transaction_T2,
 				target<-faultsExpressionNode.FaultsExpression2,
+				type<-#normal,
 				inscription<-transaction_T2_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1241,6 +1276,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_ornode_transaction_T3_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T3,
+				type<-#normal,
 				inscription<-transaction_T3_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1314,6 +1350,7 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_notnode_transaction_T0_to_logic_result_arc',
 				source<-transaction_T0,
 				target<-logicResult_place,
+				type<-#normal,
 				inscription<-transaction_T0_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1345,6 +1382,7 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_notnode_transaction_T1_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T1,
+				type<-#normal,
 				inscription<-transaction_T1_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1356,6 +1394,7 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_notnode_transaction_T1_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultExpression,
 				target<-transaction_T1,
+				type<-#normal,
 				inscription<-transaction_T1_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1366,6 +1405,7 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 		transaction_T1_to_gate1_place_arc: GSPN!GSPNArc (
 				id<-'faults_notnode_transaction_T1_to_gate1_place_arc',
 				source<-transaction_T1,
+				type<-#normal,
 				target<-faultsExpressionNode.FaultExpression,
 				inscription<-transaction_T1_to_gate1_place_arc_annotation,
 				containerPage <- sistema
@@ -1404,6 +1444,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_fault_transaction_to_evidence_to_logic_result_arc',
 				source<-transaction_to_evidence,
 				target<-logicResult_place,
+				type<-#normal,
 				inscription<-transaction_to_evidence_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1415,6 +1456,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_fault_transaction_to_evidence_to_faulty_place_arc',
 				source<-transaction_to_evidence,
 				target<-fault,
+				type<-#normal,
 				inscription<-transaction_to_evidence_to_faulty_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1426,6 +1468,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_fault_transaction_to_evidence_from_faulty_place_arc',
 				source<-fault,
 				target<-transaction_to_evidence,
+				type<-#normal,
 				inscription<-transaction_to_evidence_from_faulty_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1457,6 +1500,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				id<-'faults_fault_transaction_remove_evidence_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_remove_evidence,
+				type<-#normal,
 				inscription<-transaction_remove_evidence_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1525,6 +1569,7 @@ abstract rule FaultsGeneratesError {
 				id<-'faults_generate_errors_from_activationDelay_to_tmp_activated_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				source<-faultsGeneratesError.ActivationDelay,
 				target<-tmp_activated_propagation_place,
+				type<-#normal,
 				inscription<-from_activationDelay_to_tmp_activated_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1539,6 +1584,7 @@ abstract rule FaultsGeneratesError {
 				id<-'faults_generate_errors_from_tmp_activated_to_propagation_case_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				source<-tmp_activated_propagation_place,
 				target<-propagation_case,
+				type<-#normal,
 				inscription<-from_tmp_activated_to_propagation_case_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1552,6 +1598,7 @@ abstract rule FaultsGeneratesError {
 				id<-'faults_generate_errors_from_tmp_activated_to_not_propagation_case_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				source<-tmp_activated_propagation_place,
 				target<-not_propagation_case,
+				type<-#normal,
 				inscription<-from_tmp_activated_to_not_propagation_case_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1593,6 +1640,7 @@ abstract rule FaultsGeneratesError {
 				id<-'transaction_weight_from_fault_propagation_logic_result_arc',
 				source<-faultPropagationResult_place,
 				target<-transaction_weight,
+				type<-#normal,
 				inscription<-transaction_weight_from_fault_propagation_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1604,6 +1652,7 @@ abstract rule FaultsGeneratesError {
 				id<-'transaction_weight_to_fault_propagation_logic_result_arc',
 				source<-transaction_weight,
 				target<-faultPropagationResult_place,
+				type<-#normal,
 				inscription<-transaction_weight_to_fault_propagation_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1615,6 +1664,7 @@ abstract rule FaultsGeneratesError {
 				id<-'transaction_weight_to_errorsActivation_arc',
 				source<-transaction_weight,
 				target<-errorsActivation_place,
+				type<-#normal,
 				inscription<-transaction_weight_to_errorsActivation_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1626,6 +1676,7 @@ abstract rule FaultsGeneratesError {
 				id<-'transaction_activationDelay_from_errorsActivation',
 				source<-errorsActivation_place,
 				target<-faultsGeneratesError.ActivationDelay,
+				type<-#normal,
 				inscription<-transaction_activationDelay_from_errorsActivation_arc_annotation,
 				containerPage <- sistema
 		)
@@ -1650,6 +1701,7 @@ rule FaultsGeneratesErrorNoManager extends FaultsGeneratesError {
 				id<-'transaction_weight_from_active_arc',
 				source<- thisModule.faultPropagationManager(faultsGeneratesError.PropagationLogicStringFormat),
 				target<-transaction_weight,
+				type<-#normal,
 				inscription<-transaction_weight_from_active_arc_annotation,
 				containerPage <- sistema
 		)
@@ -1713,6 +1765,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			id<-'faults_generates_errors_transaction_t0_from_logic_result_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- faultPropagationResult_place,
 			target <- transaction_t0,
+			type<-#normal,
 			inscription <- transaction_t0_from_logic_result_arc_annotation,
 			containerPage <- sistema
 		),
@@ -1725,6 +1778,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			id<-'faults_generates_errors_transaction_t0_to_logic_result_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- transaction_t0,
 			target <- faultPropagationResult_place,
+			type<-#normal,
 			inscription <- transaction_t0_to_logic_result_arc_annotation,
 			containerPage <- sistema
 		),
@@ -1748,6 +1802,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			id<-'faults_generates_errors_transaction_t0_to_activated_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- transaction_t0,
 			target <- activated_place,
+			type<-#normal,
 			inscription <- transaction_t0_to_activated_arc_annotation,
 			containerPage <- sistema
 		),
@@ -1759,6 +1814,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			id<-'faults_generates_errors_transaction_t0_to_active_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- transaction_t0,
 			target <- active_place,
+			type<-#normal,
 			inscription <- transaction_t0_to_active_arc_annotation,
 			containerPage <- sistema
 		),
@@ -1791,6 +1847,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			id<-'faults_generates_errors_transaction_t1_from_activated_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- activated_place,
 			target <- transaction_t1,
+			type<-#normal,
 			inscription <- transaction_t1_from_activated_arc_annotation,
 			containerPage <- sistema
 		),
@@ -1823,6 +1880,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			id<-'faults_generates_errors_transaction_t2_from_active_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- active_place,
 			target <- transaction_t2,
+			type<-#normal,
 			inscription <- transaction_t2_from_active_arc_annotation,
 			containerPage <- sistema
 		),
@@ -1836,6 +1894,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			id<-'faults_generates_errors_transaction_weight_from_active_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source<-active_place,
 			target<-transaction_weight,
+			type<-#normal,
 			inscription<-transaction_weight_from_active_arc_annotation,
 			containerPage <- sistema
 		)
@@ -1862,6 +1921,7 @@ rule FaultsGeneratesErrorPropagate {
 				id<-'faults_generate_errors_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name+'_to_'+error.Name,
 				source <- faultsGeneratesError,
 				target <- error,
+				type<-#normal,
 				inscription<-propagation_to_error_arc_annotation,
 				containerPage <- sistema
 		)
@@ -1925,6 +1985,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_andnode_transaction_T0_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T0,
+				type<-#normal,
 				inscription <- transaction_T0_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1936,6 +1997,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_andnode_transaction_T0_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T0,
+				type<-#normal,
 				inscription <- transaction_T0_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1959,6 +2021,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_andnode_transaction_T0_to_gate1_place_arc',
 				source <- transaction_T0,
 				target <- errorsExpressionNode.ErrorsExpression1,
+				type<-#normal, 
 				inscription <- transaction_T0_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -1992,6 +2055,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_andnode_transaction_T1_to_logic_result_arc',
 				source <- transaction_T1,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_T1_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2003,6 +2067,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_andnode_transaction_T1_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2014,6 +2079,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_andnode_transaction_T1_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2025,6 +2091,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_andnode_transaction_T1_to_gate1_place_arc',
 				source <- transaction_T1,
 				target <- errorsExpressionNode.ErrorsExpression1,
+				type<-#normal,
 				inscription <- transaction_T1_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2036,6 +2103,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_andnode_transaction_T1_to_gate2_place_arc',
 				source <- transaction_T1,
 				target <- errorsExpressionNode.ErrorsExpression2,
+				type<-#normal,
 				inscription <- transaction_T1_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2056,6 +2124,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_andnode_transaction_T2_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T2,
+				type<-#normal,
 				inscription <- transaction_T2_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2067,6 +2136,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_andnode_transaction_T2_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T2,
+				type<-#normal,
 				inscription <- transaction_T2_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2090,6 +2160,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_andnode_transaction_T2_to_gate2_place_arc',
 				source <- transaction_T2,
 				target <- errorsExpressionNode.ErrorsExpression2,
+				type<-#normal,
 				inscription <- transaction_T2_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2110,6 +2181,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				source <- logicResult_place,
 				target <- transaction_T3,
 				inscription <- transaction_T3_from_logic_result_arc_annotation,
+				type<-#normal,
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
@@ -2181,6 +2253,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T0_to_logic_result_arc',
 				source <- transaction_T0,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_T0_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2192,6 +2265,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T0_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T0,
+				type<-#normal,
 				inscription <- transaction_T0_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2215,6 +2289,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T0_to_gate1_place_arc',
 				source <- transaction_T0,
 				target <- errorsExpressionNode.ErrorsExpression1,
+				type<-#normal,
 				inscription <- transaction_T0_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2248,6 +2323,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T1_to_logic_result_arc',
 				source <- transaction_T1,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_T1_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2259,6 +2335,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T1_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2270,6 +2347,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T1_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2281,6 +2359,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T1_to_gate1_place_arc',
 				source <- transaction_T1,
 				target <- errorsExpressionNode.ErrorsExpression1,
+				type<-#normal,
 				inscription <- transaction_T1_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2292,6 +2371,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T1_to_gate2_place_arc',
 				source <- transaction_T1,
 				target <- errorsExpressionNode.ErrorsExpression2,
+				type<-#normal,
 				inscription <- transaction_T1_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2325,6 +2405,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T2_to_logic_result_arc',
 				source <- transaction_T2,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_T2_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2336,6 +2417,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T2_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T2,
+				type<-#normal,
 				inscription <- transaction_T2_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2359,6 +2441,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T2_to_gate2_place_arc',
 				source <- transaction_T2,
 				target <- errorsExpressionNode.ErrorsExpression2,
+				type<-#normal,
 				inscription <- transaction_T2_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2378,6 +2461,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_ornode_transaction_T3_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T3,
+				type<-#normal,
 				inscription <- transaction_T3_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2451,6 +2535,7 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_notnode_transaction_T0_to_logic_result_arc',
 				source <- transaction_T0,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_T0_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2482,6 +2567,7 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_notnode_transaction_T1_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2493,6 +2579,7 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_notnode_transaction_T1_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2504,6 +2591,7 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_notnode_transaction_T1_to_gate1_place_arc',
 				source <- transaction_T1,
 				target <- errorsExpressionNode.ErrorsExpression,
+				type<-#normal,
 				inscription <- transaction_T1_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		)
@@ -2537,6 +2625,7 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 		transaction_to_evidence_to_logic_result_arc: GSPN!GSPNArc (
 				source <- transaction_to_evidence,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_to_evidence_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2548,6 +2637,7 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_error_transaction_to_evidence_to_faulty_place_arc',
 				source <- transaction_to_evidence,
 				target <- errorsExpressionNode.Error,
+				type<-#normal,
 				inscription <- transaction_to_evidence_to_faulty_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2559,6 +2649,7 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_error_transaction_to_evidence_from_faulty_place_arc',
 				source <- errorsExpressionNode.Error,
 				target <- transaction_to_evidence,
+				type<-#normal,
 				inscription <- transaction_to_evidence_from_faulty_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2589,6 +2680,7 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 				id<-'errors_error_transaction_remove_evidence_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_remove_evidence,
+				type<-#normal,
 				inscription <- transaction_remove_evidence_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2657,6 +2749,7 @@ abstract rule InternalPropagation {
 			id <- 'internalPropagation_from_propagationdelay_to_tmp_propagation_arc_annotation_'+componente.Name+'_'+internalPropagation.Name,
 			source <- internalPropagation.PropagationDelay,
 			target <- tmp_propagation_place,
+			type<-#normal,
 			inscription <- from_propagationdelay_to_tmp_propagation_arc_annotation,
 			containerPage <- sistema
 		),
@@ -2669,6 +2762,7 @@ abstract rule InternalPropagation {
 			id <- 'internalPropagation_from_tmp_propagation_to_propagate_case_arc_'+componente.Name+'_'+internalPropagation.Name,
 			source <- tmp_propagation_place,
 			target <- propagation_case,
+			type<-#normal,
 			inscription <- from_tmp_propagation_to_propagate_case_arc_annotation,
 			containerPage <- sistema
 		),
@@ -2681,6 +2775,7 @@ abstract rule InternalPropagation {
 			id <- 'internalPropagation_from_tmp_propagation_to_not_propagate_case_arc_'+componente.Name+'_'+internalPropagation.Name,
 			source <- tmp_propagation_place,
 			target <- not_propagation_case,
+			type<-#normal,
 			inscription <- from_tmp_propagation_to_not_propagate_case_arc_annotation,
 			containerPage <- sistema
 		),
@@ -2720,6 +2815,7 @@ abstract rule InternalPropagation {
 				id<-'internal_propagation_transiction_weight_from_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- internalPropagationResult_place,
 				target <- transaction_weight,
+				type<-#normal,
 				inscription <- transaction_weight_from_internal_propagation_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2731,6 +2827,7 @@ abstract rule InternalPropagation {
 				id<-'internal_propagation_transiction_weight_to_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- transaction_weight,
 				target <- internalPropagationResult_place,
+				type<-#normal,
 				inscription <- transaction_weight_to_internal_propagation_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2742,6 +2839,7 @@ abstract rule InternalPropagation {
 				id<-'internal_propagation_transiction_weight_to_errors_activation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- transaction_weight,
 				target <- errorsActivation_place,
+				type<-#normal,
 				inscription <- transaction_weight_to_errorsActivation_arc_annotation,
 				containerPage <- sistema
 		),
@@ -2753,6 +2851,7 @@ abstract rule InternalPropagation {
 				id<-'internal_propagation_transiction_weight_from_errors_activation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- errorsActivation_place,
 				target <- internalPropagation.PropagationDelay,
+				type<-#normal,
 				inscription <- transaction_activationDelay_from_errorsActivation_arc_annotation,
 				containerPage <- sistema
 		)
@@ -2775,6 +2874,7 @@ rule InternalPropagationNoManager extends InternalPropagation {
 		transaction_weight_from_active_arc: GSPN!GSPNArc (
 				source <- thisModule.resolveTemp(thisModule.errorPropagationManager(internalPropagation.PropagationLogicStringFormat), 'active_place'),
 				target <- transaction_weight,
+				type<-#normal,
 				inscription <- transaction_weight_from_active_arc_annotation,
 				containerPage <- sistema
 		)
@@ -2836,6 +2936,7 @@ rule InternalPropagationManager extends InternalPropagation {
 			id<-'internal_propagation_transiction_t0_from_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- internalPropagationResult_place,
 			target <- transaction_t0,
+			type<-#normal,
 			inscription <- transaction_t0_from_logic_result_arc_annotation,
 			containerPage <- sistema
 		),
@@ -2848,6 +2949,7 @@ rule InternalPropagationManager extends InternalPropagation {
 			id<-'internal_propagation_transiction_t0_to_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- transaction_t0,
 			target <- internalPropagationResult_place,
+			type<-#normal,
 			inscription <- transaction_t0_to_logic_result_arc_annotation,
 			containerPage <- sistema
 		),
@@ -2871,6 +2973,7 @@ rule InternalPropagationManager extends InternalPropagation {
 			id<-'internal_propagation_transiction_t0_to_activated_arc_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- transaction_t0,
 			target <- activated_place,
+			type<-#normal,
 			inscription <- transaction_t0_to_activated_arc_annotation,
 			containerPage <- sistema
 		),
@@ -2882,6 +2985,7 @@ rule InternalPropagationManager extends InternalPropagation {
 			id<-'internal_propagation_transiction_t0_to_active_arc_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- transaction_t0,
 			target <- active_place,
+			type<-#normal,
 			inscription <- transaction_t0_to_active_arc_annotation,
 			containerPage <- sistema
 		),
@@ -2913,6 +3017,7 @@ rule InternalPropagationManager extends InternalPropagation {
 			id<-'internal_propagation_transiction_r1-from_activated_arc_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- activated_place,
 			target <- transaction_t1,
+			type<-#normal,
 			inscription <- transaction_t1_from_activated_arc_annotation,
 			containerPage <- sistema
 		),
@@ -2944,6 +3049,7 @@ rule InternalPropagationManager extends InternalPropagation {
 			id<-'internal_propagation_transiction_t2_from_active_arc_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- active_place,
 			target <- transaction_t2,
+			type<-#normal,
 			inscription <- transaction_t2_from_active_arc_annotation,
 			containerPage <- sistema
 		),
@@ -2957,6 +3063,7 @@ rule InternalPropagationManager extends InternalPropagation {
 			id<-'internal_propagation_transiction_weight_from_active_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- active_place,
 			target <- transaction_weight,
+			type<-#normal,
 			inscription <- transaction_weight_from_active_arc_annotation,
 			containerPage <- sistema
 		)
@@ -2982,6 +3089,7 @@ rule InternalPropagationPropagate {
 		propagation_to_error_arc: GSPN!GSPNArc (
 				source<-internalPropagation,
 				target<-Error,
+				type<-#normal,
 				inscription<-propagation_to_error_arc_annotation,
 				containerPage<-thisModule.getPage(sistema)
 		)
@@ -3033,6 +3141,7 @@ abstract rule ErrorsProducesFailures {
 				id<-'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_from_propagationdelay_to_tmp_propagation_arc',
 				source <- errorsProducesFailures.PropagationDelay,
 				target <- tmp_propagation_place,
+				type<-#normal,
 				inscription <- from_propagationdelay_to_tmp_propagation_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3045,6 +3154,7 @@ abstract rule ErrorsProducesFailures {
 				id<-'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_from_tmp_propagation_to_propagate_arc',
 				source <- tmp_propagation_place,
 				target <- propagation_case,
+				type<-#normal,
 				inscription <- from_tmp_propagation_to_propagate_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3057,6 +3167,7 @@ abstract rule ErrorsProducesFailures {
 				id<-'errors_produces_failures_from_tmp_propagation_to_not_propagate_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 				source <- tmp_propagation_place,
 				target <- not_propagation_case,
+				type<-#normal,
 				inscription <- from_tmp_propagation_to_not_propagate_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3097,6 +3208,7 @@ abstract rule ErrorsProducesFailures {
 			id<-'errors_produces_failures_transition_weight_from_error_logic_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- errorPropagationResult_place,
 			target <- transaction_weight,
+			type<-#normal,
 			inscription <- transaction_weight_from_error_propagation_logic_result_arc_annotation,
 			containerPage <- sistema
 		),
@@ -3108,6 +3220,7 @@ abstract rule ErrorsProducesFailures {
 			id<-'errors_produces_failures_transition_weight_to_error_logic_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_weight,
 			target <- errorPropagationResult_place,
+			type<-#normal,
 			inscription <- transaction_weight_to_error_propagation_logic_result_arc_annotation,
 			containerPage <- sistema
 		),
@@ -3119,6 +3232,7 @@ abstract rule ErrorsProducesFailures {
 			id<-'errors_produces_failures_transition_weight_to_errors_activation_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_weight,
 			target <- errorsActivation_place,
+			type<-#normal,
 			inscription <- transaction_weight_to_errorsActivation_arc_annotation,
 			containerPage <- sistema
 		),
@@ -3130,6 +3244,7 @@ abstract rule ErrorsProducesFailures {
 			id<-'errors_produces_failures_transition_activationDelay_from_errorsActivation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- errorsActivation_place,
 			target <- errorsProducesFailures.PropagationDelay,
+			type<-#normal,
 			inscription <- transaction_activationDelay_from_errorsActivation_arc_annotation,
 			containerPage <- sistema
 		)
@@ -3153,6 +3268,7 @@ rule ErrorsProducesFailuresNoManager extends ErrorsProducesFailures {
 --				id<-'ErrorsProducesFailuresNoManager_transaction_weight_from_active_arc',
 				source <- thisModule.resolveTemp(thisModule.errorPropagationManager(errorsProducesFailures.PropagationLogicStringFormat), 'active_place'),
 				target <- transaction_weight,
+				type<-#normal,
 				inscription <- transaction_weight_from_active_arc_annotation,
 				containerPage <- sistema
 		)
@@ -3182,6 +3298,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 		active_place : GSPN!Place (
 --				id <- 'active_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 				name <- active_place_name,
+				type<-#normal,
 				initialMarking <- active_place_markup,
 				containerPage <- sistema
 		),
@@ -3196,6 +3313,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 		activated_place : GSPN!Place (
 --				id <- 'activated_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 				name <- activated_place_name,
+				type<-#normal,
 				initialMarking <- activated_place_markup,
 				containerPage <- sistema
 		),
@@ -3213,6 +3331,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 		transaction_t0_from_logic_result_arc: GSPN!GSPNArc (
 				source <- errorPropagationResult_place,
 				target <- transaction_t0,
+				type<-#normal,
 				inscription <- transaction_t0_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3225,6 +3344,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			id<-'errors_produces_failures_transition_t0_to_error_logic_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_t0,
 			target <- errorPropagationResult_place,
+			type<-#normal,
 			inscription <- transaction_t0_to_logic_result_arc_annotation,
 			containerPage <- sistema
 		),
@@ -3248,6 +3368,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			id<-'errors_produces_failures_transition_t0_to_activated_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_t0,
 			target <- activated_place,
+			type<-#normal,
 			inscription <- transaction_t0_to_activated_arc_annotation,
 			containerPage <- sistema
 		),
@@ -3259,6 +3380,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			id<-'errors_produces_failures_transition_t0_to_activate_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_t0,
 			target <- active_place,
+			type<-#normal,
 			inscription <- transaction_t0_to_active_arc_annotation,
 			containerPage <- sistema
 		),
@@ -3290,6 +3412,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			id<-'errors_produces_failures_transition_t1_from_activated_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- activated_place,
 			target <- transaction_t1,
+			type<-#normal,
 			inscription <- transaction_t1_from_activated_arc_annotation,
 			containerPage <- sistema
 		),
@@ -3321,6 +3444,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			id<-'errors_produces_failures_transition_t2_from_active_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- active_place,
 			target <- transaction_t2,
+			type<-#normal,
 			inscription <- transaction_t2_from_active_arc_annotation,
 			containerPage <- sistema
 		),
@@ -3334,6 +3458,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			id<-'errors_produces_failures_transition_weight_from_active_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- active_place,
 			target <- transaction_weight,
+			type<-#normal,
 			inscription <- transaction_weight_from_active_arc_annotation,
 			containerPage <- sistema
 		)
@@ -3360,6 +3485,7 @@ rule ErrorsProducesFailuresPropagate {
 				id<-'ErrorsProducesFailuresPropagate_propagation_to_failure_arc',
 				source <- errorsProducesFailures,
 				target <- failureMode,
+				type<-#normal,
 				inscription <- propagation_to_failure_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3371,6 +3497,7 @@ rule ErrorsProducesFailuresPropagate {
 				id<-'ErrorsProducesFailuresPropagate_propagation_to_failed_arc',
 				source <- errorsProducesFailures,
 				target <- componente,
+				type<-#normal,
 				inscription <- propagation_to_failed_arc_annotation,
 				containerPage <- sistema
 		)
@@ -3423,6 +3550,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T0_from_logic_result_arc: GSPN!GSPNArc (
 				source <- logicResult_place,
 				target <- transaction_T0,
+				type<-#normal,
 				inscription <- transaction_T0_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3433,6 +3561,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T0_from_gate1_place_arc: GSPN!GSPNArc (
 				source <- schedulingExpressionNode.SchedulingConditionExpression1,
 				target <- transaction_T0,
+				type<-#normal,
 				inscription <- transaction_T0_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3454,6 +3583,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T0_to_gate1_place_arc: GSPN!GSPNArc (
 				source <- transaction_T0,
 				target <- schedulingExpressionNode.SchedulingConditionExpression1,
+				type<-#normal,
 				inscription <- transaction_T0_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3485,6 +3615,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T1_to_logic_result_arc: GSPN!GSPNArc (
 				source <- transaction_T1,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_T1_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3495,6 +3626,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T1_from_gate1_place_arc: GSPN!GSPNArc (
 				source <- schedulingExpressionNode.SchedulingConditionExpression1,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3505,6 +3637,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T1_from_gate2_place_arc: GSPN!GSPNArc (
 				source <- schedulingExpressionNode.SchedulingConditionExpression2,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3515,6 +3648,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T1_to_gate1_place_arc: GSPN!GSPNArc (
 				source <- transaction_T1,
 				target <- schedulingExpressionNode.SchedulingConditionExpression1,
+				type<-#normal,
 				inscription <- transaction_T1_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3525,6 +3659,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T1_to_gate2_place_arc: GSPN!GSPNArc (
 				source <- transaction_T1,
 				target <- schedulingExpressionNode.SchedulingConditionExpression2,
+				type<-#normal,
 				inscription <- transaction_T1_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3544,6 +3679,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T2_from_logic_result_arc: GSPN!GSPNArc (
 				source <- logicResult_place,
 				target <- transaction_T2,
+				type<-#normal,
 				inscription <- transaction_T2_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3554,6 +3690,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T2_from_gate2_place_arc: GSPN!GSPNArc (
 				source <- schedulingExpressionNode.SchedulingConditionExpression2,
 				target <- transaction_T2,
+				type<-#normal,
 				inscription <- transaction_T2_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3575,6 +3712,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T2_to_gate2_place_arc: GSPN!GSPNArc (
 				source <- transaction_T2,
 				target <- schedulingExpressionNode.SchedulingConditionExpression2,
+				type<-#normal,
 				inscription <- transaction_T2_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3593,6 +3731,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 		transaction_T3_from_logic_result_arc: GSPN!GSPNArc (
 				source <- logicResult_place,
 				target <- transaction_T3,
+				type<-#normal,
 				inscription <- transaction_T3_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3653,6 +3792,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T0_to_logic_result_arc: GSPN!GSPNArc (
 				source <- transaction_T0,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_T0_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3663,6 +3803,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T0_from_gate1_place_arc: GSPN!GSPNArc (
 				source <- schedulingExpressionNode.SchedulingConditionExpression1,
 				target <- transaction_T0,
+				type<-#normal,
 				inscription <- transaction_T0_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3684,6 +3825,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T0_to_gate1_place_arc: GSPN!GSPNArc (
 				source <- transaction_T0,
 				target <- schedulingExpressionNode.SchedulingConditionExpression1,
+				type<-#normal,
 				inscription <- transaction_T0_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3715,6 +3857,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T1_to_logic_result_arc: GSPN!GSPNArc (
 				source <- transaction_T1,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_T1_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3725,6 +3868,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T1_from_gate1_place_arc: GSPN!GSPNArc (
 				source <- schedulingExpressionNode.SchedulingConditionExpression1,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3735,6 +3879,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T1_from_gate2_place_arc: GSPN!GSPNArc (
 				source <- schedulingExpressionNode.SchedulingConditionExpression2,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3745,6 +3890,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T1_to_gate1_place_arc: GSPN!GSPNArc (
 				source <- transaction_T1,
 				target <- schedulingExpressionNode.SchedulingConditionExpression1,
+				type<-#normal,
 				inscription <- transaction_T1_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3755,6 +3901,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T1_to_gate2_place_arc: GSPN!GSPNArc (
 				source <- transaction_T1,
 				target <- schedulingExpressionNode.SchedulingConditionExpression2,
+				type<-#normal,
 				inscription <- transaction_T1_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3786,6 +3933,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T2_to_logic_result_arc: GSPN!GSPNArc (
 				source <- transaction_T2,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_T2_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3796,6 +3944,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T2_from_gate2_place_arc: GSPN!GSPNArc (
 				source <- schedulingExpressionNode.SchedulingConditionExpression2,
 				target <- transaction_T2,
+				type<-#normal,
 				inscription <- transaction_T2_from_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3817,6 +3966,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T2_to_gate2_place_arc: GSPN!GSPNArc (
 				source <- transaction_T2,
 				target <- schedulingExpressionNode.SchedulingConditionExpression2,
+				type<-#normal,
 				inscription <- transaction_T2_to_gate2_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3835,6 +3985,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		transaction_T3_from_logic_result_arc: GSPN!GSPNArc (
 				source <- logicResult_place,
 				target <- transaction_T3,
+				type<-#normal,
 				inscription <- transaction_T3_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3895,6 +4046,7 @@ rule SchedulingConditionExpressionNotNodeToPN extends SchedulingConditionExpress
 		transaction_T0_to_logic_result_arc: GSPN!GSPNArc (
 				source <- transaction_T0,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_T0_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3924,6 +4076,7 @@ rule SchedulingConditionExpressionNotNodeToPN extends SchedulingConditionExpress
 		transaction_T1_from_logic_result_arc: GSPN!GSPNArc (
 				source <- logicResult_place,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3934,6 +4087,7 @@ rule SchedulingConditionExpressionNotNodeToPN extends SchedulingConditionExpress
 		transaction_T1_from_gate1_place_arc: GSPN!GSPNArc (
 				source <- schedulingExpressionNode.SchedulingConditionExpression1,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_gate1_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -3944,6 +4098,7 @@ rule SchedulingConditionExpressionNotNodeToPN extends SchedulingConditionExpress
 		transaction_T1_to_gate1_place_arc: GSPN!GSPNArc (
 				source <- transaction_T1,
 				target <- schedulingExpressionNode.SchedulingConditionExpression1,
+				type<-#normal,
 				inscription <- transaction_T1_to_gate1_place_arc_annotation,
 				containerPage <- sistema
 		)
@@ -3979,6 +4134,7 @@ rule SchedulingConditionExpressionTrueNodeToPN extends SchedulingConditionExpres
 		transaction_T0_to_logic_result_arc: GSPN!GSPNArc (
 				source <- transaction_T0,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_T0_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		)
@@ -4002,6 +4158,7 @@ rule SchedulingConditionExpressionDetectionNodeToPN extends SchedulingConditionE
 		transaction_to_evidence_to_logic_result_arc: GSPN!GSPNArc (
 				source <- transaction_to_evidence,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_to_evidence_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4012,6 +4169,7 @@ rule SchedulingConditionExpressionDetectionNodeToPN extends SchedulingConditionE
 		transaction_to_evidence_to_faulty_place_arc: GSPN!GSPNArc (
 				source <- transaction_to_evidence,
 				target <- thisModule.resolveTemp(schedulingExpressionNode.Error, 'detect_error_place'),
+				type<-#normal,
 				inscription <- transaction_to_evidence_to_faulty_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4022,6 +4180,7 @@ rule SchedulingConditionExpressionDetectionNodeToPN extends SchedulingConditionE
 		transaction_to_evidence_from_faulty_place_arc: GSPN!GSPNArc (
 				source <- thisModule.resolveTemp(schedulingExpressionNode.Error, 'detect_error_place'),
 				target <- transaction_to_evidence,
+				type<-#normal,
 				inscription <- transaction_to_evidence_from_faulty_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4050,6 +4209,7 @@ rule SchedulingConditionExpressionDetectionNodeToPN extends SchedulingConditionE
 		transaction_remove_evidence_from_logic_result_arc: GSPN!GSPNArc (
 				source <- logicResult_place,
 				target <- transaction_remove_evidence,
+				type<-#normal,
 				inscription <- transaction_remove_evidence_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4085,6 +4245,7 @@ rule SchedulingConditionExpressionFailedNodeToPN extends SchedulingConditionExpr
 		transaction_to_evidence_to_logic_result_arc: GSPN!GSPNArc (
 				source <- transaction_to_evidence,
 				target <- logicResult_place,
+				type<-#normal,
 				inscription <- transaction_to_evidence_to_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4095,6 +4256,7 @@ rule SchedulingConditionExpressionFailedNodeToPN extends SchedulingConditionExpr
 		transaction_to_evidence_to_faulty_place_arc: GSPN!GSPNArc (
 				source <- transaction_to_evidence,
 				target <- schedulingExpressionNode.FailureMode,
+				type<-#normal,
 				inscription <- transaction_to_evidence_to_faulty_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4105,6 +4267,7 @@ rule SchedulingConditionExpressionFailedNodeToPN extends SchedulingConditionExpr
 		transaction_to_evidence_from_faulty_place_arc: GSPN!GSPNArc (
 				source <- schedulingExpressionNode.FailureMode,
 				target <- transaction_to_evidence,
+				type<-#normal,
 				inscription <- transaction_to_evidence_from_faulty_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4133,6 +4296,7 @@ rule SchedulingConditionExpressionFailedNodeToPN extends SchedulingConditionExpr
 		transaction_remove_evidence_from_logic_result_arc: GSPN!GSPNArc (
 				source <- logicResult_place,
 				target <- transaction_remove_evidence,
+				type<-#normal,
 				inscription <- transaction_remove_evidence_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4174,6 +4338,7 @@ abstract rule ScheduleImmediately {
 		transaction_T0_from_logic_result_arc: GSPN!GSPNArc (
 				source <- schedulingEvent.Condition,
 				target <- transaction_T0,
+				type<-#normal,
 				inscription <- transaction_T0_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		)
@@ -4225,6 +4390,7 @@ rule ScheduleImmediatelyBefore extends ScheduleImmediately{
 		transaction_T1_from_tmp_place_arc: GSPN!GSPNArc (
 				source <- tmp_place0,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_tmp_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4234,6 +4400,7 @@ rule ScheduleImmediatelyBefore extends ScheduleImmediately{
 		transaction_T1_to_out_of_time_place_arc: GSPN!GSPNArc (
 				source <- transaction_T1,
 				target <- out_of_time_place,
+				type<-#normal,
 				inscription <- transaction_T1_to_out_of_time_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4282,6 +4449,7 @@ rule ScheduleImmediatelyAfter extends ScheduleImmediately {
 		transaction_T1_from_out_of_time_place_arc: GSPN!GSPNArc (
 				source <- out_of_time_place,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_out_of_time_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4330,6 +4498,7 @@ rule ScheduleImmediatelyInterval extends ScheduleImmediately {
 		transaction_T1_from_out_of_time_place_arc: GSPN!GSPNArc (
 				source <- out_of_time_place,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_out_of_time_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4367,6 +4536,7 @@ rule ScheduleImmediatelyInterval extends ScheduleImmediately {
 		transaction_T2_from_tmp_place_arc: GSPN!GSPNArc (
 				source <- tmp_place0,
 				target <- transaction_T2,
+				type<-#normal,
 				inscription <- transaction_T2_from_tmp_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4376,6 +4546,7 @@ rule ScheduleImmediatelyInterval extends ScheduleImmediately {
 		transaction_T2_to_out_of_time_place_arc: GSPN!GSPNArc (
 				source <- transaction_T2,
 				target <- out_of_time_place,
+				type<-#normal,
 				inscription <- transaction_T2_to_out_of_time_place_arc_annotation,
 				containerPage <- sistema
 		)
@@ -4416,6 +4587,7 @@ rule SchedulingAtTime {
 		transaction_T0_from_logic_result_arc: GSPN!GSPNArc (
 				source <- schedulingEvent.Condition,
 				target <- transaction_T0,
+				type<-#normal,
 				inscription <- transaction_T0_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		)
@@ -4460,6 +4632,7 @@ abstract rule SchedulePeriodic {
 		schedulingEvent_distribution_from_logic_result_arc: GSPN!GSPNArc (
 				source <- schedulingEvent.Condition,
 				target <- schedulingEvent.Distribution,
+				type<-#normal,
 				inscription <- schedulingEvent_distribution_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4471,6 +4644,7 @@ abstract rule SchedulePeriodic {
 		schedulingEvent_distribution_to_tmp_place_arc: GSPN!GSPNArc (
 				source <- schedulingEvent.Distribution,
 				target <- tmp_place,
+				type<-#normal,
 				inscription <- schedulingEvent_distribution_to_tmp_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4481,6 +4655,7 @@ abstract rule SchedulePeriodic {
 		transaction_T0_to_tmp_place_arc: GSPN!GSPNArc (
 				source <- tmp_place,
 				target <- transaction_T0,
+				type<-#normal,
 				inscription <- transaction_T0_to_tmp_place_arc_annotation,
 				containerPage <- sistema
 		)
@@ -4532,6 +4707,7 @@ rule SchedulePeriodicBefore extends SchedulePeriodic{
 		transaction_T1_from_tmp_place_arc: GSPN!GSPNArc (
 				source <- tmp_place0,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_tmp_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4541,6 +4717,7 @@ rule SchedulePeriodicBefore extends SchedulePeriodic{
 		transaction_T1_to_out_of_time_place_arc: GSPN!GSPNArc (
 				source <- transaction_T1,
 				target <- out_of_time_place,
+				type<-#normal,
 				inscription <- transaction_T1_to_out_of_time_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4589,6 +4766,7 @@ rule SchedulePeriodicAfter extends SchedulePeriodic {
 		transaction_T1_from_out_of_time_place_arc: GSPN!GSPNArc (
 				source <- out_of_time_place,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_out_of_time_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4637,6 +4815,7 @@ rule SchedulePeriodicInterval extends SchedulePeriodic {
 		transaction_T1_from_out_of_time_place_arc: GSPN!GSPNArc (
 				source <- out_of_time_place,
 				target <- transaction_T1,
+				type<-#normal,
 				inscription <- transaction_T1_from_out_of_time_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4674,6 +4853,7 @@ rule SchedulePeriodicInterval extends SchedulePeriodic {
 		transaction_T2_from_tmp_place_arc: GSPN!GSPNArc (
 				source <- tmp_place0,
 				target <- transaction_T2,
+				type<-#normal,
 				inscription <- transaction_T2_from_tmp_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4683,6 +4863,7 @@ rule SchedulePeriodicInterval extends SchedulePeriodic {
 		transaction_T2_to_out_of_time_place_arc: GSPN!GSPNArc (
 				source <- transaction_T2,
 				target <- out_of_time_place,
+				type<-#normal,
 				inscription <- transaction_T2_to_out_of_time_place_arc_annotation,
 				containerPage <- sistema
 		)
@@ -4745,6 +4926,7 @@ abstract rule Activity {
 		transaction_enabler_from_wait_place_arc: GSPN!GSPNArc (
 				source <- wait_place,
 				target <- activity.When,
+				type<-#normal,
 				inscription <- transaction_enabler_from_wait_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4754,6 +4936,7 @@ abstract rule Activity {
 		transaction_enabler_to_execute_activity_place_arc: GSPN!GSPNArc (
 				source <- activity.When,
 				target <- execute_activity_place,
+				type<-#normal,
 				inscription <- transaction_enabler_to_execute_activity_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4763,6 +4946,7 @@ abstract rule Activity {
 		transaction_enabler_to_duration_place_arc: GSPN!GSPNArc (
 				source <- activity.When,
 				target <- duration_place,
+				type<-#normal,
 				inscription <- transaction_enabler_to_duration_place_arc_annotation,
 				containerPage <- sistema
 		)
@@ -4804,6 +4988,7 @@ abstract rule MaintenanceActivity extends Activity {
 		transaction_T0_from_execute_activity_place_arc: GSPN!GSPNArc (
 				source <- execute_activity_place,
 				target <- transaction_T0,
+				type<-#normal,
 				inscription <- transaction_T0_from_execute_activity_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4814,6 +4999,7 @@ abstract rule MaintenanceActivity extends Activity {
 		from_transition_T0_to_tmp_execution_arc: GSPN!GSPNArc (
 				source <- transaction_T0,
 				target <- tmp_execution_place,
+				type<-#normal,
 				inscription <- from_transition_T0_to_tmp_execution_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4824,6 +5010,7 @@ abstract rule MaintenanceActivity extends Activity {
 		from_tmp_execution_to_execute_activity_arc: GSPN!GSPNArc (
 				source <- tmp_execution_place,
 				target <- execute_activity_case,
+				type<-#normal,
 				inscription <- from_tmp_execution_to_execute_activity_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4833,6 +5020,7 @@ abstract rule MaintenanceActivity extends Activity {
 		from_tmp_execution_to_not_execute_activity_arc: GSPN!GSPNArc (
 				source <- tmp_execution_place,
 				target <- not_execute_activity_case,
+				type<-#normal,
 				inscription <- from_tmp_execution_to_not_execute_activity_arc_annotation,
 				containerPage <- sistema
 		)
@@ -4863,6 +5051,7 @@ rule RepairActivity extends MaintenanceActivity {
 		cleanup_repair_from_repair_place_arc: GSPN!GSPNArc (
 				source <- repair_place,
 				target <- cleanup_repair,
+				type<-#normal,
 				inscription <- cleanup_repair_from_repair_place_arc_annotation,
 				containerPage <- sistema
 		)
@@ -4889,6 +5078,7 @@ rule RepairActivityTargets {
 		repair_from_failed_place_arc: GSPN!GSPNArc (
 				source <- target,
 				target <- repair,
+				type<-#normal,
 				inscription <- repair_from_failed_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4898,6 +5088,7 @@ rule RepairActivityTargets {
 		repair_from_repair_place_arc: GSPN!GSPNArc (
 				source <- activity,
 				target <- repair,
+				type<-#normal,
 				inscription <- repair_from_repair_place_arc_annotation,
 				containerPage <- sistema
 		),
@@ -4907,6 +5098,7 @@ rule RepairActivityTargets {
 		repair_to_repair_place_arc: GSPN!GSPNArc (
 				source <- repair,
 				target <- activity,
+				type<-#normal,
 				inscription <- repair_to_repair_place_arc_annotation,
 				containerPage <- sistema
 		)
@@ -4935,6 +5127,7 @@ rule DetectionActivityDetectableErrors {
 		coverage_succesfull_from_detection_arc: GSPN!GSPNArc (
 			source <- activity,
 			target <- coverage_successfull_check,
+			type<-#normal,
 			inscription <- coverage_succesfull_from_detection_arc_annotation,
 			containerPage <- sistema
 		),
@@ -4944,6 +5137,7 @@ rule DetectionActivityDetectableErrors {
 		coverage_from_error_arc: GSPN!GSPNArc (
 			source <- error,
 			target <- coverage_successfull_check,
+			type<-#normal,
 			inscription <- coverage_succesfull_from_error_arc_annotation,
 			containerPage <- sistema
 		),
@@ -4962,6 +5156,7 @@ rule DetectionActivityDetectableErrors {
 		coverage_not_successfull_from_detection_arc: GSPN!GSPNArc (
 			source <- activity,
 			target <- coverage_not_successfull_check,
+			type<-#normal,
 			inscription <- coverage_not_successfull_from_detection_arc_annotation,
 			containerPage <- sistema
 		),
@@ -4971,6 +5166,7 @@ rule DetectionActivityDetectableErrors {
 		coverage_not_successfull_from_error_arc: GSPN!GSPNArc (
 			source <- error,
 			target <- coverage_not_successfull_check,
+			type<-#normal,
 			inscription <- coverage_not_successfull_from_error_arc_annotation,
 			containerPage <- sistema
 		),
@@ -4985,6 +5181,7 @@ rule DetectionActivityDetectableErrors {
 		not_successfull_to_error_arc: GSPN!GSPNArc (
 			source <- coverage_not_successfull_check,
 			target <- error,
+			type<-#normal,
 			inscription <- not_successfull_to_error_arc_annotation,
 			containerPage <- sistema
 		),
@@ -4994,6 +5191,7 @@ rule DetectionActivityDetectableErrors {
 		successfull_to_error_arc: GSPN!GSPNArc (
 			source <- coverage_successfull_check,
 			target <- error,
+			type<-#normal,
 			inscription <- successfull_to_error_arc_annotation,
 			containerPage <- sistema
 		),
@@ -5003,6 +5201,7 @@ rule DetectionActivityDetectableErrors {
 		successfull_to_detected_error_arc: GSPN!GSPNArc (
 			source <- coverage_successfull_check,
 			target <- thisModule.resolveTemp(error,'detect_error_place'),
+			type<-#normal,
 			inscription <- successfull_to_detected_error_arc_annotation,
 			containerPage <- sistema
 		),
@@ -5014,6 +5213,7 @@ rule DetectionActivityDetectableErrors {
 		not_falsePositive_from_detection_arc: GSPN!GSPNArc (
 			source <- activity,
 			target <- not_falsepositive_check,
+			type<-#normal,
 			inscription <- not_falsePositive_from_detection_arc_annotation,
 			containerPage <- sistema
 		),
@@ -5039,6 +5239,7 @@ rule DetectionActivityDetectableErrors {
 		falsePositive_from_detection_arc: GSPN!GSPNArc (
 			source <- activity,
 			target <- falsepositive_check,
+			type<-#normal,
 			inscription <- falsePositive_from_detection_arc_annotation,
 			containerPage <- sistema
 		),
@@ -5063,6 +5264,7 @@ rule DetectionActivityDetectableErrors {
 		falsepositive_to_error_arc: GSPN!GSPNArc (
 			source <- falsepositive_check,
 			target <- thisModule.resolveTemp(error,'detect_error_place'),
+			type<-#normal,
 			inscription <- falsepositive_to_error_arc_annotation,
 			containerPage <- sistema
 		)
@@ -5095,6 +5297,7 @@ lazy rule removeTokenOnFailed {
 				id<-'remove_token_from_'+place.id+'_'+componente.Name+'_'+name,
 				source<-place,
 				target<-transaction_remove_token_from_faulty_place,
+				type<-#normal,
 				inscription<-transaction_remove_token_from_faulty_place_from_faulty_place_arc_annotation,
 				containerPage<-sistema
 		),
@@ -5106,6 +5309,7 @@ lazy rule removeTokenOnFailed {
 				id<-'remove_token_from_'+place.id+'_'+componente.Name+'_'+name+'_from_failed_place',
 				source<-failed_place,
 				target<-transaction_remove_token_from_faulty_place,
+				type<-#normal,
 				inscription<-transaction_remove_token_from_faulty_place_from_failed_place_arc_annotation,
 				containerPage<-sistema
 		),
@@ -5117,6 +5321,7 @@ lazy rule removeTokenOnFailed {
 				id<-'remove_token_from_'+place.id+'_'+componente.Name+'_'+name+'_to_failed_place',
 				source<-transaction_remove_token_from_faulty_place,
 				target<-failed_place,
+				type<-#normal,
 				inscription<-transaction_remove_token_from_faulty_place_to_failed_place_arc_annotation,
 				containerPage<-sistema
 		)

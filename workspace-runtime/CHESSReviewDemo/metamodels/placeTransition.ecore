@@ -345,8 +345,8 @@
     <eLiterals name="inhibitor" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GSPNArc" eSuperTypes="#//Arc">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//GSPNArcType"
-        defaultValueLiteral="normal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//GSPNArcType"
+        defaultValueLiteral="0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GSPNImmediateTransition" eSuperTypes="#//GSPNTransition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Priority" lowerBound="1"
