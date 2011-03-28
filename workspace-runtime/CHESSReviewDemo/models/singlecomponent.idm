@@ -7,5 +7,13 @@
       <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
       <TransientDuration xsi:type="Exponential"/>
     </Faults>
+    <FaultsGeneratesErrors Source="//@components.0/@Faults.0" Destination="//@components.0/@Errors.0" PropagationLogicStringFormat="c1_f1" Name="c1_fge1">
+      <ActivationDelay xsi:type="Exponential"/>
+      <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.0/@FaultsGeneratesErrors.0" Fault="//@components.0/@Faults.0"/>
+    </FaultsGeneratesErrors>
+    <ErrorsGeneratesFailures Name="c1_epf1" PropagationLogicStringFormat="c1_e1" Source="//@components.0/@Errors.0" Destination="//@components.0/@FailureModes.0">
+      <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.0/@ErrorsGeneratesFailures.0" Error="//@components.0/@Errors.0"/>
+      <PropagationDelay xsi:type="Exponential"/>
+    </ErrorsGeneratesFailures>
   </components>
 </Sistema>

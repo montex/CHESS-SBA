@@ -1,6 +1,6 @@
 <NDFile-'1.2'>
 
-NET:"org.eclipse.m2m.atl.engine.emfvm.lib.OclUndefined@11a58a4",2000,2000;
+NET:"org.eclipse.m2m.atl.engine.emfvm.lib.OclUndefined@176bbc6",2000,2000;
 COLORS:White,Black,Black,Black,Black,Black;
 PLACE:"failed_c10",0,0,0,0;
 PLACE:"faultyPlace_c1_c1_f11",0,0,0,0;
@@ -9,6 +9,16 @@ PLACE:"internal_fault_occurred_c1_c1_f13",0,0,0,0;
 PLACE:"erroneusPlace_c1_c1_e14",0,0,0,0;
 PLACE:"detect_error_Place_c1_c1_e15",0,0,0,0;
 PLACE:"failureModePlace_c1_c1_fm16",0,0,0,0;
+PLACE:"logicResult_c1_logic_c1_fge17",0,0,0,0;
+PLACE:"active_c1_faultsGeneratesError_c1_fge18",0,0,0,0;
+PLACE:"activated_c1_faultsGeneratesError_c1_fge19",0,0,0,0;
+PLACE:"tmp_activated_c1_faultsGeneratesError_c1_fge110",0,0,0,0;
+PLACE:"errorsActivation_c1_faultsGeneratesError_c1_fge111",0,0,0,0;
+PLACE:"logicResult_c1_logic_c1_epf112",0,0,0,0;
+PLACE:"active_c1_errorsProducesFailures_c1_epf113",0,0,0,0;
+PLACE:"activated_c1_errorsProducesFailures_c1_epf114",0,0,0,0;
+PLACE:"tmp_propagation_c1_errors_produces_failures_c1_epf115",0,0,0,0;
+PLACE:"errorsActivation_c1_errorsProducesFailures_c1_epf116",0,0,0,0;
 
 
 TRANS:"T0",0,0,V,Immediate,1,0,'', '',
@@ -31,11 +41,83 @@ TRANS:"T4",0,0,V,Immediate,2,0,'', '',
  (
   1.0
   );
-TRANS:"T5",0,0,V,Timed,1,Exponential,'', '',
+TRANS:"T5",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T6",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T7",0,0,V,Immediate,1,0,'', '',
+ (
+  0.0
+  );
+TRANS:"T8",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T9",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T10",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T11",0,0,V,Immediate,1,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T12",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T13",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T14",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T15",0,0,V,Immediate,1,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T16",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T17",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T18",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T19",0,0,V,Immediate,1,0,'', '',
+ (
+  0.0
+  );
+TRANS:"T20",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T21",0,0,V,Timed,1,Exponential,'', '',
  (
   1.0E-5
   );
-TRANS:"T6",0,0,V,Timed,1,Exponential,'', '',
+TRANS:"T22",0,0,V,Timed,1,Exponential,'', '',
+ (
+  0.0
+  );
+TRANS:"T23",0,0,V,Timed,1,Exponential,'', '',
+ (
+  0.0
+  );
+TRANS:"T24",0,0,V,Timed,1,Exponential,'', '',
  (
   0.0
   );
@@ -45,9 +127,9 @@ IARC:"internal_fault_occurred_c1_c1_f13","T0",1,1,'',
  (0,0,0,0),1;
 IARC:"internal_fault_occurred_c1_c1_f13","T1",1,1,'',
  (0,0,0,0),1;
-IARC:"numberOfTransientFaultyPlace_c1_c1_f12","T6",1,1,'',
+IARC:"numberOfTransientFaultyPlace_c1_c1_f12","T22",1,1,'',
  (0,0,0,0),1;
-IARC:"faultyPlace_c1_c1_f11","T6",1,1,'',
+IARC:"faultyPlace_c1_c1_f11","T22",1,1,'',
  (0,0,0,0),1;
 IARC:"faultyPlace_c1_c1_f11","T2",1,1,'',
  (0,0,0,0),1;
@@ -61,11 +143,71 @@ IARC:"erroneusPlace_c1_c1_e14","T4",1,1,'',
  (0,0,0,0),1;
 IARC:"failed_c10","T4",1,1,'',
  (0,0,0,0),1;
-
-
-OARC:"failed_c10","T5",1,2,'',
+IARC:"faultyPlace_c1_c1_f11","T5",1,1,'',
  (0,0,0,0),1;
-OARC:"T5","internal_fault_occurred_c1_c1_f13",1,1,'',
+IARC:"logicResult_c1_logic_c1_fge17","T6",1,1,'',
+ (0,0,0,0),1;
+IARC:"logicResult_c1_logic_c1_fge17","T8",1,1,'',
+ (0,0,0,0),1;
+IARC:"activated_c1_faultsGeneratesError_c1_fge19","T9",1,1,'',
+ (0,0,0,0),1;
+IARC:"active_c1_faultsGeneratesError_c1_fge18","T10",1,1,'',
+ (0,0,0,0),1;
+IARC:"active_c1_faultsGeneratesError_c1_fge18","T12",1,1,'',
+ (0,0,0,0),1;
+IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge110","T7",1,1,'',
+ (0,0,0,0),1;
+IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge110","T11",1,1,'',
+ (0,0,0,0),1;
+IARC:"logicResult_c1_logic_c1_fge17","T12",1,1,'',
+ (0,0,0,0),1;
+IARC:"errorsActivation_c1_faultsGeneratesError_c1_fge111","T23",1,1,'',
+ (0,0,0,0),1;
+IARC:"erroneusPlace_c1_c1_e14","T13",1,1,'',
+ (0,0,0,0),1;
+IARC:"logicResult_c1_logic_c1_epf112","T14",1,1,'',
+ (0,0,0,0),1;
+IARC:"logicResult_c1_logic_c1_epf112","T16",1,1,'',
+ (0,0,0,0),1;
+IARC:"activated_c1_errorsProducesFailures_c1_epf114","T17",1,1,'',
+ (0,0,0,0),1;
+IARC:"active_c1_errorsProducesFailures_c1_epf113","T18",1,1,'',
+ (0,0,0,0),1;
+IARC:"active_c1_errorsProducesFailures_c1_epf113","T20",1,1,'',
+ (0,0,0,0),1;
+IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf115","T15",1,1,'',
+ (0,0,0,0),1;
+IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf115","T19",1,1,'',
+ (0,0,0,0),1;
+IARC:"logicResult_c1_logic_c1_epf112","T20",1,1,'',
+ (0,0,0,0),1;
+IARC:"errorsActivation_c1_errorsProducesFailures_c1_epf116","T24",1,1,'',
+ (0,0,0,0),1;
+
+
+OARC:"failed_c10","T21",1,2,'',
+ (0,0,0,0),1;
+OARC:"logicResult_c1_logic_c1_fge17","T5",1,2,'',
+ (0,0,0,0),1;
+OARC:"faultyPlace_c1_c1_f11","T5",1,2,'',
+ (0,0,0,0),1;
+OARC:"activated_c1_faultsGeneratesError_c1_fge19","T8",1,2,'',
+ (0,0,0,0),1;
+OARC:"logicResult_c1_logic_c1_fge17","T9",1,2,'',
+ (0,0,0,0),1;
+OARC:"logicResult_c1_logic_c1_fge17","T10",1,2,'',
+ (0,0,0,0),1;
+OARC:"logicResult_c1_logic_c1_epf112","T13",1,2,'',
+ (0,0,0,0),1;
+OARC:"erroneusPlace_c1_c1_e14","T13",1,2,'',
+ (0,0,0,0),1;
+OARC:"activated_c1_errorsProducesFailures_c1_epf114","T16",1,2,'',
+ (0,0,0,0),1;
+OARC:"logicResult_c1_logic_c1_epf112","T17",1,2,'',
+ (0,0,0,0),1;
+OARC:"logicResult_c1_logic_c1_epf112","T18",1,2,'',
+ (0,0,0,0),1;
+OARC:"T21","internal_fault_occurred_c1_c1_f13",1,1,'',
  (0,0,0,0),1;
 OARC:"T0","faultyPlace_c1_c1_f11",1,1,'',
  (0,0,0,0),1;
@@ -78,4 +220,42 @@ OARC:"T2","failed_c10",1,1,'',
 OARC:"T3","failed_c10",1,1,'',
  (0,0,0,0),1;
 OARC:"T4","failed_c10",1,1,'',
+ (0,0,0,0),1;
+OARC:"T5","logicResult_c1_logic_c1_fge17",1,1,'',
+ (0,0,0,0),1;
+OARC:"T5","faultyPlace_c1_c1_f11",1,1,'',
+ (0,0,0,0),1;
+OARC:"T8","logicResult_c1_logic_c1_fge17",1,1,'',
+ (0,0,0,0),1;
+OARC:"T8","activated_c1_faultsGeneratesError_c1_fge19",1,1,'',
+ (0,0,0,0),1;
+OARC:"T8","active_c1_faultsGeneratesError_c1_fge18",1,1,'',
+ (0,0,0,0),1;
+OARC:"T23","tmp_activated_c1_faultsGeneratesError_c1_fge110",1,1,'',
+ (0,0,0,0),1;
+OARC:"T12","logicResult_c1_logic_c1_fge17",1,1,'',
+ (0,0,0,0),1;
+OARC:"T12","errorsActivation_c1_faultsGeneratesError_c1_fge111",1,1,'',
+ (0,0,0,0),1;
+OARC:"T7","erroneusPlace_c1_c1_e14",1,1,'',
+ (0,0,0,0),1;
+OARC:"T13","logicResult_c1_logic_c1_epf112",1,1,'',
+ (0,0,0,0),1;
+OARC:"T13","erroneusPlace_c1_c1_e14",1,1,'',
+ (0,0,0,0),1;
+OARC:"T16","logicResult_c1_logic_c1_epf112",1,1,'',
+ (0,0,0,0),1;
+OARC:"T16","activated_c1_errorsProducesFailures_c1_epf114",1,1,'',
+ (0,0,0,0),1;
+OARC:"T16","active_c1_errorsProducesFailures_c1_epf113",1,1,'',
+ (0,0,0,0),1;
+OARC:"T24","tmp_propagation_c1_errors_produces_failures_c1_epf115",1,1,'',
+ (0,0,0,0),1;
+OARC:"T20","logicResult_c1_logic_c1_epf112",1,1,'',
+ (0,0,0,0),1;
+OARC:"T20","errorsActivation_c1_errorsProducesFailures_c1_epf116",1,1,'',
+ (0,0,0,0),1;
+OARC:"T15","failureModePlace_c1_c1_fm16",1,1,'',
+ (0,0,0,0),1;
+OARC:"T15","failed_c10",1,1,'',
  (0,0,0,0),1;

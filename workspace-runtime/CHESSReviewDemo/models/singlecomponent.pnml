@@ -2,7 +2,7 @@
 <ptnet:PetriNetDoc xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ptnet="http:///ptnet.ecore">
   <nets id="Prova" type="http://www.pnml.org/version-2009/grammar/ptnet">
     <pages>
-      <objects xsi:type="ptnet:Place" id="failed_c1" InArcs="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_to_failed_place" OutArcs="faultyPlace_c1_c1_f1_from_healtyPlace remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_from_failed_place">
+      <objects xsi:type="ptnet:Place" id="failed_c1" InArcs="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_to_failed_place ErrorsProducesFailuresPropagate_propagation_to_failed_arc" OutArcs="faultyPlace_c1_c1_f1_from_healtyPlace remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_from_failed_place">
         <name text="failed_c1"/>
         <initialMarking text="0"/>
       </objects>
@@ -12,7 +12,13 @@
       <objects xsi:type="ptnet:GSPNTimedTransition" id="internal_fault_c1_c1_f1_transient_duration_time" InArcs="remove_transient_fault_c1_c1_f1_arc_from_numberOfTransientFault remove_transient_fault_c1_c1_f1_arc_from_faulty">
         <Distribution xsi:type="ptnet:Exponential"/>
       </objects>
-      <objects xsi:type="ptnet:Place" id="faultyPlace_c1_c1_f1" InArcs="permanent_faultyPlace_c1_c1_f1_to_tmp_faultyPlace transient_faultyPlace_c1_c1_f1_to_tmp_faultyPlace" OutArcs="remove_transient_fault_c1_c1_f1_arc_from_faulty remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1">
+      <objects xsi:type="ptnet:GSPNTimedTransition" id="faults_generate_errors_c1_c1_fge1_activation_delay" InArcs="transaction_activationDelay_from_errorsActivation" OutArcs="faults_generate_errors_from_activationDelay_to_tmp_activated_arc_c1_faultsGeneratesError_c1_fge1">
+        <Distribution xsi:type="ptnet:Exponential"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNTimedTransition" id="errors_produces_failure_c1_c1_epf1_propagation_delay" InArcs="errors_produces_failures_transition_activationDelay_from_errorsActivation_c1_errorsProducesFailures_c1_epf1" OutArcs="errors_produces_failures_c1_c1_epf1_from_propagationdelay_to_tmp_propagation_arc">
+        <Distribution xsi:type="ptnet:Exponential"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" id="faultyPlace_c1_c1_f1" InArcs="permanent_faultyPlace_c1_c1_f1_to_tmp_faultyPlace transient_faultyPlace_c1_c1_f1_to_tmp_faultyPlace faults_fault_transaction_to_evidence_to_faulty_place_arc" OutArcs="remove_transient_fault_c1_c1_f1_arc_from_faulty remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1 faults_fault_transaction_to_evidence_from_faulty_place_arc faults_fault_transaction_remove_evidence_from_faulty_place_arc">
         <name text="faultyPlace_c1_c1_f1"/>
         <initialMarking text="0"/>
       </objects>
@@ -27,53 +33,53 @@
         <name text="internal_fault_occurred_c1_c1_f1"/>
         <initialMarking text="0"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="internal_fault_c1_c1_f1_from_occurrence_to_tmp_occurred_place" source="internal_fault_c1_c1_f1_occurrence" target="internal_fault_occurred_c1_c1_f1">
+      <objects xsi:type="ptnet:GSPNArc" id="internal_fault_c1_c1_f1_from_occurrence_to_tmp_occurred_place" source="internal_fault_c1_c1_f1_occurrence" target="internal_fault_occurred_c1_c1_f1" type="normal">
         <inscription text="1"/>
       </objects>
       <objects xsi:type="ptnet:GSPNImmediateTransition" id="internal_fault_c1_c1_f1_permanent_fault" InArcs="internal_fault_c1_c1_f1_from_tmp_occurred_place_to_permanent_fault" OutArcs="permanent_faultyPlace_c1_c1_f1_to_tmp_faultyPlace" Priority="1" Probability="0.5"/>
-      <objects xsi:type="ptnet:GSPNArc" id="internal_fault_c1_c1_f1_from_tmp_occurred_place_to_permanent_fault" source="internal_fault_occurred_c1_c1_f1" target="internal_fault_c1_c1_f1_permanent_fault">
+      <objects xsi:type="ptnet:GSPNArc" id="internal_fault_c1_c1_f1_from_tmp_occurred_place_to_permanent_fault" source="internal_fault_occurred_c1_c1_f1" target="internal_fault_c1_c1_f1_permanent_fault" type="normal">
         <inscription text="1"/>
       </objects>
       <objects xsi:type="ptnet:GSPNImmediateTransition" id="internal_fault_c1_c1_f1_transient_fault" InArcs="internal_fault_c1_c1_f1_from_tmp_occurred_place_to_transient_fault" OutArcs="transient_faultyPlace_c1_c1_f1_to_tmp_faultyPlace transient_faultyPlace_c1_c1_f1_to_numberOfFaults" Priority="1" Probability="0.5"/>
-      <objects xsi:type="ptnet:GSPNArc" id="internal_fault_c1_c1_f1_from_tmp_occurred_place_to_transient_fault" source="internal_fault_occurred_c1_c1_f1" target="internal_fault_c1_c1_f1_transient_fault">
+      <objects xsi:type="ptnet:GSPNArc" id="internal_fault_c1_c1_f1_from_tmp_occurred_place_to_transient_fault" source="internal_fault_occurred_c1_c1_f1" target="internal_fault_c1_c1_f1_transient_fault" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="permanent_faultyPlace_c1_c1_f1_to_tmp_faultyPlace" source="internal_fault_c1_c1_f1_permanent_fault" target="faultyPlace_c1_c1_f1">
+      <objects xsi:type="ptnet:GSPNArc" id="permanent_faultyPlace_c1_c1_f1_to_tmp_faultyPlace" source="internal_fault_c1_c1_f1_permanent_fault" target="faultyPlace_c1_c1_f1" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="transient_faultyPlace_c1_c1_f1_to_tmp_faultyPlace" source="internal_fault_c1_c1_f1_transient_fault" target="faultyPlace_c1_c1_f1">
+      <objects xsi:type="ptnet:GSPNArc" id="transient_faultyPlace_c1_c1_f1_to_tmp_faultyPlace" source="internal_fault_c1_c1_f1_transient_fault" target="faultyPlace_c1_c1_f1" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="transient_faultyPlace_c1_c1_f1_to_numberOfFaults" source="internal_fault_c1_c1_f1_transient_fault" target="numberOfTransientFaultyPlace_c1_c1_f1">
+      <objects xsi:type="ptnet:GSPNArc" id="transient_faultyPlace_c1_c1_f1_to_numberOfFaults" source="internal_fault_c1_c1_f1_transient_fault" target="numberOfTransientFaultyPlace_c1_c1_f1" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="remove_transient_fault_c1_c1_f1_arc_from_numberOfTransientFault" source="numberOfTransientFaultyPlace_c1_c1_f1" target="internal_fault_c1_c1_f1_transient_duration_time">
+      <objects xsi:type="ptnet:GSPNArc" id="remove_transient_fault_c1_c1_f1_arc_from_numberOfTransientFault" source="numberOfTransientFaultyPlace_c1_c1_f1" target="internal_fault_c1_c1_f1_transient_duration_time" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="remove_transient_fault_c1_c1_f1_arc_from_faulty" source="faultyPlace_c1_c1_f1" target="internal_fault_c1_c1_f1_transient_duration_time">
+      <objects xsi:type="ptnet:GSPNArc" id="remove_transient_fault_c1_c1_f1_arc_from_faulty" source="faultyPlace_c1_c1_f1" target="internal_fault_c1_c1_f1_transient_duration_time" type="normal">
         <inscription text="1"/>
       </objects>
       <objects xsi:type="ptnet:GSPNImmediateTransition" id="remove_tokens_on_failing_component_c1_FROM_faultyPlace_c1_c1_f1" InArcs="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1 remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place" OutArcs="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place" Priority="2"/>
-      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1" source="faultyPlace_c1_c1_f1" target="remove_tokens_on_failing_component_c1_FROM_faultyPlace_c1_c1_f1">
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1" source="faultyPlace_c1_c1_f1" target="remove_tokens_on_failing_component_c1_FROM_faultyPlace_c1_c1_f1" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place" source="failed_c1" target="remove_tokens_on_failing_component_c1_FROM_faultyPlace_c1_c1_f1">
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place" source="failed_c1" target="remove_tokens_on_failing_component_c1_FROM_faultyPlace_c1_c1_f1" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place" source="remove_tokens_on_failing_component_c1_FROM_faultyPlace_c1_c1_f1" target="failed_c1">
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place" source="remove_tokens_on_failing_component_c1_FROM_faultyPlace_c1_c1_f1" target="failed_c1" type="normal">
         <inscription text="1"/>
       </objects>
       <objects xsi:type="ptnet:GSPNImmediateTransition" id="remove_tokens_on_failing_component_c1_FROM_numberOfTransientFaultyPlace_c1_c1_f1" InArcs="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1 remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place" OutArcs="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place" Priority="2"/>
-      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1" source="numberOfTransientFaultyPlace_c1_c1_f1" target="remove_tokens_on_failing_component_c1_FROM_numberOfTransientFaultyPlace_c1_c1_f1">
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1" source="numberOfTransientFaultyPlace_c1_c1_f1" target="remove_tokens_on_failing_component_c1_FROM_numberOfTransientFaultyPlace_c1_c1_f1" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place" source="failed_c1" target="remove_tokens_on_failing_component_c1_FROM_numberOfTransientFaultyPlace_c1_c1_f1">
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place" source="failed_c1" target="remove_tokens_on_failing_component_c1_FROM_numberOfTransientFaultyPlace_c1_c1_f1" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place" source="remove_tokens_on_failing_component_c1_FROM_numberOfTransientFaultyPlace_c1_c1_f1" target="failed_c1">
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place" source="remove_tokens_on_failing_component_c1_FROM_numberOfTransientFaultyPlace_c1_c1_f1" target="failed_c1" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:Place" id="erroneusPlace_c1_c1_e1" OutArcs="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1">
+      <objects xsi:type="ptnet:Place" id="erroneusPlace_c1_c1_e1" InArcs="faults_generate_errors_c1_faultsGeneratesError_c1_fge1_to_c1_e1 errors_error_transaction_to_evidence_to_faulty_place_arc" OutArcs="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1 errors_error_transaction_to_evidence_from_faulty_place_arc errors_error_transaction_remove_evidence_from_faulty_place_arc">
         <name text="erroneusPlace_c1_c1_e1"/>
         <initialMarking text="0"/>
       </objects>
@@ -82,18 +88,221 @@
         <initialMarking text="0"/>
       </objects>
       <objects xsi:type="ptnet:GSPNImmediateTransition" id="remove_tokens_on_failing_component_c1_FROM_erroneusPlace_c1_c1_e1" InArcs="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1 remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_from_failed_place" OutArcs="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_to_failed_place" Priority="2"/>
-      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1" source="erroneusPlace_c1_c1_e1" target="remove_tokens_on_failing_component_c1_FROM_erroneusPlace_c1_c1_e1">
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1" source="erroneusPlace_c1_c1_e1" target="remove_tokens_on_failing_component_c1_FROM_erroneusPlace_c1_c1_e1" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_from_failed_place" source="failed_c1" target="remove_tokens_on_failing_component_c1_FROM_erroneusPlace_c1_c1_e1">
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_from_failed_place" source="failed_c1" target="remove_tokens_on_failing_component_c1_FROM_erroneusPlace_c1_c1_e1" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_to_failed_place" source="remove_tokens_on_failing_component_c1_FROM_erroneusPlace_c1_c1_e1" target="failed_c1">
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_to_failed_place" source="remove_tokens_on_failing_component_c1_FROM_erroneusPlace_c1_c1_e1" target="failed_c1" type="normal">
         <inscription text="1"/>
       </objects>
-      <objects xsi:type="ptnet:Place" id="failureMode_c1_c1_fm1">
+      <objects xsi:type="ptnet:Place" id="failureMode_c1_c1_fm1" InArcs="ErrorsProducesFailuresPropagate_propagation_to_failure_arc">
         <name text="failureModePlace_c1_c1_fm1"/>
         <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" InArcs="faults_fault_transaction_to_evidence_to_logic_result_arc faults_generates_errors_transaction_t0_to_logic_result_arc_c1_faultsGeneratesError_c1_fge1 transaction_weight_to_fault_propagation_logic_result_arc" OutArcs="faults_fault_transaction_to_evidence_from_logic_result_arc faults_fault_transaction_remove_evidence_from_logic_result_arc faults_generates_errors_transaction_t0_from_logic_result_arc_c1_faultsGeneratesError_c1_fge1 faults_generates_errors_transaction_t1_from_logic_result_arc_c1_faultsGeneratesError_c1_fge1 faults_generates_errors_transaction_t2_from_logic_result_arc_c1_faultsGeneratesError_c1_fge1 transaction_weight_from_fault_propagation_logic_result_arc">
+        <name text="logicResult_c1_logic_c1_fge1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_c1_fge1_propagation_logic_c1_transaction_to_evidence_c1_f1" InArcs="faults_fault_transaction_to_evidence_from_faulty_place_arc faults_fault_transaction_to_evidence_from_logic_result_arc faults_fault_transaction_remove_evidence_from_faulty_place_arc" OutArcs="faults_fault_transaction_to_evidence_to_logic_result_arc faults_fault_transaction_to_evidence_to_faulty_place_arc" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_fault_transaction_to_evidence_to_logic_result_arc" source="faults_generates_errors_c1_fge1_propagation_logic_c1_transaction_to_evidence_c1_f1" target="//@nets.0/@pages.0/@objects.34" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_fault_transaction_to_evidence_to_faulty_place_arc" source="faults_generates_errors_c1_fge1_propagation_logic_c1_transaction_to_evidence_c1_f1" target="faultyPlace_c1_c1_f1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_fault_transaction_to_evidence_from_faulty_place_arc" source="faultyPlace_c1_c1_f1" target="faults_generates_errors_c1_fge1_propagation_logic_c1_transaction_to_evidence_c1_f1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_fault_transaction_to_evidence_from_logic_result_arc" source="//@nets.0/@pages.0/@objects.34" target="faults_generates_errors_c1_fge1_propagation_logic_c1_transaction_to_evidence_c1_f1" type="inhibitor">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_c1_fge1_propagation_logic_c1_transaction_remove_evidence_c1_f1" InArcs="faults_fault_transaction_remove_evidence_from_logic_result_arc" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_fault_transaction_remove_evidence_from_logic_result_arc" source="//@nets.0/@pages.0/@objects.34" target="faults_generates_errors_c1_fge1_propagation_logic_c1_transaction_remove_evidence_c1_f1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_fault_transaction_remove_evidence_from_faulty_place_arc" source="faultyPlace_c1_c1_f1" target="faults_generates_errors_c1_fge1_propagation_logic_c1_transaction_to_evidence_c1_f1" type="inhibitor">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_error_c1_c1_fge1_propagation" InArcs="faults_generate_errors_from_tmp_activated_to_propagation_case_arc_c1_faultsGeneratesError_c1_fge1" OutArcs="faults_generate_errors_c1_faultsGeneratesError_c1_fge1_to_c1_e1" Priority="1" Probability="0.0"/>
+      <objects xsi:type="ptnet:Place" id="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1" InArcs="faults_generates_errors_transaction_t0_to_active_arc_c1_faultsGeneratesError_c1_fge1" OutArcs="faults_generates_errors_transaction_t2_from_active_arc_c1_faultsGeneratesError_c1_fge1 faults_generates_errors_transaction_weight_from_active_arc_c1_faultsGeneratesError_c1_fge1">
+        <name text="active_c1_faultsGeneratesError_c1_fge1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" id="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1" InArcs="faults_generates_errors_transaction_t0_to_activated_arc_c1_faultsGeneratesError_c1_fge1" OutArcs="faults_generates_errors_transaction_t0_from_activated_arc_c1_faultsGeneratesError_c1_fge1 faults_generates_errors_transaction_t1_from_activated_arc_c1_faultsGeneratesError_c1_fge1">
+        <name text="activated_c1_faultsGeneratesError_c1_fge1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_enabler_t0_c1_faultsGeneratesError_c1_fge1" InArcs="faults_generates_errors_transaction_t0_from_logic_result_arc_c1_faultsGeneratesError_c1_fge1 faults_generates_errors_transaction_t0_from_activated_arc_c1_faultsGeneratesError_c1_fge1" OutArcs="faults_generates_errors_transaction_t0_to_logic_result_arc_c1_faultsGeneratesError_c1_fge1 faults_generates_errors_transaction_t0_to_activated_arc_c1_faultsGeneratesError_c1_fge1 faults_generates_errors_transaction_t0_to_active_arc_c1_faultsGeneratesError_c1_fge1" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_logic_result_arc_c1_faultsGeneratesError_c1_fge1" source="//@nets.0/@pages.0/@objects.34" target="faults_generates_enabler_t0_c1_faultsGeneratesError_c1_fge1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_logic_result_arc_c1_faultsGeneratesError_c1_fge1" source="faults_generates_enabler_t0_c1_faultsGeneratesError_c1_fge1" target="//@nets.0/@pages.0/@objects.34" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_activated_arc_c1_faultsGeneratesError_c1_fge1" source="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1" target="faults_generates_enabler_t0_c1_faultsGeneratesError_c1_fge1" type="inhibitor">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_activated_arc_c1_faultsGeneratesError_c1_fge1" source="faults_generates_enabler_t0_c1_faultsGeneratesError_c1_fge1" target="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_active_arc_c1_faultsGeneratesError_c1_fge1" source="faults_generates_enabler_t0_c1_faultsGeneratesError_c1_fge1" target="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transiction_t1_Reset_activated_c1_faultsGeneratesError_c1_fge1" InArcs="faults_generates_errors_transaction_t1_from_logic_result_arc_c1_faultsGeneratesError_c1_fge1 faults_generates_errors_transaction_t1_from_activated_arc_c1_faultsGeneratesError_c1_fge1" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_logic_result_arc_c1_faultsGeneratesError_c1_fge1" source="//@nets.0/@pages.0/@objects.34" target="faults_generates_errors_transiction_t1_Reset_activated_c1_faultsGeneratesError_c1_fge1" type="inhibitor">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_activated_arc_c1_faultsGeneratesError_c1_fge1" source="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1" target="faults_generates_errors_transiction_t1_Reset_activated_c1_faultsGeneratesError_c1_fge1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transaction_t2_reset_activate_place_c1_faultsGeneratesError_c1_fge1" InArcs="faults_generates_errors_transaction_t2_from_logic_result_arc_c1_faultsGeneratesError_c1_fge1 faults_generates_errors_transaction_t2_from_active_arc_c1_faultsGeneratesError_c1_fge1" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_logic_result_arc_c1_faultsGeneratesError_c1_fge1" source="//@nets.0/@pages.0/@objects.34" target="faults_generates_errors_transaction_t2_reset_activate_place_c1_faultsGeneratesError_c1_fge1" type="inhibitor">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_active_arc_c1_faultsGeneratesError_c1_fge1" source="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1" target="faults_generates_errors_transaction_t2_reset_activate_place_c1_faultsGeneratesError_c1_fge1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_weight_from_active_arc_c1_faultsGeneratesError_c1_fge1" source="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1" target="faults_generate_errors_weight_c1_fge1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" id="tmp_activated_c1_faultsGeneratesError_c1_fge1" InArcs="faults_generate_errors_from_activationDelay_to_tmp_activated_arc_c1_faultsGeneratesError_c1_fge1" OutArcs="faults_generate_errors_from_tmp_activated_to_propagation_case_arc_c1_faultsGeneratesError_c1_fge1 faults_generate_errors_from_tmp_activated_to_not_propagation_case_arc_c1_faultsGeneratesError_c1_fge1">
+        <name text="tmp_activated_c1_faultsGeneratesError_c1_fge1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_from_activationDelay_to_tmp_activated_arc_c1_faultsGeneratesError_c1_fge1" source="faults_generate_errors_c1_c1_fge1_activation_delay" target="tmp_activated_c1_faultsGeneratesError_c1_fge1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_from_tmp_activated_to_propagation_case_arc_c1_faultsGeneratesError_c1_fge1" source="tmp_activated_c1_faultsGeneratesError_c1_fge1" target="faults_generates_error_c1_c1_fge1_propagation" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_from_tmp_activated_to_not_propagation_case_arc_c1_faultsGeneratesError_c1_fge1" source="tmp_activated_c1_faultsGeneratesError_c1_fge1" target="faults_generates_error_c1_c1_fge1_not_propagation" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_error_c1_c1_fge1_not_propagation" InArcs="faults_generate_errors_from_tmp_activated_to_not_propagation_case_arc_c1_faultsGeneratesError_c1_fge1" Priority="1"/>
+      <objects xsi:type="ptnet:Place" id="errorsActivation_c1_faultsGeneratesError_c1_fge1" InArcs="transaction_weight_to_errorsActivation_arc" OutArcs="transaction_activationDelay_from_errorsActivation">
+        <name text="errorsActivation_c1_faultsGeneratesError_c1_fge1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_weight_c1_fge1" InArcs="faults_generates_errors_transaction_weight_from_active_arc_c1_faultsGeneratesError_c1_fge1 transaction_weight_from_fault_propagation_logic_result_arc" OutArcs="transaction_weight_to_fault_propagation_logic_result_arc transaction_weight_to_errorsActivation_arc" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="transaction_weight_from_fault_propagation_logic_result_arc" source="//@nets.0/@pages.0/@objects.34" target="faults_generate_errors_weight_c1_fge1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="transaction_weight_to_fault_propagation_logic_result_arc" source="faults_generate_errors_weight_c1_fge1" target="//@nets.0/@pages.0/@objects.34" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="transaction_weight_to_errorsActivation_arc" source="faults_generate_errors_weight_c1_fge1" target="errorsActivation_c1_faultsGeneratesError_c1_fge1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="transaction_activationDelay_from_errorsActivation" source="errorsActivation_c1_faultsGeneratesError_c1_fge1" target="faults_generate_errors_c1_c1_fge1_activation_delay" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_c1_faultsGeneratesError_c1_fge1_to_c1_e1" source="faults_generates_error_c1_c1_fge1_propagation" target="erroneusPlace_c1_c1_e1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" InArcs="//@nets.0/@pages.0/@objects.73 errors_produces_failures_transition_t0_to_error_logic_arc_c1_errorsProducesFailures_c1_epf1 errors_produces_failures_transition_weight_to_error_logic_arc_c1_errorsProducesFailures_c1_epf1" OutArcs="errors_error_transaction_to_evidence_from_logic_result_arc errors_error_transaction_remove_evidence_from_logic_result_arc //@nets.0/@pages.0/@objects.84 errors_produces_failures_transition_t1_from_logic_result_arc_c1_errorsProducesFailures_c1_epf1 errors_produces_failures_transition_t2_from_logic_result_arc_c1_errorsProducesFailures_c1_epf1 errors_produces_failures_transition_weight_from_error_logic_arc_c1_errorsProducesFailures_c1_epf1">
+        <name text="logicResult_c1_logic_c1_epf1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" InArcs="errors_error_transaction_to_evidence_from_faulty_place_arc errors_error_transaction_to_evidence_from_logic_result_arc errors_error_transaction_remove_evidence_from_faulty_place_arc" OutArcs="//@nets.0/@pages.0/@objects.73 errors_error_transaction_to_evidence_to_faulty_place_arc" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" source="//@nets.0/@pages.0/@objects.72" target="//@nets.0/@pages.0/@objects.71" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_error_transaction_to_evidence_to_faulty_place_arc" source="//@nets.0/@pages.0/@objects.72" target="erroneusPlace_c1_c1_e1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_error_transaction_to_evidence_from_faulty_place_arc" source="erroneusPlace_c1_c1_e1" target="//@nets.0/@pages.0/@objects.72" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_error_transaction_to_evidence_from_logic_result_arc" source="//@nets.0/@pages.0/@objects.71" target="//@nets.0/@pages.0/@objects.72" type="inhibitor">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" InArcs="errors_error_transaction_remove_evidence_from_logic_result_arc" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_error_transaction_remove_evidence_from_logic_result_arc" source="//@nets.0/@pages.0/@objects.71" target="//@nets.0/@pages.0/@objects.77" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_error_transaction_remove_evidence_from_faulty_place_arc" source="erroneusPlace_c1_c1_e1" target="//@nets.0/@pages.0/@objects.72" type="inhibitor">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="errors_produces_failures_c1_c1_epf1_propagation" InArcs="errors_produces_failures_c1_c1_epf1_from_tmp_propagation_to_propagate_arc" OutArcs="ErrorsProducesFailuresPropagate_propagation_to_failure_arc ErrorsProducesFailuresPropagate_propagation_to_failed_arc" Priority="1"/>
+      <objects xsi:type="ptnet:Place" InArcs="errors_produces_failures_transition_t0_to_activate_arc_c1_errorsProducesFailures_c1_epf1" OutArcs="errors_produces_failures_transition_t2_from_active_arc_c1_errorsProducesFailures_c1_epf1 errors_produces_failures_transition_weight_from_active_arc_c1_errorsProducesFailures_c1_epf1">
+        <name text="active_c1_errorsProducesFailures_c1_epf1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" InArcs="errors_produces_failures_transition_t0_to_activated_arc_c1_errorsProducesFailures_c1_epf1" OutArcs="errors_produces_failures_transition_t0_from_activated_arc_c1_errorsProducesFailures_c1_epf1 errors_produces_failures_transition_t1_from_activated_arc_c1_errorsProducesFailures_c1_epf1">
+        <name text="activated_c1_errorsProducesFailures_c1_epf1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" InArcs="//@nets.0/@pages.0/@objects.84 errors_produces_failures_transition_t0_from_activated_arc_c1_errorsProducesFailures_c1_epf1" OutArcs="errors_produces_failures_transition_t0_to_error_logic_arc_c1_errorsProducesFailures_c1_epf1 errors_produces_failures_transition_t0_to_activated_arc_c1_errorsProducesFailures_c1_epf1 errors_produces_failures_transition_t0_to_activate_arc_c1_errorsProducesFailures_c1_epf1" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" source="//@nets.0/@pages.0/@objects.71" target="//@nets.0/@pages.0/@objects.83" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_t0_to_error_logic_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.83" target="//@nets.0/@pages.0/@objects.71" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_t0_from_activated_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.82" target="//@nets.0/@pages.0/@objects.83" type="inhibitor">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_t0_to_activated_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.83" target="//@nets.0/@pages.0/@objects.82" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_t0_to_activate_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.83" target="//@nets.0/@pages.0/@objects.81" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" InArcs="errors_produces_failures_transition_t1_from_logic_result_arc_c1_errorsProducesFailures_c1_epf1 errors_produces_failures_transition_t1_from_activated_arc_c1_errorsProducesFailures_c1_epf1" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_t1_from_logic_result_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.71" target="//@nets.0/@pages.0/@objects.89" type="inhibitor">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_t1_from_activated_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.82" target="//@nets.0/@pages.0/@objects.89" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" InArcs="errors_produces_failures_transition_t2_from_logic_result_arc_c1_errorsProducesFailures_c1_epf1 errors_produces_failures_transition_t2_from_active_arc_c1_errorsProducesFailures_c1_epf1" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_t2_from_logic_result_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.71" target="//@nets.0/@pages.0/@objects.92" type="inhibitor">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_t2_from_active_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.81" target="//@nets.0/@pages.0/@objects.92" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_weight_from_active_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.81" target="//@nets.0/@pages.0/@objects.102" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" id="tmp_propagation_c1_errors_produces_failures_c1_epf1" InArcs="errors_produces_failures_c1_c1_epf1_from_propagationdelay_to_tmp_propagation_arc" OutArcs="errors_produces_failures_c1_c1_epf1_from_tmp_propagation_to_propagate_arc errors_produces_failures_from_tmp_propagation_to_not_propagate_arc_c1_errorsProducesFailures_c1_epf1">
+        <name text="tmp_propagation_c1_errors_produces_failures_c1_epf1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_c1_c1_epf1_from_propagationdelay_to_tmp_propagation_arc" source="errors_produces_failure_c1_c1_epf1_propagation_delay" target="tmp_propagation_c1_errors_produces_failures_c1_epf1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_c1_c1_epf1_from_tmp_propagation_to_propagate_arc" source="tmp_propagation_c1_errors_produces_failures_c1_epf1" target="errors_produces_failures_c1_c1_epf1_propagation" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_from_tmp_propagation_to_not_propagate_arc_c1_errorsProducesFailures_c1_epf1" source="tmp_propagation_c1_errors_produces_failures_c1_epf1" target="errors_produces_failures_not_propagation_c1_errorsProducesFailures_c1_epf1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="errors_produces_failures_not_propagation_c1_errorsProducesFailures_c1_epf1" InArcs="errors_produces_failures_from_tmp_propagation_to_not_propagate_arc_c1_errorsProducesFailures_c1_epf1" Priority="1" Probability="0.0"/>
+      <objects xsi:type="ptnet:Place" id="errorsActivation_c1_errorsProducesFailures_c1_epf1" InArcs="errors_produces_failures_transition_weight_to_errors_activation_arc_c1_errorsProducesFailures_c1_epf1" OutArcs="errors_produces_failures_transition_activationDelay_from_errorsActivation_c1_errorsProducesFailures_c1_epf1">
+        <name text="errorsActivation_c1_errorsProducesFailures_c1_epf1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" InArcs="errors_produces_failures_transition_weight_from_active_arc_c1_errorsProducesFailures_c1_epf1 errors_produces_failures_transition_weight_from_error_logic_arc_c1_errorsProducesFailures_c1_epf1" OutArcs="errors_produces_failures_transition_weight_to_error_logic_arc_c1_errorsProducesFailures_c1_epf1 errors_produces_failures_transition_weight_to_errors_activation_arc_c1_errorsProducesFailures_c1_epf1" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_weight_from_error_logic_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.71" target="//@nets.0/@pages.0/@objects.102" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_weight_to_error_logic_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.102" target="//@nets.0/@pages.0/@objects.71" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_weight_to_errors_activation_arc_c1_errorsProducesFailures_c1_epf1" source="//@nets.0/@pages.0/@objects.102" target="errorsActivation_c1_errorsProducesFailures_c1_epf1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="errors_produces_failures_transition_activationDelay_from_errorsActivation_c1_errorsProducesFailures_c1_epf1" source="errorsActivation_c1_errorsProducesFailures_c1_epf1" target="errors_produces_failure_c1_c1_epf1_propagation_delay" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="ErrorsProducesFailuresPropagate_propagation_to_failure_arc" source="errors_produces_failures_c1_c1_epf1_propagation" target="failureMode_c1_c1_fm1" type="normal">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="ErrorsProducesFailuresPropagate_propagation_to_failed_arc" source="errors_produces_failures_c1_c1_epf1_propagation" target="failed_c1" type="normal">
+        <inscription text="1"/>
       </objects>
     </pages>
   </nets>
