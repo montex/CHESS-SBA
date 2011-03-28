@@ -1,3 +1,4 @@
 *.class
 *.asm
 *.log
+.metadata
