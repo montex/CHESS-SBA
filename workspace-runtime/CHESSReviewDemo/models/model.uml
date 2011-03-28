@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Alloc="http://www.eclipse.org/papyrus/Alloc/1" xmlns:Analysis="http://CHESS.Dependability.StateBased/schemas/Analysis/_8OUcADW-EeCuQp9j3DmccQ/9" xmlns:Blocks="http://www.eclipse.org/papyrus/0.7.0/SysML/Blocks" xmlns:CHESSViews="http://CHESS.Core/schemas/CHESSViews/_pnW4MDqxEeCUI4z76XHrLw/23" xmlns:ComponentModel="http://CHESS/schemas/ComponentModel/_xtz4oDUkEeC3rNpnAhYo0w/2" xmlns:Core="http://CHESS/schemas/Core/_PfTEoMe6Ed-7etIj5eTw0Q/19" xmlns:Core_1="http://CHESS/schemas/Core/_v7qw0E7nEeCiWfCHUearZQ/21" xmlns:DependableComponent="http://CHESS.Dependability/schemas/DependableComponent/_vTDE8DgaEeCE2sZUGxu35w/1" xmlns:GCM="http://www.eclipse.org/papyrus/GCM/1" xmlns:GQAM="http://www.eclipse.org/papyrus/GQAM/1" xmlns:HwCommunication="http://www.eclipse.org/papyrus/HwCommunication/1" xmlns:HwComputing="http://www.eclipse.org/papyrus/HwComputing/1" xmlns:RTComponentModel="http://CHESS.Predictability/schemas/RTComponentModel/_3OwQ0EApEeCgBsnPy5jVRQ/24" xmlns:StateBasedComponents="http://CHESS.Dependability.StateBased/schemas/StateBasedComponents/_qZ6UEEAjEeCQKOeIf0epIQ/11" xmlns:ThreatsPropagation="http://CHESS.Dependability/schemas/ThreatsPropagation/_U0bY8DRoEeCPrptoDUJcNQ/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/papyrus/Alloc/1 http://www.eclipse.org/papyrus/MARTE/1#//Alloc http://CHESS.Dependability.StateBased/schemas/Analysis/_8OUcADW-EeCuQp9j3DmccQ/9 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_8Owg4DW-EeCuQp9j3DmccQ http://www.eclipse.org/papyrus/0.7.0/SysML/Blocks http://www.eclipse.org/papyrus/0.7.0/SysML#//blocks http://CHESS.Core/schemas/CHESSViews/_pnW4MDqxEeCUI4z76XHrLw/23 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_pngpMDqxEeCUI4z76XHrLw http://CHESS/schemas/ComponentModel/_xtz4oDUkEeC3rNpnAhYo0w/2 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_xt9poDUkEeC3rNpnAhYo0w http://CHESS/schemas/Core/_PfTEoMe6Ed-7etIj5eTw0Q/19 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_PfTEoce6Ed-7etIj5eTw0Q http://CHESS/schemas/Core/_v7qw0E7nEeCiWfCHUearZQ/21 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_v7qw0U7nEeCiWfCHUearZQ http://CHESS.Dependability/schemas/DependableComponent/_vTDE8DgaEeCE2sZUGxu35w/1 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_vTM18DgaEeCE2sZUGxu35w http://www.eclipse.org/papyrus/GCM/1 http://www.eclipse.org/papyrus/MARTE/1#//GCM http://www.eclipse.org/papyrus/GQAM/1 http://www.eclipse.org/papyrus/MARTE/1#//GQAM http://www.eclipse.org/papyrus/HwCommunication/1 http://www.eclipse.org/papyrus/MARTE/1#//HwCommunication http://www.eclipse.org/papyrus/HwComputing/1 http://www.eclipse.org/papyrus/MARTE/1#//HwComputing http://CHESS.Predictability/schemas/RTComponentModel/_3OwQ0EApEeCgBsnPy5jVRQ/24 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_3O6B0EApEeCgBsnPy5jVRQ http://CHESS.Dependability.StateBased/schemas/StateBasedComponents/_qZ6UEEAjEeCQKOeIf0epIQ/11 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_qaEFEEAjEeCQKOeIf0epIQ http://CHESS.Dependability/schemas/ThreatsPropagation/_U0bY8DRoEeCPrptoDUJcNQ/1 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_U0lJ8DRoEeCPrptoDUJcNQ">
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Alloc="http://www.eclipse.org/papyrus/Alloc/1" xmlns:Analysis="http://CHESS.Dependability.StateBased/schemas/Analysis/_8OUcADW-EeCuQp9j3DmccQ/9" xmlns:Blocks="http://www.eclipse.org/papyrus/0.7.0/SysML/Blocks" xmlns:CHESSViews="http://CHESS.Core/schemas/CHESSViews/_pnW4MDqxEeCUI4z76XHrLw/23" xmlns:ComponentModel="http://CHESS/schemas/ComponentModel/_xtz4oDUkEeC3rNpnAhYo0w/2" xmlns:Core="http://CHESS/schemas/Core/_PfTEoMe6Ed-7etIj5eTw0Q/19" xmlns:Core_1="http://CHESS/schemas/Core/_v7qw0E7nEeCiWfCHUearZQ/21" xmlns:DependableComponent="http://CHESS.Dependability/schemas/DependableComponent/_Lf27EE7nEeCiWfCHUearZQ/6" xmlns:DependableComponent_1="http://CHESS.Dependability/schemas/DependableComponent/_vTDE8DgaEeCE2sZUGxu35w/1" xmlns:GCM="http://www.eclipse.org/papyrus/GCM/1" xmlns:GQAM="http://www.eclipse.org/papyrus/GQAM/1" xmlns:HwCommunication="http://www.eclipse.org/papyrus/HwCommunication/1" xmlns:HwComputing="http://www.eclipse.org/papyrus/HwComputing/1" xmlns:RTComponentModel="http://CHESS.Predictability/schemas/RTComponentModel/_3OwQ0EApEeCgBsnPy5jVRQ/24" xmlns:StateBasedComponents="http://CHESS.Dependability.StateBased/schemas/StateBasedComponents/_qZ6UEEAjEeCQKOeIf0epIQ/11" xmlns:ThreatsPropagation="http://CHESS.Dependability/schemas/ThreatsPropagation/_U0bY8DRoEeCPrptoDUJcNQ/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/papyrus/Alloc/1 http://www.eclipse.org/papyrus/MARTE/1#//Alloc http://CHESS.Dependability.StateBased/schemas/Analysis/_8OUcADW-EeCuQp9j3DmccQ/9 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_8Owg4DW-EeCuQp9j3DmccQ http://www.eclipse.org/papyrus/0.7.0/SysML/Blocks http://www.eclipse.org/papyrus/0.7.0/SysML#//blocks http://CHESS.Core/schemas/CHESSViews/_pnW4MDqxEeCUI4z76XHrLw/23 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_pngpMDqxEeCUI4z76XHrLw http://CHESS/schemas/ComponentModel/_xtz4oDUkEeC3rNpnAhYo0w/2 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_xt9poDUkEeC3rNpnAhYo0w http://CHESS/schemas/Core/_PfTEoMe6Ed-7etIj5eTw0Q/19 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_PfTEoce6Ed-7etIj5eTw0Q http://CHESS/schemas/Core/_v7qw0E7nEeCiWfCHUearZQ/21 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_v7qw0U7nEeCiWfCHUearZQ http://CHESS.Dependability/schemas/DependableComponent/_Lf27EE7nEeCiWfCHUearZQ/6 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_LgJ2AE7nEeCiWfCHUearZQ http://CHESS.Dependability/schemas/DependableComponent/_vTDE8DgaEeCE2sZUGxu35w/1 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_vTM18DgaEeCE2sZUGxu35w http://www.eclipse.org/papyrus/GCM/1 http://www.eclipse.org/papyrus/MARTE/1#//GCM http://www.eclipse.org/papyrus/GQAM/1 http://www.eclipse.org/papyrus/MARTE/1#//GQAM http://www.eclipse.org/papyrus/HwCommunication/1 http://www.eclipse.org/papyrus/MARTE/1#//HwCommunication http://www.eclipse.org/papyrus/HwComputing/1 http://www.eclipse.org/papyrus/MARTE/1#//HwComputing http://CHESS.Predictability/schemas/RTComponentModel/_3OwQ0EApEeCgBsnPy5jVRQ/24 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_3O6B0EApEeCgBsnPy5jVRQ http://CHESS.Dependability.StateBased/schemas/StateBasedComponents/_qZ6UEEAjEeCQKOeIf0epIQ/11 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_qaEFEEAjEeCQKOeIf0epIQ http://CHESS.Dependability/schemas/ThreatsPropagation/_U0bY8DRoEeCPrptoDUJcNQ/1 pathmap://CHESSML_PROFILE/CHESS.profile.uml#_U0lJ8DRoEeCPrptoDUJcNQ">
   <uml:Model xmi:id="_TUS4oD_9EeCMjNe7UhVfZQ" name="model">
     <packagedElement xmi:type="uml:Package" xmi:id="_Te4_ED_9EeCMjNe7UhVfZQ" name="modelComponentView">
-      <packagedElement xmi:type="uml:Component" xmi:id="_DzqqEEACEeCoh-1BA2BB1g" name="C1"/>
-      <packagedElement xmi:type="uml:Component" xmi:id="_HzNBwEACEeCoh-1BA2BB1g" name="C2"/>
-      <packagedElement xmi:type="uml:Component" xmi:id="_LipH8EACEeCoh-1BA2BB1g" name="C1_impl" clientDependency="_XxBJUEACEeCoh-1BA2BB1g _13p38E-0EeCd_rvJFq3ZVA">
-        <ownedAttribute xmi:type="uml:Port" xmi:id="_oF8wYEACEeCoh-1BA2BB1g" name="c1_port" visibility="public" aggregation="composite">
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_pya5QUACEeCoh-1BA2BB1g" value="1"/>
-          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_pya5QEACEeCoh-1BA2BB1g" value="1"/>
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_pya5QkACEeCoh-1BA2BB1g">
+      <packagedElement xmi:type="uml:Component" xmi:id="_DzqqEEACEeCoh-1BA2BB1g" name="Analyzer" clientDependency="_wMJg8Fb3EeCR3LfeuuoSNA _3ltQoFk1EeCNUs77z6e79Q">
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_eyKhsFk5EeCNUs77z6e79Q" name="Analyzer_RI" visibility="public" aggregation="composite">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_f-7PwVk5EeCNUs77z6e79Q" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_f-7PwFk5EeCNUs77z6e79Q" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_f-7Pwlk5EeCNUs77z6e79Q">
+            <value xsi:nil="true"/>
+          </defaultValue>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_jpPlYFk5EeCNUs77z6e79Q" name="Analyzer_PI" visibility="public" aggregation="composite">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lAuVsVk5EeCNUs77z6e79Q" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lAuVsFk5EeCNUs77z6e79Q" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_lAuVslk5EeCNUs77z6e79Q">
+            <value xsi:nil="true"/>
+          </defaultValue>
+        </ownedAttribute>
+        <interfaceRealization xmi:id="_wMJg8Fb3EeCR3LfeuuoSNA" name="InterfaceRealization0" supplier="_sCcgoFb3EeCR3LfeuuoSNA" client="_LipH8EACEeCoh-1BA2BB1g _DzqqEEACEeCoh-1BA2BB1g" contract="_sCcgoFb3EeCR3LfeuuoSNA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Component" xmi:id="_HzNBwEACEeCoh-1BA2BB1g" name="Receiver" clientDependency="_UsQ6cFkSEeC5eeG1nTwzGA">
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_M0jsoFk5EeCNUs77z6e79Q" name="Receiver_PI" visibility="public" type="_HV-RUFb6EeCR3LfeuuoSNA" aggregation="composite">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OFyD8Fk5EeCNUs77z6e79Q" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OFo6AFk5EeCNUs77z6e79Q" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_OFyD8Vk5EeCNUs77z6e79Q">
+            <value xsi:nil="true"/>
+          </defaultValue>
+        </ownedAttribute>
+        <interfaceRealization xmi:id="_UsQ6cFkSEeC5eeG1nTwzGA" name="InterfaceRealization1" supplier="__x-BcE-zEeCd_rvJFq3ZVA" client="_L6dLAEACEeCoh-1BA2BB1g _HzNBwEACEeCoh-1BA2BB1g" contract="__x-BcE-zEeCd_rvJFq3ZVA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Component" xmi:id="_LipH8EACEeCoh-1BA2BB1g" name="Analyzer_impl" clientDependency="_XxBJUEACEeCoh-1BA2BB1g _wMJg8Fb3EeCR3LfeuuoSNA _ZaBGMFkWEeC5eeG1nTwzGA">
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_QOmU8FkVEeC5eeG1nTwzGA" name="Analyzer_PI_inst" visibility="public" aggregation="composite">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Sdt34VkVEeC5eeG1nTwzGA" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Sdt34FkVEeC5eeG1nTwzGA" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_Sdt34lkVEeC5eeG1nTwzGA">
+            <value xsi:nil="true"/>
+          </defaultValue>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_LxhawFkXEeC5eeG1nTwzGA" name="Analyzer_RI_inst" visibility="public" aggregation="composite">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NJvx8VkXEeC5eeG1nTwzGA" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NJvx8FkXEeC5eeG1nTwzGA" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_NJvx8lkXEeC5eeG1nTwzGA">
+            <value xsi:nil="true"/>
+          </defaultValue>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_6u4rQFk5EeCNUs77z6e79Q" name="Analyzer_PI_impl" visibility="public" aggregation="composite">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8AjugFk5EeCNUs77z6e79Q" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8AakkFk5EeCNUs77z6e79Q" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_8AjugVk5EeCNUs77z6e79Q">
+            <value xsi:nil="true"/>
+          </defaultValue>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_-73pEFk5EeCNUs77z6e79Q" name="Analyzer_RI_impl" visibility="public" aggregation="composite">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Du7vcVk6EeCNUs77z6e79Q" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Du7vcFk6EeCNUs77z6e79Q" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_Du7vclk6EeCNUs77z6e79Q">
             <value xsi:nil="true"/>
           </defaultValue>
         </ownedAttribute>
@@ -18,49 +64,119 @@
             <subvertex xmi:type="uml:State" xmi:id="_WjkTYEAxEeCNVbN088KYpA" name="State1"/>
           </region>
         </ownedBehavior>
-        <interfaceRealization xmi:id="_13p38E-0EeCd_rvJFq3ZVA" name="InterfaceRealization0" supplier="__x-BcE-zEeCd_rvJFq3ZVA" client="_LipH8EACEeCoh-1BA2BB1g" contract="__x-BcE-zEeCd_rvJFq3ZVA"/>
+        <interfaceRealization xmi:id="_ZaBGMFkWEeC5eeG1nTwzGA" name="InterfaceRealization0" client="_LipH8EACEeCoh-1BA2BB1g"/>
+        <ownedOperation xmi:id="_3kNToFb3EeCR3LfeuuoSNA" name="InterferenceAnalyze"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Component" xmi:id="_L6dLAEACEeCoh-1BA2BB1g" name="C2_impl" clientDependency="_Yy8gYEACEeCoh-1BA2BB1g _21Z5oE-0EeCd_rvJFq3ZVA">
-        <ownedAttribute xmi:type="uml:Port" xmi:id="_rfMkIEACEeCoh-1BA2BB1g" name="c2_port" visibility="public" aggregation="composite">
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sugP4UACEeCoh-1BA2BB1g" value="1"/>
-          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sugP4EACEeCoh-1BA2BB1g" value="1"/>
-          <defaultValue xmi:type="uml:LiteralString" xmi:id="_suqA4EACEeCoh-1BA2BB1g">
+      <packagedElement xmi:type="uml:Component" xmi:id="_L6dLAEACEeCoh-1BA2BB1g" name="Receiver_impl" clientDependency="_Yy8gYEACEeCoh-1BA2BB1g _UsQ6cFkSEeC5eeG1nTwzGA">
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_7qqE4FkWEeC5eeG1nTwzGA" name="Receiver_PI_inst" visibility="public" aggregation="composite">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__cHkUVkWEeC5eeG1nTwzGA" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__cHkUFkWEeC5eeG1nTwzGA" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="__cHkUlkWEeC5eeG1nTwzGA">
             <value xsi:nil="true"/>
           </defaultValue>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_-hwDcFk6EeCNUs77z6e79Q" name="Receiver_PI_impl" visibility="public" aggregation="composite">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_A2qsYVk7EeCNUs77z6e79Q" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_A2qsYFk7EeCNUs77z6e79Q" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_A2qsYlk7EeCNUs77z6e79Q">
+            <value xsi:nil="true"/>
+          </defaultValue>
+        </ownedAttribute>
+        <ownedOperation xmi:id="_8D7x0Fb4EeCR3LfeuuoSNA" name="Receive">
+          <ownedParameter xmi:id="_zVIeAFkOEeCONJhirSCuMA" name="data" type="_HV-RUFb6EeCR3LfeuuoSNA" direction="out" effect="read"/>
+        </ownedOperation>
       </packagedElement>
       <packagedElement xmi:type="uml:Component" xmi:id="_O6ktEEACEeCoh-1BA2BB1g" name="sw_system">
-        <ownedAttribute xmi:id="_i3aO8EACEeCoh-1BA2BB1g" name="c1" type="_LipH8EACEeCoh-1BA2BB1g" aggregation="composite">
+        <ownedComment xmi:id="_zUUPkFkXEeC5eeG1nTwzGA" annotatedElement="_QOmU8FkVEeC5eeG1nTwzGA">
+          <body></body>
+        </ownedComment>
+        <ownedComment xmi:id="_31YnAFkXEeC5eeG1nTwzGA" annotatedElement="_7qqE4FkWEeC5eeG1nTwzGA">
+          <body></body>
+        </ownedComment>
+        <ownedAttribute xmi:id="_i3aO8EACEeCoh-1BA2BB1g" name="Analyzer_impl_inst" type="_LipH8EACEeCoh-1BA2BB1g" aggregation="composite">
           <defaultValue xmi:type="uml:InstanceValue" xmi:id="_Lq8v4k_bEeCESaaBbYaCnQ" instance="_Lq8v4U_bEeCESaaBbYaCnQ"/>
         </ownedAttribute>
-        <ownedAttribute xmi:id="_jNmhYEACEeCoh-1BA2BB1g" name="c2" type="_L6dLAEACEeCoh-1BA2BB1g" aggregation="composite">
+        <ownedAttribute xmi:id="_jNmhYEACEeCoh-1BA2BB1g" name="Receiver_impl_inst" type="_L6dLAEACEeCoh-1BA2BB1g" aggregation="composite">
           <defaultValue xmi:type="uml:InstanceValue" xmi:id="_Lq8v5k_bEeCESaaBbYaCnQ" instance="_Lq8v5U_bEeCESaaBbYaCnQ"/>
         </ownedAttribute>
-        <ownedConnector xmi:id="_uGAOUEACEeCoh-1BA2BB1g" name="Connector0">
-          <end xmi:id="_uGAOUUACEeCoh-1BA2BB1g" role="_oF8wYEACEeCoh-1BA2BB1g" partWithPort="_i3aO8EACEeCoh-1BA2BB1g"/>
-          <end xmi:id="_uGAOUkACEeCoh-1BA2BB1g" role="_rfMkIEACEeCoh-1BA2BB1g" partWithPort="_jNmhYEACEeCoh-1BA2BB1g"/>
+        <ownedConnector xmi:id="_z-KL4FkZEeC5eeG1nTwzGA" name="Connector0">
+          <end xmi:id="_z-KL4VkZEeC5eeG1nTwzGA" role="_LxhawFkXEeC5eeG1nTwzGA" partWithPort="_i3aO8EACEeCoh-1BA2BB1g"/>
+          <end xmi:id="_z-KL4lkZEeC5eeG1nTwzGA" role="_7qqE4FkWEeC5eeG1nTwzGA" partWithPort="_jNmhYEACEeCoh-1BA2BB1g"/>
         </ownedConnector>
       </packagedElement>
-      <packagedElement xmi:type="uml:Realization" xmi:id="_XxBJUEACEeCoh-1BA2BB1g" name="Realization1" supplier="_DzqqEEACEeCoh-1BA2BB1g" client="_LipH8EACEeCoh-1BA2BB1g"/>
-      <packagedElement xmi:type="uml:Realization" xmi:id="_Yy8gYEACEeCoh-1BA2BB1g" name="Realization2" supplier="_HzNBwEACEeCoh-1BA2BB1g" client="_L6dLAEACEeCoh-1BA2BB1g"/>
-      <packagedElement xmi:type="uml:Interface" xmi:id="__x-BcE-zEeCd_rvJFq3ZVA" name="C1_Interface"/>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_21Z5oE-0EeCd_rvJFq3ZVA" name="Dependency0" supplier="__x-BcE-zEeCd_rvJFq3ZVA" client="_L6dLAEACEeCoh-1BA2BB1g"/>
+      <packagedElement xmi:type="uml:Realization" xmi:id="_XxBJUEACEeCoh-1BA2BB1g" name="Realization0" supplier="_DzqqEEACEeCoh-1BA2BB1g" client="_LipH8EACEeCoh-1BA2BB1g"/>
+      <packagedElement xmi:type="uml:Realization" xmi:id="_Yy8gYEACEeCoh-1BA2BB1g" name="Realization1" supplier="_HzNBwEACEeCoh-1BA2BB1g" client="_L6dLAEACEeCoh-1BA2BB1g"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="__x-BcE-zEeCd_rvJFq3ZVA" name="IReceiver">
+        <ownedOperation xmi:id="_jUhRwFb4EeCR3LfeuuoSNA" name="Receive">
+          <ownedParameter xmi:id="_mL9oUFkOEeCONJhirSCuMA" name="data" type="_HV-RUFb6EeCR3LfeuuoSNA" direction="out" effect="read"/>
+        </ownedOperation>
+      </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_Lq8v4E_bEeCESaaBbYaCnQ" name="sw_system_instanceSpecification">
         <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_Lq8v4U_bEeCESaaBbYaCnQ" name="c1" classifier="_LipH8EACEeCoh-1BA2BB1g">
-          <slot xmi:id="_Lq8v40_bEeCESaaBbYaCnQ" definingFeature="_oF8wYEACEeCoh-1BA2BB1g"/>
+          <slot xmi:id="_Lq8v40_bEeCESaaBbYaCnQ"/>
         </packagedElement>
         <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_Lq8v5U_bEeCESaaBbYaCnQ" name="c2" classifier="_L6dLAEACEeCoh-1BA2BB1g">
-          <slot xmi:id="_Lq8v50_bEeCESaaBbYaCnQ" definingFeature="_rfMkIEACEeCoh-1BA2BB1g"/>
+          <slot xmi:id="_Lq8v50_bEeCESaaBbYaCnQ"/>
         </packagedElement>
         <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_Lq8v6U_bEeCESaaBbYaCnQ">
-          <slot xmi:id="_Lq8v6k_bEeCESaaBbYaCnQ" definingFeature="_oF8wYEACEeCoh-1BA2BB1g">
+          <slot xmi:id="_Lq8v6k_bEeCESaaBbYaCnQ">
             <value xmi:type="uml:InstanceValue" xmi:id="_Lq8v7E_bEeCESaaBbYaCnQ" name="partWithPort" instance="_Lq8v4U_bEeCESaaBbYaCnQ"/>
           </slot>
-          <slot xmi:id="_Lq8v60_bEeCESaaBbYaCnQ" definingFeature="_rfMkIEACEeCoh-1BA2BB1g">
+          <slot xmi:id="_Lq8v60_bEeCESaaBbYaCnQ">
             <value xmi:type="uml:InstanceValue" xmi:id="_Lq8v7U_bEeCESaaBbYaCnQ" name="partWithPort" instance="_Lq8v5U_bEeCESaaBbYaCnQ"/>
           </slot>
         </packagedElement>
       </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_sCcgoFb3EeCR3LfeuuoSNA" name="IAnalyzer">
+        <ownedOperation xmi:id="_yk8kUFb3EeCR3LfeuuoSNA" name="InterferenceAnalyze"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_HV-RUFb6EeCR3LfeuuoSNA" name="IComm">
+        <ownedAttribute xmi:id="_4AeRgFb6EeCR3LfeuuoSNA" name="GPS_position" visibility="public" type="_9QxRAFb7EeCR3LfeuuoSNA">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6YX9AVb6EeCR3LfeuuoSNA" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6YX9AFb6EeCR3LfeuuoSNA" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_6YX9Alb6EeCR3LfeuuoSNA">
+            <value xsi:nil="true"/>
+          </defaultValue>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_9XQI8Fb6EeCR3LfeuuoSNA" name="on-board_signaling_interference">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Boolean"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_H4BZAFb7EeCR3LfeuuoSNA" name="Quality_of_GSM-R_signal" type="_vWzQgFb7EeCR3LfeuuoSNA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_vWzQgFb7EeCR3LfeuuoSNA" name="Quality">
+        <ownedLiteral xmi:id="_ybB2gFb7EeCR3LfeuuoSNA" name="Excellent"/>
+        <ownedLiteral xmi:id="_16yh8Fb7EeCR3LfeuuoSNA" name="High"/>
+        <ownedLiteral xmi:id="_2J9mYFb7EeCR3LfeuuoSNA" name="Medium"/>
+        <ownedLiteral xmi:id="_2brBcFb7EeCR3LfeuuoSNA" name="Low"/>
+        <ownedLiteral xmi:id="_3YhEMFb7EeCR3LfeuuoSNA" name="None"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_9QxRAFb7EeCR3LfeuuoSNA" name="Position">
+        <ownedAttribute xmi:id="__28pEFb7EeCR3LfeuuoSNA" name="X" visibility="public">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_beo90AnpEdy9WM11hWri2g"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_AYkvcFb8EeCR3LfeuuoSNA" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_AYa-cFb8EeCR3LfeuuoSNA" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_AYkvcVb8EeCR3LfeuuoSNA">
+            <value xsi:nil="true"/>
+          </defaultValue>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_A0sDsFb8EeCR3LfeuuoSNA" name="Y" visibility="public">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_beo90AnpEdy9WM11hWri2g"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_BCq1UVb8EeCR3LfeuuoSNA" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BCq1UFb8EeCR3LfeuuoSNA" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_BC0mUFb8EeCR3LfeuuoSNA">
+            <value xsi:nil="true"/>
+          </defaultValue>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_BX8hwFb8EeCR3LfeuuoSNA" name="Z" visibility="public">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_beo90AnpEdy9WM11hWri2g"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_BzLFMVb8EeCR3LfeuuoSNA" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BzLFMFb8EeCR3LfeuuoSNA" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_BzLFMlb8EeCR3LfeuuoSNA">
+            <value xsi:nil="true"/>
+          </defaultValue>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_3ltQoFk1EeCNUs77z6e79Q" name="Dependency0" supplier="__x-BcE-zEeCd_rvJFq3ZVA" client="_DzqqEEACEeCoh-1BA2BB1g"/>
       <profileApplication xmi:id="_Te5mIT_9EeCMjNe7UhVfZQ">
         <eAnnotations xmi:id="_Te5mIj_9EeCMjNe7UhVfZQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
           <references xmi:type="ecore:EPackage" href="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_xt9poDUkEeC3rNpnAhYo0w"/>
@@ -129,8 +245,8 @@
       </profileApplication>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_Te8pcD_9EeCMjNe7UhVfZQ" name="modelDeploymentView">
-      <packagedElement xmi:type="uml:Component" xmi:id="_eBMgMD_9EeCMjNe7UhVfZQ" name="NodeA">
-        <ownedAttribute xmi:type="uml:Port" xmi:id="_SMW8AEAEEeCoh-1BA2BB1g" name="nodeA_port" visibility="public" aggregation="composite">
+      <packagedElement xmi:type="uml:Component" xmi:id="_eBMgMD_9EeCMjNe7UhVfZQ" name="PC">
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_SMW8AEAEEeCoh-1BA2BB1g" name="pc_port" visibility="public" type="_HV-RUFb6EeCR3LfeuuoSNA" aggregation="composite">
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UvIawUAEEeCoh-1BA2BB1g" value="1"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UvIawEAEEeCoh-1BA2BB1g" value="1"/>
           <defaultValue xmi:type="uml:LiteralString" xmi:id="_UvIawkAEEeCoh-1BA2BB1g">
@@ -138,8 +254,8 @@
           </defaultValue>
         </ownedAttribute>
       </packagedElement>
-      <packagedElement xmi:type="uml:Component" xmi:id="_jCFnMD_9EeCMjNe7UhVfZQ" name="NodeB">
-        <ownedAttribute xmi:type="uml:Port" xmi:id="_XuJwoEAEEeCoh-1BA2BB1g" name="nodeB_port" visibility="public" aggregation="composite">
+      <packagedElement xmi:type="uml:Component" xmi:id="_jCFnMD_9EeCMjNe7UhVfZQ" name="BoardSystem">
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_XuJwoEAEEeCoh-1BA2BB1g" name="bs_port" visibility="public" type="_HV-RUFb6EeCR3LfeuuoSNA" aggregation="composite">
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_aIu8sUAEEeCoh-1BA2BB1g" value="1"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_aIu8sEAEEeCoh-1BA2BB1g" value="1"/>
           <defaultValue xmi:type="uml:LiteralString" xmi:id="_aIu8skAEEeCoh-1BA2BB1g">
@@ -154,13 +270,13 @@
         <ownedComment xmi:id="_Vmj1MEAIEeCoh-1BA2BB1g">
           <body></body>
         </ownedComment>
-        <ownedAttribute xmi:id="_qNrrMD_9EeCMjNe7UhVfZQ" name="nodeA" type="_eBMgMD_9EeCMjNe7UhVfZQ" aggregation="composite">
+        <ownedAttribute xmi:id="_qNrrMD_9EeCMjNe7UhVfZQ" name="pc" type="_eBMgMD_9EeCMjNe7UhVfZQ" aggregation="composite">
           <defaultValue xmi:type="uml:InstanceValue" xmi:id="_X-6Gwk_ZEeCESaaBbYaCnQ" instance="_X-6GwU_ZEeCESaaBbYaCnQ"/>
         </ownedAttribute>
-        <ownedAttribute xmi:id="_qe-2kD_9EeCMjNe7UhVfZQ" name="nodeB" type="_jCFnMD_9EeCMjNe7UhVfZQ" aggregation="composite">
+        <ownedAttribute xmi:id="_qe-2kD_9EeCMjNe7UhVfZQ" name="boardsystem" type="_jCFnMD_9EeCMjNe7UhVfZQ" aggregation="composite">
           <defaultValue xmi:type="uml:InstanceValue" xmi:id="_X_DQs0_ZEeCESaaBbYaCnQ" instance="_X_DQsk_ZEeCESaaBbYaCnQ"/>
         </ownedAttribute>
-        <ownedAttribute xmi:id="_J6S_MEAEEeCoh-1BA2BB1g" name="bus" type="_jayMUEADEeCoh-1BA2BB1g" aggregation="composite">
+        <ownedAttribute xmi:id="_J6S_MEAEEeCoh-1BA2BB1g" name="serialcable" type="_jayMUEADEeCoh-1BA2BB1g" aggregation="composite">
           <defaultValue xmi:type="uml:InstanceValue" xmi:id="_X_DQt0_ZEeCESaaBbYaCnQ" instance="_X_DQtk_ZEeCESaaBbYaCnQ"/>
         </ownedAttribute>
         <ownedConnector xmi:id="_g20lUEAEEeCoh-1BA2BB1g" name="Connector1">
@@ -172,15 +288,15 @@
           <end xmi:id="_lE3TEkAEEeCoh-1BA2BB1g" role="_ampnwEAEEeCoh-1BA2BB1g" partWithPort="_J6S_MEAEEeCoh-1BA2BB1g"/>
         </ownedConnector>
       </packagedElement>
-      <packagedElement xmi:type="uml:Component" xmi:id="_jayMUEADEeCoh-1BA2BB1g" name="Bus">
-        <ownedAttribute xmi:type="uml:Port" xmi:id="_ampnwEAEEeCoh-1BA2BB1g" name="bus_port0" visibility="public" aggregation="composite">
+      <packagedElement xmi:type="uml:Component" xmi:id="_jayMUEADEeCoh-1BA2BB1g" name="SerialCable">
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_ampnwEAEEeCoh-1BA2BB1g" name="sc_pc_port" visibility="public" type="_HV-RUFb6EeCR3LfeuuoSNA" aggregation="composite">
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_a077YUAEEeCoh-1BA2BB1g" value="1"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_a077YEAEEeCoh-1BA2BB1g" value="1"/>
           <defaultValue xmi:type="uml:LiteralString" xmi:id="_a077YkAEEeCoh-1BA2BB1g">
             <value xsi:nil="true"/>
           </defaultValue>
         </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Port" xmi:id="_bfqTYEAEEeCoh-1BA2BB1g" name="bus_port1" visibility="public" aggregation="composite">
+        <ownedAttribute xmi:type="uml:Port" xmi:id="_bfqTYEAEEeCoh-1BA2BB1g" name="sc_bs_port" visibility="public" type="_HV-RUFb6EeCR3LfeuuoSNA" aggregation="composite">
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bv4gsUAEEeCoh-1BA2BB1g" value="1"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bv4gsEAEEeCoh-1BA2BB1g" value="1"/>
           <defaultValue xmi:type="uml:LiteralString" xmi:id="_bwCRsEAEEeCoh-1BA2BB1g">
@@ -344,7 +460,7 @@
       </profileApplication>
       <profileApplication xmi:id="_60P_YD_-EeCoh-1BA2BB1g">
         <eAnnotations xmi:id="_6011QD_-EeCoh-1BA2BB1g" source="http://www.eclipse.org/uml2/2.0.0/UML">
-          <references xmi:type="ecore:EPackage" href="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_vTM18DgaEeCE2sZUGxu35w"/>
+          <references xmi:type="ecore:EPackage" href="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_LgJ2AE7nEeCiWfCHUearZQ"/>
         </eAnnotations>
         <appliedProfile href="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_uNKOgDQ2EeC0ueejuetpgA"/>
       </profileApplication>
@@ -442,7 +558,6 @@
   <ComponentModel:ComponentType xmi:id="_JlVGsEACEeCoh-1BA2BB1g" base_Component="_HzNBwEACEeCoh-1BA2BB1g"/>
   <ComponentModel:ComponentImplementation xmi:id="_Q8DcoEACEeCoh-1BA2BB1g" base_Component="_L6dLAEACEeCoh-1BA2BB1g"/>
   <ComponentModel:ComponentImplementation xmi:id="_RplRAEACEeCoh-1BA2BB1g" base_Component="_LipH8EACEeCoh-1BA2BB1g"/>
-  <DependableComponent:Propagation xmi:id="_variQEACEeCoh-1BA2BB1g" base_Connector="_uGAOUEACEeCoh-1BA2BB1g"/>
   <DependableComponent:Propagation xmi:id="_mFcmUEAEEeCoh-1BA2BB1g" base_Connector="_lE3TEEAEEeCoh-1BA2BB1g"/>
   <DependableComponent:Propagation xmi:id="_nS-JYEAEEeCoh-1BA2BB1g" base_Connector="_g20lUEAEEeCoh-1BA2BB1g"/>
   <GCM:FlowPort xmi:id="_sZ3xwEAEEeCoh-1BA2BB1g" direction="out" base_Port="_SMW8AEAEEeCoh-1BA2BB1g"/>
@@ -460,13 +575,8 @@
   <StateBasedComponents:StatefulSoftware xmi:id="_p1jfYE-xEeCd_rvJFq3ZVA" base_Component="_LipH8EACEeCoh-1BA2BB1g" errorModel="_Tj7ScEAxEeCNVbN088KYpA" errorLatency="3" repairDelay="2" faultOcc="1"/>
   <StateBasedComponents:StatefulSoftware xmi:id="_quZy8E-xEeCd_rvJFq3ZVA" base_Component="_L6dLAEACEeCoh-1BA2BB1g" errorLatency="1" repairDelay="2" faultOcc="3"/>
   <GQAM:GaResourcesPlatform xmi:id="_51i7wE-yEeCd_rvJFq3ZVA" base_Classifier="_lHNgoD_9EeCMjNe7UhVfZQ"/>
-  <HwCommunication:HwBus xmi:id="_7EHAoE-yEeCd_rvJFq3ZVA" base_Classifier="_jayMUEADEeCoh-1BA2BB1g"/>
   <HwComputing:HwComputingResource xmi:id="_8Vo58E-yEeCd_rvJFq3ZVA" base_Classifier="_jCFnMD_9EeCMjNe7UhVfZQ"/>
-  <HwComputing:HwComputingResource xmi:id="_99pZkE-yEeCd_rvJFq3ZVA" base_Classifier="_eBMgMD_9EeCMjNe7UhVfZQ"/>
-  <Blocks:NestedConnectorEnd xmi:id="_ElSxEE-1EeCd_rvJFq3ZVA" base_ConnectorEnd="_uGAOUUACEeCoh-1BA2BB1g"/>
-  <GCM:ClientServerPort xmi:id="_FrFUcE-1EeCd_rvJFq3ZVA" base_Port="_oF8wYEACEeCoh-1BA2BB1g" kind="provided" provInterface="__x-BcE-zEeCd_rvJFq3ZVA"/>
-  <GCM:ClientServerPort xmi:id="_JaygYE-1EeCd_rvJFq3ZVA" base_Port="_rfMkIEACEeCoh-1BA2BB1g" kind="required" reqInterface="__x-BcE-zEeCd_rvJFq3ZVA"/>
-  <Analysis:StateBasedAnalysis xmi:id="_TSeEQE_CEeCESaaBbYaCnQ" base_StructuredClassifier="_QsFkwE-qEeCU1t14pFydGg" base_NamedElement="_QsFkwE-qEeCU1t14pFydGg" platform="_51i7wE-yEeCd_rvJFq3ZVA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_ElSxEE-1EeCd_rvJFq3ZVA"/>
   <RTComponentModel:CHRtPortSlot xmi:id="_X_DQsU_ZEeCESaaBbYaCnQ" base_Slot="_X_DQsE_ZEeCESaaBbYaCnQ"/>
   <RTComponentModel:CHRtPortSlot xmi:id="_X_DQtU_ZEeCESaaBbYaCnQ" base_Slot="_X_DQtE_ZEeCESaaBbYaCnQ"/>
   <RTComponentModel:CHRtPortSlot xmi:id="_X_DQuU_ZEeCESaaBbYaCnQ" base_Slot="_X_DQuE_ZEeCESaaBbYaCnQ"/>
@@ -474,12 +584,47 @@
   <Core_1:CHGaResourcePlatform xmi:id="_8_Z98E_ZEeCESaaBbYaCnQ" base_Package="_X-6GwE_ZEeCESaaBbYaCnQ"/>
   <Alloc:Assign xmi:id="_gx5w8E_aEeCESaaBbYaCnQ" from="_Lq8v5U_bEeCESaaBbYaCnQ" to="_X_DQsk_ZEeCESaaBbYaCnQ" base_Comment="_P8O0UE_aEeCESaaBbYaCnQ"/>
   <Alloc:Assign xmi:id="_hYTCkE_aEeCESaaBbYaCnQ" from="_Lq8v4U_bEeCESaaBbYaCnQ" to="_X-6GwU_ZEeCESaaBbYaCnQ" base_Comment="_QedXoE_aEeCESaaBbYaCnQ"/>
-  <DependableComponent:Propagation xmi:id="_FmeE8E_bEeCESaaBbYaCnQ"/>
   <RTComponentModel:CHRtPortSlot xmi:id="_Lq8v5E_bEeCESaaBbYaCnQ" base_Slot="_Lq8v40_bEeCESaaBbYaCnQ"/>
   <RTComponentModel:CHRtPortSlot xmi:id="_Lq8v6E_bEeCESaaBbYaCnQ" base_Slot="_Lq8v50_bEeCESaaBbYaCnQ"/>
-  <DependableComponent:Propagation xmi:id="_VpQzIE_bEeCESaaBbYaCnQ"/>
-  <DependableComponent:Propagation xmi:id="_s0DewE_bEeC9wMdP4Wv4hA"/>
-  <DependableComponent:Propagation xmi:id="_uS1J4E_bEeC9wMdP4Wv4hA"/>
-  <DependableComponent:Propagation xmi:id="_xB9CkE_bEeC9wMdP4Wv4hA"/>
-  <DependableComponent:Propagation xmi:id="_yp9iME_bEeC9wMdP4Wv4hA"/>
+  <HwCommunication:HwBus xmi:id="_FS8R8FkQEeC5eeG1nTwzGA" base_Classifier="_jayMUEADEeCoh-1BA2BB1g"/>
+  <HwComputing:HwProcessor xmi:id="_HMyIcFkQEeC5eeG1nTwzGA" base_Classifier="_eBMgMD_9EeCMjNe7UhVfZQ"/>
+  <Blocks:NestedConnectorEnd xmi:id="_rI6YkFkQEeC5eeG1nTwzGA" base_ConnectorEnd="_lE3TEUAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_rqie8FkQEeC5eeG1nTwzGA" base_ConnectorEnd="_lE3TEUAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_tXvAkFkQEeC5eeG1nTwzGA" base_ConnectorEnd="_lE3TEkAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_t4K0IFkQEeC5eeG1nTwzGA" base_ConnectorEnd="_lE3TEkAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_1kmUUFkQEeC5eeG1nTwzGA" base_ConnectorEnd="_g20lUkAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_3VEzcFkQEeC5eeG1nTwzGA" base_ConnectorEnd="_lE3TEkAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_4q6lAFkQEeC5eeG1nTwzGA" base_ConnectorEnd="_g20lUkAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_5Ua1AFkQEeC5eeG1nTwzGA" base_ConnectorEnd="_g20lUkAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_Dc3EoFkREeC5eeG1nTwzGA" base_ConnectorEnd="_g20lUUAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_EXW-AFkREeC5eeG1nTwzGA" base_ConnectorEnd="_g20lUUAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_FIQ2gFkREeC5eeG1nTwzGA" base_ConnectorEnd="_g20lUUAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_FmoNgFkREeC5eeG1nTwzGA" base_ConnectorEnd="_g20lUUAEEeCoh-1BA2BB1g"/>
+  <Blocks:NestedConnectorEnd xmi:id="_N_BfAFkVEeC5eeG1nTwzGA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_Pma6oFkVEeC5eeG1nTwzGA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_aesEsFkVEeC5eeG1nTwzGA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_hR2akFkVEeC5eeG1nTwzGA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_h3MjUFkVEeC5eeG1nTwzGA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_iKiWEFkVEeC5eeG1nTwzGA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_im8lQFkVEeC5eeG1nTwzGA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_jMJkEFkVEeC5eeG1nTwzGA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_nOkQoFkVEeC5eeG1nTwzGA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_41FbYFkVEeC5eeG1nTwzGA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_6D2fIFkWEeC5eeG1nTwzGA"/>
+  <GCM:ClientServerPort xmi:id="_BZ1OMFkXEeC5eeG1nTwzGA" base_Port="_7qqE4FkWEeC5eeG1nTwzGA" kind="provided" provInterface="__x-BcE-zEeCd_rvJFq3ZVA"/>
+  <GCM:ClientServerPort xmi:id="_Qaei4FkXEeC5eeG1nTwzGA" base_Port="_QOmU8FkVEeC5eeG1nTwzGA" kind="provided" provInterface="_sCcgoFb3EeCR3LfeuuoSNA"/>
+  <GCM:ClientServerPort xmi:id="_RElP0FkXEeC5eeG1nTwzGA" base_Port="_LxhawFkXEeC5eeG1nTwzGA" kind="required" reqInterface="__x-BcE-zEeCd_rvJFq3ZVA"/>
+  <RTComponentModel:CHRtSpecification xmi:id="_2HcegFkXEeC5eeG1nTwzGA" base_Comment="_zUUPkFkXEeC5eeG1nTwzGA" occKind="PeriodicPattern"/>
+  <RTComponentModel:CHRtSpecification xmi:id="_5xBNQFkXEeC5eeG1nTwzGA" base_Comment="_31YnAFkXEeC5eeG1nTwzGA" occKind="SporadicPattern"/>
+  <DependableComponent_1:Propagation xmi:id="_0llYQFkZEeC5eeG1nTwzGA" base_Connector="_z-KL4FkZEeC5eeG1nTwzGA" prob="2" propDelay="4"/>
+  <Analysis:StateBasedAnalysis xmi:id="_6OAdsFk3EeCNUs77z6e79Q"/>
+  <Analysis:StateBasedAnalysis xmi:id="_9Nd4cFk3EeCNUs77z6e79Q" base_StructuredClassifier="_QsFkwE-qEeCU1t14pFydGg" base_NamedElement="_QsFkwE-qEeCU1t14pFydGg" platform="_51i7wE-yEeCd_rvJFq3ZVA"/>
+  <GCM:ClientServerPort xmi:id="_X7_UEFk5EeCNUs77z6e79Q" base_Port="_M0jsoFk5EeCNUs77z6e79Q" kind="provided" provInterface="__x-BcE-zEeCd_rvJFq3ZVA"/>
+  <GCM:ClientServerPort xmi:id="_hGfUwFk5EeCNUs77z6e79Q" base_Port="_eyKhsFk5EeCNUs77z6e79Q" kind="required" reqInterface="__x-BcE-zEeCd_rvJFq3ZVA"/>
+  <GCM:ClientServerPort xmi:id="_loTTEFk5EeCNUs77z6e79Q" base_Port="_jpPlYFk5EeCNUs77z6e79Q" kind="provided" provInterface="_sCcgoFb3EeCR3LfeuuoSNA"/>
+  <GCM:ClientServerPort xmi:id="_8bVmAFk5EeCNUs77z6e79Q" base_Port="_6u4rQFk5EeCNUs77z6e79Q" kind="provided" provInterface="_sCcgoFb3EeCR3LfeuuoSNA"/>
+  <GCM:ClientServerPort xmi:id="_EWgs0Fk6EeCNUs77z6e79Q" base_Port="_-73pEFk5EeCNUs77z6e79Q" kind="required" reqInterface="__x-BcE-zEeCd_rvJFq3ZVA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_qgD2wFk6EeCNUs77z6e79Q" base_ConnectorEnd="_z-KL4VkZEeC5eeG1nTwzGA"/>
+  <Blocks:NestedConnectorEnd xmi:id="_rYTGUFk6EeCNUs77z6e79Q" base_ConnectorEnd="_z-KL4lkZEeC5eeG1nTwzGA"/>
+  <GCM:ClientServerPort xmi:id="_B0Q9EFk7EeCNUs77z6e79Q" base_Port="_-hwDcFk6EeCNUs77z6e79Q" kind="provided" provInterface="__x-BcE-zEeCd_rvJFq3ZVA"/>
 </xmi:XMI>

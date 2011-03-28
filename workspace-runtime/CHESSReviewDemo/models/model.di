@@ -26,12 +26,42 @@
     <availablePage>
       <emfPageIdentifier href="model.notation#_OEfaIE_bEeCESaaBbYaCnQ"/>
     </availablePage>
+    <availablePage>
+      <emfPageIdentifier href="model.notation#__42_gFb5EeCR3LfeuuoSNA"/>
+    </availablePage>
+    <availablePage>
+      <emfPageIdentifier href="model.notation#_3k1cAFk3EeCNUs77z6e79Q"/>
+    </availablePage>
+    <availablePage>
+      <emfPageIdentifier href="model.notation#_HXxwUFk4EeCNUs77z6e79Q"/>
+    </availablePage>
+    <availablePage>
+      <emfPageIdentifier href="model.notation#_5XHAAFk5EeCNUs77z6e79Q"/>
+    </availablePage>
+    <availablePage>
+      <emfPageIdentifier href="model.notation#_9gvSYFk6EeCNUs77z6e79Q"/>
+    </availablePage>
   </pageList>
   <sashModel currentSelection="//@sashModel/@windows.0/@children.0">
     <windows>
       <children xsi:type="di:TabFolder">
         <children>
           <emfPageIdentifier href="model.notation#_Cz1kwEACEeCoh-1BA2BB1g"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="model.notation#__42_gFb5EeCR3LfeuuoSNA"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="model.notation#_3k1cAFk3EeCNUs77z6e79Q"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="model.notation#_HXxwUFk4EeCNUs77z6e79Q"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="model.notation#_5XHAAFk5EeCNUs77z6e79Q"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="model.notation#_9gvSYFk6EeCNUs77z6e79Q"/>
         </children>
         <children>
           <emfPageIdentifier href="model.notation#_b531EEACEeCoh-1BA2BB1g"/>
@@ -43,13 +73,7 @@
           <emfPageIdentifier href="model.notation#_NReSMEALEeCHQ-6nDlLOYg"/>
         </children>
         <children>
-          <emfPageIdentifier href="model.notation#_PJ2T0EAxEeCNVbN088KYpA"/>
-        </children>
-        <children>
           <emfPageIdentifier href="model.notation#_PcMDIE-qEeCU1t14pFydGg"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="model.notation#_fsZW4E_ZEeCESaaBbYaCnQ"/>
         </children>
       </children>
     </windows>
