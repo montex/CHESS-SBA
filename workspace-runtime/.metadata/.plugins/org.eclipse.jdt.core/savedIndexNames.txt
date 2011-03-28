@@ -1,2 +1,0 @@
-INDEX VERSION 1.126+/home/montex/Projects/CHESS/workspace-runtime/.metadata/.plugins/org.eclipse.jdt.core
-1307095227.index

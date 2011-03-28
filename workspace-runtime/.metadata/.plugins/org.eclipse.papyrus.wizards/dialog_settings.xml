@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<section name="Workbench">
-	<section name="NewModelWizard">
-		<item value="false" key="RememberCurrentSelection"/>
-		<item value="" key="DiagramTemplatesFor_uml"/>
-		<item value="" key="DiagramKindsFor_uml"/>
-		<item value="uml" key="diagramCategory"/>
-	</section>
-</section>
