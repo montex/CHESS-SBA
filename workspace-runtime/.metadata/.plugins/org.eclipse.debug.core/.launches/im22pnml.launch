@@ -19,7 +19,7 @@
 <mapEntry key="out1" value="MODELOUTPUT"/>
 </mapAttribute>
 <mapAttribute key="Options">
-<mapEntry key="OPTION_CLEAR" value="false"/>
+<mapEntry key="OPTION_CLEAR" value="true"/>
 <mapEntry key="OPTION_CONTENT_TYPE" value="false"/>
 <mapEntry key="OPTION_DERIVED" value="true"/>
 <mapEntry key="allowInterModelReferences" value="false"/>
@@ -39,8 +39,11 @@
 <mapAttribute key="Path">
 <mapEntry key="GSPN" value="/CHESSReviewDemo/metamodels/placeTransition.ecore"/>
 <mapEntry key="IM2" value="/CHESSReviewDemo/metamodels/IM2.ecore"/>
-<mapEntry key="in1" value="/CHESSReviewDemo/models/model.idm"/>
-<mapEntry key="out1" value="/CHESSReviewDemo/models/model.pnml"/>
+<mapEntry key="in1" value="/CHESSReviewDemo/models/singlecomponent.idm"/>
+<mapEntry key="out1" value="/CHESSReviewDemo/models/singlecomponent.pnml"/>
 </mapAttribute>
 <listAttribute key="Superimpose"/>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+</listAttribute>
 </launchConfiguration>

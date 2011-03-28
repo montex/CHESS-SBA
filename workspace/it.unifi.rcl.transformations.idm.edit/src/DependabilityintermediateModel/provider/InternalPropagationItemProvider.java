@@ -36,7 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class InternalPropagationItemProvider
-	extends ErrorsPropagationItemProvider
+	extends ErrorPropagationItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,

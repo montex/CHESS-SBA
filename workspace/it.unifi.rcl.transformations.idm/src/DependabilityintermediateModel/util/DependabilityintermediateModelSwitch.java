@@ -12,13 +12,13 @@ import DependabilityintermediateModel.DependabilityintermediateModelPackage;
 import DependabilityintermediateModel.DetectionActivity;
 import DependabilityintermediateModel.Deterministic;
 import DependabilityintermediateModel.Distribution;
+import DependabilityintermediateModel.ErrorPropagation;
 import DependabilityintermediateModel.ErrorsExpressionAndNode;
 import DependabilityintermediateModel.ErrorsExpressionErrorNode;
 import DependabilityintermediateModel.ErrorsExpressionNode;
 import DependabilityintermediateModel.ErrorsExpressionNotNode;
 import DependabilityintermediateModel.ErrorsExpressionOrNode;
-import DependabilityintermediateModel.ErrorsProduceFailures;
-import DependabilityintermediateModel.ErrorsPropagation;
+import DependabilityintermediateModel.ErrorsProducesFailures;
 import DependabilityintermediateModel.Exponential;
 import DependabilityintermediateModel.ExternalFault;
 import DependabilityintermediateModel.FailureMode;
@@ -326,20 +326,20 @@ public class DependabilityintermediateModelSwitch<T> {
 			case DependabilityintermediateModelPackage.INTERNAL_PROPAGATION: {
 				InternalPropagation internalPropagation = (InternalPropagation)theEObject;
 				T result = caseInternalPropagation(internalPropagation);
-				if (result == null) result = caseErrorsPropagation(internalPropagation);
+				if (result == null) result = caseErrorPropagation(internalPropagation);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case DependabilityintermediateModelPackage.ERRORS_PROPAGATION: {
-				ErrorsPropagation errorsPropagation = (ErrorsPropagation)theEObject;
-				T result = caseErrorsPropagation(errorsPropagation);
+			case DependabilityintermediateModelPackage.ERROR_PROPAGATION: {
+				ErrorPropagation errorPropagation = (ErrorPropagation)theEObject;
+				T result = caseErrorPropagation(errorPropagation);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case DependabilityintermediateModelPackage.ERRORS_PRODUCE_FAILURES: {
-				ErrorsProduceFailures errorsProduceFailures = (ErrorsProduceFailures)theEObject;
-				T result = caseErrorsProduceFailures(errorsProduceFailures);
-				if (result == null) result = caseErrorsPropagation(errorsProduceFailures);
+			case DependabilityintermediateModelPackage.ERRORS_PRODUCES_FAILURES: {
+				ErrorsProducesFailures errorsProducesFailures = (ErrorsProducesFailures)theEObject;
+				T result = caseErrorsProducesFailures(errorsProducesFailures);
+				if (result == null) result = caseErrorPropagation(errorsProducesFailures);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -884,32 +884,32 @@ public class DependabilityintermediateModelSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Errors Propagation</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Error Propagation</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Errors Propagation</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Error Propagation</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseErrorsPropagation(ErrorsPropagation object) {
+	public T caseErrorPropagation(ErrorPropagation object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Errors Produce Failures</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Errors Produces Failures</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Errors Produce Failures</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Errors Produces Failures</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseErrorsProduceFailures(ErrorsProduceFailures object) {
+	public T caseErrorsProducesFailures(ErrorsProducesFailures object) {
 		return null;
 	}
 

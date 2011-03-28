@@ -17,7 +17,7 @@ import junit.textui.TestRunner;
  * <!-- end-user-doc -->
  * @generated
  */
-public class InternalPropagationTest extends ErrorsPropagationTest {
+public class InternalPropagationTest extends ErrorPropagationTest {
 
 	/**
 	 * <!-- begin-user-doc -->

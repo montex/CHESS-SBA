@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workbench progressCount="13" version="2.0">
 <workbenchAdvisor/>
-<window height="486" width="928" x="91" y="146">
+<window height="648" width="1089" x="186" y="97">
 <fastViewData fastViewLocation="1024">
 <orientation position="512" view="org.eclipse.team.sync.views.SynchronizeView"/>
 <orientation position="512" view="org.eclipse.pde.runtime.LogView"/>
@@ -11,10 +11,10 @@
 </perspectiveBar>
 <coolbarLayout locked="0">
 <coolItem id="group.file" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="132" y="30"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="132" y="31"/>
 <coolItem id="additions" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.acceleo.ide.ui.editors.template.AcceleoEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="142" y="30"/>
+<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="120" y="31"/>
 <coolItem id="org.eclipse.emf.codegen.ecore.genmodel.presentation.GenModelEditorID" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.emf.ecore.presentation.EcoreEditorID" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.emf.ecore.presentation.ReflectiveEditorID" itemType="typePlaceholder" x="-1" y="-1"/>
@@ -30,10 +30,10 @@
 <coolItem id="org.eclipse.papyrus.layouttool.toolbarlayout" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipes.papyrus.menu.toolbar" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.papyrus.diagram.ui.toolbar" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.amalgam.discovery.modeling.toolbars.sampleToolbar" itemType="typeToolBarContribution" x="40" y="31"/>
+<coolItem id="org.eclipse.amalgam.discovery.modeling.toolbars.sampleToolbar" itemType="typeToolBarContribution" x="67" y="31"/>
 <coolItem id="org.eclipse.pde.ui.buildEditor" itemType="typePlaceholder" x="40" y="31"/>
 <coolItem id="org.eclipse.pde.ui.manifestEditor" itemType="typePlaceholder" x="40" y="31"/>
-<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="118" y="31"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="104" y="30"/>
 <coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="116" y="31"/>
 <coolItem id="org.eclipse.uml2.uml.editor.presentation.UMLEditorID" itemType="typePlaceholder" x="-1" y="-1"/>

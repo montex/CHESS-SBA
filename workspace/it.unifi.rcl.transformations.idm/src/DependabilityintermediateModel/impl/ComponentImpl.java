@@ -8,7 +8,7 @@ package DependabilityintermediateModel.impl;
 
 import DependabilityintermediateModel.Component;
 import DependabilityintermediateModel.DependabilityintermediateModelPackage;
-import DependabilityintermediateModel.ErrorsProduceFailures;
+import DependabilityintermediateModel.ErrorsProducesFailures;
 import DependabilityintermediateModel.FailureMode;
 import DependabilityintermediateModel.Fault;
 import DependabilityintermediateModel.FaultsGenerateErrors;
@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -110,7 +109,7 @@ public class ComponentImpl extends NamedElementImpl implements Component {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ErrorsProduceFailures> errorsGeneratesFailures;
+	protected EList<ErrorsProducesFailures> errorsGeneratesFailures;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -227,7 +226,7 @@ public class ComponentImpl extends NamedElementImpl implements Component {
 	 */
 	public EList<InternalPropagation> getInternalPropagation() {
 		if (internalPropagation == null) {
-			internalPropagation = new EObjectContainmentEList<InternalPropagation>(InternalPropagation.class, this, DependabilityintermediateModelPackage.COMPONENT__INTERNAL_PROPAGATION);
+			internalPropagation = new EObjectContainmentWithInverseEList<InternalPropagation>(InternalPropagation.class, this, DependabilityintermediateModelPackage.COMPONENT__INTERNAL_PROPAGATION, DependabilityintermediateModelPackage.INTERNAL_PROPAGATION__COMPONENT);
 		}
 		return internalPropagation;
 	}
@@ -237,9 +236,9 @@ public class ComponentImpl extends NamedElementImpl implements Component {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ErrorsProduceFailures> getErrorsGeneratesFailures() {
+	public EList<ErrorsProducesFailures> getErrorsGeneratesFailures() {
 		if (errorsGeneratesFailures == null) {
-			errorsGeneratesFailures = new EObjectContainmentEList<ErrorsProduceFailures>(ErrorsProduceFailures.class, this, DependabilityintermediateModelPackage.COMPONENT__ERRORS_GENERATES_FAILURES);
+			errorsGeneratesFailures = new EObjectContainmentWithInverseEList<ErrorsProducesFailures>(ErrorsProducesFailures.class, this, DependabilityintermediateModelPackage.COMPONENT__ERRORS_GENERATES_FAILURES, DependabilityintermediateModelPackage.ERRORS_PRODUCES_FAILURES__COMPONENT);
 		}
 		return errorsGeneratesFailures;
 	}
@@ -265,6 +264,10 @@ public class ComponentImpl extends NamedElementImpl implements Component {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getFaults()).basicAdd(otherEnd, msgs);
 			case DependabilityintermediateModelPackage.COMPONENT__FAULTS_GENERATES_ERRORS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getFaultsGeneratesErrors()).basicAdd(otherEnd, msgs);
+			case DependabilityintermediateModelPackage.COMPONENT__INTERNAL_PROPAGATION:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getInternalPropagation()).basicAdd(otherEnd, msgs);
+			case DependabilityintermediateModelPackage.COMPONENT__ERRORS_GENERATES_FAILURES:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getErrorsGeneratesFailures()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -369,7 +372,7 @@ public class ComponentImpl extends NamedElementImpl implements Component {
 				return;
 			case DependabilityintermediateModelPackage.COMPONENT__ERRORS_GENERATES_FAILURES:
 				getErrorsGeneratesFailures().clear();
-				getErrorsGeneratesFailures().addAll((Collection<? extends ErrorsProduceFailures>)newValue);
+				getErrorsGeneratesFailures().addAll((Collection<? extends ErrorsProducesFailures>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

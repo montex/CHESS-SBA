@@ -12,13 +12,13 @@ import DependabilityintermediateModel.DependabilityintermediateModelPackage;
 import DependabilityintermediateModel.DetectionActivity;
 import DependabilityintermediateModel.Deterministic;
 import DependabilityintermediateModel.Distribution;
+import DependabilityintermediateModel.ErrorPropagation;
 import DependabilityintermediateModel.ErrorsExpressionAndNode;
 import DependabilityintermediateModel.ErrorsExpressionErrorNode;
 import DependabilityintermediateModel.ErrorsExpressionNode;
 import DependabilityintermediateModel.ErrorsExpressionNotNode;
 import DependabilityintermediateModel.ErrorsExpressionOrNode;
-import DependabilityintermediateModel.ErrorsProduceFailures;
-import DependabilityintermediateModel.ErrorsPropagation;
+import DependabilityintermediateModel.ErrorsProducesFailures;
 import DependabilityintermediateModel.Exponential;
 import DependabilityintermediateModel.ExternalFault;
 import DependabilityintermediateModel.FailureMode;
@@ -229,12 +229,12 @@ public class DependabilityintermediateModelAdapterFactory extends AdapterFactory
 				return createInternalPropagationAdapter();
 			}
 			@Override
-			public Adapter caseErrorsPropagation(ErrorsPropagation object) {
-				return createErrorsPropagationAdapter();
+			public Adapter caseErrorPropagation(ErrorPropagation object) {
+				return createErrorPropagationAdapter();
 			}
 			@Override
-			public Adapter caseErrorsProduceFailures(ErrorsProduceFailures object) {
-				return createErrorsProduceFailuresAdapter();
+			public Adapter caseErrorsProducesFailures(ErrorsProducesFailures object) {
+				return createErrorsProducesFailuresAdapter();
 			}
 			@Override
 			public Adapter caseActivity(Activity object) {
@@ -713,30 +713,30 @@ public class DependabilityintermediateModelAdapterFactory extends AdapterFactory
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.ErrorsPropagation <em>Errors Propagation</em>}'.
+	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.ErrorPropagation <em>Error Propagation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see DependabilityintermediateModel.ErrorsPropagation
+	 * @see DependabilityintermediateModel.ErrorPropagation
 	 * @generated
 	 */
-	public Adapter createErrorsPropagationAdapter() {
+	public Adapter createErrorPropagationAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.ErrorsProduceFailures <em>Errors Produce Failures</em>}'.
+	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.ErrorsProducesFailures <em>Errors Produces Failures</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see DependabilityintermediateModel.ErrorsProduceFailures
+	 * @see DependabilityintermediateModel.ErrorsProducesFailures
 	 * @generated
 	 */
-	public Adapter createErrorsProduceFailuresAdapter() {
+	public Adapter createErrorsProducesFailuresAdapter() {
 		return null;
 	}
 

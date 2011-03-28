@@ -1,0 +1,6 @@
+query DEEM2String_query = DEEM!Net.allInstances()->
+	select(e | e.oclIsTypeOf(DEEM!Net))->
+	collect(x | x.toString().writeTo('${workspace_loc}/CHESSReviewDemo/models/' + x.Name ));
+
+uses DEEM2String;
+

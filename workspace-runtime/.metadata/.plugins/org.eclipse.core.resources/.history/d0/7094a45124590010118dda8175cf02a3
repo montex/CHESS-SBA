@@ -1,0 +1,81 @@
+<NDFile-'1.2'>
+
+NET:"org.eclipse.m2m.atl.engine.emfvm.lib.OclUndefined@11a58a4",0,0;
+COLORS:White,Black,Black,Black,Black,Black;
+PLACE:"failed_c10",0,0,0,0;
+PLACE:"faultyPlace_c1_c1_f11",0,0,0,0;
+PLACE:"numberOfTransientFaultyPlace_c1_c1_f12",0,0,0,0;
+PLACE:"internal_fault_occurred_c1_c1_f13",0,0,0,0;
+PLACE:"erroneusPlace_c1_c1_e14",0,0,0,0;
+PLACE:"detect_error_Place_c1_c1_e15",0,0,0,0;
+PLACE:"failureModePlace_c1_c1_fm16",0,0,0,0;
+
+
+TRANS:"T0",0,0,V,Immediate,1,0,'', '',
+ (
+  0.5
+  );
+TRANS:"T1",0,0,V,Immediate,1,0,'', '',
+ (
+  0.5
+  );
+TRANS:"T2",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T3",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T4",0,0,V,Immediate,2,0,'', '',
+ (
+  1.0
+  );
+TRANS:"T5",0,0,V,Timed,1,Exponential,'', '',
+ (
+  1.0E-5
+  );
+TRANS:"T6",0,0,V,Timed,1,Exponential,'', '',
+ (
+  0.0
+  );
+
+
+IARC:"internal_fault_occurred_c1_c1_f13","T0",1,Normal,''
+ (0,0,0,0),1;
+IARC:"internal_fault_occurred_c1_c1_f13","T1",1,Normal,''
+ (0,0,0,0),1;
+IARC:"numberOfTransientFaultyPlace_c1_c1_f12","T6",1,Normal,''
+ (0,0,0,0),1;
+IARC:"faultyPlace_c1_c1_f11","T6",1,Normal,''
+ (0,0,0,0),1;
+IARC:"faultyPlace_c1_c1_f11","T2",1,Normal,''
+ (0,0,0,0),1;
+IARC:"failed_c10","T2",1,Normal,''
+ (0,0,0,0),1;
+IARC:"numberOfTransientFaultyPlace_c1_c1_f12","T3",1,Normal,''
+ (0,0,0,0),1;
+IARC:"failed_c10","T3",1,Normal,''
+ (0,0,0,0),1;
+IARC:"erroneusPlace_c1_c1_e14","T4",1,Normal,''
+ (0,0,0,0),1;
+IARC:"failed_c10","T4",1,Normal,''
+ (0,0,0,0),1;
+IARC:"failed_c10","T5",1,Inhibitor,''
+ (0,0,0,0),1;
+
+
+OARC:"T5","internal_fault_occurred_c1_c1_f13",1,1,''
+ (0,0,0,0),1;
+OARC:"T0","faultyPlace_c1_c1_f11",1,1,''
+ (0,0,0,0),1;
+OARC:"T1","faultyPlace_c1_c1_f11",1,1,''
+ (0,0,0,0),1;
+OARC:"T1","numberOfTransientFaultyPlace_c1_c1_f12",1,1,''
+ (0,0,0,0),1;
+OARC:"T2","failed_c10",1,1,''
+ (0,0,0,0),1;
+OARC:"T3","failed_c10",1,1,''
+ (0,0,0,0),1;
+OARC:"T4","failed_c10",1,1,''
+ (0,0,0,0),1;

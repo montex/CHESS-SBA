@@ -582,49 +582,49 @@ public class DependabilityintermediateModelItemProviderAdapterFactory extends De
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link DependabilityintermediateModel.ErrorsPropagation} instances.
+	 * This keeps track of the one adapter used for all {@link DependabilityintermediateModel.ErrorPropagation} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ErrorsPropagationItemProvider errorsPropagationItemProvider;
+	protected ErrorPropagationItemProvider errorPropagationItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link DependabilityintermediateModel.ErrorsPropagation}.
+	 * This creates an adapter for a {@link DependabilityintermediateModel.ErrorPropagation}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createErrorsPropagationAdapter() {
-		if (errorsPropagationItemProvider == null) {
-			errorsPropagationItemProvider = new ErrorsPropagationItemProvider(this);
+	public Adapter createErrorPropagationAdapter() {
+		if (errorPropagationItemProvider == null) {
+			errorPropagationItemProvider = new ErrorPropagationItemProvider(this);
 		}
 
-		return errorsPropagationItemProvider;
+		return errorPropagationItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link DependabilityintermediateModel.ErrorsProduceFailures} instances.
+	 * This keeps track of the one adapter used for all {@link DependabilityintermediateModel.ErrorsProducesFailures} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ErrorsProduceFailuresItemProvider errorsProduceFailuresItemProvider;
+	protected ErrorsProducesFailuresItemProvider errorsProducesFailuresItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link DependabilityintermediateModel.ErrorsProduceFailures}.
+	 * This creates an adapter for a {@link DependabilityintermediateModel.ErrorsProducesFailures}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createErrorsProduceFailuresAdapter() {
-		if (errorsProduceFailuresItemProvider == null) {
-			errorsProduceFailuresItemProvider = new ErrorsProduceFailuresItemProvider(this);
+	public Adapter createErrorsProducesFailuresAdapter() {
+		if (errorsProducesFailuresItemProvider == null) {
+			errorsProducesFailuresItemProvider = new ErrorsProducesFailuresItemProvider(this);
 		}
 
-		return errorsProduceFailuresItemProvider;
+		return errorsProducesFailuresItemProvider;
 	}
 
 	/**
@@ -1047,8 +1047,8 @@ public class DependabilityintermediateModelItemProviderAdapterFactory extends De
 		if (errorsExpressionOrNodeItemProvider != null) errorsExpressionOrNodeItemProvider.dispose();
 		if (faultsGenerateErrorsItemProvider != null) faultsGenerateErrorsItemProvider.dispose();
 		if (internalPropagationItemProvider != null) internalPropagationItemProvider.dispose();
-		if (errorsPropagationItemProvider != null) errorsPropagationItemProvider.dispose();
-		if (errorsProduceFailuresItemProvider != null) errorsProduceFailuresItemProvider.dispose();
+		if (errorPropagationItemProvider != null) errorPropagationItemProvider.dispose();
+		if (errorsProducesFailuresItemProvider != null) errorsProducesFailuresItemProvider.dispose();
 		if (maintenanceActivityItemProvider != null) maintenanceActivityItemProvider.dispose();
 		if (repairActivityItemProvider != null) repairActivityItemProvider.dispose();
 		if (replaceActivityItemProvider != null) replaceActivityItemProvider.dispose();

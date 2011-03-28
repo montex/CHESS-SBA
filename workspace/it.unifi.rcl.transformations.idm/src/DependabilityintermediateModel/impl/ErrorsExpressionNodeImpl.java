@@ -7,8 +7,8 @@
 package DependabilityintermediateModel.impl;
 
 import DependabilityintermediateModel.DependabilityintermediateModelPackage;
+import DependabilityintermediateModel.ErrorPropagation;
 import DependabilityintermediateModel.ErrorsExpressionNode;
-import DependabilityintermediateModel.ErrorsPropagation;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -40,7 +40,7 @@ public abstract class ErrorsExpressionNodeImpl extends EObjectImpl implements Er
 	 * @generated
 	 * @ordered
 	 */
-	protected ErrorsPropagation errorPropagation;
+	protected ErrorPropagation errorPropagation;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -66,10 +66,10 @@ public abstract class ErrorsExpressionNodeImpl extends EObjectImpl implements Er
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorsPropagation getErrorPropagation() {
+	public ErrorPropagation getErrorPropagation() {
 		if (errorPropagation != null && errorPropagation.eIsProxy()) {
 			InternalEObject oldErrorPropagation = (InternalEObject)errorPropagation;
-			errorPropagation = (ErrorsPropagation)eResolveProxy(oldErrorPropagation);
+			errorPropagation = (ErrorPropagation)eResolveProxy(oldErrorPropagation);
 			if (errorPropagation != oldErrorPropagation) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependabilityintermediateModelPackage.ERRORS_EXPRESSION_NODE__ERROR_PROPAGATION, oldErrorPropagation, errorPropagation));
@@ -83,7 +83,7 @@ public abstract class ErrorsExpressionNodeImpl extends EObjectImpl implements Er
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorsPropagation basicGetErrorPropagation() {
+	public ErrorPropagation basicGetErrorPropagation() {
 		return errorPropagation;
 	}
 
@@ -92,8 +92,8 @@ public abstract class ErrorsExpressionNodeImpl extends EObjectImpl implements Er
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setErrorPropagation(ErrorsPropagation newErrorPropagation) {
-		ErrorsPropagation oldErrorPropagation = errorPropagation;
+	public void setErrorPropagation(ErrorPropagation newErrorPropagation) {
+		ErrorPropagation oldErrorPropagation = errorPropagation;
 		errorPropagation = newErrorPropagation;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, DependabilityintermediateModelPackage.ERRORS_EXPRESSION_NODE__ERROR_PROPAGATION, oldErrorPropagation, errorPropagation));
@@ -123,7 +123,7 @@ public abstract class ErrorsExpressionNodeImpl extends EObjectImpl implements Er
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case DependabilityintermediateModelPackage.ERRORS_EXPRESSION_NODE__ERROR_PROPAGATION:
-				setErrorPropagation((ErrorsPropagation)newValue);
+				setErrorPropagation((ErrorPropagation)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -138,7 +138,7 @@ public abstract class ErrorsExpressionNodeImpl extends EObjectImpl implements Er
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case DependabilityintermediateModelPackage.ERRORS_EXPRESSION_NODE__ERROR_PROPAGATION:
-				setErrorPropagation((ErrorsPropagation)null);
+				setErrorPropagation((ErrorPropagation)null);
 				return;
 		}
 		super.eUnset(featureID);

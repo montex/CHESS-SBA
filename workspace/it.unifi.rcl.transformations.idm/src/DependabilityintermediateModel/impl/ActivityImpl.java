@@ -11,6 +11,7 @@ import DependabilityintermediateModel.Component;
 import DependabilityintermediateModel.DependabilityintermediateModelPackage;
 import DependabilityintermediateModel.Distribution;
 import DependabilityintermediateModel.SchedulingEvent;
+import DependabilityintermediateModel.Sistema;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -19,6 +20,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,6 +33,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link DependabilityintermediateModel.impl.ActivityImpl#getDuration <em>Duration</em>}</li>
  *   <li>{@link DependabilityintermediateModel.impl.ActivityImpl#getWhen <em>When</em>}</li>
  *   <li>{@link DependabilityintermediateModel.impl.ActivityImpl#getComponent <em>Component</em>}</li>
+ *   <li>{@link DependabilityintermediateModel.impl.ActivityImpl#getSistema <em>Sistema</em>}</li>
  * </ul>
  * </p>
  *
@@ -214,6 +218,47 @@ public abstract class ActivityImpl extends NamedElementImpl implements Activity 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Sistema getSistema() {
+		if (eContainerFeatureID() != DependabilityintermediateModelPackage.ACTIVITY__SISTEMA) return null;
+		return (Sistema)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetSistema(Sistema newSistema, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newSistema, DependabilityintermediateModelPackage.ACTIVITY__SISTEMA, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSistema(Sistema newSistema) {
+		if (newSistema != eInternalContainer() || (eContainerFeatureID() != DependabilityintermediateModelPackage.ACTIVITY__SISTEMA && newSistema != null)) {
+			if (EcoreUtil.isAncestor(this, newSistema))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newSistema != null)
+				msgs = ((InternalEObject)newSistema).eInverseAdd(this, DependabilityintermediateModelPackage.SISTEMA__ACTIVITIES, Sistema.class, msgs);
+			msgs = basicSetSistema(newSistema, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DependabilityintermediateModelPackage.ACTIVITY__SISTEMA, newSistema, newSistema));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -221,6 +266,10 @@ public abstract class ActivityImpl extends NamedElementImpl implements Activity 
 				if (when != null)
 					msgs = ((InternalEObject)when).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DependabilityintermediateModelPackage.ACTIVITY__WHEN, null, msgs);
 				return basicSetWhen((SchedulingEvent)otherEnd, msgs);
+			case DependabilityintermediateModelPackage.ACTIVITY__SISTEMA:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetSistema((Sistema)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -237,8 +286,24 @@ public abstract class ActivityImpl extends NamedElementImpl implements Activity 
 				return basicSetDuration(null, msgs);
 			case DependabilityintermediateModelPackage.ACTIVITY__WHEN:
 				return basicSetWhen(null, msgs);
+			case DependabilityintermediateModelPackage.ACTIVITY__SISTEMA:
+				return basicSetSistema(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case DependabilityintermediateModelPackage.ACTIVITY__SISTEMA:
+				return eInternalContainer().eInverseRemove(this, DependabilityintermediateModelPackage.SISTEMA__ACTIVITIES, Sistema.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 
 	/**
@@ -256,6 +321,8 @@ public abstract class ActivityImpl extends NamedElementImpl implements Activity 
 			case DependabilityintermediateModelPackage.ACTIVITY__COMPONENT:
 				if (resolve) return getComponent();
 				return basicGetComponent();
+			case DependabilityintermediateModelPackage.ACTIVITY__SISTEMA:
+				return getSistema();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -276,6 +343,9 @@ public abstract class ActivityImpl extends NamedElementImpl implements Activity 
 				return;
 			case DependabilityintermediateModelPackage.ACTIVITY__COMPONENT:
 				setComponent((Component)newValue);
+				return;
+			case DependabilityintermediateModelPackage.ACTIVITY__SISTEMA:
+				setSistema((Sistema)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -298,6 +368,9 @@ public abstract class ActivityImpl extends NamedElementImpl implements Activity 
 			case DependabilityintermediateModelPackage.ACTIVITY__COMPONENT:
 				setComponent((Component)null);
 				return;
+			case DependabilityintermediateModelPackage.ACTIVITY__SISTEMA:
+				setSistema((Sistema)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -316,6 +389,8 @@ public abstract class ActivityImpl extends NamedElementImpl implements Activity 
 				return when != null;
 			case DependabilityintermediateModelPackage.ACTIVITY__COMPONENT:
 				return component != null;
+			case DependabilityintermediateModelPackage.ACTIVITY__SISTEMA:
+				return getSistema() != null;
 		}
 		return super.eIsSet(featureID);
 	}

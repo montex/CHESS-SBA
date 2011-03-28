@@ -12,12 +12,12 @@ import DependabilityintermediateModel.DependabilityintermediateModelFactory;
 import DependabilityintermediateModel.DependabilityintermediateModelPackage;
 import DependabilityintermediateModel.DetectionActivity;
 import DependabilityintermediateModel.Deterministic;
+import DependabilityintermediateModel.ErrorPropagation;
 import DependabilityintermediateModel.ErrorsExpressionAndNode;
 import DependabilityintermediateModel.ErrorsExpressionErrorNode;
 import DependabilityintermediateModel.ErrorsExpressionNotNode;
 import DependabilityintermediateModel.ErrorsExpressionOrNode;
-import DependabilityintermediateModel.ErrorsProduceFailures;
-import DependabilityintermediateModel.ErrorsPropagation;
+import DependabilityintermediateModel.ErrorsProducesFailures;
 import DependabilityintermediateModel.Exponential;
 import DependabilityintermediateModel.ExternalFault;
 import DependabilityintermediateModel.FailureConsequences;
@@ -125,8 +125,8 @@ public class DependabilityintermediateModelFactoryImpl extends EFactoryImpl impl
 			case DependabilityintermediateModelPackage.ERRORS_EXPRESSION_OR_NODE: return createErrorsExpressionOrNode();
 			case DependabilityintermediateModelPackage.FAULTS_GENERATE_ERRORS: return createFaultsGenerateErrors();
 			case DependabilityintermediateModelPackage.INTERNAL_PROPAGATION: return createInternalPropagation();
-			case DependabilityintermediateModelPackage.ERRORS_PROPAGATION: return createErrorsPropagation();
-			case DependabilityintermediateModelPackage.ERRORS_PRODUCE_FAILURES: return createErrorsProduceFailures();
+			case DependabilityintermediateModelPackage.ERROR_PROPAGATION: return createErrorPropagation();
+			case DependabilityintermediateModelPackage.ERRORS_PRODUCES_FAILURES: return createErrorsProducesFailures();
 			case DependabilityintermediateModelPackage.MAINTENANCE_ACTIVITY: return createMaintenanceActivity();
 			case DependabilityintermediateModelPackage.REPAIR_ACTIVITY: return createRepairActivity();
 			case DependabilityintermediateModelPackage.REPLACE_ACTIVITY: return createReplaceActivity();
@@ -416,9 +416,9 @@ public class DependabilityintermediateModelFactoryImpl extends EFactoryImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorsPropagation createErrorsPropagation() {
-		ErrorsPropagationImpl errorsPropagation = new ErrorsPropagationImpl();
-		return errorsPropagation;
+	public ErrorPropagation createErrorPropagation() {
+		ErrorPropagationImpl errorPropagation = new ErrorPropagationImpl();
+		return errorPropagation;
 	}
 
 	/**
@@ -426,9 +426,9 @@ public class DependabilityintermediateModelFactoryImpl extends EFactoryImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorsProduceFailures createErrorsProduceFailures() {
-		ErrorsProduceFailuresImpl errorsProduceFailures = new ErrorsProduceFailuresImpl();
-		return errorsProduceFailures;
+	public ErrorsProducesFailures createErrorsProducesFailures() {
+		ErrorsProducesFailuresImpl errorsProducesFailures = new ErrorsProducesFailuresImpl();
+		return errorsProducesFailures;
 	}
 
 	/**

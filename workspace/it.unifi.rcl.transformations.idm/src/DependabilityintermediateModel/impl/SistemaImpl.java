@@ -20,7 +20,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -97,7 +96,7 @@ public class SistemaImpl extends NamedElementImpl implements Sistema {
 	 */
 	public EList<Activity> getActivities() {
 		if (activities == null) {
-			activities = new EObjectContainmentEList<Activity>(Activity.class, this, DependabilityintermediateModelPackage.SISTEMA__ACTIVITIES);
+			activities = new EObjectContainmentWithInverseEList<Activity>(Activity.class, this, DependabilityintermediateModelPackage.SISTEMA__ACTIVITIES, DependabilityintermediateModelPackage.ACTIVITY__SISTEMA);
 		}
 		return activities;
 	}
@@ -113,6 +112,8 @@ public class SistemaImpl extends NamedElementImpl implements Sistema {
 		switch (featureID) {
 			case DependabilityintermediateModelPackage.SISTEMA__COMPONENTS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getComponents()).basicAdd(otherEnd, msgs);
+			case DependabilityintermediateModelPackage.SISTEMA__ACTIVITIES:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getActivities()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}

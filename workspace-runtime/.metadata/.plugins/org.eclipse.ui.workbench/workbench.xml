@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="85" version="2.0">
+<workbench progressCount="19" version="2.0">
 <workbenchAdvisor/>
 <window height="721" maximized="true" width="1016" x="0" y="24">
 <fastViewData fastViewLocation="1024"/>
@@ -8,55 +8,100 @@
 </perspectiveBar>
 <coolbarLayout locked="0">
 <coolItem id="group.file" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="848" y="30"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="132" y="31"/>
 <coolItem id="additions" itemType="typeGroupMarker"/>
 <coolItem id="DependabilityintermediateModel.presentation.DependabilityintermediateModelEditorID" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="it.unipd.chess.editor" itemType="typeToolBarContribution" x="1161" y="30"/>
+<coolItem id="it.unipd.chess.editor" itemType="typePlaceholder" x="848" y="31"/>
+<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="48" y="31"/>
 <coolItem id="org.eclipse.emf.codegen.ecore.genmodel.presentation.GenModelEditorID" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.emf.ecore.presentation.EcoreEditorID" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.emf.ecore.presentation.EcoreEditorID" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.emf.ecore.presentation.ReflectiveEditorID" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorID" itemType="typePlaceholder" x="915" y="31"/>
 <coolItem id="org.eclipse.emf.genericEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.gmt.modisco.infra.browser.editorID" itemType="typePlaceholder" x="152" y="30"/>
+<coolItem id="org.eclipse.gmt.modisco.common.editor.actionSet" itemType="typeToolBarContribution" x="40" y="31"/>
+<coolItem id="org.eclipse.gmt.modisco.infra.browser.editorID" itemType="typePlaceholder" x="152" y="31"/>
 <coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="76" y="31"/>
+<coolItem id="org.eclipse.m2m.atl.adt.editor.AtlEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.ocl.examples.xtext.oclinecore.Ecore" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.papyrus.core.papyrusEditor" itemType="typePlaceholder" x="1356" y="30"/>
-<coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="40" y="30"/>
+<coolItem id="org.eclipse.papyrus.layouttool.toolbarlayout" itemType="typeToolBarContribution" x="48" y="31"/>
+<coolItem id="org.eclipes.papyrus.menu.toolbar" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.papyrus.diagram.ui.toolbar" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.amalgam.discovery.modeling.toolbars.sampleToolbar" itemType="typeToolBarContribution" x="40" y="31"/>
+<coolItem id="it.unipd.chess.toolbar" itemType="typeToolBarContribution" x="40" y="31"/>
+<coolItem id="it.unipd.chess.statustoolbar" itemType="typeToolBarContribution" x="43" y="31"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="76" y="31"/>
+<coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="68" y="31"/>
 <coolItem id="org.eclipse.uml2.uml.editor.presentation.UMLEditorID" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.m2m.atl.adt.editor.AtlEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="184" y="31"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="UserSeparator" itemType="typeSeparator"/>
-<coolItem id="it.unipd.chess.toolbar" itemType="typeToolBarContribution" x="40" y="31"/>
-<coolItem id="it.unipd.chess.statustoolbar" itemType="typeToolBarContribution" x="27" y="31"/>
-<coolItem id="org.eclipes.papyrus.menu.toolbar" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.papyrus.diagram.ui.toolbar" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="120" y="31"/>
-<coolItem id="org.eclipse.gmt.modisco.common.editor.actionSet" itemType="typeToolBarContribution" x="40" y="31"/>
-<coolItem id="org.eclipse.papyrus.layouttool.toolbarlayout" itemType="typeToolBarContribution" x="48" y="31"/>
-<coolItem id="org.eclipse.amalgam.discovery.modeling.toolbars.sampleToolbar" itemType="typeToolBarContribution" x="40" y="31"/>
-<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="76" y="31"/>
-<coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="184" y="31"/>
 </coolbarLayout>
-<page aggregateWorkingSetId="Aggregate for window 1298539862107" focus="true" label="Workspace - ATL">
+<page aggregateWorkingSetId="Aggregate for window 1298539862107" focus="true" label="Workspace - &lt;Ecore&gt;">
 <editors>
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="it.unipd.chess.editor" name="model.di" partName="model.di" path="/home/montex/Projects/CHESS/workspace-runtime/CHESSReviewDemo/models/model.di" title="model.di" tooltip="CHESSReviewDemo/models/model.di" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CHESSReviewDemo/models/model.di"/>
+<editor id="org.eclipse.m2m.atl.adt.editor.AtlEditor" name="pnml2deem.atl" partName="pnml2deem.atl" path="/home/montex/Projects/CHESS/workspace-runtime/CHESSReviewDemo/atl/pnml2deem.atl" title="pnml2deem.atl" tooltip="CHESSReviewDemo/atl/pnml2deem.atl" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CHESSReviewDemo/atl/pnml2deem.atl"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="569" selectionTopPixel="339"/>
+</editor>
+<editor id="org.eclipse.ui.DefaultTextEditor" name="model.pnml" partName="model.pnml" path="/home/montex/Projects/CHESS/workspace-runtime/CHESSReviewDemo/models/model.pnml" title="model.pnml" tooltip="CHESSReviewDemo/models/model.pnml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CHESSReviewDemo/models/model.pnml"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="81780" selectionTopPixel="11636"/>
+</editor>
+<editor id="org.eclipse.ui.DefaultTextEditor" name="model.idm" partName="model.idm" path="/home/montex/Projects/CHESS/workspace-runtime/CHESSReviewDemo/models/model.idm" title="model.idm" tooltip="CHESSReviewDemo/models/model.idm" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CHESSReviewDemo/models/model.idm"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="197"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.m2m.atl.adt.editor.AtlEditor" name="im22pnml.atl" partName="im22pnml.atl" path="/home/montex/Projects/CHESS/workspace-runtime/CHESSReviewDemo/atl/im22pnml.atl" title="im22pnml.atl" tooltip="CHESSReviewDemo/atl/im22pnml.atl" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CHESSReviewDemo/atl/im22pnml.atl"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="9408" selectionTopPixel="4508"/>
+</editor>
+<editor id="org.eclipse.emf.ecore.presentation.EcoreEditorID" name="placeTransition.ecore" partName="placeTransition.ecore" path="/home/montex/Projects/CHESS/workspace-runtime/CHESSReviewDemo/metamodels/placeTransition.ecore" title="placeTransition.ecore" tooltip="CHESSReviewDemo/metamodels/placeTransition.ecore" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/CHESSReviewDemo/metamodels/placeTransition.ecore"/>
 </editor>
 </editors>
 <views>
+<view id="org.eclipse.m2m.internal.qvt.oml.debug.ui.views.trace" partName="Operational QVT Traces"/>
+<view id="org.eclipse.debug.ui.DebugView" partName="Debug">
+<viewState/>
+</view>
+<view id="org.eclipse.pde.runtime.LogView" partName="Error Log">
+<viewState activate="true" allSessions="true" column2="617" column3="150" column4="1123" error="true" groupBy="0" info="true" limit="50" ok="true" orderType="2" orderValue="-1" show_filter_text="true" useLimit="true" warning="true"/>
+</view>
+<view id="org.eclipse.debug.ui.BreakpointView" partName="Breakpoints"/>
+<view id="org.eclipse.ui.views.TaskList" partName="Tasks">
+<viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.completionField" categoryGroup="none" markerContentGenerator="org.eclipse.ui.ide.tasksGenerator" partName="Tasks">
+<columnWidths org.eclipse.ui.ide.completionField="40" org.eclipse.ui.ide.descriptionField="353" org.eclipse.ui.ide.locationField="73" org.eclipse.ui.ide.markerType="108" org.eclipse.ui.ide.pathField="143" org.eclipse.ui.ide.priorityField="19" org.eclipse.ui.ide.resourceField="108"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.completionField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.priorityField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.descriptionField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
+</viewState>
+</view>
+<view id="org.eclipse.debug.ui.VariableView" partName="Variables">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
 <viewState CommonNavigator.LINKING_ENABLED="0" currentWorkingSetName="Aggregate for window 1298539862107" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
 </view>
@@ -65,16 +110,16 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<columnWidths org.eclipse.ui.ide.locationField="73" org.eclipse.ui.ide.markerType="574" org.eclipse.ui.ide.pathField="143" org.eclipse.ui.ide.resourceField="108" org.eclipse.ui.ide.severityAndDescriptionField="687"/>
+<expanded>&#x0A;<category IMemento.internal.id="Warnings"/>
+<category IMemento.internal.id="Errors"/>
+</expanded>
+<columnWidths org.eclipse.ui.ide.locationField="73" org.eclipse.ui.ide.markerType="595" org.eclipse.ui.ide.pathField="143" org.eclipse.ui.ide.resourceField="108" org.eclipse.ui.ide.severityAndDescriptionField="687"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
 </viewState>
-</view>
-<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
-<viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.PackageExplorer" partName="Package Explorer">
 <viewState group_libraries="1" layout="2" linkWithEditor="0" rootMode="1" workingSetName="Aggregate for window 1298539862107">
@@ -108,19 +153,16 @@
 </customFilters>
 </viewState>
 </view>
-<view id="org.eclipse.pde.runtime.LogView" partName="Error Log">
-<viewState activate="true" allSessions="true" column2="617" column3="150" column4="818" error="true" groupBy="0" info="true" limit="50" ok="true" orderType="2" orderValue="-1" show_filter_text="true" useLimit="true" warning="true"/>
-</view>
-<view id="org.eclipse.papyrus.modelexplorer.modelexplorer" partName="Model Explorer">
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
 <viewState/>
 </view>
-<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<view id="org.eclipse.papyrus.modelexplorer.modelexplorer" partName="Model Explorer">
 <viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.SourceView" partName="Declaration"/>
 <view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
 </views>
-<perspectives activePart="it.unipd.chess.editor" activePerspective="org.eclipse.m2m.atl.adt.ui.atlPerspective">
+<perspectives activePart="org.eclipse.m2m.atl.adt.editor.AtlEditor" activePerspective="&lt;Ecore&gt;">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.jdt.ui.JavaPerspective" label="Java"/>
 <alwaysOnActionSet id="org.eclipse.gmt.modisco.common.editor.actionSet"/>
@@ -2198,33 +2240,49 @@
 <viewLayoutRec closeable="false" id="org.eclipse.ui.navigator.ProjectExplorer"/>
 <viewLayoutRec closeable="false" id="org.eclipse.ui.views.PropertySheet"/>
 <viewLayoutRec closeable="false" id="org.eclipse.ui.views.ContentOutline"/>
-<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.ui.internal.ViewStack@e16ffd">&#x0A;<folder activePageID="org.eclipse.ui.navigator.ProjectExplorer" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<layout>
+<mainWindow>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@e16ffd">
+<folder activePageID="org.eclipse.ui.navigator.ProjectExplorer" appearance="2" expanded="2">
+<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="954" ratioRight="318" relationship="2" relative="org.eclipse.ui.internal.ViewStack@e16ffd">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="954" ratioRight="318" relationship="2" relative="org.eclipse.ui.internal.ViewStack@e16ffd">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.250591" ratioLeft="318" ratioRight="951" relationship="2" relative="org.eclipse.ui.internal.ViewStack@e16ffd"/>
-<info folder="true" part="bottom" ratio="0.64285713" ratioLeft="378" ratioRight="210" relationship="4" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.ui.views.PropertySheet" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.PropertySheet" label="Properties"/>
+<info folder="true" part="bottom" ratio="0.64285713" ratioLeft="378" ratioRight="210" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.views.PropertySheet" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.PropertySheet" label="Properties"/>
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 <part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="bottomRight" ratio="0.5995807" ratioLeft="572" ratioRight="382" relationship="2" relative="bottom">&#x0A;<folder activePageID="org.eclipse.emf.ecoretools.internal.views.EClassHierarchyView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.emf.ecoretools.internal.views.EClassHierarchyView" label="LabelNotFound"/>
+<info folder="true" part="bottomRight" ratio="0.5995807" ratioLeft="572" ratioRight="382" relationship="2" relative="bottom">
+<folder activePageID="org.eclipse.emf.ecoretools.internal.views.EClassHierarchyView" appearance="2" expanded="2">
+<page content="org.eclipse.emf.ecoretools.internal.views.EClassHierarchyView" label="LabelNotFound"/>
 <page content="org.eclipse.emf.ecoretools.internal.views.EReferencesView" label="LabelNotFound"/>
 <page content="org.eclipse.pde.runtime.LogView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@7f4e92" ratio="0.89134127" ratioLeft="525" ratioRight="64" relationship="4" relative="org.eclipse.ui.internal.ViewStack@e16ffd">&#x0A;<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@7f4e92" ratio="0.89134127" ratioLeft="525" ratioRight="64" relationship="4" relative="org.eclipse.ui.internal.ViewStack@e16ffd">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 </presentation>
 </folder>
 </info>
@@ -2260,16 +2318,24 @@
 <view id="org.eclipse.papyrus.modelexplorer.modelexplorer"/>
 <view id="org.eclipse.ui.navigator.ProjectExplorer"/>
 <fastViewBars>
-<fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@155f52c" orientation="256" selectedTabId="org.eclipse.ui.views.PropertySheet" style="0">
+<fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@16e1cef" orientation="256" selectedTabId="org.eclipse.ui.views.PropertySheet" style="0">
 <fastViews>
-<view id="org.eclipse.ui.views.PropertySheet" ratio="0.67905825"/>
+<view id="org.eclipse.ui.views.PropertySheet" ratio="0.6780239"/>
 </fastViews>
 </fastViewBar>
-<fastViewBar fastViewLocation="1024" id="bottom" orientation="256" selectedTabId="org.eclipse.ui.console.ConsoleView" style="0">
+<fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@1664cd8" orientation="256" selectedTabId="org.eclipse.ui.console.ConsoleView" style="0">
 <fastViews>
-<view id="org.eclipse.ui.views.ProblemView" ratio="0.29873127"/>
-<view id="org.eclipse.ui.console.ConsoleView" ratio="0.29873127"/>
-<view id="org.eclipse.pde.runtime.LogView" ratio="0.3"/>
+<view id="org.eclipse.ui.views.ProblemView" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="1024" id="bottom" orientation="256" selectedTabId="org.eclipse.pde.runtime.LogView" style="0">
+<fastViews>
+<view id="org.eclipse.pde.runtime.LogView" ratio="0.29982963"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@3e94cc" orientation="256" selectedTabId="org.eclipse.ui.views.PropertySheet" style="0">
+<fastViews>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.29982963"/>
 </fastViews>
 </fastViewBar>
 </fastViewBars>
@@ -2277,13 +2343,13 @@
 <mainWindow>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@15802f1">
 <folder activePageID="org.eclipse.ui.navigator.ProjectExplorer" appearance="2" expanded="2">
+<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
 <page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.papyrus.modelexplorer.modelexplorer" label="Model Explorer"/>
-<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="2"/>
 <part id="0"/>
 <part id="1"/>
+<part id="2"/>
 </presentation>
 </folder>
 </info>
@@ -2302,16 +2368,145 @@
 <info part="org.eclipse.ui.editorss" ratio="0.23404256" ratioLeft="297" ratioRight="972" relationship="2" relative="org.eclipse.ui.internal.ViewStack@15802f1"/>
 <info folder="true" part="bottom" ratio="0.34562212" ratioLeft="300" ratioRight="568" relationship="4" relative="org.eclipse.ui.editorss">
 <folder appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ProblemView" label="LabelNotFound"/>
-<page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
 <page content="org.eclipse.pde.runtime.LogView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@155f52c" ratio="0.5667939" ratioLeft="297" ratioRight="227" relationship="4" relative="org.eclipse.ui.editorss">
 <folder appearance="2" expanded="2">
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1664cd8" ratio="0.5787671" ratioLeft="338" ratioRight="246" relationship="4" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ProblemView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@194dca5" ratio="0.7495741" ratioLeft="440" ratioRight="147" relationship="4" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="0">
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@3e94cc" ratio="0.54452056" ratioLeft="318" ratioRight="266" relationship="4" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@16e1cef" ratio="0.64726025" ratioLeft="378" ratioRight="206" relationship="4" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="0">
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="org.eclipse.debug.internal.ui.DebugPerspectiveFactory" id="org.eclipse.debug.ui.DebugPerspective" label="Debug"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.doc.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.tasks.ui.navigation"/>
+<alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.externaltools.ExternalToolsSet"/>
+<alwaysOnActionSet id="org.eclipse.gmt.modisco.common.editor.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.launchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.acceleo.ide.ui.editors.template.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.NavigateActionSet"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.breakpointActionSet"/>
+<alwaysOnActionSet id="org.eclipse.jdt.debug.ui.JDTDebugActionSet"/>
+<alwaysOnActionSet id="org.eclipse.jdt.ui.JavaActionSet"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.debugActionSet"/>
+<show_view_action id="org.eclipse.debug.ui.DebugView"/>
+<show_view_action id="org.eclipse.debug.ui.VariableView"/>
+<show_view_action id="org.eclipse.debug.ui.BreakpointView"/>
+<show_view_action id="org.eclipse.debug.ui.ExpressionView"/>
+<show_view_action id="org.eclipse.ui.views.ContentOutline"/>
+<show_view_action id="org.eclipse.ui.console.ConsoleView"/>
+<show_view_action id="org.eclipse.ui.views.TaskList"/>
+<show_view_action id="org.eclipse.ant.ui.views.AntView"/>
+<show_view_action id="org.eclipse.pde.runtime.LogView"/>
+<show_view_action id="org.eclipse.jdt.debug.ui.DisplayView"/>
+<perspective_action id="org.eclipse.jdt.ui.JavaPerspective"/>
+<perspective_action id="org.eclipse.jdt.ui.JavaBrowsingPerspective"/>
+<hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
+<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.eclipse.debug.ui.DebugView"/>
+<view id="org.eclipse.debug.ui.VariableView"/>
+<view id="org.eclipse.debug.ui.BreakpointView"/>
+<view id="org.eclipse.m2m.internal.qvt.oml.debug.ui.views.trace"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="org.eclipse.ui.views.TaskList"/>
+<fastViewBars/>
+<layout>
+<mainWindow>
+<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">
+<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
+<page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.PackageExplorer" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@9a0bb0" ratio="0.749577" ratioLeft="443" ratioRight="148" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="954" ratioRight="318" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.7495741" ratioLeft="440" ratioRight="147" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.debug.ui.DisplayView" label="LabelNotFound"/>
+<page content="org.eclipse.search.SearchResultView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.24429224" ratioLeft="107" ratioRight="331" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.75" ratioLeft="954" ratioRight="318" relationship="2" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="636" ratioRight="636" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">
+<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
+<page content="org.eclipse.debug.ui.BreakpointView" label="Breakpoints"/>
+<page content="org.eclipse.m2m.internal.qvt.oml.debug.ui.views.trace" label="Operational QVT Traces"/>
+<page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
+<page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+</presentation>
 </folder>
 </info>
 </mainWindow>
@@ -2321,140 +2516,159 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.emf.ecore.presentation.ReflectiveEditorID" path="/CHESSReviewDemo/metamodels/IM2.ecore"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="DependabilityintermediateModel.presentation.DependabilityintermediateModelEditorID" path="/CHESSReviewDemo/models/model.idm"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="it.unipd.chess.editor" path="/CHESSReviewDemo/models/model.di"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/CHESSReviewDemo/models/model.pnml"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.m2m.atl.adt.editor.AtlEditor" path="/CHESSReviewDemo/atl/pnml2deem.atl"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/CHESSReviewDemo/models/model.idm"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.m2m.atl.adt.editor.AtlEditor" path="/CHESSReviewDemo/atl/im22pnml.atl"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.m2m.atl.adt.editor.AtlEditor" path="/CHESSReviewDemo/atl/testlinks.atl"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="DependabilityintermediateModel.presentation.DependabilityintermediateModelEditorID" path="/CHESSReviewDemo/models/model.idm"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.emf.ecore.presentation.ReflectiveEditorID" path="/CHESSReviewDemo/metamodels/IM2.ecore"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="DependabilityintermediateModel.presentation.DependabilityintermediateModelEditorID" path="/CHESSReviewDemo/models/model.idm"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="it.unipd.chess.editor" path="/CHESSReviewDemo/models/model.di"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="it.unipd.chess.editor" path="/TestCHESS/prova02.di"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="it.unipd.chess.editor" path="/TestCHESS/model03.di"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.papyrus.core.papyrusEditor" path="/CHESSReviewDemo/models/CHESS_demo.di"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="it.unipd.chess.editor" path="/CHESSReviewDemo/models/model.di"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.papyrus.core.papyrusEditor" path="/CHESSReviewDemo/models/CHESS_demo.di"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="it.unipd.chess.editor" path="/CHESSReviewDemo/models/model.di"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.emf.ecore.presentation.EcoreEditorID" path="/CHESSReviewDemo/metamodels/placeTransition.ecore"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="DependabilityintermediateModel.presentation.DependabilityintermediateModelEditorID" path="/CHESSReviewDemo/models/singlecomponent.idm"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.gmt.modisco.infra.browser.editorID" path="/CHESSReviewDemo/models/singlecomponent.idm"/>
 </editors>
-<item historyLabel="model.idm" index="1"/>
-<item historyLabel="IM2.ecore" index="0"/>
-<item historyLabel="model.idm" index="1"/>
-<item historyLabel="model.di" index="2"/>
-<item historyLabel="IM2.ecore" index="0"/>
-<item historyLabel="model.idm" index="1"/>
-<item historyLabel="model.di" index="2"/>
-<item historyLabel="IM2.ecore" index="0"/>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="45747" y="0"/>
+</item>
 <item historyLabel="im22pnml.atl" index="3">
+<position info="not_deleted" x="29607" y="6"/>
+</item>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="48482" y="31"/>
+</item>
+<item historyLabel="im22pnml.atl" index="3">
+<position info="not_deleted" x="13563" y="11"/>
+</item>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="48482" y="31"/>
+</item>
+<item historyLabel="im22pnml.atl" index="3">
+<position info="not_deleted" x="201645" y="11"/>
+</item>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="48482" y="31"/>
+</item>
+<item historyLabel="im22pnml.atl" index="3">
+<position info="not_deleted" x="201645" y="11"/>
+</item>
+<item historyLabel="model.idm" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="48172" y="35"/>
+</item>
+<item historyLabel="model.idm" index="2">
 <position info="not_deleted" x="0" y="0"/>
 </item>
 <item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="25" y="0"/>
+<position info="not_deleted" x="202054" y="0"/>
+</item>
+<item historyLabel="model.idm" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="48172" y="17"/>
+</item>
+<item historyLabel="pnml2deem.atl" index="1">
+<position info="not_deleted" x="569" y="0"/>
+</item>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="48172" y="17"/>
+</item>
+<item historyLabel="model.idm" index="2">
+<position info="not_deleted" x="0" y="0"/>
 </item>
 <item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="107" y="10"/>
+<position info="not_deleted" x="202249" y="17"/>
+</item>
+<item historyLabel="model.idm" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="48172" y="17"/>
 </item>
 <item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="3117" y="102"/>
+<position info="not_deleted" x="202280" y="0"/>
+</item>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="48172" y="17"/>
 </item>
 <item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="3535" y="0"/>
+<position info="not_deleted" x="202280" y="0"/>
+</item>
+<item historyLabel="model.idm" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="50223" y="0"/>
+</item>
+<item historyLabel="model.idm" index="2">
+<position info="not_deleted" x="0" y="0"/>
 </item>
 <item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="60081" y="0"/>
+<position info="not_deleted" x="202266" y="0"/>
+</item>
+<item historyLabel="model.idm" index="2">
+<position info="not_deleted" x="0" y="0"/>
 </item>
 <item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="61084" y="327"/>
+<position info="not_deleted" x="202266" y="0"/>
 </item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="2" y="0"/>
+<item historyLabel="placeTransition.ecore" index="4"/>
+<item historyLabel="im22pnml.atl" index="3">
+<position info="not_deleted" x="202266" y="0"/>
+</item>
+<item historyLabel="model.idm" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="55813" y="0"/>
+</item>
+<item historyLabel="model.idm" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="55813" y="0"/>
+</item>
+<item historyLabel="model.idm" index="2">
+<position info="not_deleted" x="0" y="0"/>
 </item>
 <item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="202" y="0"/>
+<position info="not_deleted" x="9171" y="0"/>
 </item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="403" y="0"/>
-</item>
+<item historyLabel="placeTransition.ecore" index="4"/>
 <item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="202" y="0"/>
+<position info="not_deleted" x="9408" y="0"/>
 </item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="403" y="0"/>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="81780" y="0"/>
 </item>
-<item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="202" y="0"/>
+<item historyLabel="singlecomponent.idm" index="5"/>
+<item historyLabel="model.pnml" index="0">
+<position info="not_deleted" x="81780" y="0"/>
 </item>
-<item historyLabel="testlinks.atl" index="4">
+<item historyLabel="singlecomponent.idm - org.eclipse.emf.ecore.impl.EClassImpl@11a0d77 (name: Sistema) (instanceClassName: null) (abstract: false, interface: false)" index="5">
 <position/>
 </item>
-<item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="202" y="0"/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
+<item historyLabel="singlecomponent.idm - org.eclipse.emf.ecore.impl.EClassImpl@11a0d77 (name: Sistema) (instanceClassName: null) (abstract: false, interface: false)" index="5">
 <position/>
 </item>
-<item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="132" y="0"/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="61" y="0"/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
+<item historyLabel="placeTransition.ecore" index="4"/>
+<item historyLabel="singlecomponent.idm - org.eclipse.emf.ecore.impl.EClassImpl@11a0d77 (name: Sistema) (instanceClassName: null) (abstract: false, interface: false)" index="6">
 <position/>
 </item>
-<item historyLabel="testlinks.atl" index="4">
-<position/>
+<item historyLabel="placeTransition.ecore" index="4"/>
+<item historyLabel="singlecomponent.idm" index="5"/>
+<item historyLabel="placeTransition.ecore" index="4"/>
+<item active="true" historyLabel="im22pnml.atl" index="3">
+<position info="not_deleted" x="9408" y="0"/>
 </item>
-<item historyLabel="model.idm" index="5"/>
-<item historyLabel="IM2.ecore" index="6"/>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="403" y="0"/>
-</item>
-<item historyLabel="im22pnml.atl" index="3">
-<position info="not_deleted" x="132" y="0"/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="403" y="0"/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
-<position/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="156" y="0"/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="322" y="0"/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="359" y="0"/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="374" y="0"/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="383" y="0"/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="390" y="0"/>
-</item>
-<item historyLabel="testlinks.atl" index="4">
-<position info="not_deleted" x="403" y="0"/>
-</item>
-<item historyLabel="model.idm" index="7"/>
-<item historyLabel="model.di" index="8"/>
-<item historyLabel="prova02.di" index="9"/>
-<item historyLabel="model03.di" index="10"/>
-<item historyLabel="CHESS_demo.di" index="11"/>
-<item historyLabel="model.di" index="12"/>
-<item historyLabel="CHESS_demo.di" index="13"/>
-<item historyLabel="model.di" index="14"/>
-<item active="true" historyLabel="model.di" index="14"/>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="16384">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@15802f1"/>
+</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 </trimArea>
@@ -2464,10 +2678,38 @@
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
 <trimItem IMemento.internal.id="bottom"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@155f52c"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@1664cd8"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@194dca5"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@3e94cc"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@16e1cef"/>
 </trimArea>
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="DependabilityintermediateModel.presentation.DependabilityintermediateModelEditorID" name="singlecomponent.idm" tooltip="CHESSReviewDemo/models/singlecomponent.idm">
+<persistable path="/CHESSReviewDemo/models/singlecomponent.idm"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.gmt.modisco.infra.browser.editorID" name="model.pnml" tooltip="CHESSReviewDemo/models/model.pnml">
+<persistable path="/CHESSReviewDemo/models/model.pnml"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="model.deem" tooltip="CHESSReviewDemo/models/model.deem">
+<persistable path="/CHESSReviewDemo/models/model.deem"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.emf.ecore.presentation.EcoreEditorID" name="placeTransition.ecore" tooltip="CHESSReviewDemo/metamodels/placeTransition.ecore">
+<persistable path="/CHESSReviewDemo/metamodels/placeTransition.ecore"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.m2m.atl.adt.editor.AtlEditor" name="im22pnml.atl" tooltip="CHESSReviewDemo/atl/im22pnml.atl">
+<persistable path="/CHESSReviewDemo/atl/im22pnml.atl"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="model.idm" tooltip="CHESSReviewDemo/models/model.idm">
+<persistable path="/CHESSReviewDemo/models/model.idm"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.m2m.atl.adt.editor.AtlEditor" name="pnml2deem.atl" tooltip="CHESSReviewDemo/atl/pnml2deem.atl">
+<persistable path="/CHESSReviewDemo/atl/pnml2deem.atl"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.emf.ecore.presentation.EcoreEditorID" name="IM2.ecore" tooltip="CHESSReviewDemo/metamodels/IM2.ecore">
+<persistable path="/CHESSReviewDemo/metamodels/IM2.ecore"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="it.unipd.chess.editor" name="model.di" tooltip="CHESSReviewDemo/models/model.di">
 <persistable path="/CHESSReviewDemo/models/model.di"/>
 </file>
@@ -2483,35 +2725,11 @@
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.m2m.atl.adt.editor.AtlEditor" name="testlinks.atl" tooltip="CHESSReviewDemo/atl/testlinks.atl">
 <persistable path="/CHESSReviewDemo/atl/testlinks.atl"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.m2m.atl.adt.editor.AtlEditor" name="im22pnml.atl" tooltip="CHESSReviewDemo/atl/im22pnml.atl">
-<persistable path="/CHESSReviewDemo/atl/im22pnml.atl"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.emf.ecore.presentation.ReflectiveEditorID" name="IM2.ecore" tooltip="CHESSReviewDemo/metamodels/IM2.ecore">
-<persistable path="/CHESSReviewDemo/metamodels/IM2.ecore"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="DependabilityintermediateModel.presentation.DependabilityintermediateModelEditorID" name="model.idm" tooltip="CHESSReviewDemo/models/model.idm">
-<persistable path="/CHESSReviewDemo/models/model.idm"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="model5.png" tooltip="CHESSReviewDemo/model5.png">
 <persistable path="/CHESSReviewDemo/model5.png"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="model4.png" tooltip="CHESSReviewDemo/model4.png">
 <persistable path="/CHESSReviewDemo/model4.png"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="model3.png" tooltip="CHESSReviewDemo/model3.png">
-<persistable path="/CHESSReviewDemo/model3.png"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="model2.png" tooltip="CHESSReviewDemo/model2.png">
-<persistable path="/CHESSReviewDemo/model2.png"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="model1.png" tooltip="CHESSReviewDemo/model1.png">
-<persistable path="/CHESSReviewDemo/model1.png"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="it.unipd.chess.editor" name="model.di" tooltip="CHESSReviewDemo/model.di">
-<persistable path="/CHESSReviewDemo/model.di"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="it.unipd.chess.editor" name="test03.di" tooltip="CHESS02/test03.di">
-<persistable path="/CHESS02/test03.di"/>
 </file>
 </mruList>
 </workbench>

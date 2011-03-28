@@ -194,7 +194,7 @@ public class ComponentItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(DependabilityintermediateModelPackage.Literals.COMPONENT__ERRORS_GENERATES_FAILURES,
-				 DependabilityintermediateModelFactory.eINSTANCE.createErrorsProduceFailures()));
+				 DependabilityintermediateModelFactory.eINSTANCE.createErrorsProducesFailures()));
 	}
 
 }

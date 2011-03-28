@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="1036" key="DIALOG_WIDTH"/>
+		<item value="145" key="DIALOG_Y_ORIGIN"/>
+		<item value="525" key="DIALOG_X_ORIGIN"/>
+		<item value="448" key="DIALOG_HEIGHT"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="wrap"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="GSPN!Place" key="selection"/>
+		<list key="findhistory">
+			<item value="GSPN!Place"/>
+			<item value="remove_token_from"/>
+			<item value="remove_token_from_numberOfTransient"/>
+			<item value="remove_token_from_number"/>
+			<item value="remove_toke"/>
+			<item value="remove_token_from_n"/>
+			<item value="remove_t"/>
+			<item value="faultyPlace"/>
+		</list>
+		<list key="replacehistory">
+			<item value="TransientDuration"/>
+			<item value="ErrorsGeneratesFailures"/>
+			<item value=""/>
+		</list>
+	</section>
+</section>

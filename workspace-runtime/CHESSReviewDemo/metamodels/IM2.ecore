@@ -37,8 +37,8 @@
         eType="#//Distribution" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="PermanentProbability" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="TransientDurationTimeDistribution"
-        lowerBound="1" eType="#//Distribution" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="TransientDuration" lowerBound="1"
+        eType="#//Distribution" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ExternalFault" eSuperTypes="#//Fault">
     <eStructuralFeatures xsi:type="ecore:EReference" name="Source" lowerBound="1"
@@ -230,8 +230,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ReplaceActivity" eSuperTypes="#//MaintenanceActivity">
     <eStructuralFeatures xsi:type="ecore:EReference" name="Target" lowerBound="1"
         eType="#//Component"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="Replacement" eType="#//Component"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Replacement" eType="#//Component"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DetectionActivity" eSuperTypes="#//Activity">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Coverage" lowerBound="1"

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ptnet:PetriNetDoc xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ptnet="http:///ptnet.ecore">
+  <nets id="Prova" type="http://www.pnml.org/version-2009/grammar/ptnet">
+    <pages>
+      <objects xsi:type="ptnet:Place" id="failed_c1" InArcs="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_to_failed_place" OutArcs="faultyPlace_c1_c1_f1_from_healtyPlace remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_from_failed_place">
+        <name text="failed_c1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNTimedTransition" id="internal_fault_c1_c1_f1_occurrence" InArcs="faultyPlace_c1_c1_f1_from_healtyPlace" OutArcs="internal_fault_c1_c1_f1_from_occurrence_to_tmp_occurred_place">
+        <Distribution xsi:type="ptnet:Exponential" Rate="1.0E-5"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNTimedTransition" id="internal_fault_c1_c1_f1_transient_duration_time" InArcs="remove_transient_fault_c1_c1_f1_arc_from_numberOfTransientFault remove_transient_fault_c1_c1_f1_arc_from_faulty">
+        <Distribution xsi:type="ptnet:Exponential"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" id="faultyPlace_c1_c1_f1" InArcs="permanent_faultyPlace_c1_c1_f1_to_tmp_faultyPlace transient_faultyPlace_c1_c1_f1_to_tmp_faultyPlace" OutArcs="remove_transient_fault_c1_c1_f1_arc_from_faulty remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1">
+        <name text="faultyPlace_c1_c1_f1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" id="numberOfTransientFaultyPlace_c1_c1_f1" InArcs="transient_faultyPlace_c1_c1_f1_to_numberOfFaults" OutArcs="remove_transient_fault_c1_c1_f1_arc_from_numberOfTransientFault remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1">
+        <name text="numberOfTransientFaultyPlace_c1_c1_f1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="faultyPlace_c1_c1_f1_from_healtyPlace" source="failed_c1" target="internal_fault_c1_c1_f1_occurrence" type="inhibitor">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" id="internal_fault_occurred_c1_c1_f1" InArcs="internal_fault_c1_c1_f1_from_occurrence_to_tmp_occurred_place" OutArcs="internal_fault_c1_c1_f1_from_tmp_occurred_place_to_permanent_fault internal_fault_c1_c1_f1_from_tmp_occurred_place_to_transient_fault">
+        <name text="internal_fault_occurred_c1_c1_f1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="internal_fault_c1_c1_f1_from_occurrence_to_tmp_occurred_place" source="internal_fault_c1_c1_f1_occurrence" target="internal_fault_occurred_c1_c1_f1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="internal_fault_c1_c1_f1_permanent_fault" InArcs="internal_fault_c1_c1_f1_from_tmp_occurred_place_to_permanent_fault" OutArcs="permanent_faultyPlace_c1_c1_f1_to_tmp_faultyPlace" Priority="1" Probability="0.5"/>
+      <objects xsi:type="ptnet:GSPNArc" id="internal_fault_c1_c1_f1_from_tmp_occurred_place_to_permanent_fault" source="internal_fault_occurred_c1_c1_f1" target="internal_fault_c1_c1_f1_permanent_fault">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="internal_fault_c1_c1_f1_transient_fault" InArcs="internal_fault_c1_c1_f1_from_tmp_occurred_place_to_transient_fault" OutArcs="transient_faultyPlace_c1_c1_f1_to_tmp_faultyPlace transient_faultyPlace_c1_c1_f1_to_numberOfFaults" Priority="1" Probability="0.5"/>
+      <objects xsi:type="ptnet:GSPNArc" id="internal_fault_c1_c1_f1_from_tmp_occurred_place_to_transient_fault" source="internal_fault_occurred_c1_c1_f1" target="internal_fault_c1_c1_f1_transient_fault">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="permanent_faultyPlace_c1_c1_f1_to_tmp_faultyPlace" source="internal_fault_c1_c1_f1_permanent_fault" target="faultyPlace_c1_c1_f1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="transient_faultyPlace_c1_c1_f1_to_tmp_faultyPlace" source="internal_fault_c1_c1_f1_transient_fault" target="faultyPlace_c1_c1_f1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="transient_faultyPlace_c1_c1_f1_to_numberOfFaults" source="internal_fault_c1_c1_f1_transient_fault" target="numberOfTransientFaultyPlace_c1_c1_f1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="remove_transient_fault_c1_c1_f1_arc_from_numberOfTransientFault" source="numberOfTransientFaultyPlace_c1_c1_f1" target="internal_fault_c1_c1_f1_transient_duration_time">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="remove_transient_fault_c1_c1_f1_arc_from_faulty" source="faultyPlace_c1_c1_f1" target="internal_fault_c1_c1_f1_transient_duration_time">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="remove_tokens_on_failing_component_c1_FROM_faultyPlace_c1_c1_f1" InArcs="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1 remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place" OutArcs="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1" source="faultyPlace_c1_c1_f1" target="remove_tokens_on_failing_component_c1_FROM_faultyPlace_c1_c1_f1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place" source="failed_c1" target="remove_tokens_on_failing_component_c1_FROM_faultyPlace_c1_c1_f1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_faultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place" source="remove_tokens_on_failing_component_c1_FROM_faultyPlace_c1_c1_f1" target="failed_c1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="remove_tokens_on_failing_component_c1_FROM_numberOfTransientFaultyPlace_c1_c1_f1" InArcs="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1 remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place" OutArcs="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1" source="numberOfTransientFaultyPlace_c1_c1_f1" target="remove_tokens_on_failing_component_c1_FROM_numberOfTransientFaultyPlace_c1_c1_f1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_from_failed_place" source="failed_c1" target="remove_tokens_on_failing_component_c1_FROM_numberOfTransientFaultyPlace_c1_c1_f1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_numberOfTransientFaultyPlace_c1_c1_f1_c1_c1_f1_to_failed_place" source="remove_tokens_on_failing_component_c1_FROM_numberOfTransientFaultyPlace_c1_c1_f1" target="failed_c1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" id="erroneusPlace_c1_c1_e1" OutArcs="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1">
+        <name text="erroneusPlace_c1_c1_e1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" id="detect_error_Place_c1_c1_e1">
+        <name text="detect_error_Place_c1_c1_e1"/>
+        <initialMarking text="0"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNImmediateTransition" id="remove_tokens_on_failing_component_c1_FROM_erroneusPlace_c1_c1_e1" InArcs="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1 remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_from_failed_place" OutArcs="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_to_failed_place" Priority="2"/>
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1" source="erroneusPlace_c1_c1_e1" target="remove_tokens_on_failing_component_c1_FROM_erroneusPlace_c1_c1_e1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_from_failed_place" source="failed_c1" target="remove_tokens_on_failing_component_c1_FROM_erroneusPlace_c1_c1_e1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_c1_c1_e1_c1_c1_e1_to_failed_place" source="remove_tokens_on_failing_component_c1_FROM_erroneusPlace_c1_c1_e1" target="failed_c1">
+        <inscription text="1"/>
+      </objects>
+      <objects xsi:type="ptnet:Place" id="failureMode_c1_c1_fm1">
+        <name text="failureModePlace_c1_c1_fm1"/>
+        <initialMarking text="0"/>
+      </objects>
+    </pages>
+  </nets>
+</ptnet:PetriNetDoc>

@@ -81,7 +81,7 @@ helper context IM2!ErrorsExpressionNotNode def: toString() : String =
 helper context IM2!ErrorsExpressionAndNode def: toString() : String =
 	'('+self.ErrorsExpression1.toString()+') AND ('+self.ErrorsExpression2.toString()+')';
 
-helper context IM2!ErrorsExpressionErrorNode def: toString() : String =
+helper context IM2!ErrorsExpressionOrNode def: toString() : String =
 	'('+self.ErrorsExpression1.toString()+') OR ('+self.ErrorsExpression2.toString()+')';
 
 helper context IM2!Distribution def: getComponent():IM2!Component =
@@ -89,7 +89,7 @@ helper context IM2!Distribution def: getComponent():IM2!Component =
 	if (OwnerInternalFault <> OclUndefined) then
 		OwnerInternalFault.Component
 	else
-		let OwnerInternalFault2:IM2!InternalFault = IM2!InternalFault.allInstances()->select(s | s.TransientDurationTimeDistribution=self)->asSequence()->first() in
+		let OwnerInternalFault2:IM2!InternalFault = IM2!InternalFault.allInstances()->select(s | s.TransientDuration=self)->asSequence()->first() in
 		if (OwnerInternalFault2 <> OclUndefined) then
 			OwnerInternalFault2.Component
 		else
@@ -123,7 +123,7 @@ helper context IM2!Distribution def: getComponentsRule():String =
 	if (OwnerInternalFault <> OclUndefined) then
 		'internal_fault_'+OwnerInternalFault.Component.Name+'_'+OwnerInternalFault.Name+'_occurrence'
 	else
-		let OwnerInternalFault2:IM2!InternalFault = IM2!InternalFault.allInstances()->select(s | s.TransientDurationTimeDistribution=self)->asSequence()->first() in
+		let OwnerInternalFault2:IM2!InternalFault = IM2!InternalFault.allInstances()->select(s | s.TransientDuration=self)->asSequence()->first() in
 		if (OwnerInternalFault2 <> OclUndefined) then
 			'internal_fault_'+OwnerInternalFault2.Component.Name+'_'+OwnerInternalFault2.Name+'_transient_duration_time'
 		else
@@ -375,7 +375,7 @@ rule ComponentInternalFault {
 
 
 -- Creo l'arco che va' dallo stato failed alla transizione per il fallimento, se il componente
--- non è fallito, si possono generare fallimenti
+-- non Ã¨ fallito, si possono generare fallimenti
 		transaction_to_fault_from_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -403,7 +403,7 @@ rule ComponentInternalFault {
 		),
 		
 -- Creo l'arco che va' dallo stato failed alla transizione per il fallimento, se il componente
--- non è fallito, si possono generare fallimenti
+-- non ï¿½ fallito, si possono generare fallimenti
 		from_occurrence_to_tmp_occurred_place_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -503,7 +503,7 @@ transaction_remove_transient_fault_from_numberOfTransientFault_arc_annotation : 
 		transaction_remove_transient_fault_from_numberOfTransientFault_arc: GSPN!GSPNArc (
 				id<-'remove_transient_fault_'+componente.Name+'_'+fault.Name+'_arc_from_numberOfTransientFault',
 				source<-numberOfTransientFault_place,
-				target<-fault.TransientDurationTimeDistribution,
+				target<-fault.TransientDuration,
 				inscription <- transaction_remove_transient_fault_from_numberOfTransientFault_arc_annotation,
 				containerPage <- thisModule.getPage(sistema)
 		),
@@ -514,7 +514,7 @@ transaction_remove_transient_fault_from_numberOfTransientFault_arc_annotation : 
 		transaction_remove_transient_fault_from_faulty_arc: GSPN!GSPNArc (
 				id<-'remove_transient_fault_'+componente.Name+'_'+fault.Name+'_arc_from_faulty',
 				source<-faulty_place,
-				target<-fault.TransientDurationTimeDistribution,
+				target<-fault.TransientDuration,
 				inscription<-transaction_remove_transient_fault_from_faulty_arc_annotation,
 				containerPage <- thisModule.getPage(sistema)
 		)
@@ -610,7 +610,7 @@ rule ComponentExternalFault {
 		)
 		
 		do {
-			thisModule.removeTokenOnFailed(componente, faulty_place, fault.name, thisModule.resolveTemp(componente, 'failed_place'));
+			thisModule.removeTokenOnFailed(componente, faulty_place, fault.Name, thisModule.resolveTemp(componente, 'failed_place'));
 		}
 }
 rule ComponentErrorWithVanishingTime {
@@ -618,7 +618,7 @@ rule ComponentErrorWithVanishingTime {
 		error : IM2!Error
 		(
 			not error.VanishingTime.oclIsUndefined()
-		)
+		)	
 	using
 	{
 		componente : IM2!Component = error.Component;
@@ -769,10 +769,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 	to
 	logicResult_place : GSPN!Place (),
 -------------------------------------------------------------------------------
--- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica è verifica
--- e di rimuoverlo quando non è più verificata
+-- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica ï¿½ verifica
+-- e di rimuoverlo quando non ï¿½ piï¿½ verificata
 -- riferirsi alla figura logica_propagazione_and_from_uml_to_idm
--- la riga della tabella di verità è sempre della forma gate1 & gate2 = result
+-- la riga della tabella di veritï¿½ ï¿½ sempre della forma gate1 & gate2 = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 & 0 = 0
 		transaction_T0 : GSPN!GSPNImmediateTransition (
@@ -833,7 +833,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione logica
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -1013,10 +1013,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 	to
 	logicResult_place : GSPN!Place (),
 -------------------------------------------------------------------------------
--- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica è verifica
--- e di rimuoverlo quando non è più verificata
+-- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica ï¿½ verifica
+-- e di rimuoverlo quando non ï¿½ piï¿½ verificata
 -- riferirsi alla figura logica_propagazione_or_from_uml_to_idm
--- la riga della tabella di verità è sempre della forma gate1 | gate2 = result
+-- la riga della tabella di veritï¿½ ï¿½ sempre della forma gate1 | gate2 = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 | 0 = 1
 		transaction_T0 : GSPN!GSPNImmediateTransition (
@@ -1024,7 +1024,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -1090,7 +1090,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione logica
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -1168,7 +1168,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -1283,10 +1283,10 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 	to
 		logicResult_place : GSPN!Place (),
 -------------------------------------------------------------------------------
--- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica è verifica
--- e di rimuoverlo quando non è più verificata
+-- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica ï¿½ verifica
+-- e di rimuoverlo quando non ï¿½ piï¿½ verificata
 -- riferirsi alla figura logica_propagazione_or_from_uml_to_idm
--- la riga della tabella di verità è sempre della forma ~ gate1  = result
+-- la riga della tabella di veritï¿½ ï¿½ sempre della forma ~ gate1  = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione ~ 0 = 1
 		transaction_T0 : GSPN!GSPNImmediateTransition (
@@ -1294,7 +1294,7 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -1429,7 +1429,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				inscription<-transaction_to_evidence_from_faulty_place_arc_annotation,
 				containerPage <- sistema
 		),
--- Creo un arco inibitore che impedisce che sul token risultato dell'espressione possa finire più di un token 
+-- Creo un arco inibitore che impedisce che sul token risultato dell'espressione possa finire piï¿½ di un token 
 		transaction_to_evidence_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -1577,7 +1577,7 @@ abstract rule FaultsGeneratesError {
 				initialMarking <- errorsActivation_place_markup,
 				containerPage <- componente.intermediateModel
 		),
--- la transizione che, nel caso di più errori possono essere attivati dalla stessa logica di propagazione,
+-- la transizione che, nel caso di piï¿½ errori possono essere attivati dalla stessa logica di propagazione,
 -- consente di scegliere quale errore viene generato
 		transaction_weight : GSPN!GSPNImmediateTransition (
 			id <- 'faults_generate_errors_weight_'+faultsGeneratesError.Name,
@@ -1666,7 +1666,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 		propagation_case : GSPN!GSPNImmediateTransition (),
 --------------------------------------------------------------------------------------------
 -- La regola crea i place e le trasformazioni che consentono di attivare una sola volta la propagazione dai fault all'errore.
--- Quando il risultato della logica di propagazione viene annullato è permessa la generazione di un nuovo errore
+-- Quando il risultato della logica di propagazione viene annullato ï¿½ permessa la generazione di un nuovo errore
 -- in relazione alle figura multiple_propagation_logic
 --------------------------------------------------------------------------------------------
 -- nel place active la presenza di un token attiva le transizioni per scegliere quale propagazione
@@ -1683,8 +1683,8 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 				initialMarking <- active_place_markup,
 				containerPage <- componente.intermediateModel
 		),
--- questo place è utilizzato a supporto per memorizzare il fatto che il token nel 
--- place d'attivazione della propagazione è già stato messo
+-- questo place ï¿½ utilizzato a supporto per memorizzare il fatto che il token nel 
+-- place d'attivazione della propagazione ï¿½ giï¿½ stato messo
 		activated_place_markup : GSPN!PTMarking (
 				text <- 0
 		),
@@ -1698,14 +1698,14 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 				containerPage <- componente.intermediateModel
 		),
 -----------------------------------------------------------------------------------------
--- quando la logica di propagazione è verificata aggiunge un token in activated e active
+-- quando la logica di propagazione ï¿½ verificata aggiunge un token in activated e active
 -----------------------------------------------------------------------------------------
 		transaction_t0 : GSPN!GSPNImmediateTransition (
 			id <- 'faults_generates_enabler_t0_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			Priority <- 2,
 			containerPage <- sistema
 		),
--- Creo l'arco che abilita la transizione se la logica di propagazione è verificata
+-- Creo l'arco che abilita la transizione se la logica di propagazione ï¿½ verificata
 		transaction_t0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 			text<-1
 		),
@@ -1728,7 +1728,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			inscription <- transaction_t0_to_logic_result_arc_annotation,
 			containerPage <- sistema
 		),
--- Creo l'arco che impedisce di rimettere il token in active dopo che la propagazione è avvenuta
+-- Creo l'arco che impedisce di rimettere il token in active dopo che la propagazione ï¿½ avvenuta
 		transaction_t0_from_activated_arc_annotation : GSPN!PTArcAnnotation (
 			text<-1
 		),
@@ -1763,7 +1763,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			containerPage <- sistema
 		),
 -----------------------------------------------------------------------------------------
--- quando la logica di propagazione non è verificata rimuove un token (se presente) da
+-- quando la logica di propagazione non ï¿½ verificata rimuove un token (se presente) da
 -- activated
 -----------------------------------------------------------------------------------------
 		transaction_t1 : GSPN!GSPNImmediateTransition (
@@ -1771,7 +1771,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			Priority <- 2,
 			containerPage <- sistema
 		),
--- Creo l'arco che abilita la transizione se la logica di propagazione NON è verificata
+-- Creo l'arco che abilita la transizione se la logica di propagazione NON ï¿½ verificata
 		transaction_t1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -1795,7 +1795,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			containerPage <- sistema
 		),
 -----------------------------------------------------------------------------------------
--- quando la logica di propagazione non è verificata rimuove un token (se presente) da
+-- quando la logica di propagazione non ï¿½ verificata rimuove un token (se presente) da
 -- active
 -----------------------------------------------------------------------------------------
 		transaction_t2 : GSPN!GSPNImmediateTransition (
@@ -1803,7 +1803,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			Priority <- 2,
 			containerPage <- sistema
 		),
--- Creo l'arco che abilita la transizione se la logica di propagazione NON è verificata
+-- Creo l'arco che abilita la transizione se la logica di propagazione NON ï¿½ verificata
 		transaction_t2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 			text<-1
 		),
@@ -1907,10 +1907,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 	to
 		logicResult_place : GSPN!Place (),
 -------------------------------------------------------------------------------
--- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica è verifica
--- e di rimuoverlo quando non è più verificata
+-- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica ï¿½ verifica
+-- e di rimuoverlo quando non ï¿½ piï¿½ verificata
 -- riferirsi alla figura logica_propagazione_and_from_uml_to_idm
--- la riga della tabella di verità è sempre della forma gate1 & gate2 = result
+-- la riga della tabella di veritï¿½ ï¿½ sempre della forma gate1 & gate2 = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 & 0 = 0
 		transaction_T0 : GSPN!GSPNImmediateTransition (
@@ -1971,7 +1971,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione logica
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -2150,10 +2150,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 --		)
 	to
 -------------------------------------------------------------------------------
--- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica è verifica
--- e di rimuoverlo quando non è più verificata
+-- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica ï¿½ verifica
+-- e di rimuoverlo quando non ï¿½ piï¿½ verificata
 -- riferirsi alla figura logica_propagazione_or_from_uml_to_idm
--- la riga della tabella di verità è sempre della forma gate1 | gate2 = result
+-- la riga della tabella di veritï¿½ ï¿½ sempre della forma gate1 | gate2 = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 | 0 = 1
 		transaction_T0 : GSPN!GSPNImmediateTransition (
@@ -2161,7 +2161,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -2227,7 +2227,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione logica
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -2305,7 +2305,7 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -2420,10 +2420,10 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 --		)
 	to
 -------------------------------------------------------------------------------
--- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica è verifica
--- e di rimuoverlo quando non è più verificata
+-- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica ï¿½ verifica
+-- e di rimuoverlo quando non ï¿½ piï¿½ verificata
 -- riferirsi alla figura logica_propagazione_or_from_uml_to_idm
--- la riga della tabella di verità è sempre della forma ~ gate1  = result
+-- la riga della tabella di veritï¿½ ï¿½ sempre della forma ~ gate1  = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione ~ 0 = 1
 		transaction_T0 : GSPN!GSPNImmediateTransition (
@@ -2431,7 +2431,7 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text<-1
 		),
@@ -2705,7 +2705,7 @@ abstract rule InternalPropagation {
 				initialMarking <- errorsActivation_place_markup,
 				containerPage <- sistema
 		),
--- la transizione che, nel caso di più errori possono essere attivati dalla stessa logica di propagazione,
+-- la transizione che, nel caso di piï¿½ errori possono essere attivati dalla stessa logica di propagazione,
 -- consente di scegliere quale errore viene generato
 		transaction_weight : GSPN!GSPNImmediateTransition (
 			Priority <- 2,
@@ -2790,7 +2790,7 @@ rule InternalPropagationManager extends InternalPropagation {
 		propagation_case : GSPN!GSPNImmediateTransition (),
 --------------------------------------------------------------------------------------------
 -- La regola crea i place e le trasformazioni che consentono di attivare una sola volta la propagazione dai fault all'errore.
--- Quando il risultato della logica di propagazione viene annullato è permessa la generazione di un nuovo errore
+-- Quando il risultato della logica di propagazione viene annullato ï¿½ permessa la generazione di un nuovo errore
 -- in relazione alle figura multiple_propagation_logic
 --------------------------------------------------------------------------------------------
 -- nel place active la presenza di un token attiva le transizioni per scegliere quale propagazione
@@ -2807,8 +2807,8 @@ rule InternalPropagationManager extends InternalPropagation {
 				initialMarking <- active_place_markup,
 				containerPage <- sistema
 		),
--- questo place è utilizzato a supporto per memorizzare il fatto che il token nel 
--- place d'attivazione della propagazione è già stato messo
+-- questo place ï¿½ utilizzato a supporto per memorizzare il fatto che il token nel 
+-- place d'attivazione della propagazione ï¿½ giï¿½ stato messo
 		activated_place_markup : GSPN!PTMarking (
 				text <- 0
 		),
@@ -2822,13 +2822,13 @@ rule InternalPropagationManager extends InternalPropagation {
 				containerPage <- sistema
 		),
 -----------------------------------------------------------------------------------------
--- quando la logica di propagazione è verificata aggiunge un token in activated e active
+-- quando la logica di propagazione ï¿½ verificata aggiunge un token in activated e active
 -----------------------------------------------------------------------------------------
 		transaction_t0 : GSPN!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- thisModule.getPage(sistema)
 		),
--- Creo l'arco che abilita la transizione se la logica di propagazione è verificata
+-- Creo l'arco che abilita la transizione se la logica di propagazione ï¿½ verificata
 		transaction_t0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 			text <- 1
 		),
@@ -2851,7 +2851,7 @@ rule InternalPropagationManager extends InternalPropagation {
 			inscription <- transaction_t0_to_logic_result_arc_annotation,
 			containerPage <- sistema
 		),
--- Creo l'arco che impedisce di rimettere il token in active dopo che la propagazione è avvenuta
+-- Creo l'arco che impedisce di rimettere il token in active dopo che la propagazione ï¿½ avvenuta
 		transaction_t0_from_activated_arc_annotation : GSPN!PTArcAnnotation (
 			text <- 1
 		),
@@ -2886,14 +2886,14 @@ rule InternalPropagationManager extends InternalPropagation {
 			containerPage <- sistema
 		),
 -----------------------------------------------------------------------------------------
--- quando la logica di propagazione non è verificata rimuove un token (se presente) da
+-- quando la logica di propagazione non ï¿½ verificata rimuove un token (se presente) da
 -- activated
 -----------------------------------------------------------------------------------------
 		transaction_t1 : GSPN!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
--- Creo l'arco che abilita la transizione se la logica di propagazione NON è verificata
+-- Creo l'arco che abilita la transizione se la logica di propagazione NON ï¿½ verificata
 		transaction_t1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 			text <- 1
 		),
@@ -2917,14 +2917,14 @@ rule InternalPropagationManager extends InternalPropagation {
 			containerPage <- sistema
 		),
 -----------------------------------------------------------------------------------------
--- quando la logica di propagazione non è verificata rimuove un token (se presente) da
+-- quando la logica di propagazione non ï¿½ verificata rimuove un token (se presente) da
 -- active
 -----------------------------------------------------------------------------------------
 		transaction_t2 : GSPN!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
--- Creo l'arco che abilita la transizione se la logica di propagazione NON è verificata
+-- Creo l'arco che abilita la transizione se la logica di propagazione NON ï¿½ verificata
 		transaction_t2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 			text <- 1
 		),
@@ -3082,7 +3082,7 @@ abstract rule ErrorsProducesFailures {
 				initialMarking <- errorsActivation_place_markup,
 				containerPage <- sistema
 		),
--- la transizione che, nel caso di più errori possono essere attivati dalla stessa logica di propagazione,
+-- la transizione che, nel caso di piï¿½ errori possono essere attivati dalla stessa logica di propagazione,
 -- consente di scegliere quale errore viene generato
 		transaction_weight : GSPN!GSPNImmediateTransition (
 			Priority <- 2,
@@ -3168,7 +3168,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 		propagation_case : GSPN!GSPNImmediateTransition (),
 --------------------------------------------------------------------------------------------
 -- La regola crea i place e le trasformazioni che consentono di attivare una sola volta la propagazione dai fault all'errore.
--- Quando il risultato della logica di propagazione viene annullato è permessa la generazione di un nuovo errore
+-- Quando il risultato della logica di propagazione viene annullato ï¿½ permessa la generazione di un nuovo errore
 -- in relazione alle figura multiple_propagation_logic
 --------------------------------------------------------------------------------------------
 -- nel place active la presenza di un token attiva le transizioni per scegliere quale propagazione
@@ -3185,8 +3185,8 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 				initialMarking <- active_place_markup,
 				containerPage <- sistema
 		),
--- questo place è utilizzato a supporto per memorizzare il fatto che il token nel 
--- place d'attivazione della propagazione è già stato messo
+-- questo place ï¿½ utilizzato a supporto per memorizzare il fatto che il token nel 
+-- place d'attivazione della propagazione ï¿½ giï¿½ stato messo
 		activated_place_markup : GSPN!PTMarking (
 				text <- 0
 		),
@@ -3200,13 +3200,13 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 				containerPage <- sistema
 		),
 -----------------------------------------------------------------------------------------
--- quando la logica di propagazione è verificata aggiunge un token in activated e active
+-- quando la logica di propagazione ï¿½ verificata aggiunge un token in activated e active
 -----------------------------------------------------------------------------------------
 		transaction_t0 : GSPN!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
--- Creo l'arco che abilita la transizione se la logica di propagazione è verificata
+-- Creo l'arco che abilita la transizione se la logica di propagazione ï¿½ verificata
 		transaction_t0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -3228,7 +3228,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			inscription <- transaction_t0_to_logic_result_arc_annotation,
 			containerPage <- sistema
 		),
--- Creo l'arco che impedisce di rimettere il token in active dopo che la propagazione è avvenuta
+-- Creo l'arco che impedisce di rimettere il token in active dopo che la propagazione ï¿½ avvenuta
 		transaction_t0_from_activated_arc_annotation : GSPN!PTArcAnnotation (
 			text <- 1
 		),
@@ -3263,14 +3263,14 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			containerPage <- sistema
 		),
 -----------------------------------------------------------------------------------------
--- quando la logica di propagazione non è verificata rimuove un token (se presente) da
+-- quando la logica di propagazione non ï¿½ verificata rimuove un token (se presente) da
 -- activated
 -----------------------------------------------------------------------------------------
 		transaction_t1 : GSPN!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- thisModule.getPage(sistema)
 		),
--- Creo l'arco che abilita la transizione se la logica di propagazione NON è verificata
+-- Creo l'arco che abilita la transizione se la logica di propagazione NON ï¿½ verificata
 		transaction_t1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 			text <- 1
 		),
@@ -3294,14 +3294,14 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			containerPage <- sistema
 		),
 -----------------------------------------------------------------------------------------
--- quando la logica di propagazione non è verificata rimuove un token (se presente) da
+-- quando la logica di propagazione non ï¿½ verificata rimuove un token (se presente) da
 -- active
 -----------------------------------------------------------------------------------------
 		transaction_t2 : GSPN!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
--- Creo l'arco che abilita la transizione se la logica di propagazione NON è verificata
+-- Creo l'arco che abilita la transizione se la logica di propagazione NON ï¿½ verificata
 		transaction_t2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 			text <- 1
 		),
@@ -3406,10 +3406,10 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 	to
 		logicResult_place : GSPN!Place (),
 -------------------------------------------------------------------------------
--- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica è verifica
--- e di rimuoverlo quando non è più verificata
+-- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica ï¿½ verifica
+-- e di rimuoverlo quando non ï¿½ piï¿½ verificata
 -- riferirsi alla figura logica_propagazione_and_from_uml_to_idm
--- la riga della tabella di verità è sempre della forma gate1 & gate2 = result
+-- la riga della tabella di veritï¿½ ï¿½ sempre della forma gate1 & gate2 = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 & 0 = 0
 		transaction_T0 : GSPN!GSPNImmediateTransition (
@@ -3466,7 +3466,7 @@ rule SchedulingConditionExpressionAndNodeToPN extends SchedulingConditionExpress
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione logica
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -3624,10 +3624,10 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 		schedulingExpressionNode : IM2!SchedulingConditionExpressionOrNode
 	to
 -------------------------------------------------------------------------------
--- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica è verifica
--- e di rimuoverlo quando non è più verificata
+-- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica ï¿½ verifica
+-- e di rimuoverlo quando non ï¿½ piï¿½ verificata
 -- riferirsi alla figura logica_propagazione_or_from_uml_to_idm
--- la riga della tabella di verità è sempre della forma gate1 | gate2 = result
+-- la riga della tabella di veritï¿½ ï¿½ sempre della forma gate1 | gate2 = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 | 0 = 1
 		transaction_T0 : GSPN!GSPNImmediateTransition (
@@ -3635,7 +3635,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -3696,7 +3696,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione logica
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -3768,7 +3768,7 @@ rule SchedulingConditionExpressionOrNodeToPN extends SchedulingConditionExpressi
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -3866,10 +3866,10 @@ rule SchedulingConditionExpressionNotNodeToPN extends SchedulingConditionExpress
 		schedulingExpressionNode : IM2!SchedulingConditionExpressionNotNode
 	to
 -------------------------------------------------------------------------------
--- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica è verifica
--- e di rimuoverlo quando non è più verificata
+-- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica ï¿½ verifica
+-- e di rimuoverlo quando non ï¿½ piï¿½ verificata
 -- riferirsi alla figura logica_propagazione_or_from_uml_to_idm
--- la riga della tabella di verità è sempre della forma ~ gate1  = result
+-- la riga della tabella di veritï¿½ ï¿½ sempre della forma ~ gate1  = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione ~ 0 = 1
 		transaction_T0 : GSPN!GSPNImmediateTransition (
@@ -3877,7 +3877,7 @@ rule SchedulingConditionExpressionNotNodeToPN extends SchedulingConditionExpress
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -3961,7 +3961,7 @@ rule SchedulingConditionExpressionTrueNodeToPN extends SchedulingConditionExpres
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
--- possa essere presente più di un token
+-- possa essere presente piï¿½ di un token
 		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -4161,13 +4161,13 @@ abstract rule ScheduleImmediately {
 	}
 	to 
 -------------------------------------------------------------------------------------
--- crea la condizione che abilita l'attività
+-- crea la condizione che abilita l'attivitï¿½
 -------------------------------------------------------------------------------------
 		transaction_T0 : GSPN!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
--- Creo l'arco che abilita l'attività se la condizione di scheduling è verificata 
+-- Creo l'arco che abilita l'attivitï¿½ se la condizione di scheduling ï¿½ verificata 
 		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -4200,7 +4200,7 @@ rule ScheduleImmediatelyBefore extends ScheduleImmediately{
 		tmp_place_name0 : GSPN!Name (
 				text <- 'logicResult_'+componente.Name+'_logic_'+activity.Name
 		),
--- Un token sul place out_of_time rappresenta che non più possibile eseguire l'attività
+-- Un token sul place out_of_time rappresenta che non piï¿½ possibile eseguire l'attivitï¿½
 		out_of_time_place : GSPN!Place (
 				name <- out_of_time_name,
 				initialMarking <- out_of_time_markup,
@@ -4257,7 +4257,7 @@ rule ScheduleImmediatelyAfter extends ScheduleImmediately {
 		)
 	to
 		transaction_T0 : GSPN!GSPNImmediateTransition (),
--- Un token sul place out_of_time rappresenta che non è possibile eseguire l'attività
+-- Un token sul place out_of_time rappresenta che non ï¿½ possibile eseguire l'attivitï¿½
 		out_of_time_place : GSPN!Place (
 				name <- out_of_time_name,
 				initialMarking <- out_of_time_markup,
@@ -4305,7 +4305,7 @@ rule ScheduleImmediatelyInterval extends ScheduleImmediately {
 		)
 	to
 		transaction_T0 : GSPN!GSPNImmediateTransition (),
--- Un token sul place out_of_time rappresenta che non è possibile eseguire l'attività
+-- Un token sul place out_of_time rappresenta che non ï¿½ possibile eseguire l'attivitï¿½
 		out_of_time_place : GSPN!Place (
 				name <- tmp_place_name0,
 				initialMarking <- tmp_place_markup0,
@@ -4400,7 +4400,7 @@ rule SchedulingAtTime {
 	}
 	to 
 -------------------------------------------------------------------------------------
--- crea la condizione che abilita l'attività
+-- crea la condizione che abilita l'attivitï¿½
 -------------------------------------------------------------------------------------
 		transaction_T0 : GSPN!GSPNTimedTransition (
 			Distribution <- distribuzione_gspn,
@@ -4409,7 +4409,7 @@ rule SchedulingAtTime {
 		distribuzione_gspn : GSPN!Deterministic (
 			Value <- schedulingEvent.Time
 		),
--- Creo l'arco che abilita l'attività se la condizione di scheduling è verificata 
+-- Creo l'arco che abilita l'attivitï¿½ se la condizione di scheduling ï¿½ verificata 
 		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -4431,7 +4431,7 @@ abstract rule SchedulePeriodic {
 	}
 	to 
 -------------------------------------------------------------------------------------
--- crea la condizione che abilita l'attività
+-- crea la condizione che abilita l'attivitï¿½
 -------------------------------------------------------------------------------------
 -- per mantenere il resto del codice semplice, creo la transizione immediata T0 che propaga,
 -- transaction_T0 sara' il ritorno della chiamata della regola, non puo' esserlo schedulingEvent.Distribution
@@ -4440,7 +4440,7 @@ abstract rule SchedulePeriodic {
 			containerPage <- sistema
 		),
 -- Crea un place di comodo per collegare la transizione d'interfaccia (T0) con la transizione che
--- implementa la periodicità 
+-- implementa la periodicitï¿½ 
 		tmp_place : GSPN!Place (
 				name <- tmp_place_name,
 				initialMarking <- tmp_place_markup,
@@ -4453,7 +4453,7 @@ abstract rule SchedulePeriodic {
 				text <- 'logicResult_'+componente.Name+'_logic_'+activity.Name
 		),
 		
--- Creo l'arco che abilita l'attività se la condizione di scheduling è verificata 
+-- Creo l'arco che abilita l'attivitï¿½ se la condizione di scheduling ï¿½ verificata 
 		schedulingEvent_distribution_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
 		),
@@ -4463,7 +4463,7 @@ abstract rule SchedulePeriodic {
 				inscription <- schedulingEvent_distribution_from_logic_result_arc_annotation,
 				containerPage <- sistema
 		),
--- Creo l'arco che allo scattare della transizione che simula la periodicità mette un token in tmp_place
+-- Creo l'arco che allo scattare della transizione che simula la periodicitï¿½ mette un token in tmp_place
 -- e permette alla transizione d'interfaccia di scattare
 		schedulingEvent_distribution_to_tmp_place_arc_annotation : GSPN!PTArcAnnotation (
 				text <- 1
@@ -4507,7 +4507,7 @@ rule SchedulePeriodicBefore extends SchedulePeriodic{
 		tmp_place_name0 : GSPN!Name (
 				text <- 'logicResult_'+componente.Name+'_logic_'+activity.Name
 		),
--- Un token sul place out_of_time rappresenta che non più possibile eseguire l'attività
+-- Un token sul place out_of_time rappresenta che non piï¿½ possibile eseguire l'attivitï¿½
 		out_of_time_place : GSPN!Place (
 				name <- out_of_time_name,
 				initialMarking <- out_of_time_markup,
@@ -4564,7 +4564,7 @@ rule SchedulePeriodicAfter extends SchedulePeriodic {
 		)
 	to
 		transaction_T0 : GSPN!GSPNImmediateTransition (),
--- Un token sul place out_of_time rappresenta che non è possibile eseguire l'attività
+-- Un token sul place out_of_time rappresenta che non ï¿½ possibile eseguire l'attivitï¿½
 		out_of_time_place : GSPN!Place (
 				name <- out_of_time_name,
 				initialMarking <- out_of_time_markup,
@@ -4612,7 +4612,7 @@ rule SchedulePeriodicInterval extends SchedulePeriodic {
 		)
 	to
 		transaction_T0 : GSPN!GSPNImmediateTransition (),
--- Un token sul place out_of_time rappresenta che non è possibile eseguire l'attività
+-- Un token sul place out_of_time rappresenta che non ï¿½ possibile eseguire l'attivitï¿½
 		out_of_time_place : GSPN!Place (
 				name <- tmp_place_name0,
 				initialMarking <- tmp_place_markup0,

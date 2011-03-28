@@ -14,13 +14,13 @@ import DependabilityintermediateModel.DependabilityintermediateModelPackage;
 import DependabilityintermediateModel.DetectionActivity;
 import DependabilityintermediateModel.Deterministic;
 import DependabilityintermediateModel.Distribution;
+import DependabilityintermediateModel.ErrorPropagation;
 import DependabilityintermediateModel.ErrorsExpressionAndNode;
 import DependabilityintermediateModel.ErrorsExpressionErrorNode;
 import DependabilityintermediateModel.ErrorsExpressionNode;
 import DependabilityintermediateModel.ErrorsExpressionNotNode;
 import DependabilityintermediateModel.ErrorsExpressionOrNode;
-import DependabilityintermediateModel.ErrorsProduceFailures;
-import DependabilityintermediateModel.ErrorsPropagation;
+import DependabilityintermediateModel.ErrorsProducesFailures;
 import DependabilityintermediateModel.Exponential;
 import DependabilityintermediateModel.ExternalFault;
 import DependabilityintermediateModel.FailureConsequences;
@@ -275,14 +275,14 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass errorsPropagationEClass = null;
+	private EClass errorPropagationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass errorsProduceFailuresEClass = null;
+	private EClass errorsProducesFailuresEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -724,15 +724,6 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 */
 	public EClass getDistribution() {
 		return distributionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDistribution_Sistema() {
-		return (EReference)distributionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1298,8 +1289,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getErrorsPropagation() {
-		return errorsPropagationEClass;
+	public EReference getInternalPropagation_Component() {
+		return (EReference)internalPropagationEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -1307,8 +1298,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getErrorsPropagation_PropagationLogic() {
-		return (EReference)errorsPropagationEClass.getEStructuralFeatures().get(0);
+	public EClass getErrorPropagation() {
+		return errorPropagationEClass;
 	}
 
 	/**
@@ -1316,8 +1307,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getErrorsPropagation_Component() {
-		return (EReference)errorsPropagationEClass.getEStructuralFeatures().get(1);
+	public EReference getErrorPropagation_PropagationLogic() {
+		return (EReference)errorPropagationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1325,8 +1316,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorsPropagation_Name() {
-		return (EAttribute)errorsPropagationEClass.getEStructuralFeatures().get(2);
+	public EAttribute getErrorPropagation_Name() {
+		return (EAttribute)errorPropagationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1334,8 +1325,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorsPropagation_PropagationLogicStringFormat() {
-		return (EAttribute)errorsPropagationEClass.getEStructuralFeatures().get(3);
+	public EAttribute getErrorPropagation_PropagationLogicStringFormat() {
+		return (EAttribute)errorPropagationEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1343,8 +1334,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getErrorsProduceFailures() {
-		return errorsProduceFailuresEClass;
+	public EClass getErrorsProducesFailures() {
+		return errorsProducesFailuresEClass;
 	}
 
 	/**
@@ -1352,8 +1343,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getErrorsProduceFailures_Source() {
-		return (EReference)errorsProduceFailuresEClass.getEStructuralFeatures().get(0);
+	public EReference getErrorsProducesFailures_Source() {
+		return (EReference)errorsProducesFailuresEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1361,8 +1352,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getErrorsProduceFailures_Destination() {
-		return (EReference)errorsProduceFailuresEClass.getEStructuralFeatures().get(1);
+	public EReference getErrorsProducesFailures_Destination() {
+		return (EReference)errorsProducesFailuresEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1370,8 +1361,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getErrorsProduceFailures_PropagationDelay() {
-		return (EReference)errorsProduceFailuresEClass.getEStructuralFeatures().get(2);
+	public EReference getErrorsProducesFailures_PropagationDelay() {
+		return (EReference)errorsProducesFailuresEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1379,8 +1370,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorsProduceFailures_Weight() {
-		return (EAttribute)errorsProduceFailuresEClass.getEStructuralFeatures().get(3);
+	public EAttribute getErrorsProducesFailures_Weight() {
+		return (EAttribute)errorsProducesFailuresEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1388,8 +1379,17 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorsProduceFailures_PropagationProbability() {
-		return (EAttribute)errorsProduceFailuresEClass.getEStructuralFeatures().get(4);
+	public EAttribute getErrorsProducesFailures_PropagationProbability() {
+		return (EAttribute)errorsProducesFailuresEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getErrorsProducesFailures_Component() {
+		return (EReference)errorsProducesFailuresEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -1426,6 +1426,15 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 */
 	public EReference getActivity_Component() {
 		return (EReference)activityEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getActivity_Sistema() {
+		return (EReference)activityEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1877,7 +1886,6 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		createEAttribute(namedElementEClass, NAMED_ELEMENT__NAME);
 
 		distributionEClass = createEClass(DISTRIBUTION);
-		createEReference(distributionEClass, DISTRIBUTION__SISTEMA);
 
 		exponentialEClass = createEClass(EXPONENTIAL);
 		createEAttribute(exponentialEClass, EXPONENTIAL__RATE);
@@ -1959,24 +1967,26 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		createEReference(internalPropagationEClass, INTERNAL_PROPAGATION__PROPAGATION_DELAY);
 		createEAttribute(internalPropagationEClass, INTERNAL_PROPAGATION__PROPAGATION_PROBABILITY);
 		createEAttribute(internalPropagationEClass, INTERNAL_PROPAGATION__WEIGHT);
+		createEReference(internalPropagationEClass, INTERNAL_PROPAGATION__COMPONENT);
 
-		errorsPropagationEClass = createEClass(ERRORS_PROPAGATION);
-		createEReference(errorsPropagationEClass, ERRORS_PROPAGATION__PROPAGATION_LOGIC);
-		createEReference(errorsPropagationEClass, ERRORS_PROPAGATION__COMPONENT);
-		createEAttribute(errorsPropagationEClass, ERRORS_PROPAGATION__NAME);
-		createEAttribute(errorsPropagationEClass, ERRORS_PROPAGATION__PROPAGATION_LOGIC_STRING_FORMAT);
+		errorPropagationEClass = createEClass(ERROR_PROPAGATION);
+		createEReference(errorPropagationEClass, ERROR_PROPAGATION__PROPAGATION_LOGIC);
+		createEAttribute(errorPropagationEClass, ERROR_PROPAGATION__NAME);
+		createEAttribute(errorPropagationEClass, ERROR_PROPAGATION__PROPAGATION_LOGIC_STRING_FORMAT);
 
-		errorsProduceFailuresEClass = createEClass(ERRORS_PRODUCE_FAILURES);
-		createEReference(errorsProduceFailuresEClass, ERRORS_PRODUCE_FAILURES__SOURCE);
-		createEReference(errorsProduceFailuresEClass, ERRORS_PRODUCE_FAILURES__DESTINATION);
-		createEReference(errorsProduceFailuresEClass, ERRORS_PRODUCE_FAILURES__PROPAGATION_DELAY);
-		createEAttribute(errorsProduceFailuresEClass, ERRORS_PRODUCE_FAILURES__WEIGHT);
-		createEAttribute(errorsProduceFailuresEClass, ERRORS_PRODUCE_FAILURES__PROPAGATION_PROBABILITY);
+		errorsProducesFailuresEClass = createEClass(ERRORS_PRODUCES_FAILURES);
+		createEReference(errorsProducesFailuresEClass, ERRORS_PRODUCES_FAILURES__SOURCE);
+		createEReference(errorsProducesFailuresEClass, ERRORS_PRODUCES_FAILURES__DESTINATION);
+		createEReference(errorsProducesFailuresEClass, ERRORS_PRODUCES_FAILURES__PROPAGATION_DELAY);
+		createEAttribute(errorsProducesFailuresEClass, ERRORS_PRODUCES_FAILURES__WEIGHT);
+		createEAttribute(errorsProducesFailuresEClass, ERRORS_PRODUCES_FAILURES__PROPAGATION_PROBABILITY);
+		createEReference(errorsProducesFailuresEClass, ERRORS_PRODUCES_FAILURES__COMPONENT);
 
 		activityEClass = createEClass(ACTIVITY);
 		createEReference(activityEClass, ACTIVITY__DURATION);
 		createEReference(activityEClass, ACTIVITY__WHEN);
 		createEReference(activityEClass, ACTIVITY__COMPONENT);
+		createEReference(activityEClass, ACTIVITY__SISTEMA);
 
 		maintenanceActivityEClass = createEClass(MAINTENANCE_ACTIVITY);
 		createEAttribute(maintenanceActivityEClass, MAINTENANCE_ACTIVITY__SUCCESS_PROBABILITY);
@@ -2089,8 +2099,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		errorsExpressionNotNodeEClass.getESuperTypes().add(this.getErrorsExpressionNode());
 		errorsExpressionAndNodeEClass.getESuperTypes().add(this.getErrorsExpressionNode());
 		errorsExpressionOrNodeEClass.getESuperTypes().add(this.getErrorsExpressionNode());
-		internalPropagationEClass.getESuperTypes().add(this.getErrorsPropagation());
-		errorsProduceFailuresEClass.getESuperTypes().add(this.getErrorsPropagation());
+		internalPropagationEClass.getESuperTypes().add(this.getErrorPropagation());
+		errorsProducesFailuresEClass.getESuperTypes().add(this.getErrorPropagation());
 		activityEClass.getESuperTypes().add(this.getNamedElement());
 		maintenanceActivityEClass.getESuperTypes().add(this.getActivity());
 		repairActivityEClass.getESuperTypes().add(this.getMaintenanceActivity());
@@ -2109,7 +2119,7 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		// Initialize classes and features; add operations and parameters
 		initEClass(sistemaEClass, Sistema.class, "Sistema", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSistema_Components(), this.getComponent(), this.getComponent_IntermediateModel(), "components", null, 0, -1, Sistema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSistema_Activities(), this.getActivity(), null, "Activities", null, 0, -1, Sistema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSistema_Activities(), this.getActivity(), this.getActivity_Sistema(), "Activities", null, 0, -1, Sistema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(componentEClass, Component.class, "Component", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComponent_IntermediateModel(), this.getSistema(), this.getSistema_Components(), "intermediateModel", null, 1, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2117,8 +2127,8 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		initEReference(getComponent_Errors(), this.getError(), this.getError_Component(), "Errors", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponent_Faults(), this.getFault(), this.getFault_Component(), "Faults", null, 1, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComponent_FaultsGeneratesErrors(), this.getFaultsGenerateErrors(), this.getFaultsGenerateErrors_Component(), "FaultsGeneratesErrors", null, 1, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getComponent_InternalPropagation(), this.getInternalPropagation(), null, "InternalPropagation", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getComponent_ErrorsGeneratesFailures(), this.getErrorsProduceFailures(), null, "ErrorsGeneratesFailures", null, 1, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getComponent_InternalPropagation(), this.getInternalPropagation(), this.getInternalPropagation_Component(), "InternalPropagation", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getComponent_ErrorsGeneratesFailures(), this.getErrorsProducesFailures(), this.getErrorsProducesFailures_Component(), "ErrorsGeneratesFailures", null, 1, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(threatEClass, Threat.class, "Threat", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -2141,7 +2151,6 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		initEAttribute(getNamedElement_Name(), ecorePackage.getEString(), "Name", null, 1, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(distributionEClass, Distribution.class, "Distribution", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDistribution_Sistema(), this.getSistema(), null, "Sistema", null, 0, 1, Distribution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(exponentialEClass, Exponential.class, "Exponential", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getExponential_Rate(), ecorePackage.getEDouble(), "Rate", null, 1, 1, Exponential.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2190,7 +2199,7 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		initEReference(getFaultsExpressionNotNode_FaultsExpression(), this.getFaultsExpressionNode(), null, "FaultsExpression", null, 1, 1, FaultsExpressionNotNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(errorsExpressionNodeEClass, ErrorsExpressionNode.class, "ErrorsExpressionNode", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getErrorsExpressionNode_ErrorPropagation(), this.getErrorsPropagation(), null, "errorPropagation", null, 1, 1, ErrorsExpressionNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getErrorsExpressionNode_ErrorPropagation(), this.getErrorPropagation(), null, "errorPropagation", null, 1, 1, ErrorsExpressionNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(errorsExpressionErrorNodeEClass, ErrorsExpressionErrorNode.class, "ErrorsExpressionErrorNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getErrorsExpressionErrorNode_Error(), this.getError(), null, "Error", null, 1, 1, ErrorsExpressionErrorNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2214,7 +2223,7 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		initEReference(getFaultsGenerateErrors_PropagationLogic(), this.getFaultsExpressionNode(), null, "PropagationLogic", null, 1, 1, FaultsGenerateErrors.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFaultsGenerateErrors_Weight(), ecorePackage.getEDouble(), "Weight", "1", 1, 1, FaultsGenerateErrors.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFaultsGenerateErrors_PropagationLogicStringFormat(), ecorePackage.getEString(), "PropagationLogicStringFormat", null, 1, 1, FaultsGenerateErrors.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getFaultsGenerateErrors_Component(), this.getComponent(), this.getComponent_FaultsGeneratesErrors(), "component", null, 1, 1, FaultsGenerateErrors.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFaultsGenerateErrors_Component(), this.getComponent(), this.getComponent_FaultsGeneratesErrors(), "Component", null, 1, 1, FaultsGenerateErrors.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFaultsGenerateErrors_Name(), ecorePackage.getEString(), "Name", null, 1, 1, FaultsGenerateErrors.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(internalPropagationEClass, InternalPropagation.class, "InternalPropagation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2223,24 +2232,26 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		initEReference(getInternalPropagation_PropagationDelay(), this.getDistribution(), null, "PropagationDelay", null, 1, 1, InternalPropagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInternalPropagation_PropagationProbability(), ecorePackage.getEDouble(), "PropagationProbability", null, 1, 1, InternalPropagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInternalPropagation_Weight(), ecorePackage.getEDouble(), "Weight", "1", 1, 1, InternalPropagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInternalPropagation_Component(), this.getComponent(), this.getComponent_InternalPropagation(), "Component", null, 1, 1, InternalPropagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(errorsPropagationEClass, ErrorsPropagation.class, "ErrorsPropagation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getErrorsPropagation_PropagationLogic(), this.getErrorsExpressionNode(), null, "PropagationLogic", null, 1, 1, ErrorsPropagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getErrorsPropagation_Component(), this.getComponent(), null, "component", null, 1, 1, ErrorsPropagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getErrorsPropagation_Name(), ecorePackage.getEString(), "Name", null, 1, 1, ErrorsPropagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getErrorsPropagation_PropagationLogicStringFormat(), ecorePackage.getEString(), "PropagationLogicStringFormat", null, 1, 1, ErrorsPropagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(errorPropagationEClass, ErrorPropagation.class, "ErrorPropagation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getErrorPropagation_PropagationLogic(), this.getErrorsExpressionNode(), null, "PropagationLogic", null, 1, 1, ErrorPropagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorPropagation_Name(), ecorePackage.getEString(), "Name", null, 1, 1, ErrorPropagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorPropagation_PropagationLogicStringFormat(), ecorePackage.getEString(), "PropagationLogicStringFormat", null, 1, 1, ErrorPropagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(errorsProduceFailuresEClass, ErrorsProduceFailures.class, "ErrorsProduceFailures", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getErrorsProduceFailures_Source(), this.getError(), null, "Source", null, 1, -1, ErrorsProduceFailures.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getErrorsProduceFailures_Destination(), this.getFailureMode(), null, "Destination", null, 1, -1, ErrorsProduceFailures.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getErrorsProduceFailures_PropagationDelay(), this.getDistribution(), null, "PropagationDelay", null, 1, 1, ErrorsProduceFailures.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getErrorsProduceFailures_Weight(), ecorePackage.getEDouble(), "Weight", "1", 1, 1, ErrorsProduceFailures.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getErrorsProduceFailures_PropagationProbability(), ecorePackage.getEDouble(), "PropagationProbability", "1", 0, 1, ErrorsProduceFailures.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(errorsProducesFailuresEClass, ErrorsProducesFailures.class, "ErrorsProducesFailures", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getErrorsProducesFailures_Source(), this.getError(), null, "Source", null, 1, -1, ErrorsProducesFailures.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getErrorsProducesFailures_Destination(), this.getFailureMode(), null, "Destination", null, 1, -1, ErrorsProducesFailures.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getErrorsProducesFailures_PropagationDelay(), this.getDistribution(), null, "PropagationDelay", null, 1, 1, ErrorsProducesFailures.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorsProducesFailures_Weight(), ecorePackage.getEDouble(), "Weight", "1", 1, 1, ErrorsProducesFailures.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorsProducesFailures_PropagationProbability(), ecorePackage.getEDouble(), "PropagationProbability", "1", 0, 1, ErrorsProducesFailures.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getErrorsProducesFailures_Component(), this.getComponent(), this.getComponent_ErrorsGeneratesFailures(), "Component", null, 1, 1, ErrorsProducesFailures.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(activityEClass, Activity.class, "Activity", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getActivity_Duration(), this.getDistribution(), null, "Duration", null, 1, 1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getActivity_When(), this.getSchedulingEvent(), this.getSchedulingEvent_Activity(), "When", null, 1, 1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getActivity_Component(), this.getComponent(), null, "Component", null, 0, 1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getActivity_Sistema(), this.getSistema(), this.getSistema_Activities(), "Sistema", null, 1, 1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(maintenanceActivityEClass, MaintenanceActivity.class, "MaintenanceActivity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getMaintenanceActivity_SuccessProbability(), ecorePackage.getEDouble(), "SuccessProbability", null, 1, 1, MaintenanceActivity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
