@@ -3298,7 +3298,6 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 		active_place : GSPN!Place (
 --				id <- 'active_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 				name <- active_place_name,
-				type<-#normal,
 				initialMarking <- active_place_markup,
 				containerPage <- sistema
 		),
@@ -3313,7 +3312,6 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 		activated_place : GSPN!Place (
 --				id <- 'activated_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 				name <- activated_place_name,
-				type<-#normal,
 				initialMarking <- activated_place_markup,
 				containerPage <- sistema
 		),
