@@ -4,7 +4,10 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="DEEM"
     nsURI="http://informatica.unifi.it/metamodels/deem" nsPrefix="deem">
   <eClassifiers xsi:type="ecore:EClass" name="NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="displayInfo" eType="#//Coordinates"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Net" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="places" upperBound="-1"
@@ -64,4 +67,8 @@
     <eLiterals name="Weibull" value="14"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InhibitorArc" eSuperTypes="#//OutputArc"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Coordinates">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -8,6 +8,16 @@ create out1: DEEM from in1: GSPN;
 helper def: placeCounter : Integer = 0;
 helper def: transitionCounter : Integer = 0;
 
+helper def: nextPlacePosition_x : Integer = 100;
+helper def: nextPlacePosition_y : Integer = 100;
+helper def: nextTransitionPosition_x : Integer = 200;
+helper def: nextTransitionPosition_y : Integer = 200;
+
+helper def: displayIncrement : Integer = 200;
+
+helper def: netSize_x : Integer = 2000;
+helper def: netSize_y : Integer = 2000;
+
 helper def: idToString(p:GSPN!PnObject): String =
 	if (p = OclUndefined) then
 		'undefObject'
