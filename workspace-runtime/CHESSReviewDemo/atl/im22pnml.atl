@@ -1483,10 +1483,31 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				type<-#inhibitor,
 				inscription<-transaction_to_evidence_from_logic_result_arc_annotation,
 				containerPage <- sistema
-		)--,
+		),
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di rimuovere un token dalla logica quando l'errore scompare
 -------------------------------------------------------------------------------
+		transition_faultnode_false : GSPN!GSPNImmediateTransition (
+			containerPage <- sistema			
+		),
+		transition_faultnode_false_from_error_ins : GSPN!PTArcAnnotation ( text <- 1 ),
+		transition_faultnode_false_from_error : GSPN!GSPNArc (
+			id <- 'faultnode_false_from_error',
+			source <- fault,
+			target <- transition_faultnode_false,
+			type <- #inhibitor,
+			inscription <- transition_faultnode_false_from_error_ins,
+			containerPage <- sistema
+		),
+		transition_faultnode_false_from_result_ins : GSPN!PTArcAnnotation ( text <- 1 ),
+		transition_faultnode_false_from_result : GSPN!GSPNArc (
+			id <- 'faultnode_false_from_result',
+			source <- logicResult_place,
+			target <- transition_faultnode_false,
+			type <- #normal,
+			inscription <- transition_faultnode_false_from_result_ins,
+			containerPage <- sistema
+		)
 --		transaction_remove_evidence : GSPN!GSPNImmediateTransition (
 --			id <- 'faults_generates_errors_'+faultsGenerateErrors.Name+'_propagation_logic_'+componente.Name+'_transaction_remove_evidence_'+fault.Name,
 --			Priority <- 2,
@@ -2664,10 +2685,31 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 				type <- #inhibitor,
 				inscription <- transaction_to_evidence_from_logic_result_arc_annotation,
 				containerPage <- sistema
-		)--,
+		),
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di rimuovere un token dalla logica quando l'errore scompare
 -------------------------------------------------------------------------------
+		transition_errornode_false : GSPN!GSPNImmediateTransition (
+			containerPage <- sistema			
+		),
+		transition_errornode_false_from_error_ins : GSPN!PTArcAnnotation ( text <- 1 ),
+		transition_errornode_false_from_error : GSPN!GSPNArc (
+			id <- 'errornode_false_from_error',
+			source <- errorsExpressionNode.Error,
+			target <- transition_errornode_false,
+			type <- #inhibitor,
+			inscription <- transition_errornode_false_from_error_ins,
+			containerPage <- sistema
+		),
+		transition_errornode_false_from_result_ins : GSPN!PTArcAnnotation ( text <- 1 ),
+		transition_errornode_false_from_result : GSPN!GSPNArc (
+			id <- 'errornode_false_from_result',
+			source <- logicResult_place,
+			target <- transition_errornode_false,
+			type <- #normal,
+			inscription <- transition_errornode_false_from_result_ins,
+			containerPage <- sistema
+		)
 --		transaction_remove_evidence : GSPN!GSPNImmediateTransition (
 --			Priority <- 2,
 --			containerPage <- sistema

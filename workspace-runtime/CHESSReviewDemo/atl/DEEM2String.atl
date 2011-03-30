@@ -7,7 +7,7 @@ helper context DEEM!Net def: toString():String =
 	'NET:"'+self.Name+'",2000,2000;\n'+
 	'COLORS:White,Black,Black,Black,Black,Black;\n\n'+
 	'VARIABLE:"Time","Real";\n\n'+
-	'STUDY:"DefaultStudy",0,"not_def",10;\n\n'+
+	'STUDY:"DefaultStudy",0,"not_def",10000;\n\n'+
 	self.places->iterate(i; acc:String=''| acc + i.toString())+
 	'\n\n'+
 	self.transitions->iterate(i; acc:String=''| acc + i.toString())+
@@ -20,40 +20,27 @@ helper context DEEM!Net def: toString():String =
 	'\n';
 	
 helper context DEEM!Place def: toString(): String = 
-	'PLACE:"'+self.Name+'",1500,1500,'+self.marking+',0;\n';
+	'PLACE:"'+self.Name+'",1500,1500,'+self.marking+',1;\n';
 	
 helper context DEEM!ImmediateTransition def: toString(): String = 
-	'TRANS:"'+self.Name+'",1500,1500,V,Immediate,'+self.Priority+',0,\'\', \'\',\n'+
+--	'TRANS:"'+self.Name+'",1500,1500,V,Immediate,'+self.Priority+',0,\'\', \'\',\n'+
+    'TRANS:"'+self.Name+'",1500,1500,V,Immediate,1,1,\'\', \''+self.params->first()+'\',\n'+
     ' (\n'+
-    '  '+self.params->iterate(i; acc : String = '' |
+    '1.000000e+00\n' +
+    '  '+self.params->subSequence(2, self.params->size())->iterate(i; acc : String = '' |
 			acc +
 			if acc = '' then
 				''
 			else
 				',\n'
 			endif +
-			i.toString()
+			'\''+i.toString()+'\''
 		)+
 	'\n'+
     '  );\n';
     
-helper context DEEM!TransitionType def: toString(): String =
-	if self = #Deterministic then
-		'0'
-	else if self=#Exponential then
-		'1'
-	else if self=#Normal then
-		'11'
-	else if self=#Uniform then
-		'13'
-	else if self=#Gamma then
-		'3'
-	else --if self=#Weibull then
-		'14'
-	endif endif endif endif endif;
-
 helper context DEEM!TimedTransition def: toString(): String =
-	'TRANS:"'+self.Name+'",0,0,V,Timed,1,'+
+	'TRANS:"'+self.Name+'",1500,1500,V,Timed,1,'+
 	if self.type = #Deterministic then
 		'0'
 	else if self.type=#Exponential then
@@ -67,16 +54,18 @@ helper context DEEM!TimedTransition def: toString(): String =
 	else --if self=#Weibull then
 		'14'
 	endif endif endif endif endif
-	+',\'\', \'\',\n'+
+	+',\'\', \''+self.params->first()+'\',\n'+
     ' (\n'+
-    '  '+self.params->iterate(i; acc : String = '' |
+    '1.000000e+00\n' +
+    '  '+self.params->subSequence(2, self.params->size())->iterate(i; acc : String = '' |
 		acc +
 		if acc = '' then
 			''
 		else
 			',\n'
 		endif +
-	    i.toString())+'\n'+
+	    '\''+i.toString()+'\''
+	)+'\n'+
     '  );\n';
 
 --helper context DEEM!ArcType def: toString(): String =
