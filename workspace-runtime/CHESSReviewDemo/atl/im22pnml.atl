@@ -1483,40 +1483,40 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				type<-#inhibitor,
 				inscription<-transaction_to_evidence_from_logic_result_arc_annotation,
 				containerPage <- sistema
-		),
+		)--,
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di rimuovere un token dalla logica quando l'errore scompare
 -------------------------------------------------------------------------------
-		transaction_remove_evidence : GSPN!GSPNImmediateTransition (
-			id <- 'faults_generates_errors_'+faultsGenerateErrors.Name+'_propagation_logic_'+componente.Name+'_transaction_remove_evidence_'+fault.Name,
-			Priority <- 2,
-			containerPage <- sistema
-		),
+--		transaction_remove_evidence : GSPN!GSPNImmediateTransition (
+--			id <- 'faults_generates_errors_'+faultsGenerateErrors.Name+'_propagation_logic_'+componente.Name+'_transaction_remove_evidence_'+fault.Name,
+--			Priority <- 2,
+--			containerPage <- sistema
+--		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_remove_evidence_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
-				text<-1
-		),
-		transaction_remove_evidence_from_logic_result_arc: GSPN!GSPNArc (
-				id<-'faults_fault_transaction_remove_evidence_from_logic_result_arc',
-				source<-logicResult_place,
-				target<-transaction_remove_evidence,
-				type<-#normal,
-				inscription<-transaction_remove_evidence_from_logic_result_arc_annotation,
-				containerPage <- sistema
-		),
+--		transaction_remove_evidence_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+--				text<-1
+--		),
+--		transaction_remove_evidence_from_logic_result_arc: GSPN!GSPNArc (
+--				id<-'faults_fault_transaction_remove_evidence_from_logic_result_arc',
+--				source<-logicResult_place,
+--				target<-transaction_remove_evidence,
+--				type<-#normal,
+--				inscription<-transaction_remove_evidence_from_logic_result_arc_annotation,
+--				containerPage <- sistema
+--		),
 -- Creo l'arco inibitore che attiva permette di rimuovere il token dal risultato di questa espressione
 -- logica se nn ci sono faults 
-		transaction_remove_evidence_from_faulty_place_arc_annotation : GSPN!PTArcAnnotation (
-				text<-1
-		),
-		transaction_remove_evidence_from_faulty_place_arc: GSPN!GSPNArc (
-				id<-'faults_fault_transaction_remove_evidence_from_faulty_place_arc',
-				source<-thisModule.resolveTemp(fault, 'faulty_place'),
-				target<-transaction_to_evidence,
-				type<-#inhibitor,
-				inscription<-transaction_remove_evidence_from_faulty_place_arc_annotation,
-				containerPage <- sistema
-		)
+--		transaction_remove_evidence_from_faulty_place_arc_annotation : GSPN!PTArcAnnotation (
+--				text<-1
+--		),
+--		transaction_remove_evidence_from_faulty_place_arc: GSPN!GSPNArc (
+--				id<-'faults_fault_transaction_remove_evidence_from_faulty_place_arc',
+--				source<-thisModule.resolveTemp(fault, 'faulty_place'),
+--				target<-transaction_to_evidence,
+--				type<-#inhibitor,
+--				inscription<-transaction_remove_evidence_from_faulty_place_arc_annotation,
+--				containerPage <- sistema
+--	)
 		
 	do {
 		thisModule.registerFaultPropagationManager(faultsGenerateErrors.PropagationLogicStringFormat, faultsGenerateErrors);
@@ -2664,39 +2664,39 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 				type <- #inhibitor,
 				inscription <- transaction_to_evidence_from_logic_result_arc_annotation,
 				containerPage <- sistema
-		),
+		)--,
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di rimuovere un token dalla logica quando l'errore scompare
 -------------------------------------------------------------------------------
-		transaction_remove_evidence : GSPN!GSPNImmediateTransition (
-			Priority <- 2,
-			containerPage <- sistema
-		),
+--		transaction_remove_evidence : GSPN!GSPNImmediateTransition (
+--			Priority <- 2,
+--			containerPage <- sistema
+--		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_remove_evidence_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
-				text <- 1
-		),
-		transaction_remove_evidence_from_logic_result_arc: GSPN!GSPNArc (
-				id<-'errors_error_transaction_remove_evidence_from_logic_result_arc',
-				source <- logicResult_place,
-				target <- transaction_remove_evidence,
-				type<-#normal,
-				inscription <- transaction_remove_evidence_from_logic_result_arc_annotation,
-				containerPage <- sistema
-		),
+--		transaction_remove_evidence_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+--				text <- 1
+--		),
+--		transaction_remove_evidence_from_logic_result_arc: GSPN!GSPNArc (
+--				id<-'errors_error_transaction_remove_evidence_from_logic_result_arc',
+--				source <- logicResult_place,
+--				target <- transaction_remove_evidence,
+--				type<-#normal,
+--				inscription <- transaction_remove_evidence_from_logic_result_arc_annotation,
+--				containerPage <- sistema
+--		),
 -- Creo l'arco inibitore che attiva permette di rimuovere il token dal risultato di questa espressione
 -- logica se nn ci sono faults 
-		transaction_remove_evidence_from_faulty_place_arc_annotation : GSPN!PTArcAnnotation (
-				text <- 1
-		),
-		transaction_remove_evidence_from_faulty_place_arc: GSPN!GSPNArc (
-				id<-'errors_error_transaction_remove_evidence_from_faulty_place_arc',
-				source <- errorsExpressionNode.Error,
-				target <- transaction_to_evidence,
-				type <- #inhibitor,
-				inscription <- transaction_remove_evidence_from_faulty_place_arc_annotation,
-				containerPage <- sistema
-		)
+--		transaction_remove_evidence_from_faulty_place_arc_annotation : GSPN!PTArcAnnotation (
+--				text <- 1
+--		),
+--		transaction_remove_evidence_from_faulty_place_arc: GSPN!GSPNArc (
+--				id<-'errors_error_transaction_remove_evidence_from_faulty_place_arc',
+--				source <- errorsExpressionNode.Error,
+--				target <- transaction_to_evidence,
+--				type <- #inhibitor,
+--				inscription <- transaction_remove_evidence_from_faulty_place_arc_annotation,
+--				containerPage <- sistema
+--		)
 		
 	do {
 		--ERRORNODE

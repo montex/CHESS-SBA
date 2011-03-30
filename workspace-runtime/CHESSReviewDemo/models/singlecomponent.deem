@@ -17,78 +17,74 @@
   <places Name="activated_c1_errorsProducesFailures_c1_epf114"/>
   <places Name="tmp_propagation_c1_errors_produces_failures_c1_epf115"/>
   <places Name="errorsActivation_c1_errorsProducesFailures_c1_epf116"/>
-  <inputArcs source="//@places.3" target="//@transitions.0"/>
-  <inputArcs source="//@places.3" target="//@transitions.1"/>
-  <inputArcs source="//@places.2" target="//@transitions.22"/>
-  <inputArcs source="//@places.1" target="//@transitions.22"/>
-  <inputArcs source="//@places.1" target="//@transitions.2"/>
-  <inputArcs source="//@places.0" target="//@transitions.2"/>
-  <inputArcs source="//@places.2" target="//@transitions.3"/>
-  <inputArcs source="//@places.0" target="//@transitions.3"/>
-  <inputArcs source="//@places.4" target="//@transitions.4"/>
-  <inputArcs source="//@places.0" target="//@transitions.4"/>
-  <inputArcs source="//@places.1" target="//@transitions.5"/>
-  <inputArcs source="//@places.7" target="//@transitions.6"/>
-  <inputArcs source="//@places.7" target="//@transitions.8"/>
-  <inputArcs source="//@places.9" target="//@transitions.9"/>
-  <inputArcs source="//@places.8" target="//@transitions.10"/>
-  <inputArcs source="//@places.8" target="//@transitions.12"/>
-  <inputArcs source="//@places.10" target="//@transitions.7"/>
-  <inputArcs source="//@places.10" target="//@transitions.11"/>
-  <inputArcs source="//@places.7" target="//@transitions.12"/>
-  <inputArcs source="//@places.11" target="//@transitions.23"/>
-  <inputArcs source="//@places.4" target="//@transitions.13"/>
-  <inputArcs source="//@places.12" target="//@transitions.14"/>
-  <inputArcs source="//@places.12" target="//@transitions.16"/>
-  <inputArcs source="//@places.14" target="//@transitions.17"/>
-  <inputArcs source="//@places.13" target="//@transitions.18"/>
-  <inputArcs source="//@places.13" target="//@transitions.20"/>
-  <inputArcs source="//@places.15" target="//@transitions.15"/>
-  <inputArcs source="//@places.15" target="//@transitions.19"/>
-  <inputArcs source="//@places.12" target="//@transitions.20"/>
-  <inputArcs source="//@places.16" target="//@transitions.24"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="//@places.0" target="//@transitions.21"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="//@places.7" target="//@transitions.5"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="//@places.1" target="//@transitions.5"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="//@places.9" target="//@transitions.8"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="//@places.7" target="//@transitions.9"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="//@places.7" target="//@transitions.10"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="//@places.12" target="//@transitions.13"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="//@places.4" target="//@transitions.13"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="//@places.14" target="//@transitions.16"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="//@places.12" target="//@transitions.17"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="//@places.12" target="//@transitions.18"/>
-  <outputArcs source="//@transitions.21" target="//@places.3"/>
-  <outputArcs source="//@transitions.0" target="//@places.1"/>
-  <outputArcs source="//@transitions.1" target="//@places.1"/>
-  <outputArcs source="//@transitions.1" target="//@places.2"/>
-  <outputArcs source="//@transitions.2" target="//@places.0"/>
-  <outputArcs source="//@transitions.3" target="//@places.0"/>
-  <outputArcs source="//@transitions.4" target="//@places.0"/>
-  <outputArcs source="//@transitions.5" target="//@places.7"/>
-  <outputArcs source="//@transitions.5" target="//@places.1"/>
-  <outputArcs source="//@transitions.8" target="//@places.7"/>
-  <outputArcs source="//@transitions.8" target="//@places.9"/>
-  <outputArcs source="//@transitions.8" target="//@places.8"/>
-  <outputArcs source="//@transitions.23" target="//@places.10"/>
-  <outputArcs source="//@transitions.12" target="//@places.7"/>
-  <outputArcs source="//@transitions.12" target="//@places.11"/>
-  <outputArcs source="//@transitions.7" target="//@places.4"/>
-  <outputArcs source="//@transitions.13" target="//@places.12"/>
-  <outputArcs source="//@transitions.13" target="//@places.4"/>
-  <outputArcs source="//@transitions.16" target="//@places.12"/>
-  <outputArcs source="//@transitions.16" target="//@places.14"/>
-  <outputArcs source="//@transitions.16" target="//@places.13"/>
-  <outputArcs source="//@transitions.24" target="//@places.15"/>
-  <outputArcs source="//@transitions.20" target="//@places.12"/>
-  <outputArcs source="//@transitions.20" target="//@places.16"/>
-  <outputArcs source="//@transitions.15" target="//@places.6"/>
-  <outputArcs source="//@transitions.15" target="//@places.0"/>
+  <inputArcs source="internal_fault_occurred_c1_c1_f13" target="T0"/>
+  <inputArcs source="internal_fault_occurred_c1_c1_f13" target="T1"/>
+  <inputArcs source="numberOfTransientFaultyPlace_c1_c1_f12" target="T20"/>
+  <inputArcs source="faultyPlace_c1_c1_f11" target="T20"/>
+  <inputArcs source="faultyPlace_c1_c1_f11" target="T2"/>
+  <inputArcs source="failed_c10" target="T2"/>
+  <inputArcs source="numberOfTransientFaultyPlace_c1_c1_f12" target="T3"/>
+  <inputArcs source="failed_c10" target="T3"/>
+  <inputArcs source="erroneusPlace_c1_c1_e14" target="T4"/>
+  <inputArcs source="failed_c10" target="T4"/>
+  <inputArcs source="faultyPlace_c1_c1_f11" target="T5"/>
+  <inputArcs source="logicResult_c1_logic_c1_fge17" target="T7"/>
+  <inputArcs source="activated_c1_faultsGeneratesError_c1_fge19" target="T8"/>
+  <inputArcs source="active_c1_faultsGeneratesError_c1_fge18" target="T9"/>
+  <inputArcs source="active_c1_faultsGeneratesError_c1_fge18" target="T11"/>
+  <inputArcs source="tmp_activated_c1_faultsGeneratesError_c1_fge110" target="T6"/>
+  <inputArcs source="tmp_activated_c1_faultsGeneratesError_c1_fge110" target="T10"/>
+  <inputArcs source="logicResult_c1_logic_c1_fge17" target="T11"/>
+  <inputArcs source="errorsActivation_c1_faultsGeneratesError_c1_fge111" target="T21"/>
+  <inputArcs source="erroneusPlace_c1_c1_e14" target="T12"/>
+  <inputArcs source="logicResult_c1_logic_c1_epf112" target="T14"/>
+  <inputArcs source="activated_c1_errorsProducesFailures_c1_epf114" target="T15"/>
+  <inputArcs source="active_c1_errorsProducesFailures_c1_epf113" target="T16"/>
+  <inputArcs source="active_c1_errorsProducesFailures_c1_epf113" target="T18"/>
+  <inputArcs source="tmp_propagation_c1_errors_produces_failures_c1_epf115" target="T13"/>
+  <inputArcs source="tmp_propagation_c1_errors_produces_failures_c1_epf115" target="T17"/>
+  <inputArcs source="logicResult_c1_logic_c1_epf112" target="T18"/>
+  <inputArcs source="errorsActivation_c1_errorsProducesFailures_c1_epf116" target="T22"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c10" target="T19"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_fge17" target="T5"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="activated_c1_faultsGeneratesError_c1_fge19" target="T7"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_fge17" target="T8"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_fge17" target="T9"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_epf112" target="T12"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="activated_c1_errorsProducesFailures_c1_epf114" target="T14"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_epf112" target="T15"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_epf112" target="T16"/>
+  <outputArcs source="T19" target="internal_fault_occurred_c1_c1_f13"/>
+  <outputArcs source="T0" target="faultyPlace_c1_c1_f11"/>
+  <outputArcs source="T1" target="faultyPlace_c1_c1_f11"/>
+  <outputArcs source="T1" target="numberOfTransientFaultyPlace_c1_c1_f12"/>
+  <outputArcs source="T2" target="failed_c10"/>
+  <outputArcs source="T3" target="failed_c10"/>
+  <outputArcs source="T4" target="failed_c10"/>
+  <outputArcs source="T5" target="logicResult_c1_logic_c1_fge17"/>
+  <outputArcs source="T5" target="faultyPlace_c1_c1_f11"/>
+  <outputArcs source="T7" target="logicResult_c1_logic_c1_fge17"/>
+  <outputArcs source="T7" target="activated_c1_faultsGeneratesError_c1_fge19"/>
+  <outputArcs source="T7" target="active_c1_faultsGeneratesError_c1_fge18"/>
+  <outputArcs source="T21" target="tmp_activated_c1_faultsGeneratesError_c1_fge110"/>
+  <outputArcs source="T11" target="logicResult_c1_logic_c1_fge17"/>
+  <outputArcs source="T11" target="errorsActivation_c1_faultsGeneratesError_c1_fge111"/>
+  <outputArcs source="T6" target="erroneusPlace_c1_c1_e14"/>
+  <outputArcs source="T12" target="logicResult_c1_logic_c1_epf112"/>
+  <outputArcs source="T12" target="erroneusPlace_c1_c1_e14"/>
+  <outputArcs source="T14" target="logicResult_c1_logic_c1_epf112"/>
+  <outputArcs source="T14" target="activated_c1_errorsProducesFailures_c1_epf114"/>
+  <outputArcs source="T14" target="active_c1_errorsProducesFailures_c1_epf113"/>
+  <outputArcs source="T22" target="tmp_propagation_c1_errors_produces_failures_c1_epf115"/>
+  <outputArcs source="T18" target="logicResult_c1_logic_c1_epf112"/>
+  <outputArcs source="T18" target="errorsActivation_c1_errorsProducesFailures_c1_epf116"/>
+  <outputArcs source="T13" target="failureModePlace_c1_c1_fm16"/>
+  <outputArcs source="T13" target="failed_c10"/>
   <transitions xsi:type="deem:ImmediateTransition" Name="T0">
-    <params>0.5</params>
+    <params>0.9</params>
   </transitions>
   <transitions xsi:type="deem:ImmediateTransition" Name="T1">
-    <params>0.5</params>
+    <params>0.09999999999999998</params>
   </transitions>
   <transitions xsi:type="deem:ImmediateTransition" Name="T2" Priority="2">
     <params>1.0</params>
@@ -102,11 +98,11 @@
   <transitions xsi:type="deem:ImmediateTransition" Name="T5" Priority="2">
     <params>1.0</params>
   </transitions>
-  <transitions xsi:type="deem:ImmediateTransition" Name="T6" Priority="2">
-    <params>1.0</params>
+  <transitions xsi:type="deem:ImmediateTransition" Name="T6">
+    <params>0.9</params>
   </transitions>
-  <transitions xsi:type="deem:ImmediateTransition" Name="T7">
-    <params>0.0</params>
+  <transitions xsi:type="deem:ImmediateTransition" Name="T7" Priority="2">
+    <params>1.0</params>
   </transitions>
   <transitions xsi:type="deem:ImmediateTransition" Name="T8" Priority="2">
     <params>1.0</params>
@@ -114,49 +110,43 @@
   <transitions xsi:type="deem:ImmediateTransition" Name="T9" Priority="2">
     <params>1.0</params>
   </transitions>
-  <transitions xsi:type="deem:ImmediateTransition" Name="T10" Priority="2">
-    <params>1.0</params>
+  <transitions xsi:type="deem:ImmediateTransition" Name="T10">
+    <params>0.09999999999999998</params>
   </transitions>
-  <transitions xsi:type="deem:ImmediateTransition" Name="T11">
+  <transitions xsi:type="deem:ImmediateTransition" Name="T11" Priority="2">
     <params>1.0</params>
   </transitions>
   <transitions xsi:type="deem:ImmediateTransition" Name="T12" Priority="2">
     <params>1.0</params>
   </transitions>
-  <transitions xsi:type="deem:ImmediateTransition" Name="T13" Priority="2">
-    <params>1.0</params>
+  <transitions xsi:type="deem:ImmediateTransition" Name="T13">
+    <params>0.9</params>
   </transitions>
   <transitions xsi:type="deem:ImmediateTransition" Name="T14" Priority="2">
     <params>1.0</params>
   </transitions>
-  <transitions xsi:type="deem:ImmediateTransition" Name="T15">
+  <transitions xsi:type="deem:ImmediateTransition" Name="T15" Priority="2">
     <params>1.0</params>
   </transitions>
   <transitions xsi:type="deem:ImmediateTransition" Name="T16" Priority="2">
     <params>1.0</params>
   </transitions>
-  <transitions xsi:type="deem:ImmediateTransition" Name="T17" Priority="2">
-    <params>1.0</params>
+  <transitions xsi:type="deem:ImmediateTransition" Name="T17">
+    <params>0.09999999999999998</params>
   </transitions>
   <transitions xsi:type="deem:ImmediateTransition" Name="T18" Priority="2">
     <params>1.0</params>
   </transitions>
-  <transitions xsi:type="deem:ImmediateTransition" Name="T19">
-    <params>0.0</params>
-  </transitions>
-  <transitions xsi:type="deem:ImmediateTransition" Name="T20" Priority="2">
-    <params>1.0</params>
-  </transitions>
-  <transitions xsi:type="deem:TimedTransition" Name="T21" type="Exponential">
+  <transitions xsi:type="deem:TimedTransition" Name="T19" type="Exponential">
     <params>1.0E-5</params>
   </transitions>
+  <transitions xsi:type="deem:TimedTransition" Name="T20" type="Exponential">
+    <params>0.1</params>
+  </transitions>
+  <transitions xsi:type="deem:TimedTransition" Name="T21" type="Exponential">
+    <params>0.1</params>
+  </transitions>
   <transitions xsi:type="deem:TimedTransition" Name="T22" type="Exponential">
-    <params>0.0</params>
-  </transitions>
-  <transitions xsi:type="deem:TimedTransition" Name="T23" type="Exponential">
-    <params>0.0</params>
-  </transitions>
-  <transitions xsi:type="deem:TimedTransition" Name="T24" type="Exponential">
-    <params>0.0</params>
+    <params>0.1</params>
   </transitions>
 </deem:Net>
