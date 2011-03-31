@@ -1,6 +1,6 @@
 query DEEM2String_query = DEEM!Net.allInstances()->
 	select(e | e.oclIsTypeOf(DEEM!Net))->
-	collect(x | x.toString().writeTo('CHESSReviewDemo/models/singlecomponent'));
+	collect(x | x.toString().writeTo('CHESSReviewDemo/models/model'));
 
 uses DEEM2String;
 

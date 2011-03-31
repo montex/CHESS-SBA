@@ -927,6 +927,167 @@ public class DependabilityintermediateModelItemProviderAdapterFactory extends De
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link DependabilityintermediateModel.DependabilityMeasure} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected DependabilityMeasureItemProvider dependabilityMeasureItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link DependabilityintermediateModel.DependabilityMeasure}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createDependabilityMeasureAdapter() {
+		if (dependabilityMeasureItemProvider == null) {
+			dependabilityMeasureItemProvider = new DependabilityMeasureItemProvider(this);
+		}
+
+		return dependabilityMeasureItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link DependabilityintermediateModel.SteadyState} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected SteadyStateItemProvider steadyStateItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link DependabilityintermediateModel.SteadyState}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createSteadyStateAdapter() {
+		if (steadyStateItemProvider == null) {
+			steadyStateItemProvider = new SteadyStateItemProvider(this);
+		}
+
+		return steadyStateItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link DependabilityintermediateModel.InstantOfTime} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected InstantOfTimeItemProvider instantOfTimeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link DependabilityintermediateModel.InstantOfTime}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createInstantOfTimeAdapter() {
+		if (instantOfTimeItemProvider == null) {
+			instantOfTimeItemProvider = new InstantOfTimeItemProvider(this);
+		}
+
+		return instantOfTimeItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link DependabilityintermediateModel.IntervalOfTime} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IntervalOfTimeItemProvider intervalOfTimeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link DependabilityintermediateModel.IntervalOfTime}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createIntervalOfTimeAdapter() {
+		if (intervalOfTimeItemProvider == null) {
+			intervalOfTimeItemProvider = new IntervalOfTimeItemProvider(this);
+		}
+
+		return intervalOfTimeItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link DependabilityintermediateModel.Reliability} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ReliabilityItemProvider reliabilityItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link DependabilityintermediateModel.Reliability}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createReliabilityAdapter() {
+		if (reliabilityItemProvider == null) {
+			reliabilityItemProvider = new ReliabilityItemProvider(this);
+		}
+
+		return reliabilityItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link DependabilityintermediateModel.Availability} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected AvailabilityItemProvider availabilityItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link DependabilityintermediateModel.Availability}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createAvailabilityAdapter() {
+		if (availabilityItemProvider == null) {
+			availabilityItemProvider = new AvailabilityItemProvider(this);
+		}
+
+		return availabilityItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link DependabilityintermediateModel.Safety} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected SafetyItemProvider safetyItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link DependabilityintermediateModel.Safety}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createSafetyAdapter() {
+		if (safetyItemProvider == null) {
+			safetyItemProvider = new SafetyItemProvider(this);
+		}
+
+		return safetyItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1062,6 +1223,13 @@ public class DependabilityintermediateModelItemProviderAdapterFactory extends De
 		if (scheduleImmediatelyItemProvider != null) scheduleImmediatelyItemProvider.dispose();
 		if (scheduleAtTimeItemProvider != null) scheduleAtTimeItemProvider.dispose();
 		if (schedulePeriodicItemProvider != null) schedulePeriodicItemProvider.dispose();
+		if (dependabilityMeasureItemProvider != null) dependabilityMeasureItemProvider.dispose();
+		if (steadyStateItemProvider != null) steadyStateItemProvider.dispose();
+		if (instantOfTimeItemProvider != null) instantOfTimeItemProvider.dispose();
+		if (intervalOfTimeItemProvider != null) intervalOfTimeItemProvider.dispose();
+		if (reliabilityItemProvider != null) reliabilityItemProvider.dispose();
+		if (availabilityItemProvider != null) availabilityItemProvider.dispose();
+		if (safetyItemProvider != null) safetyItemProvider.dispose();
 	}
 
 }

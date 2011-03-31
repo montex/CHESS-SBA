@@ -7,7 +7,9 @@
 package DependabilityintermediateModel.util;
 
 import DependabilityintermediateModel.Activity;
+import DependabilityintermediateModel.Availability;
 import DependabilityintermediateModel.Component;
+import DependabilityintermediateModel.DependabilityMeasure;
 import DependabilityintermediateModel.DependabilityintermediateModelPackage;
 import DependabilityintermediateModel.DetectionActivity;
 import DependabilityintermediateModel.Deterministic;
@@ -19,6 +21,7 @@ import DependabilityintermediateModel.ErrorsExpressionNode;
 import DependabilityintermediateModel.ErrorsExpressionNotNode;
 import DependabilityintermediateModel.ErrorsExpressionOrNode;
 import DependabilityintermediateModel.ErrorsProducesFailures;
+import DependabilityintermediateModel.EvaluationType;
 import DependabilityintermediateModel.Exponential;
 import DependabilityintermediateModel.ExternalFault;
 import DependabilityintermediateModel.FailureMode;
@@ -31,12 +34,16 @@ import DependabilityintermediateModel.FaultsExpressionOrNode;
 import DependabilityintermediateModel.FaultsGenerateErrors;
 import DependabilityintermediateModel.Gamma;
 import DependabilityintermediateModel.Gaussian;
+import DependabilityintermediateModel.InstantOfTime;
 import DependabilityintermediateModel.InternalFault;
 import DependabilityintermediateModel.InternalPropagation;
+import DependabilityintermediateModel.IntervalOfTime;
 import DependabilityintermediateModel.MaintenanceActivity;
 import DependabilityintermediateModel.NamedElement;
+import DependabilityintermediateModel.Reliability;
 import DependabilityintermediateModel.RepairActivity;
 import DependabilityintermediateModel.ReplaceActivity;
+import DependabilityintermediateModel.Safety;
 import DependabilityintermediateModel.ScheduleAtTime;
 import DependabilityintermediateModel.ScheduleImmediately;
 import DependabilityintermediateModel.SchedulePeriodic;
@@ -49,6 +56,7 @@ import DependabilityintermediateModel.SchedulingConditionExpressionOrNode;
 import DependabilityintermediateModel.SchedulingConditionExpressionTrueNode;
 import DependabilityintermediateModel.SchedulingEvent;
 import DependabilityintermediateModel.Sistema;
+import DependabilityintermediateModel.SteadyState;
 import DependabilityintermediateModel.Threat;
 import DependabilityintermediateModel.Uniform;
 import DependabilityintermediateModel.Weibull;
@@ -299,6 +307,38 @@ public class DependabilityintermediateModelAdapterFactory extends AdapterFactory
 			@Override
 			public Adapter caseSchedulePeriodic(SchedulePeriodic object) {
 				return createSchedulePeriodicAdapter();
+			}
+			@Override
+			public Adapter caseDependabilityMeasure(DependabilityMeasure object) {
+				return createDependabilityMeasureAdapter();
+			}
+			@Override
+			public Adapter caseEvaluationType(EvaluationType object) {
+				return createEvaluationTypeAdapter();
+			}
+			@Override
+			public Adapter caseSteadyState(SteadyState object) {
+				return createSteadyStateAdapter();
+			}
+			@Override
+			public Adapter caseInstantOfTime(InstantOfTime object) {
+				return createInstantOfTimeAdapter();
+			}
+			@Override
+			public Adapter caseIntervalOfTime(IntervalOfTime object) {
+				return createIntervalOfTimeAdapter();
+			}
+			@Override
+			public Adapter caseReliability(Reliability object) {
+				return createReliabilityAdapter();
+			}
+			@Override
+			public Adapter caseAvailability(Availability object) {
+				return createAvailabilityAdapter();
+			}
+			@Override
+			public Adapter caseSafety(Safety object) {
+				return createSafetyAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -961,6 +1001,118 @@ public class DependabilityintermediateModelAdapterFactory extends AdapterFactory
 	 * @generated
 	 */
 	public Adapter createSchedulePeriodicAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.DependabilityMeasure <em>Dependability Measure</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see DependabilityintermediateModel.DependabilityMeasure
+	 * @generated
+	 */
+	public Adapter createDependabilityMeasureAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.EvaluationType <em>Evaluation Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see DependabilityintermediateModel.EvaluationType
+	 * @generated
+	 */
+	public Adapter createEvaluationTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.SteadyState <em>Steady State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see DependabilityintermediateModel.SteadyState
+	 * @generated
+	 */
+	public Adapter createSteadyStateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.InstantOfTime <em>Instant Of Time</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see DependabilityintermediateModel.InstantOfTime
+	 * @generated
+	 */
+	public Adapter createInstantOfTimeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.IntervalOfTime <em>Interval Of Time</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see DependabilityintermediateModel.IntervalOfTime
+	 * @generated
+	 */
+	public Adapter createIntervalOfTimeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.Reliability <em>Reliability</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see DependabilityintermediateModel.Reliability
+	 * @generated
+	 */
+	public Adapter createReliabilityAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.Availability <em>Availability</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see DependabilityintermediateModel.Availability
+	 * @generated
+	 */
+	public Adapter createAvailabilityAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link DependabilityintermediateModel.Safety <em>Safety</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see DependabilityintermediateModel.Safety
+	 * @generated
+	 */
+	public Adapter createSafetyAdapter() {
 		return null;
 	}
 

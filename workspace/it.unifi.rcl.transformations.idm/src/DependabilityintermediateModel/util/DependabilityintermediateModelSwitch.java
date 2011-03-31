@@ -7,7 +7,9 @@
 package DependabilityintermediateModel.util;
 
 import DependabilityintermediateModel.Activity;
+import DependabilityintermediateModel.Availability;
 import DependabilityintermediateModel.Component;
+import DependabilityintermediateModel.DependabilityMeasure;
 import DependabilityintermediateModel.DependabilityintermediateModelPackage;
 import DependabilityintermediateModel.DetectionActivity;
 import DependabilityintermediateModel.Deterministic;
@@ -19,6 +21,7 @@ import DependabilityintermediateModel.ErrorsExpressionNode;
 import DependabilityintermediateModel.ErrorsExpressionNotNode;
 import DependabilityintermediateModel.ErrorsExpressionOrNode;
 import DependabilityintermediateModel.ErrorsProducesFailures;
+import DependabilityintermediateModel.EvaluationType;
 import DependabilityintermediateModel.Exponential;
 import DependabilityintermediateModel.ExternalFault;
 import DependabilityintermediateModel.FailureMode;
@@ -31,12 +34,16 @@ import DependabilityintermediateModel.FaultsExpressionOrNode;
 import DependabilityintermediateModel.FaultsGenerateErrors;
 import DependabilityintermediateModel.Gamma;
 import DependabilityintermediateModel.Gaussian;
+import DependabilityintermediateModel.InstantOfTime;
 import DependabilityintermediateModel.InternalFault;
 import DependabilityintermediateModel.InternalPropagation;
+import DependabilityintermediateModel.IntervalOfTime;
 import DependabilityintermediateModel.MaintenanceActivity;
 import DependabilityintermediateModel.NamedElement;
+import DependabilityintermediateModel.Reliability;
 import DependabilityintermediateModel.RepairActivity;
 import DependabilityintermediateModel.ReplaceActivity;
+import DependabilityintermediateModel.Safety;
 import DependabilityintermediateModel.ScheduleAtTime;
 import DependabilityintermediateModel.ScheduleImmediately;
 import DependabilityintermediateModel.SchedulePeriodic;
@@ -49,6 +56,7 @@ import DependabilityintermediateModel.SchedulingConditionExpressionOrNode;
 import DependabilityintermediateModel.SchedulingConditionExpressionTrueNode;
 import DependabilityintermediateModel.SchedulingEvent;
 import DependabilityintermediateModel.Sistema;
+import DependabilityintermediateModel.SteadyState;
 import DependabilityintermediateModel.Threat;
 import DependabilityintermediateModel.Uniform;
 import DependabilityintermediateModel.Weibull;
@@ -456,6 +464,64 @@ public class DependabilityintermediateModelSwitch<T> {
 				SchedulePeriodic schedulePeriodic = (SchedulePeriodic)theEObject;
 				T result = caseSchedulePeriodic(schedulePeriodic);
 				if (result == null) result = caseSchedulingEvent(schedulePeriodic);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependabilityintermediateModelPackage.DEPENDABILITY_MEASURE: {
+				DependabilityMeasure dependabilityMeasure = (DependabilityMeasure)theEObject;
+				T result = caseDependabilityMeasure(dependabilityMeasure);
+				if (result == null) result = caseNamedElement(dependabilityMeasure);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependabilityintermediateModelPackage.EVALUATION_TYPE: {
+				EvaluationType evaluationType = (EvaluationType)theEObject;
+				T result = caseEvaluationType(evaluationType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependabilityintermediateModelPackage.STEADY_STATE: {
+				SteadyState steadyState = (SteadyState)theEObject;
+				T result = caseSteadyState(steadyState);
+				if (result == null) result = caseEvaluationType(steadyState);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependabilityintermediateModelPackage.INSTANT_OF_TIME: {
+				InstantOfTime instantOfTime = (InstantOfTime)theEObject;
+				T result = caseInstantOfTime(instantOfTime);
+				if (result == null) result = caseEvaluationType(instantOfTime);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependabilityintermediateModelPackage.INTERVAL_OF_TIME: {
+				IntervalOfTime intervalOfTime = (IntervalOfTime)theEObject;
+				T result = caseIntervalOfTime(intervalOfTime);
+				if (result == null) result = caseEvaluationType(intervalOfTime);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependabilityintermediateModelPackage.RELIABILITY: {
+				Reliability reliability = (Reliability)theEObject;
+				T result = caseReliability(reliability);
+				if (result == null) result = caseDependabilityMeasure(reliability);
+				if (result == null) result = caseNamedElement(reliability);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependabilityintermediateModelPackage.AVAILABILITY: {
+				Availability availability = (Availability)theEObject;
+				T result = caseAvailability(availability);
+				if (result == null) result = caseDependabilityMeasure(availability);
+				if (result == null) result = caseNamedElement(availability);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependabilityintermediateModelPackage.SAFETY: {
+				Safety safety = (Safety)theEObject;
+				T result = caseSafety(safety);
+				if (result == null) result = caseDependabilityMeasure(safety);
+				if (result == null) result = caseNamedElement(safety);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -1150,6 +1216,126 @@ public class DependabilityintermediateModelSwitch<T> {
 	 * @generated
 	 */
 	public T caseSchedulePeriodic(SchedulePeriodic object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dependability Measure</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dependability Measure</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDependabilityMeasure(DependabilityMeasure object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Evaluation Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Evaluation Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEvaluationType(EvaluationType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Steady State</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Steady State</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSteadyState(SteadyState object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Instant Of Time</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Instant Of Time</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInstantOfTime(InstantOfTime object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Interval Of Time</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Interval Of Time</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIntervalOfTime(IntervalOfTime object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Reliability</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Reliability</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseReliability(Reliability object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Availability</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Availability</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAvailability(Availability object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Safety</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Safety</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSafety(Safety object) {
 		return null;
 	}
 

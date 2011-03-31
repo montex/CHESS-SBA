@@ -359,6 +359,69 @@ public interface DependabilityintermediateModelFactory extends EFactory {
 	SchedulePeriodic createSchedulePeriodic();
 
 	/**
+	 * Returns a new object of class '<em>Dependability Measure</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dependability Measure</em>'.
+	 * @generated
+	 */
+	DependabilityMeasure createDependabilityMeasure();
+
+	/**
+	 * Returns a new object of class '<em>Steady State</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Steady State</em>'.
+	 * @generated
+	 */
+	SteadyState createSteadyState();
+
+	/**
+	 * Returns a new object of class '<em>Instant Of Time</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Instant Of Time</em>'.
+	 * @generated
+	 */
+	InstantOfTime createInstantOfTime();
+
+	/**
+	 * Returns a new object of class '<em>Interval Of Time</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Interval Of Time</em>'.
+	 * @generated
+	 */
+	IntervalOfTime createIntervalOfTime();
+
+	/**
+	 * Returns a new object of class '<em>Reliability</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Reliability</em>'.
+	 * @generated
+	 */
+	Reliability createReliability();
+
+	/**
+	 * Returns a new object of class '<em>Availability</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Availability</em>'.
+	 * @generated
+	 */
+	Availability createAvailability();
+
+	/**
+	 * Returns a new object of class '<em>Safety</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Safety</em>'.
+	 * @generated
+	 */
+	Safety createSafety();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -8,6 +8,7 @@ package DependabilityintermediateModel.impl;
 
 import DependabilityintermediateModel.Activity;
 import DependabilityintermediateModel.Component;
+import DependabilityintermediateModel.DependabilityMeasure;
 import DependabilityintermediateModel.DependabilityintermediateModelPackage;
 import DependabilityintermediateModel.Sistema;
 
@@ -20,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link DependabilityintermediateModel.impl.SistemaImpl#getComponents <em>Components</em>}</li>
  *   <li>{@link DependabilityintermediateModel.impl.SistemaImpl#getActivities <em>Activities</em>}</li>
+ *   <li>{@link DependabilityintermediateModel.impl.SistemaImpl#getMeasures <em>Measures</em>}</li>
  * </ul>
  * </p>
  *
@@ -57,6 +60,16 @@ public class SistemaImpl extends NamedElementImpl implements Sistema {
 	 * @ordered
 	 */
 	protected EList<Activity> activities;
+
+	/**
+	 * The cached value of the '{@link #getMeasures() <em>Measures</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMeasures()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<DependabilityMeasure> measures;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -106,6 +119,18 @@ public class SistemaImpl extends NamedElementImpl implements Sistema {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<DependabilityMeasure> getMeasures() {
+		if (measures == null) {
+			measures = new EObjectContainmentEList<DependabilityMeasure>(DependabilityMeasure.class, this, DependabilityintermediateModelPackage.SISTEMA__MEASURES);
+		}
+		return measures;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -130,6 +155,8 @@ public class SistemaImpl extends NamedElementImpl implements Sistema {
 				return ((InternalEList<?>)getComponents()).basicRemove(otherEnd, msgs);
 			case DependabilityintermediateModelPackage.SISTEMA__ACTIVITIES:
 				return ((InternalEList<?>)getActivities()).basicRemove(otherEnd, msgs);
+			case DependabilityintermediateModelPackage.SISTEMA__MEASURES:
+				return ((InternalEList<?>)getMeasures()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -146,6 +173,8 @@ public class SistemaImpl extends NamedElementImpl implements Sistema {
 				return getComponents();
 			case DependabilityintermediateModelPackage.SISTEMA__ACTIVITIES:
 				return getActivities();
+			case DependabilityintermediateModelPackage.SISTEMA__MEASURES:
+				return getMeasures();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -167,6 +196,10 @@ public class SistemaImpl extends NamedElementImpl implements Sistema {
 				getActivities().clear();
 				getActivities().addAll((Collection<? extends Activity>)newValue);
 				return;
+			case DependabilityintermediateModelPackage.SISTEMA__MEASURES:
+				getMeasures().clear();
+				getMeasures().addAll((Collection<? extends DependabilityMeasure>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -185,6 +218,9 @@ public class SistemaImpl extends NamedElementImpl implements Sistema {
 			case DependabilityintermediateModelPackage.SISTEMA__ACTIVITIES:
 				getActivities().clear();
 				return;
+			case DependabilityintermediateModelPackage.SISTEMA__MEASURES:
+				getMeasures().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -201,6 +237,8 @@ public class SistemaImpl extends NamedElementImpl implements Sistema {
 				return components != null && !components.isEmpty();
 			case DependabilityintermediateModelPackage.SISTEMA__ACTIVITIES:
 				return activities != null && !activities.isEmpty();
+			case DependabilityintermediateModelPackage.SISTEMA__MEASURES:
+				return measures != null && !measures.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

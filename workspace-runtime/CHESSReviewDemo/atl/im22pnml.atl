@@ -1025,7 +1025,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		)
 	do {
-		thisModule.myid = thisModule.myid + 1;
+		thisModule.myid <- thisModule.myid + 1;
 		transaction_T0_from_gate1_place_arc.id <- transaction_T0_from_gate1_place_arc.id + thisModule.myid.toString();		 		
 		transaction_T0_from_gate2_place_arc.id <- transaction_T0_from_gate2_place_arc.id + thisModule.myid.toString(); 	
 		transaction_T0_from_logic_result_arc.id <- transaction_T0_from_logic_result_arc.id + thisModule.myid.toString(); 	
@@ -1441,10 +1441,10 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		)
 	do {
-		thisModule.myid = thisModule.myid + 1;
+		thisModule.myid <- thisModule.myid + 1;
 		
 		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
-			thisModule.myid = thisModule.myid + 1;
+			thisModule.myid <- thisModule.myid + 1;
 			n.id <- 'prova' + thisModule.myid.toString();
 		}
 		

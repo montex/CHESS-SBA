@@ -8,6 +8,8 @@
         eType="#//Component" containment="true" eOpposite="#//Component/intermediateModel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Activities" upperBound="-1"
         eType="#//Activity" containment="true" eOpposite="#//Activity/Sistema"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measures" upperBound="-1"
+        eType="#//DependabilityMeasure" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Component" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="intermediateModel" lowerBound="1"
@@ -76,10 +78,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="Weibull" eSuperTypes="#//Distribution">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Alpha" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Beta" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="ConfidenceKindEnum">
-    <eLiterals name="relative"/>
-    <eLiterals name="absolute"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FailureMode" eSuperTypes="#//Threat">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Domain" eType="#//FailureDomain"/>
@@ -292,5 +290,29 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="After" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Distribution" lowerBound="1"
         eType="#//Distribution" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DependabilityMeasure" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        upperBound="-1" eType="#//FailureMode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="evaluations" lowerBound="1"
+        upperBound="-1" eType="#//EvaluationType" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiredMax" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiredMin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EvaluationType" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SteadyState" eSuperTypes="#//EvaluationType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InstantOfTime" eSuperTypes="#//EvaluationType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timePoint" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntervalOfTime" eSuperTypes="#//EvaluationType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="begin" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="end" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Reliability" eSuperTypes="#//DependabilityMeasure"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Availability" eSuperTypes="#//DependabilityMeasure"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Safety" eSuperTypes="#//DependabilityMeasure">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hazardousLevel" lowerBound="1"
+        eType="#//FailureConsequences"/>
   </eClassifiers>
 </ecore:EPackage>

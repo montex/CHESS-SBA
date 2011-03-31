@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link DependabilityintermediateModel.Sistema#getComponents <em>Components</em>}</li>
  *   <li>{@link DependabilityintermediateModel.Sistema#getActivities <em>Activities</em>}</li>
+ *   <li>{@link DependabilityintermediateModel.Sistema#getMeasures <em>Measures</em>}</li>
  * </ul>
  * </p>
  *
@@ -61,5 +62,21 @@ public interface Sistema extends NamedElement {
 	 * @generated
 	 */
 	EList<Activity> getActivities();
+
+	/**
+	 * Returns the value of the '<em><b>Measures</b></em>' containment reference list.
+	 * The list contents are of type {@link DependabilityintermediateModel.DependabilityMeasure}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Measures</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Measures</em>' containment reference list.
+	 * @see DependabilityintermediateModel.DependabilityintermediateModelPackage#getSistema_Measures()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<DependabilityMeasure> getMeasures();
 
 } // Sistema

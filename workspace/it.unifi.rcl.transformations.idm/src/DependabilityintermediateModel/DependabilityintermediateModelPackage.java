@@ -126,13 +126,22 @@ public interface DependabilityintermediateModelPackage extends EPackage {
 	int SISTEMA__ACTIVITIES = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Measures</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SISTEMA__MEASURES = NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Sistema</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SISTEMA_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
+	int SISTEMA_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link DependabilityintermediateModel.impl.ComponentImpl <em>Component</em>}' class.
@@ -2339,14 +2348,372 @@ public interface DependabilityintermediateModelPackage extends EPackage {
 	int SCHEDULE_PERIODIC_FEATURE_COUNT = SCHEDULING_EVENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link DependabilityintermediateModel.ConfidenceKindEnum <em>Confidence Kind Enum</em>}' enum.
+	 * The meta object id for the '{@link DependabilityintermediateModel.impl.DependabilityMeasureImpl <em>Dependability Measure</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see DependabilityintermediateModel.ConfidenceKindEnum
-	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getConfidenceKindEnum()
+	 * @see DependabilityintermediateModel.impl.DependabilityMeasureImpl
+	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getDependabilityMeasure()
 	 * @generated
 	 */
-	int CONFIDENCE_KIND_ENUM = 46;
+	int DEPENDABILITY_MEASURE = 46;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDABILITY_MEASURE__NAME = NAMED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDABILITY_MEASURE__TARGET = NAMED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Evaluations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDABILITY_MEASURE__EVALUATIONS = NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Required Max</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDABILITY_MEASURE__REQUIRED_MAX = NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Required Min</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDABILITY_MEASURE__REQUIRED_MIN = NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Dependability Measure</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDABILITY_MEASURE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The meta object id for the '{@link DependabilityintermediateModel.impl.EvaluationTypeImpl <em>Evaluation Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see DependabilityintermediateModel.impl.EvaluationTypeImpl
+	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getEvaluationType()
+	 * @generated
+	 */
+	int EVALUATION_TYPE = 47;
+
+	/**
+	 * The number of structural features of the '<em>Evaluation Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVALUATION_TYPE_FEATURE_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link DependabilityintermediateModel.impl.SteadyStateImpl <em>Steady State</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see DependabilityintermediateModel.impl.SteadyStateImpl
+	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getSteadyState()
+	 * @generated
+	 */
+	int STEADY_STATE = 48;
+
+	/**
+	 * The number of structural features of the '<em>Steady State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STEADY_STATE_FEATURE_COUNT = EVALUATION_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link DependabilityintermediateModel.impl.InstantOfTimeImpl <em>Instant Of Time</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see DependabilityintermediateModel.impl.InstantOfTimeImpl
+	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getInstantOfTime()
+	 * @generated
+	 */
+	int INSTANT_OF_TIME = 49;
+
+	/**
+	 * The feature id for the '<em><b>Time Point</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSTANT_OF_TIME__TIME_POINT = EVALUATION_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Instant Of Time</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSTANT_OF_TIME_FEATURE_COUNT = EVALUATION_TYPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link DependabilityintermediateModel.impl.IntervalOfTimeImpl <em>Interval Of Time</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see DependabilityintermediateModel.impl.IntervalOfTimeImpl
+	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getIntervalOfTime()
+	 * @generated
+	 */
+	int INTERVAL_OF_TIME = 50;
+
+	/**
+	 * The feature id for the '<em><b>Begin</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERVAL_OF_TIME__BEGIN = EVALUATION_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>End</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERVAL_OF_TIME__END = EVALUATION_TYPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Interval Of Time</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTERVAL_OF_TIME_FEATURE_COUNT = EVALUATION_TYPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link DependabilityintermediateModel.impl.ReliabilityImpl <em>Reliability</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see DependabilityintermediateModel.impl.ReliabilityImpl
+	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getReliability()
+	 * @generated
+	 */
+	int RELIABILITY = 51;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RELIABILITY__NAME = DEPENDABILITY_MEASURE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RELIABILITY__TARGET = DEPENDABILITY_MEASURE__TARGET;
+
+	/**
+	 * The feature id for the '<em><b>Evaluations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RELIABILITY__EVALUATIONS = DEPENDABILITY_MEASURE__EVALUATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Required Max</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RELIABILITY__REQUIRED_MAX = DEPENDABILITY_MEASURE__REQUIRED_MAX;
+
+	/**
+	 * The feature id for the '<em><b>Required Min</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RELIABILITY__REQUIRED_MIN = DEPENDABILITY_MEASURE__REQUIRED_MIN;
+
+	/**
+	 * The number of structural features of the '<em>Reliability</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RELIABILITY_FEATURE_COUNT = DEPENDABILITY_MEASURE_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link DependabilityintermediateModel.impl.AvailabilityImpl <em>Availability</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see DependabilityintermediateModel.impl.AvailabilityImpl
+	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getAvailability()
+	 * @generated
+	 */
+	int AVAILABILITY = 52;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AVAILABILITY__NAME = DEPENDABILITY_MEASURE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AVAILABILITY__TARGET = DEPENDABILITY_MEASURE__TARGET;
+
+	/**
+	 * The feature id for the '<em><b>Evaluations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AVAILABILITY__EVALUATIONS = DEPENDABILITY_MEASURE__EVALUATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Required Max</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AVAILABILITY__REQUIRED_MAX = DEPENDABILITY_MEASURE__REQUIRED_MAX;
+
+	/**
+	 * The feature id for the '<em><b>Required Min</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AVAILABILITY__REQUIRED_MIN = DEPENDABILITY_MEASURE__REQUIRED_MIN;
+
+	/**
+	 * The number of structural features of the '<em>Availability</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AVAILABILITY_FEATURE_COUNT = DEPENDABILITY_MEASURE_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link DependabilityintermediateModel.impl.SafetyImpl <em>Safety</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see DependabilityintermediateModel.impl.SafetyImpl
+	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getSafety()
+	 * @generated
+	 */
+	int SAFETY = 53;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SAFETY__NAME = DEPENDABILITY_MEASURE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SAFETY__TARGET = DEPENDABILITY_MEASURE__TARGET;
+
+	/**
+	 * The feature id for the '<em><b>Evaluations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SAFETY__EVALUATIONS = DEPENDABILITY_MEASURE__EVALUATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Required Max</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SAFETY__REQUIRED_MAX = DEPENDABILITY_MEASURE__REQUIRED_MAX;
+
+	/**
+	 * The feature id for the '<em><b>Required Min</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SAFETY__REQUIRED_MIN = DEPENDABILITY_MEASURE__REQUIRED_MIN;
+
+	/**
+	 * The feature id for the '<em><b>Hazardous Level</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SAFETY__HAZARDOUS_LEVEL = DEPENDABILITY_MEASURE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Safety</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SAFETY_FEATURE_COUNT = DEPENDABILITY_MEASURE_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link DependabilityintermediateModel.FailureDomain <em>Failure Domain</em>}' enum.
@@ -2356,7 +2723,7 @@ public interface DependabilityintermediateModelPackage extends EPackage {
 	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getFailureDomain()
 	 * @generated
 	 */
-	int FAILURE_DOMAIN = 47;
+	int FAILURE_DOMAIN = 54;
 
 	/**
 	 * The meta object id for the '{@link DependabilityintermediateModel.FailureDetectability <em>Failure Detectability</em>}' enum.
@@ -2366,7 +2733,7 @@ public interface DependabilityintermediateModelPackage extends EPackage {
 	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getFailureDetectability()
 	 * @generated
 	 */
-	int FAILURE_DETECTABILITY = 48;
+	int FAILURE_DETECTABILITY = 55;
 
 	/**
 	 * The meta object id for the '{@link DependabilityintermediateModel.FailureConsequences <em>Failure Consequences</em>}' enum.
@@ -2376,7 +2743,7 @@ public interface DependabilityintermediateModelPackage extends EPackage {
 	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getFailureConsequences()
 	 * @generated
 	 */
-	int FAILURE_CONSEQUENCES = 49;
+	int FAILURE_CONSEQUENCES = 56;
 
 	/**
 	 * The meta object id for the '{@link DependabilityintermediateModel.FailureConsistency <em>Failure Consistency</em>}' enum.
@@ -2386,7 +2753,7 @@ public interface DependabilityintermediateModelPackage extends EPackage {
 	 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getFailureConsistency()
 	 * @generated
 	 */
-	int FAILURE_CONSISTENCY = 50;
+	int FAILURE_CONSISTENCY = 57;
 
 
 	/**
@@ -2420,6 +2787,17 @@ public interface DependabilityintermediateModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSistema_Activities();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link DependabilityintermediateModel.Sistema#getMeasures <em>Measures</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Measures</em>'.
+	 * @see DependabilityintermediateModel.Sistema#getMeasures()
+	 * @see #getSistema()
+	 * @generated
+	 */
+	EReference getSistema_Measures();
 
 	/**
 	 * Returns the meta object for class '{@link DependabilityintermediateModel.Component <em>Component</em>}'.
@@ -3917,14 +4295,172 @@ public interface DependabilityintermediateModelPackage extends EPackage {
 	EReference getSchedulePeriodic_Distribution();
 
 	/**
-	 * Returns the meta object for enum '{@link DependabilityintermediateModel.ConfidenceKindEnum <em>Confidence Kind Enum</em>}'.
+	 * Returns the meta object for class '{@link DependabilityintermediateModel.DependabilityMeasure <em>Dependability Measure</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>Confidence Kind Enum</em>'.
-	 * @see DependabilityintermediateModel.ConfidenceKindEnum
+	 * @return the meta object for class '<em>Dependability Measure</em>'.
+	 * @see DependabilityintermediateModel.DependabilityMeasure
 	 * @generated
 	 */
-	EEnum getConfidenceKindEnum();
+	EClass getDependabilityMeasure();
+
+	/**
+	 * Returns the meta object for the reference list '{@link DependabilityintermediateModel.DependabilityMeasure#getTarget <em>Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Target</em>'.
+	 * @see DependabilityintermediateModel.DependabilityMeasure#getTarget()
+	 * @see #getDependabilityMeasure()
+	 * @generated
+	 */
+	EReference getDependabilityMeasure_Target();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link DependabilityintermediateModel.DependabilityMeasure#getEvaluations <em>Evaluations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Evaluations</em>'.
+	 * @see DependabilityintermediateModel.DependabilityMeasure#getEvaluations()
+	 * @see #getDependabilityMeasure()
+	 * @generated
+	 */
+	EReference getDependabilityMeasure_Evaluations();
+
+	/**
+	 * Returns the meta object for the attribute '{@link DependabilityintermediateModel.DependabilityMeasure#getRequiredMax <em>Required Max</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Required Max</em>'.
+	 * @see DependabilityintermediateModel.DependabilityMeasure#getRequiredMax()
+	 * @see #getDependabilityMeasure()
+	 * @generated
+	 */
+	EAttribute getDependabilityMeasure_RequiredMax();
+
+	/**
+	 * Returns the meta object for the attribute '{@link DependabilityintermediateModel.DependabilityMeasure#getRequiredMin <em>Required Min</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Required Min</em>'.
+	 * @see DependabilityintermediateModel.DependabilityMeasure#getRequiredMin()
+	 * @see #getDependabilityMeasure()
+	 * @generated
+	 */
+	EAttribute getDependabilityMeasure_RequiredMin();
+
+	/**
+	 * Returns the meta object for class '{@link DependabilityintermediateModel.EvaluationType <em>Evaluation Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Evaluation Type</em>'.
+	 * @see DependabilityintermediateModel.EvaluationType
+	 * @generated
+	 */
+	EClass getEvaluationType();
+
+	/**
+	 * Returns the meta object for class '{@link DependabilityintermediateModel.SteadyState <em>Steady State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Steady State</em>'.
+	 * @see DependabilityintermediateModel.SteadyState
+	 * @generated
+	 */
+	EClass getSteadyState();
+
+	/**
+	 * Returns the meta object for class '{@link DependabilityintermediateModel.InstantOfTime <em>Instant Of Time</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Instant Of Time</em>'.
+	 * @see DependabilityintermediateModel.InstantOfTime
+	 * @generated
+	 */
+	EClass getInstantOfTime();
+
+	/**
+	 * Returns the meta object for the attribute '{@link DependabilityintermediateModel.InstantOfTime#getTimePoint <em>Time Point</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Time Point</em>'.
+	 * @see DependabilityintermediateModel.InstantOfTime#getTimePoint()
+	 * @see #getInstantOfTime()
+	 * @generated
+	 */
+	EAttribute getInstantOfTime_TimePoint();
+
+	/**
+	 * Returns the meta object for class '{@link DependabilityintermediateModel.IntervalOfTime <em>Interval Of Time</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Interval Of Time</em>'.
+	 * @see DependabilityintermediateModel.IntervalOfTime
+	 * @generated
+	 */
+	EClass getIntervalOfTime();
+
+	/**
+	 * Returns the meta object for the attribute '{@link DependabilityintermediateModel.IntervalOfTime#getBegin <em>Begin</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Begin</em>'.
+	 * @see DependabilityintermediateModel.IntervalOfTime#getBegin()
+	 * @see #getIntervalOfTime()
+	 * @generated
+	 */
+	EAttribute getIntervalOfTime_Begin();
+
+	/**
+	 * Returns the meta object for the attribute '{@link DependabilityintermediateModel.IntervalOfTime#getEnd <em>End</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>End</em>'.
+	 * @see DependabilityintermediateModel.IntervalOfTime#getEnd()
+	 * @see #getIntervalOfTime()
+	 * @generated
+	 */
+	EAttribute getIntervalOfTime_End();
+
+	/**
+	 * Returns the meta object for class '{@link DependabilityintermediateModel.Reliability <em>Reliability</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Reliability</em>'.
+	 * @see DependabilityintermediateModel.Reliability
+	 * @generated
+	 */
+	EClass getReliability();
+
+	/**
+	 * Returns the meta object for class '{@link DependabilityintermediateModel.Availability <em>Availability</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Availability</em>'.
+	 * @see DependabilityintermediateModel.Availability
+	 * @generated
+	 */
+	EClass getAvailability();
+
+	/**
+	 * Returns the meta object for class '{@link DependabilityintermediateModel.Safety <em>Safety</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Safety</em>'.
+	 * @see DependabilityintermediateModel.Safety
+	 * @generated
+	 */
+	EClass getSafety();
+
+	/**
+	 * Returns the meta object for the attribute '{@link DependabilityintermediateModel.Safety#getHazardousLevel <em>Hazardous Level</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Hazardous Level</em>'.
+	 * @see DependabilityintermediateModel.Safety#getHazardousLevel()
+	 * @see #getSafety()
+	 * @generated
+	 */
+	EAttribute getSafety_HazardousLevel();
 
 	/**
 	 * Returns the meta object for enum '{@link DependabilityintermediateModel.FailureDomain <em>Failure Domain</em>}'.
@@ -4013,6 +4549,14 @@ public interface DependabilityintermediateModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SISTEMA__ACTIVITIES = eINSTANCE.getSistema_Activities();
+
+		/**
+		 * The meta object literal for the '<em><b>Measures</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SISTEMA__MEASURES = eINSTANCE.getSistema_Measures();
 
 		/**
 		 * The meta object literal for the '{@link DependabilityintermediateModel.impl.ComponentImpl <em>Component</em>}' class.
@@ -5225,14 +5769,148 @@ public interface DependabilityintermediateModelPackage extends EPackage {
 		EReference SCHEDULE_PERIODIC__DISTRIBUTION = eINSTANCE.getSchedulePeriodic_Distribution();
 
 		/**
-		 * The meta object literal for the '{@link DependabilityintermediateModel.ConfidenceKindEnum <em>Confidence Kind Enum</em>}' enum.
+		 * The meta object literal for the '{@link DependabilityintermediateModel.impl.DependabilityMeasureImpl <em>Dependability Measure</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see DependabilityintermediateModel.ConfidenceKindEnum
-		 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getConfidenceKindEnum()
+		 * @see DependabilityintermediateModel.impl.DependabilityMeasureImpl
+		 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getDependabilityMeasure()
 		 * @generated
 		 */
-		EEnum CONFIDENCE_KIND_ENUM = eINSTANCE.getConfidenceKindEnum();
+		EClass DEPENDABILITY_MEASURE = eINSTANCE.getDependabilityMeasure();
+
+		/**
+		 * The meta object literal for the '<em><b>Target</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEPENDABILITY_MEASURE__TARGET = eINSTANCE.getDependabilityMeasure_Target();
+
+		/**
+		 * The meta object literal for the '<em><b>Evaluations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEPENDABILITY_MEASURE__EVALUATIONS = eINSTANCE.getDependabilityMeasure_Evaluations();
+
+		/**
+		 * The meta object literal for the '<em><b>Required Max</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEPENDABILITY_MEASURE__REQUIRED_MAX = eINSTANCE.getDependabilityMeasure_RequiredMax();
+
+		/**
+		 * The meta object literal for the '<em><b>Required Min</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEPENDABILITY_MEASURE__REQUIRED_MIN = eINSTANCE.getDependabilityMeasure_RequiredMin();
+
+		/**
+		 * The meta object literal for the '{@link DependabilityintermediateModel.impl.EvaluationTypeImpl <em>Evaluation Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see DependabilityintermediateModel.impl.EvaluationTypeImpl
+		 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getEvaluationType()
+		 * @generated
+		 */
+		EClass EVALUATION_TYPE = eINSTANCE.getEvaluationType();
+
+		/**
+		 * The meta object literal for the '{@link DependabilityintermediateModel.impl.SteadyStateImpl <em>Steady State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see DependabilityintermediateModel.impl.SteadyStateImpl
+		 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getSteadyState()
+		 * @generated
+		 */
+		EClass STEADY_STATE = eINSTANCE.getSteadyState();
+
+		/**
+		 * The meta object literal for the '{@link DependabilityintermediateModel.impl.InstantOfTimeImpl <em>Instant Of Time</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see DependabilityintermediateModel.impl.InstantOfTimeImpl
+		 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getInstantOfTime()
+		 * @generated
+		 */
+		EClass INSTANT_OF_TIME = eINSTANCE.getInstantOfTime();
+
+		/**
+		 * The meta object literal for the '<em><b>Time Point</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INSTANT_OF_TIME__TIME_POINT = eINSTANCE.getInstantOfTime_TimePoint();
+
+		/**
+		 * The meta object literal for the '{@link DependabilityintermediateModel.impl.IntervalOfTimeImpl <em>Interval Of Time</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see DependabilityintermediateModel.impl.IntervalOfTimeImpl
+		 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getIntervalOfTime()
+		 * @generated
+		 */
+		EClass INTERVAL_OF_TIME = eINSTANCE.getIntervalOfTime();
+
+		/**
+		 * The meta object literal for the '<em><b>Begin</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INTERVAL_OF_TIME__BEGIN = eINSTANCE.getIntervalOfTime_Begin();
+
+		/**
+		 * The meta object literal for the '<em><b>End</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INTERVAL_OF_TIME__END = eINSTANCE.getIntervalOfTime_End();
+
+		/**
+		 * The meta object literal for the '{@link DependabilityintermediateModel.impl.ReliabilityImpl <em>Reliability</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see DependabilityintermediateModel.impl.ReliabilityImpl
+		 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getReliability()
+		 * @generated
+		 */
+		EClass RELIABILITY = eINSTANCE.getReliability();
+
+		/**
+		 * The meta object literal for the '{@link DependabilityintermediateModel.impl.AvailabilityImpl <em>Availability</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see DependabilityintermediateModel.impl.AvailabilityImpl
+		 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getAvailability()
+		 * @generated
+		 */
+		EClass AVAILABILITY = eINSTANCE.getAvailability();
+
+		/**
+		 * The meta object literal for the '{@link DependabilityintermediateModel.impl.SafetyImpl <em>Safety</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see DependabilityintermediateModel.impl.SafetyImpl
+		 * @see DependabilityintermediateModel.impl.DependabilityintermediateModelPackageImpl#getSafety()
+		 * @generated
+		 */
+		EClass SAFETY = eINSTANCE.getSafety();
+
+		/**
+		 * The meta object literal for the '<em><b>Hazardous Level</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SAFETY__HAZARDOUS_LEVEL = eINSTANCE.getSafety_HazardousLevel();
 
 		/**
 		 * The meta object literal for the '{@link DependabilityintermediateModel.FailureDomain <em>Failure Domain</em>}' enum.

@@ -114,4 +114,7 @@
       <PropagationDelay xsi:type="Exponential" Rate="0.01"/>
     </ErrorsGeneratesFailures>
   </components>
+  <measures xsi:type="Reliability" Name="R_c2(t)" target="//@components.1/@FailureModes.0">
+    <evaluations xsi:type="InstantOfTime" timePoint="10000.0"/>
+  </measures>
 </Sistema>

@@ -6,8 +6,9 @@
  */
 package DependabilityintermediateModel.impl;
 
+import DependabilityintermediateModel.Availability;
 import DependabilityintermediateModel.Component;
-import DependabilityintermediateModel.ConfidenceKindEnum;
+import DependabilityintermediateModel.DependabilityMeasure;
 import DependabilityintermediateModel.DependabilityintermediateModelFactory;
 import DependabilityintermediateModel.DependabilityintermediateModelPackage;
 import DependabilityintermediateModel.DetectionActivity;
@@ -32,11 +33,15 @@ import DependabilityintermediateModel.FaultsExpressionOrNode;
 import DependabilityintermediateModel.FaultsGenerateErrors;
 import DependabilityintermediateModel.Gamma;
 import DependabilityintermediateModel.Gaussian;
+import DependabilityintermediateModel.InstantOfTime;
 import DependabilityintermediateModel.InternalFault;
 import DependabilityintermediateModel.InternalPropagation;
+import DependabilityintermediateModel.IntervalOfTime;
 import DependabilityintermediateModel.MaintenanceActivity;
+import DependabilityintermediateModel.Reliability;
 import DependabilityintermediateModel.RepairActivity;
 import DependabilityintermediateModel.ReplaceActivity;
+import DependabilityintermediateModel.Safety;
 import DependabilityintermediateModel.ScheduleAtTime;
 import DependabilityintermediateModel.ScheduleImmediately;
 import DependabilityintermediateModel.SchedulePeriodic;
@@ -47,6 +52,7 @@ import DependabilityintermediateModel.SchedulingConditionExpressionNotNode;
 import DependabilityintermediateModel.SchedulingConditionExpressionOrNode;
 import DependabilityintermediateModel.SchedulingConditionExpressionTrueNode;
 import DependabilityintermediateModel.Sistema;
+import DependabilityintermediateModel.SteadyState;
 import DependabilityintermediateModel.Uniform;
 import DependabilityintermediateModel.Weibull;
 
@@ -140,6 +146,13 @@ public class DependabilityintermediateModelFactoryImpl extends EFactoryImpl impl
 			case DependabilityintermediateModelPackage.SCHEDULE_IMMEDIATELY: return createScheduleImmediately();
 			case DependabilityintermediateModelPackage.SCHEDULE_AT_TIME: return createScheduleAtTime();
 			case DependabilityintermediateModelPackage.SCHEDULE_PERIODIC: return createSchedulePeriodic();
+			case DependabilityintermediateModelPackage.DEPENDABILITY_MEASURE: return createDependabilityMeasure();
+			case DependabilityintermediateModelPackage.STEADY_STATE: return createSteadyState();
+			case DependabilityintermediateModelPackage.INSTANT_OF_TIME: return createInstantOfTime();
+			case DependabilityintermediateModelPackage.INTERVAL_OF_TIME: return createIntervalOfTime();
+			case DependabilityintermediateModelPackage.RELIABILITY: return createReliability();
+			case DependabilityintermediateModelPackage.AVAILABILITY: return createAvailability();
+			case DependabilityintermediateModelPackage.SAFETY: return createSafety();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -153,8 +166,6 @@ public class DependabilityintermediateModelFactoryImpl extends EFactoryImpl impl
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case DependabilityintermediateModelPackage.CONFIDENCE_KIND_ENUM:
-				return createConfidenceKindEnumFromString(eDataType, initialValue);
 			case DependabilityintermediateModelPackage.FAILURE_DOMAIN:
 				return createFailureDomainFromString(eDataType, initialValue);
 			case DependabilityintermediateModelPackage.FAILURE_DETECTABILITY:
@@ -176,8 +187,6 @@ public class DependabilityintermediateModelFactoryImpl extends EFactoryImpl impl
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case DependabilityintermediateModelPackage.CONFIDENCE_KIND_ENUM:
-				return convertConfidenceKindEnumToString(eDataType, instanceValue);
 			case DependabilityintermediateModelPackage.FAILURE_DOMAIN:
 				return convertFailureDomainToString(eDataType, instanceValue);
 			case DependabilityintermediateModelPackage.FAILURE_DETECTABILITY:
@@ -566,10 +575,9 @@ public class DependabilityintermediateModelFactoryImpl extends EFactoryImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ConfidenceKindEnum createConfidenceKindEnumFromString(EDataType eDataType, String initialValue) {
-		ConfidenceKindEnum result = ConfidenceKindEnum.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
+	public DependabilityMeasure createDependabilityMeasure() {
+		DependabilityMeasureImpl dependabilityMeasure = new DependabilityMeasureImpl();
+		return dependabilityMeasure;
 	}
 
 	/**
@@ -577,8 +585,59 @@ public class DependabilityintermediateModelFactoryImpl extends EFactoryImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertConfidenceKindEnumToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
+	public SteadyState createSteadyState() {
+		SteadyStateImpl steadyState = new SteadyStateImpl();
+		return steadyState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public InstantOfTime createInstantOfTime() {
+		InstantOfTimeImpl instantOfTime = new InstantOfTimeImpl();
+		return instantOfTime;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public IntervalOfTime createIntervalOfTime() {
+		IntervalOfTimeImpl intervalOfTime = new IntervalOfTimeImpl();
+		return intervalOfTime;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Reliability createReliability() {
+		ReliabilityImpl reliability = new ReliabilityImpl();
+		return reliability;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Availability createAvailability() {
+		AvailabilityImpl availability = new AvailabilityImpl();
+		return availability;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Safety createSafety() {
+		SafetyImpl safety = new SafetyImpl();
+		return safety;
 	}
 
 	/**

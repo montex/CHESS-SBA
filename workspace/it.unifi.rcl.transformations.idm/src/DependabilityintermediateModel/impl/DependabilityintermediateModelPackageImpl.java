@@ -7,8 +7,9 @@
 package DependabilityintermediateModel.impl;
 
 import DependabilityintermediateModel.Activity;
+import DependabilityintermediateModel.Availability;
 import DependabilityintermediateModel.Component;
-import DependabilityintermediateModel.ConfidenceKindEnum;
+import DependabilityintermediateModel.DependabilityMeasure;
 import DependabilityintermediateModel.DependabilityintermediateModelFactory;
 import DependabilityintermediateModel.DependabilityintermediateModelPackage;
 import DependabilityintermediateModel.DetectionActivity;
@@ -21,6 +22,7 @@ import DependabilityintermediateModel.ErrorsExpressionNode;
 import DependabilityintermediateModel.ErrorsExpressionNotNode;
 import DependabilityintermediateModel.ErrorsExpressionOrNode;
 import DependabilityintermediateModel.ErrorsProducesFailures;
+import DependabilityintermediateModel.EvaluationType;
 import DependabilityintermediateModel.Exponential;
 import DependabilityintermediateModel.ExternalFault;
 import DependabilityintermediateModel.FailureConsequences;
@@ -37,12 +39,16 @@ import DependabilityintermediateModel.FaultsExpressionOrNode;
 import DependabilityintermediateModel.FaultsGenerateErrors;
 import DependabilityintermediateModel.Gamma;
 import DependabilityintermediateModel.Gaussian;
+import DependabilityintermediateModel.InstantOfTime;
 import DependabilityintermediateModel.InternalFault;
 import DependabilityintermediateModel.InternalPropagation;
+import DependabilityintermediateModel.IntervalOfTime;
 import DependabilityintermediateModel.MaintenanceActivity;
 import DependabilityintermediateModel.NamedElement;
+import DependabilityintermediateModel.Reliability;
 import DependabilityintermediateModel.RepairActivity;
 import DependabilityintermediateModel.ReplaceActivity;
+import DependabilityintermediateModel.Safety;
 import DependabilityintermediateModel.ScheduleAtTime;
 import DependabilityintermediateModel.ScheduleImmediately;
 import DependabilityintermediateModel.SchedulePeriodic;
@@ -55,6 +61,7 @@ import DependabilityintermediateModel.SchedulingConditionExpressionOrNode;
 import DependabilityintermediateModel.SchedulingConditionExpressionTrueNode;
 import DependabilityintermediateModel.SchedulingEvent;
 import DependabilityintermediateModel.Sistema;
+import DependabilityintermediateModel.SteadyState;
 import DependabilityintermediateModel.Threat;
 import DependabilityintermediateModel.Uniform;
 import DependabilityintermediateModel.Weibull;
@@ -401,7 +408,56 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EEnum confidenceKindEnumEEnum = null;
+	private EClass dependabilityMeasureEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass evaluationTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass steadyStateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass instantOfTimeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass intervalOfTimeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass reliabilityEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass availabilityEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass safetyEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -517,6 +573,15 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 */
 	public EReference getSistema_Activities() {
 		return (EReference)sistemaEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSistema_Measures() {
+		return (EReference)sistemaEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1784,8 +1849,143 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EEnum getConfidenceKindEnum() {
-		return confidenceKindEnumEEnum;
+	public EClass getDependabilityMeasure() {
+		return dependabilityMeasureEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDependabilityMeasure_Target() {
+		return (EReference)dependabilityMeasureEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDependabilityMeasure_Evaluations() {
+		return (EReference)dependabilityMeasureEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDependabilityMeasure_RequiredMax() {
+		return (EAttribute)dependabilityMeasureEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDependabilityMeasure_RequiredMin() {
+		return (EAttribute)dependabilityMeasureEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getEvaluationType() {
+		return evaluationTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSteadyState() {
+		return steadyStateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getInstantOfTime() {
+		return instantOfTimeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInstantOfTime_TimePoint() {
+		return (EAttribute)instantOfTimeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getIntervalOfTime() {
+		return intervalOfTimeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getIntervalOfTime_Begin() {
+		return (EAttribute)intervalOfTimeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getIntervalOfTime_End() {
+		return (EAttribute)intervalOfTimeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getReliability() {
+		return reliabilityEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAvailability() {
+		return availabilityEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSafety() {
+		return safetyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSafety_HazardousLevel() {
+		return (EAttribute)safetyEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1855,6 +2055,7 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		sistemaEClass = createEClass(SISTEMA);
 		createEReference(sistemaEClass, SISTEMA__COMPONENTS);
 		createEReference(sistemaEClass, SISTEMA__ACTIVITIES);
+		createEReference(sistemaEClass, SISTEMA__MEASURES);
 
 		componentEClass = createEClass(COMPONENT);
 		createEReference(componentEClass, COMPONENT__INTERMEDIATE_MODEL);
@@ -2041,8 +2242,31 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		createEAttribute(schedulePeriodicEClass, SCHEDULE_PERIODIC__AFTER);
 		createEReference(schedulePeriodicEClass, SCHEDULE_PERIODIC__DISTRIBUTION);
 
+		dependabilityMeasureEClass = createEClass(DEPENDABILITY_MEASURE);
+		createEReference(dependabilityMeasureEClass, DEPENDABILITY_MEASURE__TARGET);
+		createEReference(dependabilityMeasureEClass, DEPENDABILITY_MEASURE__EVALUATIONS);
+		createEAttribute(dependabilityMeasureEClass, DEPENDABILITY_MEASURE__REQUIRED_MAX);
+		createEAttribute(dependabilityMeasureEClass, DEPENDABILITY_MEASURE__REQUIRED_MIN);
+
+		evaluationTypeEClass = createEClass(EVALUATION_TYPE);
+
+		steadyStateEClass = createEClass(STEADY_STATE);
+
+		instantOfTimeEClass = createEClass(INSTANT_OF_TIME);
+		createEAttribute(instantOfTimeEClass, INSTANT_OF_TIME__TIME_POINT);
+
+		intervalOfTimeEClass = createEClass(INTERVAL_OF_TIME);
+		createEAttribute(intervalOfTimeEClass, INTERVAL_OF_TIME__BEGIN);
+		createEAttribute(intervalOfTimeEClass, INTERVAL_OF_TIME__END);
+
+		reliabilityEClass = createEClass(RELIABILITY);
+
+		availabilityEClass = createEClass(AVAILABILITY);
+
+		safetyEClass = createEClass(SAFETY);
+		createEAttribute(safetyEClass, SAFETY__HAZARDOUS_LEVEL);
+
 		// Create enums
-		confidenceKindEnumEEnum = createEEnum(CONFIDENCE_KIND_ENUM);
 		failureDomainEEnum = createEEnum(FAILURE_DOMAIN);
 		failureDetectabilityEEnum = createEEnum(FAILURE_DETECTABILITY);
 		failureConsequencesEEnum = createEEnum(FAILURE_CONSEQUENCES);
@@ -2115,11 +2339,19 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		scheduleImmediatelyEClass.getESuperTypes().add(this.getSchedulingEvent());
 		scheduleAtTimeEClass.getESuperTypes().add(this.getSchedulingEvent());
 		schedulePeriodicEClass.getESuperTypes().add(this.getSchedulingEvent());
+		dependabilityMeasureEClass.getESuperTypes().add(this.getNamedElement());
+		steadyStateEClass.getESuperTypes().add(this.getEvaluationType());
+		instantOfTimeEClass.getESuperTypes().add(this.getEvaluationType());
+		intervalOfTimeEClass.getESuperTypes().add(this.getEvaluationType());
+		reliabilityEClass.getESuperTypes().add(this.getDependabilityMeasure());
+		availabilityEClass.getESuperTypes().add(this.getDependabilityMeasure());
+		safetyEClass.getESuperTypes().add(this.getDependabilityMeasure());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(sistemaEClass, Sistema.class, "Sistema", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSistema_Components(), this.getComponent(), this.getComponent_IntermediateModel(), "components", null, 0, -1, Sistema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSistema_Activities(), this.getActivity(), this.getActivity_Sistema(), "Activities", null, 0, -1, Sistema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSistema_Measures(), this.getDependabilityMeasure(), null, "measures", null, 0, -1, Sistema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(componentEClass, Component.class, "Component", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComponent_IntermediateModel(), this.getSistema(), this.getSistema_Components(), "intermediateModel", null, 1, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2306,11 +2538,31 @@ public class DependabilityintermediateModelPackageImpl extends EPackageImpl impl
 		initEAttribute(getSchedulePeriodic_After(), ecorePackage.getEDouble(), "After", null, 0, 1, SchedulePeriodic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSchedulePeriodic_Distribution(), this.getDistribution(), null, "Distribution", null, 1, 1, SchedulePeriodic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		// Initialize enums and add enum literals
-		initEEnum(confidenceKindEnumEEnum, ConfidenceKindEnum.class, "ConfidenceKindEnum");
-		addEEnumLiteral(confidenceKindEnumEEnum, ConfidenceKindEnum.RELATIVE);
-		addEEnumLiteral(confidenceKindEnumEEnum, ConfidenceKindEnum.ABSOLUTE);
+		initEClass(dependabilityMeasureEClass, DependabilityMeasure.class, "DependabilityMeasure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDependabilityMeasure_Target(), this.getFailureMode(), null, "target", null, 1, -1, DependabilityMeasure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependabilityMeasure_Evaluations(), this.getEvaluationType(), null, "evaluations", null, 1, -1, DependabilityMeasure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDependabilityMeasure_RequiredMax(), ecorePackage.getEDouble(), "requiredMax", null, 0, 1, DependabilityMeasure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDependabilityMeasure_RequiredMin(), ecorePackage.getEDouble(), "requiredMin", null, 0, 1, DependabilityMeasure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(evaluationTypeEClass, EvaluationType.class, "EvaluationType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(steadyStateEClass, SteadyState.class, "SteadyState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(instantOfTimeEClass, InstantOfTime.class, "InstantOfTime", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getInstantOfTime_TimePoint(), ecorePackage.getEDouble(), "timePoint", null, 1, 1, InstantOfTime.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(intervalOfTimeEClass, IntervalOfTime.class, "IntervalOfTime", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getIntervalOfTime_Begin(), ecorePackage.getEDouble(), "begin", null, 1, 1, IntervalOfTime.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getIntervalOfTime_End(), ecorePackage.getEDouble(), "end", null, 1, 1, IntervalOfTime.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(reliabilityEClass, Reliability.class, "Reliability", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(availabilityEClass, Availability.class, "Availability", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(safetyEClass, Safety.class, "Safety", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSafety_HazardousLevel(), this.getFailureConsequences(), "hazardousLevel", null, 1, 1, Safety.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
 		initEEnum(failureDomainEEnum, FailureDomain.class, "FailureDomain");
 		addEEnumLiteral(failureDomainEEnum, FailureDomain.CONTENT);
 		addEEnumLiteral(failureDomainEEnum, FailureDomain.EARLY_TIMING);

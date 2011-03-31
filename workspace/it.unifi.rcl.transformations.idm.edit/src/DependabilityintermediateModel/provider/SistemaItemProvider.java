@@ -80,6 +80,7 @@ public class SistemaItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(DependabilityintermediateModelPackage.Literals.SISTEMA__COMPONENTS);
 			childrenFeatures.add(DependabilityintermediateModelPackage.Literals.SISTEMA__ACTIVITIES);
+			childrenFeatures.add(DependabilityintermediateModelPackage.Literals.SISTEMA__MEASURES);
 		}
 		return childrenFeatures;
 	}
@@ -136,6 +137,7 @@ public class SistemaItemProvider
 		switch (notification.getFeatureID(Sistema.class)) {
 			case DependabilityintermediateModelPackage.SISTEMA__COMPONENTS:
 			case DependabilityintermediateModelPackage.SISTEMA__ACTIVITIES:
+			case DependabilityintermediateModelPackage.SISTEMA__MEASURES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -177,6 +179,26 @@ public class SistemaItemProvider
 			(createChildParameter
 				(DependabilityintermediateModelPackage.Literals.SISTEMA__ACTIVITIES,
 				 DependabilityintermediateModelFactory.eINSTANCE.createDetectionActivity()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DependabilityintermediateModelPackage.Literals.SISTEMA__MEASURES,
+				 DependabilityintermediateModelFactory.eINSTANCE.createDependabilityMeasure()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DependabilityintermediateModelPackage.Literals.SISTEMA__MEASURES,
+				 DependabilityintermediateModelFactory.eINSTANCE.createReliability()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DependabilityintermediateModelPackage.Literals.SISTEMA__MEASURES,
+				 DependabilityintermediateModelFactory.eINSTANCE.createAvailability()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DependabilityintermediateModelPackage.Literals.SISTEMA__MEASURES,
+				 DependabilityintermediateModelFactory.eINSTANCE.createSafety()));
 	}
 
 }
