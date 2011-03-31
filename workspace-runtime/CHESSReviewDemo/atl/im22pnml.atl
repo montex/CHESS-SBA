@@ -5,6 +5,8 @@ module im22pnml;
 
 create out1: GSPN from in1: IM2;
 
+helper def: myid : Integer = 0;
+
 helper def: faultPropagationLogic : Map(String, GSPN!Place) = Map{};
 helper def: faultPropagationManager : Map(String, IM2!FaultsGenerateError) = Map{};
 
@@ -1023,6 +1025,28 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		)
 	do {
+		thisModule.myid = thisModule.myid + 1;
+		transaction_T0_from_gate1_place_arc.id <- transaction_T0_from_gate1_place_arc.id + thisModule.myid.toString();		 		
+		transaction_T0_from_gate2_place_arc.id <- transaction_T0_from_gate2_place_arc.id + thisModule.myid.toString(); 	
+		transaction_T0_from_logic_result_arc.id <- transaction_T0_from_logic_result_arc.id + thisModule.myid.toString(); 	
+		transaction_T0_to_gate1_place_arc.id <- transaction_T0_to_gate1_place_arc.id + thisModule.myid.toString(); 		
+		
+		transaction_T1_from_gate1_place_arc.id <- transaction_T1_from_gate1_place_arc.id + thisModule.myid.toString(); 	
+		transaction_T1_from_gate2_place_arc.id <- transaction_T1_from_gate2_place_arc.id + thisModule.myid.toString(); 	
+		transaction_T1_from_logic_result_arc.id <- transaction_T1_from_logic_result_arc.id + thisModule.myid.toString(); 	
+		transaction_T1_to_gate1_place_arc.id <- transaction_T1_to_gate1_place_arc.id + thisModule.myid.toString(); 		
+		transaction_T1_to_gate2_place_arc.id <- transaction_T1_to_gate2_place_arc.id + thisModule.myid.toString(); 		
+		
+		transaction_T2_from_gate1_place_arc.id <- transaction_T2_from_gate1_place_arc.id + thisModule.myid.toString();	
+		transaction_T2_from_gate2_place_arc.id <- transaction_T2_from_gate2_place_arc.id + thisModule.myid.toString(); 	
+		transaction_T2_from_logic_result_arc.id <- transaction_T2_from_logic_result_arc.id + thisModule.myid.toString(); 	
+		transaction_T2_to_gate2_place_arc.id <- transaction_T2_to_gate2_place_arc.id + thisModule.myid.toString(); 		 
+
+		transaction_T3_from_gate1_place_arc.id <- transaction_T3_from_gate1_place_arc.id + thisModule.myid.toString(); 	
+		transaction_T3_from_gate2_place_arc.id <- transaction_T3_from_gate2_place_arc.id + thisModule.myid.toString(); 	
+		transaction_T3_from_logic_result_arc.id <- transaction_T3_from_logic_result_arc.id + thisModule.myid.toString(); 	
+		transaction_T3_from_gate1_place_arc.id <- transaction_T3_from_gate1_place_arc.id + thisModule.myid.toString(); 	
+		
 		thisModule.registerFaultPropagationManager(faultsGenerateErrors.PropagationLogicStringFormat, faultsGenerateErrors);
 		thisModule.registerFaultPropagationLogic(faultsGenerateErrors.PropagationLogicStringFormat, thisModule.resolveTemp(faultsGenerateErrors.PropagationLogic, 'logicResult_place'));
 	}
@@ -1053,7 +1077,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T0_from_logic_result_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T0_from_logic_result_arc',
+--				id<-'faults_ornode_transaction_T0_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T0,
 				type<-#inhibitor,
@@ -1065,7 +1089,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T0_to_logic_result_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T0_to_logic_result_arc',
+--				id<-'faults_ornode_transaction_T0_to_logic_result_arc',
 				source<-transaction_T0,
 				target<-logicResult_place,
 				type<-#normal,
@@ -1077,7 +1101,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T0_from_gate1_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T0_from_gate1_place_arc',
+--				id<-'faults_ornode_transaction_T0_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T0,
 				type<-#normal,
@@ -1089,7 +1113,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T0_from_gate2_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T0_from_gate2_place_arc',
+--				id<-'faults_ornode_transaction_T0_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T0,
 				type<-#inhibitor,
@@ -1101,7 +1125,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T0_to_gate1_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T0_to_gate1_place_arc',
+--				id<-'faults_ornode_transaction_T0_to_gate1_place_arc',
 				source<-transaction_T0,
 				target<-faultsExpressionNode.FaultsExpression1,
 				type<-#normal,
@@ -1122,7 +1146,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T1_from_logic_result_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T1_from_logic_result_arc',
+--				id<-'faults_ornode_transaction_T1_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T1,
 				type<-#inhibitor,
@@ -1135,7 +1159,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T1_to_logic_result_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T1_to_logic_result_arc',
+--				id<-'faults_ornode_transaction_T1_to_logic_result_arc',
 				source<-transaction_T1,
 				target<-logicResult_place,
 				type<-#normal,
@@ -1147,7 +1171,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T1_from_gate1_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T1_from_gate1_place_arc',
+--				id<-'faults_ornode_transaction_T1_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T1,
 				type<-#normal,
@@ -1159,7 +1183,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T1_from_gate2_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T1_from_gate2_place_arc',
+--				id<-'faults_ornode_transaction_T1_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T1,
 				type<-#normal,
@@ -1171,7 +1195,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T1_to_gate1_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T1_to_gate1_place_arc',
+--				id<-'faults_ornode_transaction_T1_to_gate1_place_arc',
 				source<-transaction_T1,
 				target<-faultsExpressionNode.FaultsExpression1,
 				type<-#normal,
@@ -1183,7 +1207,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T1_to_gate2_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T1_to_gate2_place_arc',
+--				id<-'faults_ornode_transaction_T1_to_gate2_place_arc',
 				source<-transaction_T1,
 				target<-faultsExpressionNode.FaultsExpression2,
 				type<-#normal,
@@ -1205,7 +1229,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T2_from_logic_result_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T2_from_logic_result_arc',
+--				id<-'faults_ornode_transaction_T2_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T2,
 				type<-#inhibitor,
@@ -1217,7 +1241,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T2_to_logic_result_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T2_to_logic_result_arc',
+--				id<-'faults_ornode_transaction_T2_to_logic_result_arc',
 				source<-transaction_T2,
 				target<-logicResult_place,
 				type<-#normal,
@@ -1229,7 +1253,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T2_from_gate2_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T2_from_gate2_place_arc',
+--				id<-'faults_ornode_transaction_T2_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T2,
 				type<-#normal,
@@ -1241,7 +1265,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T2_from_gate1_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T2_from_gate1_place_arc',
+--				id<-'faults_ornode_transaction_T2_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T2,
 				type<-#inhibitor,
@@ -1253,7 +1277,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T2_to_gate2_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T2_to_gate2_place_arc',
+	--			id<-'faults_ornode_transaction_T2_to_gate2_place_arc',
 				source<-transaction_T2,
 				target<-faultsExpressionNode.FaultsExpression2,
 				type<-#normal,
@@ -1273,7 +1297,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T3_from_logic_result_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T3_from_logic_result_arc',
+--				id<-'faults_ornode_transaction_T3_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T3,
 				type<-#normal,
@@ -1285,7 +1309,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T3_from_gate2_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T3_from_gate2_place_arc',
+--				id<-'faults_ornode_transaction_T3_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T3,
 				type<-#inhibitor,
@@ -1297,7 +1321,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_T3_from_gate1_place_arc: GSPN!GSPNArc (
-				id<-'faults_ornode_transaction_T3_from_gate1_place_arc',
+--				id<-'faults_ornode_transaction_T3_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T3,
 				type<-#inhibitor,
@@ -1305,6 +1329,11 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		)
 	do {
+		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+			thisModule.myid <- thisModule.myid + 1;
+			n.id <- 'FaultsExpressionNotNodeToPN_'+thisModule.myid.toString();
+		}
+
 		thisModule.registerFaultPropagationManager(faultsGenerateErrors.PropagationLogicStringFormat, faultsGenerateErrors);
 		thisModule.registerFaultPropagationLogic(faultsGenerateErrors.PropagationLogicStringFormat, faultsGenerateErrors.PropagationLogic);
 	}
@@ -1326,6 +1355,7 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione ~ 0 = 1
 		transaction_T0 : GSPN!GSPNImmediateTransition (
+			id <- 'faults_notnode_transaction',
 			Priority <- 2,
 			containerPage <- sistema
 		),
@@ -1411,6 +1441,13 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		)
 	do {
+		thisModule.myid = thisModule.myid + 1;
+		
+		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+			thisModule.myid = thisModule.myid + 1;
+			n.id <- 'prova' + thisModule.myid.toString();
+		}
+		
 		thisModule.registerFaultPropagationManager(faultsGenerateErrors.PropagationLogicStringFormat, faultsGenerateErrors);
 		thisModule.registerFaultPropagationLogic(faultsGenerateErrors.PropagationLogicStringFormat, faultsGenerateErrors.PropagationLogic);
 	}
@@ -1432,7 +1469,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 -------------------------------------------------------------------------------
 -- Creo la transizione che preleva il token dal place che evidenzia il fault
 		transaction_to_evidence : GSPN!GSPNImmediateTransition (
-			id <- 'faults_generates_errors_'+faultsGenerateErrors.Name+'_propagation_logic_'+componente.Name+'_transaction_to_evidence_'+fault.Name,
+	--		id <- 'faults_generates_errors_'+faultsGenerateErrors.Name+'_propagation_logic_'+componente.Name+'_transaction_to_evidence_'+fault.Name,
 			Priority <- 2,
 			containerPage <- sistema
 		),
@@ -1441,7 +1478,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_to_evidence_to_logic_result_arc: GSPN!GSPNArc (
-				id<-'faults_fault_transaction_to_evidence_to_logic_result_arc',
+	--			id<-'faults_fault_transaction_to_evidence_to_logic_result_arc',
 				source<-transaction_to_evidence,
 				target<-logicResult_place,
 				type<-#normal,
@@ -1453,7 +1490,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_to_evidence_to_faulty_place_arc: GSPN!GSPNArc (
-				id<-'faults_fault_transaction_to_evidence_to_faulty_place_arc',
+	--			id<-'faults_fault_transaction_to_evidence_to_faulty_place_arc',
 				source<-transaction_to_evidence,
 				target<-fault,
 				type<-#normal,
@@ -1465,7 +1502,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_to_evidence_from_faulty_place_arc: GSPN!GSPNArc (
-				id<-'faults_fault_transaction_to_evidence_from_faulty_place_arc',
+	--			id<-'faults_fault_transaction_to_evidence_from_faulty_place_arc',
 				source<-fault,
 				target<-transaction_to_evidence,
 				type<-#normal,
@@ -1477,7 +1514,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_to_evidence_from_logic_result_arc: GSPN!GSPNArc (
-				id<-'faults_fault_transaction_to_evidence_from_logic_result_arc',
+	--			id<-'faults_fault_transaction_to_evidence_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_to_evidence,
 				type<-#inhibitor,
@@ -1492,7 +1529,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 		),
 		transition_faultnode_false_from_error_ins : GSPN!PTArcAnnotation ( text <- 1 ),
 		transition_faultnode_false_from_error : GSPN!GSPNArc (
-			id <- 'faultnode_false_from_error',
+	--		id <- 'faultnode_false_from_error',
 			source <- fault,
 			target <- transition_faultnode_false,
 			type <- #inhibitor,
@@ -1501,7 +1538,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 		),
 		transition_faultnode_false_from_result_ins : GSPN!PTArcAnnotation ( text <- 1 ),
 		transition_faultnode_false_from_result : GSPN!GSPNArc (
-			id <- 'faultnode_false_from_result',
+	--		id <- 'faultnode_false_from_result',
 			source <- logicResult_place,
 			target <- transition_faultnode_false,
 			type <- #normal,
@@ -1540,6 +1577,11 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 --	)
 		
 	do {
+		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+			thisModule.myid <- thisModule.myid + 1;
+			n.id <- 'FaultsExpressionFaultNodeToPN_'+thisModule.myid.toString();
+		}
+				
 		thisModule.registerFaultPropagationManager(faultsGenerateErrors.PropagationLogicStringFormat, faultsGenerateErrors);
 		thisModule.registerFaultPropagationLogic(faultsGenerateErrors.PropagationLogicStringFormat, faultsGenerateErrors.PropagationLogic);
 	}
@@ -2636,6 +2678,7 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 -------------------------------------------------------------------------------
 -- Creo la transizione che preleva il token dal place che evidenzia il fault
 		transaction_to_evidence : GSPN!GSPNImmediateTransition (
+--			id <- 'errors_error_transaction_to_evidence',
 			Priority <- 2,
 			containerPage <- sistema
 		),
@@ -2655,7 +2698,7 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 				text <- 1
 		),
 		transaction_to_evidence_to_faulty_place_arc: GSPN!GSPNArc (
-				id<-'errors_error_transaction_to_evidence_to_faulty_place_arc',
+	--			id<-'errors_error_transaction_to_evidence_to_faulty_place_arc',
 				source <- transaction_to_evidence,
 				target <- errorsExpressionNode.Error,
 				type<-#normal,
@@ -2667,7 +2710,7 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 				text <- 1
 		),
 		transaction_to_evidence_from_faulty_place_arc: GSPN!GSPNArc (
-				id<-'errors_error_transaction_to_evidence_from_faulty_place_arc',
+	--			id<-'errors_error_transaction_to_evidence_from_faulty_place_arc',
 				source <- errorsExpressionNode.Error,
 				target <- transaction_to_evidence,
 				type<-#normal,
@@ -2679,7 +2722,7 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 				text<-1
 		),
 		transaction_to_evidence_from_logic_result_arc: GSPN!GSPNArc (
-				id<-'errors_error_transaction_to_evidence_from_logic_result_arc',
+	--			id<-'errors_error_transaction_to_evidence_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_to_evidence,
 				type <- #inhibitor,
@@ -2694,7 +2737,7 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 		),
 		transition_errornode_false_from_error_ins : GSPN!PTArcAnnotation ( text <- 1 ),
 		transition_errornode_false_from_error : GSPN!GSPNArc (
-			id <- 'errornode_false_from_error',
+	--		id <- 'errornode_false_from_error',
 			source <- errorsExpressionNode.Error,
 			target <- transition_errornode_false,
 			type <- #inhibitor,
@@ -2703,7 +2746,7 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 		),
 		transition_errornode_false_from_result_ins : GSPN!PTArcAnnotation ( text <- 1 ),
 		transition_errornode_false_from_result : GSPN!GSPNArc (
-			id <- 'errornode_false_from_result',
+	--		id <- 'errornode_false_from_result',
 			source <- logicResult_place,
 			target <- transition_errornode_false,
 			type <- #normal,
@@ -2742,8 +2785,16 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 		
 	do {
 		--ERRORNODE
+		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+			thisModule.myid <- thisModule.myid + 1;
+			n.id <- 'ErrorsExpressionErrorNodeToPN_'+thisModule.myid.toString();
+		}
+		
+		
 		thisModule.registerErrorPropagationManager(errorPropagation.PropagationLogicStringFormat, errorPropagation);
 		thisModule.registerErrorPropagationLogic(errorPropagation.PropagationLogicStringFormat, errorPropagation.PropagationLogic);
+		
+
 	}
 }
 
