@@ -545,7 +545,7 @@ rule ComponentExternalFault {
 	to
 -- Crea il place per rappresentare il fault esterno del componente
 		faulty_place : GSPN!Place (
-				id <- 'faultyPlace_'+componente.Name+'_'+fault.Name,
+--				id <- 'faultyPlace_'+componente.Name+'_'+fault.Name,
 				name <- faulty_place_name,
 				initialMarking <- faulty_place_markup,
 				containerPage <- sistema
@@ -566,7 +566,7 @@ rule ComponentExternalFault {
 				text<-1
 		),
 		transaction_to_fault_from_healty_arc: GSPN!GSPNArc (
-				id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_from_failedPlace',
+	--			id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_from_failedPlace',
 				source<-componente,
 				target<-transaction_to_fault,
 				type<-#inhibitor,
@@ -578,7 +578,7 @@ rule ComponentExternalFault {
 				text<-1
 		),
 		transaction_to_fault_from_failureMode_arc: GSPN!GSPNArc (
-				id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_from_failureModePlace_'+fault.Source.Name,
+	--			id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_from_failureModePlace_'+fault.Source.Name,
 				source<-fault.Source,
 				target<-transaction_to_fault,
 				type<-#normal,
@@ -590,7 +590,7 @@ rule ComponentExternalFault {
 				text<-1
 		),
 		transaction_to_fault_to_failureMode_arc: GSPN!GSPNArc (
-				id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_to_failureModePlace',
+	--			id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_to_failureModePlace',
 				source<-transaction_to_fault,
 				target<-fault.Source,
 				type<-#normal,
@@ -602,7 +602,7 @@ rule ComponentExternalFault {
 				text<-1
 		),
 		transaction_to_fault_to_faultyPlace_arc: GSPN!GSPNArc (
-				id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_to_faultyPlace',
+	--			id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_to_faultyPlace',
 				source<-transaction_to_fault,
 				target<-faulty_place,
 				type<-#normal,
@@ -614,7 +614,7 @@ rule ComponentExternalFault {
 				text<-1
 		),
 		transaction_to_fault_from_faultyPlace_arc: GSPN!GSPNArc (
-				id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_to_faultyPlace',
+	--			id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_to_faultyPlace',
 				source<-faulty_place,
 				target<-transaction_to_fault,
 				type<-#inhibitor,
@@ -623,6 +623,11 @@ rule ComponentExternalFault {
 		)
 		
 		do {
+			for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+				thisModule.myid <- thisModule.myid + 1;
+				n.id <- 'ComponentExternalFault_'+thisModule.myid.toString();
+			}
+			
 			thisModule.removeTokenOnFailed(componente, faulty_place, fault.Name, thisModule.resolveTemp(componente, 'failed_place'));
 		}
 }
@@ -1604,7 +1609,7 @@ abstract rule FaultsGeneratesError {
 --------------------------------------------------------------------------------------------
 -- Crea case per la generazione dell'errore
 		propagation_case : GSPN!GSPNImmediateTransition (
-			id <- 'faults_generates_error_'+componente.Name+'_'+faultsGeneratesError.Name+'_propagation',
+--			id <- 'faults_generates_error_'+componente.Name+'_'+faultsGeneratesError.Name+'_propagation',
 			Priority <- 1,
 			Probability <- faultsGeneratesError.PropagationProbability,
 			containerPage<-sistema
@@ -1618,7 +1623,7 @@ abstract rule FaultsGeneratesError {
 				text <- 'tmp_activated_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name
 		),
 		tmp_activated_propagation_place : GSPN!Place (
-				id <- 'tmp_activated_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
+--				id <- 'tmp_activated_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				name <- tmp_activated_propagation_place_name,
 				initialMarking <- tmp_activated_propagation_place_markup,
 				containerPage <- componente.intermediateModel
@@ -1629,7 +1634,7 @@ abstract rule FaultsGeneratesError {
 				text<-1
 		),
 		from_activationDelay_to_tmp_activated_arc: GSPN!GSPNArc (
-				id<-'faults_generate_errors_from_activationDelay_to_tmp_activated_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
+--				id<-'faults_generate_errors_from_activationDelay_to_tmp_activated_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				source<-faultsGeneratesError.ActivationDelay,
 				target<-tmp_activated_propagation_place,
 				type<-#normal,
@@ -1644,7 +1649,7 @@ abstract rule FaultsGeneratesError {
 				text<-1
 		),
 		from_tmp_activated_to_propagation_case_arc: GSPN!GSPNArc (
-				id<-'faults_generate_errors_from_tmp_activated_to_propagation_case_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
+--				id<-'faults_generate_errors_from_tmp_activated_to_propagation_case_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				source<-tmp_activated_propagation_place,
 				target<-propagation_case,
 				type<-#normal,
@@ -1658,7 +1663,7 @@ abstract rule FaultsGeneratesError {
 				text<-1
 		),
 		from_tmp_activated_to_not_propagation_case_arc: GSPN!GSPNArc (
-				id<-'faults_generate_errors_from_tmp_activated_to_not_propagation_case_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
+--				id<-'faults_generate_errors_from_tmp_activated_to_not_propagation_case_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				source<-tmp_activated_propagation_place,
 				target<-not_propagation_case,
 				type<-#normal,
@@ -1667,7 +1672,7 @@ abstract rule FaultsGeneratesError {
 		),
 		
 		not_propagation_case : GSPN!GSPNImmediateTransition (
-			id <- 'faults_generates_error_'+componente.Name+'_'+faultsGeneratesError.Name+'_not_propagation',
+--			id <- 'faults_generates_error_'+componente.Name+'_'+faultsGeneratesError.Name+'_not_propagation',
 			Priority <- 1,
 			Probability <- 1-faultsGeneratesError.PropagationProbability,
 			containerPage<-sistema
@@ -1682,7 +1687,7 @@ abstract rule FaultsGeneratesError {
 				text <- 'errorsActivation_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name
 		),
 		errorsActivation_place : GSPN!Place (
-				id <- 'errorsActivation_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
+--				id <- 'errorsActivation_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				name <- errorsActivation_place_name,
 				initialMarking <- errorsActivation_place_markup,
 				containerPage <- componente.intermediateModel
@@ -1690,7 +1695,7 @@ abstract rule FaultsGeneratesError {
 -- la transizione che, nel caso di pi� errori possono essere attivati dalla stessa logica di propagazione,
 -- consente di scegliere quale errore viene generato
 		transaction_weight : GSPN!GSPNImmediateTransition (
-			id <- 'faults_generate_errors_weight_'+faultsGeneratesError.Name,
+--			id <- 'faults_generate_errors_weight_'+faultsGeneratesError.Name,
 			Priority <- 2,
 			Probability <- faultsGeneratesError.Weight,
 			containerPage <- sistema
@@ -1700,7 +1705,7 @@ abstract rule FaultsGeneratesError {
 				text<-1
 		),
 		transaction_weight_from_fault_propagation_logic_result_arc: GSPN!GSPNArc (
-				id<-'transaction_weight_from_fault_propagation_logic_result_arc',
+--				id<-'transaction_weight_from_fault_propagation_logic_result_arc',
 				source<-faultPropagationResult_place,
 				target<-transaction_weight,
 				type<-#normal,
@@ -1712,7 +1717,7 @@ abstract rule FaultsGeneratesError {
 				text<-1
 		),
 		transaction_weight_to_fault_propagation_logic_result_arc: GSPN!GSPNArc (
-				id<-'transaction_weight_to_fault_propagation_logic_result_arc',
+--				id<-'transaction_weight_to_fault_propagation_logic_result_arc',
 				source<-transaction_weight,
 				target<-faultPropagationResult_place,
 				type<-#normal,
@@ -1724,7 +1729,7 @@ abstract rule FaultsGeneratesError {
 				text<-1
 		),
 		transaction_weight_to_errorsActivation_arc: GSPN!GSPNArc (
-				id<-'transaction_weight_to_errorsActivation_arc',
+--				id<-'transaction_weight_to_errorsActivation_arc',
 				source<-transaction_weight,
 				target<-errorsActivation_place,
 				type<-#normal,
@@ -1736,13 +1741,19 @@ abstract rule FaultsGeneratesError {
 				text<-1
 		),
 		transaction_activationDelay_from_errorsActivation: GSPN!GSPNArc (
-				id<-'transaction_activationDelay_from_errorsActivation',
+--				id<-'transaction_activationDelay_from_errorsActivation',
 				source<-errorsActivation_place,
 				target<-faultsGeneratesError.ActivationDelay,
 				type<-#normal,
 				inscription<-transaction_activationDelay_from_errorsActivation_arc_annotation,
 				containerPage <- sistema
 		)
+	do {
+		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+			thisModule.myid <- thisModule.myid + 1;
+			n.id <- 'FaultsGenerateErrors_'+thisModule.myid.toString();
+		}
+	}
 }
 
 rule FaultsGeneratesErrorNoManager extends FaultsGeneratesError {
@@ -2813,7 +2824,7 @@ abstract rule InternalPropagation {
 --------------------------------------------------------------------------------------------
 -- Crea case per la generazione dell'errore
 		propagation_case : GSPN!GSPNImmediateTransition (
-			id <- 'internal_propagation_'+componente.Name+'_'+internalPropagation.Name+'_propagation',
+--			id <- 'internal_propagation_'+componente.Name+'_'+internalPropagation.Name+'_propagation',
 			Priority <- 1,
 			Probability <- internalPropagation.PropagationProbability,
 			containerPage<-thisModule.getPage(sistema)
@@ -2828,7 +2839,7 @@ abstract rule InternalPropagation {
 				text <- 'tmp_propagation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name
 		),
 		tmp_propagation_place : GSPN!Place (
-				id <- 'tmp_propagation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
+--				id <- 'tmp_propagation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				name <- tmp_propagation_place_name,
 				initialMarking <- tmp_propagation_place_markup,
 				containerPage <- sistema
@@ -2839,7 +2850,7 @@ abstract rule InternalPropagation {
 				text <- 1
 		),
 		from_propagationdelay_to_tmp_propagation_arc: GSPN!GSPNArc (
-			id <- 'internalPropagation_from_propagationdelay_to_tmp_propagation_arc_annotation_'+componente.Name+'_'+internalPropagation.Name,
+--			id <- 'internalPropagation_from_propagationdelay_to_tmp_propagation_arc_annotation_'+componente.Name+'_'+internalPropagation.Name,
 			source <- internalPropagation.PropagationDelay,
 			target <- tmp_propagation_place,
 			type<-#normal,
@@ -2852,7 +2863,7 @@ abstract rule InternalPropagation {
 				text <- 1
 		),
 		from_tmp_propagation_to_propagate_case_arc: GSPN!GSPNArc (
-			id <- 'internalPropagation_from_tmp_propagation_to_propagate_case_arc_'+componente.Name+'_'+internalPropagation.Name,
+	--		id <- 'internalPropagation_from_tmp_propagation_to_propagate_case_arc_'+componente.Name+'_'+internalPropagation.Name,
 			source <- tmp_propagation_place,
 			target <- propagation_case,
 			type<-#normal,
@@ -2865,7 +2876,7 @@ abstract rule InternalPropagation {
 				text <- 1
 		),
 		from_tmp_propagation_to_not_propagate_case_arc: GSPN!GSPNArc (
-			id <- 'internalPropagation_from_tmp_propagation_to_not_propagate_case_arc_'+componente.Name+'_'+internalPropagation.Name,
+--			id <- 'internalPropagation_from_tmp_propagation_to_not_propagate_case_arc_'+componente.Name+'_'+internalPropagation.Name,
 			source <- tmp_propagation_place,
 			target <- not_propagation_case,
 			type<-#normal,
@@ -2874,7 +2885,7 @@ abstract rule InternalPropagation {
 		),
 		
 		not_propagation_case : GSPN!GSPNImmediateTransition (
-			id <- 'internal_propagation_'+componente.Name+'_'+internalPropagation.Name+'_not_propagation',
+--			id <- 'internal_propagation_'+componente.Name+'_'+internalPropagation.Name+'_not_propagation',
 			Priority <- 1,
 			Probability <- 1-internalPropagation.PropagationProbability,
 			containerPage<-thisModule.getPage(sistema)
@@ -2905,7 +2916,7 @@ abstract rule InternalPropagation {
 				text <- 1
 		),
 		transaction_weight_from_internal_propagation_logic_result_arc: GSPN!GSPNArc (
-				id<-'internal_propagation_transiction_weight_from_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
+	--			id<-'internal_propagation_transiction_weight_from_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- internalPropagationResult_place,
 				target <- transaction_weight,
 				type<-#normal,
@@ -2917,7 +2928,7 @@ abstract rule InternalPropagation {
 				text <- 1
 		),
 		transaction_weight_to_internal_propagation_logic_result_arc: GSPN!GSPNArc (
-				id<-'internal_propagation_transiction_weight_to_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
+--				id<-'internal_propagation_transiction_weight_to_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- transaction_weight,
 				target <- internalPropagationResult_place,
 				type<-#normal,
@@ -2929,7 +2940,7 @@ abstract rule InternalPropagation {
 				text <- 1
 		),
 		transaction_weight_to_errorsActivation_arc: GSPN!GSPNArc (
-				id<-'internal_propagation_transiction_weight_to_errors_activation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
+--				id<-'internal_propagation_transiction_weight_to_errors_activation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- transaction_weight,
 				target <- errorsActivation_place,
 				type<-#normal,
@@ -2941,13 +2952,19 @@ abstract rule InternalPropagation {
 				text <- 1
 		),
 		transaction_activationDelay_from_errorsActivation: GSPN!GSPNArc (
-				id<-'internal_propagation_transiction_weight_from_errors_activation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
+--				id<-'internal_propagation_transiction_weight_from_errors_activation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- errorsActivation_place,
 				target <- internalPropagation.PropagationDelay,
 				type<-#normal,
 				inscription <- transaction_activationDelay_from_errorsActivation_arc_annotation,
 				containerPage <- sistema
 		)
+	do {
+		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+			thisModule.myid <- thisModule.myid + 1;
+			n.id <- 'InternalPropagation_'+thisModule.myid.toString();
+		}
+	}
 }
 rule InternalPropagationNoManager extends InternalPropagation {
 	from
@@ -3205,7 +3222,7 @@ abstract rule ErrorsProducesFailures {
 
 -- Crea case per la generazione dell'errore
 		propagation_case : GSPN!GSPNImmediateTransition (
-			id <- 'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_propagation',
+--			id <- 'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_propagation',
 			Priority <- 1,
 			Probability <- errorsProducesFailures.PropagationProbability,
 			containerPage<-sistema
@@ -3219,7 +3236,7 @@ abstract rule ErrorsProducesFailures {
 				text <- 'tmp_propagation_'+componente.Name+'_errors_produces_failures_'+errorsProducesFailures.Name
 		),
 		tmp_propagation_place : GSPN!Place (
-				id <- 'tmp_propagation_'+componente.Name+'_errors_produces_failures_'+errorsProducesFailures.Name,
+--				id <- 'tmp_propagation_'+componente.Name+'_errors_produces_failures_'+errorsProducesFailures.Name,
 				name <- tmp_propagation_place_name,
 				initialMarking <- tmp_propagation_place_markup,
 				containerPage <- sistema
@@ -3231,7 +3248,7 @@ abstract rule ErrorsProducesFailures {
 				text <- 1
 		),
 		from_propagationdelay_to_tmp_propagation_arc: GSPN!GSPNArc (
-				id<-'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_from_propagationdelay_to_tmp_propagation_arc',
+--				id<-'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_from_propagationdelay_to_tmp_propagation_arc',
 				source <- errorsProducesFailures.PropagationDelay,
 				target <- tmp_propagation_place,
 				type<-#normal,
@@ -3244,7 +3261,7 @@ abstract rule ErrorsProducesFailures {
 				text <- 1
 		),
 		from_tmp_propagation_to_propagate_arc: GSPN!GSPNArc (
-				id<-'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_from_tmp_propagation_to_propagate_arc',
+--				id<-'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_from_tmp_propagation_to_propagate_arc',
 				source <- tmp_propagation_place,
 				target <- propagation_case,
 				type<-#normal,
@@ -3257,7 +3274,7 @@ abstract rule ErrorsProducesFailures {
 				text <- 1
 		),
 		from_tmp_propagation_to_not_propagate_arc: GSPN!GSPNArc (
-				id<-'errors_produces_failures_from_tmp_propagation_to_not_propagate_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
+--				id<-'errors_produces_failures_from_tmp_propagation_to_not_propagate_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 				source <- tmp_propagation_place,
 				target <- not_propagation_case,
 				type<-#normal,
@@ -3267,7 +3284,7 @@ abstract rule ErrorsProducesFailures {
 		
 -- Crea case per la generazione dell'errore
 		not_propagation_case : GSPN!GSPNImmediateTransition (
-			id<-'errors_produces_failures_not_propagation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
+--			id<-'errors_produces_failures_not_propagation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			Priority <- 1,
 			Probability <- 1-errorsProducesFailures.PropagationProbability,
 			containerPage<-sistema
@@ -3281,7 +3298,7 @@ abstract rule ErrorsProducesFailures {
 				text <- 'errorsActivation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name
 		),
 		errorsActivation_place : GSPN!Place (
-				id <- 'errorsActivation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
+--				id <- 'errorsActivation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 				name <- errorsActivation_place_name,
 				initialMarking <- errorsActivation_place_markup,
 				containerPage <- sistema
@@ -3298,7 +3315,7 @@ abstract rule ErrorsProducesFailures {
 			text <- 1
 		),
 		transaction_weight_from_error_propagation_logic_result_arc: GSPN!GSPNArc (
-			id<-'errors_produces_failures_transition_weight_from_error_logic_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
+--			id<-'errors_produces_failures_transition_weight_from_error_logic_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- errorPropagationResult_place,
 			target <- transaction_weight,
 			type<-#normal,
@@ -3310,7 +3327,7 @@ abstract rule ErrorsProducesFailures {
 			text <- 1
 		),
 		transaction_weight_to_error_propagation_logic_result_arc: GSPN!GSPNArc (
-			id<-'errors_produces_failures_transition_weight_to_error_logic_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
+--			id<-'errors_produces_failures_transition_weight_to_error_logic_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_weight,
 			target <- errorPropagationResult_place,
 			type<-#normal,
@@ -3322,7 +3339,7 @@ abstract rule ErrorsProducesFailures {
 			text <- 1
 		),
 		transaction_weight_to_errorsActivation_arc: GSPN!GSPNArc (
-			id<-'errors_produces_failures_transition_weight_to_errors_activation_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
+--			id<-'errors_produces_failures_transition_weight_to_errors_activation_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_weight,
 			target <- errorsActivation_place,
 			type<-#normal,
@@ -3334,13 +3351,19 @@ abstract rule ErrorsProducesFailures {
 			text <- 1
 		),
 		transaction_activationDelay_from_errorsActivation: GSPN!GSPNArc (
-			id<-'errors_produces_failures_transition_activationDelay_from_errorsActivation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
+--			id<-'errors_produces_failures_transition_activationDelay_from_errorsActivation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- errorsActivation_place,
 			target <- errorsProducesFailures.PropagationDelay,
 			type<-#normal,
 			inscription <- transaction_activationDelay_from_errorsActivation_arc_annotation,
 			containerPage <- sistema
 		)
+	do {
+		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+			thisModule.myid <- thisModule.myid + 1;
+			n.id <- 'ErrorsProduceFailures_'+thisModule.myid.toString();
+		}
+	}
 }
 rule ErrorsProducesFailuresNoManager extends ErrorsProducesFailures {
 	from
@@ -3592,6 +3615,12 @@ rule ErrorsProducesFailuresPropagate {
 				inscription <- propagation_to_failed_arc_annotation,
 				containerPage <- sistema
 		)
+	do {
+		thisModule.myid <- thisModule.myid + 1;
+		
+		propagation_to_failure_arc.id <- propagation_to_failure_arc.id + thisModule.myid.toString();
+		propagation_to_failed_arc.id <- propagation_to_failed_arc.id + thisModule.myid.toString();
+	}
 }
 
 

@@ -16,11 +16,11 @@ helper context DEEM!Net def: toString():String =
 	'\n\n'+
 	self.outputArcs->iterate(i; acc:String=''| acc + i.toString())+
 	'\n\n'+
-	'RES_FUNC:"pFail",\'IF(MARK(failureModePlace_c1_c1_fm16)>0)THEN(1)ELSE(0)\',0;'+
+	'RES_FUNC:"Reliability_c1",\'IF(MARK(failed_c10)=0)THEN(1)ELSE(0)\',0;'+
 	'\n';
 	
 helper context DEEM!Place def: toString(): String = 
-	'PLACE:"'+self.Name+'",1500,1500,'+self.marking+',1;\n';
+	'PLACE:"'+self.Name+'",1500,1500,'+self.marking+',0;\n';
 	
 helper context DEEM!ImmediateTransition def: toString(): String = 
 --	'TRANS:"'+self.Name+'",1500,1500,V,Immediate,'+self.Priority+',0,\'\', \'\',\n'+
