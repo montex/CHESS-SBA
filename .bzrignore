@@ -2,3 +2,17 @@
 *.asm
 *.log
 .metadata
+*_PhN*
+*.trsolv
+*.total_prob
+*.mc
+*.rg
+*.bak
+*.time
+*.sdistro
+*.spreadsheet
+*.gnuplot
+*.sim
+*misure_temp*
+*misure_output*
+sim_*
