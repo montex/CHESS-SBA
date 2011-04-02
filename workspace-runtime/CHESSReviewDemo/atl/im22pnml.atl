@@ -1,9 +1,10 @@
 -- @path GSPN=CHESSReviewDemo/metamodels/placeTransition.ecore
 -- @path IM2=CHESSReviewDemo/metamodels/IM2.ecore
+-- @path MOI=CHESSReviewDemo/metamodels/measures.ecore
 
 module im22pnml;
 
-create out1: GSPN from in1: IM2;
+create out1: GSPN, out2: MOI from in1: IM2;
 
 helper def: myid : Integer = 0;
 
@@ -209,6 +210,14 @@ rule Sistema {
 			type<-#PTNET,
 			pages<-gspnpage,
 			containerPetriNetDoc<-gspndoc
+		),
+		
+		study: MOI!Study (
+			name <- 'DefaultStudy'
+		),
+		evalList: MOI!EvaluationList (
+			studies <- Sequence{study},
+			measures <- MOI!Measure.allInstances()
 		)
 	do {
 		thisModule.page = gspnpage;
@@ -5466,3 +5475,80 @@ lazy rule executeActiviyIfComponentNotFailed {
 		)
 }
 
+
+rule InstantOfTime {
+	from
+		idm_instant : IM2!InstantOfTime
+	to
+		evaltype : MOI!InstantOfTime 
+		(
+			instant <- idm_instant.timePoint	
+		)
+}
+rule IntervalOfTime {
+	from
+		idm_interval : IM2!IntervalOfTime
+	to
+		evaltype : MOI!IntervalOfTimeCumulated
+		(
+			intervalBegin <- idm_interval.begin,
+			intervalEnd <- idm_interval.end
+		)
+}
+rule MeasureToRewardFunction {
+	from 
+		idm_measure : IM2!DependabilityMeasure
+	to
+		measure : MOI!Measure
+		(
+			name <- idm_measure.Name,
+			evaluationType <- idm_measure.evaluations.asSequence().first(),
+			rewardFunction <- ite
+		),
+		ite : MOI!IfThenElse
+		(
+			condition <- cond,
+			ifTrue <- thisModule.newValueExpression(1),
+			ifFalse <- thisModule.newValueExpression(0)
+		),
+		cond : MOI!OpEqual
+		(
+			expression2 <- thisModule.newValueExpression(0)
+			
+		)
+	do {
+		if(idm_measure.target->size() = 1)
+		{
+			cond.expression1 <- thisModule.newMarkingExpression(idm_measure.target.asSequence().first());
+		}
+		else
+		{
+			cond.expression1 <- thisModule.newOpSum(thisModule.newMarkingExpression(idm_measure.target.asSequence().first()), OclUndefined);
+			--tmp = cond.expression1;
+		}
+	}
+}
+
+lazy rule newValueExpression {
+	from
+		v : Real
+	to
+		vexpr : MOI!ValueExpression ( value <- v )
+}
+lazy rule newMarkingExpression {
+	from 
+		f : IM2!FailureMode
+	to
+		m : MOI!MarkingExpression
+		(
+			placeID <- thisModule.resolveTemp(f, 'failureMode_place').id
+		)
+}
+rule newOpSum( e1 : MOI!ArithmeticExpression, e2 : MOI!ArithmeticExpression) { 
+	to
+		sum : MOI!OpSum
+		(
+			expression1 <- e1,
+			expression2 <- e2
+		)
+}

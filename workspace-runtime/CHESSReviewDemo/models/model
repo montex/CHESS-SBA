@@ -1,0 +1,2233 @@
+<NDFile-'1.2'>
+
+NET:"org.eclipse.m2m.atl.engine.emfvm.lib.OclUndefined@12dc643",2000,2000;
+COLORS:White,Black,Black,Black,Black,Black;
+
+VARIABLE:"Time","Real";
+
+STUDY:"DefaultStudy",0,"not_def",10000;
+
+PLACE:"failed_c10",1500,1500,0,0;
+PLACE:"failed_c21",1500,1500,0,0;
+PLACE:"failed_nodeA2",1500,1500,0,0;
+PLACE:"failed_bus3",1500,1500,0,0;
+PLACE:"failed_nodeB4",1500,1500,0,0;
+PLACE:"faultyPlace_c1_c1_ft15",1500,1500,0,0;
+PLACE:"numberOfTransientFaultyPlace_c1_c1_ft16",1500,1500,0,0;
+PLACE:"internal_fault_occurred_c1_c1_ft17",1500,1500,0,0;
+PLACE:"faultyPlace_c2_c2_ft18",1500,1500,0,0;
+PLACE:"numberOfTransientFaultyPlace_c2_c2_ft19",1500,1500,0,0;
+PLACE:"internal_fault_occurred_c2_c2_ft110",1500,1500,0,0;
+PLACE:"faultyPlace_nodeA_nodeA_ft111",1500,1500,0,0;
+PLACE:"numberOfTransientFaultyPlace_nodeA_nodeA_ft112",1500,1500,0,0;
+PLACE:"internal_fault_occurred_nodeA_nodeA_ft113",1500,1500,0,0;
+PLACE:"faultyPlace_bus_bus_ft114",1500,1500,0,0;
+PLACE:"numberOfTransientFaultyPlace_bus_bus_ft115",1500,1500,0,0;
+PLACE:"internal_fault_occurred_bus_bus_ft116",1500,1500,0,0;
+PLACE:"faultyPlace_nodeB_nodeB_ft117",1500,1500,0,0;
+PLACE:"numberOfTransientFaultyPlace_nodeB_nodeB_ft118",1500,1500,0,0;
+PLACE:"internal_fault_occurred_nodeB_nodeB_ft119",1500,1500,0,0;
+PLACE:"faultyPlace_c1_c1_xft_nodeA_fm120",1500,1500,0,0;
+PLACE:"faultyPlace_c2_c2_xft_c1_fm121",1500,1500,0,0;
+PLACE:"faultyPlace_c2_c2_xft_c1_fm222",1500,1500,0,0;
+PLACE:"faultyPlace_c2_c2_xft_nodeB_fm123",1500,1500,0,0;
+PLACE:"faultyPlace_bus_bus_xft_nodeA_fm124",1500,1500,0,0;
+PLACE:"faultyPlace_nodeB_nodeB_xft_bus_fm125",1500,1500,0,0;
+PLACE:"erroneusPlace_c1_c1_e126",1500,1500,0,0;
+PLACE:"detect_error_Place_c1_c1_e127",1500,1500,0,0;
+PLACE:"erroneusPlace_c2_c2_e128",1500,1500,0,0;
+PLACE:"detect_error_Place_c2_c2_e129",1500,1500,0,0;
+PLACE:"erroneusPlace_nodeA_nodeA_e130",1500,1500,0,0;
+PLACE:"detect_error_Place_nodeA_nodeA_e131",1500,1500,0,0;
+PLACE:"erroneusPlace_bus_bus_e132",1500,1500,0,0;
+PLACE:"detect_error_Place_bus_bus_e133",1500,1500,0,0;
+PLACE:"erroneusPlace_nodeB_nodeB_e134",1500,1500,0,0;
+PLACE:"detect_error_Place_nodeB_nodeB_e135",1500,1500,0,0;
+PLACE:"failureModePlace_c1_c1_fm136",1500,1500,0,0;
+PLACE:"failureModePlace_c1_c1_fm237",1500,1500,0,0;
+PLACE:"failureModePlace_c2_c2_fm138",1500,1500,0,0;
+PLACE:"failureModePlace_nodeA_nodeA_fm139",1500,1500,0,0;
+PLACE:"failureModePlace_bus_bus_fm140",1500,1500,0,0;
+PLACE:"failureModePlace_nodeB_nodeB_fm141",1500,1500,0,0;
+PLACE:"logicResult_c2_logic_c2_fge242",1500,1500,0,0;
+PLACE:"logicResult_c1_logic_c1_fge143",1500,1500,0,0;
+PLACE:"logicResult_c1_logic_c1_fge244",1500,1500,0,0;
+PLACE:"logicResult_c2_logic_c2_fge145",1500,1500,0,0;
+PLACE:"logicResult_c2_logic_c2_fge246",1500,1500,0,0;
+PLACE:"logicResult_c2_logic_c2_fge247",1500,1500,0,0;
+PLACE:"logicResult_c2_logic_c2_fge348",1500,1500,0,0;
+PLACE:"logicResult_nodeA_logic_nodeA_fge149",1500,1500,0,0;
+PLACE:"logicResult_bus_logic_bus_fge150",1500,1500,0,0;
+PLACE:"logicResult_bus_logic_bus_fge251",1500,1500,0,0;
+PLACE:"logicResult_nodeB_logic_nodeB_fge152",1500,1500,0,0;
+PLACE:"logicResult_nodeB_logic_nodeB_fge253",1500,1500,0,0;
+PLACE:"active_c1_faultsGeneratesError_c1_fge154",1500,1500,0,0;
+PLACE:"activated_c1_faultsGeneratesError_c1_fge155",1500,1500,0,0;
+PLACE:"tmp_activated_c1_faultsGeneratesError_c1_fge156",1500,1500,0,0;
+PLACE:"errorsActivation_c1_faultsGeneratesError_c1_fge157",1500,1500,0,0;
+PLACE:"active_c1_faultsGeneratesError_c1_fge258",1500,1500,0,0;
+PLACE:"activated_c1_faultsGeneratesError_c1_fge259",1500,1500,0,0;
+PLACE:"tmp_activated_c1_faultsGeneratesError_c1_fge260",1500,1500,0,0;
+PLACE:"errorsActivation_c1_faultsGeneratesError_c1_fge261",1500,1500,0,0;
+PLACE:"active_c2_faultsGeneratesError_c2_fge162",1500,1500,0,0;
+PLACE:"activated_c2_faultsGeneratesError_c2_fge163",1500,1500,0,0;
+PLACE:"tmp_activated_c2_faultsGeneratesError_c2_fge164",1500,1500,0,0;
+PLACE:"errorsActivation_c2_faultsGeneratesError_c2_fge165",1500,1500,0,0;
+PLACE:"active_c2_faultsGeneratesError_c2_fge266",1500,1500,0,0;
+PLACE:"activated_c2_faultsGeneratesError_c2_fge267",1500,1500,0,0;
+PLACE:"tmp_activated_c2_faultsGeneratesError_c2_fge268",1500,1500,0,0;
+PLACE:"errorsActivation_c2_faultsGeneratesError_c2_fge269",1500,1500,0,0;
+PLACE:"active_c2_faultsGeneratesError_c2_fge370",1500,1500,0,0;
+PLACE:"activated_c2_faultsGeneratesError_c2_fge371",1500,1500,0,0;
+PLACE:"tmp_activated_c2_faultsGeneratesError_c2_fge372",1500,1500,0,0;
+PLACE:"errorsActivation_c2_faultsGeneratesError_c2_fge373",1500,1500,0,0;
+PLACE:"active_nodeA_faultsGeneratesError_nodeA_fge174",1500,1500,0,0;
+PLACE:"activated_nodeA_faultsGeneratesError_nodeA_fge175",1500,1500,0,0;
+PLACE:"tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176",1500,1500,0,0;
+PLACE:"errorsActivation_nodeA_faultsGeneratesError_nodeA_fge177",1500,1500,0,0;
+PLACE:"active_bus_faultsGeneratesError_bus_fge178",1500,1500,0,0;
+PLACE:"activated_bus_faultsGeneratesError_bus_fge179",1500,1500,0,0;
+PLACE:"tmp_activated_bus_faultsGeneratesError_bus_fge180",1500,1500,0,0;
+PLACE:"errorsActivation_bus_faultsGeneratesError_bus_fge181",1500,1500,0,0;
+PLACE:"active_bus_faultsGeneratesError_bus_fge282",1500,1500,0,0;
+PLACE:"activated_bus_faultsGeneratesError_bus_fge283",1500,1500,0,0;
+PLACE:"tmp_activated_bus_faultsGeneratesError_bus_fge284",1500,1500,0,0;
+PLACE:"errorsActivation_bus_faultsGeneratesError_bus_fge285",1500,1500,0,0;
+PLACE:"active_nodeB_faultsGeneratesError_nodeB_fge186",1500,1500,0,0;
+PLACE:"activated_nodeB_faultsGeneratesError_nodeB_fge187",1500,1500,0,0;
+PLACE:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188",1500,1500,0,0;
+PLACE:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge189",1500,1500,0,0;
+PLACE:"active_nodeB_faultsGeneratesError_nodeB_fge290",1500,1500,0,0;
+PLACE:"activated_nodeB_faultsGeneratesError_nodeB_fge291",1500,1500,0,0;
+PLACE:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292",1500,1500,0,0;
+PLACE:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge293",1500,1500,0,0;
+PLACE:"logicResult_c1_logic_c1_epf194",1500,1500,0,0;
+PLACE:"logicResult_c1_logic_c1_epf295",1500,1500,0,0;
+PLACE:"logicResult_c2_logic_c2_epf296",1500,1500,0,0;
+PLACE:"logicResult_nodeA_logic_nodeA_epf197",1500,1500,0,0;
+PLACE:"logicResult_bus_logic_bus_epf198",1500,1500,0,0;
+PLACE:"logicResult_nodeB_logic_nodeB_epf199",1500,1500,0,0;
+PLACE:"active_c1_errorsProducesFailures_c1_epf1100",1500,1500,0,0;
+PLACE:"activated_c1_errorsProducesFailures_c1_epf1101",1500,1500,0,0;
+PLACE:"tmp_propagation_c1_errors_produces_failures_c1_epf1102",1500,1500,0,0;
+PLACE:"errorsActivation_c1_errorsProducesFailures_c1_epf1103",1500,1500,0,0;
+PLACE:"active_c1_errorsProducesFailures_c1_epf2104",1500,1500,0,0;
+PLACE:"activated_c1_errorsProducesFailures_c1_epf2105",1500,1500,0,0;
+PLACE:"tmp_propagation_c1_errors_produces_failures_c1_epf2106",1500,1500,0,0;
+PLACE:"errorsActivation_c1_errorsProducesFailures_c1_epf2107",1500,1500,0,0;
+PLACE:"active_c2_errorsProducesFailures_c2_epf2108",1500,1500,0,0;
+PLACE:"activated_c2_errorsProducesFailures_c2_epf2109",1500,1500,0,0;
+PLACE:"tmp_propagation_c2_errors_produces_failures_c2_epf2110",1500,1500,0,0;
+PLACE:"errorsActivation_c2_errorsProducesFailures_c2_epf2111",1500,1500,0,0;
+PLACE:"active_nodeA_errorsProducesFailures_nodeA_epf1112",1500,1500,0,0;
+PLACE:"activated_nodeA_errorsProducesFailures_nodeA_epf1113",1500,1500,0,0;
+PLACE:"tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114",1500,1500,0,0;
+PLACE:"errorsActivation_nodeA_errorsProducesFailures_nodeA_epf1115",1500,1500,0,0;
+PLACE:"active_bus_errorsProducesFailures_bus_epf1116",1500,1500,0,0;
+PLACE:"activated_bus_errorsProducesFailures_bus_epf1117",1500,1500,0,0;
+PLACE:"tmp_propagation_bus_errors_produces_failures_bus_epf1118",1500,1500,0,0;
+PLACE:"errorsActivation_bus_errorsProducesFailures_bus_epf1119",1500,1500,0,0;
+PLACE:"active_nodeB_errorsProducesFailures_nodeB_epf1120",1500,1500,0,0;
+PLACE:"activated_nodeB_errorsProducesFailures_nodeB_epf1121",1500,1500,0,0;
+PLACE:"tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122",1500,1500,0,0;
+PLACE:"errorsActivation_nodeB_errorsProducesFailures_nodeB_epf1123",1500,1500,0,0;
+
+
+TRANS:"T0",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T1",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T2",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T3",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T4",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T5",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T6",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T7",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T8",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T9",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T10",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T11",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T12",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T13",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T14",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T15",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T16",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T17",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T18",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T19",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T20",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T21",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T22",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T23",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T24",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T25",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T26",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T27",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T28",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T29",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T30",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T31",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T32",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T33",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T34",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T35",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T36",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T37",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T38",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T39",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T40",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T41",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T42",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T43",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T44",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T45",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T46",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T47",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T48",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T49",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T50",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T51",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T52",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T53",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T54",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T55",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T56",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T57",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T58",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T59",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T60",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T61",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T62",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T63",1500,1500,V,Immediate,1,1,'', '0.9',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T64",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T65",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T66",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T67",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T68",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T69",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T70",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T71",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T72",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T73",1500,1500,V,Immediate,1,1,'', '0.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T74",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T75",1500,1500,V,Immediate,1,1,'', '0.9',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T76",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T77",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T78",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T79",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T80",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T81",1500,1500,V,Immediate,1,1,'', '0.7',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T82",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T83",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T84",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T85",1500,1500,V,Immediate,1,1,'', '0.30000000000000004',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T86",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T87",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T88",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T89",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T90",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T91",1500,1500,V,Immediate,1,1,'', '0.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T92",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T93",1500,1500,V,Immediate,1,1,'', '0.9',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T94",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T95",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T96",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T97",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T98",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T99",1500,1500,V,Immediate,1,1,'', '0.9',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T100",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T101",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T102",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T103",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T104",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T105",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T106",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T107",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T108",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T109",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T110",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T111",1500,1500,V,Immediate,1,1,'', '0.9',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T112",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T113",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T114",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T115",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T116",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T117",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T118",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T119",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T120",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T121",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T122",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T123",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T124",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T125",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T126",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T127",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T128",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T129",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T130",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T131",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T132",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T133",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T134",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T135",1500,1500,V,Immediate,1,1,'', '0.9',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T136",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T137",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T138",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T139",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T140",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T141",1500,1500,V,Immediate,1,1,'', '0.9',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T142",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T143",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T144",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T145",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T146",1500,1500,V,Immediate,1,1,'', '0.5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T147",1500,1500,V,Immediate,1,1,'', '0.9',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T148",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T149",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T150",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T151",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T152",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T153",1500,1500,V,Immediate,1,1,'', '0.9',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T154",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T155",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T156",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T157",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T158",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T159",1500,1500,V,Immediate,1,1,'', '0.9',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T160",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T161",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T162",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T163",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T164",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T165",1500,1500,V,Immediate,1,1,'', '0.9',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T166",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T167",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T168",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T169",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T170",1500,1500,V,Immediate,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T171",1500,1500,V,Timed,1,1,'', '1.0E-5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T172",1500,1500,V,Timed,1,1,'', '0.1',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T173",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T174",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T175",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T176",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T177",1500,1500,V,Timed,1,1,'', '1.0E-5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T178",1500,1500,V,Timed,1,1,'', '0.1',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T179",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T180",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T181",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T182",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T183",1500,1500,V,Timed,1,1,'', '1.0E-5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T184",1500,1500,V,Timed,1,1,'', '0.1',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T185",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T186",1500,1500,V,Timed,1,1,'', '0.02',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T187",1500,1500,V,Timed,1,1,'', '1.0E-4',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T188",1500,1500,V,Timed,1,1,'', '0.1',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T189",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T190",1500,1500,V,Timed,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T191",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T192",1500,1500,V,Timed,1,1,'', '1.0E-5',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T193",1500,1500,V,Timed,1,1,'', '0.1',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T194",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T195",1500,1500,V,Timed,1,1,'', '1.0',
+ (
+1.000000e+00
+  
+  );
+TRANS:"T196",1500,1500,V,Timed,1,1,'', '0.01',
+ (
+1.000000e+00
+  
+  );
+
+
+IARC:"internal_fault_occurred_c1_c1_ft17","T0",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"internal_fault_occurred_c1_c1_ft17","T1",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"numberOfTransientFaultyPlace_c1_c1_ft16","T172",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c1_c1_ft15","T172",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c1_c1_ft15","T2",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_c10","T2",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"numberOfTransientFaultyPlace_c1_c1_ft16","T3",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_c10","T3",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"internal_fault_occurred_c2_c2_ft110","T4",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"internal_fault_occurred_c2_c2_ft110","T5",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"numberOfTransientFaultyPlace_c2_c2_ft19","T178",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c2_c2_ft18","T178",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c2_c2_ft18","T6",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_c21","T6",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"numberOfTransientFaultyPlace_c2_c2_ft19","T7",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_c21","T7",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"internal_fault_occurred_nodeA_nodeA_ft113","T8",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"internal_fault_occurred_nodeA_nodeA_ft113","T9",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"numberOfTransientFaultyPlace_nodeA_nodeA_ft112","T184",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_nodeA_nodeA_ft111","T184",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_nodeA_nodeA_ft111","T10",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_nodeA2","T10",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"numberOfTransientFaultyPlace_nodeA_nodeA_ft112","T11",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_nodeA2","T11",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"internal_fault_occurred_bus_bus_ft116","T12",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"internal_fault_occurred_bus_bus_ft116","T13",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"numberOfTransientFaultyPlace_bus_bus_ft115","T188",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_bus_bus_ft114","T188",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_bus_bus_ft114","T14",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_bus3","T14",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"numberOfTransientFaultyPlace_bus_bus_ft115","T15",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_bus3","T15",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"internal_fault_occurred_nodeB_nodeB_ft119","T16",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"internal_fault_occurred_nodeB_nodeB_ft119","T17",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"numberOfTransientFaultyPlace_nodeB_nodeB_ft118","T193",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_nodeB_nodeB_ft117","T193",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_nodeB_nodeB_ft117","T18",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_nodeB4","T18",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"numberOfTransientFaultyPlace_nodeB_nodeB_ft118","T19",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_nodeB4","T19",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failureModePlace_nodeA_nodeA_fm139","T20",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T21",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_c10","T21",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failureModePlace_c1_c1_fm136","T22",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c2_c2_xft_c1_fm121","T23",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_c21","T23",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failureModePlace_c1_c1_fm237","T24",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c2_c2_xft_c1_fm222","T25",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_c21","T25",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failureModePlace_nodeB_nodeB_fm141","T26",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T27",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_c21","T27",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failureModePlace_nodeA_nodeA_fm139","T28",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T29",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_bus3","T29",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failureModePlace_bus_bus_fm140","T30",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T31",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_nodeB4","T31",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"erroneusPlace_c1_c1_e126","T32",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_c10","T32",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"erroneusPlace_c2_c2_e128","T33",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_c21","T33",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"erroneusPlace_nodeA_nodeA_e130","T34",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_nodeA2","T34",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"erroneusPlace_bus_bus_e132","T35",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_bus3","T35",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"erroneusPlace_nodeB_nodeB_e134","T36",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"failed_nodeB4","T36",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge246","T37",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge246","T38",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge247","T38",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge247","T39",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge242","T40",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c1_c1_ft15","T41",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_fge143","T42",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T43",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_fge244","T44",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c2_c2_ft18","T45",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge145","T46",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c2_c2_xft_c1_fm121","T47",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge246","T48",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c2_c2_xft_c1_fm222","T49",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge247","T50",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T51",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge348","T52",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_nodeA_nodeA_ft111","T53",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeA_logic_nodeA_fge149","T54",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_bus_bus_ft114","T55",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_bus_logic_bus_fge150","T56",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T57",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_bus_logic_bus_fge251","T58",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_nodeB_nodeB_ft117","T59",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeB_logic_nodeB_fge152","T60",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T61",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeB_logic_nodeB_fge253","T62",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_fge143","T64",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_c1_faultsGeneratesError_c1_fge155","T65",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c1_faultsGeneratesError_c1_fge154","T66",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c1_faultsGeneratesError_c1_fge154","T68",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge156","T63",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge156","T67",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_fge143","T68",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_c1_faultsGeneratesError_c1_fge157","T173",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_fge244","T70",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_c1_faultsGeneratesError_c1_fge259","T71",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c1_faultsGeneratesError_c1_fge258","T72",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c1_faultsGeneratesError_c1_fge258","T74",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge260","T69",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge260","T73",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_fge244","T74",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_c1_faultsGeneratesError_c1_fge261","T174",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge145","T76",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_c2_faultsGeneratesError_c2_fge163","T77",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c2_faultsGeneratesError_c2_fge162","T78",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c2_faultsGeneratesError_c2_fge162","T80",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge164","T75",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge164","T79",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge145","T80",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_c2_faultsGeneratesError_c2_fge165","T179",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge242","T82",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_c2_faultsGeneratesError_c2_fge267","T83",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c2_faultsGeneratesError_c2_fge266","T84",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c2_faultsGeneratesError_c2_fge266","T86",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge268","T81",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge268","T85",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge242","T86",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_c2_faultsGeneratesError_c2_fge269","T180",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge348","T88",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_c2_faultsGeneratesError_c2_fge371","T89",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c2_faultsGeneratesError_c2_fge370","T90",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c2_faultsGeneratesError_c2_fge370","T92",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge372","T87",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge372","T91",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_fge348","T92",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_c2_faultsGeneratesError_c2_fge373","T181",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeA_logic_nodeA_fge149","T94",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_nodeA_faultsGeneratesError_nodeA_fge175","T95",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_nodeA_faultsGeneratesError_nodeA_fge174","T96",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_nodeA_faultsGeneratesError_nodeA_fge174","T98",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176","T93",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176","T97",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeA_logic_nodeA_fge149","T98",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_nodeA_faultsGeneratesError_nodeA_fge177","T185",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_bus_logic_bus_fge150","T100",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_bus_faultsGeneratesError_bus_fge179","T101",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_bus_faultsGeneratesError_bus_fge178","T102",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_bus_faultsGeneratesError_bus_fge178","T104",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_bus_faultsGeneratesError_bus_fge180","T99",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_bus_faultsGeneratesError_bus_fge180","T103",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_bus_logic_bus_fge150","T104",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_bus_faultsGeneratesError_bus_fge181","T189",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_bus_logic_bus_fge251","T106",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_bus_faultsGeneratesError_bus_fge283","T107",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_bus_faultsGeneratesError_bus_fge282","T108",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_bus_faultsGeneratesError_bus_fge282","T110",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_bus_faultsGeneratesError_bus_fge284","T105",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_bus_faultsGeneratesError_bus_fge284","T109",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_bus_logic_bus_fge251","T110",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_bus_faultsGeneratesError_bus_fge285","T190",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeB_logic_nodeB_fge152","T112",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_nodeB_faultsGeneratesError_nodeB_fge187","T113",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_nodeB_faultsGeneratesError_nodeB_fge186","T114",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_nodeB_faultsGeneratesError_nodeB_fge186","T116",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188","T111",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188","T115",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeB_logic_nodeB_fge152","T116",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge189","T194",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeB_logic_nodeB_fge253","T118",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_nodeB_faultsGeneratesError_nodeB_fge291","T119",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_nodeB_faultsGeneratesError_nodeB_fge290","T120",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_nodeB_faultsGeneratesError_nodeB_fge290","T122",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292","T117",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292","T121",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeB_logic_nodeB_fge253","T122",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge293","T195",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"erroneusPlace_c1_c1_e126","T123",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_epf194","T124",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"erroneusPlace_c1_c1_e126","T125",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_epf295","T126",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"erroneusPlace_c2_c2_e128","T127",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_epf296","T128",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"erroneusPlace_nodeA_nodeA_e130","T129",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeA_logic_nodeA_epf197","T130",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"erroneusPlace_bus_bus_e132","T131",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_bus_logic_bus_epf198","T132",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"erroneusPlace_nodeB_nodeB_e134","T133",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeB_logic_nodeB_epf199","T134",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_epf194","T136",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_c1_errorsProducesFailures_c1_epf1101","T137",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c1_errorsProducesFailures_c1_epf1100","T138",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c1_errorsProducesFailures_c1_epf1100","T140",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf1102","T135",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf1102","T139",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_epf194","T140",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_c1_errorsProducesFailures_c1_epf1103","T175",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_epf295","T142",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_c1_errorsProducesFailures_c1_epf2105","T143",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c1_errorsProducesFailures_c1_epf2104","T144",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c1_errorsProducesFailures_c1_epf2104","T146",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf2106","T141",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf2106","T145",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c1_logic_c1_epf295","T146",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_c1_errorsProducesFailures_c1_epf2107","T176",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_epf296","T148",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_c2_errorsProducesFailures_c2_epf2109","T149",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c2_errorsProducesFailures_c2_epf2108","T150",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_c2_errorsProducesFailures_c2_epf2108","T152",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_c2_errors_produces_failures_c2_epf2110","T147",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_c2_errors_produces_failures_c2_epf2110","T151",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_c2_logic_c2_epf296","T152",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_c2_errorsProducesFailures_c2_epf2111","T182",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeA_logic_nodeA_epf197","T154",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_nodeA_errorsProducesFailures_nodeA_epf1113","T155",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_nodeA_errorsProducesFailures_nodeA_epf1112","T156",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_nodeA_errorsProducesFailures_nodeA_epf1112","T158",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114","T153",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114","T157",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeA_logic_nodeA_epf197","T158",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_nodeA_errorsProducesFailures_nodeA_epf1115","T186",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_bus_logic_bus_epf198","T160",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_bus_errorsProducesFailures_bus_epf1117","T161",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_bus_errorsProducesFailures_bus_epf1116","T162",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_bus_errorsProducesFailures_bus_epf1116","T164",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_bus_errors_produces_failures_bus_epf1118","T159",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_bus_errors_produces_failures_bus_epf1118","T163",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_bus_logic_bus_epf198","T164",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_bus_errorsProducesFailures_bus_epf1119","T191",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeB_logic_nodeB_epf199","T166",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"activated_nodeB_errorsProducesFailures_nodeB_epf1121","T167",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_nodeB_errorsProducesFailures_nodeB_epf1120","T168",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"active_nodeB_errorsProducesFailures_nodeB_epf1120","T170",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122","T165",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122","T169",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"logicResult_nodeB_logic_nodeB_epf199","T170",1,0,'',
+ (1500,1500,1500,1500),1;
+IARC:"errorsActivation_nodeB_errorsProducesFailures_nodeB_epf1123","T196",1,0,'',
+ (1500,1500,1500,1500),1;
+
+
+OARC:"failed_c10","T171",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c21","T177",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeA2","T183",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus3","T187",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB4","T192",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c10","T20",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T20",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c21","T22",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_c1_fm121","T22",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c21","T24",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_c1_fm222","T24",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c21","T26",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T26",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus3","T28",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T28",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB4","T30",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T30",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge242","T37",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge247","T37",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge242","T38",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge242","T39",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge246","T39",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge247","T40",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge246","T40",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge143","T41",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_ft15","T42",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge244","T43",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T44",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge145","T45",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_ft18","T46",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge246","T47",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_c1_fm121","T48",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge247","T49",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_c1_fm222","T50",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge348","T51",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T52",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_fge149","T53",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeA_nodeA_ft111","T54",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge150","T55",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_ft114","T56",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge251","T57",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T58",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge152","T59",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_ft117","T60",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge253","T61",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T62",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c1_faultsGeneratesError_c1_fge155","T64",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge143","T65",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge143","T66",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c1_faultsGeneratesError_c1_fge259","T70",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge244","T71",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge244","T72",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c2_faultsGeneratesError_c2_fge163","T76",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge145","T77",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge145","T78",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c2_faultsGeneratesError_c2_fge267","T82",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge242","T83",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge242","T84",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c2_faultsGeneratesError_c2_fge371","T88",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge348","T89",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge348","T90",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_nodeA_faultsGeneratesError_nodeA_fge175","T94",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_fge149","T95",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_fge149","T96",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_bus_faultsGeneratesError_bus_fge179","T100",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge150","T101",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge150","T102",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_bus_faultsGeneratesError_bus_fge283","T106",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge251","T107",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge251","T108",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_nodeB_faultsGeneratesError_nodeB_fge187","T112",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge152","T113",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge152","T114",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_nodeB_faultsGeneratesError_nodeB_fge291","T118",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge253","T119",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge253","T120",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf194","T123",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e126","T124",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf295","T125",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e126","T126",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_epf296","T127",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c2_c2_e128","T128",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_epf197","T129",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeA_nodeA_e130","T130",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_epf198","T131",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_bus_bus_e132","T132",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_epf199","T133",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeB_nodeB_e134","T134",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c1_errorsProducesFailures_c1_epf1101","T136",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf194","T137",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf194","T138",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c1_errorsProducesFailures_c1_epf2105","T142",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf295","T143",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf295","T144",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c2_errorsProducesFailures_c2_epf2109","T148",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_epf296","T149",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_epf296","T150",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_nodeA_errorsProducesFailures_nodeA_epf1113","T154",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_epf197","T155",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_epf197","T156",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_bus_errorsProducesFailures_bus_epf1117","T160",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_epf198","T161",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_epf198","T162",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_nodeB_errorsProducesFailures_nodeB_epf1121","T166",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_epf199","T167",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_epf199","T168",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"internal_fault_occurred_c1_c1_ft17","T171",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_ft15","T0",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_ft15","T1",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"numberOfTransientFaultyPlace_c1_c1_ft16","T1",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c10","T2",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c10","T3",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"internal_fault_occurred_c2_c2_ft110","T177",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_ft18","T4",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_ft18","T5",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"numberOfTransientFaultyPlace_c2_c2_ft19","T5",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c21","T6",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c21","T7",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"internal_fault_occurred_nodeA_nodeA_ft113","T183",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeA_nodeA_ft111","T8",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeA_nodeA_ft111","T9",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"numberOfTransientFaultyPlace_nodeA_nodeA_ft112","T9",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeA2","T10",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeA2","T11",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"internal_fault_occurred_bus_bus_ft116","T187",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_ft114","T12",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_ft114","T13",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"numberOfTransientFaultyPlace_bus_bus_ft115","T13",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus3","T14",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus3","T15",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"internal_fault_occurred_nodeB_nodeB_ft119","T192",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_ft117","T16",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_ft117","T17",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"numberOfTransientFaultyPlace_nodeB_nodeB_ft118","T17",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB4","T18",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB4","T19",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_nodeA_nodeA_fm139","T20",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T20",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c10","T21",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_c1_c1_fm136","T22",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_c1_fm121","T22",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c21","T23",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_c1_c1_fm237","T24",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_c1_fm222","T24",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c21","T25",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_nodeB_nodeB_fm141","T26",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T26",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c21","T27",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_nodeA_nodeA_fm139","T28",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T28",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus3","T29",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_bus_bus_fm140","T30",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T30",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB4","T31",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c10","T32",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c21","T33",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeA2","T34",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus3","T35",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB4","T36",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge242","T37",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge246","T37",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge242","T38",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge246","T38",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge247","T38",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge242","T39",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge247","T39",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge143","T41",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_ft15","T41",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge244","T43",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T43",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge145","T45",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_ft18","T45",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge246","T47",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_c1_fm121","T47",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge247","T49",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_c1_fm222","T49",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge348","T51",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T51",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_fge149","T53",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeA_nodeA_ft111","T53",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge150","T55",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_ft114","T55",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge251","T57",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T57",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge152","T59",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_ft117","T59",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge253","T61",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T61",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge143","T64",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c1_faultsGeneratesError_c1_fge155","T64",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_c1_faultsGeneratesError_c1_fge154","T64",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_activated_c1_faultsGeneratesError_c1_fge156","T173",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge143","T68",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_c1_faultsGeneratesError_c1_fge157","T68",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge244","T70",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c1_faultsGeneratesError_c1_fge259","T70",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_c1_faultsGeneratesError_c1_fge258","T70",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_activated_c1_faultsGeneratesError_c1_fge260","T174",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_fge244","T74",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_c1_faultsGeneratesError_c1_fge261","T74",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge145","T76",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c2_faultsGeneratesError_c2_fge163","T76",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_c2_faultsGeneratesError_c2_fge162","T76",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_activated_c2_faultsGeneratesError_c2_fge164","T179",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge145","T80",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_c2_faultsGeneratesError_c2_fge165","T80",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge242","T82",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c2_faultsGeneratesError_c2_fge267","T82",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_c2_faultsGeneratesError_c2_fge266","T82",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_activated_c2_faultsGeneratesError_c2_fge268","T180",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge242","T86",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_c2_faultsGeneratesError_c2_fge269","T86",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge348","T88",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c2_faultsGeneratesError_c2_fge371","T88",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_c2_faultsGeneratesError_c2_fge370","T88",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_activated_c2_faultsGeneratesError_c2_fge372","T181",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_fge348","T92",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_c2_faultsGeneratesError_c2_fge373","T92",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_fge149","T94",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_nodeA_faultsGeneratesError_nodeA_fge175","T94",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_nodeA_faultsGeneratesError_nodeA_fge174","T94",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176","T185",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_fge149","T98",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_nodeA_faultsGeneratesError_nodeA_fge177","T98",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge150","T100",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_bus_faultsGeneratesError_bus_fge179","T100",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_bus_faultsGeneratesError_bus_fge178","T100",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_activated_bus_faultsGeneratesError_bus_fge180","T189",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge150","T104",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_bus_faultsGeneratesError_bus_fge181","T104",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge251","T106",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_bus_faultsGeneratesError_bus_fge283","T106",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_bus_faultsGeneratesError_bus_fge282","T106",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_activated_bus_faultsGeneratesError_bus_fge284","T190",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_fge251","T110",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_bus_faultsGeneratesError_bus_fge285","T110",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge152","T112",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_nodeB_faultsGeneratesError_nodeB_fge187","T112",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_nodeB_faultsGeneratesError_nodeB_fge186","T112",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188","T194",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge152","T116",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge189","T116",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge253","T118",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_nodeB_faultsGeneratesError_nodeB_fge291","T118",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_nodeB_faultsGeneratesError_nodeB_fge290","T118",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292","T195",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_fge253","T122",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge293","T122",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e126","T63",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e126","T69",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c2_c2_e128","T75",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c2_c2_e128","T81",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c2_c2_e128","T87",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeA_nodeA_e130","T93",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_bus_bus_e132","T99",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_bus_bus_e132","T105",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeB_nodeB_e134","T111",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeB_nodeB_e134","T117",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf194","T123",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e126","T123",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf295","T125",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e126","T125",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_epf296","T127",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c2_c2_e128","T127",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_epf197","T129",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeA_nodeA_e130","T129",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_epf198","T131",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_bus_bus_e132","T131",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_epf199","T133",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeB_nodeB_e134","T133",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf194","T136",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c1_errorsProducesFailures_c1_epf1101","T136",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_c1_errorsProducesFailures_c1_epf1100","T136",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_propagation_c1_errors_produces_failures_c1_epf1102","T175",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf194","T140",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_c1_errorsProducesFailures_c1_epf1103","T140",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf295","T142",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c1_errorsProducesFailures_c1_epf2105","T142",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_c1_errorsProducesFailures_c1_epf2104","T142",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_propagation_c1_errors_produces_failures_c1_epf2106","T176",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c1_logic_c1_epf295","T146",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_c1_errorsProducesFailures_c1_epf2107","T146",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_epf296","T148",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_c2_errorsProducesFailures_c2_epf2109","T148",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_c2_errorsProducesFailures_c2_epf2108","T148",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_propagation_c2_errors_produces_failures_c2_epf2110","T182",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_c2_logic_c2_epf296","T152",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_c2_errorsProducesFailures_c2_epf2111","T152",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_epf197","T154",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_nodeA_errorsProducesFailures_nodeA_epf1113","T154",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_nodeA_errorsProducesFailures_nodeA_epf1112","T154",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114","T186",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeA_logic_nodeA_epf197","T158",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_nodeA_errorsProducesFailures_nodeA_epf1115","T158",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_epf198","T160",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_bus_errorsProducesFailures_bus_epf1117","T160",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_bus_errorsProducesFailures_bus_epf1116","T160",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_propagation_bus_errors_produces_failures_bus_epf1118","T191",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_bus_logic_bus_epf198","T164",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_bus_errorsProducesFailures_bus_epf1119","T164",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_epf199","T166",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"activated_nodeB_errorsProducesFailures_nodeB_epf1121","T166",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"active_nodeB_errorsProducesFailures_nodeB_epf1120","T166",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122","T196",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"logicResult_nodeB_logic_nodeB_epf199","T170",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"errorsActivation_nodeB_errorsProducesFailures_nodeB_epf1123","T170",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_c1_c1_fm136","T135",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c10","T135",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_c1_c1_fm237","T141",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c10","T141",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_c2_c2_fm138","T147",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c21","T147",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_nodeA_nodeA_fm139","T153",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeA2","T153",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_bus_bus_fm140","T159",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus3","T159",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureModePlace_nodeB_nodeB_fm141","T165",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB4","T165",1,1,'',
+ (1500,1500,1500,1500),1;
+
+
+RES_FUNC:"Reliability_c1",'IF(MARK(failed_c10)=0)THEN(1)ELSE(0)',0;

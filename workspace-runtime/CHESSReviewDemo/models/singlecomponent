@@ -1,298 +1,290 @@
 <NDFile-'1.2'>
 
-NET:"org.eclipse.m2m.atl.engine.emfvm.lib.OclUndefined@d8ea8a",2000,2000;
+
+NET:"unnamed",2000,2000;
 COLORS:White,Black,Black,Black,Black,Black;
 
 VARIABLE:"Time","Real";
 
 STUDY:"DefaultStudy",0,"not_def",100000;
 
-PLACE:"failed_c10",1500,1500,0,0;
-PLACE:"faultyPlace_c1_c1_f11",1500,1500,0,0;
-PLACE:"numberOfTransientFaultyPlace_c1_c1_f12",1500,1500,0,0;
-PLACE:"internal_fault_occurred_c1_c1_f13",1500,1500,0,0;
-PLACE:"erroneusPlace_c1_c1_e14",1500,1500,0,0;
-PLACE:"detect_error_Place_c1_c1_e15",1500,1500,0,0;
-PLACE:"failureModePlace_c1_c1_fm16",1500,1500,0,0;
-PLACE:"logicResult_c1_logic_c1_fge17",1500,1500,0,0;
-PLACE:"active_c1_faultsGeneratesError_c1_fge18",1500,1500,0,0;
-PLACE:"activated_c1_faultsGeneratesError_c1_fge19",1500,1500,0,0;
-PLACE:"tmp_activated_c1_faultsGeneratesError_c1_fge110",1500,1500,0,0;
-PLACE:"errorsActivation_c1_faultsGeneratesError_c1_fge111",1500,1500,0,0;
-PLACE:"logicResult_c1_logic_c1_epf112",1500,1500,0,0;
-PLACE:"active_c1_errorsProducesFailures_c1_epf113",1500,1500,0,0;
-PLACE:"activated_c1_errorsProducesFailures_c1_epf114",1500,1500,0,0;
-PLACE:"tmp_propagation_c1_errors_produces_failures_c1_epf115",1500,1500,0,0;
-PLACE:"errorsActivation_c1_errorsProducesFailures_c1_epf116",1500,1500,0,0;
+PLACE:"failed_c10",210,1203,0,0;
+PLACE:"faultyPlace_c1_c1_f11",187,1506,0,0;
+PLACE:"numberOfTransientFaultyPlace_c1_c1_f12",373,1534,0,0;
+PLACE:"internal_fault_occurred_c1_c1_f13",165,1673,0,0;
+PLACE:"erroneusPlace_c1_c1_e14",911,1281,0,0;
+PLACE:"detect_error_Place_c1_c1_e15",836,1123,0,0;
+PLACE:"failureModePlace_c1_c1_fm16",1511,1284,0,0;
+PLACE:"logicResult_c1_logic_c1_fge17",441,1810,0,0;
+PLACE:"active_c1_faultsGeneratesError_c1_fge18",755,1749,0,0;
+PLACE:"activated_c1_faultsGeneratesError_c1_fge19",753,1800,0,0;
+PLACE:"tmp_activated_c1_faultsGeneratesError_c1_fge110",842,1884,0,0;
+PLACE:"errorsActivation_c1_faultsGeneratesError_c1_fge111",867,1436,0,0;
+PLACE:"logicResult_c1_logic_c1_epf112",1176,1774,0,0;
+PLACE:"active_c1_errorsProducesFailures_c1_epf113",1404,1882,0,0;
+PLACE:"activated_c1_errorsProducesFailures_c1_epf114",1389,1793,0,0;
+PLACE:"tmp_propagation_c1_errors_produces_failures_c1_epf115",1677,1549,0,0;
+PLACE:"errorsActivation_c1_errorsProducesFailures_c1_epf116",1555,1851,0,0;
 
+TRANS:"T0",191,1576,V,Immediate,1,1,'', '0.9',
+      (
+       1.000000e+00
+      );
 
-TRANS:"T0",1500,1500,V,Immediate,1,1,'', '0.9',
- (
-1.000000e+00
-  
-  );
-TRANS:"T1",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
- (
-1.000000e+00
-  
-  );
-TRANS:"T2",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T3",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T4",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T5",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T6",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T7",1500,1500,V,Immediate,1,1,'', '0.9',
- (
-1.000000e+00
-  
-  );
-TRANS:"T8",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T9",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T10",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T11",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
- (
-1.000000e+00
-  
-  );
-TRANS:"T12",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T13",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T14",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T15",1500,1500,V,Immediate,1,1,'', '0.9',
- (
-1.000000e+00
-  
-  );
-TRANS:"T16",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T17",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T18",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T19",1500,1500,V,Immediate,1,1,'', '0.09999999999999998',
- (
-1.000000e+00
-  
-  );
-TRANS:"T20",1500,1500,V,Immediate,1,1,'', '1.0',
- (
-1.000000e+00
-  
-  );
-TRANS:"T21",1500,1500,V,Timed,1,1,'', '1.0E-5',
- (
-1.000000e+00
-  
-  );
-TRANS:"T22",1500,1500,V,Timed,1,1,'', '0.1',
- (
-1.000000e+00
-  
-  );
-TRANS:"T23",1500,1500,V,Timed,1,1,'', '0.1',
- (
-1.000000e+00
-  
-  );
-TRANS:"T24",1500,1500,V,Timed,1,1,'', '0.1',
- (
-1.000000e+00
-  
-  );
+TRANS:"T1",273,1603,V,Immediate,1,1,'', '0.09999999999999998',
+      (
+       1.000000e+00
+      );
 
+TRANS:"T2",94,1280,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T3",242,1256,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T4",378,1178,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T5",511,1379,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T6",611,1415,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T7",1154,1889,V,Immediate,1,1,'', '0.9',
+      (
+       1.000000e+00      );
+
+TRANS:"T8",549,1855,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T9",542,1922,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T10",585,1740,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T11",735,1927,V,Immediate,1,1,'', '0.09999999999999998',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T12",751,1462,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T13",1119,1466,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T14",1171,1461,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T15",1626,1391,V,Immediate,1,1,'', '0.9',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T16",1291,1782,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T17",1280,1850,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T18",1278,1925,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T19",1484,1515,V,Immediate,1,1,'', '0.09999999999999998',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T20",1332,1684,V,Immediate,1,1,'', '1.0',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T21",43,1566,V,Timed,1,1,'', '1.0E-5',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T22",399,1676,V,Timed,1,1,'', '0.1',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T23",905,1539,V,Timed,1,1,'', '0.1',
+      (
+       1.000000e+00
+      );
+
+TRANS:"T24",1678,1643,V,Timed,1,1,'', '0.1',
+      (
+       1.000000e+00
+      );
 
 IARC:"internal_fault_occurred_c1_c1_f13","T0",1,0,'',
- (1500,1500,1500,1500),1;
+     (182,1665,191,1613),1;
 IARC:"internal_fault_occurred_c1_c1_f13","T1",1,0,'',
- (1500,1500,1500,1500),1;
+     (197,1674,259,1630),1;
 IARC:"numberOfTransientFaultyPlace_c1_c1_f12","T22",1,0,'',
- (1500,1500,1500,1500),1;
+     (366,1556,397,1669),1;
 IARC:"faultyPlace_c1_c1_f11","T22",1,0,'',
- (1500,1500,1500,1500),1;
+     (218,1535,386,1676),1;
 IARC:"faultyPlace_c1_c1_f11","T2",1,0,'',
- (1500,1500,1500,1500),1;
+     (190,1501,108,1315),1;
 IARC:"failed_c10","T2",1,0,'',
- (1500,1500,1500,1500),1;
+     (204,1226,117,1282),1;
 IARC:"numberOfTransientFaultyPlace_c1_c1_f12","T3",1,0,'',
- (1500,1500,1500,1500),1;
+     (378,1528,257,1291),1;
 IARC:"failed_c10","T3",1,0,'',
- (1500,1500,1500,1500),1;
+     (237,1236,240,1249),1;
 IARC:"erroneusPlace_c1_c1_e14","T4",1,0,'',
- (1500,1500,1500,1500),1;
+     (903,1291,392,1194),1;
 IARC:"failed_c10","T4",1,0,'',
- (1500,1500,1500,1500),1;
+     (246,1211,373,1194),1;
 IARC:"faultyPlace_c1_c1_f11","T5",1,0,'',
- (1500,1500,1500,1500),1;
+     (222,1512,495,1402),1;
 IARC:"logicResult_c1_logic_c1_fge17","T6",1,0,'',
- (1500,1500,1500,1500),1;
+     (464,1804,607,1450),1;
 IARC:"logicResult_c1_logic_c1_fge17","T8",1,0,'',
- (1500,1500,1500,1500),1;
+     (474,1838,533,1861),1;
 IARC:"activated_c1_faultsGeneratesError_c1_fge19","T9",1,0,'',
- (1500,1500,1500,1500),1;
+     (749,1827,566,1926),1;
 IARC:"active_c1_faultsGeneratesError_c1_fge18","T10",1,0,'',
- (1500,1500,1500,1500),1;
+     (747,1765,599,1755),1;
 IARC:"active_c1_faultsGeneratesError_c1_fge18","T12",1,0,'',
- (1500,1500,1500,1500),1;
+     (768,1741,757,1499),1;
 IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge110","T7",1,0,'',
- (1500,1500,1500,1500),1;
+     (879,1899,1149,1903),1;
 IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge110","T11",1,0,'',
- (1500,1500,1500,1500),1;
+     (834,1903,760,1933),1;
 IARC:"logicResult_c1_logic_c1_fge17","T12",1,0,'',
- (1500,1500,1500,1500),1;
+     (470,1807,741,1494),1;
 IARC:"errorsActivation_c1_faultsGeneratesError_c1_fge111","T23",1,0,'',
- (1500,1500,1500,1500),1;
+     (889,1472,904,1532),1;
 IARC:"erroneusPlace_c1_c1_e14","T13",1,0,'',
- (1500,1500,1500,1500),1;
+     (942,1311,1107,1465),1;
 IARC:"logicResult_c1_logic_c1_epf112","T14",1,0,'',
- (1500,1500,1500,1500),1;
+     (1190,1766,1177,1498),1;
 IARC:"logicResult_c1_logic_c1_epf112","T16",1,0,'',
- (1500,1500,1500,1500),1;
+     (1213,1791,1286,1796),1;
 IARC:"activated_c1_errorsProducesFailures_c1_epf114","T17",1,0,'',
- (1500,1500,1500,1500),1;
+     (1385,1820,1305,1855),1;
 IARC:"active_c1_errorsProducesFailures_c1_epf113","T18",1,0,'',
- (1500,1500,1500,1500),1;
+     (1396,1901,1304,1932),1;
 IARC:"active_c1_errorsProducesFailures_c1_epf113","T20",1,0,'',
- (1500,1500,1500,1500),1;
+     (1412,1875,1345,1719),1;
 IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf115","T15",1,0,'',
- (1500,1500,1500,1500),1;
+     (1681,1544,1638,1427),1;
 IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf115","T19",1,0,'',
- (1500,1500,1500,1500),1;
+     (1670,1557,1498,1531),1;
 IARC:"logicResult_c1_logic_c1_epf112","T20",1,0,'',
- (1500,1500,1500,1500),1;
+     (1210,1777,1317,1710),1;
 IARC:"errorsActivation_c1_errorsProducesFailures_c1_epf116","T24",1,0,'',
- (1500,1500,1500,1500),1;
-
-
+     (1579,1845,1672,1677),1;
 OARC:"failed_c10","T21",1,2,'',
- (1500,1500,1500,1500),1;
+     (214,1237,57,1560),1;
 OARC:"logicResult_c1_logic_c1_fge17","T5",1,2,'',
- (1500,1500,1500,1500),1;
+     (459,1802,512,1416),1;
 OARC:"faultyPlace_c1_c1_f11","T6",1,2,'',
- (1500,1500,1500,1500),1;
+     (223,1516,606,1432),1;
 OARC:"activated_c1_faultsGeneratesError_c1_fge19","T8",1,2,'',
- (1500,1500,1500,1500),1;
+     (746,1822,563,1867),1;
 OARC:"logicResult_c1_logic_c1_fge17","T9",1,2,'',
- (1500,1500,1500,1500),1;
+     (467,1844,532,1919),1;
 OARC:"logicResult_c1_logic_c1_fge17","T10",1,2,'',
- (1500,1500,1500,1500),1;
+     (475,1814,569,1765),1;
 OARC:"logicResult_c1_logic_c1_epf112","T13",1,2,'',
- (1500,1500,1500,1500),1;
+     (1186,1766,1128,1502),1;
 OARC:"erroneusPlace_c1_c1_e14","T14",1,2,'',
- (1500,1500,1500,1500),1;
+     (944,1309,1157,1462),1;
 OARC:"activated_c1_errorsProducesFailures_c1_epf114","T16",1,2,'',
- (1500,1500,1500,1500),1;
+     (1381,1805,1305,1797),1;
 OARC:"logicResult_c1_logic_c1_epf112","T17",1,2,'',
- (1500,1500,1500,1500),1;
+     (1205,1806,1266,1851),1;
 OARC:"logicResult_c1_logic_c1_epf112","T18",1,2,'',
- (1500,1500,1500,1500),1;
+     (1200,1809,1270,1920),1;
 OARC:"internal_fault_occurred_c1_c1_f13","T21",1,1,'',
- (1500,1500,1500,1500),1;
+     (163,1672,65,1594),1;
 OARC:"faultyPlace_c1_c1_f11","T0",1,1,'',
- (1500,1500,1500,1500),1;
+     (198,1543,196,1568),1;
 OARC:"faultyPlace_c1_c1_f11","T1",1,1,'',
- (1500,1500,1500,1500),1;
+     (214,1539,263,1600),1;
 OARC:"numberOfTransientFaultyPlace_c1_c1_f12","T1",1,1,'',
- (1500,1500,1500,1500),1;
+     (368,1560,296,1605),1;
 OARC:"failed_c10","T2",1,1,'',
- (1500,1500,1500,1500),1;
+     (204,1226,117,1282),1;
 OARC:"failed_c10","T3",1,1,'',
- (1500,1500,1500,1500),1;
+     (237,1236,240,1249),1;
 OARC:"failed_c10","T4",1,1,'',
- (1500,1500,1500,1500),1;
+     (246,1211,373,1194),1;
 OARC:"logicResult_c1_logic_c1_fge17","T5",1,1,'',
- (1500,1500,1500,1500),1;
+     (459,1802,512,1416),1;
 OARC:"faultyPlace_c1_c1_f11","T5",1,1,'',
- (1500,1500,1500,1500),1;
+     (222,1512,495,1402),1;
 OARC:"logicResult_c1_logic_c1_fge17","T8",1,1,'',
- (1500,1500,1500,1500),1;
+     (474,1838,533,1861),1;
 OARC:"activated_c1_faultsGeneratesError_c1_fge19","T8",1,1,'',
- (1500,1500,1500,1500),1;
+     (746,1822,563,1867),1;
 OARC:"active_c1_faultsGeneratesError_c1_fge18","T8",1,1,'',
- (1500,1500,1500,1500),1;
+     (750,1775,574,1860),1;
 OARC:"tmp_activated_c1_faultsGeneratesError_c1_fge110","T23",1,1,'',
- (1500,1500,1500,1500),1;
+     (859,1876,906,1576),1;
 OARC:"logicResult_c1_logic_c1_fge17","T12",1,1,'',
- (1500,1500,1500,1500),1;
+     (470,1807,741,1494),1;
 OARC:"errorsActivation_c1_faultsGeneratesError_c1_fge111","T12",1,1,'',
- (1500,1500,1500,1500),1;
+     (859,1454,765,1474),1;
 OARC:"erroneusPlace_c1_c1_e14","T7",1,1,'',
- (1500,1500,1500,1500),1;
+     (934,1316,1150,1882),1;
 OARC:"logicResult_c1_logic_c1_epf112","T13",1,1,'',
- (1500,1500,1500,1500),1;
+     (1186,1766,1128,1502),1;
 OARC:"erroneusPlace_c1_c1_e14","T13",1,1,'',
- (1500,1500,1500,1500),1;
+     (942,1311,1107,1465),1;
 OARC:"logicResult_c1_logic_c1_epf112","T16",1,1,'',
- (1500,1500,1500,1500),1;
+     (1213,1790,1286,1796),1;
 OARC:"activated_c1_errorsProducesFailures_c1_epf114","T16",1,1,'',
- (1500,1500,1500,1500),1;
+     (1381,1805,1305,1797),1;
 OARC:"active_c1_errorsProducesFailures_c1_epf113","T16",1,1,'',
- (1500,1500,1500,1500),1;
+     (1403,1880,1313,1810),1;
 OARC:"tmp_propagation_c1_errors_produces_failures_c1_epf115","T24",1,1,'',
- (1500,1500,1500,1500),1;
+     (1686,1585,1683,1635),1;
 OARC:"logicResult_c1_logic_c1_epf112","T20",1,1,'',
- (1500,1500,1500,1500),1;
+     (1210,1777,1317,1710),1;
 OARC:"errorsActivation_c1_errorsProducesFailures_c1_epf116","T20",1,1,'',
- (1500,1500,1500,1500),1;
+     (1552,1851,1355,1711),1;
 OARC:"failureModePlace_c1_c1_fm16","T15",1,1,'',
- (1500,1500,1500,1500),1;
+     (1543,1312,1615,1389),1;
 OARC:"failed_c10","T15",1,1,'',
- (1500,1500,1500,1500),1;
+     (247,1220,1621,1404),1;
 
+RES_FUNC:"Reliability",'IF(MARK(failureModePlace_c1_c1_fm16)=0)THEN(1)ELSE(0)',0;
+RES_FUNC:"Reliability_2",'IF(MARK(failed_c10)=0)THEN(1)ELSE(0)',0;
 
-RES_FUNC:"pFail",'IF(MARK(faultyPlace_c1_c1_f11)>0)THEN(1)ELSE(0)',0;
-RES_FUNC:"pFail",'MARK(faultyPlace_c1_c1_f11)',0;
-
-RES_FUNC:"pFail",'IF(MARK(erroneusPlace_c1_c1_e14)>0)THEN(1)ELSE(0)',0;
-RES_FUNC:"pFail",'MARK(erroneusPlace_c1_c1_e14)',0;
