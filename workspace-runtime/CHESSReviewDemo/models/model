@@ -1,137 +1,136 @@
 <NDFile-'1.2'>
 
-NET:"org.eclipse.m2m.atl.engine.emfvm.lib.OclUndefined@12dc643",2000,2000;
+NET:"Example",2000,2000;
 COLORS:White,Black,Black,Black,Black,Black;
 
 VARIABLE:"Time","Real";
 
 STUDY:"DefaultStudy",0,"not_def",10000;
 
-PLACE:"failed_c10",1500,1500,0,0;
-PLACE:"failed_c21",1500,1500,0,0;
-PLACE:"failed_nodeA2",1500,1500,0,0;
-PLACE:"failed_bus3",1500,1500,0,0;
-PLACE:"failed_nodeB4",1500,1500,0,0;
-PLACE:"faultyPlace_c1_c1_ft15",1500,1500,0,0;
-PLACE:"numberOfTransientFaultyPlace_c1_c1_ft16",1500,1500,0,0;
-PLACE:"internal_fault_occurred_c1_c1_ft17",1500,1500,0,0;
-PLACE:"faultyPlace_c2_c2_ft18",1500,1500,0,0;
-PLACE:"numberOfTransientFaultyPlace_c2_c2_ft19",1500,1500,0,0;
-PLACE:"internal_fault_occurred_c2_c2_ft110",1500,1500,0,0;
-PLACE:"faultyPlace_nodeA_nodeA_ft111",1500,1500,0,0;
-PLACE:"numberOfTransientFaultyPlace_nodeA_nodeA_ft112",1500,1500,0,0;
-PLACE:"internal_fault_occurred_nodeA_nodeA_ft113",1500,1500,0,0;
-PLACE:"faultyPlace_bus_bus_ft114",1500,1500,0,0;
-PLACE:"numberOfTransientFaultyPlace_bus_bus_ft115",1500,1500,0,0;
-PLACE:"internal_fault_occurred_bus_bus_ft116",1500,1500,0,0;
-PLACE:"faultyPlace_nodeB_nodeB_ft117",1500,1500,0,0;
-PLACE:"numberOfTransientFaultyPlace_nodeB_nodeB_ft118",1500,1500,0,0;
-PLACE:"internal_fault_occurred_nodeB_nodeB_ft119",1500,1500,0,0;
-PLACE:"faultyPlace_c1_c1_xft_nodeA_fm120",1500,1500,0,0;
-PLACE:"faultyPlace_c2_c2_xft_c1_fm121",1500,1500,0,0;
-PLACE:"faultyPlace_c2_c2_xft_c1_fm222",1500,1500,0,0;
-PLACE:"faultyPlace_c2_c2_xft_nodeB_fm123",1500,1500,0,0;
-PLACE:"faultyPlace_bus_bus_xft_nodeA_fm124",1500,1500,0,0;
-PLACE:"faultyPlace_nodeB_nodeB_xft_bus_fm125",1500,1500,0,0;
-PLACE:"erroneusPlace_c1_c1_e126",1500,1500,0,0;
-PLACE:"detect_error_Place_c1_c1_e127",1500,1500,0,0;
-PLACE:"erroneusPlace_c2_c2_e128",1500,1500,0,0;
-PLACE:"detect_error_Place_c2_c2_e129",1500,1500,0,0;
-PLACE:"erroneusPlace_nodeA_nodeA_e130",1500,1500,0,0;
-PLACE:"detect_error_Place_nodeA_nodeA_e131",1500,1500,0,0;
-PLACE:"erroneusPlace_bus_bus_e132",1500,1500,0,0;
-PLACE:"detect_error_Place_bus_bus_e133",1500,1500,0,0;
-PLACE:"erroneusPlace_nodeB_nodeB_e134",1500,1500,0,0;
-PLACE:"detect_error_Place_nodeB_nodeB_e135",1500,1500,0,0;
-PLACE:"failureModePlace_c1_c1_fm136",1500,1500,0,0;
-PLACE:"failureModePlace_c1_c1_fm237",1500,1500,0,0;
-PLACE:"failureModePlace_c2_c2_fm138",1500,1500,0,0;
-PLACE:"failureModePlace_nodeA_nodeA_fm139",1500,1500,0,0;
-PLACE:"failureModePlace_bus_bus_fm140",1500,1500,0,0;
-PLACE:"failureModePlace_nodeB_nodeB_fm141",1500,1500,0,0;
-PLACE:"logicResult_c2_logic_c2_fge242",1500,1500,0,0;
-PLACE:"logicResult_c1_logic_c1_fge143",1500,1500,0,0;
-PLACE:"logicResult_c1_logic_c1_fge244",1500,1500,0,0;
-PLACE:"logicResult_c2_logic_c2_fge145",1500,1500,0,0;
-PLACE:"logicResult_c2_logic_c2_fge246",1500,1500,0,0;
-PLACE:"logicResult_c2_logic_c2_fge247",1500,1500,0,0;
-PLACE:"logicResult_c2_logic_c2_fge348",1500,1500,0,0;
-PLACE:"logicResult_nodeA_logic_nodeA_fge149",1500,1500,0,0;
-PLACE:"logicResult_bus_logic_bus_fge150",1500,1500,0,0;
-PLACE:"logicResult_bus_logic_bus_fge251",1500,1500,0,0;
-PLACE:"logicResult_nodeB_logic_nodeB_fge152",1500,1500,0,0;
-PLACE:"logicResult_nodeB_logic_nodeB_fge253",1500,1500,0,0;
-PLACE:"active_c1_faultsGeneratesError_c1_fge154",1500,1500,0,0;
-PLACE:"activated_c1_faultsGeneratesError_c1_fge155",1500,1500,0,0;
-PLACE:"tmp_activated_c1_faultsGeneratesError_c1_fge156",1500,1500,0,0;
-PLACE:"errorsActivation_c1_faultsGeneratesError_c1_fge157",1500,1500,0,0;
-PLACE:"active_c1_faultsGeneratesError_c1_fge258",1500,1500,0,0;
-PLACE:"activated_c1_faultsGeneratesError_c1_fge259",1500,1500,0,0;
-PLACE:"tmp_activated_c1_faultsGeneratesError_c1_fge260",1500,1500,0,0;
-PLACE:"errorsActivation_c1_faultsGeneratesError_c1_fge261",1500,1500,0,0;
-PLACE:"active_c2_faultsGeneratesError_c2_fge162",1500,1500,0,0;
-PLACE:"activated_c2_faultsGeneratesError_c2_fge163",1500,1500,0,0;
-PLACE:"tmp_activated_c2_faultsGeneratesError_c2_fge164",1500,1500,0,0;
-PLACE:"errorsActivation_c2_faultsGeneratesError_c2_fge165",1500,1500,0,0;
-PLACE:"active_c2_faultsGeneratesError_c2_fge266",1500,1500,0,0;
-PLACE:"activated_c2_faultsGeneratesError_c2_fge267",1500,1500,0,0;
-PLACE:"tmp_activated_c2_faultsGeneratesError_c2_fge268",1500,1500,0,0;
-PLACE:"errorsActivation_c2_faultsGeneratesError_c2_fge269",1500,1500,0,0;
-PLACE:"active_c2_faultsGeneratesError_c2_fge370",1500,1500,0,0;
-PLACE:"activated_c2_faultsGeneratesError_c2_fge371",1500,1500,0,0;
-PLACE:"tmp_activated_c2_faultsGeneratesError_c2_fge372",1500,1500,0,0;
-PLACE:"errorsActivation_c2_faultsGeneratesError_c2_fge373",1500,1500,0,0;
-PLACE:"active_nodeA_faultsGeneratesError_nodeA_fge174",1500,1500,0,0;
-PLACE:"activated_nodeA_faultsGeneratesError_nodeA_fge175",1500,1500,0,0;
-PLACE:"tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176",1500,1500,0,0;
-PLACE:"errorsActivation_nodeA_faultsGeneratesError_nodeA_fge177",1500,1500,0,0;
-PLACE:"active_bus_faultsGeneratesError_bus_fge178",1500,1500,0,0;
-PLACE:"activated_bus_faultsGeneratesError_bus_fge179",1500,1500,0,0;
-PLACE:"tmp_activated_bus_faultsGeneratesError_bus_fge180",1500,1500,0,0;
-PLACE:"errorsActivation_bus_faultsGeneratesError_bus_fge181",1500,1500,0,0;
-PLACE:"active_bus_faultsGeneratesError_bus_fge282",1500,1500,0,0;
-PLACE:"activated_bus_faultsGeneratesError_bus_fge283",1500,1500,0,0;
-PLACE:"tmp_activated_bus_faultsGeneratesError_bus_fge284",1500,1500,0,0;
-PLACE:"errorsActivation_bus_faultsGeneratesError_bus_fge285",1500,1500,0,0;
-PLACE:"active_nodeB_faultsGeneratesError_nodeB_fge186",1500,1500,0,0;
-PLACE:"activated_nodeB_faultsGeneratesError_nodeB_fge187",1500,1500,0,0;
-PLACE:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188",1500,1500,0,0;
-PLACE:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge189",1500,1500,0,0;
-PLACE:"active_nodeB_faultsGeneratesError_nodeB_fge290",1500,1500,0,0;
-PLACE:"activated_nodeB_faultsGeneratesError_nodeB_fge291",1500,1500,0,0;
-PLACE:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292",1500,1500,0,0;
-PLACE:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge293",1500,1500,0,0;
-PLACE:"logicResult_c1_logic_c1_epf194",1500,1500,0,0;
-PLACE:"logicResult_c1_logic_c1_epf295",1500,1500,0,0;
-PLACE:"logicResult_c2_logic_c2_epf296",1500,1500,0,0;
-PLACE:"logicResult_nodeA_logic_nodeA_epf197",1500,1500,0,0;
-PLACE:"logicResult_bus_logic_bus_epf198",1500,1500,0,0;
-PLACE:"logicResult_nodeB_logic_nodeB_epf199",1500,1500,0,0;
-PLACE:"active_c1_errorsProducesFailures_c1_epf1100",1500,1500,0,0;
-PLACE:"activated_c1_errorsProducesFailures_c1_epf1101",1500,1500,0,0;
-PLACE:"tmp_propagation_c1_errors_produces_failures_c1_epf1102",1500,1500,0,0;
-PLACE:"errorsActivation_c1_errorsProducesFailures_c1_epf1103",1500,1500,0,0;
-PLACE:"active_c1_errorsProducesFailures_c1_epf2104",1500,1500,0,0;
-PLACE:"activated_c1_errorsProducesFailures_c1_epf2105",1500,1500,0,0;
-PLACE:"tmp_propagation_c1_errors_produces_failures_c1_epf2106",1500,1500,0,0;
-PLACE:"errorsActivation_c1_errorsProducesFailures_c1_epf2107",1500,1500,0,0;
-PLACE:"active_c2_errorsProducesFailures_c2_epf2108",1500,1500,0,0;
-PLACE:"activated_c2_errorsProducesFailures_c2_epf2109",1500,1500,0,0;
-PLACE:"tmp_propagation_c2_errors_produces_failures_c2_epf2110",1500,1500,0,0;
-PLACE:"errorsActivation_c2_errorsProducesFailures_c2_epf2111",1500,1500,0,0;
-PLACE:"active_nodeA_errorsProducesFailures_nodeA_epf1112",1500,1500,0,0;
-PLACE:"activated_nodeA_errorsProducesFailures_nodeA_epf1113",1500,1500,0,0;
-PLACE:"tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114",1500,1500,0,0;
-PLACE:"errorsActivation_nodeA_errorsProducesFailures_nodeA_epf1115",1500,1500,0,0;
-PLACE:"active_bus_errorsProducesFailures_bus_epf1116",1500,1500,0,0;
-PLACE:"activated_bus_errorsProducesFailures_bus_epf1117",1500,1500,0,0;
-PLACE:"tmp_propagation_bus_errors_produces_failures_bus_epf1118",1500,1500,0,0;
-PLACE:"errorsActivation_bus_errorsProducesFailures_bus_epf1119",1500,1500,0,0;
-PLACE:"active_nodeB_errorsProducesFailures_nodeB_epf1120",1500,1500,0,0;
-PLACE:"activated_nodeB_errorsProducesFailures_nodeB_epf1121",1500,1500,0,0;
-PLACE:"tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122",1500,1500,0,0;
-PLACE:"errorsActivation_nodeB_errorsProducesFailures_nodeB_epf1123",1500,1500,0,0;
-
+PLACE:"failed_c1",1500,1500,0,0;
+PLACE:"failed_c2",1500,1500,0,0;
+PLACE:"failed_nodeA",1500,1500,0,0;
+PLACE:"failed_bus",1500,1500,0,0;
+PLACE:"failed_nodeB",1500,1500,0,0;
+PLACE:"faultyPlace_c1_c1_ft1",1500,1500,0,0;
+PLACE:"numberOfTransientFaultyPlace_c1_c1_ft1",1500,1500,0,0;
+PLACE:"internal_fault_occurred_c1_c1_ft1",1500,1500,0,0;
+PLACE:"faultyPlace_c2_c2_ft1",1500,1500,0,0;
+PLACE:"numberOfTransientFaultyPlace_c2_c2_ft1",1500,1500,0,0;
+PLACE:"internal_fault_occurred_c2_c2_ft1",1500,1500,0,0;
+PLACE:"faultyPlace_nodeA_nodeA_ft1",1500,1500,0,0;
+PLACE:"numberOfTransientFaultyPlace_nodeA_nodeA_ft1",1500,1500,0,0;
+PLACE:"internal_fault_occurred_nodeA_nodeA_ft1",1500,1500,0,0;
+PLACE:"faultyPlace_bus_bus_ft1",1500,1500,0,0;
+PLACE:"numberOfTransientFaultyPlace_bus_bus_ft1",1500,1500,0,0;
+PLACE:"internal_fault_occurred_bus_bus_ft1",1500,1500,0,0;
+PLACE:"faultyPlace_nodeB_nodeB_ft1",1500,1500,0,0;
+PLACE:"numberOfTransientFaultyPlace_nodeB_nodeB_ft1",1500,1500,0,0;
+PLACE:"internal_fault_occurred_nodeB_nodeB_ft1",1500,1500,0,0;
+PLACE:"ComponentExternalFault_2",1500,1500,0,0;
+PLACE:"ComponentExternalFault_9",1500,1500,0,0;
+PLACE:"ComponentExternalFault_16",1500,1500,0,0;
+PLACE:"ComponentExternalFault_23",1500,1500,0,0;
+PLACE:"ComponentExternalFault_30",1500,1500,0,0;
+PLACE:"ComponentExternalFault_37",1500,1500,0,0;
+PLACE:"erroneusPlace_c1_c1_e1",1500,1500,0,0;
+PLACE:"detect_error_Place_c1_c1_e1",1500,1500,0,0;
+PLACE:"erroneusPlace_c2_c2_e1",1500,1500,0,0;
+PLACE:"detect_error_Place_c2_c2_e1",1500,1500,0,0;
+PLACE:"erroneusPlace_nodeA_nodeA_e1",1500,1500,0,0;
+PLACE:"detect_error_Place_nodeA_nodeA_e1",1500,1500,0,0;
+PLACE:"erroneusPlace_bus_bus_e1",1500,1500,0,0;
+PLACE:"detect_error_Place_bus_bus_e1",1500,1500,0,0;
+PLACE:"erroneusPlace_nodeB_nodeB_e1",1500,1500,0,0;
+PLACE:"detect_error_Place_nodeB_nodeB_e1",1500,1500,0,0;
+PLACE:"failureMode_c1_c1_fm1",1500,1500,0,0;
+PLACE:"failureMode_c1_c1_fm2",1500,1500,0,0;
+PLACE:"failureMode_c2_c2_fm1",1500,1500,0,0;
+PLACE:"failureMode_nodeA_nodeA_fm1",1500,1500,0,0;
+PLACE:"failureMode_bus_bus_fm1",1500,1500,0,0;
+PLACE:"failureMode_nodeB_nodeB_fm1",1500,1500,0,0;
+PLACE:"ComponentExternalFault_87",1500,1500,0,0;
+PLACE:"ComponentExternalFault_60",1500,1500,0,0;
+PLACE:"ComponentExternalFault_69",1500,1500,0,0;
+PLACE:"ComponentExternalFault_78",1500,1500,0,0;
+PLACE:"ComponentExternalFault_111",1500,1500,0,0;
+PLACE:"ComponentExternalFault_120",1500,1500,0,0;
+PLACE:"ComponentExternalFault_129",1500,1500,0,0;
+PLACE:"ComponentExternalFault_138",1500,1500,0,0;
+PLACE:"ComponentExternalFault_147",1500,1500,0,0;
+PLACE:"ComponentExternalFault_156",1500,1500,0,0;
+PLACE:"ComponentExternalFault_165",1500,1500,0,0;
+PLACE:"ComponentExternalFault_174",1500,1500,0,0;
+PLACE:"faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1",1500,1500,0,0;
+PLACE:"faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1",1500,1500,0,0;
+PLACE:"ComponentExternalFault_199",1500,1500,0,0;
+PLACE:"ComponentExternalFault_204",1500,1500,0,0;
+PLACE:"faults_generates_errors_active_c1_faultsGeneratesError_c1_fge2",1500,1500,0,0;
+PLACE:"faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge2",1500,1500,0,0;
+PLACE:"ComponentExternalFault_226",1500,1500,0,0;
+PLACE:"ComponentExternalFault_231",1500,1500,0,0;
+PLACE:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge1",1500,1500,0,0;
+PLACE:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge1",1500,1500,0,0;
+PLACE:"ComponentExternalFault_253",1500,1500,0,0;
+PLACE:"ComponentExternalFault_258",1500,1500,0,0;
+PLACE:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge2",1500,1500,0,0;
+PLACE:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge2",1500,1500,0,0;
+PLACE:"ComponentExternalFault_280",1500,1500,0,0;
+PLACE:"ComponentExternalFault_285",1500,1500,0,0;
+PLACE:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge3",1500,1500,0,0;
+PLACE:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge3",1500,1500,0,0;
+PLACE:"ComponentExternalFault_307",1500,1500,0,0;
+PLACE:"ComponentExternalFault_312",1500,1500,0,0;
+PLACE:"faults_generates_errors_active_nodeA_faultsGeneratesError_nodeA_fge1",1500,1500,0,0;
+PLACE:"faults_generates_errors_activated_nodeA_faultsGeneratesError_nodeA_fge1",1500,1500,0,0;
+PLACE:"ComponentExternalFault_334",1500,1500,0,0;
+PLACE:"ComponentExternalFault_339",1500,1500,0,0;
+PLACE:"faults_generates_errors_active_bus_faultsGeneratesError_bus_fge1",1500,1500,0,0;
+PLACE:"faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge1",1500,1500,0,0;
+PLACE:"ComponentExternalFault_361",1500,1500,0,0;
+PLACE:"ComponentExternalFault_366",1500,1500,0,0;
+PLACE:"faults_generates_errors_active_bus_faultsGeneratesError_bus_fge2",1500,1500,0,0;
+PLACE:"faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge2",1500,1500,0,0;
+PLACE:"ComponentExternalFault_388",1500,1500,0,0;
+PLACE:"ComponentExternalFault_393",1500,1500,0,0;
+PLACE:"faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge1",1500,1500,0,0;
+PLACE:"faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge1",1500,1500,0,0;
+PLACE:"ComponentExternalFault_415",1500,1500,0,0;
+PLACE:"ComponentExternalFault_420",1500,1500,0,0;
+PLACE:"faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge2",1500,1500,0,0;
+PLACE:"faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge2",1500,1500,0,0;
+PLACE:"ComponentExternalFault_442",1500,1500,0,0;
+PLACE:"ComponentExternalFault_447",1500,1500,0,0;
+PLACE:"ComponentExternalFault_463",1500,1500,0,0;
+PLACE:"ComponentExternalFault_472",1500,1500,0,0;
+PLACE:"ComponentExternalFault_481",1500,1500,0,0;
+PLACE:"ComponentExternalFault_490",1500,1500,0,0;
+PLACE:"ComponentExternalFault_499",1500,1500,0,0;
+PLACE:"ComponentExternalFault_508",1500,1500,0,0;
+PLACE:"ComponentExternalFault_518",1500,1500,0,0;
+PLACE:"ComponentExternalFault_519",1500,1500,0,0;
+PLACE:"ComponentExternalFault_533",1500,1500,0,0;
+PLACE:"ComponentExternalFault_538",1500,1500,0,0;
+PLACE:"ComponentExternalFault_545",1500,1500,0,0;
+PLACE:"ComponentExternalFault_546",1500,1500,0,0;
+PLACE:"ComponentExternalFault_560",1500,1500,0,0;
+PLACE:"ComponentExternalFault_565",1500,1500,0,0;
+PLACE:"ComponentExternalFault_572",1500,1500,0,0;
+PLACE:"ComponentExternalFault_573",1500,1500,0,0;
+PLACE:"ComponentExternalFault_587",1500,1500,0,0;
+PLACE:"ComponentExternalFault_592",1500,1500,0,0;
+PLACE:"ComponentExternalFault_599",1500,1500,0,0;
+PLACE:"ComponentExternalFault_600",1500,1500,0,0;
+PLACE:"ComponentExternalFault_614",1500,1500,0,0;
+PLACE:"ComponentExternalFault_619",1500,1500,0,0;
+PLACE:"ComponentExternalFault_626",1500,1500,0,0;
+PLACE:"ComponentExternalFault_627",1500,1500,0,0;
+PLACE:"ComponentExternalFault_641",1500,1500,0,0;
+PLACE:"ComponentExternalFault_646",1500,1500,0,0;
+PLACE:"ComponentExternalFault_653",1500,1500,0,0;
+PLACE:"ComponentExternalFault_654",1500,1500,0,0;
+PLACE:"ComponentExternalFault_668",1500,1500,0,0;
+PLACE:"ComponentExternalFault_673",1500,1500,0,0;
 
 TRANS:"T0",1500,1500,V,Immediate,1,1,'', '0.5',
  (
@@ -1119,1115 +1118,1116 @@ TRANS:"T196",1500,1500,V,Timed,1,1,'', '0.01',
   
   );
 
-
-IARC:"internal_fault_occurred_c1_c1_ft17","T0",1,0,'',
+IARC:"internal_fault_occurred_c1_c1_ft1","T0",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"internal_fault_occurred_c1_c1_ft17","T1",1,0,'',
+IARC:"internal_fault_occurred_c1_c1_ft1","T1",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"numberOfTransientFaultyPlace_c1_c1_ft16","T172",1,0,'',
+IARC:"numberOfTransientFaultyPlace_c1_c1_ft1","T172",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c1_c1_ft15","T172",1,0,'',
+IARC:"faultyPlace_c1_c1_ft1","T172",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c1_c1_ft15","T2",1,0,'',
+IARC:"faultyPlace_c1_c1_ft1","T2",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_c10","T2",1,0,'',
+IARC:"failed_c1","T2",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"numberOfTransientFaultyPlace_c1_c1_ft16","T3",1,0,'',
+IARC:"numberOfTransientFaultyPlace_c1_c1_ft1","T3",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_c10","T3",1,0,'',
+IARC:"failed_c1","T3",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"internal_fault_occurred_c2_c2_ft110","T4",1,0,'',
+IARC:"internal_fault_occurred_c2_c2_ft1","T4",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"internal_fault_occurred_c2_c2_ft110","T5",1,0,'',
+IARC:"internal_fault_occurred_c2_c2_ft1","T5",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"numberOfTransientFaultyPlace_c2_c2_ft19","T178",1,0,'',
+IARC:"numberOfTransientFaultyPlace_c2_c2_ft1","T178",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c2_c2_ft18","T178",1,0,'',
+IARC:"faultyPlace_c2_c2_ft1","T178",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c2_c2_ft18","T6",1,0,'',
+IARC:"faultyPlace_c2_c2_ft1","T6",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_c21","T6",1,0,'',
+IARC:"failed_c2","T6",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"numberOfTransientFaultyPlace_c2_c2_ft19","T7",1,0,'',
+IARC:"numberOfTransientFaultyPlace_c2_c2_ft1","T7",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_c21","T7",1,0,'',
+IARC:"failed_c2","T7",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"internal_fault_occurred_nodeA_nodeA_ft113","T8",1,0,'',
+IARC:"internal_fault_occurred_nodeA_nodeA_ft1","T8",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"internal_fault_occurred_nodeA_nodeA_ft113","T9",1,0,'',
+IARC:"internal_fault_occurred_nodeA_nodeA_ft1","T9",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"numberOfTransientFaultyPlace_nodeA_nodeA_ft112","T184",1,0,'',
+IARC:"numberOfTransientFaultyPlace_nodeA_nodeA_ft1","T184",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_nodeA_nodeA_ft111","T184",1,0,'',
+IARC:"faultyPlace_nodeA_nodeA_ft1","T184",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_nodeA_nodeA_ft111","T10",1,0,'',
+IARC:"faultyPlace_nodeA_nodeA_ft1","T10",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_nodeA2","T10",1,0,'',
+IARC:"failed_nodeA","T10",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"numberOfTransientFaultyPlace_nodeA_nodeA_ft112","T11",1,0,'',
+IARC:"numberOfTransientFaultyPlace_nodeA_nodeA_ft1","T11",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_nodeA2","T11",1,0,'',
+IARC:"failed_nodeA","T11",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"internal_fault_occurred_bus_bus_ft116","T12",1,0,'',
+IARC:"internal_fault_occurred_bus_bus_ft1","T12",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"internal_fault_occurred_bus_bus_ft116","T13",1,0,'',
+IARC:"internal_fault_occurred_bus_bus_ft1","T13",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"numberOfTransientFaultyPlace_bus_bus_ft115","T188",1,0,'',
+IARC:"numberOfTransientFaultyPlace_bus_bus_ft1","T188",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_bus_bus_ft114","T188",1,0,'',
+IARC:"faultyPlace_bus_bus_ft1","T188",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_bus_bus_ft114","T14",1,0,'',
+IARC:"faultyPlace_bus_bus_ft1","T14",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_bus3","T14",1,0,'',
+IARC:"failed_bus","T14",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"numberOfTransientFaultyPlace_bus_bus_ft115","T15",1,0,'',
+IARC:"numberOfTransientFaultyPlace_bus_bus_ft1","T15",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_bus3","T15",1,0,'',
+IARC:"failed_bus","T15",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"internal_fault_occurred_nodeB_nodeB_ft119","T16",1,0,'',
+IARC:"internal_fault_occurred_nodeB_nodeB_ft1","T16",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"internal_fault_occurred_nodeB_nodeB_ft119","T17",1,0,'',
+IARC:"internal_fault_occurred_nodeB_nodeB_ft1","T17",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"numberOfTransientFaultyPlace_nodeB_nodeB_ft118","T193",1,0,'',
+IARC:"numberOfTransientFaultyPlace_nodeB_nodeB_ft1","T193",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_nodeB_nodeB_ft117","T193",1,0,'',
+IARC:"faultyPlace_nodeB_nodeB_ft1","T193",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_nodeB_nodeB_ft117","T18",1,0,'',
+IARC:"faultyPlace_nodeB_nodeB_ft1","T18",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_nodeB4","T18",1,0,'',
+IARC:"failed_nodeB","T18",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"numberOfTransientFaultyPlace_nodeB_nodeB_ft118","T19",1,0,'',
+IARC:"numberOfTransientFaultyPlace_nodeB_nodeB_ft1","T19",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_nodeB4","T19",1,0,'',
+IARC:"failed_nodeB","T19",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failureModePlace_nodeA_nodeA_fm139","T20",1,0,'',
+IARC:"failureMode_nodeA_nodeA_fm1","T20",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T21",1,0,'',
+IARC:"ComponentExternalFault_2","T21",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_c10","T21",1,0,'',
+IARC:"failed_c1","T21",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failureModePlace_c1_c1_fm136","T22",1,0,'',
+IARC:"failureMode_c1_c1_fm1","T22",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c2_c2_xft_c1_fm121","T23",1,0,'',
+IARC:"ComponentExternalFault_9","T23",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_c21","T23",1,0,'',
+IARC:"failed_c2","T23",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failureModePlace_c1_c1_fm237","T24",1,0,'',
+IARC:"failureMode_c1_c1_fm2","T24",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c2_c2_xft_c1_fm222","T25",1,0,'',
+IARC:"ComponentExternalFault_16","T25",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_c21","T25",1,0,'',
+IARC:"failed_c2","T25",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failureModePlace_nodeB_nodeB_fm141","T26",1,0,'',
+IARC:"failureMode_nodeB_nodeB_fm1","T26",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T27",1,0,'',
+IARC:"ComponentExternalFault_23","T27",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_c21","T27",1,0,'',
+IARC:"failed_c2","T27",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failureModePlace_nodeA_nodeA_fm139","T28",1,0,'',
+IARC:"failureMode_nodeA_nodeA_fm1","T28",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T29",1,0,'',
+IARC:"ComponentExternalFault_30","T29",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_bus3","T29",1,0,'',
+IARC:"failed_bus","T29",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failureModePlace_bus_bus_fm140","T30",1,0,'',
+IARC:"failureMode_bus_bus_fm1","T30",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T31",1,0,'',
+IARC:"ComponentExternalFault_37","T31",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_nodeB4","T31",1,0,'',
+IARC:"failed_nodeB","T31",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"erroneusPlace_c1_c1_e126","T32",1,0,'',
+IARC:"erroneusPlace_c1_c1_e1","T32",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_c10","T32",1,0,'',
+IARC:"failed_c1","T32",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"erroneusPlace_c2_c2_e128","T33",1,0,'',
+IARC:"erroneusPlace_c2_c2_e1","T33",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_c21","T33",1,0,'',
+IARC:"failed_c2","T33",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"erroneusPlace_nodeA_nodeA_e130","T34",1,0,'',
+IARC:"erroneusPlace_nodeA_nodeA_e1","T34",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_nodeA2","T34",1,0,'',
+IARC:"failed_nodeA","T34",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"erroneusPlace_bus_bus_e132","T35",1,0,'',
+IARC:"erroneusPlace_bus_bus_e1","T35",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_bus3","T35",1,0,'',
+IARC:"failed_bus","T35",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"erroneusPlace_nodeB_nodeB_e134","T36",1,0,'',
+IARC:"erroneusPlace_nodeB_nodeB_e1","T36",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"failed_nodeB4","T36",1,0,'',
+IARC:"failed_nodeB","T36",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge246","T37",1,0,'',
+IARC:"ComponentExternalFault_111","T37",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge246","T38",1,0,'',
+IARC:"ComponentExternalFault_111","T38",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge247","T38",1,0,'',
+IARC:"ComponentExternalFault_120","T38",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge247","T39",1,0,'',
+IARC:"ComponentExternalFault_120","T39",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge242","T40",1,0,'',
+IARC:"ComponentExternalFault_87","T40",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c1_c1_ft15","T41",1,0,'',
+IARC:"faultyPlace_c1_c1_ft1","T41",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_fge143","T42",1,0,'',
+IARC:"ComponentExternalFault_60","T42",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T43",1,0,'',
+IARC:"ComponentExternalFault_2","T43",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_fge244","T44",1,0,'',
+IARC:"ComponentExternalFault_69","T44",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c2_c2_ft18","T45",1,0,'',
+IARC:"faultyPlace_c2_c2_ft1","T45",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge145","T46",1,0,'',
+IARC:"ComponentExternalFault_78","T46",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c2_c2_xft_c1_fm121","T47",1,0,'',
+IARC:"ComponentExternalFault_9","T47",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge246","T48",1,0,'',
+IARC:"ComponentExternalFault_111","T48",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c2_c2_xft_c1_fm222","T49",1,0,'',
+IARC:"ComponentExternalFault_16","T49",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge247","T50",1,0,'',
+IARC:"ComponentExternalFault_120","T50",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T51",1,0,'',
+IARC:"ComponentExternalFault_23","T51",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge348","T52",1,0,'',
+IARC:"ComponentExternalFault_129","T52",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_nodeA_nodeA_ft111","T53",1,0,'',
+IARC:"faultyPlace_nodeA_nodeA_ft1","T53",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeA_logic_nodeA_fge149","T54",1,0,'',
+IARC:"ComponentExternalFault_138","T54",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_bus_bus_ft114","T55",1,0,'',
+IARC:"faultyPlace_bus_bus_ft1","T55",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_bus_logic_bus_fge150","T56",1,0,'',
+IARC:"ComponentExternalFault_147","T56",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T57",1,0,'',
+IARC:"ComponentExternalFault_30","T57",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_bus_logic_bus_fge251","T58",1,0,'',
+IARC:"ComponentExternalFault_156","T58",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_nodeB_nodeB_ft117","T59",1,0,'',
+IARC:"faultyPlace_nodeB_nodeB_ft1","T59",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeB_logic_nodeB_fge152","T60",1,0,'',
+IARC:"ComponentExternalFault_165","T60",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T61",1,0,'',
+IARC:"ComponentExternalFault_37","T61",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeB_logic_nodeB_fge253","T62",1,0,'',
+IARC:"ComponentExternalFault_174","T62",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_fge143","T64",1,0,'',
+IARC:"ComponentExternalFault_60","T64",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_c1_faultsGeneratesError_c1_fge155","T65",1,0,'',
+IARC:"faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1","T65",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c1_faultsGeneratesError_c1_fge154","T66",1,0,'',
+IARC:"faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1","T66",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c1_faultsGeneratesError_c1_fge154","T68",1,0,'',
+IARC:"faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1","T68",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge156","T63",1,0,'',
+IARC:"ComponentExternalFault_199","T63",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge156","T67",1,0,'',
+IARC:"ComponentExternalFault_199","T67",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_fge143","T68",1,0,'',
+IARC:"ComponentExternalFault_60","T68",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_c1_faultsGeneratesError_c1_fge157","T173",1,0,'',
+IARC:"ComponentExternalFault_204","T173",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_fge244","T70",1,0,'',
+IARC:"ComponentExternalFault_69","T70",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_c1_faultsGeneratesError_c1_fge259","T71",1,0,'',
+IARC:"faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge2","T71",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c1_faultsGeneratesError_c1_fge258","T72",1,0,'',
+IARC:"faults_generates_errors_active_c1_faultsGeneratesError_c1_fge2","T72",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c1_faultsGeneratesError_c1_fge258","T74",1,0,'',
+IARC:"faults_generates_errors_active_c1_faultsGeneratesError_c1_fge2","T74",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge260","T69",1,0,'',
+IARC:"ComponentExternalFault_226","T69",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_c1_faultsGeneratesError_c1_fge260","T73",1,0,'',
+IARC:"ComponentExternalFault_226","T73",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_fge244","T74",1,0,'',
+IARC:"ComponentExternalFault_69","T74",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_c1_faultsGeneratesError_c1_fge261","T174",1,0,'',
+IARC:"ComponentExternalFault_231","T174",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge145","T76",1,0,'',
+IARC:"ComponentExternalFault_78","T76",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_c2_faultsGeneratesError_c2_fge163","T77",1,0,'',
+IARC:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge1","T77",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c2_faultsGeneratesError_c2_fge162","T78",1,0,'',
+IARC:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge1","T78",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c2_faultsGeneratesError_c2_fge162","T80",1,0,'',
+IARC:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge1","T80",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge164","T75",1,0,'',
+IARC:"ComponentExternalFault_253","T75",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge164","T79",1,0,'',
+IARC:"ComponentExternalFault_253","T79",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge145","T80",1,0,'',
+IARC:"ComponentExternalFault_78","T80",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_c2_faultsGeneratesError_c2_fge165","T179",1,0,'',
+IARC:"ComponentExternalFault_258","T179",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge242","T82",1,0,'',
+IARC:"ComponentExternalFault_87","T82",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_c2_faultsGeneratesError_c2_fge267","T83",1,0,'',
+IARC:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge2","T83",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c2_faultsGeneratesError_c2_fge266","T84",1,0,'',
+IARC:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge2","T84",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c2_faultsGeneratesError_c2_fge266","T86",1,0,'',
+IARC:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge2","T86",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge268","T81",1,0,'',
+IARC:"ComponentExternalFault_280","T81",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge268","T85",1,0,'',
+IARC:"ComponentExternalFault_280","T85",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge242","T86",1,0,'',
+IARC:"ComponentExternalFault_87","T86",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_c2_faultsGeneratesError_c2_fge269","T180",1,0,'',
+IARC:"ComponentExternalFault_285","T180",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge348","T88",1,0,'',
+IARC:"ComponentExternalFault_129","T88",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_c2_faultsGeneratesError_c2_fge371","T89",1,0,'',
+IARC:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge3","T89",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c2_faultsGeneratesError_c2_fge370","T90",1,0,'',
+IARC:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge3","T90",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c2_faultsGeneratesError_c2_fge370","T92",1,0,'',
+IARC:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge3","T92",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge372","T87",1,0,'',
+IARC:"ComponentExternalFault_307","T87",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_c2_faultsGeneratesError_c2_fge372","T91",1,0,'',
+IARC:"ComponentExternalFault_307","T91",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_fge348","T92",1,0,'',
+IARC:"ComponentExternalFault_129","T92",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_c2_faultsGeneratesError_c2_fge373","T181",1,0,'',
+IARC:"ComponentExternalFault_312","T181",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeA_logic_nodeA_fge149","T94",1,0,'',
+IARC:"ComponentExternalFault_138","T94",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_nodeA_faultsGeneratesError_nodeA_fge175","T95",1,0,'',
+IARC:"faults_generates_errors_activated_nodeA_faultsGeneratesError_nodeA_fge1","T95",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_nodeA_faultsGeneratesError_nodeA_fge174","T96",1,0,'',
+IARC:"faults_generates_errors_active_nodeA_faultsGeneratesError_nodeA_fge1","T96",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_nodeA_faultsGeneratesError_nodeA_fge174","T98",1,0,'',
+IARC:"faults_generates_errors_active_nodeA_faultsGeneratesError_nodeA_fge1","T98",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176","T93",1,0,'',
+IARC:"ComponentExternalFault_334","T93",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176","T97",1,0,'',
+IARC:"ComponentExternalFault_334","T97",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeA_logic_nodeA_fge149","T98",1,0,'',
+IARC:"ComponentExternalFault_138","T98",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_nodeA_faultsGeneratesError_nodeA_fge177","T185",1,0,'',
+IARC:"ComponentExternalFault_339","T185",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_bus_logic_bus_fge150","T100",1,0,'',
+IARC:"ComponentExternalFault_147","T100",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_bus_faultsGeneratesError_bus_fge179","T101",1,0,'',
+IARC:"faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge1","T101",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_bus_faultsGeneratesError_bus_fge178","T102",1,0,'',
+IARC:"faults_generates_errors_active_bus_faultsGeneratesError_bus_fge1","T102",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_bus_faultsGeneratesError_bus_fge178","T104",1,0,'',
+IARC:"faults_generates_errors_active_bus_faultsGeneratesError_bus_fge1","T104",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_bus_faultsGeneratesError_bus_fge180","T99",1,0,'',
+IARC:"ComponentExternalFault_361","T99",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_bus_faultsGeneratesError_bus_fge180","T103",1,0,'',
+IARC:"ComponentExternalFault_361","T103",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_bus_logic_bus_fge150","T104",1,0,'',
+IARC:"ComponentExternalFault_147","T104",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_bus_faultsGeneratesError_bus_fge181","T189",1,0,'',
+IARC:"ComponentExternalFault_366","T189",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_bus_logic_bus_fge251","T106",1,0,'',
+IARC:"ComponentExternalFault_156","T106",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_bus_faultsGeneratesError_bus_fge283","T107",1,0,'',
+IARC:"faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge2","T107",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_bus_faultsGeneratesError_bus_fge282","T108",1,0,'',
+IARC:"faults_generates_errors_active_bus_faultsGeneratesError_bus_fge2","T108",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_bus_faultsGeneratesError_bus_fge282","T110",1,0,'',
+IARC:"faults_generates_errors_active_bus_faultsGeneratesError_bus_fge2","T110",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_bus_faultsGeneratesError_bus_fge284","T105",1,0,'',
+IARC:"ComponentExternalFault_388","T105",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_bus_faultsGeneratesError_bus_fge284","T109",1,0,'',
+IARC:"ComponentExternalFault_388","T109",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_bus_logic_bus_fge251","T110",1,0,'',
+IARC:"ComponentExternalFault_156","T110",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_bus_faultsGeneratesError_bus_fge285","T190",1,0,'',
+IARC:"ComponentExternalFault_393","T190",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeB_logic_nodeB_fge152","T112",1,0,'',
+IARC:"ComponentExternalFault_165","T112",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_nodeB_faultsGeneratesError_nodeB_fge187","T113",1,0,'',
+IARC:"faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge1","T113",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_nodeB_faultsGeneratesError_nodeB_fge186","T114",1,0,'',
+IARC:"faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge1","T114",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_nodeB_faultsGeneratesError_nodeB_fge186","T116",1,0,'',
+IARC:"faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge1","T116",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188","T111",1,0,'',
+IARC:"ComponentExternalFault_415","T111",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188","T115",1,0,'',
+IARC:"ComponentExternalFault_415","T115",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeB_logic_nodeB_fge152","T116",1,0,'',
+IARC:"ComponentExternalFault_165","T116",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge189","T194",1,0,'',
+IARC:"ComponentExternalFault_420","T194",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeB_logic_nodeB_fge253","T118",1,0,'',
+IARC:"ComponentExternalFault_174","T118",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_nodeB_faultsGeneratesError_nodeB_fge291","T119",1,0,'',
+IARC:"faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge2","T119",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_nodeB_faultsGeneratesError_nodeB_fge290","T120",1,0,'',
+IARC:"faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge2","T120",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_nodeB_faultsGeneratesError_nodeB_fge290","T122",1,0,'',
+IARC:"faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge2","T122",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292","T117",1,0,'',
+IARC:"ComponentExternalFault_442","T117",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292","T121",1,0,'',
+IARC:"ComponentExternalFault_442","T121",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeB_logic_nodeB_fge253","T122",1,0,'',
+IARC:"ComponentExternalFault_174","T122",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge293","T195",1,0,'',
+IARC:"ComponentExternalFault_447","T195",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"erroneusPlace_c1_c1_e126","T123",1,0,'',
+IARC:"erroneusPlace_c1_c1_e1","T123",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_epf194","T124",1,0,'',
+IARC:"ComponentExternalFault_463","T124",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"erroneusPlace_c1_c1_e126","T125",1,0,'',
+IARC:"erroneusPlace_c1_c1_e1","T125",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_epf295","T126",1,0,'',
+IARC:"ComponentExternalFault_472","T126",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"erroneusPlace_c2_c2_e128","T127",1,0,'',
+IARC:"erroneusPlace_c2_c2_e1","T127",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_epf296","T128",1,0,'',
+IARC:"ComponentExternalFault_481","T128",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"erroneusPlace_nodeA_nodeA_e130","T129",1,0,'',
+IARC:"erroneusPlace_nodeA_nodeA_e1","T129",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeA_logic_nodeA_epf197","T130",1,0,'',
+IARC:"ComponentExternalFault_490","T130",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"erroneusPlace_bus_bus_e132","T131",1,0,'',
+IARC:"erroneusPlace_bus_bus_e1","T131",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_bus_logic_bus_epf198","T132",1,0,'',
+IARC:"ComponentExternalFault_499","T132",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"erroneusPlace_nodeB_nodeB_e134","T133",1,0,'',
+IARC:"erroneusPlace_nodeB_nodeB_e1","T133",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeB_logic_nodeB_epf199","T134",1,0,'',
+IARC:"ComponentExternalFault_508","T134",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_epf194","T136",1,0,'',
+IARC:"ComponentExternalFault_463","T136",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_c1_errorsProducesFailures_c1_epf1101","T137",1,0,'',
+IARC:"ComponentExternalFault_519","T137",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c1_errorsProducesFailures_c1_epf1100","T138",1,0,'',
+IARC:"ComponentExternalFault_518","T138",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c1_errorsProducesFailures_c1_epf1100","T140",1,0,'',
+IARC:"ComponentExternalFault_518","T140",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf1102","T135",1,0,'',
+IARC:"ComponentExternalFault_533","T135",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf1102","T139",1,0,'',
+IARC:"ComponentExternalFault_533","T139",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_epf194","T140",1,0,'',
+IARC:"ComponentExternalFault_463","T140",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_c1_errorsProducesFailures_c1_epf1103","T175",1,0,'',
+IARC:"ComponentExternalFault_538","T175",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_epf295","T142",1,0,'',
+IARC:"ComponentExternalFault_472","T142",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_c1_errorsProducesFailures_c1_epf2105","T143",1,0,'',
+IARC:"ComponentExternalFault_546","T143",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c1_errorsProducesFailures_c1_epf2104","T144",1,0,'',
+IARC:"ComponentExternalFault_545","T144",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c1_errorsProducesFailures_c1_epf2104","T146",1,0,'',
+IARC:"ComponentExternalFault_545","T146",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf2106","T141",1,0,'',
+IARC:"ComponentExternalFault_560","T141",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_c1_errors_produces_failures_c1_epf2106","T145",1,0,'',
+IARC:"ComponentExternalFault_560","T145",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c1_logic_c1_epf295","T146",1,0,'',
+IARC:"ComponentExternalFault_472","T146",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_c1_errorsProducesFailures_c1_epf2107","T176",1,0,'',
+IARC:"ComponentExternalFault_565","T176",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_epf296","T148",1,0,'',
+IARC:"ComponentExternalFault_481","T148",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_c2_errorsProducesFailures_c2_epf2109","T149",1,0,'',
+IARC:"ComponentExternalFault_573","T149",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c2_errorsProducesFailures_c2_epf2108","T150",1,0,'',
+IARC:"ComponentExternalFault_572","T150",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_c2_errorsProducesFailures_c2_epf2108","T152",1,0,'',
+IARC:"ComponentExternalFault_572","T152",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_c2_errors_produces_failures_c2_epf2110","T147",1,0,'',
+IARC:"ComponentExternalFault_587","T147",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_c2_errors_produces_failures_c2_epf2110","T151",1,0,'',
+IARC:"ComponentExternalFault_587","T151",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_c2_logic_c2_epf296","T152",1,0,'',
+IARC:"ComponentExternalFault_481","T152",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_c2_errorsProducesFailures_c2_epf2111","T182",1,0,'',
+IARC:"ComponentExternalFault_592","T182",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeA_logic_nodeA_epf197","T154",1,0,'',
+IARC:"ComponentExternalFault_490","T154",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_nodeA_errorsProducesFailures_nodeA_epf1113","T155",1,0,'',
+IARC:"ComponentExternalFault_600","T155",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_nodeA_errorsProducesFailures_nodeA_epf1112","T156",1,0,'',
+IARC:"ComponentExternalFault_599","T156",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_nodeA_errorsProducesFailures_nodeA_epf1112","T158",1,0,'',
+IARC:"ComponentExternalFault_599","T158",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114","T153",1,0,'',
+IARC:"ComponentExternalFault_614","T153",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114","T157",1,0,'',
+IARC:"ComponentExternalFault_614","T157",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeA_logic_nodeA_epf197","T158",1,0,'',
+IARC:"ComponentExternalFault_490","T158",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_nodeA_errorsProducesFailures_nodeA_epf1115","T186",1,0,'',
+IARC:"ComponentExternalFault_619","T186",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_bus_logic_bus_epf198","T160",1,0,'',
+IARC:"ComponentExternalFault_499","T160",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_bus_errorsProducesFailures_bus_epf1117","T161",1,0,'',
+IARC:"ComponentExternalFault_627","T161",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_bus_errorsProducesFailures_bus_epf1116","T162",1,0,'',
+IARC:"ComponentExternalFault_626","T162",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_bus_errorsProducesFailures_bus_epf1116","T164",1,0,'',
+IARC:"ComponentExternalFault_626","T164",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_bus_errors_produces_failures_bus_epf1118","T159",1,0,'',
+IARC:"ComponentExternalFault_641","T159",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_bus_errors_produces_failures_bus_epf1118","T163",1,0,'',
+IARC:"ComponentExternalFault_641","T163",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_bus_logic_bus_epf198","T164",1,0,'',
+IARC:"ComponentExternalFault_499","T164",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_bus_errorsProducesFailures_bus_epf1119","T191",1,0,'',
+IARC:"ComponentExternalFault_646","T191",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeB_logic_nodeB_epf199","T166",1,0,'',
+IARC:"ComponentExternalFault_508","T166",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"activated_nodeB_errorsProducesFailures_nodeB_epf1121","T167",1,0,'',
+IARC:"ComponentExternalFault_654","T167",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_nodeB_errorsProducesFailures_nodeB_epf1120","T168",1,0,'',
+IARC:"ComponentExternalFault_653","T168",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"active_nodeB_errorsProducesFailures_nodeB_epf1120","T170",1,0,'',
+IARC:"ComponentExternalFault_653","T170",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122","T165",1,0,'',
+IARC:"ComponentExternalFault_668","T165",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122","T169",1,0,'',
+IARC:"ComponentExternalFault_668","T169",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"logicResult_nodeB_logic_nodeB_epf199","T170",1,0,'',
+IARC:"ComponentExternalFault_508","T170",1,0,'',
  (1500,1500,1500,1500),1;
-IARC:"errorsActivation_nodeB_errorsProducesFailures_nodeB_epf1123","T196",1,0,'',
- (1500,1500,1500,1500),1;
-
-
-OARC:"failed_c10","T171",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c21","T177",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeA2","T183",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_bus3","T187",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeB4","T192",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c10","T20",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T20",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c21","T22",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_c1_fm121","T22",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c21","T24",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_c1_fm222","T24",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c21","T26",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T26",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_bus3","T28",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T28",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeB4","T30",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T30",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge242","T37",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge247","T37",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge242","T38",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge242","T39",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge246","T39",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge247","T40",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge246","T40",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge143","T41",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c1_c1_ft15","T42",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge244","T43",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T44",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge145","T45",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_ft18","T46",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge246","T47",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_c1_fm121","T48",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge247","T49",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_c1_fm222","T50",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge348","T51",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T52",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_fge149","T53",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeA_nodeA_ft111","T54",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge150","T55",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_bus_bus_ft114","T56",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge251","T57",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T58",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge152","T59",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeB_nodeB_ft117","T60",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge253","T61",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T62",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c1_faultsGeneratesError_c1_fge155","T64",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge143","T65",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge143","T66",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c1_faultsGeneratesError_c1_fge259","T70",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge244","T71",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge244","T72",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c2_faultsGeneratesError_c2_fge163","T76",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge145","T77",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge145","T78",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c2_faultsGeneratesError_c2_fge267","T82",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge242","T83",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge242","T84",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c2_faultsGeneratesError_c2_fge371","T88",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge348","T89",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge348","T90",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_nodeA_faultsGeneratesError_nodeA_fge175","T94",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_fge149","T95",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_fge149","T96",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_bus_faultsGeneratesError_bus_fge179","T100",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge150","T101",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge150","T102",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_bus_faultsGeneratesError_bus_fge283","T106",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge251","T107",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge251","T108",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_nodeB_faultsGeneratesError_nodeB_fge187","T112",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge152","T113",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge152","T114",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_nodeB_faultsGeneratesError_nodeB_fge291","T118",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge253","T119",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge253","T120",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf194","T123",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_c1_c1_e126","T124",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf295","T125",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_c1_c1_e126","T126",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_epf296","T127",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_c2_c2_e128","T128",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_epf197","T129",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_nodeA_nodeA_e130","T130",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_epf198","T131",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_bus_bus_e132","T132",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_epf199","T133",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_nodeB_nodeB_e134","T134",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c1_errorsProducesFailures_c1_epf1101","T136",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf194","T137",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf194","T138",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c1_errorsProducesFailures_c1_epf2105","T142",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf295","T143",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf295","T144",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c2_errorsProducesFailures_c2_epf2109","T148",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_epf296","T149",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_epf296","T150",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_nodeA_errorsProducesFailures_nodeA_epf1113","T154",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_epf197","T155",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_epf197","T156",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_bus_errorsProducesFailures_bus_epf1117","T160",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_epf198","T161",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_epf198","T162",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_nodeB_errorsProducesFailures_nodeB_epf1121","T166",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_epf199","T167",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_epf199","T168",1,2,'',
- (1500,1500,1500,1500),1;
-OARC:"internal_fault_occurred_c1_c1_ft17","T171",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c1_c1_ft15","T0",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c1_c1_ft15","T1",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"numberOfTransientFaultyPlace_c1_c1_ft16","T1",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c10","T2",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c10","T3",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"internal_fault_occurred_c2_c2_ft110","T177",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_ft18","T4",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_ft18","T5",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"numberOfTransientFaultyPlace_c2_c2_ft19","T5",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c21","T6",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c21","T7",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"internal_fault_occurred_nodeA_nodeA_ft113","T183",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeA_nodeA_ft111","T8",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeA_nodeA_ft111","T9",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"numberOfTransientFaultyPlace_nodeA_nodeA_ft112","T9",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeA2","T10",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeA2","T11",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"internal_fault_occurred_bus_bus_ft116","T187",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_bus_bus_ft114","T12",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_bus_bus_ft114","T13",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"numberOfTransientFaultyPlace_bus_bus_ft115","T13",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_bus3","T14",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_bus3","T15",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"internal_fault_occurred_nodeB_nodeB_ft119","T192",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeB_nodeB_ft117","T16",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeB_nodeB_ft117","T17",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"numberOfTransientFaultyPlace_nodeB_nodeB_ft118","T17",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeB4","T18",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeB4","T19",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_nodeA_nodeA_fm139","T20",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T20",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c10","T21",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_c1_c1_fm136","T22",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_c1_fm121","T22",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c21","T23",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_c1_c1_fm237","T24",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_c1_fm222","T24",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c21","T25",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_nodeB_nodeB_fm141","T26",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T26",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c21","T27",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_nodeA_nodeA_fm139","T28",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T28",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_bus3","T29",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_bus_bus_fm140","T30",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T30",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeB4","T31",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c10","T32",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c21","T33",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeA2","T34",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_bus3","T35",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeB4","T36",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge242","T37",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge246","T37",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge242","T38",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge246","T38",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge247","T38",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge242","T39",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge247","T39",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge143","T41",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c1_c1_ft15","T41",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge244","T43",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c1_c1_xft_nodeA_fm120","T43",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge145","T45",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_ft18","T45",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge246","T47",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_c1_fm121","T47",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge247","T49",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_c1_fm222","T49",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge348","T51",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_c2_c2_xft_nodeB_fm123","T51",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_fge149","T53",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeA_nodeA_ft111","T53",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge150","T55",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_bus_bus_ft114","T55",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge251","T57",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_bus_bus_xft_nodeA_fm124","T57",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge152","T59",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeB_nodeB_ft117","T59",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge253","T61",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"faultyPlace_nodeB_nodeB_xft_bus_fm125","T61",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge143","T64",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c1_faultsGeneratesError_c1_fge155","T64",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_c1_faultsGeneratesError_c1_fge154","T64",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_activated_c1_faultsGeneratesError_c1_fge156","T173",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge143","T68",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_c1_faultsGeneratesError_c1_fge157","T68",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge244","T70",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c1_faultsGeneratesError_c1_fge259","T70",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_c1_faultsGeneratesError_c1_fge258","T70",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_activated_c1_faultsGeneratesError_c1_fge260","T174",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_fge244","T74",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_c1_faultsGeneratesError_c1_fge261","T74",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge145","T76",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c2_faultsGeneratesError_c2_fge163","T76",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_c2_faultsGeneratesError_c2_fge162","T76",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_activated_c2_faultsGeneratesError_c2_fge164","T179",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge145","T80",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_c2_faultsGeneratesError_c2_fge165","T80",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge242","T82",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c2_faultsGeneratesError_c2_fge267","T82",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_c2_faultsGeneratesError_c2_fge266","T82",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_activated_c2_faultsGeneratesError_c2_fge268","T180",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge242","T86",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_c2_faultsGeneratesError_c2_fge269","T86",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge348","T88",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c2_faultsGeneratesError_c2_fge371","T88",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_c2_faultsGeneratesError_c2_fge370","T88",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_activated_c2_faultsGeneratesError_c2_fge372","T181",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_fge348","T92",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_c2_faultsGeneratesError_c2_fge373","T92",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_fge149","T94",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_nodeA_faultsGeneratesError_nodeA_fge175","T94",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_nodeA_faultsGeneratesError_nodeA_fge174","T94",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176","T185",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_fge149","T98",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_nodeA_faultsGeneratesError_nodeA_fge177","T98",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge150","T100",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_bus_faultsGeneratesError_bus_fge179","T100",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_bus_faultsGeneratesError_bus_fge178","T100",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_activated_bus_faultsGeneratesError_bus_fge180","T189",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge150","T104",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_bus_faultsGeneratesError_bus_fge181","T104",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge251","T106",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_bus_faultsGeneratesError_bus_fge283","T106",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_bus_faultsGeneratesError_bus_fge282","T106",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_activated_bus_faultsGeneratesError_bus_fge284","T190",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_fge251","T110",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_bus_faultsGeneratesError_bus_fge285","T110",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge152","T112",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_nodeB_faultsGeneratesError_nodeB_fge187","T112",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_nodeB_faultsGeneratesError_nodeB_fge186","T112",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188","T194",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge152","T116",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge189","T116",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge253","T118",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_nodeB_faultsGeneratesError_nodeB_fge291","T118",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_nodeB_faultsGeneratesError_nodeB_fge290","T118",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292","T195",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_fge253","T122",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_nodeB_faultsGeneratesError_nodeB_fge293","T122",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_c1_c1_e126","T63",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_c1_c1_e126","T69",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_c2_c2_e128","T75",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_c2_c2_e128","T81",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_c2_c2_e128","T87",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_nodeA_nodeA_e130","T93",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_bus_bus_e132","T99",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_bus_bus_e132","T105",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_nodeB_nodeB_e134","T111",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_nodeB_nodeB_e134","T117",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf194","T123",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_c1_c1_e126","T123",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf295","T125",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_c1_c1_e126","T125",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_epf296","T127",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_c2_c2_e128","T127",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_epf197","T129",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_nodeA_nodeA_e130","T129",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_epf198","T131",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_bus_bus_e132","T131",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_epf199","T133",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"erroneusPlace_nodeB_nodeB_e134","T133",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf194","T136",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c1_errorsProducesFailures_c1_epf1101","T136",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_c1_errorsProducesFailures_c1_epf1100","T136",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_propagation_c1_errors_produces_failures_c1_epf1102","T175",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf194","T140",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_c1_errorsProducesFailures_c1_epf1103","T140",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf295","T142",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c1_errorsProducesFailures_c1_epf2105","T142",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_c1_errorsProducesFailures_c1_epf2104","T142",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_propagation_c1_errors_produces_failures_c1_epf2106","T176",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c1_logic_c1_epf295","T146",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_c1_errorsProducesFailures_c1_epf2107","T146",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_epf296","T148",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_c2_errorsProducesFailures_c2_epf2109","T148",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_c2_errorsProducesFailures_c2_epf2108","T148",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_propagation_c2_errors_produces_failures_c2_epf2110","T182",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_c2_logic_c2_epf296","T152",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_c2_errorsProducesFailures_c2_epf2111","T152",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_epf197","T154",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_nodeA_errorsProducesFailures_nodeA_epf1113","T154",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_nodeA_errorsProducesFailures_nodeA_epf1112","T154",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114","T186",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeA_logic_nodeA_epf197","T158",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_nodeA_errorsProducesFailures_nodeA_epf1115","T158",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_epf198","T160",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_bus_errorsProducesFailures_bus_epf1117","T160",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_bus_errorsProducesFailures_bus_epf1116","T160",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_propagation_bus_errors_produces_failures_bus_epf1118","T191",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_bus_logic_bus_epf198","T164",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_bus_errorsProducesFailures_bus_epf1119","T164",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_epf199","T166",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"activated_nodeB_errorsProducesFailures_nodeB_epf1121","T166",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"active_nodeB_errorsProducesFailures_nodeB_epf1120","T166",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122","T196",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"logicResult_nodeB_logic_nodeB_epf199","T170",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"errorsActivation_nodeB_errorsProducesFailures_nodeB_epf1123","T170",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_c1_c1_fm136","T135",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c10","T135",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_c1_c1_fm237","T141",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c10","T141",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_c2_c2_fm138","T147",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_c21","T147",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_nodeA_nodeA_fm139","T153",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeA2","T153",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_bus_bus_fm140","T159",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_bus3","T159",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failureModePlace_nodeB_nodeB_fm141","T165",1,1,'',
- (1500,1500,1500,1500),1;
-OARC:"failed_nodeB4","T165",1,1,'',
+IARC:"ComponentExternalFault_673","T196",1,0,'',
  (1500,1500,1500,1500),1;
 
+OARC:"failed_c1","T171",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c2","T177",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeA","T183",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus","T187",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB","T192",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c1","T20",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_2","T20",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c2","T22",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_9","T22",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c2","T24",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_16","T24",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c2","T26",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_23","T26",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus","T28",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_30","T28",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB","T30",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_37","T30",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_87","T37",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_120","T37",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_87","T38",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_87","T39",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_111","T39",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_120","T40",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_111","T40",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_60","T41",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_ft1","T42",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_69","T43",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_2","T44",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_78","T45",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_ft1","T46",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_111","T47",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_9","T48",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_120","T49",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_16","T50",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_129","T51",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_23","T52",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_138","T53",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeA_nodeA_ft1","T54",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_147","T55",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_ft1","T56",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_156","T57",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_30","T58",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_165","T59",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_ft1","T60",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_174","T61",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_37","T62",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1","T64",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_60","T65",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_60","T66",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge2","T70",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_69","T71",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_69","T72",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge1","T76",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_78","T77",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_78","T78",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge2","T82",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_87","T83",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_87","T84",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge3","T88",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_129","T89",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_129","T90",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_nodeA_faultsGeneratesError_nodeA_fge1","T94",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_138","T95",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_138","T96",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge1","T100",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_147","T101",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_147","T102",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge2","T106",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_156","T107",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_156","T108",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge1","T112",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_165","T113",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_165","T114",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge2","T118",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_174","T119",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_174","T120",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_463","T123",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e1","T124",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_472","T125",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e1","T126",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_481","T127",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c2_c2_e1","T128",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_490","T129",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeA_nodeA_e1","T130",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_499","T131",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_bus_bus_e1","T132",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_508","T133",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeB_nodeB_e1","T134",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_519","T136",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_463","T137",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_463","T138",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_546","T142",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_472","T143",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_472","T144",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_573","T148",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_481","T149",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_481","T150",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_600","T154",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_490","T155",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_490","T156",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_627","T160",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_499","T161",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_499","T162",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_654","T166",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_508","T167",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_508","T168",1,2,'',
+ (1500,1500,1500,1500),1;
+OARC:"internal_fault_occurred_c1_c1_ft1","T171",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_ft1","T0",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_ft1","T1",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"numberOfTransientFaultyPlace_c1_c1_ft1","T1",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c1","T2",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c1","T3",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"internal_fault_occurred_c2_c2_ft1","T177",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_ft1","T4",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_ft1","T5",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"numberOfTransientFaultyPlace_c2_c2_ft1","T5",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c2","T6",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c2","T7",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"internal_fault_occurred_nodeA_nodeA_ft1","T183",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeA_nodeA_ft1","T8",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeA_nodeA_ft1","T9",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"numberOfTransientFaultyPlace_nodeA_nodeA_ft1","T9",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeA","T10",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeA","T11",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"internal_fault_occurred_bus_bus_ft1","T187",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_ft1","T12",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_ft1","T13",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"numberOfTransientFaultyPlace_bus_bus_ft1","T13",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus","T14",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus","T15",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"internal_fault_occurred_nodeB_nodeB_ft1","T192",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_ft1","T16",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_ft1","T17",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"numberOfTransientFaultyPlace_nodeB_nodeB_ft1","T17",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB","T18",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB","T19",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_nodeA_nodeA_fm1","T20",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_2","T20",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c1","T21",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_c1_c1_fm1","T22",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_9","T22",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c2","T23",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_c1_c1_fm2","T24",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_16","T24",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c2","T25",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_nodeB_nodeB_fm1","T26",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_23","T26",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c2","T27",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_nodeA_nodeA_fm1","T28",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_30","T28",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus","T29",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_bus_bus_fm1","T30",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_37","T30",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB","T31",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c1","T32",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c2","T33",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeA","T34",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus","T35",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB","T36",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_87","T37",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_111","T37",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_87","T38",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_111","T38",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_120","T38",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_87","T39",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_120","T39",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_60","T41",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c1_c1_ft1","T41",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_69","T43",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_2","T43",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_78","T45",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_c2_c2_ft1","T45",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_111","T47",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_9","T47",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_120","T49",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_16","T49",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_129","T51",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_23","T51",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_138","T53",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeA_nodeA_ft1","T53",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_147","T55",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_bus_bus_ft1","T55",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_156","T57",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_30","T57",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_165","T59",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faultyPlace_nodeB_nodeB_ft1","T59",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_174","T61",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_37","T61",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_60","T64",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1","T64",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1","T64",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_199","T173",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_60","T68",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_204","T68",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_69","T70",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge2","T70",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_active_c1_faultsGeneratesError_c1_fge2","T70",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_226","T174",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_69","T74",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_231","T74",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_78","T76",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge1","T76",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge1","T76",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_253","T179",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_78","T80",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_258","T80",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_87","T82",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge2","T82",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge2","T82",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_280","T180",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_87","T86",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_285","T86",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_129","T88",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge3","T88",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_active_c2_faultsGeneratesError_c2_fge3","T88",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_307","T181",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_129","T92",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_312","T92",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_138","T94",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_nodeA_faultsGeneratesError_nodeA_fge1","T94",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_active_nodeA_faultsGeneratesError_nodeA_fge1","T94",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_334","T185",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_138","T98",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_339","T98",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_147","T100",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge1","T100",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_active_bus_faultsGeneratesError_bus_fge1","T100",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_361","T189",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_147","T104",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_366","T104",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_156","T106",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge2","T106",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_active_bus_faultsGeneratesError_bus_fge2","T106",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_388","T190",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_156","T110",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_393","T110",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_165","T112",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge1","T112",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge1","T112",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_415","T194",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_165","T116",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_420","T116",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_174","T118",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge2","T118",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge2","T118",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_442","T195",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_174","T122",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_447","T122",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e1","T63",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e1","T69",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c2_c2_e1","T75",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c2_c2_e1","T81",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c2_c2_e1","T87",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeA_nodeA_e1","T93",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_bus_bus_e1","T99",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_bus_bus_e1","T105",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeB_nodeB_e1","T111",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeB_nodeB_e1","T117",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_463","T123",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e1","T123",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_472","T125",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c1_c1_e1","T125",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_481","T127",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_c2_c2_e1","T127",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_490","T129",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeA_nodeA_e1","T129",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_499","T131",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_bus_bus_e1","T131",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_508","T133",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"erroneusPlace_nodeB_nodeB_e1","T133",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_463","T136",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_519","T136",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_518","T136",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_533","T175",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_463","T140",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_538","T140",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_472","T142",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_546","T142",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_545","T142",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_560","T176",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_472","T146",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_565","T146",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_481","T148",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_573","T148",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_572","T148",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_587","T182",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_481","T152",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_592","T152",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_490","T154",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_600","T154",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_599","T154",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_614","T186",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_490","T158",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_619","T158",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_499","T160",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_627","T160",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_626","T160",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_641","T191",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_499","T164",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_646","T164",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_508","T166",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_654","T166",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_653","T166",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_668","T196",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_508","T170",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"ComponentExternalFault_673","T170",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_c1_c1_fm1","T135",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c1","T135",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_c1_c1_fm2","T141",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c1","T141",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_c2_c2_fm1","T147",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_c2","T147",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_nodeA_nodeA_fm1","T153",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeA","T153",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_bus_bus_fm1","T159",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_bus","T159",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failureMode_nodeB_nodeB_fm1","T165",1,1,'',
+ (1500,1500,1500,1500),1;
+OARC:"failed_nodeB","T165",1,1,'',
+ (1500,1500,1500,1500),1;
 
-RES_FUNC:"Reliability_c1",'IF(MARK(failed_c10)=0)THEN(1)ELSE(0)',0;
+RES_FUNC:"R_c1(t)",'IF(OclUndefined=0.0)THEN(1.0)ELSE(0.0)',0;
+RES_FUNC:"R_c2(t)",'IF(MARK(failureMode_c2_c2_fm1)=0.0)THEN(1.0)ELSE(0.0)',0;
+RES_FUNC:"R_c1(t)_fm1",'IF(MARK(failureMode_c1_c1_fm1)=0.0)THEN(1.0)ELSE(0.0)',0;
+RES_FUNC:"R_c1(t)_fm2",'IF(MARK(failureMode_c1_c1_fm2)=0.0)THEN(1.0)ELSE(0.0)',0;
+

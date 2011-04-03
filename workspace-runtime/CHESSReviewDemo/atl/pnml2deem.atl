@@ -40,7 +40,7 @@ rule Net {
 	}
 	to
 		deemNet : DEEM!Net (
-			Name <- net.name
+			Name <- net.id
 		)
 }
 
@@ -53,7 +53,7 @@ rule Places {
 	}
 	to
 		deemPlace : DEEM!Place (
-			Name <- name.text+thisModule.placeCounter.toString(),
+			Name <- place.id,--+thisModule.placeCounter.toString(),
 --			descrizione <- 'X'+thisModule.idToString(place),
 			marking <- markup.text,
 			net <- place.containerPage

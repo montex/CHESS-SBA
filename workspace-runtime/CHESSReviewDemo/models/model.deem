@@ -1,682 +1,682 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<deem:Net xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:deem="http://informatica.unifi.it/metamodels/deem">
-  <places Name="failed_c10"/>
-  <places Name="failed_c21"/>
-  <places Name="failed_nodeA2"/>
-  <places Name="failed_bus3"/>
-  <places Name="failed_nodeB4"/>
-  <places Name="faultyPlace_c1_c1_ft15"/>
-  <places Name="numberOfTransientFaultyPlace_c1_c1_ft16"/>
-  <places Name="internal_fault_occurred_c1_c1_ft17"/>
-  <places Name="faultyPlace_c2_c2_ft18"/>
-  <places Name="numberOfTransientFaultyPlace_c2_c2_ft19"/>
-  <places Name="internal_fault_occurred_c2_c2_ft110"/>
-  <places Name="faultyPlace_nodeA_nodeA_ft111"/>
-  <places Name="numberOfTransientFaultyPlace_nodeA_nodeA_ft112"/>
-  <places Name="internal_fault_occurred_nodeA_nodeA_ft113"/>
-  <places Name="faultyPlace_bus_bus_ft114"/>
-  <places Name="numberOfTransientFaultyPlace_bus_bus_ft115"/>
-  <places Name="internal_fault_occurred_bus_bus_ft116"/>
-  <places Name="faultyPlace_nodeB_nodeB_ft117"/>
-  <places Name="numberOfTransientFaultyPlace_nodeB_nodeB_ft118"/>
-  <places Name="internal_fault_occurred_nodeB_nodeB_ft119"/>
-  <places Name="faultyPlace_c1_c1_xft_nodeA_fm120"/>
-  <places Name="faultyPlace_c2_c2_xft_c1_fm121"/>
-  <places Name="faultyPlace_c2_c2_xft_c1_fm222"/>
-  <places Name="faultyPlace_c2_c2_xft_nodeB_fm123"/>
-  <places Name="faultyPlace_bus_bus_xft_nodeA_fm124"/>
-  <places Name="faultyPlace_nodeB_nodeB_xft_bus_fm125"/>
-  <places Name="erroneusPlace_c1_c1_e126"/>
-  <places Name="detect_error_Place_c1_c1_e127"/>
-  <places Name="erroneusPlace_c2_c2_e128"/>
-  <places Name="detect_error_Place_c2_c2_e129"/>
-  <places Name="erroneusPlace_nodeA_nodeA_e130"/>
-  <places Name="detect_error_Place_nodeA_nodeA_e131"/>
-  <places Name="erroneusPlace_bus_bus_e132"/>
-  <places Name="detect_error_Place_bus_bus_e133"/>
-  <places Name="erroneusPlace_nodeB_nodeB_e134"/>
-  <places Name="detect_error_Place_nodeB_nodeB_e135"/>
-  <places Name="failureModePlace_c1_c1_fm136"/>
-  <places Name="failureModePlace_c1_c1_fm237"/>
-  <places Name="failureModePlace_c2_c2_fm138"/>
-  <places Name="failureModePlace_nodeA_nodeA_fm139"/>
-  <places Name="failureModePlace_bus_bus_fm140"/>
-  <places Name="failureModePlace_nodeB_nodeB_fm141"/>
-  <places Name="logicResult_c2_logic_c2_fge242"/>
-  <places Name="logicResult_c1_logic_c1_fge143"/>
-  <places Name="logicResult_c1_logic_c1_fge244"/>
-  <places Name="logicResult_c2_logic_c2_fge145"/>
-  <places Name="logicResult_c2_logic_c2_fge246"/>
-  <places Name="logicResult_c2_logic_c2_fge247"/>
-  <places Name="logicResult_c2_logic_c2_fge348"/>
-  <places Name="logicResult_nodeA_logic_nodeA_fge149"/>
-  <places Name="logicResult_bus_logic_bus_fge150"/>
-  <places Name="logicResult_bus_logic_bus_fge251"/>
-  <places Name="logicResult_nodeB_logic_nodeB_fge152"/>
-  <places Name="logicResult_nodeB_logic_nodeB_fge253"/>
-  <places Name="active_c1_faultsGeneratesError_c1_fge154"/>
-  <places Name="activated_c1_faultsGeneratesError_c1_fge155"/>
-  <places Name="tmp_activated_c1_faultsGeneratesError_c1_fge156"/>
-  <places Name="errorsActivation_c1_faultsGeneratesError_c1_fge157"/>
-  <places Name="active_c1_faultsGeneratesError_c1_fge258"/>
-  <places Name="activated_c1_faultsGeneratesError_c1_fge259"/>
-  <places Name="tmp_activated_c1_faultsGeneratesError_c1_fge260"/>
-  <places Name="errorsActivation_c1_faultsGeneratesError_c1_fge261"/>
-  <places Name="active_c2_faultsGeneratesError_c2_fge162"/>
-  <places Name="activated_c2_faultsGeneratesError_c2_fge163"/>
-  <places Name="tmp_activated_c2_faultsGeneratesError_c2_fge164"/>
-  <places Name="errorsActivation_c2_faultsGeneratesError_c2_fge165"/>
-  <places Name="active_c2_faultsGeneratesError_c2_fge266"/>
-  <places Name="activated_c2_faultsGeneratesError_c2_fge267"/>
-  <places Name="tmp_activated_c2_faultsGeneratesError_c2_fge268"/>
-  <places Name="errorsActivation_c2_faultsGeneratesError_c2_fge269"/>
-  <places Name="active_c2_faultsGeneratesError_c2_fge370"/>
-  <places Name="activated_c2_faultsGeneratesError_c2_fge371"/>
-  <places Name="tmp_activated_c2_faultsGeneratesError_c2_fge372"/>
-  <places Name="errorsActivation_c2_faultsGeneratesError_c2_fge373"/>
-  <places Name="active_nodeA_faultsGeneratesError_nodeA_fge174"/>
-  <places Name="activated_nodeA_faultsGeneratesError_nodeA_fge175"/>
-  <places Name="tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176"/>
-  <places Name="errorsActivation_nodeA_faultsGeneratesError_nodeA_fge177"/>
-  <places Name="active_bus_faultsGeneratesError_bus_fge178"/>
-  <places Name="activated_bus_faultsGeneratesError_bus_fge179"/>
-  <places Name="tmp_activated_bus_faultsGeneratesError_bus_fge180"/>
-  <places Name="errorsActivation_bus_faultsGeneratesError_bus_fge181"/>
-  <places Name="active_bus_faultsGeneratesError_bus_fge282"/>
-  <places Name="activated_bus_faultsGeneratesError_bus_fge283"/>
-  <places Name="tmp_activated_bus_faultsGeneratesError_bus_fge284"/>
-  <places Name="errorsActivation_bus_faultsGeneratesError_bus_fge285"/>
-  <places Name="active_nodeB_faultsGeneratesError_nodeB_fge186"/>
-  <places Name="activated_nodeB_faultsGeneratesError_nodeB_fge187"/>
-  <places Name="tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188"/>
-  <places Name="errorsActivation_nodeB_faultsGeneratesError_nodeB_fge189"/>
-  <places Name="active_nodeB_faultsGeneratesError_nodeB_fge290"/>
-  <places Name="activated_nodeB_faultsGeneratesError_nodeB_fge291"/>
-  <places Name="tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292"/>
-  <places Name="errorsActivation_nodeB_faultsGeneratesError_nodeB_fge293"/>
-  <places Name="logicResult_c1_logic_c1_epf194"/>
-  <places Name="logicResult_c1_logic_c1_epf295"/>
-  <places Name="logicResult_c2_logic_c2_epf296"/>
-  <places Name="logicResult_nodeA_logic_nodeA_epf197"/>
-  <places Name="logicResult_bus_logic_bus_epf198"/>
-  <places Name="logicResult_nodeB_logic_nodeB_epf199"/>
-  <places Name="active_c1_errorsProducesFailures_c1_epf1100"/>
-  <places Name="activated_c1_errorsProducesFailures_c1_epf1101"/>
-  <places Name="tmp_propagation_c1_errors_produces_failures_c1_epf1102"/>
-  <places Name="errorsActivation_c1_errorsProducesFailures_c1_epf1103"/>
-  <places Name="active_c1_errorsProducesFailures_c1_epf2104"/>
-  <places Name="activated_c1_errorsProducesFailures_c1_epf2105"/>
-  <places Name="tmp_propagation_c1_errors_produces_failures_c1_epf2106"/>
-  <places Name="errorsActivation_c1_errorsProducesFailures_c1_epf2107"/>
-  <places Name="active_c2_errorsProducesFailures_c2_epf2108"/>
-  <places Name="activated_c2_errorsProducesFailures_c2_epf2109"/>
-  <places Name="tmp_propagation_c2_errors_produces_failures_c2_epf2110"/>
-  <places Name="errorsActivation_c2_errorsProducesFailures_c2_epf2111"/>
-  <places Name="active_nodeA_errorsProducesFailures_nodeA_epf1112"/>
-  <places Name="activated_nodeA_errorsProducesFailures_nodeA_epf1113"/>
-  <places Name="tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114"/>
-  <places Name="errorsActivation_nodeA_errorsProducesFailures_nodeA_epf1115"/>
-  <places Name="active_bus_errorsProducesFailures_bus_epf1116"/>
-  <places Name="activated_bus_errorsProducesFailures_bus_epf1117"/>
-  <places Name="tmp_propagation_bus_errors_produces_failures_bus_epf1118"/>
-  <places Name="errorsActivation_bus_errorsProducesFailures_bus_epf1119"/>
-  <places Name="active_nodeB_errorsProducesFailures_nodeB_epf1120"/>
-  <places Name="activated_nodeB_errorsProducesFailures_nodeB_epf1121"/>
-  <places Name="tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122"/>
-  <places Name="errorsActivation_nodeB_errorsProducesFailures_nodeB_epf1123"/>
-  <inputArcs source="internal_fault_occurred_c1_c1_ft17" target="T0"/>
-  <inputArcs source="internal_fault_occurred_c1_c1_ft17" target="T1"/>
-  <inputArcs source="numberOfTransientFaultyPlace_c1_c1_ft16" target="T172"/>
-  <inputArcs source="faultyPlace_c1_c1_ft15" target="T172"/>
-  <inputArcs source="faultyPlace_c1_c1_ft15" target="T2"/>
-  <inputArcs source="failed_c10" target="T2"/>
-  <inputArcs source="numberOfTransientFaultyPlace_c1_c1_ft16" target="T3"/>
-  <inputArcs source="failed_c10" target="T3"/>
-  <inputArcs source="internal_fault_occurred_c2_c2_ft110" target="T4"/>
-  <inputArcs source="internal_fault_occurred_c2_c2_ft110" target="T5"/>
-  <inputArcs source="numberOfTransientFaultyPlace_c2_c2_ft19" target="T178"/>
-  <inputArcs source="faultyPlace_c2_c2_ft18" target="T178"/>
-  <inputArcs source="faultyPlace_c2_c2_ft18" target="T6"/>
-  <inputArcs source="failed_c21" target="T6"/>
-  <inputArcs source="numberOfTransientFaultyPlace_c2_c2_ft19" target="T7"/>
-  <inputArcs source="failed_c21" target="T7"/>
-  <inputArcs source="internal_fault_occurred_nodeA_nodeA_ft113" target="T8"/>
-  <inputArcs source="internal_fault_occurred_nodeA_nodeA_ft113" target="T9"/>
-  <inputArcs source="numberOfTransientFaultyPlace_nodeA_nodeA_ft112" target="T184"/>
-  <inputArcs source="faultyPlace_nodeA_nodeA_ft111" target="T184"/>
-  <inputArcs source="faultyPlace_nodeA_nodeA_ft111" target="T10"/>
-  <inputArcs source="failed_nodeA2" target="T10"/>
-  <inputArcs source="numberOfTransientFaultyPlace_nodeA_nodeA_ft112" target="T11"/>
-  <inputArcs source="failed_nodeA2" target="T11"/>
-  <inputArcs source="internal_fault_occurred_bus_bus_ft116" target="T12"/>
-  <inputArcs source="internal_fault_occurred_bus_bus_ft116" target="T13"/>
-  <inputArcs source="numberOfTransientFaultyPlace_bus_bus_ft115" target="T188"/>
-  <inputArcs source="faultyPlace_bus_bus_ft114" target="T188"/>
-  <inputArcs source="faultyPlace_bus_bus_ft114" target="T14"/>
-  <inputArcs source="failed_bus3" target="T14"/>
-  <inputArcs source="numberOfTransientFaultyPlace_bus_bus_ft115" target="T15"/>
-  <inputArcs source="failed_bus3" target="T15"/>
-  <inputArcs source="internal_fault_occurred_nodeB_nodeB_ft119" target="T16"/>
-  <inputArcs source="internal_fault_occurred_nodeB_nodeB_ft119" target="T17"/>
-  <inputArcs source="numberOfTransientFaultyPlace_nodeB_nodeB_ft118" target="T193"/>
-  <inputArcs source="faultyPlace_nodeB_nodeB_ft117" target="T193"/>
-  <inputArcs source="faultyPlace_nodeB_nodeB_ft117" target="T18"/>
-  <inputArcs source="failed_nodeB4" target="T18"/>
-  <inputArcs source="numberOfTransientFaultyPlace_nodeB_nodeB_ft118" target="T19"/>
-  <inputArcs source="failed_nodeB4" target="T19"/>
-  <inputArcs source="failureModePlace_nodeA_nodeA_fm139" target="T20"/>
-  <inputArcs source="faultyPlace_c1_c1_xft_nodeA_fm120" target="T21"/>
-  <inputArcs source="failed_c10" target="T21"/>
-  <inputArcs source="failureModePlace_c1_c1_fm136" target="T22"/>
-  <inputArcs source="faultyPlace_c2_c2_xft_c1_fm121" target="T23"/>
-  <inputArcs source="failed_c21" target="T23"/>
-  <inputArcs source="failureModePlace_c1_c1_fm237" target="T24"/>
-  <inputArcs source="faultyPlace_c2_c2_xft_c1_fm222" target="T25"/>
-  <inputArcs source="failed_c21" target="T25"/>
-  <inputArcs source="failureModePlace_nodeB_nodeB_fm141" target="T26"/>
-  <inputArcs source="faultyPlace_c2_c2_xft_nodeB_fm123" target="T27"/>
-  <inputArcs source="failed_c21" target="T27"/>
-  <inputArcs source="failureModePlace_nodeA_nodeA_fm139" target="T28"/>
-  <inputArcs source="faultyPlace_bus_bus_xft_nodeA_fm124" target="T29"/>
-  <inputArcs source="failed_bus3" target="T29"/>
-  <inputArcs source="failureModePlace_bus_bus_fm140" target="T30"/>
-  <inputArcs source="faultyPlace_nodeB_nodeB_xft_bus_fm125" target="T31"/>
-  <inputArcs source="failed_nodeB4" target="T31"/>
-  <inputArcs source="erroneusPlace_c1_c1_e126" target="T32"/>
-  <inputArcs source="failed_c10" target="T32"/>
-  <inputArcs source="erroneusPlace_c2_c2_e128" target="T33"/>
-  <inputArcs source="failed_c21" target="T33"/>
-  <inputArcs source="erroneusPlace_nodeA_nodeA_e130" target="T34"/>
-  <inputArcs source="failed_nodeA2" target="T34"/>
-  <inputArcs source="erroneusPlace_bus_bus_e132" target="T35"/>
-  <inputArcs source="failed_bus3" target="T35"/>
-  <inputArcs source="erroneusPlace_nodeB_nodeB_e134" target="T36"/>
-  <inputArcs source="failed_nodeB4" target="T36"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge246" target="T37"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge246" target="T38"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge247" target="T38"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge247" target="T39"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge242" target="T40"/>
-  <inputArcs source="faultyPlace_c1_c1_ft15" target="T41"/>
-  <inputArcs source="logicResult_c1_logic_c1_fge143" target="T42"/>
-  <inputArcs source="faultyPlace_c1_c1_xft_nodeA_fm120" target="T43"/>
-  <inputArcs source="logicResult_c1_logic_c1_fge244" target="T44"/>
-  <inputArcs source="faultyPlace_c2_c2_ft18" target="T45"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge145" target="T46"/>
-  <inputArcs source="faultyPlace_c2_c2_xft_c1_fm121" target="T47"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge246" target="T48"/>
-  <inputArcs source="faultyPlace_c2_c2_xft_c1_fm222" target="T49"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge247" target="T50"/>
-  <inputArcs source="faultyPlace_c2_c2_xft_nodeB_fm123" target="T51"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge348" target="T52"/>
-  <inputArcs source="faultyPlace_nodeA_nodeA_ft111" target="T53"/>
-  <inputArcs source="logicResult_nodeA_logic_nodeA_fge149" target="T54"/>
-  <inputArcs source="faultyPlace_bus_bus_ft114" target="T55"/>
-  <inputArcs source="logicResult_bus_logic_bus_fge150" target="T56"/>
-  <inputArcs source="faultyPlace_bus_bus_xft_nodeA_fm124" target="T57"/>
-  <inputArcs source="logicResult_bus_logic_bus_fge251" target="T58"/>
-  <inputArcs source="faultyPlace_nodeB_nodeB_ft117" target="T59"/>
-  <inputArcs source="logicResult_nodeB_logic_nodeB_fge152" target="T60"/>
-  <inputArcs source="faultyPlace_nodeB_nodeB_xft_bus_fm125" target="T61"/>
-  <inputArcs source="logicResult_nodeB_logic_nodeB_fge253" target="T62"/>
-  <inputArcs source="logicResult_c1_logic_c1_fge143" target="T64"/>
-  <inputArcs source="activated_c1_faultsGeneratesError_c1_fge155" target="T65"/>
-  <inputArcs source="active_c1_faultsGeneratesError_c1_fge154" target="T66"/>
-  <inputArcs source="active_c1_faultsGeneratesError_c1_fge154" target="T68"/>
-  <inputArcs source="tmp_activated_c1_faultsGeneratesError_c1_fge156" target="T63"/>
-  <inputArcs source="tmp_activated_c1_faultsGeneratesError_c1_fge156" target="T67"/>
-  <inputArcs source="logicResult_c1_logic_c1_fge143" target="T68"/>
-  <inputArcs source="errorsActivation_c1_faultsGeneratesError_c1_fge157" target="T173"/>
-  <inputArcs source="logicResult_c1_logic_c1_fge244" target="T70"/>
-  <inputArcs source="activated_c1_faultsGeneratesError_c1_fge259" target="T71"/>
-  <inputArcs source="active_c1_faultsGeneratesError_c1_fge258" target="T72"/>
-  <inputArcs source="active_c1_faultsGeneratesError_c1_fge258" target="T74"/>
-  <inputArcs source="tmp_activated_c1_faultsGeneratesError_c1_fge260" target="T69"/>
-  <inputArcs source="tmp_activated_c1_faultsGeneratesError_c1_fge260" target="T73"/>
-  <inputArcs source="logicResult_c1_logic_c1_fge244" target="T74"/>
-  <inputArcs source="errorsActivation_c1_faultsGeneratesError_c1_fge261" target="T174"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge145" target="T76"/>
-  <inputArcs source="activated_c2_faultsGeneratesError_c2_fge163" target="T77"/>
-  <inputArcs source="active_c2_faultsGeneratesError_c2_fge162" target="T78"/>
-  <inputArcs source="active_c2_faultsGeneratesError_c2_fge162" target="T80"/>
-  <inputArcs source="tmp_activated_c2_faultsGeneratesError_c2_fge164" target="T75"/>
-  <inputArcs source="tmp_activated_c2_faultsGeneratesError_c2_fge164" target="T79"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge145" target="T80"/>
-  <inputArcs source="errorsActivation_c2_faultsGeneratesError_c2_fge165" target="T179"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge242" target="T82"/>
-  <inputArcs source="activated_c2_faultsGeneratesError_c2_fge267" target="T83"/>
-  <inputArcs source="active_c2_faultsGeneratesError_c2_fge266" target="T84"/>
-  <inputArcs source="active_c2_faultsGeneratesError_c2_fge266" target="T86"/>
-  <inputArcs source="tmp_activated_c2_faultsGeneratesError_c2_fge268" target="T81"/>
-  <inputArcs source="tmp_activated_c2_faultsGeneratesError_c2_fge268" target="T85"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge242" target="T86"/>
-  <inputArcs source="errorsActivation_c2_faultsGeneratesError_c2_fge269" target="T180"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge348" target="T88"/>
-  <inputArcs source="activated_c2_faultsGeneratesError_c2_fge371" target="T89"/>
-  <inputArcs source="active_c2_faultsGeneratesError_c2_fge370" target="T90"/>
-  <inputArcs source="active_c2_faultsGeneratesError_c2_fge370" target="T92"/>
-  <inputArcs source="tmp_activated_c2_faultsGeneratesError_c2_fge372" target="T87"/>
-  <inputArcs source="tmp_activated_c2_faultsGeneratesError_c2_fge372" target="T91"/>
-  <inputArcs source="logicResult_c2_logic_c2_fge348" target="T92"/>
-  <inputArcs source="errorsActivation_c2_faultsGeneratesError_c2_fge373" target="T181"/>
-  <inputArcs source="logicResult_nodeA_logic_nodeA_fge149" target="T94"/>
-  <inputArcs source="activated_nodeA_faultsGeneratesError_nodeA_fge175" target="T95"/>
-  <inputArcs source="active_nodeA_faultsGeneratesError_nodeA_fge174" target="T96"/>
-  <inputArcs source="active_nodeA_faultsGeneratesError_nodeA_fge174" target="T98"/>
-  <inputArcs source="tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176" target="T93"/>
-  <inputArcs source="tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176" target="T97"/>
-  <inputArcs source="logicResult_nodeA_logic_nodeA_fge149" target="T98"/>
-  <inputArcs source="errorsActivation_nodeA_faultsGeneratesError_nodeA_fge177" target="T185"/>
-  <inputArcs source="logicResult_bus_logic_bus_fge150" target="T100"/>
-  <inputArcs source="activated_bus_faultsGeneratesError_bus_fge179" target="T101"/>
-  <inputArcs source="active_bus_faultsGeneratesError_bus_fge178" target="T102"/>
-  <inputArcs source="active_bus_faultsGeneratesError_bus_fge178" target="T104"/>
-  <inputArcs source="tmp_activated_bus_faultsGeneratesError_bus_fge180" target="T99"/>
-  <inputArcs source="tmp_activated_bus_faultsGeneratesError_bus_fge180" target="T103"/>
-  <inputArcs source="logicResult_bus_logic_bus_fge150" target="T104"/>
-  <inputArcs source="errorsActivation_bus_faultsGeneratesError_bus_fge181" target="T189"/>
-  <inputArcs source="logicResult_bus_logic_bus_fge251" target="T106"/>
-  <inputArcs source="activated_bus_faultsGeneratesError_bus_fge283" target="T107"/>
-  <inputArcs source="active_bus_faultsGeneratesError_bus_fge282" target="T108"/>
-  <inputArcs source="active_bus_faultsGeneratesError_bus_fge282" target="T110"/>
-  <inputArcs source="tmp_activated_bus_faultsGeneratesError_bus_fge284" target="T105"/>
-  <inputArcs source="tmp_activated_bus_faultsGeneratesError_bus_fge284" target="T109"/>
-  <inputArcs source="logicResult_bus_logic_bus_fge251" target="T110"/>
-  <inputArcs source="errorsActivation_bus_faultsGeneratesError_bus_fge285" target="T190"/>
-  <inputArcs source="logicResult_nodeB_logic_nodeB_fge152" target="T112"/>
-  <inputArcs source="activated_nodeB_faultsGeneratesError_nodeB_fge187" target="T113"/>
-  <inputArcs source="active_nodeB_faultsGeneratesError_nodeB_fge186" target="T114"/>
-  <inputArcs source="active_nodeB_faultsGeneratesError_nodeB_fge186" target="T116"/>
-  <inputArcs source="tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188" target="T111"/>
-  <inputArcs source="tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188" target="T115"/>
-  <inputArcs source="logicResult_nodeB_logic_nodeB_fge152" target="T116"/>
-  <inputArcs source="errorsActivation_nodeB_faultsGeneratesError_nodeB_fge189" target="T194"/>
-  <inputArcs source="logicResult_nodeB_logic_nodeB_fge253" target="T118"/>
-  <inputArcs source="activated_nodeB_faultsGeneratesError_nodeB_fge291" target="T119"/>
-  <inputArcs source="active_nodeB_faultsGeneratesError_nodeB_fge290" target="T120"/>
-  <inputArcs source="active_nodeB_faultsGeneratesError_nodeB_fge290" target="T122"/>
-  <inputArcs source="tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292" target="T117"/>
-  <inputArcs source="tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292" target="T121"/>
-  <inputArcs source="logicResult_nodeB_logic_nodeB_fge253" target="T122"/>
-  <inputArcs source="errorsActivation_nodeB_faultsGeneratesError_nodeB_fge293" target="T195"/>
-  <inputArcs source="erroneusPlace_c1_c1_e126" target="T123"/>
-  <inputArcs source="logicResult_c1_logic_c1_epf194" target="T124"/>
-  <inputArcs source="erroneusPlace_c1_c1_e126" target="T125"/>
-  <inputArcs source="logicResult_c1_logic_c1_epf295" target="T126"/>
-  <inputArcs source="erroneusPlace_c2_c2_e128" target="T127"/>
-  <inputArcs source="logicResult_c2_logic_c2_epf296" target="T128"/>
-  <inputArcs source="erroneusPlace_nodeA_nodeA_e130" target="T129"/>
-  <inputArcs source="logicResult_nodeA_logic_nodeA_epf197" target="T130"/>
-  <inputArcs source="erroneusPlace_bus_bus_e132" target="T131"/>
-  <inputArcs source="logicResult_bus_logic_bus_epf198" target="T132"/>
-  <inputArcs source="erroneusPlace_nodeB_nodeB_e134" target="T133"/>
-  <inputArcs source="logicResult_nodeB_logic_nodeB_epf199" target="T134"/>
-  <inputArcs source="logicResult_c1_logic_c1_epf194" target="T136"/>
-  <inputArcs source="activated_c1_errorsProducesFailures_c1_epf1101" target="T137"/>
-  <inputArcs source="active_c1_errorsProducesFailures_c1_epf1100" target="T138"/>
-  <inputArcs source="active_c1_errorsProducesFailures_c1_epf1100" target="T140"/>
-  <inputArcs source="tmp_propagation_c1_errors_produces_failures_c1_epf1102" target="T135"/>
-  <inputArcs source="tmp_propagation_c1_errors_produces_failures_c1_epf1102" target="T139"/>
-  <inputArcs source="logicResult_c1_logic_c1_epf194" target="T140"/>
-  <inputArcs source="errorsActivation_c1_errorsProducesFailures_c1_epf1103" target="T175"/>
-  <inputArcs source="logicResult_c1_logic_c1_epf295" target="T142"/>
-  <inputArcs source="activated_c1_errorsProducesFailures_c1_epf2105" target="T143"/>
-  <inputArcs source="active_c1_errorsProducesFailures_c1_epf2104" target="T144"/>
-  <inputArcs source="active_c1_errorsProducesFailures_c1_epf2104" target="T146"/>
-  <inputArcs source="tmp_propagation_c1_errors_produces_failures_c1_epf2106" target="T141"/>
-  <inputArcs source="tmp_propagation_c1_errors_produces_failures_c1_epf2106" target="T145"/>
-  <inputArcs source="logicResult_c1_logic_c1_epf295" target="T146"/>
-  <inputArcs source="errorsActivation_c1_errorsProducesFailures_c1_epf2107" target="T176"/>
-  <inputArcs source="logicResult_c2_logic_c2_epf296" target="T148"/>
-  <inputArcs source="activated_c2_errorsProducesFailures_c2_epf2109" target="T149"/>
-  <inputArcs source="active_c2_errorsProducesFailures_c2_epf2108" target="T150"/>
-  <inputArcs source="active_c2_errorsProducesFailures_c2_epf2108" target="T152"/>
-  <inputArcs source="tmp_propagation_c2_errors_produces_failures_c2_epf2110" target="T147"/>
-  <inputArcs source="tmp_propagation_c2_errors_produces_failures_c2_epf2110" target="T151"/>
-  <inputArcs source="logicResult_c2_logic_c2_epf296" target="T152"/>
-  <inputArcs source="errorsActivation_c2_errorsProducesFailures_c2_epf2111" target="T182"/>
-  <inputArcs source="logicResult_nodeA_logic_nodeA_epf197" target="T154"/>
-  <inputArcs source="activated_nodeA_errorsProducesFailures_nodeA_epf1113" target="T155"/>
-  <inputArcs source="active_nodeA_errorsProducesFailures_nodeA_epf1112" target="T156"/>
-  <inputArcs source="active_nodeA_errorsProducesFailures_nodeA_epf1112" target="T158"/>
-  <inputArcs source="tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114" target="T153"/>
-  <inputArcs source="tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114" target="T157"/>
-  <inputArcs source="logicResult_nodeA_logic_nodeA_epf197" target="T158"/>
-  <inputArcs source="errorsActivation_nodeA_errorsProducesFailures_nodeA_epf1115" target="T186"/>
-  <inputArcs source="logicResult_bus_logic_bus_epf198" target="T160"/>
-  <inputArcs source="activated_bus_errorsProducesFailures_bus_epf1117" target="T161"/>
-  <inputArcs source="active_bus_errorsProducesFailures_bus_epf1116" target="T162"/>
-  <inputArcs source="active_bus_errorsProducesFailures_bus_epf1116" target="T164"/>
-  <inputArcs source="tmp_propagation_bus_errors_produces_failures_bus_epf1118" target="T159"/>
-  <inputArcs source="tmp_propagation_bus_errors_produces_failures_bus_epf1118" target="T163"/>
-  <inputArcs source="logicResult_bus_logic_bus_epf198" target="T164"/>
-  <inputArcs source="errorsActivation_bus_errorsProducesFailures_bus_epf1119" target="T191"/>
-  <inputArcs source="logicResult_nodeB_logic_nodeB_epf199" target="T166"/>
-  <inputArcs source="activated_nodeB_errorsProducesFailures_nodeB_epf1121" target="T167"/>
-  <inputArcs source="active_nodeB_errorsProducesFailures_nodeB_epf1120" target="T168"/>
-  <inputArcs source="active_nodeB_errorsProducesFailures_nodeB_epf1120" target="T170"/>
-  <inputArcs source="tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122" target="T165"/>
-  <inputArcs source="tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122" target="T169"/>
-  <inputArcs source="logicResult_nodeB_logic_nodeB_epf199" target="T170"/>
-  <inputArcs source="errorsActivation_nodeB_errorsProducesFailures_nodeB_epf1123" target="T196"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c10" target="T171"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c21" target="T177"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="failed_nodeA2" target="T183"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="failed_bus3" target="T187"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="failed_nodeB4" target="T192"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c10" target="T20"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c1_c1_xft_nodeA_fm120" target="T20"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c21" target="T22"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c2_c2_xft_c1_fm121" target="T22"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c21" target="T24"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c2_c2_xft_c1_fm222" target="T24"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c21" target="T26"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c2_c2_xft_nodeB_fm123" target="T26"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="failed_bus3" target="T28"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_bus_bus_xft_nodeA_fm124" target="T28"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="failed_nodeB4" target="T30"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_nodeB_nodeB_xft_bus_fm125" target="T30"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge242" target="T37"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge247" target="T37"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge242" target="T38"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge242" target="T39"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge246" target="T39"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge247" target="T40"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge246" target="T40"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_fge143" target="T41"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c1_c1_ft15" target="T42"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_fge244" target="T43"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c1_c1_xft_nodeA_fm120" target="T44"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge145" target="T45"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c2_c2_ft18" target="T46"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge246" target="T47"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c2_c2_xft_c1_fm121" target="T48"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge247" target="T49"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c2_c2_xft_c1_fm222" target="T50"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge348" target="T51"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c2_c2_xft_nodeB_fm123" target="T52"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeA_logic_nodeA_fge149" target="T53"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_nodeA_nodeA_ft111" target="T54"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_bus_logic_bus_fge150" target="T55"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_bus_bus_ft114" target="T56"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_bus_logic_bus_fge251" target="T57"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_bus_bus_xft_nodeA_fm124" target="T58"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeB_logic_nodeB_fge152" target="T59"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_nodeB_nodeB_ft117" target="T60"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeB_logic_nodeB_fge253" target="T61"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_nodeB_nodeB_xft_bus_fm125" target="T62"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_c1_faultsGeneratesError_c1_fge155" target="T64"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_fge143" target="T65"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_fge143" target="T66"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_c1_faultsGeneratesError_c1_fge259" target="T70"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_fge244" target="T71"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_fge244" target="T72"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_c2_faultsGeneratesError_c2_fge163" target="T76"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge145" target="T77"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge145" target="T78"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_c2_faultsGeneratesError_c2_fge267" target="T82"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge242" target="T83"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge242" target="T84"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_c2_faultsGeneratesError_c2_fge371" target="T88"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge348" target="T89"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_fge348" target="T90"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_nodeA_faultsGeneratesError_nodeA_fge175" target="T94"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeA_logic_nodeA_fge149" target="T95"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeA_logic_nodeA_fge149" target="T96"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_bus_faultsGeneratesError_bus_fge179" target="T100"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_bus_logic_bus_fge150" target="T101"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_bus_logic_bus_fge150" target="T102"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_bus_faultsGeneratesError_bus_fge283" target="T106"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_bus_logic_bus_fge251" target="T107"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_bus_logic_bus_fge251" target="T108"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_nodeB_faultsGeneratesError_nodeB_fge187" target="T112"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeB_logic_nodeB_fge152" target="T113"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeB_logic_nodeB_fge152" target="T114"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_nodeB_faultsGeneratesError_nodeB_fge291" target="T118"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeB_logic_nodeB_fge253" target="T119"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeB_logic_nodeB_fge253" target="T120"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_epf194" target="T123"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_c1_c1_e126" target="T124"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_epf295" target="T125"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_c1_c1_e126" target="T126"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_epf296" target="T127"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_c2_c2_e128" target="T128"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeA_logic_nodeA_epf197" target="T129"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_nodeA_nodeA_e130" target="T130"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_bus_logic_bus_epf198" target="T131"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_bus_bus_e132" target="T132"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeB_logic_nodeB_epf199" target="T133"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_nodeB_nodeB_e134" target="T134"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_c1_errorsProducesFailures_c1_epf1101" target="T136"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_epf194" target="T137"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_epf194" target="T138"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_c1_errorsProducesFailures_c1_epf2105" target="T142"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_epf295" target="T143"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c1_logic_c1_epf295" target="T144"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_c2_errorsProducesFailures_c2_epf2109" target="T148"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_epf296" target="T149"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_c2_logic_c2_epf296" target="T150"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_nodeA_errorsProducesFailures_nodeA_epf1113" target="T154"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeA_logic_nodeA_epf197" target="T155"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeA_logic_nodeA_epf197" target="T156"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_bus_errorsProducesFailures_bus_epf1117" target="T160"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_bus_logic_bus_epf198" target="T161"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_bus_logic_bus_epf198" target="T162"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="activated_nodeB_errorsProducesFailures_nodeB_epf1121" target="T166"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeB_logic_nodeB_epf199" target="T167"/>
-  <outputArcs xsi:type="deem:InhibitorArc" source="logicResult_nodeB_logic_nodeB_epf199" target="T168"/>
-  <outputArcs source="T171" target="internal_fault_occurred_c1_c1_ft17"/>
-  <outputArcs source="T0" target="faultyPlace_c1_c1_ft15"/>
-  <outputArcs source="T1" target="faultyPlace_c1_c1_ft15"/>
-  <outputArcs source="T1" target="numberOfTransientFaultyPlace_c1_c1_ft16"/>
-  <outputArcs source="T2" target="failed_c10"/>
-  <outputArcs source="T3" target="failed_c10"/>
-  <outputArcs source="T177" target="internal_fault_occurred_c2_c2_ft110"/>
-  <outputArcs source="T4" target="faultyPlace_c2_c2_ft18"/>
-  <outputArcs source="T5" target="faultyPlace_c2_c2_ft18"/>
-  <outputArcs source="T5" target="numberOfTransientFaultyPlace_c2_c2_ft19"/>
-  <outputArcs source="T6" target="failed_c21"/>
-  <outputArcs source="T7" target="failed_c21"/>
-  <outputArcs source="T183" target="internal_fault_occurred_nodeA_nodeA_ft113"/>
-  <outputArcs source="T8" target="faultyPlace_nodeA_nodeA_ft111"/>
-  <outputArcs source="T9" target="faultyPlace_nodeA_nodeA_ft111"/>
-  <outputArcs source="T9" target="numberOfTransientFaultyPlace_nodeA_nodeA_ft112"/>
-  <outputArcs source="T10" target="failed_nodeA2"/>
-  <outputArcs source="T11" target="failed_nodeA2"/>
-  <outputArcs source="T187" target="internal_fault_occurred_bus_bus_ft116"/>
-  <outputArcs source="T12" target="faultyPlace_bus_bus_ft114"/>
-  <outputArcs source="T13" target="faultyPlace_bus_bus_ft114"/>
-  <outputArcs source="T13" target="numberOfTransientFaultyPlace_bus_bus_ft115"/>
-  <outputArcs source="T14" target="failed_bus3"/>
-  <outputArcs source="T15" target="failed_bus3"/>
-  <outputArcs source="T192" target="internal_fault_occurred_nodeB_nodeB_ft119"/>
-  <outputArcs source="T16" target="faultyPlace_nodeB_nodeB_ft117"/>
-  <outputArcs source="T17" target="faultyPlace_nodeB_nodeB_ft117"/>
-  <outputArcs source="T17" target="numberOfTransientFaultyPlace_nodeB_nodeB_ft118"/>
-  <outputArcs source="T18" target="failed_nodeB4"/>
-  <outputArcs source="T19" target="failed_nodeB4"/>
-  <outputArcs source="T20" target="failureModePlace_nodeA_nodeA_fm139"/>
-  <outputArcs source="T20" target="faultyPlace_c1_c1_xft_nodeA_fm120"/>
-  <outputArcs source="T21" target="failed_c10"/>
-  <outputArcs source="T22" target="failureModePlace_c1_c1_fm136"/>
-  <outputArcs source="T22" target="faultyPlace_c2_c2_xft_c1_fm121"/>
-  <outputArcs source="T23" target="failed_c21"/>
-  <outputArcs source="T24" target="failureModePlace_c1_c1_fm237"/>
-  <outputArcs source="T24" target="faultyPlace_c2_c2_xft_c1_fm222"/>
-  <outputArcs source="T25" target="failed_c21"/>
-  <outputArcs source="T26" target="failureModePlace_nodeB_nodeB_fm141"/>
-  <outputArcs source="T26" target="faultyPlace_c2_c2_xft_nodeB_fm123"/>
-  <outputArcs source="T27" target="failed_c21"/>
-  <outputArcs source="T28" target="failureModePlace_nodeA_nodeA_fm139"/>
-  <outputArcs source="T28" target="faultyPlace_bus_bus_xft_nodeA_fm124"/>
-  <outputArcs source="T29" target="failed_bus3"/>
-  <outputArcs source="T30" target="failureModePlace_bus_bus_fm140"/>
-  <outputArcs source="T30" target="faultyPlace_nodeB_nodeB_xft_bus_fm125"/>
-  <outputArcs source="T31" target="failed_nodeB4"/>
-  <outputArcs source="T32" target="failed_c10"/>
-  <outputArcs source="T33" target="failed_c21"/>
-  <outputArcs source="T34" target="failed_nodeA2"/>
-  <outputArcs source="T35" target="failed_bus3"/>
-  <outputArcs source="T36" target="failed_nodeB4"/>
-  <outputArcs source="T37" target="logicResult_c2_logic_c2_fge242"/>
-  <outputArcs source="T37" target="logicResult_c2_logic_c2_fge246"/>
-  <outputArcs source="T38" target="logicResult_c2_logic_c2_fge242"/>
-  <outputArcs source="T38" target="logicResult_c2_logic_c2_fge246"/>
-  <outputArcs source="T38" target="logicResult_c2_logic_c2_fge247"/>
-  <outputArcs source="T39" target="logicResult_c2_logic_c2_fge242"/>
-  <outputArcs source="T39" target="logicResult_c2_logic_c2_fge247"/>
-  <outputArcs source="T41" target="logicResult_c1_logic_c1_fge143"/>
-  <outputArcs source="T41" target="faultyPlace_c1_c1_ft15"/>
-  <outputArcs source="T43" target="logicResult_c1_logic_c1_fge244"/>
-  <outputArcs source="T43" target="faultyPlace_c1_c1_xft_nodeA_fm120"/>
-  <outputArcs source="T45" target="logicResult_c2_logic_c2_fge145"/>
-  <outputArcs source="T45" target="faultyPlace_c2_c2_ft18"/>
-  <outputArcs source="T47" target="logicResult_c2_logic_c2_fge246"/>
-  <outputArcs source="T47" target="faultyPlace_c2_c2_xft_c1_fm121"/>
-  <outputArcs source="T49" target="logicResult_c2_logic_c2_fge247"/>
-  <outputArcs source="T49" target="faultyPlace_c2_c2_xft_c1_fm222"/>
-  <outputArcs source="T51" target="logicResult_c2_logic_c2_fge348"/>
-  <outputArcs source="T51" target="faultyPlace_c2_c2_xft_nodeB_fm123"/>
-  <outputArcs source="T53" target="logicResult_nodeA_logic_nodeA_fge149"/>
-  <outputArcs source="T53" target="faultyPlace_nodeA_nodeA_ft111"/>
-  <outputArcs source="T55" target="logicResult_bus_logic_bus_fge150"/>
-  <outputArcs source="T55" target="faultyPlace_bus_bus_ft114"/>
-  <outputArcs source="T57" target="logicResult_bus_logic_bus_fge251"/>
-  <outputArcs source="T57" target="faultyPlace_bus_bus_xft_nodeA_fm124"/>
-  <outputArcs source="T59" target="logicResult_nodeB_logic_nodeB_fge152"/>
-  <outputArcs source="T59" target="faultyPlace_nodeB_nodeB_ft117"/>
-  <outputArcs source="T61" target="logicResult_nodeB_logic_nodeB_fge253"/>
-  <outputArcs source="T61" target="faultyPlace_nodeB_nodeB_xft_bus_fm125"/>
-  <outputArcs source="T64" target="logicResult_c1_logic_c1_fge143"/>
-  <outputArcs source="T64" target="activated_c1_faultsGeneratesError_c1_fge155"/>
-  <outputArcs source="T64" target="active_c1_faultsGeneratesError_c1_fge154"/>
-  <outputArcs source="T173" target="tmp_activated_c1_faultsGeneratesError_c1_fge156"/>
-  <outputArcs source="T68" target="logicResult_c1_logic_c1_fge143"/>
-  <outputArcs source="T68" target="errorsActivation_c1_faultsGeneratesError_c1_fge157"/>
-  <outputArcs source="T70" target="logicResult_c1_logic_c1_fge244"/>
-  <outputArcs source="T70" target="activated_c1_faultsGeneratesError_c1_fge259"/>
-  <outputArcs source="T70" target="active_c1_faultsGeneratesError_c1_fge258"/>
-  <outputArcs source="T174" target="tmp_activated_c1_faultsGeneratesError_c1_fge260"/>
-  <outputArcs source="T74" target="logicResult_c1_logic_c1_fge244"/>
-  <outputArcs source="T74" target="errorsActivation_c1_faultsGeneratesError_c1_fge261"/>
-  <outputArcs source="T76" target="logicResult_c2_logic_c2_fge145"/>
-  <outputArcs source="T76" target="activated_c2_faultsGeneratesError_c2_fge163"/>
-  <outputArcs source="T76" target="active_c2_faultsGeneratesError_c2_fge162"/>
-  <outputArcs source="T179" target="tmp_activated_c2_faultsGeneratesError_c2_fge164"/>
-  <outputArcs source="T80" target="logicResult_c2_logic_c2_fge145"/>
-  <outputArcs source="T80" target="errorsActivation_c2_faultsGeneratesError_c2_fge165"/>
-  <outputArcs source="T82" target="logicResult_c2_logic_c2_fge242"/>
-  <outputArcs source="T82" target="activated_c2_faultsGeneratesError_c2_fge267"/>
-  <outputArcs source="T82" target="active_c2_faultsGeneratesError_c2_fge266"/>
-  <outputArcs source="T180" target="tmp_activated_c2_faultsGeneratesError_c2_fge268"/>
-  <outputArcs source="T86" target="logicResult_c2_logic_c2_fge242"/>
-  <outputArcs source="T86" target="errorsActivation_c2_faultsGeneratesError_c2_fge269"/>
-  <outputArcs source="T88" target="logicResult_c2_logic_c2_fge348"/>
-  <outputArcs source="T88" target="activated_c2_faultsGeneratesError_c2_fge371"/>
-  <outputArcs source="T88" target="active_c2_faultsGeneratesError_c2_fge370"/>
-  <outputArcs source="T181" target="tmp_activated_c2_faultsGeneratesError_c2_fge372"/>
-  <outputArcs source="T92" target="logicResult_c2_logic_c2_fge348"/>
-  <outputArcs source="T92" target="errorsActivation_c2_faultsGeneratesError_c2_fge373"/>
-  <outputArcs source="T94" target="logicResult_nodeA_logic_nodeA_fge149"/>
-  <outputArcs source="T94" target="activated_nodeA_faultsGeneratesError_nodeA_fge175"/>
-  <outputArcs source="T94" target="active_nodeA_faultsGeneratesError_nodeA_fge174"/>
-  <outputArcs source="T185" target="tmp_activated_nodeA_faultsGeneratesError_nodeA_fge176"/>
-  <outputArcs source="T98" target="logicResult_nodeA_logic_nodeA_fge149"/>
-  <outputArcs source="T98" target="errorsActivation_nodeA_faultsGeneratesError_nodeA_fge177"/>
-  <outputArcs source="T100" target="logicResult_bus_logic_bus_fge150"/>
-  <outputArcs source="T100" target="activated_bus_faultsGeneratesError_bus_fge179"/>
-  <outputArcs source="T100" target="active_bus_faultsGeneratesError_bus_fge178"/>
-  <outputArcs source="T189" target="tmp_activated_bus_faultsGeneratesError_bus_fge180"/>
-  <outputArcs source="T104" target="logicResult_bus_logic_bus_fge150"/>
-  <outputArcs source="T104" target="errorsActivation_bus_faultsGeneratesError_bus_fge181"/>
-  <outputArcs source="T106" target="logicResult_bus_logic_bus_fge251"/>
-  <outputArcs source="T106" target="activated_bus_faultsGeneratesError_bus_fge283"/>
-  <outputArcs source="T106" target="active_bus_faultsGeneratesError_bus_fge282"/>
-  <outputArcs source="T190" target="tmp_activated_bus_faultsGeneratesError_bus_fge284"/>
-  <outputArcs source="T110" target="logicResult_bus_logic_bus_fge251"/>
-  <outputArcs source="T110" target="errorsActivation_bus_faultsGeneratesError_bus_fge285"/>
-  <outputArcs source="T112" target="logicResult_nodeB_logic_nodeB_fge152"/>
-  <outputArcs source="T112" target="activated_nodeB_faultsGeneratesError_nodeB_fge187"/>
-  <outputArcs source="T112" target="active_nodeB_faultsGeneratesError_nodeB_fge186"/>
-  <outputArcs source="T194" target="tmp_activated_nodeB_faultsGeneratesError_nodeB_fge188"/>
-  <outputArcs source="T116" target="logicResult_nodeB_logic_nodeB_fge152"/>
-  <outputArcs source="T116" target="errorsActivation_nodeB_faultsGeneratesError_nodeB_fge189"/>
-  <outputArcs source="T118" target="logicResult_nodeB_logic_nodeB_fge253"/>
-  <outputArcs source="T118" target="activated_nodeB_faultsGeneratesError_nodeB_fge291"/>
-  <outputArcs source="T118" target="active_nodeB_faultsGeneratesError_nodeB_fge290"/>
-  <outputArcs source="T195" target="tmp_activated_nodeB_faultsGeneratesError_nodeB_fge292"/>
-  <outputArcs source="T122" target="logicResult_nodeB_logic_nodeB_fge253"/>
-  <outputArcs source="T122" target="errorsActivation_nodeB_faultsGeneratesError_nodeB_fge293"/>
-  <outputArcs source="T63" target="erroneusPlace_c1_c1_e126"/>
-  <outputArcs source="T69" target="erroneusPlace_c1_c1_e126"/>
-  <outputArcs source="T75" target="erroneusPlace_c2_c2_e128"/>
-  <outputArcs source="T81" target="erroneusPlace_c2_c2_e128"/>
-  <outputArcs source="T87" target="erroneusPlace_c2_c2_e128"/>
-  <outputArcs source="T93" target="erroneusPlace_nodeA_nodeA_e130"/>
-  <outputArcs source="T99" target="erroneusPlace_bus_bus_e132"/>
-  <outputArcs source="T105" target="erroneusPlace_bus_bus_e132"/>
-  <outputArcs source="T111" target="erroneusPlace_nodeB_nodeB_e134"/>
-  <outputArcs source="T117" target="erroneusPlace_nodeB_nodeB_e134"/>
-  <outputArcs source="T123" target="logicResult_c1_logic_c1_epf194"/>
-  <outputArcs source="T123" target="erroneusPlace_c1_c1_e126"/>
-  <outputArcs source="T125" target="logicResult_c1_logic_c1_epf295"/>
-  <outputArcs source="T125" target="erroneusPlace_c1_c1_e126"/>
-  <outputArcs source="T127" target="logicResult_c2_logic_c2_epf296"/>
-  <outputArcs source="T127" target="erroneusPlace_c2_c2_e128"/>
-  <outputArcs source="T129" target="logicResult_nodeA_logic_nodeA_epf197"/>
-  <outputArcs source="T129" target="erroneusPlace_nodeA_nodeA_e130"/>
-  <outputArcs source="T131" target="logicResult_bus_logic_bus_epf198"/>
-  <outputArcs source="T131" target="erroneusPlace_bus_bus_e132"/>
-  <outputArcs source="T133" target="logicResult_nodeB_logic_nodeB_epf199"/>
-  <outputArcs source="T133" target="erroneusPlace_nodeB_nodeB_e134"/>
-  <outputArcs source="T136" target="logicResult_c1_logic_c1_epf194"/>
-  <outputArcs source="T136" target="activated_c1_errorsProducesFailures_c1_epf1101"/>
-  <outputArcs source="T136" target="active_c1_errorsProducesFailures_c1_epf1100"/>
-  <outputArcs source="T175" target="tmp_propagation_c1_errors_produces_failures_c1_epf1102"/>
-  <outputArcs source="T140" target="logicResult_c1_logic_c1_epf194"/>
-  <outputArcs source="T140" target="errorsActivation_c1_errorsProducesFailures_c1_epf1103"/>
-  <outputArcs source="T142" target="logicResult_c1_logic_c1_epf295"/>
-  <outputArcs source="T142" target="activated_c1_errorsProducesFailures_c1_epf2105"/>
-  <outputArcs source="T142" target="active_c1_errorsProducesFailures_c1_epf2104"/>
-  <outputArcs source="T176" target="tmp_propagation_c1_errors_produces_failures_c1_epf2106"/>
-  <outputArcs source="T146" target="logicResult_c1_logic_c1_epf295"/>
-  <outputArcs source="T146" target="errorsActivation_c1_errorsProducesFailures_c1_epf2107"/>
-  <outputArcs source="T148" target="logicResult_c2_logic_c2_epf296"/>
-  <outputArcs source="T148" target="activated_c2_errorsProducesFailures_c2_epf2109"/>
-  <outputArcs source="T148" target="active_c2_errorsProducesFailures_c2_epf2108"/>
-  <outputArcs source="T182" target="tmp_propagation_c2_errors_produces_failures_c2_epf2110"/>
-  <outputArcs source="T152" target="logicResult_c2_logic_c2_epf296"/>
-  <outputArcs source="T152" target="errorsActivation_c2_errorsProducesFailures_c2_epf2111"/>
-  <outputArcs source="T154" target="logicResult_nodeA_logic_nodeA_epf197"/>
-  <outputArcs source="T154" target="activated_nodeA_errorsProducesFailures_nodeA_epf1113"/>
-  <outputArcs source="T154" target="active_nodeA_errorsProducesFailures_nodeA_epf1112"/>
-  <outputArcs source="T186" target="tmp_propagation_nodeA_errors_produces_failures_nodeA_epf1114"/>
-  <outputArcs source="T158" target="logicResult_nodeA_logic_nodeA_epf197"/>
-  <outputArcs source="T158" target="errorsActivation_nodeA_errorsProducesFailures_nodeA_epf1115"/>
-  <outputArcs source="T160" target="logicResult_bus_logic_bus_epf198"/>
-  <outputArcs source="T160" target="activated_bus_errorsProducesFailures_bus_epf1117"/>
-  <outputArcs source="T160" target="active_bus_errorsProducesFailures_bus_epf1116"/>
-  <outputArcs source="T191" target="tmp_propagation_bus_errors_produces_failures_bus_epf1118"/>
-  <outputArcs source="T164" target="logicResult_bus_logic_bus_epf198"/>
-  <outputArcs source="T164" target="errorsActivation_bus_errorsProducesFailures_bus_epf1119"/>
-  <outputArcs source="T166" target="logicResult_nodeB_logic_nodeB_epf199"/>
-  <outputArcs source="T166" target="activated_nodeB_errorsProducesFailures_nodeB_epf1121"/>
-  <outputArcs source="T166" target="active_nodeB_errorsProducesFailures_nodeB_epf1120"/>
-  <outputArcs source="T196" target="tmp_propagation_nodeB_errors_produces_failures_nodeB_epf1122"/>
-  <outputArcs source="T170" target="logicResult_nodeB_logic_nodeB_epf199"/>
-  <outputArcs source="T170" target="errorsActivation_nodeB_errorsProducesFailures_nodeB_epf1123"/>
-  <outputArcs source="T135" target="failureModePlace_c1_c1_fm136"/>
-  <outputArcs source="T135" target="failed_c10"/>
-  <outputArcs source="T141" target="failureModePlace_c1_c1_fm237"/>
-  <outputArcs source="T141" target="failed_c10"/>
-  <outputArcs source="T147" target="failureModePlace_c2_c2_fm138"/>
-  <outputArcs source="T147" target="failed_c21"/>
-  <outputArcs source="T153" target="failureModePlace_nodeA_nodeA_fm139"/>
-  <outputArcs source="T153" target="failed_nodeA2"/>
-  <outputArcs source="T159" target="failureModePlace_bus_bus_fm140"/>
-  <outputArcs source="T159" target="failed_bus3"/>
-  <outputArcs source="T165" target="failureModePlace_nodeB_nodeB_fm141"/>
-  <outputArcs source="T165" target="failed_nodeB4"/>
+<deem:Net xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:deem="http://informatica.unifi.it/metamodels/deem" Name="Example">
+  <places Name="failed_c1"/>
+  <places Name="failed_c2"/>
+  <places Name="failed_nodeA"/>
+  <places Name="failed_bus"/>
+  <places Name="failed_nodeB"/>
+  <places Name="faultyPlace_c1_c1_ft1"/>
+  <places Name="numberOfTransientFaultyPlace_c1_c1_ft1"/>
+  <places Name="internal_fault_occurred_c1_c1_ft1"/>
+  <places Name="faultyPlace_c2_c2_ft1"/>
+  <places Name="numberOfTransientFaultyPlace_c2_c2_ft1"/>
+  <places Name="internal_fault_occurred_c2_c2_ft1"/>
+  <places Name="faultyPlace_nodeA_nodeA_ft1"/>
+  <places Name="numberOfTransientFaultyPlace_nodeA_nodeA_ft1"/>
+  <places Name="internal_fault_occurred_nodeA_nodeA_ft1"/>
+  <places Name="faultyPlace_bus_bus_ft1"/>
+  <places Name="numberOfTransientFaultyPlace_bus_bus_ft1"/>
+  <places Name="internal_fault_occurred_bus_bus_ft1"/>
+  <places Name="faultyPlace_nodeB_nodeB_ft1"/>
+  <places Name="numberOfTransientFaultyPlace_nodeB_nodeB_ft1"/>
+  <places Name="internal_fault_occurred_nodeB_nodeB_ft1"/>
+  <places Name="ComponentExternalFault_2"/>
+  <places Name="ComponentExternalFault_9"/>
+  <places Name="ComponentExternalFault_16"/>
+  <places Name="ComponentExternalFault_23"/>
+  <places Name="ComponentExternalFault_30"/>
+  <places Name="ComponentExternalFault_37"/>
+  <places Name="erroneusPlace_c1_c1_e1"/>
+  <places Name="detect_error_Place_c1_c1_e1"/>
+  <places Name="erroneusPlace_c2_c2_e1"/>
+  <places Name="detect_error_Place_c2_c2_e1"/>
+  <places Name="erroneusPlace_nodeA_nodeA_e1"/>
+  <places Name="detect_error_Place_nodeA_nodeA_e1"/>
+  <places Name="erroneusPlace_bus_bus_e1"/>
+  <places Name="detect_error_Place_bus_bus_e1"/>
+  <places Name="erroneusPlace_nodeB_nodeB_e1"/>
+  <places Name="detect_error_Place_nodeB_nodeB_e1"/>
+  <places Name="failureMode_c1_c1_fm1"/>
+  <places Name="failureMode_c1_c1_fm2"/>
+  <places Name="failureMode_c2_c2_fm1"/>
+  <places Name="failureMode_nodeA_nodeA_fm1"/>
+  <places Name="failureMode_bus_bus_fm1"/>
+  <places Name="failureMode_nodeB_nodeB_fm1"/>
+  <places Name="ComponentExternalFault_87"/>
+  <places Name="ComponentExternalFault_60"/>
+  <places Name="ComponentExternalFault_69"/>
+  <places Name="ComponentExternalFault_78"/>
+  <places Name="ComponentExternalFault_111"/>
+  <places Name="ComponentExternalFault_120"/>
+  <places Name="ComponentExternalFault_129"/>
+  <places Name="ComponentExternalFault_138"/>
+  <places Name="ComponentExternalFault_147"/>
+  <places Name="ComponentExternalFault_156"/>
+  <places Name="ComponentExternalFault_165"/>
+  <places Name="ComponentExternalFault_174"/>
+  <places Name="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1"/>
+  <places Name="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1"/>
+  <places Name="ComponentExternalFault_199"/>
+  <places Name="ComponentExternalFault_204"/>
+  <places Name="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge2"/>
+  <places Name="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge2"/>
+  <places Name="ComponentExternalFault_226"/>
+  <places Name="ComponentExternalFault_231"/>
+  <places Name="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge1"/>
+  <places Name="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge1"/>
+  <places Name="ComponentExternalFault_253"/>
+  <places Name="ComponentExternalFault_258"/>
+  <places Name="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge2"/>
+  <places Name="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge2"/>
+  <places Name="ComponentExternalFault_280"/>
+  <places Name="ComponentExternalFault_285"/>
+  <places Name="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge3"/>
+  <places Name="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge3"/>
+  <places Name="ComponentExternalFault_307"/>
+  <places Name="ComponentExternalFault_312"/>
+  <places Name="faults_generates_errors_active_nodeA_faultsGeneratesError_nodeA_fge1"/>
+  <places Name="faults_generates_errors_activated_nodeA_faultsGeneratesError_nodeA_fge1"/>
+  <places Name="ComponentExternalFault_334"/>
+  <places Name="ComponentExternalFault_339"/>
+  <places Name="faults_generates_errors_active_bus_faultsGeneratesError_bus_fge1"/>
+  <places Name="faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge1"/>
+  <places Name="ComponentExternalFault_361"/>
+  <places Name="ComponentExternalFault_366"/>
+  <places Name="faults_generates_errors_active_bus_faultsGeneratesError_bus_fge2"/>
+  <places Name="faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge2"/>
+  <places Name="ComponentExternalFault_388"/>
+  <places Name="ComponentExternalFault_393"/>
+  <places Name="faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge1"/>
+  <places Name="faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge1"/>
+  <places Name="ComponentExternalFault_415"/>
+  <places Name="ComponentExternalFault_420"/>
+  <places Name="faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge2"/>
+  <places Name="faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge2"/>
+  <places Name="ComponentExternalFault_442"/>
+  <places Name="ComponentExternalFault_447"/>
+  <places Name="ComponentExternalFault_463"/>
+  <places Name="ComponentExternalFault_472"/>
+  <places Name="ComponentExternalFault_481"/>
+  <places Name="ComponentExternalFault_490"/>
+  <places Name="ComponentExternalFault_499"/>
+  <places Name="ComponentExternalFault_508"/>
+  <places Name="ComponentExternalFault_518"/>
+  <places Name="ComponentExternalFault_519"/>
+  <places Name="ComponentExternalFault_533"/>
+  <places Name="ComponentExternalFault_538"/>
+  <places Name="ComponentExternalFault_545"/>
+  <places Name="ComponentExternalFault_546"/>
+  <places Name="ComponentExternalFault_560"/>
+  <places Name="ComponentExternalFault_565"/>
+  <places Name="ComponentExternalFault_572"/>
+  <places Name="ComponentExternalFault_573"/>
+  <places Name="ComponentExternalFault_587"/>
+  <places Name="ComponentExternalFault_592"/>
+  <places Name="ComponentExternalFault_599"/>
+  <places Name="ComponentExternalFault_600"/>
+  <places Name="ComponentExternalFault_614"/>
+  <places Name="ComponentExternalFault_619"/>
+  <places Name="ComponentExternalFault_626"/>
+  <places Name="ComponentExternalFault_627"/>
+  <places Name="ComponentExternalFault_641"/>
+  <places Name="ComponentExternalFault_646"/>
+  <places Name="ComponentExternalFault_653"/>
+  <places Name="ComponentExternalFault_654"/>
+  <places Name="ComponentExternalFault_668"/>
+  <places Name="ComponentExternalFault_673"/>
+  <inputArcs source="internal_fault_occurred_c1_c1_ft1" target="T0"/>
+  <inputArcs source="internal_fault_occurred_c1_c1_ft1" target="T1"/>
+  <inputArcs source="numberOfTransientFaultyPlace_c1_c1_ft1" target="T172"/>
+  <inputArcs source="faultyPlace_c1_c1_ft1" target="T172"/>
+  <inputArcs source="faultyPlace_c1_c1_ft1" target="T2"/>
+  <inputArcs source="failed_c1" target="T2"/>
+  <inputArcs source="numberOfTransientFaultyPlace_c1_c1_ft1" target="T3"/>
+  <inputArcs source="failed_c1" target="T3"/>
+  <inputArcs source="internal_fault_occurred_c2_c2_ft1" target="T4"/>
+  <inputArcs source="internal_fault_occurred_c2_c2_ft1" target="T5"/>
+  <inputArcs source="numberOfTransientFaultyPlace_c2_c2_ft1" target="T178"/>
+  <inputArcs source="faultyPlace_c2_c2_ft1" target="T178"/>
+  <inputArcs source="faultyPlace_c2_c2_ft1" target="T6"/>
+  <inputArcs source="failed_c2" target="T6"/>
+  <inputArcs source="numberOfTransientFaultyPlace_c2_c2_ft1" target="T7"/>
+  <inputArcs source="failed_c2" target="T7"/>
+  <inputArcs source="internal_fault_occurred_nodeA_nodeA_ft1" target="T8"/>
+  <inputArcs source="internal_fault_occurred_nodeA_nodeA_ft1" target="T9"/>
+  <inputArcs source="numberOfTransientFaultyPlace_nodeA_nodeA_ft1" target="T184"/>
+  <inputArcs source="faultyPlace_nodeA_nodeA_ft1" target="T184"/>
+  <inputArcs source="faultyPlace_nodeA_nodeA_ft1" target="T10"/>
+  <inputArcs source="failed_nodeA" target="T10"/>
+  <inputArcs source="numberOfTransientFaultyPlace_nodeA_nodeA_ft1" target="T11"/>
+  <inputArcs source="failed_nodeA" target="T11"/>
+  <inputArcs source="internal_fault_occurred_bus_bus_ft1" target="T12"/>
+  <inputArcs source="internal_fault_occurred_bus_bus_ft1" target="T13"/>
+  <inputArcs source="numberOfTransientFaultyPlace_bus_bus_ft1" target="T188"/>
+  <inputArcs source="faultyPlace_bus_bus_ft1" target="T188"/>
+  <inputArcs source="faultyPlace_bus_bus_ft1" target="T14"/>
+  <inputArcs source="failed_bus" target="T14"/>
+  <inputArcs source="numberOfTransientFaultyPlace_bus_bus_ft1" target="T15"/>
+  <inputArcs source="failed_bus" target="T15"/>
+  <inputArcs source="internal_fault_occurred_nodeB_nodeB_ft1" target="T16"/>
+  <inputArcs source="internal_fault_occurred_nodeB_nodeB_ft1" target="T17"/>
+  <inputArcs source="numberOfTransientFaultyPlace_nodeB_nodeB_ft1" target="T193"/>
+  <inputArcs source="faultyPlace_nodeB_nodeB_ft1" target="T193"/>
+  <inputArcs source="faultyPlace_nodeB_nodeB_ft1" target="T18"/>
+  <inputArcs source="failed_nodeB" target="T18"/>
+  <inputArcs source="numberOfTransientFaultyPlace_nodeB_nodeB_ft1" target="T19"/>
+  <inputArcs source="failed_nodeB" target="T19"/>
+  <inputArcs source="failureMode_nodeA_nodeA_fm1" target="T20"/>
+  <inputArcs source="ComponentExternalFault_2" target="T21"/>
+  <inputArcs source="failed_c1" target="T21"/>
+  <inputArcs source="failureMode_c1_c1_fm1" target="T22"/>
+  <inputArcs source="ComponentExternalFault_9" target="T23"/>
+  <inputArcs source="failed_c2" target="T23"/>
+  <inputArcs source="failureMode_c1_c1_fm2" target="T24"/>
+  <inputArcs source="ComponentExternalFault_16" target="T25"/>
+  <inputArcs source="failed_c2" target="T25"/>
+  <inputArcs source="failureMode_nodeB_nodeB_fm1" target="T26"/>
+  <inputArcs source="ComponentExternalFault_23" target="T27"/>
+  <inputArcs source="failed_c2" target="T27"/>
+  <inputArcs source="failureMode_nodeA_nodeA_fm1" target="T28"/>
+  <inputArcs source="ComponentExternalFault_30" target="T29"/>
+  <inputArcs source="failed_bus" target="T29"/>
+  <inputArcs source="failureMode_bus_bus_fm1" target="T30"/>
+  <inputArcs source="ComponentExternalFault_37" target="T31"/>
+  <inputArcs source="failed_nodeB" target="T31"/>
+  <inputArcs source="erroneusPlace_c1_c1_e1" target="T32"/>
+  <inputArcs source="failed_c1" target="T32"/>
+  <inputArcs source="erroneusPlace_c2_c2_e1" target="T33"/>
+  <inputArcs source="failed_c2" target="T33"/>
+  <inputArcs source="erroneusPlace_nodeA_nodeA_e1" target="T34"/>
+  <inputArcs source="failed_nodeA" target="T34"/>
+  <inputArcs source="erroneusPlace_bus_bus_e1" target="T35"/>
+  <inputArcs source="failed_bus" target="T35"/>
+  <inputArcs source="erroneusPlace_nodeB_nodeB_e1" target="T36"/>
+  <inputArcs source="failed_nodeB" target="T36"/>
+  <inputArcs source="ComponentExternalFault_111" target="T37"/>
+  <inputArcs source="ComponentExternalFault_111" target="T38"/>
+  <inputArcs source="ComponentExternalFault_120" target="T38"/>
+  <inputArcs source="ComponentExternalFault_120" target="T39"/>
+  <inputArcs source="ComponentExternalFault_87" target="T40"/>
+  <inputArcs source="faultyPlace_c1_c1_ft1" target="T41"/>
+  <inputArcs source="ComponentExternalFault_60" target="T42"/>
+  <inputArcs source="ComponentExternalFault_2" target="T43"/>
+  <inputArcs source="ComponentExternalFault_69" target="T44"/>
+  <inputArcs source="faultyPlace_c2_c2_ft1" target="T45"/>
+  <inputArcs source="ComponentExternalFault_78" target="T46"/>
+  <inputArcs source="ComponentExternalFault_9" target="T47"/>
+  <inputArcs source="ComponentExternalFault_111" target="T48"/>
+  <inputArcs source="ComponentExternalFault_16" target="T49"/>
+  <inputArcs source="ComponentExternalFault_120" target="T50"/>
+  <inputArcs source="ComponentExternalFault_23" target="T51"/>
+  <inputArcs source="ComponentExternalFault_129" target="T52"/>
+  <inputArcs source="faultyPlace_nodeA_nodeA_ft1" target="T53"/>
+  <inputArcs source="ComponentExternalFault_138" target="T54"/>
+  <inputArcs source="faultyPlace_bus_bus_ft1" target="T55"/>
+  <inputArcs source="ComponentExternalFault_147" target="T56"/>
+  <inputArcs source="ComponentExternalFault_30" target="T57"/>
+  <inputArcs source="ComponentExternalFault_156" target="T58"/>
+  <inputArcs source="faultyPlace_nodeB_nodeB_ft1" target="T59"/>
+  <inputArcs source="ComponentExternalFault_165" target="T60"/>
+  <inputArcs source="ComponentExternalFault_37" target="T61"/>
+  <inputArcs source="ComponentExternalFault_174" target="T62"/>
+  <inputArcs source="ComponentExternalFault_60" target="T64"/>
+  <inputArcs source="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1" target="T65"/>
+  <inputArcs source="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1" target="T66"/>
+  <inputArcs source="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1" target="T68"/>
+  <inputArcs source="ComponentExternalFault_199" target="T63"/>
+  <inputArcs source="ComponentExternalFault_199" target="T67"/>
+  <inputArcs source="ComponentExternalFault_60" target="T68"/>
+  <inputArcs source="ComponentExternalFault_204" target="T173"/>
+  <inputArcs source="ComponentExternalFault_69" target="T70"/>
+  <inputArcs source="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge2" target="T71"/>
+  <inputArcs source="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge2" target="T72"/>
+  <inputArcs source="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge2" target="T74"/>
+  <inputArcs source="ComponentExternalFault_226" target="T69"/>
+  <inputArcs source="ComponentExternalFault_226" target="T73"/>
+  <inputArcs source="ComponentExternalFault_69" target="T74"/>
+  <inputArcs source="ComponentExternalFault_231" target="T174"/>
+  <inputArcs source="ComponentExternalFault_78" target="T76"/>
+  <inputArcs source="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge1" target="T77"/>
+  <inputArcs source="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge1" target="T78"/>
+  <inputArcs source="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge1" target="T80"/>
+  <inputArcs source="ComponentExternalFault_253" target="T75"/>
+  <inputArcs source="ComponentExternalFault_253" target="T79"/>
+  <inputArcs source="ComponentExternalFault_78" target="T80"/>
+  <inputArcs source="ComponentExternalFault_258" target="T179"/>
+  <inputArcs source="ComponentExternalFault_87" target="T82"/>
+  <inputArcs source="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge2" target="T83"/>
+  <inputArcs source="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge2" target="T84"/>
+  <inputArcs source="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge2" target="T86"/>
+  <inputArcs source="ComponentExternalFault_280" target="T81"/>
+  <inputArcs source="ComponentExternalFault_280" target="T85"/>
+  <inputArcs source="ComponentExternalFault_87" target="T86"/>
+  <inputArcs source="ComponentExternalFault_285" target="T180"/>
+  <inputArcs source="ComponentExternalFault_129" target="T88"/>
+  <inputArcs source="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge3" target="T89"/>
+  <inputArcs source="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge3" target="T90"/>
+  <inputArcs source="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge3" target="T92"/>
+  <inputArcs source="ComponentExternalFault_307" target="T87"/>
+  <inputArcs source="ComponentExternalFault_307" target="T91"/>
+  <inputArcs source="ComponentExternalFault_129" target="T92"/>
+  <inputArcs source="ComponentExternalFault_312" target="T181"/>
+  <inputArcs source="ComponentExternalFault_138" target="T94"/>
+  <inputArcs source="faults_generates_errors_activated_nodeA_faultsGeneratesError_nodeA_fge1" target="T95"/>
+  <inputArcs source="faults_generates_errors_active_nodeA_faultsGeneratesError_nodeA_fge1" target="T96"/>
+  <inputArcs source="faults_generates_errors_active_nodeA_faultsGeneratesError_nodeA_fge1" target="T98"/>
+  <inputArcs source="ComponentExternalFault_334" target="T93"/>
+  <inputArcs source="ComponentExternalFault_334" target="T97"/>
+  <inputArcs source="ComponentExternalFault_138" target="T98"/>
+  <inputArcs source="ComponentExternalFault_339" target="T185"/>
+  <inputArcs source="ComponentExternalFault_147" target="T100"/>
+  <inputArcs source="faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge1" target="T101"/>
+  <inputArcs source="faults_generates_errors_active_bus_faultsGeneratesError_bus_fge1" target="T102"/>
+  <inputArcs source="faults_generates_errors_active_bus_faultsGeneratesError_bus_fge1" target="T104"/>
+  <inputArcs source="ComponentExternalFault_361" target="T99"/>
+  <inputArcs source="ComponentExternalFault_361" target="T103"/>
+  <inputArcs source="ComponentExternalFault_147" target="T104"/>
+  <inputArcs source="ComponentExternalFault_366" target="T189"/>
+  <inputArcs source="ComponentExternalFault_156" target="T106"/>
+  <inputArcs source="faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge2" target="T107"/>
+  <inputArcs source="faults_generates_errors_active_bus_faultsGeneratesError_bus_fge2" target="T108"/>
+  <inputArcs source="faults_generates_errors_active_bus_faultsGeneratesError_bus_fge2" target="T110"/>
+  <inputArcs source="ComponentExternalFault_388" target="T105"/>
+  <inputArcs source="ComponentExternalFault_388" target="T109"/>
+  <inputArcs source="ComponentExternalFault_156" target="T110"/>
+  <inputArcs source="ComponentExternalFault_393" target="T190"/>
+  <inputArcs source="ComponentExternalFault_165" target="T112"/>
+  <inputArcs source="faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge1" target="T113"/>
+  <inputArcs source="faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge1" target="T114"/>
+  <inputArcs source="faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge1" target="T116"/>
+  <inputArcs source="ComponentExternalFault_415" target="T111"/>
+  <inputArcs source="ComponentExternalFault_415" target="T115"/>
+  <inputArcs source="ComponentExternalFault_165" target="T116"/>
+  <inputArcs source="ComponentExternalFault_420" target="T194"/>
+  <inputArcs source="ComponentExternalFault_174" target="T118"/>
+  <inputArcs source="faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge2" target="T119"/>
+  <inputArcs source="faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge2" target="T120"/>
+  <inputArcs source="faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge2" target="T122"/>
+  <inputArcs source="ComponentExternalFault_442" target="T117"/>
+  <inputArcs source="ComponentExternalFault_442" target="T121"/>
+  <inputArcs source="ComponentExternalFault_174" target="T122"/>
+  <inputArcs source="ComponentExternalFault_447" target="T195"/>
+  <inputArcs source="erroneusPlace_c1_c1_e1" target="T123"/>
+  <inputArcs source="ComponentExternalFault_463" target="T124"/>
+  <inputArcs source="erroneusPlace_c1_c1_e1" target="T125"/>
+  <inputArcs source="ComponentExternalFault_472" target="T126"/>
+  <inputArcs source="erroneusPlace_c2_c2_e1" target="T127"/>
+  <inputArcs source="ComponentExternalFault_481" target="T128"/>
+  <inputArcs source="erroneusPlace_nodeA_nodeA_e1" target="T129"/>
+  <inputArcs source="ComponentExternalFault_490" target="T130"/>
+  <inputArcs source="erroneusPlace_bus_bus_e1" target="T131"/>
+  <inputArcs source="ComponentExternalFault_499" target="T132"/>
+  <inputArcs source="erroneusPlace_nodeB_nodeB_e1" target="T133"/>
+  <inputArcs source="ComponentExternalFault_508" target="T134"/>
+  <inputArcs source="ComponentExternalFault_463" target="T136"/>
+  <inputArcs source="ComponentExternalFault_519" target="T137"/>
+  <inputArcs source="ComponentExternalFault_518" target="T138"/>
+  <inputArcs source="ComponentExternalFault_518" target="T140"/>
+  <inputArcs source="ComponentExternalFault_533" target="T135"/>
+  <inputArcs source="ComponentExternalFault_533" target="T139"/>
+  <inputArcs source="ComponentExternalFault_463" target="T140"/>
+  <inputArcs source="ComponentExternalFault_538" target="T175"/>
+  <inputArcs source="ComponentExternalFault_472" target="T142"/>
+  <inputArcs source="ComponentExternalFault_546" target="T143"/>
+  <inputArcs source="ComponentExternalFault_545" target="T144"/>
+  <inputArcs source="ComponentExternalFault_545" target="T146"/>
+  <inputArcs source="ComponentExternalFault_560" target="T141"/>
+  <inputArcs source="ComponentExternalFault_560" target="T145"/>
+  <inputArcs source="ComponentExternalFault_472" target="T146"/>
+  <inputArcs source="ComponentExternalFault_565" target="T176"/>
+  <inputArcs source="ComponentExternalFault_481" target="T148"/>
+  <inputArcs source="ComponentExternalFault_573" target="T149"/>
+  <inputArcs source="ComponentExternalFault_572" target="T150"/>
+  <inputArcs source="ComponentExternalFault_572" target="T152"/>
+  <inputArcs source="ComponentExternalFault_587" target="T147"/>
+  <inputArcs source="ComponentExternalFault_587" target="T151"/>
+  <inputArcs source="ComponentExternalFault_481" target="T152"/>
+  <inputArcs source="ComponentExternalFault_592" target="T182"/>
+  <inputArcs source="ComponentExternalFault_490" target="T154"/>
+  <inputArcs source="ComponentExternalFault_600" target="T155"/>
+  <inputArcs source="ComponentExternalFault_599" target="T156"/>
+  <inputArcs source="ComponentExternalFault_599" target="T158"/>
+  <inputArcs source="ComponentExternalFault_614" target="T153"/>
+  <inputArcs source="ComponentExternalFault_614" target="T157"/>
+  <inputArcs source="ComponentExternalFault_490" target="T158"/>
+  <inputArcs source="ComponentExternalFault_619" target="T186"/>
+  <inputArcs source="ComponentExternalFault_499" target="T160"/>
+  <inputArcs source="ComponentExternalFault_627" target="T161"/>
+  <inputArcs source="ComponentExternalFault_626" target="T162"/>
+  <inputArcs source="ComponentExternalFault_626" target="T164"/>
+  <inputArcs source="ComponentExternalFault_641" target="T159"/>
+  <inputArcs source="ComponentExternalFault_641" target="T163"/>
+  <inputArcs source="ComponentExternalFault_499" target="T164"/>
+  <inputArcs source="ComponentExternalFault_646" target="T191"/>
+  <inputArcs source="ComponentExternalFault_508" target="T166"/>
+  <inputArcs source="ComponentExternalFault_654" target="T167"/>
+  <inputArcs source="ComponentExternalFault_653" target="T168"/>
+  <inputArcs source="ComponentExternalFault_653" target="T170"/>
+  <inputArcs source="ComponentExternalFault_668" target="T165"/>
+  <inputArcs source="ComponentExternalFault_668" target="T169"/>
+  <inputArcs source="ComponentExternalFault_508" target="T170"/>
+  <inputArcs source="ComponentExternalFault_673" target="T196"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c1" target="T171"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c2" target="T177"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_nodeA" target="T183"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_bus" target="T187"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_nodeB" target="T192"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c1" target="T20"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_2" target="T20"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c2" target="T22"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_9" target="T22"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c2" target="T24"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_16" target="T24"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_c2" target="T26"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_23" target="T26"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_bus" target="T28"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_30" target="T28"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="failed_nodeB" target="T30"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_37" target="T30"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_87" target="T37"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_120" target="T37"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_87" target="T38"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_87" target="T39"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_111" target="T39"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_120" target="T40"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_111" target="T40"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_60" target="T41"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c1_c1_ft1" target="T42"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_69" target="T43"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_2" target="T44"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_78" target="T45"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_c2_c2_ft1" target="T46"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_111" target="T47"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_9" target="T48"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_120" target="T49"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_16" target="T50"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_129" target="T51"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_23" target="T52"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_138" target="T53"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_nodeA_nodeA_ft1" target="T54"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_147" target="T55"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_bus_bus_ft1" target="T56"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_156" target="T57"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_30" target="T58"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_165" target="T59"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faultyPlace_nodeB_nodeB_ft1" target="T60"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_174" target="T61"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_37" target="T62"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1" target="T64"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_60" target="T65"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_60" target="T66"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge2" target="T70"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_69" target="T71"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_69" target="T72"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge1" target="T76"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_78" target="T77"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_78" target="T78"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge2" target="T82"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_87" target="T83"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_87" target="T84"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge3" target="T88"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_129" target="T89"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_129" target="T90"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_nodeA_faultsGeneratesError_nodeA_fge1" target="T94"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_138" target="T95"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_138" target="T96"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge1" target="T100"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_147" target="T101"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_147" target="T102"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge2" target="T106"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_156" target="T107"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_156" target="T108"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge1" target="T112"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_165" target="T113"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_165" target="T114"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge2" target="T118"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_174" target="T119"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_174" target="T120"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_463" target="T123"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_c1_c1_e1" target="T124"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_472" target="T125"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_c1_c1_e1" target="T126"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_481" target="T127"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_c2_c2_e1" target="T128"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_490" target="T129"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_nodeA_nodeA_e1" target="T130"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_499" target="T131"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_bus_bus_e1" target="T132"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_508" target="T133"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="erroneusPlace_nodeB_nodeB_e1" target="T134"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_519" target="T136"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_463" target="T137"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_463" target="T138"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_546" target="T142"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_472" target="T143"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_472" target="T144"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_573" target="T148"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_481" target="T149"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_481" target="T150"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_600" target="T154"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_490" target="T155"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_490" target="T156"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_627" target="T160"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_499" target="T161"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_499" target="T162"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_654" target="T166"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_508" target="T167"/>
+  <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_508" target="T168"/>
+  <outputArcs source="T171" target="internal_fault_occurred_c1_c1_ft1"/>
+  <outputArcs source="T0" target="faultyPlace_c1_c1_ft1"/>
+  <outputArcs source="T1" target="faultyPlace_c1_c1_ft1"/>
+  <outputArcs source="T1" target="numberOfTransientFaultyPlace_c1_c1_ft1"/>
+  <outputArcs source="T2" target="failed_c1"/>
+  <outputArcs source="T3" target="failed_c1"/>
+  <outputArcs source="T177" target="internal_fault_occurred_c2_c2_ft1"/>
+  <outputArcs source="T4" target="faultyPlace_c2_c2_ft1"/>
+  <outputArcs source="T5" target="faultyPlace_c2_c2_ft1"/>
+  <outputArcs source="T5" target="numberOfTransientFaultyPlace_c2_c2_ft1"/>
+  <outputArcs source="T6" target="failed_c2"/>
+  <outputArcs source="T7" target="failed_c2"/>
+  <outputArcs source="T183" target="internal_fault_occurred_nodeA_nodeA_ft1"/>
+  <outputArcs source="T8" target="faultyPlace_nodeA_nodeA_ft1"/>
+  <outputArcs source="T9" target="faultyPlace_nodeA_nodeA_ft1"/>
+  <outputArcs source="T9" target="numberOfTransientFaultyPlace_nodeA_nodeA_ft1"/>
+  <outputArcs source="T10" target="failed_nodeA"/>
+  <outputArcs source="T11" target="failed_nodeA"/>
+  <outputArcs source="T187" target="internal_fault_occurred_bus_bus_ft1"/>
+  <outputArcs source="T12" target="faultyPlace_bus_bus_ft1"/>
+  <outputArcs source="T13" target="faultyPlace_bus_bus_ft1"/>
+  <outputArcs source="T13" target="numberOfTransientFaultyPlace_bus_bus_ft1"/>
+  <outputArcs source="T14" target="failed_bus"/>
+  <outputArcs source="T15" target="failed_bus"/>
+  <outputArcs source="T192" target="internal_fault_occurred_nodeB_nodeB_ft1"/>
+  <outputArcs source="T16" target="faultyPlace_nodeB_nodeB_ft1"/>
+  <outputArcs source="T17" target="faultyPlace_nodeB_nodeB_ft1"/>
+  <outputArcs source="T17" target="numberOfTransientFaultyPlace_nodeB_nodeB_ft1"/>
+  <outputArcs source="T18" target="failed_nodeB"/>
+  <outputArcs source="T19" target="failed_nodeB"/>
+  <outputArcs source="T20" target="failureMode_nodeA_nodeA_fm1"/>
+  <outputArcs source="T20" target="ComponentExternalFault_2"/>
+  <outputArcs source="T21" target="failed_c1"/>
+  <outputArcs source="T22" target="failureMode_c1_c1_fm1"/>
+  <outputArcs source="T22" target="ComponentExternalFault_9"/>
+  <outputArcs source="T23" target="failed_c2"/>
+  <outputArcs source="T24" target="failureMode_c1_c1_fm2"/>
+  <outputArcs source="T24" target="ComponentExternalFault_16"/>
+  <outputArcs source="T25" target="failed_c2"/>
+  <outputArcs source="T26" target="failureMode_nodeB_nodeB_fm1"/>
+  <outputArcs source="T26" target="ComponentExternalFault_23"/>
+  <outputArcs source="T27" target="failed_c2"/>
+  <outputArcs source="T28" target="failureMode_nodeA_nodeA_fm1"/>
+  <outputArcs source="T28" target="ComponentExternalFault_30"/>
+  <outputArcs source="T29" target="failed_bus"/>
+  <outputArcs source="T30" target="failureMode_bus_bus_fm1"/>
+  <outputArcs source="T30" target="ComponentExternalFault_37"/>
+  <outputArcs source="T31" target="failed_nodeB"/>
+  <outputArcs source="T32" target="failed_c1"/>
+  <outputArcs source="T33" target="failed_c2"/>
+  <outputArcs source="T34" target="failed_nodeA"/>
+  <outputArcs source="T35" target="failed_bus"/>
+  <outputArcs source="T36" target="failed_nodeB"/>
+  <outputArcs source="T37" target="ComponentExternalFault_87"/>
+  <outputArcs source="T37" target="ComponentExternalFault_111"/>
+  <outputArcs source="T38" target="ComponentExternalFault_87"/>
+  <outputArcs source="T38" target="ComponentExternalFault_111"/>
+  <outputArcs source="T38" target="ComponentExternalFault_120"/>
+  <outputArcs source="T39" target="ComponentExternalFault_87"/>
+  <outputArcs source="T39" target="ComponentExternalFault_120"/>
+  <outputArcs source="T41" target="ComponentExternalFault_60"/>
+  <outputArcs source="T41" target="faultyPlace_c1_c1_ft1"/>
+  <outputArcs source="T43" target="ComponentExternalFault_69"/>
+  <outputArcs source="T43" target="ComponentExternalFault_2"/>
+  <outputArcs source="T45" target="ComponentExternalFault_78"/>
+  <outputArcs source="T45" target="faultyPlace_c2_c2_ft1"/>
+  <outputArcs source="T47" target="ComponentExternalFault_111"/>
+  <outputArcs source="T47" target="ComponentExternalFault_9"/>
+  <outputArcs source="T49" target="ComponentExternalFault_120"/>
+  <outputArcs source="T49" target="ComponentExternalFault_16"/>
+  <outputArcs source="T51" target="ComponentExternalFault_129"/>
+  <outputArcs source="T51" target="ComponentExternalFault_23"/>
+  <outputArcs source="T53" target="ComponentExternalFault_138"/>
+  <outputArcs source="T53" target="faultyPlace_nodeA_nodeA_ft1"/>
+  <outputArcs source="T55" target="ComponentExternalFault_147"/>
+  <outputArcs source="T55" target="faultyPlace_bus_bus_ft1"/>
+  <outputArcs source="T57" target="ComponentExternalFault_156"/>
+  <outputArcs source="T57" target="ComponentExternalFault_30"/>
+  <outputArcs source="T59" target="ComponentExternalFault_165"/>
+  <outputArcs source="T59" target="faultyPlace_nodeB_nodeB_ft1"/>
+  <outputArcs source="T61" target="ComponentExternalFault_174"/>
+  <outputArcs source="T61" target="ComponentExternalFault_37"/>
+  <outputArcs source="T64" target="ComponentExternalFault_60"/>
+  <outputArcs source="T64" target="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge1"/>
+  <outputArcs source="T64" target="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge1"/>
+  <outputArcs source="T173" target="ComponentExternalFault_199"/>
+  <outputArcs source="T68" target="ComponentExternalFault_60"/>
+  <outputArcs source="T68" target="ComponentExternalFault_204"/>
+  <outputArcs source="T70" target="ComponentExternalFault_69"/>
+  <outputArcs source="T70" target="faults_generates_errors_activated_c1_faultsGeneratesError_c1_fge2"/>
+  <outputArcs source="T70" target="faults_generates_errors_active_c1_faultsGeneratesError_c1_fge2"/>
+  <outputArcs source="T174" target="ComponentExternalFault_226"/>
+  <outputArcs source="T74" target="ComponentExternalFault_69"/>
+  <outputArcs source="T74" target="ComponentExternalFault_231"/>
+  <outputArcs source="T76" target="ComponentExternalFault_78"/>
+  <outputArcs source="T76" target="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge1"/>
+  <outputArcs source="T76" target="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge1"/>
+  <outputArcs source="T179" target="ComponentExternalFault_253"/>
+  <outputArcs source="T80" target="ComponentExternalFault_78"/>
+  <outputArcs source="T80" target="ComponentExternalFault_258"/>
+  <outputArcs source="T82" target="ComponentExternalFault_87"/>
+  <outputArcs source="T82" target="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge2"/>
+  <outputArcs source="T82" target="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge2"/>
+  <outputArcs source="T180" target="ComponentExternalFault_280"/>
+  <outputArcs source="T86" target="ComponentExternalFault_87"/>
+  <outputArcs source="T86" target="ComponentExternalFault_285"/>
+  <outputArcs source="T88" target="ComponentExternalFault_129"/>
+  <outputArcs source="T88" target="faults_generates_errors_activated_c2_faultsGeneratesError_c2_fge3"/>
+  <outputArcs source="T88" target="faults_generates_errors_active_c2_faultsGeneratesError_c2_fge3"/>
+  <outputArcs source="T181" target="ComponentExternalFault_307"/>
+  <outputArcs source="T92" target="ComponentExternalFault_129"/>
+  <outputArcs source="T92" target="ComponentExternalFault_312"/>
+  <outputArcs source="T94" target="ComponentExternalFault_138"/>
+  <outputArcs source="T94" target="faults_generates_errors_activated_nodeA_faultsGeneratesError_nodeA_fge1"/>
+  <outputArcs source="T94" target="faults_generates_errors_active_nodeA_faultsGeneratesError_nodeA_fge1"/>
+  <outputArcs source="T185" target="ComponentExternalFault_334"/>
+  <outputArcs source="T98" target="ComponentExternalFault_138"/>
+  <outputArcs source="T98" target="ComponentExternalFault_339"/>
+  <outputArcs source="T100" target="ComponentExternalFault_147"/>
+  <outputArcs source="T100" target="faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge1"/>
+  <outputArcs source="T100" target="faults_generates_errors_active_bus_faultsGeneratesError_bus_fge1"/>
+  <outputArcs source="T189" target="ComponentExternalFault_361"/>
+  <outputArcs source="T104" target="ComponentExternalFault_147"/>
+  <outputArcs source="T104" target="ComponentExternalFault_366"/>
+  <outputArcs source="T106" target="ComponentExternalFault_156"/>
+  <outputArcs source="T106" target="faults_generates_errors_activated_bus_faultsGeneratesError_bus_fge2"/>
+  <outputArcs source="T106" target="faults_generates_errors_active_bus_faultsGeneratesError_bus_fge2"/>
+  <outputArcs source="T190" target="ComponentExternalFault_388"/>
+  <outputArcs source="T110" target="ComponentExternalFault_156"/>
+  <outputArcs source="T110" target="ComponentExternalFault_393"/>
+  <outputArcs source="T112" target="ComponentExternalFault_165"/>
+  <outputArcs source="T112" target="faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge1"/>
+  <outputArcs source="T112" target="faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge1"/>
+  <outputArcs source="T194" target="ComponentExternalFault_415"/>
+  <outputArcs source="T116" target="ComponentExternalFault_165"/>
+  <outputArcs source="T116" target="ComponentExternalFault_420"/>
+  <outputArcs source="T118" target="ComponentExternalFault_174"/>
+  <outputArcs source="T118" target="faults_generates_errors_activated_nodeB_faultsGeneratesError_nodeB_fge2"/>
+  <outputArcs source="T118" target="faults_generates_errors_active_nodeB_faultsGeneratesError_nodeB_fge2"/>
+  <outputArcs source="T195" target="ComponentExternalFault_442"/>
+  <outputArcs source="T122" target="ComponentExternalFault_174"/>
+  <outputArcs source="T122" target="ComponentExternalFault_447"/>
+  <outputArcs source="T63" target="erroneusPlace_c1_c1_e1"/>
+  <outputArcs source="T69" target="erroneusPlace_c1_c1_e1"/>
+  <outputArcs source="T75" target="erroneusPlace_c2_c2_e1"/>
+  <outputArcs source="T81" target="erroneusPlace_c2_c2_e1"/>
+  <outputArcs source="T87" target="erroneusPlace_c2_c2_e1"/>
+  <outputArcs source="T93" target="erroneusPlace_nodeA_nodeA_e1"/>
+  <outputArcs source="T99" target="erroneusPlace_bus_bus_e1"/>
+  <outputArcs source="T105" target="erroneusPlace_bus_bus_e1"/>
+  <outputArcs source="T111" target="erroneusPlace_nodeB_nodeB_e1"/>
+  <outputArcs source="T117" target="erroneusPlace_nodeB_nodeB_e1"/>
+  <outputArcs source="T123" target="ComponentExternalFault_463"/>
+  <outputArcs source="T123" target="erroneusPlace_c1_c1_e1"/>
+  <outputArcs source="T125" target="ComponentExternalFault_472"/>
+  <outputArcs source="T125" target="erroneusPlace_c1_c1_e1"/>
+  <outputArcs source="T127" target="ComponentExternalFault_481"/>
+  <outputArcs source="T127" target="erroneusPlace_c2_c2_e1"/>
+  <outputArcs source="T129" target="ComponentExternalFault_490"/>
+  <outputArcs source="T129" target="erroneusPlace_nodeA_nodeA_e1"/>
+  <outputArcs source="T131" target="ComponentExternalFault_499"/>
+  <outputArcs source="T131" target="erroneusPlace_bus_bus_e1"/>
+  <outputArcs source="T133" target="ComponentExternalFault_508"/>
+  <outputArcs source="T133" target="erroneusPlace_nodeB_nodeB_e1"/>
+  <outputArcs source="T136" target="ComponentExternalFault_463"/>
+  <outputArcs source="T136" target="ComponentExternalFault_519"/>
+  <outputArcs source="T136" target="ComponentExternalFault_518"/>
+  <outputArcs source="T175" target="ComponentExternalFault_533"/>
+  <outputArcs source="T140" target="ComponentExternalFault_463"/>
+  <outputArcs source="T140" target="ComponentExternalFault_538"/>
+  <outputArcs source="T142" target="ComponentExternalFault_472"/>
+  <outputArcs source="T142" target="ComponentExternalFault_546"/>
+  <outputArcs source="T142" target="ComponentExternalFault_545"/>
+  <outputArcs source="T176" target="ComponentExternalFault_560"/>
+  <outputArcs source="T146" target="ComponentExternalFault_472"/>
+  <outputArcs source="T146" target="ComponentExternalFault_565"/>
+  <outputArcs source="T148" target="ComponentExternalFault_481"/>
+  <outputArcs source="T148" target="ComponentExternalFault_573"/>
+  <outputArcs source="T148" target="ComponentExternalFault_572"/>
+  <outputArcs source="T182" target="ComponentExternalFault_587"/>
+  <outputArcs source="T152" target="ComponentExternalFault_481"/>
+  <outputArcs source="T152" target="ComponentExternalFault_592"/>
+  <outputArcs source="T154" target="ComponentExternalFault_490"/>
+  <outputArcs source="T154" target="ComponentExternalFault_600"/>
+  <outputArcs source="T154" target="ComponentExternalFault_599"/>
+  <outputArcs source="T186" target="ComponentExternalFault_614"/>
+  <outputArcs source="T158" target="ComponentExternalFault_490"/>
+  <outputArcs source="T158" target="ComponentExternalFault_619"/>
+  <outputArcs source="T160" target="ComponentExternalFault_499"/>
+  <outputArcs source="T160" target="ComponentExternalFault_627"/>
+  <outputArcs source="T160" target="ComponentExternalFault_626"/>
+  <outputArcs source="T191" target="ComponentExternalFault_641"/>
+  <outputArcs source="T164" target="ComponentExternalFault_499"/>
+  <outputArcs source="T164" target="ComponentExternalFault_646"/>
+  <outputArcs source="T166" target="ComponentExternalFault_508"/>
+  <outputArcs source="T166" target="ComponentExternalFault_654"/>
+  <outputArcs source="T166" target="ComponentExternalFault_653"/>
+  <outputArcs source="T196" target="ComponentExternalFault_668"/>
+  <outputArcs source="T170" target="ComponentExternalFault_508"/>
+  <outputArcs source="T170" target="ComponentExternalFault_673"/>
+  <outputArcs source="T135" target="failureMode_c1_c1_fm1"/>
+  <outputArcs source="T135" target="failed_c1"/>
+  <outputArcs source="T141" target="failureMode_c1_c1_fm2"/>
+  <outputArcs source="T141" target="failed_c1"/>
+  <outputArcs source="T147" target="failureMode_c2_c2_fm1"/>
+  <outputArcs source="T147" target="failed_c2"/>
+  <outputArcs source="T153" target="failureMode_nodeA_nodeA_fm1"/>
+  <outputArcs source="T153" target="failed_nodeA"/>
+  <outputArcs source="T159" target="failureMode_bus_bus_fm1"/>
+  <outputArcs source="T159" target="failed_bus"/>
+  <outputArcs source="T165" target="failureMode_nodeB_nodeB_fm1"/>
+  <outputArcs source="T165" target="failed_nodeB"/>
   <transitions xsi:type="deem:ImmediateTransition" Name="T0">
     <params>0.5</params>
   </transitions>

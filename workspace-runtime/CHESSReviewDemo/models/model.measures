@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:moi="http://rcl.dsi.unifi.it/ecore/measures">
+  <moi:Variable name="Time"/>
+  <moi:EvaluationList>
+    <studies name="DefaultStudy">
+      <vars variable="Time">
+        <values>10000.0</values>
+      </vars>
+    </studies>
+    <measures name="R_c1(t)">
+      <rewardFunction xsi:type="moi:IfThenElse">
+        <condition xsi:type="moi:OpEqual">
+          <expression2 xsi:type="moi:ValueExpression"/>
+        </condition>
+        <ifTrue xsi:type="moi:ValueExpression" value="1.0"/>
+        <ifFalse xsi:type="moi:ValueExpression"/>
+      </rewardFunction>
+      <evaluationType xsi:type="moi:InstantOfTime">
+        <instant xsi:type="moi:VariableExpression" variable="Time"/>
+      </evaluationType>
+    </measures>
+    <measures name="R_c2(t)">
+      <rewardFunction xsi:type="moi:IfThenElse">
+        <condition xsi:type="moi:OpEqual">
+          <expression1 xsi:type="moi:MarkingExpression" placeID="failureMode_c2_c2_fm1"/>
+          <expression2 xsi:type="moi:ValueExpression"/>
+        </condition>
+        <ifTrue xsi:type="moi:ValueExpression" value="1.0"/>
+        <ifFalse xsi:type="moi:ValueExpression"/>
+      </rewardFunction>
+      <evaluationType xsi:type="moi:InstantOfTime">
+        <instant xsi:type="moi:VariableExpression" variable="Time"/>
+      </evaluationType>
+    </measures>
+    <measures name="R_c1(t)_fm1">
+      <rewardFunction xsi:type="moi:IfThenElse">
+        <condition xsi:type="moi:OpEqual">
+          <expression1 xsi:type="moi:MarkingExpression" placeID="failureMode_c1_c1_fm1"/>
+          <expression2 xsi:type="moi:ValueExpression"/>
+        </condition>
+        <ifTrue xsi:type="moi:ValueExpression" value="1.0"/>
+        <ifFalse xsi:type="moi:ValueExpression"/>
+      </rewardFunction>
+      <evaluationType xsi:type="moi:InstantOfTime">
+        <instant xsi:type="moi:VariableExpression" variable="Time"/>
+      </evaluationType>
+    </measures>
+    <measures name="R_c1(t)_fm2">
+      <rewardFunction xsi:type="moi:IfThenElse">
+        <condition xsi:type="moi:OpEqual">
+          <expression1 xsi:type="moi:MarkingExpression" placeID="failureMode_c1_c1_fm2"/>
+          <expression2 xsi:type="moi:ValueExpression"/>
+        </condition>
+        <ifTrue xsi:type="moi:ValueExpression" value="1.0"/>
+        <ifFalse xsi:type="moi:ValueExpression"/>
+      </rewardFunction>
+      <evaluationType xsi:type="moi:InstantOfTime">
+        <instant xsi:type="moi:VariableExpression" variable="Time"/>
+      </evaluationType>
+    </measures>
+  </moi:EvaluationList>
+  <moi:MarkingExpression placeID="failureMode_c1_c1_fm1"/>
+  <moi:MarkingExpression placeID="failureMode_c1_c1_fm2"/>
+</xmi:XMI>

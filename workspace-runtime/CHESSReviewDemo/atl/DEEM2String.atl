@@ -1,23 +1,27 @@
 -- @path DEEM=CHESSReviewDemo/metamodels/deem.ecore
+-- @path MOI=CHESSReviewDemo/metamodels/measures.ecore
 
 library DEEM2String;
 
 helper context DEEM!Net def: toString():String = 
 	'<NDFile-\'1.2\'>\n\n'+
 	'NET:"'+self.Name+'",2000,2000;\n'+
-	'COLORS:White,Black,Black,Black,Black,Black;\n\n'+
-	'VARIABLE:"Time","Real";\n\n'+
-	'STUDY:"DefaultStudy",0,"not_def",10000;\n\n'+
+	'COLORS:White,Black,Black,Black,Black,Black;\n'
+	+'\n'+
+	MOI!Variable.allInstances()->iterate(i; acc:String=''| acc + i.toString())
+	+'\n'+
+	MOI!Study.allInstances()->iterate(i; acc:String=''| acc + i.toString())
+	+'\n'+
 	self.places->iterate(i; acc:String=''| acc + i.toString())+
-	'\n\n'+
+	'\n'+
 	self.transitions->iterate(i; acc:String=''| acc + i.toString())+
-	'\n\n'+
+	'\n'+
 	self.inputArcs->iterate(i; acc:String=''| acc + i.toString())+
-	'\n\n'+
-	self.outputArcs->iterate(i; acc:String=''| acc + i.toString())+
-	'\n\n'+
-	'RES_FUNC:"Reliability_c1",\'IF(MARK(failed_c10)=0)THEN(1)ELSE(0)\',0;'+
-	'\n';
+	'\n'+
+	self.outputArcs->iterate(i; acc:String=''| acc + i.toString())
+	+'\n'+
+	MOI!Measure.allInstances()->iterate(i; acc:String=''| acc + i.toString() + '\n')
+	+'\n';
 	
 helper context DEEM!Place def: toString(): String = 
 	'PLACE:"'+self.Name+'",1500,1500,'+self.marking+',0;\n';
@@ -89,3 +93,22 @@ helper context DEEM!OutputArc def: toString(): String =
 	+',\'\',\n'+
     ' (1500,1500,1500,1500),1;\n';
 
+helper context MOI!ValueExpression def: toString(): String = self.value.toString();
+
+helper context MOI!OpSum def: toString(): String = self.expression1.toString() + '+' + self.expression2.toString();
+
+helper context MOI!IfThenElse def: toString(): String =
+	'IF('+self.condition.toString()+')THEN('+self.ifTrue.toString()+')ELSE('+self.ifFalse.toString()+')';
+
+helper context MOI!MarkingExpression def: toString(): String = 'MARK('+self.placeID+')';
+
+helper context MOI!Study def: toString(): String =
+	'STUDY:"'+self.name+'",0,"not_def",10000;\n';
+	
+helper context MOI!Variable def: toString(): String = 
+ 	'VARIABLE:"'+self.name+'","Real";\n';
+ 	
+helper context MOI!Measure def:toString(): String =
+	'RES_FUNC:"'+self.name+'",\''+self.rewardFunction.toString()+'\',0;';
+	
+helper context MOI!OpEqual def: toString(): String = self.expression1.toString() + '=' + self.expression2.toString();

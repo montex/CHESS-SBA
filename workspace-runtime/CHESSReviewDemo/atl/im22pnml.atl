@@ -7,6 +7,7 @@ module im22pnml;
 create out1: GSPN, out2: MOI from in1: IM2;
 
 helper def: myid : Integer = 0;
+helper def: timePoints : OrderedSet(Real) = OrderedSet{};
 
 helper def: faultPropagationLogic : Map(String, GSPN!Place) = Map{};
 helper def: faultPropagationManager : Map(String, IM2!FaultsGenerateError) = Map{};
@@ -212,8 +213,16 @@ rule Sistema {
 			containerPetriNetDoc<-gspndoc
 		),
 		
+		var : MOI!Variable (
+			name <- 'Time'
+		),
+		varvals : MOI!VariableValues (
+			variable <- var,
+			values <- OrderedSet{}
+		),
 		study: MOI!Study (
-			name <- 'DefaultStudy'
+			name <- 'DefaultStudy',
+			vars <- Sequence{varvals}
 		),
 		evalList: MOI!EvaluationList (
 			studies <- Sequence{study},
@@ -221,6 +230,10 @@ rule Sistema {
 		)
 	do {
 		thisModule.page = gspnpage;
+		
+		for(i in IM2!InstantOfTime.allInstances()) {
+			varvals.values <- varvals.values.append(i.timePoint);
+		}
 	}
 }
 
@@ -778,14 +791,18 @@ abstract rule FaultsExpressionNodeToPN {
 		logicResult_place : GSPN!Place (
 				name <- logicResult_place_name,
 				initialMarking <- logicResult_place_markup,
-				containerPage <- sistema
+				containerPage <- sistema--,
+				--id <- 'logicResult_'+componente.Name+'_logic_'+faultsGenerateErrors.Name+thisModule.myid
 		),
 		logicResult_place_markup : GSPN!PTMarking (
 				text <- 0
 		),
 		logicResult_place_name : GSPN!Name (
-				text <- 'logicResult_'+componente.Name+'_logic_'+faultsGenerateErrors.Name
+				text <- 'logicResult_'+componente.Name+'_logic_'+faultsGenerateErrors.Name+thisModule.myid
 		)
+	do {
+		thisModule.myid = thisModule.myid + 1;
+	}
 }
 rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 	from
@@ -796,6 +813,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 --		)
 	to
 	logicResult_place : GSPN!Place (),
+
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica � verifica
 -- e di rimuoverlo quando non � pi� verificata
@@ -1073,7 +1091,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 --			faultsGenerateErrors = faultsExpressionNode.faultsGenerateErrors
 --		)
 	to
-	logicResult_place : GSPN!Place (),
+	logicResult_place : GSPN!Place ( name <- logicResult_place_name_or ),
+			logicResult_place_name_or : GSPN!Name (
+				text <- 'logicResult_or_'+componente.Name+'_logic_'+faultsGenerateErrors.Name+thisModule.myid
+		),
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica � verifica
 -- e di rimuoverlo quando non � pi� verificata
@@ -1477,7 +1498,10 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 		fault : IM2!Fault = faultsExpressionNode.Fault;
 	}
 	to
-		logicResult_place : GSPN!Place (),
+		logicResult_place : GSPN!Place ( name <- logicResult_place_name_ft  ),
+		logicResult_place_name_ft : GSPN!Name (
+				text <- 'logicResult_'+componente.Name+'_'+fault.Name+'_logic_'+faultsGenerateErrors.Name+thisModule.myid
+		),
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di mettere uno ed un solo token quando si verifica il fault
 -------------------------------------------------------------------------------
@@ -2037,8 +2061,11 @@ abstract rule ErrorsExpressionNodeToPN {
 				text <- 0
 		),
 		logicResult_place_name : GSPN!Name (
-				text <- 'logicResult_'+componente.Name+'_logic_'+errorPropagation.Name
+				text <- 'logicResult_'+componente.Name+'_logic_'+errorPropagation.Name+thisModule.myid
 		)
+	do {
+		thisModule.myid = thisModule.myid + 1;
+	}
 }
 rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 	from
@@ -5482,7 +5509,7 @@ rule InstantOfTime {
 	to
 		evaltype : MOI!InstantOfTime 
 		(
-			instant <- idm_instant.timePoint	
+			instant <- thisModule.newVariableExpression(MOI!Variable.allInstances()->select(v | v.name = 'Time').first())
 		)
 }
 rule IntervalOfTime {
@@ -5491,13 +5518,17 @@ rule IntervalOfTime {
 	to
 		evaltype : MOI!IntervalOfTimeCumulated
 		(
-			intervalBegin <- idm_interval.begin,
-			intervalEnd <- idm_interval.end
+			intervalBegin <- thisModule.newValueExpression(idm_interval.begin),
+			intervalEnd <- thisModule.newVariableExpression(MOI!Variable.allInstances()->select(v | v.name = 'Time').first())
 		)
 }
 rule MeasureToRewardFunction {
 	from 
 		idm_measure : IM2!DependabilityMeasure
+	using {
+		mexp : OrderedSet(MOI!MarkingExpression) = OrderedSet{};
+		tmp : MOI!OpSum = OclUndefined; 
+	}
 	to
 		measure : MOI!Measure
 		(
@@ -5523,12 +5554,28 @@ rule MeasureToRewardFunction {
 		}
 		else
 		{
-			cond.expression1 <- thisModule.newOpSum(thisModule.newMarkingExpression(idm_measure.target.asSequence().first()), OclUndefined);
+		--	cond.expression1 <- thisModule.newOpSum();
+			for(i in idm_measure.target) {
+				mexp = mexp->including(thisModule.newMarkingExpression(i));
+			}
+			tmp <- thisModule.newOpSum(mexp->at(1),mexp->at(2));
+			cond.expression1 <- tmp;
+			--cond.expression1 <- thisModule.newOpSum(thisModule.newMarkingExpression(idm_measure.target.asSequence().first()), OclUndefined);
 			--tmp = cond.expression1;
+			--TODO
 		}
 	}
 }
 
+lazy rule newVariableExpression {
+	from 
+		var : MOI!Variable
+	to
+		vexp : MOI!VariableExpression
+		(
+			variable <- var
+		)
+}
 lazy rule newValueExpression {
 	from
 		v : Real
@@ -5545,6 +5592,7 @@ lazy rule newMarkingExpression {
 		)
 }
 rule newOpSum( e1 : MOI!ArithmeticExpression, e2 : MOI!ArithmeticExpression) { 
+--rule newOpSum() {
 	to
 		sum : MOI!OpSum
 		(
