@@ -1,0 +1,1177 @@
+-- @path IM=/ATLchess/IM2.ecore
+-- @nsURI UML2=http://www.eclipse.org/uml2/3.0.0/UML
+
+module prova;
+create OUT : IM from IN : UML2;
+
+--helpers for string parsing (stubs) 
+--NFP are strings with a well-defined format. these helpers should get the Real value from the String
+
+helper context String def: NFPRealValue : Real = self.toReal();
+
+helper context String def: NFPFrequencyValue : Real = self.toReal();
+
+helper context String def: NFPDurationValue : Real = self.toReal();
+
+helper context String def: NFPDurationInvertedValue : Real = 1/self.toReal();
+
+--other helpers
+
+helper context UML2!Component def: ErrorModelUndefined : Boolean =
+	if self.getAppliedStereotypes()-> exists(e| e.name = 'StatefulHardware' 
+		or e.name = 'StatelessHardware' or e.name = 'StatefulSoftware' or e.name = 'StatelessSoftware') then
+		self.getValue(self.getAppliedStereotypes()->
+			select(g|g.name = 'StatefulHardware' or g.name = 'StatelessHardware'  
+			or g.name = 'StatefulSoftware' or g.name = 'StatelessSoftware')->first(), 'errorModel').oclIsUndefined()
+	else
+		true
+	endif;
+
+--this is direction for FlowPorts
+helper context UML2!Port def: getDirection : String = 
+	self.getValue(self.getAppliedStereotypes()->
+					select(s | s.name = 'FlowPort')->first(), 'direction').toString();
+
+--this is direction for ClientServerPorts
+helper context UML2!Port def: getKind : String = 
+	self.getValue(self.getAppliedStereotypes()->
+					select(s | s.name = 'ClientServerPort')->first(), 'kind').toString();
+
+helper context UML2!Component def: corrispondingComponent : IM!Component =
+	thisModule.CComponents->select(e| e.Name = self.name)->first();
+	
+helper context UML2!Component def: hasCC : Boolean =
+	thisModule.CComponents->exists(e| e.Name = self.name);
+
+helper context UML2!Component def: hasCC1 : Boolean =
+	thisModule.CComponents->exists(e| e.Name = self.name);
+
+helper context UML2!Package def: getConnectors : Sequence(UML2!InstanceSpecification) = 
+	self.packagedElement->select(i| i.oclIsTypeOf(UML2!InstanceSpecification) and
+		i.classifier.isEmpty());
+
+helper def: Connectors : Sequence(UML2!Connectors) = Sequence {};
+
+--instance specification of connectors
+helper def: InstConn : Set(UML2!InstanceSpecification) = Set {};
+
+--Allocation through Assign (Comments)
+helper def: Comments : Sequence(UML2!Comment) = Sequence {};
+
+helper context UML2!Comment def: allocatedSW : Sequence(UML2!Component) =
+	self.getValue(self.getAppliedStereotypes()-> select(e|e.name = 'Assign')->first(), 'from');
+
+helper context UML2!Comment def: allocatedHW : UML2!Component =
+	self.getValue(self.getAppliedStereotypes()-> select(e|e.name = 'Assign')->first(), 'to');
+
+helper context UML2!Connector def: getInterface : UML2!Interface = 
+	if 
+		self.end->first().role.getAppliedStereotypes()-> exists(e|e.name = 'ClientServerPort') and
+		self.end->last().role.getAppliedStereotypes()-> exists(e|e.name = 'ClientServerPort')
+	then
+		self.end->last().role.getValue(self.end->last().role.getAppliedStereotypes()->
+			select(e|e.name = 'ClientServerPort')->first(), 'reqInterface')->first()
+	else
+		OclUndefined
+	endif;
+
+helper context UML2!Port def: isProvided : Boolean = 
+	if 
+		self.getValue(self.getAppliedStereotypes()->
+			select(e|e.name = 'ClientServerPort')->first(), 'kind').toString() = 'provided'
+	then
+		true
+	else
+		false
+	endif;
+			
+--helper context String def: get : String = ''
+
+helper def: RepairActivities : OrderedSet (IM!RepairActivity) = OrderedSet {};
+
+helper def: DIMSystem : IM!Sistema = OclUndefined;
+
+helper def: CComponents : Sequence(IM!Component) = Sequence {};
+
+helper def: UMLSystem : UML!Component = OclUndefined;
+
+helper def: TemporaryScen : Sequence(IM!SchedulingConditionExpressionNode) = Sequence {};
+helper def: TemporaryFen : Sequence(IM!FaultsExpressionNode) = Sequence {};
+
+helper def: TempSeq : Sequence(IM!SchedulingConditionExpressionNode) = Sequence {};
+helper def: TempFenSeq : Sequence(IM!FaultsExpressionNode) = Sequence {};
+
+helper def: TempXfts : Sequence (IM!ExternalFault) = Sequence {};
+
+--counter starts from 1, not 0
+helper def: Counter : Integer = 1;
+
+--rules
+
+--TODO: Decide where the analysis should start. Probably:
+	--from a component stereotyped 'StateBasedAnalysis'
+	--with a reference to the (sub)system to be analyzed
+	
+rule IMSystem {
+	from
+		sys : UML2!Component (
+			sys.getAppliedStereotypes()-> exists(e| e.name = 'StateBasedAnalysis')
+		)
+	to
+		s : IM!Sistema (
+			Name <- sys.name
+		)
+		
+	do{		
+		
+		--store the dim system and UML2 system as global variables for further reference
+		thisModule.DIMSystem <- s;
+		thisModule.UMLSystem <- sys;
+		
+		--transform resources of a 'GaResourcesPlatform' (should become CHGaResourcesPlatform)
+		
+		--old version (components & properties)
+		--commented in order to try the newest version
+		--thisModule.System(sys.getValue(sys.getAppliedStereotypes()->select
+		--	(g|g.name = 'StateBasedAnalysis')->first(), 'platform')->first().base_Classifier);
+		
+		--new version (packages & instance specifications)
+		thisModule.Resources(sys.getValue(sys.getAppliedStereotypes()->select
+			(g|g.name = 'StateBasedAnalysis')->first(), 'platform')->first().base_Package);
+	}
+}
+
+--WORK IN PROGRESS: Changing from Property and Component to InstanceSpecification and Package - ISSUES
+rule Resources(sys : UML2!Package) {
+	
+	do{
+		--transform components first
+		for (p in sys.packagedElement){
+			if (p.oclIsTypeOf(UML2!InstanceSpecification)){
+				if (p.classifier.isEmpty()){
+					--is an instance specification of a connector: store it
+					thisModule.InstConn.add(p);
+				}else{
+					--is an instance specification of a component
+					if (p.classifier->first().getAppliedStereotypes()-> exists(e| e.name = 'StatefulHardware')){
+						thisModule.StatefulHardware2Component(p.classifier->first());
+					}
+					if (p.classifier->first().getAppliedStereotypes()-> exists(e| e.name = 'StatelessHardware')){
+						thisModule.StatelessHardware2Component(p.classifier->first());
+					}
+					if (p.classifier->first().getAppliedStereotypes()-> exists(e| e.name = 'StatefulSoftware')){
+						thisModule.StatefulSoftware2Component(p.classifier->first());
+					}
+					if (p.classifier->first().getAppliedStereotypes()-> exists(e| e.name = 'StatelessSoftware')){
+						thisModule.StatelessSoftware2Component(p.classifier->first());
+					}
+				}
+			}
+		}
+		--transform components allocated on previous transformed components,
+		--if they don't have an intermediate representation yet
+		for (c in sys.ownedComment){
+			if (c.getAppliedStereotypes()->exists(e | e.name = 'Assign')){
+				
+				if (c.allocatedHW->first().classifier->first().hasCC){
+					--hw already transformed -> trasform sw allocated
+					for (a in c.allocatedSW){
+						if (a.classifier->first().getAppliedStereotypes()-> exists(e | e.name = 'StatefulSoftware')){
+							thisModule.StatefulSoftware2Component(a.classifier->first());
+						}
+						else if (a.classifier->first().getAppliedStereotypes()-> exists(e | e.name = 'StatelessSoftware')){
+							thisModule.StatelessSoftware2Component(a.classifier->first());
+						}
+						thisModule.InstConn.addAll(a.getOwner().getConnectors);
+					}
+				}else{
+					--transform hw (sw is already allocated)
+					if (c.allocatedHW->first().classifier->first().getAppliedStereotypes()-> exists(e | e.name = 'StatefulHardware')){
+							thisModule.StatefulHardware2Component(c.allocatedHW->first().classifier->first());
+						}
+					else if (c.allocatedHW->first().classifier->first().getAppliedStereotypes()-> exists(e | e.name = 'StatelessHardware')){
+							thisModule.StatelessHardware2Component(c.allocatedHW->first().classifier->first());
+					}
+					thisModule.InstConn.addAll(c.allocatedHW->first().getOwner().getConnectors);
+				}
+			}
+			thisModule.Comments.add(c); --for fault propagation due to allocation (delayed action)
+		}
+			
+		--NEW version:
+		for (c in thisModule.InstConn){
+			thisModule.new_Connectors(c, c.slot->first().value->first().instance.classifier->first(), 
+				c.slot->last().value->first().instance.classifier->first());
+		}
+	}
+}
+
+-- OLD Version: keep it for backup
+rule System (sys : UML2!Component){
+
+	do{
+		--transform components first
+		for (p in sys.ownedAttribute){
+			if (p.oclIsTypeOf(UML2!Property)){
+				if (p.type.getAppliedStereotypes()-> exists(e| e.name = 'StatefulHardware')){
+					thisModule.StatefulHardware2Component(p.type);
+				}
+				if (p.type.getAppliedStereotypes()-> exists(e| e.name = 'StatelessHardware')){
+					thisModule.StatelessHardware2Component(p.type);
+				}
+				if (p.type.getAppliedStereotypes()-> exists(e| e.name = 'StatefulSoftware')){
+					thisModule.StatefulSoftware2Component(p.type);
+				}
+				if (p.type.getAppliedStereotypes()-> exists(e| e.name = 'StatelessSoftware')){
+					thisModule.StatelessSoftware2Component(p.type);
+				}
+				--WORK IN PROGRESS: check if it's a composite Component (i.e. there's a CSD for it)
+				--comment to avoid considering composite components
+				if (p.type.ownedAttribute->select(s|s.oclIsTypeOf(UML2!Property)).notEmpty()){
+					--thisModule.CSD(p.type);
+				}
+			}
+		}
+		--then store connectors for subsequent transformations
+		thisModule.Connectors <- sys.ownedConnector;
+		
+		--transform allocated statebased components still without an intermediate representation
+				
+		
+		
+--		for (c in sys.ownedComment){
+--			if (c.getAppliedStereotypes()->exists(e | e.name = 'Assign')){
+--				
+--				for (a in c.allocatedSW){
+--					if (not a.type.hasCC and 
+--						a.type.getAppliedStereotypes()-> exists(e | e.name = 'StatefulSoftware')){
+--						thisModule.StatefulSoftware2Component(a.type);
+--					}
+--					if (not a.type.hasCC and 
+--						a.type.getAppliedStereotypes()-> exists(e | e.name = 'StatelessSoftware')){
+--						thisModule.StatelessSoftware2Component(a.type);
+--					}
+--				}
+--
+--				if (not c.allocatedHW->first().type.hasCC and
+--					c.allocatedHW->first().type.getAppliedStereotypes()-> exists(e | e.name = 'StatefulHardware')){
+--					thisModule.StatefulHardware2Component(c.allocatedHW->first().type);
+--				}
+--				
+--				if (not c.allocatedHW->first().type.hasCC and
+--					c.allocatedHW->first().type.getAppliedStereotypes()-> exists(e | e.name = 'StatelessHardware')){
+--					thisModule.StatelessHardware2Component(c.allocatedHW->first().type);
+--				}
+--				thisModule.Comments.add(c); --fault propagation handled as a delayed action
+--			}
+--		}
+	}
+}
+
+--WORK IN PROGRESS
+rule CSD(cc:UML2!Component){ -- the parent
+
+	to
+		c : IM!Component(
+			Name <- cc.name,	
+			intermediateModel <- thisModule.DIMSystem
+		),
+		
+		fparent : IM!FailureMode(
+			Name <- cc.name + '_FailureMode',
+			Component <- c	
+		),
+		
+		eparent : IM!Error(
+			Name <- cc.name + '_Error',
+			Component <- c	
+		),
+		
+		d : IM!Deterministic(
+			Value <- 0
+		),
+		
+		en : IM!ErrorsExpressionErrorNode(
+			Error <- eparent
+		),
+		
+		epf : IM!ErrorsProducesFailures(
+			Source <- eparent,
+			Destination <- fparent,
+			PropagationDelay <- d,
+			PropagationLogic <- en	
+		),
+		
+		fge : IM!FaultsGenerateErrors(
+			ActivationDelay <- d, --??
+			Destination <- eparent
+		)
+	
+	do{
+		for (p in cc.ownedAttribute){
+			if (p.oclIsTypeOf(UML2!Property)){
+				-- the children
+				--transform child as a subcomponent of parent (statebased???)
+				--WIP
+				if (p.type.corrispondingComponent = OclUndefined)
+					thisModule.SubComponent(p.type, cc);
+				
+				--NOT TESTED YET
+				--check if the child has a composite Component (i.e. it's a parent for other children)
+				--if (p.type.ownedAttribute->select(s|s.oclIsTypeOf(UML2!Property)).notEmpty()){
+				--	thisModule.CSD(p.type);
+				--}
+				
+			}
+		}
+		--update parent
+		c.ErrorsGeneratesFailures.add(epf);
+		c.FaultsGeneratesErrors.add(fge);
+		fge.Source.addAll(c.Faults);
+		--handling propagation logic	- it's a copy-paste could it be an helper?
+		for (f in fge.Source){
+			thisModule.FaultExpr(f);
+		}
+		if (thisModule.TemporaryFen->size() = 1){
+			fge.PropagationLogic <- thisModule.TemporaryFen->first();
+		}else{
+			for(fen in thisModule.TemporaryFen){
+				if (fen <> thisModule.TemporaryFen->last()){
+					thisModule.CreateFenOrExpr();
+				}
+			}
+			thisModule.TemporaryFen->addAll(thisModule.TempFenSeq);
+
+			for(fen in thisModule.TemporaryFen){
+				if (fen.oclIsTypeOf(IM!FaultsExpressionOrNode)){
+					fen.FaultsExpression1 <- thisModule.TemporaryFen.at(thisModule.Counter);
+					thisModule.Counter <- thisModule.Counter+1;
+					fen.FaultsExpression2 <- thisModule.TemporaryFen.at(thisModule.Counter);
+					thisModule.Counter <- thisModule.Counter+1;
+				}
+			}
+			fge.PropagationLogic <- thisModule.TemporaryFen->last();
+		}
+		thisModule.TemporaryFen.clear();
+		thisModule.TempFenSeq.clear();
+		thisModule.Counter <- 1;
+	}
+}
+
+--WORK IN PROGRESS
+rule SubComponent(c:UML2!Component, p:UML2!Component){
+	
+	to
+		csub : IM!Component (
+			Name <- c.name,
+			intermediateModel <- thisModule.DIMSystem
+		),
+		
+		esub : IM!Error (
+			Name <- c.name + '_Error',
+			Component <- csub
+		),
+		
+		fsub : IM!FailureMode(
+			Name <- c.name + '_FailureMode',
+			Component <- csub
+		),
+		
+		d : IM!Deterministic(
+			Value <- 0
+		),
+		
+		en : IM!ErrorsExpressionErrorNode(
+			Error <- esub
+		),
+		
+		epf : IM!ErrorsProducesFailures(
+			Source <- esub,
+			Destination <- fsub,
+			PropagationDelay <- d,
+			PropagationLogic <- en	
+		),
+		
+		xft : IM!ExternalFault(
+			Name <- p.name + 'Fault_from_Subcomponent_' + c.name	
+		)
+		
+	do{
+		csub.ErrorsGeneratesFailures.add(epf);
+		p.corrispondingComponent.Faults.add(xft);
+	}
+	
+}
+
+
+-- rule called from the Stateful/Stateless Hardware/Software rules
+rule setFailureMode(c : IM!Component, elRate : Real, e : IM!Error){	
+	to
+		f: IM!FailureMode(		
+			Component <- c,
+			Name <- c.Name + '_FailureMode' + thisModule.Counter -- multiple failure modes of the same component should have different names
+		),
+		
+		en : IM!ErrorsExpressionErrorNode(
+			Error <- e	
+		),
+		
+		epf: IM!ErrorsProducesFailures(
+			Source <- e,
+			Destination <- f,
+			PropagationDelay <- el,
+			PropagationLogic <- en
+		),
+		
+		el: IM!Exponential(
+			Rate <- elRate
+		)
+		
+	do{
+		c.ErrorsGeneratesFailures.add(epf);	
+		thisModule.Counter <- thisModule.Counter + 1;
+	}
+
+}
+
+rule StatefulHardware2Component(sfh : UML!Component) {
+
+	to
+		c : IM!Component (
+			Name <- sfh.name,
+			intermediateModel <- thisModule.DIMSystem,
+			Errors <- e,
+			Faults <- ft,
+			FaultsGeneratesErrors <- fge
+		),
+		
+		fo : IM!Exponential(
+			Rate <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+				= 'StatefulHardware')->first(), 'faultOcc').NFPFrequencyValue
+		),
+		
+		ft : IM!InternalFault(
+			Component <- c,
+			Name <- sfh.name + '_Fault',
+			Occurrence <- fo,
+			PermanentProbability <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+				= 'StatefulHardware')->first(), 'probPermFault').NFPRealValue
+		),
+		
+		e : IM!Error(
+			Component <- c,
+			Name <- sfh.name + '_Error'
+		),
+		
+		
+		d: IM!Deterministic(
+			Value <- 0	
+		),
+		
+		fn : IM!FaultsExpressionFaultNode(
+			Fault <- ft	
+		),
+		
+		fge : IM!FaultsGenerateErrors(
+			Source <- ft,
+			Destination <- e,
+			ActivationDelay <- d,
+			--PropagationProbability <- ??
+			PropagationLogic <- fn--,
+			--Weight <- default value?
+		),
+		
+		rd : IM!Exponential(
+			Rate <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+				= 'StatefulHardware')->first(), 'repairDelay').NFPDurationInvertedValue
+		),
+		
+		ra : IM!RepairActivity(
+			Component <- c,
+			Target <- c,
+			Duration <- rd --,
+			--When <- ... handled as a DELAYED ACTION
+		)	
+		
+	do{
+		-- Failure Modes management
+		if (sfh.ErrorModelUndefined){
+			thisModule.setFailureMode(c, sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+				= 'StatefulHardware')->first(), 'errorLatency').NFPDurationInvertedValue, e);
+		}else{
+			for (r in sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+					= 'StatefulHardware')->first(), 'errorModel').base_StateMachine.region){
+				for (s in r.subvertex){
+					if (s.getAppliedStereotypes()->exists(e|e.name = 'FailureMode'))
+
+						thisModule.setFailureMode(c, sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+				= 'StatefulHardware')->first(), 'errorLatency').NFPDurationInvertedValue, e);
+					
+				}
+			}
+		}
+		--reset Counter
+		thisModule.Counter <- 1;
+		
+		thisModule.CComponents.add(c);
+	}
+}
+
+-- same as StatefulHardware except for this: 
+-- in ErrorsProducesFailures the PropagationDelay attribute is always set to Exponetial with Rate = 0
+rule StatelessHardware2Component(sfh : UML!Component) {
+
+	to
+		c : IM!Component (
+			Name <- sfh.name,
+			intermediateModel <- thisModule.DIMSystem,
+			Errors <- e,
+			Faults <- ft,
+			FaultsGeneratesErrors <- fge
+		),
+		
+		fo : IM!Exponential(
+			Rate <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+				= 'StatelessHardware')->first(), 'faultOcc').NFPFrequencyValue
+		),
+			
+		ft : IM!InternalFault(
+			Component <- c,
+			Name <- sfh.name + '_Fault',
+			Occurrence <- fo,
+			PermanentProbability <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+				= 'StatelessHardware')->first(), 'probPermFault').NFPRealValue
+		),
+		
+		e : IM!Error(
+			Component <- c,
+			Name <- sfh.name + '_Error'
+		),
+		
+		
+		d: IM!Deterministic(
+			Value <- 0	
+		),
+		
+		fn : IM!FaultsExpressionFaultNode(
+			Fault <- ft	
+		),
+		
+		fge : IM!FaultsGenerateErrors(
+			Source <- ft,
+			Destination <- e,
+			ActivationDelay <- d,
+			--PropagationProbability <- ??
+			PropagationLogic <- fn  --,
+			--Weight <- ??
+		),
+		
+		rd : IM!Exponential(
+			Rate <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+				= 'StatelessHardware')->first(), 'repairDelay').NFPDurationValue	
+		),
+		
+		ra : IM!RepairActivity(
+			Component <- c,
+			Target <- c,
+			Duration <- rd
+		)
+
+	do{
+		-- Failure Modes management
+		if (sfh.ErrorModelUndefined){
+			thisModule.setFailureMode(c, 0, e); --this is different from StatefulHardware
+		}else{
+			for (r in sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+					= 'StatelessHardware')->first(), 'errorModel').base_StateMachine.region){
+				for (s in r.subvertex){
+					if (s.getAppliedStereotypes()->exists(e|e.name = 'FailureMode'))
+						thisModule.setFailureMode(c, 0, e); --this is different from StatefulHardware
+					
+				}
+			}
+		}
+		--reset Counter
+		thisModule.Counter <- 1;
+		
+		thisModule.CComponents.add(c);
+	}
+}
+
+-- same as StatefulHardware except for this: 
+-- in InternalFault the PermanentProbability attribute is always set to Exponential with Rate = 0
+rule StatefulSoftware2Component(sfh : UML!Component) {
+
+	to
+		c : IM!Component (
+			Name <- sfh.name,
+			intermediateModel <- thisModule.DIMSystem,
+			Errors <- e,
+			Faults <- ft,
+			FaultsGeneratesErrors <- fge
+		),
+		
+		fo : IM!Exponential(
+			Rate <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+				= 'StatefulSoftware')->first(), 'faultOcc').NFPFrequencyValue
+		),
+		
+		ft : IM!InternalFault(
+			Component <- c,
+			Name <- sfh.name + '_Fault',
+			Occurrence <- fo,
+			PermanentProbability <- 0 --this is different from StatefulHardware
+		),
+		
+		e : IM!Error(
+			Component <- c,
+			Name <- sfh.name + '_Error'
+		),
+		
+		
+		d: IM!Deterministic(
+			Value <- 0	
+		),
+		
+		fn : IM!FaultsExpressionFaultNode(
+			Fault <- ft	
+		),
+		
+		fge : IM!FaultsGenerateErrors(
+			Source <- ft,
+			Destination <- e,
+			ActivationDelay <- d,
+			--PropagationProbability <- ??
+			PropagationLogic <- fn--,
+			--Weight <- ??
+		),
+		
+		rd : IM!Exponential(
+			Rate <- 0  --this is different from StatefulHardware
+		),
+		
+		ra : IM!RepairActivity(
+			Component <- c,
+			Target <- c,
+			Duration <- rd --,
+			--When <- ... handled as a DELAYED ACTION
+		)	
+		
+	do{
+		-- Failure Modes management
+		if (sfh.ErrorModelUndefined){
+			thisModule.setFailureMode(c, 0, e); --this is different from StatefulHardware
+		}else{
+			for (r in sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+					= 'StatefulSoftware')->first(), 'errorModel').base_StateMachine.region){
+				for (s in r.subvertex){
+					if (s.getAppliedStereotypes()->exists(e|e.name = 'FailureMode'))
+						thisModule.setFailureMode(c, 0, e); --this is different from StatefulHardware
+					
+				}
+			}
+		}
+		--reset Counter
+		thisModule.Counter <- 1;
+		
+		thisModule.CComponents.add(c);
+	}
+}
+
+-- same as StatefulHardware except for the followings: 
+-- in ErrorsProducesFailures the PropagationDelay attribute is always set to Exponetial with Rate = 0 (as for StatelessHardware)
+-- in InternalFault the PermanentProbability attribute is always set to Exponential with Rate = 0 (as for StatefulSoftware)
+-- in RepairActivity the Duration attribute is always set to Exponential with Rate =0
+
+rule StatelessSoftware2Component (sfh : UML!Component){
+
+	to
+		c : IM!Component (
+			Name <- sfh.name,
+			intermediateModel <- thisModule.DIMSystem,
+			Errors <- e,
+			Faults <- ft,
+			FaultsGeneratesErrors <- fge
+		),
+		
+		fo : IM!Exponential(
+			Rate <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+				= 'StatelessSoftware')->first(), 'faultOcc').NFPFrequencyValue
+		),
+		
+		ft : IM!InternalFault(
+			Component <- c,
+			Name <- sfh.name + '_Fault',
+			Occurrence <- fo,
+			PermanentProbability <- 0 --this is different from StatefulHardware
+		),
+		
+		e : IM!Error(
+			Component <- c,
+			Name <- sfh.name + '_Error'
+		),
+		
+		
+		d: IM!Deterministic(
+			Value <- 0	
+		),
+		
+		fn : IM!FaultsExpressionFaultNode(
+			Fault <- ft	
+		),
+		
+		fge : IM!FaultsGenerateErrors(
+			Source <- ft,
+			Destination <- e,
+			ActivationDelay <- d,
+			--PropagationProbability <- ??
+			PropagationLogic <- fn--,
+			--Weight <- ??
+		),
+		
+		rd : IM!Exponential(
+			Rate <- 0	--this is different from StetefulHardware
+		),
+		
+		ra : IM!RepairActivity(
+			Component <- c,
+			Target <- c,
+			Duration <- rd --,
+			--When <- ... handled as a DELAYED ACTION
+		)	
+		
+	do{
+		-- Failure Modes management
+		if (sfh.ErrorModelUndefined){
+			thisModule.setFailureMode(c, 0, e); --this is different from StatefulHardware
+		}else{
+			for (r in sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+					= 'StatefulSoftware')->first(), 'errorModel').base_StateMachine.region){
+				for (s in r.subvertex){
+					if (s.getAppliedStereotypes()->exists(e|e.name = 'FailureMode'))
+						thisModule.setFailureMode(c, 0, e); --this is different from StatefulHardware
+					
+				}
+			}
+		}
+		--reset Counter
+		thisModule.Counter <- 1;
+		
+		thisModule.CComponents.add(c);
+	}
+}
+
+--called from the end rule - delayed actions
+rule Connectors(c : UML2!Connector){
+
+	do{
+		--check if components are stereotyped correctly (both HW)
+		--TODO: better check if they have a corrisponding component in the IM
+		if (c.end->first().partWithPort.type.getAppliedStereotypes()->
+				exists(s | s.name = 'StatefulHardware' or s.name = 'StatelessHardware') and
+			c.end->last().partWithPort.type.getAppliedStereotypes()->
+				exists(s | s.name = 'StatefulHardware' or s.name = 'StatelessHardware')){
+			
+			--better check the ports are stereotyped as FlowPort
+			if (c.end->first().role.getAppliedStereotypes()-> exists(s | s.name = 'FlowPort') and
+				c.end->last().role.getAppliedStereotypes()-> exists(s | s.name = 'FlowPort')){
+				--check directions and call Propagation rule correctly
+				if (c.end->first().role.getDirection = 'out' and c.end->last().role.getDirection = 'in'){
+					--first is server, last is client
+					thisModule.Propagation(c, c.end->first().partWithPort.type, c.end->last().partWithPort.type);
+				}
+				if (c.end->first().role.getDirection = 'in' and c.end->last().role.getDirection = 'out'){
+					--first is client, last is server
+					thisModule.Propagation(c, c.end->last().partWithPort.type, c.end->first().partWithPort.type);
+				}
+				if (c.end->first().role.getDirection = 'inout' and c.end->last().role.getDirection = 'inout'){
+					--bidirectional propagation
+					thisModule.Propagation(c, c.end->first().partWithPort.type, c.end->last().partWithPort.type);
+					thisModule.Propagation(c, c.end->last().partWithPort.type, c.end->first().partWithPort.type);
+				}
+				--other combination are bad ones and can be discarded
+			}
+		}
+		
+		--check if components are stereotyped correctly (both SW)
+		--TODO: better check if they have a corrisponding component in the IM
+		if (c.end->first().partWithPort.type.getAppliedStereotypes()->
+				exists(s | s.name = 'StatefulSoftware' or s.name = 'StatelessSoftware') and
+			c.end->last().partWithPort.type.getAppliedStereotypes()->
+				exists(s | s.name = 'StatefulSoftware' or s.name = 'StatelessSoftware')){
+			
+			--check directions and call Propagation rule correctly 
+			-- must be done for ClientServerPort and not FlowPort (or maybe both??)
+			
+			--better check the ports are really stereotyped as ClientServerPort
+			if (c.end->first().role.getAppliedStereotypes()-> exists(s | s.name = 'ClientServerPort') and
+				c.end->last().role.getAppliedStereotypes()-> exists(s | s.name = 'ClientServerPort')){
+				
+				--check directions and call Propagation rule correctly			
+				if (c.end->first().role.getKind = 'provided' and c.end->last().role.getKind = 'required'){
+					--first is server, last is client,
+					thisModule.Propagation(c, c.end->first().partWithPort.type, c.end->last().partWithPort.type);
+				}
+				if (c.end->first().role.getKind = 'required' and c.end->last().role.getKind = 'provided'){
+					--first is client, last is server
+					thisModule.Propagation(c, c.end->last().partWithPort.type, c.end->first().partWithPort.type);
+				}
+				if (c.end->first().role.getKind = 'proreq' and c.end->last().role.getKind = 'proreq'){
+					--bidirectional propagation
+					thisModule.Propagation(c, c.end->first().partWithPort.type, c.end->last().partWithPort.type);
+					thisModule.Propagation(c, c.end->last().partWithPort.type, c.end->first().partWithPort.type);
+				}
+				--other combination are bad ones and can be discarded
+			}
+		}
+	}
+}
+
+--new version of Connectors rule
+rule new_Connectors (c : UML!InstanceSpecification, first : UML!InstanceSpecification, last : UML!InstanceSpecification ){
+	
+	do{
+		--check if components have a corrisponding component in the IM
+		if (first.hasCC1 and last.hasCC1){
+
+			--case A: ports are stereotyped as FlowPort
+			if (c.slot->first().definingFeature.getAppliedStereotypes()-> exists(s | s.name = 'FlowPort') and
+				c.slot->last().definingFeature.getAppliedStereotypes()-> exists(s | s.name = 'FlowPort')){
+
+				--check directions and call Propagation rule correctly
+				if (c.slot->first().definingFeature.getDirection = 'out' and c.slot->last().definingFeature.getDirection = 'in'){
+					--first is server, last is client
+					thisModule.new_Propagation(c, first, last);
+				}
+				if (c.slot->first().definingFeature.getDirection = 'in' and c.slot->last().definingFeature.getDirection = 'out'){
+					--first is client, last is server
+					thisModule.new_Propagation(c, last, first);
+				}
+				if (c.slot->first().definingFeature.getDirection = 'inout' and c.slot->last().definingFeature.getDirection = 'inout'){
+					--bidirectional propagation
+					thisModule.new_Propagation(c, first, last);
+					thisModule.new_Propagation(c, last, first);
+				}
+				--other combination are bad ones and can be discarded
+			}
+		
+			--case B: ports are stereotyped as ClientServerPort
+			if (c.slot->first().definingFeature.getAppliedStereotypes()-> exists(s | s.name = 'ClientServerPort') and
+				c.slot->last().definingFeature.getAppliedStereotypes()-> exists(s | s.name = 'ClientServerPort')){		
+
+				--check directions and call Propagation rule correctly			
+				if (c.slot->first().definingFeature.getKind = 'provided' and c.slot->last().definingFeature.getKind = 'required'){
+					--first is server, last is client,
+					thisModule.new_Propagation(c, first, last);
+				}
+				if (c.slot->first().definingFeature.getKind = 'required' and c.slot->last().definingFeature.getKind = 'provided'){
+					--first is client, last is server
+					thisModule.new_Propagation(c, last, first);
+				}
+				if (c.slot->first().definingFeature.getKind = 'proreq' and c.slot->last().definingFeature.getKind = 'proreq'){
+					--bidirectional propagation
+					thisModule.new_Propagation(c, first, last);
+					thisModule.new_Propagation(c, last, first);
+				}
+				--other combination are bad ones and can be discarded
+			}
+		} else{	
+			-- one or both of these components don't have a cc in the im, but can be transformed if stereotyped correctly
+			if (not first.hasCC1){
+
+				if (first.getAppliedStereotypes()-> exists(e| e.name = 'StatefulHardware'))
+					thisModule.StatefulHardware2Component(first);				
+				if (first.getAppliedStereotypes()-> exists(e| e.name = 'StatelessHardware'))
+					thisModule.StatelessHardware2Component(first);			
+				if (first.getAppliedStereotypes()-> exists(e| e.name = 'StatefulSoftware'))
+					thisModule.StatefulSoftware2Component(first);	
+				if (first.getAppliedStereotypes()-> exists(e| e.name = 'StatelessSoftware'))
+					thisModule.StatelessSoftware2Component(first);
+			}			
+			if (not last.hasCC1){
+
+				if (last.getAppliedStereotypes()-> exists(e| e.name = 'StatefulHardware'))
+					thisModule.StatefulHardware2Component(last);				
+				if (last.getAppliedStereotypes()-> exists(e| e.name = 'StatelessHardware'))
+					thisModule.StatelessHardware2Component(last);			
+				if (last.getAppliedStereotypes()-> exists(e| e.name = 'StatefulSoftware'))
+					thisModule.StatefulSoftware2Component(last);	
+				if (last.getAppliedStereotypes()-> exists(e| e.name = 'StatelessSoftware'))
+					thisModule.StatelessSoftware2Component(last);
+			}
+		}
+	}
+}
+
+rule new_Propagation (c : UML2!InstanceSpecification, server : UML2!Component, client : UML2!Component){
+	
+	do{
+		for (fm in server.corrispondingComponent.FailureModes){
+			thisModule.AssignXft(fm, server.corrispondingComponent, client.corrispondingComponent);
+		}
+		thisModule.AssignFge(client.corrispondingComponent, c);
+		thisModule.TempXfts.clear();
+	}
+}
+
+
+
+rule Propagation(c : UML2!Connector, server : UML2!Component, client : UML2!Component){
+	
+	do{
+		for (fm in server.corrispondingComponent.FailureModes){
+			thisModule.AssignXft(fm, server.corrispondingComponent, client.corrispondingComponent);
+		}
+		thisModule.AssignFge(client.corrispondingComponent, c);
+		thisModule.TempXfts.clear();
+	}
+}
+
+--this rule can be used both for allocation and for connectors
+--parent/child are client/server
+rule AssignXft(f : IM!FailureMode, parent: IM!Component, child: IM!Component){
+	
+	to		
+		xft : IM!ExternalFault (
+			Source <- f,
+			Component <- child,
+			Name <- child.Name + '_Fault_Caused_By_' + parent.Name
+		)--,
+		
+	do{
+		child.Faults.add(xft);
+		--store xsft in a variable - remember to clear that variable after AssignFge
+		thisModule.TempXfts.add(xft);
+	}
+}
+
+--TODO: this rule cannot be used for both
+--in case of allocation: only external faults caused by the parent
+--in case of connectors: only external faults caused by the server
+rule AssignFge(child: IM!Component, comm: UML2!Comment){
+	
+	to
+	
+		d : IM!Deterministic(
+			Value <- 0	
+		),
+		
+		fge : IM!FaultsGenerateErrors(
+			--Source <- handled in the do block
+			--PropagationLogic <- handled in the do block
+			Destination <- child.Errors->first()
+		)
+		
+	do{
+		fge.Source.addAll(thisModule.TempXfts);
+		--handling propagation logic	
+		for (f in fge.Source){
+			thisModule.FaultExpr(f);
+		}
+		if (thisModule.TemporaryFen->size() = 1){
+			fge.PropagationLogic <- thisModule.TemporaryFen->first();
+		}else{
+			for(fen in thisModule.TemporaryFen){
+				if (fen <> thisModule.TemporaryFen->last()){
+					thisModule.CreateFenOrExpr();
+				}
+			}
+			thisModule.TemporaryFen->addAll(thisModule.TempFenSeq);
+
+			for(fen in thisModule.TemporaryFen){
+				if (fen.oclIsTypeOf(IM!FaultsExpressionOrNode)){
+					fen.FaultsExpression1 <- thisModule.TemporaryFen.at(thisModule.Counter);
+					thisModule.Counter <- thisModule.Counter+1;
+					fen.FaultsExpression2 <- thisModule.TemporaryFen.at(thisModule.Counter);
+					thisModule.Counter <- thisModule.Counter+1;
+				}
+			}
+			fge.PropagationLogic <- thisModule.TemporaryFen->last();
+		}
+		thisModule.TemporaryFen.clear();
+		thisModule.TempFenSeq.clear();
+		thisModule.Counter <- 1;
+		
+		--handling stereotype Propagation
+		if(comm.getAppliedStereotypes()->exists(e|e.name = 'propagation')){
+			d.Value <- comm.getValue(comm.getAppliedStereotypes()->
+				select(e|e.name = 'propagation')->first(), 'propDelay').NFPRealValue;
+			fge.ActivationDelay <- d;
+			fge.PropagationProbability <- comm.getValue(comm.getAppliedStereotypes()->
+				select(e|e.name = 'propagation')->first(), 'prob').NFPRealValue;
+		}else{
+			fge.ActivationDelay <- d;
+			fge.PropagationProbability <- 1;
+		}
+		child.FaultsGeneratesErrors.add(fge);
+	}
+}
+
+rule RepairActivity(r : IM!RepairActivity){
+	
+	to
+		si : IM!ScheduleImmediately
+	
+	do{
+		r.When <- si;
+		for (fm in r.Component.FailureModes){
+			thisModule.Condition(fm);
+		}
+		if (thisModule.TemporaryScen->size() = 1){
+			si.Condition <- thisModule.TemporaryScen->first();
+		}else{
+			for(scen in thisModule.TemporaryScen){
+				if (scen <> thisModule.TemporaryScen->last()){
+					thisModule.CreateOrExpr();
+				}
+			}
+			thisModule.TemporaryScen->addAll(thisModule.TempSeq);
+
+			for(scen in thisModule.TemporaryScen){
+				if (scen.oclIsTypeOf(IM!SchedulingConditionExpressionOrNode)){
+					scen.SchedulingConditionExpression1 <- thisModule.TemporaryScen.at(thisModule.Counter);
+					thisModule.Counter <- thisModule.Counter+1;
+					scen.SchedulingConditionExpression2 <- thisModule.TemporaryScen.at(thisModule.Counter);
+					thisModule.Counter <- thisModule.Counter+1;
+				}
+			}
+			si.Condition <- thisModule.TemporaryScen->last();
+		}
+
+		thisModule.TemporaryScen.clear();
+		thisModule.TempSeq.clear();
+		thisModule.Counter <- 1;
+	}
+}
+
+rule CreateOrExpr(){
+	
+	to
+		sceon : IM!SchedulingConditionExpressionOrNode
+		
+	do{
+		thisModule.TempSeq.add(sceon);
+	}
+		
+}
+
+rule Condition(fm : IM!FailureMode){
+	
+	to
+		scefn : IM!SchedulingConditionExpressionFailedNode(
+			FailureMode <- fm	
+		)
+		
+	do{
+		thisModule.TemporaryScen.add(scefn);
+	}	
+}
+
+rule FaultExpr(f: IM!Fault){
+	
+	to
+		fefn:IM!FaultsExpressionFaultNode(
+			Fault <- f	
+		)
+	
+	do{
+		thisModule.TemporaryFen.add(fefn);
+	}
+}
+
+rule CreateFenOrExpr(){
+	
+	to
+		feon : IM!FaultsExpressionOrNode
+		
+	do{
+		thisModule.TempFenSeq.add(feon);
+	}
+		
+}
+
+rule Allocation(c : UML2!Comment, parent : UML2!Component, child : UML2!Component){
+	
+	do{
+		for (fm in parent.corrispondingComponent.FailureModes){
+			thisModule.AssignXft(fm, parent.corrispondingComponent, child.corrispondingComponent);
+		}
+		thisModule.AssignFge(child.corrispondingComponent, c);
+		thisModule.TempXfts.clear();
+	}
+}
+
+rule Reliability(sys : DIM!Component, time : Real){
+	
+	to
+		re : IM!Reliability (
+			Name <-	'Reliability_Measure'
+		),
+		
+		it : IM!InstantOfTime (
+			timePoint <- time	
+		)
+	do{
+		thisModule.DIMSystem.measures.add(re);
+		re.evaluations.add(it);
+		
+		if(sys.hasValue(sys.getAppliedStereotypes()-> 
+			select(e| e.name = 'StateBasedAnalysis')->first(), 'targetDepComponent')){
+			
+			re.target <- (sys.getValue(sys.getAppliedStereotypes()->select(e| e.name = 'StateBasedAnalysis')->
+				first(), 'targetDepComponent'))->first().classifier->first().corrispondingComponent.FailureModes;
+		}
+	}
+}
+
+
+endpoint rule EndRule() {
+	
+	do{	
+
+		--call rule to transform comments (allocation)
+		for (c in thisModule.Comments){
+			for (a in c.allocatedSW){
+				thisModule.Allocation(c, c.allocatedHW->first().classifier->first(), a.classifier->first());
+			}
+		}
+		
+		--call rule to transform connectors (i.e. update components in the intermediate model)
+		--OLD VERSION:
+		--for (c in thisModule.Connectors){
+		--	thisModule.Connectors(c);
+		--}
+
+		
+		--call rule to handle repair activities
+		thisModule.RepairActivities <- IM!RepairActivity.allInstances();
+		for (r in thisModule.RepairActivities){
+			thisModule.RepairActivity(r);
+		}
+		
+		if (thisModule.DIMSystem <> OclUndefined)
+			thisModule.DIMSystem.Activities.addAll(IM!Activity.allInstances());
+		
+		--dependability measure handling
+		--temporary version
+		if (thisModule.UMLSystem.WhichMeasure = 'Reliability'){
+			thisModule.Reliability(thisModule.UMLSystem, thisModule.UMLSystem.getDepMeasure.getTime);
+		}else{
+			--TODO: Availability, Safety... (others?)
+		}
+		
+	}
+}
+
+--temporary parser to retrieve the string that represent the dep measure from a statebased analysis
+helper context UML2!Component def: getDepMeasure : String = 
+	self.getValue(self.getAppliedStereotypes()-> 
+				select(e| e.name = 'StateBasedAnalysis')->first(), 'measure');
+
+--temporary parser to retrieve the dependability measure from a string
+helper context UML2!Component def: WhichMeasure : String =
+	if self.getDepMeasure.startsWith('Reliability') then 'Reliability' else 'error' endif;
+
+
+--temporary parser to retrieve the time value from a string
+helper context String def: getTime : Real = self.substring(self.indexOf('=')+2, self.size()-1).toReal();
