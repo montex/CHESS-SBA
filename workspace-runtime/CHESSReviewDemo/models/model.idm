@@ -2,14 +2,13 @@
 <Sistema xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://if.dsi.unifi.it/Modeling/DIM" Name="Example">
   <components Name="c1">
     <FailureModes Name="c1_fm1"/>
-    <FailureModes Name="c1_fm2"/>
     <Errors Name="c1_e1"/>
-    <Faults xsi:type="InternalFault" Name="c1_ft1" PermanentProbability="0.5">
-      <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
-      <TransientDuration xsi:type="Exponential" Rate="0.1"/>
+    <Faults xsi:type="InternalFault" Name="c1_ft1">
+      <Occurrence xsi:type="Exponential" Rate="1.0E-12"/>
+      <TransientDuration xsi:type="Exponential" Rate="1.0"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="c1_xft_nodeA_fm1" Source="//@components.2/@FailureModes.0"/>
-    <FaultsGeneratesErrors Source="//@components.0/@Faults.0" Destination="//@components.0/@Errors.0" PropagationProbability="0.9" PropagationLogicStringFormat="c1_ft1" Name="c1_fge1">
+    <FaultsGeneratesErrors Source="//@components.0/@Faults.0" Destination="//@components.0/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="c1_ft1" Name="c1_fge1">
       <ActivationDelay xsi:type="Exponential" Rate="0.01"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.0/@FaultsGeneratesErrors.0" Fault="//@components.0/@Faults.0"/>
     </FaultsGeneratesErrors>
@@ -17,12 +16,8 @@
       <ActivationDelay xsi:type="Exponential" Rate="0.01"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.0/@FaultsGeneratesErrors.1" Fault="//@components.0/@Faults.1"/>
     </FaultsGeneratesErrors>
-    <ErrorsGeneratesFailures Name="c1_epf1" PropagationLogicStringFormat="c1_e1" Source="//@components.0/@Errors.0" Destination="//@components.0/@FailureModes.0" Weight="0.5" PropagationProbability="0.9">
+    <ErrorsGeneratesFailures Name="c1_epf1" PropagationLogicStringFormat="c1_e1" Source="//@components.0/@Errors.0" Destination="//@components.0/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.0/@ErrorsGeneratesFailures.0" Error="//@components.0/@Errors.0"/>
-      <PropagationDelay xsi:type="Exponential" Rate="0.01"/>
-    </ErrorsGeneratesFailures>
-    <ErrorsGeneratesFailures Name="c1_epf2" PropagationLogicStringFormat="c1_e1" Source="//@components.0/@Errors.0" Destination="//@components.0/@FailureModes.1" Weight="0.5" PropagationProbability="0.9">
-      <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.0/@ErrorsGeneratesFailures.1" Error="//@components.0/@Errors.0"/>
       <PropagationDelay xsi:type="Exponential" Rate="0.01"/>
     </ErrorsGeneratesFailures>
   </components>
@@ -30,28 +25,24 @@
     <FailureModes Name="c2_fm1"/>
     <Errors Name="c2_e1"/>
     <Faults xsi:type="InternalFault" Name="c2_ft1" PermanentProbability="0.5">
-      <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
-      <TransientDuration xsi:type="Exponential" Rate="0.1"/>
+      <Occurrence xsi:type="Exponential" Rate="1.0E-12"/>
+      <TransientDuration xsi:type="Exponential" Rate="1.0"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="c2_xft_c1_fm1" Source="//@components.0/@FailureModes.0"/>
-    <Faults xsi:type="ExternalFault" Name="c2_xft_c1_fm2" Source="//@components.0/@FailureModes.1"/>
     <Faults xsi:type="ExternalFault" Name="c2_xft_nodeB_fm1" Source="//@components.4/@FailureModes.0"/>
-    <FaultsGeneratesErrors Source="//@components.1/@Faults.0" Destination="//@components.1/@Errors.0" PropagationProbability="0.9" PropagationLogicStringFormat="c2_ft1" Name="c2_fge1">
+    <FaultsGeneratesErrors Source="//@components.1/@Faults.0" Destination="//@components.1/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="c2_ft1" Name="c2_fge1">
       <ActivationDelay xsi:type="Exponential" Rate="0.01"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.0" Fault="//@components.1/@Faults.0"/>
     </FaultsGeneratesErrors>
-    <FaultsGeneratesErrors Source="//@components.1/@Faults.1 //@components.1/@Faults.2" Destination="//@components.1/@Errors.0" PropagationProbability="0.7" PropagationLogicStringFormat="c2_xft_c1_fm1 OR c2_xft_c1_fm2" Name="c2_fge2">
-      <ActivationDelay xsi:type="Exponential" Rate="0.01"/>
-      <PropagationLogic xsi:type="FaultsExpressionOrNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.1">
-        <FaultsExpression1 xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.1" Fault="//@components.1/@Faults.1"/>
-        <FaultsExpression2 xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.1" Fault="//@components.1/@Faults.2"/>
-      </PropagationLogic>
+    <FaultsGeneratesErrors Source="//@components.1/@Faults.1" Destination="//@components.1/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="c2_xft_c1_fm1" Name="c2_fge2">
+      <ActivationDelay xsi:type="Exponential" Rate="1.0E-4"/>
+      <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.1" Fault="//@components.1/@Faults.1"/>
     </FaultsGeneratesErrors>
-    <FaultsGeneratesErrors Source="//@components.1/@Faults.3" Destination="//@components.1/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="c2_xft_nodeB_fm1" Name="c2_fge3">
+    <FaultsGeneratesErrors Source="//@components.1/@Faults.2" Destination="//@components.1/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="c2_xft_nodeB_fm1" Name="c2_fge3">
       <ActivationDelay xsi:type="Exponential" Rate="0.01"/>
-      <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.2" Fault="//@components.1/@Faults.3"/>
+      <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.2" Fault="//@components.1/@Faults.2"/>
     </FaultsGeneratesErrors>
-    <ErrorsGeneratesFailures Name="c2_epf2" PropagationLogicStringFormat="c2_e1" Source="//@components.1/@Errors.0" Destination="//@components.1/@FailureModes.0" PropagationProbability="0.9">
+    <ErrorsGeneratesFailures Name="c2_epf2" PropagationLogicStringFormat="c2_e1" Source="//@components.1/@Errors.0" Destination="//@components.1/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.1/@ErrorsGeneratesFailures.0" Error="//@components.1/@Errors.0"/>
       <PropagationDelay xsi:type="Exponential" Rate="0.01"/>
     </ErrorsGeneratesFailures>
@@ -59,15 +50,15 @@
   <components Name="nodeA">
     <FailureModes Name="nodeA_fm1"/>
     <Errors Name="nodeA_e1"/>
-    <Faults xsi:type="InternalFault" Name="nodeA_ft1" PermanentProbability="0.5">
+    <Faults xsi:type="InternalFault" Name="nodeA_ft1" PermanentProbability="0.9">
       <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
-      <TransientDuration xsi:type="Exponential" Rate="0.1"/>
+      <TransientDuration xsi:type="Exponential" Rate="1.0"/>
     </Faults>
-    <FaultsGeneratesErrors Source="//@components.2/@Faults.0" Destination="//@components.2/@Errors.0" PropagationProbability="0.9" PropagationLogicStringFormat="nodeA_ft1" Name="nodeA_fge1">
+    <FaultsGeneratesErrors Source="//@components.2/@Faults.0" Destination="//@components.2/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="nodeA_ft1" Name="nodeA_fge1">
       <ActivationDelay xsi:type="Exponential" Rate="0.01"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.2/@FaultsGeneratesErrors.0" Fault="//@components.2/@Faults.0"/>
     </FaultsGeneratesErrors>
-    <ErrorsGeneratesFailures Name="nodeA_epf1" PropagationLogicStringFormat="nodeA_e1" Source="//@components.2/@Errors.0" Destination="//@components.2/@FailureModes.0" PropagationProbability="0.9">
+    <ErrorsGeneratesFailures Name="nodeA_epf1" PropagationLogicStringFormat="nodeA_e1" Source="//@components.2/@Errors.0" Destination="//@components.2/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.2/@ErrorsGeneratesFailures.0" Error="//@components.2/@Errors.0"/>
       <PropagationDelay xsi:type="Exponential" Rate="0.02"/>
     </ErrorsGeneratesFailures>
@@ -76,19 +67,19 @@
     <FailureModes Name="bus_fm1"/>
     <Errors Name="bus_e1"/>
     <Faults xsi:type="InternalFault" Name="bus_ft1" PermanentProbability="0.5">
-      <Occurrence xsi:type="Exponential" Rate="1.0E-4"/>
-      <TransientDuration xsi:type="Exponential" Rate="0.1"/>
+      <Occurrence xsi:type="Exponential" Rate="1.0E-12"/>
+      <TransientDuration xsi:type="Exponential" Rate="1.0"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="bus_xft_nodeA_fm1" Source="//@components.2/@FailureModes.0"/>
-    <FaultsGeneratesErrors Source="//@components.3/@Faults.0" Destination="//@components.3/@Errors.0" PropagationProbability="0.9" PropagationLogicStringFormat="bus_ft1" Name="bus_fge1">
+    <FaultsGeneratesErrors Source="//@components.3/@Faults.0" Destination="//@components.3/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="bus_ft1" Name="bus_fge1">
       <ActivationDelay xsi:type="Exponential" Rate="0.01"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.3/@FaultsGeneratesErrors.0" Fault="//@components.3/@Faults.0"/>
     </FaultsGeneratesErrors>
-    <FaultsGeneratesErrors Source="//@components.3/@Faults.1" Destination="//@components.3/@Errors.0" PropagationProbability="0.5" PropagationLogicStringFormat="bus_xft_nodeA_fm1" Name="bus_fge2">
+    <FaultsGeneratesErrors Source="//@components.3/@Faults.1" Destination="//@components.3/@Errors.0" PropagationProbability="0.0010" PropagationLogicStringFormat="bus_xft_nodeA_fm1" Name="bus_fge2">
       <ActivationDelay xsi:type="Exponential" Rate="1.0"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.3/@FaultsGeneratesErrors.1" Fault="//@components.3/@Faults.1"/>
     </FaultsGeneratesErrors>
-    <ErrorsGeneratesFailures Name="bus_epf1" PropagationLogicStringFormat="nodeA_e1" Source="//@components.3/@Errors.0" Destination="//@components.3/@FailureModes.0" PropagationProbability="0.9">
+    <ErrorsGeneratesFailures Name="bus_epf1" PropagationLogicStringFormat="nodeA_e1" Source="//@components.3/@Errors.0" Destination="//@components.3/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.3/@ErrorsGeneratesFailures.0" Error="//@components.3/@Errors.0"/>
       <PropagationDelay xsi:type="Exponential" Rate="0.01"/>
     </ErrorsGeneratesFailures>
@@ -96,34 +87,28 @@
   <components Name="nodeB">
     <FailureModes Name="nodeB_fm1"/>
     <Errors Name="nodeB_e1"/>
-    <Faults xsi:type="InternalFault" Name="nodeB_ft1" PermanentProbability="0.5">
-      <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
-      <TransientDuration xsi:type="Exponential" Rate="0.1"/>
+    <Faults xsi:type="InternalFault" Name="nodeB_ft1" PermanentProbability="0.9">
+      <Occurrence xsi:type="Exponential" Rate="1.0E-7"/>
+      <TransientDuration xsi:type="Exponential" Rate="1.0"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="nodeB_xft_bus_fm1" Source="//@components.3/@FailureModes.0"/>
-    <FaultsGeneratesErrors Source="//@components.4/@Faults.0" Destination="//@components.4/@Errors.0" PropagationProbability="0.9" PropagationLogicStringFormat="nodeB_ft1" Name="nodeB_fge1">
+    <FaultsGeneratesErrors Source="//@components.4/@Faults.0" Destination="//@components.4/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="nodeB_ft1" Name="nodeB_fge1">
       <ActivationDelay xsi:type="Exponential" Rate="0.01"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.4/@FaultsGeneratesErrors.0" Fault="//@components.4/@Faults.0"/>
     </FaultsGeneratesErrors>
-    <FaultsGeneratesErrors Source="//@components.4/@Faults.1" Destination="//@components.4/@Errors.0" PropagationProbability="0.5" PropagationLogicStringFormat="nodeB_xft_bus_fm1" Name="nodeB_fge2">
+    <FaultsGeneratesErrors Source="//@components.4/@Faults.1" Destination="//@components.4/@Errors.0" PropagationProbability="0.0010" PropagationLogicStringFormat="nodeB_xft_bus_fm1" Name="nodeB_fge2">
       <ActivationDelay xsi:type="Exponential" Rate="1.0"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.4/@FaultsGeneratesErrors.1" Fault="//@components.4/@Faults.1"/>
     </FaultsGeneratesErrors>
-    <ErrorsGeneratesFailures Name="nodeB_epf1" PropagationLogicStringFormat="nodeB_e1" Source="//@components.4/@Errors.0" Destination="//@components.4/@FailureModes.0" PropagationProbability="0.9">
+    <ErrorsGeneratesFailures Name="nodeB_epf1" PropagationLogicStringFormat="nodeB_e1" Source="//@components.4/@Errors.0" Destination="//@components.4/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.4/@ErrorsGeneratesFailures.0" Error="//@components.4/@Errors.0"/>
       <PropagationDelay xsi:type="Exponential" Rate="0.01"/>
     </ErrorsGeneratesFailures>
   </components>
-  <measures xsi:type="Reliability" Name="R_c1(t)" target="//@components.0/@FailureModes.0 //@components.0/@FailureModes.1">
-    <evaluations xsi:type="InstantOfTime" timePoint="10000.0"/>
-  </measures>
   <measures xsi:type="Reliability" Name="R_c2(t)" target="//@components.1/@FailureModes.0">
     <evaluations xsi:type="InstantOfTime" timePoint="10000.0"/>
   </measures>
-  <measures xsi:type="Reliability" Name="R_c1(t)_fm1" target="//@components.0/@FailureModes.0">
-    <evaluations xsi:type="InstantOfTime" timePoint="10000.0"/>
-  </measures>
-  <measures xsi:type="Reliability" Name="R_c1(t)_fm2" target="//@components.0/@FailureModes.1">
+  <measures xsi:type="Reliability" Name="R_c1(t)" target="//@components.0/@FailureModes.0">
     <evaluations xsi:type="InstantOfTime" timePoint="10000.0"/>
   </measures>
 </Sistema>
