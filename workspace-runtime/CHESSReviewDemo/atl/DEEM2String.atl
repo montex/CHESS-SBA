@@ -23,12 +23,20 @@ helper context DEEM!Net def: toString():String =
 	MOI!Measure.allInstances()->iterate(i; acc:String=''| acc + i.toString() + '\n')
 	+'\n';
 	
-helper context DEEM!Place def: toString(): String = 
-	'PLACE:"'+self.Name+'",1500,1500,'+self.marking+',0;\n';
+helper context DEEM!Place def: toString(): String =
+	if self.displayInfo.oclIsUndefined() then
+		'PLACE:"'+self.Name+'",1500,1500,'+self.marking+',0;\n'
+	else
+		'PLACE:"'+self.Name+'",'+ self.displayInfo.x.longValue()+','+self.displayInfo.y.longValue()+','+self.marking+',0;\n'
+	endif;
 	
 helper context DEEM!ImmediateTransition def: toString(): String = 
 --	'TRANS:"'+self.Name+'",1500,1500,V,Immediate,'+self.Priority+',0,\'\', \'\',\n'+
-    'TRANS:"'+self.Name+'",1500,1500,V,Immediate,1,1,\'\', \''+self.params->first()+'\',\n'+
+	if(self.displayInfo.oclIsUndefined()) then
+    	'TRANS:"'+self.Name+'",1500,1500,V,Immediate,1,1,\'\', \''+self.params->first()+'\',\n'
+	else
+		'TRANS:"'+self.Name+'",'+self.displayInfo.x.longValue()+','+self.displayInfo.y.longValue()+',V,Immediate,1,1,\'\', \''+self.params->first()+'\',\n'
+	endif+
     ' (\n'+
     '1.000000e+00\n' +
     '  '+self.params->subSequence(2, self.params->size())->iterate(i; acc : String = '' |
@@ -44,7 +52,11 @@ helper context DEEM!ImmediateTransition def: toString(): String =
     '  );\n';
     
 helper context DEEM!TimedTransition def: toString(): String =
-	'TRANS:"'+self.Name+'",1500,1500,V,Timed,1,'+
+	if(self.displayInfo.oclIsUndefined()) then
+		'TRANS:"'+self.Name+'",1500,1500,V,Timed,1,'
+	else
+		'TRANS:"'+self.Name+'",'+self.displayInfo.x.longValue()+','+self.displayInfo.y.longValue()+',V,Timed,1,'
+	endif+
 	if self.type = #Deterministic then
 		'0'
 	else if self.type=#Exponential then
@@ -81,7 +93,19 @@ helper context DEEM!TimedTransition def: toString(): String =
 
 helper context DEEM!InputArc def: toString(): String =
 	'IARC:"'+self.source.Name+'","'+self.target.Name+'",1,0,\'\',\n'+
-    ' (1500,1500,1500,1500),1;\n';
+    ' ('+
+    if(self.source.displayInfo.oclIsUndefined()) then
+	    '1500,1500'
+	else
+		self.source.displayInfo.x.longValue().toString()+','+self.source.displayInfo.y.longValue().toString()
+	endif
+	+','+
+    if(self.target.displayInfo.oclIsUndefined()) then
+	    '1500,1500'
+	else
+		self.target.displayInfo.x.longValue().toString() + ',' + self.target.displayInfo.y.longValue().toString()
+	endif
+	+'),1;\n';
     
 helper context DEEM!OutputArc def: toString(): String =
 	'OARC:"'+
@@ -91,7 +115,19 @@ helper context DEEM!OutputArc def: toString(): String =
 		self.target.Name+'","'+self.source.Name+'",1,1'
 	endif
 	+',\'\',\n'+
-    ' (1500,1500,1500,1500),1;\n';
+    ' ('+
+    if(self.source.displayInfo.oclIsUndefined()) then
+	    '1500,1500'
+	else
+		self.source.displayInfo.x.longValue().toString()+','+self.source.displayInfo.y.longValue().toString()
+	endif
+	+','+
+    if(self.target.displayInfo.oclIsUndefined()) then
+	    '1500,1500'
+	else
+		self.target.displayInfo.x.longValue().toString() + ',' + self.target.displayInfo.y.longValue().toString()
+	endif
+	+'),1;\n';
 
 helper context MOI!ValueExpression def: toString(): String = self.value.toString();
 

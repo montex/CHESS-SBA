@@ -8,10 +8,10 @@ create out1: DEEM from in1: GSPN;
 helper def: placeCounter : Integer = 0;
 helper def: transitionCounter : Integer = 0;
 
-helper def: nextPlacePosition_x : Integer = 100;
-helper def: nextPlacePosition_y : Integer = 100;
-helper def: nextTransitionPosition_x : Integer = 200;
-helper def: nextTransitionPosition_y : Integer = 200;
+helper def: nextPlacePosition_x : Integer = 50;
+helper def: nextPlacePosition_y : Integer = 50;
+helper def: nextTransitionPosition_x : Integer = 150;
+helper def: nextTransitionPosition_y : Integer = 150;
 
 helper def: displayIncrement : Integer = 200;
 
@@ -59,6 +59,7 @@ rule Places {
 			net <- place.containerPage
 		)
 	do {
+		thisModule.setPlacePosition(deemPlace);
 		thisModule.placeCounter <- thisModule.placeCounter+1; 
 	}
 }
@@ -76,7 +77,8 @@ rule ImmediateTransitions {
 			net <- transition.containerPage
 		)
 	do {
-		thisModule.transitionCounter <- thisModule.transitionCounter+1; 
+		thisModule.transitionCounter <- thisModule.transitionCounter+1;
+		thisModule.setTransitionPosition(deemImmediateTransition);
 	}
 }
 
@@ -98,7 +100,8 @@ rule ExponentialTransitions {
 			net <- transition.containerPage
 		)
 	do {
-		thisModule.transitionCounter <- thisModule.transitionCounter+1; 
+		thisModule.transitionCounter <- thisModule.transitionCounter+1;
+		thisModule.setTransitionPosition(deemTimedTransition);
 	}
 }
 
@@ -120,7 +123,8 @@ rule GaussianTransitions {
 			net <- transition.containerPage
 		)
 	do {
-		thisModule.transitionCounter <- thisModule.transitionCounter+1; 
+		thisModule.transitionCounter <- thisModule.transitionCounter+1;
+		thisModule.setTransitionPosition(deemTimedTransition);
 	}
 }
 
@@ -143,6 +147,7 @@ rule DeterministicTransitions {
 		)
 	do {
 		thisModule.transitionCounter <- thisModule.transitionCounter+1; 
+		thisModule.setTransitionPosition(deemTimedTransition);
 	}
 }
 
@@ -165,6 +170,7 @@ rule UniformTransitions {
 		)
 	do {
 		thisModule.transitionCounter <- thisModule.transitionCounter+1; 
+		thisModule.setTransitionPosition(deemTimedTransition);
 	}
 }
 
@@ -187,6 +193,7 @@ rule WeibullTransitions {
 		)
 	do {
 		thisModule.transitionCounter <- thisModule.transitionCounter+1; 
+		thisModule.setTransitionPosition(deemTimedTransition);
 	}
 }
 
@@ -209,6 +216,7 @@ rule GammaTransitions {
 		)
 	do {
 		thisModule.transitionCounter <- thisModule.transitionCounter+1; 
+		thisModule.setTransitionPosition(deemTimedTransition);
 	}
 }
 
@@ -264,3 +272,43 @@ rule OutputArcs {
 		)
 }
 
+rule setPlacePosition(p : DEEM!Place) {
+	to 
+		co : DEEM!Coordinates (
+			x <- thisModule.nextPlacePosition_x,
+			y <- thisModule.nextPlacePosition_y
+		)
+	do {
+		p.displayInfo <- co;
+		
+		thisModule.nextPlacePosition_x <- thisModule.nextPlacePosition_x + thisModule.displayIncrement;
+		if(thisModule.nextPlacePosition_x >= thisModule.netSize_x ) {
+			thisModule.nextPlacePosition_x <- thisModule.nextPlacePosition_x mod thisModule.netSize_x;
+			thisModule.nextPlacePosition_y <- thisModule.nextPlacePosition_y + thisModule.displayIncrement;
+			
+			if(thisModule.nextPlacePosition_y >= thisModule.netSize_y ) {
+				thisModule.nextPlacePosition_y <- thisModule.nextPlacePosition_y mod thisModule.netSize_y;
+			}
+		}
+	}	
+}
+rule setTransitionPosition(t : DEEM!Transition) {
+	to
+		co: DEEM!Coordinates (
+			x <- thisModule.nextTransitionPosition_x,
+			y <- thisModule.nextTransitionPosition_y
+		)
+	do {
+		t.displayInfo <- co;
+		
+		thisModule.nextTransitionPosition_x <- thisModule.nextTransitionPosition_x + thisModule.displayIncrement;
+		if(thisModule.nextTransitionPosition_x >= thisModule.netSize_x) {
+			thisModule.nextTransitionPosition_x <- thisModule.nextTransitionPosition_x mod thisModule.netSize_x;
+			thisModule.nextTransitionPosition_y <- thisModule.nextTransitionPosition_y + thisModule.displayIncrement;
+			
+			if(thisModule.nextTransitionPosition_y >= thisModule.netSize_y) {
+				thisModule.nextTransitionPosition_y <- thisModule.nextTransitionPosition_y mod thisModule.netSize_y;
+			}
+		}
+	}
+}
