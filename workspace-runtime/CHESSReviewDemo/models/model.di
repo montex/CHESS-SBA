@@ -64,9 +64,6 @@
           <emfPageIdentifier href="model.notation#_akIUsEADEeCoh-1BA2BB1g"/>
         </children>
         <children>
-          <emfPageIdentifier href="model.notation#_NReSMEALEeCHQ-6nDlLOYg"/>
-        </children>
-        <children>
           <emfPageIdentifier href="model.notation#_PcMDIE-qEeCU1t14pFydGg"/>
         </children>
         <children>

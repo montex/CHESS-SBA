@@ -1,4 +1,4 @@
--- @path IM=/ATLchess/IM2.ecore
+-- @path IM=CHESSReviewDemo/IM2.ecore
 -- @nsURI UML2=http://www.eclipse.org/uml2/3.0.0/UML
 
 module prova;
@@ -292,14 +292,20 @@ rule CSD(cc:UML2!Component){ -- the parent
 		),
 		
 		en : IM!ErrorsExpressionErrorNode(
-			Error <- eparent
+			Error <- eparent,
+			--Leonardo (inizio)
+			errorPropagation <- epf
+			--Leonardo (fine)
 		),
 		
 		epf : IM!ErrorsProducesFailures(
 			Source <- eparent,
 			Destination <- fparent,
 			PropagationDelay <- d,
-			PropagationLogic <- en	
+			PropagationLogic <- en,
+			--Leonardo (inizio)
+			PropagationLogicStringFormat <- en.toString()
+			--Leonardo (fine)
 		),
 		
 		fge : IM!FaultsGenerateErrors(
@@ -413,14 +419,20 @@ rule setFailureMode(c : IM!Component, elRate : Real, e : IM!Error){
 		),
 		
 		en : IM!ErrorsExpressionErrorNode(
-			Error <- e	
+			Error <- e,
+			--Leonardo (inizio)
+			errorPropagation <- epf
+			--Leonardo (fine)
 		),
 		
 		epf: IM!ErrorsProducesFailures(
 			Source <- e,
 			Destination <- f,
 			PropagationDelay <- el,
-			PropagationLogic <- en
+			PropagationLogic <- en,
+			--Leonardo (inizio)
+			PropagationLogicStringFormat <- en.toString()
+			--Leonardo (fine)
 		),
 		
 		el: IM!Exponential(
@@ -469,7 +481,10 @@ rule StatefulHardware2Component(sfh : UML!Component) {
 		),
 		
 		fn : IM!FaultsExpressionFaultNode(
-			Fault <- ft	
+			Fault <- ft,
+			--Leonardo (inizio)
+			faultsGenerateErrors <- fge
+			--Leonardo (fine)
 		),
 		
 		fge : IM!FaultsGenerateErrors(
@@ -477,8 +492,11 @@ rule StatefulHardware2Component(sfh : UML!Component) {
 			Destination <- e,
 			ActivationDelay <- d,
 			--PropagationProbability <- ??
-			PropagationLogic <- fn--,
+			PropagationLogic <- fn,
 			--Weight <- default value?
+			--Leonardo (inizio)
+			PropagationLogicStringFormat <- fn.toString()
+			--Leonardo (fine)
 		),
 		
 		rd : IM!Exponential(
@@ -554,7 +572,10 @@ rule StatelessHardware2Component(sfh : UML!Component) {
 		),
 		
 		fn : IM!FaultsExpressionFaultNode(
-			Fault <- ft	
+			Fault <- ft,
+			--Leonardo (inizio)
+			faultsGenerateErrors <- fge
+			--Leonardo (fine)
 		),
 		
 		fge : IM!FaultsGenerateErrors(
@@ -562,8 +583,11 @@ rule StatelessHardware2Component(sfh : UML!Component) {
 			Destination <- e,
 			ActivationDelay <- d,
 			--PropagationProbability <- ??
-			PropagationLogic <- fn  --,
+			PropagationLogic <- fn  ,
 			--Weight <- ??
+			--Leonardo (inizio)
+			PropagationLogicStringFormat <- fn.toString()
+			--Leonardo (fine)
 		),
 		
 		rd : IM!Exponential(
@@ -634,7 +658,10 @@ rule StatefulSoftware2Component(sfh : UML!Component) {
 		),
 		
 		fn : IM!FaultsExpressionFaultNode(
-			Fault <- ft	
+			Fault <- ft,
+			--Leonardo (inizio)
+			faultsGenerateErrors <- fge
+			--Leonardo (fine)
 		),
 		
 		fge : IM!FaultsGenerateErrors(
@@ -642,8 +669,11 @@ rule StatefulSoftware2Component(sfh : UML!Component) {
 			Destination <- e,
 			ActivationDelay <- d,
 			--PropagationProbability <- ??
-			PropagationLogic <- fn--,
+			PropagationLogic <- fn,
 			--Weight <- ??
+			--Leonardo (inizio)
+			PropagationLogicStringFormat <- fn.toString()
+			--Leonardo (fine)
 		),
 		
 		rd : IM!Exponential(
@@ -717,7 +747,8 @@ rule StatelessSoftware2Component (sfh : UML!Component){
 		),
 		
 		fn : IM!FaultsExpressionFaultNode(
-			Fault <- ft	
+			Fault <- ft,
+			faultsGenerateErrors <- fge
 		),
 		
 		fge : IM!FaultsGenerateErrors(
@@ -725,8 +756,11 @@ rule StatelessSoftware2Component (sfh : UML!Component){
 			Destination <- e,
 			ActivationDelay <- d,
 			--PropagationProbability <- ??
-			PropagationLogic <- fn--,
+			PropagationLogic <- fn,
 			--Weight <- ??
+			--Leonardo (inizio)
+			PropagationLogicStringFormat <- fn.toString()
+			--Leonardo (fine)
 		),
 		
 		rd : IM!Exponential(
@@ -945,6 +979,35 @@ rule AssignXft(f : IM!FailureMode, parent: IM!Component, child: IM!Component){
 	}
 }
 
+--Leonardo (inizio)
+helper context IM!FaultsExpressionFaultNode def: toString(): String = self.Fault.Name;
+helper context IM!FaultsExpressionOrNode def: toString(): String = '(' + self.FaultsExpression1.toString() + ' OR ' + self.FaultsExpression2.toString() + ')';
+
+rule setFGEBackLinks(fen: IM!FaultsExpressionNode, fge: IM!FaultsGenerateErrors ) {
+	do {
+		fen.faultsGenerateErrors <- fge;
+		if (fen.oclIsTypeOf(IM!FaultsExpressionOrNode)) {
+			thisModule.setFGEBackLinks(fen.FaultsExpression1, fge);
+			thisModule.setFGEBackLinks(fen.FaultsExpression2, fge);
+		}
+	}
+}
+
+helper context IM!ErrorsExpressionErrorNode def: toString(): String = self.Error.Name;
+helper context IM!ErrorsExpressionOrNode def: toString(): String = '(' + self.ErrorsExpression1.toString() + ' OR ' + self.ErrorsExpression2.toString() + ')';
+
+rule setEPFBackLinks(een: IM!ErrorsExpressionNode, epf: IM!ErrorsProducesFailures ) {
+	do {
+		een.errorPropagation <- epf;
+		if (een.oclIsTypeOf(IM!FaultsExpressionOrNode)) {
+			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
+			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
+		}
+	}
+}
+--Leonardo (fine)
+
+
 --TODO: this rule cannot be used for both
 --in case of allocation: only external faults caused by the parent
 --in case of connectors: only external faults caused by the server
@@ -987,7 +1050,12 @@ rule AssignFge(child: IM!Component, comm: UML2!Comment){
 				}
 			}
 			fge.PropagationLogic <- thisModule.TemporaryFen->last();
+
 		}
+		--Leonardo (inizio)
+		fge.PropagationLogicStringFormat <- fge.PropagationLogic.toString();
+		thisModule.setFGEBackLinks(fge.PropagationLogic, fge);
+		--Leonardo (fine)
 		thisModule.TemporaryFen.clear();
 		thisModule.TempFenSeq.clear();
 		thisModule.Counter <- 1;

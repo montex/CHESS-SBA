@@ -7,48 +7,10 @@
         <values>10000.0</values>
       </vars>
     </studies>
-    <measures name="R_c1(t)">
+    <measures name="Reliability_Measure">
       <rewardFunction xsi:type="moi:IfThenElse">
         <condition xsi:type="moi:OpEqual">
-          <expression2 xsi:type="moi:ValueExpression"/>
-        </condition>
-        <ifTrue xsi:type="moi:ValueExpression" value="1.0"/>
-        <ifFalse xsi:type="moi:ValueExpression"/>
-      </rewardFunction>
-      <evaluationType xsi:type="moi:InstantOfTime">
-        <instant xsi:type="moi:VariableExpression" variable="Time"/>
-      </evaluationType>
-    </measures>
-    <measures name="R_c2(t)">
-      <rewardFunction xsi:type="moi:IfThenElse">
-        <condition xsi:type="moi:OpEqual">
-          <expression1 xsi:type="moi:MarkingExpression" placeID="failureMode_c2_c2_fm1"/>
-          <expression2 xsi:type="moi:ValueExpression"/>
-        </condition>
-        <ifTrue xsi:type="moi:ValueExpression" value="1.0"/>
-        <ifFalse xsi:type="moi:ValueExpression"/>
-      </rewardFunction>
-      <evaluationType xsi:type="moi:InstantOfTime">
-        <instant xsi:type="moi:VariableExpression" variable="Time"/>
-      </evaluationType>
-    </measures>
-    <measures name="R_c1(t)_fm1">
-      <rewardFunction xsi:type="moi:IfThenElse">
-        <condition xsi:type="moi:OpEqual">
-          <expression1 xsi:type="moi:MarkingExpression" placeID="failureMode_c1_c1_fm1"/>
-          <expression2 xsi:type="moi:ValueExpression"/>
-        </condition>
-        <ifTrue xsi:type="moi:ValueExpression" value="1.0"/>
-        <ifFalse xsi:type="moi:ValueExpression"/>
-      </rewardFunction>
-      <evaluationType xsi:type="moi:InstantOfTime">
-        <instant xsi:type="moi:VariableExpression" variable="Time"/>
-      </evaluationType>
-    </measures>
-    <measures name="R_c1(t)_fm2">
-      <rewardFunction xsi:type="moi:IfThenElse">
-        <condition xsi:type="moi:OpEqual">
-          <expression1 xsi:type="moi:MarkingExpression" placeID="failureMode_c1_c1_fm2"/>
+          <expression1 xsi:type="moi:MarkingExpression" placeID="failureMode_Receiver_impl_Receiver_impl_FailureMode1"/>
           <expression2 xsi:type="moi:ValueExpression"/>
         </condition>
         <ifTrue xsi:type="moi:ValueExpression" value="1.0"/>
@@ -59,6 +21,4 @@
       </evaluationType>
     </measures>
   </moi:EvaluationList>
-  <moi:MarkingExpression placeID="failureMode_c1_c1_fm1"/>
-  <moi:MarkingExpression placeID="failureMode_c1_c1_fm2"/>
 </xmi:XMI>
