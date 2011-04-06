@@ -419,6 +419,22 @@ rule SubComponent(c:UML2!Component, p:UML2!Component){
 	
 }
 
+lazy rule newDeterministic {
+	from
+		r : Real
+	to 
+		d : IM!Deterministic (
+			Value <- r
+		)		
+}
+lazy rule newExponential {
+	from
+		r : Real
+	to
+		e : IM!Exponential (
+			Rate <- r 
+		)
+}
 
 -- rule called from the Stateful/Stateless Hardware/Software rules
 rule setFailureMode(c : IM!Component, elRate : Real, e : IM!Error){	
@@ -438,20 +454,16 @@ rule setFailureMode(c : IM!Component, elRate : Real, e : IM!Error){
 		epf: IM!ErrorsProducesFailures(
 			Source <- e,
 			Destination <- f,
-			PropagationDelay <- el,
+			PropagationDelay <- if elRate = 0 then thisModule.newDeterministic(elRate) else thisModule.newExponential(elRate) endif,
 			PropagationLogic <- en,
 			--Leonardo (inizio)
 			PropagationLogicStringFormat <- en.toString()
 			--Leonardo (fine)
-		),
-		
-		el: IM!Exponential(
-			Rate <- elRate
 		)
-		
+			
 	do{
 		thisModule.setEPFName(epf);
-		
+	
 		c.ErrorsGeneratesFailures.add(epf);	
 		thisModule.Counter <- thisModule.Counter + 1;
 	}

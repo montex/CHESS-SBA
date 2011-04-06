@@ -555,6 +555,13 @@
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SAd0BVuuEeCW15PhyoEOBA" key="StereotypePropertyLocation" value="Compartment"/>
       </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_7Sg1Y1utEeCW15PhyoEOBA" type="6025">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_eZlEYGBREeCNPvJmNzIf5A" source="Stereotype_Annotation">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_f3LDwGBREeCNPvJmNzIf5A" key="StereotypeWithQualifiedNameList" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_f3LDwWBREeCNPvJmNzIf5A" key="StereotypeList" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_f3Lq0GBREeCNPvJmNzIf5A" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_f3Lq0WBREeCNPvJmNzIf5A" key="PropStereoDisplay" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_f3Lq0mBREeCNPvJmNzIf5A" key="StereotypePropertyLocation" value="Compartment"/>
+        </eAnnotations>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_7Sg1ZFutEeCW15PhyoEOBA" x="3" y="-17"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_7Sg1YVutEeCW15PhyoEOBA" fontHeight="8"/>
@@ -940,11 +947,11 @@
             <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_1f-WdEALEeCHQ-6nDlLOYg" key="QualifiedNameDepth" value="1000"/>
           </eAnnotations>
           <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_8DwMgEALEeCHQ-6nDlLOYg" source="Stereotype_Annotation">
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RYLwAFkREeC5eeG1nTwzGA" key="StereotypeWithQualifiedNameList" value=""/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RYLwAVkREeC5eeG1nTwzGA" key="StereotypeList" value="MARTE::MARTE_Foundations::Alloc::Assign"/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RYLwAlkREeC5eeG1nTwzGA" key="PropStereoDisplay" value="MARTE::MARTE_Foundations::Alloc::Assign.from,MARTE::MARTE_Foundations::Alloc::Assign.to"/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RYLwA1kREeC5eeG1nTwzGA" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RYLwBFkREeC5eeG1nTwzGA" key="StereotypePropertyLocation" value="Compartment"/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_MsGrIGBTEeCNPvJmNzIf5A" key="StereotypeWithQualifiedNameList" value=""/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_MsHSMGBTEeCNPvJmNzIf5A" key="StereotypeList" value="MARTE::MARTE_Foundations::Alloc::Assign,CHESS::Dependability::DependableComponent::Propagation"/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_MsHSMWBTEeCNPvJmNzIf5A" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_MsHSMmBTEeCNPvJmNzIf5A" key="PropStereoDisplay" value="MARTE::MARTE_Foundations::Alloc::Assign.from,MARTE::MARTE_Foundations::Alloc::Assign.to"/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_MsHSM2BTEeCNPvJmNzIf5A" key="StereotypePropertyLocation" value="Compartment"/>
           </eAnnotations>
           <children xmi:type="notation:DecorationNode" xmi:id="_1f-WdUALEeCHQ-6nDlLOYg" type="5150"/>
           <element xmi:type="uml:Comment" href="model.uml#_J5VZEEAIEeCoh-1BA2BB1g"/>
@@ -961,11 +968,11 @@
             <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_19R9hEALEeCHQ-6nDlLOYg" key="QualifiedNameDepth" value="1000"/>
           </eAnnotations>
           <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_4dcNIEALEeCHQ-6nDlLOYg" source="Stereotype_Annotation">
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_P2YmEFkREeC5eeG1nTwzGA" key="StereotypeWithQualifiedNameList" value=""/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_P2YmEVkREeC5eeG1nTwzGA" key="StereotypeList" value="MARTE::MARTE_Foundations::Alloc::Assign"/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_P2YmElkREeC5eeG1nTwzGA" key="PropStereoDisplay" value="MARTE::MARTE_Foundations::Alloc::Assign.from,MARTE::MARTE_Foundations::Alloc::Assign.to"/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_P2YmE1kREeC5eeG1nTwzGA" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
-            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_P2YmFFkREeC5eeG1nTwzGA" key="StereotypePropertyLocation" value="Compartment"/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_K04q0GBTEeCNPvJmNzIf5A" key="StereotypeWithQualifiedNameList" value=""/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_K05R4GBTEeCNPvJmNzIf5A" key="StereotypeList" value="MARTE::MARTE_Foundations::Alloc::Assign,CHESS::Dependability::DependableComponent::Propagation"/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_K05R4WBTEeCNPvJmNzIf5A" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_K05R4mBTEeCNPvJmNzIf5A" key="PropStereoDisplay" value="MARTE::MARTE_Foundations::Alloc::Assign.from,MARTE::MARTE_Foundations::Alloc::Assign.to"/>
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_K05R42BTEeCNPvJmNzIf5A" key="StereotypePropertyLocation" value="Compartment"/>
           </eAnnotations>
           <children xmi:type="notation:DecorationNode" xmi:id="_19R9hUALEeCHQ-6nDlLOYg" type="5150">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_MSIcMFkREeC5eeG1nTwzGA" source="Stereotype_Annotation">
@@ -987,6 +994,13 @@
     <styles xmi:type="notation:DiagramStyle" xmi:id="_NReSPEALEeCHQ-6nDlLOYg"/>
     <element xmi:type="uml:Component" href="model.uml#_lHNgoD_9EeCMjNe7UhVfZQ"/>
     <edges xmi:type="notation:Connector" xmi:id="_K-GE4EAMEeCHQ-6nDlLOYg" type="4013" source="_BNBzcEAMEeCHQ-6nDlLOYg" target="_GdmVMEAMEeCHQ-6nDlLOYg" lineColor="0">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_n2MIwGBREeCNPvJmNzIf5A" source="Stereotype_Annotation">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ob-WYGBREeCNPvJmNzIf5A" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ob-WYWBREeCNPvJmNzIf5A" key="StereotypeList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ob-WYmBREeCNPvJmNzIf5A" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ob-WY2BREeCNPvJmNzIf5A" key="PropStereoDisplay" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ob-WZGBREeCNPvJmNzIf5A" key="StereotypePropertyLocation" value="Compartment"/>
+      </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_K-GE40AMEeCHQ-6nDlLOYg" type="6025">
         <layoutConstraint xmi:type="notation:Location" xmi:id="_K-GE5EAMEeCHQ-6nDlLOYg" x="-23" y="-33"/>
       </children>
@@ -995,6 +1009,13 @@
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_K-GE4kAMEeCHQ-6nDlLOYg" points="[-8, 10, 51, -69]$[-52, 69, 7, -10]"/>
     </edges>
     <edges xmi:type="notation:Connector" xmi:id="_LPXbEEAMEeCHQ-6nDlLOYg" type="4013" source="__FKvEEALEeCHQ-6nDlLOYg" target="_FWUkEEAMEeCHQ-6nDlLOYg" lineColor="0">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_kfAKgGBREeCNPvJmNzIf5A" source="Stereotype_Annotation">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_lijSMGBREeCNPvJmNzIf5A" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_lijSMWBREeCNPvJmNzIf5A" key="StereotypeList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_lijSMmBREeCNPvJmNzIf5A" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_lijSM2BREeCNPvJmNzIf5A" key="PropStereoDisplay" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_lijSNGBREeCNPvJmNzIf5A" key="StereotypePropertyLocation" value="Compartment"/>
+      </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_LPXbE0AMEeCHQ-6nDlLOYg" type="6025">
         <layoutConstraint xmi:type="notation:Location" xmi:id="_LPXbFEAMEeCHQ-6nDlLOYg" x="-5" y="36"/>
       </children>
@@ -1112,11 +1133,11 @@
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Qs1ytU-qEeCU1t14pFydGg" key="QualifiedNameDepth" value="1000"/>
       </eAnnotations>
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_WCu5UE-qEeCU1t14pFydGg" source="Stereotype_Annotation">
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RBvHgF-3EeCgRa5DuzCOVA" key="StereotypeWithQualifiedNameList" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RBvHgV-3EeCgRa5DuzCOVA" key="StereotypeList" value="CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RBvHgl-3EeCgRa5DuzCOVA" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RBvukF-3EeCgRa5DuzCOVA" key="PropStereoDisplay" value="CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.platform,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.measure,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.targetDepComponent"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RBvukV-3EeCgRa5DuzCOVA" key="StereotypePropertyLocation" value="Compartment"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_q-SssGBSEeCNPvJmNzIf5A" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_q-SssWBSEeCNPvJmNzIf5A" key="StereotypeList" value="CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_q-SssmBSEeCNPvJmNzIf5A" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_q-Sss2BSEeCNPvJmNzIf5A" key="PropStereoDisplay" value="CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.platform,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.measure,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.targetDepComponent"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_q-SstGBSEeCNPvJmNzIf5A" key="StereotypePropertyLocation" value="Compartment"/>
       </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_Qs1ytk-qEeCU1t14pFydGg" type="5005"/>
       <children xmi:type="notation:BasicCompartment" xmi:id="_Qs1yt0-qEeCU1t14pFydGg" type="7002">

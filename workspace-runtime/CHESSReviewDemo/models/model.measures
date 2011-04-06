@@ -5,6 +5,7 @@
     <studies name="DefaultStudy">
       <vars variable="Time">
         <values>10000.0</values>
+        <values>20000.0</values>
       </vars>
     </studies>
     <measures name="Reliability_Measure">
@@ -21,4 +22,7 @@
       </evaluationType>
     </measures>
   </moi:EvaluationList>
+  <moi:InstantOfTime>
+    <instant xsi:type="moi:VariableExpression" variable="Time"/>
+  </moi:InstantOfTime>
 </xmi:XMI>

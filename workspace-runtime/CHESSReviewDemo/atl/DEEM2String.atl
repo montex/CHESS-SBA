@@ -139,7 +139,20 @@ helper context MOI!IfThenElse def: toString(): String =
 helper context MOI!MarkingExpression def: toString(): String = 'MARK('+self.placeID+')';
 
 helper context MOI!Study def: toString(): String =
-	'STUDY:"'+self.name+'",0,"not_def",10000;\n';
+	'STUDY:"'+self.name+'"'+	
+	self.vars.asOrderedSet()->iterate(
+		i; acc:String=''| acc + ',1,"{'+
+		i.toString() +
+		'}",0'
+	)
+	+';\n';
+	
+helper context MOI!VariableValues def: toString(): String =
+	self.values.asOrderedSet().first().toString()+
+	self.values.asOrderedSet().subOrderedSet(2, self.values.size()) ->iterate(
+		i; acc:String=''| acc + ',' + i.toString()
+	)
+	;
 	
 helper context MOI!Variable def: toString(): String = 
  	'VARIABLE:"'+self.name+'","Real";\n';

@@ -5,12 +5,13 @@
     <Errors Name="PC_Error"/>
     <Faults xsi:type="InternalFault" Name="PC_Fault" PermanentProbability="0.9">
       <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
+      <TransientDuration xsi:type="Deterministic"/>
     </Faults>
-    <FaultsGeneratesErrors Source="//@components.0/@Faults.0" Destination="//@components.0/@Errors.0" PropagationLogicStringFormat="PC_Fault">
+    <FaultsGeneratesErrors Source="//@components.0/@Faults.0" Destination="//@components.0/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="PC_Fault" Name="fge1">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.0/@FaultsGeneratesErrors.0" Fault="//@components.0/@Faults.0"/>
     </FaultsGeneratesErrors>
-    <ErrorsGeneratesFailures PropagationLogicStringFormat="PC_Error" Source="//@components.0/@Errors.0" Destination="//@components.0/@FailureModes.0">
+    <ErrorsGeneratesFailures Name="epf1" PropagationLogicStringFormat="PC_Error" Source="//@components.0/@Errors.0" Destination="//@components.0/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.0/@ErrorsGeneratesFailures.0" Error="//@components.0/@Errors.0"/>
       <PropagationDelay xsi:type="Exponential" Rate="0.1"/>
     </ErrorsGeneratesFailures>
@@ -20,17 +21,18 @@
     <Errors Name="BoardSystem_Error"/>
     <Faults xsi:type="InternalFault" Name="BoardSystem_Fault" PermanentProbability="0.9">
       <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
+      <TransientDuration xsi:type="Deterministic"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="BoardSystem_Fault_Caused_By_SerialCable" Source="//@components.2/@FailureModes.0"/>
-    <FaultsGeneratesErrors Source="//@components.1/@Faults.0" Destination="//@components.1/@Errors.0" PropagationLogicStringFormat="BoardSystem_Fault">
+    <FaultsGeneratesErrors Source="//@components.1/@Faults.0" Destination="//@components.1/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="BoardSystem_Fault" Name="fge2">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.0" Fault="//@components.1/@Faults.0"/>
     </FaultsGeneratesErrors>
-    <FaultsGeneratesErrors Source="//@components.1/@Faults.1" Destination="//@components.1/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="BoardSystem_Fault_Caused_By_SerialCable">
+    <FaultsGeneratesErrors Source="//@components.1/@Faults.1" Destination="//@components.1/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="BoardSystem_Fault_Caused_By_SerialCable" Name="fge6">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.1" Fault="//@components.1/@Faults.1"/>
     </FaultsGeneratesErrors>
-    <ErrorsGeneratesFailures PropagationLogicStringFormat="BoardSystem_Error" Source="//@components.1/@Errors.0" Destination="//@components.1/@FailureModes.0">
+    <ErrorsGeneratesFailures Name="epf2" PropagationLogicStringFormat="BoardSystem_Error" Source="//@components.1/@Errors.0" Destination="//@components.1/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.1/@ErrorsGeneratesFailures.0" Error="//@components.1/@Errors.0"/>
       <PropagationDelay xsi:type="Exponential" Rate="0.1"/>
     </ErrorsGeneratesFailures>
@@ -40,19 +42,20 @@
     <Errors Name="SerialCable_Error"/>
     <Faults xsi:type="InternalFault" Name="SerialCable_Fault" PermanentProbability="0.9">
       <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
+      <TransientDuration xsi:type="Deterministic"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="SerialCable_Fault_Caused_By_PC" Source="//@components.0/@FailureModes.0"/>
-    <FaultsGeneratesErrors Source="//@components.2/@Faults.0" Destination="//@components.2/@Errors.0" PropagationLogicStringFormat="SerialCable_Fault">
+    <FaultsGeneratesErrors Source="//@components.2/@Faults.0" Destination="//@components.2/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="SerialCable_Fault" Name="fge3">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.2/@FaultsGeneratesErrors.0" Fault="//@components.2/@Faults.0"/>
     </FaultsGeneratesErrors>
-    <FaultsGeneratesErrors Source="//@components.2/@Faults.1" Destination="//@components.2/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="SerialCable_Fault_Caused_By_PC">
+    <FaultsGeneratesErrors Source="//@components.2/@Faults.1" Destination="//@components.2/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="SerialCable_Fault_Caused_By_PC" Name="fge8">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.2/@FaultsGeneratesErrors.1" Fault="//@components.2/@Faults.1"/>
     </FaultsGeneratesErrors>
-    <ErrorsGeneratesFailures PropagationLogicStringFormat="SerialCable_Error" Source="//@components.2/@Errors.0" Destination="//@components.2/@FailureModes.0">
+    <ErrorsGeneratesFailures Name="epf3" PropagationLogicStringFormat="SerialCable_Error" Source="//@components.2/@Errors.0" Destination="//@components.2/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.2/@ErrorsGeneratesFailures.0" Error="//@components.2/@Errors.0"/>
-      <PropagationDelay xsi:type="Exponential"/>
+      <PropagationDelay xsi:type="Deterministic"/>
     </ErrorsGeneratesFailures>
   </components>
   <components Name="Analyzer_impl">
@@ -60,24 +63,25 @@
     <Errors Name="Analyzer_impl_Error"/>
     <Faults xsi:type="InternalFault" Name="Analyzer_impl_Fault">
       <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
+      <TransientDuration xsi:type="Deterministic"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="Analyzer_impl_Fault_Caused_By_Receiver_impl" Source="//@components.4/@FailureModes.0"/>
     <Faults xsi:type="ExternalFault" Name="Analyzer_impl_Fault_Caused_By_PC" Source="//@components.0/@FailureModes.0"/>
-    <FaultsGeneratesErrors Source="//@components.3/@Faults.0" Destination="//@components.3/@Errors.0" PropagationLogicStringFormat="Analyzer_impl_Fault">
+    <FaultsGeneratesErrors Source="//@components.3/@Faults.0" Destination="//@components.3/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="Analyzer_impl_Fault" Name="fge4">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.3/@FaultsGeneratesErrors.0" Fault="//@components.3/@Faults.0"/>
     </FaultsGeneratesErrors>
-    <FaultsGeneratesErrors Source="//@components.3/@Faults.1" Destination="//@components.3/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="Analyzer_impl_Fault_Caused_By_Receiver_impl">
+    <FaultsGeneratesErrors Source="//@components.3/@Faults.1" Destination="//@components.3/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="Analyzer_impl_Fault_Caused_By_Receiver_impl" Name="fge7">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.3/@FaultsGeneratesErrors.1" Fault="//@components.3/@Faults.1"/>
     </FaultsGeneratesErrors>
-    <FaultsGeneratesErrors Source="//@components.3/@Faults.2" Destination="//@components.3/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="Analyzer_impl_Fault_Caused_By_PC">
+    <FaultsGeneratesErrors Source="//@components.3/@Faults.2" Destination="//@components.3/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="Analyzer_impl_Fault_Caused_By_PC" Name="fge9">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.3/@FaultsGeneratesErrors.2" Fault="//@components.3/@Faults.2"/>
     </FaultsGeneratesErrors>
-    <ErrorsGeneratesFailures PropagationLogicStringFormat="Analyzer_impl_Error" Source="//@components.3/@Errors.0" Destination="//@components.3/@FailureModes.0">
+    <ErrorsGeneratesFailures Name="epf4" PropagationLogicStringFormat="Analyzer_impl_Error" Source="//@components.3/@Errors.0" Destination="//@components.3/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.3/@ErrorsGeneratesFailures.0" Error="//@components.3/@Errors.0"/>
-      <PropagationDelay xsi:type="Exponential"/>
+      <PropagationDelay xsi:type="Deterministic"/>
     </ErrorsGeneratesFailures>
   </components>
   <components Name="Receiver_impl">
@@ -85,19 +89,20 @@
     <Errors Name="Receiver_impl_Error"/>
     <Faults xsi:type="InternalFault" Name="Receiver_impl_Fault">
       <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
+      <TransientDuration xsi:type="Deterministic"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="Receiver_impl_Fault_Caused_By_BoardSystem" Source="//@components.1/@FailureModes.0"/>
-    <FaultsGeneratesErrors Source="//@components.4/@Faults.0" Destination="//@components.4/@Errors.0" PropagationLogicStringFormat="Receiver_impl_Fault">
+    <FaultsGeneratesErrors Source="//@components.4/@Faults.0" Destination="//@components.4/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="Receiver_impl_Fault" Name="fge5">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.4/@FaultsGeneratesErrors.0" Fault="//@components.4/@Faults.0"/>
     </FaultsGeneratesErrors>
-    <FaultsGeneratesErrors Source="//@components.4/@Faults.1" Destination="//@components.4/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="Receiver_impl_Fault_Caused_By_BoardSystem">
+    <FaultsGeneratesErrors Source="//@components.4/@Faults.1" Destination="//@components.4/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="Receiver_impl_Fault_Caused_By_BoardSystem" Name="fge10">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.4/@FaultsGeneratesErrors.1" Fault="//@components.4/@Faults.1"/>
     </FaultsGeneratesErrors>
-    <ErrorsGeneratesFailures PropagationLogicStringFormat="Receiver_impl_Error" Source="//@components.4/@Errors.0" Destination="//@components.4/@FailureModes.0">
+    <ErrorsGeneratesFailures Name="epf5" PropagationLogicStringFormat="Receiver_impl_Error" Source="//@components.4/@Errors.0" Destination="//@components.4/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.4/@ErrorsGeneratesFailures.0" Error="//@components.4/@Errors.0"/>
-      <PropagationDelay xsi:type="Exponential"/>
+      <PropagationDelay xsi:type="Deterministic"/>
     </ErrorsGeneratesFailures>
   </components>
   <Activities xsi:type="RepairActivity" Component="//@components.0" Target="//@components.0">
@@ -132,5 +137,6 @@
   </Activities>
   <measures xsi:type="Reliability" Name="Reliability_Measure" target="//@components.4/@FailureModes.0">
     <evaluations xsi:type="InstantOfTime" timePoint="10000.0"/>
+    <evaluations xsi:type="InstantOfTime" timePoint="20000.0"/>
   </measures>
 </Sistema>
