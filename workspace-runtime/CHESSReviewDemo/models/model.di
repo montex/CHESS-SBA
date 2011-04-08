@@ -55,9 +55,6 @@
           <emfPageIdentifier href="model.notation#_HXxwUFk4EeCNUs77z6e79Q"/>
         </children>
         <children>
-          <emfPageIdentifier href="model.notation#_9gvSYFk6EeCNUs77z6e79Q"/>
-        </children>
-        <children>
           <emfPageIdentifier href="model.notation#_b531EEACEeCoh-1BA2BB1g"/>
         </children>
         <children>
