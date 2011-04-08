@@ -27,14 +27,14 @@
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_PC_fge1_activation_delay" InArcs="ComponentExternalFault_173" OutArcs="ComponentExternalFault_164" Priority="1"/>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="internal_fault_BoardSystem_BoardSystem_Fault_transient_duration_time" InArcs="remove_transient_fault_BoardSystem_BoardSystem_Fault_arc_from_numberOfTransientFault remove_transient_fault_BoardSystem_BoardSystem_Fault_arc_from_faulty" Priority="1"/>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_BoardSystem_fge2_activation_delay" InArcs="ComponentExternalFault_200" OutArcs="ComponentExternalFault_191" Priority="1"/>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_BoardSystem_fge6_activation_delay" InArcs="ComponentExternalFault_227" OutArcs="ComponentExternalFault_218" Priority="1"/>
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_BoardSystem_fge8_activation_delay" InArcs="ComponentExternalFault_227" OutArcs="ComponentExternalFault_218" Priority="1"/>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="internal_fault_SerialCable_SerialCable_Fault_transient_duration_time" InArcs="remove_transient_fault_SerialCable_SerialCable_Fault_arc_from_numberOfTransientFault remove_transient_fault_SerialCable_SerialCable_Fault_arc_from_faulty" Priority="1"/>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_SerialCable_fge3_activation_delay" InArcs="ComponentExternalFault_254" OutArcs="ComponentExternalFault_245" Priority="1"/>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_SerialCable_fge8_activation_delay" InArcs="ComponentExternalFault_281" OutArcs="ComponentExternalFault_272" Priority="1"/>
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_SerialCable_fge7_activation_delay" InArcs="ComponentExternalFault_281" OutArcs="ComponentExternalFault_272" Priority="1"/>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="errors_produces_failure_SerialCable_epf3_propagation_delay" InArcs="ComponentExternalFault_552" OutArcs="ComponentExternalFault_543" Priority="1"/>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="internal_fault_Analyzer_impl_Analyzer_impl_Fault_transient_duration_time" InArcs="remove_transient_fault_Analyzer_impl_Analyzer_impl_Fault_arc_from_numberOfTransientFault remove_transient_fault_Analyzer_impl_Analyzer_impl_Fault_arc_from_faulty" Priority="1"/>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_Analyzer_impl_fge4_activation_delay" InArcs="ComponentExternalFault_308" OutArcs="ComponentExternalFault_299" Priority="1"/>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_Analyzer_impl_fge7_activation_delay" InArcs="ComponentExternalFault_335" OutArcs="ComponentExternalFault_326" Priority="1"/>
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_Analyzer_impl_fge6_activation_delay" InArcs="ComponentExternalFault_335" OutArcs="ComponentExternalFault_326" Priority="1"/>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generate_errors_Analyzer_impl_fge9_activation_delay" InArcs="ComponentExternalFault_362" OutArcs="ComponentExternalFault_353" Priority="1"/>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="errors_produces_failure_Analyzer_impl_epf4_propagation_delay" InArcs="ComponentExternalFault_579" OutArcs="ComponentExternalFault_570" Priority="1"/>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="internal_fault_Receiver_impl_Receiver_impl_Fault_transient_duration_time" InArcs="remove_transient_fault_Receiver_impl_Receiver_impl_Fault_arc_from_numberOfTransientFault remove_transient_fault_Receiver_impl_Receiver_impl_Fault_arc_from_faulty" Priority="1"/>
@@ -535,7 +535,7 @@
         <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_PC_PC_Error_PC_PC_Error_to_failed_place" source="remove_tokens_on_failing_component_PC_FROM_erroneusPlace_PC_PC_Error" target="failed_PC" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:Place" id="erroneusPlace_BoardSystem_BoardSystem_Error" InArcs="faults_generate_errors_BoardSystem_faultsGeneratesError_fge2_to_BoardSystem_Error faults_generate_errors_BoardSystem_faultsGeneratesError_fge6_to_BoardSystem_Error ComponentExternalFault_439" OutArcs="remove_token_from_erroneusPlace_BoardSystem_BoardSystem_Error_BoardSystem_BoardSystem_Error ComponentExternalFault_440 ComponentExternalFault_443">
+        <objects xsi:type="ptnet:Place" id="erroneusPlace_BoardSystem_BoardSystem_Error" InArcs="faults_generate_errors_BoardSystem_faultsGeneratesError_fge2_to_BoardSystem_Error faults_generate_errors_BoardSystem_faultsGeneratesError_fge8_to_BoardSystem_Error ComponentExternalFault_439" OutArcs="remove_token_from_erroneusPlace_BoardSystem_BoardSystem_Error_BoardSystem_BoardSystem_Error ComponentExternalFault_440 ComponentExternalFault_443">
           <name text="erroneusPlace_BoardSystem_BoardSystem_Error"/>
           <initialMarking text="0"/>
         </objects>
@@ -553,7 +553,7 @@
         <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_BoardSystem_BoardSystem_Error_BoardSystem_BoardSystem_Error_to_failed_place" source="remove_tokens_on_failing_component_BoardSystem_FROM_erroneusPlace_BoardSystem_BoardSystem_Error" target="failed_BoardSystem" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:Place" id="erroneusPlace_SerialCable_SerialCable_Error" InArcs="faults_generate_errors_SerialCable_faultsGeneratesError_fge3_to_SerialCable_Error faults_generate_errors_SerialCable_faultsGeneratesError_fge8_to_SerialCable_Error ComponentExternalFault_448" OutArcs="remove_token_from_erroneusPlace_SerialCable_SerialCable_Error_SerialCable_SerialCable_Error ComponentExternalFault_449 ComponentExternalFault_452">
+        <objects xsi:type="ptnet:Place" id="erroneusPlace_SerialCable_SerialCable_Error" InArcs="faults_generate_errors_SerialCable_faultsGeneratesError_fge3_to_SerialCable_Error faults_generate_errors_SerialCable_faultsGeneratesError_fge7_to_SerialCable_Error ComponentExternalFault_448" OutArcs="remove_token_from_erroneusPlace_SerialCable_SerialCable_Error_SerialCable_SerialCable_Error ComponentExternalFault_449 ComponentExternalFault_452">
           <name text="erroneusPlace_SerialCable_SerialCable_Error"/>
           <initialMarking text="0"/>
         </objects>
@@ -571,7 +571,7 @@
         <objects xsi:type="ptnet:GSPNArc" id="remove_token_from_erroneusPlace_SerialCable_SerialCable_Error_SerialCable_SerialCable_Error_to_failed_place" source="remove_tokens_on_failing_component_SerialCable_FROM_erroneusPlace_SerialCable_SerialCable_Error" target="failed_SerialCable" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:Place" id="erroneusPlace_Analyzer_impl_Analyzer_impl_Error" InArcs="faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge4_to_Analyzer_impl_Error faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge7_to_Analyzer_impl_Error faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge9_to_Analyzer_impl_Error ComponentExternalFault_457" OutArcs="remove_token_from_erroneusPlace_Analyzer_impl_Analyzer_impl_Error_Analyzer_impl_Analyzer_impl_Error ComponentExternalFault_458 ComponentExternalFault_461">
+        <objects xsi:type="ptnet:Place" id="erroneusPlace_Analyzer_impl_Analyzer_impl_Error" InArcs="faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge4_to_Analyzer_impl_Error faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge6_to_Analyzer_impl_Error faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge9_to_Analyzer_impl_Error ComponentExternalFault_457" OutArcs="remove_token_from_erroneusPlace_Analyzer_impl_Analyzer_impl_Error_Analyzer_impl_Analyzer_impl_Error ComponentExternalFault_458 ComponentExternalFault_461">
           <name text="erroneusPlace_Analyzer_impl_Analyzer_impl_Error"/>
           <initialMarking text="0"/>
         </objects>
@@ -675,8 +675,8 @@
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_74" source="ComponentExternalFault_66" target="ComponentExternalFault_72" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:Place" id="ComponentExternalFault_75" InArcs="ComponentExternalFault_77 faults_generates_errors_transaction_t0_to_logic_result_arc_BoardSystem_faultsGeneratesError_fge6 ComponentExternalFault_225" OutArcs="ComponentExternalFault_80 ComponentExternalFault_83 faults_generates_errors_transaction_t0_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge6 faults_generates_errors_transaction_t1_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge6 faults_generates_errors_transaction_t2_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge6 ComponentExternalFault_224">
-          <name text="logicResult_BoardSystem_BoardSystem_Fault_Caused_By_SerialCable_logic_fge6616"/>
+        <objects xsi:type="ptnet:Place" id="ComponentExternalFault_75" InArcs="ComponentExternalFault_77 faults_generates_errors_transaction_t0_to_logic_result_arc_BoardSystem_faultsGeneratesError_fge8 ComponentExternalFault_225" OutArcs="ComponentExternalFault_80 ComponentExternalFault_83 faults_generates_errors_transaction_t0_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge8 faults_generates_errors_transaction_t1_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge8 faults_generates_errors_transaction_t2_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge8 ComponentExternalFault_224">
+          <name text="logicResult_BoardSystem_BoardSystem_Fault_Caused_By_SerialCable_logic_fge8616"/>
           <initialMarking text="0"/>
         </objects>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_76" InArcs="ComponentExternalFault_79 ComponentExternalFault_80" OutArcs="ComponentExternalFault_77 ComponentExternalFault_78" Priority="2"/>
@@ -723,8 +723,8 @@
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_92" source="ComponentExternalFault_84" target="ComponentExternalFault_90" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:Place" id="ComponentExternalFault_93" InArcs="ComponentExternalFault_95 faults_generates_errors_transaction_t0_to_logic_result_arc_SerialCable_faultsGeneratesError_fge8 ComponentExternalFault_279" OutArcs="ComponentExternalFault_98 ComponentExternalFault_101 faults_generates_errors_transaction_t0_from_logic_result_arc_SerialCable_faultsGeneratesError_fge8 faults_generates_errors_transaction_t1_from_logic_result_arc_SerialCable_faultsGeneratesError_fge8 faults_generates_errors_transaction_t2_from_logic_result_arc_SerialCable_faultsGeneratesError_fge8 ComponentExternalFault_278">
-          <name text="logicResult_SerialCable_SerialCable_Fault_Caused_By_PC_logic_fge8616"/>
+        <objects xsi:type="ptnet:Place" id="ComponentExternalFault_93" InArcs="ComponentExternalFault_95 faults_generates_errors_transaction_t0_to_logic_result_arc_SerialCable_faultsGeneratesError_fge7 ComponentExternalFault_279" OutArcs="ComponentExternalFault_98 ComponentExternalFault_101 faults_generates_errors_transaction_t0_from_logic_result_arc_SerialCable_faultsGeneratesError_fge7 faults_generates_errors_transaction_t1_from_logic_result_arc_SerialCable_faultsGeneratesError_fge7 faults_generates_errors_transaction_t2_from_logic_result_arc_SerialCable_faultsGeneratesError_fge7 ComponentExternalFault_278">
+          <name text="logicResult_SerialCable_SerialCable_Fault_Caused_By_PC_logic_fge7616"/>
           <initialMarking text="0"/>
         </objects>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_94" InArcs="ComponentExternalFault_97 ComponentExternalFault_98" OutArcs="ComponentExternalFault_95 ComponentExternalFault_96" Priority="2"/>
@@ -771,8 +771,8 @@
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_110" source="ComponentExternalFault_102" target="ComponentExternalFault_108" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:Place" id="ComponentExternalFault_111" InArcs="ComponentExternalFault_113 faults_generates_errors_transaction_t0_to_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7 ComponentExternalFault_333" OutArcs="ComponentExternalFault_116 ComponentExternalFault_119 faults_generates_errors_transaction_t0_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7 faults_generates_errors_transaction_t1_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7 faults_generates_errors_transaction_t2_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7 ComponentExternalFault_332">
-          <name text="logicResult_Analyzer_impl_Analyzer_impl_Fault_Caused_By_Receiver_impl_logic_fge7616"/>
+        <objects xsi:type="ptnet:Place" id="ComponentExternalFault_111" InArcs="ComponentExternalFault_113 faults_generates_errors_transaction_t0_to_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6 ComponentExternalFault_333" OutArcs="ComponentExternalFault_116 ComponentExternalFault_119 faults_generates_errors_transaction_t0_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6 faults_generates_errors_transaction_t1_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6 faults_generates_errors_transaction_t2_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6 ComponentExternalFault_332">
+          <name text="logicResult_Analyzer_impl_Analyzer_impl_Fault_Caused_By_Receiver_impl_logic_fge6616"/>
           <initialMarking text="0"/>
         </objects>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_112" InArcs="ComponentExternalFault_115 ComponentExternalFault_116" OutArcs="ComponentExternalFault_113 ComponentExternalFault_114" Priority="2"/>
@@ -1013,53 +1013,53 @@
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_200" source="ComponentExternalFault_195" target="faults_generate_errors_BoardSystem_fge2_activation_delay" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_201" InArcs="ComponentExternalFault_219" OutArcs="faults_generate_errors_BoardSystem_faultsGeneratesError_fge6_to_BoardSystem_Error" Priority="1"/>
-        <objects xsi:type="ptnet:Place" id="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6" InArcs="faults_generates_errors_transaction_t0_to_active_arc_BoardSystem_faultsGeneratesError_fge6" OutArcs="faults_generates_errors_transaction_t2_from_active_arc_BoardSystem_faultsGeneratesError_fge6 faults_generates_errors_transaction_weight_from_active_arc_BoardSystem_faultsGeneratesError_fge6">
-          <name text="active_BoardSystem_faultsGeneratesError_fge6"/>
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_201" InArcs="ComponentExternalFault_219" OutArcs="faults_generate_errors_BoardSystem_faultsGeneratesError_fge8_to_BoardSystem_Error" Priority="1"/>
+        <objects xsi:type="ptnet:Place" id="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8" InArcs="faults_generates_errors_transaction_t0_to_active_arc_BoardSystem_faultsGeneratesError_fge8" OutArcs="faults_generates_errors_transaction_t2_from_active_arc_BoardSystem_faultsGeneratesError_fge8 faults_generates_errors_transaction_weight_from_active_arc_BoardSystem_faultsGeneratesError_fge8">
+          <name text="active_BoardSystem_faultsGeneratesError_fge8"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:Place" id="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6" InArcs="faults_generates_errors_transaction_t0_to_activated_arc_BoardSystem_faultsGeneratesError_fge6" OutArcs="faults_generates_errors_transaction_t0_from_activated_arc_BoardSystem_faultsGeneratesError_fge6 faults_generates_errors_transaction_t1_from_activated_arc_BoardSystem_faultsGeneratesError_fge6">
-          <name text="activated_BoardSystem_faultsGeneratesError_fge6"/>
+        <objects xsi:type="ptnet:Place" id="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8" InArcs="faults_generates_errors_transaction_t0_to_activated_arc_BoardSystem_faultsGeneratesError_fge8" OutArcs="faults_generates_errors_transaction_t0_from_activated_arc_BoardSystem_faultsGeneratesError_fge8 faults_generates_errors_transaction_t1_from_activated_arc_BoardSystem_faultsGeneratesError_fge8">
+          <name text="activated_BoardSystem_faultsGeneratesError_fge8"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge6" InArcs="faults_generates_errors_transaction_t0_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge6 faults_generates_errors_transaction_t0_from_activated_arc_BoardSystem_faultsGeneratesError_fge6" OutArcs="faults_generates_errors_transaction_t0_to_logic_result_arc_BoardSystem_faultsGeneratesError_fge6 faults_generates_errors_transaction_t0_to_activated_arc_BoardSystem_faultsGeneratesError_fge6 faults_generates_errors_transaction_t0_to_active_arc_BoardSystem_faultsGeneratesError_fge6" Priority="2"/>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge6" source="ComponentExternalFault_75" target="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge6" type="normal">
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge8" InArcs="faults_generates_errors_transaction_t0_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge8 faults_generates_errors_transaction_t0_from_activated_arc_BoardSystem_faultsGeneratesError_fge8" OutArcs="faults_generates_errors_transaction_t0_to_logic_result_arc_BoardSystem_faultsGeneratesError_fge8 faults_generates_errors_transaction_t0_to_activated_arc_BoardSystem_faultsGeneratesError_fge8 faults_generates_errors_transaction_t0_to_active_arc_BoardSystem_faultsGeneratesError_fge8" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge8" source="ComponentExternalFault_75" target="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge8" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_logic_result_arc_BoardSystem_faultsGeneratesError_fge6" source="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge6" target="ComponentExternalFault_75" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_logic_result_arc_BoardSystem_faultsGeneratesError_fge8" source="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge8" target="ComponentExternalFault_75" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_activated_arc_BoardSystem_faultsGeneratesError_fge6" source="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6" target="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge6" type="inhibitor">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_activated_arc_BoardSystem_faultsGeneratesError_fge8" source="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8" target="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge8" type="inhibitor">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_activated_arc_BoardSystem_faultsGeneratesError_fge6" source="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge6" target="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_activated_arc_BoardSystem_faultsGeneratesError_fge8" source="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge8" target="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_active_arc_BoardSystem_faultsGeneratesError_fge6" source="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge6" target="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_active_arc_BoardSystem_faultsGeneratesError_fge8" source="faults_generates_enabler_t0_BoardSystem_faultsGeneratesError_fge8" target="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transiction_t1_Reset_activated_BoardSystem_faultsGeneratesError_fge6" InArcs="faults_generates_errors_transaction_t1_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge6 faults_generates_errors_transaction_t1_from_activated_arc_BoardSystem_faultsGeneratesError_fge6" Priority="2"/>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge6" source="ComponentExternalFault_75" target="faults_generates_errors_transiction_t1_Reset_activated_BoardSystem_faultsGeneratesError_fge6" type="inhibitor">
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transiction_t1_Reset_activated_BoardSystem_faultsGeneratesError_fge8" InArcs="faults_generates_errors_transaction_t1_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge8 faults_generates_errors_transaction_t1_from_activated_arc_BoardSystem_faultsGeneratesError_fge8" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge8" source="ComponentExternalFault_75" target="faults_generates_errors_transiction_t1_Reset_activated_BoardSystem_faultsGeneratesError_fge8" type="inhibitor">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_activated_arc_BoardSystem_faultsGeneratesError_fge6" source="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6" target="faults_generates_errors_transiction_t1_Reset_activated_BoardSystem_faultsGeneratesError_fge6" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_activated_arc_BoardSystem_faultsGeneratesError_fge8" source="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8" target="faults_generates_errors_transiction_t1_Reset_activated_BoardSystem_faultsGeneratesError_fge8" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transaction_t2_reset_activate_place_BoardSystem_faultsGeneratesError_fge6" InArcs="faults_generates_errors_transaction_t2_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge6 faults_generates_errors_transaction_t2_from_active_arc_BoardSystem_faultsGeneratesError_fge6" Priority="2"/>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge6" source="ComponentExternalFault_75" target="faults_generates_errors_transaction_t2_reset_activate_place_BoardSystem_faultsGeneratesError_fge6" type="inhibitor">
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transaction_t2_reset_activate_place_BoardSystem_faultsGeneratesError_fge8" InArcs="faults_generates_errors_transaction_t2_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge8 faults_generates_errors_transaction_t2_from_active_arc_BoardSystem_faultsGeneratesError_fge8" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_logic_result_arc_BoardSystem_faultsGeneratesError_fge8" source="ComponentExternalFault_75" target="faults_generates_errors_transaction_t2_reset_activate_place_BoardSystem_faultsGeneratesError_fge8" type="inhibitor">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_active_arc_BoardSystem_faultsGeneratesError_fge6" source="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6" target="faults_generates_errors_transaction_t2_reset_activate_place_BoardSystem_faultsGeneratesError_fge6" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_active_arc_BoardSystem_faultsGeneratesError_fge8" source="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8" target="faults_generates_errors_transaction_t2_reset_activate_place_BoardSystem_faultsGeneratesError_fge8" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_weight_from_active_arc_BoardSystem_faultsGeneratesError_fge6" source="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6" target="ComponentExternalFault_223" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_weight_from_active_arc_BoardSystem_faultsGeneratesError_fge8" source="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8" target="ComponentExternalFault_223" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:Place" id="ComponentExternalFault_217" InArcs="ComponentExternalFault_218" OutArcs="ComponentExternalFault_219 ComponentExternalFault_220">
-          <name text="tmp_activated_BoardSystem_faultsGeneratesError_fge6"/>
+          <name text="tmp_activated_BoardSystem_faultsGeneratesError_fge8"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_218" source="faults_generate_errors_BoardSystem_fge6_activation_delay" target="ComponentExternalFault_217" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_218" source="faults_generate_errors_BoardSystem_fge8_activation_delay" target="ComponentExternalFault_217" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_219" source="ComponentExternalFault_217" target="ComponentExternalFault_201" type="normal">
@@ -1070,10 +1070,10 @@
         </objects>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_221" InArcs="ComponentExternalFault_220" Priority="1" Probability="0.0"/>
         <objects xsi:type="ptnet:Place" id="ComponentExternalFault_222" InArcs="ComponentExternalFault_226" OutArcs="ComponentExternalFault_227">
-          <name text="errorsActivation_BoardSystem_faultsGeneratesError_fge6"/>
+          <name text="errorsActivation_BoardSystem_faultsGeneratesError_fge8"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_223" InArcs="faults_generates_errors_transaction_weight_from_active_arc_BoardSystem_faultsGeneratesError_fge6 ComponentExternalFault_224" OutArcs="ComponentExternalFault_225 ComponentExternalFault_226" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_223" InArcs="faults_generates_errors_transaction_weight_from_active_arc_BoardSystem_faultsGeneratesError_fge8 ComponentExternalFault_224" OutArcs="ComponentExternalFault_225 ComponentExternalFault_226" Priority="2"/>
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_224" source="ComponentExternalFault_75" target="ComponentExternalFault_223" type="normal">
           <inscription text="1"/>
         </objects>
@@ -1083,7 +1083,7 @@
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_226" source="ComponentExternalFault_223" target="ComponentExternalFault_222" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_227" source="ComponentExternalFault_222" target="faults_generate_errors_BoardSystem_fge6_activation_delay" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_227" source="ComponentExternalFault_222" target="faults_generate_errors_BoardSystem_fge8_activation_delay" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_228" InArcs="ComponentExternalFault_246" OutArcs="faults_generate_errors_SerialCable_faultsGeneratesError_fge3_to_SerialCable_Error" Priority="1"/>
@@ -1159,53 +1159,53 @@
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_254" source="ComponentExternalFault_249" target="faults_generate_errors_SerialCable_fge3_activation_delay" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_255" InArcs="ComponentExternalFault_273" OutArcs="faults_generate_errors_SerialCable_faultsGeneratesError_fge8_to_SerialCable_Error" Priority="1"/>
-        <objects xsi:type="ptnet:Place" id="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8" InArcs="faults_generates_errors_transaction_t0_to_active_arc_SerialCable_faultsGeneratesError_fge8" OutArcs="faults_generates_errors_transaction_t2_from_active_arc_SerialCable_faultsGeneratesError_fge8 faults_generates_errors_transaction_weight_from_active_arc_SerialCable_faultsGeneratesError_fge8">
-          <name text="active_SerialCable_faultsGeneratesError_fge8"/>
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_255" InArcs="ComponentExternalFault_273" OutArcs="faults_generate_errors_SerialCable_faultsGeneratesError_fge7_to_SerialCable_Error" Priority="1"/>
+        <objects xsi:type="ptnet:Place" id="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7" InArcs="faults_generates_errors_transaction_t0_to_active_arc_SerialCable_faultsGeneratesError_fge7" OutArcs="faults_generates_errors_transaction_t2_from_active_arc_SerialCable_faultsGeneratesError_fge7 faults_generates_errors_transaction_weight_from_active_arc_SerialCable_faultsGeneratesError_fge7">
+          <name text="active_SerialCable_faultsGeneratesError_fge7"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:Place" id="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8" InArcs="faults_generates_errors_transaction_t0_to_activated_arc_SerialCable_faultsGeneratesError_fge8" OutArcs="faults_generates_errors_transaction_t0_from_activated_arc_SerialCable_faultsGeneratesError_fge8 faults_generates_errors_transaction_t1_from_activated_arc_SerialCable_faultsGeneratesError_fge8">
-          <name text="activated_SerialCable_faultsGeneratesError_fge8"/>
+        <objects xsi:type="ptnet:Place" id="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7" InArcs="faults_generates_errors_transaction_t0_to_activated_arc_SerialCable_faultsGeneratesError_fge7" OutArcs="faults_generates_errors_transaction_t0_from_activated_arc_SerialCable_faultsGeneratesError_fge7 faults_generates_errors_transaction_t1_from_activated_arc_SerialCable_faultsGeneratesError_fge7">
+          <name text="activated_SerialCable_faultsGeneratesError_fge7"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge8" InArcs="faults_generates_errors_transaction_t0_from_logic_result_arc_SerialCable_faultsGeneratesError_fge8 faults_generates_errors_transaction_t0_from_activated_arc_SerialCable_faultsGeneratesError_fge8" OutArcs="faults_generates_errors_transaction_t0_to_logic_result_arc_SerialCable_faultsGeneratesError_fge8 faults_generates_errors_transaction_t0_to_activated_arc_SerialCable_faultsGeneratesError_fge8 faults_generates_errors_transaction_t0_to_active_arc_SerialCable_faultsGeneratesError_fge8" Priority="2"/>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_logic_result_arc_SerialCable_faultsGeneratesError_fge8" source="ComponentExternalFault_93" target="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge8" type="normal">
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge7" InArcs="faults_generates_errors_transaction_t0_from_logic_result_arc_SerialCable_faultsGeneratesError_fge7 faults_generates_errors_transaction_t0_from_activated_arc_SerialCable_faultsGeneratesError_fge7" OutArcs="faults_generates_errors_transaction_t0_to_logic_result_arc_SerialCable_faultsGeneratesError_fge7 faults_generates_errors_transaction_t0_to_activated_arc_SerialCable_faultsGeneratesError_fge7 faults_generates_errors_transaction_t0_to_active_arc_SerialCable_faultsGeneratesError_fge7" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_logic_result_arc_SerialCable_faultsGeneratesError_fge7" source="ComponentExternalFault_93" target="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge7" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_logic_result_arc_SerialCable_faultsGeneratesError_fge8" source="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge8" target="ComponentExternalFault_93" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_logic_result_arc_SerialCable_faultsGeneratesError_fge7" source="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge7" target="ComponentExternalFault_93" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_activated_arc_SerialCable_faultsGeneratesError_fge8" source="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8" target="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge8" type="inhibitor">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_activated_arc_SerialCable_faultsGeneratesError_fge7" source="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7" target="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge7" type="inhibitor">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_activated_arc_SerialCable_faultsGeneratesError_fge8" source="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge8" target="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_activated_arc_SerialCable_faultsGeneratesError_fge7" source="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge7" target="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_active_arc_SerialCable_faultsGeneratesError_fge8" source="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge8" target="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_active_arc_SerialCable_faultsGeneratesError_fge7" source="faults_generates_enabler_t0_SerialCable_faultsGeneratesError_fge7" target="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transiction_t1_Reset_activated_SerialCable_faultsGeneratesError_fge8" InArcs="faults_generates_errors_transaction_t1_from_logic_result_arc_SerialCable_faultsGeneratesError_fge8 faults_generates_errors_transaction_t1_from_activated_arc_SerialCable_faultsGeneratesError_fge8" Priority="2"/>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_logic_result_arc_SerialCable_faultsGeneratesError_fge8" source="ComponentExternalFault_93" target="faults_generates_errors_transiction_t1_Reset_activated_SerialCable_faultsGeneratesError_fge8" type="inhibitor">
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transiction_t1_Reset_activated_SerialCable_faultsGeneratesError_fge7" InArcs="faults_generates_errors_transaction_t1_from_logic_result_arc_SerialCable_faultsGeneratesError_fge7 faults_generates_errors_transaction_t1_from_activated_arc_SerialCable_faultsGeneratesError_fge7" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_logic_result_arc_SerialCable_faultsGeneratesError_fge7" source="ComponentExternalFault_93" target="faults_generates_errors_transiction_t1_Reset_activated_SerialCable_faultsGeneratesError_fge7" type="inhibitor">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_activated_arc_SerialCable_faultsGeneratesError_fge8" source="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8" target="faults_generates_errors_transiction_t1_Reset_activated_SerialCable_faultsGeneratesError_fge8" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_activated_arc_SerialCable_faultsGeneratesError_fge7" source="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7" target="faults_generates_errors_transiction_t1_Reset_activated_SerialCable_faultsGeneratesError_fge7" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transaction_t2_reset_activate_place_SerialCable_faultsGeneratesError_fge8" InArcs="faults_generates_errors_transaction_t2_from_logic_result_arc_SerialCable_faultsGeneratesError_fge8 faults_generates_errors_transaction_t2_from_active_arc_SerialCable_faultsGeneratesError_fge8" Priority="2"/>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_logic_result_arc_SerialCable_faultsGeneratesError_fge8" source="ComponentExternalFault_93" target="faults_generates_errors_transaction_t2_reset_activate_place_SerialCable_faultsGeneratesError_fge8" type="inhibitor">
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transaction_t2_reset_activate_place_SerialCable_faultsGeneratesError_fge7" InArcs="faults_generates_errors_transaction_t2_from_logic_result_arc_SerialCable_faultsGeneratesError_fge7 faults_generates_errors_transaction_t2_from_active_arc_SerialCable_faultsGeneratesError_fge7" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_logic_result_arc_SerialCable_faultsGeneratesError_fge7" source="ComponentExternalFault_93" target="faults_generates_errors_transaction_t2_reset_activate_place_SerialCable_faultsGeneratesError_fge7" type="inhibitor">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_active_arc_SerialCable_faultsGeneratesError_fge8" source="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8" target="faults_generates_errors_transaction_t2_reset_activate_place_SerialCable_faultsGeneratesError_fge8" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_active_arc_SerialCable_faultsGeneratesError_fge7" source="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7" target="faults_generates_errors_transaction_t2_reset_activate_place_SerialCable_faultsGeneratesError_fge7" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_weight_from_active_arc_SerialCable_faultsGeneratesError_fge8" source="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8" target="ComponentExternalFault_277" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_weight_from_active_arc_SerialCable_faultsGeneratesError_fge7" source="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7" target="ComponentExternalFault_277" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:Place" id="ComponentExternalFault_271" InArcs="ComponentExternalFault_272" OutArcs="ComponentExternalFault_273 ComponentExternalFault_274">
-          <name text="tmp_activated_SerialCable_faultsGeneratesError_fge8"/>
+          <name text="tmp_activated_SerialCable_faultsGeneratesError_fge7"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_272" source="faults_generate_errors_SerialCable_fge8_activation_delay" target="ComponentExternalFault_271" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_272" source="faults_generate_errors_SerialCable_fge7_activation_delay" target="ComponentExternalFault_271" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_273" source="ComponentExternalFault_271" target="ComponentExternalFault_255" type="normal">
@@ -1216,10 +1216,10 @@
         </objects>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_275" InArcs="ComponentExternalFault_274" Priority="1" Probability="0.0"/>
         <objects xsi:type="ptnet:Place" id="ComponentExternalFault_276" InArcs="ComponentExternalFault_280" OutArcs="ComponentExternalFault_281">
-          <name text="errorsActivation_SerialCable_faultsGeneratesError_fge8"/>
+          <name text="errorsActivation_SerialCable_faultsGeneratesError_fge7"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_277" InArcs="faults_generates_errors_transaction_weight_from_active_arc_SerialCable_faultsGeneratesError_fge8 ComponentExternalFault_278" OutArcs="ComponentExternalFault_279 ComponentExternalFault_280" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_277" InArcs="faults_generates_errors_transaction_weight_from_active_arc_SerialCable_faultsGeneratesError_fge7 ComponentExternalFault_278" OutArcs="ComponentExternalFault_279 ComponentExternalFault_280" Priority="2"/>
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_278" source="ComponentExternalFault_93" target="ComponentExternalFault_277" type="normal">
           <inscription text="1"/>
         </objects>
@@ -1229,7 +1229,7 @@
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_280" source="ComponentExternalFault_277" target="ComponentExternalFault_276" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_281" source="ComponentExternalFault_276" target="faults_generate_errors_SerialCable_fge8_activation_delay" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_281" source="ComponentExternalFault_276" target="faults_generate_errors_SerialCable_fge7_activation_delay" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_282" InArcs="ComponentExternalFault_300" OutArcs="faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge4_to_Analyzer_impl_Error" Priority="1"/>
@@ -1305,53 +1305,53 @@
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_308" source="ComponentExternalFault_303" target="faults_generate_errors_Analyzer_impl_fge4_activation_delay" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_309" InArcs="ComponentExternalFault_327" OutArcs="faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge7_to_Analyzer_impl_Error" Priority="1"/>
-        <objects xsi:type="ptnet:Place" id="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7" InArcs="faults_generates_errors_transaction_t0_to_active_arc_Analyzer_impl_faultsGeneratesError_fge7" OutArcs="faults_generates_errors_transaction_t2_from_active_arc_Analyzer_impl_faultsGeneratesError_fge7 faults_generates_errors_transaction_weight_from_active_arc_Analyzer_impl_faultsGeneratesError_fge7">
-          <name text="active_Analyzer_impl_faultsGeneratesError_fge7"/>
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_309" InArcs="ComponentExternalFault_327" OutArcs="faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge6_to_Analyzer_impl_Error" Priority="1"/>
+        <objects xsi:type="ptnet:Place" id="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6" InArcs="faults_generates_errors_transaction_t0_to_active_arc_Analyzer_impl_faultsGeneratesError_fge6" OutArcs="faults_generates_errors_transaction_t2_from_active_arc_Analyzer_impl_faultsGeneratesError_fge6 faults_generates_errors_transaction_weight_from_active_arc_Analyzer_impl_faultsGeneratesError_fge6">
+          <name text="active_Analyzer_impl_faultsGeneratesError_fge6"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:Place" id="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7" InArcs="faults_generates_errors_transaction_t0_to_activated_arc_Analyzer_impl_faultsGeneratesError_fge7" OutArcs="faults_generates_errors_transaction_t0_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge7 faults_generates_errors_transaction_t1_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge7">
-          <name text="activated_Analyzer_impl_faultsGeneratesError_fge7"/>
+        <objects xsi:type="ptnet:Place" id="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6" InArcs="faults_generates_errors_transaction_t0_to_activated_arc_Analyzer_impl_faultsGeneratesError_fge6" OutArcs="faults_generates_errors_transaction_t0_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge6 faults_generates_errors_transaction_t1_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge6">
+          <name text="activated_Analyzer_impl_faultsGeneratesError_fge6"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge7" InArcs="faults_generates_errors_transaction_t0_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7 faults_generates_errors_transaction_t0_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge7" OutArcs="faults_generates_errors_transaction_t0_to_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7 faults_generates_errors_transaction_t0_to_activated_arc_Analyzer_impl_faultsGeneratesError_fge7 faults_generates_errors_transaction_t0_to_active_arc_Analyzer_impl_faultsGeneratesError_fge7" Priority="2"/>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7" source="ComponentExternalFault_111" target="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge7" type="normal">
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge6" InArcs="faults_generates_errors_transaction_t0_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6 faults_generates_errors_transaction_t0_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge6" OutArcs="faults_generates_errors_transaction_t0_to_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6 faults_generates_errors_transaction_t0_to_activated_arc_Analyzer_impl_faultsGeneratesError_fge6 faults_generates_errors_transaction_t0_to_active_arc_Analyzer_impl_faultsGeneratesError_fge6" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6" source="ComponentExternalFault_111" target="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge6" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7" source="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge7" target="ComponentExternalFault_111" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6" source="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge6" target="ComponentExternalFault_111" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge7" source="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7" target="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge7" type="inhibitor">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge6" source="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6" target="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge6" type="inhibitor">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_activated_arc_Analyzer_impl_faultsGeneratesError_fge7" source="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge7" target="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_activated_arc_Analyzer_impl_faultsGeneratesError_fge6" source="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge6" target="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_active_arc_Analyzer_impl_faultsGeneratesError_fge7" source="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge7" target="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t0_to_active_arc_Analyzer_impl_faultsGeneratesError_fge6" source="faults_generates_enabler_t0_Analyzer_impl_faultsGeneratesError_fge6" target="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transiction_t1_Reset_activated_Analyzer_impl_faultsGeneratesError_fge7" InArcs="faults_generates_errors_transaction_t1_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7 faults_generates_errors_transaction_t1_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge7" Priority="2"/>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7" source="ComponentExternalFault_111" target="faults_generates_errors_transiction_t1_Reset_activated_Analyzer_impl_faultsGeneratesError_fge7" type="inhibitor">
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transiction_t1_Reset_activated_Analyzer_impl_faultsGeneratesError_fge6" InArcs="faults_generates_errors_transaction_t1_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6 faults_generates_errors_transaction_t1_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge6" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6" source="ComponentExternalFault_111" target="faults_generates_errors_transiction_t1_Reset_activated_Analyzer_impl_faultsGeneratesError_fge6" type="inhibitor">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge7" source="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7" target="faults_generates_errors_transiction_t1_Reset_activated_Analyzer_impl_faultsGeneratesError_fge7" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t1_from_activated_arc_Analyzer_impl_faultsGeneratesError_fge6" source="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6" target="faults_generates_errors_transiction_t1_Reset_activated_Analyzer_impl_faultsGeneratesError_fge6" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transaction_t2_reset_activate_place_Analyzer_impl_faultsGeneratesError_fge7" InArcs="faults_generates_errors_transaction_t2_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7 faults_generates_errors_transaction_t2_from_active_arc_Analyzer_impl_faultsGeneratesError_fge7" Priority="2"/>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge7" source="ComponentExternalFault_111" target="faults_generates_errors_transaction_t2_reset_activate_place_Analyzer_impl_faultsGeneratesError_fge7" type="inhibitor">
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="faults_generates_errors_transaction_t2_reset_activate_place_Analyzer_impl_faultsGeneratesError_fge6" InArcs="faults_generates_errors_transaction_t2_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6 faults_generates_errors_transaction_t2_from_active_arc_Analyzer_impl_faultsGeneratesError_fge6" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_logic_result_arc_Analyzer_impl_faultsGeneratesError_fge6" source="ComponentExternalFault_111" target="faults_generates_errors_transaction_t2_reset_activate_place_Analyzer_impl_faultsGeneratesError_fge6" type="inhibitor">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_active_arc_Analyzer_impl_faultsGeneratesError_fge7" source="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7" target="faults_generates_errors_transaction_t2_reset_activate_place_Analyzer_impl_faultsGeneratesError_fge7" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_t2_from_active_arc_Analyzer_impl_faultsGeneratesError_fge6" source="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6" target="faults_generates_errors_transaction_t2_reset_activate_place_Analyzer_impl_faultsGeneratesError_fge6" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_weight_from_active_arc_Analyzer_impl_faultsGeneratesError_fge7" source="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7" target="ComponentExternalFault_331" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generates_errors_transaction_weight_from_active_arc_Analyzer_impl_faultsGeneratesError_fge6" source="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6" target="ComponentExternalFault_331" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:Place" id="ComponentExternalFault_325" InArcs="ComponentExternalFault_326" OutArcs="ComponentExternalFault_327 ComponentExternalFault_328">
-          <name text="tmp_activated_Analyzer_impl_faultsGeneratesError_fge7"/>
+          <name text="tmp_activated_Analyzer_impl_faultsGeneratesError_fge6"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_326" source="faults_generate_errors_Analyzer_impl_fge7_activation_delay" target="ComponentExternalFault_325" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_326" source="faults_generate_errors_Analyzer_impl_fge6_activation_delay" target="ComponentExternalFault_325" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_327" source="ComponentExternalFault_325" target="ComponentExternalFault_309" type="normal">
@@ -1362,10 +1362,10 @@
         </objects>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_329" InArcs="ComponentExternalFault_328" Priority="1" Probability="0.0"/>
         <objects xsi:type="ptnet:Place" id="ComponentExternalFault_330" InArcs="ComponentExternalFault_334" OutArcs="ComponentExternalFault_335">
-          <name text="errorsActivation_Analyzer_impl_faultsGeneratesError_fge7"/>
+          <name text="errorsActivation_Analyzer_impl_faultsGeneratesError_fge6"/>
           <initialMarking text="0"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_331" InArcs="faults_generates_errors_transaction_weight_from_active_arc_Analyzer_impl_faultsGeneratesError_fge7 ComponentExternalFault_332" OutArcs="ComponentExternalFault_333 ComponentExternalFault_334" Priority="2"/>
+        <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_331" InArcs="faults_generates_errors_transaction_weight_from_active_arc_Analyzer_impl_faultsGeneratesError_fge6 ComponentExternalFault_332" OutArcs="ComponentExternalFault_333 ComponentExternalFault_334" Priority="2"/>
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_332" source="ComponentExternalFault_111" target="ComponentExternalFault_331" type="normal">
           <inscription text="1"/>
         </objects>
@@ -1375,7 +1375,7 @@
         <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_334" source="ComponentExternalFault_331" target="ComponentExternalFault_330" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_335" source="ComponentExternalFault_330" target="faults_generate_errors_Analyzer_impl_fge7_activation_delay" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="ComponentExternalFault_335" source="ComponentExternalFault_330" target="faults_generate_errors_Analyzer_impl_fge6_activation_delay" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:GSPNImmediateTransition" id="ComponentExternalFault_336" InArcs="ComponentExternalFault_354" OutArcs="faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge9_to_Analyzer_impl_Error" Priority="1"/>
@@ -1603,19 +1603,19 @@
         <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_BoardSystem_faultsGeneratesError_fge2_to_BoardSystem_Error" source="ComponentExternalFault_174" target="erroneusPlace_BoardSystem_BoardSystem_Error" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_BoardSystem_faultsGeneratesError_fge6_to_BoardSystem_Error" source="ComponentExternalFault_201" target="erroneusPlace_BoardSystem_BoardSystem_Error" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_BoardSystem_faultsGeneratesError_fge8_to_BoardSystem_Error" source="ComponentExternalFault_201" target="erroneusPlace_BoardSystem_BoardSystem_Error" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_SerialCable_faultsGeneratesError_fge3_to_SerialCable_Error" source="ComponentExternalFault_228" target="erroneusPlace_SerialCable_SerialCable_Error" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_SerialCable_faultsGeneratesError_fge8_to_SerialCable_Error" source="ComponentExternalFault_255" target="erroneusPlace_SerialCable_SerialCable_Error" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_SerialCable_faultsGeneratesError_fge7_to_SerialCable_Error" source="ComponentExternalFault_255" target="erroneusPlace_SerialCable_SerialCable_Error" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge4_to_Analyzer_impl_Error" source="ComponentExternalFault_282" target="erroneusPlace_Analyzer_impl_Analyzer_impl_Error" type="normal">
           <inscription text="1"/>
         </objects>
-        <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge7_to_Analyzer_impl_Error" source="ComponentExternalFault_309" target="erroneusPlace_Analyzer_impl_Analyzer_impl_Error" type="normal">
+        <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge6_to_Analyzer_impl_Error" source="ComponentExternalFault_309" target="erroneusPlace_Analyzer_impl_Analyzer_impl_Error" type="normal">
           <inscription text="1"/>
         </objects>
         <objects xsi:type="ptnet:GSPNArc" id="faults_generate_errors_Analyzer_impl_faultsGeneratesError_fge9_to_Analyzer_impl_Error" source="ComponentExternalFault_336" target="erroneusPlace_Analyzer_impl_Analyzer_impl_Error" type="normal">
@@ -2162,11 +2162,11 @@
   </ptnet:GSPNTimedTransition>
   <ptnet:Name text="logicResult_PC_logic_fge1616"/>
   <ptnet:Name text="logicResult_BoardSystem_logic_fge2616"/>
-  <ptnet:Name text="logicResult_BoardSystem_logic_fge6616"/>
+  <ptnet:Name text="logicResult_BoardSystem_logic_fge8616"/>
   <ptnet:Name text="logicResult_SerialCable_logic_fge3616"/>
-  <ptnet:Name text="logicResult_SerialCable_logic_fge8616"/>
+  <ptnet:Name text="logicResult_SerialCable_logic_fge7616"/>
   <ptnet:Name text="logicResult_Analyzer_impl_logic_fge4616"/>
-  <ptnet:Name text="logicResult_Analyzer_impl_logic_fge7616"/>
+  <ptnet:Name text="logicResult_Analyzer_impl_logic_fge6616"/>
   <ptnet:Name text="logicResult_Analyzer_impl_logic_fge9616"/>
   <ptnet:Name text="logicResult_Receiver_impl_logic_fge5616"/>
   <ptnet:Name text="logicResult_Receiver_impl_logic_fge10616"/>

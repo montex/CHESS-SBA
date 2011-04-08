@@ -175,10 +175,10 @@
     <places Name="ComponentExternalFault_195">
       <displayInfo x="1450.0" y="1050.0"/>
     </places>
-    <places Name="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6">
+    <places Name="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8">
       <displayInfo x="1650.0" y="1050.0"/>
     </places>
-    <places Name="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6">
+    <places Name="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8">
       <displayInfo x="1850.0" y="1050.0"/>
     </places>
     <places Name="ComponentExternalFault_217">
@@ -199,10 +199,10 @@
     <places Name="ComponentExternalFault_249">
       <displayInfo x="1050.0" y="1250.0"/>
     </places>
-    <places Name="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8">
+    <places Name="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7">
       <displayInfo x="1250.0" y="1250.0"/>
     </places>
-    <places Name="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8">
+    <places Name="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7">
       <displayInfo x="1450.0" y="1250.0"/>
     </places>
     <places Name="ComponentExternalFault_271">
@@ -223,10 +223,10 @@
     <places Name="ComponentExternalFault_303">
       <displayInfo x="650.0" y="1450.0"/>
     </places>
-    <places Name="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7">
+    <places Name="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6">
       <displayInfo x="850.0" y="1450.0"/>
     </places>
-    <places Name="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7">
+    <places Name="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6">
       <displayInfo x="1050.0" y="1450.0"/>
     </places>
     <places Name="ComponentExternalFault_325">
@@ -448,9 +448,9 @@
     <inputArcs source="ComponentExternalFault_66" target="T84"/>
     <inputArcs source="ComponentExternalFault_195" target="T3"/>
     <inputArcs source="ComponentExternalFault_75" target="T86"/>
-    <inputArcs source="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6" target="T87"/>
-    <inputArcs source="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6" target="T88"/>
-    <inputArcs source="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6" target="T90"/>
+    <inputArcs source="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8" target="T87"/>
+    <inputArcs source="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8" target="T88"/>
+    <inputArcs source="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8" target="T90"/>
     <inputArcs source="ComponentExternalFault_217" target="T85"/>
     <inputArcs source="ComponentExternalFault_217" target="T89"/>
     <inputArcs source="ComponentExternalFault_75" target="T90"/>
@@ -464,9 +464,9 @@
     <inputArcs source="ComponentExternalFault_84" target="T96"/>
     <inputArcs source="ComponentExternalFault_249" target="T6"/>
     <inputArcs source="ComponentExternalFault_93" target="T98"/>
-    <inputArcs source="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8" target="T99"/>
-    <inputArcs source="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8" target="T100"/>
-    <inputArcs source="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8" target="T102"/>
+    <inputArcs source="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7" target="T99"/>
+    <inputArcs source="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7" target="T100"/>
+    <inputArcs source="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7" target="T102"/>
     <inputArcs source="ComponentExternalFault_271" target="T97"/>
     <inputArcs source="ComponentExternalFault_271" target="T101"/>
     <inputArcs source="ComponentExternalFault_93" target="T102"/>
@@ -480,9 +480,9 @@
     <inputArcs source="ComponentExternalFault_102" target="T108"/>
     <inputArcs source="ComponentExternalFault_303" target="T10"/>
     <inputArcs source="ComponentExternalFault_111" target="T110"/>
-    <inputArcs source="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7" target="T111"/>
-    <inputArcs source="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7" target="T112"/>
-    <inputArcs source="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7" target="T114"/>
+    <inputArcs source="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6" target="T111"/>
+    <inputArcs source="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6" target="T112"/>
+    <inputArcs source="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6" target="T114"/>
     <inputArcs source="ComponentExternalFault_325" target="T109"/>
     <inputArcs source="ComponentExternalFault_325" target="T113"/>
     <inputArcs source="ComponentExternalFault_111" target="T114"/>
@@ -602,19 +602,19 @@
     <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge2" target="T80"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_66" target="T81"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_66" target="T82"/>
-    <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6" target="T86"/>
+    <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8" target="T86"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_75" target="T87"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_75" target="T88"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge3" target="T92"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_84" target="T93"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_84" target="T94"/>
-    <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8" target="T98"/>
+    <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7" target="T98"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_93" target="T99"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_93" target="T100"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge4" target="T104"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_102" target="T105"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_102" target="T106"/>
-    <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7" target="T110"/>
+    <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6" target="T110"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_111" target="T111"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="ComponentExternalFault_111" target="T112"/>
     <outputArcs xsi:type="deem:InhibitorArc" source="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge9" target="T116"/>
@@ -734,8 +734,8 @@
     <outputArcs source="T84" target="ComponentExternalFault_66"/>
     <outputArcs source="T84" target="ComponentExternalFault_195"/>
     <outputArcs source="T86" target="ComponentExternalFault_75"/>
-    <outputArcs source="T86" target="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6"/>
-    <outputArcs source="T86" target="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6"/>
+    <outputArcs source="T86" target="faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8"/>
+    <outputArcs source="T86" target="faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8"/>
     <outputArcs source="T4" target="ComponentExternalFault_217"/>
     <outputArcs source="T90" target="ComponentExternalFault_75"/>
     <outputArcs source="T90" target="ComponentExternalFault_222"/>
@@ -746,8 +746,8 @@
     <outputArcs source="T96" target="ComponentExternalFault_84"/>
     <outputArcs source="T96" target="ComponentExternalFault_249"/>
     <outputArcs source="T98" target="ComponentExternalFault_93"/>
-    <outputArcs source="T98" target="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8"/>
-    <outputArcs source="T98" target="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8"/>
+    <outputArcs source="T98" target="faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7"/>
+    <outputArcs source="T98" target="faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7"/>
     <outputArcs source="T7" target="ComponentExternalFault_271"/>
     <outputArcs source="T102" target="ComponentExternalFault_93"/>
     <outputArcs source="T102" target="ComponentExternalFault_276"/>
@@ -758,8 +758,8 @@
     <outputArcs source="T108" target="ComponentExternalFault_102"/>
     <outputArcs source="T108" target="ComponentExternalFault_303"/>
     <outputArcs source="T110" target="ComponentExternalFault_111"/>
-    <outputArcs source="T110" target="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7"/>
-    <outputArcs source="T110" target="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7"/>
+    <outputArcs source="T110" target="faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6"/>
+    <outputArcs source="T110" target="faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6"/>
     <outputArcs source="T11" target="ComponentExternalFault_325"/>
     <outputArcs source="T114" target="ComponentExternalFault_111"/>
     <outputArcs source="T114" target="ComponentExternalFault_330"/>

@@ -28,7 +28,7 @@
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.0" Fault="//@components.1/@Faults.0"/>
     </FaultsGeneratesErrors>
-    <FaultsGeneratesErrors Source="//@components.1/@Faults.1" Destination="//@components.1/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="BoardSystem_Fault_Caused_By_SerialCable" Name="fge6">
+    <FaultsGeneratesErrors Source="//@components.1/@Faults.1" Destination="//@components.1/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="BoardSystem_Fault_Caused_By_SerialCable" Name="fge8">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.1" Fault="//@components.1/@Faults.1"/>
     </FaultsGeneratesErrors>
@@ -49,7 +49,7 @@
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.2/@FaultsGeneratesErrors.0" Fault="//@components.2/@Faults.0"/>
     </FaultsGeneratesErrors>
-    <FaultsGeneratesErrors Source="//@components.2/@Faults.1" Destination="//@components.2/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="SerialCable_Fault_Caused_By_PC" Name="fge8">
+    <FaultsGeneratesErrors Source="//@components.2/@Faults.1" Destination="//@components.2/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="SerialCable_Fault_Caused_By_PC" Name="fge6">
       <ActivationDelay xsi:type="Deterministic"/>
       <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.2/@FaultsGeneratesErrors.1" Fault="//@components.2/@Faults.1"/>
     </FaultsGeneratesErrors>
@@ -135,8 +135,7 @@
       <Condition xsi:type="SchedulingConditionExpressionFailedNode" FailureMode="//@components.4/@FailureModes.0"/>
     </When>
   </Activities>
-  <measures xsi:type="Reliability" Name="Reliability_Measure" target="//@components.4/@FailureModes.0">
+  <measures xsi:type="Reliability" Name="Reliability_IN!Receiver_impl" target="//@components.4/@FailureModes.0">
     <evaluations xsi:type="InstantOfTime" timePoint="10000.0"/>
-    <evaluations xsi:type="InstantOfTime" timePoint="20000.0"/>
   </measures>
 </Sistema>

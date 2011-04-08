@@ -1225,7 +1225,7 @@ rule Reliability(sys : DIM!Component, time : Real){
 	
 	to
 		re : IM!Reliability (
-			Name <-	'Reliability_Measure'
+			Name <-	'Reliability_'
 		),
 		
 		it : IM!InstantOfTime (
@@ -1240,6 +1240,9 @@ rule Reliability(sys : DIM!Component, time : Real){
 			
 			re.target <- (sys.getValue(sys.getAppliedStereotypes()->select(e| e.name = 'StateBasedAnalysis')->
 				first(), 'targetDepComponent'))->first().classifier->first().corrispondingComponent.FailureModes;
+			
+			re.Name <- re.Name + (sys.getValue(sys.getAppliedStereotypes()->select(e| e.name = 'StateBasedAnalysis')->
+				first(), 'targetDepComponent'))->first().classifier->first().toString();
 		}
 	}
 }

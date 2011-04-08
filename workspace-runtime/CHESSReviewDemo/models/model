@@ -5,7 +5,7 @@ COLORS:White,Black,Black,Black,Black,Black;
 
 VARIABLE:"Time","Real";
 
-STUDY:"DefaultStudy",1,"{10000.0,20000.0}",0;
+STUDY:"DefaultStudy",1,"{500000.0}",0;
 
 PLACE:"failed_PC",50,50,0,0;
 PLACE:"failed_BoardSystem",250,50,0,0;
@@ -65,24 +65,24 @@ PLACE:"faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge2",850
 PLACE:"faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge2",1050,1050,0,0;
 PLACE:"ComponentExternalFault_190",1250,1050,0,0;
 PLACE:"ComponentExternalFault_195",1450,1050,0,0;
-PLACE:"faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6",1650,1050,0,0;
-PLACE:"faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6",1850,1050,0,0;
+PLACE:"faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8",1650,1050,0,0;
+PLACE:"faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8",1850,1050,0,0;
 PLACE:"ComponentExternalFault_217",50,1250,0,0;
 PLACE:"ComponentExternalFault_222",250,1250,0,0;
 PLACE:"faults_generates_errors_active_SerialCable_faultsGeneratesError_fge3",450,1250,0,0;
 PLACE:"faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge3",650,1250,0,0;
 PLACE:"ComponentExternalFault_244",850,1250,0,0;
 PLACE:"ComponentExternalFault_249",1050,1250,0,0;
-PLACE:"faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8",1250,1250,0,0;
-PLACE:"faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8",1450,1250,0,0;
+PLACE:"faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7",1250,1250,0,0;
+PLACE:"faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7",1450,1250,0,0;
 PLACE:"ComponentExternalFault_271",1650,1250,0,0;
 PLACE:"ComponentExternalFault_276",1850,1250,0,0;
 PLACE:"faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge4",50,1450,0,0;
 PLACE:"faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge4",250,1450,0,0;
 PLACE:"ComponentExternalFault_298",450,1450,0,0;
 PLACE:"ComponentExternalFault_303",650,1450,0,0;
-PLACE:"faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7",850,1450,0,0;
-PLACE:"faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7",1050,1450,0,0;
+PLACE:"faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6",850,1450,0,0;
+PLACE:"faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6",1050,1450,0,0;
 PLACE:"ComponentExternalFault_325",1250,1450,0,0;
 PLACE:"ComponentExternalFault_330",1450,1450,0,0;
 PLACE:"faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge9",1650,1450,0,0;
@@ -1228,11 +1228,11 @@ IARC:"ComponentExternalFault_195","T3",1,0,'',
  (1450,1050,750,150),1;
 IARC:"ComponentExternalFault_75","T86",1,0,'',
  (450,850,1350,1750),1;
-IARC:"faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6","T87",1,0,'',
+IARC:"faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8","T87",1,0,'',
  (1850,1050,1550,1750),1;
-IARC:"faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6","T88",1,0,'',
+IARC:"faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8","T88",1,0,'',
  (1650,1050,1750,1750),1;
-IARC:"faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6","T90",1,0,'',
+IARC:"faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8","T90",1,0,'',
  (1650,1050,150,1950),1;
 IARC:"ComponentExternalFault_217","T85",1,0,'',
  (50,1250,1150,1750),1;
@@ -1260,11 +1260,11 @@ IARC:"ComponentExternalFault_249","T6",1,0,'',
  (1050,1250,1350,150),1;
 IARC:"ComponentExternalFault_93","T98",1,0,'',
  (850,850,1750,1950),1;
-IARC:"faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8","T99",1,0,'',
+IARC:"faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7","T99",1,0,'',
  (1450,1250,1950,1950),1;
-IARC:"faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8","T100",1,0,'',
+IARC:"faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7","T100",1,0,'',
  (1250,1250,150,150),1;
-IARC:"faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8","T102",1,0,'',
+IARC:"faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7","T102",1,0,'',
  (1250,1250,550,150),1;
 IARC:"ComponentExternalFault_271","T97",1,0,'',
  (1650,1250,1550,1950),1;
@@ -1292,11 +1292,11 @@ IARC:"ComponentExternalFault_303","T10",1,0,'',
  (650,1450,150,350),1;
 IARC:"ComponentExternalFault_111","T110",1,0,'',
  (1250,850,150,350),1;
-IARC:"faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7","T111",1,0,'',
+IARC:"faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6","T111",1,0,'',
  (1050,1450,350,350),1;
-IARC:"faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7","T112",1,0,'',
+IARC:"faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6","T112",1,0,'',
  (850,1450,550,350),1;
-IARC:"faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7","T114",1,0,'',
+IARC:"faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6","T114",1,0,'',
  (850,1450,950,350),1;
 IARC:"ComponentExternalFault_325","T109",1,0,'',
  (1250,1450,1950,150),1;
@@ -1537,7 +1537,7 @@ OARC:"ComponentExternalFault_66","T81",1,2,'',
  (250,850,350,1750),1;
 OARC:"ComponentExternalFault_66","T82",1,2,'',
  (250,850,550,1750),1;
-OARC:"faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6","T86",1,2,'',
+OARC:"faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8","T86",1,2,'',
  (1850,1050,1350,1750),1;
 OARC:"ComponentExternalFault_75","T87",1,2,'',
  (450,850,1550,1750),1;
@@ -1549,7 +1549,7 @@ OARC:"ComponentExternalFault_84","T93",1,2,'',
  (650,850,750,1950),1;
 OARC:"ComponentExternalFault_84","T94",1,2,'',
  (650,850,950,1950),1;
-OARC:"faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8","T98",1,2,'',
+OARC:"faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7","T98",1,2,'',
  (1450,1250,1750,1950),1;
 OARC:"ComponentExternalFault_93","T99",1,2,'',
  (850,850,1950,1950),1;
@@ -1561,7 +1561,7 @@ OARC:"ComponentExternalFault_102","T105",1,2,'',
  (1050,850,1150,150),1;
 OARC:"ComponentExternalFault_102","T106",1,2,'',
  (1050,850,1350,150),1;
-OARC:"faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7","T110",1,2,'',
+OARC:"faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6","T110",1,2,'',
  (1050,1450,150,350),1;
 OARC:"ComponentExternalFault_111","T111",1,2,'',
  (1250,850,350,350),1;
@@ -1801,9 +1801,9 @@ OARC:"ComponentExternalFault_195","T84",1,1,'',
  (950,1750,1450,1050),1;
 OARC:"ComponentExternalFault_75","T86",1,1,'',
  (1350,1750,450,850),1;
-OARC:"faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge6","T86",1,1,'',
+OARC:"faults_generates_errors_activated_BoardSystem_faultsGeneratesError_fge8","T86",1,1,'',
  (1350,1750,1850,1050),1;
-OARC:"faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge6","T86",1,1,'',
+OARC:"faults_generates_errors_active_BoardSystem_faultsGeneratesError_fge8","T86",1,1,'',
  (1350,1750,1650,1050),1;
 OARC:"ComponentExternalFault_217","T4",1,1,'',
  (950,150,50,1250),1;
@@ -1825,9 +1825,9 @@ OARC:"ComponentExternalFault_249","T96",1,1,'',
  (1350,1950,1050,1250),1;
 OARC:"ComponentExternalFault_93","T98",1,1,'',
  (1750,1950,850,850),1;
-OARC:"faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge8","T98",1,1,'',
+OARC:"faults_generates_errors_activated_SerialCable_faultsGeneratesError_fge7","T98",1,1,'',
  (1750,1950,1450,1250),1;
-OARC:"faults_generates_errors_active_SerialCable_faultsGeneratesError_fge8","T98",1,1,'',
+OARC:"faults_generates_errors_active_SerialCable_faultsGeneratesError_fge7","T98",1,1,'',
  (1750,1950,1250,1250),1;
 OARC:"ComponentExternalFault_271","T7",1,1,'',
  (1550,150,1650,1250),1;
@@ -1849,9 +1849,9 @@ OARC:"ComponentExternalFault_303","T108",1,1,'',
  (1750,150,650,1450),1;
 OARC:"ComponentExternalFault_111","T110",1,1,'',
  (150,350,1250,850),1;
-OARC:"faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge7","T110",1,1,'',
+OARC:"faults_generates_errors_activated_Analyzer_impl_faultsGeneratesError_fge6","T110",1,1,'',
  (150,350,1050,1450),1;
-OARC:"faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge7","T110",1,1,'',
+OARC:"faults_generates_errors_active_Analyzer_impl_faultsGeneratesError_fge6","T110",1,1,'',
  (150,350,850,1450),1;
 OARC:"ComponentExternalFault_325","T11",1,1,'',
  (350,350,1250,1450),1;
