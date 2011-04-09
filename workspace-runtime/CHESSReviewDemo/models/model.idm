@@ -13,14 +13,14 @@
     </FaultsGeneratesErrors>
     <ErrorsGeneratesFailures Name="epf1" PropagationLogicStringFormat="PC_Error" Source="//@components.0/@Errors.0" Destination="//@components.0/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.0/@ErrorsGeneratesFailures.0" Error="//@components.0/@Errors.0"/>
-      <PropagationDelay xsi:type="Exponential" Rate="0.1"/>
+      <PropagationDelay xsi:type="Exponential" Rate="27777.777777777777"/>
     </ErrorsGeneratesFailures>
   </components>
   <components Name="BoardSystem">
     <FailureModes Name="BoardSystem_FailureMode1"/>
     <Errors Name="BoardSystem_Error"/>
     <Faults xsi:type="InternalFault" Name="BoardSystem_Fault" PermanentProbability="0.9">
-      <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
+      <Occurrence xsi:type="Exponential" Rate="1.0E-7"/>
       <TransientDuration xsi:type="Deterministic"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="BoardSystem_Fault_Caused_By_SerialCable" Source="//@components.2/@FailureModes.0"/>
@@ -34,14 +34,14 @@
     </FaultsGeneratesErrors>
     <ErrorsGeneratesFailures Name="epf2" PropagationLogicStringFormat="BoardSystem_Error" Source="//@components.1/@Errors.0" Destination="//@components.1/@FailureModes.0">
       <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.1/@ErrorsGeneratesFailures.0" Error="//@components.1/@Errors.0"/>
-      <PropagationDelay xsi:type="Exponential" Rate="0.1"/>
+      <PropagationDelay xsi:type="Exponential" Rate="2777.777777777778"/>
     </ErrorsGeneratesFailures>
   </components>
   <components Name="SerialCable">
     <FailureModes Name="SerialCable_FailureMode1"/>
     <Errors Name="SerialCable_Error"/>
     <Faults xsi:type="InternalFault" Name="SerialCable_Fault" PermanentProbability="0.9">
-      <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
+      <Occurrence xsi:type="Exponential" Rate="1.0E-12"/>
       <TransientDuration xsi:type="Deterministic"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="SerialCable_Fault_Caused_By_PC" Source="//@components.0/@FailureModes.0"/>
@@ -62,7 +62,7 @@
     <FailureModes Name="Analyzer_impl_FailureMode1"/>
     <Errors Name="Analyzer_impl_Error"/>
     <Faults xsi:type="InternalFault" Name="Analyzer_impl_Fault">
-      <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
+      <Occurrence xsi:type="Exponential" Rate="1.0E-12"/>
       <TransientDuration xsi:type="Deterministic"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="Analyzer_impl_Fault_Caused_By_Receiver_impl" Source="//@components.4/@FailureModes.0"/>
@@ -88,7 +88,7 @@
     <FailureModes Name="Receiver_impl_FailureMode1"/>
     <Errors Name="Receiver_impl_Error"/>
     <Faults xsi:type="InternalFault" Name="Receiver_impl_Fault">
-      <Occurrence xsi:type="Exponential" Rate="1.0E-5"/>
+      <Occurrence xsi:type="Exponential" Rate="1.0E-12"/>
       <TransientDuration xsi:type="Deterministic"/>
     </Faults>
     <Faults xsi:type="ExternalFault" Name="Receiver_impl_Fault_Caused_By_BoardSystem" Source="//@components.1/@FailureModes.0"/>
@@ -105,36 +105,6 @@
       <PropagationDelay xsi:type="Deterministic"/>
     </ErrorsGeneratesFailures>
   </components>
-  <Activities xsi:type="RepairActivity" Component="//@components.0" Target="//@components.0">
-    <Duration xsi:type="Exponential" Rate="0.25"/>
-    <When xsi:type="ScheduleImmediately">
-      <Condition xsi:type="SchedulingConditionExpressionFailedNode" FailureMode="//@components.0/@FailureModes.0"/>
-    </When>
-  </Activities>
-  <Activities xsi:type="RepairActivity" Component="//@components.1" Target="//@components.1">
-    <Duration xsi:type="Exponential" Rate="0.25"/>
-    <When xsi:type="ScheduleImmediately">
-      <Condition xsi:type="SchedulingConditionExpressionFailedNode" FailureMode="//@components.1/@FailureModes.0"/>
-    </When>
-  </Activities>
-  <Activities xsi:type="RepairActivity" Component="//@components.2" Target="//@components.2">
-    <Duration xsi:type="Exponential" Rate="3.0"/>
-    <When xsi:type="ScheduleImmediately">
-      <Condition xsi:type="SchedulingConditionExpressionFailedNode" FailureMode="//@components.2/@FailureModes.0"/>
-    </When>
-  </Activities>
-  <Activities xsi:type="RepairActivity" Component="//@components.3" Target="//@components.3">
-    <Duration xsi:type="Exponential"/>
-    <When xsi:type="ScheduleImmediately">
-      <Condition xsi:type="SchedulingConditionExpressionFailedNode" FailureMode="//@components.3/@FailureModes.0"/>
-    </When>
-  </Activities>
-  <Activities xsi:type="RepairActivity" Component="//@components.4" Target="//@components.4">
-    <Duration xsi:type="Exponential"/>
-    <When xsi:type="ScheduleImmediately">
-      <Condition xsi:type="SchedulingConditionExpressionFailedNode" FailureMode="//@components.4/@FailureModes.0"/>
-    </When>
-  </Activities>
   <measures xsi:type="Reliability" Name="Reliability_IN!Receiver_impl" target="//@components.4/@FailureModes.0">
     <evaluations xsi:type="InstantOfTime" timePoint="10000.0"/>
   </measures>

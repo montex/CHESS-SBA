@@ -556,8 +556,8 @@
   <ComponentModel:ComponentType xmi:id="_JlVGsEACEeCoh-1BA2BB1g" base_Component="_HzNBwEACEeCoh-1BA2BB1g"/>
   <ComponentModel:ComponentImplementation xmi:id="_Q8DcoEACEeCoh-1BA2BB1g" base_Component="_L6dLAEACEeCoh-1BA2BB1g"/>
   <ComponentModel:ComponentImplementation xmi:id="_RplRAEACEeCoh-1BA2BB1g" base_Component="_LipH8EACEeCoh-1BA2BB1g"/>
-  <DependableComponent:Propagation xmi:id="_mFcmUEAEEeCoh-1BA2BB1g" prob="1" propDelay="1.0E-04" base_Connector="_lE3TEEAEEeCoh-1BA2BB1g"/>
-  <DependableComponent:Propagation xmi:id="_nS-JYEAEEeCoh-1BA2BB1g" prob="1" propDelay="1.0E-04" base_Connector="_g20lUEAEEeCoh-1BA2BB1g"/>
+  <DependableComponent:Propagation xmi:id="_mFcmUEAEEeCoh-1BA2BB1g" prob="1" propDelay="1.0E-03" base_Connector="_lE3TEEAEEeCoh-1BA2BB1g"/>
+  <DependableComponent:Propagation xmi:id="_nS-JYEAEEeCoh-1BA2BB1g" prob="1" propDelay="1.0E-03" base_Connector="_g20lUEAEEeCoh-1BA2BB1g"/>
   <GCM:FlowPort xmi:id="_sZ3xwEAEEeCoh-1BA2BB1g" direction="out" base_Port="_SMW8AEAEEeCoh-1BA2BB1g"/>
   <GCM:FlowPort xmi:id="_s7qQMEAEEeCoh-1BA2BB1g" direction="in" base_Port="_ampnwEAEEeCoh-1BA2BB1g"/>
   <GCM:FlowPort xmi:id="_trfxsEAEEeCoh-1BA2BB1g" direction="out" base_Port="_bfqTYEAEEeCoh-1BA2BB1g"/>
@@ -567,11 +567,11 @@
   <ThreatsPropagation:ErrorModel xmi:id="_Tj7ScEAxEeCNVbN088KYpA" base_StateMachine="_JXYl8EAxEeCNVbN088KYpA"/>
   <ThreatsPropagation:FailureMode xmi:id="_UUSYYEAxEeCNVbN088KYpA" base_State="_RFVJEEAxEeCNVbN088KYpA"/>
   <ThreatsPropagation:FailureMode xmi:id="_XOkYMEAxEeCNVbN088KYpA" base_State="_WjkTYEAxEeCNVbN088KYpA"/>
-  <StateBasedComponents:StatelessHardware xmi:id="_hL-V4EDIEeC334zN2zV6NA" base_Component="_jayMUEADEeCoh-1BA2BB1g" probPermFault="0.9" repairDelay="3" faultOcc="1.0E-5"/>
-  <StateBasedComponents:StatefulHardware xmi:id="_zRlQYEDIEeC334zN2zV6NA" base_Component="_jCFnMD_9EeCMjNe7UhVfZQ" probPermFault="0.9" errorLatency="3.6E-04" repairDelay="4" faultOcc="1.0E-05"/>
-  <StateBasedComponents:StatefulHardware xmi:id="_6Xe8EEDIEeC334zN2zV6NA" base_Component="_eBMgMD_9EeCMjNe7UhVfZQ" probPermFault="0.9" errorLatency="3.6E-04" repairDelay="4" faultOcc="1.0E-05"/>
-  <StateBasedComponents:StatefulSoftware xmi:id="_p1jfYE-xEeCd_rvJFq3ZVA" base_Component="_LipH8EACEeCoh-1BA2BB1g" errorLatency="3.6E-04" repairDelay="2" faultOcc="1.0E-05"/>
-  <StateBasedComponents:StatefulSoftware xmi:id="_quZy8E-xEeCd_rvJFq3ZVA" base_Component="_L6dLAEACEeCoh-1BA2BB1g" errorLatency="3.6E-04" repairDelay="2" faultOcc="1.0E-05"/>
+  <StateBasedComponents:StatelessHardware xmi:id="_hL-V4EDIEeC334zN2zV6NA" base_Component="_jayMUEADEeCoh-1BA2BB1g" probPermFault="0.9" repairDelay="3" faultOcc="1.0E-12"/>
+  <StateBasedComponents:StatefulHardware xmi:id="_zRlQYEDIEeC334zN2zV6NA" base_Component="_jCFnMD_9EeCMjNe7UhVfZQ" probPermFault="0.9" errorLatency="3.6E-04" repairDelay="4" faultOcc="1.0E-07"/>
+  <StateBasedComponents:StatefulHardware xmi:id="_6Xe8EEDIEeC334zN2zV6NA" base_Component="_eBMgMD_9EeCMjNe7UhVfZQ" probPermFault="0.9" errorLatency="3.6E-05" repairDelay="4" faultOcc="1.0E-05"/>
+  <StateBasedComponents:StatefulSoftware xmi:id="_p1jfYE-xEeCd_rvJFq3ZVA" base_Component="_LipH8EACEeCoh-1BA2BB1g" errorLatency="3.6E-04" repairDelay="2" faultOcc="1.0E-12"/>
+  <StateBasedComponents:StatefulSoftware xmi:id="_quZy8E-xEeCd_rvJFq3ZVA" base_Component="_L6dLAEACEeCoh-1BA2BB1g" errorLatency="3.6E-04" repairDelay="2" faultOcc="1.0E-12"/>
   <HwComputing:HwComputingResource xmi:id="_8Vo58E-yEeCd_rvJFq3ZVA" base_Classifier="_jCFnMD_9EeCMjNe7UhVfZQ" speedFactor="(value=1.0)"/>
   <Blocks:NestedConnectorEnd xmi:id="_ElSxEE-1EeCd_rvJFq3ZVA"/>
   <HwCommunication:HwBus xmi:id="_FS8R8FkQEeC5eeG1nTwzGA" base_Classifier="_jayMUEADEeCoh-1BA2BB1g" speedFactor="(value=1.0)" adressWidth="" wordWidth=""/>
@@ -616,12 +616,12 @@
   <Alloc:Assign xmi:id="_fFlskFoAEeCIuvkONEI9Sw" from="_YFi74VuuEeCW15PhyoEOBA" to="_Um19IVn9EeCIuvkONEI9Sw" base_Comment="_dISSYFoAEeCIuvkONEI9Sw"/>
   <Alloc:Assign xmi:id="_n1D-IFoAEeCIuvkONEI9Sw" from="_YFss41uuEeCW15PhyoEOBA" to="_Um19JVn9EeCIuvkONEI9Sw" base_Comment="_dvpNUFoAEeCIuvkONEI9Sw"/>
   <HwComputing:HwComputingResource xmi:id="_79yNkFrJEeCATuT6LwspdA" base_Classifier="_eBMgMD_9EeCMjNe7UhVfZQ" speedFactor="(value=1.0)"/>
-  <DependableComponent:Propagation xmi:id="_9fCXUFutEeCW15PhyoEOBA" prob="1" propDelay="1.0E-04" base_Connector="_7R6YcFutEeCW15PhyoEOBA"/>
+  <DependableComponent:Propagation xmi:id="_9fCXUFutEeCW15PhyoEOBA" prob="1" propDelay="1.0E-03" base_Connector="_7R6YcFutEeCW15PhyoEOBA"/>
   <RTComponentModel:CHRtPortSlot xmi:id="_YFss4FuuEeCW15PhyoEOBA" base_Slot="_YFi741uuEeCW15PhyoEOBA" cH_RtSpecification="_2HcegFkXEeC5eeG1nTwzGA"/>
   <RTComponentModel:CHRtPortSlot xmi:id="_YFss4luuEeCW15PhyoEOBA" base_Slot="_YFss4VuuEeCW15PhyoEOBA"/>
   <RTComponentModel:CHRtPortSlot xmi:id="_YF120luuEeCW15PhyoEOBA" base_Slot="_YF120VuuEeCW15PhyoEOBA" cH_RtSpecification="_5xBNQFkXEeC5eeG1nTwzGA"/>
   <StateBasedAnalysis:StateBasedAnalysis xmi:id="_vDuGcGBREeCNPvJmNzIf5A"/>
   <StateBasedAnalysis:StateBasedAnalysis xmi:id="_UggRAGBSEeCNPvJmNzIf5A" base_StructuredClassifier="_QsFkwE-qEeCU1t14pFydGg" base_NamedElement="_QsFkwE-qEeCU1t14pFydGg" platform="_dNdiwFn_EeCIuvkONEI9Sw" measure="Reliability { instantOfTime = 10000 }" targetDepComponent="_YFss41uuEeCW15PhyoEOBA"/>
-  <DependableComponent:Propagation xmi:id="_JPI1AGBTEeCNPvJmNzIf5A" prob="1" propDelay="1.0E-04" base_Comment="_Vmj1MEAIEeCoh-1BA2BB1g"/>
-  <DependableComponent:Propagation xmi:id="_Ll8UUGBTEeCNPvJmNzIf5A" prob="1" propDelay="1.0E-04" base_Comment="_J5VZEEAIEeCoh-1BA2BB1g"/>
+  <DependableComponent:Propagation xmi:id="_JPI1AGBTEeCNPvJmNzIf5A" prob="1" propDelay="1.0E-03" base_Comment="_Vmj1MEAIEeCoh-1BA2BB1g"/>
+  <DependableComponent:Propagation xmi:id="_Ll8UUGBTEeCNPvJmNzIf5A" prob="1" propDelay="1.0E-03" base_Comment="_J5VZEEAIEeCoh-1BA2BB1g"/>
 </xmi:XMI>

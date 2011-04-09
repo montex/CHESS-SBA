@@ -522,19 +522,19 @@ rule StatefulHardware2Component(sfh : UML!Component) {
 			--Leonardo (inizio)
 			PropagationLogicStringFormat <- fn.toString()
 			--Leonardo (fine)
-		),
+		)--,
 		
-		rd : IM!Exponential(
-			Rate <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
-				= 'StatefulHardware')->first(), 'repairDelay').NFPDurationInvertedValue
-		),
+--		rd : IM!Exponential(
+--			Rate <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+--				= 'StatefulHardware')->first(), 'repairDelay').NFPDurationInvertedValue
+--		),
 		
-		ra : IM!RepairActivity(
-			Component <- c,
-			Target <- c,
-			Duration <- rd --,
-			--When <- ... handled as a DELAYED ACTION
-		)	
+--		ra : IM!RepairActivity(
+--			Component <- c,
+--			Target <- c,
+--			Duration <- rd --,
+--			--When <- ... handled as a DELAYED ACTION
+--		)	
 		
 	do{
 		thisModule.setFGEName(fge);
@@ -615,18 +615,18 @@ rule StatelessHardware2Component(sfh : UML!Component) {
 			--Leonardo (inizio)
 			PropagationLogicStringFormat <- fn.toString()
 			--Leonardo (fine)
-		),
+		)--,
 		
-		rd : IM!Exponential(
-			Rate <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
-				= 'StatelessHardware')->first(), 'repairDelay').NFPDurationValue	
-		),
-		
-		ra : IM!RepairActivity(
-			Component <- c,
-			Target <- c,
-			Duration <- rd
-		)
+--		rd : IM!Exponential(
+--			Rate <- sfh.getValue(sfh.getAppliedStereotypes()->select(g|g.name 
+--				= 'StatelessHardware')->first(), 'repairDelay').NFPDurationValue	
+--		),
+--		
+--		ra : IM!RepairActivity(
+--			Component <- c,
+--			Target <- c,
+--			Duration <- rd
+--		)
 
 	do{
 		thisModule.setFGEName(fge);
@@ -704,18 +704,18 @@ rule StatefulSoftware2Component(sfh : UML!Component) {
 			--Leonardo (inizio)
 			PropagationLogicStringFormat <- fn.toString()
 			--Leonardo (fine)
-		),
+		)--,
 		
-		rd : IM!Exponential(
-			Rate <- 0  --this is different from StatefulHardware
-		),
-		
-		ra : IM!RepairActivity(
-			Component <- c,
-			Target <- c,
-			Duration <- rd --,
-			--When <- ... handled as a DELAYED ACTION
-		)	
+--		rd : IM!Exponential(
+--			Rate <- 0  --this is different from StatefulHardware
+--		),
+--		
+--		ra : IM!RepairActivity(
+--			Component <- c,
+--			Target <- c,
+--			Duration <- rd --,
+--			--When <- ... handled as a DELAYED ACTION
+--		)	
 		
 	do{
 		thisModule.setFGEName(fge);
@@ -797,18 +797,18 @@ rule StatelessSoftware2Component (sfh : UML!Component){
 			PropagationLogicStringFormat <- fn.toString(),
 			Name <- thisModule.getFGEName()
 			--Leonardo (fine)
-		),
-		
-		rd : IM!Exponential(
-			Rate <- 0	--this is different from StetefulHardware
-		),
-		
-		ra : IM!RepairActivity(
-			Component <- c,
-			Target <- c,
-			Duration <- rd --,
-			--When <- ... handled as a DELAYED ACTION
-		)	
+		)--,
+--		
+--		rd : IM!Exponential(
+--			Rate <- 0	--this is different from StetefulHardware
+--		),
+--		
+--		ra : IM!RepairActivity(
+--			Component <- c,
+--			Target <- c,
+--			Duration <- rd --,
+--			--When <- ... handled as a DELAYED ACTION
+--		)	
 		
 	do{
 		thisModule.setFGEName(fge);

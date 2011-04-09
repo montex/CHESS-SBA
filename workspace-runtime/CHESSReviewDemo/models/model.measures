@@ -4,10 +4,10 @@
   <moi:EvaluationList>
     <studies name="DefaultStudy">
       <vars variable="Time">
-        <values>500000.0</values>
+        <values>10000.0</values>
       </vars>
     </studies>
-    <measures name="Reliability_Measure">
+    <measures name="Reliability_IN!Receiver_impl">
       <rewardFunction xsi:type="moi:IfThenElse">
         <condition xsi:type="moi:OpEqual">
           <expression1 xsi:type="moi:MarkingExpression" placeID="failureMode_Receiver_impl_Receiver_impl_FailureMode1"/>
