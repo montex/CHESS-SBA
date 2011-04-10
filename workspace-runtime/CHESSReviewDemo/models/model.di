@@ -16,9 +16,6 @@
     <availablePage>
       <emfPageIdentifier href="model.notation#_PJ2T0EAxEeCNVbN088KYpA"/>
     </availablePage>
-    <availablePage>
-      <emfPageIdentifier href="model.notation#_PcMDIE-qEeCU1t14pFydGg"/>
-    </availablePage>
     <availablePage/>
     <availablePage/>
     <availablePage/>
@@ -46,34 +43,13 @@
           <emfPageIdentifier href="model.notation#_Cz1kwEACEeCoh-1BA2BB1g"/>
         </children>
         <children>
-          <emfPageIdentifier href="model.notation#__42_gFb5EeCR3LfeuuoSNA"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="model.notation#_3k1cAFk3EeCNUs77z6e79Q"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="model.notation#_HXxwUFk4EeCNUs77z6e79Q"/>
-        </children>
-        <children>
           <emfPageIdentifier href="model.notation#_b531EEACEeCoh-1BA2BB1g"/>
         </children>
         <children>
           <emfPageIdentifier href="model.notation#_akIUsEADEeCoh-1BA2BB1g"/>
         </children>
         <children>
-          <emfPageIdentifier href="model.notation#_PcMDIE-qEeCU1t14pFydGg"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="model.notation#_jceJAFrLEeCATuT6LwspdA"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="model.notation#_akIUsEADEeCoh-1BA2BB1g"/>
-        </children>
-        <children>
           <emfPageIdentifier href="model.notation#_NReSMEALEeCHQ-6nDlLOYg"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="model.notation#_Cz1kwEACEeCoh-1BA2BB1g"/>
         </children>
       </children>
     </windows>
