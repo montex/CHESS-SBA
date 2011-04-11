@@ -581,11 +581,11 @@
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_bxpQt0ADEeCoh-1BA2BB1g" key="QualifiedNameDepth" value="1000"/>
       </eAnnotations>
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_gwskoEADEeCoh-1BA2BB1g" source="Stereotype_Annotation">
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_n44-oGKaEeCXrqv6SfepZg" key="StereotypeWithQualifiedNameList" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_n44-oWKaEeCXrqv6SfepZg" key="StereotypeList" value=",MARTE::MARTE_DesignModel::HRM::HwLogical::HwComputing::HwComputingResource"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_n44-omKaEeCXrqv6SfepZg" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_n44-o2KaEeCXrqv6SfepZg" key="PropStereoDisplay" value="CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.probPermFault,CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.errorLatency,CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.faultOcc"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_n44-pGKaEeCXrqv6SfepZg" key="StereotypePropertyLocation" value="Compartment"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_aqhL0GQ6EeCNpdofDcsHMg" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_aqhy4GQ6EeCNpdofDcsHMg" key="StereotypeList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_aqhy4WQ6EeCNpdofDcsHMg" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_aqhy4mQ6EeCNpdofDcsHMg" key="PropStereoDisplay" value="CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.probPermFault,CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.errorLatency,CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.faultOcc"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_aqhy42Q6EeCNpdofDcsHMg" key="StereotypePropertyLocation" value="Compartment"/>
       </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_bxpQuEADEeCoh-1BA2BB1g" type="5005"/>
       <children xmi:type="notation:BasicCompartment" xmi:id="_bxpQuUADEeCoh-1BA2BB1g" type="7002">
@@ -631,11 +631,11 @@
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_eUJCp0ADEeCoh-1BA2BB1g" key="QualifiedNameDepth" value="1000"/>
       </eAnnotations>
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_hmtmoEADEeCoh-1BA2BB1g" source="Stereotype_Annotation">
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oOTN8GKaEeCXrqv6SfepZg" key="StereotypeWithQualifiedNameList" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oOTN8WKaEeCXrqv6SfepZg" key="StereotypeList" value=",MARTE::MARTE_DesignModel::HRM::HwLogical::HwComputing::HwComputingResource"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oOTN8mKaEeCXrqv6SfepZg" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oOTN82KaEeCXrqv6SfepZg" key="PropStereoDisplay" value="CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.probPermFault,CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.errorLatency,CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.faultOcc"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oOTN9GKaEeCXrqv6SfepZg" key="StereotypePropertyLocation" value="Compartment"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_a8maUGQ6EeCNpdofDcsHMg" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_a8maUWQ6EeCNpdofDcsHMg" key="StereotypeList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_a8maUmQ6EeCNpdofDcsHMg" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_a8maU2Q6EeCNpdofDcsHMg" key="PropStereoDisplay" value="CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.probPermFault,CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.errorLatency,CHESS::Dependability::StateBased::StateBasedComponents::StatefulHardware.faultOcc"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_a8maVGQ6EeCNpdofDcsHMg" key="StereotypePropertyLocation" value="Compartment"/>
       </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_eUJCqEADEeCoh-1BA2BB1g" type="5005"/>
       <children xmi:type="notation:BasicCompartment" xmi:id="_eUJCqUADEeCoh-1BA2BB1g" type="7002">
@@ -667,11 +667,11 @@
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_fAfLR0ADEeCoh-1BA2BB1g" key="QualifiedNameDepth" value="1000"/>
       </eAnnotations>
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_51i7wU-yEeCd_rvJFq3ZVA" source="Stereotype_Annotation">
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_260KcFk-EeCNs75R1yXTDw" key="StereotypeWithQualifiedNameList" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_260KcVk-EeCNs75R1yXTDw" key="StereotypeList" value="MARTE::MARTE_AnalysisModel::GQAM::GaResourcesPlatform,MARTE::MARTE_AnalysisModel::GQAM::GaResourcesPlatform"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_260Kclk-EeCNs75R1yXTDw" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_260Kc1k-EeCNs75R1yXTDw" key="PropStereoDisplay" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_260KdFk-EeCNs75R1yXTDw" key="StereotypePropertyLocation" value="Compartment"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_KL7ScGQ6EeCNpdofDcsHMg" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_KL7ScWQ6EeCNpdofDcsHMg" key="StereotypeList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_KL7ScmQ6EeCNpdofDcsHMg" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_KL7Sc2Q6EeCNpdofDcsHMg" key="PropStereoDisplay" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_KL7SdGQ6EeCNpdofDcsHMg" key="StereotypePropertyLocation" value="Compartment"/>
       </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_fAfLSEADEeCoh-1BA2BB1g" type="5005"/>
       <children xmi:type="notation:BasicCompartment" xmi:id="_fAfLSUADEeCoh-1BA2BB1g" type="7002">
@@ -703,11 +703,11 @@
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jayzZ0ADEeCoh-1BA2BB1g" key="QualifiedNameDepth" value="1000"/>
       </eAnnotations>
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_lWSPsEADEeCoh-1BA2BB1g" source="Stereotype_Annotation">
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oyguQGKaEeCXrqv6SfepZg" key="StereotypeWithQualifiedNameList" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oyguQWKaEeCXrqv6SfepZg" key="StereotypeList" value=",MARTE::MARTE_DesignModel::HRM::HwLogical::HwCommunication::HwBus"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oyguQmKaEeCXrqv6SfepZg" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oyguQ2KaEeCXrqv6SfepZg" key="PropStereoDisplay" value="CHESS::Dependability::StateBased::StateBasedComponents::StatelessHardware.probPermFault,CHESS::Dependability::StateBased::StateBasedComponents::StatelessHardware.faultOcc"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oyguRGKaEeCXrqv6SfepZg" key="StereotypePropertyLocation" value="Compartment"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_bsUAAGQ6EeCNpdofDcsHMg" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_bsUnEGQ6EeCNpdofDcsHMg" key="StereotypeList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_bsUnEWQ6EeCNpdofDcsHMg" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_bsUnEmQ6EeCNpdofDcsHMg" key="PropStereoDisplay" value="CHESS::Dependability::StateBased::StateBasedComponents::StatelessHardware.probPermFault,CHESS::Dependability::StateBased::StateBasedComponents::StatelessHardware.faultOcc"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_bsUnE2Q6EeCNpdofDcsHMg" key="StereotypePropertyLocation" value="Compartment"/>
       </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_jayzaEADEeCoh-1BA2BB1g" type="5005">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_FTPM4FkQEeC5eeG1nTwzGA" source="Stereotype_Annotation">
@@ -751,11 +751,11 @@
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_NReSN0ALEeCHQ-6nDlLOYg" key="QualifiedNameDepth" value="1000"/>
       </eAnnotations>
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CFxpQEAgEeCNVbN088KYpA" source="Stereotype_Annotation">
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_4fZBIE-yEeCd_rvJFq3ZVA" key="StereotypeWithQualifiedNameList" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_4fZBIU-yEeCd_rvJFq3ZVA" key="StereotypeList" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_4fZBIk-yEeCd_rvJFq3ZVA" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_4fZBI0-yEeCd_rvJFq3ZVA" key="PropStereoDisplay" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_4fZBJE-yEeCd_rvJFq3ZVA" key="StereotypePropertyLocation" value="Compartment"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_EkehwGQ6EeCNpdofDcsHMg" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_EkehwWQ6EeCNpdofDcsHMg" key="StereotypeList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_EkehwmQ6EeCNpdofDcsHMg" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Ekehw2Q6EeCNpdofDcsHMg" key="PropStereoDisplay" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_EkehxGQ6EeCNpdofDcsHMg" key="StereotypePropertyLocation" value="Compartment"/>
       </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_NReSOEALEeCHQ-6nDlLOYg" type="5121"/>
       <children xmi:type="notation:BasicCompartment" xmi:id="_NReSOUALEeCHQ-6nDlLOYg" type="7069">
