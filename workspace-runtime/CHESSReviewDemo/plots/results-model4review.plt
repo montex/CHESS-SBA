@@ -1,18 +1,21 @@
-set terminal svg
+set terminal svg enhanced
 
 set xlabel 'Time t (hours)' 
 set ylabel 'R(t)' 
 
 set xtics format "%.0e"
 
-set title "Reliability of component \"Receiver_impl_inst\"\r\nin platform \"hwsystem_instanceSpecification\""
+set title "Reliability of component \"Receiver\\_impl\\_inst\"\r\n\r\nfo: Fault occurrence rate of the Analyzer component"
 
-set output "model4review-p1.0.svg"
-plot './results-model4review.txt' u 1:3 ev :::0::0 t 'Reliability_Receiver_impl_inst(t)' w lp
+set output "model4review-faultocc.svg"
+plot './results-model4review.txt' u 1:4 ev :::0::0 t "fo = 1.0E-05 hours^{-1}" w lp,\
+	 './results-model4review.txt' u 1:4 ev :::1::1 t "fo = 5.0E-05 hours^{-1}" w lp
+
+set title "Reliability of component \"Receiver\\_impl\\_inst\"\r\n\r\np: Probability of propagation from SerialCable to BoardSystem"
 
 set yrange [0:1.1]
 set key bottom left
-set output "model4review-p0.01.svg"
-plot './results-model4review.txt' u 1:3 ev :::0::0 t 'p=1.0' w lp,\
-	 './results-model4review.txt' u 1:3 ev :::1::1 t 'p=0.01' w lp
+set output "model4review-propprob.svg"
+plot './results-model4review.txt' u 1:4 ev :::0::0 t 'p=1.0' w lp,\
+	 './results-model4review.txt' u 1:4 ev :::2::2 t 'p=0.1' w lp
 

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"  standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="600" height="480" viewBox="0 0 600 480"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<desc>Produced by GNUPLOT 4.4 patchlevel 0 </desc>
+
+<defs>
+
+	<circle id='gpDot' r='0.5' stroke-width='0.5'/>
+	<path id='gpPt0' stroke-width='0.222' stroke='currentColor' d='M-1,0 h2 M0,-1 v2'/>
+	<path id='gpPt1' stroke-width='0.222' stroke='currentColor' d='M-1,-1 L1,1 M1,-1 L-1,1'/>
+	<path id='gpPt2' stroke-width='0.222' stroke='currentColor' d='M-1,0 L1,0 M0,-1 L0,1 M-1,-1 L1,1 M-1,1 L1,-1'/>
+	<rect id='gpPt3' stroke-width='0.222' stroke='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<rect id='gpPt4' stroke-width='0.222' stroke='currentColor' fill='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<circle id='gpPt5' stroke-width='0.222' stroke='currentColor' cx='0' cy='0' r='1'/>
+	<use xlink:href='#gpPt5' id='gpPt6' fill='currentColor' stroke='none'/>
+	<path id='gpPt7' stroke-width='0.222' stroke='currentColor' d='M0,-1.33 L-1.33,0.67 L1.33,0.67 z'/>
+	<use xlink:href='#gpPt7' id='gpPt8' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt7' id='gpPt9' stroke='currentColor' transform='rotate(180)'/>
+	<use xlink:href='#gpPt9' id='gpPt10' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt3' id='gpPt11' stroke='currentColor' transform='rotate(45)'/>
+	<use xlink:href='#gpPt11' id='gpPt12' fill='currentColor' stroke='none'/>
+</defs>
+<g style="fill:none; color:white; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
+	<path  d='M80.2,422.4 L89.2,422.4 M579.1,422.4 L570.1,422.4 '></path>
+	<g transform="translate(71.9,426.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan> 0.1</tspan>
+		</text>
+	</g>
+	<path  d='M80.2,385.5 L89.2,385.5 M579.1,385.5 L570.1,385.5 '></path>
+	<g transform="translate(71.9,390.0)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan> 0.2</tspan>
+		</text>
+	</g>
+	<path  d='M80.2,348.6 L89.2,348.6 M579.1,348.6 L570.1,348.6 '></path>
+	<g transform="translate(71.9,353.1)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan> 0.3</tspan>
+		</text>
+	</g>
+	<path  d='M80.2,311.6 L89.2,311.6 M579.1,311.6 L570.1,311.6 '></path>
+	<g transform="translate(71.9,316.1)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan> 0.4</tspan>
+		</text>
+	</g>
+	<path  d='M80.2,274.7 L89.2,274.7 M579.1,274.7 L570.1,274.7 '></path>
+	<g transform="translate(71.9,279.2)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan> 0.5</tspan>
+		</text>
+	</g>
+	<path  d='M80.2,237.8 L89.2,237.8 M579.1,237.8 L570.1,237.8 '></path>
+	<g transform="translate(71.9,242.3)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan> 0.6</tspan>
+		</text>
+	</g>
+	<path  d='M80.2,200.9 L89.2,200.9 M579.1,200.9 L570.1,200.9 '></path>
+	<g transform="translate(71.9,205.4)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan> 0.7</tspan>
+		</text>
+	</g>
+	<path  d='M80.2,163.9 L89.2,163.9 M579.1,163.9 L570.1,163.9 '></path>
+	<g transform="translate(71.9,168.4)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan> 0.8</tspan>
+		</text>
+	</g>
+	<path  d='M80.2,127.0 L89.2,127.0 M579.1,127.0 L570.1,127.0 '></path>
+	<g transform="translate(71.9,131.5)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan> 0.9</tspan>
+		</text>
+	</g>
+	<path  d='M80.2,90.1 L89.2,90.1 M579.1,90.1 L570.1,90.1 '></path>
+	<g transform="translate(71.9,94.6)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan> 1</tspan>
+		</text>
+	</g>
+	<path  d='M80.2,422.4 L80.2,413.4 M80.2,90.1 L80.2,99.1 '></path>
+	<g transform="translate(80.2,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>0e+00</tspan>
+		</text>
+	</g>
+	<path  d='M130.1,422.4 L130.1,413.4 M130.1,90.1 L130.1,99.1 '></path>
+	<g transform="translate(130.1,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>1e+04</tspan>
+		</text>
+	</g>
+	<path  d='M180.0,422.4 L180.0,413.4 M180.0,90.1 L180.0,99.1 '></path>
+	<g transform="translate(180.0,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>2e+04</tspan>
+		</text>
+	</g>
+	<path  d='M229.9,422.4 L229.9,413.4 M229.9,90.1 L229.9,99.1 '></path>
+	<g transform="translate(229.9,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>3e+04</tspan>
+		</text>
+	</g>
+	<path  d='M279.8,422.4 L279.8,413.4 M279.8,90.1 L279.8,99.1 '></path>
+	<g transform="translate(279.8,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>4e+04</tspan>
+		</text>
+	</g>
+	<path  d='M329.6,422.4 L329.6,413.4 M329.6,90.1 L329.6,99.1 '></path>
+	<g transform="translate(329.6,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>5e+04</tspan>
+		</text>
+	</g>
+	<path  d='M379.5,422.4 L379.5,413.4 M379.5,90.1 L379.5,99.1 '></path>
+	<g transform="translate(379.5,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>6e+04</tspan>
+		</text>
+	</g>
+	<path  d='M429.4,422.4 L429.4,413.4 M429.4,90.1 L429.4,99.1 '></path>
+	<g transform="translate(429.4,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>7e+04</tspan>
+		</text>
+	</g>
+	<path  d='M479.3,422.4 L479.3,413.4 M479.3,90.1 L479.3,99.1 '></path>
+	<g transform="translate(479.3,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>8e+04</tspan>
+		</text>
+	</g>
+	<path  d='M529.2,422.4 L529.2,413.4 M529.2,90.1 L529.2,99.1 '></path>
+	<g transform="translate(529.2,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>9e+04</tspan>
+		</text>
+	</g>
+	<path  d='M579.1,422.4 L579.1,413.4 M579.1,90.1 L579.1,99.1 '></path>
+	<g transform="translate(579.1,444.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>1e+05</tspan>
+		</text>
+	</g>
+	<path  d='M80.2,90.1 L80.2,422.4 L579.1,422.4 L579.1,90.1 L80.2,90.1 Z '></path>
+	<g transform="translate(25.9,256.3) rotate(270)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>R(t)</tspan>
+		</text>
+	</g>
+	<g transform="translate(329.6,471.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>Time t (hours)</tspan>
+		</text>
+	</g>
+	<g transform="translate(329.6,31.6)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>Reliability of component "Receiver_impl_inst"</tspan>
+		</text>
+	</g>
+	<g transform="translate(329.6,49.6)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan></tspan>
+		</text>
+	</g>
+	<g transform="translate(329.6,67.6)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
+		<text><tspan>fo: Fault occurrence rate of the Analyzer component</tspan>
+		</text>
+	</g>
+</g>
+	<a xlink:title="Plot #1">
+<g style="fill:none; color:red; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
+	<g transform="translate(512.0,112.6)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan>fo = 1.0E-05 hours</tspan>
+		<tspan font-size="9.6pt" dy="-6.00pt">-1</tspan>
+		<tspan font-size="12.0pt" dy="6.00pt"></tspan></text>
+	</g>
+	<path  d='M520.3,108.1 L562.5,108.1 M85.2,93.4 L105.1,106.6 L130.1,122.2 L180.0,151.0 L229.9,176.7 L329.6,222.4 
+		L579.1,301.9 '></path>
+	<use xlink:href='#gpPt0' transform='translate(85.2,93.4) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(105.1,106.6) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(130.1,122.2) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(180.0,151.0) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(229.9,176.7) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(329.6,222.4) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(579.1,301.9) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(541.4,108.1) scale(4.50)'/>
+</g>
+	</a>
+	<a xlink:title="Plot #2">
+<g style="fill:none; color:green; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
+	<g transform="translate(512.0,130.6)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:end">
+		<text><tspan>fo = 5.0E-05 hours</tspan>
+		<tspan font-size="9.6pt" dy="-6.00pt">-1</tspan>
+		<tspan font-size="12.0pt" dy="6.00pt"></tspan></text>
+	</g>
+	<path  d='M520.3,126.1 L562.5,126.1 M85.2,106.2 L105.1,163.6 L130.1,221.2 L180.0,300.6 L229.9,348.4 L329.6,395.5 
+		L579.1,421.0 '></path>
+	<use xlink:href='#gpPt1' transform='translate(85.2,106.2) scale(4.50)'/>
+	<use xlink:href='#gpPt1' transform='translate(105.1,163.6) scale(4.50)'/>
+	<use xlink:href='#gpPt1' transform='translate(130.1,221.2) scale(4.50)'/>
+	<use xlink:href='#gpPt1' transform='translate(180.0,300.6) scale(4.50)'/>
+	<use xlink:href='#gpPt1' transform='translate(229.9,348.4) scale(4.50)'/>
+	<use xlink:href='#gpPt1' transform='translate(329.6,395.5) scale(4.50)'/>
+	<use xlink:href='#gpPt1' transform='translate(579.1,421.0) scale(4.50)'/>
+	<use xlink:href='#gpPt1' transform='translate(541.4,126.1) scale(4.50)'/>
+</g>
+	</a>
+<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
+	<path  d='M80.2,90.1 L80.2,422.4 L579.1,422.4 L579.1,90.1 L80.2,90.1 Z '></path>
+</g>
+</svg>
+
