@@ -1113,12 +1113,12 @@ rule AssignFge(child: IM!Component, comm: UML2!Comment){
 		thisModule.Counter <- 1;
 		
 		--handling stereotype Propagation
-		if(comm.getAppliedStereotypes()->exists(e|e.name = 'propagation')){
+		if(comm.getAppliedStereotypes()->exists(e|e.name = 'Propagation')){
 			d.Value <- comm.getValue(comm.getAppliedStereotypes()->
-				select(e|e.name = 'propagation')->first(), 'propDelay').NFPRealValue;
+				select(e|e.name = 'Propagation')->first(), 'propDelay').NFPRealValue;
 			fge.ActivationDelay <- d;
 			fge.PropagationProbability <- comm.getValue(comm.getAppliedStereotypes()->
-				select(e|e.name = 'propagation')->first(), 'prob').NFPRealValue;
+				select(e|e.name = 'Propagation')->first(), 'prob').NFPRealValue;
 		}else{
 			fge.ActivationDelay <- d;
 			fge.PropagationProbability <- 1;
