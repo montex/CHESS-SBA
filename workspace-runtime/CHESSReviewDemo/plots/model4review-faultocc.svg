@@ -162,15 +162,15 @@
 		<tspan font-size="9.6pt" dy="-6.00pt">-1</tspan>
 		<tspan font-size="12.0pt" dy="6.00pt"></tspan></text>
 	</g>
-	<path  d='M520.3,108.1 L562.5,108.1 M85.2,93.4 L105.1,106.6 L130.1,122.2 L180.0,151.0 L229.9,176.7 L329.6,222.4 
-		L579.1,301.9 '></path>
-	<use xlink:href='#gpPt0' transform='translate(85.2,93.4) scale(4.50)'/>
-	<use xlink:href='#gpPt0' transform='translate(105.1,106.6) scale(4.50)'/>
-	<use xlink:href='#gpPt0' transform='translate(130.1,122.2) scale(4.50)'/>
-	<use xlink:href='#gpPt0' transform='translate(180.0,151.0) scale(4.50)'/>
-	<use xlink:href='#gpPt0' transform='translate(229.9,176.7) scale(4.50)'/>
-	<use xlink:href='#gpPt0' transform='translate(329.6,222.4) scale(4.50)'/>
-	<use xlink:href='#gpPt0' transform='translate(579.1,301.9) scale(4.50)'/>
+	<path  d='M520.3,108.1 L562.5,108.1 M85.2,93.5 L105.1,106.7 L130.1,122.3 L180.0,150.9 L229.9,177.4 L329.6,221.6 
+		L579.1,301.1 '></path>
+	<use xlink:href='#gpPt0' transform='translate(85.2,93.5) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(105.1,106.7) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(130.1,122.3) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(180.0,150.9) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(229.9,177.4) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(329.6,221.6) scale(4.50)'/>
+	<use xlink:href='#gpPt0' transform='translate(579.1,301.1) scale(4.50)'/>
 	<use xlink:href='#gpPt0' transform='translate(541.4,108.1) scale(4.50)'/>
 </g>
 	</a>
