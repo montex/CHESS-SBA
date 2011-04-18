@@ -1577,4 +1577,47 @@
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_p_WKsFrMEeCATuT6LwspdA" id="(0.4619289340101523,0.8470588235294118)"/>
     </edges>
   </notation:Diagram>
+  <notation:Diagram xmi:id="_pTFBIGmfEeCCp5-R5F8EZQ" type="PapyrusUMLClassDiagram" name="statebased_analysis" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_qAQQMGmfEeCCp5-R5F8EZQ" type="2002" fontName="Ubuntu" fontHeight="11" lineColor="0">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CyKjQGmjEeCCp5-R5F8EZQ" source="layoutFigure">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_CyKjQWmjEeCCp5-R5F8EZQ" key="layoutFigure_value" value="Automatic_Layout"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_FFG2QGmjEeCCp5-R5F8EZQ" source="QualifiedName">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_FFG2QWmjEeCCp5-R5F8EZQ" key="QualifiedNameDepth" value="3"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_FeF-AGmjEeCCp5-R5F8EZQ" source="displayNameLabelIcon">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_FeF-AWmjEeCCp5-R5F8EZQ" key="displayNameLabelIcon_value" value="false"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Fr04AGmjEeCCp5-R5F8EZQ" source="ShadowFigure">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Fr04AWmjEeCCp5-R5F8EZQ" key="ShadowFigure_Value" value="false"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_t5RJIGmfEeCCp5-R5F8EZQ" source="Stereotype_Annotation">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_KZhWMGmjEeCCp5-R5F8EZQ" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_KZhWMWmjEeCCp5-R5F8EZQ" key="StereotypeList" value="CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_KZhWMmmjEeCCp5-R5F8EZQ" key="PropStereoDisplay" value=",CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.measure,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.platform,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.targetDepComponent"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_KZhWM2mjEeCCp5-R5F8EZQ" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_KZhWNGmjEeCCp5-R5F8EZQ" key="StereotypePropertyLocation" value="Compartment"/>
+      </eAnnotations>
+      <children xmi:type="notation:DecorationNode" xmi:id="_qASscGmfEeCCp5-R5F8EZQ" type="5005"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_qASscWmfEeCCp5-R5F8EZQ" type="7002">
+        <styles xmi:type="notation:SortingStyle" xmi:id="_qASscmmfEeCCp5-R5F8EZQ"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_qASsc2mfEeCCp5-R5F8EZQ"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qASsdGmfEeCCp5-R5F8EZQ"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_qASsdWmfEeCCp5-R5F8EZQ" type="7003">
+        <styles xmi:type="notation:SortingStyle" xmi:id="_qASsdmmfEeCCp5-R5F8EZQ"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_qASsd2mfEeCCp5-R5F8EZQ"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qASseGmfEeCCp5-R5F8EZQ"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_qASseWmfEeCCp5-R5F8EZQ" type="7004">
+        <styles xmi:type="notation:SortingStyle" xmi:id="_qASsemmfEeCCp5-R5F8EZQ"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_qASse2mfEeCCp5-R5F8EZQ"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qASsfGmfEeCCp5-R5F8EZQ"/>
+      </children>
+      <element xmi:type="uml:Component" href="model.uml#_pfeiAGRHEeCooZQiudzy4A"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qAQQMWmfEeCCp5-R5F8EZQ" x="140" y="85" width="350" height="137"/>
+    </children>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_pTFBIWmfEeCCp5-R5F8EZQ"/>
+    <element xmi:type="uml:Package" href="model.uml#_Te-eoz_9EeCMjNe7UhVfZQ"/>
+  </notation:Diagram>
 </xmi:XMI>
