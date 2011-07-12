@@ -1,0 +1,170 @@
+-- @path PNML=CHESSReviewDemo/metamodels/placeTransition.ecore
+-- @path MOI=CHESSReviewDemo/metamodels/measures.ecore
+
+query PNML2DEEM_query = PNML!PetriNet.allInstances()->
+	collect(x | x.toString().writeTo('CHESSReviewDemo/models/model'));
+
+helper context PNML!PetriNet def: toString():String = 
+	'<NDFile-\'1.2\'>\n\n'+
+	'NET:"'+self.id+'",2000,2000;\n'+
+	'COLORS:White,Black,Black,Black,Black,Black;\n'
+	+'\n'+
+	MOI!Variable.allInstances()->iterate(i; acc:String=''| acc + i.toString())
+	+'\n'+
+	MOI!Study.allInstances()->iterate(i; acc:String=''| acc + i.toString())
+	+'\n'+
+	PNML!Place.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
+	'\n'+
+	PNML!GSPNTransition.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
+	'\n'+
+	PNML!GSPNArc.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
+	'\n'+
+	MOI!Measure.allInstances()->iterate(i; acc:String=''| acc + i.toString() + '\n')
+	+'\n';
+	
+helper context PNML!Place def: toString(): String =
+	if self.nodegraphics.oclIsUndefined() then
+		'PLACE:"'+self.id+'",1500,1500,'+self.initialMarking.text+',0;\n'
+	else
+		'PLACE:"'+self.id+'",'+ self.nodegraphics.position.x+','+self.nodegraphics.position.x+','+self.initialMarking.text+',0;\n'
+	endif;
+	
+helper context PNML!GSPNImmediateTransition def: toString(): String = 
+--	'TRANS:"'+self.Name+'",1500,1500,V,Immediate,'+self.Priority+',0,\'\', \'\',\n'+
+	if(self.nodegraphics.oclIsUndefined()) then
+    	'TRANS:"'+self.id+'",1500,1500,V,Immediate,1,1,\'\', \''+self.Probability+'\',\n'
+	else
+		'TRANS:"'+self.id+'",'+self.nodegraphics.position.x+','+self.nodegraphics.position.y+',V,Immediate,1,1,\'\', \''+self.Probability+'\',\n'
+	endif+
+    ' (\n'+
+    self.Probability +
+    '\n' +
+    '  );\n';
+    
+helper context PNML!GSPNTimedTransition def: toString(): String = 
+	if(self.nodegraphics.oclIsUndefined()) then
+		'TRANS:"'+self.id+'",1500,1500,V,Timed,1,'
+	else
+		'TRANS:"'+self.id+'",'+self.nodegraphics.position.x+','+self.nodegraphics.position.y+',V,Timed,1,'
+	endif+
+	self.Distribution.getCode()+
+	',\'\', \''+self.Distribution.paramSequence()->first()+'\',\n'+
+    ' (\n'+
+    '1.000000e+00\n' +
+    '  '+self.Distribution.paramSequence().subSequence(2, self.Distribution.paramSequence().size())->iterate(i; acc : String = '' |
+	acc +
+		if acc = '' then
+			''
+		else
+			',\n'
+		endif +
+	    '\''+i.toString()+'\''
+	)+'\n'+
+    '  );\n';
+
+helper context PNML!Distribution def: getCode(): String = 
+	if self.oclIsTypeOf(PNML!Deterministic) then
+		'0'
+	else if self.oclIsTypeOf(PNML!Exponential) then
+		'1'
+	else if self.oclIsTypeOf(PNML!Gaussian) then
+		'11'
+	else if self.oclIsTypeOf(PNML!Uniform) then
+		'13'
+	else if self.oclIsTypeOf(PNML!Gamma) then
+		'3'
+	else --if self=#Weibull then
+		'14'
+	endif endif endif endif endif;
+
+helper context PNML!Distribution def: paramSequence(): Sequence(Real) =
+	if self.oclIsTypeOf(PNML!Deterministic) then
+		Sequence{self.Value}
+	else if self.oclIsTypeOf(PNML!Exponential) then
+		Sequence{self.Rate}
+	else if self.oclIsTypeOf(PNML!Gaussian) then
+		Sequence{self.Mean, self.Variance}
+	else if self.oclIsTypeOf(PNML!Uniform) then
+		Sequence{self.Lower, self.Upper}
+	else if self.oclIsTypeOf(PNML!Gamma) then
+		Sequence{self.Alpha, self.Beta}
+	else --if self=#Weibull then
+		Sequence{self.Alpha, self.Beta}
+	endif endif endif endif endif;
+	
+helper context PNML!GSPNArc def: toString(): String =
+	if self.source.oclIsKindOf(PNML!Place) then
+	--Input Arc / Inhibitor Arc
+		if self.type = #inhibitor then
+			--Inhibitor Arc
+			'OARC:"'+self.source.id+'","'+self.target.id+'",1,2,\'\',\n'
+		else
+			--Input Arc
+			'IARC:"'+self.source.id+'","'+self.target.id+'",1,0,\'\',\n'
+		endif
+		
+		+' ('+
+		if self.source.nodegraphics.oclIsUndefined() then
+			'1500,1500'
+		else
+			self.source.nodegraphics.position.x.toString()+','+self.source.nodegraphics.position.y.toString()
+		endif
+		+','+
+	    if(self.target.nodegraphics.oclIsUndefined()) then
+		    '1500,1500'
+		else
+			self.target.nodegraphics.position.x.toString() + ',' + self.target.nodegraphics.position.y.toString()
+		endif
+		+'),1;\n'
+	else
+	--Output Arc
+		'OARC:"'+self.target.id+'","'+self.source.id+'",1,1,\'\',\n'+
+		' ('+
+		if self.target.nodegraphics.oclIsUndefined() then
+			'1500,1500'
+		else
+			self.target.nodegraphics.position.x.toString()+','+self.target.nodegraphics.position.y.toString()
+		endif
+		+','+
+	    if(self.source.nodegraphics.oclIsUndefined()) then
+		    '1500,1500'
+		else
+			self.source.nodegraphics.position.x.toString() + ',' + self.source.nodegraphics.position.y.toString()
+		endif
+		+'),1;\n'		
+	endif;
+
+helper context MOI!ValueExpression def: toString(): String = self.value.toString();
+
+helper context MOI!OpSum def: toString(): String = self.expression1.toString() + '+' + self.expression2.toString();
+
+helper context MOI!IfThenElse def: toString(): String =
+	'IF('+self.condition.toString()+')THEN('+self.ifTrue.toString()+')ELSE('+self.ifFalse.toString()+')';
+
+helper context MOI!MarkingExpression def: toString(): String = 'MARK('+self.placeID+')';
+
+helper context MOI!Study def: toString(): String =
+	'STUDY:"'+self.name+'"'+	
+	self.vars.asOrderedSet()->iterate(
+		i; acc:String=''| acc + ',1,"{'+
+		i.toString() +
+		'}",0'
+	)
+	+';\n';
+	
+helper context MOI!VariableValues def: toString(): String =
+	self.values.asOrderedSet().first().toString()+
+	self.values.asOrderedSet().subOrderedSet(2, self.values.size()) ->iterate(
+		i; acc:String=''| acc + ',' + i.toString()
+	)
+	;
+	
+helper context MOI!Variable def: toString(): String = 
+ 	'VARIABLE:"'+self.name+'","Real";\n';
+ 	
+helper context MOI!Measure def:toString(): String =
+	'RES_FUNC:"'+self.name+'",\''+self.rewardFunction.toString()+'\',0;';
+	
+helper context MOI!OpEqual def: toString(): String = self.expression1.toString() + '=' + self.expression2.toString();
+
+
