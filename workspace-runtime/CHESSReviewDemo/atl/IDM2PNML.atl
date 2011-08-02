@@ -1,28 +1,27 @@
--- @path GSPN=CHESSReviewDemo/metamodels/placeTransition.ecore
+-- @path PNML=CHESSReviewDemo/metamodels/placeTransition.ecore
 -- @path IM2=CHESSReviewDemo/metamodels/IM2.ecore
--- @path MOI=CHESSReviewDemo/metamodels/measures.ecore
 
-module im22pnml;
+module IDM2PNML;
 
-create out1: GSPN, out2: MOI from in1: IM2;
+create out1: PNML from in1: IM2;
 
 helper def: myid : Integer = 0;
 helper def: timePoints : OrderedSet(Real) = OrderedSet{};
 
-helper def: faultPropagationLogic : Map(String, GSPN!Place) = Map{};
+helper def: faultPropagationLogic : Map(String, PNML!Place) = Map{};
 helper def: faultPropagationManager : Map(String, IM2!FaultsGenerateError) = Map{};
 
-helper def: errorPropagationLogic : Map(String, GSPN!Place) = Map{};
+helper def: errorPropagationLogic : Map(String, PNML!Place) = Map{};
 helper def: errorPropagationManager : Map(String, IM2!ErrorPropagation) = Map{};
 
-helper def: registerFaultPropagationLogic(s: String, p:GSPN!Place) : Boolean = 
-	let map : Map(String, GSPN!Place) = Map{(s, p)} in
+helper def: registerFaultPropagationLogic(s: String, p:PNML!Place) : Boolean = 
+	let map : Map(String, PNML!Place) = Map{(s, p)} in
 		thisModule.faultPropagationLogic = thisModule.faultPropagationLogic.including(map);
 helper def: registerFaultPropagationManager(s: String, m:IM2!FaultsGenerateError) : Boolean = 
 	let map : Map(String, IM2!FaultsGenerateError) = Map{(s, m)} in
 		thisModule.faultPropagationLogic = thisModule.faultPropagationManager.including(map);
-helper def: getFaultPropagationLogic(m: IM2!FaultsGenerateError): GSPN!Place =
-	let place : GSPN!Place = thisModule.faultPropagationLogic.get(m.PropagationLogicStringFormat) in
+helper def: getFaultPropagationLogic(m: IM2!FaultsGenerateError): PNML!Place =
+	let place : PNML!Place = thisModule.faultPropagationLogic.get(m.PropagationLogicStringFormat) in
 		if (place=OclUndefined) then
 			let manager : IM2!FaultsGenerateError =  thisModule.faultPropagationManager.get(m.PropagationLogicStringFormat) in
 				if (manager=OclUndefined) then
@@ -34,14 +33,14 @@ helper def: getFaultPropagationLogic(m: IM2!FaultsGenerateError): GSPN!Place =
 			place
 		endif;
 	
-helper def: registerErrorPropagationLogic(s: String, p:GSPN!Place) : Boolean = 
-	let map : Map(String, GSPN!Place)  = Map{(s,p)} in
+helper def: registerErrorPropagationLogic(s: String, p:PNML!Place) : Boolean = 
+	let map : Map(String, PNML!Place)  = Map{(s,p)} in
 		thisModule.errorPropagationLogic = thisModule.errorPropagationLogic.including(map);
 helper def: registerErrorPropagationManager(s: String, m:IM2!ErrorPropagation) : Boolean = 
 	let map : Map(String, IM2!ErrorPropagation) = Map{(s, m)} in
 		thisModule.errorPropagationManager = thisModule.errorPropagationManager.including(map);
-helper def: getErrorPropagationLogic(m: IM2!ErrorPropagation): GSPN!Place =
-	let place : GSPN!Place = thisModule.errorPropagationLogic.get(m.PropagationLogicStringFormat) in
+helper def: getErrorPropagationLogic(m: IM2!ErrorPropagation): PNML!Place =
+	let place : PNML!Place = thisModule.errorPropagationLogic.get(m.PropagationLogicStringFormat) in
 		if (place=OclUndefined) then
 			let manager : IM2!ErrorPropagation =  thisModule.errorPropagationManager.get(m.PropagationLogicStringFormat) in
 				if (manager=OclUndefined) then
@@ -53,9 +52,9 @@ helper def: getErrorPropagationLogic(m: IM2!ErrorPropagation): GSPN!Place =
 			place
 		endif;
 
-helper def: page : GSPN!Page = OclUndefined;
+helper def: page : PNML!Page = OclUndefined;
 
-helper def: getPage(s:IM2!Sistema) : GSPN!Page = s; 
+helper def: getPage(s:IM2!Sistema) : PNML!Page = s; 
 --	if (thisModule.page = OclUndefined) then
 --		thisModule.Sistema(s)
 --	else
@@ -200,33 +199,33 @@ rule Sistema {
 	from
 		sistema : IM2!Sistema
 	to
-		gspnpage: GSPN!Page (
+		gspnpage: PNML!Page (
 			containerPetriNet<-gspnnet
 		),
-		gspndoc: GSPN!PetriNetDoc (
+		gspndoc: PNML!PetriNetDoc (
 			nets<-gspnnet
 		),
-		gspnnet: GSPN!PetriNet(
+		gspnnet: PNML!PetriNet(
 			id<-sistema.Name,
 			type<-#PTNET,
 			pages<-gspnpage,
 			containerPetriNetDoc<-gspndoc
 		),
 		
-		var : MOI!Variable (
+		var : PNML!Variable (
 			name <- 'Time'
 		),
-		varvals : MOI!VariableValues (
+		varvals : PNML!VariableValues (
 			variable <- var,
 			values <- OrderedSet{}
 		),
-		study: MOI!Study (
+		study: PNML!Study (
 			name <- 'DefaultStudy',
 			vars <- Sequence{varvals}
 		),
-		evalList: MOI!EvaluationList (
+		evalList: PNML!EvaluationList (
 			studies <- Sequence{study},
-			measures <- MOI!Measure.allInstances()
+			measures <- PNML!Measure.allInstances()
 		)
 	do {
 		thisModule.page = gspnpage;
@@ -243,16 +242,16 @@ rule ComponentWithOutReplace {
 	from
 		componente : IM2!Component
 	to
-		failed_place : GSPN!Place (
+		failed_place : PNML!Place (
 				id <- 'failed_'+componente.Name,
 				name <- failed_place_name,
 				initialMarking <- failed_place_markup,
 				containerPage <- componente.intermediateModel
 		),
-		failed_place_markup : GSPN!PTMarking (
+		failed_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		failed_place_name : GSPN!Name (
+		failed_place_name : PNML!Name (
 				text <- 'failed_'+componente.Name
 		)
 }
@@ -267,7 +266,7 @@ rule ImmediateTransition {
 			distribuzione.Value = 0
 		)
 	to
-		transizione : GSPN!GSPNImmediateTransition (
+		transizione : PNML!GSPNImmediateTransition (
 			id <- distribuzione.getRule(),
 			Priority <- 1,
 			containerPage<-distribuzione.getSistema()
@@ -280,12 +279,12 @@ rule DeterministicTransition {
 			distribuzione.Value > 0
 		)
 	to
-		transizione : GSPN!GSPNTimedTransition (
+		transizione : PNML!GSPNTimedTransition (
 			id <- distribuzione.getRule(),
 			Distribution <- distribuzione_gspn,
 			containerPage<-distribuzione.getSistema()
 		),
-		distribuzione_gspn : GSPN!Deterministic (
+		distribuzione_gspn : PNML!Deterministic (
 			Value <- distribuzione.Value
 		)
 }
@@ -293,12 +292,12 @@ rule ExponentialTransition {
 	from
 		distribuzione : IM2!Exponential
 	to
-		transizione : GSPN!GSPNTimedTransition (
+		transizione : PNML!GSPNTimedTransition (
 			id <- distribuzione.getRule(),
 			Distribution <- distribuzione_gspn,
 			containerPage<- distribuzione.getSistema()
 		),
-		distribuzione_gspn : GSPN!Exponential (
+		distribuzione_gspn : PNML!Exponential (
 			Rate <- distribuzione.Rate
 		)
 }
@@ -306,12 +305,12 @@ rule GaussianTransition {
 	from
 		distribuzione : IM2!Gaussian
 	to
-		transizione : GSPN!GSPNTimedTransition (
+		transizione : PNML!GSPNTimedTransition (
 			id <- distribuzione.getRule(),
 			Distribution <- distribuzione_gspn,
 			containerPage<- distribuzione.getSistema()
 		),
-		distribuzione_gspn : GSPN!Gaussian (
+		distribuzione_gspn : PNML!Gaussian (
 			Mean <- distribuzione.Mean,
 			Variance <- distribuzione.Variance
 		)
@@ -320,12 +319,12 @@ rule UniformTransition {
 	from
 		distribuzione : IM2!Uniform
 	to
-		transizione : GSPN!GSPNTimedTransition (
+		transizione : PNML!GSPNTimedTransition (
 			id <- distribuzione.getRule(),
 			Distribution <- distribuzione_gspn,
 			containerPage<- distribuzione.getSistema()
 		),
-		distribuzione_gspn : GSPN!Uniform (
+		distribuzione_gspn : PNML!Uniform (
 			Lower <- distribuzione.Lower,
 			Upper <- distribuzione.Upper
 		)
@@ -334,12 +333,12 @@ rule GammaTransition {
 	from
 		distribuzione : IM2!Gamma
 	to
-		transizione : GSPN!GSPNTimedTransition (
+		transizione : PNML!GSPNTimedTransition (
 			id <- distribuzione.getRule(),
 			Distribution <- distribuzione_gspn,
 			containerPage<- distribuzione.getSistema()
 		),
-		distribuzione_gspn : GSPN!Gamma (
+		distribuzione_gspn : PNML!Gamma (
 			Alpha <- distribuzione.Alpha,
 			Beta <- distribuzione.Beta
 		)
@@ -348,12 +347,12 @@ rule WeibullTransition {
 	from
 		distribuzione : IM2!Weibull
 	to
-		transizione : GSPN!GSPNTimedTransition (
+		transizione : PNML!GSPNTimedTransition (
 			id <- distribuzione.getRule(),
 			Distribution <- distribuzione_gspn,
 			containerPage<- distribuzione.getSistema()
 		),
-		distribuzione_gspn : GSPN!Weibull (
+		distribuzione_gspn : PNML!Weibull (
 			Alpha <- distribuzione.Alpha,
 			Beta <- distribuzione.Beta
 		)
@@ -366,31 +365,31 @@ rule ComponentInternalFault {
 	using {
 			componente : IM2!Component = fault.Component;
 			sistema : IM2!Sistema = componente.intermediateModel;
-			page : GSPN!Page = sistema;
+			page : PNML!Page = sistema;
 	}
 	to
 -- Crea il place per rappresentare il fallimento corrente del componente
-		faulty_place : GSPN!Place (
+		faulty_place : PNML!Place (
 			id <- 'faultyPlace_'+componente.Name+'_'+fault.Name,
 			name <- faulty_place_name,
 			initialMarking <- faulty_place_markup,
 			containerPage<- thisModule.getPage(sistema)
 		),
-		faulty_place_markup : GSPN!PTMarking (
+		faulty_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		faulty_place_name : GSPN!Name (
+		faulty_place_name : PNML!Name (
 				text <- 'faultyPlace_'+componente.Name+'_'+fault.Name
 		),
 
 -- Crea il place che conteggia il numero di fault transienti
-		numberOfTransientFault_place_markup : GSPN!PTMarking (
+		numberOfTransientFault_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		numberOfTransientFault_place_name : GSPN!Name (
+		numberOfTransientFault_place_name : PNML!Name (
 				text <- 'numberOfTransientFaultyPlace_'+componente.Name+'_'+fault.Name
 		),
-		numberOfTransientFault_place : GSPN!Place (
+		numberOfTransientFault_place : PNML!Place (
 				id <- 'numberOfTransientFaultyPlace_'+componente.Name+'_'+fault.Name,
 				name <- numberOfTransientFault_place_name,
 				initialMarking <- numberOfTransientFault_place_markup,
@@ -400,10 +399,10 @@ rule ComponentInternalFault {
 
 -- Creo l'arco che va' dallo stato failed alla transizione per il fallimento, se il componente
 -- non è fallito, si possono generare fallimenti
-		transaction_to_fault_from_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_fault_from_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_fault_from_arc: GSPN!GSPNArc (
+		transaction_to_fault_from_arc: PNML!GSPNArc (
 				id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_from_healtyPlace',
 				source<-componente,
 				target<-fault.Occurrence,
@@ -413,25 +412,25 @@ rule ComponentInternalFault {
 		),
 
 -- Crea un place d'appoggio che contiene un token se si verfica un fault
-		tmp_occurred_place : GSPN!Place (
+		tmp_occurred_place : PNML!Place (
 			id <- 'internal_fault_occurred_'+componente.Name+'_'+fault.Name,
 			name <- tmp_occurred_place_name,
 			initialMarking <- tmp_occurred_place_markup,
 			containerPage<- thisModule.getPage(sistema)
 		),
-		tmp_occurred_place_markup : GSPN!PTMarking (
+		tmp_occurred_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		tmp_occurred_place_name : GSPN!Name (
+		tmp_occurred_place_name : PNML!Name (
 				text <- 'internal_fault_occurred_'+componente.Name+'_'+fault.Name
 		),
 		
 -- Creo l'arco che va' dallo stato failed alla transizione per il fallimento, se il componente
 -- non � fallito, si possono generare fallimenti
-		from_occurrence_to_tmp_occurred_place_arc_annotation : GSPN!PTArcAnnotation (
+		from_occurrence_to_tmp_occurred_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		from_occurrence_to_tmp_occurred_place_arc: GSPN!GSPNArc (
+		from_occurrence_to_tmp_occurred_place_arc: PNML!GSPNArc (
 				id<-'internal_fault_'+componente.Name+'_'+fault.Name+'_from_occurrence_to_tmp_occurred_place',
 				source<-fault.Occurrence,
 				target<-tmp_occurred_place,
@@ -443,7 +442,7 @@ rule ComponentInternalFault {
 
 		
 -- Crea case per un fault permanente
-		permanent_fault_case : GSPN!GSPNImmediateTransition (
+		permanent_fault_case : PNML!GSPNImmediateTransition (
 			id <- 'internal_fault_'+componente.Name+'_'+fault.Name+'_permanent_fault',
 			Priority <- 1,
 			Weight <-fault.PermanentProbability,
@@ -451,10 +450,10 @@ rule ComponentInternalFault {
 		),
 
 -- Creo l'arco che va' dal place tmp_occurred_fault alla transizione che attiva il fault permanente
-		from_tmp_occurred_place_to_permanent_fault_arc_annotation : GSPN!PTArcAnnotation (
+		from_tmp_occurred_place_to_permanent_fault_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		from_tmp_occurred_place_to_permanent_fault_arc: GSPN!GSPNArc (
+		from_tmp_occurred_place_to_permanent_fault_arc: PNML!GSPNArc (
 				id<-'internal_fault_'+componente.Name+'_'+fault.Name+'_from_tmp_occurred_place_to_permanent_fault',
 				source<-tmp_occurred_place,
 				target<-permanent_fault_case,
@@ -464,7 +463,7 @@ rule ComponentInternalFault {
 		),
 		
 -- Crea case per un fault transiente
-		transient_fault_case : GSPN!GSPNImmediateTransition (
+		transient_fault_case : PNML!GSPNImmediateTransition (
 			id <- 'internal_fault_'+componente.Name+'_'+fault.Name+'_transient_fault',
 			Priority <- 1,
 			Weight <- 1-fault.PermanentProbability,
@@ -472,10 +471,10 @@ rule ComponentInternalFault {
 		),
 
 -- Creo l'arco che va' dal place tmp_occurred_fault alla transizione che attiva il fault permanente
-		from_tmp_occurred_place_to_transient_fault_arc_annotation : GSPN!PTArcAnnotation (
+		from_tmp_occurred_place_to_transient_fault_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		from_tmp_occurred_place_to_transient_fault_arc: GSPN!GSPNArc (
+		from_tmp_occurred_place_to_transient_fault_arc: PNML!GSPNArc (
 				id<-'internal_fault_'+componente.Name+'_'+fault.Name+'_from_tmp_occurred_place_to_transient_fault',
 				source<-tmp_occurred_place,
 				target<-transient_fault_case,
@@ -486,10 +485,10 @@ rule ComponentInternalFault {
 		
 		
 -- Crea l'arco uscente dal case permanente
-		transaction_to_permanent_fault_to_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_permanent_fault_to_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_permanent_fault_to_arc: GSPN!GSPNArc (
+		transaction_to_permanent_fault_to_arc: PNML!GSPNArc (
 				id<-'permanent_faultyPlace_'+componente.Name+'_'+fault.Name+'_to_tmp_faultyPlace',
 				source<-permanent_fault_case,
 				target<-faulty_place,
@@ -499,10 +498,10 @@ rule ComponentInternalFault {
 		),
 
 -- Crea l'arco uscente del case transiente che mette un place in fualt
-		transaction_to_transient_fault_to_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_transient_fault_to_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_transient_fault_to_arc: GSPN!GSPNArc (
+		transaction_to_transient_fault_to_arc: PNML!GSPNArc (
 				id<-'transient_faultyPlace_'+componente.Name+'_'+fault.Name+'_to_tmp_faultyPlace',
 				source<-transient_fault_case,
 				target<-faulty_place,
@@ -512,10 +511,10 @@ rule ComponentInternalFault {
 		),
 	
 -- Creo l'arcuo uscnte dal case transiente che mette un token in numberOfTransientFault_place
-		transaction_to_transient_fault_to_numberOfFaults_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_transient_fault_to_numberOfFaults_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_transient_fault_to_numberOfFaults_arc: GSPN!GSPNArc (
+		transaction_to_transient_fault_to_numberOfFaults_arc: PNML!GSPNArc (
 				id<-'transient_faultyPlace_'+componente.Name+'_'+fault.Name+'_to_numberOfFaults',
 				source<-transient_fault_case,
 				target<-numberOfTransientFault_place,
@@ -527,10 +526,10 @@ rule ComponentInternalFault {
 
 -- Crea gli archi in entrata per la transizione che elimina gli errori transitori
 -- Creo arco numberOfTransientFault_place->transaction_remove_transient_fault
-transaction_remove_transient_fault_from_numberOfTransientFault_arc_annotation : GSPN!PTArcAnnotation (
+transaction_remove_transient_fault_from_numberOfTransientFault_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_remove_transient_fault_from_numberOfTransientFault_arc: GSPN!GSPNArc (
+		transaction_remove_transient_fault_from_numberOfTransientFault_arc: PNML!GSPNArc (
 				id<-'remove_transient_fault_'+componente.Name+'_'+fault.Name+'_arc_from_numberOfTransientFault',
 				source<-numberOfTransientFault_place,
 				target<-fault.TransientDuration,
@@ -539,10 +538,10 @@ transaction_remove_transient_fault_from_numberOfTransientFault_arc_annotation : 
 				containerPage <- thisModule.getPage(sistema)
 		),
 -- Creo arco faulty_place->transaction_remove_transient_fault
-		transaction_remove_transient_fault_from_faulty_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_remove_transient_fault_from_faulty_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_remove_transient_fault_from_faulty_arc: GSPN!GSPNArc (
+		transaction_remove_transient_fault_from_faulty_arc: PNML!GSPNArc (
 				id<-'remove_transient_fault_'+componente.Name+'_'+fault.Name+'_arc_from_faulty',
 				source<-faulty_place,
 				target<-fault.TransientDuration,
@@ -566,28 +565,28 @@ rule ComponentExternalFault {
 		}
 	to
 -- Crea il place per rappresentare il fault esterno del componente
-		faulty_place : GSPN!Place (
+		faulty_place : PNML!Place (
 --				id <- 'faultyPlace_'+componente.Name+'_'+fault.Name,
 				name <- faulty_place_name,
 				initialMarking <- faulty_place_markup,
 				containerPage <- sistema
 		),
-		faulty_place_markup : GSPN!PTMarking (
+		faulty_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		faulty_place_name : GSPN!Name (
+		faulty_place_name : PNML!Name (
 				text <- 'faultyPlace_'+componente.Name+'_'+fault.Name
 		),
 -- Creo la transizione che fa' scattare il fault
-		transaction_to_fault : GSPN!GSPNImmediateTransition (
+		transaction_to_fault : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che va' dallo stato healty alla transizione per il fallimento
-		transaction_to_fault_from_healty_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_fault_from_healty_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_fault_from_healty_arc: GSPN!GSPNArc (
+		transaction_to_fault_from_healty_arc: PNML!GSPNArc (
 	--			id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_from_failedPlace',
 				source<-componente,
 				target<-transaction_to_fault,
@@ -596,10 +595,10 @@ rule ComponentExternalFault {
 				containerPage <- sistema
 		),
 -- Creo l'arco che va' dal failureMode alla transizione per il fallimento
-		transaction_to_fault_from_failureMode_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_fault_from_failureMode_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_fault_from_failureMode_arc: GSPN!GSPNArc (
+		transaction_to_fault_from_failureMode_arc: PNML!GSPNArc (
 	--			id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_from_failureModePlace_'+fault.Source.Name,
 				source<-fault.Source,
 				target<-transaction_to_fault,
@@ -608,10 +607,10 @@ rule ComponentExternalFault {
 				containerPage <- sistema
 		),
 -- Creo l'arco che rimette il token in failureMode
-		transaction_to_fault_to_failureMode_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_fault_to_failureMode_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_fault_to_failureMode_arc: GSPN!GSPNArc (
+		transaction_to_fault_to_failureMode_arc: PNML!GSPNArc (
 	--			id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_to_failureModePlace',
 				source<-transaction_to_fault,
 				target<-fault.Source,
@@ -620,10 +619,10 @@ rule ComponentExternalFault {
 				containerPage <- sistema
 		),
 -- Creo l'arco uscente che mette un token su faultyPlace
-		transaction_to_fault_to_faultyPlace_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_fault_to_faultyPlace_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_fault_to_faultyPlace_arc: GSPN!GSPNArc (
+		transaction_to_fault_to_faultyPlace_arc: PNML!GSPNArc (
 	--			id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_to_faultyPlace',
 				source<-transaction_to_fault,
 				target<-faulty_place,
@@ -632,10 +631,10 @@ rule ComponentExternalFault {
 				containerPage <- sistema
 		),
 -- Creo un arco inibitore entrante che non permette di accumulare token su faultyPlace
-		transaction_to_fault_from_faultyPlace_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_fault_from_faultyPlace_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_fault_from_faultyPlace_arc: GSPN!GSPNArc (
+		transaction_to_fault_from_faultyPlace_arc: PNML!GSPNArc (
 	--			id<-'faultyPlace_'+componente.Name+'_'+fault.Name+'_to_faultyPlace',
 				source<-faulty_place,
 				target<-transaction_to_fault,
@@ -645,7 +644,7 @@ rule ComponentExternalFault {
 		)
 		
 		do {
-			for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+			for(n in PNML!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
 				thisModule.myid <- thisModule.myid + 1;
 				n.id <- 'ComponentExternalFault_'+thisModule.myid.toString();
 			}
@@ -663,27 +662,27 @@ rule ComponentErrorWithVanishingTime {
 	{
 		componente : IM2!Component = error.Component;
 		sistema : IM2!Sistema = componente.intermediateModel;
-		vanisishing_transition : GSPN!GSPNTimedTransition = thisModule.resolveTemp(error.VanishingTime, 'transizione');
+		vanisishing_transition : PNML!GSPNTimedTransition = thisModule.resolveTemp(error.VanishingTime, 'transizione');
 	}
 	to
 -- Creo il place che rappresenta l'errore latente nel componente
-		erroneus_place : GSPN!Place (
+		erroneus_place : PNML!Place (
 			id <- 'erroneusPlace_'+componente.Name+'_'+error.Name,
 			name <- erroneus_place_name,
 			initialMarking <- erroneus_place_markup,
 			containerPage <- componente.intermediateModel
 		),
-erroneus_place_markup : GSPN!PTMarking (
+erroneus_place_markup : PNML!PTMarking (
 			text <- 0
 		),
-		erroneus_place_name : GSPN!Name (
+		erroneus_place_name : PNML!Name (
 			text <- 'erroneusPlace_'+componente.Name+'_'+error.Name
 		),
 -- Creo l'arco che consente di eliminare il token dal erroneus_place se sono presenti dei meccanismi di compezzazione
-		vanishing_transition_from_arc_annotation : GSPN!PTArcAnnotation (
+		vanishing_transition_from_arc_annotation : PNML!PTArcAnnotation (
 			text<-1
 		),
-		vanishing_transition_from_arc: GSPN!GSPNArc (
+		vanishing_transition_from_arc: PNML!GSPNArc (
 			id<-'erroneusPlace_'+componente.Name+'_'+error.Name+'_to_vanishing_transition',
 			source<-erroneus_place,
 			target<-vanisishing_transition,
@@ -691,16 +690,16 @@ erroneus_place_markup : GSPN!PTMarking (
 			inscription<-vanishing_transition_from_arc_annotation,
 			containerPage <- sistema
 		),
-		detect_error_place : GSPN!Place (
+		detect_error_place : PNML!Place (
 			id <- 'detect_error_Place_'+componente.Name+'_'+error.Name,
 			name <- detect_error_place_name,
 			initialMarking <- detect_error_place_markup,
 			containerPage <- componente.intermediateModel
 		),
-		detect_error_place_markup : GSPN!PTMarking (
+		detect_error_place_markup : PNML!PTMarking (
 			text <- 0
 		),
-		detect_error_place_name : GSPN!Name (
+		detect_error_place_name : PNML!Name (
 			text <- 'detect_error_Place_'+componente.Name+'_'+error.Name
 		)
 	do
@@ -721,28 +720,28 @@ rule ComponentErrorWithOutVanishingTime {
 	}
 	to
 -- Creo il place che rappresenta l'errore latente nel componente
-		erroneus_place : GSPN!Place (
+		erroneus_place : PNML!Place (
 			id <- 'erroneusPlace_'+componente.Name+'_'+error.Name,
 			name <- erroneus_place_name,
 			initialMarking <- erroneus_place_markup,
 			containerPage <- componente.intermediateModel
 		),
-		erroneus_place_markup : GSPN!PTMarking (
+		erroneus_place_markup : PNML!PTMarking (
 			text <- 0
 		),
-		erroneus_place_name : GSPN!Name (
+		erroneus_place_name : PNML!Name (
 			text <- 'erroneusPlace_'+componente.Name+'_'+error.Name
 		),
-		detect_error_place : GSPN!Place (
+		detect_error_place : PNML!Place (
 			id <- 'detect_error_Place_'+componente.Name+'_'+error.Name,
 			name <- detect_error_place_name,
 			initialMarking <- detect_error_place_markup,
 			containerPage <- componente.intermediateModel
 		),
-		detect_error_place_markup : GSPN!PTMarking (
+		detect_error_place_markup : PNML!PTMarking (
 			text <- 0
 		),
-		detect_error_place_name : GSPN!Name (
+		detect_error_place_name : PNML!Name (
 			text <- 'detect_error_Place_'+componente.Name+'_'+error.Name
 		)
 		
@@ -759,16 +758,16 @@ rule ComponentFailureMode {
 		sistema : IM2!Sistema = componente.intermediateModel;
 	}
 	to
-		failureMode_place : GSPN!Place (
+		failureMode_place : PNML!Place (
 				id <- 'failureMode_'+componente.Name+'_'+failureMode.Name,
 				name <- failureMode_place_name,
 				initialMarking <- failureMode_place_markup,
 				containerPage <- componente.intermediateModel
 		),
-		failureMode_place_markup : GSPN!PTMarking (
+		failureMode_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		failureMode_place_name : GSPN!Name (
+		failureMode_place_name : PNML!Name (
 				text <- 'failureModePlace_'+componente.Name+'_'+failureMode.Name
 		)
 }
@@ -788,16 +787,16 @@ abstract rule FaultsExpressionNodeToPN {
 	}
 	to
 -- Crea il place per rappresentare il fault esterno del componente
-		logicResult_place : GSPN!Place (
+		logicResult_place : PNML!Place (
 				name <- logicResult_place_name,
 				initialMarking <- logicResult_place_markup,
 				containerPage <- sistema--,
 				--id <- 'logicResult_'+componente.Name+'_logic_'+faultsGenerateErrors.Name+thisModule.myid
 		),
-		logicResult_place_markup : GSPN!PTMarking (
+		logicResult_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		logicResult_place_name : GSPN!Name (
+		logicResult_place_name : PNML!Name (
 				text <- 'logicResult_'+componente.Name+'_logic_'+faultsGenerateErrors.Name+thisModule.myid
 		)
 	do {
@@ -812,7 +811,7 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 --			faultsGenerateErrors = faultsExpressionNode.faultsGenerateErrors
 --		)
 	to
-	logicResult_place : GSPN!Place (),
+	logicResult_place : PNML!Place (),
 
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica � verifica
@@ -821,15 +820,15 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 -- la riga della tabella di verit� � sempre della forma gate1 & gate2 = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 & 0 = 0
-		transaction_T0 : GSPN!GSPNImmediateTransition (
+		transaction_T0 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T0_from_logic_result_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T0_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T0,
@@ -838,10 +837,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T0_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T0_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T0_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T0,
@@ -850,10 +849,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T0_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T0_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T0_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T0,
@@ -862,10 +861,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T0_to_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_to_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_to_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T0_to_gate1_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T0_to_gate1_place_arc',
 				source<-transaction_T0,
 				target<-faultsExpressionNode.FaultsExpression1,
@@ -877,16 +876,16 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 & 1 = 1
 ----------------------------------------------------------------------------------------
-		transaction_T1 : GSPN!GSPNImmediateTransition (
+		transaction_T1 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione logica
 -- possa essere presente pi� di un token
-		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T1_from_logic_result_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T1_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T1,
@@ -896,10 +895,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 		),
 
 -- Creo l'arco che aggiunge un token nel place del risultato di questa espressione logica
-		transaction_T1_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_T1_to_logic_result_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T1_to_logic_result_arc',
 				source<-transaction_T1,
 				target<-logicResult_place,
@@ -908,10 +907,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T1_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T1_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T1,
@@ -920,10 +919,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T1_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T1_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T1_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T1,
@@ -932,10 +931,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T1_to_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_to_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_to_gate1_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T1_to_gate1_place_arc',
 				source<-transaction_T1,
 				target<-faultsExpressionNode.FaultsExpression1,
@@ -944,10 +943,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate2  
-		transaction_T1_to_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_to_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T1_to_gate2_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T1_to_gate2_place_arc',
 				source<-transaction_T1,
 				target<-faultsExpressionNode.FaultsExpression2,
@@ -960,15 +959,15 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 0 & 1 = 0
 ----------------------------------------------------------------------------------------
-		transaction_T2 : GSPN!GSPNImmediateTransition (
+		transaction_T2 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_T2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T2_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T2_from_logic_result_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T2_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T2,
@@ -977,10 +976,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T2_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T2_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T2_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T2_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T2,
@@ -989,10 +988,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T2_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T2_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T2_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T2_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T2,
@@ -1001,10 +1000,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T2_to_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_to_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T2_to_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T2_to_gate2_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T2_to_gate2_place_arc',
 				source<-transaction_T2,
 				target<-faultsExpressionNode.FaultsExpression2,
@@ -1016,15 +1015,15 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 0 & 0 = 0
 ----------------------------------------------------------------------------------------
-		transaction_T3 : GSPN!GSPNImmediateTransition (
+		transaction_T3 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_T3_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T3_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T3_from_logic_result_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T3_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T3,
@@ -1033,10 +1032,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T3_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T3_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T3_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T3_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T3,
@@ -1045,10 +1044,10 @@ rule FaultsExpressionAndNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T3_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T3_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T3_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'faults_andnode_transaction_T3_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T3,
@@ -1091,8 +1090,8 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 --			faultsGenerateErrors = faultsExpressionNode.faultsGenerateErrors
 --		)
 	to
-	logicResult_place : GSPN!Place ( name <- logicResult_place_name_or ),
-			logicResult_place_name_or : GSPN!Name (
+	logicResult_place : PNML!Place ( name <- logicResult_place_name_or ),
+			logicResult_place_name_or : PNML!Name (
 				text <- 'logicResult_or_'+componente.Name+'_logic_'+faultsGenerateErrors.Name+thisModule.myid
 		),
 -------------------------------------------------------------------------------
@@ -1102,16 +1101,16 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 -- la riga della tabella di verit� � sempre della forma gate1 | gate2 = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 | 0 = 1
-		transaction_T0 : GSPN!GSPNImmediateTransition (
+		transaction_T0 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
 -- possa essere presente pi� di un token
-		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T0_from_logic_result_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T0_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T0,
@@ -1120,10 +1119,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che aggiunge un token nel risultato di questa espressione
-		transaction_T0_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_T0_to_logic_result_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T0_to_logic_result_arc',
 				source<-transaction_T0,
 				target<-logicResult_place,
@@ -1132,10 +1131,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T0_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T0_from_gate1_place_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T0_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T0,
@@ -1144,10 +1143,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T0_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T0_from_gate2_place_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T0_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T0,
@@ -1156,10 +1155,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T0_to_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_to_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_to_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T0_to_gate1_place_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T0_to_gate1_place_arc',
 				source<-transaction_T0,
 				target<-faultsExpressionNode.FaultsExpression1,
@@ -1171,16 +1170,16 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 | 1 = 1
 ----------------------------------------------------------------------------------------
-		transaction_T1 : GSPN!GSPNImmediateTransition (
+		transaction_T1 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione logica
 -- possa essere presente pi� di un token
-		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T1_from_logic_result_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T1_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T1,
@@ -1190,10 +1189,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 		),
 
 -- Creo l'arco che aggiunge un token nel place del risultato di questa espressione logica
-		transaction_T1_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_T1_to_logic_result_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T1_to_logic_result_arc',
 				source<-transaction_T1,
 				target<-logicResult_place,
@@ -1202,10 +1201,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T1_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_from_gate1_place_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T1_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T1,
@@ -1214,10 +1213,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T1_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T1_from_gate2_place_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T1_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T1,
@@ -1226,10 +1225,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T1_to_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_to_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_to_gate1_place_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T1_to_gate1_place_arc',
 				source<-transaction_T1,
 				target<-faultsExpressionNode.FaultsExpression1,
@@ -1238,10 +1237,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate2  
-		transaction_T1_to_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_to_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T1_to_gate2_place_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T1_to_gate2_place_arc',
 				source<-transaction_T1,
 				target<-faultsExpressionNode.FaultsExpression2,
@@ -1254,16 +1253,16 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 0 | 1 = 1
 ----------------------------------------------------------------------------------------
-		transaction_T2 : GSPN!GSPNImmediateTransition (
+		transaction_T2 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
 -- possa essere presente pi� di un token
-		transaction_T2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T2_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T2_from_logic_result_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T2_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T2,
@@ -1272,10 +1271,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che aggiunge un token nel risultato di questa espressione
-		transaction_T2_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T2_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_T2_to_logic_result_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T2_to_logic_result_arc',
 				source<-transaction_T2,
 				target<-logicResult_place,
@@ -1284,10 +1283,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T2_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T2_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T2_from_gate2_place_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T2_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T2,
@@ -1296,10 +1295,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T2_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T2_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T2_from_gate1_place_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T2_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T2,
@@ -1308,10 +1307,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T2_to_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_to_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T2_to_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T2_to_gate2_place_arc: PNML!GSPNArc (
 	--			id<-'faults_ornode_transaction_T2_to_gate2_place_arc',
 				source<-transaction_T2,
 				target<-faultsExpressionNode.FaultsExpression2,
@@ -1323,15 +1322,15 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 0 | 0 = 0
 ----------------------------------------------------------------------------------------
-		transaction_T3 : GSPN!GSPNImmediateTransition (
+		transaction_T3 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_T3_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T3_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T3_from_logic_result_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T3_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T3,
@@ -1340,10 +1339,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T3_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T3_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T3_from_gate2_place_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T3_from_gate2_place_arc',
 				source<-faultsExpressionNode.FaultsExpression2,
 				target<-transaction_T3,
@@ -1352,10 +1351,10 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T3_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T3_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T3_from_gate1_place_arc: PNML!GSPNArc (
 --				id<-'faults_ornode_transaction_T3_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultsExpression1,
 				target<-transaction_T3,
@@ -1364,7 +1363,7 @@ rule FaultsExpressionOrNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		)
 	do {
-		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+		for(n in PNML!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
 			thisModule.myid <- thisModule.myid + 1;
 			n.id <- 'FaultsExpressionNotNodeToPN_'+thisModule.myid.toString();
 		}
@@ -1381,7 +1380,7 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 --			faultsGenerateErrors = faultsExpressionNode.faultsGenerateErrors
 --		)
 	to
-		logicResult_place : GSPN!Place (),
+		logicResult_place : PNML!Place (),
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica � verifica
 -- e di rimuoverlo quando non � pi� verificata
@@ -1389,17 +1388,17 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 -- la riga della tabella di verit� � sempre della forma ~ gate1  = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione ~ 0 = 1
-		transaction_T0 : GSPN!GSPNImmediateTransition (
+		transaction_T0 : PNML!GSPNImmediateTransition (
 			id <- 'faults_notnode_transaction',
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
 -- possa essere presente pi� di un token
-		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T0_from_logic_result_arc: PNML!GSPNArc (
 				id<-'faults_notnode_transaction_T0_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T0,
@@ -1408,10 +1407,10 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che aggiunge un token nel risultato di questa espressione
-		transaction_T0_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_T0_to_logic_result_arc: PNML!GSPNArc (
 				id<-'faults_notnode_transaction_T0_to_logic_result_arc',
 				source<-transaction_T0,
 				target<-logicResult_place,
@@ -1420,10 +1419,10 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T0_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T0_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'faults_notnode_transaction_T0_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultExpression,
 				target<-transaction_T0,
@@ -1435,15 +1434,15 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione ~ 1 = 0
 ----------------------------------------------------------------------------------------
-		transaction_T1 : GSPN!GSPNImmediateTransition (
+		transaction_T1 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token dal place che rappresenta il risultato dell'espressione
-		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T1_from_logic_result_arc: PNML!GSPNArc (
 				id<-'faults_notnode_transaction_T1_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_T1,
@@ -1452,10 +1451,10 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T1_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'faults_notnode_transaction_T1_from_gate1_place_arc',
 				source<-faultsExpressionNode.FaultExpression,
 				target<-transaction_T1,
@@ -1464,10 +1463,10 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T1_to_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_to_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_to_gate1_place_arc: PNML!GSPNArc (
 				id<-'faults_notnode_transaction_T1_to_gate1_place_arc',
 				source<-transaction_T1,
 				type<-#normal,
@@ -1478,7 +1477,7 @@ rule FaultsExpressionNotNodeToPN extends FaultsExpressionNodeToPN {
 	do {
 		thisModule.myid <- thisModule.myid + 1;
 		
-		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+		for(n in PNML!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
 			thisModule.myid <- thisModule.myid + 1;
 			n.id <- 'prova' + thisModule.myid.toString();
 		}
@@ -1498,24 +1497,24 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 		fault : IM2!Fault = faultsExpressionNode.Fault;
 	}
 	to
-		logicResult_place : GSPN!Place ( name <- logicResult_place_name_ft  ),
-		logicResult_place_name_ft : GSPN!Name (
+		logicResult_place : PNML!Place ( name <- logicResult_place_name_ft  ),
+		logicResult_place_name_ft : PNML!Name (
 				text <- 'logicResult_'+componente.Name+'_'+fault.Name+'_logic_'+faultsGenerateErrors.Name+thisModule.myid
 		),
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di mettere uno ed un solo token quando si verifica il fault
 -------------------------------------------------------------------------------
 -- Creo la transizione che preleva il token dal place che evidenzia il fault
-		transaction_to_evidence : GSPN!GSPNImmediateTransition (
+		transaction_to_evidence : PNML!GSPNImmediateTransition (
 	--		id <- 'faults_generates_errors_'+faultsGenerateErrors.Name+'_propagation_logic_'+componente.Name+'_transaction_to_evidence_'+fault.Name,
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che mette il token nel risultato di questa espressione logica 
-		transaction_to_evidence_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_evidence_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_evidence_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_to_evidence_to_logic_result_arc: PNML!GSPNArc (
 	--			id<-'faults_fault_transaction_to_evidence_to_logic_result_arc',
 				source<-transaction_to_evidence,
 				target<-logicResult_place,
@@ -1524,10 +1523,10 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che rimette il token nel place che evidenzia il fault 
-		transaction_to_evidence_to_faulty_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_evidence_to_faulty_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_evidence_to_faulty_place_arc: GSPN!GSPNArc (
+		transaction_to_evidence_to_faulty_place_arc: PNML!GSPNArc (
 	--			id<-'faults_fault_transaction_to_evidence_to_faulty_place_arc',
 				source<-transaction_to_evidence,
 				target<-fault,
@@ -1536,10 +1535,10 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco d'attivazione della transizione che rimuove un token dal place che evidenzia il fault 
-		transaction_to_evidence_from_faulty_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_evidence_from_faulty_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_evidence_from_faulty_place_arc: GSPN!GSPNArc (
+		transaction_to_evidence_from_faulty_place_arc: PNML!GSPNArc (
 	--			id<-'faults_fault_transaction_to_evidence_from_faulty_place_arc',
 				source<-fault,
 				target<-transaction_to_evidence,
@@ -1548,10 +1547,10 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo un arco inibitore che impedisce che sul token risultato dell'espressione possa finire pi� di un token 
-		transaction_to_evidence_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_evidence_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_evidence_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_to_evidence_from_logic_result_arc: PNML!GSPNArc (
 	--			id<-'faults_fault_transaction_to_evidence_from_logic_result_arc',
 				source<-logicResult_place,
 				target<-transaction_to_evidence,
@@ -1562,11 +1561,11 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di rimuovere un token dalla logica quando l'errore scompare
 -------------------------------------------------------------------------------
-		transition_faultnode_false : GSPN!GSPNImmediateTransition (
+		transition_faultnode_false : PNML!GSPNImmediateTransition (
 			containerPage <- sistema			
 		),
-		transition_faultnode_false_from_error_ins : GSPN!PTArcAnnotation ( text <- 1 ),
-		transition_faultnode_false_from_error : GSPN!GSPNArc (
+		transition_faultnode_false_from_error_ins : PNML!PTArcAnnotation ( text <- 1 ),
+		transition_faultnode_false_from_error : PNML!GSPNArc (
 	--		id <- 'faultnode_false_from_error',
 			source <- fault,
 			target <- transition_faultnode_false,
@@ -1574,8 +1573,8 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 			inscription <- transition_faultnode_false_from_error_ins,
 			containerPage <- sistema
 		),
-		transition_faultnode_false_from_result_ins : GSPN!PTArcAnnotation ( text <- 1 ),
-		transition_faultnode_false_from_result : GSPN!GSPNArc (
+		transition_faultnode_false_from_result_ins : PNML!PTArcAnnotation ( text <- 1 ),
+		transition_faultnode_false_from_result : PNML!GSPNArc (
 	--		id <- 'faultnode_false_from_result',
 			source <- logicResult_place,
 			target <- transition_faultnode_false,
@@ -1583,16 +1582,16 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 			inscription <- transition_faultnode_false_from_result_ins,
 			containerPage <- sistema
 		)
---		transaction_remove_evidence : GSPN!GSPNImmediateTransition (
+--		transaction_remove_evidence : PNML!GSPNImmediateTransition (
 --			id <- 'faults_generates_errors_'+faultsGenerateErrors.Name+'_propagation_logic_'+componente.Name+'_transaction_remove_evidence_'+fault.Name,
 --			Priority <- 2,
 --			containerPage <- sistema
 --		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
---		transaction_remove_evidence_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+--		transaction_remove_evidence_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 --				text<-1
 --		),
---		transaction_remove_evidence_from_logic_result_arc: GSPN!GSPNArc (
+--		transaction_remove_evidence_from_logic_result_arc: PNML!GSPNArc (
 --				id<-'faults_fault_transaction_remove_evidence_from_logic_result_arc',
 --				source<-logicResult_place,
 --				target<-transaction_remove_evidence,
@@ -1602,10 +1601,10 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 --		),
 -- Creo l'arco inibitore che attiva permette di rimuovere il token dal risultato di questa espressione
 -- logica se nn ci sono faults 
---		transaction_remove_evidence_from_faulty_place_arc_annotation : GSPN!PTArcAnnotation (
+--		transaction_remove_evidence_from_faulty_place_arc_annotation : PNML!PTArcAnnotation (
 --				text<-1
 --		),
---		transaction_remove_evidence_from_faulty_place_arc: GSPN!GSPNArc (
+--		transaction_remove_evidence_from_faulty_place_arc: PNML!GSPNArc (
 --				id<-'faults_fault_transaction_remove_evidence_from_faulty_place_arc',
 --				source<-thisModule.resolveTemp(fault, 'faulty_place'),
 --				target<-transaction_to_evidence,
@@ -1615,7 +1614,7 @@ rule FaultsExpressionFaultNodeToPN extends FaultsExpressionNodeToPN {
 --	)
 		
 	do {
-		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+		for(n in PNML!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
 			thisModule.myid <- thisModule.myid + 1;
 			n.id <- 'FaultsExpressionFaultNodeToPN_'+thisModule.myid.toString();
 		}
@@ -1632,16 +1631,16 @@ abstract rule FaultsGeneratesError {
 	{
 		componente : IM2!Component = faultsGeneratesError.Component;
 		sistema : IM2!Sistema = componente.intermediateModel;
-		page : GSPN!Page = sistema;
+		page : PNML!Page = sistema;
 
-		faultPropagationResult_place : GSPN!Place = thisModule.getFaultPropagationLogic(faultsGeneratesError);
+		faultPropagationResult_place : PNML!Place = thisModule.getFaultPropagationLogic(faultsGeneratesError);
 	}
 	to
 --------------------------------------------------------------------------------------------
 -- in relazione alle figura faultGeneratesErrors_from_uml_to_idm
 --------------------------------------------------------------------------------------------
 -- Crea case per la generazione dell'errore
-		propagation_case : GSPN!GSPNImmediateTransition (
+		propagation_case : PNML!GSPNImmediateTransition (
 --			id <- 'faults_generates_error_'+componente.Name+'_'+faultsGeneratesError.Name+'_propagation',
 			Priority <- 1,
 			Weight <- faultsGeneratesError.PropagationProbability,
@@ -1649,13 +1648,13 @@ abstract rule FaultsGeneratesError {
 		),
 		
 -- place di comodo per registrare l'attivazione della propagazione
-		tmp_activated_propagation_place_markup : GSPN!PTMarking (
+		tmp_activated_propagation_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		tmp_activated_propagation_place_name : GSPN!Name (
+		tmp_activated_propagation_place_name : PNML!Name (
 				text <- 'tmp_activated_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name
 		),
-		tmp_activated_propagation_place : GSPN!Place (
+		tmp_activated_propagation_place : PNML!Place (
 --				id <- 'tmp_activated_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				name <- tmp_activated_propagation_place_name,
 				initialMarking <- tmp_activated_propagation_place_markup,
@@ -1663,10 +1662,10 @@ abstract rule FaultsGeneratesError {
 		),
 
 -- Creo l'arco che aggiunge un token in tmp_activated_propagation_place 
-		from_activationDelay_to_tmp_activated_arc_annotation : GSPN!PTArcAnnotation (
+		from_activationDelay_to_tmp_activated_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		from_activationDelay_to_tmp_activated_arc: GSPN!GSPNArc (
+		from_activationDelay_to_tmp_activated_arc: PNML!GSPNArc (
 --				id<-'faults_generate_errors_from_activationDelay_to_tmp_activated_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				source<-faultsGeneratesError.ActivationDelay,
 				target<-tmp_activated_propagation_place,
@@ -1678,10 +1677,10 @@ abstract rule FaultsGeneratesError {
 
 -- Creo l'arco che rimuove un token in tmp_activated_propagation_place e esegue la propagazione
 -- tmp_activated_propagation_place abilita/disabilita la propagazione
-		from_tmp_activated_to_propagation_case_arc_annotation : GSPN!PTArcAnnotation (
+		from_tmp_activated_to_propagation_case_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		from_tmp_activated_to_propagation_case_arc: GSPN!GSPNArc (
+		from_tmp_activated_to_propagation_case_arc: PNML!GSPNArc (
 --				id<-'faults_generate_errors_from_tmp_activated_to_propagation_case_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				source<-tmp_activated_propagation_place,
 				target<-propagation_case,
@@ -1692,10 +1691,10 @@ abstract rule FaultsGeneratesError {
 
 -- Creo l'arco che rimuove un token in tmp_activated_propagation_place e non esegue la propagazione
 -- tmp_activated_propagation_place abilita/disabilita la propagazione
-		from_tmp_activated_to_not_propagation_case_arc_annotation : GSPN!PTArcAnnotation (
+		from_tmp_activated_to_not_propagation_case_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		from_tmp_activated_to_not_propagation_case_arc: GSPN!GSPNArc (
+		from_tmp_activated_to_not_propagation_case_arc: PNML!GSPNArc (
 --				id<-'faults_generate_errors_from_tmp_activated_to_not_propagation_case_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				source<-tmp_activated_propagation_place,
 				target<-not_propagation_case,
@@ -1704,7 +1703,7 @@ abstract rule FaultsGeneratesError {
 				containerPage <- sistema
 		),
 		
-		not_propagation_case : GSPN!GSPNImmediateTransition (
+		not_propagation_case : PNML!GSPNImmediateTransition (
 --			id <- 'faults_generates_error_'+componente.Name+'_'+faultsGeneratesError.Name+'_not_propagation',
 			Priority <- 1,
 			Weight <- 1-faultsGeneratesError.PropagationProbability,
@@ -1713,13 +1712,13 @@ abstract rule FaultsGeneratesError {
 		
 
 -- place per l'attivazione della generazione dell'errore
-		errorsActivation_place_markup : GSPN!PTMarking (
+		errorsActivation_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		errorsActivation_place_name : GSPN!Name (
+		errorsActivation_place_name : PNML!Name (
 				text <- 'errorsActivation_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name
 		),
-		errorsActivation_place : GSPN!Place (
+		errorsActivation_place : PNML!Place (
 --				id <- 'errorsActivation_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				name <- errorsActivation_place_name,
 				initialMarking <- errorsActivation_place_markup,
@@ -1727,17 +1726,17 @@ abstract rule FaultsGeneratesError {
 		),
 -- la transizione che, nel caso di pi� errori possono essere attivati dalla stessa logica di propagazione,
 -- consente di scegliere quale errore viene generato
-		transaction_weight : GSPN!GSPNImmediateTransition (
+		transaction_weight : PNML!GSPNImmediateTransition (
 --			id <- 'faults_generate_errors_weight_'+faultsGeneratesError.Name,
 			Priority <- 2,
 			Weight <- faultsGeneratesError.Weight,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_weight_from_fault_propagation_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_from_fault_propagation_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_weight_from_fault_propagation_logic_result_arc: GSPN!GSPNArc (
+		transaction_weight_from_fault_propagation_logic_result_arc: PNML!GSPNArc (
 --				id<-'transaction_weight_from_fault_propagation_logic_result_arc',
 				source<-faultPropagationResult_place,
 				target<-transaction_weight,
@@ -1746,10 +1745,10 @@ abstract rule FaultsGeneratesError {
 				containerPage <- sistema
 		),
 -- Creo l'arco che rimette il token nel risultato di questa espressione logica 
-		transaction_weight_to_fault_propagation_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_to_fault_propagation_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_weight_to_fault_propagation_logic_result_arc: GSPN!GSPNArc (
+		transaction_weight_to_fault_propagation_logic_result_arc: PNML!GSPNArc (
 --				id<-'transaction_weight_to_fault_propagation_logic_result_arc',
 				source<-transaction_weight,
 				target<-faultPropagationResult_place,
@@ -1758,10 +1757,10 @@ abstract rule FaultsGeneratesError {
 				containerPage <- sistema
 		),
 -- Creo l'arco che mette il token nel place che permette l'attivazione (cmq ancora non sicura) degli errori
-		transaction_weight_to_errorsActivation_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_to_errorsActivation_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_weight_to_errorsActivation_arc: GSPN!GSPNArc (
+		transaction_weight_to_errorsActivation_arc: PNML!GSPNArc (
 --				id<-'transaction_weight_to_errorsActivation_arc',
 				source<-transaction_weight,
 				target<-errorsActivation_place,
@@ -1770,10 +1769,10 @@ abstract rule FaultsGeneratesError {
 				containerPage <- sistema
 		),
 -- Creo l'arco che abilita la transizione temporizzata per l'attivazione dell'errore
-		transaction_activationDelay_from_errorsActivation_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_activationDelay_from_errorsActivation_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_activationDelay_from_errorsActivation: GSPN!GSPNArc (
+		transaction_activationDelay_from_errorsActivation: PNML!GSPNArc (
 --				id<-'transaction_activationDelay_from_errorsActivation',
 				source<-errorsActivation_place,
 				target<-faultsGeneratesError.ActivationDelay,
@@ -1782,7 +1781,7 @@ abstract rule FaultsGeneratesError {
 				containerPage <- sistema
 		)
 	do {
-		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+		for(n in PNML!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
 			thisModule.myid <- thisModule.myid + 1;
 			n.id <- 'FaultsGenerateErrors_'+thisModule.myid.toString();
 		}
@@ -1797,14 +1796,14 @@ rule FaultsGeneratesErrorNoManager extends FaultsGeneratesError {
 			(thisModule.faultPropagationManager.get(faultsGeneratesError.PropagationLogicStringFormat)<>faultsGeneratesError)
 		)
 	to
-		propagation_case : GSPN!GSPNImmediateTransition (),
+		propagation_case : PNML!GSPNImmediateTransition (),
 -----------------------------------------------------------------------------------
 -- Creo l'arco che attiva la propagazione solo se c'e' un token nel place active_place
 -----------------------------------------------------------------------------------
-		transaction_weight_from_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_from_active_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_weight_from_active_arc: GSPN!GSPNArc (
+		transaction_weight_from_active_arc: PNML!GSPNArc (
 				id<-'transaction_weight_from_active_arc',
 				source<- thisModule.faultPropagationManager(faultsGeneratesError.PropagationLogicStringFormat),
 				target<-transaction_weight,
@@ -1822,7 +1821,7 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			thisModule.faultPropagationManager.get(faultsGeneratesError.PropagationLogicStringFormat)=faultsGeneratesError
 		)
 	to
-		propagation_case : GSPN!GSPNImmediateTransition (),
+		propagation_case : PNML!GSPNImmediateTransition (),
 --------------------------------------------------------------------------------------------
 -- La regola crea i place e le trasformazioni che consentono di attivare una sola volta la propagazione dai fault all'errore.
 -- Quando il risultato della logica di propagazione viene annullato � permessa la generazione di un nuovo errore
@@ -1830,13 +1829,13 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 --------------------------------------------------------------------------------------------
 -- nel place active la presenza di un token attiva le transizioni per scegliere quale propagazione
 -- deve avvenire
-		active_place_markup : GSPN!PTMarking (
+		active_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		active_place_name : GSPN!Name (
+		active_place_name : PNML!Name (
 				text <- 'active_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name
 		),
-		active_place : GSPN!Place (
+		active_place : PNML!Place (
 				id <- 'faults_generates_errors_active_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				name <- active_place_name,
 				initialMarking <- active_place_markup,
@@ -1844,13 +1843,13 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 		),
 -- questo place � utilizzato a supporto per memorizzare il fatto che il token nel 
 -- place d'attivazione della propagazione � gi� stato messo
-		activated_place_markup : GSPN!PTMarking (
+		activated_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		activated_place_name : GSPN!Name (
+		activated_place_name : PNML!Name (
 				text <- 'activated_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name
 		),
-		activated_place : GSPN!Place (
+		activated_place : PNML!Place (
 				id <- 'faults_generates_errors_activated_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 				name <- activated_place_name,
 				initialMarking <- activated_place_markup,
@@ -1859,16 +1858,16 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 -----------------------------------------------------------------------------------------
 -- quando la logica di propagazione � verificata aggiunge un token in activated e active
 -----------------------------------------------------------------------------------------
-		transaction_t0 : GSPN!GSPNImmediateTransition (
+		transaction_t0 : PNML!GSPNImmediateTransition (
 			id <- 'faults_generates_enabler_t0_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che abilita la transizione se la logica di propagazione � verificata
-		transaction_t0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text<-1
 		),
-		transaction_t0_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_t0_from_logic_result_arc: PNML!GSPNArc (
 			id<-'faults_generates_errors_transaction_t0_from_logic_result_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- faultPropagationResult_place,
 			target <- transaction_t0,
@@ -1878,10 +1877,10 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 		),
 -- Creo l'arco che rimette il token nel risultato della propagazione logica quando la transizione
 -- che notifica l'attivazione scatta
-		transaction_t0_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text<-1
 		),
-		transaction_t0_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_t0_to_logic_result_arc: PNML!GSPNArc (
 			id<-'faults_generates_errors_transaction_t0_to_logic_result_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- transaction_t0,
 			target <- faultPropagationResult_place,
@@ -1890,10 +1889,10 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			containerPage <- sistema
 		),
 -- Creo l'arco che impedisce di rimettere il token in active dopo che la propagazione � avvenuta
-		transaction_t0_from_activated_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_from_activated_arc_annotation : PNML!PTArcAnnotation (
 			text<-1
 		),
-		transaction_t0_from_activated_arc: GSPN!GSPNArc (
+		transaction_t0_from_activated_arc: PNML!GSPNArc (
 			id<-'faults_generates_errors_transaction_t0_from_activated_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- activated_place,
 			target <- transaction_t0,
@@ -1902,10 +1901,10 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			containerPage <- sistema
 		),
 -- Creo l'arco che memorizza l'avvenuta attivazione della propagazione
-		transaction_t0_to_activated_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_to_activated_arc_annotation : PNML!PTArcAnnotation (
 			text<-1
 		),
-		transaction_t0_to_activated_arc: GSPN!GSPNArc (
+		transaction_t0_to_activated_arc: PNML!GSPNArc (
 			id<-'faults_generates_errors_transaction_t0_to_activated_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- transaction_t0,
 			target <- activated_place,
@@ -1914,10 +1913,10 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			containerPage <- sistema
 		),
 -- Creo l'arco attivazione la propagazione
-		transaction_t0_to_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_to_active_arc_annotation : PNML!PTArcAnnotation (
 			text<-1
 		),
-		transaction_t0_to_active_arc: GSPN!GSPNArc (
+		transaction_t0_to_active_arc: PNML!GSPNArc (
 			id<-'faults_generates_errors_transaction_t0_to_active_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- transaction_t0,
 			target <- active_place,
@@ -1929,16 +1928,16 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 -- quando la logica di propagazione non � verificata rimuove un token (se presente) da
 -- activated
 -----------------------------------------------------------------------------------------
-		transaction_t1 : GSPN!GSPNImmediateTransition (
+		transaction_t1 : PNML!GSPNImmediateTransition (
 			id<-'faults_generates_errors_transiction_t1_Reset_activated_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che abilita la transizione se la logica di propagazione NON � verificata
-		transaction_t1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t1_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_t1_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_t1_from_logic_result_arc: PNML!GSPNArc (
 			id<-'faults_generates_errors_transaction_t1_from_logic_result_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- faultPropagationResult_place,
 			target <- transaction_t1,
@@ -1947,10 +1946,10 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token da activated (se presente)
-		transaction_t1_from_activated_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t1_from_activated_arc_annotation : PNML!PTArcAnnotation (
 			text<-1
 		),
-		transaction_t1_from_activated_arc: GSPN!GSPNArc (
+		transaction_t1_from_activated_arc: PNML!GSPNArc (
 			id<-'faults_generates_errors_transaction_t1_from_activated_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- activated_place,
 			target <- transaction_t1,
@@ -1962,16 +1961,16 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 -- quando la logica di propagazione non � verificata rimuove un token (se presente) da
 -- active
 -----------------------------------------------------------------------------------------
-		transaction_t2 : GSPN!GSPNImmediateTransition (
+		transaction_t2 : PNML!GSPNImmediateTransition (
 			id<-'faults_generates_errors_transaction_t2_reset_activate_place_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che abilita la transizione se la logica di propagazione NON � verificata
-		transaction_t2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t2_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text<-1
 		),
-		transaction_t2_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_t2_from_logic_result_arc: PNML!GSPNArc (
 			id<-'faults_generates_errors_transaction_t2_from_logic_result_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- faultPropagationResult_place,
 			target <- transaction_t2,
@@ -1980,10 +1979,10 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token da activated (se presente)
-		transaction_t2_from_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t2_from_active_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_t2_from_active_arc: GSPN!GSPNArc (
+		transaction_t2_from_active_arc: PNML!GSPNArc (
 			id<-'faults_generates_errors_transaction_t2_from_active_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source <- active_place,
 			target <- transaction_t2,
@@ -1994,10 +1993,10 @@ rule FaultsGeneratesErrorManager extends FaultsGeneratesError {
 -----------------------------------------------------------------------------------
 -- Creo l'arco che attiva la propagazione solo se c'e' un token nel place active_place
 -----------------------------------------------------------------------------------
-		transaction_weight_from_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_from_active_arc_annotation : PNML!PTArcAnnotation (
 			text<-1
 		),
-		transaction_weight_from_active_arc: GSPN!GSPNArc (
+		transaction_weight_from_active_arc: PNML!GSPNArc (
 			id<-'faults_generates_errors_transaction_weight_from_active_arc_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name,
 			source<-active_place,
 			target<-transaction_weight,
@@ -2021,10 +2020,10 @@ rule FaultsGeneratesErrorPropagate {
 	}
 	to
 -- Creo l'arco che mette un token nel place associato all'errore
-		propagation_to_error_arc_annotation : GSPN!PTArcAnnotation (
+		propagation_to_error_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		propagation_to_error_arc: GSPN!GSPNArc (
+		propagation_to_error_arc: PNML!GSPNArc (
 				id<-'faults_generate_errors_'+componente.Name+'_faultsGeneratesError_'+faultsGeneratesError.Name+'_to_'+error.Name,
 				source <- faultsGeneratesError,
 				target <- error,
@@ -2052,15 +2051,15 @@ abstract rule ErrorsExpressionNodeToPN {
 	}
 	to
 -- Crea il place per rappresentare il fault esterno del componente
-		logicResult_place : GSPN!Place (
+		logicResult_place : PNML!Place (
 				name <- logicResult_place_name,
 				initialMarking <- logicResult_place_markup,
 				containerPage <- sistema
 		),
-		logicResult_place_markup : GSPN!PTMarking (
+		logicResult_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		logicResult_place_name : GSPN!Name (
+		logicResult_place_name : PNML!Name (
 				text <- 'logicResult_'+componente.Name+'_logic_'+errorPropagation.Name+thisModule.myid
 		)
 	do {
@@ -2075,7 +2074,7 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 --			errorPropagation = errorsExpressionNode.errorPropagation
 --		)
 	to
-		logicResult_place : GSPN!Place (),
+		logicResult_place : PNML!Place (),
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di mettere uno ed un solo token quando la condizione logica � verifica
 -- e di rimuoverlo quando non � pi� verificata
@@ -2083,15 +2082,15 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 -- la riga della tabella di verit� � sempre della forma gate1 & gate2 = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 & 0 = 0
-		transaction_T0 : GSPN!GSPNImmediateTransition (
+		transaction_T0 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T0_from_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T0_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T0,
@@ -2100,10 +2099,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T0_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T0_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T0_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T0,
@@ -2112,10 +2111,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T0_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T0_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T0_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T0,
@@ -2124,10 +2123,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T0_to_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_to_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_to_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T0_to_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T0_to_gate1_place_arc',
 				source <- transaction_T0,
 				target <- errorsExpressionNode.ErrorsExpression1,
@@ -2139,16 +2138,16 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 & 1 = 1
 ----------------------------------------------------------------------------------------
-		transaction_T1 : GSPN!GSPNImmediateTransition (
+		transaction_T1 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione logica
 -- possa essere presente pi� di un token
-		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T1_from_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T1_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T1,
@@ -2158,10 +2157,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 		),
 
 -- Creo l'arco che aggiunge un token nel place del risultato di questa espressione logica
-		transaction_T1_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_T1_to_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T1_to_logic_result_arc',
 				source <- transaction_T1,
 				target <- logicResult_place,
@@ -2170,10 +2169,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T1_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T1_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T1_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T1,
@@ -2182,10 +2181,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T1_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T1_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T1_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T1,
@@ -2194,10 +2193,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T1_to_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_to_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_to_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T1_to_gate1_place_arc',
 				source <- transaction_T1,
 				target <- errorsExpressionNode.ErrorsExpression1,
@@ -2206,10 +2205,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate2  
-		transaction_T1_to_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_to_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T1_to_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T1_to_gate2_place_arc',
 				source <- transaction_T1,
 				target <- errorsExpressionNode.ErrorsExpression2,
@@ -2222,15 +2221,15 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 0 & 1 = 0
 ----------------------------------------------------------------------------------------
-		transaction_T2 : GSPN!GSPNImmediateTransition (
+		transaction_T2 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_T2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T2_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T2_from_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T2_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T2,
@@ -2239,10 +2238,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T2_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T2_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T2_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T2_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T2,
@@ -2251,10 +2250,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T2_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T2_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T2_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T2_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T2,
@@ -2263,10 +2262,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T2_to_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_to_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T2_to_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T2_to_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T2_to_gate2_place_arc',
 				source <- transaction_T2,
 				target <- errorsExpressionNode.ErrorsExpression2,
@@ -2278,15 +2277,15 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 0 & 0 = 0
 ----------------------------------------------------------------------------------------
-		transaction_T3 : GSPN!GSPNImmediateTransition (
+		transaction_T3 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_T3_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T3_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T3_from_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T3_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T3,
@@ -2295,10 +2294,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T3_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T3_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T3_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T3_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T3,
@@ -2307,10 +2306,10 @@ rule ErrorsExpressionAndNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T3_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T3_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T3_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_andnode_transaction_T3_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T3,
@@ -2338,16 +2337,16 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 -- la riga della tabella di verit� � sempre della forma gate1 | gate2 = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 | 0 = 1
-		transaction_T0 : GSPN!GSPNImmediateTransition (
+		transaction_T0 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
 -- possa essere presente pi� di un token
-		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T0_from_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T0_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T0,
@@ -2356,10 +2355,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che aggiunge un token nel risultato di questa espressione
-		transaction_T0_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T0_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_T0_to_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T0_to_logic_result_arc',
 				source <- transaction_T0,
 				target <- logicResult_place,
@@ -2368,10 +2367,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T0_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T0_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T0_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T0_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T0,
@@ -2380,10 +2379,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T0_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T0_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T0_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T0_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T0,
@@ -2392,10 +2391,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T0_to_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_to_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T0_to_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T0_to_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T0_to_gate1_place_arc',
 				source <- transaction_T0,
 				target <- errorsExpressionNode.ErrorsExpression1,
@@ -2407,16 +2406,16 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 1 | 1 = 1
 ----------------------------------------------------------------------------------------
-		transaction_T1 : GSPN!GSPNImmediateTransition (
+		transaction_T1 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione logica
 -- possa essere presente pi� di un token
-		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T1_from_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T1_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T1,
@@ -2426,10 +2425,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 		),
 
 -- Creo l'arco che aggiunge un token nel place del risultato di questa espressione logica
-		transaction_T1_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_T1_to_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T1_to_logic_result_arc',
 				source <- transaction_T1,
 				target <- logicResult_place,
@@ -2438,10 +2437,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T1_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T1_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T1,
@@ -2450,10 +2449,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T1_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T1_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T1_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T1,
@@ -2462,10 +2461,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T1_to_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_to_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_to_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T1_to_gate1_place_arc',
 				source <- transaction_T1,
 				target <- errorsExpressionNode.ErrorsExpression1,
@@ -2474,10 +2473,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate2  
-		transaction_T1_to_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_to_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T1_to_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T1_to_gate2_place_arc',
 				source <- transaction_T1,
 				target <- errorsExpressionNode.ErrorsExpression2,
@@ -2490,16 +2489,16 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 0 | 1 = 1
 ----------------------------------------------------------------------------------------
-		transaction_T2 : GSPN!GSPNImmediateTransition (
+		transaction_T2 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
 -- possa essere presente pi� di un token
-		transaction_T2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T2_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T2_from_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T2_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T2,
@@ -2508,10 +2507,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che aggiunge un token nel risultato di questa espressione
-		transaction_T2_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T2_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_T2_to_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T2_to_logic_result_arc',
 				source <- transaction_T2,
 				target <- logicResult_place,
@@ -2520,10 +2519,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T2_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T2_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T2_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T2_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T2,
@@ -2532,10 +2531,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T2_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T2_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T2_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T2_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T2,
@@ -2544,10 +2543,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T2_to_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T2_to_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T2_to_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T2_to_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T2_to_gate2_place_arc',
 				source <- transaction_T2,
 				target <- errorsExpressionNode.ErrorsExpression2,
@@ -2559,15 +2558,15 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione 0 | 0 = 0
 ----------------------------------------------------------------------------------------
-		transaction_T3 : GSPN!GSPNImmediateTransition (
+		transaction_T3 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_T3_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T3_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T3_from_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T3_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T3,
@@ -2576,10 +2575,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate2  
-		transaction_T3_from_gate2_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_gate2_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T3_from_gate2_place_arc: GSPN!GSPNArc (
+		transaction_T3_from_gate2_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T3_from_gate2_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression2,
 				target <- transaction_T3,
@@ -2588,10 +2587,10 @@ rule ErrorsExpressionOrNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T3_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T3_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T3_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T3_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_ornode_transaction_T3_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression1,
 				target <- transaction_T3,
@@ -2620,16 +2619,16 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 -- la riga della tabella di verit� � sempre della forma ~ gate1  = result
 -------------------------------------------------------------------------------
 -- Creo la transizione per la condizione ~ 0 = 1
-		transaction_T0 : GSPN!GSPNImmediateTransition (
+		transaction_T0 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che inpedisce che nel place del risultato di questa espressione
 -- possa essere presente pi� di un token
-		transaction_T0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T0_from_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_notnode_transaction_T0_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T0,
@@ -2638,10 +2637,10 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che aggiunge un token nel risultato di questa espressione
-		transaction_T0_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T0_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_T0_to_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_notnode_transaction_T0_to_logic_result_arc',
 				source <- transaction_T0,
 				target <- logicResult_place,
@@ -2650,10 +2649,10 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T0_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T0_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T0_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_notnode_transaction_T0_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression,
 				target <- transaction_T0,
@@ -2665,15 +2664,15 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 ----------------------------------------------------------------------------------------
 -- Creo la transizione per la condizione ~ 1 = 0
 ----------------------------------------------------------------------------------------
-		transaction_T1 : GSPN!GSPNImmediateTransition (
+		transaction_T1 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token dal place che rappresenta il risultato dell'espressione
-		transaction_T1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_T1_from_logic_result_arc: PNML!GSPNArc (
 				id<-'errors_notnode_transaction_T1_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_T1,
@@ -2682,10 +2681,10 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per l'input dal place di gate1  
-		transaction_T1_from_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_from_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_from_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_from_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_notnode_transaction_T1_from_gate1_place_arc',
 				source <- errorsExpressionNode.ErrorsExpression,
 				target <- transaction_T1,
@@ -2694,10 +2693,10 @@ rule ErrorsExpressionNotNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che per reintrodurre il place in gate1  
-		transaction_T1_to_gate1_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T1_to_gate1_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_T1_to_gate1_place_arc: GSPN!GSPNArc (
+		transaction_T1_to_gate1_place_arc: PNML!GSPNArc (
 				id<-'errors_notnode_transaction_T1_to_gate1_place_arc',
 				source <- transaction_T1,
 				target <- errorsExpressionNode.ErrorsExpression,
@@ -2719,21 +2718,21 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 --			errorPropagation = errorsExpressionNode.errorPropagation
 --		)
 	to
-		logicResult_place : GSPN!Place(),
+		logicResult_place : PNML!Place(),
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di mettere uno ed un solo token quando si verifica l'errore
 -------------------------------------------------------------------------------
 -- Creo la transizione che preleva il token dal place che evidenzia il fault
-		transaction_to_evidence : GSPN!GSPNImmediateTransition (
+		transaction_to_evidence : PNML!GSPNImmediateTransition (
 --			id <- 'errors_error_transaction_to_evidence',
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che mette il token nel risultato di questa espressione logica 
-		transaction_to_evidence_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_evidence_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_to_evidence_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_to_evidence_to_logic_result_arc: PNML!GSPNArc (
 				source <- transaction_to_evidence,
 				target <- logicResult_place,
 				type<-#normal,
@@ -2741,10 +2740,10 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- Creo l'arco che rimette il token nel place che evidenzia il fault 
-		transaction_to_evidence_to_faulty_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_evidence_to_faulty_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_to_evidence_to_faulty_place_arc: GSPN!GSPNArc (
+		transaction_to_evidence_to_faulty_place_arc: PNML!GSPNArc (
 	--			id<-'errors_error_transaction_to_evidence_to_faulty_place_arc',
 				source <- transaction_to_evidence,
 				target <- errorsExpressionNode.Error,
@@ -2753,10 +2752,10 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- (condizione necessaria) nel place dell'errore deve esserci almeno un token  
-		transaction_to_evidence_from_faulty_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_evidence_from_faulty_place_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_to_evidence_from_faulty_place_arc: GSPN!GSPNArc (
+		transaction_to_evidence_from_faulty_place_arc: PNML!GSPNArc (
 	--			id<-'errors_error_transaction_to_evidence_from_faulty_place_arc',
 				source <- errorsExpressionNode.Error,
 				target <- transaction_to_evidence,
@@ -2765,10 +2764,10 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 				containerPage <- sistema
 		),
 -- (condizione necessaria) nel place della valutazione logica non deve esserci nessun token  
-		transaction_to_evidence_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_to_evidence_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_to_evidence_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_to_evidence_from_logic_result_arc: PNML!GSPNArc (
 	--			id<-'errors_error_transaction_to_evidence_from_logic_result_arc',
 				source <- logicResult_place,
 				target <- transaction_to_evidence,
@@ -2779,11 +2778,11 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 -------------------------------------------------------------------------------
 -- la transizione che seguono si occupano di rimuovere un token dalla logica quando l'errore scompare
 -------------------------------------------------------------------------------
-		transition_errornode_false : GSPN!GSPNImmediateTransition (
+		transition_errornode_false : PNML!GSPNImmediateTransition (
 			containerPage <- sistema			
 		),
-		transition_errornode_false_from_error_ins : GSPN!PTArcAnnotation ( text <- 1 ),
-		transition_errornode_false_from_error : GSPN!GSPNArc (
+		transition_errornode_false_from_error_ins : PNML!PTArcAnnotation ( text <- 1 ),
+		transition_errornode_false_from_error : PNML!GSPNArc (
 	--		id <- 'errornode_false_from_error',
 			source <- errorsExpressionNode.Error,
 			target <- transition_errornode_false,
@@ -2791,8 +2790,8 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 			inscription <- transition_errornode_false_from_error_ins,
 			containerPage <- sistema
 		),
-		transition_errornode_false_from_result_ins : GSPN!PTArcAnnotation ( text <- 1 ),
-		transition_errornode_false_from_result : GSPN!GSPNArc (
+		transition_errornode_false_from_result_ins : PNML!PTArcAnnotation ( text <- 1 ),
+		transition_errornode_false_from_result : PNML!GSPNArc (
 	--		id <- 'errornode_false_from_result',
 			source <- logicResult_place,
 			target <- transition_errornode_false,
@@ -2800,15 +2799,15 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 			inscription <- transition_errornode_false_from_result_ins,
 			containerPage <- sistema
 		)
---		transaction_remove_evidence : GSPN!GSPNImmediateTransition (
+--		transaction_remove_evidence : PNML!GSPNImmediateTransition (
 --			Priority <- 2,
 --			containerPage <- sistema
 --		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
---		transaction_remove_evidence_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+--		transaction_remove_evidence_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 --				text <- 1
 --		),
---		transaction_remove_evidence_from_logic_result_arc: GSPN!GSPNArc (
+--		transaction_remove_evidence_from_logic_result_arc: PNML!GSPNArc (
 --				id<-'errors_error_transaction_remove_evidence_from_logic_result_arc',
 --				source <- logicResult_place,
 --				target <- transaction_remove_evidence,
@@ -2818,10 +2817,10 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 --		),
 -- Creo l'arco inibitore che attiva permette di rimuovere il token dal risultato di questa espressione
 -- logica se nn ci sono faults 
---		transaction_remove_evidence_from_faulty_place_arc_annotation : GSPN!PTArcAnnotation (
+--		transaction_remove_evidence_from_faulty_place_arc_annotation : PNML!PTArcAnnotation (
 --				text <- 1
 --		),
---		transaction_remove_evidence_from_faulty_place_arc: GSPN!GSPNArc (
+--		transaction_remove_evidence_from_faulty_place_arc: PNML!GSPNArc (
 --				id<-'errors_error_transaction_remove_evidence_from_faulty_place_arc',
 --				source <- errorsExpressionNode.Error,
 --				target <- transaction_to_evidence,
@@ -2832,7 +2831,7 @@ rule ErrorsExpressionErrorNodeToPN extends ErrorsExpressionNodeToPN {
 		
 	do {
 		--ERRORNODE
-		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+		for(n in PNML!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
 			thisModule.myid <- thisModule.myid + 1;
 			n.id <- 'ErrorsExpressionErrorNodeToPN_'+thisModule.myid.toString();
 		}
@@ -2852,14 +2851,14 @@ abstract rule InternalPropagation {
 	{
 		componente : IM2!Component = internalPropagation.Component;
 		sistema : IM2!Sistema = componente.intermediateModel;
-		internalPropagationResult_place : GSPN!Place = thisModule.getErrorPropagationLogic(internalPropagation);
+		internalPropagationResult_place : PNML!Place = thisModule.getErrorPropagationLogic(internalPropagation);
 	}
 	to
 --------------------------------------------------------------------------------------------
 -- in relazione alle figura faultGeneratesErrors_from_uml_to_idm
 --------------------------------------------------------------------------------------------
 -- Crea case per la generazione dell'errore
-		propagation_case : GSPN!GSPNImmediateTransition (
+		propagation_case : PNML!GSPNImmediateTransition (
 --			id <- 'internal_propagation_'+componente.Name+'_'+internalPropagation.Name+'_propagation',
 			Priority <- 1,
 			Weight <- internalPropagation.PropagationProbability,
@@ -2868,13 +2867,13 @@ abstract rule InternalPropagation {
 		
 
 -- place di comodo per abilitare o non abilitare la propagazione
-		tmp_propagation_place_markup : GSPN!PTMarking (
+		tmp_propagation_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		tmp_propagation_place_name : GSPN!Name (
+		tmp_propagation_place_name : PNML!Name (
 				text <- 'tmp_propagation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name
 		),
-		tmp_propagation_place : GSPN!Place (
+		tmp_propagation_place : PNML!Place (
 --				id <- 'tmp_propagation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				name <- tmp_propagation_place_name,
 				initialMarking <- tmp_propagation_place_markup,
@@ -2882,10 +2881,10 @@ abstract rule InternalPropagation {
 		),
 		
 -- Creo l'arco che aggiunge un token in tmp_propagation e abilita la scelta tra propagare e non propagare l'errore 
-		from_propagationdelay_to_tmp_propagation_arc_annotation : GSPN!PTArcAnnotation (
+		from_propagationdelay_to_tmp_propagation_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		from_propagationdelay_to_tmp_propagation_arc: GSPN!GSPNArc (
+		from_propagationdelay_to_tmp_propagation_arc: PNML!GSPNArc (
 --			id <- 'internalPropagation_from_propagationdelay_to_tmp_propagation_arc_annotation_'+componente.Name+'_'+internalPropagation.Name,
 			source <- internalPropagation.PropagationDelay,
 			target <- tmp_propagation_place,
@@ -2895,10 +2894,10 @@ abstract rule InternalPropagation {
 		),
 		
 -- Creo l'arco che rimuove il token da tmp_propagation e esegue la propagazione 
-		from_tmp_propagation_to_propagate_case_arc_annotation : GSPN!PTArcAnnotation (
+		from_tmp_propagation_to_propagate_case_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		from_tmp_propagation_to_propagate_case_arc: GSPN!GSPNArc (
+		from_tmp_propagation_to_propagate_case_arc: PNML!GSPNArc (
 	--		id <- 'internalPropagation_from_tmp_propagation_to_propagate_case_arc_'+componente.Name+'_'+internalPropagation.Name,
 			source <- tmp_propagation_place,
 			target <- propagation_case,
@@ -2908,10 +2907,10 @@ abstract rule InternalPropagation {
 		),
 		
 -- Creo l'arco che rimuove il token da tmp_propagation e non esegue la propagazione 
-		from_tmp_propagation_to_not_propagate_case_arc_annotation : GSPN!PTArcAnnotation (
+		from_tmp_propagation_to_not_propagate_case_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		from_tmp_propagation_to_not_propagate_case_arc: GSPN!GSPNArc (
+		from_tmp_propagation_to_not_propagate_case_arc: PNML!GSPNArc (
 --			id <- 'internalPropagation_from_tmp_propagation_to_not_propagate_case_arc_'+componente.Name+'_'+internalPropagation.Name,
 			source <- tmp_propagation_place,
 			target <- not_propagation_case,
@@ -2920,7 +2919,7 @@ abstract rule InternalPropagation {
 			containerPage <- sistema
 		),
 		
-		not_propagation_case : GSPN!GSPNImmediateTransition (
+		not_propagation_case : PNML!GSPNImmediateTransition (
 --			id <- 'internal_propagation_'+componente.Name+'_'+internalPropagation.Name+'_not_propagation',
 			Priority <- 1,
 			Weight <- 1-internalPropagation.PropagationProbability,
@@ -2928,13 +2927,13 @@ abstract rule InternalPropagation {
 		),
 		
 -- place per l'attivazione della generazione dell'errore
-		errorsActivation_place_markup : GSPN!PTMarking (
+		errorsActivation_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		errorsActivation_place_name : GSPN!Name (
+		errorsActivation_place_name : PNML!Name (
 				text <- 'errorsActivation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name
 		),
-		errorsActivation_place : GSPN!Place (
+		errorsActivation_place : PNML!Place (
 --				id <- 'errorsActivation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				name <- errorsActivation_place_name,
 				initialMarking <- errorsActivation_place_markup,
@@ -2942,16 +2941,16 @@ abstract rule InternalPropagation {
 		),
 -- la transizione che, nel caso di pi� errori possono essere attivati dalla stessa logica di propagazione,
 -- consente di scegliere quale errore viene generato
-		transaction_weight : GSPN!GSPNImmediateTransition (
+		transaction_weight : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			Weight <- internalPropagation.Weight,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_weight_from_internal_propagation_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_from_internal_propagation_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_weight_from_internal_propagation_logic_result_arc: GSPN!GSPNArc (
+		transaction_weight_from_internal_propagation_logic_result_arc: PNML!GSPNArc (
 	--			id<-'internal_propagation_transiction_weight_from_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- internalPropagationResult_place,
 				target <- transaction_weight,
@@ -2960,10 +2959,10 @@ abstract rule InternalPropagation {
 				containerPage <- sistema
 		),
 -- Creo l'arco che rimette  il token nel risultato di questa espressione logica 
-		transaction_weight_to_internal_propagation_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_to_internal_propagation_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_weight_to_internal_propagation_logic_result_arc: GSPN!GSPNArc (
+		transaction_weight_to_internal_propagation_logic_result_arc: PNML!GSPNArc (
 --				id<-'internal_propagation_transiction_weight_to_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- transaction_weight,
 				target <- internalPropagationResult_place,
@@ -2972,10 +2971,10 @@ abstract rule InternalPropagation {
 				containerPage <- sistema
 		),
 -- Creo l'arco che mette il token nel place che permette l'attivazione (cmq ancora non sicura) degli errori
-		transaction_weight_to_errorsActivation_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_to_errorsActivation_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_weight_to_errorsActivation_arc: GSPN!GSPNArc (
+		transaction_weight_to_errorsActivation_arc: PNML!GSPNArc (
 --				id<-'internal_propagation_transiction_weight_to_errors_activation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- transaction_weight,
 				target <- errorsActivation_place,
@@ -2984,10 +2983,10 @@ abstract rule InternalPropagation {
 				containerPage <- sistema
 		),
 -- Creo l'arco che abilita la transizione temporizzata per l'attivazione dell'errore
-		transaction_activationDelay_from_errorsActivation_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_activationDelay_from_errorsActivation_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_activationDelay_from_errorsActivation: GSPN!GSPNArc (
+		transaction_activationDelay_from_errorsActivation: PNML!GSPNArc (
 --				id<-'internal_propagation_transiction_weight_from_errors_activation_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				source <- errorsActivation_place,
 				target <- internalPropagation.PropagationDelay,
@@ -2996,7 +2995,7 @@ abstract rule InternalPropagation {
 				containerPage <- sistema
 		)
 	do {
-		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+		for(n in PNML!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
 			thisModule.myid <- thisModule.myid + 1;
 			n.id <- 'InternalPropagation_'+thisModule.myid.toString();
 		}
@@ -3010,14 +3009,14 @@ rule InternalPropagationNoManager extends InternalPropagation {
 			not (thisModule.errorPropagationManager(internalPropagation.PropagationLogicStringFormat)=internalPropagation)
 		)
 	to
-		propagation_case : GSPN!GSPNImmediateTransition (),
+		propagation_case : PNML!GSPNImmediateTransition (),
 -----------------------------------------------------------------------------------
 -- Creo l'arco che attiva la propagazione solo se c'e' un token nel place active_place
 -----------------------------------------------------------------------------------
-		transaction_weight_from_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_from_active_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_weight_from_active_arc: GSPN!GSPNArc (
+		transaction_weight_from_active_arc: PNML!GSPNArc (
 				source <- thisModule.resolveTemp(thisModule.errorPropagationManager(internalPropagation.PropagationLogicStringFormat), 'active_place'),
 				target <- transaction_weight,
 				type<-#normal,
@@ -3033,7 +3032,7 @@ rule InternalPropagationManager extends InternalPropagation {
 			thisModule.errorPropagationManager(internalPropagation.PropagationLogicStringFormat)=internalPropagation
 		)
 	to
-		propagation_case : GSPN!GSPNImmediateTransition (),
+		propagation_case : PNML!GSPNImmediateTransition (),
 --------------------------------------------------------------------------------------------
 -- La regola crea i place e le trasformazioni che consentono di attivare una sola volta la propagazione dai fault all'errore.
 -- Quando il risultato della logica di propagazione viene annullato � permessa la generazione di un nuovo errore
@@ -3041,13 +3040,13 @@ rule InternalPropagationManager extends InternalPropagation {
 --------------------------------------------------------------------------------------------
 -- nel place active la presenza di un token attiva le transizioni per scegliere quale propagazione
 -- deve avvenire
-		active_place_markup : GSPN!PTMarking (
+		active_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		active_place_name : GSPN!Name (
+		active_place_name : PNML!Name (
 				text <- 'internal_propagation_active_'+componente.Name+'_internalPropagation_'+internalPropagation.Name
 		),
-		active_place : GSPN!Place (
+		active_place : PNML!Place (
 				id <- 'internal_propagation_active_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				name <- active_place_name,
 				initialMarking <- active_place_markup,
@@ -3055,13 +3054,13 @@ rule InternalPropagationManager extends InternalPropagation {
 		),
 -- questo place � utilizzato a supporto per memorizzare il fatto che il token nel 
 -- place d'attivazione della propagazione � gi� stato messo
-		activated_place_markup : GSPN!PTMarking (
+		activated_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		activated_place_name : GSPN!Name (
+		activated_place_name : PNML!Name (
 				text <- 'internal_propagation_activated_'+componente.Name+'_internalPropagation_'+internalPropagation.Name
 		),
-		activated_place : GSPN!Place (
+		activated_place : PNML!Place (
 				id <- 'internal_propagation_activated_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 				name <- activated_place_name,
 				initialMarking <- activated_place_markup,
@@ -3070,15 +3069,15 @@ rule InternalPropagationManager extends InternalPropagation {
 -----------------------------------------------------------------------------------------
 -- quando la logica di propagazione � verificata aggiunge un token in activated e active
 -----------------------------------------------------------------------------------------
-		transaction_t0 : GSPN!GSPNImmediateTransition (
+		transaction_t0 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- thisModule.getPage(sistema)
 		),
 -- Creo l'arco che abilita la transizione se la logica di propagazione � verificata
-		transaction_t0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t0_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_t0_from_logic_result_arc: PNML!GSPNArc (
 			id<-'internal_propagation_transiction_t0_from_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- internalPropagationResult_place,
 			target <- transaction_t0,
@@ -3088,10 +3087,10 @@ rule InternalPropagationManager extends InternalPropagation {
 		),
 -- Creo l'arco che rimette il token nel risultato della propagazione logica quando la transizione
 -- che notifica l'attivazione scatta
-		transaction_t0_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t0_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_t0_to_logic_result_arc: PNML!GSPNArc (
 			id<-'internal_propagation_transiction_t0_to_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- transaction_t0,
 			target <- internalPropagationResult_place,
@@ -3100,10 +3099,10 @@ rule InternalPropagationManager extends InternalPropagation {
 			containerPage <- sistema
 		),
 -- Creo l'arco che impedisce di rimettere il token in active dopo che la propagazione � avvenuta
-		transaction_t0_from_activated_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_from_activated_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t0_from_activated_arc: GSPN!GSPNArc (
+		transaction_t0_from_activated_arc: PNML!GSPNArc (
 			id<-'internal_propagation_transiction_t0_from_activated_arc_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- activated_place,
 			target <- transaction_t0,
@@ -3112,10 +3111,10 @@ rule InternalPropagationManager extends InternalPropagation {
 			containerPage <- sistema
 		),
 -- Creo l'arco che memorizza l'avvenuta attivazione della propagazione
-		transaction_t0_to_activated_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_to_activated_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t0_to_activated_arc: GSPN!GSPNArc (
+		transaction_t0_to_activated_arc: PNML!GSPNArc (
 			id<-'internal_propagation_transiction_t0_to_activated_arc_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- transaction_t0,
 			target <- activated_place,
@@ -3124,10 +3123,10 @@ rule InternalPropagationManager extends InternalPropagation {
 			containerPage <- sistema
 		),
 -- Creo l'arco attivazione la propagazione
-		transaction_t0_to_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_to_active_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t0_to_active_arc: GSPN!GSPNArc (
+		transaction_t0_to_active_arc: PNML!GSPNArc (
 			id<-'internal_propagation_transiction_t0_to_active_arc_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- transaction_t0,
 			target <- active_place,
@@ -3139,15 +3138,15 @@ rule InternalPropagationManager extends InternalPropagation {
 -- quando la logica di propagazione non � verificata rimuove un token (se presente) da
 -- activated
 -----------------------------------------------------------------------------------------
-		transaction_t1 : GSPN!GSPNImmediateTransition (
+		transaction_t1 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che abilita la transizione se la logica di propagazione NON � verificata
-		transaction_t1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t1_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t1_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_t1_from_logic_result_arc: PNML!GSPNArc (
 			id<-'internal_propagation_transiction_t1_from_logic_result_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- internalPropagationResult_place,
 			target <- transaction_t1,
@@ -3156,10 +3155,10 @@ rule InternalPropagationManager extends InternalPropagation {
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token da activated (se presente)
-		transaction_t1_from_activated_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t1_from_activated_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t1_from_activated_arc: GSPN!GSPNArc (
+		transaction_t1_from_activated_arc: PNML!GSPNArc (
 			id<-'internal_propagation_transiction_r1-from_activated_arc_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- activated_place,
 			target <- transaction_t1,
@@ -3171,15 +3170,15 @@ rule InternalPropagationManager extends InternalPropagation {
 -- quando la logica di propagazione non � verificata rimuove un token (se presente) da
 -- active
 -----------------------------------------------------------------------------------------
-		transaction_t2 : GSPN!GSPNImmediateTransition (
+		transaction_t2 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che abilita la transizione se la logica di propagazione NON � verificata
-		transaction_t2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t2_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t2_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_t2_from_logic_result_arc: PNML!GSPNArc (
 			id<-'internal_propagation_transiction_t2_from_logic_result_arc_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- internalPropagationResult_place,
 			target <- transaction_t2,
@@ -3188,10 +3187,10 @@ rule InternalPropagationManager extends InternalPropagation {
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token da activated (se presente)
-		transaction_t2_from_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t2_from_active_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t2_from_active_arc: GSPN!GSPNArc (
+		transaction_t2_from_active_arc: PNML!GSPNArc (
 			id<-'internal_propagation_transiction_t2_from_active_arc_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- active_place,
 			target <- transaction_t2,
@@ -3202,10 +3201,10 @@ rule InternalPropagationManager extends InternalPropagation {
 -----------------------------------------------------------------------------------
 -- Creo l'arco che attiva la propagazione solo se c'e' un token nel place active_place
 -----------------------------------------------------------------------------------
-		transaction_weight_from_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_from_active_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_weight_from_active_arc: GSPN!GSPNArc (
+		transaction_weight_from_active_arc: PNML!GSPNArc (
 			id<-'internal_propagation_transiction_weight_from_active_'+componente.Name+'_internalPropagation_'+internalPropagation.Name,
 			source <- active_place,
 			target <- transaction_weight,
@@ -3229,10 +3228,10 @@ rule InternalPropagationPropagate {
 	}
 	to
 -- Creo l'arco che mette un token nel place associato all'errore
-		propagation_to_error_arc_annotation : GSPN!PTArcAnnotation (
+		propagation_to_error_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		propagation_to_error_arc: GSPN!GSPNArc (
+		propagation_to_error_arc: PNML!GSPNArc (
 				source<-internalPropagation,
 				target<-Error,
 				type<-#normal,
@@ -3249,7 +3248,7 @@ abstract rule ErrorsProducesFailures {
 	{
 		componente : IM2!Component = errorsProducesFailures.Component;
 		sistema : IM2!Sistema = componente.intermediateModel;
-		errorPropagationResult_place : GSPN!Place = thisModule.getErrorPropagationLogic(errorsProducesFailures);
+		errorPropagationResult_place : PNML!Place = thisModule.getErrorPropagationLogic(errorsProducesFailures);
 	}
 	to
 --------------------------------------------------------------------------------------------
@@ -3257,7 +3256,7 @@ abstract rule ErrorsProducesFailures {
 --------------------------------------------------------------------------------------------
 
 -- Crea case per la generazione dell'errore
-		propagation_case : GSPN!GSPNImmediateTransition (
+		propagation_case : PNML!GSPNImmediateTransition (
 --			id <- 'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_propagation',
 			Priority <- 1,
 			Weight <- errorsProducesFailures.PropagationProbability,
@@ -3265,13 +3264,13 @@ abstract rule ErrorsProducesFailures {
 		),
 		
 -- place per l'attivazione della generazione del fallimento
-		tmp_propagation_place_markup : GSPN!PTMarking (
+		tmp_propagation_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		tmp_propagation_place_name : GSPN!Name (
+		tmp_propagation_place_name : PNML!Name (
 				text <- 'tmp_propagation_'+componente.Name+'_errors_produces_failures_'+errorsProducesFailures.Name
 		),
-		tmp_propagation_place : GSPN!Place (
+		tmp_propagation_place : PNML!Place (
 --				id <- 'tmp_propagation_'+componente.Name+'_errors_produces_failures_'+errorsProducesFailures.Name,
 				name <- tmp_propagation_place_name,
 				initialMarking <- tmp_propagation_place_markup,
@@ -3280,10 +3279,10 @@ abstract rule ErrorsProducesFailures {
 
 -- Creo l'arco che aggiunge un token in tmp_propagation e che permette di eseguire la generazione del fault o di
 -- eseguire la "non generare"
-		from_propagationdelay_to_tmp_propagation_arc_annotation : GSPN!PTArcAnnotation (
+		from_propagationdelay_to_tmp_propagation_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		from_propagationdelay_to_tmp_propagation_arc: GSPN!GSPNArc (
+		from_propagationdelay_to_tmp_propagation_arc: PNML!GSPNArc (
 --				id<-'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_from_propagationdelay_to_tmp_propagation_arc',
 				source <- errorsProducesFailures.PropagationDelay,
 				target <- tmp_propagation_place,
@@ -3293,10 +3292,10 @@ abstract rule ErrorsProducesFailures {
 		),
 		
 -- Creo l'arco che rimuove il token eseguendo la gnerazione del fault 
-		from_tmp_propagation_to_propagate_arc_annotation : GSPN!PTArcAnnotation (
+		from_tmp_propagation_to_propagate_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		from_tmp_propagation_to_propagate_arc: GSPN!GSPNArc (
+		from_tmp_propagation_to_propagate_arc: PNML!GSPNArc (
 --				id<-'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_from_tmp_propagation_to_propagate_arc',
 				source <- tmp_propagation_place,
 				target <- propagation_case,
@@ -3306,10 +3305,10 @@ abstract rule ErrorsProducesFailures {
 		),
 
 -- Creo l'arco che rimuove il token eseguendo la "non generazione del fault" 
-		from_tmp_propagation_to_not_propagate_arc_annotation : GSPN!PTArcAnnotation (
+		from_tmp_propagation_to_not_propagate_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		from_tmp_propagation_to_not_propagate_arc: GSPN!GSPNArc (
+		from_tmp_propagation_to_not_propagate_arc: PNML!GSPNArc (
 --				id<-'errors_produces_failures_from_tmp_propagation_to_not_propagate_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 				source <- tmp_propagation_place,
 				target <- not_propagation_case,
@@ -3319,7 +3318,7 @@ abstract rule ErrorsProducesFailures {
 		),
 		
 -- Crea case per la generazione dell'errore
-		not_propagation_case : GSPN!GSPNImmediateTransition (
+		not_propagation_case : PNML!GSPNImmediateTransition (
 --			id<-'errors_produces_failures_not_propagation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			Priority <- 1,
 			Weight <- 1-errorsProducesFailures.PropagationProbability,
@@ -3327,13 +3326,13 @@ abstract rule ErrorsProducesFailures {
 		),
 		
 -- place per l'attivazione della generazione del fallimento
-		errorsActivation_place_markup : GSPN!PTMarking (
+		errorsActivation_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		errorsActivation_place_name : GSPN!Name (
+		errorsActivation_place_name : PNML!Name (
 				text <- 'errorsActivation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name
 		),
-		errorsActivation_place : GSPN!Place (
+		errorsActivation_place : PNML!Place (
 --				id <- 'errorsActivation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 				name <- errorsActivation_place_name,
 				initialMarking <- errorsActivation_place_markup,
@@ -3341,16 +3340,16 @@ abstract rule ErrorsProducesFailures {
 		),
 -- la transizione che, nel caso di pi� errori possono essere attivati dalla stessa logica di propagazione,
 -- consente di scegliere quale errore viene generato
-		transaction_weight : GSPN!GSPNImmediateTransition (
+		transaction_weight : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			Weight <- errorsProducesFailures.Weight,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
-		transaction_weight_from_error_propagation_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_from_error_propagation_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_weight_from_error_propagation_logic_result_arc: GSPN!GSPNArc (
+		transaction_weight_from_error_propagation_logic_result_arc: PNML!GSPNArc (
 --			id<-'errors_produces_failures_transition_weight_from_error_logic_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- errorPropagationResult_place,
 			target <- transaction_weight,
@@ -3359,10 +3358,10 @@ abstract rule ErrorsProducesFailures {
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimette il token nel risultato di questa espressione logica 
-		transaction_weight_to_error_propagation_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_to_error_propagation_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_weight_to_error_propagation_logic_result_arc: GSPN!GSPNArc (
+		transaction_weight_to_error_propagation_logic_result_arc: PNML!GSPNArc (
 --			id<-'errors_produces_failures_transition_weight_to_error_logic_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_weight,
 			target <- errorPropagationResult_place,
@@ -3371,10 +3370,10 @@ abstract rule ErrorsProducesFailures {
 			containerPage <- sistema
 		),
 -- Creo l'arco che mette il token nel place che permette l'attivazione (cmq ancora non sicura) degli errori
-		transaction_weight_to_errorsActivation_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_to_errorsActivation_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_weight_to_errorsActivation_arc: GSPN!GSPNArc (
+		transaction_weight_to_errorsActivation_arc: PNML!GSPNArc (
 --			id<-'errors_produces_failures_transition_weight_to_errors_activation_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_weight,
 			target <- errorsActivation_place,
@@ -3383,10 +3382,10 @@ abstract rule ErrorsProducesFailures {
 			containerPage <- sistema
 		),
 -- Creo l'arco che abilita la transizione temporizzata per l'attivazione dell'errore
-		transaction_activationDelay_from_errorsActivation_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_activationDelay_from_errorsActivation_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_activationDelay_from_errorsActivation: GSPN!GSPNArc (
+		transaction_activationDelay_from_errorsActivation: PNML!GSPNArc (
 --			id<-'errors_produces_failures_transition_activationDelay_from_errorsActivation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- errorsActivation_place,
 			target <- errorsProducesFailures.PropagationDelay,
@@ -3395,7 +3394,7 @@ abstract rule ErrorsProducesFailures {
 			containerPage <- sistema
 		)
 	do {
-		for(n in GSPN!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
+		for(n in PNML!PnObject.allInstances()->select(i | i.id.oclIsUndefined())) {
 			thisModule.myid <- thisModule.myid + 1;
 			n.id <- 'ErrorsProduceFailures_'+thisModule.myid.toString();
 		}
@@ -3409,14 +3408,14 @@ rule ErrorsProducesFailuresNoManager extends ErrorsProducesFailures {
 			(thisModule.errorPropagationManager.get(errorsProducesFailures.PropagationLogicStringFormat)<>errorsProducesFailures)
 		)
 	to
-		propagation_case : GSPN!GSPNImmediateTransition (),
+		propagation_case : PNML!GSPNImmediateTransition (),
 -----------------------------------------------------------------------------------
 -- Creo l'arco che attiva la propagazione solo se c'e' un token nel place active_place
 -----------------------------------------------------------------------------------
-		transaction_weight_from_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_from_active_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_weight_from_active_arc: GSPN!GSPNArc (
+		transaction_weight_from_active_arc: PNML!GSPNArc (
 --				id<-'ErrorsProducesFailuresNoManager_transaction_weight_from_active_arc',
 				source <- thisModule.resolveTemp(thisModule.errorPropagationManager(errorsProducesFailures.PropagationLogicStringFormat), 'active_place'),
 				target <- transaction_weight,
@@ -3433,7 +3432,7 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			(thisModule.errorPropagationManager.get(errorsProducesFailures.PropagationLogicStringFormat)=errorsProducesFailures)
 		)
 	to
-		propagation_case : GSPN!GSPNImmediateTransition (),
+		propagation_case : PNML!GSPNImmediateTransition (),
 --------------------------------------------------------------------------------------------
 -- La regola crea i place e le trasformazioni che consentono di attivare una sola volta la propagazione dai fault all'errore.
 -- Quando il risultato della logica di propagazione viene annullato � permessa la generazione di un nuovo errore
@@ -3441,13 +3440,13 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 --------------------------------------------------------------------------------------------
 -- nel place active la presenza di un token attiva le transizioni per scegliere quale propagazione
 -- deve avvenire
-		active_place_markup : GSPN!PTMarking (
+		active_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		active_place_name : GSPN!Name (
+		active_place_name : PNML!Name (
 				text <- 'active_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name
 		),
-		active_place : GSPN!Place (
+		active_place : PNML!Place (
 --				id <- 'active_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 				name <- active_place_name,
 				initialMarking <- active_place_markup,
@@ -3455,13 +3454,13 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 		),
 -- questo place � utilizzato a supporto per memorizzare il fatto che il token nel 
 -- place d'attivazione della propagazione � gi� stato messo
-		activated_place_markup : GSPN!PTMarking (
+		activated_place_markup : PNML!PTMarking (
 				text <- 0
 		),
-		activated_place_name : GSPN!Name (
+		activated_place_name : PNML!Name (
 				text <- 'activated_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name
 		),
-		activated_place : GSPN!Place (
+		activated_place : PNML!Place (
 --				id <- 'activated_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 				name <- activated_place_name,
 				initialMarking <- activated_place_markup,
@@ -3470,15 +3469,15 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 -----------------------------------------------------------------------------------------
 -- quando la logica di propagazione � verificata aggiunge un token in activated e active
 -----------------------------------------------------------------------------------------
-		transaction_t0 : GSPN!GSPNImmediateTransition (
+		transaction_t0 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che abilita la transizione se la logica di propagazione � verificata
-		transaction_t0_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		transaction_t0_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_t0_from_logic_result_arc: PNML!GSPNArc (
 				source <- errorPropagationResult_place,
 				target <- transaction_t0,
 				type<-#normal,
@@ -3487,10 +3486,10 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 		),
 -- Creo l'arco che rimette il token nel risultato della propagazione logica quando la transizione
 -- che notifica l'attivazione scatta
-		transaction_t0_to_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_to_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t0_to_logic_result_arc: GSPN!GSPNArc (
+		transaction_t0_to_logic_result_arc: PNML!GSPNArc (
 			id<-'errors_produces_failures_transition_t0_to_error_logic_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_t0,
 			target <- errorPropagationResult_place,
@@ -3499,10 +3498,10 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			containerPage <- sistema
 		),
 -- Creo l'arco che impedisce di rimettere il token in active dopo che la propagazione � avvenuta
-		transaction_t0_from_activated_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_from_activated_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t0_from_activated_arc: GSPN!GSPNArc (
+		transaction_t0_from_activated_arc: PNML!GSPNArc (
 			id<-'errors_produces_failures_transition_t0_from_activated_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- activated_place,
 			target <- transaction_t0,
@@ -3511,10 +3510,10 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			containerPage <- sistema
 		),
 -- Creo l'arco che memorizza l'avvenuta attivazione della propagazione
-		transaction_t0_to_activated_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_to_activated_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t0_to_activated_arc: GSPN!GSPNArc (
+		transaction_t0_to_activated_arc: PNML!GSPNArc (
 			id<-'errors_produces_failures_transition_t0_to_activated_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_t0,
 			target <- activated_place,
@@ -3523,10 +3522,10 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			containerPage <- sistema
 		),
 -- Creo l'arco attivazione la propagazione
-		transaction_t0_to_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t0_to_active_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t0_to_active_arc: GSPN!GSPNArc (
+		transaction_t0_to_active_arc: PNML!GSPNArc (
 			id<-'errors_produces_failures_transition_t0_to_activate_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- transaction_t0,
 			target <- active_place,
@@ -3538,15 +3537,15 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 -- quando la logica di propagazione non � verificata rimuove un token (se presente) da
 -- activated
 -----------------------------------------------------------------------------------------
-		transaction_t1 : GSPN!GSPNImmediateTransition (
+		transaction_t1 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- thisModule.getPage(sistema)
 		),
 -- Creo l'arco che abilita la transizione se la logica di propagazione NON � verificata
-		transaction_t1_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t1_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t1_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_t1_from_logic_result_arc: PNML!GSPNArc (
 			id<-'errors_produces_failures_transition_t1_from_logic_result_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- errorPropagationResult_place,
 			target <- transaction_t1,
@@ -3555,10 +3554,10 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token da activated (se presente)
-		transaction_t1_from_activated_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t1_from_activated_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t1_from_activated_arc: GSPN!GSPNArc (
+		transaction_t1_from_activated_arc: PNML!GSPNArc (
 			id<-'errors_produces_failures_transition_t1_from_activated_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- activated_place,
 			target <- transaction_t1,
@@ -3570,15 +3569,15 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 -- quando la logica di propagazione non � verificata rimuove un token (se presente) da
 -- active
 -----------------------------------------------------------------------------------------
-		transaction_t2 : GSPN!GSPNImmediateTransition (
+		transaction_t2 : PNML!GSPNImmediateTransition (
 			Priority <- 2,
 			containerPage <- sistema
 		),
 -- Creo l'arco che abilita la transizione se la logica di propagazione NON � verificata
-		transaction_t2_from_logic_result_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t2_from_logic_result_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t2_from_logic_result_arc: GSPN!GSPNArc (
+		transaction_t2_from_logic_result_arc: PNML!GSPNArc (
 			id<-'errors_produces_failures_transition_t2_from_logic_result_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- errorPropagationResult_place,
 			target <- transaction_t2,
@@ -3587,10 +3586,10 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token da activated (se presente)
-		transaction_t2_from_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_t2_from_active_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_t2_from_active_arc: GSPN!GSPNArc (
+		transaction_t2_from_active_arc: PNML!GSPNArc (
 			id<-'errors_produces_failures_transition_t2_from_active_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- active_place,
 			target <- transaction_t2,
@@ -3601,10 +3600,10 @@ rule ErrorsProducesFailuresManager extends ErrorsProducesFailures {
 -----------------------------------------------------------------------------------
 -- Creo l'arco che attiva la propagazione solo se c'e' un token nel place active_place
 -----------------------------------------------------------------------------------
-		transaction_weight_from_active_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_weight_from_active_arc_annotation : PNML!PTArcAnnotation (
 			text <- 1
 		),
-		transaction_weight_from_active_arc: GSPN!GSPNArc (
+		transaction_weight_from_active_arc: PNML!GSPNArc (
 			id<-'errors_produces_failures_transition_weight_from_active_arc_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			source <- active_place,
 			target <- transaction_weight,
@@ -3628,10 +3627,10 @@ rule ErrorsProducesFailuresPropagate {
 	}
 	to
 -- Creo l'arco che mette un token nel place associato al modo di fallimento
-		propagation_to_failure_arc_annotation : GSPN!PTArcAnnotation (
+		propagation_to_failure_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		propagation_to_failure_arc: GSPN!GSPNArc (
+		propagation_to_failure_arc: PNML!GSPNArc (
 				id<-'ErrorsProducesFailuresPropagate_propagation_to_failure_arc',
 				source <- errorsProducesFailures,
 				target <- failureMode,
@@ -3640,10 +3639,10 @@ rule ErrorsProducesFailuresPropagate {
 				containerPage <- sistema
 		),
 -- Creo l'arco che mette un token nel place che indica il fallimento della componente
-		propagation_to_failed_arc_annotation : GSPN!PTArcAnnotation (
+		propagation_to_failed_arc_annotation : PNML!PTArcAnnotation (
 				text <- 1
 		),
-		propagation_to_failed_arc: GSPN!GSPNArc (
+		propagation_to_failed_arc: PNML!GSPNArc (
 				id<-'ErrorsProducesFailuresPropagate_propagation_to_failed_arc',
 				source <- errorsProducesFailures,
 				target <- componente,
@@ -3666,7 +3665,7 @@ rule ErrorsProducesFailuresPropagate {
 lazy rule removeTokenOnFailed {
 	from
 		componente : IM2!Component,
-		place : GSPN!Place,
+		place : PNML!Place,
 		name : String,
 		failed_place : GPSN!Place
 	using {
@@ -3674,16 +3673,16 @@ lazy rule removeTokenOnFailed {
 	}
 	to
 -- Creo la transizione che rimuove i token da faulty_place
-		transaction_remove_token_from_faulty_place : GSPN!GSPNImmediateTransition (
+		transaction_remove_token_from_faulty_place : PNML!GSPNImmediateTransition (
 			id <- 'remove_tokens_on_failing_component_'+componente.Name+'_FROM_'+place.id,
 			Priority <- 2,
 			containerPage <- componente.intermediateModel
 		),
 -- Creo l'arco entrante che rimuove un token alla volta da faulty_place
-		transaction_remove_token_from_faulty_place_from_faulty_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_remove_token_from_faulty_place_from_faulty_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_remove_token_from_faulty_place_from_faulty_place_arc: GSPN!GSPNArc (
+		transaction_remove_token_from_faulty_place_from_faulty_place_arc: PNML!GSPNArc (
 				id<-'remove_token_from_'+place.id+'_'+componente.Name+'_'+name,
 				source<-place,
 				target<-transaction_remove_token_from_faulty_place,
@@ -3692,10 +3691,10 @@ lazy rule removeTokenOnFailed {
 				containerPage<-sistema
 		),
 -- Creo l'arco che abilita il reset dello del place faulty_place
-		transaction_remove_token_from_faulty_place_from_failed_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_remove_token_from_faulty_place_from_failed_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_remove_token_from_faulty_place_from_failed_place_arc: GSPN!GSPNArc (
+		transaction_remove_token_from_faulty_place_from_failed_place_arc: PNML!GSPNArc (
 				id<-'remove_token_from_'+place.id+'_'+componente.Name+'_'+name+'_from_failed_place',
 				source<-failed_place,
 				target<-transaction_remove_token_from_faulty_place,
@@ -3704,10 +3703,10 @@ lazy rule removeTokenOnFailed {
 				containerPage<-sistema
 		),
 -- Creo l'arco che rimette il token in failed_place dopo aver tolto un token da faulty-place
-		transaction_remove_token_from_faulty_place_to_failed_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_remove_token_from_faulty_place_to_failed_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_remove_token_from_faulty_place_to_failed_place_arc: GSPN!GSPNArc (
+		transaction_remove_token_from_faulty_place_to_failed_place_arc: PNML!GSPNArc (
 				id<-'remove_token_from_'+place.id+'_'+componente.Name+'_'+name+'_to_failed_place',
 				source<-transaction_remove_token_from_faulty_place,
 				target<-failed_place,
@@ -3724,10 +3723,10 @@ lazy rule executeActiviyIfComponentNotFailed {
 			activity.Component<>OclUndefined
 		)
 	to 
-		transaction_T0_from_failed_place_arc_annotation : GSPN!PTArcAnnotation (
+		transaction_T0_from_failed_place_arc_annotation : PNML!PTArcAnnotation (
 				text<-1
 		),
-		transaction_T0_from_failed_place_arc: GSPN!GSPNArc (
+		transaction_T0_from_failed_place_arc: PNML!GSPNArc (
 				source <- activity.Component,
 				target <- activity.When,
 				type <- #inhibitor,
@@ -3741,42 +3740,42 @@ rule InstantOfTime {
 	from
 		idm_instant : IM2!InstantOfTime
 	to
-		evaltype : MOI!InstantOfTime 
+		evaltype : PNML!InstantOfTime 
 		(
-			instant <- thisModule.newVariableExpression(MOI!Variable.allInstances()->select(v | v.name = 'Time').first())
+			instant <- thisModule.newVariableExpression(PNML!Variable.allInstances()->select(v | v.name = 'Time').first())
 		)
 }
 rule IntervalOfTime {
 	from
 		idm_interval : IM2!IntervalOfTime
 	to
-		evaltype : MOI!IntervalOfTimeCumulated
+		evaltype : PNML!IntervalOfTimeCumulated
 		(
 			intervalBegin <- thisModule.newValueExpression(idm_interval.begin),
-			intervalEnd <- thisModule.newVariableExpression(MOI!Variable.allInstances()->select(v | v.name = 'Time').first())
+			intervalEnd <- thisModule.newVariableExpression(PNML!Variable.allInstances()->select(v | v.name = 'Time').first())
 		)
 }
 rule MeasureToRewardFunction {
 	from 
 		idm_measure : IM2!DependabilityMeasure
 	using {
-		mexp : OrderedSet(MOI!MarkingExpression) = OrderedSet{};
-		tmp : MOI!OpSum = OclUndefined; 
+		mexp : OrderedSet(PNML!MarkingExpression) = OrderedSet{};
+		tmp : PNML!OpSum = OclUndefined; 
 	}
 	to
-		measure : MOI!Measure
+		measure : PNML!Measure
 		(
 			name <- idm_measure.Name,
 			evaluationType <- idm_measure.evaluations.asSequence().first(),
 			rewardFunction <- ite
 		),
-		ite : MOI!IfThenElse
+		ite : PNML!IfThenElse
 		(
 			condition <- cond,
 			ifTrue <- thisModule.newValueExpression(1),
 			ifFalse <- thisModule.newValueExpression(0)
 		),
-		cond : MOI!OpEqual
+		cond : PNML!OpEqual
 		(
 			expression2 <- thisModule.newValueExpression(0)
 			
@@ -3803,9 +3802,9 @@ rule MeasureToRewardFunction {
 
 lazy rule newVariableExpression {
 	from 
-		var : MOI!Variable
+		var : PNML!Variable
 	to
-		vexp : MOI!VariableExpression
+		vexp : PNML!VariableExpression
 		(
 			variable <- var
 		)
@@ -3814,21 +3813,21 @@ lazy rule newValueExpression {
 	from
 		v : Real
 	to
-		vexpr : MOI!ValueExpression ( value <- v )
+		vexpr : PNML!ValueExpression ( value <- v )
 }
 lazy rule newMarkingExpression {
 	from 
 		f : IM2!FailureMode
 	to
-		m : MOI!MarkingExpression
+		m : PNML!MarkingExpression
 		(
-			placeID <- thisModule.resolveTemp(f, 'failureMode_place').id
+			place <- thisModule.resolveTemp(f, 'failureMode_place')
 		)
 }
-rule newOpSum( e1 : MOI!ArithmeticExpression, e2 : MOI!ArithmeticExpression) { 
+rule newOpSum( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) { 
 --rule newOpSum() {
 	to
-		sum : MOI!OpSum
+		sum : PNML!OpSum
 		(
 			expression1 <- e1,
 			expression2 <- e2

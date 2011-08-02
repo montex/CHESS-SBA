@@ -1,5 +1,4 @@
 -- @path PNML=CHESSReviewDemo/metamodels/placeTransition.ecore
--- @path MOI=CHESSReviewDemo/metamodels/measures.ecore
 
 query PNML2DEEM_query = PNML!PetriNet.allInstances()->
 	collect(x | x.toString().writeTo('CHESSReviewDemo/models/model'));
@@ -9,9 +8,9 @@ helper context PNML!PetriNet def: toString():String =
 	'NET:"'+self.id+'",2000,2000;\n'+
 	'COLORS:White,Black,Black,Black,Black,Black;\n'
 	+'\n'+
-	MOI!Variable.allInstances()->iterate(i; acc:String=''| acc + i.toString())
+	PNML!Variable.allInstances()->iterate(i; acc:String=''| acc + i.toString())
 	+'\n'+
-	MOI!Study.allInstances()->iterate(i; acc:String=''| acc + i.toString())
+	PNML!Study.allInstances()->iterate(i; acc:String=''| acc + i.toString())
 	+'\n'+
 	PNML!Place.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
 	'\n'+
@@ -19,7 +18,7 @@ helper context PNML!PetriNet def: toString():String =
 	'\n'+
 	PNML!GSPNArc.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
 	'\n'+
-	MOI!Measure.allInstances()->iterate(i; acc:String=''| acc + i.toString() + '\n')
+	PNML!Measure.allInstances()->iterate(i; acc:String=''| acc + i.toString() + '\n')
 	+'\n';
 	
 helper context PNML!Place def: toString(): String =
@@ -138,16 +137,16 @@ helper context PNML!GSPNArc def: toString(): String =
 		+'),1;\n'		
 	endif;
 
-helper context MOI!ValueExpression def: toString(): String = self.value.toString();
+helper context PNML!ValueExpression def: toString(): String = self.value.toString();
 
-helper context MOI!OpSum def: toString(): String = self.expression1.toString() + '+' + self.expression2.toString();
+helper context PNML!OpSum def: toString(): String = self.expression1.toString() + '+' + self.expression2.toString();
 
-helper context MOI!IfThenElse def: toString(): String =
+helper context PNML!IfThenElse def: toString(): String =
 	'IF('+self.condition.toString()+')THEN('+self.ifTrue.toString()+')ELSE('+self.ifFalse.toString()+')';
 
-helper context MOI!MarkingExpression def: toString(): String = 'MARK('+self.placeID+')';
+helper context PNML!MarkingExpression def: toString(): String = 'MARK('+self.place.id+')';
 
-helper context MOI!Study def: toString(): String =
+helper context PNML!Study def: toString(): String =
 	'STUDY:"'+self.name+'"'+	
 	self.vars.asOrderedSet()->iterate(
 		i; acc:String=''| acc + ',1,"{'+
@@ -156,19 +155,19 @@ helper context MOI!Study def: toString(): String =
 	)
 	+';\n';
 	
-helper context MOI!VariableValues def: toString(): String =
+helper context PNML!VariableValues def: toString(): String =
 	self.values.asOrderedSet().first().toString()+
 	self.values.asOrderedSet().subOrderedSet(2, self.values.size()) ->iterate(
 		i; acc:String=''| acc + ',' + i.toString()
 	)
 	;
 	
-helper context MOI!Variable def: toString(): String = 
+helper context PNML!Variable def: toString(): String = 
  	'VARIABLE:"'+self.name+'","Real";\n';
  	
-helper context MOI!Measure def:toString(): String =
+helper context PNML!Measure def:toString(): String =
 	'RES_FUNC:"'+self.name+'",\''+self.rewardFunction.toString()+'\',0;';
 	
-helper context MOI!OpEqual def: toString(): String = self.expression1.toString() + '=' + self.expression2.toString();
+helper context PNML!OpEqual def: toString(): String = self.expression1.toString() + '=' + self.expression2.toString();
 
 
