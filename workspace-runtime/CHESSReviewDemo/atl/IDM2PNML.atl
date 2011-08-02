@@ -446,7 +446,7 @@ rule ComponentInternalFault {
 		permanent_fault_case : GSPN!GSPNImmediateTransition (
 			id <- 'internal_fault_'+componente.Name+'_'+fault.Name+'_permanent_fault',
 			Priority <- 1,
-			Probability<-fault.PermanentProbability,
+			Weight <-fault.PermanentProbability,
 			containerPage<-thisModule.getPage(sistema)
 		),
 
@@ -467,7 +467,7 @@ rule ComponentInternalFault {
 		transient_fault_case : GSPN!GSPNImmediateTransition (
 			id <- 'internal_fault_'+componente.Name+'_'+fault.Name+'_transient_fault',
 			Priority <- 1,
-			Probability<-1- fault.PermanentProbability,
+			Weight <- 1-fault.PermanentProbability,
 			containerPage<-thisModule.getPage(sistema)
 		),
 
@@ -1644,7 +1644,7 @@ abstract rule FaultsGeneratesError {
 		propagation_case : GSPN!GSPNImmediateTransition (
 --			id <- 'faults_generates_error_'+componente.Name+'_'+faultsGeneratesError.Name+'_propagation',
 			Priority <- 1,
-			Probability <- faultsGeneratesError.PropagationProbability,
+			Weight <- faultsGeneratesError.PropagationProbability,
 			containerPage<-sistema
 		),
 		
@@ -1707,7 +1707,7 @@ abstract rule FaultsGeneratesError {
 		not_propagation_case : GSPN!GSPNImmediateTransition (
 --			id <- 'faults_generates_error_'+componente.Name+'_'+faultsGeneratesError.Name+'_not_propagation',
 			Priority <- 1,
-			Probability <- 1-faultsGeneratesError.PropagationProbability,
+			Weight <- 1-faultsGeneratesError.PropagationProbability,
 			containerPage<-sistema
 		),
 		
@@ -1730,7 +1730,7 @@ abstract rule FaultsGeneratesError {
 		transaction_weight : GSPN!GSPNImmediateTransition (
 --			id <- 'faults_generate_errors_weight_'+faultsGeneratesError.Name,
 			Priority <- 2,
-			Probability <- faultsGeneratesError.Weight,
+			Weight <- faultsGeneratesError.Weight,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
@@ -2862,7 +2862,7 @@ abstract rule InternalPropagation {
 		propagation_case : GSPN!GSPNImmediateTransition (
 --			id <- 'internal_propagation_'+componente.Name+'_'+internalPropagation.Name+'_propagation',
 			Priority <- 1,
-			Probability <- internalPropagation.PropagationProbability,
+			Weight <- internalPropagation.PropagationProbability,
 			containerPage<-thisModule.getPage(sistema)
 		),
 		
@@ -2923,7 +2923,7 @@ abstract rule InternalPropagation {
 		not_propagation_case : GSPN!GSPNImmediateTransition (
 --			id <- 'internal_propagation_'+componente.Name+'_'+internalPropagation.Name+'_not_propagation',
 			Priority <- 1,
-			Probability <- 1-internalPropagation.PropagationProbability,
+			Weight <- 1-internalPropagation.PropagationProbability,
 			containerPage<-thisModule.getPage(sistema)
 		),
 		
@@ -2944,7 +2944,7 @@ abstract rule InternalPropagation {
 -- consente di scegliere quale errore viene generato
 		transaction_weight : GSPN!GSPNImmediateTransition (
 			Priority <- 2,
-			Probability <- internalPropagation.Weight,
+			Weight <- internalPropagation.Weight,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 
@@ -3260,7 +3260,7 @@ abstract rule ErrorsProducesFailures {
 		propagation_case : GSPN!GSPNImmediateTransition (
 --			id <- 'errors_produces_failures_'+componente.Name+'_'+errorsProducesFailures.Name+'_propagation',
 			Priority <- 1,
-			Probability <- errorsProducesFailures.PropagationProbability,
+			Weight <- errorsProducesFailures.PropagationProbability,
 			containerPage<-sistema
 		),
 		
@@ -3322,7 +3322,7 @@ abstract rule ErrorsProducesFailures {
 		not_propagation_case : GSPN!GSPNImmediateTransition (
 --			id<-'errors_produces_failures_not_propagation_'+componente.Name+'_errorsProducesFailures_'+errorsProducesFailures.Name,
 			Priority <- 1,
-			Probability <- 1-errorsProducesFailures.PropagationProbability,
+			Weight <- 1-errorsProducesFailures.PropagationProbability,
 			containerPage<-sistema
 		),
 		
@@ -3343,7 +3343,7 @@ abstract rule ErrorsProducesFailures {
 -- consente di scegliere quale errore viene generato
 		transaction_weight : GSPN!GSPNImmediateTransition (
 			Priority <- 2,
-			Probability <- errorsProducesFailures.Weight,
+			Weight <- errorsProducesFailures.Weight,
 			containerPage <- sistema
 		),
 -- Creo l'arco che rimuove il token nel risultato di questa espressione logica 

@@ -333,8 +333,8 @@
         changeable="false" eOpposite="#//ToolInfo/toolInfoModel"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GSPNTransition" eSuperTypes="#//Transition">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="Cases" upperBound="-1"
-        eType="#//Case" containment="true" eOpposite="#//Case/Transition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Guard" eType="#//LogicalExpression"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="GSPNTransitionType">
     <eLiterals name="immediate"/>
@@ -347,11 +347,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="GSPNArc" eSuperTypes="#//Arc">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//GSPNArcType"
         defaultValueLiteral="0"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="MultiplicityFunction" eType="#//ArithmeticExpression"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GSPNImmediateTransition" eSuperTypes="#//GSPNTransition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Priority" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Probability" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Weight" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble" defaultValueLiteral="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GSPNTimedTransition" eSuperTypes="#//GSPNTransition">
@@ -362,7 +364,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Probability" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Transition" lowerBound="1"
-        eType="#//GSPNTransition" eOpposite="#//GSPNTransition/Cases"/>
+        eType="#//GSPNTransition"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Distribution" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Deterministic" eSuperTypes="#//Distribution">
@@ -387,5 +389,51 @@
   <eClassifiers xsi:type="ecore:EClass" name="Weibull" eSuperTypes="#//Distribution">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Alpha" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Beta" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueExpression" eSuperTypes="#//ArithmeticExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MarkingExpression" eSuperTypes="#//ArithmeticExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="placeID" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArithmeticExpression" abstract="true"
+      eSuperTypes="#//Expression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ArithmeticBinaryOperator" abstract="true"
+      eSuperTypes="#//ArithmeticExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression1" lowerBound="1"
+        eType="#//ArithmeticExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression2" lowerBound="1"
+        eType="#//ArithmeticExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OpSum" eSuperTypes="#//ArithmeticBinaryOperator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OpMinus" eSuperTypes="#//ArithmeticBinaryOperator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OpMultiply" eSuperTypes="#//ArithmeticBinaryOperator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OpDivide" eSuperTypes="#//ArithmeticBinaryOperator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IfThenElse" eSuperTypes="#//ArithmeticExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
+        eType="#//LogicalExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ifTrue" lowerBound="1"
+        eType="#//ArithmeticExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ifFalse" lowerBound="1"
+        eType="#//ArithmeticExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalExpression" abstract="true" eSuperTypes="#//Expression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalBinaryOperator" abstract="true"
+      eSuperTypes="#//LogicalExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression1" lowerBound="1"
+        eType="#//ArithmeticExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression2" lowerBound="1"
+        eType="#//ArithmeticExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OpEqual" eSuperTypes="#//LogicalBinaryOperator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OpGreater" eSuperTypes="#//LogicalBinaryOperator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OpLess" eSuperTypes="#//LogicalBinaryOperator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OpGreaterEqual" eSuperTypes="#//LogicalBinaryOperator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OpLessEqual" eSuperTypes="#//LogicalBinaryOperator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OpNot" eSuperTypes="#//LogicalExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+        eType="#//LogicalExpression" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

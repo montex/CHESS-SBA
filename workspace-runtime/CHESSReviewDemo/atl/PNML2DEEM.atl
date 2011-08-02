@@ -32,12 +32,12 @@ helper context PNML!Place def: toString(): String =
 helper context PNML!GSPNImmediateTransition def: toString(): String = 
 --	'TRANS:"'+self.Name+'",1500,1500,V,Immediate,'+self.Priority+',0,\'\', \'\',\n'+
 	if(self.nodegraphics.oclIsUndefined()) then
-    	'TRANS:"'+self.id+'",1500,1500,V,Immediate,1,1,\'\', \''+self.Probability+'\',\n'
+    	'TRANS:"'+self.id+'",1500,1500,V,Immediate,1,1,\'\', \''+self.Weight+'\',\n'
 	else
-		'TRANS:"'+self.id+'",'+self.nodegraphics.position.x+','+self.nodegraphics.position.y+',V,Immediate,1,1,\'\', \''+self.Probability+'\',\n'
+		'TRANS:"'+self.id+'",'+self.nodegraphics.position.x+','+self.nodegraphics.position.y+',V,Immediate,1,1,\'\', \''+self.Weight+'\',\n'
 	endif+
     ' (\n'+
-    self.Probability +
+    self.Weight +
     '\n' +
     '  );\n';
     
@@ -48,7 +48,9 @@ helper context PNML!GSPNTimedTransition def: toString(): String =
 		'TRANS:"'+self.id+'",'+self.nodegraphics.position.x+','+self.nodegraphics.position.y+',V,Timed,1,'
 	endif+
 	self.Distribution.getCode()+
-	',\'\', \''+self.Distribution.paramSequence()->first()+'\',\n'+
+	',\''+
+	if(self.Guard.oclIsUndefined()) then '' else self.Guard.toString() endif
+	+'\', \''+self.Distribution.paramSequence()->first()+'\',\n'+
     ' (\n'+
     '1.000000e+00\n' +
     '  '+self.Distribution.paramSequence().subSequence(2, self.Distribution.paramSequence().size())->iterate(i; acc : String = '' |
@@ -61,7 +63,7 @@ helper context PNML!GSPNTimedTransition def: toString(): String =
 	    '\''+i.toString()+'\''
 	)+'\n'+
     '  );\n';
-
+    
 helper context PNML!Distribution def: getCode(): String = 
 	if self.oclIsTypeOf(PNML!Deterministic) then
 		'0'
@@ -97,13 +99,13 @@ helper context PNML!GSPNArc def: toString(): String =
 	--Input Arc / Inhibitor Arc
 		if self.type = #inhibitor then
 			--Inhibitor Arc
-			'OARC:"'+self.source.id+'","'+self.target.id+'",1,2,\'\',\n'
+			'OARC:"'+self.source.id+'","'+self.target.id+'",1,2,\''
 		else
 			--Input Arc
-			'IARC:"'+self.source.id+'","'+self.target.id+'",1,0,\'\',\n'
+			'IARC:"'+self.source.id+'","'+self.target.id+'",1,0,\''
 		endif
-		
-		+' ('+
+		+if(self.MultiplicityFunction.oclIsUndefined()) then '' else self.MultiplicityFunction.toString() endif		
+		+'\',\n ('+
 		if self.source.nodegraphics.oclIsUndefined() then
 			'1500,1500'
 		else
@@ -118,7 +120,9 @@ helper context PNML!GSPNArc def: toString(): String =
 		+'),1;\n'
 	else
 	--Output Arc
-		'OARC:"'+self.target.id+'","'+self.source.id+'",1,1,\'\',\n'+
+		'OARC:"'+self.target.id+'","'+self.source.id+'",1,1,\''+
+		if(self.MultiplicityFunction.oclIsUndefined()) then '' else self.MultiplicityFunction.toString() endif
+		+'\',\n'+
 		' ('+
 		if self.target.nodegraphics.oclIsUndefined() then
 			'1500,1500'
