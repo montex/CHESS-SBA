@@ -360,12 +360,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="Distribution" lowerBound="1"
         eType="#//Distribution" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Case" eSuperTypes="#//Node">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Probability" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="Transition" lowerBound="1"
-        eType="#//GSPNTransition"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Distribution" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Deterministic" eSuperTypes="#//Distribution">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
