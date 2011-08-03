@@ -5,7 +5,9 @@ module IDM2PNML;
 create OUT : PNML from IN : IDM;
 
 helper def: trCount : Integer = 1;
+helper def: placeCount : Integer = 1;
 helper def: arcCount : Integer = 1;
+helper def: otherCount : Integer = 1;
 helper def: timePoints : OrderedSet(Real) = OrderedSet{};
 
 helper def: getPage : PNML!Page = IDM!Sistema.allInstances()->first();
@@ -20,7 +22,8 @@ rule Sistema {
 		),
 		net: PNML!PetriNet (
 			id <-  s.Name,
-			pages <- Sequence{pp}
+			pages <- Sequence{pp},
+			type <- #GSPN
 		),
 		doc: PNML!PetriNetDoc (
 			nets <- Sequence{net}
@@ -60,6 +63,10 @@ rule ImmediateTransition {
 			Priority <- 1,
 			containerPage <- thisModule.getPage
 		)
+	do { 
+		tr.id <- 'T' + thisModule.trCount + 'Immediate';
+		thisModule.trCount <- thisModule.trCount + 1;
+	}
 }
 rule DeterministicTransition {
 	from
@@ -75,6 +82,10 @@ rule DeterministicTransition {
 		d : PNML!Deterministic (
 			Value <- dist.Value
 		)
+	do { 
+		tr.id <- 'T' + thisModule.trCount + 'Deterministic';
+		thisModule.trCount <- thisModule.trCount + 1;
+	}
 }
 abstract rule TimedTransition {
 	from
@@ -84,8 +95,12 @@ abstract rule TimedTransition {
 		)
 	to
 		tr : PNML!GSPNTimedTransition (
-			containerPage <- thisModule.getPage	
+			containerPage <- thisModule.getPage,
+			id <- 'T' + thisModule.trCount + 'Timed'
 		)
+	do { 
+		thisModule.trCount <- thisModule.trCount + 1;
+	}
 }
 rule ExponentialTransition extends TimedTransition {
 	from
@@ -150,7 +165,12 @@ rule WeibullTransition extends TimedTransition {
 rule InternalFault {
 	from 
 		ft : IDM!InternalFault
+	using {
+		fo : PNML!Transition = ft.Occurrence;
+		td : PNML!Transition = ft.TransientDuration;
+	}
 	to
+		--Place
 		faulty : PNML!Place (
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.getPTMarking(0),
@@ -160,10 +180,106 @@ rule InternalFault {
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.getPTMarking(0),
 			id <- ft.Name + '_transient'	
-		)
+		),
+		tmpfaulty : PNML!Place (
+			containerPage <- thisModule.getPage,
+			initialMarking <- thisModule.getPTMarking(0),
+			id <- ft.Name + '_tmp'			
+		),
 		
+		--Transizioni (in aggiunta a quelle create automaticamente per FO e TD)
+		casepermanent : PNML!GSPNImmediateTransition (
+			containerPage <- thisModule.getPage,
+			id <- ft.Name + '_caseperm',
+			Priority <- 1,
+			Weight <- ft.PermanentProbability
+		),
+		casetransient : PNML!GSPNImmediateTransition (
+			containerPage <- thisModule.getPage,
+			id <- ft.Name + '_casetrans',
+			Priority <- 1,
+			Weight <- (1 - ft.PermanentProbability)
+		),		
+		
+		--Archi
+		totmp : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- fo,
+			target <- tmpfaulty,
+			id <- ft.Name + '_totmp'
+		),
+			--Permanent Fault
+		tmp_to_permcase : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- tmpfaulty,
+			target <- casepermanent,
+			id <- ft.Name + '_tmp_to_permcase'	
+		),
+		permcase_to_faulty : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- casepermanent,
+			target <- faulty,
+			id <- ft.Name + '_permcase_to_faulty'
+		),
+			--Transient Fault
+		tmp_to_transcase : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- tmpfaulty,
+			target <- casetransient,
+			id <- ft.Name + '_tmp_to_transcase'	
+		),
+		transcase_to_faulty : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- casetransient,
+			target <- faulty,
+			id <- ft.Name + '_transcase_to_faulty'				
+		),
+		transcase_to_transient : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- casetransient,
+			target <- transient,
+			id <- ft.Name + '_transcase_to_transient'				
+		)
+	do {
+		thisModule.makeUniqueID(faulty);
+		thisModule.makeUniqueID(transient);
+		thisModule.makeUniqueID(tmpfaulty);
+		
+		thisModule.makeUniqueID(casepermanent);
+		thisModule.makeUniqueID(casetransient);
+		
+		thisModule.makeUniqueID(totmp);
+		thisModule.makeUniqueID(tmp_to_permcase);
+		thisModule.makeUniqueID(permcase_to_faulty);
+		thisModule.makeUniqueID(tmp_to_transcase);
+		thisModule.makeUniqueID(transcase_to_faulty);
+		thisModule.makeUniqueID(transcase_to_transient);
+	}
 }
 
+--Crea un ID unico per Place, Transizioni e Archi, aggiungendo un numero progressivo all'ID attuale
+rule makeUniqueID(obj : PNML!PnObject) {
+	do {
+		if(obj.oclIsKindOf(PNML!Transition)) {
+			obj.id <- 'T' + thisModule.trCount.toString() + '_' + obj.id;
+			thisModule.trCount <- thisModule.trCount + 1;
+		}
+		else if(obj.oclIsKindOf(PNML!Place)) {
+			obj.id <- 'P' + thisModule.placeCount.toString() + '_' + obj.id;
+			thisModule.placeCount <- thisModule.placeCount + 1;
+		}
+		else if(obj.oclIsKindOf(PNML!Arc)) {
+			obj.id <- 'A' + thisModule.arcCount.toString() + '_' + obj.id;
+			thisModule.arcCount <- thisModule.arcCount + 1;
+		}
+		else {
+			obj.id <- 'O' + thisModule.otherCount.toString() + '_' + obj.id;
+			thisModule.otherCount <- thisModule.otherCount + 1;
+		}		
+	}
+}
+
+--Crea un oggeto PTMarking a partire da un numero intero
 lazy rule getPTMarking {
 	from
 		v : Integer
