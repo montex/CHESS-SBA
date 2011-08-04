@@ -51,124 +51,18 @@ rule Sistema {
 	}
 }
 
--- Crea le transizioni basandomi sulle distribuzioni utilizzate
-rule ImmediateTransition {
-	from
-		dist : IDM!Deterministic
-		(
-			dist.Value = 0
-		)
-	to
-		tr : PNML!GSPNImmediateTransition (
-			Priority <- 1,
-			containerPage <- thisModule.getPage
-		)
-	do { 
-		tr.id <- 'T' + thisModule.trCount + 'Immediate';
-		thisModule.trCount <- thisModule.trCount + 1;
-	}
-}
-rule DeterministicTransition {
-	from
-		dist : IDM!Deterministic
-		(
-			dist.Value > 0
-		)
-	to
-		tr : PNML!GSPNTimedTransition (
-			Distribution <- d,
-			containerPage <- thisModule.getPage
-		),
-		d : PNML!Deterministic (
-			Value <- dist.Value
-		)
-	do { 
-		tr.id <- 'T' + thisModule.trCount + 'Deterministic';
-		thisModule.trCount <- thisModule.trCount + 1;
-	}
-}
-abstract rule TimedTransition {
-	from
-		dist : IDM!Distribution
-		(
-			not dist.oclIsTypeOf(IDM!Deterministic)	
-		)
-	to
-		tr : PNML!GSPNTimedTransition (
-			containerPage <- thisModule.getPage,
-			id <- 'T' + thisModule.trCount + 'Timed'
-		)
-	do { 
-		thisModule.trCount <- thisModule.trCount + 1;
-	}
-}
-rule ExponentialTransition extends TimedTransition {
-	from
-		dist: IDM!Exponential
-	to
-		tr : PNML!GSPNTimedTransition (
-			Distribution <- ee
-		),
-		ee : PNML!Exponential (
-			Rate <- dist.Rate 
-		)
-}
-rule GaussianTransition extends TimedTransition {
-	from
-		dist : IDM!Gaussian
-	to
-		tr : PNML!GSPNTimedTransition (
-			Distribution <- gg
-		),
-		gg : PNML!Gaussian (
-			Mean <- dist.Mean,
-			Variance <- dist.Variance
-		)
-}
-rule UniformTransition extends TimedTransition {
-	from
-		dist : IDM!Uniform
-	to
-		tr : PNML!GSPNTimedTransition (
-			Distribution <- uu
-		),
-		uu : PNML!Uniform (
-			Lower <- dist.Lower,
-			Upper <- dist.Upper
-		)
-}
-rule GammaTransition extends TimedTransition {
-	from
-		dist : IDM!Gamma
-	to
-		tr : PNML!GSPNTimedTransition (
-			Distribution <- gg
-		),
-		gg : PNML!Gamma (
-			Alpha <- dist.Alpha,
-			Beta <- dist.Beta
-		)
-}
-rule WeibullTransition extends TimedTransition {
-	from
-		dist : IDM!Weibull
-	to
-		tr : PNML!GSPNTimedTransition (
-			Distribution <- ww
-		),
-		ww : PNML!Weibull (
-			Alpha <- dist.Alpha,
-			Beta <- dist.Beta
-		)
-}
+-- Crea le distribuzioni
+rule Exponential { from e : IDM!Exponential to ee : PNML!Exponential ( Rate <- e.Rate ) }
+rule Deterministic { from d : IDM!Deterministic to dd : PNML!Deterministic ( Value <- d.Value ) }
+rule Uniform { from u : IDM!Uniform to uu : PNML!Uniform ( Lower <- u.Lower, Upper <- u.Upper ) }
+rule Gaussian { from g : IDM!Gaussian to gg : PNML!Gaussian ( Mean <- g.Mean, Variance <- g.Variance ) }
+rule Gamma { from g : IDM!Gamma to gg : PNML!Gamma ( Alpha <- g.Alpha, Beta <- g.Beta ) }
+rule Weibull { from w : IDM!Weibull to ww : PNML!Weibull ( Alpha <- w.Alpha, Beta <- w.Beta ) }
 
-rule InternalFault {
+-- Regole per InternalFault
+abstract rule InternalFault {
 	from 
 		ft : IDM!InternalFault
-	using {
-		fo : PNML!Transition = ft.Occurrence;
-		td : PNML!Transition = ft.TransientDuration;
-	}
 	to
 		--Place
 		faulty : PNML!Place (
@@ -204,7 +98,6 @@ rule InternalFault {
 		--Archi
 		totmp : PNML!GSPNArc (
 			containerPage <- thisModule.getPage,
-			source <- fo,
 			target <- tmpfaulty,
 			id <- ft.Name + '_totmp'
 		),
@@ -239,7 +132,17 @@ rule InternalFault {
 			source <- casetransient,
 			target <- transient,
 			id <- ft.Name + '_transcase_to_transient'				
-		)
+		),
+		removetrans_trans : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- transient,
+			id <- ft.Name + '_removetrans_trans'
+		),
+		removetrans_faulty : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- faulty,
+			id <- ft.Name + '_removetrans_faulty'
+		)		
 	do {
 		thisModule.makeUniqueID(faulty);
 		thisModule.makeUniqueID(transient);
@@ -254,7 +157,141 @@ rule InternalFault {
 		thisModule.makeUniqueID(tmp_to_transcase);
 		thisModule.makeUniqueID(transcase_to_faulty);
 		thisModule.makeUniqueID(transcase_to_transient);
+		thisModule.makeUniqueID(removetrans_trans);
+		thisModule.makeUniqueID(removetrans_faulty);
 	}
+}
+rule InternalFaultTT extends InternalFault { --FO timed, TD timed
+	from 
+		ft : IDM!InternalFault
+		(
+			if ft.Occurrence.oclIsTypeOf(IDM!Deterministic) then
+				if ft.TransientDuration.oclIsTypeOf(IDM!Deterministic) then
+					ft.Occurrence.Value > 0 and ft.TransientDuration.Value > 0
+				else
+					ft.Occurrence.Value > 0
+				endif
+			else
+				if ft.TransientDuration.oclIsTypeOf(IDM!Deterministic) then
+					ft.TransientDuration.Value > 0
+				else
+					true
+				endif
+			endif
+		)
+	to
+		fo : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			Distribution <- ft.Occurrence,
+			id <- ft.Name + '_FO'
+		),
+		td : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			Distribution <- ft.TransientDuration,
+			id <- ft.Name + '_TD'
+		),
+		totmp : PNML!GSPNArc ( source <- fo ),
+		removetrans_trans : PNML!GSPNArc ( target <- td ),
+		removetrans_faulty : PNML!GSPNArc ( target <- td )
+}
+rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
+	from 
+		ft : IDM!InternalFault
+		(
+			if ft.Occurrence.oclIsTypeOf(IDM!Deterministic) and ft.TransientDuration.oclIsTypeOf(IDM!Deterministic) then
+				ft.Occurrence.Value = 0 and ft.TransientDuration.Value = 0
+			else
+				false
+			endif
+		)
+	to
+		fo : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- ft.Name + '_FO',
+			Priority <- 1,
+			Weight <- 1
+		),
+		td : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- ft.Name + '_TD',
+			Priority <- 1,
+			Weight <- 1
+		),
+		totmp : PNML!GSPNArc ( source <- fo ),
+		removetrans_trans : PNML!GSPNArc ( target <- td ),
+		removetrans_faulty : PNML!GSPNArc ( target <- td )
+}
+rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
+	from 
+		ft : IDM!InternalFault
+		(
+			if ft.Occurrence.oclIsTypeOf(IDM!Deterministic) then
+				if ft.TransientDuration.oclIsTypeOf(IDM!Deterministic) then
+					ft.Occcurence.Value > 0 and ft.TransientDuration.Value = 0
+				else
+					false
+				endif
+			else
+				if ft.TransientDuration.oclIsTypeOf(IDM!Deterministic) then
+					ft.TransientDuration.Value = 0
+				else
+					false
+				endif
+			endif
+		)
+	to
+		fo : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			Distribution <- ft.TransientDuration,
+			id <- ft.Name + '_FO'
+		),
+		td : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- ft.Name + '_TD',
+			Priority <- 1,
+			Weight <- 1
+		),
+		totmp : PNML!GSPNArc ( source <- fo ),
+		removetrans_trans : PNML!GSPNArc ( target <- td ),
+		removetrans_faulty : PNML!GSPNArc ( target <- td )
+}
+rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
+	from 
+		ft : IDM!InternalFault
+		(
+			if ft.Occurrence.oclIsTypeOf(IDM!Deterministic) then
+				if ft.TransientDuration.oclIsTypeOf(IDM!Deterministic) then
+					ft.Occurrence.Value = 0 and ft.TransientDuration.Value > 0
+				else
+					ft.Occurrence.Value = 0
+				endif
+			else
+				false
+			endif
+		)
+	to
+		fo : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- ft.Name + '_FO',
+			Priority <- 1,
+			Weight <- 1
+		),
+		td : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			Distribution <- ft.TransientDuration,
+			id <- ft.Name + '_TD'
+		),
+		totmp : PNML!GSPNArc ( source <- fo ),
+		removetrans_trans : PNML!GSPNArc ( target <- td ),
+		removetrans_faulty : PNML!GSPNArc ( target <- td )
 }
 
 --Crea un ID unico per Place, Transizioni e Archi, aggiungendo un numero progressivo all'ID attuale
