@@ -67,19 +67,23 @@ abstract rule InternalFault {
 		--Place
 		faulty : PNML!Place (
 			containerPage <- thisModule.getPage,
-			initialMarking <- thisModule.getPTMarking(0),
+			initialMarking <- thisModule.newPTMarking(0),
 			id <- ft.Name
 		),
 		transient : PNML!Place (
 			containerPage <- thisModule.getPage,
-			initialMarking <- thisModule.getPTMarking(0),
+			initialMarking <- thisModule.newPTMarking(0),
 			id <- ft.Name + '_transient'	
 		),
 		tmpfaulty : PNML!Place (
 			containerPage <- thisModule.getPage,
-			initialMarking <- thisModule.getPTMarking(0),
+			initialMarking <- thisModule.newPTMarking(0),
 			id <- ft.Name + '_tmp'			
 		),
+		
+		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
+		e2 : PNML!MarkingExpression ( place <- faulty ),
+		e3 : PNML!ValueExpression ( value <- 0 ),
 		
 		--Transizioni (in aggiunta a quelle create automaticamente per FO e TD)
 		casepermanent : PNML!GSPNImmediateTransition (
@@ -180,11 +184,13 @@ rule InternalFaultTT extends InternalFault { --FO timed, TD timed
 			endif
 		)
 	to
+		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
 		fo : PNML!GSPNTimedTransition
 		(
 			containerPage <- thisModule.getPage,
 			Distribution <- ft.Occurrence,
-			id <- ft.Name + '_FO'
+			id <- ft.Name + '_FO',
+			Guard <- e1
 		),
 		td : PNML!GSPNTimedTransition
 		(
@@ -207,12 +213,14 @@ rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 			endif
 		)
 	to
+		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
 		fo : PNML!GSPNImmediateTransition
 		(
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_FO',
 			Priority <- 1,
-			Weight <- 1
+			Weight <- 1,
+			Guard <- e1
 		),
 		td : PNML!GSPNImmediateTransition
 		(
@@ -244,11 +252,13 @@ rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
 			endif
 		)
 	to
+		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
 		fo : PNML!GSPNTimedTransition
 		(
 			containerPage <- thisModule.getPage,
 			Distribution <- ft.TransientDuration,
-			id <- ft.Name + '_FO'
+			id <- ft.Name + '_FO',
+			Guard <- e1
 		),
 		td : PNML!GSPNImmediateTransition
 		(
@@ -276,12 +286,14 @@ rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
 			endif
 		)
 	to
+		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
 		fo : PNML!GSPNImmediateTransition
 		(
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_FO',
 			Priority <- 1,
-			Weight <- 1
+			Weight <- 1,
+			Guard <- e1
 		),
 		td : PNML!GSPNTimedTransition
 		(
@@ -317,12 +329,112 @@ rule makeUniqueID(obj : PNML!PnObject) {
 }
 
 --Crea un oggeto PTMarking a partire da un numero intero
-lazy rule getPTMarking {
+lazy rule newPTMarking {
 	from
 		v : Integer
 	to
 		m : PNML!PTMarking (
 			text <- v
+		)
+}
+
+--Evaluation types
+rule InstantOfTime {
+	from
+		idm_instant : IDM!InstantOfTime
+	to
+		evaltype : PNML!InstantOfTime 
+		(
+			instant <- thisModule.newVariableExpression(PNML!Variable.allInstances()->select(v | v.name = 'Time').first())
+		)
+}
+rule IntervalOfTime {
+	from
+		idm_interval : IDM!IntervalOfTime
+	to
+		evaltype : PNML!IntervalOfTimeCumulated
+		(
+			intervalBegin <- thisModule.newValueExpression(idm_interval.begin),
+			intervalEnd <- thisModule.newVariableExpression(PNML!Variable.allInstances()->select(v | v.name = 'Time').first())
+		)
+}
+--Measures of interest
+rule MeasureToRewardFunction {
+	from 
+		idm_measure : IDM!DependabilityMeasure
+	using {
+		mexp : OrderedSet(PNML!MarkingExpression) = OrderedSet{};
+		tmp : PNML!OpSum = OclUndefined; 
+	}
+	to
+		measure : PNML!Measure
+		(
+			name <- idm_measure.Name,
+			evaluationType <- idm_measure.evaluations.asSequence().first(),
+			rewardFunction <- ite
+		),
+		ite : PNML!IfThenElse
+		(
+			condition <- cond,
+			ifTrue <- thisModule.newValueExpression(1),
+			ifFalse <- thisModule.newValueExpression(0)
+		),
+		cond : PNML!OpEqual
+		(
+			expression2 <- thisModule.newValueExpression(0)
+			
+		)
+	do {
+		if(idm_measure.target->size() = 1)
+		{
+			cond.expression1 <- thisModule.newMarkingExpression(idm_measure.target.asSequence().first());
+		}
+		else
+		{
+		--	cond.expression1 <- thisModule.newOpSum();
+			for(i in idm_measure.target) {
+				mexp = mexp->including(thisModule.newMarkingExpression(i));
+			}
+			tmp <- thisModule.newOpSum(mexp->at(1),mexp->at(2));
+			cond.expression1 <- tmp;
+			--cond.expression1 <- thisModule.newOpSum(thisModule.newMarkingExpression(idm_measure.target.asSequence().first()), OclUndefined);
+			--tmp = cond.expression1;
+			--TODO
+		}
+	}
+}
+
+lazy rule newVariableExpression {
+	from 
+		var : PNML!Variable
+	to
+		vexp : PNML!VariableExpression
+		(
+			variable <- var
+		)
+}
+lazy rule newValueExpression {
+	from
+		v : Real
+	to
+		vexpr : PNML!ValueExpression ( value <- v )
+}
+lazy rule newMarkingExpression {
+	from 
+		f : IDM!FailureMode
+	to
+		m : PNML!MarkingExpression
+		(
+			place <- thisModule.resolveTemp(f, 'failureMode_place')
+			
+		)
+}
+rule newOpSum( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) { 
+	to
+		sum : PNML!OpSum
+		(
+			expression1 <- e1,
+			expression2 <- e2
 		)
 }
 
