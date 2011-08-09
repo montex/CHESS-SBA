@@ -17,9 +17,10 @@ helper context PNML!PetriNet def: toString():String =
 	PNML!GSPNTransition.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
 	'\n'+
 	PNML!GSPNArc.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
-	'\n'+
-	PNML!Measure.allInstances()->iterate(i; acc:String=''| acc + i.toString() + '\n')
-	+'\n';
+	'\n'--+
+--	PNML!Measure.allInstances()->iterate(i; acc:String=''| acc + i.toString() + '\n')
+--	+'\n'
+;
 	
 helper context PNML!Place def: toString(): String =
 	if self.nodegraphics.oclIsUndefined() then
@@ -140,6 +141,8 @@ helper context PNML!GSPNArc def: toString(): String =
 helper context PNML!ValueExpression def: toString(): String = self.value.toString();
 
 helper context PNML!OpSum def: toString(): String = self.expression1.toString() + '+' + self.expression2.toString();
+helper context PNML!OpGreater def: toString(): String = self.expression1.toString() + '>' + self.expression2.toString();
+helper context PNML!OpEqual def: toString(): String = self.expression1.toString() + '=' + self.expression2.toString();
 
 helper context PNML!IfThenElse def: toString(): String =
 	'IF('+self.condition.toString()+')THEN('+self.ifTrue.toString()+')ELSE('+self.ifFalse.toString()+')';
@@ -168,6 +171,5 @@ helper context PNML!Variable def: toString(): String =
 helper context PNML!Measure def:toString(): String =
 	'RES_FUNC:"'+self.name+'",\''+self.rewardFunction.toString()+'\',0;';
 	
-helper context PNML!OpEqual def: toString(): String = self.expression1.toString() + '=' + self.expression2.toString();
 
 

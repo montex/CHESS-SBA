@@ -11,7 +11,13 @@ helper def: otherCount : Integer = 1;
 helper def: timePoints : OrderedSet(Real) = OrderedSet{};
 
 helper def: getPage : PNML!Page = IDM!Sistema.allInstances()->first();
-	
+
+helper def: tmpErrors : Sequence(IDM!Error) = Sequence{};
+helper def: tmpLogicExp : PNML!LogicalExpression = OclUndefined;
+
+helper context IDM!Error def: toString() : String = self.Name;
+helper context IDM!FailureMode def: toString() : String = self.Name;
+
 rule Sistema {
 	from
 		s : IDM!Sistema
@@ -85,7 +91,7 @@ abstract rule InternalFault {
 		e2 : PNML!MarkingExpression ( place <- faulty ),
 		e3 : PNML!ValueExpression ( value <- 0 ),
 		
-		--Transizioni (in aggiunta a quelle create automaticamente per FO e TD)
+		--Transizioni (quelle per FO e TD vengono create dalle regole che estendono questa)
 		casepermanent : PNML!GSPNImmediateTransition (
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_caseperm',
@@ -213,7 +219,6 @@ rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 			endif
 		)
 	to
-		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
 		fo : PNML!GSPNImmediateTransition
 		(
 			containerPage <- thisModule.getPage,
@@ -306,7 +311,150 @@ rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
 		removetrans_faulty : PNML!GSPNArc ( target <- td )
 }
 
---Crea un ID unico per Place, Transizioni e Archi, aggiungendo un numero progressivo all'ID attuale
+rule Error { --manca l'implementazione di VanishingTime 
+	from 
+		e : IDM!Error
+	to
+		err : PNML!Place (
+			id <- e.Name,
+			containerPage <- thisModule.getPage,
+			initialMarking <- thisModule.newPTMarking(0)
+		)
+	do {
+		thisModule.makeUniqueID(err);
+	}
+}
+
+rule FailureMode {
+	from
+		fm : IDM!FailureMode
+	to
+		fmode : PNML!Place (
+			id <- fm.Name,
+			containerPage <- thisModule.getPage,
+			initialMarking <- thisModule.newPTMarking(0)			
+		)
+	do {
+		thisModule.makeUniqueID(fmode);
+	}
+}
+
+--FaultsExpression elements
+rule FaultsExpressionFaultNode {
+	from
+		n : IDM!FaultsExpressionFaultNode
+	to
+		nn : PNML!OpGreater ( expression1 <- e1, expression2 <- e2 ),
+		e1 : PNML!MarkingExpression (
+			place <- 
+			if n.Fault.oclIsTypeOf(IDM!InternalFault) then
+				n.Fault
+			else
+				n.Fault.Source
+			endif
+		),
+		e2 : PNML!ValueExpression ( value <- 0 )
+}
+rule FaultsExpressionNotNode {
+	from
+		n : IDM!FaultsExpressionNotNode
+	to
+		nn : PNML!OpNot ( expression <- n.FaultsExpression )
+}
+rule FaultsExpressionAndNode {
+	from
+		n : IDM!FaultsExpressionAndNode
+	to
+		nn : PNML!OpAnd ( e1 <- n.FaultsExpression1, e2 <- n.FaultsExpression2 )
+}
+rule FaultsExpressionOrNode {
+	from
+		n : IDM!FaultsExpressionOrNode
+	to
+		nn : PNML!OpOr ( e1 <- n.FaultsExpression1, e2 <- n.FaultsExpression2 )
+}
+
+rule FGETimed {
+	from
+		fge : IDM!FaultsGenerateErrors
+		(
+			if fge.ActivationDelay.oclIsTypeOf(IDM!Deterministic) then
+				fge.ActivationDelay.Value > 0
+			else
+				true
+			endif
+		)
+	to
+		trfge : PNML!GSPNTimedTransition
+		(
+			id <- fge.Name,
+			Distribution <- fge.ActivationDelay,
+			containerPage <- thisModule.getPage
+		),
+		tmp : PNML!Place
+		(
+			id <- fge.Name + '_tmp',
+			initialMarking <- thisModule.newPTMarking(0),
+			containerPage <- thisModule.getPage
+		),
+		casepropagate : PNML!GSPNImmediateTransition
+		(
+			id <- fge.Name + '_caseprop',
+			Weight <- fge.PropagationProbability,
+			containerPage <- thisModule.getPage
+		),
+		caseskip : PNML!GSPNImmediateTransition
+		(
+			id <- fge.Name + '_caseskip',
+			Weight <- ( 1 - fge.PropagationProbability ),
+			containerPage <- thisModule.getPage
+		),
+		--Archi
+		totmp : PNML!GSPNArc
+		(
+			id <- fge.Name + '_totmp',
+			source <- trfge,
+			target <- tmp,
+			containerPage <- thisModule.getPage
+		),
+		topropagate : PNML!GSPNArc
+		(
+			id <- fge.Name + '_toprop',
+			containerPage <- thisModule.getPage,
+			source <- tmp,
+			target <- casepropagate
+		),
+		toskip : PNML!GSPNArc
+		(
+			id <- fge.Name + '_toskip',
+			containerPage <- thisModule.getPage,
+			source <- tmp,
+			target <- caseskip
+		)
+	do {
+		thisModule.makeUniqueID(trfge);
+		thisModule.makeUniqueID(tmp);
+		thisModule.makeUniqueID(casepropagate);
+		thisModule.makeUniqueID(caseskip);
+		
+		thisModule.makeUniqueID(totmp);
+		thisModule.makeUniqueID(topropagate);
+		thisModule.makeUniqueID(toskip);
+		
+		thisModule.tmpErrors = Sequence{};
+		for(e in fge.Destination) {
+			thisModule.newOutputArc(casepropagate, e);
+			thisModule.tmpErrors <-	thisModule.tmpErrors.append(e);
+		}
+		for(e in thisModule.tmpErrors.) {
+			
+		}
+
+		trfge.Guard = fge.PropagationLogic;
+	}
+}
+
+--Crea un ID unico per Place, sTransizioni e Archi, aggiungendo un numero progressivo all'ID attuale
 rule makeUniqueID(obj : PNML!PnObject) {
 	do {
 		if(obj.oclIsKindOf(PNML!Transition)) {
@@ -387,13 +535,13 @@ rule MeasureToRewardFunction {
 	do {
 		if(idm_measure.target->size() = 1)
 		{
-			cond.expression1 <- thisModule.newMarkingExpression(idm_measure.target.asSequence().first());
+			cond.expression1 <- thisModule.newMarkingExpressionFromFailureMode(idm_measure.target.asSequence().first());
 		}
 		else
 		{
 		--	cond.expression1 <- thisModule.newOpSum();
 			for(i in idm_measure.target) {
-				mexp = mexp->including(thisModule.newMarkingExpression(i));
+				mexp = mexp->including(thisModule.newMarkingExpressionFromFailureMode(i));
 			}
 			tmp <- thisModule.newOpSum(mexp->at(1),mexp->at(2));
 			cond.expression1 <- tmp;
@@ -419,14 +567,22 @@ lazy rule newValueExpression {
 	to
 		vexpr : PNML!ValueExpression ( value <- v )
 }
-lazy rule newMarkingExpression {
+lazy rule newMarkingExpressionFromFailureMode {
 	from 
 		f : IDM!FailureMode
 	to
 		m : PNML!MarkingExpression
 		(
-			place <- thisModule.resolveTemp(f, 'failureMode_place')
-			
+			place <- f
+		)
+}
+lazy rule newMarkingExpressionFromError {
+	from 
+		e : IDM!Error
+	to
+		m : PNML!MarkingExpression
+		(
+			place <- e
 		)
 }
 rule newOpSum( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) { 
@@ -437,4 +593,35 @@ rule newOpSum( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) {
 			expression2 <- e2
 		)
 }
+rule newOpAnd( ex1 : PNML!LogicalExpression, ex2 : PNML!LogicalExpression) { 
+	to
+		opand : PNML!OpAnd
+		(
+			e1 <- ex1,
+			e2 <- ex2
+		)
+}
+rule newOpOr( ex1 : PNML!LogicalExpression, ex2 : PNML!LogicalExpression) { 
+	to
+		opor : PNML!OpOr
+		(
+			e1 <- ex1,
+			e2 <- ex2
+		)
+}
+
+rule newOutputArc( t : PNML!GSPNTransition, p : PNML!Place ) { 
+	to
+		arc : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- t,
+			target <- p,
+			id <- t.id + '_to_' + p.toString()
+		)
+}
+
+
+
+
 
