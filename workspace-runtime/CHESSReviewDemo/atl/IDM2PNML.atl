@@ -430,12 +430,14 @@ abstract rule FGE {
 		(
 			id <- fge.Name + '_caseprop',
 			Weight <- fge.PropagationProbability,
+			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
 		caseskip : PNML!GSPNImmediateTransition
 		(
 			id <- fge.Name + '_caseskip',
 			Weight <- ( 1 - fge.PropagationProbability ),
+			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
 		--Archi

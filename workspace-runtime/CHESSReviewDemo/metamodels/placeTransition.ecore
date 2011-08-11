@@ -352,7 +352,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GSPNImmediateTransition" eSuperTypes="#//GSPNTransition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Priority" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" defaultValueLiteral="1"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Weight" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble" defaultValueLiteral="1"/>
   </eClassifiers>

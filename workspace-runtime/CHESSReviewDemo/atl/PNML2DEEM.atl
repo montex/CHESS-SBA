@@ -32,10 +32,12 @@ helper context PNML!Place def: toString(): String =
 helper context PNML!GSPNImmediateTransition def: toString(): String = 
 --	'TRANS:"'+self.Name+'",1500,1500,V,Immediate,'+self.Priority+',0,\'\', \'\',\n'+
 	if(self.nodegraphics.oclIsUndefined()) then
-    	'TRANS:"'+self.id+'",1500,1500,V,Immediate,1,1,'
+    	'TRANS:"'+self.id+'",1500,1500,V,Immediate,'
 	else
-		'TRANS:"'+self.id+'",'+self.nodegraphics.position.x+','+self.nodegraphics.position.y+',V,Immediate,1,1,'
+		'TRANS:"'+self.id+'",'+self.nodegraphics.position.x+','+self.nodegraphics.position.y+',V,Immediate,'
 	endif+
+	self.Priority+
+	',1,'+
 	'\''+
 	if(self.Guard.oclIsUndefined()) then '' else self.Guard.toString() endif+
 	'\''+
