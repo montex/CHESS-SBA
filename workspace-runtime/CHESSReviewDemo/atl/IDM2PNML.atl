@@ -10,6 +10,9 @@ helper def: arcCount : Integer = 1;
 helper def: otherCount : Integer = 1;
 helper def: timePoints : OrderedSet(Real) = OrderedSet{};
 
+helper def: priPropagation : Integer = 2;
+helper def: priPropagationChoice : Integer = 3;
+
 helper def: getPage : PNML!Page = IDM!Sistema.allInstances()->first();
 
 helper def: tmpLogicExp : PNML!LogicalExpression = OclUndefined;
@@ -94,13 +97,13 @@ abstract rule InternalFault {
 		casepermanent : PNML!GSPNImmediateTransition (
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_caseperm',
-			Priority <- 1,
+			Priority <- thisModule.priPropagationChoice,
 			Weight <- ft.PermanentProbability
 		),
 		casetransient : PNML!GSPNImmediateTransition (
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_casetrans',
-			Priority <- 1,
+			Priority <- thisModule.priPropagationChoice,
 			Weight <- (1 - ft.PermanentProbability)
 		),		
 		
@@ -224,7 +227,7 @@ rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 		(
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_FO',
-			Priority <- 1,
+			Priority <- thisModule.priPropagation,
 			Weight <- 1,
 			Guard <- e1
 		),
@@ -299,7 +302,7 @@ rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
 		(
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_FO',
-			Priority <- 1,
+			Priority <- thisModule.priPropagation,
 			Weight <- 1,
 			Guard <- e1
 		),
@@ -529,7 +532,7 @@ rule FGEImmediate extends FGE {
 			id <- fge.Name,
 			containerPage <- thisModule.getPage,
 			Weight <- fge.Weight,
-			Priority <- 2,
+			Priority <- thisModule.priPropagation,
 			Guard <- andop
 		),
 		andop : PNML!OpAnd,
@@ -589,12 +592,14 @@ abstract rule EPF {
 		(
 			id <- epf.Name + '_caseprop',
 			Weight <- epf.PropagationProbability,
+			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
 		caseskip : PNML!GSPNImmediateTransition
 		(
 			id <- epf.Name + '_caseskip',
 			Weight <- ( 1 - epf.PropagationProbability ),
+			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
 		--Archi
@@ -691,7 +696,7 @@ rule EPFImmediate extends EPF {
 			id <- epf.Name,
 			containerPage <- thisModule.getPage,
 			Weight <- epf.Weight,
-			Priority <- 2,
+			Priority <- thisModule.priPropagation,
 			Guard <- andop
 		),
 		andop : PNML!OpAnd,
