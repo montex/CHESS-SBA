@@ -377,6 +377,37 @@ rule FaultsExpressionOrNode {
 		nn : PNML!OpOr ( e1 <- n.FaultsExpression1, e2 <- n.FaultsExpression2 )
 }
 
+--ErrorsExpression elements
+rule ErrorsExpressionFaultNode {
+	from
+		n : IDM!ErrorsExpressionErrorNode
+	to
+		nn : PNML!OpGreater ( expression1 <- e1, expression2 <- e2 ),
+		e1 : PNML!MarkingExpression
+		(
+			place <- n.Error
+		),
+		e2 : PNML!ValueExpression ( value <- 0 )
+}
+rule ErrorsExpressionNotNode {
+	from
+		n : IDM!ErrorsExpressionNotNode
+	to
+		nn : PNML!OpNot ( expression <- n.ErrorsExpression )
+}
+rule ErrorsExpressionAndNode {
+	from
+		n : IDM!ErrorsExpressionAndNode
+	to
+		nn : PNML!OpAnd ( e1 <- n.ErrorsExpression1, e2 <- n.ErrorsExpression2 )
+}
+rule ErrorsExpressionOrNode {
+	from
+		n : IDM!ErrorsExpressionOrNode
+	to
+		nn : PNML!OpOr ( e1 <- n.ErrorsExpression1, e2 <- n.ErrorsExpression2 )
+}
+
 --FaultsGenerateErrors
 abstract rule FGE {
 	from
@@ -535,6 +566,168 @@ rule FGEImmediate extends FGE {
 			thisModule.newValueExpression(0)
 		);
 		thisModule.newOutputArc(casepropagate, fge.Destination.first());
+		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+	}
+}
+
+--ErrorsProduceFailures
+abstract rule EPF {
+	from
+		epf : IDM!ErrorsProducesFailures
+	to
+		andop : PNML!OpAnd
+		(
+			expression1 <- epf.PropagationLogic
+		),		
+		tmp : PNML!Place
+		(
+			id <- epf.Name + '_tmp',
+			initialMarking <- thisModule.newPTMarking(0),
+			containerPage <- thisModule.getPage
+		),
+		casepropagate : PNML!GSPNImmediateTransition
+		(
+			id <- epf.Name + '_caseprop',
+			Weight <- epf.PropagationProbability,
+			containerPage <- thisModule.getPage
+		),
+		caseskip : PNML!GSPNImmediateTransition
+		(
+			id <- epf.Name + '_caseskip',
+			Weight <- ( 1 - epf.PropagationProbability ),
+			containerPage <- thisModule.getPage
+		),
+		--Archi
+		totmp : PNML!GSPNArc
+		(
+			id <- epf.Name + '_totmp',
+--			source <- trfge,
+			target <- tmp,
+			containerPage <- thisModule.getPage
+		),
+		topropagate : PNML!GSPNArc
+		(
+			id <- epf.Name + '_toprop',
+			containerPage <- thisModule.getPage,
+			source <- tmp,
+			target <- casepropagate
+		),
+		toskip : PNML!GSPNArc
+		(
+			id <- epf.Name + '_toskip',
+			containerPage <- thisModule.getPage,
+			source <- tmp,
+			target <- caseskip
+		)
+}
+rule EPFTimed extends EPF {
+	from
+		epf : IDM!ErrorsProducesFailures
+		(
+			if epf.PropagationDelay.oclIsTypeOf(IDM!Deterministic) then
+				epf.PropagationDelay.Value > 0
+			else
+				true
+			endif
+		)
+	to
+		trepf : PNML!GSPNTimedTransition
+		(
+			id <- epf.Name,
+			Distribution <- epf.PropagationDelay,
+			containerPage <- thisModule.getPage,
+			Guard <- andop
+		),
+		andop : PNML!OpAnd,
+		totmp : PNML!GSPNArc
+		(
+			source <- trepf
+		)
+	do {
+		thisModule.makeUniqueID(trepf);
+		thisModule.makeUniqueID(tmp);
+		thisModule.makeUniqueID(casepropagate);
+		thisModule.makeUniqueID(caseskip);
+		
+		thisModule.makeUniqueID(totmp);
+		thisModule.makeUniqueID(topropagate);
+		thisModule.makeUniqueID(toskip);
+		
+		thisModule.tmpLogicExp <- andop;
+
+		for(fm in epf.Destination.subSequence(2, epf.Destination.size())) {
+			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
+				thisModule.newOpEqual(
+					thisModule.newMarkingExpressionFromFailureMode(fm),
+					thisModule.newValueExpression(0)
+				),
+				OclUndefined
+			);
+			thisModule.newOutputArc(casepropagate, fm);
+			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+		}
+		
+		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
+			thisModule.newMarkingExpressionFromError(epf.Destination.first()),
+			thisModule.newValueExpression(0)
+		);
+		thisModule.newOutputArc(casepropagate, epf.Destination.first());
+		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+	}
+}
+rule EPFImmediate extends EPF {
+	from
+		epf : IDM!ErrorsProducesFailures
+		(
+			if epf.PropagationDelay.oclIsTypeOf(IDM!Deterministic) then
+				epf.PropagationDelay.Value = 0
+			else
+				false
+			endif
+		)
+	to
+		trepf : PNML!GSPNImmediateTransition
+		(
+			id <- epf.Name,
+			containerPage <- thisModule.getPage,
+			Weight <- epf.Weight,
+			Priority <- 2,
+			Guard <- andop
+		),
+		andop : PNML!OpAnd,
+		totmp : PNML!GSPNArc
+		(
+			source <- trepf
+		)
+	do {
+		thisModule.makeUniqueID(trepf);
+		thisModule.makeUniqueID(tmp);
+		thisModule.makeUniqueID(casepropagate);
+		thisModule.makeUniqueID(caseskip);
+		
+		thisModule.makeUniqueID(totmp);
+		thisModule.makeUniqueID(topropagate);
+		thisModule.makeUniqueID(toskip);
+		
+		thisModule.tmpLogicExp <- andop;
+
+		for(fm in epf.Destination.subSequence(2, epf.Destination.size())) {
+			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
+				thisModule.newOpEqual(
+					thisModule.newMarkingExpressionFromFailureMode(fm),
+					thisModule.newValueExpression(0)
+				),
+				OclUndefined
+			);
+			thisModule.newOutputArc(casepropagate, fm);
+			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+		}
+		
+		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
+			thisModule.newMarkingExpressionFromError(epf.Destination.first()),
+			thisModule.newValueExpression(0)
+		);
+		thisModule.newOutputArc(casepropagate, epf.Destination.first());
 		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
 	}
 }
