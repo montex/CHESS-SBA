@@ -189,6 +189,7 @@ rule InternalFaultTT extends InternalFault { --FO timed, TD timed
 			endif
 		)
 	to
+		faulty : PNML!Place,
 		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
 		fo : PNML!GSPNTimedTransition
 		(
@@ -218,6 +219,7 @@ rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 			endif
 		)
 	to
+		faulty : PNML!Place,
 		fo : PNML!GSPNImmediateTransition
 		(
 			containerPage <- thisModule.getPage,
@@ -256,6 +258,7 @@ rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
 			endif
 		)
 	to
+		faulty : PNML!Place,
 		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
 		fo : PNML!GSPNTimedTransition
 		(
@@ -290,6 +293,7 @@ rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
 			endif
 		)
 	to
+		faulty : PNML!Place,
 		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
 		fo : PNML!GSPNImmediateTransition
 		(
@@ -373,24 +377,11 @@ rule FaultsExpressionOrNode {
 		nn : PNML!OpOr ( e1 <- n.FaultsExpression1, e2 <- n.FaultsExpression2 )
 }
 
-rule FGETimed {
+--FaultsGenerateErrors
+abstract rule FGE {
 	from
 		fge : IDM!FaultsGenerateErrors
-		(
-			if fge.ActivationDelay.oclIsTypeOf(IDM!Deterministic) then
-				fge.ActivationDelay.Value > 0
-			else
-				true
-			endif
-		)
 	to
-		trfge : PNML!GSPNTimedTransition
-		(
-			id <- fge.Name,
-			Distribution <- fge.ActivationDelay,
-			containerPage <- thisModule.getPage,
-			Guard <- andop
-		),
 		andop : PNML!OpAnd
 		(
 			expression1 <- fge.PropagationLogic
@@ -417,7 +408,7 @@ rule FGETimed {
 		totmp : PNML!GSPNArc
 		(
 			id <- fge.Name + '_totmp',
-			source <- trfge,
+--			source <- trfge,
 			target <- tmp,
 			containerPage <- thisModule.getPage
 		),
@@ -434,6 +425,86 @@ rule FGETimed {
 			containerPage <- thisModule.getPage,
 			source <- tmp,
 			target <- caseskip
+		)
+}
+rule FGETimed extends FGE {
+	from
+		fge : IDM!FaultsGenerateErrors
+		(
+			if fge.ActivationDelay.oclIsTypeOf(IDM!Deterministic) then
+				fge.ActivationDelay.Value > 0
+			else
+				true
+			endif
+		)
+	to
+		trfge : PNML!GSPNTimedTransition
+		(
+			id <- fge.Name,
+			Distribution <- fge.ActivationDelay,
+			containerPage <- thisModule.getPage,
+			Guard <- andop
+		),
+		andop : PNML!OpAnd,
+		totmp : PNML!GSPNArc
+		(
+			source <- trfge
+		)
+	do {
+		thisModule.makeUniqueID(trfge);
+		thisModule.makeUniqueID(tmp);
+		thisModule.makeUniqueID(casepropagate);
+		thisModule.makeUniqueID(caseskip);
+		
+		thisModule.makeUniqueID(totmp);
+		thisModule.makeUniqueID(topropagate);
+		thisModule.makeUniqueID(toskip);
+		
+		thisModule.tmpLogicExp <- andop;
+
+		for(e in fge.Destination.subSequence(2, fge.Destination.size())) {
+			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
+				thisModule.newOpEqual(
+					thisModule.newMarkingExpressionFromError(e),
+					thisModule.newValueExpression(0)
+				),
+				OclUndefined
+			);
+			thisModule.newOutputArc(casepropagate, e);
+			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+		}
+		
+		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
+			thisModule.newMarkingExpressionFromError(fge.Destination.first()),
+			thisModule.newValueExpression(0)
+		);
+		thisModule.newOutputArc(casepropagate, fge.Destination.first());
+		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+	}
+}
+rule FGEImmediate extends FGE {
+	from
+		fge : IDM!FaultsGenerateErrors
+		(
+			if fge.ActivationDelay.oclIsTypeOf(IDM!Deterministic) then
+				fge.ActivationDelay.Value = 0
+			else
+				false
+			endif
+		)
+	to
+		trfge : PNML!GSPNImmediateTransition
+		(
+			id <- fge.Name,
+			containerPage <- thisModule.getPage,
+			Weight <- fge.Weight,
+			Priority <- 2,
+			Guard <- andop
+		),
+		andop : PNML!OpAnd,
+		totmp : PNML!GSPNArc
+		(
+			source <- trfge
 		)
 	do {
 		thisModule.makeUniqueID(trfge);
