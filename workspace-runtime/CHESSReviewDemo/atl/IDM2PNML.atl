@@ -266,7 +266,7 @@ rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
 		fo : PNML!GSPNTimedTransition
 		(
 			containerPage <- thisModule.getPage,
-			Distribution <- ft.TransientDuration,
+			Distribution <- ft.Occurrence,
 			id <- ft.Name + '_FO',
 			Guard <- e1
 		),
