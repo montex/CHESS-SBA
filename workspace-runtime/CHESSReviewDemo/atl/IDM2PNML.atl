@@ -12,7 +12,6 @@ helper def: timePoints : OrderedSet(Real) = OrderedSet{};
 
 helper def: getPage : PNML!Page = IDM!Sistema.allInstances()->first();
 
-helper def: tmpErrors : Sequence(IDM!Error) = Sequence{};
 helper def: tmpLogicExp : PNML!LogicalExpression = OclUndefined;
 
 helper context IDM!Error def: toString() : String = self.Name;
@@ -389,8 +388,13 @@ rule FGETimed {
 		(
 			id <- fge.Name,
 			Distribution <- fge.ActivationDelay,
-			containerPage <- thisModule.getPage
+			containerPage <- thisModule.getPage,
+			Guard <- andop
 		),
+		andop : PNML!OpAnd
+		(
+			expression1 <- fge.PropagationLogic
+		),		
 		tmp : PNML!Place
 		(
 			id <- fge.Name + '_tmp',
@@ -441,16 +445,26 @@ rule FGETimed {
 		thisModule.makeUniqueID(topropagate);
 		thisModule.makeUniqueID(toskip);
 		
-		thisModule.tmpErrors = Sequence{};
-		for(e in fge.Destination) {
-			thisModule.newOutputArc(casepropagate, e);
-			thisModule.tmpErrors <-	thisModule.tmpErrors.append(e);
-		}
-		for(e in thisModule.tmpErrors.) {
-			
-		}
+		thisModule.tmpLogicExp <- andop;
 
-		trfge.Guard = fge.PropagationLogic;
+		for(e in fge.Destination.subSequence(2, fge.Destination.size())) {
+			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
+				thisModule.newOpEqual(
+					thisModule.newMarkingExpressionFromError(e),
+					thisModule.newValueExpression(0)
+				),
+				OclUndefined
+			);
+			thisModule.newOutputArc(casepropagate, e);
+			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+		}
+		
+		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
+			thisModule.newMarkingExpressionFromError(fge.Destination.first()),
+			thisModule.newValueExpression(0)
+		);
+		thisModule.newOutputArc(casepropagate, fge.Destination.first());
+		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
 	}
 }
 
@@ -585,6 +599,17 @@ lazy rule newMarkingExpressionFromError {
 			place <- e
 		)
 }
+rule newOpEqual ( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) {
+	to
+		eq : PNML!OpEqual
+		(
+			expression1 <- e1,
+			expression2 <- e2
+		)
+	do {
+		eq;
+	}
+}
 rule newOpSum( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) { 
 	to
 		sum : PNML!OpSum
@@ -592,22 +617,31 @@ rule newOpSum( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) {
 			expression1 <- e1,
 			expression2 <- e2
 		)
+	do {
+		sum;
+	}
 }
-rule newOpAnd( ex1 : PNML!LogicalExpression, ex2 : PNML!LogicalExpression) { 
+rule newOpAnd( e1 : PNML!LogicalExpression, e2 : PNML!LogicalExpression) { 
 	to
 		opand : PNML!OpAnd
 		(
-			e1 <- ex1,
-			e2 <- ex2
+			expression1 <- e1,
+			expression2 <- e2
 		)
+	do { 
+		opand;
+	}
 }
-rule newOpOr( ex1 : PNML!LogicalExpression, ex2 : PNML!LogicalExpression) { 
+rule newOpOr( e1 : PNML!LogicalExpression, e2 : PNML!LogicalExpression) { 
 	to
 		opor : PNML!OpOr
-		(
-			e1 <- ex1,
-			e2 <- ex2
+		( 
+			expression1 <- e1,
+			expression2 <- e2
 		)
+	do {
+		opor;
+	}
 }
 
 rule newOutputArc( t : PNML!GSPNTransition, p : PNML!Place ) { 

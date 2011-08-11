@@ -17,9 +17,9 @@ helper context PNML!PetriNet def: toString():String =
 	PNML!GSPNTransition.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
 	'\n'+
 	PNML!GSPNArc.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
-	'\n'--+
---	PNML!Measure.allInstances()->iterate(i; acc:String=''| acc + i.toString() + '\n')
---	+'\n'
+	'\n'+
+	PNML!Measure.allInstances()->iterate(i; acc:String=''| acc + i.toString() + '\n')
+	+'\n'
 ;
 	
 helper context PNML!Place def: toString(): String =
@@ -140,6 +140,8 @@ helper context PNML!GSPNArc def: toString(): String =
 
 helper context PNML!ValueExpression def: toString(): String = self.value.toString();
 
+helper context PNML!OpAnd def: toString(): String = '('+self.expression1.toString() + ')AND(' + self.expression2.toString()+')';
+helper context PNML!OpOr def: toString(): String = '('+self.expression1.toString() + ')OR(' + self.expression2.toString()+')';
 helper context PNML!OpSum def: toString(): String = self.expression1.toString() + '+' + self.expression2.toString();
 helper context PNML!OpGreater def: toString(): String = self.expression1.toString() + '>' + self.expression2.toString();
 helper context PNML!OpEqual def: toString(): String = self.expression1.toString() + '=' + self.expression2.toString();
