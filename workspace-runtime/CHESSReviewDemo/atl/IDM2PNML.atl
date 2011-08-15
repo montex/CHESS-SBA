@@ -10,15 +10,21 @@ helper def: arcCount : Integer = 1;
 helper def: otherCount : Integer = 1;
 helper def: timePoints : OrderedSet(Real) = OrderedSet{};
 
+helper def: priTransientDuration : Integer = 1;
 helper def: priPropagation : Integer = 2;
 helper def: priPropagationChoice : Integer = 3;
+helper def: priReset : Integer = 1;
 
 helper def: getPage : PNML!Page = IDM!Sistema.allInstances()->first();
 
 helper def: tmpLogicExp : PNML!LogicalExpression = OclUndefined;
 
+helper context IDM!NamedElement def: toString() : String = self.Name;
 helper context IDM!Error def: toString() : String = self.Name;
 helper context IDM!FailureMode def: toString() : String = self.Name;
+
+helper context PNML!Place def: toString() : String = self.id;
+helper context PNML!Transition def: toString() : String = self.id;
 
 rule Sistema {
 	from
@@ -55,6 +61,44 @@ rule Sistema {
 	do {
 		for(i in IDM!InstantOfTime.allInstances()) {
 			varvals.values <- varvals.values.append(i.timePoint);
+		}
+	}
+}
+
+-- Crea la transizione di reset per ciascun componente
+rule Component {
+	from
+		c : IDM!Component
+	to
+		doreset : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- c.Name + '_doreset',
+			initialMarking <- thisModule.newPTMarking(0)
+		),
+		reset : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- c.Name + '_reset',
+			Priority <- thisModule.priReset,
+			Weight <- 1
+		),
+		arcreset : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- c.Name + '_arcreset',
+			source <- doreset,
+			target <- reset
+		)
+	do {
+		for(f in c.Faults) {
+			thisModule.newInputArcMultiplicityOfPlace(reset, f);
+		}
+		for(e in c.Errors) {
+			thisModule.newInputArcMultiplicityOfPlace(reset, e);
+		}
+		for(fm in c.FailureModes) {
+			thisModule.newInputArcMultiplicityOfPlace(reset, fm);
 		}
 	}
 }
@@ -235,7 +279,7 @@ rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 		(
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_TD',
-			Priority <- 1,
+			Priority <- thisModule.priTransientDuration,
 			Weight <- 1
 		),
 		totmp : PNML!GSPNArc ( source <- fo ),
@@ -274,7 +318,7 @@ rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
 		(
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_TD',
-			Priority <- 1,
+			Priority <- thisModule.priTransientDuration,
 			Weight <- 1
 		),
 		totmp : PNML!GSPNArc ( source <- fo ),
@@ -915,14 +959,39 @@ rule newOpOr( e1 : PNML!LogicalExpression, e2 : PNML!LogicalExpression) {
 	}
 }
 
-rule newOutputArc( t : PNML!GSPNTransition, p : PNML!Place ) { 
+rule newOutputArc( t : PNML!Transition, p : PNML!Place ) { 
 	to
 		arc : PNML!GSPNArc
 		(
 			containerPage <- thisModule.getPage,
 			source <- t,
 			target <- p,
-			id <- t.id + '_to_' + p.toString()
+			id <- t.toString() + '_to_' + p.toString()
+		)
+}
+rule newInputArc( p : PNML!Place, t : PNML!Transition ) {
+	to 
+		arc : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- p,
+			target <- t,
+			id <- p.toString() + '_to_' + t.toString()
+		)
+}
+rule newInputArcMultiplicityOfPlace ( p : PNML!Place, t : PNML!Transition ) {
+	to 
+		arc : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- p,
+			target <- t,
+			id <- p.toString() + '_to_' + t.toString(),
+			MultiplicityFunction <- expmark
+		),
+	    expmark : PNML!MarkingExpression
+		(
+			place <- p	
 		)
 }
 
