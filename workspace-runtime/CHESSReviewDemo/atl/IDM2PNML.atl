@@ -547,7 +547,7 @@ rule FGETimed extends FGE {
 		for(e in fge.Destination.subSequence(2, fge.Destination.size())) {
 			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
 				thisModule.newOpEqual(
-					thisModule.newMarkingExpressionFromError(e),
+					thisModule.newMarkingExpression(e),
 					thisModule.newValueExpression(0)
 				),
 				OclUndefined
@@ -557,7 +557,7 @@ rule FGETimed extends FGE {
 		}
 		
 		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
-			thisModule.newMarkingExpressionFromError(fge.Destination.first()),
+			thisModule.newMarkingExpression(fge.Destination.first()),
 			thisModule.newValueExpression(0)
 		);
 		thisModule.newOutputArc(casepropagate, fge.Destination.first());
@@ -603,7 +603,7 @@ rule FGEImmediate extends FGE {
 		for(e in fge.Destination.subSequence(2, fge.Destination.size())) {
 			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
 				thisModule.newOpEqual(
-					thisModule.newMarkingExpressionFromError(e),
+					thisModule.newMarkingExpression(e),
 					thisModule.newValueExpression(0)
 				),
 				OclUndefined
@@ -613,7 +613,7 @@ rule FGEImmediate extends FGE {
 		}
 		
 		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
-			thisModule.newMarkingExpressionFromError(fge.Destination.first()),
+			thisModule.newMarkingExpression(fge.Destination.first()),
 			thisModule.newValueExpression(0)
 		);
 		thisModule.newOutputArc(casepropagate, fge.Destination.first());
@@ -711,7 +711,7 @@ rule EPFTimed extends EPF {
 		for(fm in epf.Destination.subSequence(2, epf.Destination.size())) {
 			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
 				thisModule.newOpEqual(
-					thisModule.newMarkingExpressionFromFailureMode(fm),
+					thisModule.newMarkingExpression(fm),
 					thisModule.newValueExpression(0)
 				),
 				OclUndefined
@@ -721,7 +721,7 @@ rule EPFTimed extends EPF {
 		}
 		
 		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
-			thisModule.newMarkingExpressionFromError(epf.Destination.first()),
+			thisModule.newMarkingExpression(epf.Destination.first()),
 			thisModule.newValueExpression(0)
 		);
 		thisModule.newOutputArc(casepropagate, epf.Destination.first());
@@ -767,7 +767,7 @@ rule EPFImmediate extends EPF {
 		for(fm in epf.Destination.subSequence(2, epf.Destination.size())) {
 			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
 				thisModule.newOpEqual(
-					thisModule.newMarkingExpressionFromFailureMode(fm),
+					thisModule.newMarkingExpression(fm),
 					thisModule.newValueExpression(0)
 				),
 				OclUndefined
@@ -777,7 +777,7 @@ rule EPFImmediate extends EPF {
 		}
 		
 		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
-			thisModule.newMarkingExpressionFromError(epf.Destination.first()),
+			thisModule.newMarkingExpression(epf.Destination.first()),
 			thisModule.newValueExpression(0)
 		);
 		thisModule.newOutputArc(casepropagate, epf.Destination.first());
@@ -1047,13 +1047,13 @@ rule MeasureToRewardFunction {
 	do {
 		if(idm_measure.target->size() = 1)
 		{
-			cond.expression1 <- thisModule.newMarkingExpressionFromFailureMode(idm_measure.target.asSequence().first());
+			cond.expression1 <- thisModule.newMarkingExpression(idm_measure.target.asSequence().first());
 		}
 		else
 		{
 		--	cond.expression1 <- thisModule.newOpSum();
 			for(i in idm_measure.target) {
-				mexp = mexp->including(thisModule.newMarkingExpressionFromFailureMode(i));
+				mexp = mexp->including(thisModule.newMarkingExpression(i));
 			}
 			tmp <- thisModule.newOpSum(mexp->at(1),mexp->at(2));
 			cond.expression1 <- tmp;
@@ -1079,23 +1079,15 @@ lazy rule newValueExpression {
 	to
 		vexpr : PNML!ValueExpression ( value <- v )
 }
-lazy rule newMarkingExpressionFromFailureMode {
-	from 
-		f : IDM!FailureMode
+rule newMarkingExpression( p : PNML!Place ) {
 	to
 		m : PNML!MarkingExpression
 		(
-			place <- f
+			place <- p
 		)
-}
-lazy rule newMarkingExpressionFromError {
-	from 
-		e : IDM!Error
-	to
-		m : PNML!MarkingExpression
-		(
-			place <- e
-		)
+	do {
+		m;
+	}
 }
 rule newOpEqual ( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) {
 	to
@@ -1108,7 +1100,7 @@ rule newOpEqual ( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression
 		eq;
 	}
 }
-rule newOpSum( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) { 
+rule newOpSum ( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) { 
 	to
 		sum : PNML!OpSum
 		(
@@ -1119,7 +1111,7 @@ rule newOpSum( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) {
 		sum;
 	}
 }
-rule newOpAnd( e1 : PNML!LogicalExpression, e2 : PNML!LogicalExpression) { 
+rule newOpAnd ( e1 : PNML!LogicalExpression, e2 : PNML!LogicalExpression) { 
 	to
 		opand : PNML!OpAnd
 		(
@@ -1130,7 +1122,7 @@ rule newOpAnd( e1 : PNML!LogicalExpression, e2 : PNML!LogicalExpression) {
 		opand;
 	}
 }
-rule newOpOr( e1 : PNML!LogicalExpression, e2 : PNML!LogicalExpression) { 
+rule newOpOr ( e1 : PNML!LogicalExpression, e2 : PNML!LogicalExpression) { 
 	to
 		opor : PNML!OpOr
 		( 
@@ -1142,7 +1134,7 @@ rule newOpOr( e1 : PNML!LogicalExpression, e2 : PNML!LogicalExpression) {
 	}
 }
 
-rule newOutputArc( t : PNML!Transition, p : PNML!Place ) { 
+rule newOutputArc ( t : PNML!Transition, p : PNML!Place ) { 
 	to
 		arc : PNML!GSPNArc
 		(
@@ -1152,7 +1144,7 @@ rule newOutputArc( t : PNML!Transition, p : PNML!Place ) {
 			id <- t.toString() + '_to_' + p.toString()
 		)
 }
-rule newInputArc( p : PNML!Place, t : PNML!Transition ) {
+rule newInputArc ( p : PNML!Place, t : PNML!Transition ) {
 	to 
 		arc : PNML!GSPNArc
 		(
