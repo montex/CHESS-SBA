@@ -67,7 +67,7 @@ helper context PNML!GSPNTimedTransition def: toString(): String =
 			',\n'
 		endif +
 	    '\''+i.toString()+'\''
-	)+'\n'+
+	)+
     '  );\n';
     
 helper context PNML!Distribution def: getCode(): String = 

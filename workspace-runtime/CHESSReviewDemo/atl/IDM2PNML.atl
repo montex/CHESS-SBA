@@ -10,10 +10,12 @@ helper def: arcCount : Integer = 1;
 helper def: otherCount : Integer = 1;
 helper def: timePoints : OrderedSet(Real) = OrderedSet{};
 
-helper def: priTransientDuration : Integer = 1;
-helper def: priPropagation : Integer = 2;
-helper def: priPropagationChoice : Integer = 3;
-helper def: priReset : Integer = 1;
+helper def: priTransientDuration : Integer = 4;
+helper def: priPropagation : Integer = 5;
+helper def: priPropagationChoice : Integer = 6;
+helper def: priReset : Integer = 3;
+helper def: priActivity : Integer = 2;
+helper def: priActivitySchedule : Integer = 1;
 
 helper def: getPage : PNML!Page = IDM!Sistema.allInstances()->first();
 
@@ -92,13 +94,13 @@ rule Component {
 		)
 	do {
 		for(f in c.Faults) {
-			thisModule.newInputArcMultiplicityOfPlace(reset, f);
+			thisModule.newInputArcMultiplicityOfPlace(f, reset);
 		}
 		for(e in c.Errors) {
-			thisModule.newInputArcMultiplicityOfPlace(reset, e);
+			thisModule.newInputArcMultiplicityOfPlace(e, reset);
 		}
 		for(fm in c.FailureModes) {
-			thisModule.newInputArcMultiplicityOfPlace(reset, fm);
+			thisModule.newInputArcMultiplicityOfPlace(fm, reset);
 		}
 	}
 }
@@ -802,6 +804,187 @@ rule makeUniqueID(obj : PNML!PnObject) {
 			obj.id <- 'O' + thisModule.otherCount.toString() + '_' + obj.id;
 			thisModule.otherCount <- thisModule.otherCount + 1;
 		}		
+	}
+}
+
+-- ScheduleExpression nodes
+	-- T
+rule ScheduleExpImmediately {
+	from
+		se : IDM!ScheduleExpressionImmediately
+	using {
+		act : IDM!Activity = IDM!Activity.allInstances()->select(i | i.When.T = se).first();
+	}
+	to
+		tr : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_schedule_T',
+			Weight <- 1,
+			Priority <- thisModule.priActivitySchedule,
+			Guard <- g_and
+		),
+		arc : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_schedule_T_oarc',
+			source <- tr,
+			target <- act
+		),
+		g_and : PNML!OpAnd
+		(
+			expression1 <- act.When.EX,
+			expression2 <- g_eq
+		),
+		g_eq : PNML!OpEqual
+		(
+			expression1 <- g_mexp,
+			expression2 <- thisModule.newValueExpression(0)
+		),
+		g_mexp : PNML!MarkingExpression
+		(
+			place <- act
+		)
+}
+	-- EX
+rule ScheduleExpTrue {
+	from
+		se : IDM!ScheduleExpressionTrue
+	to
+		tt : PNML!OpTrue
+}
+rule ScheduleExpNot {
+	from
+		se : IDM!ScheduleExpressionNot
+	to
+		notexp : PNML!OpNot
+		(
+			expression <- se.e
+		)
+}
+rule ScheduleExpOr {
+	from
+		se : IDM!ScheduleExpressionOr
+	to
+		orexp : PNML!OpOr
+		(
+			expression1 <- se.e1,
+			expression2 <- se.e2
+		)
+}
+rule ScheduleExpAnd {
+	from
+		se : IDM!ScheduleExpressionAnd
+	to
+		orexp : PNML!OpAnd
+		(
+			expression1 <- se.e1,
+			expression2 <- se.e2
+		)	
+}
+rule ScheduleExpFailed {
+	from 
+		se : IDM!ScheduleExpressionFailed
+	to
+	 	gthan : PNML!OpGreater
+		(
+			expression1 <- mexp,
+			expression2 <- thisModule.newValueExpression(0)
+		),
+		mexp : PNML!MarkingExpression
+		(
+			place <- se.failureMode
+		)
+}
+rule ScheduleExpErrorDetected {
+	from
+		se : IDM!ScheduleExpressionErrorDetected
+	to
+	 	gthan : PNML!OpGreater
+		(
+			expression1 <- mexp,
+			expression2 <- thisModule.newValueExpression(0)
+		),
+		mexp : PNML!MarkingExpression
+		(
+			place <- se.error
+		)
+}
+
+--Activities
+abstract rule Activity {
+	from
+		act : IDM!Activity
+	to
+		enabled : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_enabled',
+			initialMarking <- thisModule.newPTMarking(0)
+		)
+}
+	--Replace (Timed)
+rule RepairTimed extends Activity {
+	from
+		act : IDM!RepairActivity
+		(
+			if act.Duration.oclIsTypeOf(IDM!Deterministic) then
+				act.Duration.Value > 0
+			else
+				true
+			endif
+		)
+	to
+		enabled : PNML!Place,
+		tr_rep : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name,
+			Distribution <- act.Duration
+		),
+		enabledtotr : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_enabled_to' + enabled.id,
+			source <- enabled,
+			target <- tr_rep
+		)
+	do { 
+		for( c in act.Target ) {
+			thisModule.newOutputArc(tr_rep, c);
+		}
+	}
+}
+rule RepairImmediate extends Activity {
+	from
+		act : IDM!RepairActivity
+		(
+			if act.Duration.oclIsTypeOf(IDM!Deterministic) then
+				act.Duration.Value = 0
+			else
+				false
+			endif
+		)
+	to
+		enabled : PNML!Place,
+		tr_rep : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name,
+			Weight <- 1,
+			Priority <- thisModule.priActivity
+		),
+		enabledtotr : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_enabled_to' + enabled.id,
+			source <- enabled,
+			target <- tr_rep
+		)
+	do { 
+		for( c in act.Target ) {
+			thisModule.newOutputArc(tr_rep, c);
+		}
 	}
 }
 

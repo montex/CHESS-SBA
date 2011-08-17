@@ -433,6 +433,8 @@
         eType="#//ArithmeticExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LogicalExpression" abstract="true" eSuperTypes="#//Expression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OpTrue" eSuperTypes="#//LogicalExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OpFalse" eSuperTypes="#//LogicalExpression"/>
   <eClassifiers xsi:type="ecore:EClass" name="LogicalBinaryOperator" abstract="true"
       eSuperTypes="#//LogicalExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression1" lowerBound="1"
