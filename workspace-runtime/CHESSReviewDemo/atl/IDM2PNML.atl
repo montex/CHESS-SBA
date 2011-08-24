@@ -16,6 +16,7 @@ helper def: priPropagationChoice : Integer = 6;
 helper def: priReset : Integer = 3;
 helper def: priActivity : Integer = 2;
 helper def: priActivitySchedule : Integer = 1;
+helper def: priReliability : Integer = 7;
 
 helper def: getPage : PNML!Page = IDM!Sistema.allInstances()->first();
 
@@ -94,7 +95,9 @@ rule Component {
 		)
 	do {
 		for(f in c.Faults) {
-			thisModule.newInputArcMultiplicityOfPlace(f, reset);
+			if(f.oclIsTypeOf(IDM!InternalFault)) {
+				thisModule.newInputArcMultiplicityOfPlace(f, reset);
+			}
 		}
 		for(e in c.Errors) {
 			thisModule.newInputArcMultiplicityOfPlace(e, reset);
@@ -1019,13 +1022,9 @@ rule IntervalOfTime {
 		)
 }
 --Measures of interest
-rule MeasureToRewardFunction {
-	from 
+abstract rule MeasureOfInterest {
+	from
 		idm_measure : IDM!DependabilityMeasure
-	using {
-		mexp : OrderedSet(PNML!MarkingExpression) = OrderedSet{};
-		tmp : PNML!OpSum = OclUndefined; 
-	}
 	to
 		measure : PNML!Measure
 		(
@@ -1035,32 +1034,87 @@ rule MeasureToRewardFunction {
 		),
 		ite : PNML!IfThenElse
 		(
-			condition <- cond,
+--			condition <- cond,
 			ifTrue <- thisModule.newValueExpression(1),
 			ifFalse <- thisModule.newValueExpression(0)
+		)
+}
+rule Reliability extends MeasureOfInterest {
+	from 
+		idm_measure : IDM!Reliability
+	to
+		measure : PNML!Measure,
+		ite : PNML!IfThenElse
+		(
+			condition <- cond	
 		),
 		cond : PNML!OpEqual
 		(
+			expression1 <- thisModule.newMarkingExpression(relplace),
 			expression2 <- thisModule.newValueExpression(0)
-			
+		),
+		relplace : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- measure.name + '_memory_pl',
+			initialMarking <- thisModule.newPTMarking(0)
+		),
+		reltrans : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- measure.name + '_memory_tr',
+			Weight <- 1,
+			Priority <- thisModule.priReliability
+		),
+		relarc : PNML!GSPNArc 
+		(
+			containerPage <- thisModule.getPage,
+			id <- measure.name + '_memory_arc',
+			source <- reltrans,
+			target <- relplace
+		),
+		g_eq : PNML!OpEqual
+		(
+			expression1 <- thisModule.newMarkingExpression(relplace),
+			expression2 <- thisModule.newValueExpression(0)
 		)
 	do {
-		if(idm_measure.target->size() = 1)
-		{
-			cond.expression1 <- thisModule.newMarkingExpression(idm_measure.target.asSequence().first());
+		thisModule.tmpLogicExp <- g_eq;
+		for(fm in idm_measure.target) {
+			thisModule.tmpLogicExp <- thisModule.newOpAnd(
+				thisModule.newOpGreater(
+					thisModule.newMarkingExpression(fm),
+					thisModule.newValueExpression(0)
+				),
+				thisModule.tmpLogicExp
+			);
 		}
-		else
-		{
-		--	cond.expression1 <- thisModule.newOpSum();
-			for(i in idm_measure.target) {
-				mexp = mexp->including(thisModule.newMarkingExpression(i));
-			}
-			tmp <- thisModule.newOpSum(mexp->at(1),mexp->at(2));
-			cond.expression1 <- tmp;
-			--cond.expression1 <- thisModule.newOpSum(thisModule.newMarkingExpression(idm_measure.target.asSequence().first()), OclUndefined);
-			--tmp = cond.expression1;
-			--TODO
+		reltrans.Guard <- thisModule.tmpLogicExp;
+	}
+}
+rule Availability extends MeasureOfInterest {
+	from 
+		idm_measure : IDM!Availability
+	to
+		measure : PNML!Measure,
+		ite : PNML!IfThenElse,
+		cond : PNML!OpEqual
+		(
+			expression1 <- thisModule.newMarkingExpression(idm_measure.target.first()),
+			expression2 <- thisModule.newValueExpression(0)
+		)
+	do {
+		thisModule.tmpLogicExp <- cond;
+		for(fm in idm_measure.target.subSequence(2, idm_measure.target.size())) {
+			thisModule.tmpLogicExp <- thisModule.newOpAnd(
+				thisModule.newOpEqual(
+					thisModule.newMarkingExpression(fm),
+					thisModule.newValueExpression(0)
+				),
+				thisModule.tmpLogicExp
+			);
 		}
+		ite.condition <- thisModule.tmpLogicExp;
 	}
 }
 
@@ -1092,6 +1146,17 @@ rule newMarkingExpression( p : PNML!Place ) {
 rule newOpEqual ( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) {
 	to
 		eq : PNML!OpEqual
+		(
+			expression1 <- e1,
+			expression2 <- e2
+		)
+	do {
+		eq;
+	}
+}
+rule newOpGreater ( e1 : PNML!ArithmeticExpression, e2 : PNML!ArithmeticExpression) {
+	to
+		eq : PNML!OpGreater
 		(
 			expression1 <- e1,
 			expression2 <- e2

@@ -1,4 +1,4 @@
--- @path IM=/transformations/IM2.ecore
+-- @path IM=/CHESSReviewDemo/metamodels/IM2.ecore
 -- @path CHESS=http://schemas/CHESS/_PfAJsMe6Ed-7etIj5eTw0Q/19
 -- @nsURI MARTE=http://www.eclipse.org/papyrus/MARTE/1
 
@@ -265,18 +265,20 @@ rule StatefulHardware2Component(sfh : CHESS!StatefulHardware){
 			PropagationLogic <- fn,
 			--Weight <- default value?
 			PropagationLogicStringFormat <- fn.toString()
-		)--,
+		),
 		
---		rd : IM!Exponential(
---			Rate <- sfh.repairDelay.NFPDurationInvertedValue
---		),
---		
---		ra : IM!RepairActivity(
+		rd : IM!Exponential(
+			Rate <- sfh.repairDelay.NFPDurationInvertedValue
+		),
+		
+		ra : IM!RepairActivity(
+			
 --			Component <- c,
---			Target <- c,
---			Duration <- rd --,
---			--When <- ... handled as a DELAYED ACTION
---		)
+			Name <- c.Name + '_RD',
+			Target <- Sequence{c},
+			Duration <- rd --,
+			--When <- ... handled as a DELAYED ACTION
+		)
 	do{
 		thisModule.setFGEName(fge);
 		
@@ -348,17 +350,18 @@ rule StatelessHardware2Component(slh: CHESS!StatelessHardware){
 			PropagationLogic <- fn  ,
 			--Weight <- ??
 			PropagationLogicStringFormat <- fn.toString()
-		)--,
+		),
 		
---		rd : IM!Exponential(
---			Rate <- slh.repairDelay.NFPDurationValue	
---		),
---		
---		ra : IM!RepairActivity(
+		rd : IM!Exponential(
+			Rate <- slh.repairDelay.NFPDurationValue	
+		),
+		
+		ra : IM!RepairActivity(
 --			Component <- c,
---			Target <- c,
---			Duration <- rd
---		)
+			Name <- c.Name + '_RD',
+			Target <- Sequence{c},
+			Duration <- rd
+		)
 
 	do{
 		thisModule.setFGEName(fge);
@@ -430,18 +433,19 @@ rule StatefulSoftware2Component(sfs : CHESS!StatefulSoftware) {
 			PropagationLogic <- fn,
 			--Weight <- ??
 			PropagationLogicStringFormat <- fn.toString()
-		)--,
+		),
 		
---		rd : IM!Exponential(
---			Rate <- sfs.repairDelay.NFPDurationValue
---		),
---		
---		ra : IM!RepairActivity(
+		rd : IM!Exponential(
+			Rate <- sfs.repairDelay.NFPDurationValue
+		),
+		
+		ra : IM!RepairActivity(
 --			Component <- c,
---			Target <- c,
---			Duration <- rd --,
---			--When <- ... handled as a DELAYED ACTION
---		)	
+			Name <- c.Name + '_RD',
+			Target <- Sequence{c},
+			Duration <- rd --,
+			--When <- ... handled as a DELAYED ACTION
+		)	
 		
 	do{
 		thisModule.setFGEName(fge);
@@ -519,13 +523,14 @@ rule StatelessSoftware2Component(sls : CHESS!StatelessSoftware){
 			Name <- thisModule.getFGEName()
 		),
 		
-		rd : IM!Exponential(
-			Rate <- 0	--this is different from StatefulHardware
+		rd : IM!Deterministic(
+			Value <- 0	--this is different from StatefulHardware
 		),
 		
 		ra : IM!RepairActivity(
-			Component <- c,
-			Target <- c,
+--			Component <- c,
+			Name <- c.Name + '_RD',
+			Target <- Sequence{c},
 			Duration <- rd --,
 			--When <- ... handled as a DELAYED ACTION
 		)	
@@ -765,15 +770,20 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 rule RepairActivity(r : IM!RepairActivity){
 	
 	to
-		si : IM!ScheduleImmediately
-	
+		se : IM!ScheduleExpression
+		(
+			T <- si
+		),
+		si : IM!ScheduleExpressionImmediately
 	do{
-		r.When <- si;
-		for (fm in r.Component.FailureModes){
-			thisModule.SchedCond(fm);
+		r.When <- se;
+		for (c in r.Target){
+			for(fm in c.FailureModes) {
+				thisModule.SchedCond(fm);
+			}
 		}
 		if (thisModule.TempScen->size() = 1){
-			si.Condition <- thisModule.TempScen->first();
+			se.EX <- thisModule.TempScen->first();
 		}else{
 			for(scen in thisModule.TempScen){
 				if (scen <> thisModule.TempScen->last()){
@@ -790,7 +800,7 @@ rule RepairActivity(r : IM!RepairActivity){
 					thisModule.Counter <- thisModule.Counter+1;
 				}
 			}
-			si.Condition <- thisModule.TempScen->last();
+			se.EX <- thisModule.TempScen->last();
 		}
 
 		thisModule.TempScen.clear();
@@ -802,8 +812,8 @@ rule RepairActivity(r : IM!RepairActivity){
 rule SchedCond(fm : IM!FailureMode){
 	
 	to
-		scefn : IM!SchedulingConditionExpressionFailedNode(
-			FailureMode <- fm	
+		scefn : IM!ScheduleExpressionFailed (
+			failureMode <- fm	
 		)
 		
 	do{
@@ -875,7 +885,7 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 				first().corrispondingComponent.FailureModes;
 	
 			re.Name <- re.Name + sba.targetDepComponent->first().classifier->
-				first().toString();
+				first().toString().replaceAll('!', '_');
 		}
 	}
 }
