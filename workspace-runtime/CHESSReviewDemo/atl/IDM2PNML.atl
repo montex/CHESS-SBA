@@ -930,6 +930,82 @@ rule ScheduleExpImmediately {
 			place <- act
 		)
 }
+rule ScheduleExpAtTime {
+	from 
+		se : IDM!ScheduleExpressionAtTime
+	using {
+		act : IDM!Activity = IDM!Activity.allInstances()->select(i | i.When.T = se).first();
+	}
+	to
+		tr : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_schedule_T',
+			Distribution <- delay
+		),
+		arc : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_schedule_T_oarc',
+			source <- tr,
+			target <- act
+		),
+		delay : PNML!Deterministic ( Value <- se.t ),
+		wait : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_schedule_T_wait',
+			initialMarking <- thisModule.newPTMarking(1)
+		),
+		fromwait : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_schedule_T_fromwait',
+			source <- wait,
+			target <- tr
+		)
+}
+rule ScheduleExpPeriodic {
+	from
+		se : IDM!ScheduleExpressionPeriodic
+	using {
+		act : IDM!Activity = IDM!Activity.allInstances()->select(i | i.When.T = se).first();
+	}
+	to
+		tr : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_schedule_T',
+			Distribution <- se.PeriodDuration
+		),
+		arc : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_schedule_T_oarc',
+			source <- tr,
+			target <- act
+		),
+		wait : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_schedule_T_wait',
+			initialMarking <- thisModule.newPTMarking(1)
+		),
+		fromwait : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_schedule_T_fromwait',
+			source <- wait,
+			target <- tr
+		),
+		looptowait : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_schedule_T_looptowait',
+			source <- tr,
+			target <- wait				
+		)
+}
 	-- EX
 rule ScheduleExpTrue {
 	from
@@ -991,7 +1067,166 @@ rule ScheduleExpErrorDetected {
 		),
 		mexp : PNML!MarkingExpression
 		(
-			place <- se.error
+			place <- thisModule.resolveTemp(se.error, 'detected')
+		)
+}
+	-- L
+rule ScheduleExpBefore {
+	from 
+		se : IDM!ScheduleExpressionBefore
+	using {
+		act : IDM!Activity = IDM!Activity.allInstances()->select(i | i.When.L = se).first();
+	}
+	to
+		limit : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L',
+			initialMarking <- thisModule.newPTMarking(0)
+		),
+		fireonce : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L_fireonce',
+			initialMarking <- thisModule.newPTMarking(0)
+		),	
+		elapse : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L_elapse',
+			Distribution <- delay
+		),
+		delay : PNML!Deterministic ( Value <- se.t ),
+		from_fireonce : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- fireonce.id + '_to_' + elapse.id,
+			source <- fireonce,
+			target <- elapse
+		),
+		to_limit : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- elapse.id + '_to_' + limit.id,
+			source <- elapse,
+			target <- limit				
+		),
+		inhibit : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L_inhibit',
+			source <- limit,
+			target <- act.When.T,
+			type <- #inhibitor
+		)
+}
+rule ScheduleExpAfter {
+	from 
+		se : IDM!ScheduleExpressionAfter
+	using {
+		act : IDM!Activity = IDM!Activity.allInstances()->select(i | i.When.L = se).first();
+	}
+	to
+		limit : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L',
+			initialMarking <- thisModule.newPTMarking(0)
+		),
+		elapse : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L_elapse',
+			Distribution <- delay
+		),
+		delay : PNML!Deterministic ( Value <- se.t ),
+		from_limit : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- limit.id + '_to_' + elapse.id,
+			source <- limit,
+			target <- elapse				
+		),
+		inhibit : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L_inhibit',
+			source <- limit,
+			target <- act.When.T,
+			type <- #inhibitor
+		)
+}
+rule ScheduleExpInterval {
+	from 
+		se : IDM!ScheduleExpressionInterval
+	using {
+		act : IDM!Activity = IDM!Activity.allInstances()->select(i | i.When.L = se).first();
+	}
+	to
+		limit : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L',
+			initialMarking <- thisModule.newPTMarking(0)
+		),
+		elapse_t1 : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L_elapse_t1',
+			Distribution <- delay_t1
+		),
+		delay_t1 : PNML!Deterministic ( Value <- se.t1 ),
+		
+		elapse_t2 : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L_elapse_t2',
+			Distribution <- delay_t2
+		),
+		delay_t2 : PNML!Deterministic ( Value <- se.t2 ),
+		
+		ininterval : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L_ininterval',
+			initialMarking <- thisModule.newPTMarking(0)
+		),
+		
+		from_limit : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- limit.id + '_to_' + elapse_t1.id,
+			source <- limit,
+			target <- elapse_t1
+		),
+		enterinterval : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- elapse_t1.id + '_to_' + ininterval.id
+			source <- elapse_t1,
+			target <- ininterval
+		),
+		exitinterval : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- ininterval.id + '_to_' + elapse_t2.id,
+			source <- ininterval,
+			target <- elapse_t2
+		),
+		to_limit : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- elapse_t2.id + '_to_' + limit.id,
+			source <- elapse_t2,
+			target <- limit			
+		),
+		inhibit : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_L_inhibit',
+			source <- limit,
+			target <- act.When.T,
+			type <- #inhibitor
 		)
 }
 
