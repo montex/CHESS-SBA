@@ -374,10 +374,91 @@ rule Error { --manca l'implementazione di VanishingTime
 			id <- e.Name,
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.newPTMarking(0)
+		),
+		detected : PNML!Place (
+			id <- e.Name + '_detected',
+			containerPage <- thisModule.getPage,
+			initialMarking <- thisModule.newPTMarking(0)
 		)
 	do {
 		thisModule.makeUniqueID(err);
+		thisModule.makeUniqueID(detected);
 	}
+}
+rule ErrorVanishImmediate extends Error {
+	from
+		e : IDM!Error
+		(
+			if e.VanishingTime.oclIsUndefined() then
+				false
+			else
+				if e.VanishingTime.oclIsTypeOf(IDM!Deterministic) then
+					e.VanishingTime.Value = 0
+				else
+					false
+				endif
+			endif
+		)
+	to
+		err : PNML!Place,
+		detected : PNML!Place,
+		vanish : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- e.Name + '_vanish',
+			Priority <- thisModule.priTransientDuration,
+			Weight <- 1
+		),
+		tovanish : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- e.Name + '_to_vanish',
+			source <- err,
+			target <- vanish
+		)
+	do {
+		thisModule.makeUniqueID(err);
+		thisModule.makeUniqueID(detected);
+		thisModule.makeUniqueID(vanish);
+		thisModule.makeUniqueID(tovanish);
+	}		
+}
+rule ErrorVanishTimed extends Error {
+	from
+		e : IDM!Error
+		(
+			if e.VanishingTime.oclIsUndefined() then
+				false
+			else
+				if e.VanishingTime.oclIsTypeOf(IDM!Deterministic) then
+					e.VanishingTime.Value > 0
+				else
+					true
+				endif
+			endif
+		)
+	to
+		err : PNML!Place,
+		detected : PNML!Place,
+		vanish : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- e.Name + '_vanish',
+			Distribution <- e.VanishingTime
+		),
+		tovanish : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- e.Name + '_to_vanish',
+			source <- err,
+			target <- vanish
+		)
+	do {
+		thisModule.makeUniqueID(err);
+		thisModule.makeUniqueID(detected);
+		thisModule.makeUniqueID(vanish);
+		thisModule.makeUniqueID(tovanish);
+	}		
 }
 
 rule FailureMode {
