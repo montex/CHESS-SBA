@@ -1202,7 +1202,7 @@ rule ScheduleExpInterval {
 		enterinterval : PNML!GSPNArc
 		(
 			containerPage <- thisModule.getPage,
-			id <- elapse_t1.id + '_to_' + ininterval.id
+			id <- elapse_t1.id + '_to_' + ininterval.id,
 			source <- elapse_t1,
 			target <- ininterval
 		),
@@ -1307,16 +1307,6 @@ rule RepairImmediate extends Activity {
 	}
 }
 
---Crea un oggeto PTMarking a partire da un numero intero
-lazy rule newPTMarking {
-	from
-		v : Integer
-	to
-		m : PNML!PTMarking (
-			text <- v
-		)
-}
-
 --Evaluation types
 rule InstantOfTime {
 	from
@@ -1337,6 +1327,7 @@ rule IntervalOfTime {
 			intervalEnd <- thisModule.newVariableExpression(PNML!Variable.allInstances()->select(v | v.name = 'Time').first())
 		)
 }
+
 --Measures of interest
 abstract rule MeasureOfInterest {
 	from
@@ -1434,6 +1425,7 @@ rule Availability extends MeasureOfInterest {
 	}
 }
 
+--Rules to generate expression nodes
 lazy rule newVariableExpression {
 	from 
 		var : PNML!Variable
@@ -1515,6 +1507,8 @@ rule newOpOr ( e1 : PNML!LogicalExpression, e2 : PNML!LogicalExpression) {
 	}
 }
 
+--Other rules
+	--Creates a new output arc between a transition and a place
 rule newOutputArc ( t : PNML!Transition, p : PNML!Place ) { 
 	to
 		arc : PNML!GSPNArc
@@ -1525,6 +1519,7 @@ rule newOutputArc ( t : PNML!Transition, p : PNML!Place ) {
 			id <- t.toString() + '_to_' + p.toString()
 		)
 }
+	--Creates a new input arc between a place and a transition
 rule newInputArc ( p : PNML!Place, t : PNML!Transition ) {
 	to 
 		arc : PNML!GSPNArc
@@ -1535,6 +1530,8 @@ rule newInputArc ( p : PNML!Place, t : PNML!Transition ) {
 			id <- p.toString() + '_to_' + t.toString()
 		)
 }
+	--Creates a new input arc between a place and a transition,
+	--having as multiplicity the number of tokens in the place (i.e., MARK(p))
 rule newInputArcMultiplicityOfPlace ( p : PNML!Place, t : PNML!Transition ) {
 	to 
 		arc : PNML!GSPNArc
@@ -1550,8 +1547,12 @@ rule newInputArcMultiplicityOfPlace ( p : PNML!Place, t : PNML!Transition ) {
 			place <- p	
 		)
 }
-
-
-
-
-
+	--Creates a new "PTMarking" element from on an integer value
+lazy rule newPTMarking {
+	from
+		v : Integer
+	to
+		m : PNML!PTMarking (
+			text <- v
+		)
+}
