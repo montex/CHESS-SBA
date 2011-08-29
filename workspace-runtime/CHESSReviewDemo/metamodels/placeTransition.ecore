@@ -459,14 +459,18 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="instant" lowerBound="1"
         eType="#//ArithmeticExpression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IntervalOfTime" abstract="true" eSuperTypes="#//EvaluationType">
+  <eClassifiers xsi:type="ecore:EClass" name="IntervalOfTime" eSuperTypes="#//EvaluationType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="intervalBegin" lowerBound="1"
         eType="#//ArithmeticExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="intervalEnd" lowerBound="1"
         eType="#//ArithmeticExpression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IntervalOfTimeCumulated" eSuperTypes="#//IntervalOfTime"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IntervalOfTimeAveraged" eSuperTypes="#//IntervalOfTime"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IntervalOfTimeAveraged" eSuperTypes="#//EvaluationType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="intervalBegin" lowerBound="1"
+        eType="#//ArithmeticExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="intervalEnd" lowerBound="1"
+        eType="#//ArithmeticExpression" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Variable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         iD="true"/>

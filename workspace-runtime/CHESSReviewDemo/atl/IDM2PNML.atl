@@ -10,10 +10,10 @@ helper def: arcCount : Integer = 1;
 helper def: otherCount : Integer = 1;
 helper def: timePoints : OrderedSet(Real) = OrderedSet{};
 
-helper def: priTransientDuration : Integer = 4;
-helper def: priPropagation : Integer = 5;
+helper def: priTransientDuration : Integer = 3;
+helper def: priPropagation : Integer = 4;
 helper def: priPropagationChoice : Integer = 6;
-helper def: priReset : Integer = 3;
+helper def: priReset : Integer = 5;
 helper def: priActivity : Integer = 2;
 helper def: priActivitySchedule : Integer = 1;
 helper def: priReliability : Integer = 7;
@@ -97,13 +97,27 @@ rule Component {
 		for(f in c.Faults) {
 			if(f.oclIsTypeOf(IDM!InternalFault)) {
 				thisModule.newInputArcMultiplicityOfPlace(f, reset);
+				--thisModule.resolveTemp(Tuple{ft=f}, 'tmpfaulty').debug();
+				
+				--thisModule.newInputArcMultiplicityOfPlace(thisModule.tmpPlace, reset);
+--				thisModule.tmpPlace.debug();
+--				thisModule.newInputArcMultiplicityOfPlace(thisModule.tmpPlace, reset);
 			}
 		}
 		for(e in c.Errors) {
 			thisModule.newInputArcMultiplicityOfPlace(e, reset);
+	--		for(fge in IDM!FaultsGenerateErrors.allInstances()->select(i | i.Destination.includes(e))) {
+	--			thisModule.newInputArcMultiplicityOfPlace(fge, 'tmp');
+	--		}
+--			for(fge in IDM!FaultsGenerateErrors.allInstances()->select(i | i.Destination.includes(e))) {
+--				thisModule.resolveTemp(fge, 'tmp').debug();
+--			}
 		}
 		for(fm in c.FailureModes) {
 			thisModule.newInputArcMultiplicityOfPlace(fm, reset);
+	--		for(epf in IDM!FaultsGenerateErrors.allInstances()->select(i | i.Destination.includes(fm))) {
+	--			thisModule.newInputArcMultiplicityOfPlace(epf, 'tmp');
+	--		}
 		}
 	}
 }
@@ -242,6 +256,7 @@ rule InternalFaultTT extends InternalFault { --FO timed, TD timed
 		)
 	to
 		faulty : PNML!Place,
+		tmpfaulty : PNML!Place,
 		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
 		fo : PNML!GSPNTimedTransition
 		(
@@ -272,6 +287,7 @@ rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 		)
 	to
 		faulty : PNML!Place,
+		tmpfaulty : PNML!Place,
 		fo : PNML!GSPNImmediateTransition
 		(
 			containerPage <- thisModule.getPage,
@@ -311,6 +327,7 @@ rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
 		)
 	to
 		faulty : PNML!Place,
+		tmpfaulty : PNML!Place,
 		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
 		fo : PNML!GSPNTimedTransition
 		(
@@ -346,6 +363,7 @@ rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
 		)
 	to
 		faulty : PNML!Place,
+		tmpfaulty : PNML!Place,
 		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
 		fo : PNML!GSPNImmediateTransition
 		(
@@ -1321,7 +1339,17 @@ rule IntervalOfTime {
 	from
 		idm_interval : IDM!IntervalOfTime
 	to
-		evaltype : PNML!IntervalOfTimeCumulated
+		evaltype : PNML!IntervalOfTime
+		(
+			intervalBegin <- thisModule.newValueExpression(idm_interval.begin),
+			intervalEnd <- thisModule.newVariableExpression(PNML!Variable.allInstances()->select(v | v.name = 'Time').first())
+		)
+}
+rule IntervalOfTimeAveraged {
+	from
+		idm_interval : IDM!IntervalOfTimeAveraged
+	to
+		evaltype : PNML!IntervalOfTimeAveraged
 		(
 			intervalBegin <- thisModule.newValueExpression(idm_interval.begin),
 			intervalEnd <- thisModule.newVariableExpression(PNML!Variable.allInstances()->select(v | v.name = 'Time').first())

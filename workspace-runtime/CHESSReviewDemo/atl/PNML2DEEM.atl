@@ -57,18 +57,14 @@ helper context PNML!GSPNTimedTransition def: toString(): String =
 	',\''+
 	if(self.Guard.oclIsUndefined()) then '' else self.Guard.toString() endif
 	+'\', \''+self.Distribution.paramSequence()->first()+'\',\n'+
-    ' (\n'+
-    '1.000000e+00\n' +
-    '  '+self.Distribution.paramSequence().subSequence(2, self.Distribution.paramSequence().size())->iterate(i; acc : String = '' |
-	acc +
-		if acc = '' then
-			''
-		else
-			',\n'
-		endif +
-	    '\''+i.toString()+'\''
+    '(\n'+'  '+
+    '1.000000e+00' +
+    self.Distribution.paramSequence().subSequence(2, self.Distribution.paramSequence().size())->iterate(
+    	i; acc : String = '' |
+		acc + ',\n' +
+	    '  '+'\''+i.toString()+'\''
 	)+
-    '  );\n';
+    '\n);\n';
     
 helper context PNML!Distribution def: getCode(): String = 
 	if self.oclIsTypeOf(PNML!Deterministic) then
@@ -177,7 +173,8 @@ helper context PNML!Variable def: toString(): String =
  	'VARIABLE:"'+self.name+'","Real";\n';
  	
 helper context PNML!Measure def:toString(): String =
-	'RES_FUNC:"'+self.name+'",\''+self.rewardFunction.toString()+'\',0;';
+	'RES_FUNC:"'+self.name+'",\''+self.rewardFunction.toString()+'\','+self.evaluationType.toString()+';';
 	
-
-
+helper context PNML!InstantOfTime def:toString(): String = '0';
+helper context PNML!IntervalOfTime def:toString(): String = '1';
+helper context PNML!IntervalOfTimeAveraged def:toString(): String = '2';
