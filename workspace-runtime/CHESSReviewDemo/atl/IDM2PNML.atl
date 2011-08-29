@@ -1380,15 +1380,25 @@ rule Reliability extends MeasureOfInterest {
 			source <- reltrans,
 			target <- relplace
 		),
-		g_eq : PNML!OpEqual
+		g_and : PNML!OpAnd
+		(
+--			expression1 <- g_first,
+			expression2 <- g_rel
+		),
+		g_first : PNML!OpGreater
+		(
+			expression1 <- thisModule.newMarkingExpression(idm_measure.target.first()),
+			expression2 <- thisModule.newValueExpression(0)				
+		),
+		g_rel : PNML!OpEqual
 		(
 			expression1 <- thisModule.newMarkingExpression(relplace),
 			expression2 <- thisModule.newValueExpression(0)
 		)
 	do {
-		thisModule.tmpLogicExp <- g_eq;
-		for(fm in idm_measure.target) {
-			thisModule.tmpLogicExp <- thisModule.newOpAnd(
+		thisModule.tmpLogicExp <- g_first;
+		for(fm in idm_measure.target.excluding(idm_measure.target.first())) {
+			thisModule.tmpLogicExp <- thisModule.newOpOr(
 				thisModule.newOpGreater(
 					thisModule.newMarkingExpression(fm),
 					thisModule.newValueExpression(0)
@@ -1396,7 +1406,8 @@ rule Reliability extends MeasureOfInterest {
 				thisModule.tmpLogicExp
 			);
 		}
-		reltrans.Guard <- thisModule.tmpLogicExp;
+		g_and.expression1 <- thisModule.tmpLogicExp;
+		reltrans.Guard <- g_and;
 	}
 }
 rule Availability extends MeasureOfInterest {
