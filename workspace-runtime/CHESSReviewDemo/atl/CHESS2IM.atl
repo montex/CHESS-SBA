@@ -890,6 +890,31 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 	}
 }
 
+rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
+	
+	to
+		re : IM!Availability (
+			Name <-	'Availability_'
+		),
+		
+		it : IM!IntervalOfTime (
+			begin <- 0,
+			end <- time	
+		)
+	do{
+		thisModule.IMSystem.measures.add(re);
+		re.evaluations.add(it);
+
+		if (sba.targetDepComponent <> OclUndefined){
+			re.target <- sba.targetDepComponent->first().classifier->
+				first().corrispondingComponent.FailureModes;
+	
+			re.Name <- re.Name + sba.targetDepComponent->first().classifier->
+				first().toString().replaceAll('!', '_');
+		}
+	}
+}
+
 --manages all the delayed actions
 endpoint rule EndRule() {
 	
@@ -940,6 +965,8 @@ endpoint rule EndRule() {
 		--temporary version
 		if (thisModule.SBAnalysis.WhichMeasure = 'Reliability'){
 			thisModule.Reliability(thisModule.SBAnalysis, thisModule.SBAnalysis.measure.getTime);
+		}else if (thisModule.SBAnalysis.WhichMeasure = 'Availability'){
+			thisModule.Availability(thisModule.SBAnalysis, thisModule.SBAnalysis.measure.getTime);
 		}else{
 			--TODO: Availability, Safety... (others?)
 		}
@@ -966,7 +993,10 @@ lazy rule newExponential {
 
 --temporary parser to retrieve which dependability measure a SBAnalysis refers to
 helper context CHESS!StateBasedAnalysis def: WhichMeasure : String =
-	if self.measure.startsWith('Reliability') then 'Reliability' else 'error' endif;
+	if self.measure.startsWith('Reliability') then 'Reliability'
+	else if self.measure.startsWith('Availability') then 'Availability'
+	else 'error'
+	endif endif;
 
 --temporary parser to retrieve the time value from a dependability measure
 helper context String def: getTime : Real = 

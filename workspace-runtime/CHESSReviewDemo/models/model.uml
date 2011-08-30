@@ -594,7 +594,7 @@
   <DependableComponent:Propagation xmi:id="_Z8rigGRHEeCooZQiudzy4A" prob="1.0" propDelay="1.0E-02" base_Comment="_J5VZEEAIEeCoh-1BA2BB1g"/>
   <DependableComponent:Propagation xmi:id="_dKbQ4GRHEeCooZQiudzy4A" prob="1.0" propDelay="1.0E-02" base_Comment="_Vmj1MEAIEeCoh-1BA2BB1g"/>
   <GQAM:GaResourcesPlatform xmi:id="_j8nWYGRHEeCooZQiudzy4A" base_Classifier="_lHNgoD_9EeCMjNe7UhVfZQ"/>
-  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_qm-VkGRHEeCooZQiudzy4A" base_StructuredClassifier="_pfeiAGRHEeCooZQiudzy4A" base_NamedElement="_pfeiAGRHEeCooZQiudzy4A" platform="_dNdiwFn_EeCIuvkONEI9Sw" measure="Reliability { instantOfTime = 10000 }" targetDepComponent="_YFss41uuEeCW15PhyoEOBA"/>
+  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_qm-VkGRHEeCooZQiudzy4A" base_StructuredClassifier="_pfeiAGRHEeCooZQiudzy4A" base_NamedElement="_pfeiAGRHEeCooZQiudzy4A" platform="_dNdiwFn_EeCIuvkONEI9Sw" measure="Availability { intervalEnd = 10000 }" targetDepComponent="_YFss41uuEeCW15PhyoEOBA"/>
   <DependableComponent:Propagation xmi:id="_HO4F8GRPEeCdHrsDGHtu8g" prob="0.01" propDelay="1.0E-02" base_Comment="_dISSYFoAEeCIuvkONEI9Sw"/>
   <DependableComponent:Propagation xmi:id="_cZ0DUGdoEeCSBPYSdfJ_7Q" prob="0.6" propDelay="2" base_InstanceSpecification="_Um_uI1n9EeCIuvkONEI9Sw"/>
   <DependableComponent:Propagation xmi:id="_wWLrIGdoEeCSBPYSdfJ_7Q" prob="0.7" propDelay="4" base_InstanceSpecification="_Um_uKFn9EeCIuvkONEI9Sw"/>

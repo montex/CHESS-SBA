@@ -65,6 +65,9 @@ rule Sistema {
 		for(i in IDM!InstantOfTime.allInstances()) {
 			varvals.values <- varvals.values.append(i.timePoint);
 		}
+		for(i in IDM!IntervalOfTime.allInstances()) {
+			varvals.values <- varvals.values.append(i.end);
+		}
 	}
 }
 
@@ -1260,7 +1263,7 @@ abstract rule Activity {
 			initialMarking <- thisModule.newPTMarking(0)
 		)
 }
-	--Replace (Timed)
+	--Repair
 rule RepairTimed extends Activity {
 	from
 		act : IDM!RepairActivity
