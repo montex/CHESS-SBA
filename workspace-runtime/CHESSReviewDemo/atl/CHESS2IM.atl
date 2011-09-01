@@ -276,6 +276,7 @@ rule StatefulHardware2Component(sfh : CHESS!StatefulHardware){
 --			Component <- c,
 			Name <- c.Name + '_RD',
 			Target <- Sequence{c},
+			SuccessProbability <- 1,
 			Duration <- rd --,
 			--When <- ... handled as a DELAYED ACTION
 		)
@@ -360,6 +361,7 @@ rule StatelessHardware2Component(slh: CHESS!StatelessHardware){
 --			Component <- c,
 			Name <- c.Name + '_RD',
 			Target <- Sequence{c},
+			SuccessProbability <- 1,
 			Duration <- rd
 		)
 
@@ -443,6 +445,7 @@ rule StatefulSoftware2Component(sfs : CHESS!StatefulSoftware) {
 --			Component <- c,
 			Name <- c.Name + '_RD',
 			Target <- Sequence{c},
+			SuccessProbability <- 1,
 			Duration <- rd --,
 			--When <- ... handled as a DELAYED ACTION
 		)	
@@ -531,6 +534,7 @@ rule StatelessSoftware2Component(sls : CHESS!StatelessSoftware){
 --			Component <- c,
 			Name <- c.Name + '_RD',
 			Target <- Sequence{c},
+			SuccessProbability <- 1,
 			Duration <- rd --,
 			--When <- ... handled as a DELAYED ACTION
 		)	

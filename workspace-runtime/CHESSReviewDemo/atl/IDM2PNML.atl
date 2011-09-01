@@ -10,13 +10,14 @@ helper def: arcCount : Integer = 1;
 helper def: otherCount : Integer = 1;
 helper def: timePoints : OrderedSet(Real) = OrderedSet{};
 
-helper def: priTransientDuration : Integer = 3;
-helper def: priPropagation : Integer = 4;
-helper def: priPropagationChoice : Integer = 6;
-helper def: priReset : Integer = 5;
+helper def: priTransientDuration : Integer = 4;
+helper def: priPropagation : Integer = 5;
+helper def: priPropagationChoice : Integer = 7;
+helper def: priReset : Integer = 6;
 helper def: priActivity : Integer = 2;
 helper def: priActivitySchedule : Integer = 1;
-helper def: priReliability : Integer = 7;
+helper def: priActivityOutcome : Integer = 3;
+helper def: priReliability : Integer = 8;
 
 helper def: getPage : PNML!Page = IDM!Sistema.allInstances()->first();
 
@@ -100,27 +101,13 @@ rule Component {
 		for(f in c.Faults) {
 			if(f.oclIsTypeOf(IDM!InternalFault)) {
 				thisModule.newInputArcMultiplicityOfPlace(f, reset);
-				--thisModule.resolveTemp(Tuple{ft=f}, 'tmpfaulty').debug();
-				
-				--thisModule.newInputArcMultiplicityOfPlace(thisModule.tmpPlace, reset);
---				thisModule.tmpPlace.debug();
---				thisModule.newInputArcMultiplicityOfPlace(thisModule.tmpPlace, reset);
 			}
 		}
 		for(e in c.Errors) {
 			thisModule.newInputArcMultiplicityOfPlace(e, reset);
-	--		for(fge in IDM!FaultsGenerateErrors.allInstances()->select(i | i.Destination.includes(e))) {
-	--			thisModule.newInputArcMultiplicityOfPlace(fge, 'tmp');
-	--		}
---			for(fge in IDM!FaultsGenerateErrors.allInstances()->select(i | i.Destination.includes(e))) {
---				thisModule.resolveTemp(fge, 'tmp').debug();
---			}
 		}
 		for(fm in c.FailureModes) {
 			thisModule.newInputArcMultiplicityOfPlace(fm, reset);
-	--		for(epf in IDM!FaultsGenerateErrors.allInstances()->select(i | i.Destination.includes(fm))) {
-	--			thisModule.newInputArcMultiplicityOfPlace(epf, 'tmp');
-	--		}
 		}
 	}
 }
@@ -1261,6 +1248,38 @@ abstract rule Activity {
 			containerPage <- thisModule.getPage,
 			id <- act.Name + '_enabled',
 			initialMarking <- thisModule.newPTMarking(0)
+		),
+		completed : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_completed',
+			initialMarking <- thisModule.newPTMarking(0) 	
+		),
+		tr_success : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_outcome_success',
+			Priority <- thisModule.priActivityOutcome
+		),
+		tr_failed : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_outcome_failed',
+			Priority <- thisModule.priActivityOutcome
+		),
+		tosuccess : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- completed,
+			target <- tr_success,
+			id <- completed.id + '_to_' + tr_success.id
+		),
+		tofailed : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- completed,
+			target <- tr_failed,
+			id <- completed.id + '_to_' + tr_failed.id
 		)
 }
 	--Repair
@@ -1276,6 +1295,7 @@ rule RepairTimed extends Activity {
 		)
 	to
 		enabled : PNML!Place,
+		completed : PNML!Place,
 		tr_rep : PNML!GSPNTimedTransition
 		(
 			containerPage <- thisModule.getPage,
@@ -1288,10 +1308,19 @@ rule RepairTimed extends Activity {
 			id <- act.Name + '_enabled_to' + enabled.id,
 			source <- enabled,
 			target <- tr_rep
-		)
+		),
+		trtocompleted : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- tr_rep,
+			target <- completed,
+			id <- tr_rep.id + '_to_' + completed.id
+		),
+		tr_success : PNML!GSPNImmediateTransition ( Weight <- act.SuccessProbability ),
+		tr_failed : PNML!GSPNImmediateTransition ( Weight <- (1-act.SuccessProbability) )
 	do { 
 		for( c in act.Target ) {
-			thisModule.newOutputArc(tr_rep, c);
+			thisModule.newOutputArc(tr_success, c);
 		}
 	}
 }
@@ -1307,6 +1336,7 @@ rule RepairImmediate extends Activity {
 		)
 	to
 		enabled : PNML!Place,
+		completed : PNML!Place,
 		tr_rep : PNML!GSPNImmediateTransition
 		(
 			containerPage <- thisModule.getPage,
@@ -1320,10 +1350,19 @@ rule RepairImmediate extends Activity {
 			id <- act.Name + '_enabled_to' + enabled.id,
 			source <- enabled,
 			target <- tr_rep
-		)
+		),
+		trtocompleted : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- tr_rep,
+			target <- completed,
+			id <- tr_rep.id + '_to_' + completed.id
+		),
+		tr_success : PNML!GSPNImmediateTransition ( Weight <- act.SuccessProbability ),
+		tr_failed : PNML!GSPNImmediateTransition ( Weight <- (1-act.SuccessProbability) )
 	do { 
 		for( c in act.Target ) {
-			thisModule.newOutputArc(tr_rep, c);
+			thisModule.newOutputArc(tr_success, c);
 		}
 	}
 }
