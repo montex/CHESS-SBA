@@ -48,6 +48,9 @@
           <region xmi:id="_PJ1swEAxEeCNVbN088KYpA" name="region0">
             <subvertex xmi:type="uml:State" xmi:id="_RFVJEEAxEeCNVbN088KYpA" name="State0"/>
             <subvertex xmi:type="uml:State" xmi:id="_WjkTYEAxEeCNVbN088KYpA" name="State1"/>
+            <subvertex xmi:type="uml:Pseudostate" xmi:id="_K8cU0Nh3EeCArqIVkK-99Q" name="Initial0"/>
+            <subvertex xmi:type="uml:State" xmi:id="_LlEbENh3EeCArqIVkK-99Q" name="State2"/>
+            <transition xmi:id="_MfHBcNh3EeCArqIVkK-99Q" name="Transition0" source="_K8cU0Nh3EeCArqIVkK-99Q" target="_LlEbENh3EeCArqIVkK-99Q"/>
           </region>
         </ownedBehavior>
         <ownedBehavior xmi:type="uml:Activity" xmi:id="_eRaZYFrLEeCATuT6LwspdA" name="InterferenceAnalyze-ICB" specification="_3kNToFb3EeCR3LfeuuoSNA">
@@ -166,7 +169,10 @@
           </slot>
         </packagedElement>
       </packagedElement>
-      <packagedElement xmi:type="uml:Activity" xmi:id="_UdQP8NcHEeCIwq4csJyYLg" name="Activity0"/>
+      <packagedElement xmi:type="uml:Activity" xmi:id="_UdQP8NcHEeCIwq4csJyYLg" name="Activity0">
+        <node xmi:type="uml:ActivityFinalNode" xmi:id="_aH-E0NhsEeCArqIVkK-99Q" name="ActivityFinalNode1"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_KkJKkNhsEeCArqIVkK-99Q" name="DataType0"/>
       <profileApplication xmi:id="_Te5mIT_9EeCMjNe7UhVfZQ">
         <eAnnotations xmi:id="_Te5mIj_9EeCMjNe7UhVfZQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
           <references xmi:type="ecore:EPackage" href="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_xt9poDUkEeC3rNpnAhYo0w"/>
@@ -600,5 +606,6 @@
   <DependableComponent:Propagation xmi:id="_cZ0DUGdoEeCSBPYSdfJ_7Q" prob="0.6" propDelay="2" base_InstanceSpecification="_Um_uI1n9EeCIuvkONEI9Sw"/>
   <DependableComponent:Propagation xmi:id="_wWLrIGdoEeCSBPYSdfJ_7Q" prob="0.7" propDelay="4" base_InstanceSpecification="_Um_uKFn9EeCIuvkONEI9Sw"/>
   <DependableComponent:Propagation xmi:id="_-qihkGdoEeCSBPYSdfJ_7Q" prob="0.3" propDelay="3" base_InstanceSpecification="_YF1201uuEeCW15PhyoEOBA"/>
-  <MaintenanceMonitoring:Repair xmi:id="_bUSZMNcHEeCIwq4csJyYLg" base_Activity="_UdQP8NcHEeCIwq4csJyYLg" duration="1000" probSuccess="0.9" targets="_-hwDcFk6EeCNUs77z6e79Q"/>
+  <MaintenanceMonitoring:Repair xmi:id="_bUSZMNcHEeCIwq4csJyYLg" base_Activity="_UdQP8NcHEeCIwq4csJyYLg" duration="1000" probSuccess="0.9" targets="_jNmhYEACEeCoh-1BA2BB1g"/>
+  <ThreatsPropagation:InternalFault xmi:id="_O7BqQNh3EeCArqIVkK-99Q" base_Transition="_MfHBcNh3EeCArqIVkK-99Q"/>
 </xmi:XMI>

@@ -91,9 +91,29 @@ rule RepairActivityGeneric {
 	to
 		act : IM!RepairActivity
 		(
-			SuccessProbability <- r.probSuccess.NFPRealValue.debug()
-		)
+			Name <- r.base_Activity.name,
+			SuccessProbability <- r.probSuccess.NFPRealValue,
+			Duration <- d,
+			When <- timeexp
+		),
+		--For the moment the duration is assumed to be exponential
+		d : IM!Exponential (
+			Rate <- r.duration.NFPDurationInvertedValue
+		),
+		--temporary
+		timeexp : IM!ScheduleExpression
+		(
+				T <- timeexp_t,
+				EX <- timeexp_ex
+		),
+		timeexp_ex : IM!ScheduleExpressionTrue,
+		timeexp_t : IM!ScheduleExpressionPeriodic
+		(
+				PeriodDuration <- period
+		),
+		period : IM!Deterministic ( Value <- 1000 )
 	do {
+		--r.targets handled as DELAYED ACTION in EndRule()
 	}
 }
 --LEONARDO
@@ -976,9 +996,17 @@ endpoint rule EndRule() {
 		thisModule.IMSystem.Activities.addAll(IM!Activity.allInstances());
 		--handle repair activities
 		--thisModule.RepairActivities <- IM!RepairActivity.allInstances();
+		--RepairActitivity elements generated fom RD
 		for (r in thisModule.RepairActivities){
 			thisModule.RepairActivity(r);
 		}
+		--Other RepairActivity elements
+		for (rep in IM!RepairActivity.allInstances().asSet() - thisModule.RepairActivities) {
+			for ( t in CHESS!Repair.allInstances()->select( act | act.base_Activity.name = rep.Name )->first().targets ) {
+				rep.Target <- rep.Target->including(t.getType().corrispondingComponent);
+			}
+		}
+	
 		
 		--fault propagation due to Assign (hw -> sw)
 		for (a in MARTE!Assign.allInstances()){
@@ -1071,6 +1099,8 @@ helper def: TempScen : Sequence(IM!SchedulingConditionExpressionNode) = Sequence
 helper def: TempScenSeq : Sequence(IM!SchedulingConditionExpressionNode) = Sequence {};
 
 helper context UML2!Component def: corrispondingComponent : IM!Component =
+	thisModule.IMSystem.components->select(e| e.Name = self.name)->first();
+helper context UML2!Property def: corrispondingComponent : IM!Component =
 	thisModule.IMSystem.components->select(e| e.Name = self.name)->first();
 
 helper context CHESS!DependableComponent def : getName : String = self.base_Component.name;

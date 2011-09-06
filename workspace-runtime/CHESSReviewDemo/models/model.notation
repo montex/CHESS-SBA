@@ -1122,6 +1122,42 @@
               <element xmi:type="uml:State" href="model.uml#_WjkTYEAxEeCNVbN088KYpA"/>
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WkBmYUAxEeCNVbN088KYpA" x="265" y="80"/>
             </children>
+            <children xmi:type="notation:Shape" xmi:id="_K-x3INh3EeCArqIVkK-99Q" type="8000" fontName="Ubuntu" fontHeight="11" lineColor="0">
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_K-1hgNh3EeCArqIVkK-99Q" source="ShadowFigure">
+                <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_K-1hgdh3EeCArqIVkK-99Q" key="ShadowFigure_Value" value="false"/>
+              </eAnnotations>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_K-2IkNh3EeCArqIVkK-99Q" source="displayNameLabelIcon">
+                <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_K-2Ikdh3EeCArqIVkK-99Q" key="displayNameLabelIcon_value" value="false"/>
+              </eAnnotations>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_K-2Ikth3EeCArqIVkK-99Q" source="QualifiedName">
+                <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_K-2Ik9h3EeCArqIVkK-99Q" key="QualifiedNameDepth" value="1000"/>
+              </eAnnotations>
+              <children xmi:type="notation:DecorationNode" xmi:id="_K-2voNh3EeCArqIVkK-99Q" type="8001">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_K-2vodh3EeCArqIVkK-99Q" x="25" y="3"/>
+              </children>
+              <children xmi:type="notation:DecorationNode" xmi:id="_K-2voth3EeCArqIVkK-99Q" type="8002">
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_K-3WsNh3EeCArqIVkK-99Q" x="25" y="-10"/>
+              </children>
+              <element xmi:type="uml:Pseudostate" href="model.uml#_K8cU0Nh3EeCArqIVkK-99Q"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_K-x3Idh3EeCArqIVkK-99Q" x="33" y="212"/>
+            </children>
+            <children xmi:type="notation:Shape" xmi:id="_LmKnQNh3EeCArqIVkK-99Q" type="6000" fontName="Ubuntu" fontHeight="11" lineColor="0">
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_LmLOUNh3EeCArqIVkK-99Q" source="ShadowFigure">
+                <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_LmLOUdh3EeCArqIVkK-99Q" key="ShadowFigure_Value" value="false"/>
+              </eAnnotations>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_LmLOUth3EeCArqIVkK-99Q" source="displayNameLabelIcon">
+                <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_LmLOU9h3EeCArqIVkK-99Q" key="displayNameLabelIcon_value" value="false"/>
+              </eAnnotations>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_LmL1YNh3EeCArqIVkK-99Q" source="QualifiedName">
+                <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_LmL1Ydh3EeCArqIVkK-99Q" key="QualifiedNameDepth" value="1000"/>
+              </eAnnotations>
+              <children xmi:type="notation:DecorationNode" xmi:id="_LmL1Yth3EeCArqIVkK-99Q" type="6001"/>
+              <children xmi:type="notation:DecorationNode" xmi:id="_LmL1Y9h3EeCArqIVkK-99Q" type="6002">
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LmL1ZNh3EeCArqIVkK-99Q"/>
+              </children>
+              <element xmi:type="uml:State" href="model.uml#_LlEbENh3EeCArqIVkK-99Q"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LmKnQdh3EeCArqIVkK-99Q" x="161" y="183"/>
+            </children>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_PJ2T5UAxEeCNVbN088KYpA"/>
           </children>
           <element xmi:type="uml:Region" href="model.uml#_PJ1swEAxEeCNVbN088KYpA"/>
@@ -1134,6 +1170,27 @@
     </children>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_PJ2T6UAxEeCNVbN088KYpA"/>
     <element xmi:type="uml:StateMachine" href="model.uml#_JXYl8EAxEeCNVbN088KYpA"/>
+    <edges xmi:type="notation:Connector" xmi:id="_MieegNh3EeCArqIVkK-99Q" type="7000" source="_K-x3INh3EeCArqIVkK-99Q" target="_LmKnQNh3EeCArqIVkK-99Q" lineColor="0">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_O_7YYNh3EeCArqIVkK-99Q" source="Stereotype_Annotation">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_O_7YYdh3EeCArqIVkK-99Q" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_O_7YYth3EeCArqIVkK-99Q" key="StereotypeList" value="CHESS::Dependability::ThreatsPropagation::InternalFault"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_O_9NkNh3EeCArqIVkK-99Q" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_O_9Nkdh3EeCArqIVkK-99Q" key="PropStereoDisplay" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_O_9Nkth3EeCArqIVkK-99Q" key="StereotypePropertyLocation" value="Compartment"/>
+      </eAnnotations>
+      <children xmi:type="notation:DecorationNode" xmi:id="_Miiv8Nh3EeCArqIVkK-99Q" type="7001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Miiv8dh3EeCArqIVkK-99Q"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_Miiv8th3EeCArqIVkK-99Q" type="7002">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Miiv89h3EeCArqIVkK-99Q"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_Miiv9Nh3EeCArqIVkK-99Q" type="7003">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Miiv9dh3EeCArqIVkK-99Q" y="60"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_Mieegdh3EeCArqIVkK-99Q" fontName="Ubuntu" fontHeight="11"/>
+      <element xmi:type="uml:Transition" href="model.uml#_MfHBcNh3EeCArqIVkK-99Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Mieegth3EeCArqIVkK-99Q" points="[10, -2, -130, 17]$[140, -39, 0, -20]"/>
+    </edges>
   </notation:Diagram>
   <notation:Diagram xmi:id="__42_gFb5EeCR3LfeuuoSNA" type="PapyrusUMLClassDiagram" name="Data" measurementUnit="Pixel">
     <children xmi:type="notation:Shape" xmi:id="_HWRMQFb6EeCR3LfeuuoSNA" type="2010" fontName="Segoe UI" lineColor="0">
