@@ -5,6 +5,21 @@
 module CHESS2IM;
 create OUT : IM from IN1 : CHESS, IN2 : MARTE, IN3 : UML2;
 
+--FUFFA
+rule Prop{
+	
+	from
+		p : UML2!Property
+		
+	do{
+		p.owner.debug('own');
+	}
+}
+
+
+--END FUFFa
+
+
 --entrypoint rule to call those rules who needs to be applied before anything else
 entrypoint rule Entry(){
 	
@@ -46,7 +61,7 @@ rule Platform(res : UML2!Package){
 		thisModule.Components.addAll(res.getInstances->collect(p | p.classifier->first()));
 		
 		--get components that are interested by sw-hw allocation
-		thisModule.Comments.addAll(res.ownedComment);
+		thisModule.Comments.addAll(res.getComments);
 
 		--get resources platform Ports
 		for (i in res.getInstances){
@@ -54,16 +69,19 @@ rule Platform(res : UML2!Package){
 		}
 		
 		for (a in MARTE!Assign.allInstances()){
-			if (res.ownedComment->exists(e | e = a.base_Comment)){
+			if (thisModule.Comments->exists(e | e = a.base_Comment)){
 				thisModule.Assign(a);
 			}	
 		}
-		--get the States of the components
+		--get the States and transitions of the components
 		for (c in thisModule.Components){
 			for (m in c.ownedBehavior->select(s | s.oclIsTypeOf(UML2!StateMachine))){
 				for (r in m.region){
 					for (s in r.subvertex){
 						thisModule.States.add(s);
+					}
+					for (t in r.transition){
+						thisModule.Transitions.add(t);
 					}
 				}
 			}
@@ -71,8 +89,7 @@ rule Platform(res : UML2!Package){
 	}
 }
 
---LEONARDO
---rule to trnsform activities
+--rule to transform activities
 rule Activities () {
 	
 	do {
@@ -82,9 +99,11 @@ rule Activities () {
 			}
 		}
 	}
+
 }
 --rule for RepairActivity
 rule RepairActivityGeneric {
+
 	
 	from
 		r : CHESS!Repair
@@ -116,7 +135,6 @@ rule RepairActivityGeneric {
 		--r.targets handled as DELAYED ACTION in EndRule()
 	}
 }
---LEONARDO
 
 --get allocated HW/SW from Assign comments
 rule Assign (a : MARTE!Assign){	
@@ -147,6 +165,20 @@ rule Assign (a : MARTE!Assign){
 		}
 	}
 }
+
+----filter the ErrorModel in the resources platform from the rest
+--rule ErrorModel{
+--	
+--	from 
+--		em : CHESS!ErrorModel(
+--			
+--		)
+--	
+--	do{
+--	}
+--		
+--}
+
 
 --filter the ClientServerPort in the resources platform from the rest
 rule ClientServerPort{
@@ -200,6 +232,32 @@ rule PropagationConnector{
 	}
 }
 
+--filter the Propagation connectors in the resources platform from the rest
+rule PropagationTransition{
+
+	from
+		p : CHESS!Propagation (
+			thisModule.Transitions->exists(t | t = p.base_Transition)	
+		)
+		
+	do{
+		thisModule.PropTran.add(p);
+	}
+}
+	
+
+--filter the Error states of the components in the resources platform from the rest
+rule Error{
+	
+	from
+		f : CHESS!Error(
+			thisModule.States->exists(s | s = f.base_State)	
+		)
+	do{
+		thisModule.Errors.add(f);
+	}
+}
+
 --filter the FailureMode states of the components in the resources platform from the rest
 rule FailureMode{
 	
@@ -209,6 +267,18 @@ rule FailureMode{
 		)
 	do{
 		thisModule.FailureModes.add(f);
+	}
+}
+
+--filter the InternalFault transitions of the components in the resources platform from the rest
+rule InternalFault{
+	
+	from
+		f : CHESS!InternalFault(
+			thisModule.Transitions->exists(s | s = f.base_Transition)	
+		)
+	do{
+		thisModule.InternalFaults.add(f);
 	}
 }
 
@@ -265,6 +335,239 @@ rule StatelessSoftware{
 }
 
 
+--filter the DependableComponent components in the resources platform from the rest
+rule DependableComponent{
+	
+	from
+		dc: CHESS!DependableComponent (
+			thisModule.Components->exists(c | c = dc.base_Component and dc.oclIsTypeOf(CHESS!DependableComponent))	
+		)
+		
+	do{
+		thisModule.DepComponent.add(dc);
+	}
+}
+
+--WORK IN PROGRESS
+rule DependableComponent2Component(dc: CHESS!DependableComponent){
+	
+	do{
+	
+		if (dc.errorModel = OclUndefined){
+			--check if the component is a statebased (atomic) component and transform it accordingly
+			if (dc.oclIsTypeOf(CHESS!StatefulHardware)){
+				thisModule.StatefulHardware2Component(dc);
+			}
+			else if (dc.oclIsTypeOf(CHESS!StatelessHardware)){
+				thisModule.StatelessHardware2Component(dc);
+			}
+			else if (dc.oclIsTypeOf(CHESS!StatefulSoftware)){
+				thisModule.StatefulSoftware2Component(dc);
+			}
+			else if (dc.oclIsTypeOf(CHESS!StatelessSoftware)){
+				thisModule.StatelessSoftware2Component(dc);
+			}
+			else{
+				--if not, this component won't fail due to internal faults, but it could be interested by fault propagation
+				thisModule.NoIntFaultComponent(dc);
+			}
+		}else{
+			thisModule.ComponentErrorModel(dc);
+		}
+	}
+}
+
+rule NoIntFaultComponent(dc: CHESS!DependableComponent){
+	
+	to 
+		c : IM!Component(
+			Name <- dc.getName	
+		),
+		
+		e : IM!Error(
+			Component <- c,
+			Name <- c.Name + '_Error'
+		)
+		
+	do{
+		thisModule.setFailureMode(c, 0.0, e); --probably needs review
+	}
+}
+
+rule ComponentErrorModel(dc: CHESS!DependableComponent){
+	
+	to 
+		c : IM!Component(
+			Name <- dc.getName	
+		)
+	
+	do{
+		for (r in dc.errorModel.base_StateMachine.region){
+			for(s in r.subvertex){
+				if (thisModule.Errors->exists(e | e.base_State = s)){
+					thisModule.CreateAndAddError(s, c);
+				}
+				if (thisModule.FailureModes->exists(e | e.base_State = s)){
+					--thisModule.setFailureMode(c, 0.0, e);
+					thisModule.CreateAndAddFailureMode(s, c);
+				}
+			}
+			for (t in r.transition){
+				if (thisModule.InternalFaults->exists(e | e.base_Transition = t)){
+					thisModule.CreateAndAddIntFault(t, t.getInternalFault, c);
+				}else{
+					if(t.getTarget().getError <> OclUndefined){
+						thisModule.ErrorTransition(t, c);
+					}else if(t.getTarget().getFailureMode <> OclUndefined and t.getSource().getError <> OclUndefined){
+						t.getSource().getError;
+						thisModule.FailureModeTransition(t, c);
+					}
+				}
+			}
+		}
+	}
+}
+
+rule ErrorTransition(t: UML2!Transition, c :  IM!Component){
+	
+	to
+	
+		d: IM!Deterministic(
+			Value <- 0	
+	   	),
+		
+		en : IM!ErrorsExpressionErrorNode(
+			Error <- t.getSource().getCorrispondingError,
+			errorPropagation <- ip
+		),
+	
+		ip: IM!InternalPropagation(
+			Component <- c,
+			Source <- t.getSource().getCorrispondingError,
+			Destination <- t.getTarget().getCorrispondingError,
+			Weight <- 1,
+			PropagationDelay <- d,
+			PropagationProbability <- 1,
+			PropagationLogic <- en,
+			PropagationLogicStringFormat <- en.toString()
+		)
+		
+	
+	do{
+		thisModule.setIPName(ip);
+		if(thisModule.PropTran->exists(e | e.base_Transition = t)){
+			thisModule.TransitionPropagation(thisModule.PropTran->select(s | s.base_Transition = t)->first(), d, ip);
+		}
+		
+	}
+}
+
+rule FailureModeTransition(t: UML2!Transition, c :  IM!Component){
+	
+	using{
+		fm : CHESS!FailureMode = t.getTarget().getFailureMode;
+	}
+	
+	to 
+	 	d: IM!Deterministic(
+			Value <- 0	
+	   	),
+		
+		en : IM!ErrorsExpressionErrorNode(
+			Error <- t.getSource().getCorrispondingError,
+			errorPropagation <- epf
+		),
+	
+		epf : IM!ErrorsProducesFailures(
+			Component <- c,
+			Source <- t.getSource().getCorrispondingError,
+			Destination <- t.getTarget().getCorrispondingFailureMode,
+			Weight <- if fm.probability <> OclUndefined then fm.probability.toReal() else 1.0 endif,
+			PropagationDelay <- d,
+			PropagationProbability <- 1,
+			PropagationLogic <- en,
+			PropagationLogicStringFormat <- en.toString()
+	   	)
+	
+	do{
+		thisModule.setEPFName(epf);
+		if(thisModule.PropTran->exists(e | e.base_Transition = t)){
+			thisModule.TransitionPropagation(thisModule.PropTran->select(s | s.base_Transition = t)->first(), d, epf);
+		}
+		
+	}
+}
+
+rule TransitionPropagation(pr : CHESS!Propagation, d : IM!Distribution, epf : IM!ErrorsProducesFailures){
+	
+	do{
+		d.Value <- pr.propDelay.toReal();
+		epf.PropagationProbability <- pr.prob.toReal();
+	}
+	
+}
+
+rule CreateAndAddError(s : UML2!State, c : IM!Component){
+	
+	to e : IM!Error(
+		--VanishingTime <- to be added in the profile
+		Name <- s.name 
+	)
+	
+	do{
+		c.Errors.add(e);
+	}
+}
+
+
+rule CreateAndAddFailureMode(s : UML2!State, c : IM!Component){
+	
+	to fm : IM!FailureMode(
+		--??
+		Name <- s.name	
+	)
+	
+	do{
+		c.FailureModes.add(fm);
+	}
+}
+
+rule CreateAndAddIntFault(t : UML2!Transition, ift : CHESS!InternalFault, c : IM!Component){
+	
+	to ft : IM!InternalFault(
+			--Occurence <- to be added in the profile
+			PermanentProbability <- ift.permanentProb.toReal(),
+			--TransientDuration <- to be added in the profile
+			Name <- t.name
+		),
+		
+		d: IM!Deterministic(
+			Value <- 0	
+		),
+		
+		fn : IM!FaultsExpressionFaultNode(
+			Fault <- ft,
+			faultsGenerateErrors <- fge
+		),
+		
+		fge : IM!FaultsGenerateErrors(
+			Component <- c,
+			Source <- ft,
+			Destination <- t.getTarget().getCorrispondingError,
+			ActivationDelay <- d,
+			PropagationProbability <- 1,
+			PropagationLogic <- fn,
+			--Weight <- value?
+			PropagationLogicStringFormat <- fn.toString()
+		)		
+	
+	do{
+		thisModule.setFGEName(fge);
+		c.Faults.add(ft);
+		thisModule.Counter <- thisModule.Counter + 1;
+	}
+}
+
 rule StatefulHardware2Component(sfh : CHESS!StatefulHardware){
 	
 	to c : IM!Component(
@@ -285,7 +588,7 @@ rule StatefulHardware2Component(sfh : CHESS!StatefulHardware){
 			Name <- sfh.getName + '_Fault',
 			Occurrence <- fo,
 			PermanentProbability <- sfh.probPermFault.NFPRealValue,
-		TransientDuration <- td
+			TransientDuration <- td
 		),
 		
 		td : IM!Deterministic( Value <- 0 ),
@@ -330,21 +633,9 @@ rule StatefulHardware2Component(sfh : CHESS!StatefulHardware){
 		)
 	do{
 		thisModule.setFGEName(fge);
-		
 		thisModule.RepairActivities <- thisModule.RepairActivities->including(ra);
-		-- Failure Modes management
-		if (sfh.errorModel = OclUndefined){
-			thisModule.setFailureMode(c, sfh.errorLatency.NFPDurationInvertedValue, e);
-		}else{
-			for (r in sfh.errorModel.base_StateMachine.region){
-				for(s in r.subvertex){
-					if (thisModule.FailureModes->exists(e | e.base_State = s)){
-						thisModule.setFailureMode(c, sfh.errorLatency.NFPDurationInvertedValue, e);
-					}
-				}
-			}
-		}
-		--reset Counter
+		-- this rule is called only if the component doesn't have an ErrorModel	
+		thisModule.setFailureMode(c, sfh.errorLatency.NFPDurationInvertedValue, e);
 		thisModule.Counter <- 1;
 	}
 }
@@ -416,21 +707,9 @@ rule StatelessHardware2Component(slh: CHESS!StatelessHardware){
 
 	do{
 		thisModule.setFGEName(fge);
-		
 		thisModule.RepairActivities <- thisModule.RepairActivities->including(ra);
-		-- Failure Modes management
-		if (slh.errorModel = OclUndefined){
-			thisModule.setFailureMode(c, 0, e); --this is different from StatefulHardware
-		}else{
-			for (r in slh.errorModel.base_StateMachine.region){
-				for(s in r.subvertex){
-					if (thisModule.FailureModes->exists(e | e.base_State = s)){
-						thisModule.setFailureMode(c, 0, e);
-					}
-				}
-			}
-		}
-		--reset Counter
+		-- this rule is called only if the component doesn't have an ErrorModel	
+		thisModule.setFailureMode(c, 0, e); --this is different from StatefulHardware
 		thisModule.Counter <- 1;
 	}
 }
@@ -502,21 +781,9 @@ rule StatefulSoftware2Component(sfs : CHESS!StatefulSoftware) {
 		
 	do{
 		thisModule.setFGEName(fge);
-		
 		thisModule.RepairActivities <- thisModule.RepairActivities->including(ra);
-		-- Failure Modes management
-		if (sfs.errorModel = OclUndefined){
-			thisModule.setFailureMode(c, sfs.errorLatency.NFPDurationInvertedValue, e);
-		}else{
-			for (r in sfs.errorModel.base_StateMachine.region){
-				for(s in r.subvertex){
-					if (thisModule.FailureModes->exists(e | e.base_State = s)){
-						thisModule.setFailureMode(c, sfs.errorLatency.NFPDurationInvertedValue, e);
-					}
-				}
-			}
-		}
-		--reset Counter
+		-- this rule is called only if the component doesn't have an ErrorModel	
+		thisModule.setFailureMode(c, sfs.errorLatency.NFPDurationInvertedValue, e);
 		thisModule.Counter <- 1;
 	}
 }
@@ -592,21 +859,9 @@ rule StatelessSoftware2Component(sls : CHESS!StatelessSoftware){
 		
 	do{
 		thisModule.setFGEName(fge);
-		
 		thisModule.RepairActivities <- thisModule.RepairActivities->including(ra);
-		-- Failure Modes management
-		if (sls.errorModel = OclUndefined){
-			thisModule.setFailureMode(c, 0, e); --this is different from StatefulHardware
-		}else{
-			for (r in sls.errorModel.base_StateMachine.region){
-				for(s in r.subvertex){
-					if (thisModule.FailureModes->exists(e | e.base_State = s)){
-						thisModule.setFailureMode(c, 0, e);
-					}
-				}
-			}
-		}
-		--reset Counter
+		-- this rule is called only if the component doesn't have an ErrorModel	
+		thisModule.setFailureMode(c, 0, e); --this is different from StatefulHardware
 		thisModule.Counter <- 1;
 	}
 }
@@ -645,7 +900,7 @@ rule Allocation(a : MARTE!Assign, parent : UML2!Component, child : UML2!Componen
 	
 	do{
 		for (fm in parent.corrispondingComponent.FailureModes){
-			thisModule.AssignXft(fm, parent.corrispondingComponent, child.corrispondingComponent);
+			thisModule.AssignXft(fm, parent.corrispondingComponent.debug('parent'), child.corrispondingComponent.debug('child'));
 		}
 		thisModule.AssignFge(child.corrispondingComponent, a);
 		thisModule.TempXfts.clear();
@@ -815,6 +1070,7 @@ rule Connectors(p : CHESS!Propagation, first : UML2!Slot, last : UML2!Slot){
 rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!Component){
 	
 	do{
+		--TODO: not every fm in server, just those that affect the port - how??
 		for (fm in server.corrispondingComponent.FailureModes){
 			thisModule.AssignXft(fm, server.corrispondingComponent, client.corrispondingComponent);
 		}
@@ -849,10 +1105,10 @@ rule RepairActivity(r : IM!RepairActivity){
 			thisModule.TempScen->addAll(thisModule.TempScenSeq);
 
 			for(scen in thisModule.TempScen){
-				if (scen.oclIsTypeOf(IM!SchedulingConditionExpressionOrNode)){
-					scen.SchedulingConditionExpression1 <- thisModule.TempScen.at(thisModule.Counter);
+				if (scen.oclIsTypeOf(IM!ScheduleExpressionOr)){
+					scen.e1 <- thisModule.TempScen.at(thisModule.Counter);
 					thisModule.Counter <- thisModule.Counter+1;
-					scen.SchedulingConditionExpression2 <- thisModule.TempScen.at(thisModule.Counter);
+					scen.e2 <- thisModule.TempScen.at(thisModule.Counter);
 					thisModule.Counter <- thisModule.Counter+1;
 				}
 			}
@@ -880,7 +1136,7 @@ rule SchedCond(fm : IM!FailureMode){
 rule CreateScenOrExpr(){
 	
 	to
-		sceon : IM!SchedulingConditionExpressionOrNode
+		sceon : IM!ScheduleExpressionOr
 		
 	do{
 		thisModule.TempScenSeq.add(sceon);
@@ -919,6 +1175,13 @@ rule setEPFName(epf : IM!ErrorsProducesFailures) {
 	do {
 		epf.Name <- 'epf' + thisModule.epfCounter.toString();
 		thisModule.epfCounter <- thisModule.epfCounter + 1;
+	}
+}
+
+rule setIPName(ip : IM!InternalPropagation) {
+	do {
+		ip.Name <- 'ip' + thisModule.ipCounter.toString();
+		thisModule.ipCounter <- thisModule.ipCounter + 1;
 	}
 }
 
@@ -977,15 +1240,8 @@ endpoint rule EndRule() {
 	do{			
 		
 		--component transformation
-		for (c in thisModule.DepComponent){
-			if (c.oclIsTypeOf(CHESS!StatefulHardware))
-				thisModule.StatefulHardware2Component(c);
-			else if (c.oclIsTypeOf(CHESS!StatelessHardware))
-				thisModule.StatelessHardware2Component(c);
-			else if (c.oclIsTypeOf(CHESS!StatefulSoftware))
-				thisModule.StatefulSoftware2Component(c);
-			else if (c.oclIsTypeOf(CHESS!StatelessSoftware))
-				thisModule.StatelessSoftware2Component(c);
+		for (c in thisModule.DepComponent.debug('comp')){
+			thisModule.DependableComponent2Component(c);
 		}
 		
 		--delayed actions for components
@@ -1012,7 +1268,7 @@ endpoint rule EndRule() {
 		for (a in MARTE!Assign.allInstances()){
 			if (thisModule.Comments->exists(e | e = a.base_Comment)){
 				for (f in a.from){
-					thisModule.Allocation(a, a.to->first().classifier->first(), f.classifier->first());
+					thisModule.Allocation(a, a.to->first().classifier->first().debug('to'), f.classifier->first().debug('from'));
 				}
 				
 			}	
@@ -1069,9 +1325,12 @@ helper context String def: getTime : Real =
 helper def : DepComponent : Set(CHESS!DependableComponent) = Set{};
 helper def : PropComm : Set(CHESS!Propagation) = Set{};
 helper def : PropConn : Set(CHESS!Propagation) = Set{};
+helper def : PropTran : Set(CHESS!Propagation) = Set{};
 helper def : CSPort : Set(MARTE!ClientServerPort) = Set{};
 helper def : FlowPort : Set(MARTE!FlowPort) = Set{};
+helper def : Errors : Set(CHESS!Errores) = Set{};
 helper def : FailureModes : Set(CHESS!FailureMode) = Set{};
+helper def : InternalFaults : Set(CHESS!InternalFault) = Set{};
 
 helper def : StatefulHW : Set(CHESS!StatefulHardware) = Set {};
 helper def : StatelessHW : Set(CHESS!StatelessHardware) = Set {};
@@ -1113,11 +1372,30 @@ helper context UML2!Package def : getConnectors : Set(UML2!InstanceSpecification
 helper context UML2!Package def : getInstances : Set(UML2!InstanceSpecification) = self.packagedElement->select(p | p.oclIsTypeOf(UML2!InstanceSpecification))->
 			select(p | p.classifier.notEmpty());
 
+helper context UML2!Package def : getComments : Set(UML2!InstanceSpecification) = self.getInstances->collect(p | p.classifier->first())->
+			collect(p | p.ownedComment)->flatten();
+
+helper context UML2!State def : getError : CHESS!Error =
+			thisModule.Errors->select(e | e.base_State = self)->first();
+
+helper context UML2!State def : getFailureMode : CHESS!FailureMode =
+			thisModule.FailureModes->select(e | e.base_State = self)->first();
+
+helper context UML2!Transition def : getInternalFault : CHESS!InternalFault =
+			thisModule.InternalFaults->select(ift | ift.base_Transition = self)->first();
+
+helper context UML2!State def : getCorrispondingError :  IM!Error =
+			IM!Error.allInstances()->select(e | e.Name = self.name)->first();
+
+helper context UML2!State def : getCorrispondingFailureMode :  IM!FailureMode =
+			IM!FailureMode.allInstances()->select(e | e.Name = self.name)->first();
+
 helper def : Components : Set(UML2!Component) = Set {};
 helper def : Connectors : Set(UML2!InstanceSpecification) = Set {};
 helper def : Comments : Set (UML2!Comment) = Set {};
 helper def : Ports : Set (UML2!Port) = Set {};
 helper def : States : Set(UML2!State) = Set{};
+helper def : Transitions : Set(UML2!Tansition) = Set{};
 
 helper def : SBAnalysis : CHESS!StateBasedAnalysis = OclUndefined;
 helper def : Resources : UML2!Package = OclUndefined;
@@ -1126,8 +1404,10 @@ helper def : IMSystem : IM!Sistema = OclUndefined;
 
 --counters starts from 1, not 0
 helper def: Counter : Integer = 1;
+helper def: CounterTwo : Integer = 1;
 helper def: fgeCounter : Integer = 1;
 helper def: epfCounter : Integer = 1;
+helper def: ipCounter : Integer = 1;
 
 helper context IM!FaultsExpressionFaultNode def: toString(): String = self.Fault.Name;
 helper context IM!FaultsExpressionOrNode def: toString(): String = '(' + self.FaultsExpression1.toString() + ' OR ' + self.FaultsExpression2.toString() + ')';
@@ -1137,3 +1417,4 @@ helper context IM!ErrorsExpressionOrNode def: toString(): String = '(' + self.Er
 
 
 
+
