@@ -1,5 +1,5 @@
 -- @path IM=/CHESSReviewDemo/metamodels/IM2.ecore
--- @path CHESS=http://schemas/CHESS/_PfAJsMe6Ed-7etIj5eTw0Q/19
+-- @path CHESS=/CHESSReviewDemo/metamodels/chessmlprofile.ecore 
 -- @nsURI MARTE=http://www.eclipse.org/papyrus/MARTE/1
 
 module CHESS2IM;
@@ -1368,17 +1368,27 @@ rule setIPName(ip : IM!InternalPropagation) {
 
 rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 	
+	using {
+		strClean : String = sba.measure.regexReplaceAll('[={}]', ' ');
+		iInstant : Integer = strClean.indexOf('instantOfTime');
+	}	
 	to
 		re : IM!Reliability (
 			Name <-	'Reliability_'
-		),
-		
-		it : IM!InstantOfTime (
-			timePoint <- time	
 		)
+		
 	do{
 		thisModule.IMSystem.measures.add(re);
-		re.evaluations.add(it);
+		if (iInstant > 0) {
+			re.evaluations.add(
+				thisModule.newEvalInstantOfTime(
+					strClean.substring(iInstant + 1 + 'instantOfTime'.size(), strClean.size()).toReal()
+				)
+			);			
+		}
+		else{ 
+			--Should not happen!
+		}
 
 		if (sba.targetDepComponent <> OclUndefined){
 			re.target <- sba.targetDepComponent->first().classifier->
@@ -1392,19 +1402,37 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 
 rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 	
+	using {
+		strClean : String = sba.measure.regexReplaceAll('[={}]', ' ');
+		iInterval : Integer = strClean.indexOf('intervalEnd');
+		iInstant : Integer = strClean.indexOf('instantOfTime');
+	}	
 	to
 		re : IM!Availability (
 			Name <-	'Availability_'
-		),
-		
-		it : IM!IntervalOfTime (
-			begin <- 0,
-			end <- time	
 		)
 	do{
 		thisModule.IMSystem.measures.add(re);
-		re.evaluations.add(it);
 
+		if (iInterval > 0)
+		{
+			re.evaluations.add(
+				thisModule.newEvalIntervalOfTime(
+					strClean.substring(iInterval + 1 + 'intervalEnd'.size(), strClean.size()).toReal()
+				)
+			);
+		}
+		else if (iInstant > 0) {
+			re.evaluations.add(
+				thisModule.newEvalInstantOfTime(
+					strClean.substring(iInstant + 1 + 'instantOfTime'.size(), strClean.size()).toReal()
+				)
+			);			
+		}
+		else{ 
+			--Should not happen!
+		}
+		
 		if (sba.targetDepComponent <> OclUndefined){
 			re.target <- sba.targetDepComponent->first().classifier->
 				first().corrispondingComponent.FailureModes;
@@ -1489,6 +1517,22 @@ lazy rule newExponential {
 		e : IM!Exponential (
 			Rate <- r 
 		)
+}
+lazy rule newEvalIntervalOfTime {
+	from
+		t : Real
+	to
+		iot : IM!IntervalOfTimeAveraged
+		(
+			begin <- 0,
+			end <- t
+		)
+}
+lazy rule newEvalInstantOfTime {
+	from
+		t : Real
+	to
+		instant : IM!InstantOfTime ( timePoint <- t )
 }
 
 --temporary parser to retrieve which dependability measure a SBAnalysis refers to

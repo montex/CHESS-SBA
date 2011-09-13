@@ -69,6 +69,9 @@ rule Sistema {
 		for(i in IDM!IntervalOfTime.allInstances()) {
 			varvals.values <- varvals.values.append(i.end);
 		}
+		for(i in IDM!IntervalOfTimeAveraged.allInstances()) {
+			varvals.values <- varvals.values.append(i.end);
+		}
 	}
 }
 
@@ -509,13 +512,13 @@ rule FaultsExpressionAndNode {
 	from
 		n : IDM!FaultsExpressionAndNode
 	to
-		nn : PNML!OpAnd ( e1 <- n.FaultsExpression1, e2 <- n.FaultsExpression2 )
+		nn : PNML!OpAnd ( expression1 <- n.FaultsExpression1, expression2 <- n.FaultsExpression2 )
 }
 rule FaultsExpressionOrNode {
 	from
 		n : IDM!FaultsExpressionOrNode
 	to
-		nn : PNML!OpOr ( e1 <- n.FaultsExpression1, e2 <- n.FaultsExpression2 )
+		nn : PNML!OpOr ( expression1 <- n.FaultsExpression1, expression2 <- n.FaultsExpression2 )
 }
 
 --ErrorsExpression elements
@@ -1366,6 +1369,108 @@ rule RepairImmediate extends Activity {
 		}
 	}
 }
+	--Detection
+rule DetectionTimed extends Activity {
+	from
+		act : IDM!DetectionActivity
+		(
+			if act.Duration.oclIsTypeOf(IDM!Deterministic) then
+				act.Duration.Value > 0
+			else
+				act.
+				true 
+			endif
+		)
+	to
+		enabled : PNML!Place,
+		completed : PNML!Place,
+		tr_rep : PNML!GSPNTimedTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name,
+			Distribution <- act.Duration
+		),
+		enabledtotr : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			id <- act.Name + '_enabled_to' + enabled.id,
+			source <- enabled,
+			target <- tr_rep
+		),
+		trtocompleted : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- tr_rep,
+			target <- completed,
+			id <- tr_rep.id + '_to_' + completed.id
+		),
+		--True Positive (correctly detected)
+		tr_success : PNML!GSPNImmediateTransition
+		( 
+			Weight <- act.Coverage,
+			Guard <- g_success				
+		),
+		g_success : PNML!OpGreater
+		(
+			expression1 <- thisModule.newMarkingExpression(act.DetectableErrors.first()),
+			expression2 <- thisModule.newValueExpression(0)
+		),
+		tosuccess : PNML!GSPNArc,
+		--False Negative (incorrectly not detected)
+		tr_failed : PNML!GSPNImmediateTransition
+		( 
+			Weight <- (1-act.Coverage),
+			Guard <- g_failed
+		),
+		g_failed : PNML!OpGreater
+		(
+			expression1 <- thisModule.newMarkingExpression(act.DetectableErrors.first()),
+			expression2 <- thisModule.newValueExpression(0)
+		),
+		tofailed : PNML!GSPNArc,
+		--True Negative (correctly not detected)
+		tr_trueneg : PNML!GSPNImmediateTransition 
+		( 
+			Weight <- (1-act.FalsePositiveRatio), 
+			Guard <- g_trueneg
+		),
+		g_trueneg : PNML!OpEqual
+		(
+			expression1 <- thisModule.newMarkingExpression(act.DetectableErrors.first()),
+			expression2 <- thisModule.newValueExpression(0)
+		),
+		totrueneg : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- completed,
+			target <- tr_trueneg,
+			id <- completed.id + '_to_' + tr_trueneg.id
+		),
+		--False Positive (incorrectly detected)
+		tr_falsepos : PNML!GSPNImmediateTransition
+		( 
+			Weight <- act.FalsePositiveRatio, 
+			Guard <- g_falsepos
+		),
+		g_falsepos : PNML!OpEqual
+		(
+			expression1 <- thisModule.newMarkingExpression(act.DetectableErrors.first()),
+			expression2 <- thisModule.newValueExpression(0)
+		),
+		tofalsepos : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- completed,
+			target <- tr_falsepos,
+			id <- completed.id + '_to_' + tr_falsepos.id
+		)
+	do { 
+		for( c in act.Target ) {
+			---thisModule.newOutputArc(tr_success, c);
+		}
+	}
+}
+
 
 --Evaluation types
 rule InstantOfTime {
