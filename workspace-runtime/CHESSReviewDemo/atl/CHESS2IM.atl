@@ -90,7 +90,6 @@ rule Activities () {
 --rule for RepairActivity
 rule RepairActivityGeneric {
 
-	
 	from
 		r : CHESS!Repair
 	to
@@ -108,15 +107,19 @@ rule RepairActivityGeneric {
 		--temporary
 		timeexp : IM!ScheduleExpression
 		(
-				T <- timeexp_t,
+				T <- 
+				if r.when.trim().startsWith('Periodic') then
+					thisModule.newScheduleExpPeriodic(r.when)
+				else
+					if r.when.trim().startsWith('AtTime') then
+						thisModule.newScheduleExpAtTime(r.when)
+					else
+						OclUndefined
+					endif
+				endif,
 				EX <- timeexp_ex
 		),
-		timeexp_ex : IM!ScheduleExpressionTrue,
-		timeexp_t : IM!ScheduleExpressionPeriodic
-		(
-				PeriodDuration <- period
-		),
-		period : IM!Deterministic ( Value <- 1000 )
+		timeexp_ex : IM!ScheduleExpressionTrue
 	do {
 		--r.targets handled as DELAYED ACTION in EndRule()
 	}
@@ -1369,7 +1372,7 @@ rule setIPName(ip : IM!InternalPropagation) {
 rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 	
 	using {
-		strClean : String = sba.measure.regexReplaceAll('[={}]', ' ');
+		strClean : String = sba.measure.clean;
 		iInstant : Integer = strClean.indexOf('instantOfTime');
 	}	
 	to
@@ -1403,7 +1406,7 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 	
 	using {
-		strClean : String = sba.measure.regexReplaceAll('[={}]', ' ');
+		strClean : String = sba.measure.clean;
 		iInterval : Integer = strClean.indexOf('intervalEnd');
 		iInstant : Integer = strClean.indexOf('instantOfTime');
 	}	
@@ -1500,6 +1503,35 @@ endpoint rule EndRule() {
 		}
 		
 	}
+}
+
+lazy rule newScheduleExpPeriodic {
+	from
+		s : String
+	using {
+		sClean : String = s.clean;
+	}
+	to
+		p : IM!ScheduleExpressionPeriodic
+		(
+			PeriodDuration <- d
+		),
+		d : IM!Deterministic
+		(
+			Value <- sClean.substring('Periodic'.size()+1, sClean.size()).toReal()
+		)
+}
+lazy rule newScheduleExpAtTime {
+	from
+		s : String
+	using {
+		sClean : String = s.clean;
+	}
+	to
+		p : IM!ScheduleExpressionAtTime
+		(
+			t <- sClean.substring('AtTime'.size()+1, sClean.size()).toReal()
+		)
 }
 
 lazy rule newDeterministic {
@@ -1617,6 +1649,9 @@ helper context UML2!State def : getCorrispondingError :  IM!Error =
 
 helper context UML2!State def : getCorrispondingFailureMode :  IM!FailureMode =
 			IM!FailureMode.allInstances()->select(e | e.Name = self.name)->first();
+
+--Trim whitespaces, remove brackets, remove the equal symbol
+helper context String def: clean : String = self.regexReplaceAll('[={}]', ' ').trim();
 
 helper def : Components : Set(UML2!Component) = Set {};
 helper def : Connectors : Set(UML2!InstanceSpecification) = Set {};

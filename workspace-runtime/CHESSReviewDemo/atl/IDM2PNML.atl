@@ -117,7 +117,12 @@ rule Component {
 
 -- Crea le distribuzioni
 rule Exponential { from e : IDM!Exponential to ee : PNML!Exponential ( Rate <- e.Rate ) }
-rule Deterministic { from d : IDM!Deterministic to dd : PNML!Deterministic ( Value <- d.Value ) }
+rule Deterministic { 
+	from 
+		d : IDM!Deterministic ( d.Value > 0 )
+	to 
+		dd : PNML!Deterministic ( Value <- d.Value ) 
+}
 rule Uniform { from u : IDM!Uniform to uu : PNML!Uniform ( Lower <- u.Lower, Upper <- u.Upper ) }
 rule Gaussian { from g : IDM!Gaussian to gg : PNML!Gaussian ( Mean <- g.Mean, Variance <- g.Variance ) }
 rule Gamma { from g : IDM!Gamma to gg : PNML!Gamma ( Alpha <- g.Alpha, Beta <- g.Beta ) }
