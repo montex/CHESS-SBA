@@ -104,7 +104,6 @@ rule RepairActivityGeneric {
 		d : IM!Exponential (
 			Rate <- r.duration.NFPDurationInvertedValue
 		),
-		--temporary
 		timeexp : IM!ScheduleExpression
 		(
 				T <- 
@@ -123,6 +122,37 @@ rule RepairActivityGeneric {
 	do {
 		--r.targets handled as DELAYED ACTION in EndRule()
 	}
+}
+rule ErrorDetectionActivity {
+	from
+		r : CHESS!ErrorDetection
+	to
+		act : IM!DetectionActivity
+		(
+			Name <- r.base_Activity.name,
+			Coverage <- r.probSuccess,
+			Duration <- d,
+			When <- timeexp
+		),
+		--For the moment the duration is assumed to be exponential
+		d : IM!Exponential (
+			Rate <- r.duration.NFPDurationInvertedValue
+		),
+		timeexp : IM!ScheduleExpression
+		(
+				T <- 
+				if r.when.trim().startsWith('Periodic') then
+					thisModule.newScheduleExpPeriodic(r.when)
+				else
+					if r.when.trim().startsWith('AtTime') then
+						thisModule.newScheduleExpAtTime(r.when)
+					else
+						OclUndefined
+					endif
+				endif,
+				EX <- timeexp_ex
+		),
+		timeexp_ex : IM!ScheduleExpressionTrue
 }
 
 --get allocated HW/SW from Assign comments
