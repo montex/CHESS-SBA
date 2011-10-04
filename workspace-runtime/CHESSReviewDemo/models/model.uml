@@ -676,7 +676,7 @@
   <Alloc:Assign xmi:id="_fFlskFoAEeCIuvkONEI9Sw"/>
   <Alloc:Assign xmi:id="_n1D-IFoAEeCIuvkONEI9Sw"/>
   <HwComputing:HwComputingResource xmi:id="_79yNkFrJEeCATuT6LwspdA" base_Classifier="_eBMgMD_9EeCMjNe7UhVfZQ" speedFactor="(value=1.0)"/>
-  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_JvpyMGCBEeCyQ-PEGdvddA" base_StructuredClassifier="_QsFkwE-qEeCU1t14pFydGg" base_NamedElement="_QsFkwE-qEeCU1t14pFydGg" platform="_tcamAJ5NEeCfxbKPFC2yOg" measure="Reliability { instantOfTime = 100 }"/>
+  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_JvpyMGCBEeCyQ-PEGdvddA" base_StructuredClassifier="_QsFkwE-qEeCU1t14pFydGg" base_NamedElement="_QsFkwE-qEeCU1t14pFydGg" platform="_tcamAJ5NEeCfxbKPFC2yOg" measure="Availability { instantOfTime = 100 }" measureEvaluationResult="9.907000e-01" targetDepComponent="_malOIOH9EeC9tbdPirJicw"/>
   <RTComponentModel:CHRtSpecification xmi:id="_PhlRUJ5KEeCfxbKPFC2yOg" partWithPort="_i3aO8EACEeCoh-1BA2BB1g" WCET="(worst=80.0,best=80.0,value=80.0,unit=ms)" localWCET="(worst=80.0,best=80.0,value=80.0,unit=ms)" relativePriority="5" base_Comment="_zUUPkFkXEeC5eeG1nTwzGA" occKind="periodic(period=(value=125.0,unit=ms))" rlDl="(value=125.0,unit=ms)" context="_3kNToFb3EeCR3LfeuuoSNA"/>
   <RTComponentModel:CHRtSpecification xmi:id="_RXKS4J5KEeCfxbKPFC2yOg" partWithPort="_jNmhYEACEeCoh-1BA2BB1g" WCET="(worst=98.0,best=98.0,value=98.0,unit=ms)" localWCET="(worst=98.0,best=98.0,value=98.0,unit=ms)" relativePriority="4" base_Comment="_31YnAFkXEeC5eeG1nTwzGA" occKind="sporadic(minInterarrival=(value=125.0,unit=ms))" rlDl="(value=125.0,unit=ms)" context="_8D7x0Fb4EeCR3LfeuuoSNA"/>
   <Core:CHGaResourcePlatform xmi:id="_tcamAJ5NEeCfxbKPFC2yOg" base_Package="_rf-ugJ5NEeCfxbKPFC2yOg"/>
@@ -686,14 +686,14 @@
   <GCM:ClientServerPort xmi:id="_PDfrkLOdEeCblev6SiGqpg" base_Port="_PCcisLOdEeCblev6SiGqpg" kind="provided"/>
   <DependableComponent:Propagation xmi:id="_qMA98NhxEeCp84L1McMFOA" prob="0.2" propDelay="2" base_Connector="_lE3TEEAEEeCoh-1BA2BB1g"/>
   <ThreatsPropagation:ErrorModel xmi:id="_8UA98NiZEeCAnv7Ak73PhA" base_StateMachine="_1gGaINiZEeCAnv7Ak73PhA"/>
-  <ThreatsPropagation:InternalFault xmi:id="_8FM1sNkkEeC1M8UwuablEg" base_Transition="_to6AsNkjEeC1M8UwuablEg" permanentProb="0.4" occurrence="4.5" transientDuration="2.3"/>
+  <ThreatsPropagation:InternalFault xmi:id="_8FM1sNkkEeC1M8UwuablEg" base_Transition="_to6AsNkjEeC1M8UwuablEg" permanentProb="0.4" occurrence="1.0E-4" transientDuration="2.3"/>
   <ThreatsPropagation:Error xmi:id="_CoKzcNklEeC1M8UwuablEg" base_State="_Y2608NkiEeC1M8UwuablEg" probability="0.6" vanishingTime="1.5"/>
   <ThreatsPropagation:FailureMode xmi:id="_NihoMNklEeC1M8UwuablEg" base_State="_lud5sNkjEeC1M8UwuablEg" probability="0.7" affectedPorts="_-hwDcFk6EeCNUs77z6e79Q"/>
   <ThreatsPropagation:FailureMode xmi:id="_OISnsNklEeC1M8UwuablEg" base_State="_nChikNkjEeC1M8UwuablEg" probability="0.3" affectedPorts="_-hwDcFk6EeCNUs77z6e79Q"/>
   <DependableComponent:Propagation xmi:id="_STZ9QNklEeC1M8UwuablEg" prob="0.6" propDelay="2" base_Transition="_RPzyQNklEeC1M8UwuablEg"/>
   <DependableComponent:Propagation xmi:id="_WRDekNklEeC1M8UwuablEg" prob="0.4" propDelay="3" base_Transition="_VXCGUNklEeC1M8UwuablEg"/>
   <ThreatsPropagation:Error xmi:id="_1TQV4NkmEeC6fJxXphZ7jQ" base_State="_zDJUcNkmEeC6fJxXphZ7jQ" probability="0.7" vanishingTime="1.1"/>
-  <ThreatsPropagation:InternalFault xmi:id="_Zlh1INknEeC6fJxXphZ7jQ" base_Transition="_YflgwNknEeC6fJxXphZ7jQ" permanentProb="0.1" occurrence="3.2" transientDuration="1.6"/>
+  <ThreatsPropagation:InternalFault xmi:id="_Zlh1INknEeC6fJxXphZ7jQ" base_Transition="_YflgwNknEeC6fJxXphZ7jQ" permanentProb="0.1" occurrence="1.0E-4" transientDuration="1.6"/>
   <ThreatsPropagation:FailureMode xmi:id="_p-WdsNknEeC6fJxXphZ7jQ" base_State="_pctwQNknEeC6fJxXphZ7jQ" probability="0.6" affectedPorts="_6u4rQFk5EeCNUs77z6e79Q"/>
   <ThreatsPropagation:FailureMode xmi:id="_rPBbYNknEeC6fJxXphZ7jQ" base_State="_qpg6kNknEeC6fJxXphZ7jQ" probability="0.3" affectedPorts="_6u4rQFk5EeCNUs77z6e79Q"/>
   <DependableComponent:Propagation xmi:id="_uS1xsNknEeC6fJxXphZ7jQ" prob="0.7" propDelay="0.5" base_Transition="_sxO1ANknEeC6fJxXphZ7jQ"/>
