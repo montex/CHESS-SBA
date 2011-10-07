@@ -333,7 +333,7 @@
         <ownedAttribute xmi:id="_J6S_MEAEEeCoh-1BA2BB1g" name="serialcable" type="_jayMUEADEeCoh-1BA2BB1g" aggregation="composite">
           <defaultValue xmi:type="uml:InstanceValue" xmi:id="_Um19Kln9EeCIuvkONEI9Sw"/>
         </ownedAttribute>
-        <ownedAttribute xmi:id="_rEU0INogEeCiT71ruNvmOg" name="component" type="_ntZUkNogEeCiT71ruNvmOg"/>
+        <ownedAttribute xmi:id="_rEU0INogEeCiT71ruNvmOg" name="component"/>
         <ownedConnector xmi:id="_g20lUEAEEeCoh-1BA2BB1g" name="Connector1">
           <end xmi:id="_g20lUUAEEeCoh-1BA2BB1g" role="_XuJwoEAEEeCoh-1BA2BB1g" partWithPort="_qe-2kD_9EeCMjNe7UhVfZQ"/>
           <end xmi:id="_g20lUkAEEeCoh-1BA2BB1g" role="_bfqTYEAEEeCoh-1BA2BB1g" partWithPort="_J6S_MEAEEeCoh-1BA2BB1g"/>
@@ -398,7 +398,6 @@
           </slot>
         </packagedElement>
       </packagedElement>
-      <packagedElement xmi:type="uml:Component" xmi:id="_ntZUkNogEeCiT71ruNvmOg" name="Component0"/>
       <profileApplication xmi:id="_Te9QgD_9EeCMjNe7UhVfZQ">
         <eAnnotations xmi:id="_Te9QgT_9EeCMjNe7UhVfZQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
           <references xmi:type="ecore:EPackage" href="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_TUueEMe6Ed-7etIj5eTw0Q"/>
@@ -676,7 +675,7 @@
   <Alloc:Assign xmi:id="_fFlskFoAEeCIuvkONEI9Sw"/>
   <Alloc:Assign xmi:id="_n1D-IFoAEeCIuvkONEI9Sw"/>
   <HwComputing:HwComputingResource xmi:id="_79yNkFrJEeCATuT6LwspdA" base_Classifier="_eBMgMD_9EeCMjNe7UhVfZQ" speedFactor="(value=1.0)"/>
-  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_JvpyMGCBEeCyQ-PEGdvddA" base_StructuredClassifier="_QsFkwE-qEeCU1t14pFydGg" base_NamedElement="_QsFkwE-qEeCU1t14pFydGg" platform="_tcamAJ5NEeCfxbKPFC2yOg" measure="Availability { instantOfTime = 100 }" measureEvaluationResult="9.907000e-01" targetDepComponent="_malOIOH9EeC9tbdPirJicw"/>
+  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_JvpyMGCBEeCyQ-PEGdvddA" base_StructuredClassifier="_QsFkwE-qEeCU1t14pFydGg" base_NamedElement="_QsFkwE-qEeCU1t14pFydGg" platform="_tcamAJ5NEeCfxbKPFC2yOg" measure="Availability { instantOfTime = 1000 }" measureEvaluationResult="9.111000e-01" targetDepComponent="_malOIOH9EeC9tbdPirJicw"/>
   <RTComponentModel:CHRtSpecification xmi:id="_PhlRUJ5KEeCfxbKPFC2yOg" partWithPort="_i3aO8EACEeCoh-1BA2BB1g" WCET="(worst=80.0,best=80.0,value=80.0,unit=ms)" localWCET="(worst=80.0,best=80.0,value=80.0,unit=ms)" relativePriority="5" base_Comment="_zUUPkFkXEeC5eeG1nTwzGA" occKind="periodic(period=(value=125.0,unit=ms))" rlDl="(value=125.0,unit=ms)" context="_3kNToFb3EeCR3LfeuuoSNA"/>
   <RTComponentModel:CHRtSpecification xmi:id="_RXKS4J5KEeCfxbKPFC2yOg" partWithPort="_jNmhYEACEeCoh-1BA2BB1g" WCET="(worst=98.0,best=98.0,value=98.0,unit=ms)" localWCET="(worst=98.0,best=98.0,value=98.0,unit=ms)" relativePriority="4" base_Comment="_31YnAFkXEeC5eeG1nTwzGA" occKind="sporadic(minInterarrival=(value=125.0,unit=ms))" rlDl="(value=125.0,unit=ms)" context="_8D7x0Fb4EeCR3LfeuuoSNA"/>
   <Core:CHGaResourcePlatform xmi:id="_tcamAJ5NEeCfxbKPFC2yOg" base_Package="_rf-ugJ5NEeCfxbKPFC2yOg"/>
@@ -702,7 +701,6 @@
   <ThreatsPropagation:ExternalFault xmi:id="_yPo-cNknEeC6fJxXphZ7jQ" base_Transition="_hJbEYNknEeC6fJxXphZ7jQ" fromPort="_-73pEFk5EeCNUs77z6e79Q" propagationCondition="OR" probability="0.5"/>
   <DependableComponent:Propagation xmi:id="_i5S3ANldEeCZQ6McY5bwtA" prob="0.6" propDelay="3" base_Connector="_XZWxALOiEeCNRt1PnAKP6Q"/>
   <DependableComponent:Propagation xmi:id="_XJMeENoCEeCiT71ruNvmOg" prob="0.3" propDelay="1.2" base_Connector="_g20lUEAEEeCoh-1BA2BB1g"/>
-  <DependableComponent:DependableComponent xmi:id="_o4U2oNogEeCiT71ruNvmOg" base_Component="_ntZUkNogEeCiT71ruNvmOg"/>
   <DependableComponent:DependableComponent xmi:id="_XKI2QNojEeCiT71ruNvmOg" base_Component="_jayMUEADEeCoh-1BA2BB1g"/>
   <DependableComponent:Propagation xmi:id="_Q0GdENoqEeCiT71ruNvmOg" prob="0.3" propDelay="1.2" base_Comment="_Vmj1MEAIEeCoh-1BA2BB1g"/>
   <DependableComponent:Propagation xmi:id="_RYs-8NoqEeCiT71ruNvmOg" prob="0.4" propDelay="1.7" base_Comment="_J5VZEEAIEeCoh-1BA2BB1g"/>
