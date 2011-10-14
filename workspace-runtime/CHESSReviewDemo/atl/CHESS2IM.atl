@@ -367,6 +367,10 @@ rule DependableComponent{
 
 --WORK IN PROGRESS
 rule DependableComponent2Component(dc: CHESS!DependableComponent){
+--	
+--	using{
+--		dc : CHESS!DependableComponent = thisModule.DepComponent->select(d | d.base_Component = c)->first();
+--	}
 	
 	do{
 	
@@ -1480,10 +1484,11 @@ rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 endpoint rule EndRule() {
 	
 	do{			
-		
 		--component transformation
-		for (c in thisModule.DepComponent){
-			thisModule.DependableComponent2Component(c);
+		for (c in thisModule.Components){
+			if(thisModule.DepComponent->select(d | d.base_Component = c)->first() <> OclUndefined){
+				thisModule.DependableComponent2Component(thisModule.DepComponent->select(d | d.base_Component = c)->first());
+			}
 		}
 		
 		--delayed actions for components
@@ -1608,7 +1613,7 @@ helper context CHESS!StateBasedAnalysis def: WhichMeasure : String =
 helper context String def: getTime : Real = 
 	self.substring(self.indexOf('=')+2, self.size()-1).toReal();
 
-helper def : DepComponent : Set(CHESS!DependableComponent) = Set{};
+helper def : DepComponent : Sequence(CHESS!DependableComponent) = Sequence{};
 helper def : PropComm : Set(CHESS!Propagation) = Set{};
 helper def : PropConn : Set(CHESS!Propagation) = Set{};
 helper def : PropTran : Set(CHESS!Propagation) = Set{};
@@ -1683,7 +1688,7 @@ helper context UML2!State def : getCorrispondingFailureMode :  IM!FailureMode =
 --Trim whitespaces, remove brackets, remove the equal symbol
 helper context String def: clean : String = self.regexReplaceAll('[={}]', ' ').trim();
 
-helper def : Components : Set(UML2!Component) = Set {};
+helper def : Components : Sequence(UML2!Component) = Sequence {};
 helper def : Connectors : Set(UML2!InstanceSpecification) = Set {};
 helper def : Comments : Set (UML2!Comment) = Set {};
 helper def : Ports : Set (UML2!Port) = Set {};
@@ -1712,4 +1717,4 @@ helper context IM!ErrorsExpressionOrNode def: toString(): String = '(' + self.Er
 
 
 
-
+
