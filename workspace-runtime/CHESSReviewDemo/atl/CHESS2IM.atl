@@ -1,5 +1,5 @@
 -- @path IM=/CHESSReviewDemo/metamodels/IM2.ecore
--- @path CHESS=http://schemas/CHESS/_PfAJsMe6Ed-7etIj5eTw0Q/19
+-- @path CHESS=/CHESSReviewDemo/metamodels/chessmlprofile.ecore 
 -- @nsURI MARTE=http://www.eclipse.org/papyrus/MARTE/1
 
 module CHESS2IM;
@@ -75,8 +75,7 @@ rule Platform(res : UML2!Package){
 	}
 }
 
---LEONARDO
---rule to trnsform activities
+--rule to transform activities
 rule Activities () {
 	
 	do {
@@ -91,7 +90,6 @@ rule Activities () {
 --rule for RepairActivity
 rule RepairActivityGeneric {
 
-	
 	from
 		r : CHESS!Repair
 	to
@@ -99,19 +97,63 @@ rule RepairActivityGeneric {
 		(
 			Name <- r.base_Activity.name,
 			SuccessProbability <- r.probSuccess.NFPRealValue,
-			Duration <- d	
+			Duration <- d,
+			When <- timeexp
 		),
 		--For the moment the duration is assumed to be exponential
-		d : IM!Exponential ( Rate <- r.duration.NFPDurationInvertedValue )
+		d : IM!Exponential (
+			Rate <- r.duration.NFPDurationInvertedValue
+		),
+		timeexp : IM!ScheduleExpression
+		(
+				T <- 
+				if r.when.trim().startsWith('Periodic') then
+					thisModule.newScheduleExpPeriodic(r.when)
+				else
+					if r.when.trim().startsWith('AtTime') then
+						thisModule.newScheduleExpAtTime(r.when)
+					else
+						OclUndefined
+					endif
+				endif,
+				EX <- timeexp_ex
+		),
+		timeexp_ex : IM!ScheduleExpressionTrue
 	do {
-		for(t in r.targets) {
---	0		if(thisModule.Components.includes(t)) {
-				act.Target <- act.Target.including(t.classifier->first().corrispondingComponent);
-	--		}
-		}
+		--r.targets handled as DELAYED ACTION in EndRule()
 	}
 }
---LEONARDO
+rule ErrorDetectionActivity {
+	from
+		r : CHESS!ErrorDetection
+	to
+		act : IM!DetectionActivity
+		(
+			Name <- r.base_Activity.name,
+			Coverage <- r.probSuccess,
+			Duration <- d,
+			When <- timeexp
+		),
+		--For the moment the duration is assumed to be exponential
+		d : IM!Exponential (
+			Rate <- r.duration.NFPDurationInvertedValue
+		),
+		timeexp : IM!ScheduleExpression
+		(
+				T <- 
+				if r.when.trim().startsWith('Periodic') then
+					thisModule.newScheduleExpPeriodic(r.when)
+				else
+					if r.when.trim().startsWith('AtTime') then
+						thisModule.newScheduleExpAtTime(r.when)
+					else
+						OclUndefined
+					endif
+				endif,
+				EX <- timeexp_ex
+		),
+		timeexp_ex : IM!ScheduleExpressionTrue
+}
 
 --get allocated HW/SW from Assign comments
 rule Assign (a : MARTE!Assign){	
@@ -325,6 +367,10 @@ rule DependableComponent{
 
 --WORK IN PROGRESS
 rule DependableComponent2Component(dc: CHESS!DependableComponent){
+--	
+--	using{
+--		dc : CHESS!DependableComponent = thisModule.DepComponent->select(d | d.base_Component = c)->first();
+--	}
 	
 	do{
 	
@@ -1359,17 +1405,27 @@ rule setIPName(ip : IM!InternalPropagation) {
 
 rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 	
+	using {
+		strClean : String = sba.measure.clean;
+		iInstant : Integer = strClean.indexOf('instantOfTime');
+	}	
 	to
 		re : IM!Reliability (
 			Name <-	'Reliability_'
-		),
-		
-		it : IM!InstantOfTime (
-			timePoint <- time	
 		)
+		
 	do{
 		thisModule.IMSystem.measures.add(re);
-		re.evaluations.add(it);
+		if (iInstant > 0) {
+			re.evaluations.add(
+				thisModule.newEvalInstantOfTime(
+					strClean.substring(iInstant + 1 + 'instantOfTime'.size(), strClean.size()).toReal()
+				)
+			);			
+		}
+		else{ 
+			--Should not happen!
+		}
 
 		if (sba.targetDepComponent <> OclUndefined){
 			re.target <- sba.targetDepComponent->first().classifier->
@@ -1383,19 +1439,37 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 
 rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 	
+	using {
+		strClean : String = sba.measure.clean;
+		iInterval : Integer = strClean.indexOf('intervalEnd');
+		iInstant : Integer = strClean.indexOf('instantOfTime');
+	}	
 	to
 		re : IM!Availability (
 			Name <-	'Availability_'
-		),
-		
-		it : IM!IntervalOfTime (
-			begin <- 0,
-			end <- time	
 		)
 	do{
 		thisModule.IMSystem.measures.add(re);
-		re.evaluations.add(it);
 
+		if (iInterval > 0)
+		{
+			re.evaluations.add(
+				thisModule.newEvalIntervalOfTime(
+					strClean.substring(iInterval + 1 + 'intervalEnd'.size(), strClean.size()).toReal()
+				)
+			);
+		}
+		else if (iInstant > 0) {
+			re.evaluations.add(
+				thisModule.newEvalInstantOfTime(
+					strClean.substring(iInstant + 1 + 'instantOfTime'.size(), strClean.size()).toReal()
+				)
+			);			
+		}
+		else{ 
+			--Should not happen!
+		}
+		
 		if (sba.targetDepComponent <> OclUndefined){
 			re.target <- sba.targetDepComponent->first().classifier->
 				first().corrispondingComponent.FailureModes;
@@ -1410,10 +1484,11 @@ rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 endpoint rule EndRule() {
 	
 	do{			
-		
 		--component transformation
-		for (c in thisModule.DepComponent){
-			thisModule.DependableComponent2Component(c);
+		for (c in thisModule.Components){
+			if(thisModule.DepComponent->select(d | d.base_Component = c)->first() <> OclUndefined){
+				thisModule.DependableComponent2Component(thisModule.DepComponent->select(d | d.base_Component = c)->first());
+			}
 		}
 		
 		--delayed actions for components
@@ -1424,9 +1499,17 @@ endpoint rule EndRule() {
 		thisModule.IMSystem.Activities.addAll(IM!Activity.allInstances());
 		--handle repair activities
 		--thisModule.RepairActivities <- IM!RepairActivity.allInstances();
+		--RepairActitivity elements generated fom RD
 		for (r in thisModule.RepairActivities){
 			thisModule.RepairActivity(r);
 		}
+		--Other RepairActivity elements
+		for (rep in IM!RepairActivity.allInstances().asSet() - thisModule.RepairActivities) {
+			for ( t in CHESS!Repair.allInstances()->select( act | act.base_Activity.name = rep.Name )->first().targets ) {
+				rep.Target <- rep.Target->including(t.getType().corrispondingComponent);
+			}
+		}
+	
 		
 		--fault propagation due to Assign (hw -> sw)
 		for (a in MARTE!Assign.allInstances()){
@@ -1457,6 +1540,35 @@ endpoint rule EndRule() {
 	}
 }
 
+lazy rule newScheduleExpPeriodic {
+	from
+		s : String
+	using {
+		sClean : String = s.clean;
+	}
+	to
+		p : IM!ScheduleExpressionPeriodic
+		(
+			PeriodDuration <- d
+		),
+		d : IM!Deterministic
+		(
+			Value <- sClean.substring('Periodic'.size()+1, sClean.size()).toReal()
+		)
+}
+lazy rule newScheduleExpAtTime {
+	from
+		s : String
+	using {
+		sClean : String = s.clean;
+	}
+	to
+		p : IM!ScheduleExpressionAtTime
+		(
+			t <- sClean.substring('AtTime'.size()+1, sClean.size()).toReal()
+		)
+}
+
 lazy rule newDeterministic {
 	from
 		r : Real
@@ -1473,6 +1585,22 @@ lazy rule newExponential {
 			Rate <- r 
 		)
 }
+lazy rule newEvalIntervalOfTime {
+	from
+		t : Real
+	to
+		iot : IM!IntervalOfTimeAveraged
+		(
+			begin <- 0,
+			end <- t
+		)
+}
+lazy rule newEvalInstantOfTime {
+	from
+		t : Real
+	to
+		instant : IM!InstantOfTime ( timePoint <- t )
+}
 
 --temporary parser to retrieve which dependability measure a SBAnalysis refers to
 helper context CHESS!StateBasedAnalysis def: WhichMeasure : String =
@@ -1485,7 +1613,7 @@ helper context CHESS!StateBasedAnalysis def: WhichMeasure : String =
 helper context String def: getTime : Real = 
 	self.substring(self.indexOf('=')+2, self.size()-1).toReal();
 
-helper def : DepComponent : Set(CHESS!DependableComponent) = Set{};
+helper def : DepComponent : Sequence(CHESS!DependableComponent) = Sequence{};
 helper def : PropComm : Set(CHESS!Propagation) = Set{};
 helper def : PropConn : Set(CHESS!Propagation) = Set{};
 helper def : PropTran : Set(CHESS!Propagation) = Set{};
@@ -1523,6 +1651,8 @@ helper def: TempScenSeq : Sequence(IM!SchedulingConditionExpressionNode) = Seque
 
 helper context UML2!Component def: corrispondingComponent : IM!Component =
 	thisModule.IMSystem.components->select(e| e.Name = self.name)->first();
+helper context UML2!Property def: corrispondingComponent : IM!Component =
+	thisModule.IMSystem.components->select(e| e.Name = self.name)->first();
 
 helper context CHESS!DependableComponent def : getName : String = self.base_Component.name;
 
@@ -1555,7 +1685,10 @@ helper context UML2!State def : getCorrispondingError :  IM!Error =
 helper context UML2!State def : getCorrispondingFailureMode :  IM!FailureMode =
 			IM!FailureMode.allInstances()->select(e | e.Name = self.name)->first();
 
-helper def : Components : Set(UML2!Component) = Set {};
+--Trim whitespaces, remove brackets, remove the equal symbol
+helper context String def: clean : String = self.regexReplaceAll('[={}]', ' ').trim();
+
+helper def : Components : Sequence(UML2!Component) = Sequence {};
 helper def : Connectors : Set(UML2!InstanceSpecification) = Set {};
 helper def : Comments : Set (UML2!Comment) = Set {};
 helper def : Ports : Set (UML2!Port) = Set {};
@@ -1584,4 +1717,4 @@ helper context IM!ErrorsExpressionOrNode def: toString(): String = '(' + self.Er
 
 
 
-
+
