@@ -59,6 +59,7 @@ rule Platform(res : UML2!Package){
 				thisModule.Assign(a);
 			}	
 		}
+
 		--get the States and transitions of the components
 		for (c in thisModule.Components){
 			for (m in c.ownedBehavior->select(s | s.oclIsTypeOf(UML2!StateMachine))){
@@ -161,7 +162,7 @@ rule Assign (a : MARTE!Assign){
 	do{
 		--"from" and "to" are keywords in ATL... (works anyway, only issue: they are highlighted)
 		thisModule.Components.addAll(a.from->collect(f | f.classifier->first()));
-		thisModule.Components.addAll(a.to->collect(f | f.classifier->first()));
+--		thisModule.Components.addAll(a.to->collect(f | f.classifier->first()));
 		
 		--get also connectors from the allocated HW/SW		
 		for (f in a.from){
@@ -1470,6 +1471,7 @@ rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 			--Should not happen!
 		}
 		
+		sba.targetDepComponent->first().classifier->first();
 		if (sba.targetDepComponent <> OclUndefined){
 			re.target <- sba.targetDepComponent->first().classifier->
 				first().corrispondingComponent.FailureModes;
