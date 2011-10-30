@@ -1104,7 +1104,7 @@ rule ScheduleExpBefore {
 		(
 			containerPage <- thisModule.getPage,
 			id <- act.Name + '_L_fireonce',
-			initialMarking <- thisModule.newPTMarking(0)
+			initialMarking <- thisModule.newPTMarking(1)
 		),	
 		elapse : PNML!GSPNTimedTransition
 		(
@@ -1147,7 +1147,7 @@ rule ScheduleExpAfter {
 		(
 			containerPage <- thisModule.getPage,
 			id <- act.Name + '_L',
-			initialMarking <- thisModule.newPTMarking(0)
+			initialMarking <- thisModule.newPTMarking(1)
 		),
 		elapse : PNML!GSPNTimedTransition
 		(
@@ -1183,7 +1183,7 @@ rule ScheduleExpInterval {
 		(
 			containerPage <- thisModule.getPage,
 			id <- act.Name + '_L',
-			initialMarking <- thisModule.newPTMarking(0)
+			initialMarking <- thisModule.newPTMarking(1)
 		),
 		elapse_t1 : PNML!GSPNTimedTransition
 		(
