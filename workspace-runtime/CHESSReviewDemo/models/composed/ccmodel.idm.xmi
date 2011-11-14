@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Sistema xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://if.dsi.unifi.it/Modeling/DIM" Name="StateBasedAnalysis0">
+  <components Name="ComponentImplSubA">
+    <FailureModes Name="ComponentImplSubA_FailureMode1"/>
+    <Errors Name="ComponentImplSubA_Error"/>
+    <ErrorsGeneratesFailures Name="epf1" PropagationLogicStringFormat="ComponentImplA_Error" Source="//@components.0/@Errors.0" Destination="//@components.0/@FailureModes.0">
+      <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.0/@ErrorsGeneratesFailures.0" Error="//@components.0/@Errors.0"/>
+      <PropagationDelay xsi:type="Deterministic"/>
+    </ErrorsGeneratesFailures>
+  </components>
+  <components Name="ComponentImplB">
+    <FailureModes Name="ComponentImplB_FailureMode2"/>
+    <Errors Name="ComponentImplB_Error"/>
+    <Faults xsi:type="InternalFault" Name="ComponentImplB_Fault">
+      <Occurrence xsi:type="Exponential" Rate="0.6"/>
+      <TransientDuration xsi:type="Deterministic"/>
+    </Faults>
+    <Faults xsi:type="ExternalFault" Name="ExternalFault_ComponentImplSubA_FailureMode1" Source="//@components.0/@FailureModes.0"/>
+    <FaultsGeneratesErrors Source="//@components.1/@Faults.0" Destination="//@components.1/@Errors.0" PropagationProbability="1.0" PropagationLogicStringFormat="ComponentImplB_Fault" Name="fge1">
+      <ActivationDelay xsi:type="Deterministic"/>
+      <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.0" Fault="//@components.1/@Faults.0"/>
+    </FaultsGeneratesErrors>
+    <FaultsGeneratesErrors Source="//@components.1/@Faults.1" Destination="//@components.1/@Errors.0" PropagationProbability="0.5" PropagationLogicStringFormat="ExternalFault_ComponentImplA_FailureMode1" Name="fge2">
+      <ActivationDelay xsi:type="Deterministic" Value="43.0"/>
+      <PropagationLogic xsi:type="FaultsExpressionFaultNode" faultsGenerateErrors="//@components.1/@FaultsGeneratesErrors.1" Fault="//@components.1/@Faults.1"/>
+    </FaultsGeneratesErrors>
+    <ErrorsGeneratesFailures Name="epf2" PropagationLogicStringFormat="ComponentImplB_Error" Source="//@components.1/@Errors.0" Destination="//@components.1/@FailureModes.0">
+      <PropagationLogic xsi:type="ErrorsExpressionErrorNode" errorPropagation="//@components.1/@ErrorsGeneratesFailures.0" Error="//@components.1/@Errors.0"/>
+      <PropagationDelay xsi:type="Exponential" Rate="0.008130081300813009"/>
+    </ErrorsGeneratesFailures>
+  </components>
+  <Activities xsi:type="RepairActivity" Name="ComponentImplB_RD" SuccessProbability="1.0" Target="//@components.1">
+    <Duration xsi:type="Exponential" Rate="1.0E-10"/>
+    <When>
+      <T xsi:type="ScheduleExpressionImmediately"/>
+      <EX xsi:type="ScheduleExpressionFailed" failureMode="//@components.1/@FailureModes.0"/>
+    </When>
+  </Activities>
+  <measures xsi:type="Reliability" Name="Reliability_IN2_ComponentImplB" target="//@components.1/@FailureModes.0">
+    <evaluations xsi:type="InstantOfTime" timePoint="10.0"/>
+  </measures>
+</Sistema>
