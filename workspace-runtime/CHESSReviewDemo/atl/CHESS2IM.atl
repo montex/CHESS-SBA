@@ -390,12 +390,28 @@ rule DependableComponent2Component(dc: CHESS!DependableComponent){
 				thisModule.StatelessSoftware2Component(dc);
 			}
 			else{
-				--if not, this component won't fail due to internal faults, but it could be interested by fault propagation
-				thisModule.NoIntFaultComponent(dc);
+				--composed components won't have a representation in the IDM
+				for(e in dc.base_Component.getOwnedElements()){
+					if(e.oclIsTypeOf(UML2!Property)){
+						thisModule.Transform <- false;
+					}
+				}
+			
+				if(thisModule.Transform = true){
+					--if not, this component won't fail due to internal faults, but it could be interested by fault propagation
+					thisModule.NoIntFaultComponent(dc);
+				}
 			}
 		}else{
 			thisModule.ComponentErrorModel(dc);
 		}
+	}
+}
+
+rule NoTransformation(dc: CHESS!DependableComponent){
+	
+	do{
+		--do nothing
 	}
 }
 
@@ -1127,7 +1143,7 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 		clientDepComp : CHESS!DependableComponent = thisModule.DepComponent->select(s | s.base_Component = client)->first();
 	}
 	
-	do{
+	do{	
 		
 		if(server.corrispondingComponent <> OclUndefined and client.corrispondingComponent <> OclUndefined){
 			
@@ -1169,6 +1185,37 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 				
 			}
 		
+		}
+		else{
+			--composed component
+			--one of client-server could not have a corrisponding component cause it's a composed component
+			--the connected port is delegated to a child port
+			--call propagation with the correct ports and components
+			
+			
+			--case A: server is composed
+			if(server.corrispondingComponent = OclUndefined){
+				for (c in server.getOwnedConnectors()){
+					if(c.getEnds()->first().getRole() = serverport){						
+						thisModule.Propagation(p, c.getEnds()->last().getPartWithPort().getType(), client, c.getEnds()->last().getRole(), clientport);
+					}
+					if(c.getEnds()->last().getRole() = serverport){						
+						thisModule.Propagation(p, c.getEnds()->first().getPartWithPort().getType(), client, c.getEnds()->first().getRole(), clientport);
+					}
+				}
+			}
+			
+			--case B: client is composed
+			if (client.corrispondingComponent = OclUndefined){
+				for (c in client.getOwnedConnectors()){
+					if(c.getEnds()->first().getRole() = clientport){						
+						thisModule.Propagation(p, server, c.getEnds()->last().getPartWithPort().getType(), server, c.getEnds()->last().getRole());
+					}
+					if(c.getEnds()->last().getRole() = clientport){						
+						thisModule.Propagation(p, server, c.getEnds()->first().getPartWithPort().getType(), server, c.getEnds()->first().getRole());
+					}
+				}
+			}
 		}
 	}
 }
@@ -1709,6 +1756,8 @@ helper def: fgeCounter : Integer = 1;
 helper def: epfCounter : Integer = 1;
 helper def: ipCounter : Integer = 1;
 
+helper def: Transform : Boolean = true;
+
 helper context IM!FaultsExpressionFaultNode def: toString(): String = self.Fault.Name;
 helper context IM!FaultsExpressionOrNode def: toString(): String = '(' + self.FaultsExpression1.toString() + ' OR ' + self.FaultsExpression2.toString() + ')';
 helper context IM!FaultsExpressionAndNode def: toString() : String = '(' + self.FaultsExpression1.toString() + ' AND ' + self.FaultsExpression2.toString() + ')';
@@ -1716,7 +1765,3 @@ helper context IM!FaultsExpressionAndNode def: toString() : String = '(' + self.
 
 helper context IM!ErrorsExpressionErrorNode def: toString(): String = self.Error.Name;
 helper context IM!ErrorsExpressionOrNode def: toString(): String = '(' + self.ErrorsExpression1.toString() + ' OR ' + self.ErrorsExpression2.toString() + ')';
-
-
-
-
