@@ -1475,17 +1475,13 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 			--Should not happen!
 		}
 
-		if (sba.targetDepComponent <> OclUndefined){
-			for (c in sba.targetDepComponent->asSequence()){
-				re.target <- re.target.union(c.classifier->first().corrispondingComponent.FailureModes);
-				re.Name <- re.Name + c.classifier->first().toString().replaceAll('!', '_');
-			}
-			
---			re.target <- sba.targetDepComponent->first().classifier->
-	--			first().corrispondingComponent.FailureModes;
-	
-			--re.Name <- re.Name + sba.targetDepComponent->first().classifier->
-				--first().toString().replaceAll('!', '_');
+		for (c in sba.targetDepComponent) {
+			re.target <- re.target.union(c.classifier->first().corrispondingComponent.FailureModes);
+			re.Name <- re.Name + c.classifier->first().toString().replaceAll('!', '_');
+		}
+		for (fm in sba.targetFailureMode) {
+			re.target <- re.target.union(fm);
+			re.Name <- re.Name + fm.toString();
 		}
 	}
 }
@@ -1523,13 +1519,13 @@ rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 			--Should not happen!
 		}
 		
-		sba.targetDepComponent->first().classifier->first();
-		if (sba.targetDepComponent <> OclUndefined){
-			re.target <- sba.targetDepComponent->first().classifier->
-				first().corrispondingComponent.FailureModes;
-	
-			re.Name <- re.Name + sba.targetDepComponent->first().classifier->
-				first().toString().replaceAll('!', '_');
+		for (c in sba.targetDepComponent) {
+			re.target <- re.target.union(c.classifier->first().corrispondingComponent.FailureModes);
+			re.Name <- re.Name + c.classifier->first().toString().replaceAll('!', '_');
+		}
+		for (fm in sba.targetFailureMode) {
+			re.target <- re.target.union(fm);
+			re.Name <- re.Name + fm.toString();
 		}
 	}
 }
