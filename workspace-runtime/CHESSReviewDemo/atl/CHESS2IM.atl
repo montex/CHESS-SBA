@@ -1476,11 +1476,16 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 		}
 
 		if (sba.targetDepComponent <> OclUndefined){
-			re.target <- sba.targetDepComponent->first().classifier->
-				first().corrispondingComponent.FailureModes;
+			for (c in sba.targetDepComponent->asSequence()){
+				re.target <- re.target.union(c.classifier->first().corrispondingComponent.FailureModes);
+				re.Name <- re.Name + c.classifier->first().toString().replaceAll('!', '_');
+			}
+			
+--			re.target <- sba.targetDepComponent->first().classifier->
+	--			first().corrispondingComponent.FailureModes;
 	
-			re.Name <- re.Name + sba.targetDepComponent->first().classifier->
-				first().toString().replaceAll('!', '_');
+			--re.Name <- re.Name + sba.targetDepComponent->first().classifier->
+				--first().toString().replaceAll('!', '_');
 		}
 	}
 }
