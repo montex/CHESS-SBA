@@ -742,7 +742,7 @@ rule StatelessHardware2Component(slh: CHESS!StatelessHardware){
 		),
 		
 		rd : IM!Exponential(
-			Rate <- slh.repairDelay.NFPDurationValue	
+			Rate <- slh.repairDelay.NFPDurationInvertedValue
 		),
 		
 		ra : IM!RepairActivity(
@@ -815,7 +815,7 @@ rule StatefulSoftware2Component(sfs : CHESS!StatefulSoftware) {
 		),
 		
 		rd : IM!Exponential(
-			Rate <- sfs.repairDelay.NFPDurationValue
+			Rate <- sfs.repairDelay.NFPDurationInvertedValue
 		),
 		
 		ra : IM!RepairActivity(
