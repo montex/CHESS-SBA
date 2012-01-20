@@ -3380,6 +3380,13 @@
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_nT6J0AFtEeGAurLhAuMcpw" source="QualifiedName">
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_nT6J0QFtEeGAurLhAuMcpw" key="QualifiedNameDepth" value="1000"/>
       </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Up0DQEAYEeG5K_BbjR_vJw" source="Stereotype_Annotation">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_UtzLYEAYEeG5K_BbjR_vJw" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_UtzLYUAYEeG5K_BbjR_vJw" key="StereotypeList" value="CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_UtzycEAYEeG5K_BbjR_vJw" key="PropStereoDisplay" value="CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.measure,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.targetDepComponent,CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis.platform"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_UtzycUAYEeG5K_BbjR_vJw" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_UtzyckAYEeG5K_BbjR_vJw" key="StereotypePropertyLocation" value="Compartment"/>
+      </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_nT6J0gFtEeGAurLhAuMcpw" type="5005"/>
       <children xmi:type="notation:BasicCompartment" xmi:id="_nT6J0wFtEeGAurLhAuMcpw" type="7002">
         <styles xmi:type="notation:TitleStyle" xmi:id="_nT6J1AFtEeGAurLhAuMcpw"/>
@@ -3400,7 +3407,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nT6J4QFtEeGAurLhAuMcpw"/>
       </children>
       <element xmi:type="uml:Component" href="model.uml#_5aVT4P_REeC1brWc6v2cFQ"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nTy1EAFtEeGAurLhAuMcpw" x="210" y="85"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nTy1EAFtEeGAurLhAuMcpw" x="95" y="70" width="411" height="156"/>
     </children>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_kWNpoQFtEeGAurLhAuMcpw"/>
     <element xmi:type="uml:Package" href="model.uml#_Zxoww_ZuEeC7B6JYhp9kVA"/>

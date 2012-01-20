@@ -518,7 +518,7 @@
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_ZxowwfZuEeC7B6JYhp9kVA" name="modelAnalysisView">
       <packagedElement xmi:type="uml:Package" xmi:id="_Zxoww_ZuEeC7B6JYhp9kVA" name="DependabilityAnalysisView">
-        <packagedElement xmi:type="uml:Component" xmi:id="_5aVT4P_REeC1brWc6v2cFQ" name="StateBasedAnalysis0"/>
+        <packagedElement xmi:type="uml:Component" xmi:id="_5aVT4P_REeC1brWc6v2cFQ" name="SBA01"/>
         <packagedElement xmi:type="uml:Component" xmi:id="_BMnF0AFxEeGXFttZRZoAnw" name="Component0"/>
         <profileApplication xmi:id="_ZxowxPZuEeC7B6JYhp9kVA">
           <eAnnotations xmi:id="_ZxowxfZuEeC7B6JYhp9kVA" source="http://www.eclipse.org/uml2/2.0.0/UML">
@@ -810,7 +810,7 @@
   <DependableComponent:Propagation xmi:id="_DB_ckP_QEeC1brWc6v2cFQ"/>
   <Blocks:NestedConnectorEnd xmi:id="_elR9AP_REeC1brWc6v2cFQ" propertyPath="_o3JfwPgNEeC2ZpD0BLbttg"/>
   <GCM:FlowPort xmi:id="_o3dXcP_REeC1brWc6v2cFQ"/>
-  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_5b-SoP_REeC1brWc6v2cFQ" base_StructuredClassifier="_5aVT4P_REeC1brWc6v2cFQ" base_NamedElement="_5aVT4P_REeC1brWc6v2cFQ" platform="_jj04kP46EeCQkLM39NLBXw" measure="Reliability { instantOfTime = 10000 }" measureEvaluationResult="9.989800e-01" targetDepComponent="_6R1u0QuyEeGZU4srmRRV2A"/>
+  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_5b-SoP_REeC1brWc6v2cFQ" base_StructuredClassifier="_5aVT4P_REeC1brWc6v2cFQ" base_NamedElement="_5aVT4P_REeC1brWc6v2cFQ" platform="_jj04kP46EeCQkLM39NLBXw" measure="Reliability { instantOfTime = 10000 }" measureEvaluationResult="9.990200e-01" targetDepComponent="_6R1u0QuyEeGZU4srmRRV2A"/>
   <DependableComponent:Propagation xmi:id="_5KZHMAFBEeG9C_MXmHPAaQ" prob="0.9" propDelay="1.0" base_Connector="_wyJHwPgKEeC2ZpD0BLbttg"/>
   <ThreatsPropagation:InternalFault xmi:id="_mW65wAFEEeG9C_MXmHPAaQ" base_Transition="_mSwLcAFEEeG9C_MXmHPAaQ" permanentProb="1.0E-9" occurrence="1.0E-7" transientDuration="1.0"/>
   <ThreatsPropagation:InternalFault xmi:id="_qlE8QAFEEeG9C_MXmHPAaQ" base_Transition="_qisWoAFEEeG9C_MXmHPAaQ" permanentProb="1.0E-9" occurrence="1.0E-7" transientDuration="1.0"/>

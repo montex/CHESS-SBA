@@ -53,25 +53,37 @@
     <windows>
       <children xsi:type="di:TabFolder">
         <children>
-          <emfPageIdentifier href="modelSchedulability.notation#_cQDzoPZxEeC7B6JYhp9kVA"/>
+          <emfPageIdentifier href="modelSchedulability.notation#_Q94QcPgAEeC2ZpD0BLbttg"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="modelSchedulability.notation#_Hb3SMPgBEeC2ZpD0BLbttg"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="modelSchedulability.notation#_Q94QcPgAEeC2ZpD0BLbttg"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="modelSchedulability.notation#_Hb3SMPgBEeC2ZpD0BLbttg"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="modelSchedulability.notation#_L4U2cPgBEeC2ZpD0BLbttg"/>
         </children>
         <children>
           <emfPageIdentifier href="modelSchedulability.notation#_QZa3gPgLEeC2ZpD0BLbttg"/>
         </children>
         <children>
-          <emfPageIdentifier href="modelSchedulability.notation#_Jyio8At5EeGp-8Gki-dy6Q"/>
+          <emfPageIdentifier href="modelSchedulability.notation#_shqfIPgMEeC2ZpD0BLbttg"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="modelSchedulability.notation#_QZa3gPgLEeC2ZpD0BLbttg"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="modelSchedulability.notation#_QZa3gPgLEeC2ZpD0BLbttg"/>
         </children>
         <children>
           <emfPageIdentifier href="modelSchedulability.notation#_ps_hEAFtEeGXFttZRZoAnw"/>
         </children>
         <children>
-          <emfPageIdentifier href="modelSchedulability.notation#_cQDzoPZxEeC7B6JYhp9kVA"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="modelSchedulability.notation#_LsPMIPgKEeC2ZpD0BLbttg"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="modelSchedulability.notation#_oN35QPgNEeC2ZpD0BLbttg"/>
+          <emfPageIdentifier href="modelSchedulability.notation#_vJsN4fsYEeCeG4iiOw5dSA"/>
         </children>
       </children>
     </windows>
