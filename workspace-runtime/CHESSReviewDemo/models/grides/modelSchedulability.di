@@ -85,6 +85,9 @@
         <children>
           <emfPageIdentifier href="modelSchedulability.notation#_vJsN4fsYEeCeG4iiOw5dSA"/>
         </children>
+        <children>
+          <emfPageIdentifier href="modelSchedulability.notation#_oN35QPgNEeC2ZpD0BLbttg"/>
+        </children>
       </children>
     </windows>
   </sashModel>

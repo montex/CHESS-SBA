@@ -94,6 +94,7 @@
             <subvertex xmi:type="uml:State" xmi:id="_scyJACA2EeGe97N1lStKyg" name="fm1"/>
             <transition xmi:id="_GhJfQCA2EeGe97N1lStKyg" name="ExternalFault0" source="_8g9MsCA1EeGe97N1lStKyg" target="_-yr-wCA1EeGe97N1lStKyg"/>
             <transition xmi:id="_1_U2QCA2EeGe97N1lStKyg" name="Propagation0" source="_-yr-wCA1EeGe97N1lStKyg" target="_scyJACA2EeGe97N1lStKyg"/>
+            <transition xmi:id="_WR2-UCzAEeGE59hIVtL0PA" name="InternalFault0" source="_8g9MsCA1EeGe97N1lStKyg" target="_-yr-wCA1EeGe97N1lStKyg"/>
           </region>
         </ownedBehavior>
       </packagedElement>
@@ -420,4 +421,5 @@
   <ThreatsPropagation:FailureMode xmi:id="_sgngICA2EeGe97N1lStKyg" base_State="_scyJACA2EeGe97N1lStKyg"/>
   <DependableComponent:Propagation xmi:id="_2ACA4CA2EeGe97N1lStKyg" base_Transition="_1_U2QCA2EeGe97N1lStKyg"/>
   <MaintenanceMonitoring:ErrorDetection xmi:id="_NTPtECBVEeGQqf3BDWY8-Q" base_Activity="_1Q-cUCBTEeGQqf3BDWY8-Q"/>
+  <ThreatsPropagation:InternalFault xmi:id="_WSgekCzAEeGE59hIVtL0PA" base_Transition="_WR2-UCzAEeGE59hIVtL0PA"/>
 </xmi:XMI>

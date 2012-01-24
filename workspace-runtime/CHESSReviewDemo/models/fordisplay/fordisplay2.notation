@@ -748,13 +748,13 @@
                 <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="__LPosiA1EeGe97N1lStKyg" key="StereotypePropertyLocation" value="Compartment"/>
               </eAnnotations>
               <children xmi:type="notation:DecorationNode" xmi:id="_-zDLJiA1EeGe97N1lStKyg" type="6001">
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ANK_wCA2EeGe97N1lStKyg" width="131" height="17"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ANK_wCA2EeGe97N1lStKyg" width="131" height="34"/>
               </children>
               <children xmi:type="notation:DecorationNode" xmi:id="_-zHckCA1EeGe97N1lStKyg" type="6002">
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-zHckSA1EeGe97N1lStKyg" y="17" width="131" height="32"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-zHckSA1EeGe97N1lStKyg" y="34" width="131" height="32"/>
               </children>
               <element xmi:type="uml:State" href="fordisplay2.uml#_-yr-wCA1EeGe97N1lStKyg"/>
-              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-y4MASA1EeGe97N1lStKyg" x="235" y="14" width="131" height="49"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-y4MASA1EeGe97N1lStKyg" x="235" y="14" width="131" height="66"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_sc76ACA2EeGe97N1lStKyg" type="6000" fontName="Ubuntu" fontHeight="11" lineColor="0">
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_sc8hECA2EeGe97N1lStKyg" source="ShadowFigure">
@@ -809,7 +809,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_GhVFcyA2EeGe97N1lStKyg"/>
       </children>
       <children xmi:type="notation:DecorationNode" xmi:id="_GhVFdCA2EeGe97N1lStKyg" type="7003">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_GhVFdSA2EeGe97N1lStKyg" x="-21" y="49"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_GhVFdSA2EeGe97N1lStKyg" x="6" y="123"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_GhUeYSA2EeGe97N1lStKyg" fontName="Ubuntu" fontHeight="11"/>
       <element xmi:type="uml:Transition" href="fordisplay2.uml#_GhJfQCA2EeGe97N1lStKyg"/>
@@ -838,6 +838,28 @@
       <element xmi:type="uml:Transition" href="fordisplay2.uml#_1_U2QCA2EeGe97N1lStKyg"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1_bj8iA2EeGe97N1lStKyg" points="[6, 14, -45, -99]$[61, 159, 10, 46]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2AOOICA2EeGe97N1lStKyg" id="(0.5648854961832062,0.7878787878787878)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_WSIEECzAEeGE59hIVtL0PA" type="7000" source="_871K0CA1EeGe97N1lStKyg" target="_-y4MACA1EeGe97N1lStKyg" lineColor="0">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_WSxkUCzAEeGE59hIVtL0PA" source="Stereotype_Annotation">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_WSyLYCzAEeGE59hIVtL0PA" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_WSyLYSzAEeGE59hIVtL0PA" key="StereotypeList" value="CHESS::Dependability::ThreatsPropagation::InternalFault"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_WSyLYizAEeGE59hIVtL0PA" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_WSyLYyzAEeGE59hIVtL0PA" key="PropStereoDisplay" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_WSyLZCzAEeGE59hIVtL0PA" key="StereotypePropertyLocation" value="Compartment"/>
+      </eAnnotations>
+      <children xmi:type="notation:DecorationNode" xmi:id="_WSJSMCzAEeGE59hIVtL0PA" type="7001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_WSJSMSzAEeGE59hIVtL0PA"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_WSJSMizAEeGE59hIVtL0PA" type="7002">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_WSJSMyzAEeGE59hIVtL0PA"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_WSJSNCzAEeGE59hIVtL0PA" type="7003">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_WSJSNSzAEeGE59hIVtL0PA" y="60"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_WSIEESzAEeGE59hIVtL0PA" fontName="Ubuntu" fontHeight="11"/>
+      <element xmi:type="uml:Transition" href="fordisplay2.uml#_WR2-UCzAEeGE59hIVtL0PA"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_WSIEEizAEeGE59hIVtL0PA" points="[10, -3, -180, 36]$[160, -30, -30, 9]"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_WTRTkCzAEeGE59hIVtL0PA" id="(0.22900763358778625,0.7346938775510204)"/>
     </edges>
   </notation:Diagram>
 </xmi:XMI>

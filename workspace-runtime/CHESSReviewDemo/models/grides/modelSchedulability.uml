@@ -859,7 +859,7 @@
   <ThreatsPropagation:Error xmi:id="__UqLMPsZEeCeG4iiOw5dSA" base_State="__TnpYPsZEeCeG4iiOw5dSA"/>
   <ThreatsPropagation:Error xmi:id="__p0i4PsZEeCeG4iiOw5dSA" base_State="__o7LAPsZEeCeG4iiOw5dSA"/>
   <ThreatsPropagation:InternalFault xmi:id="_QTiHIPsaEeCeG4iiOw5dSA" base_Transition="_QRvXYPsaEeCeG4iiOw5dSA" permanentProb="1" occurrence="1.0E-7" transientDuration="1.0"/>
-  <ThreatsPropagation:InternalFault xmi:id="_Q0KvAPsaEeCeG4iiOw5dSA" base_Transition="_Qyq6MPsaEeCeG4iiOw5dSA" permanentProb="1.0E-4" occurrence="1.0E+2" transientDuration="1"/>
+  <ThreatsPropagation:InternalFault xmi:id="_Q0KvAPsaEeCeG4iiOw5dSA" base_Transition="_Qyq6MPsaEeCeG4iiOw5dSA" permanentProb="1" occurrence="1.0E+2" transientDuration="1"/>
   <ThreatsPropagation:Error xmi:id="_SZypAPsaEeCeG4iiOw5dSA" base_State="_SYvgIPsaEeCeG4iiOw5dSA"/>
   <Alloc:Assign xmi:id="_LiJNAPsgEeCeG4iiOw5dSA" from="__fkN4SowEeGJ4qErCwQ8wg" to="_AHwHMguQEeGeGcsysALQew" base_Comment="_Hg0FkPsgEeCeG4iiOw5dSA"/>
   <Alloc:Assign xmi:id="_S-7SMPshEeCeG4iiOw5dSA" from="__ft-4yowEeGJ4qErCwQ8wg" to="_AH54MAuQEeGeGcsysALQew" base_Comment="_Gz9moPsgEeCeG4iiOw5dSA"/>
@@ -884,11 +884,11 @@
   <DependableComponent:Propagation xmi:id="_10u1YPvPEeCeG4iiOw5dSA" prob="1.0" propDelay="1.0E-03"/>
   <DependableComponent:DependableComponent xmi:id="_y1gOsPvQEeCeG4iiOw5dSA" errorModel="_4En-8PvQEeCeG4iiOw5dSA" base_Property="_o3JfwPgNEeC2ZpD0BLbttg"/>
   <ThreatsPropagation:ErrorModel xmi:id="_4En-8PvQEeCeG4iiOw5dSA" base_StateMachine="_tLe0wPsYEeCeG4iiOw5dSA"/>
-  <DependableComponent:Propagation xmi:id="_-tOH8PvuEeCeG4iiOw5dSA" prob="1.0E-04" propDelay="1.0" base_Transition="_VefJEPsaEeCeG4iiOw5dSA"/>
-  <DependableComponent:Propagation xmi:id="_AEsRMPvvEeCeG4iiOw5dSA" prob="1.0E-4" propDelay="1.0" base_Transition="_UP85YPsaEeCeG4iiOw5dSA"/>
+  <DependableComponent:Propagation xmi:id="_-tOH8PvuEeCeG4iiOw5dSA" prob="1.0" propDelay="1.0" base_Transition="_VefJEPsaEeCeG4iiOw5dSA"/>
+  <DependableComponent:Propagation xmi:id="_AEsRMPvvEeCeG4iiOw5dSA" prob="1.0" propDelay="1.0" base_Transition="_UP85YPsaEeCeG4iiOw5dSA"/>
   <DependableComponent:Propagation xmi:id="_BDuFQPvvEeCeG4iiOw5dSA" prob="1.0E-04" propDelay="1.0" base_Transition="_T1bgkPsaEeCeG4iiOw5dSA"/>
   <DependableComponent:Propagation xmi:id="_CJ5qMPvvEeCeG4iiOw5dSA" prob="1.0E-4" propDelay="1.0" base_Transition="_Py5fQPsaEeCeG4iiOw5dSA"/>
-  <DependableComponent:Propagation xmi:id="_DNspgPvvEeCeG4iiOw5dSA" prob="1.0E-4" propDelay="1.0" base_Transition="_RNyv8PsaEeCeG4iiOw5dSA"/>
+  <DependableComponent:Propagation xmi:id="_DNspgPvvEeCeG4iiOw5dSA" prob="0.5" propDelay="1.0" base_Transition="_RNyv8PsaEeCeG4iiOw5dSA"/>
   <Core:CHGaResourcePlatform xmi:id="_jj04kP46EeCQkLM39NLBXw" base_Package="_jjrHkP46EeCQkLM39NLBXw"/>
   <StateBasedComponents:StatefulSoftware xmi:id="_fg90EP_PEeC1brWc6v2cFQ" base_Component="_wq11wPZxEeC7B6JYhp9kVA" errorLatency="2.0E-4" repairDelay="1.0E+12" faultOcc="1.0E-12"/>
   <StateBasedComponents:StatefulSoftware xmi:id="_kS4q8P_PEeC1brWc6v2cFQ" base_Component="_xhl3kPZxEeC7B6JYhp9kVA" errorLatency="2.0E-4" repairDelay="1.0E+12" faultOcc="1.0E-12"/>
@@ -896,7 +896,7 @@
   <DependableComponent:Propagation xmi:id="_DB_ckP_QEeC1brWc6v2cFQ"/>
   <Blocks:NestedConnectorEnd xmi:id="_elR9AP_REeC1brWc6v2cFQ" propertyPath="_o3JfwPgNEeC2ZpD0BLbttg"/>
   <GCM:FlowPort xmi:id="_o3dXcP_REeC1brWc6v2cFQ"/>
-  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_5b-SoP_REeC1brWc6v2cFQ" base_StructuredClassifier="_5aVT4P_REeC1brWc6v2cFQ" base_NamedElement="_5aVT4P_REeC1brWc6v2cFQ" platform="_jj04kP46EeCQkLM39NLBXw" measure="Reliability { instantOfTime = 10000 }" measureEvaluationResult="" targetDepComponent="__fkN4SowEeGJ4qErCwQ8wg"/>
+  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_5b-SoP_REeC1brWc6v2cFQ" base_StructuredClassifier="_5aVT4P_REeC1brWc6v2cFQ" base_NamedElement="_5aVT4P_REeC1brWc6v2cFQ" platform="_jj04kP46EeCQkLM39NLBXw" measure="Reliability { instantOfTime = 10000000000 }" measureEvaluationResult="9.920000e-01" targetDepComponent="__fkN4SowEeGJ4qErCwQ8wg"/>
   <DependableComponent:Propagation xmi:id="_5KZHMAFBEeG9C_MXmHPAaQ" prob="0.9" propDelay="1.0" base_Connector="_wyJHwPgKEeC2ZpD0BLbttg"/>
   <ThreatsPropagation:InternalFault xmi:id="_mW65wAFEEeG9C_MXmHPAaQ" base_Transition="_mSwLcAFEEeG9C_MXmHPAaQ" permanentProb="1.0E-4" occurrence="1.0E-7" transientDuration="1.0"/>
   <ThreatsPropagation:InternalFault xmi:id="_qlE8QAFEEeG9C_MXmHPAaQ" base_Transition="_qisWoAFEEeG9C_MXmHPAaQ" permanentProb="1.0E-4" occurrence="1.0E-7" transientDuration="1.0"/>
