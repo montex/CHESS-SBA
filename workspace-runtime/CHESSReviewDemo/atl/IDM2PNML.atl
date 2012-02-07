@@ -885,6 +885,170 @@ rule EPFImmediate extends EPF {
 	}
 }
 
+--InternalPropagation
+abstract rule InternalPropagation {
+	from
+		iprop : IDM!InternalPropagation
+	to
+		andop : PNML!OpAnd
+		(
+			expression1 <- iprop.PropagationLogic
+		),		
+		tmp : PNML!Place
+		(
+			id <- iprop.Name + '_tmp',
+			initialMarking <- thisModule.newPTMarking(0),
+			containerPage <- thisModule.getPage
+		),
+		casepropagate : PNML!GSPNImmediateTransition
+		(
+			id <- iprop.Name + '_caseprop',
+			Weight <- iprop.PropagationProbability,
+			Priority <- thisModule.priPropagationChoice,
+			containerPage <- thisModule.getPage
+		),
+		caseskip : PNML!GSPNImmediateTransition
+		(
+			id <- iprop.Name + '_caseskip',
+			Weight <- ( 1 - iprop.PropagationProbability ),
+			Priority <- thisModule.priPropagationChoice,
+			containerPage <- thisModule.getPage
+		),
+		--Archi
+		totmp : PNML!GSPNArc
+		(
+			id <- iprop.Name + '_totmp',
+--			source <- trfge,
+			target <- tmp,
+			containerPage <- thisModule.getPage
+		),
+		topropagate : PNML!GSPNArc
+		(
+			id <- iprop.Name + '_toprop',
+			containerPage <- thisModule.getPage,
+			source <- tmp,
+			target <- casepropagate
+		),
+		toskip : PNML!GSPNArc
+		(
+			id <- iprop.Name + '_toskip',
+			containerPage <- thisModule.getPage,
+			source <- tmp,
+			target <- caseskip
+		)
+}
+rule InternalPropagationTimed extends InternalPropagation {
+	from
+		iprop : IDM!InternalPropagation
+		(
+			if iprop.PropagationDelay.oclIsTypeOf(IDM!Deterministic) then
+				iprop.PropagationDelay.Value > 0
+			else
+				true
+			endif
+		)
+	to
+		triprop : PNML!GSPNTimedTransition
+		(
+			id <- iprop.Name,
+			Distribution <- iprop.PropagationDelay,
+			containerPage <- thisModule.getPage,
+			Guard <- andop
+		),
+		andop : PNML!OpAnd,
+		totmp : PNML!GSPNArc
+		(
+			source <- triprop
+		)
+	do {
+		thisModule.makeUniqueID(triprop);
+		thisModule.makeUniqueID(tmp);
+		thisModule.makeUniqueID(casepropagate);
+		thisModule.makeUniqueID(caseskip);
+		
+		thisModule.makeUniqueID(totmp);
+		thisModule.makeUniqueID(topropagate);
+		thisModule.makeUniqueID(toskip);
+		
+		thisModule.tmpLogicExp <- andop;
+
+		for(e in iprop.Destination.subSequence(2, iprop.Destination.size())) {
+			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
+				thisModule.newOpEqual(
+					thisModule.newMarkingExpression(e),
+					thisModule.newValueExpression(0)
+				),
+				OclUndefined
+			);
+			thisModule.newOutputArc(casepropagate, e);
+			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+		}
+		
+		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
+			thisModule.newMarkingExpression(iprop.Destination.first()),
+			thisModule.newValueExpression(0)
+		);
+		thisModule.newOutputArc(casepropagate, iprop.Destination.first());
+		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+	}
+}
+rule InternalPropagationImmediate extends InternalPropagation {
+	from
+		iprop : IDM!InternalPropagation
+		(
+			if iprop.PropagationDelay.oclIsTypeOf(IDM!Deterministic) then
+				iprop.PropagationDelay.Value = 0
+			else
+				false
+			endif
+		)
+	to
+		triprop : PNML!GSPNImmediateTransition
+		(
+			id <- iprop.Name,
+			containerPage <- thisModule.getPage,
+			Weight <- iprop.Weight,
+			Priority <- thisModule.priPropagation,
+			Guard <- andop
+		),
+		andop : PNML!OpAnd,
+		totmp : PNML!GSPNArc
+		(
+			source <- triprop
+		)
+	do {
+		thisModule.makeUniqueID(triprop);
+		thisModule.makeUniqueID(tmp);
+		thisModule.makeUniqueID(casepropagate);
+		thisModule.makeUniqueID(caseskip);
+		
+		thisModule.makeUniqueID(totmp);
+		thisModule.makeUniqueID(topropagate);
+		thisModule.makeUniqueID(toskip);
+		
+		thisModule.tmpLogicExp <- andop;
+
+		for(e in iprop.Destination.subSequence(2, iprop.Destination.size())) {
+			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
+				thisModule.newOpEqual(
+					thisModule.newMarkingExpression(e),
+					thisModule.newValueExpression(0)
+				),
+				OclUndefined
+			);
+			thisModule.newOutputArc(casepropagate, e);
+			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+		}
+		
+		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
+			thisModule.newMarkingExpression(iprop.Destination.first()),
+			thisModule.newValueExpression(0)
+		);
+		thisModule.newOutputArc(casepropagate, iprop.Destination.first());
+		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+	}
+}
+
 --Crea un ID unico per Place, sTransizioni e Archi, aggiungendo un numero progressivo all'ID attuale
 rule makeUniqueID(obj : PNML!PnObject) {
 	do {
