@@ -1156,8 +1156,11 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 						if (thisModule.FailureModes->exists(e | e.base_State = s)){
 							
 							if (thisModule.FailureModes->select(e | e.base_State = s)->
-							first().affectedPorts->includes(serverport)){
-								--...create and IM!ExternalFault in client corrisponding im component
+								first().affectedPorts->includes(serverport) or 
+								thisModule.FailureModes->select(e | e.base_State = s)->
+								first().affectedPorts->isEmpty())
+							{
+								--...create an IM!ExternalFault in client corrisponding im component
 								thisModule.SetExternalFaultClient(client.corrispondingComponent, s.getCorrispondingFailureMode);
 							}
 						}
@@ -1170,19 +1173,68 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 						if (thisModule.ExternalFaults->exists(e | e.base_Transition = t)){
 							if (thisModule.ExternalFaults->select(e | e.base_Transition = t)->
 							first().fromPort->includes(clientport)){
-								--...create and IM!FaultsGenerateErrors in client corrisponding im component
+								--...create an IM!FaultsGenerateErrors in client corrisponding im component
 								thisModule.SetFgeClient(client.corrispondingComponent, t, p);
 
 							}
 						}
 					}
 				}
+			 	
+			} else if(serverDepComp.errorModel = OclUndefined and clientDepComp.errorModel <> OclUndefined) {
+				--2) server has NOT error model, client has error model
+
+				--for each client's ExternalFault that originates from the port interested by the connection...
+				for(f in server.corrispondingComponent.FailureModes) {
+					thisModule.SetExternalFaultClient(client.corrispondingComponent, f);
+				}
 				
-			} else if(serverDepComp <> OclUndefined and clientDepComp <> OclUndefined){
-				--no error model, propagate the only failuremode of the server to the client
+				for (r in clientDepComp.errorModel.base_StateMachine.region){
+					for(t in r.transition){
+						if (thisModule.ExternalFaults->exists(e | e.base_Transition = t)){
+							if (thisModule.ExternalFaults->select(e | e.base_Transition = t)->
+							    first().fromPort->includes(clientport) or
+								thisModule.ExternalFaults->select(e | e.base_Transition = t)->
+							    first().fromPort->isEmpty())
+							{
+								--...create an IM!FaultsGenerateErrors in client corrisponding im component
+								thisModule.SetFgeClient(client.corrispondingComponent, t, p);
+							}
+						}
+					}
+				}				
+				
+			} else if(serverDepComp.errorModel <> OclUndefined and clientDepComp.errorModel = OclUndefined) {
+				--3) server has error model, client has NOT error model
+				if (MARTE!Assign.allInstances()->exists(e | e.base_Comment = p.base_Comment)) {
+					--Assign relation: server is a hardware component, client is a the sowftware allocated to it,
+					--all the failure modes should be taken into account
+					for(f in server.corrispondingComponent.FailureModes) {
+						thisModule.SetExternalFaultAndFGEClient(client.corrispondingComponent, f, p);
+					}
+				}else {
+					--Normal connector
+					--for each server's FailureMode that affect the port interested by the connection...
+					for (r in serverDepComp.errorModel.base_StateMachine.region){
+						for(s in r.subvertex){
+							if (thisModule.FailureModes->exists(e | e.base_State = s)){
+								
+								if (thisModule.FailureModes->select(e | e.base_State = s)->
+									first().affectedPorts.debug()->includes(serverport) or 
+									thisModule.FailureModes->select(e | e.base_State = s)->
+									first().affectedPorts->isEmpty())
+								{
+									--...create an IM!ExternalFault in client corrisponding im component
+									thisModule.SetExternalFaultAndFGEClient(client.corrispondingComponent, s.getCorrispondingFailureMode, p);
+								}
+							}
+						}
+					}
+				}
 			
-				thisModule.SetExternalFaultAndFGEClient(client.corrispondingComponent, server.corrispondingComponent.FailureModes->first(), p);
-				
+			} else if(serverDepComp <> OclUndefined and clientDepComp <> OclUndefined){
+				--4) BOTH server and client do NOT have the error model, propagate the only failuremode of the server to the client
+				thisModule.SetExternalFaultAndFGEClient(client.corrispondingComponent, server.corrispondingComponent.FailureModes->first(), p);	
 			}
 		
 		}

@@ -379,11 +379,11 @@
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_v5hvYPsYEeCeG4iiOw5dSA" name="Initial0"/>
             <subvertex xmi:type="uml:State" xmi:id="_7uJXgPsZEeCeG4iiOw5dSA" name="FaultCPU0"/>
             <subvertex xmi:type="uml:State" xmi:id="_8NlskPsZEeCeG4iiOw5dSA" name="FaultCPU1"/>
-            <subvertex xmi:type="uml:State" xmi:id="_9DFKIPsZEeCeG4iiOw5dSA" name="FailureMode0"/>
             <subvertex xmi:type="uml:State" xmi:id="_9UXHYPsZEeCeG4iiOw5dSA" name="FailureMode1"/>
             <subvertex xmi:type="uml:State" xmi:id="__TnpYPsZEeCeG4iiOw5dSA" name="FaultMem1"/>
             <subvertex xmi:type="uml:State" xmi:id="__o7LAPsZEeCeG4iiOw5dSA" name="FaultMem0"/>
             <subvertex xmi:type="uml:State" xmi:id="_SYvgIPsaEeCeG4iiOw5dSA" name="Error4"/>
+            <subvertex xmi:type="uml:State" xmi:id="_1RBmUFI9EeGlFqQgeYHbuQ" name="FailureMode0"/>
             <transition xmi:id="_Py5fQPsaEeCeG4iiOw5dSA" name="1" source="__o7LAPsZEeCeG4iiOw5dSA" target="_7uJXgPsZEeCeG4iiOw5dSA"/>
             <transition xmi:id="_QRvXYPsaEeCeG4iiOw5dSA" name="InternalFault1" source="_v5hvYPsYEeCeG4iiOw5dSA" target="__o7LAPsZEeCeG4iiOw5dSA"/>
             <transition xmi:id="_Qyq6MPsaEeCeG4iiOw5dSA" name="InternalFault2" source="_v5hvYPsYEeCeG4iiOw5dSA" target="__TnpYPsZEeCeG4iiOw5dSA"/>
@@ -393,35 +393,81 @@
             <transition xmi:id="_VefJEPsaEeCeG4iiOw5dSA" name="InternalFault7" source="_SYvgIPsaEeCeG4iiOw5dSA" target="_9UXHYPsZEeCeG4iiOw5dSA"/>
             <transition xmi:id="_mSwLcAFEEeG9C_MXmHPAaQ" name="InternalFault8" source="_v5hvYPsYEeCeG4iiOw5dSA" target="_7uJXgPsZEeCeG4iiOw5dSA"/>
             <transition xmi:id="_qisWoAFEEeG9C_MXmHPAaQ" name="InternalFault9" source="_v5hvYPsYEeCeG4iiOw5dSA" target="_8NlskPsZEeCeG4iiOw5dSA"/>
+            <transition xmi:id="_Y49RoFJKEeGlFqQgeYHbuQ" name="ExternalFault0" source="_v5hvYPsYEeCeG4iiOw5dSA" target="_SYvgIPsaEeCeG4iiOw5dSA"/>
           </region>
         </ownedBehavior>
       </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_jjrHkP46EeCQkLM39NLBXw" name="hwsystem_instSpec">
-        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_AHmWMAuQEeGeGcsysALQew" name="hwsystem" classifier="_UNDhMPgLEeC2ZpD0BLbttg">
-          <slot xmi:id="_AHmWMguQEeGeGcsysALQew" definingFeature="_ooGXIPgNEeC2ZpD0BLbttg">
-            <value xmi:type="uml:InstanceValue" xmi:id="_AHmWMwuQEeGeGcsysALQew" name="SerailCable" instance="_AHmWMQuQEeGeGcsysALQew"/>
+        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_rpY8sFJIEeGlFqQgeYHbuQ" name="hwsystem" classifier="_UNDhMPgLEeC2ZpD0BLbttg">
+          <slot xmi:id="_rpaK0VJIEeGlFqQgeYHbuQ" definingFeature="_ooGXIPgNEeC2ZpD0BLbttg">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rpax4FJIEeGlFqQgeYHbuQ" name="SerailCable" instance="_rpaK0FJIEeGlFqQgeYHbuQ"/>
           </slot>
-          <slot xmi:id="_AHwHMwuQEeGeGcsysALQew" definingFeature="_o3JfwPgNEeC2ZpD0BLbttg">
-            <value xmi:type="uml:InstanceValue" xmi:id="_AHwHNAuQEeGeGcsysALQew" name="BoardSystem" instance="_AHwHMguQEeGeGcsysALQew"/>
+          <slot xmi:id="_rpjUwFJIEeGlFqQgeYHbuQ" definingFeature="_o3JfwPgNEeC2ZpD0BLbttg">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rpj70FJIEeGlFqQgeYHbuQ" name="BoardSystem" instance="_rpitsFJIEeGlFqQgeYHbuQ"/>
           </slot>
-          <slot xmi:id="_AH54MQuQEeGeGcsysALQew" definingFeature="_pJB58PgNEeC2ZpD0BLbttg">
-            <value xmi:type="uml:InstanceValue" xmi:id="_AH54MguQEeGeGcsysALQew" name="PC" instance="_AH54MAuQEeGeGcsysALQew"/>
+          <slot xmi:id="_rrbkEVJIEeGlFqQgeYHbuQ" definingFeature="_pJB58PgNEeC2ZpD0BLbttg">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rrcLIFJIEeGlFqQgeYHbuQ" name="PC" instance="_rrbkEFJIEeGlFqQgeYHbuQ"/>
           </slot>
         </packagedElement>
-        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_AHmWMQuQEeGeGcsysALQew" name="hwsystem_SerailCable" classifier="_V1Nx0PgLEeC2ZpD0BLbttg">
-          <slot xmi:id="_AHmWNAuQEeGeGcsysALQew" definingFeature="_BMgEkPgPEeC2ZpD0BLbttg"/>
-          <slot xmi:id="_AHwHMAuQEeGeGcsysALQew" definingFeature="_Bwtk4PgPEeC2ZpD0BLbttg"/>
+        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_rpaK0FJIEeGlFqQgeYHbuQ" name="hwsystem_SerailCable" classifier="_V1Nx0PgLEeC2ZpD0BLbttg">
+          <slot xmi:id="_rpcnEFJIEeGlFqQgeYHbuQ" definingFeature="_BMgEkPgPEeC2ZpD0BLbttg"/>
+          <slot xmi:id="_rpdOIFJIEeGlFqQgeYHbuQ" definingFeature="_Bwtk4PgPEeC2ZpD0BLbttg"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_AHwHMguQEeGeGcsysALQew" name="hwsystem_BoardSystem" classifier="_ef1YkPgLEeC2ZpD0BLbttg"/>
-        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_AH54MAuQEeGeGcsysALQew" name="hwsystem_PC" classifier="_WtPmAPgLEeC2ZpD0BLbttg">
-          <slot xmi:id="_AH54MwuQEeGeGcsysALQew" definingFeature="_3ObR4PgOEeC2ZpD0BLbttg"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_AH54NQuQEeGeGcsysALQew">
-          <slot xmi:id="_AH54NguQEeGeGcsysALQew" definingFeature="_3ObR4PgOEeC2ZpD0BLbttg">
-            <value xmi:type="uml:InstanceValue" xmi:id="_AH54OAuQEeGeGcsysALQew" name="partWithPort" instance="_AH54MAuQEeGeGcsysALQew"/>
+        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_rpitsFJIEeGlFqQgeYHbuQ" name="hwsystem_BoardSystem" classifier="_ef1YkPgLEeC2ZpD0BLbttg">
+          <slot xmi:id="_rplJ8FJIEeGlFqQgeYHbuQ" definingFeature="_ljIaYBzlEeGp_dTcTgVLmQ"/>
+          <slot xmi:id="_rplxAFJIEeGlFqQgeYHbuQ" definingFeature="_q2vnkCfyEeGJH78aeOsNQg"/>
+          <slot xmi:id="_rqizQFJIEeGlFqQgeYHbuQ" definingFeature="_KhvzACfuEeGJH78aeOsNQg">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rqjaUFJIEeGlFqQgeYHbuQ" name="Property0" instance="_rqiMMFJIEeGlFqQgeYHbuQ"/>
           </slot>
-          <slot xmi:id="_AH54NwuQEeGeGcsysALQew" definingFeature="_BMgEkPgPEeC2ZpD0BLbttg">
-            <value xmi:type="uml:InstanceValue" xmi:id="_AIDCIAuQEeGeGcsysALQew" name="partWithPort" instance="_AHmWMQuQEeGeGcsysALQew"/>
+          <slot xmi:id="_rqmdoVJIEeGlFqQgeYHbuQ" definingFeature="_XgwqUCfyEeGJH78aeOsNQg">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rqnEsFJIEeGlFqQgeYHbuQ" name="Property1" instance="_rqmdoFJIEeGlFqQgeYHbuQ"/>
+          </slot>
+          <slot xmi:id="_rqpg8VJIEeGlFqQgeYHbuQ" definingFeature="_XwZo0CfyEeGJH78aeOsNQg">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rqqIAFJIEeGlFqQgeYHbuQ" name="Property2" instance="_rqpg8FJIEeGlFqQgeYHbuQ"/>
+          </slot>
+          <slot xmi:id="_rrICEFJIEeGlFqQgeYHbuQ" definingFeature="_X_AFgCfyEeGJH78aeOsNQg">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rrIpIFJIEeGlFqQgeYHbuQ" name="Property3" instance="_rrHbAFJIEeGlFqQgeYHbuQ"/>
+          </slot>
+          <slot xmi:id="_rrWrkFJIEeGlFqQgeYHbuQ" definingFeature="_YQ4fsCfyEeGJH78aeOsNQg">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rrX5sFJIEeGlFqQgeYHbuQ" name="Property4" instance="_rrUPUFJIEeGlFqQgeYHbuQ"/>
+          </slot>
+        </packagedElement>
+        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_rqiMMFJIEeGlFqQgeYHbuQ" name="hwsystem_BoardSystem_Property0" classifier="_Y3gXoCfuEeGJH78aeOsNQg">
+          <slot xmi:id="_rqlPgFJIEeGlFqQgeYHbuQ" definingFeature="_kfpioCfyEeGJH78aeOsNQg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_rqmdoFJIEeGlFqQgeYHbuQ" name="hwsystem_BoardSystem_Property1" classifier="_ZIMfACfuEeGJH78aeOsNQg">
+          <slot xmi:id="_rqoS0FJIEeGlFqQgeYHbuQ" definingFeature="_k2mDACfyEeGJH78aeOsNQg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_rqpg8FJIEeGlFqQgeYHbuQ" name="hwsystem_BoardSystem_Property2" classifier="_ZX2EkCfuEeGJH78aeOsNQg">
+          <slot xmi:id="_rqr9MFJIEeGlFqQgeYHbuQ" definingFeature="_nIB6ICfyEeGJH78aeOsNQg"/>
+          <slot xmi:id="_rrCigFJIEeGlFqQgeYHbuQ" definingFeature="_oVqK4CfyEeGJH78aeOsNQg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_rrHbAFJIEeGlFqQgeYHbuQ" name="hwsystem_BoardSystem_Property3" classifier="_ZpuewCfuEeGJH78aeOsNQg">
+          <slot xmi:id="_rrJ3QFJIEeGlFqQgeYHbuQ" definingFeature="_m3MBwCfyEeGJH78aeOsNQg"/>
+          <slot xmi:id="_rrLFYFJIEeGlFqQgeYHbuQ" definingFeature="_oqX2oCfyEeGJH78aeOsNQg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_rrUPUFJIEeGlFqQgeYHbuQ" name="hwsystem_BoardSystem_Property4" classifier="_Z75z4CfuEeGJH78aeOsNQg">
+          <slot xmi:id="_rrZH0FJIEeGlFqQgeYHbuQ" definingFeature="_o6UXICfyEeGJH78aeOsNQg"/>
+          <slot xmi:id="_rrZu4FJIEeGlFqQgeYHbuQ" definingFeature="_pgBFMCfyEeGJH78aeOsNQg"/>
+          <slot xmi:id="_rraV8FJIEeGlFqQgeYHbuQ" definingFeature="_qGBVQCfyEeGJH78aeOsNQg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_rrbkEFJIEeGlFqQgeYHbuQ" name="hwsystem_PC" classifier="_WtPmAPgLEeC2ZpD0BLbttg">
+          <slot xmi:id="_rreAUFJIEeGlFqQgeYHbuQ" definingFeature="_3ObR4PgOEeC2ZpD0BLbttg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_rrhqsFJIEeGlFqQgeYHbuQ">
+          <slot xmi:id="_rrhqsVJIEeGlFqQgeYHbuQ" definingFeature="_3ObR4PgOEeC2ZpD0BLbttg">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rri40FJIEeGlFqQgeYHbuQ" name="partWithPort" instance="_rrbkEFJIEeGlFqQgeYHbuQ"/>
+          </slot>
+          <slot xmi:id="_rrhqslJIEeGlFqQgeYHbuQ" definingFeature="_BMgEkPgPEeC2ZpD0BLbttg">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rrkG8FJIEeGlFqQgeYHbuQ" name="partWithPort" instance="_rpaK0FJIEeGlFqQgeYHbuQ"/>
+          </slot>
+        </packagedElement>
+        <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_rrnKQFJIEeGlFqQgeYHbuQ">
+          <slot xmi:id="_rrnxUFJIEeGlFqQgeYHbuQ" definingFeature="_ljIaYBzlEeGp_dTcTgVLmQ">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rro_cFJIEeGlFqQgeYHbuQ" name="partWithPort" instance="_rpitsFJIEeGlFqQgeYHbuQ"/>
+          </slot>
+          <slot xmi:id="_rrnxUVJIEeGlFqQgeYHbuQ" definingFeature="_Bwtk4PgPEeC2ZpD0BLbttg">
+            <value xmi:type="uml:InstanceValue" xmi:id="_rrqNkFJIEeGlFqQgeYHbuQ" name="partWithPort" instance="_rpaK0FJIEeGlFqQgeYHbuQ"/>
           </slot>
         </packagedElement>
       </packagedElement>
@@ -854,16 +900,15 @@
   <StateBasedComponents:StatefulSoftware xmi:id="_gguZYPsYEeCeG4iiOw5dSA" base_Component="_kaTRMPZxEeC7B6JYhp9kVA" errorLatency="3.0E-4" repairDelay="1.0E+12" faultOcc="1.0E-12"/>
   <ThreatsPropagation:Error xmi:id="_7vyWQPsZEeCeG4iiOw5dSA" base_State="_7uJXgPsZEeCeG4iiOw5dSA"/>
   <ThreatsPropagation:Error xmi:id="_8OoOYPsZEeCeG4iiOw5dSA" base_State="_8NlskPsZEeCeG4iiOw5dSA"/>
-  <ThreatsPropagation:FailureMode xmi:id="_9EHr8PsZEeCeG4iiOw5dSA" base_State="_9DFKIPsZEeCeG4iiOw5dSA"/>
   <ThreatsPropagation:FailureMode xmi:id="_9VQfQPsZEeCeG4iiOw5dSA" base_State="_9UXHYPsZEeCeG4iiOw5dSA"/>
   <ThreatsPropagation:Error xmi:id="__UqLMPsZEeCeG4iiOw5dSA" base_State="__TnpYPsZEeCeG4iiOw5dSA"/>
   <ThreatsPropagation:Error xmi:id="__p0i4PsZEeCeG4iiOw5dSA" base_State="__o7LAPsZEeCeG4iiOw5dSA"/>
   <ThreatsPropagation:InternalFault xmi:id="_QTiHIPsaEeCeG4iiOw5dSA" base_Transition="_QRvXYPsaEeCeG4iiOw5dSA" permanentProb="1" occurrence="1.0E-7" transientDuration="1.0"/>
   <ThreatsPropagation:InternalFault xmi:id="_Q0KvAPsaEeCeG4iiOw5dSA" base_Transition="_Qyq6MPsaEeCeG4iiOw5dSA" permanentProb="1" occurrence="1.0E+2" transientDuration="1"/>
   <ThreatsPropagation:Error xmi:id="_SZypAPsaEeCeG4iiOw5dSA" base_State="_SYvgIPsaEeCeG4iiOw5dSA"/>
-  <Alloc:Assign xmi:id="_LiJNAPsgEeCeG4iiOw5dSA" from="__fkN4SowEeGJ4qErCwQ8wg" to="_AHwHMguQEeGeGcsysALQew" base_Comment="_Hg0FkPsgEeCeG4iiOw5dSA"/>
-  <Alloc:Assign xmi:id="_S-7SMPshEeCeG4iiOw5dSA" from="__ft-4yowEeGJ4qErCwQ8wg" to="_AH54MAuQEeGeGcsysALQew" base_Comment="_Gz9moPsgEeCeG4iiOw5dSA"/>
-  <Alloc:Assign xmi:id="_gOl8APsiEeCeG4iiOw5dSA" from="__fkN5iowEeGJ4qErCwQ8wg" to="_AH54MAuQEeGeGcsysALQew" base_Comment="_HOCTgPsgEeCeG4iiOw5dSA"/>
+  <Alloc:Assign xmi:id="_LiJNAPsgEeCeG4iiOw5dSA" from="__fkN4SowEeGJ4qErCwQ8wg" to="_rpitsFJIEeGlFqQgeYHbuQ" base_Comment="_Hg0FkPsgEeCeG4iiOw5dSA"/>
+  <Alloc:Assign xmi:id="_S-7SMPshEeCeG4iiOw5dSA" from="__ft-4yowEeGJ4qErCwQ8wg" to="_rrbkEFJIEeGlFqQgeYHbuQ" base_Comment="_Gz9moPsgEeCeG4iiOw5dSA"/>
+  <Alloc:Assign xmi:id="_gOl8APsiEeCeG4iiOw5dSA" from="__fkN5iowEeGJ4qErCwQ8wg" to="_rrbkEFJIEeGlFqQgeYHbuQ" base_Comment="_HOCTgPsgEeCeG4iiOw5dSA"/>
   <DependableComponent:Propagation xmi:id="_1-QMgPvJEeCeG4iiOw5dSA" prob="1" propDelay="1.0E-03" base_Comment="_Gz9moPsgEeCeG4iiOw5dSA"/>
   <Blocks:NestedConnectorEnd xmi:id="_IVozgPvKEeCeG4iiOw5dSA" base_ConnectorEnd="_DO4zEfgPEeC2ZpD0BLbttg"/>
   <Blocks:NestedConnectorEnd xmi:id="_IWPQcPvKEeCeG4iiOw5dSA" base_ConnectorEnd="_WGmLofpOEeCsZeUJdL7j6w"/>
@@ -896,18 +941,12 @@
   <DependableComponent:Propagation xmi:id="_DB_ckP_QEeC1brWc6v2cFQ"/>
   <Blocks:NestedConnectorEnd xmi:id="_elR9AP_REeC1brWc6v2cFQ" propertyPath="_o3JfwPgNEeC2ZpD0BLbttg"/>
   <GCM:FlowPort xmi:id="_o3dXcP_REeC1brWc6v2cFQ"/>
-  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_5b-SoP_REeC1brWc6v2cFQ" base_StructuredClassifier="_5aVT4P_REeC1brWc6v2cFQ" base_NamedElement="_5aVT4P_REeC1brWc6v2cFQ" platform="_jj04kP46EeCQkLM39NLBXw" measure="Reliability { instantOfTime = 10000000000 }" measureEvaluationResult="9.920000e-01" targetDepComponent="__fkN4SowEeGJ4qErCwQ8wg"/>
+  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_5b-SoP_REeC1brWc6v2cFQ" base_StructuredClassifier="_5aVT4P_REeC1brWc6v2cFQ" base_NamedElement="_5aVT4P_REeC1brWc6v2cFQ" platform="_jj04kP46EeCQkLM39NLBXw" measure="Reliability { instantOfTime = 100 }" measureEvaluationResult="5.040000e-01" targetDepComponent="__fkN4SowEeGJ4qErCwQ8wg"/>
   <DependableComponent:Propagation xmi:id="_5KZHMAFBEeG9C_MXmHPAaQ" prob="0.9" propDelay="1.0" base_Connector="_wyJHwPgKEeC2ZpD0BLbttg"/>
   <ThreatsPropagation:InternalFault xmi:id="_mW65wAFEEeG9C_MXmHPAaQ" base_Transition="_mSwLcAFEEeG9C_MXmHPAaQ" permanentProb="1.0E-4" occurrence="1.0E-7" transientDuration="1.0"/>
   <ThreatsPropagation:InternalFault xmi:id="_qlE8QAFEEeG9C_MXmHPAaQ" base_Transition="_qisWoAFEEeG9C_MXmHPAaQ" permanentProb="1.0E-4" occurrence="1.0E-7" transientDuration="1.0"/>
   <HardwareBaseline:CH_HwProcessor xmi:id="_uxAGgAt-EeGoQ8cZN5VARg" base_Classifier="_WtPmAPgLEeC2ZpD0BLbttg"/>
   <HardwareBaseline:CH_HwProcessor xmi:id="_-7vPwAt-EeGoQ8cZN5VARg" base_Classifier="_ef1YkPgLEeC2ZpD0BLbttg"/>
-  <HardwareBaseline:CH_HwBus xmi:id="_AHwHMQuQEeGeGcsysALQew" base_InstanceSpecification="_AHmWMQuQEeGeGcsysALQew" speedFactor="(value=1.0)" utilization="">
-    <packetT>(worst=90.0,best=90.0,unit=us)</packetT>
-  </HardwareBaseline:CH_HwBus>
-  <HardwareBaseline:CH_HwProcessor xmi:id="_AHwHNQuQEeGeGcsysALQew" base_InstanceSpecification="_AHwHMguQEeGeGcsysALQew" utilization="(value=54.40,statQ=calc,mode='20120116104612')"/>
-  <HardwareBaseline:CH_HwProcessor xmi:id="_AH54NAuQEeGeGcsysALQew" base_InstanceSpecification="_AH54MAuQEeGeGcsysALQew" utilization="(value=22.86,statQ=calc,mode='20120116104612')"/>
-  <DependableComponent:Propagation xmi:id="_AIDCIQuQEeGeGcsysALQew" prob="1" propDelay="1.0E+3" base_InstanceSpecification="_AH54NQuQEeGeGcsysALQew"/>
   <GCM:FlowPort xmi:id="_ePYf8BzlEeGp_dTcTgVLmQ"/>
   <GCM:FlowPort xmi:id="_jmtJ8BzlEeGp_dTcTgVLmQ"/>
   <GCM:FlowPort xmi:id="_lj4BQBzlEeGp_dTcTgVLmQ" direction="in" base_Port="_ljIaYBzlEeGp_dTcTgVLmQ"/>
@@ -1023,4 +1062,15 @@
     <respT>(worst=0.080000,best=0.012000,unit=s,statQ=calc,mode='20120116104612%sw_system_sender_impl_inst_send_icomm__internal_event_1')</respT>
   </SAM:SaStep>
   <DependableComponent:DependableComponent xmi:id="_IUPvsEETEeGpetakrXzAfA" base_Component="_ef1YkPgLEeC2ZpD0BLbttg" errorModel="_4En-8PvQEeCeG4iiOw5dSA"/>
+  <ThreatsPropagation:FailureMode xmi:id="_13HV8FI9EeGlFqQgeYHbuQ" base_State="_1RBmUFI9EeGlFqQgeYHbuQ"/>
+  <HardwareBaseline:CH_HwBus xmi:id="_rpfqYFJIEeGlFqQgeYHbuQ" base_InstanceSpecification="_rpaK0FJIEeGlFqQgeYHbuQ" speedFactor="(value=1.0)">
+    <packetT>(worst=90.0,best=90.0,unit=us)</packetT>
+  </HardwareBaseline:CH_HwBus>
+  <HardwareBaseline:CH_HwProcessor xmi:id="_rqg-EFJIEeGlFqQgeYHbuQ" base_InstanceSpecification="_rpitsFJIEeGlFqQgeYHbuQ"/>
+  <HardwareBaseline:CH_HwProcessor xmi:id="_rrFl0FJIEeGlFqQgeYHbuQ" base_InstanceSpecification="_rqpg8FJIEeGlFqQgeYHbuQ"/>
+  <HardwareBaseline:CH_HwProcessor xmi:id="_rrRzEFJIEeGlFqQgeYHbuQ" base_InstanceSpecification="_rrHbAFJIEeGlFqQgeYHbuQ"/>
+  <HardwareBaseline:CH_HwProcessor xmi:id="_rrf1gFJIEeGlFqQgeYHbuQ" base_InstanceSpecification="_rrbkEFJIEeGlFqQgeYHbuQ"/>
+  <DependableComponent:Propagation xmi:id="_rrlVEFJIEeGlFqQgeYHbuQ" prob="1" propDelay="1.0E-3" base_InstanceSpecification="_rrhqsFJIEeGlFqQgeYHbuQ"/>
+  <DependableComponent:Propagation xmi:id="_rrrbsFJIEeGlFqQgeYHbuQ" prob="1" propDelay="1.0E-3" base_InstanceSpecification="_rrnKQFJIEeGlFqQgeYHbuQ"/>
+  <ThreatsPropagation:ExternalFault xmi:id="_Y7Ib4FJKEeGlFqQgeYHbuQ" base_Transition="_Y49RoFJKEeGlFqQgeYHbuQ"/>
 </xmi:XMI>
