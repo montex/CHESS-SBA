@@ -845,7 +845,7 @@ rule StatelessSoftware2Component(sls : CHESS!StatelessSoftware){
 
 	to
 		c : IM!Component (
-			Name <- sls.geyName,
+			Name <- sls.getName,
 			--intermediateModel <- delayed action
 			Errors <- e,
 			Faults <- ft,
@@ -888,8 +888,7 @@ rule StatelessSoftware2Component(sls : CHESS!StatelessSoftware){
 			PropagationProbability <- 1,
 			PropagationLogic <- fn,
 			--Weight <- ??
-			PropagationLogicStringFormat <- fn.toString(),
-			Name <- thisModule.getFGEName()
+			PropagationLogicStringFormat <- fn.toString()
 		),
 		
 		rd : IM!Deterministic(
@@ -1220,7 +1219,7 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 							if (thisModule.FailureModes->exists(e | e.base_State = s)){
 								
 								if (thisModule.FailureModes->select(e | e.base_State = s)->
-									first().affectedPorts.debug()->includes(serverport) or 
+									first().affectedPorts->includes(serverport) or 
 									thisModule.FailureModes->select(e | e.base_State = s)->
 									first().affectedPorts->isEmpty())
 								{
