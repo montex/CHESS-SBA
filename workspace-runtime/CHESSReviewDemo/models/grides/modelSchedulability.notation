@@ -2937,13 +2937,13 @@
                 <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SZypBvsaEeCeG4iiOw5dSA" key="StereotypePropertyLocation" value="Compartment"/>
               </eAnnotations>
               <children xmi:type="notation:DecorationNode" xmi:id="_SZfHCPsaEeCeG4iiOw5dSA" type="6001">
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_13ut8PvuEeCeG4iiOw5dSA" width="81" height="26"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_13ut8PvuEeCeG4iiOw5dSA" width="81" height="13"/>
               </children>
               <children xmi:type="notation:DecorationNode" xmi:id="_SZfHCfsaEeCeG4iiOw5dSA" type="6002">
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SZfHCvsaEeCeG4iiOw5dSA" y="26" width="81" height="49"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SZfHCvsaEeCeG4iiOw5dSA" y="13" width="81" height="49"/>
               </children>
               <element xmi:type="uml:State" href="modelSchedulability.uml#_SYvgIPsaEeCeG4iiOw5dSA"/>
-              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SZfHAfsaEeCeG4iiOw5dSA" x="610" y="114" width="81" height="75"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SZfHAfsaEeCeG4iiOw5dSA" x="610" y="114" width="81" height="62"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_1vzNAFI9EeGlFqQgeYHbuQ" type="6000" fontName="Ubuntu" fontHeight="11" lineColor="0">
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_1yZ1EFI9EeGlFqQgeYHbuQ" source="ShadowFigure">

@@ -30,6 +30,10 @@
       <packagedElement xmi:type="uml:Interface" xmi:id="_l7KGUB_6EeG8A7ayxhn0fw" name="iRequired2"/>
       <packagedElement xmi:type="uml:Interface" xmi:id="_maDo0B_6EeG8A7ayxhn0fw" name="iProvided1"/>
       <packagedElement xmi:type="uml:Interface" xmi:id="_rvLTYB_6EeG8A7ayxhn0fw" name="iProvided2"/>
+      <packagedElement xmi:type="uml:Activity" xmi:id="_EWPDMN_eEeGpPqxEI2bKLw" name="Activity0"/>
+      <packagedElement xmi:type="uml:StateMachine" xmi:id="_KEfmgN_eEeGpPqxEI2bKLw" name="StateMachine0">
+        <region xmi:id="_K6eMQN_eEeGpPqxEI2bKLw" name="Region0"/>
+      </packagedElement>
       <profileApplication xmi:id="_mxcVcB_3EeG8A7ayxhn0fw">
         <eAnnotations xmi:id="_mxcVcR_3EeG8A7ayxhn0fw" source="http://www.eclipse.org/uml2/2.0.0/UML">
           <references xmi:type="ecore:EPackage" href="http:///schemas/CHESS/_PfAJsMe6Ed-7etIj5eTw0Q/19#//ComponentModel"/>

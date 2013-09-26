@@ -468,7 +468,7 @@
   <StateBasedComponents:StatefulSoftware xmi:id="_DbGJgPTiEeCijelzhNgVKQ" base_Component="_gMpYMPS0EeCijelzhNgVKQ" errorLatency="3.6E-04" faultOcc="1.0E-12"/>
   <StateBasedComponents:StatefulSoftware xmi:id="_E5uDoPTiEeCijelzhNgVKQ" base_Component="_gudEwPS0EeCijelzhNgVKQ" errorLatency="3.6E-04" faultOcc="1.0E-12"/>
   <StateBasedComponents:StatefulHardware xmi:id="_gJ4CIPTiEeCijelzhNgVKQ" base_Component="_KpbKgPS4EeCijelzhNgVKQ" probPermFault="0.9" errorLatency="3.6E-04" faultOcc="1-0E-05"/>
-  <StateBasedComponents:StatefulHardware xmi:id="_oiYlMPTiEeCijelzhNgVKQ" base_Component="_MVhf8PS4EeCijelzhNgVKQ" probPermFault="0.9" errorLatency="3.6E-04" faultOcc="1.0E-07"/>
+  <StateBasedComponents:StatefulHardware xmi:id="_oiYlMPTiEeCijelzhNgVKQ" base_Component="_MVhf8PS4EeCijelzhNgVKQ" probPermFault="0.9" errorLatency="3.6E-04" repairDelay="24" faultOcc="1.0E-07"/>
   <StateBasedComponents:StatelessHardware xmi:id="_vTGEAPTiEeCijelzhNgVKQ" base_Component="_bjF2UPS4EeCijelzhNgVKQ" probPermFault="0.9" faultOcc="1.0E-12"/>
   <DependableComponent:Propagation xmi:id="_2frmgPTiEeCijelzhNgVKQ" prob="1.0" propDelay="1.0E-03" base_Connector="_lUkM4PS3EeCijelzhNgVKQ"/>
   <DependableComponent:Propagation xmi:id="__8VHIPTiEeCijelzhNgVKQ" prob="1.0" propDelay="1.0E-02" base_Comment="_DiTgYPTEEeCijelzhNgVKQ"/>
@@ -476,7 +476,7 @@
   <DependableComponent:Propagation xmi:id="_mZWmsPTjEeCijelzhNgVKQ" prob="1.0" propDelay="1.0E-03" base_Connector="_dQBGoPTCEeCijelzhNgVKQ"/>
   <DependableComponent:Propagation xmi:id="_nMHgYPTjEeCijelzhNgVKQ" prob="1.0" propDelay="1.0E-03" base_Connector="_uSUxEPTCEeCijelzhNgVKQ"/>
   <Core:CHGaResourcePlatform xmi:id="_2MlO4PTjEeCijelzhNgVKQ" base_Classifier="_1u4NwPS4EeCijelzhNgVKQ"/>
-  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_8T39QPTjEeCijelzhNgVKQ" base_StructuredClassifier="_8Tp60PTjEeCijelzhNgVKQ" base_NamedElement="_8Tp60PTjEeCijelzhNgVKQ" platform="_2MlO4PTjEeCijelzhNgVKQ" measure="Reliability {instantOfTime = 10000}"/>
+  <StateBasedAnalysis:StateBasedAnalysis xmi:id="_8T39QPTjEeCijelzhNgVKQ" base_StructuredClassifier="_8Tp60PTjEeCijelzhNgVKQ" base_NamedElement="_8Tp60PTjEeCijelzhNgVKQ" platform="_2MlO4PTjEeCijelzhNgVKQ" measure="Reliability {instantOfTime = 10000}" targetDepComponent="_WNypAPj_EeCpQYsuiBu8CA"/>
   <RTComponentModel:CHRtPortSlot xmi:id="_WNwMwPj_EeCpQYsuiBu8CA" base_Slot="_WNsiYPj_EeCpQYsuiBu8CA" cH_RtSpecification="_EadY8PTbEeCijelzhNgVKQ"/>
   <RTComponentModel:CHRtPortSlot xmi:id="_WN1sUPj_EeCpQYsuiBu8CA" base_Slot="_WN0eMPj_EeCpQYsuiBu8CA" cH_RtSpecification="_XkfvcPTcEeCijelzhNgVKQ"/>
   <DependableComponent:Propagation xmi:id="_WN7L4Pj_EeCpQYsuiBu8CA" prob="1.0" propDelay="1.0E-03" base_InstanceSpecification="_WN2TYPj_EeCpQYsuiBu8CA"/>

@@ -48,6 +48,7 @@
     <availablePage>
       <emfPageIdentifier href="model.notation#_kWNpoAFtEeGAurLhAuMcpw"/>
     </availablePage>
+    <availablePage/>
   </pageList>
   <sashModel currentSelection="//@sashModel/@windows.0/@children.0">
     <windows>

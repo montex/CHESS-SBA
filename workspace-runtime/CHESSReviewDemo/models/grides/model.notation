@@ -3409,6 +3409,45 @@
       <element xmi:type="uml:Component" href="model.uml#_5aVT4P_REeC1brWc6v2cFQ"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nTy1EAFtEeGAurLhAuMcpw" x="95" y="70" width="411" height="156"/>
     </children>
+    <children xmi:type="notation:Shape" xmi:id="_ppPNQM3jEeGQ6ewJPRqMHg" type="2008" fontName="Cantarell" fontHeight="11" lineColor="0">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ppQbYM3jEeGQ6ewJPRqMHg" source="ShadowFigure">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ppQbYc3jEeGQ6ewJPRqMHg" key="ShadowFigure_Value" value="false"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ppRCcM3jEeGQ6ewJPRqMHg" source="displayNameLabelIcon">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ppRCcc3jEeGQ6ewJPRqMHg" key="displayNameLabelIcon_value" value="false"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ppRCcs3jEeGQ6ewJPRqMHg" source="QualifiedName">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ppRCc83jEeGQ6ewJPRqMHg" key="QualifiedNameDepth" value="1000"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_sMl60M3jEeGQ6ewJPRqMHg" source="Stereotype_Annotation">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_BuNpMM3kEeGQ6ewJPRqMHg" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_BuNpMc3kEeGQ6ewJPRqMHg" key="StereotypeList" value="CHESS::Dependability::StateBased::MaintenanceMonitoring::Repair"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_BuNpMs3kEeGQ6ewJPRqMHg" key="PropStereoDisplay" value="CHESS::Dependability::StateBased::MaintenanceMonitoring::Repair.targets,CHESS::Dependability::StateBased::MaintenanceMonitoring::Repair.when,CHESS::Dependability::StateBased::MaintenanceMonitoring::Repair.duration,CHESS::Dependability::StateBased::MaintenanceMonitoring::Repair.probSuccess"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_BuNpM83kEeGQ6ewJPRqMHg" key="Stereotype_Presentation_Kind" value="VerticalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_BuOQQM3kEeGQ6ewJPRqMHg" key="StereotypePropertyLocation" value="Compartment"/>
+      </eAnnotations>
+      <children xmi:type="notation:DecorationNode" xmi:id="_ppRCdM3jEeGQ6ewJPRqMHg" type="5029"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_ppRCdc3jEeGQ6ewJPRqMHg" type="7017">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_ppRCds3jEeGQ6ewJPRqMHg"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_ppRCd83jEeGQ6ewJPRqMHg"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_ppRCeM3jEeGQ6ewJPRqMHg"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ppRCec3jEeGQ6ewJPRqMHg"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_ppRpgM3jEeGQ6ewJPRqMHg" type="7018">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_ppRpgc3jEeGQ6ewJPRqMHg"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_ppRpgs3jEeGQ6ewJPRqMHg"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_ppRpg83jEeGQ6ewJPRqMHg"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ppRphM3jEeGQ6ewJPRqMHg"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_ppRphc3jEeGQ6ewJPRqMHg" type="7019">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_ppRphs3jEeGQ6ewJPRqMHg"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_ppRph83jEeGQ6ewJPRqMHg"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_ppRpiM3jEeGQ6ewJPRqMHg"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ppRpic3jEeGQ6ewJPRqMHg"/>
+      </children>
+      <element xmi:type="uml:Activity" href="model.uml#_7F5t4M3iEeGQ6ewJPRqMHg"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ppPNQc3jEeGQ6ewJPRqMHg" x="830" y="85" width="351" height="201"/>
+    </children>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_kWNpoQFtEeGAurLhAuMcpw"/>
     <element xmi:type="uml:Package" href="model.uml#_Zxoww_ZuEeC7B6JYhp9kVA"/>
   </notation:Diagram>

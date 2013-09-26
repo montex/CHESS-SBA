@@ -419,7 +419,8 @@
   <Blocks:NestedConnectorEnd xmi:id="_T2cscCA2EeGe97N1lStKyg" base_ConnectorEnd="_-KrnwCAuEeGe97N1lStKyg"/>
   <Blocks:NestedConnectorEnd xmi:id="_VvQoMCA2EeGe97N1lStKyg" base_ConnectorEnd="_9sX7IyAuEeGe97N1lStKyg"/>
   <ThreatsPropagation:FailureMode xmi:id="_sgngICA2EeGe97N1lStKyg" base_State="_scyJACA2EeGe97N1lStKyg"/>
-  <DependableComponent:Propagation xmi:id="_2ACA4CA2EeGe97N1lStKyg" base_Transition="_1_U2QCA2EeGe97N1lStKyg"/>
+  <DependableComponent:Propagation xmi:id="_2ACA4CA2EeGe97N1lStKyg" prob="1.0" propDelay="Exponential(1/60)" base_Transition="_1_U2QCA2EeGe97N1lStKyg"/>
   <MaintenanceMonitoring:ErrorDetection xmi:id="_NTPtECBVEeGQqf3BDWY8-Q" base_Activity="_1Q-cUCBTEeGQqf3BDWY8-Q"/>
-  <ThreatsPropagation:InternalFault xmi:id="_WSgekCzAEeGE59hIVtL0PA" base_Transition="_WR2-UCzAEeGE59hIVtL0PA"/>
+  <ThreatsPropagation:InternalFault xmi:id="_WSgekCzAEeGE59hIVtL0PA" base_Transition="_WR2-UCzAEeGE59hIVtL0PA" permanentProb="0.9" occurrence="Exponential(1E-6)"/>
+  <ThreatsPropagation:ErrorModel xmi:id="_hJZYcN_REeGNauy7OU5iEw" base_StateMachine="_TaCPgCAxEeGe97N1lStKyg"/>
 </xmi:XMI>
