@@ -564,7 +564,8 @@ abstract rule FGE {
 	to
 		andop : PNML!OpAnd
 		(
-			expression1 <- fge.PropagationLogic
+			expression1 <- thisModule.newOpAnd(fge.PropagationLogic,
+											   thisModule.buildConditionComponentIsNotFailed(fge.Component))
 		),		
 		tmp : PNML!Place
 		(
@@ -718,6 +719,8 @@ rule FGEImmediate extends FGE {
 		);
 		thisModule.newOutputArc(casepropagate, fge.Destination.first());
 		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+		
+		
 	}
 }
 
@@ -728,7 +731,8 @@ abstract rule EPF {
 	to
 		andop : PNML!OpAnd
 		(
-			expression1 <- epf.PropagationLogic
+			expression1 <- thisModule.newOpAnd(epf.PropagationLogic,
+											   thisModule.buildConditionComponentIsNotFailed(epf.Component))
 		),		
 		tmp : PNML!Place
 		(
@@ -1859,6 +1863,32 @@ rule newOpOr ( e1 : PNML!LogicalExpression, e2 : PNML!LogicalExpression) {
 		)
 	do {
 		opor;
+	}
+}
+	--Build a LogicalExpression element that represents the fact that the specified
+	--component is not failed (i.e., all the corresponding places have marking = 0)
+rule buildConditionComponentIsNotFailed(c : IDM!Component) {
+	using {
+		failures : Sequence(IDM!FailureMode) = c.FailureModes;
+		exp : PNML!LogicalExpression = OclUndefined;
+	}
+	do {
+		--Check first failure mode place is > 0
+		exp <- thisModule.newOpEqual(
+                   thisModule.newMarkingExpression(failures.first()),
+				   thisModule.newValueExpression(0)
+			   );
+		--Check subsequent failure modes (if they exist)
+		for(fm in failures.subSequence(2, failures.size())) {
+			exp <- thisModule.newOpAnd(
+				       exp,
+					   thisModule.newOpEqual(
+                           thisModule.newMarkingExpression(failures.first()),
+				           thisModule.newValueExpression(0)
+			           )
+				   );
+		}
+		exp;
 	}
 }
 
