@@ -565,7 +565,13 @@ abstract rule FGE {
 		andop : PNML!OpAnd
 		(
 			expression1 <- thisModule.newOpAnd(fge.PropagationLogic,
-											   thisModule.buildConditionComponentIsNotFailed(fge.Component))
+											   thisModule.newOpAnd(
+											       thisModule.newOpEqual(
+											           thisModule.newMarkingExpression(tmp),
+													   thisModule.newValueExpression(0)
+												   ),
+											       thisModule.buildConditionComponentIsNotFailed(fge.Component)
+											   ))
 		),		
 		tmp : PNML!Place
 		(
@@ -732,7 +738,13 @@ abstract rule EPF {
 		andop : PNML!OpAnd
 		(
 			expression1 <- thisModule.newOpAnd(epf.PropagationLogic,
-											   thisModule.buildConditionComponentIsNotFailed(epf.Component))
+											   thisModule.newOpAnd(
+											       thisModule.newOpEqual(
+											           thisModule.newMarkingExpression(tmp),
+													   thisModule.newValueExpression(0)
+												   ),
+											       thisModule.buildConditionComponentIsNotFailed(epf.Component)
+											   ))
 		),		
 		tmp : PNML!Place
 		(
@@ -1476,7 +1488,8 @@ rule RepairTimed extends Activity {
 		(
 			containerPage <- thisModule.getPage,
 			id <- act.Name,
-			Distribution <- act.Duration
+			Distribution <- act.Duration,
+			Guard <- thisModule.buildConditionNoExternalFaultsExcludingCoRepairs(act)
 		),
 		enabledtotr : PNML!GSPNArc
 		(
@@ -1518,7 +1531,8 @@ rule RepairImmediate extends Activity {
 			containerPage <- thisModule.getPage,
 			id <- act.Name,
 			Weight <- 1,
-			Priority <- thisModule.priActivity
+			Priority <- thisModule.priActivity,
+			Guard <- thisModule.buildConditionNoExternalFaultsExcludingCoRepairs(act)
 		),
 		enabledtotr : PNML!GSPNArc
 		(
@@ -1887,6 +1901,32 @@ rule buildConditionComponentIsNotFailed(c : IDM!Component) {
 				           thisModule.newValueExpression(0)
 			           )
 				   );
+		}
+		exp;
+	}
+}
+	
+	--build a LogicalExpression element that specifies the following condition:
+	--The component is not currently affected by any external faults, excluding external faults
+	--originated by components that are going to be repaired with the same activity.
+	--This prevents repairing a component and having it immediately failed again because of an
+	--external fault.
+rule buildConditionNoExternalFaultsExcludingCoRepairs(act : IDM!RepairActivity) {
+	using {
+		extfaults : Sequence(IDM!ExternalFault) = act.Target->collect(c | c.Faults).flatten()->select(f | f.oclIsTypeOf(IDM!ExternalFault));
+		exp : PNML!LogicalExpression = PNML!OpTrue.newInstance();
+	}	
+	do {
+		for(xft in extfaults) {
+			if(not act.Target.includes(xft.Source.Component)) {
+				exp <- thisModule.newOpAnd(
+						   exp,
+					       thisModule.newOpEqual(
+					           thisModule.newMarkingExpression(xft.Source),
+							   thisModule.newValueExpression(0)
+						   )
+					   );				
+			}
 		}
 		exp;
 	}
