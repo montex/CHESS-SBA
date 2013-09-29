@@ -346,7 +346,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GSPNArc" eSuperTypes="#//Arc">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//GSPNArcType"
-        defaultValueLiteral="0"/>
+        defaultValueLiteral="normal"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="MultiplicityFunction" eType="#//ArithmeticExpression"
         containment="true"/>
   </eClassifiers>
