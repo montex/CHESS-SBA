@@ -134,22 +134,25 @@ rule Weibull { from w : IDM!Weibull to ww : PNML!Weibull ( Alpha <- w.Alpha, Bet
 abstract rule InternalFault {
 	from 
 		ft : IDM!InternalFault
+	using {
+		basename : String = ft.refImmediateComposite().Name + '_' + ft.Name;
+	}
 	to
 		--Place
 		faulty : PNML!Place (
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.newPTMarking(0),
-			id <- ft.Name
+			id <- basename
 		),
 		transient : PNML!Place (
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.newPTMarking(0),
-			id <- ft.Name + '_transient'	
+			id <- basename + '_transient'
 		),
 		tmpfaulty : PNML!Place (
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.newPTMarking(0),
-			id <- ft.Name + '_tmp'			
+			id <- basename + '_tmp'
 		),
 		
 		e1 : PNML!OpEqual ( expression1 <- e2, expression2 <- e3 ),
@@ -159,13 +162,13 @@ abstract rule InternalFault {
 		--Transizioni (quelle per FO e TD vengono create dalle regole che estendono questa)
 		casepermanent : PNML!GSPNImmediateTransition (
 			containerPage <- thisModule.getPage,
-			id <- ft.Name + '_caseperm',
+			id <- basename + '_caseperm',
 			Priority <- thisModule.priPropagationChoice,
 			Weight <- ft.PermanentProbability
 		),
 		casetransient : PNML!GSPNImmediateTransition (
 			containerPage <- thisModule.getPage,
-			id <- ft.Name + '_casetrans',
+			id <- basename + '_casetrans',
 			Priority <- thisModule.priPropagationChoice,
 			Weight <- (1 - ft.PermanentProbability)
 		),		
@@ -174,67 +177,67 @@ abstract rule InternalFault {
 		totmp : PNML!GSPNArc (
 			containerPage <- thisModule.getPage,
 			target <- tmpfaulty,
-			id <- ft.Name + '_totmp'
+			id <- basename + '_totmp'
 		),
 			--Permanent Fault
 		tmp_to_permcase : PNML!GSPNArc (
 			containerPage <- thisModule.getPage,
 			source <- tmpfaulty,
 			target <- casepermanent,
-			id <- ft.Name + '_tmp_to_permcase'	
+			id <- basename + '_tmp_to_permcase'	
 		),
 		permcase_to_faulty : PNML!GSPNArc (
 			containerPage <- thisModule.getPage,
 			source <- casepermanent,
 			target <- faulty,
-			id <- ft.Name + '_permcase_to_faulty'
+			id <- basename + '_permcase_to_faulty'
 		),
 			--Transient Fault
 		tmp_to_transcase : PNML!GSPNArc (
 			containerPage <- thisModule.getPage,
 			source <- tmpfaulty,
 			target <- casetransient,
-			id <- ft.Name + '_tmp_to_transcase'	
+			id <- basename + '_tmp_to_transcase'	
 		),
 		transcase_to_faulty : PNML!GSPNArc (
 			containerPage <- thisModule.getPage,
 			source <- casetransient,
 			target <- faulty,
-			id <- ft.Name + '_transcase_to_faulty'				
+			id <- basename + '_transcase_to_faulty'				
 		),
 		transcase_to_transient : PNML!GSPNArc (
 			containerPage <- thisModule.getPage,
 			source <- casetransient,
 			target <- transient,
-			id <- ft.Name + '_transcase_to_transient'				
+			id <- basename + '_transcase_to_transient'				
 		),
 		removetrans_trans : PNML!GSPNArc (
 			containerPage <- thisModule.getPage,
 			source <- transient,
-			id <- ft.Name + '_removetrans_trans'
+			id <- basename + '_removetrans_trans'
 		),
 		removetrans_faulty : PNML!GSPNArc (
 			containerPage <- thisModule.getPage,
 			source <- faulty,
-			id <- ft.Name + '_removetrans_faulty'
+			id <- basename + '_removetrans_faulty'
 		)		
-	do {
-		thisModule.makeUniqueID(faulty);
-		thisModule.makeUniqueID(transient);
-		thisModule.makeUniqueID(tmpfaulty);
-		
-		thisModule.makeUniqueID(casepermanent);
-		thisModule.makeUniqueID(casetransient);
-		
-		thisModule.makeUniqueID(totmp);
-		thisModule.makeUniqueID(tmp_to_permcase);
-		thisModule.makeUniqueID(permcase_to_faulty);
-		thisModule.makeUniqueID(tmp_to_transcase);
-		thisModule.makeUniqueID(transcase_to_faulty);
-		thisModule.makeUniqueID(transcase_to_transient);
-		thisModule.makeUniqueID(removetrans_trans);
-		thisModule.makeUniqueID(removetrans_faulty);
-	}
+--	do {
+--		thisModule.makeUniqueID(faulty);
+--		thisModule.makeUniqueID(transient);
+--		thisModule.makeUniqueID(tmpfaulty);
+--		
+--		thisModule.makeUniqueID(casepermanent);
+--		thisModule.makeUniqueID(casetransient);
+--		
+--		thisModule.makeUniqueID(totmp);
+--		thisModule.makeUniqueID(tmp_to_permcase);
+--		thisModule.makeUniqueID(permcase_to_faulty);
+--		thisModule.makeUniqueID(tmp_to_transcase);
+--		thisModule.makeUniqueID(transcase_to_faulty);
+--		thisModule.makeUniqueID(transcase_to_transient);
+--		thisModule.makeUniqueID(removetrans_trans);
+--		thisModule.makeUniqueID(removetrans_faulty);
+--	}
 }
 rule InternalFaultTT extends InternalFault { --FO timed, TD timed
 	from 
@@ -387,21 +390,24 @@ rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
 rule Error { --manca l'implementazione di VanishingTime 
 	from 
 		e : IDM!Error
+	using {
+		basename : String = e.refImmediateComposite().Name + '_' + e.Name;
+	}
 	to
 		err : PNML!Place (
-			id <- e.Name,
+			id <- basename,
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.newPTMarking(0)
 		),
 		detected : PNML!Place (
-			id <- e.Name + '_detected',
+			id <- basename + '_detected',
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.newPTMarking(0)
 		)
-	do {
-		thisModule.makeUniqueID(err);
-		thisModule.makeUniqueID(detected);
-	}
+--	do {
+--		thisModule.makeUniqueID(err);
+--		thisModule.makeUniqueID(detected);
+--	}
 }
 rule ErrorVanishImmediate extends Error {
 	from
@@ -423,23 +429,23 @@ rule ErrorVanishImmediate extends Error {
 		vanish : PNML!GSPNImmediateTransition
 		(
 			containerPage <- thisModule.getPage,
-			id <- e.Name + '_vanish',
+			id <- basename + '_vanish',
 			Priority <- thisModule.priTransientDuration,
 			Weight <- 1.0
 		),
 		tovanish : PNML!GSPNArc
 		(
 			containerPage <- thisModule.getPage,
-			id <- e.Name + '_to_vanish',
+			id <- basename + '_to_vanish',
 			source <- err,
 			target <- vanish
 		)
-	do {
-		thisModule.makeUniqueID(err);
-		thisModule.makeUniqueID(detected);
-		thisModule.makeUniqueID(vanish);
-		thisModule.makeUniqueID(tovanish);
-	}		
+--	do {
+--		thisModule.makeUniqueID(err);
+--		thisModule.makeUniqueID(detected);
+--		thisModule.makeUniqueID(vanish);
+--		thisModule.makeUniqueID(tovanish);
+--	}		
 }
 rule ErrorVanishTimed extends Error {
 	from
@@ -461,22 +467,22 @@ rule ErrorVanishTimed extends Error {
 		vanish : PNML!GSPNTimedTransition
 		(
 			containerPage <- thisModule.getPage,
-			id <- e.Name + '_vanish',
+			id <- basename + '_vanish',
 			Distribution <- e.VanishingTime
 		),
 		tovanish : PNML!GSPNArc
 		(
 			containerPage <- thisModule.getPage,
-			id <- e.Name + '_to_vanish',
+			id <- basename + '_to_vanish',
 			source <- err,
 			target <- vanish
 		)
-	do {
-		thisModule.makeUniqueID(err);
-		thisModule.makeUniqueID(detected);
-		thisModule.makeUniqueID(vanish);
-		thisModule.makeUniqueID(tovanish);
-	}		
+--	do {
+--		thisModule.makeUniqueID(err);
+--		thisModule.makeUniqueID(detected);
+--		thisModule.makeUniqueID(vanish);
+--		thisModule.makeUniqueID(tovanish);
+--	}		
 }
 
 rule FailureMode {
@@ -484,13 +490,13 @@ rule FailureMode {
 		fm : IDM!FailureMode
 	to
 		fmode : PNML!Place (
-			id <- fm.Name,
+			id <- fm.refImmediateComposite().Name + '_' + fm.Name,
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.newPTMarking(0)			
 		)
-	do {
-		thisModule.makeUniqueID(fmode);
-	}
+--	do {
+--		thisModule.makeUniqueID(fmode);
+--	}
 }
 
 --FaultsExpression elements
@@ -563,6 +569,9 @@ rule ErrorsExpressionOrNode {
 abstract rule FGE {
 	from
 		fge : IDM!FaultsGenerateErrors
+	using {
+		basename : String = fge.refImmediateComposite().Name + '_' + fge.Name;
+	}
 	to
 		andop : PNML!OpAnd
 		(
@@ -577,20 +586,20 @@ abstract rule FGE {
 		),		
 		tmp : PNML!Place
 		(
-			id <- fge.Name + '_tmp',
+			id <- basename + '_tmp',
 			initialMarking <- thisModule.newPTMarking(0),
 			containerPage <- thisModule.getPage
 		),
 		casepropagate : PNML!GSPNImmediateTransition
 		(
-			id <- fge.Name + '_caseprop',
+			id <- basename + '_caseprop',
 			Weight <- fge.PropagationProbability,
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
 		caseskip : PNML!GSPNImmediateTransition
 		(
-			id <- fge.Name + '_caseskip',
+			id <- basename + '_caseskip',
 			Weight <- ( 1 - fge.PropagationProbability ),
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
@@ -598,21 +607,21 @@ abstract rule FGE {
 		--Archi
 		totmp : PNML!GSPNArc
 		(
-			id <- fge.Name + '_totmp',
+			id <- basename + '_totmp',
 --			source <- trfge,
 			target <- tmp,
 			containerPage <- thisModule.getPage
 		),
 		topropagate : PNML!GSPNArc
 		(
-			id <- fge.Name + '_toprop',
+			id <- basename + '_toprop',
 			containerPage <- thisModule.getPage,
 			source <- tmp,
 			target <- casepropagate
 		),
 		toskip : PNML!GSPNArc
 		(
-			id <- fge.Name + '_toskip',
+			id <- basename + '_toskip',
 			containerPage <- thisModule.getPage,
 			source <- tmp,
 			target <- caseskip
@@ -631,7 +640,7 @@ rule FGETimed extends FGE {
 	to
 		trfge : PNML!GSPNTimedTransition
 		(
-			id <- fge.Name,
+			id <- basename,
 			Distribution <- fge.ActivationDelay,
 			containerPage <- thisModule.getPage,
 			Guard <- andop
@@ -642,14 +651,14 @@ rule FGETimed extends FGE {
 			source <- trfge
 		)
 	do {
-		thisModule.makeUniqueID(trfge);
-		thisModule.makeUniqueID(tmp);
-		thisModule.makeUniqueID(casepropagate);
-		thisModule.makeUniqueID(caseskip);
-		
-		thisModule.makeUniqueID(totmp);
-		thisModule.makeUniqueID(topropagate);
-		thisModule.makeUniqueID(toskip);
+--		thisModule.makeUniqueID(trfge);
+--		thisModule.makeUniqueID(tmp);
+--		thisModule.makeUniqueID(casepropagate);
+--		thisModule.makeUniqueID(caseskip);
+--		
+--		thisModule.makeUniqueID(totmp);
+--		thisModule.makeUniqueID(topropagate);
+--		thisModule.makeUniqueID(toskip);
 		
 		thisModule.tmpLogicExp <- andop;
 
@@ -686,7 +695,7 @@ rule FGEImmediate extends FGE {
 	to
 		trfge : PNML!GSPNImmediateTransition
 		(
-			id <- fge.Name,
+			id <- basename,
 			containerPage <- thisModule.getPage,
 			Weight <- fge.Weight,
 			Priority <- thisModule.priPropagation,
@@ -698,14 +707,14 @@ rule FGEImmediate extends FGE {
 			source <- trfge
 		)
 	do {
-		thisModule.makeUniqueID(trfge);
-		thisModule.makeUniqueID(tmp);
-		thisModule.makeUniqueID(casepropagate);
-		thisModule.makeUniqueID(caseskip);
-		
-		thisModule.makeUniqueID(totmp);
-		thisModule.makeUniqueID(topropagate);
-		thisModule.makeUniqueID(toskip);
+--		thisModule.makeUniqueID(trfge);
+--		thisModule.makeUniqueID(tmp);
+--		thisModule.makeUniqueID(casepropagate);
+--		thisModule.makeUniqueID(caseskip);
+--		
+--		thisModule.makeUniqueID(totmp);
+--		thisModule.makeUniqueID(topropagate);
+--		thisModule.makeUniqueID(toskip);
 		
 		thisModule.tmpLogicExp <- andop;
 
@@ -736,6 +745,9 @@ rule FGEImmediate extends FGE {
 abstract rule EPF {
 	from
 		epf : IDM!ErrorsProducesFailures
+	using {
+		basename : String = epf.refImmediateComposite().Name + '_' + epf.Name;
+	}
 	to
 		andop : PNML!OpAnd
 		(
@@ -750,20 +762,20 @@ abstract rule EPF {
 		),		
 		tmp : PNML!Place
 		(
-			id <- epf.Name + '_tmp',
+			id <- basename + '_tmp',
 			initialMarking <- thisModule.newPTMarking(0),
 			containerPage <- thisModule.getPage
 		),
 		casepropagate : PNML!GSPNImmediateTransition
 		(
-			id <- epf.Name + '_caseprop',
+			id <- basename + '_caseprop',
 			Weight <- epf.PropagationProbability,
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
 		caseskip : PNML!GSPNImmediateTransition
 		(
-			id <- epf.Name + '_caseskip',
+			id <- basename + '_caseskip',
 			Weight <- ( 1 - epf.PropagationProbability ),
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
@@ -771,21 +783,21 @@ abstract rule EPF {
 		--Archi
 		totmp : PNML!GSPNArc
 		(
-			id <- epf.Name + '_totmp',
+			id <- basename + '_totmp',
 --			source <- trfge,
 			target <- tmp,
 			containerPage <- thisModule.getPage
 		),
 		topropagate : PNML!GSPNArc
 		(
-			id <- epf.Name + '_toprop',
+			id <- basename + '_toprop',
 			containerPage <- thisModule.getPage,
 			source <- tmp,
 			target <- casepropagate
 		),
 		toskip : PNML!GSPNArc
 		(
-			id <- epf.Name + '_toskip',
+			id <- basename + '_toskip',
 			containerPage <- thisModule.getPage,
 			source <- tmp,
 			target <- caseskip
@@ -804,7 +816,7 @@ rule EPFTimed extends EPF {
 	to
 		trepf : PNML!GSPNTimedTransition
 		(
-			id <- epf.Name,
+			id <- basename,
 			Distribution <- epf.PropagationDelay,
 			containerPage <- thisModule.getPage,
 			Guard <- andop
@@ -815,14 +827,14 @@ rule EPFTimed extends EPF {
 			source <- trepf
 		)
 	do {
-		thisModule.makeUniqueID(trepf);
-		thisModule.makeUniqueID(tmp);
-		thisModule.makeUniqueID(casepropagate);
-		thisModule.makeUniqueID(caseskip);
-		
-		thisModule.makeUniqueID(totmp);
-		thisModule.makeUniqueID(topropagate);
-		thisModule.makeUniqueID(toskip);
+--		thisModule.makeUniqueID(trepf);
+--		thisModule.makeUniqueID(tmp);
+--		thisModule.makeUniqueID(casepropagate);
+--		thisModule.makeUniqueID(caseskip);
+--		
+--		thisModule.makeUniqueID(totmp);
+--		thisModule.makeUniqueID(topropagate);
+--		thisModule.makeUniqueID(toskip);
 		
 		thisModule.tmpLogicExp <- andop;
 
@@ -859,7 +871,7 @@ rule EPFImmediate extends EPF {
 	to
 		trepf : PNML!GSPNImmediateTransition
 		(
-			id <- epf.Name,
+			id <- basename,
 			containerPage <- thisModule.getPage,
 			Weight <- epf.Weight,
 			Priority <- thisModule.priPropagation,
@@ -871,14 +883,14 @@ rule EPFImmediate extends EPF {
 			source <- trepf
 		)
 	do {
-		thisModule.makeUniqueID(trepf);
-		thisModule.makeUniqueID(tmp);
-		thisModule.makeUniqueID(casepropagate);
-		thisModule.makeUniqueID(caseskip);
-		
-		thisModule.makeUniqueID(totmp);
-		thisModule.makeUniqueID(topropagate);
-		thisModule.makeUniqueID(toskip);
+--		thisModule.makeUniqueID(trepf);
+--		thisModule.makeUniqueID(tmp);
+--		thisModule.makeUniqueID(casepropagate);
+--		thisModule.makeUniqueID(caseskip);
+--		
+--		thisModule.makeUniqueID(totmp);
+--		thisModule.makeUniqueID(topropagate);
+--		thisModule.makeUniqueID(toskip);
 		
 		thisModule.tmpLogicExp <- andop;
 
@@ -907,6 +919,9 @@ rule EPFImmediate extends EPF {
 abstract rule InternalPropagation {
 	from
 		iprop : IDM!InternalPropagation
+	using {
+		basename : String = iprop.refImmediateComposite().Name + '_' + iprop.Name;
+	}
 	to
 		andop : PNML!OpAnd
 		(
@@ -914,20 +929,20 @@ abstract rule InternalPropagation {
 		),		
 		tmp : PNML!Place
 		(
-			id <- iprop.Name + '_tmp',
+			id <- basename + '_tmp',
 			initialMarking <- thisModule.newPTMarking(0),
 			containerPage <- thisModule.getPage
 		),
 		casepropagate : PNML!GSPNImmediateTransition
 		(
-			id <- iprop.Name + '_caseprop',
+			id <- basename + '_caseprop',
 			Weight <- iprop.PropagationProbability,
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
 		caseskip : PNML!GSPNImmediateTransition
 		(
-			id <- iprop.Name + '_caseskip',
+			id <- basename + '_caseskip',
 			Weight <- ( 1 - iprop.PropagationProbability ),
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
@@ -935,21 +950,21 @@ abstract rule InternalPropagation {
 		--Archi
 		totmp : PNML!GSPNArc
 		(
-			id <- iprop.Name + '_totmp',
+			id <- basename + '_totmp',
 --			source <- trfge,
 			target <- tmp,
 			containerPage <- thisModule.getPage
 		),
 		topropagate : PNML!GSPNArc
 		(
-			id <- iprop.Name + '_toprop',
+			id <- basename + '_toprop',
 			containerPage <- thisModule.getPage,
 			source <- tmp,
 			target <- casepropagate
 		),
 		toskip : PNML!GSPNArc
 		(
-			id <- iprop.Name + '_toskip',
+			id <- basename + '_toskip',
 			containerPage <- thisModule.getPage,
 			source <- tmp,
 			target <- caseskip
@@ -968,7 +983,7 @@ rule InternalPropagationTimed extends InternalPropagation {
 	to
 		triprop : PNML!GSPNTimedTransition
 		(
-			id <- iprop.Name,
+			id <- basename,
 			Distribution <- iprop.PropagationDelay,
 			containerPage <- thisModule.getPage,
 			Guard <- andop
@@ -979,14 +994,14 @@ rule InternalPropagationTimed extends InternalPropagation {
 			source <- triprop
 		)
 	do {
-		thisModule.makeUniqueID(triprop);
-		thisModule.makeUniqueID(tmp);
-		thisModule.makeUniqueID(casepropagate);
-		thisModule.makeUniqueID(caseskip);
-		
-		thisModule.makeUniqueID(totmp);
-		thisModule.makeUniqueID(topropagate);
-		thisModule.makeUniqueID(toskip);
+--		thisModule.makeUniqueID(triprop);
+--		thisModule.makeUniqueID(tmp);
+--		thisModule.makeUniqueID(casepropagate);
+--		thisModule.makeUniqueID(caseskip);
+--		
+--		thisModule.makeUniqueID(totmp);
+--		thisModule.makeUniqueID(topropagate);
+--		thisModule.makeUniqueID(toskip);
 		
 		thisModule.tmpLogicExp <- andop;
 
@@ -1023,7 +1038,7 @@ rule InternalPropagationImmediate extends InternalPropagation {
 	to
 		triprop : PNML!GSPNImmediateTransition
 		(
-			id <- iprop.Name,
+			id <- basename,
 			containerPage <- thisModule.getPage,
 			Weight <- iprop.Weight,
 			Priority <- thisModule.priPropagation,
@@ -1035,14 +1050,14 @@ rule InternalPropagationImmediate extends InternalPropagation {
 			source <- triprop
 		)
 	do {
-		thisModule.makeUniqueID(triprop);
-		thisModule.makeUniqueID(tmp);
-		thisModule.makeUniqueID(casepropagate);
-		thisModule.makeUniqueID(caseskip);
-		
-		thisModule.makeUniqueID(totmp);
-		thisModule.makeUniqueID(topropagate);
-		thisModule.makeUniqueID(toskip);
+--		thisModule.makeUniqueID(triprop);
+--		thisModule.makeUniqueID(tmp);
+--		thisModule.makeUniqueID(casepropagate);
+--		thisModule.makeUniqueID(caseskip);
+--		
+--		thisModule.makeUniqueID(totmp);
+--		thisModule.makeUniqueID(topropagate);
+--		thisModule.makeUniqueID(toskip);
 		
 		thisModule.tmpLogicExp <- andop;
 
@@ -1068,26 +1083,26 @@ rule InternalPropagationImmediate extends InternalPropagation {
 }
 
 --Crea un ID unico per Place, sTransizioni e Archi, aggiungendo un numero progressivo all'ID attuale
-rule makeUniqueID(obj : PNML!PnObject) {
-	do {
-		if(obj.oclIsKindOf(PNML!Transition)) {
-			obj.id <- 'T' + thisModule.trCount.toString() + '_' + obj.id;
-			thisModule.trCount <- thisModule.trCount + 1;
-		}
-		else if(obj.oclIsKindOf(PNML!Place)) {
-			obj.id <- 'P' + thisModule.placeCount.toString() + '_' + obj.id;
-			thisModule.placeCount <- thisModule.placeCount + 1;
-		}
-		else if(obj.oclIsKindOf(PNML!Arc)) {
-			obj.id <- 'A' + thisModule.arcCount.toString() + '_' + obj.id;
-			thisModule.arcCount <- thisModule.arcCount + 1;
-		}
-		else {
-			obj.id <- 'O' + thisModule.otherCount.toString() + '_' + obj.id;
-			thisModule.otherCount <- thisModule.otherCount + 1;
-		}		
-	}
-}
+--rule makeUniqueID(obj : PNML!PnObject) {
+--	do {
+--		if(obj.oclIsKindOf(PNML!Transition)) {
+--			obj.id <- 'T' + thisModule.trCount.toString() + '_' + obj.id;
+--			thisModule.trCount <- thisModule.trCount + 1;
+--		}
+--		else if(obj.oclIsKindOf(PNML!Place)) {
+--			obj.id <- 'P' + thisModule.placeCount.toString() + '_' + obj.id;
+--			thisModule.placeCount <- thisModule.placeCount + 1;
+--		}
+--		else if(obj.oclIsKindOf(PNML!Arc)) {
+--			obj.id <- 'A' + thisModule.arcCount.toString() + '_' + obj.id;
+--			thisModule.arcCount <- thisModule.arcCount + 1;
+--		}
+--		else {
+--			obj.id <- 'O' + thisModule.otherCount.toString() + '_' + obj.id;
+--			thisModule.otherCount <- thisModule.otherCount + 1;
+--		}		
+--	}
+--}
 
 -- ScheduleExpression nodes
 	-- T
