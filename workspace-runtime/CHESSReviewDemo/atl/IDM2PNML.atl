@@ -1,3 +1,5 @@
+-- @atlcompiler atl2010
+
 -- @path IDM=/CHESSReviewDemo/metamodels/IM2.ecore
 -- @path PNML=/CHESSReviewDemo/metamodels/placeTransition.ecore
 
@@ -35,7 +37,7 @@ rule Sistema {
 		s : IDM!Sistema
 	to
 		pp: PNML!Page (
-			id <- s.Name,
+			id <- s.Name + '_page',
 			objects <- Sequence{}
 		),
 		net: PNML!PetriNet (
@@ -91,7 +93,7 @@ rule Component {
 			containerPage <- thisModule.getPage,
 			id <- c.Name + '_reset',
 			Priority <- thisModule.priReset,
-			Weight <- 1
+			Weight <- 1.0
 		),
 		arcreset : PNML!GSPNArc
 		(
@@ -291,7 +293,7 @@ rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_FO',
 			Priority <- thisModule.priPropagation,
-			Weight <- 1,
+			Weight <- 1.0,
 			Guard <- e1
 		),
 		td : PNML!GSPNImmediateTransition
@@ -299,7 +301,7 @@ rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_TD',
 			Priority <- thisModule.priTransientDuration,
-			Weight <- 1
+			Weight <- 1.0
 		),
 		totmp : PNML!GSPNArc ( source <- fo ),
 		removetrans_trans : PNML!GSPNArc ( target <- td ),
@@ -339,7 +341,7 @@ rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_TD',
 			Priority <- thisModule.priTransientDuration,
-			Weight <- 1
+			Weight <- 1.0
 		),
 		totmp : PNML!GSPNArc ( source <- fo ),
 		removetrans_trans : PNML!GSPNArc ( target <- td ),
@@ -368,7 +370,7 @@ rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
 			containerPage <- thisModule.getPage,
 			id <- ft.Name + '_FO',
 			Priority <- thisModule.priPropagation,
-			Weight <- 1,
+			Weight <- 1.0,
 			Guard <- e1
 		),
 		td : PNML!GSPNTimedTransition
@@ -423,7 +425,7 @@ rule ErrorVanishImmediate extends Error {
 			containerPage <- thisModule.getPage,
 			id <- e.Name + '_vanish',
 			Priority <- thisModule.priTransientDuration,
-			Weight <- 1
+			Weight <- 1.0
 		),
 		tovanish : PNML!GSPNArc
 		(
@@ -1100,7 +1102,7 @@ rule ScheduleExpImmediately {
 		(
 			containerPage <- thisModule.getPage,
 			id <- act.Name + '_schedule_T',
-			Weight <- 1,
+			Weight <- 1.0,
 			Priority <- thisModule.priActivitySchedule,
 			Guard <- g_and
 		),
@@ -1530,7 +1532,7 @@ rule RepairImmediate extends Activity {
 		(
 			containerPage <- thisModule.getPage,
 			id <- act.Name,
-			Weight <- 1,
+			Weight <- 1.0,
 			Priority <- thisModule.priActivity,
 			Guard <- thisModule.buildConditionNoExternalFaultsExcludingCoRepairs(act)
 		),
@@ -1732,7 +1734,7 @@ rule Reliability extends MeasureOfInterest {
 		(
 			containerPage <- thisModule.getPage,
 			id <- measure.name + '_memory_tr',
-			Weight <- 1,
+			Weight <- 1.0,
 			Priority <- thisModule.priReliability
 		),
 		relarc : PNML!GSPNArc 
