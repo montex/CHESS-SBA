@@ -32,6 +32,9 @@ helper context IDM!FailureMode def: toString() : String = self.Name;
 helper context PNML!Place def: toString() : String = self.id;
 helper context PNML!Transition def: toString() : String = self.id;
 
+helper context PNML!Arc def: defaultID() : String =
+	self.source.id + '_to_' + self.target.id;
+
 rule Sistema {
 	from
 		s : IDM!Sistema
