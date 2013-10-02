@@ -29,6 +29,11 @@ helper context IDM!NamedElement def: toString() : String = self.Name;
 helper context IDM!Error def: toString() : String = self.Name;
 helper context IDM!FailureMode def: toString() : String = self.Name;
 
+helper context IDM!Component def: getResetTransition() : PNML!GSPNTransition =
+	thisModule.resolveTemp(self, 'reset');
+helper context IDM!Threat def: getResetTransition() : PNML!GSPNTransition =
+	self.refImmediateComposite().getResetTransition();
+
 helper context PNML!Place def: toString() : String = self.id;
 helper context PNML!Transition def: toString() : String = self.id;
 
@@ -105,19 +110,6 @@ rule Component {
 			source <- doreset,
 			target <- reset
 		)
-	do {
-		for(f in c.Faults) {
-			if(f.oclIsTypeOf(IDM!InternalFault)) {
-				thisModule.newInputArcMultiplicityOfPlace(f, reset);
-			}
-		}
-		for(e in c.Errors) {
-			thisModule.newInputArcMultiplicityOfPlace(e, reset);
-		}
-		for(fm in c.FailureModes) {
-			thisModule.newInputArcMultiplicityOfPlace(fm, reset);
-		}
-	}
 }
 
 -- Crea le distribuzioni
@@ -139,6 +131,7 @@ abstract rule InternalFault {
 		ft : IDM!InternalFault
 	using {
 		basename : String = ft.refImmediateComposite().Name + '_' + ft.Name;
+		component_reset : PNML!GSPNTransition = ft.getResetTransition();
 	}
 	to
 		--Place
@@ -223,7 +216,30 @@ abstract rule InternalFault {
 			containerPage <- thisModule.getPage,
 			source <- faulty,
 			id <- basename + '_removetrans_faulty'
-		)		
+		),
+
+		--Arcs for component reset
+		faulty_to_reset : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- faulty,
+			target <- component_reset,
+			MultiplicityFunction <- thisModule.newMarkingExpression(faulty),
+			id <- faulty_to_reset.defaultID()
+		),
+		transient_to_reset : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- transient,
+			target <- component_reset,
+			MultiplicityFunction <- thisModule.newMarkingExpression(transient),
+			id <- transient_to_reset.defaultID()
+		),
+		tmpfaulty_to_reset : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- tmpfaulty,
+			target <- component_reset,
+			MultiplicityFunction <- thisModule.newMarkingExpression(tmpfaulty),
+			id <- tmpfaulty_to_reset.defaultID()
+		)
 }
 rule InternalFaultTT extends InternalFault { --FO timed, TD timed
 	from 
@@ -378,6 +394,7 @@ rule Error { --manca l'implementazione di VanishingTime
 		e : IDM!Error
 	using {
 		basename : String = e.refImmediateComposite().Name + '_' + e.Name;
+		component_reset : PNML!GSPNTransition = e.getResetTransition();
 	}
 	to
 		err : PNML!Place (
@@ -389,6 +406,21 @@ rule Error { --manca l'implementazione di VanishingTime
 			id <- basename + '_detected',
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.newPTMarking(0)
+		),
+		--Arcs for component reset
+		err_to_reset : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- err,
+			target <- component_reset,
+			MultiplicityFunction <- thisModule.newMarkingExpression(err),
+			id <- err_to_reset.defaultID()
+		),
+		detected_to_reset : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- detected,
+			target <- component_reset,
+			MultiplicityFunction <- thisModule.newMarkingExpression(detected),
+			id <- detected_to_reset.defaultID()
 		)
 }
 rule ErrorVanishImmediate extends Error {
@@ -458,11 +490,21 @@ rule ErrorVanishTimed extends Error {
 rule FailureMode {
 	from
 		fm : IDM!FailureMode
+	using{
+		component_reset : PNML!GSPNTransition = fm.getResetTransition();
+	}
 	to
 		fmode : PNML!Place (
 			id <- fm.refImmediateComposite().Name + '_' + fm.Name,
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.newPTMarking(0)			
+		),
+		fmode_to_reset : PNML!GSPNArc (
+			containerPage <- thisModule.getPage,
+			source <- fmode,
+			target <- component_reset,
+			MultiplicityFunction <- thisModule.newMarkingExpression(fmode),
+			id <- fmode_to_reset.defaultID()
 		)
 }
 
@@ -592,6 +634,15 @@ abstract rule FGE {
 			containerPage <- thisModule.getPage,
 			source <- tmp,
 			target <- caseskip
+		),
+		--Arcs for component reset
+		tmp_to_reset : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- tmp,
+			target <- fge.refImmediateComposite().getResetTransition(),
+			MultiplicityFunction <- thisModule.newMarkingExpression(tmp),
+			id <- tmp_to_reset.defaultID()
 		)
 }
 rule FGETimed extends FGE {
@@ -751,6 +802,15 @@ abstract rule EPF {
 			containerPage <- thisModule.getPage,
 			source <- tmp,
 			target <- caseskip
+		),
+		--Arcs for component reset
+		tmp_to_reset : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- tmp,
+			target <- epf.refImmediateComposite().getResetTransition(),
+			MultiplicityFunction <- thisModule.newMarkingExpression(tmp),
+			id <- tmp_to_reset.defaultID()
 		)
 }
 rule EPFTimed extends EPF {
@@ -900,6 +960,15 @@ abstract rule InternalPropagation {
 			containerPage <- thisModule.getPage,
 			source <- tmp,
 			target <- caseskip
+		),
+		--Arcs for component reset
+		tmp_to_reset : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- tmp,
+			target <- iprop.refImmediateComposite().getResetTransition(),
+			MultiplicityFunction <- thisModule.newMarkingExpression(tmp),
+			id <- tmp_to_reset.defaultID()
 		)
 }
 rule InternalPropagationTimed extends InternalPropagation {
