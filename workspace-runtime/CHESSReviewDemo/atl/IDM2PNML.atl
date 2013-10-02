@@ -224,23 +224,6 @@ abstract rule InternalFault {
 			source <- faulty,
 			id <- basename + '_removetrans_faulty'
 		)		
---	do {
---		thisModule.makeUniqueID(faulty);
---		thisModule.makeUniqueID(transient);
---		thisModule.makeUniqueID(tmpfaulty);
---		
---		thisModule.makeUniqueID(casepermanent);
---		thisModule.makeUniqueID(casetransient);
---		
---		thisModule.makeUniqueID(totmp);
---		thisModule.makeUniqueID(tmp_to_permcase);
---		thisModule.makeUniqueID(permcase_to_faulty);
---		thisModule.makeUniqueID(tmp_to_transcase);
---		thisModule.makeUniqueID(transcase_to_faulty);
---		thisModule.makeUniqueID(transcase_to_transient);
---		thisModule.makeUniqueID(removetrans_trans);
---		thisModule.makeUniqueID(removetrans_faulty);
---	}
 }
 rule InternalFaultTT extends InternalFault { --FO timed, TD timed
 	from 
@@ -407,10 +390,6 @@ rule Error { --manca l'implementazione di VanishingTime
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.newPTMarking(0)
 		)
---	do {
---		thisModule.makeUniqueID(err);
---		thisModule.makeUniqueID(detected);
---	}
 }
 rule ErrorVanishImmediate extends Error {
 	from
@@ -443,12 +422,6 @@ rule ErrorVanishImmediate extends Error {
 			source <- err,
 			target <- vanish
 		)
---	do {
---		thisModule.makeUniqueID(err);
---		thisModule.makeUniqueID(detected);
---		thisModule.makeUniqueID(vanish);
---		thisModule.makeUniqueID(tovanish);
---	}		
 }
 rule ErrorVanishTimed extends Error {
 	from
@@ -480,12 +453,6 @@ rule ErrorVanishTimed extends Error {
 			source <- err,
 			target <- vanish
 		)
---	do {
---		thisModule.makeUniqueID(err);
---		thisModule.makeUniqueID(detected);
---		thisModule.makeUniqueID(vanish);
---		thisModule.makeUniqueID(tovanish);
---	}		
 }
 
 rule FailureMode {
@@ -497,9 +464,6 @@ rule FailureMode {
 			containerPage <- thisModule.getPage,
 			initialMarking <- thisModule.newPTMarking(0)			
 		)
---	do {
---		thisModule.makeUniqueID(fmode);
---	}
 }
 
 --FaultsExpression elements
@@ -654,15 +618,6 @@ rule FGETimed extends FGE {
 			source <- trfge
 		)
 	do {
---		thisModule.makeUniqueID(trfge);
---		thisModule.makeUniqueID(tmp);
---		thisModule.makeUniqueID(casepropagate);
---		thisModule.makeUniqueID(caseskip);
---		
---		thisModule.makeUniqueID(totmp);
---		thisModule.makeUniqueID(topropagate);
---		thisModule.makeUniqueID(toskip);
-		
 		thisModule.tmpLogicExp <- andop;
 
 		for(e in fge.Destination.subSequence(2, fge.Destination.size())) {
@@ -710,15 +665,7 @@ rule FGEImmediate extends FGE {
 			source <- trfge
 		)
 	do {
---		thisModule.makeUniqueID(trfge);
---		thisModule.makeUniqueID(tmp);
---		thisModule.makeUniqueID(casepropagate);
---		thisModule.makeUniqueID(caseskip);
---		
---		thisModule.makeUniqueID(totmp);
---		thisModule.makeUniqueID(topropagate);
---		thisModule.makeUniqueID(toskip);
-		
+	
 		thisModule.tmpLogicExp <- andop;
 
 		for(e in fge.Destination.subSequence(2, fge.Destination.size())) {
@@ -830,15 +777,6 @@ rule EPFTimed extends EPF {
 			source <- trepf
 		)
 	do {
---		thisModule.makeUniqueID(trepf);
---		thisModule.makeUniqueID(tmp);
---		thisModule.makeUniqueID(casepropagate);
---		thisModule.makeUniqueID(caseskip);
---		
---		thisModule.makeUniqueID(totmp);
---		thisModule.makeUniqueID(topropagate);
---		thisModule.makeUniqueID(toskip);
-		
 		thisModule.tmpLogicExp <- andop;
 
 		for(fm in epf.Destination.subSequence(2, epf.Destination.size())) {
@@ -886,15 +824,6 @@ rule EPFImmediate extends EPF {
 			source <- trepf
 		)
 	do {
---		thisModule.makeUniqueID(trepf);
---		thisModule.makeUniqueID(tmp);
---		thisModule.makeUniqueID(casepropagate);
---		thisModule.makeUniqueID(caseskip);
---		
---		thisModule.makeUniqueID(totmp);
---		thisModule.makeUniqueID(topropagate);
---		thisModule.makeUniqueID(toskip);
-		
 		thisModule.tmpLogicExp <- andop;
 
 		for(fm in epf.Destination.subSequence(2, epf.Destination.size())) {
@@ -997,15 +926,7 @@ rule InternalPropagationTimed extends InternalPropagation {
 			source <- triprop
 		)
 	do {
---		thisModule.makeUniqueID(triprop);
---		thisModule.makeUniqueID(tmp);
---		thisModule.makeUniqueID(casepropagate);
---		thisModule.makeUniqueID(caseskip);
---		
---		thisModule.makeUniqueID(totmp);
---		thisModule.makeUniqueID(topropagate);
---		thisModule.makeUniqueID(toskip);
-		
+	
 		thisModule.tmpLogicExp <- andop;
 
 		for(e in iprop.Destination.subSequence(2, iprop.Destination.size())) {
@@ -1053,15 +974,6 @@ rule InternalPropagationImmediate extends InternalPropagation {
 			source <- triprop
 		)
 	do {
---		thisModule.makeUniqueID(triprop);
---		thisModule.makeUniqueID(tmp);
---		thisModule.makeUniqueID(casepropagate);
---		thisModule.makeUniqueID(caseskip);
---		
---		thisModule.makeUniqueID(totmp);
---		thisModule.makeUniqueID(topropagate);
---		thisModule.makeUniqueID(toskip);
-		
 		thisModule.tmpLogicExp <- andop;
 
 		for(e in iprop.Destination.subSequence(2, iprop.Destination.size())) {
@@ -1084,28 +996,6 @@ rule InternalPropagationImmediate extends InternalPropagation {
 		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
 	}
 }
-
---Crea un ID unico per Place, sTransizioni e Archi, aggiungendo un numero progressivo all'ID attuale
---rule makeUniqueID(obj : PNML!PnObject) {
---	do {
---		if(obj.oclIsKindOf(PNML!Transition)) {
---			obj.id <- 'T' + thisModule.trCount.toString() + '_' + obj.id;
---			thisModule.trCount <- thisModule.trCount + 1;
---		}
---		else if(obj.oclIsKindOf(PNML!Place)) {
---			obj.id <- 'P' + thisModule.placeCount.toString() + '_' + obj.id;
---			thisModule.placeCount <- thisModule.placeCount + 1;
---		}
---		else if(obj.oclIsKindOf(PNML!Arc)) {
---			obj.id <- 'A' + thisModule.arcCount.toString() + '_' + obj.id;
---			thisModule.arcCount <- thisModule.arcCount + 1;
---		}
---		else {
---			obj.id <- 'O' + thisModule.otherCount.toString() + '_' + obj.id;
---			thisModule.otherCount <- thisModule.otherCount + 1;
---		}		
---	}
---}
 
 -- ScheduleExpression nodes
 	-- T
