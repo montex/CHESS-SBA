@@ -37,8 +37,12 @@ helper context IDM!Threat def: getResetTransition() : PNML!GSPNTransition =
 helper context PNML!Place def: toString() : String = self.id;
 helper context PNML!Transition def: toString() : String = self.id;
 
-helper context PNML!Arc def: defaultID() : String =
-	self.source.id + '_to_' + self.target.id;
+helper context PNML!GSPNArc def: defaultID() : String =
+	if self.type = #inhibitor then
+		self.source.id + '_inhibit_' + self.target.id
+	else
+		self.source.id + '_to_' + self.target.id
+	endif;
 
 rule Sistema {
 	from
@@ -614,6 +618,12 @@ abstract rule FGE {
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
+		blocker : PNML!Place
+		(
+			id <- basename + '_blocker',
+			initialMarking <- thisModule.newPTMarking(0),
+			containerPage <- thisModule.getPage
+		),
 		--Archi
 		totmp : PNML!GSPNArc
 		(
@@ -636,6 +646,21 @@ abstract rule FGE {
 			source <- tmp,
 			target <- caseskip
 		),
+		toblocker : PNML!GSPNArc
+		(
+			id <- basename + '_toblocker',
+			containerPage <- thisModule.getPage,
+			--source <- trfge,
+			target <- blocker
+		),
+		toblocker_inhibit : PNML!GSPNArc
+		(
+			id <- basename + '_toblocker_inhibit',
+			containerPage <- thisModule.getPage,
+			source <- blocker,
+			--target <- trfge,
+			type <- #inhibitor
+		),
 		--Arcs for component reset
 		tmp_to_reset : PNML!GSPNArc
 		(
@@ -644,6 +669,14 @@ abstract rule FGE {
 			target <- fge.refImmediateComposite().getResetTransition(),
 			MultiplicityFunction <- thisModule.newMarkingExpression(tmp),
 			id <- tmp_to_reset.defaultID()
+		),
+		blocker_to_reset : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- blocker,
+			target <- fge.refImmediateComposite().getResetTransition(),
+			MultiplicityFunction <- thisModule.newMarkingExpression(blocker),
+			id <- blocker_to_reset.defaultID()
 		)
 }
 rule FGETimed extends FGE {
@@ -665,10 +698,9 @@ rule FGETimed extends FGE {
 			Guard <- andop
 		),
 		andop : PNML!OpAnd,
-		totmp : PNML!GSPNArc
-		(
-			source <- trfge
-		)
+		totmp : PNML!GSPNArc ( source <- trfge ),
+		toblocker : PNML!GSPNArc ( source <- trfge ),
+		toblocker_inhibit : PNML!GSPNArc ( target <- trfge )
 	do {
 		thisModule.tmpLogicExp <- andop;
 
@@ -712,10 +744,9 @@ rule FGEImmediate extends FGE {
 			Guard <- andop
 		),
 		andop : PNML!OpAnd,
-		totmp : PNML!GSPNArc
-		(
-			source <- trfge
-		)
+		totmp : PNML!GSPNArc ( source <- trfge ),
+		toblocker : PNML!GSPNArc ( source <- trfge ),
+		toblocker_inhibit : PNML!GSPNArc ( target <- trfge )
 	do {
 	
 		thisModule.tmpLogicExp <- andop;
@@ -782,6 +813,12 @@ abstract rule EPF {
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
+		blocker : PNML!Place
+		(
+			id <- basename + '_blocker',
+			initialMarking <- thisModule.newPTMarking(0),
+			containerPage <- thisModule.getPage
+		),
 		--Archi
 		totmp : PNML!GSPNArc
 		(
@@ -804,6 +841,21 @@ abstract rule EPF {
 			source <- tmp,
 			target <- caseskip
 		),
+		toblocker : PNML!GSPNArc
+		(
+			id <- basename + '_toblocker',
+			containerPage <- thisModule.getPage,
+			--source <- trepf,
+			target <- blocker
+		),
+		toblocker_inhibit : PNML!GSPNArc
+		(
+			id <- basename + '_toblocker_inhibit',
+			containerPage <- thisModule.getPage,
+			source <- blocker,
+			--target <- trepf,
+			type <- #inhibitor
+		),
 		--Arcs for component reset
 		tmp_to_reset : PNML!GSPNArc
 		(
@@ -812,6 +864,14 @@ abstract rule EPF {
 			target <- epf.refImmediateComposite().getResetTransition(),
 			MultiplicityFunction <- thisModule.newMarkingExpression(tmp),
 			id <- tmp_to_reset.defaultID()
+		),
+		blocker_to_reset : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- blocker,
+			target <- epf.refImmediateComposite().getResetTransition(),
+			MultiplicityFunction <- thisModule.newMarkingExpression(blocker),
+			id <- blocker_to_reset.defaultID()
 		)
 }
 rule EPFTimed extends EPF {
@@ -833,10 +893,9 @@ rule EPFTimed extends EPF {
 			Guard <- andop
 		),
 		andop : PNML!OpAnd,
-		totmp : PNML!GSPNArc
-		(
-			source <- trepf
-		)
+		totmp : PNML!GSPNArc ( source <- trepf ),
+		toblocker : PNML!GSPNArc ( source <- trepf ),
+		toblocker_inhibit : PNML!GSPNArc ( target <- trepf )
 	do {
 		thisModule.tmpLogicExp <- andop;
 
@@ -880,10 +939,9 @@ rule EPFImmediate extends EPF {
 			Guard <- andop
 		),
 		andop : PNML!OpAnd,
-		totmp : PNML!GSPNArc
-		(
-			source <- trepf
-		)
+		totmp : PNML!GSPNArc ( source <- trepf ),
+		toblocker : PNML!GSPNArc ( source <- trepf ),
+		toblocker_inhibit : PNML!GSPNArc ( target <- trepf )
 	do {
 		thisModule.tmpLogicExp <- andop;
 
