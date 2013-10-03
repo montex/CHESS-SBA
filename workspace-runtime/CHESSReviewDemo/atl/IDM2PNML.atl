@@ -101,7 +101,8 @@ rule Component {
 			containerPage <- thisModule.getPage,
 			id <- c.Name + '_reset',
 			Priority <- thisModule.priReset,
-			Weight <- 1.0
+			Weight <- 1.0,
+			Guard <- thisModule.buildConditionNoExternalFaultsExcludingCoRepairs(c)
 		),
 		arcreset : PNML!GSPNArc
 		(
@@ -1467,8 +1468,7 @@ rule RepairTimed extends Activity {
 		(
 			containerPage <- thisModule.getPage,
 			id <- act.Name,
-			Distribution <- act.Duration,
-			Guard <- thisModule.buildConditionNoExternalFaultsExcludingCoRepairs(act)
+			Distribution <- act.Duration
 		),
 		enabledtotr : PNML!GSPNArc
 		(
@@ -1489,6 +1489,7 @@ rule RepairTimed extends Activity {
 	do { 
 		for( c in act.Target ) {
 			thisModule.newOutputArc(tr_success, c);
+			thisModule.newInhibitorArc(c, tr_rep);
 		}
 	}
 }
@@ -1510,8 +1511,7 @@ rule RepairImmediate extends Activity {
 			containerPage <- thisModule.getPage,
 			id <- act.Name,
 			Weight <- 1.0,
-			Priority <- thisModule.priActivity,
-			Guard <- thisModule.buildConditionNoExternalFaultsExcludingCoRepairs(act)
+			Priority <- thisModule.priActivity
 		),
 		enabledtotr : PNML!GSPNArc
 		(
@@ -1532,6 +1532,7 @@ rule RepairImmediate extends Activity {
 	do { 
 		for( c in act.Target ) {
 			thisModule.newOutputArc(tr_success, c);
+			thisModule.newInhibitorArc(c, tr_rep);
 		}
 	}
 }
@@ -1890,9 +1891,10 @@ rule buildConditionComponentIsNotFailed(c : IDM!Component) {
 	--originated by components that are going to be repaired with the same activity.
 	--This prevents repairing a component and having it immediately failed again because of an
 	--external fault.
-rule buildConditionNoExternalFaultsExcludingCoRepairs(act : IDM!RepairActivity) {
+rule buildConditionNoExternalFaultsExcludingCoRepairs_old(act : IDM!RepairActivity) {
 	using {
 		extfaults : Sequence(IDM!ExternalFault) = act.Target->collect(c | c.Faults).flatten()->select(f | f.oclIsTypeOf(IDM!ExternalFault));
+		extcomponents: Set(IDM!Component) = extfaults->collect(f | f.Source.refImmediateComposite());
 		exp : PNML!LogicalExpression = PNML!OpTrue.newInstance();
 	}	
 	do {
@@ -1907,10 +1909,51 @@ rule buildConditionNoExternalFaultsExcludingCoRepairs(act : IDM!RepairActivity) 
 					   );				
 			}
 		}
+		--enable the transition if at least one of the components is going to be repaired
+		for(c in extcomponents) {
+			exp <- thisModule.newOpOr(
+				       exp,
+				       thisModule.newOpGreater(
+				           thisModule.newMarkingExpression(c),
+						   thisModule.newValueExpression(0)
+					   )
+				   );
+		}
 		exp;
 	}
 }
-
+rule buildConditionNoExternalFaultsExcludingCoRepairs(c : IDM!Component) {
+	using {
+		extfaults : Sequence(IDM!ExternalFault) = c.Faults->select(f | f.oclIsTypeOf(IDM!ExternalFault));
+		extcomponents: Set(IDM!Component) = extfaults->collect(f | f.Source.refImmediateComposite());
+		exp : PNML!LogicalExpression = PNML!OpTrue.newInstance();
+	}	
+	do {
+		for(xft in extfaults) {
+--			if(not act.Target.includes(xft.Source.Component)) {
+				exp <- thisModule.newOpAnd(
+						   exp,
+					       thisModule.newOpEqual(
+					           thisModule.newMarkingExpression(xft.Source),
+							   thisModule.newValueExpression(0)
+						   )
+					   );				
+--			}
+		}
+		--enable the transition if at least one of the components is going to be repaired
+		for(c in extcomponents) {
+			exp <- thisModule.newOpOr(
+				       exp,
+				       thisModule.newOpGreater(
+				           thisModule.newMarkingExpression(c),
+						   thisModule.newValueExpression(0)
+					   )
+				   );
+		}
+		exp;
+	}
+}
+	
 --Other rules
 	--Creates a new output arc between a transition and a place
 rule newOutputArc ( t : PNML!Transition, p : PNML!Place ) { 
@@ -1932,6 +1975,18 @@ rule newInputArc ( p : PNML!Place, t : PNML!Transition ) {
 			source <- p,
 			target <- t,
 			id <- p.toString() + '_to_' + t.toString()
+		)
+}
+	--Creates a new inhibitor arc between a place and a transition
+rule newInhibitorArc ( p : PNML!Place, t : PNML!Transition ) {
+	to 
+		arc : PNML!GSPNArc
+		(
+			containerPage <- thisModule.getPage,
+			source <- p,
+			target <- t,
+			id <- p.toString() + '_inhibits_' + t.toString(),
+			type <- #inhibitor
 		)
 }
 	--Creates a new input arc between a place and a transition,
