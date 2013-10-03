@@ -1891,66 +1891,69 @@ rule buildConditionComponentIsNotFailed(c : IDM!Component) {
 	--originated by components that are going to be repaired with the same activity.
 	--This prevents repairing a component and having it immediately failed again because of an
 	--external fault.
-rule buildConditionNoExternalFaultsExcludingCoRepairs_old(act : IDM!RepairActivity) {
-	using {
-		extfaults : Sequence(IDM!ExternalFault) = act.Target->collect(c | c.Faults).flatten()->select(f | f.oclIsTypeOf(IDM!ExternalFault));
-		extcomponents: Set(IDM!Component) = extfaults->collect(f | f.Source.refImmediateComposite());
-		exp : PNML!LogicalExpression = PNML!OpTrue.newInstance();
-	}	
-	do {
-		for(xft in extfaults) {
-			if(not act.Target.includes(xft.Source.Component)) {
-				exp <- thisModule.newOpAnd(
-						   exp,
-					       thisModule.newOpEqual(
-					           thisModule.newMarkingExpression(xft.Source),
-							   thisModule.newValueExpression(0)
-						   )
-					   );				
-			}
-		}
-		--enable the transition if at least one of the components is going to be repaired
-		for(c in extcomponents) {
-			exp <- thisModule.newOpOr(
-				       exp,
-				       thisModule.newOpGreater(
-				           thisModule.newMarkingExpression(c),
-						   thisModule.newValueExpression(0)
-					   )
-				   );
-		}
-		exp;
-	}
-}
+--rule buildConditionNoExternalFaultsExcludingCoRepairs_old(act : IDM!RepairActivity) {
+--	using {
+--		extfaults : Sequence(IDM!ExternalFault) = act.Target->collect(c | c.Faults).flatten()->select(f | f.oclIsTypeOf(IDM!ExternalFault));
+--		extcomponents: Set(IDM!Component) = extfaults->collect(f | f.Source.refImmediateComposite());
+--		exp : PNML!LogicalExpression = PNML!OpTrue.newInstance();
+--	}
+--	do {
+--		for(xft in extfaults) {
+--			if(not act.Target.includes(xft.Source.Component)) {
+--				exp <- thisModule.newOpAnd(
+--						   exp,
+--					       thisModule.newOpEqual(
+--					           thisModule.newMarkingExpression(xft.Source),
+--							   thisModule.newValueExpression(0)
+--						   )
+--					   );
+--			}
+--		}
+--		--enable the transition if at least one of the components is going to be repaired
+--		for(c in extcomponents) {
+--			exp <- thisModule.newOpOr(
+--				       exp,
+--				       thisModule.newOpGreater(
+--				           thisModule.newMarkingExpression(c),
+--						   thisModule.newValueExpression(0)
+--					   )
+--				   );
+--		}
+--		exp;
+--	}
+--}
 rule buildConditionNoExternalFaultsExcludingCoRepairs(c : IDM!Component) {
 	using {
 		extfaults : Sequence(IDM!ExternalFault) = c.Faults->select(f | f.oclIsTypeOf(IDM!ExternalFault));
 		extcomponents: Set(IDM!Component) = extfaults->collect(f | f.Source.refImmediateComposite());
 		exp : PNML!LogicalExpression = PNML!OpTrue.newInstance();
-	}	
+		expout: PNML!LogicalExpression = PNML!OpTrue.newInstance();
+	}
 	do {
-		for(xft in extfaults) {
---			if(not act.Target.includes(xft.Source.Component)) {
+		--For all components that propagate to this component...
+		for(xc in extcomponents) {
+			exp <- PNML!OpTrue.newInstance();
+			--for all external faults, check that they are not active
+			for(xft in extfaults->select(f | f.Source.refImmediateComposite() = xc)) {
 				exp <- thisModule.newOpAnd(
 						   exp,
 					       thisModule.newOpEqual(
 					           thisModule.newMarkingExpression(xft.Source),
 							   thisModule.newValueExpression(0)
 						   )
-					   );				
---			}
-		}
-		--enable the transition if at least one of the components is going to be repaired
-		for(c in extcomponents) {
+					   );
+			}
+			--or that the component is going to be repaired
 			exp <- thisModule.newOpOr(
 				       exp,
-				       thisModule.newOpGreater(
-				           thisModule.newMarkingExpression(c),
+					   thisModule.newOpGreater(
+					       thisModule.newMarkingExpression(xc),
 						   thisModule.newValueExpression(0)
 					   )
 				   );
+			expout <- thisModule.newOpAnd(expout, exp);
 		}
-		exp;
+		expout;
 	}
 }
 	
