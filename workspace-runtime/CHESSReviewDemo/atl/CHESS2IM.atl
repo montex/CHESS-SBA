@@ -399,7 +399,7 @@ rule DependableComponent2Component(dc: CHESS!DependableComponent, inst: UML2!Ins
 			
 				if(thisModule.Transform = true){
 					--if not, this component won't fail due to internal faults, but it could be interested by fault propagation
-					thisModule.NoIntFaultComponent(dc);
+					thisModule.NoIntFaultComponent(dc,inst);
 				}
 			}
 		}else{
@@ -408,18 +408,18 @@ rule DependableComponent2Component(dc: CHESS!DependableComponent, inst: UML2!Ins
 	}
 }
 
-rule NoTransformation(dc: CHESS!DependableComponent){
+rule NoTransformation(dc: CHESS!DependableComponent, inst: UML2!InsanceSpecification){
 	
 	do{
 		--do nothing
 	}
 }
 
-rule NoIntFaultComponent(dc: CHESS!DependableComponent){
+rule NoIntFaultComponent(dc: CHESS!DependableComponent, inst: UML2!InsanceSpecification){
 	
 	to 
 		c : IM!Component(
-			Name <- dc.getName	
+			Name <- inst.name	
 		),
 		
 		e : IM!Error(
@@ -440,6 +440,8 @@ rule ComponentErrorModel(dc: CHESS!DependableComponent, inst: UML2!InsanceSpecif
 		)
 	
 	do{
+		thisModule.InstanceMap <- thisModule.InstanceMap.including(inst, c);
+		
 		for (r in dc.errorModel.base_StateMachine.region){
 			for(s in r.subvertex){
 				if (thisModule.Errors->exists(e | e.base_State = s)){
@@ -463,7 +465,7 @@ rule ComponentErrorModel(dc: CHESS!DependableComponent, inst: UML2!InsanceSpecif
 				}
 			}
 		}
-		thisModule.Counter <- 1;
+		thisModule.Counter <- 1;		
 	}
 }
 
@@ -680,6 +682,8 @@ rule StatefulHardware2Component(sfh : CHESS!StatefulHardware, inst: UML2!Instanc
 			--When <- ... handled as a DELAYED ACTION
 		)
 	do{
+		thisModule.InstanceMap <- thisModule.InstanceMap.including(inst, c);
+		
 		thisModule.setFGEName(fge);
 		thisModule.RepairActivities <- thisModule.RepairActivities->including(ra);
 		-- this rule is called only if the component doesn't have an ErrorModel	
@@ -754,6 +758,8 @@ rule StatelessHardware2Component(slh: CHESS!StatelessHardware, inst: UML2!Instan
 		)
 
 	do{
+		thisModule.InstanceMap <- thisModule.InstanceMap.including(inst, c);
+		
 		thisModule.setFGEName(fge);
 		thisModule.RepairActivities <- thisModule.RepairActivities->including(ra);
 		-- this rule is called only if the component doesn't have an ErrorModel	
@@ -828,6 +834,8 @@ rule StatefulSoftware2Component(sfs : CHESS!StatefulSoftware, inst: UML2!Instanc
 		)	
 		
 	do{
+		thisModule.InstanceMap <- thisModule.InstanceMap.including(inst, c);
+		
 		thisModule.setFGEName(fge);
 		thisModule.RepairActivities <- thisModule.RepairActivities->including(ra);
 		-- this rule is called only if the component doesn't have an ErrorModel	
@@ -905,6 +913,8 @@ rule StatelessSoftware2Component(sls : CHESS!StatelessSoftware, inst: UML2!Insta
 		)	
 		
 	do{
+		thisModule.InstanceMap <- thisModule.InstanceMap.including(inst, c);
+		
 		thisModule.setFGEName(fge);
 		thisModule.RepairActivities <- thisModule.RepairActivities->including(ra);
 		-- this rule is called only if the component doesn't have an ErrorModel	
@@ -1089,6 +1099,8 @@ rule Connectors(p : CHESS!Propagation, first : UML2!Slot, last : UML2!Slot){
 		cslast :  MARTE!ClientServerPort = thisModule.CSPort->select (e | e.base_Port = last.definingFeature)->first();
 		firstComp : UML!Component = first.value->first().instance.classifier->first();
 		lastComp : UML!Component = 	last.value->first().instance.classifier->first();
+		firstInst : UML!InstanceSpecification = first.value->first().instance;
+		lastInst : UML!InstanceSpecification = 	last.value->first().instance;
 	}
 	
 	do{
@@ -1098,16 +1110,16 @@ rule Connectors(p : CHESS!Propagation, first : UML2!Slot, last : UML2!Slot){
 			--check directions and call Propagation rule correctly
 				if (flowFirst.direction.toString() = 'out' and flowLast.direction.toString() = 'in'){
 					--firstComp is server, lastComp is client
-					thisModule.Propagation(p, firstComp, lastComp, flowFirst.base_Port, flowLast.base_Port);
+					thisModule.Propagation(p, firstComp, lastComp, flowFirst.base_Port, flowLast.base_Port, firstInst, lastInst);
 				}
 				if (flowFirst.direction.toString() = 'in' and flowLast.direction.toString() = 'out'){
 					--firstComp is client, lastComp is server
-					thisModule.Propagation(p, lastComp, firstComp, flowLast.base_Port, flowFirst.base_Port);
+					thisModule.Propagation(p, lastComp, firstComp, flowLast.base_Port, flowFirst.base_Port, lastInst, firstInst);
 				}
 				if (flowFirst.direction.toString() = 'inout' and flowLast.direction.toString() = 'inout'){
 					--bidirectional propagation
-					thisModule.Propagation(p, firstComp, lastComp, flowFirst.base_Port, flowLast.base_Port);
-					thisModule.Propagation(p, lastComp, firstComp, flowLast.base_Port, flowFirst.base_Port);
+					thisModule.Propagation(p, firstComp, lastComp, flowFirst.base_Port, flowLast.base_Port, firstInst, lastInst);
+					thisModule.Propagation(p, lastComp, firstComp, flowLast.base_Port, flowFirst.base_Port, lastInst, firstInst);
 				}
 				--other combination are bad ones and are not considered
 		}
@@ -1118,16 +1130,16 @@ rule Connectors(p : CHESS!Propagation, first : UML2!Slot, last : UML2!Slot){
 			--check directions and call Propagation rule correctly
 				if (csfirst.kind.toString() = 'provided' and cslast.kind.toString() = 'required'){
 					--firstComp is server, lastComp is client
-					thisModule.Propagation(p, firstComp, lastComp, csfirst.base_Port, cslast.base_Port);
+					thisModule.Propagation(p, firstComp, lastComp, csfirst.base_Port, cslast.base_Port, firstInst, lastInst);
 				}
 				if (csfirst.kind.toString() = 'required' and cslast.kind.toString() = 'provided'){
 					--firstComp is client, lastComp is server
-					thisModule.Propagation(p, lastComp, firstComp, cslast.base_Port, csfirst.base_Port);
+					thisModule.Propagation(p, lastComp, firstComp, cslast.base_Port, csfirst.base_Port, lastInst, firstInst);
 				}
 				if (csfirst.kind.toString() = 'proreq' and cslast.kind.toString() = 'proreq'){
 					--bidirectional propagation
-					thisModule.Propagation(p, firstComp, lastComp, csfirst.base_Port, cslast.base_Port);
-					thisModule.Propagation(p, lastComp, firstComp, cslast.base_Port, csfirst.base_Port);
+					thisModule.Propagation(p, firstComp, lastComp, csfirst.base_Port, cslast.base_Port, firstInst, lastInst);
+					thisModule.Propagation(p, lastComp, firstComp, cslast.base_Port, csfirst.base_Port, lastInst, firstInst);
 				}
 				--other combination are bad ones and are not considered
 		}
@@ -1135,7 +1147,8 @@ rule Connectors(p : CHESS!Propagation, first : UML2!Slot, last : UML2!Slot){
 }
 
 
-rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!Component, serverport : UML2!Port, clientport : UML2!Port){
+rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!Component, serverport : UML2!Port, clientport : UML2!Port,
+				  serverInst: UML2!InstanceSpecification, clientInst: UML2!InstanceSpecification){
 	
 	using{
 		serverDepComp : CHESS!DependableComponent = thisModule.DepComponent->select(s | s.base_Component = server)->first();
@@ -1143,8 +1156,11 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 	}
 	
 	do{	
+		serverInst.debug();
+		clientInst.debug();
+		'..'.debug();
 		
-		if(server.corrispondingComponent <> OclUndefined and client.corrispondingComponent <> OclUndefined){
+		if(serverInst.getCorrespondingComponent <> OclUndefined and clientInst.getCorrespondingComponent <> OclUndefined){
 			
 			--1) both client and server have an ErrorModel
 			if(serverDepComp.errorModel <> OclUndefined and clientDepComp.errorModel <> OclUndefined){
@@ -1160,7 +1176,7 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 								first().affectedPorts->isEmpty())
 							{
 								--...create an IM!ExternalFault in client corrisponding im component
-								thisModule.SetExternalFaultClient(client.corrispondingComponent, s.getCorrispondingFailureMode);
+								thisModule.SetExternalFaultClient(clientInst.getCorrespondingComponent, s.getCorrispondingFailureMode);
 							}
 						}
 					}
@@ -1173,7 +1189,7 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 							if (thisModule.ExternalFaults->select(e | e.base_Transition = t)->
 							first().fromPort->includes(clientport)){
 								--...create an IM!FaultsGenerateErrors in client corrisponding im component
-								thisModule.SetFgeClient(client.corrispondingComponent, t, p);
+								thisModule.SetFgeClient(clientInst.getCorrespondingComponent, t, p);
 
 							}
 						}
@@ -1184,8 +1200,8 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 				--2) server has NOT error model, client has error model
 
 				--for each client's ExternalFault that originates from the port interested by the connection...
-				for(f in server.corrispondingComponent.FailureModes) {
-					thisModule.SetExternalFaultClient(client.corrispondingComponent, f);
+				for(f in serverInst.getCorrespondingComponent.FailureModes) {
+					thisModule.SetExternalFaultClient(clientInst.getCorrespondingComponent, f);
 				}
 				
 				for (r in clientDepComp.errorModel.base_StateMachine.region){
@@ -1197,7 +1213,7 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 							    first().fromPort->isEmpty())
 							{
 								--...create an IM!FaultsGenerateErrors in client corrisponding im component
-								thisModule.SetFgeClient(client.corrispondingComponent, t, p);
+								thisModule.SetFgeClient(clientInst.getCorrespondingComponent, t, p);
 							}
 						}
 					}
@@ -1208,8 +1224,8 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 				if (MARTE!Assign.allInstances()->exists(e | e.base_Comment = p.base_Comment)) {
 					--Assign relation: server is a hardware component, client is a the sowftware allocated to it,
 					--all the failure modes should be taken into account
-					for(f in server.corrispondingComponent.FailureModes) {
-						thisModule.SetExternalFaultAndFGEClient(client.corrispondingComponent, f, p);
+					for(f in serverInst.getCorrespondingComponent.FailureModes) {
+						thisModule.SetExternalFaultAndFGEClient(clientInst.getCorrespondingComponent, f, p);
 					}
 				}else {
 					--Normal connector
@@ -1224,7 +1240,7 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 									first().affectedPorts->isEmpty())
 								{
 									--...create an IM!ExternalFault in client corrisponding im component
-									thisModule.SetExternalFaultAndFGEClient(client.corrispondingComponent, s.getCorrispondingFailureMode, p);
+									thisModule.SetExternalFaultAndFGEClient(clientInst.getCorrespondingComponent, s.getCorrispondingFailureMode, p);
 								}
 							}
 						}
@@ -1233,7 +1249,7 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 			
 			} else if(serverDepComp <> OclUndefined and clientDepComp <> OclUndefined){
 				--4) BOTH server and client do NOT have the error model, propagate the only failuremode of the server to the client
-				thisModule.SetExternalFaultAndFGEClient(client.corrispondingComponent, server.corrispondingComponent.FailureModes->first(), p);	
+				thisModule.SetExternalFaultAndFGEClient(clientInst.getCorrespondingComponent, serverInst.getCorrespondingComponent.FailureModes->first(), p);	
 			}
 		
 		}
@@ -1243,27 +1259,31 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 			--the connected port is delegated to a child port
 			--call propagation with the correct ports and components
 			
-			
 			--case A: server is composed
-			if(server.corrispondingComponent = OclUndefined){
+			if(serverInst.getCorrespondingComponent = OclUndefined){
 				for (c in server.getOwnedConnectors()){
-					if(c.getEnds()->first().getRole() = serverport){						
-						thisModule.Propagation(p, c.getEnds()->last().getPartWithPort().getType(), client, c.getEnds()->last().getRole(), clientport);
+					if(c.getEnds()->first().getRole() = serverport){
+						--serverInst.slot->select(sl | sl.value.instance->classifier = c.getEnds()->last().getPartWithPort().getType()).value.instance.debug();
+						serverInst.slot.debug();
+						thisModule.Propagation(p, c.getEnds()->last().getPartWithPort().getType(), client, c.getEnds()->last().getRole(), clientport, serverInst, clientInst);
 					}
 					if(c.getEnds()->last().getRole() = serverport){						
-						thisModule.Propagation(p, c.getEnds()->first().getPartWithPort().getType(), client, c.getEnds()->first().getRole(), clientport);
+						serverInst.slot.debug();
+						thisModule.Propagation(p, c.getEnds()->first().getPartWithPort().getType(), client, c.getEnds()->first().getRole(), clientport, c.getEnds()->first().getPartWithPort(), clientInst);
 					}
 				}
 			}
 			
 			--case B: client is composed
-			if (client.corrispondingComponent = OclUndefined){
+			if (clientInst.getCorrespondingComponent = OclUndefined){
 				for (c in client.getOwnedConnectors()){
-					if(c.getEnds()->first().getRole() = clientport){						
-						thisModule.Propagation(p, server, c.getEnds()->last().getPartWithPort().getType(), server, c.getEnds()->last().getRole());
+					if(c.getEnds()->first().getRole() = clientport){
+						clientInst <- clientInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->last().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first().debug();
+						thisModule.Propagation(p, server, c.getEnds()->last().getPartWithPort().getType(), server, c.getEnds()->last().getRole(), serverInst, clientInst);
 					}
 					if(c.getEnds()->last().getRole() = clientport){						
-						thisModule.Propagation(p, server, c.getEnds()->first().getPartWithPort().getType(), server, c.getEnds()->first().getRole());
+						clientInst <- clientInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->first().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first().debug();
+						thisModule.Propagation(p, server, c.getEnds()->first().getPartWithPort().getType(), server, c.getEnds()->first().getRole(), serverInst, clientInst);
 					}
 				}
 			}
@@ -1527,8 +1547,8 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 		}
 
 		for (c in sba.targetDepComponent) {
-			re.target <- re.target.union(c.classifier->first().corrispondingComponent.FailureModes);
-			re.Name <- re.Name + c.classifier->first().toString().replaceAll('!', '_');
+			re.target <- re.target.union(c.getCorrespondingComponent.FailureModes);
+			re.Name <- re.Name + c.toString().replaceAll('!', '_');
 		}
 		for (fm in sba.targetFailureMode) {
 			re.target <- re.target.union(fm);
@@ -1571,7 +1591,7 @@ rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 		}
 		
 		for (c in sba.targetDepComponent) {
-			re.target <- re.target.union(c.classifier->first().corrispondingComponent.FailureModes);
+			re.target <- re.target.union(c.getCorrespondingComponent.FailureModes);
 			re.Name <- re.Name + c.classifier->first().toString().replaceAll('!', '_');
 		}
 		for (fm in sba.targetFailureMode) {
@@ -1584,7 +1604,8 @@ rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 --manages all the delayed actions
 endpoint rule EndRule() {
 	
-	do{			
+	do{
+		
 		--component transformation
 		for (c in thisModule.Instances){
 			if(thisModule.DepComponent->select(d | d.base_Component = c.component)->first() <> OclUndefined){
@@ -1627,7 +1648,7 @@ endpoint rule EndRule() {
 				thisModule.Connectors(p, p.base_InstanceSpecification.slot->first(), p.base_InstanceSpecification.slot->last());
 			}
 		}
-
+		thisModule.InstanceMap.debug();
 		--dependability measure handling
 		--temporary version
 		if (thisModule.SBAnalysis.WhichMeasure = 'Reliability'){
@@ -1798,6 +1819,11 @@ helper def : Comments : Set (UML2!Comment) = Set {};
 helper def : Ports : Set (UML2!Port) = Set {};
 helper def : States : Set(UML2!State) = Set{};
 helper def : Transitions : Set(UML2!Tansition) = Set{};
+
+--Maps instances in the CHESS model to IDM components
+helper def: InstanceMap: Map(UML2!InstanceSpecification,IM!Component) = Map{};
+helper context UML2!InstanceSpecification def: getCorrespondingComponent : IM!Component =
+	thisModule.InstanceMap.get(self);
 
 helper def : SBAnalysis : CHESS!StateBasedAnalysis = OclUndefined;
 helper def : Resources : UML2!Package = OclUndefined;
