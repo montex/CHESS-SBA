@@ -1525,6 +1525,13 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 	using {
 		strClean : String = sba.measure.clean;
 		iInstant : Integer = strClean.indexOf('instantOfTime');
+
+		--Select all the failure modes of component instance specified as 'targetDepComponent'
+		fmOfSelectedInstances : Set(IM!FailureMode) = sba.targetDepComponent->collect(c | c.getCorrespondingComponent.FailureModes)->flatten()->asSet();
+		--Select all the failure modes (of all the instances) specified as 'targetFailureModes'
+		--(the query below is probably overkill, it should be optimized one day...)
+		fmSelected : Set(IM!FailureMode) = UML2!InstanceSpecification->allInstances()->collect(i | sba.targetFailureMode->collect(fm | fm.base_State.getCorrespondingFailureWithin(i)))->flatten()->asBag();
+
 	}
 	to
 		re : IM!Reliability (
@@ -1544,14 +1551,19 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 			--Should not happen!
 		}
 
-		for (c in sba.targetDepComponent) {
-			re.target <- re.target.union(c.getCorrespondingComponent.FailureModes);
-			re.Name <- re.Name + c.toString().replaceAll('!', '_');
+		--[fmOfSelectedInstances]: all the failure modes of selected component instances
+		--[fmSelected]: all the selected failure modes
+		--Idea: select only SELECTED failure modes, of SELECTED component instances
+		--(i.e., perform an intersection between the two)
+		--If one of the two is not specified, then select all the failure modes specified by the other
+		if(fmOfSelectedInstances.isEmpty()) {
+			fmOfSelectedInstances <- fmSelected;
 		}
-		for (fm in sba.targetFailureMode) {
-			re.target <- re.target.union(fm);
-			re.Name <- re.Name + fm.toString();
+		if(fmSelected.isEmpty()) {
+			fmSelected <- fmOfSelectedInstances;
 		}
+		re.target <- fmOfSelectedInstances->intersection(fmSelected);
+		re.Name <- re.Name + re.target.toString();
 	}
 }
 
