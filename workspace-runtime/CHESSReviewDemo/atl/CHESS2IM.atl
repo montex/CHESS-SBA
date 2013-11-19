@@ -1527,15 +1527,13 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 		iInstant : Integer = strClean.indexOf('instantOfTime');
 
 		--Select all the failure modes of component instance specified as 'targetDepComponent'
-		fmOfSelectedInstances : Set(IM!FailureMode) = sba.targetDepComponent->collect(c | c.getCorrespondingComponent.FailureModes)->flatten()->asSet();
+		allFailuresOfSelectedInstances : Set(IM!FailureMode) = sba.targetDepComponent->collect(c | c.getCorrespondingComponent.FailureModes)->flatten()->asSet();
 		--Select all the failure modes (of all the instances) specified as 'targetFailureModes'
-		--(the query below is probably overkill, it should be optimized one day...)
-		fmSelected : Set(IM!FailureMode) = UML2!InstanceSpecification->allInstances()->collect(i | sba.targetFailureMode->collect(fm | fm.base_State.getCorrespondingFailureWithin(i)))->flatten()->asBag();
-
+		fmSelected : Set(IM!FailureMode) = thisModule.FailuresMap->getKeys()->select(k | sba.targetFailureMode->collect(fm | fm.base_State)->includes(k.st))->collect(selK | thisModule.FailuresMap->get(selK))->asSet();
 	}
 	to
 		re : IM!Reliability (
-			Name <-	'Reliability_'
+			Name <-	'Reliability'
 		)
 
 	do{
@@ -1551,19 +1549,22 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 			--Should not happen!
 		}
 
-		--[fmOfSelectedInstances]: all the failure modes of selected component instances
+		--[allFailuresOfSelectedInstances]: all the failure modes of selected component instances
 		--[fmSelected]: all the selected failure modes
 		--Idea: select only SELECTED failure modes, of SELECTED component instances
 		--(i.e., perform an intersection between the two)
 		--If one of the two is not specified, then select all the failure modes specified by the other
-		if(fmOfSelectedInstances.isEmpty()) {
-			fmOfSelectedInstances <- fmSelected;
-		}
 		if(fmSelected.isEmpty()) {
-			fmSelected <- fmOfSelectedInstances;
+			re.target <- allFailuresOfSelectedInstances;
+			re.Name <- re.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
+		}else{
+			if(allFailuresOfSelectedInstances.isEmpty()) {
+				re.target <- fmSelected;
+			}else{
+				re.target <- allFailuresOfSelectedInstances->intersection(fmSelected);
+			}
+			re.Name <- re.Name + re.target->collect(fm | '_' + fm.Name)->sum();
 		}
-		re.target <- fmOfSelectedInstances->intersection(fmSelected);
-		re.Name <- re.Name + re.target.toString();
 	}
 }
 
@@ -1573,6 +1574,11 @@ rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 		strClean : String = sba.measure.clean;
 		iInterval : Integer = strClean.indexOf('intervalEnd');
 		iInstant : Integer = strClean.indexOf('instantOfTime');
+
+		--Select all the failure modes of component instance specified as 'targetDepComponent'
+		allFailuresOfSelectedInstances : Set(IM!FailureMode) = sba.targetDepComponent->collect(c | c.getCorrespondingComponent.FailureModes)->flatten()->asSet();
+		--Select all the failure modes (of all the instances) specified as 'targetFailureModes'
+		fmSelected : Set(IM!FailureMode) = thisModule.FailuresMap->getKeys()->select(k | sba.targetFailureMode->collect(fm | fm.base_State)->includes(k.st))->collect(selK | thisModule.FailuresMap->get(selK))->asSet();
 	}
 	to
 		re : IM!Availability (
@@ -1600,13 +1606,21 @@ rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 			--Should not happen!
 		}
 
-		for (c in sba.targetDepComponent) {
-			re.target <- re.target.union(c.getCorrespondingComponent.FailureModes);
-			re.Name <- re.Name + c.classifier->first().toString().replaceAll('!', '_');
-		}
-		for (fm in sba.targetFailureMode) {
-			re.target <- re.target.union(fm);
-			re.Name <- re.Name + fm.toString();
+		--[allFailuresOfSelectedInstances]: all the failure modes of selected component instances
+		--[fmSelected]: all the selected failure modes
+		--Idea: select only SELECTED failure modes, of SELECTED component instances
+		--(i.e., perform an intersection between the two)
+		--If one of the two is not specified, then select all the failure modes specified by the other
+		if(fmSelected.isEmpty()) {
+			re.target <- allFailuresOfSelectedInstances;
+			re.Name <- re.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
+		}else{
+			if(allFailuresOfSelectedInstances.isEmpty()) {
+				re.target <- fmSelected;
+			}else{
+				re.target <- allFailuresOfSelectedInstances->intersection(fmSelected);
+			}
+			re.Name <- re.Name + re.target->collect(fm | '_' + fm.Name)->sum();
 		}
 	}
 }
