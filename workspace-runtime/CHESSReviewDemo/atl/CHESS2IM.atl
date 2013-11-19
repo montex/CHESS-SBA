@@ -1158,10 +1158,6 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 	}
 
 	do{
-		serverInst.debug();
-		clientInst.debug();
-		'..'.debug();
-
 		if(serverInst.getCorrespondingComponent <> OclUndefined and clientInst.getCorrespondingComponent <> OclUndefined){
 
 			--1) both client and server have an ErrorModel
@@ -1265,12 +1261,11 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 			if(serverInst.getCorrespondingComponent = OclUndefined){
 				for (c in server.getOwnedConnectors()){
 					if(c.getEnds()->first().getRole() = serverport){
-						--serverInst.slot->select(sl | sl.value.instance->classifier = c.getEnds()->last().getPartWithPort().getType()).value.instance.debug();
-						serverInst.slot.debug();
+						serverInst <- serverInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->last().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
 						thisModule.Propagation(p, c.getEnds()->last().getPartWithPort().getType(), client, c.getEnds()->last().getRole(), clientport, serverInst, clientInst);
 					}
 					if(c.getEnds()->last().getRole() = serverport){
-						serverInst.slot.debug();
+						serverInst <- serverInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->first().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
 						thisModule.Propagation(p, c.getEnds()->first().getPartWithPort().getType(), client, c.getEnds()->first().getRole(), clientport, c.getEnds()->first().getPartWithPort(), clientInst);
 					}
 				}
@@ -1280,11 +1275,11 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 			if (clientInst.getCorrespondingComponent = OclUndefined){
 				for (c in client.getOwnedConnectors()){
 					if(c.getEnds()->first().getRole() = clientport){
-						clientInst <- clientInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->last().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first().debug();
+						clientInst <- clientInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->last().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
 						thisModule.Propagation(p, server, c.getEnds()->last().getPartWithPort().getType(), server, c.getEnds()->last().getRole(), serverInst, clientInst);
 					}
 					if(c.getEnds()->last().getRole() = clientport){
-						clientInst <- clientInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->first().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first().debug();
+						clientInst <- clientInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->first().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
 						thisModule.Propagation(p, server, c.getEnds()->first().getPartWithPort().getType(), server, c.getEnds()->first().getRole(), serverInst, clientInst);
 					}
 				}
@@ -1297,7 +1292,7 @@ rule SetExternalFaultAndFGEClient(client : IM!Component, fm : IM!FailureMode, p 
 
 	to
 		xft : IM!ExternalFault(
-			Name <- 'ExternalFault_' + fm.Name,
+			Name <- client.Name + '_xftfrom_' + fm.Name,
 			Source <- fm,
 			Component <- client
 		),
@@ -1331,7 +1326,7 @@ rule SetExternalFaultClient(client : IM!Component, fm : IM!FailureMode){
 
 	to
 		xft : IM!ExternalFault(
-			Name <- 'ExternalFault_' + fm.Name,
+			Name <- client.Name + '_xftfrom_' + fm.Name,
 			Source <- fm,
 			Component <- client
 		)
@@ -1371,6 +1366,7 @@ rule SetFgeClient(client : IM!Component, t : UML!Transition, p : CHESS!Propagati
 		for (f in fge.Source){
 			thisModule.FaultExpr(f);
 		}
+
 		if (thisModule.TempFen->size() = 1){
 			fge.PropagationLogic <- thisModule.TempFen->first();
 		}else{
@@ -1401,14 +1397,14 @@ rule SetFgeClient(client : IM!Component, t : UML!Transition, p : CHESS!Propagati
 			}
 
 			fge.PropagationLogic <- thisModule.TempFen->last();
-			fge.PropagationLogicStringFormat <- fge.PropagationLogic.toString();
-
-			thisModule.setFGEBackLinks(fge.PropagationLogic, fge);
-			thisModule.TempFen.clear();
-			thisModule.TempFenSeq.clear();
-			thisModule.Counter <- 1;
 		}
 
+		fge.PropagationLogicStringFormat <- fge.PropagationLogic.toString();
+
+		thisModule.setFGEBackLinks(fge.PropagationLogic, fge);
+		thisModule.TempFen.clear();
+		thisModule.TempFenSeq.clear();
+		thisModule.Counter <- 1;
 	}
 }
 
@@ -1650,7 +1646,6 @@ endpoint rule EndRule() {
 				thisModule.Connectors(p, p.base_InstanceSpecification.slot->first(), p.base_InstanceSpecification.slot->last());
 			}
 		}
-		thisModule.InstanceMap.debug();
 		--dependability measure handling
 		--temporary version
 		if (thisModule.SBAnalysis.WhichMeasure = 'Reliability'){
