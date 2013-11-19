@@ -445,23 +445,23 @@ rule ComponentErrorModel(dc: CHESS!DependableComponent, inst: UML2!InsanceSpecif
 		for (r in dc.errorModel.base_StateMachine.region){
 			for(s in r.subvertex){
 				if (thisModule.Errors->exists(e | e.base_State = s)){
-					thisModule.CreateAndAddError(s, c);
+					thisModule.CreateAndAddError(s, c, inst);
 				}
 				if (thisModule.FailureModes->exists(e | e.base_State = s)){
 					--thisModule.setFailureMode(c, 0.0, e);
-					thisModule.CreateAndAddFailureMode(s, c);
+					thisModule.CreateAndAddFailureMode(s, c, inst);
 				}
 			}
 			for (t in r.transition){
 				if (thisModule.InternalFaults->exists(e | e.base_Transition = t)){
-					thisModule.CreateAndAddIntFault(t, t.getInternalFault, c);
+					thisModule.CreateAndAddIntFault(t, t.getInternalFault, c, inst);
 				} else if (thisModule.ExternalFaults->exists(e | e.base_Transition = t)){
 					--do nothing at the moment
 				} else if(t.getTarget().getError <> OclUndefined){
-					thisModule.ErrorTransition(t, c);
+					thisModule.ErrorTransition(t, c, inst);
 				}else if(t.getTarget().getFailureMode <> OclUndefined and t.getSource().getError <> OclUndefined){
 					t.getSource().getError;
-					thisModule.FailureModeTransition(t, c);
+					thisModule.FailureModeTransition(t, c, inst);
 				}
 			}
 		}
@@ -469,7 +469,7 @@ rule ComponentErrorModel(dc: CHESS!DependableComponent, inst: UML2!InsanceSpecif
 	}
 }
 
-rule ErrorTransition(t: UML2!Transition, c :  IM!Component){
+rule ErrorTransition(t: UML2!Transition, c :  IM!Component, inst: UML2!InstanceSpecification){
 
 	to
 
@@ -478,14 +478,14 @@ rule ErrorTransition(t: UML2!Transition, c :  IM!Component){
 	   	),
 
 		en : IM!ErrorsExpressionErrorNode(
-			Error <- t.getSource().getCorrispondingError,
+			Error <- t.getSource().getCorrespondingErrorWithin(inst),
 			errorPropagation <- ip
 		),
 
 		ip: IM!InternalPropagation(
 			Component <- c,
-			Source <- t.getSource().getCorrispondingError,
-			Destination <- t.getTarget().getCorrispondingError,
+			Source <- t.getSource().getCorrespondingErrorWithin(inst),
+			Destination <- t.getTarget().getCorrespondingErrorWithin(inst),
 			Weight <- 1,
 			PropagationDelay <- d,
 			PropagationProbability <- 1,
@@ -503,7 +503,7 @@ rule ErrorTransition(t: UML2!Transition, c :  IM!Component){
 	}
 }
 
-rule FailureModeTransition(t: UML2!Transition, c :  IM!Component){
+rule FailureModeTransition(t: UML2!Transition, c :  IM!Component, inst: UML2!InstanceSpecification){
 
 	using{
 		fm : CHESS!FailureMode = t.getTarget().getFailureMode;
@@ -515,14 +515,14 @@ rule FailureModeTransition(t: UML2!Transition, c :  IM!Component){
 	   	),
 
 		en : IM!ErrorsExpressionErrorNode(
-			Error <- t.getSource().getCorrispondingError,
+			Error <- t.getSource().getCorrespondingErrorWithin(inst),
 			errorPropagation <- epf
 		),
 
 		epf : IM!ErrorsProducesFailures(
 			Component <- c,
-			Source <- t.getSource().getCorrispondingError,
-			Destination <- t.getTarget().getCorrispondingFailureMode,
+			Source <- t.getSource().getCorrespondingErrorWithin(inst),
+			Destination <- t.getTarget().getCorrespondingFailureWithin(inst),
 			Weight <- if fm.probability <> OclUndefined then fm.probability.toReal() else 1.0 endif,
 			PropagationDelay <- d,
 			PropagationProbability <- 1,
@@ -548,7 +548,7 @@ rule TransitionPropagation(pr : CHESS!Propagation, d : IM!Distribution, epf : IM
 
 }
 
-rule CreateAndAddError(s : UML2!State, c : IM!Component){
+rule CreateAndAddError(s : UML2!State, c : IM!Component, inst: UML2!InstanceSpecification){
 
 	using{
 		vt : String = s.getError.vanishingTime;
@@ -561,11 +561,12 @@ rule CreateAndAddError(s : UML2!State, c : IM!Component){
 
 	do{
 		c.Errors.add(e);
+		thisModule.ErrorsMap <- thisModule.ErrorsMap->including(Tuple{st=s,i=inst}, e);
 	}
 }
 
 
-rule CreateAndAddFailureMode(s : UML2!State, c : IM!Component){
+rule CreateAndAddFailureMode(s : UML2!State, c : IM!Component, inst: UML2!InstanceSpecification){
 
 	to fm : IM!FailureMode(
 		--Domain, Detectability...?
@@ -574,10 +575,11 @@ rule CreateAndAddFailureMode(s : UML2!State, c : IM!Component){
 
 	do{
 		c.FailureModes.add(fm);
+		thisModule.FailuresMap <- thisModule.FailuresMap->including(Tuple{st=s,i=inst}, fm);
 	}
 }
 
-rule CreateAndAddIntFault(t : UML2!Transition, ift : CHESS!InternalFault, c : IM!Component){
+rule CreateAndAddIntFault(t : UML2!Transition, ift : CHESS!InternalFault, c : IM!Component, inst : UML2!InstanceSpecification){
 
 	using{
 		oc : String = t.getInternalFault.occurrence;
@@ -603,7 +605,7 @@ rule CreateAndAddIntFault(t : UML2!Transition, ift : CHESS!InternalFault, c : IM
 		fge : IM!FaultsGenerateErrors(
 			Component <- c,
 			Source <- ft,
-			Destination <- t.getTarget().getCorrispondingError,
+			Destination <- t.getTarget().getCorrespondingErrorWithin(inst),
 			ActivationDelay <- d,
 			PropagationProbability <- 1,
 			PropagationLogic <- fn,
@@ -1176,7 +1178,7 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 								first().affectedPorts->isEmpty())
 							{
 								--...create an IM!ExternalFault in client corrisponding im component
-								thisModule.SetExternalFaultClient(clientInst.getCorrespondingComponent, s.getCorrispondingFailureMode);
+								thisModule.SetExternalFaultClient(clientInst.getCorrespondingComponent, s.getCorrespondingFailureWithin(clientInst));
 							}
 						}
 					}
@@ -1240,7 +1242,7 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 									first().affectedPorts->isEmpty())
 								{
 									--...create an IM!ExternalFault in client corrisponding im component
-									thisModule.SetExternalFaultAndFGEClient(clientInst.getCorrespondingComponent, s.getCorrispondingFailureMode, p);
+									thisModule.SetExternalFaultAndFGEClient(clientInst.getCorrespondingComponent, s.getCorrespondingFailureWithin(clientInst), p);
 								}
 							}
 						}
@@ -1351,7 +1353,7 @@ rule SetFgeClient(client : IM!Component, t : UML!Transition, p : CHESS!Propagati
 		fge : IM!FaultsGenerateErrors(
 			Component <- client,
 			Weight <- 1,
-			Destination <- t.getTarget().getCorrispondingError,
+			Destination <- t.getTarget().getCorrespondingErrorWithin(client.getSourceInstance),
 			ActivationDelay <- if p.propDelay <> OclUndefined then thisModule.newExponential(1.0/p.propDelay.toReal()) else thisModule.newDeterministic(0) endif,
 			PropagationProbability <- if p.prob <> OclUndefined then p.prob.toReal() else 1 endif
 		)
@@ -1799,12 +1801,6 @@ helper context UML2!Transition def : getInternalFault : CHESS!InternalFault =
 helper context UML2!Transition def : getExternalFault : CHESS!ExternalFault =
 			thisModule.ExternalFaults->select(ift | ift.base_Transition = self)->first();
 
-helper context UML2!State def : getCorrispondingError :  IM!Error =
-			IM!Error.allInstances()->select(e | e.Name = self.name)->first();
-
-helper context UML2!State def : getCorrispondingFailureMode :  IM!FailureMode =
-			IM!FailureMode.allInstances()->select(e | e.Name = self.name)->first();
-
 --Trim whitespaces, remove brackets, remove the equal symbol
 helper context String def: clean : String = self.regexReplaceAll('[={}]', ' ').trim();
 
@@ -1816,9 +1812,21 @@ helper def : States : Set(UML2!State) = Set{};
 helper def : Transitions : Set(UML2!Tansition) = Set{};
 
 --Maps instances in the CHESS model to IDM components
-helper def: InstanceMap: Map(UML2!InstanceSpecification,IM!Component) = Map{};
+helper def: InstanceMap : Map(UML2!InstanceSpecification,IM!Component) = Map{};
 helper context UML2!InstanceSpecification def: getCorrespondingComponent : IM!Component =
 	thisModule.InstanceMap.get(self);
+helper context IM!Component def: getSourceInstance : UML2!InstanceSpecification =
+	thisModule.InstanceMap->getKeys()->select(k | thisModule.InstanceMap->get(k) = self)->first();
+
+--Maps state/instance pairs in the CHESS model to IDM errors
+helper def: ErrorsMap : Map(TupleType(st: UML2!State, i: UML2!InstanceSpecification),IM!Error) = Map{};
+helper context UML2!State def: getCorrespondingErrorWithin(inst : UML2!InstanceSpecification) : IM!Error =
+	thisModule.ErrorsMap->get(Tuple{st=self,i=inst});
+
+--Maps state/instance pairs in the CHESS model to IDM failure modes
+helper def: FailuresMap : Map(TupleType(st: UML2!State, i: UML2!InstanceSpecification),IM!FailureMode) = Map{};
+helper context UML2!State def: getCorrespondingFailureWithin(inst : UML2!InstanceSpecification) : IM!FailureMode =
+	thisModule.FailuresMap->get(Tuple{st=self,i=inst});
 
 helper def : SBAnalysis : CHESS!StateBasedAnalysis = OclUndefined;
 helper def : Resources : UML2!Package = OclUndefined;
