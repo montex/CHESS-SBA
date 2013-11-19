@@ -556,7 +556,7 @@ rule CreateAndAddError(s : UML2!State, c : IM!Component){
 
 	to e : IM!Error(
 		VanishingTime <- if vt <> OclUndefined then thisModule.newExponential(vt.toReal()) else OclUndefined endif,
-		Name <- s.name
+		Name <- c.Name + '_' + s.name
 	)
 
 	do{
@@ -569,7 +569,7 @@ rule CreateAndAddFailureMode(s : UML2!State, c : IM!Component){
 
 	to fm : IM!FailureMode(
 		--Domain, Detectability...?
-		Name <- s.name
+		Name <- c.Name + '_' + s.name
 	)
 
 	do{
@@ -588,7 +588,7 @@ rule CreateAndAddIntFault(t : UML2!Transition, ift : CHESS!InternalFault, c : IM
 			Occurrence <- if oc <> OclUndefined then thisModule.newExponential(oc.toReal()) else OclUndefined endif,
 			PermanentProbability <- ift.permanentProb.toReal(),
 			TransientDuration <- if td <> OclUndefined then thisModule.newExponential(td.toReal()) else OclUndefined endif,
-			Name <- t.name
+			Name <- c.Name + '_' + t.name
 		),
 
 		d: IM!Deterministic(
@@ -635,7 +635,7 @@ rule StatefulHardware2Component(sfh : CHESS!StatefulHardware, inst: UML2!Instanc
 
 		ft : IM!InternalFault(
 			Component <- c,
-			Name <- sfh.getName + '_Fault',
+			Name <- c.Name + '_Fault',
 			Occurrence <- fo,
 			PermanentProbability <- sfh.probPermFault.NFPRealValue,
 			TransientDuration <- td
@@ -645,7 +645,7 @@ rule StatefulHardware2Component(sfh : CHESS!StatefulHardware, inst: UML2!Instanc
 
 		e : IM!Error(
 			Component <- c,
-			Name <- sfh.getName + '_Error'
+			Name <- c.Name + '_Error'
 		),
 
 
@@ -712,7 +712,7 @@ rule StatelessHardware2Component(slh: CHESS!StatelessHardware, inst: UML2!Instan
 
 		ft : IM!InternalFault(
 			Component <- c,
-			Name <- slh.getName + '_Fault',
+			Name <- c.Name + '_Fault',
 			Occurrence <- fo,
 			PermanentProbability <- slh.probPermFault.NFPRealValue,
 			TransientDuration <- td
@@ -722,7 +722,7 @@ rule StatelessHardware2Component(slh: CHESS!StatelessHardware, inst: UML2!Instan
 
 		e : IM!Error(
 			Component <- c,
-			Name <- slh.getName + '_Error'
+			Name <- c.Name + '_Error'
 		),
 
 
@@ -787,7 +787,7 @@ rule StatefulSoftware2Component(sfs : CHESS!StatefulSoftware, inst: UML2!Instanc
 
 		ft : IM!InternalFault(
 			Component <- c,
-			Name <- sfs.getName + '_Fault',
+			Name <- c.Name + '_Fault',
 			Occurrence <- fo,
 			PermanentProbability <- 0, --this is different from StatefulHardware
 			TransientDuration <- td
@@ -797,7 +797,7 @@ rule StatefulSoftware2Component(sfs : CHESS!StatefulSoftware, inst: UML2!Instanc
 
 		e : IM!Error(
 			Component <- c,
-			Name <- sfs.getName + '_Error'
+			Name <- c.Name + '_Error'
 		),
 
 
@@ -866,7 +866,7 @@ rule StatelessSoftware2Component(sls : CHESS!StatelessSoftware, inst: UML2!Insta
 
 		ft : IM!InternalFault(
 			Component <- c,
-			Name <- sls.getName + '_Fault',
+			Name <- c.Name + '_Fault',
 			Occurrence <- fo,
 			PermanentProbability <- 0, --this is different from StatefulHardware
 			TransientDuration <- td
@@ -876,7 +876,7 @@ rule StatelessSoftware2Component(sls : CHESS!StatelessSoftware, inst: UML2!Insta
 
 		e : IM!Error(
 			Component <- c,
-			Name <- sls.getName + '_Error'
+			Name <- c.Name + '_Error'
 		),
 
 
