@@ -1771,11 +1771,6 @@ helper def: TempFenSeq : Sequence(IM!FaultsExpressionNode) = Sequence {};
 helper def: TempScen : Sequence(IM!SchedulingConditionExpressionNode) = Sequence {};
 helper def: TempScenSeq : Sequence(IM!SchedulingConditionExpressionNode) = Sequence {};
 
-helper context UML2!Component def: corrispondingComponent : IM!Component =
-	thisModule.IMSystem.components->select(e| e.Name = self.name)->first();
-helper context UML2!Property def: corrispondingComponent : IM!Component =
-	thisModule.IMSystem.components->select(e| e.Name = self.name)->first();
-
 helper context UML2!InstanceSpecification def: component : UML2!Component =
 	self.classifier->first();
 
