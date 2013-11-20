@@ -1067,28 +1067,38 @@ rule FaultExpr(f: IM!Fault){
 		)
 
 	do{
-		thisModule.TempFen.add(fefn);
+--		thisModule.TempFen.add(fefn);
+		fefn;
 	}
 }
 
-rule CreateFenOrExpr(){
+rule CreateFenOrExpr(e1 : IM!FaultsExpressionNode, e2: IM!FaultsExpressionNode){
 
 	to
 		feon : IM!FaultsExpressionOrNode
-
+		(
+			FaultsExpression1 <- e1,
+			FaultsExpression2 <- e2
+		)
 	do{
-		thisModule.TempFenSeq.add(feon);
+--		thisModule.TempFenSeq.add(feon);
+		feon;
 	}
 
 }
 
-rule CreateFenAndExpr(){
+rule CreateFenAndExpr(e1 : IM!FaultsExpressionNode, e2: IM!FaultsExpressionNode){
 
 	to
 		fean : IM!FaultsExpressionAndNode
+		(
+			FaultsExpression1 <- e1,
+			FaultsExpression2 <- e2
+		)
 
 	do{
-		thisModule.TempFenSeq.add(fean);
+--		thisModule.TempFenSeq.add(fean);
+		fean;
 	}
 
 }
@@ -1388,41 +1398,52 @@ rule SetFgeClient(client : IM!Component, t : UML!Transition, p : CHESS!Propagati
 		}
 
 		--handling propagation logic
-		for (f in fge.Source){
-			thisModule.FaultExpr(f);
+		fge.PropagationLogic <- thisModule.FaultExpr(fge.Source->first());
+		for(f in fge.Source->subSequence(2, fge.Source->size())) {
+			if(propCond = 'AND') {
+				fge.PropagationLogic <- thisModule.CreateFenAndExpr(fge.PropagationLogic,
+																	thisModule.FaultExpr(f));
+			}else{
+				fge.PropagationLogic <- thisModule.CreateFenOrExpr(fge.PropagationLogic,
+																	thisModule.FaultExpr(f));
+			}
 		}
 
-		if (thisModule.TempFen->size() = 1){
-			fge.PropagationLogic <- thisModule.TempFen->first();
-		}else{
-			for(fen in thisModule.TempFen){
-				if (fen <> thisModule.TempFen->last()){
-					if(propCond = 'OR'){
-						thisModule.CreateFenOrExpr();
-					}else if (propCond = 'AND'){
-						thisModule.CreateFenAndExpr();
-					}
-				}
-			}
-			thisModule.TempFen->addAll(thisModule.TempFenSeq);
-
-			for(fen in thisModule.TempFen){
-				if (fen.oclIsTypeOf(IM!FaultsExpressionOrNode)){
-					fen.FaultsExpression1 <- thisModule.TempFen.at(thisModule.Counter);
-					thisModule.Counter <- thisModule.Counter+1;
-					fen.FaultsExpression2 <- thisModule.TempFen.at(thisModule.Counter);
-					thisModule.Counter <- thisModule.Counter+1;
-				}
-				else if (fen.oclIsTypeOf(IM!FaultsExpressionAndNode)){
-					fen.FaultsExpression1 <- thisModule.TempFen.at(thisModule.Counter);
-					thisModule.Counter <- thisModule.Counter+1;
-					fen.FaultsExpression2 <- thisModule.TempFen.at(thisModule.Counter);
-					thisModule.Counter <- thisModule.Counter+1;
-				}
-			}
-
-			fge.PropagationLogic <- thisModule.TempFen->last();
-		}
+--		for (f in fge.Source){
+--			thisModule.FaultExpr(f);
+--		}
+--
+--		if (thisModule.TempFen->size() = 1){
+--			fge.PropagationLogic <- thisModule.TempFen->first();
+--		}else{
+--			for(fen in thisModule.TempFen){
+--				if (fen <> thisModule.TempFen->last()){
+--					if(propCond = 'OR'){
+--						thisModule.CreateFenOrExpr();
+--					}else if (propCond = 'AND'){
+--						thisModule.CreateFenAndExpr();
+--					}
+--				}
+--			}
+--			thisModule.TempFen->addAll(thisModule.TempFenSeq);
+--
+--			for(fen in thisModule.TempFen){
+--				if (fen.oclIsTypeOf(IM!FaultsExpressionOrNode)){
+--					fen.FaultsExpression1 <- thisModule.TempFen.at(thisModule.Counter);
+--					thisModule.Counter <- thisModule.Counter+1;
+--					fen.FaultsExpression2 <- thisModule.TempFen.at(thisModule.Counter);
+--					thisModule.Counter <- thisModule.Counter+1;
+--				}
+--				else if (fen.oclIsTypeOf(IM!FaultsExpressionAndNode)){
+--					fen.FaultsExpression1 <- thisModule.TempFen.at(thisModule.Counter);
+--					thisModule.Counter <- thisModule.Counter+1;
+--					fen.FaultsExpression2 <- thisModule.TempFen.at(thisModule.Counter);
+--					thisModule.Counter <- thisModule.Counter+1;
+--				}
+--			}
+--
+--			fge.PropagationLogic <- thisModule.TempFen->last();
+--		}
 
 		fge.PropagationLogicStringFormat <- fge.PropagationLogic.toString();
 
