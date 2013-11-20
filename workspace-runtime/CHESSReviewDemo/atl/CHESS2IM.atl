@@ -967,95 +967,6 @@ rule Allocation(a : MARTE!Assign, parent : UML2!Component, child : UML2!Componen
 	do{
 
 		thisModule.Propagation(p, parent, child);
-
---		for (fm in parent.corrispondingComponent.FailureModes){
---			thisModule.AssignXft(fm, parent.corrispondingComponent, child.corrispondingComponent);
---		}
---		thisModule.AssignFge(child.corrispondingComponent, a);
---		thisModule.TempXfts.clear();
-	}
-}
-
-rule AssignXft(f : IM!FailureMode, parent: IM!Component, child: IM!Component){
-
-	to
-		xft : IM!ExternalFault (
-			Source <- f,
-			Component <- child,
-			Name <- --child.Name +
-					'_From_' + parent.Name + '_' + f.Name
-		)
-
-	do{
-		child.Faults.add(xft);
-		--store xsft in a variable - remember to clear that variable after AssignFge
-		thisModule.TempXfts.add(xft);
-	}
-}
-
-rule AssignFge(child: IM!Component, a: MARTE!Assign){
-
-	using{
-		comm : CHESS!Propgation = thisModule.PropComm->select(e | a.base_Comment = e.base_Comment)->first();
-	}
-
-	to
-
-		d : IM!Deterministic(
-			Value <- 0
-		),
-
-		fge : IM!FaultsGenerateErrors(
-			--Source <- handled in the do block
-			--PropagationLogic <- handled in the do block
-			Destination <- child.Errors->first()
-		)
-
-	do{
-		thisModule.setFGEName(fge);
-
-		fge.Source.addAll(thisModule.TempXfts);
-		--handling propagation logic
-		for (f in fge.Source){
-			thisModule.FaultExpr(f);
-		}
-		if (thisModule.TempFen->size() = 1){
-			fge.PropagationLogic <- thisModule.TempFen->first();
-		}else{
-			for(fen in thisModule.TempFen){
-				if (fen <> thisModule.TempFen->last()){
-					thisModule.CreateFenOrExpr();
-				}
-			}
-			thisModule.TempFen->addAll(thisModule.TempFenSeq);
-
-			for(fen in thisModule.TempFen){
-				if (fen.oclIsTypeOf(IM!FaultsExpressionOrNode)){
-					fen.FaultsExpression1 <- thisModule.TempFen.at(thisModule.Counter);
-					thisModule.Counter <- thisModule.Counter+1;
-					fen.FaultsExpression2 <- thisModule.TempFen.at(thisModule.Counter);
-					thisModule.Counter <- thisModule.Counter+1;
-				}
-			}
-			fge.PropagationLogic <- thisModule.TempFen->last();
-
-		}
-		fge.PropagationLogicStringFormat <- fge.PropagationLogic.toString();
-		thisModule.setFGEBackLinks(fge.PropagationLogic, fge);
-		thisModule.TempFen.clear();
-		thisModule.TempFenSeq.clear();
-		thisModule.Counter <- 1;
-
-		--handling stereotype Propagation
-		if (thisModule.PropComm->exists(e | a.base_Comment = e.base_Comment)){
-			d.Value <- comm.propDelay.NFPRealValue;
-			fge.PropagationProbability <- comm.prob.NFPRealValue;
-		} else{
-			fge.PropagationProbability <- 1;
-		}
-		fge.ActivationDelay <- d;
-
-		child.FaultsGeneratesErrors.add(fge);
 	}
 }
 
@@ -1067,7 +978,6 @@ rule FaultExpr(f: IM!Fault){
 		)
 
 	do{
---		thisModule.TempFen.add(fefn);
 		fefn;
 	}
 }
@@ -1081,7 +991,6 @@ rule CreateFenOrExpr(e1 : IM!FaultsExpressionNode, e2: IM!FaultsExpressionNode){
 			FaultsExpression2 <- e2
 		)
 	do{
---		thisModule.TempFenSeq.add(feon);
 		feon;
 	}
 
@@ -1097,7 +1006,6 @@ rule CreateFenAndExpr(e1 : IM!FaultsExpressionNode, e2: IM!FaultsExpressionNode)
 		)
 
 	do{
---		thisModule.TempFenSeq.add(fean);
 		fean;
 	}
 
