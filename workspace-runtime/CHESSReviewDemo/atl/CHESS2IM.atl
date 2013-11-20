@@ -1156,6 +1156,14 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 	using{
 		serverDepComp : CHESS!DependableComponent = thisModule.DepComponent->select(s | s.base_Component = server)->first();
 		clientDepComp : CHESS!DependableComponent = thisModule.DepComponent->select(s | s.base_Component = client)->first();
+
+		--The following variables are used for recursive calls if one of the two components is a composed component
+		newServer : UML2!Component = OclUndefined;
+		newClient : UML2!Component = OclUndefined;
+		newServerPort : UML2!Port = OclUndefined;
+		newClientPort : UML2!Port = OclUndefined;
+		newServerInst : UML2!InstanceSpecification = OclUndefined;
+		newClientInst : UML2!InstanceSpecification = OclUndefined;
 	}
 
 	do{
@@ -1254,37 +1262,53 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 		}
 		else{
 			--composed component
-			--one of client-server could not have a corrisponding component cause it's a composed component
+			--one (org both) of client-server could not have a corrisponding component cause it's a composed component
 			--the connected port is delegated to a child port
 			--call propagation with the correct ports and components
 
-			--case A: server is composed
+			--if server is composed
 			if(serverInst.getCorrespondingComponent = OclUndefined){
 				for (c in server.getOwnedConnectors()){
 					if(c.getEnds()->first().getRole() = serverport){
-						serverInst <- serverInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->last().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
-						thisModule.Propagation(p, c.getEnds()->last().getPartWithPort().getType(), client, c.getEnds()->last().getRole(), clientport, serverInst, clientInst);
+						newServer <- c.getEnds()->last().getPartWithPort().getType();
+						newServerPort <- c.getEnds()->last().getRole();
+						newServerInst <- serverInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->last().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
+						newClient <- client;
+						newClientPort <- clientport;
+						newClientInst <- clientInst;
 					}
 					if(c.getEnds()->last().getRole() = serverport){
-						serverInst <- serverInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->first().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
-						thisModule.Propagation(p, c.getEnds()->first().getPartWithPort().getType(), client, c.getEnds()->first().getRole(), clientport, c.getEnds()->first().getPartWithPort(), clientInst);
+						newServer <- c.getEnds()->first().getPartWithPort().getType();
+						newServerPort <- c.getEnds()->first().getRole();
+						newServerInst <- serverInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->first().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
+						newClient <- client;
+						newClientPort <- clientport;
+						newClientInst <- clientInst;
 					}
 				}
 			}
-
-			--case B: client is composed
+			--if client is composed
 			if (clientInst.getCorrespondingComponent = OclUndefined){
 				for (c in client.getOwnedConnectors()){
 					if(c.getEnds()->first().getRole() = clientport){
-						clientInst <- clientInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->last().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
-						thisModule.Propagation(p, server, c.getEnds()->last().getPartWithPort().getType(), server, c.getEnds()->last().getRole(), serverInst, clientInst);
+						newServer <- server;
+						newServerPort <- serverport;
+						newServerInst <- serverInst;
+						newClient <- c.getEnds()->last().getPartWithPort().getType();
+						newClientPort <- c.getEnds()->last().getRole();
+						newClientInst <- clientInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->last().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
 					}
 					if(c.getEnds()->last().getRole() = clientport){
-						clientInst <- clientInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->first().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
-						thisModule.Propagation(p, server, c.getEnds()->first().getPartWithPort().getType(), server, c.getEnds()->first().getRole(), serverInst, clientInst);
+						newServer <- server;
+						newServerPort <- serverport;
+						newServerInst <- serverInst;
+						newClient <- c.getEnds()->first().getPartWithPort().getType();
+						newClientPort <- c.getEnds()->first().getRole();
+						newClientInst <- clientInst.slot->collect(sl | sl.value->select(i | i.instance.classifier->includes(c.getEnds()->first().getPartWithPort().getType())))->flatten()->collect(o | o.instance)->first();
 					}
 				}
 			}
+			thisModule.Propagation(p,newServer,newClient,newServerPort,newClientPort,newServerInst,newClientInst);
 		}
 	}
 }
