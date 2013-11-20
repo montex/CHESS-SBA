@@ -1307,7 +1307,7 @@ rule SetExternalFaultAndFGEClient(client : IM!Component, fm : IM!FailureMode, p 
 			Source <- xft,
 			Weight <- 1,
 			Destination <- client.Errors->first(),
-			ActivationDelay <- if p.propDelay <> OclUndefined then thisModule.newExponential(1.0/p.propDelay.toReal()) else thisModule.newDeterministic(0) endif,
+			ActivationDelay <- if p.propDelay.IsValidRate then thisModule.newExponential(1.0/p.propDelay.toReal()) else thisModule.newDeterministic(0) endif,
 			PropagationProbability <- if p.prob <> OclUndefined then p.prob.toReal() else 1 endif,
 			PropagationLogic <- fen,
 			PropagationLogicStringFormat <- fen.toString()
@@ -1349,7 +1349,7 @@ rule SetFgeClient(client : IM!Component, t : UML!Transition, p : CHESS!Propagati
 			Component <- client,
 			Weight <- 1,
 			Destination <- t.getTarget().getCorrespondingErrorWithin(client.getSourceInstance),
-			ActivationDelay <- if p.propDelay <> OclUndefined then thisModule.newExponential(1.0/p.propDelay.toReal()) else thisModule.newDeterministic(0) endif,
+			ActivationDelay <- if p.propDelay.IsValidRate then thisModule.newExponential(1.0/p.propDelay.toReal()) else thisModule.newDeterministic(0) endif,
 			PropagationProbability <- if p.prob <> OclUndefined then p.prob.toReal() else 1 endif
 		)
 
@@ -1786,6 +1786,13 @@ helper context String def: NFPFrequencyValue : Real = self.toReal();
 helper context String def: NFPDurationValue : Real = self.toReal();
 
 helper context String def: NFPDurationInvertedValue : Real = 1/self.toReal();
+
+helper context String def: IsValidRate : Boolean =
+	if(self <> OclUndefined) then
+		self.toReal() > 0
+	else
+		false
+	endif;
 
 --other helpers
 helper def: TempXfts : Sequence (IM!ExternalFault) = Sequence {};
