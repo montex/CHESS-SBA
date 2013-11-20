@@ -429,6 +429,7 @@ rule NoIntFaultComponent(dc: CHESS!DependableComponent, inst: UML2!InsanceSpecif
 
 	do{
 		thisModule.setFailureMode(c, 0.0, e);
+		thisModule.InstanceMap <- thisModule.InstanceMap.including(inst, c);
 	}
 }
 
