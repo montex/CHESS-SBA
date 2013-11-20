@@ -1238,7 +1238,7 @@ rule Propagation (p : CHESS!Propagation, server : UML2!Component, client : UML2!
 									first().affectedPorts->isEmpty())
 								{
 									--...create an IM!ExternalFault in client corrisponding im component
-									thisModule.SetExternalFaultAndFGEClient(clientInst.getCorrespondingComponent, s.getCorrespondingFailureWithin(clientInst), p);
+									thisModule.SetExternalFaultAndFGEClient(clientInst.getCorrespondingComponent, s.getCorrespondingFailureWithin(serverInst), p);
 								}
 							}
 						}
