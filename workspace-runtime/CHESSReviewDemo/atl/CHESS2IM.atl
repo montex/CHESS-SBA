@@ -958,17 +958,39 @@ rule setFailureMode(c : IM!Component, elRate : Real, e : IM!Error){
 
 
 
-rule Allocation(a : MARTE!Assign, parent : UML2!Component, child : UML2!Component){
+rule Allocation_Phase1(a : MARTE!Assign, parent : UML2!Component, child : UML2!Component){
 
 	using{
 		p : CHESS!Propagation = thisModule.PropComm->select(c | a.base_Comment = c.base_Comment)->first();
 	}
 
 	do{
-
-		thisModule.Propagation(p, parent, child);
+		for(sw in a.from) {
+			for(hw in a.to) {
+				thisModule.Propagation_Phase1(p, parent, child, OclUndefined, OclUndefined, hw, sw);
+				sw.debug();
+				hw.debug();
+			}
+		}
 	}
 }
+rule Allocation_Phase2(a : MARTE!Assign, parent : UML2!Component, child : UML2!Component){
+
+	using{
+		p : CHESS!Propagation = thisModule.PropComm->select(c | a.base_Comment = c.base_Comment)->first();
+	}
+
+	do{
+		for(sw in a.from) {
+			for(hw in a.to) {
+				thisModule.Propagation_Phase2(p, parent, child, OclUndefined, OclUndefined, hw, sw);
+				sw.debug();
+				hw.debug();
+			}
+		}
+	}
+}
+
 
 rule FaultExpr(f: IM!Fault){
 
@@ -1767,20 +1789,28 @@ endpoint rule EndRule() {
 			}
 		}
 
-
+		--PHASE 1: External Faults
 		--fault propagation due to Assign (hw -> sw)
 		for (a in MARTE!Assign.allInstances()){
 			if (thisModule.Comments->exists(e | e = a.base_Comment)){
-				for (f in a.from){
-					thisModule.Allocation(a, a.to->first().classifier->first(), f.classifier->first());
-				}
+--				for (f in a.from){
+					thisModule.Allocation_Phase1(a, a.to->first().classifier->first(), a.from->first().classifier->first());
+--				}
 			}
 		}
-
 		--fault propagation due to connectors (hw -> hw or sw -> sw)
 		for (p in CHESS!Propagation.allInstances()->select(p | p.base_InstanceSpecification <> OclUndefined)){
 			if (thisModule.Connectors->exists(e | e = p.base_InstanceSpecification)){
 				thisModule.Connectors_Phase1(p, p.base_InstanceSpecification.slot->first(), p.base_InstanceSpecification.slot->last());
+			}
+		}
+
+		--PHASE 2: FGE Relations
+		for (a in MARTE!Assign.allInstances()){
+			if (thisModule.Comments->exists(e | e = a.base_Comment)){
+--				for (f in a.from){
+					thisModule.Allocation_Phase2(a, a.to->first().classifier->first(), a.from->first().classifier->first());
+--				}
 			}
 		}
 		for (p in CHESS!Propagation.allInstances()->select(p | p.base_InstanceSpecification <> OclUndefined)){
