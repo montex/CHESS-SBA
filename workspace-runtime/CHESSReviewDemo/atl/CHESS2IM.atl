@@ -1779,11 +1779,17 @@ endpoint rule EndRule() {
 			thisModule.RepairActivity(r);
 		}
 --		--Other RepairActivity elements
---		for (rep in IM!RepairActivity.allInstances().asSet() - thisModule.RepairActivities) {
+		for (rep in IM!RepairActivity.allInstances().asSet() - thisModule.RepairActivities) {
 --			for ( t in CHESS!Repair.allInstances()->select( act | act.base_Activity.name = rep.Name )->first().targets ) {
---				rep.Target <- rep.Target->including(t.getCorrespondingComponent);
---			}
---		}
+----				rep.Target <- rep.Target->including(t.getCorrespondingComponent);
+
+			rep.Target <-
+				let t : CHESS!Repair = CHESS!Repair.allInstances()->select( act | act.base_Activity.name.debug() = rep.Name.debug() )->first().targets.debug() in
+--				IM!Component.allInstances()->select(c | t.debug().includes(c.getSourceInstance.classifier.debug())).debug();
+				IM!Component.allInstances()->select(c | t->collect(targ | targ.type)->includes(c.getSourceInstance.classifier->first()));
+
+			rep.Target.debug();
+		}
 
 		--PHASE 1: External Faults
 		--fault propagation due to Assign (hw -> sw)
