@@ -81,9 +81,9 @@ rule Activities () {
 
 	do {
 		for(a in CHESS!Repair.allInstances()) {
-			if(not a.targets.excludesAll(thisModule.Components->collect(p | p.component))) {
-				thisModule.RepairActivityGeneric(a);
-			}
+--			if(not a.targets.excludesAll(thisModule.Components->collect(p | p.component))) {
+--				thisModule.RepairActivityGeneric(a);
+--			}
 		}
 	}
 
@@ -968,8 +968,6 @@ rule Allocation_Phase1(a : MARTE!Assign, parent : UML2!Component, child : UML2!C
 		for(sw in a.from) {
 			for(hw in a.to) {
 				thisModule.Propagation_Phase1(p, parent, child, OclUndefined, OclUndefined, hw, sw);
-				sw.debug();
-				hw.debug();
 			}
 		}
 	}
@@ -984,8 +982,6 @@ rule Allocation_Phase2(a : MARTE!Assign, parent : UML2!Component, child : UML2!C
 		for(sw in a.from) {
 			for(hw in a.to) {
 				thisModule.Propagation_Phase2(p, parent, child, OclUndefined, OclUndefined, hw, sw);
-				sw.debug();
-				hw.debug();
 			}
 		}
 	}
@@ -1184,7 +1180,7 @@ rule Propagation_Phase1 (p : CHESS!Propagation, server : UML2!Component, client 
 								first().affectedPorts->isEmpty())
 							{
 								--...create an IM!ExternalFault in client corrisponding im component
-								thisModule.SetExternalFaultClient(clientInst.getCorrespondingComponent, s.getCorrespondingFailureWithin(clientInst));
+								thisModule.SetExternalFaultClient(clientInst.getCorrespondingComponent, s.getCorrespondingFailureWithin(serverInst));
 							}
 						}
 					}
@@ -1333,7 +1329,7 @@ rule Propagation_Phase2 (p : CHESS!Propagation, server : UML2!Component, client 
 								thisModule.ExternalFaults->select(e | e.base_Transition = t)->
 							    first().fromPort->isEmpty())
 							{
---								if(thisModule.FGEMap.debug()->get(Tuple{tr=t,inst=clientInst}.debug()).debug() = OclUndefined) {
+--								if(thisModule.FGEMap->get(Tuple{tr=t,inst=clientInst}) = OclUndefined) {
 								if(t.getFGEWithin(clientInst) = OclUndefined) {
 									--...create an IM!FaultsGenerateErrors in client corrisponding im component
 									thisModule.SetFgeClient(clientInst.getCorrespondingComponent, t, p);
@@ -1782,12 +1778,12 @@ endpoint rule EndRule() {
 		for (r in thisModule.RepairActivities){
 			thisModule.RepairActivity(r);
 		}
-		--Other RepairActivity elements
-		for (rep in IM!RepairActivity.allInstances().asSet() - thisModule.RepairActivities) {
-			for ( t in CHESS!Repair.allInstances()->select( act | act.base_Activity.name = rep.Name )->first().targets ) {
-				rep.Target <- rep.Target->including(t.getType().corrispondingComponent);
-			}
-		}
+--		--Other RepairActivity elements
+--		for (rep in IM!RepairActivity.allInstances().asSet() - thisModule.RepairActivities) {
+--			for ( t in CHESS!Repair.allInstances()->select( act | act.base_Activity.name = rep.Name )->first().targets ) {
+--				rep.Target <- rep.Target->including(t.getCorrespondingComponent);
+--			}
+--		}
 
 		--PHASE 1: External Faults
 		--fault propagation due to Assign (hw -> sw)
