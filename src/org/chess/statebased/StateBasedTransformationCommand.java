@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.m2m.atl.core.ATLCoreException;
@@ -49,7 +48,6 @@ import org.eclipse.m2m.atl.core.service.CoreService;
 import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
-import org.eclipse.papyrus.uml.diagram.clazz.edit.parts.ModelEditPart;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.uml2.uml.Component;
@@ -423,7 +421,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 //	protected void CallBuildInstances(final PapyrusMultiDiagramEditor editor) {
 //
 //		try {
-//			//retrieve the diagrams for which the instance have to be rebuilded
+//			//retrieve the diagrams for which the instance have to be rebuildt
 //			Resource notation = ResourceUtils.getNotationResource(editor.getServicesRegistry());
 //			
 //			EList <EObject> tmp = notation.getContents();
