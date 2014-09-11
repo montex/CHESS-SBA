@@ -29,8 +29,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.papyrus.infra.gmfdiag.common,
  org.polarsys.chess.chessmlprofile;bundle-version="1.0.0",
  org.polarsys.chess.core;bundle-version="0.9.2",
- org.polarsys.chess.editor;bundle-version="0.9.2",
- org.polarsys.chess.commands;bundle-version="0.9.2"
+ org.polarsys.chess.commands;bundle-version="0.9.2",
+ org.polarsys.chess.service
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.chess.statebased

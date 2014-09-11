@@ -1,12 +1,14 @@
 package org.chess.statebased;
 
-import org.polarsys.chess.editor.CHESSEditor;
-import org.polarsys.chess.core.profiles.CHESSProfileManager;
+import org.polarsys.chess.core.views.DiagramStatus;
+import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
+import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.ui.AbstractSourceProvider;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISources;
@@ -19,7 +21,7 @@ public class StateBasedSourceProvider extends AbstractSourceProvider {
 	private static final String ENABLED = "enabled";
 	private final static String DISABLED = "disabled";
 	boolean enabled;
-
+	
 	@Override
 	public void dispose() {
 	}
@@ -27,10 +29,10 @@ public class StateBasedSourceProvider extends AbstractSourceProvider {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Map getCurrentState() {	
-		Map currentState = new HashMap(2);
-		String currentSt = enabled ? ENABLED : DISABLED;
-		currentState.put(ANALYSIS, currentSt);
-		return currentState;
+		Map currentStateMap = new HashMap(2);
+		String currentState = enabled ? ENABLED : DISABLED;
+		currentStateMap.put(ANALYSIS, currentState);
+		return currentStateMap;
 	}
 
 	@Override
@@ -47,19 +49,17 @@ public class StateBasedSourceProvider extends AbstractSourceProvider {
 	}
 	
 	public void updateStatus(IEditorPart activeEditor) {
-
 		try {
-			if (activeEditor instanceof CHESSEditor) {
-
-				DesignView currentView = ((CHESSEditor) activeEditor).getDiagramStatus().getCurrentView();
-
-				if (currentView.getName().equals(CHESSProfileManager.DEPENDABILITY_ANALYSIS_VIEW)) {
-					setEnabled(true);
-				} else {
-					setEnabled(false);
+			if (CHESSEditorUtils.isCHESSProject(activeEditor)) {
+				DiagramStatus ds = CHESSEditorUtils.getDiagramStatus((PapyrusMultiDiagramEditor) activeEditor);
+				if (ds != null) {
+					DesignView currentView = ds.getCurrentView();
+					if (currentView != null && ViewUtils.isDependabilityAnalysisView(currentView)){
+						setEnabled(true);
+					}		
+					else 
+						setEnabled(false);
 				}
-			} else {
-				setEnabled(false);
 			}
 			refreshElements();
 		} catch (Exception e) {

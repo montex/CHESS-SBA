@@ -13,12 +13,9 @@ import java.net.URL;
 import java.util.Collections;
 
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
-import org.polarsys.chess.chessmlprofile.Core.CHESS;
-import org.polarsys.chess.editor.CHESSEditor;
-import org.polarsys.chess.editor.utils.CHESSEditorUtils;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
-import org.polarsys.chess.commands.BuildInstanceCommand;
+import org.polarsys.chess.service.utils.CHESSEditorUtils;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -30,14 +27,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
-import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.m2m.atl.core.ATLCoreException;
@@ -52,13 +47,12 @@ import org.eclipse.m2m.atl.core.emf.EMFModelFactory;
 import org.eclipse.m2m.atl.core.launch.ILauncher;
 import org.eclipse.m2m.atl.core.service.CoreService;
 import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher;
+import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.uml.diagram.clazz.edit.parts.ModelEditPart;
-import org.eclipse.papyrus.uml.diagram.composite.edit.parts.CompositeStructureDiagramEditPart;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageableElement;
@@ -66,7 +60,7 @@ import org.eclipse.uml2.uml.Stereotype;
 
 public class StateBasedTransformationCommand extends AbstractHandler {
 	
-	private static final String RESURCEPLATFORM = "CHESS::Core::CHGaResourcePlatform";
+//	private static final String RESURCEPLATFORM = "CHESS::Core::CHGaResourcePlatform";
 
 	private static final String PLUGIN_PATH = "platform:/plugin/org.chess.statebased";
 	
@@ -113,7 +107,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		
-		final CHESSEditor editor = CHESSEditorUtils.getCHESSEditor();
+		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
 		final ParameterList params = DEEMClient.getParameters();
 
 		Shell shell = new Shell();
@@ -123,7 +117,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			pmDialog.run(true, true, new IRunnableWithProgress(){
 				@Override
 				public void run(IProgressMonitor monitor) {		
-					int largeStep = params.getMaximumBatches();
+					//int largeStep = params.getMaximumBatches();
 					int smallStep = params.getMinimumBatches();
 					int numSubTasks = 3*smallStep/10 + smallStep;
 					
@@ -166,7 +160,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 	}
 
 
-	private static IFile RunTransformations(CHESSEditor editor, IProgressMonitor monitor ){
+	private static IFile RunTransformations(PapyrusMultiDiagramEditor editor, IProgressMonitor monitor ){
 		
 		try {
 			
@@ -369,7 +363,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 		return res;
 	}
 	
-	private void backPropagation(String analysis, CHESSEditor editor) {
+	private void backPropagation(String analysis, PapyrusMultiDiagramEditor editor) {
 		
 		try {
 			String name = null;
@@ -406,12 +400,9 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			}
 			
 			final String finalValue = value;
-			IDiagramGraphicalViewer diagramGraphicalViewer = CHESSEditorUtils.getDiagramGraphicalViewer();
-			Object temp = diagramGraphicalViewer.getRootEditPart().getChildren().get(0);
-			ModelEditPart mep = (ModelEditPart) temp;
 			final Component com = comp;
 			final Stereotype stereotype = comp.getAppliedStereotype(STATEBASED_ANALYSIS);
-			TransactionalEditingDomain editingDomain = mep.getEditingDomain();
+			TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) editor.getEditingDomain();
 			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 				
 				protected void doExecute() {
@@ -427,40 +418,41 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
 		} 
 	}
-	
-	protected void CallBuildInstances(final CHESSEditor editor) {
 
-		try {
-			//retrieve the diagrams for which the instance have to be rebuilded
-			Resource notation = ResourceUtils.getNotationResource(editor.getServicesRegistry());
-			
-			EList <EObject> tmp = notation.getContents();
-			for (int i = 0; i < tmp.size(); i++){
-				Diagram di = (Diagram) tmp.get(i);
-				if(di.getType().equals("CompositeStructure")){
-					Element e = (Element)di.getElement();
-					if(e.getAppliedStereotype(RESURCEPLATFORM) != null){
-						
-						final CompositeStructureDiagramEditPart csd_ep = (CompositeStructureDiagramEditPart) di;
-						TransactionalEditingDomain editingDomain = csd_ep.getEditingDomain();
-						editingDomain.getCommandStack().execute(
-								new RecordingCommand(editingDomain) {
-									protected void doExecute() {
-										if (BuildInstanceCommand.buildPrototypeInstanceRestoringAssigns(editor, csd_ep, new StringBuffer()) != null){
-											editor.getDiagramStatus().setUserAction(false);
-										}
-									}
-								});
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-		}
-		
-	}
-	
+	//FIXME: not aligned to Luna release (cause: unused)
+//	protected void CallBuildInstances(final PapyrusMultiDiagramEditor editor) {
+//
+//		try {
+//			//retrieve the diagrams for which the instance have to be rebuilded
+//			Resource notation = ResourceUtils.getNotationResource(editor.getServicesRegistry());
+//			
+//			EList <EObject> tmp = notation.getContents();
+//			for (int i = 0; i < tmp.size(); i++){
+//				Diagram di = (Diagram) tmp.get(i);
+//				if(di.getType().equals("CompositeStructure")){
+//					Element e = (Element)di.getElement();
+//					if(e.getAppliedStereotype(RESURCEPLATFORM) != null){
+//						
+//						final CompositeStructureDiagramEditPart csd_ep = (CompositeStructureDiagramEditPart) di;
+//						TransactionalEditingDomain editingDomain = csd_ep.getEditingDomain();
+//						editingDomain.getCommandStack().execute(
+//								new RecordingCommand(editingDomain) {
+//									protected void doExecute() {
+//										if (BuildInstanceCommand.buildPrototypeInstanceRestoringAssigns(editor, csd_ep, new StringBuffer()) != null){
+//											editor.getDiagramStatus().setUserAction(false);
+//										}
+//									}
+//								});
+//					}
+//				}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+//		}
+//		
+//	}
+
 
 	private static String changeSuffix(String str, String oldsfx, String newsfx){
 		
