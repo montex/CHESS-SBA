@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<permissions>
+      <view name="ComponentView">
+            <diagram name="*">
+            	  <perm el="Model" owner="true" write="true" visible="true"/> 
+            	  <perm el="Package" owner="true" write="true" visible="true"/>      
+            	  
+                  <perm el="StateMachine" owner="true" write="true" visible="true"/>
+                  
+                  <perm el="Interaction" owner="true" write="true" visible="true"/>
+                  
+                  <perm el="Parameter" owner="true" write="true" visible="true"/>
+                  <perm el="Operation" owner="true" write="true" visible="true"/>
+                  <perm el="Property" owner="true" write="true" visible="true"/>
+                  
+                  <perm el="Constraint" owner="true" write="true" visible="true"/>
+                  <perm el="IntervalConstraint" owner="true" write="true" visible="true"/>
+                  <perm el="Interval" owner="true" write="true" visible="true"/>
+                  <perm el="OpaqueExpression" owner="true" write="true" visible="true"/>
+                  
+                  <!--      To delete activity BEGIN     -->
+                  <perm el="Region" owner="true" write="true" visible="true"/>
+                  <perm el="InitialNode" owner="true" write="true" visible="true"/>
+                  <perm el="ActivityFinalNode" owner="true" write="true" visible="true"/>
+                  <perm el="ControlFlow" owner="true" write="true" visible="true"/>
+                  <perm el="CallOperationAction" owner="true" write="true" visible="true"/>
+                  <perm el="InputPin" owner="true" write="true" visible="true"/>
+                  <perm el="Activity" owner="true" write="true" visible="true"/>
+                  <perm ft="classifierBehavior" owner="true" write="true" visible="true"/>
+                  <perm el="InputPin" owner="true" write="true" visible="true"/>
+                  <perm el="CallOperationAction" owner="true" write="true" visible="true"/>
+                  <perm st="StateBasedAnalysis" owner="true" write="true" visible="true"/>
+                  <!--      To delete activity END     -->
+                  
+                  <!--      To delete component implementations BEGIN     -->
+                  <perm st="ClientServerPort" owner="true" visible="true"/>
+                  <perm el="Port" owner="true" visible="true"/>
+                  <perm el="Component" owner="true" write="true" visible="true"/>
+                  <perm el="Realization" owner="true" visible="true"/>
+                  <perm st="ComponentImplementation" owner="true" write="true" visible="true"/>
+                  <perm st="StatefulSoftware" owner="true" visible="true"/>
+                  <perm el="Connector" owner="true" visible="true"/>
+                  <!--      To delete component implementations END     -->  
+                  
+                  <!--      To delete component types BEGIN     -->
+                  <perm st="ComponentType" owner="true" visible="true"/>
+                  <perm el="InterfaceRealization" owner="true" visible="true"/>
+                  <perm el="Dependency" owner="true" visible="true"/>
+                  <!--      To delete component types END     -->
+                  
+                  
+                  <perm ft="packagedElement" owner="true" write="true" visible="true"/>
+                  <perm ft="ownedComment" owner="true" write="true" visible="true"/>
+                  <perm ft="ownedAttribute" owner="true" write="true" visible="true"/>
+                  <perm ft="ownedBehavior" owner="true" write="true" visible="true"/>
+                  <perm ft="ownedOperation" owner="true" write="true" visible="true"/>
+                  <perm ft="ownedParameter" owner="true" write="true" visible="true"/>
+                  <perm ft="clientDependecy" owner="true" write="true" visible="true"/>
+                  <perm ft="interfaceRealization" owner="true" write="true" visible="true"/>
+                  
+                  <perm el="Comment" owner="true" write="true" visible="true"/>
+                  
+                  <perm el="InstanceValue" owner="true" write="true" visible="true"/>
+                  
+                  <!--in case of deletion of elements-->
+                  <perm el="InstanceSpecification" owner="true" visible="true"/>
+                  <perm st="InstanceSpecification" owner="true" visible="true"/>
+                  <perm el="Slot" owner="true" write="true" visible="true"/>
+                  <perm st="Slot" owner="true" write="true" visible="true"/>
+                  <perm st="CHRtSpecification" owner="true" visible="true"/>
+                  <perm st="IdentifInstance" owner="true" write="true" visible="true"/>
+                  <perm st="IdentifSlot" owner="true" write="true" visible="true"/>
+                  <perm st="MultiInstance" owner="true" write="true" visible="true"/>
+                  <perm st="MultiSlot" owner="true" write="true" visible="true"/>
+                  <perm st="CHRtPortSlot" owner="true" write="true" visible="true"/>
+                  <perm st="Documentation" owner="true" write="true" visible="true"/>
+                 
+                  <perm el="LiteralInteger" owner="true" write="true" visible="true"/>
+                  <perm el="LiteralString" owner="true" write="true" visible="true"/>
+                  <perm el="LiteralUnlimitedNatural" owner="true" write="true" visible="true"/>
+                  <perm el="PrimitiveType" owner="true" write="true" visible="true"/>
+                  
+                  <perm st="TupleType" owner="true" write="true" visible="true"/>
+                  <perm st="CollectionType" owner="true" write="true" visible="true"/>
+                  <perm st="IntervalType" owner="true" write="true" visible="true"/>
+                  <perm st="ChoiceType" owner="true" write="true" visible="true"/>
+                  <perm st="BoundedSubtype" owner="true" write="true" visible="true"/>
+                  
+                  <perm st="CHGaResourcePlatform" owner="true" write="true" visible="true"/>
+                  <perm el="Abstraction" owner="true" write="true" visible="true"/>
+                  <perm st="Allocate" owner="true" write="true" visible="true"/>
+                  
+                  <!-- Deletion -->
+                  <perm el="OutputPin" owner="true" write="true" visible="true"/>
+                  <perm st="FlowPort" owner="true" write="true" visible="true"/>
+                  <perm st="Propagation" owner="true" visible="true"/>
+                  <perm el="ConnectorEnd" owner="true" visible="true"/>
+                  
+                  <!-- Forever -->
+                  <perm st="Contract" owner="true" write="true" visible="true"/>
+                  <perm st="FormalProperty" owner="true" write="true" visible="true"/>
+                  <perm st="ConstraintBlock" owner="true" write="true" visible="true"/>
+                  <perm st="ContractProperty" owner="true" write="true" visible="true"/>
+                  <perm st="System" owner="true" write="true" visible="true"/>
+                  <perm st="SRAComponent" owner="true" write="true" visible="true"/>
+                  <perm el="Association" owner="true" write="true" visible="true"/>
+                  <perm st="ContractRefinement" owner="true" write="true" visible="true"/>
+                                    
+                 <!--DEBUG perm el="Lifeline" owner="true" write="true" visible="true"/-->
+            </diagram>
+            <diagram name="Composite">
+            	 <perm el="Component" owner="true" write="true" visible="true"/>
+                 <perm st="ClientServerPort" owner="true" write="true" visible="true"/>
+                 <perm el="Port" owner="true" write="true" visible="true"/>
+                 <perm st="FlowPort" owner="true" write="true" visible="true"/>
+                 <perm el="Property" owner="true" write="true" visible="true"/>
+                 <perm el="Connector" owner="true" write="true" visible="true"/>
+                 <perm el="ConnectorEnd" owner="true" write="true" visible="true"/>
+                 <perm el="NestedConnectorEnd" owner="true" write="true" visible="true"/>
+                 
+                 
+                 <perm el="StateMachine" owner="true" write="true" visible="true"/>
+                 <perm el="Region" owner="true" write="true" visible="true"/>
+                 <perm el="Activity" owner="true" write="true" visible="true"/>
+                 
+                 <perm st="ComponentImplementation" owner="true" write="true" visible="true"/>
+                 <perm st="ComponentType" owner="true" write="true" visible="true"/>
+                 
+                 <!--for deletion-->
+                 <perm st="NestedConnectorEnd" owner="true" write="true" visible="true"/>
+                 <perm st="CHRtPortSlot" owner="true" write="true" visible="true"/>
+                 <perm el="InterfaceRealization" owner="true" write="true" visible="true"/>
+                 <perm el="Realization" owner="true" write="true" visible="true"/>
+                 <perm el="Dependency" owner="true" write="true" visible="true"/>
+                 
+                 <!--forever-->
+                 <perm el="Class" owner="true" write="true" visible="true"/>
+                 <perm st="DelegationConstraint" owner="true" write="true" visible="true"/>
+                 
+                 
+            </diagram>
+            <diagram name="Class">
+                <perm el="Generalization" owner="true" write="true" visible="true"/>
+                <perm el="ControlFlow" owner="true" write="true" visible="true"/>
+            	<perm el="Class" owner="true" write="true" visible="true"/>
+                <perm el="Package" owner="true" write="true" visible="true"/>
+                <perm el="Component" owner="true" write="true" visible="true"/>
+                <perm st="ComponentType" owner="true" write="true" visible="true"/>
+                <perm st="ComponentImplementation" owner="true" write="true" visible="true"/>
+                <perm el="Realization" owner="true" write="true" visible="true"/>
+                <perm el="Operation" owner="true" write="true" visible="true"/>
+                <perm el="Interface" owner="true" write="true" visible="true"/>
+                
+                <perm el="InterfaceRealization" owner="true" write="true" visible="true"/>
+                <perm el="DataType" owner="true" write="true" visible="true"/>
+                <perm el="Enumeration" owner="true" write="true" visible="true"/>
+                <perm el="EnumerationLiteral" owner="true" write="true" visible="true"/>
+                <perm el="Dependency" owner="true" write="true" visible="true"/>
+                <perm el="Interaction" owner="true" write="true" visible="true"/>
+                <perm el="StateMachine" owner="true" write="true" visible="true"/>
+                <perm el="Region" owner="true" write="true" visible="true"/>
+                <perm el="Activity" owner="true" write="true" visible="true"/>
+                
+                 <perm st="ClientServerPort" owner="true" write="true" visible="true"/>
+                 
+                 <!-- deletion -->
+                 <perm st="StatefulSoftware" owner="true" visible="true"/>
+                 <perm el="ConnectorEnd" owner="true" visible="true"/>
+                 <perm el="Connector" owner="true" visible="true"/>
+                 <perm st="Propagation" owner="true" visible="true"/>
+                 <perm el="Port" owner="true" visible="true"/>
+                 <perm st="CHRtPortSlot" owner="true" visible="true"/>
+                 <perm st="StatefulHardware" owner="true" visible="true"/>
+                 <perm st="ErrorModel" owner="true" visible="true"/>
+                 <perm st="FailureMode" owner="true" visible="true"/>
+                 <perm el="State" owner="true" visible="true"/>
+                 <perm el="Property" owner="true" visible="true"/>
+                 <perm st="Allocated" owner="true" visible="true"/>
+                 
+                 <perm st="Configuration" owner="true" visible="true"/>
+                 <perm el="Property" owner="true" visible="true"/>
+                 
+                 <!-- Forever -->
+                 <perm st="Contract" owner="true" write="true" visible="true"/>
+                 <perm st="FormalProperty" owner="true" write="true" visible="true"/>
+                 <perm st="ConstraintBlock" owner="true" write="true" visible="true"/>
+                 <perm st="ContractProperty" owner="true" write="true" visible="true"/>
+                 
+            </diagram>
+            <diagram name="Activity">
+                  <!--perm owner="true" write="true" visible="true"/-->
+                  <perm el="Region" owner="true" write="true" visible="true"/>
+                  <perm el="InitialNode" owner="true" write="true" visible="true"/>
+                  <perm el="ActivityFinalNode" owner="true" write="true" visible="true"/>
+                  <perm el="ControlFlow" owner="true" write="true" visible="true"/>
+                  <perm el="CallOperationAction" owner="true" write="true" visible="true"/>
+                  <perm el="InputPin" owner="true" write="true" visible="true"/>
+                  <perm el="Activity" owner="true" write="true" visible="true"/>
+                  <perm ft="classifierBehavior" owner="true" write="true" visible="true"/>
+                 
+                  <!-- deletion -->
+                  <perm st="Propagation" owner="true" visible="true"/>
+            </diagram>
+            
+            <diagram name="Sequence">
+                  <perm owner="true" write="true" visible="true"/>
+            </diagram>
+            
+            <diagram name="StateMachine">
+                  <perm el="FinalState" owner="true" write="true" visible="true"/>
+                  <perm el="Pseudostate" owner="true" write="true" visible="true"/>
+                   <perm el="Transition" owner="true" write="true" visible="true"/>
+                   <perm el="StateMachine" owner="true" write="true" visible="true"/>
+                  <perm el="State" owner="true" write="true" visible="true"/>
+                  <perm el="ModeBehavior" owner="true" write="true" visible="true"/>
+                  <perm el="Mode" owner="true" write="true" visible="true"/>
+                  <perm el="ModeTransition" owner="true" write="true" visible="true"/>
+                  <perm el="Region" owner="true" write="true" visible="true"/>
+                  
+                  
+                  <perm el="Component" owner="true" write="true" visible="true"/>
+                  
+            </diagram>
+            <diagram name="UseCase">
+                  <perm el="Actor" owner="true" write="true" visible="true"/>
+                  <perm el="UseCase" owner="true" write="true" visible="true"/>
+                  <perm el="Association" owner="true" write="true" visible="true"/>
+            </diagram>
+      </view>
+      <view name="ExtraFunctionalView">
+            <!--perm owner="true" write="true" visible="true"/-->
+            <diagram name="*">
+            	<perm el="Model" owner="true" write="true" visible="true"/> 
+                  <perm st="Documentation" owner="true" write="true" visible="true"/>
+            	  <perm ft="packagedElement" owner="true" write="true" visible="true"/>
+            	  <perm el="Constraint" owner="true" write="true" visible="true"/>	
+                  <perm ft="ownedComment" owner="true" write="true" visible="true"/>
+                  <perm el="Comment" owner="true" write="true" visible="true"/>
+                  
+                  <perm el="Component" owner="true" write="true" visible="true"/>
+                  <perm el="StateMachine" owner="true" write="true" visible="true"/>
+                  <perm el="Region" owner="true" write="true" visible="true"/>
+                  
+                  <!--to allow modification of CHRtSpecification once CHRtPortSlots have been generated-->
+				  <perm st="CHRtPortSlot" owner="true" write="true" visible="true"/>
+                                    
+                  <!--Permissions for SA Profile-->
+                  <perm st="SafetyObjective" owner="true" write="true" visible="true"/>
+                  <perm st="SafeAwareCapability" owner="true" write="true" visible="true"/>
+                  <perm st="SafeAwareComponent" owner="true" write="true" visible="true"/>
+                  <perm st="MitigationMeanDefinition" owner="true" write="true" visible="true"/>
+                  <perm st="MMApplied" owner="true" write="true" visible="true"/>
+                  <perm st="MitigationMeanImplementation" owner="true" write="true" visible="true"/>
+                  <perm st="AbstractRisk" owner="true" write="true" visible="true"/>
+                  <perm st="Risk" owner="true" write="true" visible="true"/>
+                  <perm st="RiskTheme" owner="true" write="true" visible="true"/>
+                  <perm st="RiskEvaluation" owner="true" write="true" visible="true"/>
+                  <perm st="Consequence" owner="true" write="true" visible="true"/>
+                  <perm st="SafetyDependency" owner="true" write="true" visible="true"/>
+                  <perm st="FailureModel" owner="true" write="true" visible="true"/>
+                  <perm st="RateFailureModel" owner="true" write="true" visible="true"/>
+                  <perm st="FixedFailureModel" owner="true" write="true" visible="true"/>
+                  
+                  <!--Permissions for Simulation Based Analysis-->
+                  <perm el="Interaction" owner="true" write="true" visible="true"/>
+                  
+            </diagram>
+            <diagram name="Class">
+                  <perm st="StatefulSoftware" owner="true" write="true" visible="true"/>
+                  <perm st="StatelessSoftware" owner="true" write="true" visible="true"/>
+                  <perm st="FPTC" owner="true" write="true" visible="true"/>
+                  <perm st="FI4FA" owner="true" write="true" visible="true"/>
+                  <perm st="FaultTolerant" owner="true" write="true" visible="true"/>
+                  <perm st="RedundancyManager" owner="true" write="true" visible="true"/>
+                  <perm st="DependableComponent" owner="true" write="true" visible="true"/>
+                  <perm st="Variant" owner="true" write="true" visible="true"/>
+                  <perm st="Adjudicator" owner="true" write="true" visible="true"/>
+                  
+            </diagram>
+            
+            <diagram name="Composite">
+                  <perm st="CHRtSpecification" owner="true" write="true" visible="true"/>
+                  <perm st="Propagation" owner="true" write="true" visible="true"/>
+                  <perm st="FPTCSpecification" owner="true" write="true" visible="true"/>
+                  <perm st="FI4FASpecification" owner="true" write="true" visible="true"/>
+                  <perm st="ACIDAvoidable" owner="true" write="true" visible="true"/>
+                  <perm st="ACIDMitigation" owner="true" write="true" visible="true"/>
+                  <perm st="FI4FA" owner="true" write="true" visible="true"/>
+                  <perm st="FPTC" owner="true" write="true" visible="true"/>
+                  <perm st="FPTCPortSlot" owner="true" write="true" visible="true"/>
+            </diagram>
+            
+            <diagram name="Activity">
+                  <perm st="Repair" owner="true" write="true" visible="true"/>
+                  <perm st="Replace" owner="true" write="true" visible="true"/>
+                  <perm st="ErrorDetection" owner="true" write="true" visible="true"/>
+                  <perm st="FailureDetection" owner="true" write="true" visible="true"/>
+                  <perm el="Activity" owner="true" write="true" visible="true"/>
+                  <perm el="InitialNode" owner="true" write="true" visible="true"/>
+                  <perm el="ControlFlow" owner="true" write="true" visible="true"/>
+                  <perm el="ActivityFinalNode" owner="true" write="true" visible="true"/>
+            </diagram>
+            
+            <diagram name="StateMachine">
+                  <perm st="Propagation" owner="true" write="true" visible="true"/>
+                  <perm st="ErrorModel" owner="true" write="true" visible="true"/>
+                  <perm st="InternalFault" owner="true" write="true" visible="true"/>
+                  <perm st="ExternalFault" owner="true" write="true" visible="true"/>                  
+                  <perm st="Error" owner="true" write="true" visible="true"/>
+                  <perm st="Failurefree" owner="true" write="true" visible="true"/>
+                  <perm st="Errorfree" owner="true" write="true" visible="true"/>
+                  <perm st="UnclassifiedError" owner="true" write="true" visible="true"/>
+                  <perm st="UnclassifiedFailure" owner="true" write="true" visible="true"/>
+                  <perm st="FailureMode" owner="true" write="true" visible="true"/>
+                  <perm el="FinalState" owner="true" write="true" visible="true"/>
+                  <perm el="Pseudostate" owner="true" write="true" visible="true"/>
+                  <perm el="Transition" owner="true" write="true" visible="true"/>
+                  <perm el="StateMachine" owner="true" write="true" visible="true"/>
+                  <perm el="State" owner="true" write="true" visible="true"/>
+                  <perm el="ModeBehavior" owner="true" write="true" visible="true"/>
+                  <perm el="Mode" owner="true" write="true" visible="true"/>
+                  <perm el="ModeTransition" owner="true" write="true" visible="true"/>
+                  <perm el="Region" owner="true" write="true" visible="true"/>
+                  
+                  
+                  <perm el="Component" owner="true" write="true" visible="true"/>
+                  
+            </diagram>
+            
+            <diagram name="Sequence">
+            	<!--Permissions for Simulation Based Analysis-->
+                  <perm el="Interaction" owner="true" write="true" visible="true"/>
+                  <perm el="Lifeline" owner="true" write="true" visible="true"/>
+                  <perm el="Constraint" owner="true" write="true" visible="true"/>
+                  <perm el="TimeObservation" owner="true" write="true" visible="true"/>
+                  <perm el="LiteralString" owner="true" write="true" visible="true"/>
+                  <perm el="Message" owner="true" write="true" visible="true"/>
+                  <perm el="SendOperationEvent" owner="true" write="true" visible="true"/>
+                  <perm el="MessageOccurrenceSpecification" owner="true" write="true" visible="true"/>
+                  <perm el="ReceiveOperationEvent" owner="true" write="true" visible="true"/>
+                  
+                  
+            </diagram>
+            
+      </view>
+      <view name="AnalysisView">
+            <diagram name="*">
+            	<perm el="Model" owner="true" write="true" visible="true"/> 
+                  <perm owner="true" write="true" visible="true"/>
+            </diagram>
+      </view>
+      <view name="DeploymentView">
+            <diagram name="*">
+            	<perm el="Model" owner="true" write="true" visible="true"/> 
+            	  <perm el="StateMachine" owner="true" write="true" visible="true"/>
+            	  <perm el="Region" owner="true" write="true" visible="true"/>
+            
+                  <perm el="Package" owner="true" write="true" visible="true"/>
+                  <perm el="Class" owner="true" write="true" visible="true"/>
+                  <perm el="Component" owner="true" write="true" visible="true"/>
+                  <perm el="Comment" owner="true" write="true" visible="true"/>
+            
+				  <perm el="LiteralInteger" owner="true" write="true" visible="true"/>
+                  <perm el="LiteralString" owner="true" write="true" visible="true"/>
+                  <perm el="LiteralUnlimitedNatural" owner="true" write="true" visible="true"/>            
+            		
+                  <perm st="Documentation" owner="true" write="true" visible="true"/>
+                  
+                  <perm el="Dependency" owner="true" write="true" visible="true"/>
+            
+ 				  <!--in case of deletion of elements-->
+                  <perm el="InstanceSpecification" owner="true" write="true" visible="true"/> 
+                  <perm el="Slot" owner="true" write="true" visible="true"/>
+                  <perm el="InstanceValue" owner="true" write="true" visible="true"/>              
+                  <perm st="StateBasedAnalysis" owner="true" write="true" visible="true"/>
+                  
+                  
+                  <perm st="GaResourcesPlatform" owner="true" write="true" visible="true"/>
+                  
+                  
+                  <perm st="HwCommunicationResource" owner="true" write="true" visible="true"/>
+                  <perm st="HwComputingResource" owner="true" write="true" visible="true"/>
+                  
+                  
+                  <perm st="CH_HwComputingResource" owner="true" write="true" visible="true"/>
+                  <perm st="CH_HwBus" owner="true" write="true" visible="true"/>
+                  
+                  <perm st="CH_HwProcessor" owner="true" write="true" visible="true"/>
+                  <perm st="CHGaResourcePlatform" owner="true" write="true" visible="true"/>
+                  <perm st="GaExecHost" owner="true" write="true" visible="true"/>
+                  <perm st="GaCommHost" owner="true" write="true" visible="true"/>
+                  
+                  
+                  <!--deletion-->
+                  <perm ft="InstanceValue" owner="true" write="true" visible="true"/>
+                  <perm st="Assign" owner="true" write="true" visible="true"/>
+                  <perm st="FlowPort" owner="true" write="true" visible="true"/>
+                  <perm el="Port" owner="true" write="true" visible="true"/>
+                  <perm el="ConnectorEnd" owner="true" write="true" visible="true"/>
+                  <perm ft="Connector" owner="true" write="true" visible="true"/>
+                  
+                  
+                  <!--Permissions for SA Profile-->
+                  <perm st="SafetyObjective" owner="true" write="true" visible="true"/>
+                  <perm st="SafeAwareCapability" owner="true" write="true" visible="true"/>
+                  <perm st="SafeAwareComponent" owner="true" write="true" visible="true"/>
+                  <perm st="MitigationMeanDefinition" owner="true" write="true" visible="true"/>
+                  <perm st="MMApplied" owner="true" write="true" visible="true"/>
+                  <perm st="MitigationMeanImplementation" owner="true" write="true" visible="true"/>
+                  <perm st="AbstractRisk" owner="true" write="true" visible="true"/>
+                  <perm st="Risk" owner="true" write="true" visible="true"/>
+                  <perm st="RiskTheme" owner="true" write="true" visible="true"/>
+                  <perm st="RiskEvaluation" owner="true" write="true" visible="true"/>
+                  <perm st="Consequence" owner="true" write="true" visible="true"/>
+                  <perm st="SafetyDependency" owner="true" write="true" visible="true"/>
+                  <perm st="FailureModel" owner="true" write="true" visible="true"/>
+                  <perm st="RateFailureModel" owner="true" write="true" visible="true"/>
+                  <perm st="FixedFailureModel" owner="true" write="true" visible="true"/>
+                  
+                  <!--forever-->
+                  <perm el="Constraint" owner="true" write="true" visible="true"/>
+                  <perm st="DelegationConstraint" owner="true" write="true" visible="true"/>
+                  <perm st="FormalProperty" owner="true" write="true" visible="true"/>
+                  <perm st="Contract" owner="true" write="true" visible="true"/>
+                  <perm st="System" owner="true" write="true" visible="true"/>
+                  <perm el="Property" owner="true" write="true" visible="true"/>
+                  <perm st="ContractProperty" owner="true" write="true" visible="true"/>
+                  <perm el="Association" owner="true" write="true" visible="true"/>
+                  <perm st="ContractRefinement" owner="true" write="true" visible="true"/>
+                  
+                  
+            </diagram>
+            <diagram name="Class">
+                  <!--<perm owner="true" write="true" visible="true"/>-->
+                  
+
+                  
+                  <perm el="Interface" owner="true" write="true" visible="true"/>
+                  <perm st="FlowSpecification" owner="true" write="true" visible="true"/>
+                  
+                  
+                  <perm st="DependableComponent" owner="true" write="true" visible="true"/>
+
+                  
+                  <perm el="Package" owner="true" write="true" visible="true"/>
+                  <perm el="DataType" owner="true" write="true" visible="true"/>
+                  <perm el="Enumeration" owner="true" write="true" visible="true"/>
+                  <perm el="EnumerationLiteral" owner="true" write="true" visible="true"/>
+                  
+                  <perm st="CH_HwProcessor" owner="true" write="true" visible="true"/>
+                  <perm st="HwMemory" owner="true" write="true" visible="true"/>
+                  <perm st="HWSensor" owner="true" write="true" visible="true"/>
+                  <perm st="HWActuator" owner="true" write="true" visible="true"/>
+                  <perm st="CH_HwBus" owner="true" write="true" visible="true"/>
+                  <perm st="HwASIC" owner="true" write="true" visible="true"/>
+                  <perm st="HwCache" owner="true" write="true" visible="true"/>
+                  <perm st="GaExecHost" owner="true" write="true" visible="true"/>
+                  <perm st="GaCommHost" owner="true" write="true" visible="true"/>      
+                  
+                  <perm el="StateMachine" owner="true" write="true" visible="true"/>
+                  <perm el="Region" owner="true" write="true" visible="true"/>
+                 
+                 
+                 
+                 <!-- Deletion of elements -->
+                 <perm st="FlowPort" owner="true" visible="true"/>
+                 <perm el="ConnectorEnd" owner="true" visible="true"/>
+                 <perm el="Port" owner="true" write="true" visible="true"/>
+                 <perm ft="Port" owner="true" write="true" visible="true"/>
+                 <perm st="NestedConnectorEnd" owner="true" visible="true"/>
+                 <perm ft="Connector" owner="true" visible="true"/>
+                 
+                 <perm st="StateBasedAnalysis" owner="true" write="true" visible="true"/>
+                 <perm st="Assign" owner="true" write="true" visible="true"/>
+                 <perm st="DataTypeAssign" owner="true" write="true" visible="true"/>
+                             
+            </diagram>
+            <diagram name="Composite">
+            
+                  <perm el="ConnectorEnd" owner="true" write="true" visible="true"/>
+                  <perm el="NestedConnectorEnd" owner="true" write="true" visible="true"/>
+                  
+                  <perm ft="Port" owner="true" write="true" visible="true"/>
+                  <perm st="FlowPort" owner="true" write="true" visible="true"/>
+                  <perm el="Property" owner="true" write="true" visible="true"/>
+                  <perm el="Connector" owner="true" write="true" visible="true"/>
+                  
+                  
+                  <perm st="FIBEX" owner="true" write="true" visible="true"/>
+                  <perm st="CH_HwProcessor" owner="true" write="true" visible="true"/>                  
+                  <perm st="HwMemory" owner="true" write="true" visible="true"/>
+                  <perm st="HWSensor" owner="true" write="true" visible="true"/>
+                  <perm st="HWActuator" owner="true" write="true" visible="true"/>
+                  <perm st="CH_HwBus" owner="true" write="true" visible="true"/>
+                  <perm st="HWASIC" owner="true" write="true" visible="true"/>
+                  <perm st="HWCache" owner="true" write="true" visible="true"/>
+                  <perm st="Assign" owner="true" write="true" visible="true"/>
+                  <perm st="GaExecHost" owner="true" write="true" visible="true"/>
+                  <perm st="GaCommHost" owner="true" write="true" visible="true"/>
+                  
+                 <perm el="StateMachine" owner="true" write="true" visible="true"/>
+                 <perm el="Region" owner="true" write="true" visible="true"/>
+                  
+            </diagram>
+            <diagram name="StateMachine">
+            	 <perm el="FinalState" owner="true" write="true" visible="true"/>
+                 <perm el="Pseudostate" owner="true" write="true" visible="true"/>
+                 <perm el="Transition" owner="true" write="true" visible="true"/>
+                 <perm el="StateMachine" owner="true" write="true" visible="true"/>
+                 <perm el="State" owner="true" write="true" visible="true"/>
+                 <perm el="ModeBehavior" owner="true" write="true" visible="true"/>
+                 <perm el="Mode" owner="true" write="true" visible="true"/>
+                 <perm el="ModeTransition" owner="true" write="true" visible="true"/>
+                 <perm el="Region" owner="true" write="true" visible="true"/>
+				 <perm el="Component" owner="true" write="true" visible="true"/>
+            </diagram>
+      </view>
+      <view name="RequirementView">
+            <diagram name="*"> 
+            	<perm el="Model" owner="true" write="true" visible="true"/>            	
+				  <perm el="Package" owner="true" write="true" visible="true"/>
+				  <perm el="Constraint" owner="true" write="true" visible="true"/>
+                  <perm st="Requirement" owner="true" write="true" visible="true"/>
+                  <perm st="Derive" owner="true" write="true" visible="true"/>
+                  <perm el="Slot" st="Satisfy" owner="true" write="true" visible="true"/>
+                  <perm st="Copy" owner="true" write="true" visible="true"/>
+                  <perm el="Abstraction" owner="true" write="true" visible="true"/>
+                  
+                  <perm el="Class" owner="true" write="true" visible="true"/>
+                  <perm ft="packagedElement" owner="true" write="true" visible="true"/>
+                  <perm ft="clientDependency" owner="true" write="true" visible="true"/>
+                  <perm ft="eAnnotations" owner="true" write="true" visible="true"/>
+                  
+                  <perm st="SafetyGoal" owner="true" write="true" visible="true"/>
+                  <perm st="SafetyRequirement" owner="true" write="true" visible="true"/>
+            </diagram>
+      </view>
+      <view name="RTAnalysisView">
+            <diagram name="*">
+                  <perm owner="true" visible="true"/>
+            </diagram>
+      </view>
+      <view name="DependabilityAnalysisView">
+            <diagram name="*">
+                  <perm owner="true" write="true" visible="true"/>
+            </diagram>
+      </view>
+      
+      <view name="DependabilityView">
+            <diagram name="*">
+                  <perm el="Component" owner="true" write="true" visible="true"/>
+                  <perm el="Comment" owner="true" write="true" visible="true"/>
+                  <perm st="FPTCPortSlot" owner="true" write="true" visible="true"/>
+                  
+            </diagram>
+            <diagram name="Class">            	  
+                  <perm st="FPTC" owner="true" write="true" visible="true"/>
+                  <perm st="StatefulHardware" owner="true" write="true" visible="true"/>
+                  <perm st="StatelessHardware" owner="true" write="true" visible="true"/>
+                  
+                  <perm st="FI4FA" owner="true" write="true" visible="true"/>
+                  <perm el="Comment" owner="true" write="true" visible="true"/>
+                  <perm st="DependableComponent" owner="true" write="true" visible="true"/>
+            </diagram>
+            <diagram name="Composite">
+            	  <perm st="Propagation" owner="true" write="true" visible="true"/>
+                  <perm st="FPTCSpecification" owner="true" write="true" visible="true"/>
+                  <perm st="FI4FASpecification" owner="true" write="true" visible="true"/>
+                  <perm st="ACIDAvoidable" owner="true" write="true" visible="true"/>
+                  <perm st="ACIDMitigation" owner="true" write="true" visible="true"/>
+                  <perm st="Comment" owner="true" write="true" visible="true"/>
+                  <perm st="ErrorModelAssign" owner="true" write="true" visible="true"/>
+                  <perm st="FPTC" owner="true" write="true" visible="true"/>
+                  <perm st="FI4FA" owner="true" write="true" visible="true"/>
+            </diagram>
+            <diagram name="StateMachine">
+                  <perm el="FinalState" owner="true" write="true" visible="true"/>
+                  <perm el="Pseudostate" owner="true" write="true" visible="true"/>
+                  <perm el="Transition" owner="true" write="true" visible="true"/>
+            	  <perm el="StateMachine" owner="true" write="true" visible="true"/>
+            	  <perm st="Propagation" owner="true" write="true" visible="true"/>
+            	  <perm st="ErrorModel" owner="true" write="true" visible="true"/>
+            	  <perm st="InternalFault" owner="true" write="true" visible="true"/>
+                  <perm st="ExternalFault" owner="true" write="true" visible="true"/>                  
+                  <perm st="Error" owner="true" write="true" visible="true"/>
+                  <perm st="Errorfree" owner="true" write="true" visible="true"/>
+                  <perm st="Unclassified" owner="true" write="true" visible="true"/>
+                  <perm st="FailureMode" owner="true" write="true" visible="true"/>
+            </diagram>
+      </view>
+      <view name="RailwayView">
+            <diagram name="*">
+                  <perm el="*" owner="true" write="true" visible="true"/>
+            </diagram>
+            <diagram name="Composite">
+                  <perm st="TransmissionWithProtocol" owner="true" write="true" visible="true"/>
+            </diagram>
+            
+      </view>
+      
+      <view name="SystemView">
+            <diagram name="*">
+            	<perm el="Model" owner="true" write="true" visible="true"/> 
+                  <perm el="*" owner="true" write="true" visible="true"/>
+                  <perm st="DelegationConstraint" owner="true" write="true" visible="true"/>
+                  <perm st="AutomotiveBlock" owner="true" write="true" visible="true"/>
+            </diagram>            
+      </view>
+      
+</permissions>

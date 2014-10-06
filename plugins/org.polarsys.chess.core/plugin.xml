@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="org.polarsys.chess.diagramListener" name="diagramListener" schema="schema/org.polarsys.chess.diagramListener.exsd"/>
+   <extension-point id="org.polarsys.chess.resourceListener" name="resourceListener" schema="schema/org.polarsys.chess.resourceListener.exsd"/>
+   <extension-point id="org.polarsys.chess.selectionListener" name="selectionListener" schema="schema/org.polarsys.chess.selectionListener.exsd"/>
+   <extension-point id="org.polarsys.chess.addprofile" name="addProfile" schema="schema/org.polarsys.chess.addprofile.exsd"/>
+   <extension-point id="org.polarsys.chess.transformationExecutor" name="transformationExecutor" schema="schema/org.polarsys.chess.transformationExecutor.exsd"/>
+   
+   <extension
+         id="org.polarsys.chess.CHESSNature"
+         name="CHESS"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.polarsys.chess.core.natures.CHESSNature">
+         </run>
+      </runtime>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+      <image
+            icon="resources/CHESSicon.gif"
+            id="it.unipd.chess.natureicon"
+            natureId="org.polarsys.chess.CHESSNature">
+      </image>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            description="CHESS Debug Commands"
+            id="org.polarsys.chess.categoryDebug"
+            name="CHESS Debug Commands">
+      </category>
+      <command
+            categoryId="org.polarsys.chess.categoryDebug"
+            defaultHandler="org.polarsys.chess.core.views.ReloadXMLPermissions"
+            id="org.polarsys.chess.command.xmlPerm"
+            name="reload XML permissions">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="org.polarsys.chess.toolbarDebug"
+               label="chess.toolbarDebug">
+            <command
+                  commandId="org.polarsys.chess.command.xmlPerm"
+                  icon="resources/reloadPermissions.gif"
+                  label="xml"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <with
+                           variable="activeEditorInput">
+                        <adapt
+                              type="org.eclipse.core.resources.IResource">
+                           <test
+                                 property="org.eclipse.core.resources.projectNature"
+                                 value="org.polarsys.chess.CHESSNature">
+                           </test>
+                        </adapt>
+                     </with>
+                  </and>
+               </visibleWhen>
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.polarsys.chess.core.preferences.CHESSMainPage"
+            id="org.polarsys.chess.preferences"
+            name="CHESS">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.polarsys.chess.preferences"
+            class="org.polarsys.chess.core.preferences.ConstraintPreferencePage"
+            id="org.polarsys.chess.preferences.constraints"
+            name="Constraints">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.polarsys.chess.core.preferences.ConstraintPreferenceInitializer">
+      </initializer>
+   </extension>
+</plugin>
