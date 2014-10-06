@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/uml2/2.2.0/GenModel"
+    modelDirectory="/org.polarsys.chess.chessmlprofile/src" editDirectory="/org.polarsys.chess.chessmlprofile.edit/src"
+    editorDirectory="/org.polarsys.chess.chessmlprofile.editor/src" modelPluginID="org.polarsys.chess.chessmlprofile"
+    modelName="CHESS" editPluginClass="org.polarsys.chess.chessmlprofile.provider.CHESSEditPlugin"
+    editorPluginClass="org.polarsys.chess.chessmlprofile.presentation.CHESSEditorPlugin"
+    importerID="org.eclipse.uml2.uml.ecore.importer" complianceLevel="5.0" copyrightFields="false"
+    editPluginID="org.polarsys.chess.chessmlprofile.edit" editorPluginID="org.polarsys.chess.chessmlprofile.editor"
+    usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore MARTE.genmodel#//MARTE MARTE.genmodel#//MARTE_Library platform:/plugin/org.eclipse.uml2.uml/model/UML.genmodel#//uml platform:/plugin/org.eclipse.uml2.types/model/Types.genmodel#//types MARTE.genmodel#//MARTE_Library/BasicNFP_Types">
+  <genAnnotations source="http://www.eclipse.org/emf/2002/GenModel/importer/org.eclipse.uml2.uml.ecore.importer">
+    <details key="ECORE_TAGGED_VALUES" value="PROCESS"/>
+    <details key="UNION_PROPERTIES" value="REPORT"/>
+    <details key="DUPLICATE_FEATURES" value="DISCARD"/>
+    <details key="SUBSETTING_PROPERTIES" value="REPORT"/>
+    <details key="COMMENTS" value="PROCESS"/>
+    <details key="DUPLICATE_FEATURE_INHERITANCE" value="DISCARD"/>
+    <details key="DUPLICATE_OPERATIONS" value="DISCARD"/>
+    <details key="INVARIANT_CONSTRAINTS" value="PROCESS"/>
+    <details key="REDEFINING_PROPERTIES" value="REPORT"/>
+    <details key="ANNOTATION_DETAILS" value="PROCESS"/>
+    <details key="DUPLICATE_OPERATION_INHERITANCE" value="DISCARD"/>
+    <details key="REDEFINING_OPERATIONS" value="REPORT"/>
+    <details key="DERIVED_FEATURES" value="PROCESS"/>
+    <details key="OPERATION_BODIES" value="IGNORE"/>
+    <details key="CAMEL_CASE_NAMES" value="IGNORE"/>
+    <details key="SUPER_CLASS_ORDER" value="PROCESS"/>
+    <details key="UNTYPED_PROPERTIES" value="REPORT"/>
+    <details key="VALIDATION_DELEGATES" value="IGNORE"/>
+    <details key="OPPOSITE_ROLE_NAMES" value="IGNORE"/>
+    <details key="PROPERTY_DEFAULT_EXPRESSIONS" value="IGNORE"/>
+    <details key="NON_API_INVARIANTS" value="IGNORE"/>
+    <details key="INVOCATION_DELEGATES" value="IGNORE"/>
+  </genAnnotations>
+  <foreignModel>CHESS.profile.uml</foreignModel>
+  <genPackages xsi:type="genmodel:GenPackage" prefix="chessmlprofile" basePackage="org.polarsys.chess"
+      disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#/">
+    <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//dummy"/>
+    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="Core" basePackage="org.polarsys.chess.chessmlprofile"
+        resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Core">
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESS">
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/base_Model"/>
+        <genFeatures xsi:type="genmodel:GenFeature" property="None" children="true"
+            createChild="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/analysisView"/>
+        <genFeatures xsi:type="genmodel:GenFeature" property="None" children="true"
+            createChild="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/deploymentView"/>
+        <genFeatures xsi:type="genmodel:GenFeature" property="None" children="true"
+            createChild="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/requirementView"/>
+        <genFeatures xsi:type="genmodel:GenFeature" property="None" children="true"
+            createChild="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/componentView"/>
+        <genFeatures xsi:type="genmodel:GenFeature" property="None" children="true"
+            createChild="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/systemView"/>
+      </genClasses>
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHGaResourcePlatform">
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHGaResourcePlatform/base_InstanceSpecification"/>
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHGaResourcePlatform/base_Package"/>
+      </genClasses>
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/IdentifInstance">
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/IdentifInstance/base_InstanceSpecification"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Core/IdentifInstance/id"/>
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/IdentifInstance/sourceInstanceSpec"/>
+      </genClasses>
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/IdentifSlot">
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/IdentifSlot/base_Slot"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Core/IdentifSlot/id"/>
+      </genClasses>
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/MultiInstance">
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/MultiInstance/base_InstanceSpecification"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Core/MultiInstance/upperBound"/>
+      </genClasses>
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/MultiSlot">
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/MultiSlot/base_Slot"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Core/MultiSlot/upperBound"/>
+      </genClasses>
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="CHESSViews" basePackage="org.polarsys.chess.chessmlprofile.Core"
+          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Core/CHESSViews">
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/ExtraFunctionalView">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/ExtraFunctionalView/base_Package"/>
+          <genFeatures xsi:type="genmodel:GenFeature" property="None" children="true"
+              createChild="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/ExtraFunctionalView/timingdataflowview"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/TimingDataFlowView">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/TimingDataFlowView/base_Package"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/RTAnalysisView">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/RTAnalysisView/base_Package"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/DeploymentView">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/DeploymentView/base_Package"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/DeploymentView/AssignList"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/RequirementView">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/RequirementView/base_Package"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/ComponentView">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/ComponentView/base_Package"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/DependabilityAnalysisView">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/DependabilityAnalysisView/base_Package"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/SystemView">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/SystemView/base_Package"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/PSMView">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/PSMView/base_Package"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/AnalysisView">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/AnalysisView/base_Package"/>
+          <genFeatures xsi:type="genmodel:GenFeature" property="None" children="true"
+              createChild="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/AnalysisView/rtanalysisview"/>
+        </genClasses>
+      </nestedGenPackages>
+    </nestedGenPackages>
+    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="Dependability" disposableProviderFactory="true"
+        ecorePackage="chessmlprofile.ecore#//Dependability">
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FailurePropagation"
+          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/FailurePropagation">
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FPTC">
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/FPTC/fptc"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/FPTC/base_Comment"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationAnalysis"/>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FPTCSpecification">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/FPTCSpecification/base_Comment"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/FPTCSpecification/failure"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/FPTCSpecification/partWithPort"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FPTCPortSlot">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/FPTCPortSlot/FPTCSpecification"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/FPTCPortSlot/base_Slot"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FI4FA">
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/FI4FA/fi4fa"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FI4FASpecification"/>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDAvoidable">
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDAvoidable/a"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDAvoidable/c"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDAvoidable/base_Comment"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDAvoidable/i"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDAvoidable/d"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDMitigation">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDMitigation/base_Comment"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDMitigation/a"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDMitigation/c"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDMitigation/i"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDMitigation/d"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FI4FAAnalysis"/>
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FailurePropagationDataTypes"
+            disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes">
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_avoidable">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_avoidable/unspecified"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_avoidable/impermanence"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_avoidable/none"/>
+          </genEnums>
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/I_avoidable">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/I_avoidable/unspecified"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/I_avoidable/interference"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/I_avoidable/none"/>
+          </genEnums>
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/C_avoidable">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/C_avoidable/unspecified"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/C_avoidable/inconsistency"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/C_avoidable/none"/>
+          </genEnums>
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType/late"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType/early"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType/valueSubtle"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType/valueCoarse"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType/omission"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType/commission"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType/noFailure"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType/variable"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType/wildcard"/>
+          </genEnums>
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/A_avoidable">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/A_avoidable/unspecified"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/A_avoidable/incompletion"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/A_avoidable/none"/>
+          </genEnums>
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/A_mitigation">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/A_mitigation/unspecified"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/A_mitigation/all_or_nothing"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/A_mitigation/all_or_compensation"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/A_mitigation/none"/>
+          </genEnums>
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/C_mitigation">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/C_mitigation/unspecified"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/C_mitigation/full_consistency"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/C_mitigation/range_violation_allowed"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/C_mitigation/none"/>
+          </genEnums>
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/I_mitigation">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/I_mitigation/unspecified"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/I_mitigation/portable_level"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/I_mitigation/serializable"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/I_mitigation/none"/>
+          </genEnums>
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_mitigation">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_mitigation/unspecified"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_mitigation/no_loss"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_mitigation/partial_loss_allowed"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_mitigation/none"/>
+          </genEnums>
+        </nestedGenPackages>
+      </nestedGenPackages>
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="DependableComponent"
+          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/DependableComponent">
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/DependableComponent/Propagation">
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/prob"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/propDelay"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/base_Abstraction"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/base_Comment"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/base_Connector"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/base_InstanceSpecification"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/transfFunct"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/base_Transition"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/weight"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/DependableComponent/DependableComponent">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/DependableComponent/base_Component"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/DependableComponent/errorModel"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/DependableComponent/base_Property"/>
+        </genClasses>
+      </nestedGenPackages>
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="ThreatsPropagation"
+          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/ThreatsPropagation">
+        <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/ThreatsPropagation/DurationType">
+          <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/ThreatsPropagation/DurationType/transient"/>
+          <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/ThreatsPropagation/DurationType/permanent"/>
+        </genEnums>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/InternalFault">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/InternalFault/base_Transition"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/InternalFault/permanentProb"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/InternalFault/transfFunct"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/InternalFault/property"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/InternalFault/childFailure"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/InternalFault/occurrence"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/InternalFault/transientDuration"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/ExternalFault">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/ExternalFault/base_Transition"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/ExternalFault/fromPort"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/ExternalFault/propagationCondition"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/ExternalFault/probability"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/ExternalFault/unit"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/ExternalFault/type"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/ExternalFault/transfFunct"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/Error">
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/Error/type"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/Error/vanishingTime"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/ThreatState">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/ThreatState/base_State"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/ThreatState/probability"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/ThreatState/unit"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/ErrorFree"/>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/UnclassifiedError"/>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/FailureMode">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/FailureMode/affectedPorts"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/FailureMode/type"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/FailureFree"/>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/UnclassifiedFailure"/>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/StuckAt">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/StuckAt/property"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/StuckAt/value"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/StuckAt/base_State"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/StuckAtFixed">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/StuckAtFixed/base_State"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/StuckAtFixed/property"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/Inverted">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/Inverted/base_State"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/Inverted/property"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/RampDown">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/RampDown/base_State"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/RampDown/property"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/RampDown/decr"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/ThreatsPropagation/RampDown/endValue"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/ThreatsPropagation/ErrorModel">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/ThreatsPropagation/ErrorModel/base_StateMachine"/>
+        </genClasses>
+      </nestedGenPackages>
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="DataFlowCallGraph"
+          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/DataFlowCallGraph">
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/DataFlowCallGraph/DataFlowCallGraphAnalysis">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DataFlowCallGraph/DataFlowCallGraphAnalysis/result"/>
+        </genClasses>
+      </nestedGenPackages>
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="StateBased" disposableProviderFactory="true"
+          ecorePackage="chessmlprofile.ecore#//Dependability/StateBased">
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="StateBasedDataTypes"
+            disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes">
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/RedundancyKind">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/RedundancyKind/TMR"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/RedundancyKind/Recovery"/>
+          </genEnums>
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/ConfidenceKind">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/ConfidenceKind/relative"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/ConfidenceKind/absolute"/>
+          </genEnums>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/DependabilityMeasure"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/EvaluationMethod"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/EvaluationBySimulation"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/EvaluationAnalytical"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/Reliability"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/EvaluationType"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/SteadyState"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/Availability"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/MTTF"/>
+        </nestedGenPackages>
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="StateBasedComponents"
+            resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents">
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatefulHardware">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatefulHardware/probPermFault"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatefulHardware/errorLatency"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatefulHardware/repairDelay"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatefulHardware/faultOcc"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatefulSoftware">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatefulSoftware/errorLatency"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatefulSoftware/repairDelay"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatefulSoftware/faultOcc"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatelessHardware">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatelessHardware/probPermFault"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatelessHardware/repairDelay"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatelessHardware/faultOcc"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatelessSoftware">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatelessSoftware/faultOcc"/>
+          </genClasses>
+        </nestedGenPackages>
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FaultTolerance"
+            resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance">
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/FaultTolerant">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/FaultTolerant/base_Component"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/FaultTolerant/scheme"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/FaultTolerant/schemeAttrs"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/RedundancyManager">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/RedundancyManager/base_Component"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/RedundancyManager/scheme"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/Variant">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/Variant/base_Component"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/Adjudicator">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/Adjudicator/base_Component"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/Adjudicator/coverage"/>
+          </genClasses>
+        </nestedGenPackages>
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="MaintenanceMonitoring"
+            resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring">
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/MMActivities">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/MMActivities/base_Activity"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/MMActivities/when"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/MMActivities/duration"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/MMActivities/probSuccess"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/MMActivities/onCompletion"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/MMActivities/onSuccessfulCompletion"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/MMActivities/onFailedCompletion"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/MMActivities/base_Action"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/Repair">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/Repair/targets"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/Replace">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/Replace/targets"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/Replace/replacement"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/ErrorDetection">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/ErrorDetection/targets"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/ErrorDetection/correctionProbability"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/ErrorDetection/controlledFailure"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/FailureDetection">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/FailureDetection/onDetection"/>
+          </genClasses>
+        </nestedGenPackages>
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="StateBasedAnalysis"
+            resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/StateBased/StateBasedAnalysis">
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedAnalysis/StateBasedAnalysis">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedAnalysis/StateBasedAnalysis/measure"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedAnalysis/StateBasedAnalysis/measureEvaluationResult"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedAnalysis/StateBasedAnalysis/evalMethod"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/StateBasedAnalysis/StateBasedAnalysis/targetFailureMode"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/StateBased/StateBasedAnalysis/StateBasedAnalysis/targetDepComponent"/>
+          </genClasses>
+        </nestedGenPackages>
+      </nestedGenPackages>
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FMEA" resource="XML"
+          disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/FMEA">
+        <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FMEA/FMEAAnalysisType">
+          <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FMEA/FMEAAnalysisType/frame"/>
+          <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FMEA/FMEAAnalysisType/system"/>
+        </genEnums>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FMEA/FIBEX">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FMEA/FIBEX/base_Comment"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FMEA/FIBEX/config"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FMEA/FMEAAnalysis">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FMEA/FMEAAnalysis/errorType"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FMEA/FMEAAnalysis/simulationRuns"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FMEA/FMEAAnalysis/analysisType"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FMEA/ErrorModelAssign">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FMEA/ErrorModelAssign/base_Comment"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FMEA/ErrorModelAssign/from"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FMEA/ErrorModelAssign/to"/>
+        </genClasses>
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FMEADataTypes" disposableProviderFactory="true"
+            ecorePackage="chessmlprofile.ecore#//Dependability/FMEA/FMEADataTypes">
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FMEA/FMEADataTypes/Persistency">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FMEA/FMEADataTypes/Persistency/transient"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FMEA/FMEADataTypes/Persistency/permanent"/>
+          </genEnums>
+        </nestedGenPackages>
+      </nestedGenPackages>
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="MitigationMeans" resource="XML"
+          disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/MitigationMeans">
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/MitigationMeans/TransmissionWithProtocol">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/MitigationMeans/TransmissionWithProtocol/base_Connector"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/MitigationMeans/TransmissionWithProtocol/CRC"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/MitigationMeans/TransmissionWithProtocol/UseSeqID"/>
+        </genClasses>
+      </nestedGenPackages>
+    </nestedGenPackages>
+    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="Predictability" basePackage="org.polarsys.chess.chessmlprofile"
+        disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Predictability">
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="TimingAnalysis" basePackage="org.polarsys.chess.chessmlprofile.Predictability"
+          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Predictability/TimingAnalysis">
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/TimingAnalysis/SimulationBasedTimingAnalysis"/>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/TimingAnalysis/AgeTimingConstraint"/>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/TimingAnalysis/ReactionConstraint"/>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/TimingAnalysis/OutputSynchronizationConstraint">
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/OutputSynchronizationConstraint/width"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/TimingAnalysis/InputSynchronizationConstraint">
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/InputSynchronizationConstraint/width"/>
+        </genClasses>
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="TimingConstraints"
+            basePackage="org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis"
+            resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints">
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/ArbitraryEventConstraint">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/ArbitraryEventConstraint/offset"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/ArbitraryEventConstraint/maximumInterarrivalTime"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/ArbitraryEventConstraint/minimumInterarrivalTime"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/PatternEventConstraint">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/PatternEventConstraint/offset"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/PatternEventConstraint/jitter"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/PatternEventConstraint/minimumInterarrivalTime"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/PatternEventConstraint/occurrence"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/PatternEventConstraint/period"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/PeriodicEventConstraint">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/PeriodicEventConstraint/offset"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/PeriodicEventConstraint/jitter"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/PeriodicEventConstraint/minimumInterarrivalTime"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/PeriodicEventConstraint/period"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/SporadicEventConstraint">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/SporadicEventConstraint/offset"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/SporadicEventConstraint/jitter"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/SporadicEventConstraint/maximumInterarrivalTime"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/SporadicEventConstraint/minimumInterarrivalTime"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/TimingAnalysis/TimingConstraints/SporadicEventConstraint/period"/>
+          </genClasses>
+        </nestedGenPackages>
+      </nestedGenPackages>
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="DeploymentConfiguration"
+          basePackage="org.polarsys.chess.chessmlprofile.Predictability" disposableProviderFactory="true"
+          ecorePackage="chessmlprofile.ecore#//Predictability/DeploymentConfiguration">
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="HardwareBaseline"
+            basePackage="org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration"
+            resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline">
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicOperation">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicOperation/add"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicOperation/mul"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicOperation/div"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicOperation/mod"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicOperation/shift"/>
+          </genEnums>
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicDataType">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicDataType/Signed"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicDataType/Integer"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicDataType/Fixed_Point"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicDataType/Float"/>
+          </genEnums>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CH_HwProcessor">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CH_HwProcessor/dataType"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CH_HwProcessor/utilization"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/HWDataType">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/HWDataType/base_DataType"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/HWDataType/bitLength"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/HWDataType/signed"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/HWDataType/fixedPoint"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/HWDataType/float"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/HWDataType/execution"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/DataTypeExecution">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/DataTypeExecution/base_Class"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/DataTypeExecution/operation"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/DataTypeExecution/executionCycles"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/ComputeComplexity">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/ComputeComplexity/swDataType"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/ComputeComplexity/opCount"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/ComputeComplexity/base_Class"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" image="false" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/SWDataType">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/SWDataType/base_DataType"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/SWDataType/bitSize"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/OperationCount">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/OperationCount/operation"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/OperationCount/count"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/OperationCount/base_Class"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CHControlFlow">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CHControlFlow/base_ControlFlow"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CHControlFlow/rep"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CHControlFlow/prob"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CHControlFlow/order"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CHControlFlow/compComplex"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/FloatSWDataType">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/FloatSWDataType/signed"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/FixedSWDataType">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/FixedSWDataType/signed"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/IntegerSWDataType">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/IntegerSWDataType/signed"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CharSWDataType">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CharSWDataType/signed"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/BooleanSWDataType"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CH_HwBus">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CH_HwBus/utilization"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CH_HwComputingResource">
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/CH_HwComputingResource/utilization"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/DataTypeAssign">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/DataTypeAssign/base_Comment"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/DataTypeAssign/from"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/HardwareBaseline/DataTypeAssign/to"/>
+          </genClasses>
+        </nestedGenPackages>
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="DeploymentConfAnalysis"
+            basePackage="org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration"
+            resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis">
+          <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/OptimizationGoal">
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/OptimizationGoal/average"/>
+            <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/OptimizationGoal/maxHighPerfUsage"/>
+          </genEnums>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/MappingConfigurationAnalysis">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/MappingConfigurationAnalysis/prohibitedAllocations"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/MappingConfigurationAnalysis/fixedAllocations"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/MappingConfigurationAnalysis/bottomUpAnalysis"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/MappingConfigurationAnalysis/resultingMapping"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/SchedulingAnalysis">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/SchedulingAnalysis/mapping"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/SchedulingAnalysis/resultingPriorities"/>
+            <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/SchedulingAnalysis/schedulingStrategy"/>
+          </genClasses>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/BusConfigurationAnalysis">
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/BusConfigurationAnalysis/resultingBusConfig"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/BusConfigurationAnalysis/resultingCommLatencies"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/BusConfigurationAnalysis/inputFibex"/>
+            <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+                propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/DeploymentConfiguration/DeploymentConfAnalysis/BusConfigurationAnalysis/hwBusPlatform"/>
+          </genClasses>
+        </nestedGenPackages>
+      </nestedGenPackages>
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="RTComponentModel"
+          basePackage="org.polarsys.chess.chessmlprofile.Predictability" resource="XML"
+          disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Predictability/RTComponentModel">
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtPortSlot">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtPortSlot/base_Slot"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtPortSlot/cH_RtSpecification"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/partWithPort"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/WCET"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/localWCET"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/relativePriority"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/ceiling"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/memorySizeFootprint"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/stackSize"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/heapSize"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/slot"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/base_Comment"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/occKind"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/protection"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/rlDl"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/context"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/respT"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/blockT"/>
+        </genClasses>
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="RTDataTypes" basePackage="org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel"
+            disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Predictability/RTComponentModel/RTDataTypes">
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/RTDataTypes/CH_SporadicPattern"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/RTDataTypes/CH_PeriodicPattern"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/RTDataTypes/CH_BurstPattern"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/RTDataTypes/TA_Pattern"/>
+          <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/RTDataTypes/TA_ArbitraryPattern"/>
+        </nestedGenPackages>
+      </nestedGenPackages>
+    </nestedGenPackages>
+    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="ComponentModel" basePackage="org.polarsys.chess.chessmlprofile"
+        resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//ComponentModel">
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//ComponentModel/ComponentType">
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ComponentModel/ComponentType/base_Component"/>
+      </genClasses>
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//ComponentModel/ComponentImplementation">
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ComponentModel/ComponentImplementation/base_Component"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/language"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/OS"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/sourceCodeLocation"/>
+      </genClasses>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

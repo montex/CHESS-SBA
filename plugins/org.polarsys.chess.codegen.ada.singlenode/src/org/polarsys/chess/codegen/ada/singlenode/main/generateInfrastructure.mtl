@@ -1,0 +1,122 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module generateInfrastructure('http://www.eclipse.org/uml2/3.0.0/UML')]
+[import org::polarsys::chess::codegen::ada::singlenode::ifs::Interface /]
+[import org::polarsys::chess::codegen::ada::singlenode::component::ComponentType /]
+[import org::polarsys::chess::codegen::ada::singlenode::component::ComponentImplementation /]
+[import org::polarsys::chess::codegen::ada::singlenode::container::Container /]
+[import org::polarsys::chess::codegen::ada::singlenode::deployment::Deployment /]
+[import org::polarsys::chess::codegen::ada::singlenode::main::Main /]
+[import org::polarsys::chess::codegen::ada::singlenode::main::GPR /]
+[import org::polarsys::chess::codegen::ada::singlenode::main::GNATadc /]
+[import org::polarsys::chess::codegen::ada::singlenode::main::License /]
+[import org::polarsys::chess::codegen::ada::singlenode::datatype::DataType /]
+[import org::polarsys::chess::codegen::ada::singlenode::datatype::DataTypeC /]
+[comment import org::polarsys::chess::codegen::ada::singlenode::timingAnalysis::annotation::generateAITdescriptor /]
+
+[template public generateInfrastructure(model : Model) {
+	compTypeStName : String = 'CHESS::ComponentModel::ComponentType';
+	compImplStName : String = 'CHESS::ComponentModel::ComponentImplementation';
+	chHwProcessorStName  : String = 'CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor';
+	clSvPortStName : String = 'MARTE::MARTE_DesignModel::GCM::ClientServerPort';
+   	processingNodeList : Sequence(InstanceSpecification) = getProcessingNodeList(InstanceSpecification.allInstances()->asSequence(), chHwProcessorStName)->filter(InstanceSpecification);
+   	assignStName   : String = 'MARTE::MARTE_Foundations::Alloc::Assign';
+	chHwProcessorStName  : String = 'CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor';
+    isSingleNodeSystem : Boolean = isSingleNodeSystem(InstanceSpecification.allInstances()->asSequence(), chHwProcessorStName);
+   }
+]
+
+[comment @main/]
+
+[for (procNode : InstanceSpecification | processingNodeList)]
+[let deployedInstanceList : Sequence(InstanceSpecification) = getNodeInstanceSpecification(procNode, Comment.allInstances()->asSequence(), assignStName)->filter(InstanceSpecification)]
+[let deployedImplementationList : Sequence(Component) = getNodeComponentImplementationList(deployedInstanceList, compImplStName)->filter(Component)]
+[let deployedTypeList : Sequence(Component) = getNodeComponentTypeList(deployedImplementationList, compTypeStName)->filter(Component)]
+[let deployedInterfaceList : Sequence(Interface) = getNodeInterfaceList(deployedTypeList, clSvPortStName)->filter(Interface)]	
+
+    [comment Generate license /]
+	[generateLicense(model, procNode)/]
+
+	[comment Generate code for data types /]
+	[generateDataType(model, procNode)/]
+    [comment][if (hasCimplementation(deployedImplementationList, compImplStName))][/comment]
+       [generateDataTypeC(model, procNode)/]
+    [comment][/if][/comment]
+
+	[comment Generate code for interfaces/]
+	[for (aInterface : Interface | deployedInterfaceList)]
+	   [generateInterface(model, procNode, aInterface)/]
+	[/for]
+	[comment Generate code for component types/]
+	[for (aComponentType : Component | deployedTypeList)]
+	   [generateComponentType(model, procNode, aComponentType)/]
+	[/for]
+	[comment Generate code for component implementations/]
+	[for (aComponentImpl : Component | deployedImplementationList)]
+       [generateComponentImplementation(model, procNode, aComponentImpl, aComponentImpl.clientDependency.supplier->asSequence()->first().oclAsType(Component))/]
+	[/for]
+	[comment Generate code for containers/]
+	[for (aInstSpec : InstanceSpecification | deployedInstanceList)]
+       [generateContainer(model, procNode, aInstSpec, aInstSpec.classifier->asSequence()->first().oclAsType(Component))/]
+	[/for]
+
+	[comment Generate deployment code/]
+	[generateDeployment(model, procNode, deployedInstanceList,
+                    getConnectorInstList(InstanceSpecification.allInstances()->asSequence(), clSvPortStName))/]
+
+	[comment Generate Main file/]
+	[generateMain(model, procNode)/]
+
+	[comment Generate .gpr project file /]
+	[generateGPR(model, procNode, deployedImplementationList)/]
+
+	[comment Generate gnat.adc for compilation directives /]
+	[generateGNATadc(model, procNode)/]
+
+[/let] [comment InterfaceList /]
+[/let] [comment ComponentTypeList /]
+[/let] [comment ComponentImplementationList/]
+[/let] [comment ComponentInstanceList/]
+[/for]
+
+[comment Generate aiT descriptor /]
+[comment generateAITdescriptor(model)/]
+
+[/template]
+
+
+[query public getConnectorInstList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'getConnectorInstList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getProcessingNodeList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'getProcessingNodeList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getNodeInstanceSpecification(arg0: InstanceSpecification, arg1 : Sequence(OclAny), arg2 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'getNodeInstanceSpecification(org.eclipse.uml2.uml.InstanceSpecification, java.util.List, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
+
+[query public getNodeComponentImplementationList(arg0: Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'getNodeComponentImplementationList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getNodeComponentTypeList(arg0: Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'getNodeComponentTypeList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getNodeInterfaceList(arg0: Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'getNodeInterfaceList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public hasCimplementation(arg0 : Sequence(OclAny), arg1 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'hasCimplementation(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]

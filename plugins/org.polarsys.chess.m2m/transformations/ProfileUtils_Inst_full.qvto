@@ -1,0 +1,255 @@
+/*
+-----------------------------------------------------------------------
+--          			CHESS M2M plugin							 --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+*/
+
+library ProfileUtils_Inst_full;
+import UMLUtils_Inst_full;
+modeltype UML uses "http://www.eclipse.org/uml2/2.0.0/UML";
+modeltype MARTEP uses "http://www.eclipse.org/papyrus/MARTE/1";
+modeltype CHESS uses "http://CHESS";
+	
+
+
+modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
+
+
+property marteModel : EPackage = null;
+
+
+property MARTEProfile : Profile = null;
+property CHESSProfile : Profile = null;
+
+
+--property SaExecHosts :Sequence(MARTE::SAM::SaExecHost) = Sequence{};
+	
+
+helper initUtils(marte : Profile, chess : Profile) {
+	MARTEProfile := marte;
+	CHESSProfile := chess;
+	marteModel := null;
+	return;
+}
+
+helper initUtils(marte : Profile, chess : Profile, marteMdl : EPackage) {
+	MARTEProfile := marte;
+	CHESSProfile := chess;
+	marteModel := marteMdl;
+	return;
+}
+
+query Element::printStereotypes() {
+	log("********************************************************************************");
+	log("* Element: " + if(self.oclIsKindOf(NamedElement)) then self.oclAsType(NamedElement).name else "noName" endif);
+	self.getAppliedStereotypes()->collect(qualifiedName)->forEach(s){log("* " + s)};
+	log("********************************************************************************");
+}	
+
+query Bag(String)::print(){
+	self->forEach(i){log(i)};
+}
+
+query getMARTEStereotype(stereoName : String) : Stereotype {
+	return MARTEProfile.allOwnedElements()[Stereotype]->selectOne(stereoName.equalsIgnoreCase(name))
+}
+
+query getMARTEStereotypeQualifiedName(stereoName : String) : String {
+	return this.getStereotypeQualifiedName(MARTEProfile, stereoName);
+}
+
+query getCHESSStereotype(stereoName : String) : Stereotype {
+	return CHESSProfile.allOwnedElements()[Stereotype]->selectOne(name=stereoName);
+}
+
+query getCHESSStereotypeQualifiedName(stereoName : String) : String {
+	return this.getStereotypeQualifiedName(CHESSProfile, stereoName);
+}
+
+query getStereotypeQualifiedName(profile : Profile, stereoName : String) : String {
+	var s := profile.allOwnedElements()[Stereotype]->selectOne(name=stereoName).qualifiedName;
+	--log("property "+stereoName+"QN = \""+s+"\";");
+	return s;
+}
+
+query getMARTEProfile(profileName : String) : Profile {
+	return MARTEProfile.allOwnedElements()[Profile]->selectOne(name=profileName);
+}
+
+query getCHESSProfile(profileName : String) : Profile {
+	return CHESSProfile.allOwnedElements()[Profile]->selectOne(name=profileName);
+}
+
+query printMARTEStereotypeInfo(stereoName : String) {
+	var s := marteModel.allSubobjects()[EClass]->selectOne(name=stereoName).instanceTypeName;
+	var t := s.substring(1, s.rfind('.')-1);
+	t:=t.substring(1, t.rfind('.'));
+	s:=s.substringAfter(t);
+	
+	log("Qualified name: " + getMARTEStereotype(stereoName).qualifiedName);
+	log("Metaclass: MARTE::" + s.replace('.',"::"));
+}
+
+/*
+  Test if a CHRtPort slot correctly represents an operation
+*/
+query Slot::isCHRtPortSlotCorrect() : Boolean {
+	var s := self.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot);	   
+	return self.owningInstance.classifier <> null and
+	       s <> null and
+	       s.cH_RtSpecification <> null and 
+	       s.cH_RtSpecification->isEmpty() = false;
+}
+
+/*
+  Return the related CHRtSpecification of a Comment
+*/
+query Comment::CHRtSpec() : chessmlprofile::RTComponentModel::CHRtSpecification {
+	return self.getMetaclass(CHRtSpecificationQN).oclAsType(chessmlprofile::RTComponentModel::CHRtSpecification);
+}
+
+query InstanceSpecification::isProcessor() : Boolean {
+	var b := self.isStereotyped(CHHwProcessorQN);
+	return b;
+}
+
+query InstanceSpecification::isComputingResource() : Boolean {
+	var b := self.isStereotyped(CHHwComputingResourceQN);
+	return b;
+}
+
+query InstanceSpecification::isBus() : Boolean {
+	var b := self.isStereotyped(CHHwBusQN);
+	return b;
+}
+
+/*
+  Return the related CHRtSpecification of a Comment
+*/
+query Slot::CHRtSpecForOperation(op : Operation) : chessmlprofile::RTComponentModel::CHRtSpecification {
+    //TODO Assumption: CHRtPortSlot.cH_RtSpecification should contain one and only <<CHRtSpecification>>
+    self.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification ->forEach(spec){
+    	if (spec.context = op) then
+    		return spec
+    	endif;
+    	if (spec.context![Operation].isSameOperation(op)) then
+    		return spec
+    	endif;
+    };
+    //The operation must exists!
+    assert fatal (false)
+    	with log ("Cannot find Operation " + op.name + " for Slot " + self.owningInstance.name);
+	return null; 
+}
+
+
+query Slot::getStringId() : String {
+	var ids := self.getMetaclass(IdentifSlotQN).oclAsType(CHESS::Core::IdentifSlot);
+	if not (ids.oclIsInvalid() or ids.oclIsUndefined()) then
+		return "_"+ids.id.toString()
+	endif;
+	return "";
+}
+
+query Slot::getId() : Integer {
+	var ids := self.getMetaclass(IdentifSlotQN).oclAsType(CHESS::Core::IdentifSlot);
+	if not (ids.oclIsInvalid() or ids.oclIsUndefined()) then
+		return ids.id
+	endif;
+	return 0;
+}
+
+query InstanceSpecification::getStringId() : String {
+	var ids := self.getMetaclass(IdentifInstanceQN).oclAsType(CHESS::Core::IdentifInstance);
+	if not (ids.oclIsInvalid() or ids.oclIsUndefined()) then
+		return "_" + ids.id.toString()
+	endif;
+	return "";
+}
+
+query InstanceSpecification::getId() : Integer {
+	var ids := self.getMetaclass(IdentifInstanceQN).oclAsType(CHESS::Core::IdentifInstance);
+	if not (ids.oclIsInvalid() and ids.oclIsUndefined()) then
+		return ids.id
+	endif;
+	return 0;
+}
+
+query InstanceSpecification::getSourceInstanceSpec() : InstanceSpecification {
+	var ids := self.getMetaclass(IdentifInstanceQN).oclAsType(CHESS::Core::IdentifInstance);
+	if not (ids.oclIsInvalid() and ids.oclIsUndefined()) then
+		return ids.sourceInstanceSpec
+	endif;
+	assert fatal (false)
+		with log ("Cannot find source instance specification for " + self.qualifiedName);
+	return null
+}
+
+// Naming conventions
+
+query operationClassName(slot : Slot, name : String) : String {
+//	var slotInstance := slot.getStringId();
+//	var owningInstance := slot.owningInstance.getStringId();
+//	if (slotInstance <> "") then
+//		slotInstance = "_"+slotInstance
+//	endif;
+//	if (owningInstance <> "") then
+//		owningInstance = "_"+owningInstance
+//	endif;	
+//	return slot.owningInstance.name + owningInstance + "_" + slot.definingFeature![Port].name + "_"+ slotInstance + "_" + name
+
+	return slot.owningInstance.name + slot.owningInstance.getStringId() + "_" 
+		+ slot.definingFeature![Port].name // + slot.getStringId() 
+		+ "_" + name
+}
+
+query opaqueActionName(slot : Slot, chrtSpec : chessmlprofile::RTComponentModel::CHRtSpecification) : String {
+	return slot.owningInstance.name + slot.owningInstance.getStringId() + "_" 
+		+ slot.definingFeature![Port].name // + slot.getStringId() 
+		+ "_" + chrtSpec.context.name();
+}
+
+query chessmlprofile::RTComponentModel::CHRtSpecification::schedulableResource(slot : Slot) : String {
+    //TODO what happens if the operation (i.e. the 'context') is overloaded? (same name?): resolved with name() query
+	return slot.owningInstance.name + slot.owningInstance.getStringId() + "_" 
+		+ slot.definingFeature![Port].name // + slot.getStringId() 
+		+ "_" + self.context.name() + "_task";
+}
+
+-- CHESS Stereotype Qualified Names
+
+property ComponentImplementationQN = "CHESS::ComponentModel::ComponentImplementation";
+property CHRtPortSlotQN = "CHESS::Predictability::RTComponentModel::CHRtPortSlot";
+property CHRtSpecificationQN = "CHESS::Predictability::RTComponentModel::CHRtSpecification";
+property CHGaResourcePlatformQN = "CHESS::Core::CHGaResourcePlatform";
+property CHHwComputingResourceQN = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwComputingResource";
+property CHHwProcessorQN = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor";
+property CHHwBusQN = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwBus";
+
+property IdentifInstanceQN = "CHESS::Core::IdentifInstance";
+property IdentifSlotQN = "CHESS::Core::IdentifSlot";	
+
+-- MARTE Stereotype Qualified Names
+property ClientServerPortQN = "MARTE::MARTE_DesignModel::GCM::ClientServerPort";
+property AssignQN = "MARTE::MARTE_Foundations::Alloc::Assign";
+property SchedulableResourceQN = "MARTE::MARTE_Foundations::GRM::SchedulableResource";
+property SaStepQN = "MARTE::MARTE_AnalysisModel::SAM::SaStep";
+property GaCommChannelQN = "MARTE::MARTE_AnalysisModel::GQAM::GaCommChannel";
+property HwComputingResourceQN = "MARTE::MARTE_DesignModel::HRM::HwLogical::HwComputing::HwComputingResource";
+property HwBusQN = "MARTE::MARTE_DesignModel::HRM::HwLogical::HwCommunication::HwBus";
+property SaExecHostQN = "MARTE::MARTE_AnalysisModel::SAM::SaExecHost";
+property GaResourcesPlatformQN = "MARTE::MARTE_AnalysisModel::GQAM::GaResourcesPlatform";
+property SaCommHostQN = "MARTE::MARTE_AnalysisModel::SAM::SaCommHost";
+property MemoryPartitionQN = "MARTE::MARTE_DesignModel::SRM::SW_Concurrency::MemoryPartition";
+property SwSchedulableResourceQN = "MARTE::MARTE_DesignModel::SRM::SW_Concurrency::SwSchedulableResource";
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="Drawer__1301934597253" name="Railway Mitigations">
+		
+			<aspectTool description="Create new Connector stereotyped as TrasmissionWithProtocol" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Connector.gif" id="composite.tool.connector_1301934783215" name="TrasmissionWithProtocol" refToolId="composite.tool.connector">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Dependability::MitigationMeans::TransmissionWithProtocol">
+						</stereotype>
+					</stereotypesToApply>
+				</postAction>
+				<!--postAction displayKind="IconStereotype" displayPlace="Compartment" id="org.eclipse.papyrus.postaction.changeStereotypeDisplayProvider"/-->
+			</aspectTool>	
+		</drawer>
+	</content>
+</paletteDefinition>

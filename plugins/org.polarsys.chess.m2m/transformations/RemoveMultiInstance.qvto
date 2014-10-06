@@ -1,0 +1,75 @@
+/*
+-----------------------------------------------------------------------
+--          			CHESS M2M plugin							 --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Stefano Puri         stefano.puri@intecs.it 		         --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+*/
+
+
+modeltype CHESS uses "http://CHESS";
+modeltype UML uses "http://www.eclipse.org/uml2/3.0.0/UML";
+modeltype MARTE uses "http://www.eclipse.org/papyrus/MARTE/1";
+
+transformation RemoveMultiInstance(inout chessModel : CHESS);
+
+property CHESSProfile : Profile = null;
+property model : Model = null;
+property newMultiInstPackage : Set(Package) = null;
+property CHGaResourcePlatformQN = "CHESS::Core::CHGaResourcePlatform";
+
+
+configuration property rootComp : String;
+
+property rootInstance : InstanceSpecification = null;
+
+main() {
+
+    log("*** Remove Multi Instance Transformation   ***");	
+	model := chessModel.rootObjects()![Model];
+	
+	CHESSProfile := model.getAppliedProfiles()->selectOne(name="CHESS").oclAsType(Profile);
+  	
+  	var compViewPack : Package := model.getView("ComponentView");
+  	compViewPack->map removeMultipleInstancePackage();
+  	
+}
+
+/**
+Takes the package owning the instances created by the BuildInstance trasformation and explodes 
+all the instanceSpecification and Slot deriving from Properties/Ports with mult>1
+*/
+mapping UML::Package::removeMultipleInstancePackage() {
+
+	var platforms := self.allOwnedElements()[Package]->select(isStereotyped(CHGaResourcePlatformQN))->asSequence();
+	
+	assert fatal (platforms->size()=1) with log("CHGaResourcesPlatform not found");
+	
+	var instPackage := platforms->first();
+
+	//var instPackage := UML::Package.allInstances()->select(name = rootName+"_instSpec")->asOrderedSet()->first().oclAsType(UML::Package);
+	var parentPackage : UML::Package := instPackage.owner.oclAsType(UML::Package);
+	
+	newMultiInstPackage := self.allOwnedElements()[Package] -> select(name=instPackage.name+"_full");
+	newMultiInstPackage->forEach(p){
+		p.packagedElement := null;
+		p.destroy();
+	};
+}
+
+query Model::getView(viewName : String) : Package {
+	var seq := self.packagedElement[Package]-> union(self.packagedElement[Package].packagedElement[Package]);
+	return seq -> selectOne(isStereotyped("CHESS::Core::CHESSViews::" + viewName));
+}
+
+query Element::isStereotyped(stereoName : String) : Boolean {
+	return self.getAppliedStereotype(stereoName) <> null
+}

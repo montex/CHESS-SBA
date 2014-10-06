@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif"
+			id="DepAnalysisViewDrawer__1317300165546"
+			name="DependabilityAnalysis">
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif"
+				id="clazz.tool.component_1301932923050_1317300366021" name="StateBasedAnalysis (Component)"
+				refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype
+							stereotypeName="CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis" />
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif"
+				id="clazz.tool.component_1316779916487_1317300377613" name="FailurePropagationAnalysis (Component)"
+				refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype
+							stereotypeName="CHESS::Dependability::FailurePropagation::FailurePropagationAnalysis" />
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif"
+				id="clazz.tool.component_1317300388677" name="FMEAAnalysis (Component)"
+				refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Dependability::FMEA::FMEAAnalysis" />
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+		</drawer>
+
+	</content>
+</paletteDefinition>

@@ -1,0 +1,189 @@
+/*
+-----------------------------------------------------------------------
+--          			CHESS M2M plugin							 --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+*/
+
+library UMLUtils_Inst_full;
+import chess.lib;
+
+modeltype UML uses "http://www.eclipse.org/uml2/2.0.0/UML";
+modeltype MARTEP uses "http://www.eclipse.org/papyrus/MARTE/1";
+modeltype CHESS uses "http://CHESS";
+
+modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
+
+query Element::getMetaclass(stereoName : String) : EObject {
+  var s = self.getAppliedStereotype(stereoName);
+  return self.getStereotypeApplication(s);	
+}
+
+query Model::getView(viewName : String) : Package {
+	var seq := self.packagedElement[Package]-> union(self.packagedElement[Package].packagedElement[Package]);
+	return seq -> selectOne(isStereotyped("CHESS::Core::CHESSViews::" + viewName));
+}
+
+query Element::isStereotyped(stereoName : String) : Boolean {
+	return self.getAppliedStereotype(stereoName) <> null
+}
+
+/*
+  Return the connector associated to a port assuming
+  each port has at most only one connector 
+*/
+//TODO Assumption: a port should have only one connector
+query Port::getConnector() : Connector {
+	return self._end->asSequence()->first().owner.oclAsType(Connector);
+}
+
+/*
+  Return the RI Slot of the 'instance' InstanceSpecification that corresponds to the given port
+*/
+//query Port::portToSlot(in instance : InstanceSpecification) : Slot {
+//	return instance.ownedElement[Slot]->selectOne(definingFeature = self);	
+//}
+
+query CallOperationAction::portToSlotFull(in instance : InstanceSpecification) : Set(Slot) {
+	var rule := self.activity.specification![Operation]._class.getRuleFor(self);
+	if rule.oclIsInvalid() or rule.oclIsUndefined() then //if there is no contraint all the ports are called simultaneously
+		return instance.slot->select(definingFeature = self.onPort)
+	else {
+		return instance.portToSlotsByRule(self.onPort, rule)->asSet();
+	}endif;
+	return null;	
+}		
+
+query Class::getRuleFor(callOp : CallOperationAction) : Constraint {
+	self.ownedRule->forEach(rule){
+		if rule.constrainedElement![CallOperationAction] = callOp then
+			return rule
+		endif;
+	};
+	return null;
+}
+
+query Element::isNull() : Boolean {
+	return self.oclIsInvalid() or self.oclIsUndefined();
+}
+//TODO Assumption: The InstanceSpecification.classifier property should really have one and only element!	
+query InstanceSpecification::classifier() : Classifier {
+	return self.classifier->selectOne(true);
+}
+
+/*
+  Test if a connector is attached to the 'el' element
+*/
+query Connector::isLinkedWith(el : Element) : Boolean {
+	return self._end->selectOne(partWithPort = el) <> null;
+}
+
+
+//TODO extends with other comparison criteria
+query Operation::isSameOperation(op : Operation) : Boolean {
+	
+	var b := self.name = op.name 
+	and self.ownedParameter->size() = op.ownedParameter->size() 
+	and self.visibility = op.visibility 
+	and op.isStatic = self.isStatic 
+	and op.isAbstract = self.isAbstract;
+	
+	if not b then
+		return false
+	endif;
+	
+	// the ownedParameter is an ordered set...
+    var i := 1;
+    while (i <= self.ownedParameter->size()) {
+    	b := b and self.ownedParameter->at(i).isSameParameter(op.ownedParameter->at(i));
+    	i := i + 1;
+    };
+    
+	return b;	
+}
+
+query Parameter::isSameParameter(pa : Parameter) : Boolean {
+	return self.name = pa.name and self.type = pa.type and self.direction = pa.direction;
+}
+
+/*
+  Build the name of an operation: the name of a operation corresponds to 
+  its name concatenated to the name of type of its parameters
+*/
+query BehavioralFeature::name() : String {
+	var n := self.name;
+    self.ownedParameter.type.name->forEach(s){
+    	n := n + "_" + s;
+    };
+	return n;
+}
+
+// Constructors
+
+constructor Operation::Operation(n : String) {
+	name := n;
+}
+
+constructor Operation::Operation(op: Operation)  {
+	name:= op.name();
+	op.ownedParameter -> forEach(par) {
+		ownedParameter += new Parameter(par);
+	};
+	
+	redefinedOperation:= op;
+	// TODO complete with other attributes if necessary
+}
+
+
+
+constructor Parameter::Parameter(par: Parameter)  {
+	name:= par.name;
+	type:= par.type;
+}
+
+constructor Package::Package(n:String) {
+	name:= n;
+}
+
+constructor Class::Class(n:String)  {
+	name:= n;
+}
+
+constructor Activity::Activity(n:String) {
+	name:= n;
+}
+
+constructor InitialNode::InitialNode(n: String) {
+	name:= n;
+}
+
+constructor ActivityFinalNode::ActivityFinalNode(n: String) {
+	name:= n;
+}
+
+constructor ControlFlow::ControlFlow(n: String) {
+	name:= n;
+	guard:= new OpaqueExpression();
+}
+
+constructor OpaqueAction::OpaqueAction(n: String) {
+	name:= n;
+}
+
+constructor Constraint::Constraint(n: String) {
+	name:= n;
+}
+
+constructor OpaqueExpression::OpaqueExpression() {
+	body:="true";
+	language:="OCL";
+}

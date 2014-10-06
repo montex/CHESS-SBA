@@ -1,0 +1,1437 @@
+/*
+-----------------------------------------------------------------------
+--          			CHESS M2M plugin							 --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+*/
+
+import ProfileUtils_Inst_full;
+import UMLUtils_Inst_full;
+import chess.lib;
+import chess.libJava4QVTutils;
+	
+modeltype UML uses "http://www.eclipse.org/uml2/5.0.0/UML";
+modeltype MARTEP uses "http://www.eclipse.org/papyrus/MARTE/1";
+modeltype CHESS uses "http://CHESS";	
+modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
+	
+
+transformation CHESS_PIM2PSM(inout source:UML);
+
+configuration property analysisType : String;
+configuration property deadline : String;
+configuration property scenario : String;
+configuration property saAnalysis : String;
+configuration property saE2EFlow : String;
+
+property model : Model = null;
+property RTAnalView : Package = null;
+property compView : Package = null;
+property depView : Package = null;
+property MARTEProfile : Profile = null;
+property CHESSProfile : Profile = null;
+
+property platform : Package = null;
+property hostPackage : Package = null;
+property operationPackage : Package = null;
+property taskPackage : Package = null;
+property analysisContextPackage : Package = null;
+
+property assigns : Set(Comment) = null;
+property specs : Set(Comment) = null;
+property slots : Set(Slot) = null;
+property slotInstances : Set(Slot) = null;
+property e2eOperations : Set(Operation) = null;
+
+property instSpecPackage : Package = null;
+property instSpecFullPackage : Package = null;
+
+property currentConcurRes : MARTE::SRM::SW_Concurrency::SwSchedulableResource = null;
+property currentSlot : Slot = null;
+//property currentSharedRes : MARTE::SAM::SaSharedResource = null;
+	
+main() {
+    log("*** CHESS PIM->PSM transformation   ***");
+    log("Performing " + analysisType + " Analysis");	
+	model := source.rootObjects()![Model];
+	
+	MARTEProfile := model.getView("ComponentView").getAppliedProfiles()->selectOne(name="GCM").owner.owner.oclAsType(Profile);
+	CHESSProfile := model.getAppliedProfiles()->selectOne(name="CHESS").oclAsType(Profile);
+	
+	initUtils(MARTEProfile, CHESSProfile);
+	
+	model.map psmModel();
+}
+
+mapping inout Model::psmModel() {
+	init{
+		RTAnalView := self.getView("RTAnalysisView");
+		//TODO apply the SAM profile during the creation of the CHESS model!!!
+		RTAnalView.applyProfile(getMARTEProfile("SAM"));
+		RTAnalView.applyProfile(getCHESSProfile("TimingAnalysis"));
+		RTAnalView.applyProfile(getCHESSProfile("DeploymentConfAnalysis"));
+		RTAnalView.applyProfile(getMARTEProfile("SW_Interaction"));
+		RTAnalView.applyProfile(getMARTEProfile("SW_Concurrency"));
+		
+		
+		compView := self.getView("ComponentView");
+		depView := self.getView("DeploymentView");
+		
+		var platforms := compView.allOwnedElements()[Package]->select(isStereotyped(CHGaResourcePlatformQN))->asSequence();
+		platform := platforms->first();
+		
+		instSpecPackage := compView.allOwnedElements()[Package]->selectOne(name.endsWith("_instSpec"));
+		instSpecFullPackage := compView.allOwnedElements()[Package]->selectOne(name.endsWith("_instSpec_full"));
+	}
+	
+	assert fatal (platform <> null)
+		with log("CHGaResourcesPlatform is not present: there should be one CHGaResourcePlatform in the model");
+	
+	assert fatal (platforms->size()=1) 
+		with log("Ambiguos analysis scenario: there should be only one CHGaResourcePlatform in the model");
+			
+	log("<<CHGaResourcesPlatform>> found.");	
+	platform.map CHGaResourcePlatform2SaAnalysisContext();
+}
+
+mapping Package::CHGaResourcePlatform2SaAnalysisContext() : Class {
+	init{
+		log("Generating <<SaAnalysisContext>> and necessary packages.");
+		
+		hostPackage := object Package {
+			name := "Host";
+		};   
+		operationPackage := object Package {
+			name := "Operation";
+		};
+		taskPackage := object Package {
+			name := "Task";
+		};
+		analysisContextPackage := object Package{
+			name := "AnalysisContext";
+		};
+
+	    RTAnalView.packagedElement += hostPackage;
+		RTAnalView.packagedElement += operationPackage;
+		RTAnalView.packagedElement += taskPackage;
+		RTAnalView.packagedElement += analysisContextPackage;
+	}
+	
+	// analysisContextPackage
+	analysisContextPackage.applyProfile(getMARTEProfile("GQAM"));
+
+	/*
+	Creation of the "AnalysisContext" package
+	(<<saAnalysisContext>> containing :
+	<<saEndToEndFlow>>, Constraint as <<gaLatencyObs>>,
+	<<gaWorkloadEvent>>, OpaqueAction as <<saStep>>)
+	*/
+	
+	result.name := model.name + "_analysisContext";
+	analysisContextPackage.packagedElement += result;	
+	// Apply the stereotype <<saAnalysisContext>>
+	var analysisC := result.applyStereotype(getMARTEStereotype("SaAnalysisContext")).oclAsType(MARTE::SAM::SaAnalysisContext);
+	analysisC.context += "(tool=mast,options=(invoke=true,recoverResults=true,overwriteResults=true,overwriteOutputModel=true,modeID=''))";
+	
+	end{
+	
+	// hostPackage
+	
+	hostPackage.applyProfile(getMARTEProfile("HwComputing"));
+	hostPackage.applyProfile(getMARTEProfile("HwCommunication"));
+	hostPackage.applyProfile(getMARTEProfile("GQAM"));
+	
+	
+	// Retrieve all <<Assign>>
+	assigns := depView.allOwnedElements()[Comment]->select(isStereotyped(AssignQN))->asSet();
+	
+	assert fatal (assigns <> null)
+		with log ("No <<Assign>> found in input model");	
+			
+	assigns.getTo()->asSet()->select(isProcessor())->map HwProcessor2SaExecHost();
+
+	assigns.getTo()->asSet()->select(isComputingResource())->map HwComputingResource2SaExecHost();
+	
+	self.ownedMember[InstanceSpecification]->select(isBus())->processBus();
+	
+	// operationPackage
+	
+	var comps := compView.allOwnedElements()[Component]->select(isStereotyped(ComponentImplementationQN));
+	
+	assert fatal (comps <> null)
+		with log ("No <<ComponentImplementation>> found in input model");
+	
+	// taskPackage
+		
+	slots := instSpecPackage.allOwnedElements()[Slot]->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
+	
+	assert fatal (slots <> null)
+		with log ("No <<CHRtPortSlot>> found in input model");
+	
+	specs := compView.allOwnedElements()[Comment]->select(isStereotyped(CHRtSpecificationQN))->asSet();
+	
+	assert fatal (specs <> null)
+		with log ("No <<CHRtSpecification>> found in input model");	
+	
+	taskPackage.applyProfile(getMARTEProfile("GRM"));
+	
+	assigns->forEach(ass){
+		var asg := ass.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+
+		//TODO assumption: one annotatedElement per Assign	
+		var list := ass.getInstances(instSpecPackage, instSpecFullPackage);
+		list->forEach(e){
+			var id := e.getMetaclass("CHESS::Core::IdentifInstance").oclAsType(CHESS::Core::IdentifInstance);
+			slotInstances += e.slot->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
+		}
+	};
+	
+	log("Slot list:");
+	slotInstances->forEach(s){
+		log("  "+s.definingFeature.name);
+	};
+	
+	log("");
+	log("*** Proceeds to create SwSchedulableResources and SaSteps ***");
+	
+	slotInstances->forEach(s){
+		var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
+		specs->forEach(spec){
+		    log("***Processing Slot" +s.getStringId()+ " defining feature " +s.getStringId()+ s.definingFeature.name+ " for " + s.owningInstance.name + s.owningInstance.getStringId() + " and operation "+ spec.context.name +".");
+		    
+		    //maps only if the operation is deferred
+			s.map CHRtSlot2SwSchedulableResource(spec.base_Comment);  
+			//now creates the <<SaStep>> operations
+		    s.CHRTComment2SaStep(spec.base_Comment);
+		}; 
+	};
+	
+	if(analysisType.equalsIgnoreCase("Schedulability")) then {
+		
+	//Proceeds to create the EndToEndWorkFlow now that all the necessary resources are generated
+		log("");
+		log("*** Proceeds to create the EndToEndWorkFlow ***");
+		slotInstances->forEach(s){
+			var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
+			specs->forEach(spec){
+				s.map slot2EndToEndWorkFlow(spec.base_Comment);
+			};
+		};
+	} endif;
+	
+	
+	if(analysisType.equalsIgnoreCase("EndToEnd")) then {
+		
+		//EndToEndWorkFlow for E2E Scenario
+		var pimContext : Class = model.allOwnedElements()[Class]->selectOne(c : Class | c.qualifiedName.equalsIgnoreCase(saAnalysis));
+		var pimActivity : Activity = model.allOwnedElements()[Activity]->selectOne(a : Activity | a.qualifiedName.equalsIgnoreCase(saE2EFlow));
+		var interactions : Set(Interaction) := model.allOwnedElements()[Interaction];
+		interactions->forEach(interaction){
+		if(interaction.qualifiedName.equalsIgnoreCase(scenario)) then {
+			log(">>>>> Found End-To-End Scenario: " + interaction.name);
+			interaction.map Interaction2EndToEndWorkFlow(result, pimContext, pimActivity);
+		} endif;
+		
+		log("e2e operations:");
+		e2eOperations->forEach(op){
+			log("   "+ op.name)
+		};
+		
+		//Proceeds to create the EndToEndWorkFlow for those tasks not involved in the e2e scenario"
+		log("*** Proceeds to create the EndToEndWorkFlow ***");
+		slotInstances->forEach(s){
+			var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
+			specs->forEach(spec){
+				if(not e2eOperations->exists(op: Operation | op.name.equalsIgnoreCase(spec.context.name))) then {
+					log("Operation is: " +  spec.context.name);
+				    s.map slot2EndToEndWorkFlow(spec.base_Comment);
+				} endif;
+			};
+		};		
+	};
+
+	} endif;
+	
+		log("*** End of CHESS PIM->PSM transformation ***");
+	}
+
+}
+
+//context: the PSM analysisContext - used to read analysis reuslts to backpropagate to PIM
+//pimContext, pimActivity: PIM entities to be updated by the backpropagation
+//
+mapping Interaction::Interaction2EndToEndWorkFlow(context : Class, pimContext : Class, pimActivity: Activity) : Activity{
+	init {
+		log("Generating <<EndToEndWorkFlow>> from " +  self.name);
+		
+		//First we get a list of ordered messages 
+		//it is based on the assumption that each message starts with a progressive number to keep their order
+		var messageSequence : Sequence(Message) := self.message->sortedBy(name)->asSequence();
+		log("****** messages sequence");
+		messageSequence->forEach(msg){
+			log("          " + msg.name)
+		};
+		//get starting chrts for initializing the <<gaWorkloadEvent>> pattern
+		var startMsg := messageSequence->first();
+   		var startChrts := startMsg.getMsgChrts();
+   	}
+   	
+   	result.name := self.name;
+    // Add the action to the owned behaviors of RTAnalysisContext     
+    platform.resolveoneIn(Package::CHGaResourcePlatform2SaAnalysisContext, Class).ownedBehavior += result;
+    //Apply the stereotype <<SaEndtoEndFlow>> to the activity
+	result.applyStereotype(getMARTEStereotype("SaEndtoEndFlow"));
+	//Global Timing Requirement
+	var actConstraint := new Constraint("Global_Timing_Req");
+	result.precondition += actConstraint;
+	
+	var actInitialNode := result.createInitialNode();
+	var controlFlowInit := new ControlFlow("ControlFlowInit");
+	actInitialNode.outgoing += controlFlowInit;
+	result.edge += controlFlowInit;
+	
+	//Apply stereotype <<gaLatencyObs>> and specify the deadline for the end to end flow
+	var gaLatencyObs := actConstraint.applyStereotype(getMARTEStereotype("GaLatencyObs")).oclAsType(MARTE::GQAM::GaLatencyObs);
+	gaLatencyObs.latency += deadline.parseNFPDuration("value");
+	
+	//Apply stereotype <<gaWorkloadEvent>> and specify the release pattern of the end-to-end flow
+	var gaWorkloadEvent := actInitialNode.applyStereotype(getMARTEStereotype("GaWorkloadEvent")).oclAsType(MARTE::GQAM::GaWorkloadEvent);
+	gaWorkloadEvent.pattern := startChrts.occKind;
+	
+	//create end2end action sequence 
+	var resultNode := createE2EOpaqueActionsChain(messageSequence, result, actInitialNode);
+	
+	//create final node
+	//var finalNode := new ActivityFinalNode("ActivityFinalNode1");
+	var finalNode := result.createFinalNode();
+	//result.node += finalNode;
+	
+	resultNode.outgoing![ControlFlow].target := finalNode;
+}
+
+//Return the nextE2ENode TODO - work in progress!!!
+helper createE2EOpaqueActionsChain(in messageSequence : Sequence(Message), inout endToEndWorkFlow : Activity, inout currentNode : ActivityNode) : ActivityNode {
+	
+	var nextNode := currentNode;	
+	messageSequence->forEach(msg){
+		//log("operation is: " + msg.signature.name);
+		
+		var currentChrts := msg.getMsgChrts();
+		//log("its context is: " +currentChrts.context.name);
+		//log("its partWithPort is: " +currentChrts.partWithPort.name);
+		//log("its occKind is: " +currentChrts.occKind.toString());
+		//log("its protection is: " +currentChrts.protection.toString());
+		//log("its WCET is: " +currentChrts.WCET.toString());
+		//log("Slot [createOpaqueActionsChain]: " + currentSlot.definingFeature.name);
+
+		//if operation is sporadic then create a get node before the operation node
+		nextNode := createSporadicRelatedNodes(currentChrts, currentSlot, endToEndWorkFlow, nextNode);
+		
+		//Creates the subsequent OpaqueAction and ControlFlow
+		nextNode := createSaStepNode(currentChrts, currentSlot, endToEndWorkFlow, nextNode);
+		
+		e2eOperations += currentChrts.context->oclAsType(Operation);		
+	};
+	
+	return nextNode;
+}
+
+helper createSaStepNode(in currentCHRts: chessmlprofile::RTComponentModel::CHRtSpecification, in sourceSlot : Slot, inout EndToEndWorkFlow : Activity, inout currentNode : ActivityNode) : ActivityNode {
+	var opNode := createOpaqueAction(opaqueActionName(sourceSlot, currentCHRts), EndToEndWorkFlow, currentNode);
+	var opSaStep := opNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	//log("Slot [createSaStepNode]: " + currentSlot.definingFeature.name);
+	// Set the <<SwSchedulableResource>> that executes the <<saStep>>
+	var concurRes := currentConcurRes;
+	if currentCHRts.isDeferred() then
+		concurRes := currentCHRts.base_Comment.getConcurRes(sourceSlot)
+	endif;
+	opSaStep.concurRes := concurRes;
+    // Retrieve the <<SaStep>> to use for the subusage
+	var saStep := sourceSlot.resolve2SaStep(currentCHRts.base_Comment).getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	//Add the newly created operation as subUsage of the OpaqueAction(<<saStep>>)
+	opSaStep.subUsage += saStep;
+	
+	//opSaStep.sharedRes += currentSharedRes;
+	return opNode;
+}
+
+/*
+  Creates Bus related entities given an InstanceSpecification of a Bus
+*/
+helper InstanceSpecification::processBus(){
+	log("Bus found for InstanceSpecification '"+self.name+"'."); 
+	self.map HwBus2SaCommHost();
+	self.map HwBus2OperationClass();
+	self.linkedHwInstanceSpecifications()-> map BusProperty2GaCommChannel(self);
+	return null;
+}
+
+//NOT USED
+//mapping Slot::CHRtSlot2SwSchedulableResourceStrict(chrt : Comment) : Class when {chrt.CHRtSpec().isDeferred()} {
+//	init{
+//		var res := self.owningInstance.resolveoneIn(InstanceSpecification::Instance2SwSchedulableResource, Class);
+//		if res = null then
+//			res := self.owningInstance.map Instance2SwSchedulableResource(chrt, self)
+//		else 
+//			log("  Nothing to do")
+//		endif;
+//		result := res;
+//	}
+//}
+
+
+mapping Slot::CHRtSlot2SwSchedulableResource(chrt : Comment) : Class when {chrt.CHRtSpec().isDeferred()} {
+	init{
+		var res := self.owningInstance.map Instance2SwSchedulableResource(chrt, self);
+		result := res;
+	}
+}
+
+mapping InstanceSpecification::Instance2SwSchedulableResource(chrt : Comment, slot : Slot) : Class when {chrt.CHRtSpec().isDeferred()} {
+	init{
+		var chrts := chrt.CHRtSpec();
+		var resourceName := chrts.schedulableResource(slot);
+		log("  Operation '" + chrt.CHRtSpec().context.name + "' is deferred. Generating <<SwSchedulableResource>> '" + resourceName + "'.");
+    }
+	 
+	result.name := resourceName;
+	
+	taskPackage.packagedElement += result;
+	
+	var sr := result.applyStereotype(getMARTEStereotype("SwSchedulableResource")).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);		
+	sr.isProtected := false;
+	var schedParams := "fp(priority=(value=" + chrts.relativePriority.normalizeNFPInteger() +", source=meas))";
+	
+	//TODO assume <<Assign>> 'from' and 'to' typed as InstanceSpecification	
+	// Find the deployment node (InstanceSpecification), based on <<Assign>> directives
+
+	var hostClassifier := getAssignToFrom_MemoryPartition(slot.owningInstance);
+	sr.host := hostClassifier.getHost();
+	assert fatal (sr.host <> null)
+		with log("Null Host for SwSchedulableResource '" +result.name+ "'.");
+	sr.schedParams := schedParams;
+}
+
+
+
+/*
+  Given a InstanceSpecification representing a Processor/ComputingResource,
+  return the already generated SaExecHost
+*/
+query InstanceSpecification::getHost() : MARTE::SAM::SaExecHost {
+	var res := self.resolveoneIn(InstanceSpecification::HwProcessor2SaExecHost, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
+	if res.oclIsInvalid() or res = null then
+		return self.resolveoneIn(InstanceSpecification::HwComputingResource2SaExecHost, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost)
+	endif;
+	return res;	
+}
+
+/*
+  Given an ICB-Activity return the list of all its CallOperationAction nodes,
+  assuming that their are all connected in a single chain: no loops and branches.
+*/
+query Activity::collectCallOperationNodes() : Sequence(CallOperationAction) {
+	var nodes : Sequence(CallOperationAction) := Sequence{};
+	var prevNode : ActivityNode := self.node![InitialNode];
+	var nextNode : ActivityNode;
+	while(true){
+		//TODO Assumption one edge per node 
+		nextNode := prevNode.outgoing->any(true).target;
+		if (nextNode <> null and nextNode.oclIsKindOf(CallOperationAction)) then {
+			nodes += nextNode.oclAsType(CallOperationAction);
+			prevNode := nextNode;
+		}
+		else{
+			if (nextNode.oclIsKindOf(ActivityFinalNode)) then {
+				break;
+			}
+			endif;
+		}
+		endif;
+	};
+	return nodes;
+}
+
+helper createSaStepNode(in sourceCHRtComment: Comment, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
+	var chrts := sourceCHRtComment.CHRtSpec();
+	var opNode := createOpaqueAction(opaqueActionName(sourceSlot, chrts), e2eActivity, prevE2ENode);
+	var opSaStep := opNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	
+	// Set the <<SwSchedulableResource>> that executes the <<saStep>>
+	
+	var concurRes := currentConcurRes;
+	if chrts.isDeferred() then
+		concurRes := sourceCHRtComment.getConcurRes(sourceSlot)//classResource.getMetaclass(SchedulableResourceQN).oclAsType(MARTE::GRM::SchedulableResource);
+	endif;
+	opSaStep.concurRes := concurRes;
+    // Retrieve the <<SaStep>> to use for the subusage
+	var saStep := sourceSlot.resolve2SaStep(chrts.base_Comment).getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	//Add the newly created operation as subUsage of the OpaqueAction(<<saStep>>)
+	opSaStep.subUsage += saStep;
+	
+	//opSaStep.sharedRes += currentSharedRes;
+	return opNode;
+}
+
+//Stefano: not clear what this method is intended to implement!!!
+helper createSubUsage(in sourceCHRtComment: Comment, in sourceSlot : Slot)  {
+	var chrts := sourceCHRtComment.CHRtSpec();
+	
+	//log("createSubUsage, chrt = " + chrts.toString() + " sourceSlot = "+sourceSlot.owningInstance.toString());
+	var owningSaStep := sourceSlot.resolveoneIn(Slot::CHRTCommentProtected2SaStep, Operation).getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	//log("createSubUsage, owningSaStep = " + owningSaStep.toString());
+	owningSaStep.subUsage += sourceSlot.resolve2SaStep(chrts.base_Comment).getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep); 
+	
+}
+
+/*
+Author: Stefano Puri
+Given a Slot with an associated CHRtSpecification representing a port-operation using another port-operation, 
+it sets the dependencies through the subusage field of the SaStep mapped to the requiring operation  
+*/
+
+helper createSubUsage(requiringSlot : Slot, in reqCHRtSpec: chessmlprofile::RTComponentModel::CHRtSpecification, in providingSlot : Slot,  in provCHRtSpec: chessmlprofile::RTComponentModel::CHRtSpecification)  {
+	
+	var requiringPSMOperation = requiringSlot.resolve2SaStep(reqCHRtSpec.base_Comment);
+	//log("currentPSMOperation = " + currentPSMOperation.toString());       			
+	var piPSMOperation = providingSlot.resolve2SaStep(provCHRtSpec.base_Comment);
+	//log("usedPSMOperation = " + usedPSMOperation.toString());	        			
+	var reqSaStep = requiringPSMOperation.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep); 		
+	var provSaStep = piPSMOperation.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);  			
+	//log("usedStep = " + usedSaStep.toString());
+	reqSaStep.subUsage += provSaStep;
+}
+
+
+/*
+  Given a comment related to a CHRtSlot return  the corresponding schedulable resource  
+*/
+query Comment::getConcurRes(slot : Slot) : MARTE::SRM::SW_Concurrency::SwSchedulableResource {
+	var classResource := slot.resolveIn(Slot::CHRtSlot2SwSchedulableResource, Class)->selectOne(
+	    name=self.CHRtSpec().schedulableResource(slot));
+	return classResource.getMetaclass(SwSchedulableResourceQN).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);
+}
+
+/*
+Given a Slot and a Comment stereotyped with CHRtSpecification return the SaStep Operation previously created
+*/
+query Slot::resolve2SaStep(chrt : Comment) : Operation {
+	var chrts := chrt.CHRtSpec();
+	var ops : Sequence(Operation);
+	log("resolve2SaStep, chrtSpecification = "+chrts.toString() +", context = "+chrts.context.toString());
+	
+	if (chrts.isSporadic()) then {
+		ops := self.resolveIn(Slot::CHRTCommentSporadic2SaStep, Operation);
+	}
+	else {
+		
+		if (chrts.isProtected()) then {
+			ops := self.resolveIn(Slot::CHRTCommentProtected2SaStep, Operation);
+		} else {
+			ops := self.resolveIn(Slot::CHRTCommentUnprotected2SaStep, Operation);
+		} endif;
+	}
+	endif;
+	
+	ops->forEach(op) {
+		if op.name = chrts.context.name then
+			return op
+		endif;
+	};
+	return null;
+}
+//"receive" node and "get" node
+helper createSporadicRelatedNodes(in currentOp : chessmlprofile::RTComponentModel::CHRtSpecification, in currentSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
+	if currentOp.isSporadic() then {
+		var nextE2ENode := prevE2ENode;
+		var riSlot := currentSlot.getCorrespondingSlotFull();
+		//If the current operation responds to a remote call, creates the "receive" node first
+		var connectingBus = getConnectingBus(currentSlot.owningInstance, riSlot.owningInstance);
+		if connectingBus <> null then
+			nextE2ENode := createReceiveOp(connectingBus, currentSlot, e2eActivity, nextE2ENode)
+		endif;
+		//If the current operation is sporadic, attaches the "get" operation before the operation node 
+		//TODO Stefano: the following get operation should be set as subUsage of the sporadic SaStep Operation created in the PSM, it should not appear as activity
+		return createGetOp(currentOp.base_Comment, currentSlot, e2eActivity, nextE2ENode);
+	} 
+	else
+		return prevE2ENode
+	endif;
+	return null;
+}
+
+//Return the nextE2ENode 
+helper createOpaqueActionsChain(in currentIsGuarded : Boolean, in currentCHRtComment : Comment, in currentSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode/*, currentOp : chessmlprofile::RTComponentModel::CHRtSpecification*/) : ActivityNode {
+	var currentOp := currentCHRtComment.CHRtSpec();
+	var nextE2ENode := prevE2ENode;
+	
+	log("CreateOpaqueActionChain: currentIsGuarded = "+currentIsGuarded.toString());
+	
+	//if operation is sporadic then create receive + get nodes before the operation node
+	nextE2ENode := createSporadicRelatedNodes(currentOp, currentSlot, e2eActivity, nextE2ENode);
+	
+	//Creates the subsequent OpaqueAction and ControlFlow
+	nextE2ENode := createSaStepNode(currentCHRtComment, currentSlot,e2eActivity, nextE2ENode);
+	
+	//this does not create sporadic related nodes=>nextE2ENode := createSaStepNode(currentCHRtComment, currentSlot,e2eActivity, prevE2ENode);
+	
+	//if the operation has a ICB-Activity then parse its CallOperationNodes
+	currentOp.context.method![Activity].collectCallOperationNodes()->forEach(calledOpNode){
+		
+		//var riSlot := calledOpNode.onPort.portToSlot(currentSlot.owningInstance);
+		var riSlots := calledOpNode.portToSlotFull(currentSlot.owningInstance);
+		riSlots->forEach(riSlot){
+			log("  Search for piSlot from riSlot '" + riSlot.owningInstance.name + riSlot.owningInstance.getStringId() + riSlot.definingFeature.name + riSlot.getStringId() + "'.");
+			var usedPiSlot := riSlot.getCorrespondingSlotFull();
+			log("  Found piSlot '" + usedPiSlot.owningInstance.name+usedPiSlot.owningInstance.getStringId() + usedPiSlot.definingFeature.name + usedPiSlot.getStringId() + "'.");
+	        var usedPiCHRtSpec := usedPiSlot.CHRtSpecForOperation(calledOpNode.operation);
+	        var bus := getConnectingBus(currentSlot.owningInstance, usedPiSlot.owningInstance);
+	        
+	        //if it is a remote call, attach a send operation 
+	        if bus <> null then{
+	        	log("it is a remote call...");
+	        	if usedPiCHRtSpec.isDeferred() then
+	        		return createSendOp(bus, currentSlot, e2eActivity, nextE2ENode)
+	        	else 
+	        	    //if it is a simple operation, proceeds with the subsequent call
+	        		nextE2ENode := createSendOp(bus, currentSlot, e2eActivity, nextE2ENode)
+	        	endif
+	        }
+	        else{
+	        	log("it is a local call...");
+		        //otherwise it is a local call
+		        //if it is a simple operation, simply add it to the endtoendworkflow and proceeds with the subsequent call
+				if usedPiCHRtSpec.isDeferred() then {
+					// Calls "put" operation
+					//TODO Stefano: the following get operation should be set as subUsage of the sporadic SaStep Operation created in the PSM, it should not appear as activity
+					nextE2ENode := createPutOp(usedPiCHRtSpec.base_Comment, usedPiSlot, e2eActivity, nextE2ENode)       
+				}
+	        	else
+	        		//if the node is protected all its CallOperation must be inserted in the subUsage of the SaStep Operation (created in the Operation Package) instead of creating a SaStep node
+	        		if usedPiCHRtSpec.isProtected() then {
+	        			//Stefano: why should a create a subUsagesChain here?  Just a subusage is enough.
+	        			//nextE2ENode := createSubUsagesChain(currentOp.base_Comment, usedPiCHRtSpec.base_Comment, usedPiSlot, e2eActivity, nextE2ENode)
+	        			createSubUsage(currentSlot, currentCHRtComment.CHRtSpec(), usedPiSlot, usedPiCHRtSpec);
+
+	        		}
+	        		else{
+	        			//TODO Stefano: is this correct?
+	        			nextE2ENode := createOpaqueActionsChain(usedPiCHRtSpec.isProtected(),usedPiCHRtSpec.base_Comment, usedPiSlot, e2eActivity, nextE2ENode)
+	        		}endif
+	        						
+				endif	
+			}	
+	        endif;
+        }
+	};
+    return nextE2ENode;
+}
+
+//NOT USED
+helper createSubUsagesChain(in enclosingCHRTComment : Comment, in currentCHRtComment : Comment, in currentSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode/*, currentOp : chessmlprofile::RTComponentModel::CHRtSpecification*/) : ActivityNode {
+	var currentOp := currentCHRtComment.CHRtSpec();
+	var nextE2ENode := prevE2ENode;
+	log("createSubUsagesChain... currentSlot="+currentSlot.owningInstance.toString());
+	nextE2ENode := createSporadicRelatedNodes(currentOp, currentSlot, e2eActivity, nextE2ENode);
+	//Creates the subsequent OpaqueAction and ControlFlow
+	if not currentOp.isDeferred() then
+		createSubUsage(currentCHRtComment, currentSlot)
+	else
+		nextE2ENode := createSaStepNode(currentCHRtComment, currentSlot, e2eActivity, nextE2ENode)
+	endif;	
+	//if the operation has a ICB-Activity then parse its CallOperationNodes
+	currentOp.context.method![Activity].collectCallOperationNodes()->forEach(calledOpNode){
+		
+		var riSlots := calledOpNode.portToSlotFull(currentSlot.owningInstance);
+		riSlots->forEach(riSlot){
+			var piSlot := riSlot.getCorrespondingSlotFull();
+	        var piOp := piSlot.CHRtSpecForOperation(calledOpNode.operation);
+	        var bus := getConnectingBus(currentSlot.owningInstance, piSlot.owningInstance);
+	        
+	        //if it is a remote call, attaches a send operation 
+	        if bus <> null then
+	        	if piOp.isDeferred() then
+	        		return createSendOp(bus, currentSlot, e2eActivity, nextE2ENode)
+	        	else 
+	        	    //if it is a simple operation, proceeds with the subsequent call
+	        		nextE2ENode := createSendOp(bus, currentSlot, e2eActivity, nextE2ENode)
+	        	endif
+	        else
+		        //otherwise it is a local call
+		        //if it is a simple operation, simply add it to the endtoendworkflow and proceeds with the subsequent call
+				if not piOp.isDeferred() then        
+	        		nextE2ENode := createSubUsagesChain(currentOp.base_Comment, piOp.base_Comment, piSlot, e2eActivity, nextE2ENode)
+	        	else
+	        		//Calls put operation
+					return createPutOp(piOp.base_Comment, piSlot, e2eActivity, nextE2ENode)
+				endif		
+	        endif;
+        }
+	};
+    return nextE2ENode;
+}
+
+helper createPutOp(in sourceCHRtComment : Comment, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
+    var putSpec := sourceCHRtComment.CHRtSpec();
+	var putOp := //putSpec.base_Comment.resolveoneIn(Comment::SporadicOperation2SaSharedResource, Class).ownedOperation->selectOne(name="put");
+	sourceSlot.owningInstance.resolveoneIn(InstanceSpecification::SporadicOperation2SwMutualExclusionResource, Class).ownedOperation->selectOne(name="put");
+	
+	var putNode := createOpaqueAction(sourceSlot.owningInstance.name + "_" + putOp.name, e2eActivity, prevE2ENode);
+	var opSaStep := putNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	// Set the <<SwSchedulableResource>> that executes the <<saStep>>
+	opSaStep.concurRes := currentConcurRes;//sourceCHRtComment.getConcurRes(sourceSlot);
+    // Retrieve the <<SaStep>> to use for the subusage
+	var saStep := putOp.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	//Add the newly created operation as subUsage of the OpaqueAction(<<saStep>>)
+	opSaStep.subUsage += saStep;
+	return putNode;
+}
+
+helper createGetOp(in sourceCHRtComment : Comment, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
+    var getSpec := sourceCHRtComment.CHRtSpec();
+	var getOp := //getSpec.base_Comment.resolveoneIn(Comment::SporadicOperation2SaSharedResource, Class).ownedOperation->selectOne(name="get");
+	sourceSlot.owningInstance.resolveoneIn(InstanceSpecification::SporadicOperation2SwMutualExclusionResource, Class).ownedOperation->selectOne(name="get");
+	
+	var getNode := createOpaqueAction(sourceSlot.owningInstance.name + "_" + getOp.name, e2eActivity, prevE2ENode);
+	var opSaStep := getNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	// Set the <<SchedulableResource>> that executes the <<saStep>>
+	//var classResource : Class := currentCHRtComment.resolveIn(Comment::CHRtSlot2SchedulableResource, Class)->selectOne(name=getSpec.genResourceName());
+	opSaStep.concurRes := sourceCHRtComment.getConcurRes(sourceSlot);//classResource.getMetaclass(SchedulableResourceQN).oclAsType(MARTE::GRM::SchedulableResource);
+    // Retrieve the <<SaStep>> to use for the subusage
+	var saStep := getOp.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	//Add the newly created operation as subUsage of the OpaqueAction(<<saStep>>)
+	opSaStep.subUsage += saStep;
+	return getNode;
+}
+
+helper createSendOp(in connectingBus : InstanceSpecification, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
+	return createBusOp(connectingBus, "send", sourceSlot, e2eActivity, prevE2ENode);
+}
+
+helper createReceiveOp(in connectingBus : InstanceSpecification, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
+	return createBusOp(connectingBus, "receive", sourceSlot, e2eActivity, prevE2ENode);
+}
+
+//opType must be "receive" or "send"
+helper createBusOp(in connectingBus : InstanceSpecification, in opType : String, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
+	log("  Attaching '"+ opType +"' operation for communication channel '" + connectingBus.name + "'.");
+	
+	var sendNode := createOpaqueAction(connectingBus.name + "_" + opType, e2eActivity, prevE2ENode);
+	var sendSaStep := sendNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+                       
+	//var gaCommChannel := getAssignToFrom(sourceSlot.CHRtSpec().partWithPort.property2InstanceSpec()).resolveoneIn(InstanceSpecification::BusProperty2GaCommChannel, Class).getMetaclass(GaCommChannelQN).oclAsType(MARTE::GQAM::GaCommChannel);                     
+	var gaCommChannel := getAssignToFrom_MemoryPartition(sourceSlot.owningInstance).resolveoneIn(InstanceSpecification::BusProperty2GaCommChannel, Class).getMetaclass(GaCommChannelQN).oclAsType(MARTE::GQAM::GaCommChannel);
+	sendSaStep.concurRes := gaCommChannel;
+	//TODO Assumption: send operation unique for each HwBus
+	var sendOp : Operation := connectingBus.resolveoneIn(InstanceSpecification::HwBus2OperationClass, Class).ownedOperation->selectOne(name.endsWith("_" + opType));
+	sendSaStep.subUsage += sendOp.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	return sendNode;
+}
+
+helper createOpaqueAction(in name : String , inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
+	//var node := new OpaqueAction(name);
+	var node := e2eActivity.createOpaqueAction(name);
+	var edge := new ControlFlow("ControlFlow_" + node.name);
+	e2eActivity.node += node;
+	e2eActivity.edge += edge;
+	node.outgoing += edge;
+	//TODO Assumption: only one outgoing activity edge per node
+	prevE2ENode.outgoing![ControlFlow].target := node;
+	
+	
+	return node;
+}
+
+mapping Slot::Slot2Class4SaStep() : Class {
+	var name := operationClassName(self, "operations");
+	log("  <<SaStep>> operation class not found. Generating '" + name + "'.");
+	result.name := name;
+	operationPackage.packagedElement += result;
+}
+
+helper Slot::CHRTComment2SaStep(chrt : Comment) : Operation {
+	if chrt.CHRtSpec().isSporadic() then 
+		return self.map CHRTCommentSporadic2SaStep(chrt) 
+	endif;
+	if chrt.CHRtSpec().isProtected() then
+		return self.map CHRTCommentProtected2SaStep(chrt)
+	else
+		return self.map CHRTCommentUnprotected2SaStep(chrt)
+	endif;	
+	return null;
+}
+
+//NOT USED
+mapping Slot::CHRTCommentUnprotected2SaStepStrict(chrt : Comment) : Operation when {not chrt.CHRtSpec().isProtected()} {
+	init{
+		var res := self.owningInstance.resolveoneIn(InstanceSpecification::InstanceUnprotected2SaStep, Operation);
+		if res = null then {
+			log("  Generating <<SaStep>> for operation '" + chrt.CHRtSpec().context.name + "'.");
+			res := self.owningInstance.map InstanceUnprotected2SaStep(chrt, self);
+		} else 
+			log("  Nothing to do")
+		endif;
+		result := res;
+	}
+}
+
+mapping Slot::CHRTCommentUnprotected2SaStep(chrt : Comment) : Operation when {not chrt.CHRtSpec().isProtected()} {
+	init{
+		log("  Generating <<SaStep>> for operation '" + chrt.CHRtSpec().context.name + "'.");
+		var res := self.owningInstance.map InstanceUnprotected2SaStep(chrt, self);
+		result := res;
+	}
+}
+
+mapping InstanceSpecification::InstanceUnprotected2SaStep(chrt : Comment, slot : Slot) : Operation when {not chrt.CHRtSpec().isProtected()} {
+	init{	
+	
+		if chrt.CHRtSpec().isDeferred() then
+	    	log("  Operation is cyclic.")
+	    else
+	    	log("  Operation is unprotected.")
+    	endif;
+    	
+		var chrts := chrt.CHRtSpec();
+		var selfOperation := chrts.context.oclAsType(Operation);
+		//Create a new Class containing this operation of the PI if it does not exist yet
+		var owner := slot.Slot2Class4SaStepProxy();
+		result := new Operation(selfOperation);
+	}
+
+	owner.ownedOperation += result;
+	// Convert the newly created operation to a <<saStep>>
+	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	saStep.execTime += chrts.localWCET;
+	
+	//createSubUsageForPSMOperation(selfOperation, result, slot.owningInstance)
+}
+
+mapping Slot::CHRTCommentProtected2SaStepStrict(chrt : Comment) : Operation when {chrt.CHRtSpec().isProtected()} {
+	init{
+		//one Slot can have different chrtSpecification associated and so it can be mapped to multiple SaStep...
+		//TODO Operation's name can be a problem when used as identifier...
+		var res := self.owningInstance.resolveIn(InstanceSpecification::InstanceProtected2SaStep, Operation)-> selectOne
+				(name=chrt.CHRtSpec().context.name);
+		if res = null then {
+			log("  Generating <<SaStep>> for operation '" + chrt.CHRtSpec().context.name + "'.");
+			res := self.owningInstance.map InstanceProtected2SaStep(chrt, self);
+		} else 
+			log("  Nothing to do")
+		endif;
+		result := res;
+	}
+	
+}
+
+mapping Slot::CHRTCommentProtected2SaStep(chrt : Comment) : Operation when {chrt.CHRtSpec().isProtected()} {
+	init{
+		log("  Generating <<SaStep>> for operation '" + chrt.CHRtSpec().context.name + "'.");
+		var res := self.owningInstance.map InstanceProtected2SaStep(chrt, self);
+		result := res;
+	}
+}
+
+//NOT USED
+mapping InstanceSpecification::InstanceProtected2SaStepStrict(chrt : Comment, slot : Slot) : Operation when {chrt.CHRtSpec().isProtected()} {
+    //TODO Assumes 1 state (SwMutualExclusionResource) for each PI with guarded operations
+	init{
+	    log("  Operation is protected.");
+		var chrts := chrt.CHRtSpec();
+		var selfOperation := chrts.context.oclAsType(Operation);
+		var owner := self.resolveoneIn(InstanceSpecification::ProtectedOperation2SwMutualExclusionResource, Class);
+		result := new Operation(selfOperation);
+	}
+	//Create a new SwMutualExclusionResource containing this operation for each PI port
+	
+	if owner = null then
+		owner := self.map ProtectedOperation2SwMutualExclusionResource(chrt, slot)
+	endif;
+
+	var saMutualExRes := owner.getMetaclass("MARTE::MARTE_DesignModel::SRM::SW_Interaction::SwMutualExclusionResource").oclAsType(MARTE::SRM::SW_Interaction::SwMutualExclusionResource);
+	//apply also a SaSharedResource in order to add it to sastep.sharedres
+	var saSharedRes := owner.getMetaclass("MARTE::MARTE_AnalysisModel::SAM::SaSharedResource").oclAsType(MARTE::SAM::SaSharedResource);
+
+	owner.ownedOperation += result;
+	// Convert the newly created operation to a <<saStep>>
+	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	saStep.execTime += chrts.localWCET;	
+	// The sharedRes will be set on the SaStep of the end to end workflow
+	saStep.sharedRes += saSharedRes;
+}
+
+mapping InstanceSpecification::InstanceProtected2SaStep(chrt : Comment, slot : Slot) : Operation when {chrt.CHRtSpec().isProtected()} {
+    //Assumes 1 state (SwMutualExclusionResource) for each InstanceSpecification with PI with guarded operations
+	init{
+	    log("  Operation is protected.");
+		var chrts := chrt.CHRtSpec();
+		var selfOperation := chrts.context.oclAsType(Operation);
+		
+		log("Check if the protected resource has already been created");
+		var owner := self.resolveoneIn(InstanceSpecification::ProtectedOperation2SwMutualExclusionResource, Class);
+		if owner = null then
+			//Create a new SwMutualExclusionResource containing this operation for each PI port
+			owner := self.map ProtectedOperation2SwMutualExclusionResource(chrt, slot)
+		else 
+			log("<<SwMutualExclusionResource>> found, nothing to do")
+		endif;
+		
+		result := new Operation(selfOperation);
+	}
+	
+	var saMutualExRes := owner.getMetaclass("MARTE::MARTE_DesignModel::SRM::SW_Interaction::SwMutualExclusionResource").oclAsType(MARTE::SRM::SW_Interaction::SwMutualExclusionResource);
+	//apply also a SaSharedResource in order to add it to sastep.sharedres
+	var saSharedRes := owner.getMetaclass("MARTE::MARTE_AnalysisModel::SAM::SaSharedResource").oclAsType(MARTE::SAM::SaSharedResource);
+
+	owner.ownedOperation += result;
+	// Convert the newly created operation to a <<saStep>>
+	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	saStep.execTime += chrts.localWCET;	
+	// The sharedRes will be set on the SaStep of the end to end workflow
+	saStep.sharedRes += saSharedRes;
+}
+
+mapping InstanceSpecification::ProtectedOperation2SwMutualExclusionResource(annotation : Comment, slot : Slot) : Class {
+	var name := self.name + "_state";
+	log("  <<SwMutualExclusionResource>> class not found. Generating '"+name+"' ");
+	
+	var port := slot.definingFeature![Port];
+	result.name := name;
+	operationPackage.packagedElement += result;
+	var mutualExRes := result.applyStereotype(getMARTEStereotype("SwMutualExclusionResource")).oclAsType(MARTE::SRM::SW_Interaction::SwMutualExclusionResource);
+	
+	var saSharedRes := result.applyStereotype(getMARTEStereotype("SaSharedResource")).oclAsType(MARTE::SAM::SaSharedResource);
+	//saSharedRes.ceiling := "(value="+ self.CHRtSpec().ceiling +", source=req)";
+	//saSharedRes.ceiling := annotation.CHRtSpec().ceiling;
+	result.setCeiling2(annotation.CHRtSpec().ceiling);
+	result.setProtectKind2("PriorityCeiling");
+}
+
+//NOT USED
+mapping Slot::CHRTCommentSporadic2SaStepStrict(chrt : Comment) : Operation when {chrt.CHRtSpec().isSporadic()} {
+    //TODO Assumes 1 state (SwMutualExclusionResource) for each sporadic operation
+	init{	
+		var res := self.owningInstance.resolveoneIn(InstanceSpecification::InstanceSporadic2SaStep, Operation);
+		if res = null then {
+			log("  Generating <<SaStep>> for operation '" + chrt.CHRtSpec().context.name + "'.");
+			res := self.owningInstance.map InstanceSporadic2SaStep(chrt, self);
+		} else 
+			log("  Nothing to do")
+		endif;
+		result := res;
+	}
+}
+
+mapping Slot::CHRTCommentSporadic2SaStep(chrt : Comment) : Operation when {chrt.CHRtSpec().isSporadic()} {
+	init{	
+		log("  Generating <<SaStep>> for operation '" + chrt.CHRtSpec().context.name + "'.");
+		var res := self.owningInstance.map InstanceSporadic2SaStep(chrt, self);
+		result := res;
+	}
+}
+
+helper Slot::Slot2Class4SaStepProxy() : Class {
+	var owner := self.resolveoneIn(Slot::Slot2Class4SaStep, Class);
+	if owner = null then {
+		owner := self.map Slot2Class4SaStep();
+	} endif;
+	return owner;
+}
+
+mapping InstanceSpecification::InstanceSporadic2SaStep(chrt : Comment, slot : Slot) : Operation when {chrt.CHRtSpec().isSporadic()} {
+    //TODO Assumes 1 state (SwMutualExclusionResource) for each sporadic operation		
+	init{	
+		log("  Operation is sporadic.");
+		var chrts := chrt.CHRtSpec();
+		var selfOperation := chrts.context.oclAsType(Operation);
+		var owner := slot.Slot2Class4SaStepProxy();
+		//Create a new SwMutualExclusionResource containing the put/get operation associated to this sporadic operation
+	    var protectedState := self.map SporadicOperation2SwMutualExclusionResource(chrt, slot);
+		result := new Operation(selfOperation);
+	}
+
+	owner.ownedOperation += result;
+	// Convert the newly created operation to a <<saStep>>
+	var localSaStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	localSaStep.execTime += chrts.localWCET;
+	
+	//createSubUsageForPSMOperation(selfOperation, result, slot.owningInstance)
+	
+}
+
+
+mapping InstanceSpecification::SporadicOperation2SwMutualExclusionResource(chrt : Comment, slot : Slot) : Class {
+	init{
+		var name := operationClassName(slot, chrt.CHRtSpec().context.name() + "_state");
+		log("    Generating <<SwMutualExclusionResource>> '" + name + "'.");
+		log("    NOTE 'put' and 'get' operations execution times are hardcoded: (worst=0.0,value=0.0,best=0.0,unit=ms)");
+		var putOp : Operation := new Operation("put");
+		var getOp : Operation := new Operation("get");
+	}
+	
+	result.name := name;
+	operationPackage.packagedElement += result;
+	
+	var swMutualExRes := result.applyStereotype(getMARTEStereotype("SwMutualExclusionResource")).oclAsType(MARTE::SRM::SW_Interaction::SwMutualExclusionResource);	
+	//apply also a SaSharedResource in order to add it to sastep.sharedres
+	var saSharedRes := result.applyStereotype(getMARTEStereotype("SaSharedResource")).oclAsType(MARTE::SAM::SaSharedResource);
+	
+	result.setCeiling2(chrt.CHRtSpec().ceiling);
+	result.setProtectKind2("PriorityCeiling");
+	
+	result.ownedOperation += putOp;
+	result.ownedOperation += getOp;
+		
+	var saPutOp  := putOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	saPutOp.sharedRes += saSharedRes;
+	var saGetOp := getOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	saGetOp.sharedRes += saSharedRes;
+	
+	saPutOp.execTime := "(worst=0.0,value=0.0,best=0.0,unit=ms)";
+	saGetOp.execTime := "(worst=0.0,value=0.0,best=0.0,unit=ms)";
+}
+
+mapping InstanceSpecification::HwBus2OperationClass() : Class {
+	init{
+		log("  Generating Bus operations. NOTE: 'send' and 'receive' execution times are hardcoded.");
+		log("    'send' execution time is (worst=0.0,value=0.0,best=0.0,unit=ms)");
+		log("    'receive' execution time is (worst=0.0,value=0.0,best=0.0,unit=ms)");
+		var sendOp : Operation := new Operation(self.name + "_send");
+		var receiveOp : Operation := new Operation(self.name + "_receive");
+	}
+	
+	result.name := self.name + "_operation";
+	operationPackage.packagedElement+=result;
+	
+	result.ownedOperation += sendOp;
+	result.ownedOperation += receiveOp;
+		
+	var stsendOp  := sendOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var streceiveOp := receiveOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	
+	//TODO for the moment exec time is hardcoded
+	stsendOp.execTime := "(worst=0.0,value=0.0,best=0.0,unit=ms)";
+	streceiveOp.execTime := "(worst=0.0,value=0.0,best=0.0,unit=ms)";
+}
+
+/*
+<<HwBus>>
+It represents a special resource able to transfer data.
+It is characterized by its address and word widths, these are functional values, usually different from the wires number of
+its corresponding HW_Channel seeing that buses may be multiplexed or serial.
+
+<<SaCommHost>>
+In a communication host (e.g., network and bus), the related schedulable resource element is CommunicationChannel,
+which may be characterized by concrete scheduling parameters (like the packet size).
+*/
+mapping InstanceSpecification::HwBus2SaCommHost() : Class {
+	init{
+		log ("  Generating <<SaCommHost>>.");
+		var hwBus :=  self.getMetaclass(CHHwBusQN).oclAsType(chessmlprofile::HardwareBaseline::CH_HwBus);
+	}
+    
+	result.name := self.name;
+	hostPackage.packagedElement += result;
+	
+	var stHost := result.applyStereotype(getMARTEStereotype("SaCommHost")).oclAsType(MARTE::SAM::SaCommHost);
+	stHost.speedFactor := hwBus.speedFactor;//DEF"";
+	if stHost.speedFactor = null or stHost.speedFactor = "" then
+		stHost.speedFactor := "(value=1.0)"
+	endif;
+	
+	stHost.blockT := hwBus.blockT;//DEF (worst=0.0,unit=ms)
+	
+	if stHost.blockT->size() = 0 then
+		stHost.blockT += "(worst=0.0,unit=ms)"
+	endif;
+	
+	stHost.packetT := hwBus.packetT;
+	
+	if stHost.packetT->size() = 0 then
+		stHost.packetT += "(worst=1.0,unit=ms)"
+	endif;	
+}
+
+/*
+<<GaCommChannel>>
+A logical communications layer connecting SchedulableResources.
+*/
+mapping InstanceSpecification::BusProperty2GaCommChannel(in host : InstanceSpecification) : Class {
+	log("  Found connected InstanceSpecification '" + self.name + "'. Generating <<GaCommChannel>>.");
+	log("    Scheduling parameters are hardcoded: fp(priority=(value=24,source=meas))");
+	result.name := self.name + "_" + host.name + "_server";
+	hostPackage.packagedElement += result;
+	
+	var stCommChannel := result.applyStereotype(getMARTEStereotype("GaCommChannel")).oclAsType(MARTE::GQAM::GaCommChannel);
+	
+	stCommChannel.host := host.resolveoneIn(InstanceSpecification::HwBus2SaCommHost, Class).getMetaclass(SaCommHostQN).oclAsType(MARTE::SAM::SaCommHost);
+	//TODO schedParams?
+	stCommChannel.schedParams := "fp(priority=(value=24,source=meas))";
+}
+
+/*
+<<HwComputingResource>>
+It is a high level concept that denotes an active execution resource.
+Such resources are often clocked and may support a range of operating frequencies.
+
+<<SaExecHost>>
+A CPU or other device which executes functional steps. The SaExecHost stereotype adds schedulability metrics, interrupt
+overheads, and utilization of scheduling processing.
+*/
+mapping InstanceSpecification::HwComputingResource2SaExecHost() : Class {
+	log("Generating <<SaExecHost>> from instanceSpecification '"+self.name+"' corresponding to <<CH_HwComputingResource>> '" + self.classifier().name + "'.");
+    var hcr := self.getMetaclass(CHHwComputingResourceQN).oclAsType(chessmlprofile::HardwareBaseline::CH_HwComputingResource);
+	result.name := self.name;
+	hostPackage.packagedElement += result;
+	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::SAM::SaExecHost);
+	
+	stHost.schedPriRange := "[1..256]";
+	stHost.speedFactor := hcr.speedFactor;//"(value=1.0)";
+}
+
+mapping InstanceSpecification::HwProcessor2SaExecHost() : Class {
+	log("Generating <<SaExecHost>> from instanceSpecification '"+self.name+"' corresponding to <<CH_HwProcessor>> '" + self.classifier().name + "'.");
+    var hcr := self.getMetaclass(CHHwProcessorQN).oclAsType(chessmlprofile::HardwareBaseline::CH_HwProcessor);
+	result.name := self.name;
+	hostPackage.packagedElement += result;
+	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::SAM::SaExecHost);
+	
+	stHost.schedPriRange := "[1..256]";
+	stHost.speedFactor := hcr.speedFactor;
+}
+
+//NOT USED
+//Create a new Activity as <<SaEndToEndFlow>>
+mapping Slot::slot2EndToEndWorkFlowStrict(chrt : Comment) : Activity when {chrt.CHRtSpec().isDeferred()} {
+    init {
+    	var res := self.owningInstance.resolveoneIn(InstanceSpecification::Instance2EndToEndWorkFlow, Activity);
+    	if res = null then
+    		res := self.owningInstance.map Instance2EndToEndWorkFlow(chrt, self)
+    	else 
+			log("  Nothing to do")
+		endif;
+    	result := res;
+    }
+}
+
+//Create a new Activity as <<SaEndToEndFlow>>
+mapping Slot::slot2EndToEndWorkFlow(chrt : Comment) : Activity when {chrt.CHRtSpec().isDeferred()} {
+    init {
+    	var res := self.owningInstance.map Instance2EndToEndWorkFlow(chrt, self);
+    	result := res;
+    }
+}
+
+mapping InstanceSpecification::Instance2EndToEndWorkFlow(chrt : Comment, slot : Slot) : Activity when {chrt.CHRtSpec().isDeferred()} {
+    init {
+    	log("Generating <<EndToEndWorkFlow>> from the Instance"+ " for '" + slot.owningInstance.name + slot.owningInstance.getStringId() + "' and operation "+ chrt.CHRtSpec().context.name +".");
+    	var chrts := chrt.CHRtSpec();
+    	var actionName := opaqueActionName(slot, chrts);//slot.owningInstance.name + "_" + chrts.context.name;
+	    // entities for single and distributed communication
+	    //var actInitialNode := new InitialNode("InitialNode1");
+	   
+	    var controlFlowInit := new ControlFlow("ControlFlow1");
+		var actConstraint := new Constraint("Global_Timing_Req");
+		//setting internal references
+		//actInitialNode.outgoing += controlFlowInit;
+    }
+    
+    result.name := actionName;
+    // Add the action to the owned behaviors of RTAnalysisContext     
+    platform.resolveoneIn(Package::CHGaResourcePlatform2SaAnalysisContext, Class).ownedBehavior += result;
+    //Apply the stereotype <<SaEndtoEndFlow>> to the activity
+	result.applyStereotype(getMARTEStereotype("SaEndtoEndFlow"));
+	result.precondition += actConstraint;
+	//result.node += actInitialNode;
+	
+	var actInitialNode := result.createInitialNode();
+	actInitialNode.outgoing += controlFlowInit;
+	
+	result.edge += controlFlowInit;
+    //Apply stereotype <<gaLatencyObs>> and specify the deadline for the end to end flow
+	var gaLatencyObs := actConstraint.applyStereotype(getMARTEStereotype("GaLatencyObs")).oclAsType(MARTE::GQAM::GaLatencyObs);
+	//var relativeDeadline : String := "(value=" + CHRtRlDl + ",unit=ms)";
+	gaLatencyObs.latency += chrts.rlDl;
+	
+	//if the current operation is deferred, it will be the first on the ICB
+	currentConcurRes := chrt.getConcurRes(slot);
+	
+	//Apply stereotype <<gaWorkloadEvent>> and specify the release pattern
+	//of the end-to-end flow
+	var gaWorkloadEvent := actInitialNode.applyStereotype(getMARTEStereotype("GaWorkloadEvent")).oclAsType(MARTE::GQAM::GaWorkloadEvent);
+	gaWorkloadEvent.pattern := chrts.occKind;
+	
+	var resultNode := createOpaqueActionsChain(chrts.isProtected(), chrt, slot, result, actInitialNode);
+
+	//create final node
+	//var finalNode := new ActivityFinalNode("ActivityFinalNode1");
+	var finalNode := result.createFinalNode();
+	//result.node += finalNode;
+	
+	
+    //TODO assumption only one activity edge per node
+    resultNode.outgoing![ControlFlow].target := finalNode;
+    
+    
+}
+
+query chessmlprofile::RTComponentModel::CHRtSpecification::isDeferred() : Boolean {
+	var arrivalPattern := self.occKind.getArrivalPatternType();
+	//the operation is deferred if the arrival pattern is: periodic, sporadic, bursty
+	if  arrivalPattern.oclIsInvalid() then
+		return false
+	endif;
+	return (arrivalPattern <> null and arrivalPattern.length() <> 0);
+}
+
+query chessmlprofile::RTComponentModel::CHRtSpecification::isSporadic() : Boolean {
+	var arrivalPattern := self.occKind.getArrivalPatternType();
+	if (arrivalPattern.oclIsUndefined()) then
+		return false
+	endif;
+	return (arrivalPattern.equalsIgnoreCase("sporadic"));// and self.isGuarded());
+}
+
+query chessmlprofile::RTComponentModel::CHRtSpecification::isProtected() : Boolean { 
+	return (not self.isDeferred()) and self.protection = MARTE::HLAM::CallConcurrencyKind::guarded;
+}
+
+query Port::getCHrtSpecComment() : Comment {
+	return specs->selectOne(annotatedElement![Port] = self);
+}
+
+query InstanceSpecification::linkedHwInstanceSpecifications() : Set(InstanceSpecification) {
+	var res : Set(InstanceSpecification) := Set{};
+	var links := self.owner.ownedElement[InstanceSpecification]->select(classifier->size() = 0);
+	//var candidates := self.owner.ownedElement[InstanceSpecification] - links;
+	var busLinks := links->select(allOwnedElements()[InstanceValue]->selectOne(instance = self) <> null);
+	busLinks->forEach(l){
+	  var ends := l.allOwnedElements()[InstanceValue]->asOrderedSet();
+	  res += l.allOwnedElements()[InstanceValue]->select(instance <> self).instance;
+	};
+	return res;
+}	
+
+query getConnectingBusInstance(senderProcessor: InstanceSpecification, receiverProcessor: InstanceSpecification) : InstanceSpecification {
+	// get the hw connections and buses
+	//var links : Set(InstanceSpecification):= senderProcessor.owner.ownedElement[InstanceSpecification]->select(isStereotyped("CHESS::Dependability::DependableComponent::Propagation"));
+	var links : Set(InstanceSpecification):= senderProcessor.owner.ownedElement[InstanceSpecification]->select(classifier -> size() = 0);
+	var buses := senderProcessor.owner.ownedElement[InstanceSpecification]->select(classifier->selectOne(isStereotyped(CHHwBusQN))<>null);
+	//for each bus, selects its connectors and check if the two processors are connected by 2 of those
+	buses->forEach(bus){
+	  	var busLinks := links->select(allOwnedElements()[InstanceValue]->selectOne(instance = bus) <> null);
+	  	var sender := busLinks->selectOne(allOwnedElements()[InstanceValue]->selectOne(instance = senderProcessor) <> null) <> null;
+	  	var receiver := busLinks->selectOne(allOwnedElements()[InstanceValue]->selectOne(instance = receiverProcessor) <> null) <> null;
+	  	if sender and receiver then {
+	  		log("  Found a bus interconnection: " + bus.name + ".");
+	  		return bus;
+	  	} endif;	
+	};
+	return null;
+}
+
+query getConnectingBus(riIns : InstanceSpecification, piIns : InstanceSpecification) : InstanceSpecification {
+	var senderHwInstance := getAssignToFrom_MemoryPartition(riIns);					
+	var receiverHwInstance := getAssignToFrom_MemoryPartition(piIns); 
+	if senderHwInstance <> receiverHwInstance then 
+	   return getConnectingBusInstance(senderHwInstance, receiverHwInstance)
+	endif;
+	return null;
+}
+
+//query Port::getConnectedPort() : Port {
+//	var bindingConnector := self.getConnector();
+//	var myConnectorEnd := (bindingConnector.allOwnedElements()[ConnectorEnd])->	selectOne(role <> self);
+//    return myConnectorEnd.role.oclAsType(Port);
+//}
+
+//query Port::getConnectedPartWithPort() : Property {
+//	var bindingConnector := self.getConnector();
+//	var otherEnd := (bindingConnector.allOwnedElements()[ConnectorEnd])->	selectOne(role <> self);
+//    return otherEnd.partWithPort;
+//}
+
+//query Port::getCorrespondingSlot() : Slot {
+//	return slots->selectOne(definingFeature = self);
+//}
+query Slot::listAll() : Slot {
+	var riPiLinks := self.owner.owner.ownedElement[InstanceSpecification]->select(classifier -> size() = 0);
+	riPiLinks->forEach(l) {
+	    //TODO Assumption: each link has 2 and only 2 ends
+		var ends := l.allOwnedElements()[InstanceValue]->asOrderedSet();
+		
+		log("FIRST");
+		log("Instance", ends->first().instance![InstanceSpecification].name + ends->first().instance![InstanceSpecification].getStringId());
+		log("Slot", ends->first().owner![Slot].definingFeature![Port].name + ends->first().owner![Slot].getStringId());
+	
+		log("LAST");
+		log("Instance", ends->last().instance![InstanceSpecification].name + ends->last().instance![InstanceSpecification].getStringId());
+		log("Slot", ends->last().owner![Slot].definingFeature![Port].name + ends->last().owner![Slot].getStringId());
+	};
+	return null;	
+}
+
+query Slot::getCorrespondingSlotFull() : Slot {
+	
+	var riPiLinks := self.owner.owner.ownedElement[InstanceSpecification]->select(classifier -> size() = 0);
+	riPiLinks->forEach(l){
+	    //TODO Assumption: each link has 2 and only 2 ends
+		var ends := l.allOwnedElements()[InstanceValue]->asOrderedSet();
+		
+		// bug fixed: check also if the instance is the same, not only the slot
+		var bFirst := ends->first().instance![InstanceSpecification] = self.owningInstance;
+		bFirst := bFirst and 
+			ends->first().instance![InstanceSpecification].getId() = self.owningInstance.getId();
+		bFirst := bFirst and 
+			ends->first().owner![Slot].definingFeature![Port] = self.definingFeature;
+		bFirst := bFirst and self.getId() = ends->first().owner![Slot].getId();
+			
+		var bLast := ends->last().instance![InstanceSpecification] = self.owningInstance;
+		bLast := bLast and 
+			ends->last().instance![InstanceSpecification].getId() = self.owningInstance.getId();
+		bLast := bLast and 
+			ends->last().owner![Slot].definingFeature![Port] = self.definingFeature;
+		bLast := bLast and self.getId() = ends->last().owner![Slot].getId();
+				
+			
+		if bFirst then {
+	  	  var s :=  ends->last();
+	  	  return s.instance.slot->selectOne(definingFeature = s.owner![Slot].definingFeature);
+	  	} else
+	  	 
+	    if bLast then {
+	  	  var s := ends->first();//res += ends->first().instance//candidates->selectOne(ownedElement[Slot]->selectOne(s | s = ends->first()) <> null)
+	  	  return s.instance.slot->selectOne(definingFeature = s.owner![Slot].definingFeature);
+	    } endif
+		
+	    endif;
+	    
+	};
+	return null;
+}
+
+/*
+ Return the "to" attribute of a given <Assign>Comment
+*/
+
+query Comment::getTo() : InstanceSpecification{
+	var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	return 	asg.to![InstanceSpecification];
+}
+
+query getAssignForInstance(p : InstanceSpecification) : MARTE::Alloc::Assign {
+	return assigns->selectOne(isAssignForInstance(p)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+}
+
+query Comment::isAssignForInstance(spec : InstanceSpecification) : Boolean {
+	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	return ass._from![InstanceSpecification] = spec.getSourceInstanceSpec() and self.isReferringId(spec.getId());
+}
+
+query getAssignToFrom_MemoryPartition(p : InstanceSpecification) : InstanceSpecification {
+	var ass := getAssignForInstance(p);
+	var toInstance := ass.to![InstanceSpecification];
+	var toClass := toInstance.classifier![Classifier];
+	if toClass.isStereotyped(MemoryPartitionQN) then {
+		var a := assigns -> selectOne(isAssignedFrom(toInstance));
+		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+		return 	asg.to![InstanceSpecification];
+	} else //it is an hardware component
+		return 	ass.to![InstanceSpecification]
+	endif;
+	
+	return null;
+}
+
+//query getAssignToFrom(p : InstanceSpecification) : InstanceSpecification {
+//	var a := assigns -> selectOne(isAssignedFrom(p));
+//	var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+//	return 	asg.to![InstanceSpecification];
+//}
+
+//query getAssignFromTo(p : InstanceSpecification) : InstanceSpecification {
+//	var a := assigns -> selectOne(isAssignedTo(p));
+//	var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+//	return 	asg._from![InstanceSpecification];
+//}
+
+query Comment::isAssignedFrom(p : InstanceSpecification) : Boolean {
+    var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+    return asg._from![InstanceSpecification] = p;
+}
+
+query Comment::isAssignedTo(p : InstanceSpecification) : Boolean {
+    var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+    return asg.to![InstanceSpecification] = p;
+}
+
+//query InstanceSpecification::RIportSize(port : Port): Integer {
+//	return self.allOwnedElements()[Slot]->select(isRI())->size();
+//}
+
+//query InstanceSpecification::PIportSize(port : Port): Integer {
+//	return self.allOwnedElements()[Slot]->select(isPI())->size();
+//}
+
+//query InstanceSpecification::getRIportFromIndex(port : Port, i : Integer): Integer {
+//	var n := self.RIportSize(port);
+//	return i.mod(n);
+//}
+
+//query Slot::isRI() : Boolean {
+//	var cp := self.definingFeature![Port].getMetaclass(ClientServerPortQN).oclAsType(MARTE::GCM::ClientServerPort);
+//	return cp.reqInterface->isEmpty();
+//}
+
+//query Slot::isPI() : Boolean {
+//	var cp := self.definingFeature![Port].getMetaclass(ClientServerPortQN).oclAsType(MARTE::GCM::ClientServerPort);
+//	return cp.provInterface->isEmpty();
+//}
+query ConnectableElement::getLifeLineInstance(instances : Set(InstanceSpecification)) : InstanceSpecification {
+	var nonNullInstances : Set(InstanceSpecification) := instances->select(instance : InstanceSpecification | not instance.name.oclIsUndefined());
+	return nonNullInstances->selectOne(instance : InstanceSpecification | instance.name.indexOf(self.name) > 0);
+}
+
+helper Message::getMsgChrts() : chessmlprofile::RTComponentModel::CHRtSpecification {
+	   	
+	var chrts : chessmlprofile::RTComponentModel::CHRtSpecification := null;
+	//log(self.name);
+   	//get the operation
+   	var operation : Operation := self.signature.oclAsType(Operation);
+   	//log(operation.name);
+   	//assume that Message's receiveEvent is of type MessageOccurrenceSpecification
+   	var receiveEvent : MessageOccurrenceSpecification := self.receiveEvent.oclAsType(MessageOccurrenceSpecification);
+   	//log(receiveEvent.name);
+   	//assume that Message's receiveEvent covers only one lifeline
+   	var lifeline : Lifeline := receiveEvent.covered->asSequence()->first();
+   	//log(lifeline.name);
+   	//get the instance related to Lifeline's' "represents" feature
+	//log("Found Lifeline for property: " + lifeline.represents.name + " with Type: " + lifeline.represents.type.name);
+	//search for instance in the CHGaResourcePlatform
+	var instance := lifeline.represents.getLifeLineInstance(instSpecFullPackage.allOwnedElements()[InstanceSpecification]);
+	//log("Found Instance " + instance.name);
+		
+	//get the instance's chrtPortSlots with a ChRtSpecification comment whose context is equal to the inital operation
+	var startInstSlots : Set(Slot):= instance.slot->select(isStereotyped(CHRtPortSlotQN));
+   	startInstSlots->forEach(s){
+   		var chrtSpecs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
+   		chrtSpecs->forEach(spec){
+   			if(spec.context.qualifiedName.equalsIgnoreCase(operation.qualifiedName)) then {
+   				chrts := spec;
+   				currentSlot := s;
+   				//log("Slot [getMsgChrts]: " + s.definingFeature.name);
+   			} endif;
+   		};
+   	};
+   	//log("+++++++++++++ context: " + startChrts.context.name);
+	return chrts;
+}

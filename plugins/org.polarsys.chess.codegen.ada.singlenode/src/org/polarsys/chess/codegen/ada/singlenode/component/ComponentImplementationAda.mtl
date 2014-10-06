@@ -1,0 +1,161 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module ComponentImplementationAda('http://www.eclipse.org/uml2/3.0.0/UML')/]
+[import org::polarsys::chess::codegen::ada::singlenode::main::Copyright /]
+
+[template public generateComponentImplementationAda(model : Model, procNode: InstanceSpecification, cImpl : Component, rType : Component ) {
+	ptList : Sequence(OclAny) = cImpl.ownedAttribute->filter("Port")->asSequence();
+    procNodeName : String = procNode.name;
+    clSvPortStName : String = 'MARTE::MARTE_DesignModel::GCM::ClientServerPort';
+    pkgName : String = rType.name.concat('s.').concat(cImpl.name).concat('s');
+}
+]
+
+[file (procNodeName.concat('/src/component_repository/impl/ada/').concat(rType.name).concat('s-').concat(cImpl.name).
+                                 concat('s.ads').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model)/]
+
+-- Comment the with below if you do not use user-defined datatypes
+with Datatype; use Datatype;
+
+package [pkgName/] is
+
+ -- Declaration of the component implementation
+   type [cImpl.name/] is new [rType.name /] with private;
+ 
+ -- Declaration of the component implementation operation
+   [for (op: Operation | cImpl.ownedOperation)]
+
+      [if (op.ownedParameter->size() = 0)]
+   overriding 
+   procedure [op.name /] (Self : in out [cImpl.name/]);
+      [else]
+   overriding 
+   procedure [op.name/] (Self: in out [cImpl.name/][for (par : Parameter | op.ownedParameter)];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]);
+      [/if]
+   [/for]
+
+private
+
+   type [cImpl.name/] is new [rType.name /] with null record;
+
+--/ ** Insert below your private declarations
+--/ ** [protected (pkgName.concat('_PrivateDeclarations'))]
+
+--/ ** [/protected]
+
+end [pkgName/];
+
+[/file]
+
+[comment Package body/]
+[file (procNodeName.concat('/src/component_repository/impl/ada/').concat(rType.name).concat('s-').concat(cImpl.name).
+                                 concat('s.adb').toLower(), false, 'UTF-8')]
+[generateReducedCopyrightAda(model)/]
+
+--/ ** Insert below your with'ed packages
+--/ ** [protected ('with packages')]
+
+--/ ** [/protected]
+
+package body [pkgName/] is
+
+--/ ** Insert below your package local definitions
+--/ ** [protected (pkgName.concat('_pkgDefinitions'))]
+
+--/ ** [/protected]
+
+   [for (op: Operation | cImpl.ownedOperation)]
+
+       [if (op.ownedParameter->size() = 0)]
+          [let opName : String = getOperationSignature(cImpl, op)]
+   overriding 
+   procedure [op.name/] (Self : in out [cImpl.name/]) is
+     pragma Warnings (Off, Self);
+   --/ ** Insert below your local variables declarations;
+   --/ ** [protected (opName.concat('_LocalVariables'))]
+
+   --/ ** [/protected]
+   begin
+   --/ ** Summary of calls to Required Interfaces (Worst-case scenario) **
+
+     		[if op.method->size() > 0]
+     			[let act : Activity = op.method->filter(Activity)->asSequence()->first()]
+					[for (coa: CallOperationAction | act.node->filter(CallOperationAction))]
+   --/ 1 call to -> Self.[coa.onPort.name/].[coa.operation.name/]
+   					[/for]
+     			[/let]
+            [else]
+   --/ No calls to Required Interfaces
+			[/if]
+
+   --/ ** End of calls to Required Interfaces **
+   
+      null; -- Remove in your final build
+   --/ ** [protected (opName)]
+
+   --/ ** [/protected]
+   end [op.name/];
+          [/let]
+      [else]
+        [comment TODO: take parameterType into account when creating operation name/]
+         [let opName : String = getOperationSignature(cImpl, op)]
+   overriding 
+   procedure [op.name/] (Self: in out [cImpl.name/][for (par : Parameter | op.ownedParameter)];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]) is
+      pragma Warnings (Off, Self);
+   --/ ** Insert below your local variables declarations;
+   --/ ** [protected (opName.concat('_LocalVariables'))]
+
+   --/ ** [/protected]
+
+   begin
+   --/ ** Summary of calls to Required Interfaces (Worst-case scenario) **
+
+     		[if op.method->size() > 0]
+     			[let act : Activity = op.method->filter(Activity)->asSequence()->first()]
+					[for (coa: CallOperationAction | act.node->filter(CallOperationAction))]
+   --/ 1 call to -> Self.[coa.onPort.name/].[coa.operation.name/]
+   					[/for]
+     			[/let]
+            [else]
+   --/ No calls to Required Interfaces
+			[/if]
+
+   --/ ** End of calls to Required Interfaces **
+   
+      null; -- Remove in your final build
+   --/ ** [protected (opName)]
+
+   --/ ** [/protected]
+   end [op.name/];
+         [/let]
+      [/if]
+   [/for]
+
+end [pkgName/];
+[/file]
+
+[/template]
+
+[query public getOperationSignature(arg0 : Component, arg1 : Operation) : String
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'getOperationSignature(org.eclipse.uml2.uml.Component, org.eclipse.uml2.uml.Operation)', Sequence{arg0, arg1}) /]
+
+[query public getCalledOperation(arg0 : Operation) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'getCalledOperation(org.eclipse.uml2.uml.Operation)', Sequence{arg0}) /]

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="CSD_FPTC_Drawer__1317635175167" name="FPTC">
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif" id="composite.tool.comment_1317635199513" name="FPTCSpecification (Comment)" refToolId="composite.tool.comment">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Dependability::FailurePropagation::FPTCSpecification"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+						
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif" id="composite.tool.comment_1317635199514" name="FI4FASpecification (Comment)" refToolId="composite.tool.comment">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Dependability::FailurePropagation::FI4FASpecification"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+					
+			<aspectTool description="Create new Link" id="composite.tool.link_1317635215191" name="Link" refToolId="composite.tool.link"/>
+			
+		</drawer>
+	</content>
+</paletteDefinition>

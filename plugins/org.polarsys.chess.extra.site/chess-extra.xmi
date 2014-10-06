@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ASCII"?>
+<discovery:DiscoveryDefinition
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:discovery="http://www.eclipse.org/papyrus/discovery/1.0">
+  <categories
+      name="Features"
+      description="CHESS features"
+      relevance="6">
+    <components
+        name="MARTE2MAST"
+        provider="University of Padua"
+        description="Allows to execute MAST analysis"
+        license="GPL"
+        groups="//@filters.0"
+        image32="images/marte-32x32.png"
+        incubation="true">
+      <sitesURLS>http://www.math.unipd.it/~azovi/CHESS/CHESS_Polarsys_Extra/</sitesURLS>
+      <overview
+          summary=""
+          screenshot=""
+          url=""/>
+      <id>it.unipd.chess.m2m.marte2mast.feature</id>
+    </components>
+  </categories>
+  <filters name="Stable"/>
+  <filters name="Experimental"/>
+</discovery:DiscoveryDefinition>

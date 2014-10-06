@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="Drawer__1316779617160" name="CHESS/Deployment">
+			<aspectTool description="Create new Package" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Package.gif" id="clazz.tool.package_1316779781926" name="Package" refToolId="clazz.tool.package"/>
+			<aspectTool description="Create a CH_HwProcessor component" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1316779719559" name="CH_HWProcessor (Component)" refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor"/>
+						<stereotype stereotypeName="MARTE::MARTE_AnalysisModel::GQAM::GaExecHost"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<!--aspectTool description="Create a CH_HwComputingResource component" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1316779796799" name="CH_HwComputingResource (Component)" refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwComputingResource"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool-->
+			<aspectTool description="Create a CH_HwBus component" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1316779840654" name="CH_HwBus Componnet)" refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwBus"/>
+						<stereotype stereotypeName="MARTE::MARTE_AnalysisModel::GQAM::GaCommHost"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1317119715520" name="HWActuator (Component)" refToolId="clazz.tool.component">
+			<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+				<stereotypesToApply><stereotype stereotypeName="MARTE::MARTE_DesignModel::HRM::HwLogical::HwDevice::HWActuator"/>
+				</stereotypesToApply>
+			</postAction>
+		</aspectTool>
+		<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1317119725420" name="HWSensor (Component)" refToolId="clazz.tool.component">
+			<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+				<stereotypesToApply><stereotype stereotypeName="MARTE::MARTE_DesignModel::HRM::HwLogical::HwDevice::HWSensor"/>
+				</stereotypesToApply>
+			</postAction>
+		</aspectTool>
+		<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1317119746861" name="HwCache (Component)" refToolId="clazz.tool.component">
+			<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+				<stereotypesToApply><stereotype stereotypeName="MARTE::MARTE_DesignModel::HRM::HwLogical::HwStorage::HwMemory::HwCache"/>
+				</stereotypesToApply>
+			</postAction>
+		</aspectTool>
+		<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1301932923050_1317121808800" name="HwASIC (Component)" refToolId="clazz.tool.component">
+			<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+				<stereotypesToApply><stereotype stereotypeName="MARTE::MARTE_DesignModel::HRM::HwLogical::HwComputing::HwASIC"/>
+				</stereotypesToApply>
+			</postAction>
+		</aspectTool>
+		
+		<aspectTool description="Create Partition" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_partition" name="Partition (Component)" refToolId="clazz.tool.component">
+			<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+				<stereotypesToApply><stereotype stereotypeName="MARTE::MARTE_DesignModel::SRM::SW_Concurrency::MemoryPartition"/>
+				</stereotypesToApply>
+			</postAction>
+		</aspectTool>
+			
+			<aspectTool description="Create a component" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1316779916487" name="Component" refToolId="clazz.tool.component"/>
+			<aspectTool description="Create a comment" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif" id="clazz.tool.comment_1316779679320" name="Comment" refToolId="clazz.tool.comment"/>
+			<aspectTool description="Creation of a link for comment" id="clazz.tool.link_13167799276791" name="Link" refToolId="clazz.tool.link"/>
+			<aspectTool description="Create a Composition" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Association.gif" id="clazz.tool.association_1372928774312" name="Association" refToolId="clazz.tool.association"><postAction id="org.eclipse.papyrus.postaction.associationendactionprovider"><associationEnd index="0" name="source"/><associationEnd index="1" name="target"><aggregation value="composite"/><multiplicity value="1..1"/><navigable value="Yes"/><owner value="Class"/></associationEnd></postAction></aspectTool>
+			<aspectTool description="Create a Dependency" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Dependency.gif" id="clazz.tool.dependency_1301932902690" name="Dependency" refToolId="clazz.tool.dependency"/>
+		</drawer>
+	</content>
+</paletteDefinition>

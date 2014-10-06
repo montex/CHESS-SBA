@@ -1,0 +1,901 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+ 
+ <extension point="org.polarsys.chess.resourceListener">
+      <listener
+            name="resource listener"
+            realization="org.polarsys.chess.validator.ResourceListener">
+      </listener>
+   </extension>
+ 
+<extension point="org.eclipse.emf.validation.constraintBindings">
+      <clientContext
+            default="false"
+            id="CHESSvalidationContextID">
+         <selector
+               class="org.polarsys.chess.validator.ValidationDelegateClientSelector">
+         </selector>
+      </clientContext>
+      <binding
+            category="ExtraFunctionalView"
+            context="CHESSvalidationContextID">
+      </binding>
+      <binding
+            category="DeploymentView"
+            context="CHESSvalidationContextID">
+      </binding>
+      <binding
+            category="FunctionalView"
+            context="CHESSvalidationContextID">
+      </binding>
+      
+      <binding
+            category="AnalysisView"
+            context="CHESSvalidationContextID">
+      </binding>
+      
+      <binding
+            category="CHESSModelConstraints"
+            context="CHESSvalidationContextID">
+      </binding>
+      
+   </extension> 
+   
+   <!-- CONSTRAINTS: -->
+   
+  <!-- Custom constraint provider using OCL documents -->
+ <!--<extension
+         point="org.eclipse.emf.validation.constraintProviders"
+         id="oclProvider">
+         
+      <constraintProvider cache="true">
+         <package namespaceUri="org.polarsys.chess.core.*"/>
+        
+         <ocl path="OCLconstraints/library.ocl"/>
+        
+      </constraintProvider>
+  </extension>-->
+     
+   <extension
+         point="org.eclipse.emf.validation.constraintProviders">
+         
+     <category
+        id="CHESSModelConstraints"
+        name="CHESS Model Constraints">
+     </category>
+     <category
+           id="CHESSModelConstraints/AnalysisView"
+           name="AnalysisView">
+     </category>
+     <category
+           id="CHESSModelConstraints/ExtraFunctionalView"
+           name="ExtraFunctionalView">
+     </category>
+        
+      <category
+            id="CHESSModelConstraints/DeploymentView"
+            name="DeploymentView">
+      </category>
+      
+      <category
+            id="CHESSModelConstraints/FunctionalView" name="FunctionalView">
+      	 </category>
+      <constraintProvider
+            cache="true">
+         <package
+               namespaceUri="http://www.eclipse.org/uml2/5.0.0/UML">
+         </package>
+         <constraints
+               categories="CHESSModelConstraints/ExtraFunctionalView">
+               
+               <constraint
+                  id="EFVRT_01"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Batch"
+                  name="EFVRT_01"
+                  severity="ERROR"
+                  statusCode="ev01">
+               <message>
+                  The attribute&quot;context&quot; of {0} must be set
+               </message>
+               <description>
+                 The attribute 'context' of CHRtSpecification must be set.
+               </description>
+               <target
+                     class="Comment">
+               </target>
+               <![CDATA[
+  
+               if(self.getAppliedStereotype('CHESS::Predictability::RTComponentModel::CHRtSpecification') <> null) then
+  
+           			 self.getValue(self.getAppliedStereotype('CHESS::Predictability::RTComponentModel::CHRtSpecification'), 'context') <> null
+           			
+           			else
+           				true
+           				endif               	
+               	]]>
+            </constraint>
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.EFVRT_02"
+                  id="EFVRT_02"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="EFVRT_02"
+                  severity="ERROR"
+                  statusCode="ev02">
+               <message>
+                  The attribute&quot;occKind&quot; of &lt;&lt;CHRtSpecification&gt;&gt; tmust be an instance of PeriodicPattern, SporadicPattern or BurstPattern, otherwise Protection must be 'guarded' or 'concurrent'
+               </message>
+               <description>
+                 The attribute 'occKind' of CHRtSpecification must be set or protection must be 'guarded' or 'concurrent'.
+               </description>
+               <target
+                     class="Comment">
+               </target>
+            </constraint>
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.EFVRT_03"
+                  id="EFVRT_03"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="EFVRT_03"
+                  severity="ERROR"
+                  statusCode="ev03">
+               <message>
+                  In the&lt;&lt;CH_RtSpecification&gt;&gt; note of the element: [{0}] in the package [{1}] having &quot;occKind&quot; member = &quot;PeriodicPattern&quot; : period must be &gt;=0 and WCET and relDl must be both &gt;=0
+               </message>
+               <description>
+               PeriodicPattern period must > 0 and WCET and relDl must be > 0
+               </description>
+               <target
+                     class="Comment">
+               </target>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.EFVRT_04"
+                  id="EFVRT_04"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="EFVRT_04"
+                  severity="ERROR"
+                  statusCode="ev04">
+               <message>
+                  In the&lt;&lt;CH_RtSpecification&gt;&gt; note of the element: [{0}] in the package [{1}] having &quot;occKind&quot; member = &quot;PeriodicPattern&quot; : phase,priority and relativePriority attributes are not null and then must be all &gt; 0
+               </message>
+               <target
+                     class="Comment">
+               </target>
+               <description>
+               In CH_RtSpecificationhaving occKind= PeriodicPattern, phase,priority and relativePriority attributes must be >= 0
+               </description>
+            </constraint>
+            
+             <constraint
+                  id="EFVRT_05"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Batch"
+                  name="EFVRT_05"
+                  severity="ERROR"
+                  statusCode="ev05">
+               <message>
+                  In the {0} the attribute&quot;partWithPort&quot; must not be null
+               </message>
+               <target
+                     class="Comment">
+               </target>
+               <description>
+                  CHRtSpecification partWithPort attribut must not be null
+               </description>
+               <![CDATA[
+						if(self.getAppliedStereotype('CHESS::Predictability::RTComponentModel::CHRtSpecification') = null) then
+				  			true
+						else
+               				self.getValue(self.getAppliedStereotype('CHESS::Predictability::RTComponentModel::CHRtSpecification'), 'partWithPort') <> null
+               			endif	
+               	]]>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.EFVRT_20"
+                  id="EFVRT_20"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="EFVRT_20"
+                  severity="ERROR"
+                  statusCode="ev20">
+               <message>
+                  In the&lt;&lt;CH_RtSpecification&gt;&gt; comment note of the element: [{0}] in the package [{1}] having &quot;occKind&quot; member = &quot;SporadicPattern&quot; : minInterarrival, WCET and relDl attributes must be all &gt;= 0
+               </message>
+               <description>
+                In CH_RtSpecification having occKind=SporadicPattern, minInterarrival, WCET and relDl attributes must be >= 0
+               </description>
+               <target
+                     class="Comment">
+               </target>
+            </constraint>
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.EFVRT_30"
+                  id="EFVRT_30"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="EFVRT_30"
+                  severity="ERROR"
+                  statusCode="ev30">
+               <message>
+                  In the&lt;&lt;CH_RtSpecification&gt;&gt; comment note of the element: [{0}] in the package [{1}] attribute localWCET is not null and then must be &gt; 0
+                  
+               </message>
+               <description>
+                In CH_RtSpecification attribute priority and relativePriority must be >= 0
+               </description>
+               <target
+                     class="Comment">
+               </target>
+            </constraint>
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.EFVRT_40"
+                  id="EFVRT_40"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="EFVRT_40"
+                  severity="ERROR"
+                  statusCode="ev40">
+               <target
+                     class="Comment">
+               </target> 
+               <message>
+                  In the&lt;&lt;CH_RtSpecification&gt;&gt; comment note of the element: [{0}] in the package [{1}] the attribute &quot;localWCET&quot; is not null then must be &gt; 0
+               </message>
+               <description>
+                In CH_RtSpecification attribute localWCET must be >= 0
+               </description>
+            </constraint>
+         </constraints>
+         <constraints
+               categories="CHESSModelConstraints/DeploymentView">
+               
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.DV_01"
+                  id="DV_01"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="DV_01"
+                  severity="ERROR"
+                  statusCode="DV_01">
+               <message>
+                  {1}
+               </message>
+               <target class="InstanceSpecification">
+               </target>
+               <description>
+                 The ComponentImplementation instance must be deployed on exactly one processing unit..
+               </description>
+            </constraint>   
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.DV_02"
+                  id="DV_02"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="DV_02"
+                  severity="ERROR"
+                  statusCode="DV_02">
+               <message>
+                  {1}
+               </message>
+               <target class="Comment">
+               </target>
+               <description>
+                 The attribute 'from'\'to' of stereotype Assign must be valued with exactly one Element.
+                 The value of the attribute 'from' in stereotype Assign must be an instance (InstanceSpecification) of a ComponentImplementation.
+                 The value of the attribute 'to' in stereotype Assign must be an instance (InstanceSpecification) of a CH_HwProcessor
+               </description>
+            </constraint> 
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.DV_03"
+                  id="DV_03"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="DV_03"
+                  severity="WARNING"
+                  statusCode="DV_03">
+               <message>
+                  {1}
+               </message>
+               <target class="Component">
+               </target>
+               <description>
+                 The attribute HW_BUS_PACKETT of stereotype HwBus must be set
+               </description>
+            </constraint> 
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.DV_04"
+                  id="DV_04"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="DV_04"
+                  severity="WARNING"
+                  statusCode="DV_04">
+               <message>
+                  {1}
+               </message>
+               <target class="Component">
+               </target>
+               <description>
+                 The attribute 'speedFactor' of stereotype HwBus is null, default (value=1.0) will be used
+                 The attribute 'blockT' of stereotype HwBus is null, default (worst=0.0,unit=ms) will be used
+                 The attribute 'speedFactor' of stereotype CH_HwProcessor is null, default (value=1.0) will be used
+               </description>
+            </constraint> 
+               
+            <!--constraint
+                  id="DV_05"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Live"
+                  name="DV_05"
+                  severity="ERROR"
+                  statusCode="dv05">
+               <message>
+                  Component {0} in the deployment view must not have operations.
+               </message>
+               <target
+                     class="Component">
+                  <event
+                        name="Add">
+                     <feature
+                           name="ownedOperation">
+                     </feature>
+                  </event>
+               </target>
+               <description>
+                  Components in the deployment view must not have operations.
+               </description>
+               <![CDATA[			
+                let s:Bag(String) = self.getNearestPackage().getAppliedStereotypes().name in
+				let s2:Bag(String) = self.getNearestPackage().allOwningPackages().getAppliedStereotypes().name in
+				if(s->includes('DeploymentView') or s2->includes('DeploymentView')) then
+				if(self.ownedOperation->isEmpty()) then
+					true
+				else false
+				endif
+				else true
+				endif
+               ]]>
+            </constraint-->
+            <!--constraint
+                  id="DV_01"
+                  isEnabledByDefault="false"
+                  lang="OCL"
+                  mode="Batch"
+                  name="DV_01"
+                  severity="ERROR"
+                  statusCode="dv01">
+               <message>
+                Deployment view can only contains the following model entities:
+UML::Abstraction stereotyped with MARTE::MARTE_foundation::Alloc::Allocate
+Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comments
+               </message>
+               <target
+                     class="Package">
+               </target>
+               <![CDATA[
+                if(self.getAppliedStereotype('CHESS::Core::CHESSViews::DeploymentView') <> null) then
+					let members : Set(NamedElement) = self.member in
+					let comments : Bag(Comment) = self.member->collect(ne:NamedElement | ne.ownedComment) in
+					members->forAll(ne:NamedElement | ne.oclIsKindOf(Package) or ne.oclIsKindOf(Component) or 
+					ne.oclIsKindOf(Property) or ne.oclIsKindOf(Connector) or  ne.oclIsKindOf(Abstraction) and 
+					ne.oclAsType(Abstraction).getAppliedStereotypes()
+					->forAll(s:Stereotype | s.qualifiedName = 'MARTE::MARTE_Foundations::Alloc::Allocate') and
+					comments->forAll(c:Comment | c.getAppliedStereotypes()->forAll(cs:Stereotype | cs.name = 'CH_RtSpecification')))
+				else true
+				endif
+               ]]>
+            </constraint-->
+         </constraints>
+      
+         
+         <constraints
+               categories="CHESSModelConstraints/FunctionalView">
+               
+               
+            <!--constraint  
+                  id="FV_01"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Live"
+                  name="FV_01"
+                  severity="ERROR"
+                  statusCode="fv01">
+               <message>
+                  A ClientServerPort cannot have a type;
+               </message>
+               <target
+                     class="Port">
+                     
+               </target>
+               <description>
+                  A ClientServerPort cannot have a type
+               </description>
+                <![CDATA[
+                
+            	if(self.getAppliedStereotype('MARTE::MARTE_DesignModel::GCM::ClientServerPort') <> null) then
+                  if(self.oclAsType(TypedElement).type <> null) then
+                  	false
+                  else
+                  	true
+                  endif
+                 else
+                 	true
+                 endif
+					]]>
+            </constraint-->
+            
+             <constraint
+                  class="org.polarsys.chess.validator.constraints.FV_02"
+                  id="FV_02"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="FV_02"
+                  severity="WARNING"
+                  statusCode="FV_02">
+               <message>
+                  ComponentType {0} does not provide an Interface
+               </message>
+               <description>
+                  ComponentType does not provide an Interface
+               </description>
+               <target class="Component">
+               </target>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.FV_03"
+                  id="FV_03"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="FV_03"
+                  severity="ERROR"
+                  statusCode="FV_03">
+               <message>
+                  {1}
+               </message>
+               <description>
+                  The ComponentImplementation must realize exactly one ComponentType
+                  The ComponentImplementation must define the same operation as the ComponentType it realizes
+               </description>
+               <target class="Component">
+               </target>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.FV_04"
+                  id="FV_03"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="FV_04"
+                  severity="ERROR"
+                  statusCode="FV_04">
+               <message>
+                  {1}
+               </message>
+               <description>
+               The ComponentType does not define the same operations from the interface it realizes
+               </description>
+               <target class="Component">
+               </target>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.FV_05"
+                  id="FV_05"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="FV_05"
+                  severity="ERROR"
+                  statusCode="FV_05">
+               <message>
+                  {1}
+               </message>
+               <description>
+               The Port  must be stereotyped by ClientServerPort FlowPort
+               </description>
+               <target class="Component">
+               </target>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.FV_06"
+                  id="FV_06"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="FV_06"
+                  severity="ERROR"
+                  statusCode="FV_06">
+               <message>
+                  {1}
+               </message>
+               <description>
+               The value of ClientServerPort stereotype's attribute SPEC_KIND  must be set to INTERFACEBASED
+               </description>
+               <target class="Component">
+               </target>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.FV_07"
+                  id="FV_07"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="FV_07"
+                  severity="ERROR"
+                  statusCode="FV_07">
+               <message>
+                  {1}
+               </message>
+               <description>
+               ClientServerPorts with kind PROREQ are not allowed in ComponentTypes and ComponentImplementations
+               </description>
+               <target class="Component">
+               </target>
+            </constraint>
+            
+            <constraint
+                  id="FV_08"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Live"
+                  name="FV_08"
+                  severity="WARNING"
+                  statusCode="FV_08">
+               <message>
+                  Interfaces should be created only in packages that are descendants of the root package with the stereotype CHESS::ComponentView
+               </message>
+               <description>
+               	  Interfaces should be created only in packages that are descendants of the root package with the stereotype CHESS::ComponentView
+               </description>
+               <target
+                     class="Package">
+                  <event
+                        name="Add">
+                     <feature
+                           name="packagedElement">
+                     </feature>
+                  </event>
+               </target>
+                <![CDATA[ 
+                let p : Set(Package) = self.allOwningPackages() in 
+				if(p->select(pkg:Package | pkg.getAppliedStereotypes().name
+					->includes('ComponentView'))->isEmpty()
+					and self.getAppliedStereotypes().name->excludes('ComponentView')) then
+					let i:Set(Element) = self.ownedElement->select(e:Element | e.oclIsKindOf(Interface)) in
+					if(i->notEmpty()) then false
+					else true
+					endif
+				else true
+				endif ]]>
+            </constraint>
+            
+            <constraint
+                  id="FV_09"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Live"
+                  name="FV_09"
+                  severity="WARNING"
+                  statusCode="FV_09">
+               <message>
+                  Operations should be created only in packages that are descendants of the root package with the stereotype CHESS::ComponentView
+               </message>     	
+               <description>
+               Operations shuold be created only in packages that are descendants of the root package with the stereotype CHESS::ComponentView
+               </description>
+               <target
+                     class="Interface">
+                  <event
+                        name="Add">
+                     <feature
+                           name="ownedOperation">
+                     </feature>
+                  </event>
+               </target>
+               <target
+                     class="Class">
+                  <event
+                        name="Add">
+                     <feature
+                           name="ownedOperation">
+                     </feature>
+                  </event>
+               </target>
+               <![CDATA[
+                let p : Set(Package) = self.allOwningPackages() in 
+				if(not p->select(pkg:Package | pkg.getAppliedStereotypes().name->includes('DeploymentView') or pkg.getAppliedStereotypes().name->includes('RequirementView'))->isEmpty()) then
+					self.ownedOperation->isEmpty()
+				else true
+				endif
+				]]>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.Connector_01"
+                  id="FV_10"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Live"
+                  name="Connector_01"
+                  severity="WARNING"
+                  statusCode="FV_10">
+               <message>
+                  Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
+               </message>
+               <description>
+               Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
+               </description>
+               
+               <target class="Connector">
+               </target>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.Connector_02"
+                  id="FV_11"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Live"
+                  name="Connector_02"
+                  severity="WARNING"
+                  statusCode="FV_11">
+               <message>
+                  TODO: work in progress
+               </message>
+               <target class="Connector">
+               </target>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.FlowPorts_01"
+                  id="FlowPorts_01"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="FlowPorts_01"
+                  severity="WARNING"
+                  statusCode="FlowPorts_01">
+               <message>
+                  The &lt;&lt;FlowPort&gt;&gt; is not mapped to a parameter of a required or provided operation
+               </message>
+               <description>
+               	The FlowPort is not mapped to a parameter of a required or provided operation
+               </description>
+               <target class="Port">
+               </target>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.FlowPorts_02"
+                  id="FlowPorts_02"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="FlowPorts_02"
+                  severity="WARNING"
+                  statusCode="FlowPorts_02">
+               <message>
+                  The &lt;&lt;FlowPort&gt;&gt; should be mapped to parameters of the same type
+               </message>
+               <description>
+               	The FlowPort should be mapped to parameters of the same type
+               </description>
+               <target class="Port">
+               </target>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.FlowPorts_03"
+                  id="FlowPorts_03"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="FlowPorts_03"
+                  severity="WARNING"
+                  statusCode="FlowPorts_03">
+               <message>
+                  The &lt;&lt;FlowPort&gt;&gt;  should be mapped to parameters according to their directions, ie:
+                  * port direction IN -&gt; param direction IN or INOUT (param of PROVIDED operation)
+		 		  * port direction OUT -&gt; param direction OUT or INOUT (param of PROVIDED operation)
+		 	 	  * port direction IN -&gt; param direction OUT or INOUT (param of REQUIRED operation)
+		 		  * port direction OUT -&gt; param direction IN or INOUT (param of REQUIRED operation)
+				  * port direction INOUT -&gt; param direction IN or OUT or INOUT (param of REQUIRED or PROVIDED operation)
+               </message>
+               <description>
+               	The FlowPort  should be mapped to parameters according to their directions, ie:
+                  * port direction IN -&gt; param direction IN or INOUT (param of PROVIDED operation)
+		 		  * port direction OUT -&gt; param direction OUT or INOUT (param of PROVIDED operation)
+		 	 	  * port direction IN -&gt; param direction OUT or INOUT (param of REQUIRED operation)
+		 		  * port direction OUT -&gt; param direction IN or INOUT (param of REQUIRED operation)
+				  * port direction INOUT -&gt; param direction IN or OUT or INOUT (param of REQUIRED or PROVIDED operation)
+               </description>
+               <target class="Port">
+               </target>
+            </constraint>
+             
+            <!--constraint
+                  id="FV_01"
+                  isEnabledByDefault="false"
+                  lang="OCL"
+                  mode="Live"
+                  name="FV_01"
+                  severity="ERROR"
+                  statusCode="fv01">
+               <message>
+                  FunctionalView can only contain packages, interfaces, components, interface realizations and usage dependencies.
+               </message>
+               <target
+                     class="Package">
+                  <event
+                        name="Add">
+                     <feature
+                           name="packagedElement">
+                     </feature>
+                  </event>
+               </target>
+               <![CDATA[
+               	let s:Bag(String) = self.getNearestPackage().getAppliedStereotypes().name in
+				let s2:Bag(String) = self.getNearestPackage().allOwningPackages().getAppliedStereotypes().name in
+				if(s->includes('FunctionalView') or s2->includes('FunctionalView')) then
+					if(packagedElement->forAll(pe:PackageableElement | pe.oclIsKindOf(Package) or pe.oclIsKindOf(Component) or 
+						pe.oclIsKindOf(Realization) or pe.oclIsKindOf(Interface) or pe.oclIsKindOf(Usage))) then true
+					else false
+					endif
+				else true
+				endif
+				]]>
+            </constraint-->
+            <!--constraint
+                  id="FV_02"
+                  isEnabledByDefault="false"
+                  lang="OCL"
+                  mode="Live"
+                  name="FV_02"
+                  severity="ERROR"
+                  statusCode="fv02">
+               <message>
+                  The only MARTE subprofile allowed for application in the Functional View is MARTE::MARTE_DesignModel::GCM
+               </message>
+               <target
+                     class="Package">
+                  <event
+                        name="Add">
+                     <feature
+                           name="profileApplication">
+                     </feature>
+                  </event>
+               </target>
+               <![CDATA[
+                if(self.getAppliedStereotype('CHESS::Core::CHESSViews::FunctionalView') <> null) then
+				let p:Set(Profile) = self.getAllAppliedProfiles() in
+				p->select(pr:Profile | pr.qualifiedName.substring(1,5) = 'MARTE')
+				->forAll(pr2:Profile | pr2.qualifiedName = 'MARTE::MARTE_DesignModel::GCM') 
+				else true
+				endif ]]>
+            </constraint-->
+            <!--constraint  covered in fr.irisa.triskell.chess.chckers
+                  id="FV_03"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Batch"
+                  name="FV_03 (to fix live trigger) "
+                  severity="ERROR"
+                  statusCode="fv03">
+               <message>
+                  {0} must have stereotype &quot;ClientServerPort&quot;
+               </message>
+               <target
+                     class="Port">
+               </target>
+                <![CDATA[
+                  let s:Bag(String) = self.getNearestPackage().getAppliedStereotypes().name in	
+      			  let s2:Bag(String) = self.getNearestPackage().allOwningPackages().getAppliedStereotypes().name in
+				  if(s->includes('ComponentView') or s2->includes('ComponentView')) then
+				  	if(self.getAppliedStereotype('MARTE::MARTE_DesignModel::GCM::FlowPort') <> null) then
+				  		true
+				  	else
+         				if(self.getAppliedStereotype('MARTE::MARTE_DesignModel::GCM::ClientServerPort') <> null) then
+         					true
+						else false
+						endif	
+					endif
+				  else true
+				  endif
+					]]>
+            </constraint-->
+            </constraints>
+         
+         <constraints
+               categories="AnalysisView">
+               <constraint
+                  id="AV_01"
+                  isEnabledByDefault="true"
+                  lang="OCL"
+                  mode="Live"
+                  name="AV_01"
+                  severity="ERROR"
+                  statusCode="AV_01">
+               <message>
+                  There must be only one root package of the model on which the stereotype CHESS::AnalysisView is applied
+               </message>
+               <description>
+               	There must be only one root package of the model on which the stereotype CHESS::AnalysisView is applied
+               </description>
+               <target
+                     class="Model">
+                  <event
+                        name="Add">
+                     <feature
+                           name="nestedPackage">
+                     </feature>
+                  </event>
+               </target>
+               <![CDATA[
+                let s : Set(Stereotype) = self.getAppliedStereotypes() in
+				if(s->size() = 1 and s->forAll(st:Stereotype | st.name = 'CHESS::Core::CHESS')) then
+					if(self.nestedPackage->collect(p:Package | p.getAppliedStereotype('CHESS::Core::CHESSViews::AnalysisView'))->size() = 1) then
+		 				true
+					else false
+					endif
+				else true
+				endif ]]>				
+            </constraint>
+            <!--constraint
+                  id="AV_02"
+                  isEnabledByDefault="false"
+                  lang="OCL"
+                  mode="Batch"
+                  name="AV_02"
+                  severity="ERROR"
+                  statusCode="av02">
+               <message>
+                  AnalysisView can only own &lt;&lt;DependabilityAnalysisView&gt;&gt; and &lt;&lt;RTAnalysisView&gt;&gt; as owned elements.
+               </message>
+               <target
+                     class="Package"></target>
+               <![CDATA[ 
+               if(self.getAppliedStereotype('CHESS::Core::CHESSViews::AnalysisView') <> null) then
+				if(self.ownedElement->size() > 0) then
+					self.ownedElement->forAll(e:Element | e.getAppliedStereotypes().name
+					->includes('DependabilityAnalysisView') 
+					or e.getAppliedStereotypes().name->includes('RTAnalysisView'))
+				else true
+			   endif
+			   else true
+			   endif ]]>
+            </constraint-->
+         </constraints>
+      </constraintProvider>
+      
+   </extension>
+
+</plugin>

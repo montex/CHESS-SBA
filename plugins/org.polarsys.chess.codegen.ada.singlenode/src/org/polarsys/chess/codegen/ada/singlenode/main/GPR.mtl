@@ -1,0 +1,69 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module GPR('http://www.eclipse.org/uml2/3.0.0/UML')]
+
+[template public generateGPR(model : Model, procNode : InstanceSpecification, deployedImplementationList : Sequence(Component)) {
+   procNodeName : String = procNode.name;
+   compImplStName : String = 'CHESS::ComponentModel::ComponentImplementation';
+   chHwProcessorStName  : String = 'CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor';
+   isSingleNodeSystem : Boolean = isSingleNodeSystem(InstanceSpecification.allInstances()->asSequence(), chHwProcessorStName);}
+]
+[file (procNodeName.concat('/').concat(model.name).concat('.gpr').toLower(), false, 'UTF-8')]
+[if (isSingleNodeSystem)]
+project [model.name/] is
+
+   for Main use ("main.adb");
+   for Source_Dirs use ("src", "../src/task", "src/deployment", "src/interface", "../src/dataStructure", "src/container", "../src/cpa", 
+                        "src/datatype", "src/component_repository/type", 
+                        "src/component_repository/impl/ada"[if (hasCimplementation(deployedImplementationList, compImplStName))], 
+                        "src/component_repository/impl/c",
+                        "src/component_repository/impl/c/wrapper");
+   for Object_Dir use "obj";
+   for Languages use ("Ada", "C++");
+   [else]);
+   for Object_Dir use "obj";
+   for Languages use ("Ada");
+   [/if]
+
+   package Compiler is
+      for Default_Switches ("ada") use ("-g", "-gnato", "-gnatwa", "-gnatQ", "-gnat05");
+   end Compiler;
+
+   package Builder is
+      for Default_Switches ("ada") use ("-g");
+      for Global_Configuration_Pragmas use "./gnat.adc";
+   end Builder;
+
+   package Ide is
+      for Compiler_Command ("c") use "gcc";
+   end Ide;
+
+   package Naming is
+      for Spec_Suffix ("C++") use ".h";
+   end Naming;
+
+end [model.name/];
+[/if]
+[/file]
+[/template]
+
+[query public hasCimplementation(arg0 : Sequence(OclAny), arg1 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'hasCimplementation(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public isSingleNodeSystem(arg0 : Sequence(OclAny), arg1 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'isSingleNodeSystem(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]

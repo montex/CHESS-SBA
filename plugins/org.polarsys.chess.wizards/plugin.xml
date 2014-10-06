@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+<extension point="org.eclipse.ui.newWizards">
+	<category 
+		id="it.unipd.chess.wizards.category"
+    	name="CHESS">
+	</category>
+	<wizard
+         category="it.unipd.chess.wizards.category"
+         class="org.polarsys.chess.wizards.CHESSNewProjectWizard"
+         finalPerspective="org.eclipse.papyrus.infra.core.perspective"         
+         icon="resources/CHESSicon.gif"
+         id="it.unipd.chess.wizards.createproject"
+         name="CHESS Project"
+         project="true">
+      <description>
+         %NewWizards.project.description
+      </description>
+	</wizard>
+    <wizard
+         category="it.unipd.chess.wizards.category"
+         class="org.polarsys.chess.wizards.InitModelWizard"
+         finalPerspective="org.eclipse.papyrus.infra.core.perspective"
+         icon="resources/CHESSicon.gif"
+         id="it.unipd.chess.wizards.createmodel"
+         name="CHESS Model">
+   </wizard>
+</extension>
+
+
+</plugin>

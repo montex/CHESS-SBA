@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.m2m.qvt.oml.runtime.qvtTransformation">
+      <transformation
+            file="transformations/CHESS_PIM2PSM.qvto"
+            id="transformations/CHESS_PIM2PSM">
+      </transformation>
+   </extension>
+<extension point="org.eclipse.m2m.qvt.oml.javaBlackboxUnits">
+     <unit
+        name="lib"
+        namespace="chess">
+        <library
+           class="org.polarsys.chess.m2m.blackbox.VSLUtils"
+           name="VSLUtils">
+           <metamodel nsURI="http://www.eclipse.org/emf/2002/Ecore"/>
+           <metamodel nsURI="http://www.eclipse.org/papyrus/MARTE/1"/>
+           <metamodel nsURI="http://CHESS"/>
+           <metamodel nsURI="http://www.eclipse.org/uml2/2.0.0/UML"/>
+        </library>
+     </unit>
+	</extension>
+	
+	<extension point="org.eclipse.m2m.qvt.oml.javaBlackboxUnits">
+     <unit
+        name="libJava4QVTutils"
+        namespace="chess">
+        <library
+           class="org.polarsys.chess.m2m.blackbox.Java4QVTutils"
+           name="Java4QVTutils">
+           <metamodel nsURI="http://www.eclipse.org/emf/2002/Ecore"/>
+           <metamodel nsURI="http://www.eclipse.org/papyrus/MARTE/1"/>
+           <metamodel nsURI="http://CHESS"/>
+           <metamodel nsURI="http://www.eclipse.org/uml2/2.0.0/UML"/>
+        </library>
+     </unit>
+	</extension>
+	 
+  <!--<extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IFile"
+            nameFilter="*.qvtotrace"
+            id="it.unipd.chess.m2m.popupMenus.contribution.IFile">
+         <action
+               class="it.unipd.chess.m2m.backpropagation.BackpropagationUIAction"
+               enablesFor="1"
+               id="it.unipd.chess.m2m.popupMenus.backpropagationAction"
+               icon="icons/default.gif"
+               label="Backpropagation"/>
+      </objectContribution>
+   </extension>-->
+   <!--<extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IFile"
+            nameFilter="*.uml"
+            id="it.unipd.chess.m2m.popupMenus.contribution.uml">
+         <action
+               class="it.unipd.chess.m2m.QVToUIAction"
+               enablesFor="1"
+               id="it.unipd.chess.m2m.popupMenus.qvtoUIAction"
+               icon="icons/default.gif"
+               label="Schedulability Analysis"/>
+      </objectContribution>
+   </extension>-->
+   <!--<extension
+         point="org.eclipse.m2m.qvt.oml.runtime.qvtTransformation">
+      <transformation
+            file="transformation/AlePIM2PSM.qvto"
+            id="transformation/AlePIM2PSM">
+         <input
+               metamodel="http://www.eclipse.org/uml2/2.0.0/UML"
+               metaclass="UML/Model">
+         </input>
+         <output
+               metamodel="http://www.eclipse.org/uml2/2.0.0/UML"
+               metaclass="UML/Model">
+         </output>
+            
+      </transformation>
+   </extension>-->
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="org.polarsys.chess.mainMenu"
+               label="CHESS"
+               mnemonic="E">
+            <command
+                  commandId="it.unipd.chess.m2m.purgePIM"
+                  label="Purge user model"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <with
+                           variable="activeEditorInput">
+                        <adapt
+                              type="org.eclipse.core.resources.IResource">
+                           <test
+                                 property="org.eclipse.core.resources.projectNature"
+                                 value="org.polarsys.chess.CHESSNature">
+                           </test>
+                        </adapt>
+                     </with>
+                  </and>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="it.unipd.chess.m2m.QvtoUIHandlerVERDE.id"
+                  label="Schedulability (VERDE)"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <with
+                           variable="activeEditorInput">
+                        <adapt
+                              type="org.eclipse.core.resources.IResource">
+                           <test
+                                 property="org.eclipse.core.resources.projectNature"
+                                 value="org.polarsys.chess.CHESSNature">
+                           </test>
+                        </adapt>
+                     </with>
+                  </and>
+               </visibleWhen>
+            </command>
+            <command
+               commandId="it.unipd.chess.m2m.QVToUIHandlerEnd2End.id"
+               label="End-To-End Scenario Analysis"
+               style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <with
+                           variable="activeEditorInput">
+                        <adapt
+                              type="org.eclipse.core.resources.IResource">
+                           <test
+                                 property="org.eclipse.core.resources.projectNature"
+                                 value="org.polarsys.chess.CHESSNature">
+                           </test>
+                        </adapt>
+                     </with>
+                  </and>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         id="Build Instance Command"
+         point="org.eclipse.ui.commands">
+      <!--command
+            categoryId="it.unipd.chess.commands.category"
+            defaultHandler="org.polarsys.chess.m2m.QVToUIHandlerFull"
+            id="it.unipd.chess.m2m.QvtoUIHandlerFull.id"
+            name="Schedulability Analysis">
+      </command-->
+      <command
+            category="it.unipd.chess.category"
+            categoryId="it.unipd.chess.commands.category"
+            defaultHandler="org.polarsys.chess.m2m.PurgePIMHandler"
+            id="it.unipd.chess.m2m.purgePIM"
+            name="Purge user model">
+      </command>
+      <command
+            categoryId="it.unipd.chess.commands.category"
+            defaultHandler="org.polarsys.chess.m2m.QVToUIHandlerVERDE"
+            id="it.unipd.chess.m2m.QvtoUIHandlerVERDE.id"
+            name="Schedulability Analysis (VERDE)">
+      </command>
+      <command
+            categoryId="it.unipd.chess.commands.category"
+            defaultHandler="org.polarsys.chess.m2m.QVToUIHandlerEnd2End"
+            id="it.unipd.chess.m2m.QVToUIHandlerEnd2End.id"
+            name="End-To-End Scenario Analysis">
+      </command>
+      <!--
+      <command
+            categoryId="it.unipd.chess.commands.category"
+            defaultHandler="it.unipd.chess.m2m.QVToUIHandler"
+            id="it.unipd.chess.m2m.QvtoUIHandler.id"
+            name="Schedulability Analysis">
+      </command>
+      -->
+   </extension>
+   
+</plugin>

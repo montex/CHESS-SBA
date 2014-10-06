@@ -1,0 +1,267 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module ComponentImplementationC('http://www.eclipse.org/uml2/3.0.0/UML')/]
+[import org::polarsys::chess::codegen::ada::singlenode::main::Copyright /]
+
+[template public generateComponentImplementationC(model : Model, procNode: InstanceSpecification, cImpl : Component, rType : Component ) {
+	ptList : Sequence(OclAny) = cImpl.ownedAttribute->filter("Port")->asSequence();
+    procNodeName : String = procNode.name;
+    clSvPortStName : String = 'MARTE::MARTE_DesignModel::GCM::ClientServerPort';
+    pkgName : String = rType.name.concat('s.').concat(cImpl.name).concat('s');
+}
+]
+
+[file (procNodeName.concat('/src/component_repository/impl/c/wrapper/').concat(rType.name).concat('s-').concat(cImpl.name).
+                                 concat('s.ads').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model)/]
+
+-- Comment the with below if you do not use user-defined datatypes
+with Datatype; use Datatype;
+
+package [pkgName/] is
+
+ -- Declaration of the Ada wrapper for the component implementation
+   type [cImpl.name/] is new [rType.name /] with private;
+ 
+ -- Declaration of the component implementation operation
+   [for (op: Operation | cImpl.ownedOperation)]
+
+      [if (op.ownedParameter->size() = 0)]
+   overriding 
+   procedure [op.name /] (Self : in out [cImpl.name/]);
+      [else]
+   overriding 
+   procedure [op.name/] (Self: in out [cImpl.name/][for (par : Parameter | op.ownedParameter)];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]);
+      [/if]
+   [/for]
+
+private
+   -- Declaration of the import directives
+   [for (op: Operation | cImpl.ownedOperation)]
+
+         [if (op.method->size() = 0)]
+            [let parList : OrderedSet(Parameter) = op.ownedParameter]
+   procedure [op.name/]_Ada([parList->first().name/] : [parList->first().direction/] [parList->first().type.name/][for (par : Parameter | parList->excluding(parList->first())->asOrderedSet())];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]);
+            [/let]
+         [else]
+   procedure [op.name/]_Ada(Self: in [cImpl.name/][for (par : Parameter | op.ownedParameter)];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]);
+         [/if]
+   pragma Import (Convention => C,
+                  Entity => [op.name/]_Ada,
+                  External_Name => "[op.name/]");
+   [/for]
+
+
+   type [cImpl.name/] is new [rType.name /] with null record;
+
+end [pkgName/];
+[/file]
+
+[comment Package body/]
+[file (procNodeName.concat('/src/component_repository/impl/c/wrapper/').concat(rType.name).concat('s-').concat(cImpl.name).
+                                 concat('s.adb').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model)/]
+
+--/ ** Insert below your with'ed packages
+--/ ** [protected ('with packages')]
+
+--/ ** [/protected]
+
+package body [pkgName/] is
+
+  -- Dispatching procedures called from foreign code
+[for (op: Operation | cImpl.ownedOperation)]
+
+   [if op.method->size() > 0]
+      [let act : Activity = op.method->filter(Activity)->asSequence()->first()]
+         [for (coa: CallOperationAction | act.node->filter(CallOperationAction))]
+            [if (coa.operation.ownedParameter->size() = 0)]
+   procedure Dispatch_[coa.onPort.name/]_[coa.operation.name/](obj: in [cImpl.name/]'Class);
+            [else]
+   procedure Dispatch_[coa.onPort.name/]_[coa.operation.name/](obj: in [cImpl.name/]'Class[for (par : Parameter | coa.operation.ownedParameter)];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]);
+            [/if]
+   pragma Export(C, Dispatch_[coa.onPort.name/]_[coa.operation.name/], "Dispatch_[coa.onPort.name/]_[coa.operation.name/]");
+
+            [if (coa.operation.ownedParameter->size() = 0)]
+   procedure Dispatch_[coa.onPort.name/]_[coa.operation.name/](obj: in [cImpl.name/]'Class) is
+            [else]
+   procedure Dispatch_[coa.onPort.name/]_[coa.operation.name/](obj: in [cImpl.name/]'Class[for (par : Parameter | coa.operation.ownedParameter)];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]) is
+            [/if]
+     pragma Warnings (Off, obj);
+   begin
+      -- Ada.Text_IO.Put_Line("(Ada) Calling [coa.onPort.name/].[coa.operation.name/]");
+            [if (coa.operation.ownedParameter->size() = 0)] [comment 0 parameters/]
+      obj.[coa.onPort.name/].[coa.operation.name/];
+            [else]
+               [let parList : OrderedSet(Parameter) = coa.operation.ownedParameter]
+      obj.[coa.onPort.name/].[coa.operation.name/]([parList->first().name/][for (par : Parameter | parList->excluding(parList->first())->asOrderedSet())],[par.name/][/for]);
+               [/let]
+            [/if]
+   end Dispatch_[coa.onPort.name/]_[coa.operation.name/];
+         [/for]
+      [/let]
+   [/if]
+[/for]
+
+-- wrappers for procedures implemented in foreign code
+[for (op: Operation | cImpl.ownedOperation)]
+
+   [if (op.ownedParameter->size() = 0)]
+   overriding 
+   procedure [op.name/] (Self : in out [cImpl.name/]) is
+     pragma Warnings (Off, Self);
+   begin
+      [if (op.method->size() = 0)]
+      [op.name/]_Ada;
+      [else]
+      [op.name/]_Ada(Self);
+      [/if]
+   end [op.name/];
+   [else] [comment The operation has parameters /]
+   overriding 
+   procedure [op.name/] (Self: in out [cImpl.name/][for (par : Parameter | op.ownedParameter)];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]) is
+      pragma Warnings (Off, Self);
+   begin
+      [if (op.method->size() = 0)]
+         [let parList : OrderedSet(Parameter) = op.ownedParameter]
+      [op.name/]_Ada([parList->first().name/][for (par : Parameter | parList->excluding(parList->first())->asOrderedSet())],[par.name/][/for]);
+         [/let]
+      [else]
+      [op.name/]_Ada(Self[for (par : Parameter | op.ownedParameter)],[par.name/][/for]);
+      [/if]
+   end [op.name/];
+   [/if]
+[/for]
+ 
+end [pkgName/];
+[/file]
+
+[comment C implementation spec /]
+[file (procNodeName.concat('/src/component_repository/impl/c/').concat(cImpl.name).concat('.h').toLower(), false, 'UTF-8')]
+[generateCopyrightC(model)/]
+
+#ifndef [cImpl.name.concat('_H_').toUpper()/]
+#define [cImpl.name.concat('_H_').toUpper()/]
+
+#include "datatype.h"
+
+extern "C"
+{
+[for (op: Operation | cImpl.ownedOperation)]
+   [if (op.ownedParameter->size() = 0)]
+      [if (op.method->size() = 0)]
+   void [op.name/]();
+      [else]
+   void [op.name/](const void *obj);
+      [/if]
+   [else]
+      [let parList : OrderedSet(Parameter) = op.ownedParameter]
+         [if (op.method->size() = 0)]
+   void [op.name/]([if (parList->first().direction.toString().equalsIgnoreCase('out') or parList->first().direction.toString().equalsIgnoreCase('inout'))][adaTypeToCtype(parList->first().type)/] &[else]const [adaTypeToCtype(parList->first().type)/] [/if][parList->first().name/][for (par : Parameter | parList->excluding(parList->first())->asOrderedSet())], [if (par.direction.toString().equalsIgnoreCase('out') or par.direction.toString().equalsIgnoreCase('inout'))][adaTypeToCtype(par.type)/] &[else] const [adaTypeToCtype(par.type)/] [/if][par.name/][/for]);
+         [else]
+   void [op.name/](const void *obj[for (par : Parameter | parList)], [if (par.direction.toString().equalsIgnoreCase('out') or par.direction.toString().equalsIgnoreCase('inout'))][adaTypeToCtype(par.type)/] &[else]const [adaTypeToCtype(par.type)/] [/if][par.name/][/for]);
+         [/if]
+      [/let]
+   [/if]
+[/for]
+}
+
+#endif /* [cImpl.name.concat('_H_').toUpper()/] */
+[/file]
+
+[comment C implementation body /]
+[file (procNodeName.concat('/src/component_repository/impl/c/').concat(cImpl.name).concat('.cpp').toLower(), false, 'UTF-8')]
+[generateReducedCopyrightC(model)/]
+
+#include "[cImpl.name.concat('.h').toLower()/]"
+
+// Import below your "included" files.
+// Define below your global variables.
+// [protected (pkgName.concat('_includedFiles_GlobalVariables'))]
+
+// [/protected]
+
+// Declaration of the external subprograms to call RI operations 
+[for (op: Operation | cImpl.ownedOperation)]
+   [if op.method->size() > 0]
+extern "C" {
+      [let act : Activity = op.method->filter(Activity)->asSequence()->first()]
+         [for (coa: CallOperationAction | act.node->filter(CallOperationAction))]
+            [if (coa.operation.ownedParameter->size() = 0)]
+   void Dispatch_[coa.onPort.name/]_[coa.operation.name/](const void *obj);
+            [else]
+   void Dispatch_[coa.onPort.name/]_[coa.operation.name/](const void *obj[for (par : Parameter | coa.operation.ownedParameter)], [adaTypeToCtype(par.type)/] [if (par.direction.toString().equalsIgnoreCase('out') or par.direction.toString().equalsIgnoreCase('inout'))]&[/if][par.name/][/for]);
+            [/if]
+         [/for]
+      [/let]
+}
+  [/if]
+[/for]
+
+[for (op: Operation | cImpl.ownedOperation)]
+
+   [if (op.ownedParameter->size() = 0)]
+      [if (op.method->size() = 0)]
+extern "C" void [op.name/]() {
+      [else]
+extern "C" void [op.name/](const void *obj) {
+      [/if]
+   [else]
+      [let parList : OrderedSet(Parameter) = op.ownedParameter]
+         [if (op.method->size() = 0)]
+extern "C" void [op.name/]([if (parList->first().direction.toString().equalsIgnoreCase('out') or parList->first().direction.toString().equalsIgnoreCase('inout'))][adaTypeToCtype(parList->first().type)/]  &[else]const [adaTypeToCtype(parList->first().type)/] [/if][parList->first().name/][for (par : Parameter | parList->excluding(parList->first())->asOrderedSet())], [if (par.direction.toString().equalsIgnoreCase('out') or par.direction.toString().equalsIgnoreCase('inout'))][adaTypeToCtype(par.type)/] &[else]const [adaTypeToCtype(par.type)/] [/if][par.name/][/for]) {
+         [else]
+extern "C" void [op.name/](const void *obj[for (par : Parameter | parList)], [if (par.direction.toString().equalsIgnoreCase('out') or par.direction.toString().equalsIgnoreCase('inout'))][adaTypeToCtype(par.type)/] &[else]const [adaTypeToCtype(par.type)/] [/if][par.name/][/for]) {
+         [/if]
+      [/let]
+   [/if]
+   // ** Summary of calls to Required Interfaces **
+   [let opName : String = getOperationSignature(cImpl, op)]
+      [if op.method->size() > 0]
+         [let act : Activity = op.method->filter(Activity)->asSequence()->first()]
+		    [for (coa: CallOperationAction | act.node->filter(CallOperationAction))]
+   //  1 call to -> Dispatch_[coa.onPort.name/]_[coa.operation.name/]
+   			[/for]
+         [/let]
+      [else]
+   // No calls to Required Interfaces
+	  [/if]
+   // ** End of calls to Required Interfaces ** 
+ 
+   // ** [protected (opName)]
+
+   // ** [/protected]
+   [/let]
+};
+[/for]
+
+[/file]
+
+[/template]
+
+[query public adaTypeToCtype(arg0: Type) : String
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'adaTypeToCtype(org.eclipse.uml2.uml.Type)', Sequence{arg0}) /]
+
+[query public getOperationSignature(arg0 : Component, arg1 : Operation) : String
+	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'getOperationSignature(org.eclipse.uml2.uml.Component, org.eclipse.uml2.uml.Operation)', Sequence{arg0, arg1}) /]

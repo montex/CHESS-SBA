@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="Drawer__1301934597255" name="CHESS FunctView">
+			<aspectTool description="Create new Property" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Property.gif" id="composite.tool.property_1301934686712" name="Property" refToolId="composite.tool.property"/>
+			<aspectTool description="Create new Connector" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Connector.gif" id="composite.tool.connector_1301934783215" name="Connector" refToolId="composite.tool.connector"/>
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.papyrus.marte.static.profile/resources/icons/GCM/Provided.png" id="composite.tool.port_1284541248483" name="Provided Port" refToolId="composite.tool.port">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_DesignModel::GCM::ClientServerPort">
+							<property propertyName="MARTE::MARTE_DesignModel::GCM::ClientServerPort::kind">
+								<value>provided</value>
+							</property>
+							<!--runtimeProperty propertyName="MARTE::MARTE_DesignModel::GCM::ClientServerPort::provInterface"/-->
+						</stereotype>
+					</stereotypesToApply>
+				</postAction>
+				<postAction displayKind="IconStereotype" displayPlace="Compartment" id="org.eclipse.papyrus.postaction.changeStereotypeDisplayProvider"/>
+			</aspectTool>
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.papyrus.marte.static.profile/resources/icons/GCM/Required.png" id="composite.tool.port_1284541248483" name="Required Port" refToolId="composite.tool.port">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_DesignModel::GCM::ClientServerPort">
+							<property propertyName="MARTE::MARTE_DesignModel::GCM::ClientServerPort::kind">
+								<value>required</value>
+							</property>
+							<!--runtimeProperty propertyName="MARTE::MARTE_DesignModel::GCM::ClientServerPort::reqInterface"/-->
+						</stereotype>
+					</stereotypesToApply>
+				</postAction>
+				<postAction displayKind="IconStereotype" displayPlace="Compartment" id="org.eclipse.papyrus.postaction.changeStereotypeDisplayProvider"/>
+			</aspectTool>
+			
+			<aspectTool description="Create an IN Flow Port" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Port.gif" id="composite.tool.port_1330080349877" name="IN FlowPort (Port)" refToolId="composite.tool.port">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_DesignModel::GCM::FlowPort">
+							<property propertyName="MARTE::MARTE_DesignModel::GCM::FlowPort::direction">
+								<value>in</value>
+							</property>
+						</stereotype>
+					</stereotypesToApply>
+				</postAction>
+				<postAction displayKind="IconStereotype" displayPlace="Compartment" id="org.eclipse.papyrus.postaction.changeStereotypeDisplayProvider"/>
+			</aspectTool>
+			<aspectTool description="Create an OUT Flow Port" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Port.gif" id="composite.tool.port_1330080399365" name="OUT FlowPort (Port)" refToolId="composite.tool.port">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_DesignModel::GCM::FlowPort">
+							<property propertyName="MARTE::MARTE_DesignModel::GCM::FlowPort::direction">
+								<value>out</value>
+							</property>
+						</stereotype>
+					</stereotypesToApply>
+				</postAction>
+				<postAction displayKind="IconStereotype" displayPlace="Compartment" id="org.eclipse.papyrus.postaction.changeStereotypeDisplayProvider"/>
+			</aspectTool>
+			
+		</drawer>
+	</content>
+</paletteDefinition>

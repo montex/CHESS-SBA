@@ -1,0 +1,142 @@
+/*
+-----------------------------------------------------------------------
+--          			CHESS M2M plugin							 --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+*/
+
+modeltype UML uses "http://www.eclipse.org/uml2/2.0.0/UML";
+modeltype MARTEP uses "http://www.eclipse.org/papyrus/MARTE/1";
+
+modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
+
+
+transformation AlePIM2PSM(in source:UML, in marte:MARTEP);
+
+property model : Model = null;
+property MARTEProfile : Profile = null;
+
+
+property s1 = "HwComputingResource";
+property s2 = "SaExecHost";	
+
+main() {
+    log("*** CHESS PIM->PSM transformation   ***");
+
+	model := source.rootObjects()![Model];
+	var p := model.getView("ComponentView");
+	MARTEProfile := p.getAppliedProfiles()->selectOne(name="GCM").owner.owner.oclAsType(Profile);
+	
+	this.printMARTEStereotypeInfo(s1);
+	this.printMARTEStereotypeInfo(s2);
+	
+	log("-----------------------------");
+	var l1 := this.getMARTEStereotype(s1).member[Property]->asSequence()->sortedBy(name).name;
+	var l2 := this.getMARTEStereotype(s2).member[Property]->asSequence()->sortedBy(name).name;
+	log(s1+"|"+s2);
+	l1->union(l2)->forEach(a){
+		var s : String ="";
+		if (l1->includes(a)) then 
+			s:=s+a
+		else 
+		  s:=s+"-----------"
+		endif;
+		s:=s+"|";
+		
+		if (l2->includes(a)) then 
+			s:=s+a
+		
+		else 
+		  s:=s+"-----------"
+		endif;
+		log(s);
+	};
+	
+	log("-----------------------------");
+	--this.getMARTEStereotype("HwComputingResource").member[Property].name->intersection(
+	--this.getMARTEStereotype("SaExecHost").member[Property].name)->asSequence()->print();
+	
+}
+
+helper Stereotype::getGens() : Set(Stereotype) {
+    var ss := self->generalization.target[Stereotype];
+    var s : Set(Stereotype) := Set{};
+    if (ss<>null) then
+	   s += ss->getGens()->flatten()->asSet()
+	endif;
+	s += self;
+	return s;
+}
+
+query Stereotype::printGens(in n : Integer) : Set(Stereotype) {
+	var s : String :="";
+	while (i:=0; i<n){
+		s := s+"      ";
+		i:=i+1;
+	};
+	log(s + self.name);
+	self->generalization.target[Stereotype]->printGens(n+1);
+	return null;
+}
+
+query OrderedSet(String)::print(indent : String){
+	self->forEach(i){log(indent + i)};
+}
+
+query Bag(String)::print(indent : String){
+	self->forEach(i){log(indent + i)};
+}
+
+query Sequence(String)::print(indent : String){
+	self->forEach(i){log(indent + i)};
+}
+
+
+query PackageableElement::getView(viewName : String) : Package {
+	var seq : Bag(Package) := model.packagedElement[Package]-> union(model.packagedElement[Package].packagedElement[Package]);
+	return seq-> selectOne (p | p.getAppliedStereotype("CHESS::Core::CHESSViews::"+viewName) != null);
+	--seq->forEach(p){
+	--	log(p.name);
+	--	p.getAppliedStereotypes()->collect(qualifiedName)->forEach(s){log(s)};
+	--};
+}
+
+query Element::listStereotypes() : OclVoid {
+	log("********************************************************************************");
+	log("* Element: " + if(self.oclIsKindOf(NamedElement)) then self.oclAsType(NamedElement).name else "noName" endif);
+	self.getAppliedStereotypes()->collect(qualifiedName)->forEach(s){log("* " + s)};
+	log("********************************************************************************");
+	return null;
+}	
+
+query Element::toMetaclass(stereoName : String) : EObject {
+  var s = self.getAppliedStereotype(stereoName);
+  return self.getStereotypeApplication(s);	
+}
+
+query OclAny::getMARTEStereotype(stereoName : String) : Stereotype {
+	return MARTEProfile.allOwnedElements()[Stereotype]->selectOne(name=stereoName);
+}
+
+query OclAny::getMARTEProfile(profileName : String) : Profile {
+	return MARTEProfile.allOwnedElements()[Profile]->selectOne(name=profileName);
+}
+
+query OclAny::printMARTEStereotypeInfo(stereoName : String) : OclVoid {
+	var s := marte.rootObjects().allSubobjects()[EClass]->selectOne(name=stereoName).instanceTypeName;
+	var t := s.substring(1, s.rfind('.')-1);
+	t:=t.substring(1, t.rfind('.'));
+	s:=s.substringAfter(t);
+	
+	log("Qualified name:\n" + self.getMARTEStereotype(stereoName).qualifiedName);
+	log("Metaclass:\nMARTE::" + s.replace('.',"::"));
+}

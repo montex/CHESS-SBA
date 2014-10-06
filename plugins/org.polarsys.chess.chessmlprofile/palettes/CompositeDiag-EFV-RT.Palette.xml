@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif"
+			id="CSD_RTDrawer__1302019186026" name="Real Time">
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif"
+				id="composite.tool.comment_1302019229058" name="CHRtSpecification"
+				refToolId="composite.tool.comment">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype
+							stereotypeName="CHESS::Predictability::RTComponentModel::CHRtSpecification" />
+					</stereotypesToApply>
+				</postAction>
+				<postAction displayKind="HorizontalStereo" displayPlace="Compartment"
+					id="org.eclipse.papyrus.postaction.changeStereotypeDisplayProvider" />
+			</aspectTool>
+			<aspectTool description="Create new Link for CHRtSpecification"
+				id="composite.tool.link_13176352151912" name="Link" refToolId="composite.tool.link" />
+
+		</drawer>
+	</content>
+</paletteDefinition>

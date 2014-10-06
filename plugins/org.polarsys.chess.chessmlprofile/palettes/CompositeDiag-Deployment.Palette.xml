@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif"
+			id="Drawer__1309350634222" name="CHESS/Deployment">
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif"
+				id="composite.tool.comment_1309350691427" name="Assign (Comment)"
+				refToolId="composite.tool.comment">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_Foundations::Alloc::Assign" />
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create new Comment"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif"
+				id="composite.tool.comment_1309350699287" name="Comment"
+				refToolId="composite.tool.comment" />
+			<aspectTool description="Create new Property"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Property.gif"
+				id="composite.tool.property_1309350731179" name="Property"
+				refToolId="composite.tool.property" />
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Port.gif"
+				id="composite.tool.port_1309350716538" name="IN FlowPort (Port)"
+				refToolId="composite.tool.port">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_DesignModel::GCM::FlowPort">
+							<property propertyName="MARTE::MARTE_DesignModel::GCM::FlowPort::direction">
+								<value>in</value>
+							</property>
+						</stereotype>
+					</stereotypesToApply>
+				</postAction>
+				<postAction displayKind="IconStereotype" displayPlace="Compartment"
+					id="org.eclipse.papyrus.postaction.changeStereotypeDisplayProvider" />
+			</aspectTool>
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Port.gif"
+				id="composite.tool.port_1309350717522" name="INOUT FlowPort (Port)"
+				refToolId="composite.tool.port">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_DesignModel::GCM::FlowPort" />
+					</stereotypesToApply>
+				</postAction>
+				<postAction displayKind="IconStereotype" displayPlace="Compartment"
+					id="org.eclipse.papyrus.postaction.changeStereotypeDisplayProvider" />
+			</aspectTool>
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Port.gif"
+				id="composite.tool.port_1309350726554" name="OUT FlowPort (Port)"
+				refToolId="composite.tool.port">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_DesignModel::GCM::FlowPort">
+							<property propertyName="MARTE::MARTE_DesignModel::GCM::FlowPort::direction">
+								<value>out</value>
+							</property>
+						</stereotype>
+					</stereotypesToApply>
+				</postAction>
+				<postAction displayKind="IconStereotype" displayPlace="Compartment"
+					id="org.eclipse.papyrus.postaction.changeStereotypeDisplayProvider" />
+			</aspectTool>
+			<aspectTool description="Create new Connector"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Connector.gif"
+				id="composite.tool.connector_1309350703600" name="Connector"
+				refToolId="composite.tool.connector" />
+			<aspectTool description="Create new Link for Comment"
+				id="composite.tool.link_1317290422288" name="Link" refToolId="composite.tool.link" />
+		</drawer>
+	</content>
+</paletteDefinition>

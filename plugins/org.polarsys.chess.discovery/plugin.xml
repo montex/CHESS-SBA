@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.polarsys.chess.discovery.commands.category"
+            name="CHESS Discovery">
+      </category>
+      <command
+            categoryId="org.polarsys.chess.discovery.commands.category"
+            id="org.polarsys.chess.discovery.commands.category.discoveryCommand"
+            name="Install CHESS Additional Components">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.polarsys.chess.discovery.ui.menu.handler.CHESSDiscoveryHandler"
+            commandId="org.polarsys.chess.discovery.commands.category.discoveryCommand">
+      </handler>
+   </extension>
+
+ <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:help?after=org.eclipse.equinox.p2.ui.sdk.install">
+            <command
+                  commandId="org.polarsys.chess.discovery.commands.category.discoveryCommand"
+                  icon="icons/CHESSicon.gif"
+                  id="org.polarsys.chess.discovery.ui.menu.toolbars.discoveryCommand"
+                  tooltip="Install CHESS Additional Components">
+            </command>
+      </menuContribution>
+   </extension>
+
+
+</plugin>

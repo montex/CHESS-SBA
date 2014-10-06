@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="it.unipd.chess.commands.category"
+            defaultHandler="org.polarsys.chess.codegen.ada.singlenode.AdaGenUIHandler"
+            id="org.polarsys.chess.codegen.ada.singlenode.command.id"
+            name="Ada">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="org.polarsys.chess.mainMenu"
+               label="CHESS"
+               mnemonic="E">
+            <menu
+                  id="it.unipd.chess.codegenerationMenu"
+                  label="Code generation">
+               <command
+                     commandId="org.polarsys.chess.codegen.ada.singlenode.command.id"
+                     label="Single node Ada infrastructural code generator"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <or>
+                        <with
+                              variable="activeEditorId">
+                           <equals
+                                 value="org.eclipse.uml2.uml.editor.presentation.UMLEditorID">
+                           </equals>
+                        </with>
+                        <with
+                              variable="activeEditorInput">
+                           <adapt
+                                 type="org.eclipse.core.resources.IResource">
+                              <test
+                                    property="org.eclipse.core.resources.projectNature"
+                                    value="org.polarsys.chess.CHESSNature">
+                              </test>
+                           </adapt>
+                        </with>
+                     </or>
+                  </visibleWhen>
+               </command>
+            </menu>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Export-Package: org.polarsys.chess.discovery,
+ org.polarsys.chess.discovery.ui.menu.handler
+Require-Bundle: org.eclipse.ui;bundle-version="3.8.0",
+ org.eclipse.core.runtime;bundle-version="3.8.0",
+ org.eclipse.papyrus.infra.discovery.ui;bundle-version="1.0.0",
+ org.eclipse.papyrus.infra.discovery
+Bundle-Vendor: %providerName
+Bundle-ActivationPolicy: lazy
+Bundle-Version: 1.0.0.qualifier
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-Activator: org.polarsys.chess.discovery.Activator
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.polarsys.chess.discovery;singleton:=true
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+

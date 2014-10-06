@@ -1,0 +1,500 @@
+/*
+-----------------------------------------------------------------------
+--          			CHESS M2M plugin							 --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Stefano Puri         stefano.puri@intecs.it 		         --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+*/
+
+
+modeltype CHESS uses "http://CHESS";
+modeltype UML uses "http://www.eclipse.org/uml2/3.0.0/UML";
+modeltype MARTE uses "http://www.eclipse.org/papyrus/MARTE/1";
+
+transformation BuildMultiInstance(inout chessModel : CHESS);
+
+property CHESSProfile : Profile = null;
+property model : Model = null;
+property newMultiInstPackage : Package = null;
+property CHGaResourcePlatformQN = "CHESS::Core::CHGaResourcePlatform";
+
+
+configuration property rootComp : String;
+
+property rootInstance : InstanceSpecification = null;
+
+main() {
+
+    log("*** Build Multi Instances Transformation   ***");	
+	model := chessModel.rootObjects()![Model];
+	
+	CHESSProfile := model.getAppliedProfiles()->selectOne(name="CHESS").oclAsType(Profile);
+  	
+  	var compViewPack : Package := model.getView("ComponentView");
+  	compViewPack->map buildMultipleInstancePackage();
+  	
+}
+
+/**
+Takes the package owning the instances created by the BuildInstance trasformation and explodes 
+all the instanceSpecification and Slot deriving from Properties/Ports with mult>1
+*/
+mapping UML::Package::buildMultipleInstancePackage() {
+
+	var platforms := self.allOwnedElements()[Package]->select(isStereotyped(CHGaResourcePlatformQN))->asSequence();
+	log("CHGaResourcesPlatforms in the model: " + platforms->size().repr());
+	assert fatal (platforms->size()=1) with log("CHGaResourcesPlatform not found");
+	
+	var instPackage := platforms->first();
+
+	var parentPackage : UML::Package := instPackage.owner.oclAsType(UML::Package);
+	
+	newMultiInstPackage := object UML::Package{};
+	
+	newMultiInstPackage.name := instPackage.name+"_full";
+	
+	parentPackage.packagedElement += newMultiInstPackage;
+	instPackage.map createFullInstances();
+	
+	instPackage.map createLinks();
+		
+}
+
+mapping UML::Package::createFullInstances() {
+		
+	self.packagedElement->forEach(a){
+		 if(a.oclIsTypeOf(UML::InstanceSpecification))then{
+		 	var inst := a.oclAsType(UML::InstanceSpecification);
+		 	if (not inst.classifier -> isEmpty()) then {
+		 		//this is a Component instance
+		 		var multiInstanceStereo := inst.getStereotypeApplications()->
+					select(metaClassName()="MultiInstance")->asOrderedSet()->first().oclAsType(CHESS::Core::MultiInstance);
+				if (not multiInstanceStereo.oclIsInvalid()) then {
+					var i : Integer := 1;
+					while(i<=multiInstanceStereo.upperBound){
+						inst.map cloneInst(i);
+						i:=i+1;
+					}
+				}else{
+					inst.map cloneInst(0);
+				}
+				endif;
+				
+		 	}else{
+		 				
+		 	}endif;
+		 }endif;
+	}
+}
+
+
+mapping UML::Package::createLinks() {
+		
+	self.packagedElement->forEach(a){
+		 if(a.oclIsTypeOf(UML::InstanceSpecification))then{
+		 	var inst := a.oclAsType(UML::InstanceSpecification);
+		 	if (not inst.classifier -> isEmpty()) then {
+		 		
+		 	}else{
+		 		//this is an instance of Connector
+		 		var reqInstanceOrig : InstanceSpecification := getRequiringInstance(inst);
+		 		var reqPort : Port := getRequiredPort(inst);
+		 		var provPort : Port := getProvidedPort(inst);
+		 		var provInstanceOrig : InstanceSpecification := getProvidingInstance(inst);
+		 		var reqInstMult : Integer := 0;
+		 		var reqPortMult : Integer := reqPort.upperBound();
+		 		var provInstMult : Integer := 0;
+		 		var provPortMult : Integer := provPort.upperBound();
+		 		
+		 		var multiInstanceStereo := reqInstanceOrig.getStereotypeApplications()->
+					select(metaClassName()="MultiInstance")->asOrderedSet()->first().oclAsType(CHESS::Core::MultiInstance);
+				if (not multiInstanceStereo.oclIsInvalid()) then {	
+					reqInstMult :=multiInstanceStereo.upperBound;
+				}else{
+					reqInstMult :=1;
+				
+				}endif;
+				multiInstanceStereo := provInstanceOrig.getStereotypeApplications()->
+					select(metaClassName()="MultiInstance")->asOrderedSet()->first().oclAsType(CHESS::Core::MultiInstance);
+				if (not multiInstanceStereo.oclIsInvalid()) then {	
+					provInstMult :=multiInstanceStereo.upperBound;
+				}
+				else{
+					provInstMult :=1;
+				}endif;
+				
+				newMultiInstPackage.ownedElement -> forEach(newInst){
+					var identInstStereo : CHESS::Core::IdentifInstance := newInst.getStereotypeApplications()->select(metaClassName()="IdentifInstance")->
+						asOrderedSet()->first().oclAsType(CHESS::Core::IdentifInstance);
+					if (identInstStereo.sourceInstanceSpec = reqInstanceOrig) then {
+					
+						
+						newInst.oclAsType(UML::InstanceSpecification).map setRequired(reqPort, provPort, provInstanceOrig, provInstMult, reqInstMult, reqPortMult);
+						
+					}endif;
+					
+				};
+			
+		 	}endif;
+		 }endif;
+	}
+}
+
+
+mapping UML::InstanceSpecification::cloneInst (in id : Integer):UML::InstanceSpecification {
+	name := self.name;
+	classifier := self.classifier;
+	
+	newMultiInstPackage.packagedElement += result;
+	
+	self.slot->forEach(slot){
+		var multiSlotStereo := slot.getStereotypeApplications()->
+		select(metaClassName()="MultiSlot")->asOrderedSet()->first().oclAsType(CHESS::Core::MultiSlot);
+		if (not multiSlotStereo.oclIsInvalid()) then {
+			var i : Integer := 1;
+			while(i<=multiSlotStereo.upperBound){
+				slot.map cloneSlot(i, result);
+				i:=i+1;
+			}
+		}else{
+				slot.map cloneSlot(0, result);
+		}endif;
+					
+	};
+		
+	var identifInstance := result.applyStereotype(getCHESSStereotype("IdentifInstance")).oclAsType(CHESS::Core::IdentifInstance);
+	identifInstance.id := id;
+	identifInstance.sourceInstanceSpec :=self;
+	
+
+}
+
+mapping UML::Slot::cloneSlot (in id : Integer, inout inst : InstanceSpecification):UML::Slot {
+	definingFeature := self.definingFeature;
+	inst.slot += result;
+	if (id > 0) then{
+		var identifSlot := result.applyStereotype(getCHESSStereotype("IdentifSlot")).oclAsType(CHESS::Core::IdentifSlot);
+		identifSlot.id := id;
+	}endif;
+	
+	var chRtSlotStereo : CHESS::RTComponentModel::CHRtPortSlot := self.getStereotypeApplications()->
+		select(metaClassName()="CHRtPortSlot")->asOrderedSet()->first().oclAsType(CHESS::RTComponentModel::CHRtPortSlot);
+	if (not chRtSlotStereo.oclIsInvalid()) then {
+		var chrtslot := result.applyStereotype(getCHESSStereotype("CHRtPortSlot")).oclAsType(CHESS::RTComponentModel::CHRtPortSlot);
+		chrtslot.cH_RtSpecification := chRtSlotStereo.cH_RtSpecification;	
+	}endif;
+		
+	
+
+}
+
+
+query getRequiringInstance(connInst : UML::InstanceSpecification) : UML::InstanceSpecification {
+	connInst.slot->forEach(sl){
+		if (sl.oclAsType(UML::Slot).definingFeature.oclIsKindOf(UML::Port)) then{
+			var port : UML::Port := sl.oclAsType(UML::Slot).definingFeature.oclAsType(UML::Port);
+		
+			port.getStereotypeApplications()->select(metaClassName()="ClientServerPort")->forEach(csp){
+				var p := csp.oclAsType(MARTE::GCM::ClientServerPort);
+				if(p.kind = MARTE::GCM::ClientServerKind::required)then{
+					return sl.value->select(name="partWithPort")->asOrderedSet()->first().oclAsType(UML::InstanceValue).instance;
+				}endif;
+			}
+		
+		}endif;
+	};
+	return null;
+}
+
+query getRequiredPort(connInst : UML::InstanceSpecification) : UML::Port {
+	connInst.slot->forEach(sl){
+		if (sl.oclAsType(UML::Slot).definingFeature.oclIsKindOf(UML::Port)) then{
+			var port : UML::Port := sl.oclAsType(UML::Slot).definingFeature.oclAsType(UML::Port);
+		
+			port.getStereotypeApplications()->select(metaClassName()="ClientServerPort")->forEach(csp){
+				var p := csp.oclAsType(MARTE::GCM::ClientServerPort);
+				if(p.kind = MARTE::GCM::ClientServerKind::required)then{
+					return sl.definingFeature.oclAsType(UML::Port);
+				}endif;
+			}
+		
+		}endif;
+	};
+	return null;
+}
+
+query getProvidingInstance(connInst : UML::InstanceSpecification) : UML::InstanceSpecification {
+	connInst.slot->forEach(sl){
+		if (sl.oclAsType(UML::Slot).definingFeature.oclIsKindOf(UML::Port)) then{
+			var port : UML::Port := sl.oclAsType(UML::Slot).definingFeature.oclAsType(UML::Port);
+		
+			port.getStereotypeApplications()->select(metaClassName()="ClientServerPort")->forEach(csp){
+				var p := csp.oclAsType(MARTE::GCM::ClientServerPort);
+				if(p.kind = MARTE::GCM::ClientServerKind::provided)then{
+					return sl.value->select(name="partWithPort")->asOrderedSet()->first().oclAsType(UML::InstanceValue).instance;
+				}endif;
+			}
+		
+		}endif;
+	};
+	return null;
+}
+
+query getProvidedPort(connInst : UML::InstanceSpecification) : UML::Port {
+	connInst.slot->forEach(sl){
+		if (sl.oclAsType(UML::Slot).definingFeature.oclIsKindOf(UML::Port)) then{
+			var port : UML::Port := sl.oclAsType(UML::Slot).definingFeature.oclAsType(UML::Port);
+		
+			port.getStereotypeApplications()->select(metaClassName()="ClientServerPort")->forEach(csp){
+				var p := csp.oclAsType(MARTE::GCM::ClientServerPort);
+				if(p.kind = MARTE::GCM::ClientServerKind::provided)then{
+					return sl.definingFeature.oclAsType(UML::Port);
+				}endif;
+			}
+		
+		}endif;
+	};
+	return null;
+}
+
+
+
+
+
+//set links between required ports and provided ports
+mapping UML::InstanceSpecification::setRequired(in reqPort : UML::Port, in provPort : UML::Port, 
+		in destInst : UML::InstanceSpecification, in provCompMult: Integer, in reqCompMult: Integer, in reqPortMult: Integer){
+	//var chessComp := sm.objectsOfType(UML::Component)->select(name = self.name)->asOrderedSet()->first();
+	var instId : Integer :=0;
+	var identifInstStereo : CHESS::Core::IdentifInstance := self.getStereotypeApplications()->
+					select(metaClassName()="IdentifInstance")->asOrderedSet()->first().oclAsType(CHESS::Core::IdentifInstance);
+	instId := identifInstStereo.id;
+	
+		self.slot->select(definingFeature.oclIsKindOf(UML::Port))->forEach(slot){
+			var p : UML::Port := slot.definingFeature.oclAsType(UML::Port);
+			if (p=reqPort) then {
+				var reqPortId : Integer := 0;
+				var identifSlotStereo : CHESS::Core::IdentifSlot := slot.getStereotypeApplications()->
+					select(metaClassName()="IdentifSlot")->asOrderedSet()->first().oclAsType(CHESS::Core::IdentifSlot);
+				reqPortId := identifSlotStereo.id;
+				
+				//create new InstanceSpecification for connector
+				var connInst : UML::InstanceSpecification := new InstanceSpecification ();
+				//set Slot for requiredPort
+				var reqSlot : UML::Slot := new Slot();
+				newMultiInstPackage.packagedElement += connInst;
+				connInst.slot += reqSlot;
+				reqSlot.definingFeature := reqPort;
+				var instValue : UML::InstanceValue := new InstanceValue();
+				reqSlot.value += instValue;
+				instValue.instance := self;
+				var identifSlot := reqSlot.applyStereotype(getCHESSStereotype("IdentifSlot")).oclAsType(CHESS::Core::IdentifSlot);
+				identifSlot.id := reqPortId;
+				
+				//now set Slot for provided port
+				
+					var portID := 0;  //0 is the value in case of provPort.upperBound()=1
+					var destCompID := 0; //0 is the value in case of provCompMult=1
+					//if reqP.mult = comp.mult*provP.mult then same as for setEmptyLinks()
+					if(p.upperBound()=provPort.upperBound()*provCompMult)then{
+					
+						if (provPort.upperBound()>1)then{
+							if(reqPortId.mod(provPort.upperBound())<>0)then{
+								portID := reqPortId.mod(provPort.upperBound());
+							}else{
+								portID :=provPort.upperBound();
+							}endif;
+						}endif;
+						
+						if (provCompMult > 1) then {
+							if(reqPortId.mod(provPort.upperBound())<>0)then{
+								destCompID := (reqPortId/provPort.upperBound()).floor()+1;
+							}else{
+								destCompID := (reqPortId/provPort.upperBound()).floor();
+							}endif;
+						}endif;
+					}else{
+						//case reqP.mult=1, comp.mult=provP.mult*destComp.mult
+						if(p.upperBound()=1 and reqCompMult=provPort.upperBound()*provCompMult)then{
+							
+							if (provPort.upperBound()>1)then{
+							
+								if(instId.mod(provPort.upperBound())<>0)then{
+									portID := instId.mod(provPort.upperBound());
+								}else{
+									portID := provPort.upperBound();
+								}endif;
+							}endif;
+							if (provCompMult > 1) then {
+								if(instId.mod(provPort.upperBound())<>0)then{
+									destCompID := (instId/provPort.upperBound()).floor()+1;
+								}else{
+									destCompID := (instId/provPort.upperBound()).floor();
+								}endif;
+							}endif;
+						}else{
+							//case reqP.mult=provP.mult
+							if(p.upperBound() = provPort.upperBound())then{
+							
+								if (provPort.upperBound()>1)then{
+									if(instId.mod(provPort.upperBound())<>0)then{
+										portID := instId.mod(provPort.upperBound());
+									}else{
+										portID := provPort.upperBound();
+									}endif;
+								}endif;
+								if (provCompMult >1) then {
+									if(instId.mod(provPort.upperBound())<>0)then{
+										destCompID := (instId/provPort.upperBound()).floor()+1;
+									}else{
+										destCompID := (instId/provPort.upperBound()).floor();
+									}endif;
+								}endif;
+							}else{
+								//case reqP.mult*comp.mult=provP.mult (compDest.mult = 1)
+								if(p.upperBound()*reqCompMult = provPort.upperBound())then{
+									if (provPort.upperBound()>1)then{
+										portID := p.upperBound()*reqCompMult;
+									}endif;
+									if (provCompMult > 1) then {
+										destCompID := 1;
+									}endif;
+								}else{
+									//case reqP.mult*comp.mult=destComp.mult (provP.mult = 1) ---> (self.relId*reqP.mult)-(reqP.mult-reqP.relId)
+									if(p.upperBound()*reqCompMult=provCompMult)then{
+										if (provPort.upperBound()>1)then{
+											portID := 1;
+										}endif;
+										if (provCompMult > 1) then {
+											destCompID := (instId*p.upperBound())-(p.upperBound()-reqPortId);
+										}endif;
+										log("MISSING CASE"+" comp:"+instId.toString()+" reqP:"+reqPortId.toString()+" destC:"+destCompID.toString());
+									}endif;
+								}endif;
+							}endif;
+						}endif;
+					}endif;
+					
+					var provIdentifInstance : UML::InstanceSpecification := getIdentifInstance(destCompID, destInst);
+					
+					//set Slot for providedPort
+					var provSlot : UML::Slot := new Slot();
+					connInst.slot += provSlot;
+					provSlot.definingFeature := provPort;
+					instValue := new InstanceValue();
+					provSlot.value += instValue;
+					instValue.instance := provIdentifInstance;
+					identifSlot := provSlot.applyStereotype(getCHESSStereotype("IdentifSlot")).oclAsType(CHESS::Core::IdentifSlot);
+					identifSlot.id := portID;
+					
+				}endif;
+			
+		};
+}
+
+query getIdentifInstance(in id : Integer, in origInstance : UML::InstanceSpecification):UML::InstanceSpecification{
+  newMultiInstPackage.ownedElement->forEach(elem){
+  	var identifInstStereo : CHESS::Core::IdentifInstance := elem.getStereotypeApplications()->
+					select(metaClassName()="IdentifInstance")->asOrderedSet()->first().oclAsType(CHESS::Core::IdentifInstance);
+	if (not identifInstStereo.oclIsInvalid()) then{
+		if (identifInstStereo.id = id and identifInstStereo.sourceInstanceSpec = origInstance) then {
+			return elem.oclAsType(UML::InstanceSpecification);
+		}endif;
+	}endif;
+  };
+  return null;
+}
+
+
+
+//find the provided port for the required port in input among the connectors in input
+query Set(UML::Connector)::findOtherEndReq(in pin : String, in cin : String) : UML::ConnectorEnd{
+	self->forEach(c){
+		var en := c._end->select(role.name = pin and partWithPort.name=cin)->asOrderedSet()->first();
+		if((not en.oclIsInvalid()))then{
+			var target := c._end->select(partWithPort.name <> cin and role.oclAsType(UML::Port).getStereotypeApplications()->
+				select(metaClassName()="ClientServerPort")->asOrderedSet()->first().oclAsType(MARTE::GCM::ClientServerPort).kind=MARTE::GCM::ClientServerKind::provided)->
+					asOrderedSet()->first();
+			return target;
+		}endif;
+	};
+	return null;
+}
+
+
+query getCHESSStereotype(stereoName : String) : Stereotype {
+	return CHESSProfile.allOwnedElements()[Stereotype]->selectOne(name=stereoName);
+}
+
+query getCHRtSpecification(port : UML::Port, partWithPort : UML::Property, setComm : Set(UML::Comment)) : chessmlprofile::RTComponentModel::CHRtSpecification {
+	
+	setComm->forEach(comm){
+	    var c := comm.getStereotypeApplications()->
+					select(metaClassName()="CHRtSpecification")->asOrderedSet()->first().oclAsType(chessmlprofile::RTComponentModel::CHRtSpecification);
+	
+		if (c != null)then{
+			if (partWithPort != null) then{
+			
+				if (c.partWithPort = partWithPort and c.base_Comment.annotatedElement->includes(port)) then{
+					return c;
+				}endif;
+			}else{
+				if (c.base_Comment.annotatedElement->includes(port)) then{
+					return c;
+				}endif;
+				
+			}endif;
+		}endif;
+	};
+	return null;
+}
+
+query getRequiredPort(conn : UML::Connector) : UML::Port {
+	conn._end->forEach(conEnd){
+		var martePort := conEnd.role.oclAsType(UML::Port).getStereotypeApplications()->
+		select(metaClassName()="ClientServerPort")->asOrderedSet()->first().oclAsType(MARTE::GCM::ClientServerPort);
+			if(conEnd.partWithPort <> null and martePort.kind=MARTE::GCM::ClientServerKind::required)then{
+				return conEnd.role.oclAsType(UML::Port);
+			}endif;	
+	};
+	return null;
+}
+
+query getRequiredProperty(conn : UML::Connector) : UML::Property {
+	conn._end->forEach(conEnd){
+		var martePort := conEnd.role.oclAsType(UML::Port).getStereotypeApplications()->
+		select(metaClassName()="ClientServerPort")->asOrderedSet()->first().oclAsType(MARTE::GCM::ClientServerPort);
+			if(conEnd.partWithPort <> null and martePort.kind=MARTE::GCM::ClientServerKind::required)then{
+				return conEnd.partWithPort.oclAsType(UML::Property);
+			}endif;	
+	};
+	return null;
+}
+
+query getProvidedProperty(conn : UML::Connector) : UML::Property {
+	conn._end->forEach(conEnd){
+		var martePort := conEnd.role.oclAsType(UML::Port).getStereotypeApplications()->
+		select(metaClassName()="ClientServerPort")->asOrderedSet()->first().oclAsType(MARTE::GCM::ClientServerPort);
+			if(conEnd.partWithPort <> null and martePort.kind=MARTE::GCM::ClientServerKind::provided)then{
+				return conEnd.partWithPort.oclAsType(UML::Property);
+			}endif;	
+	};
+	return null;
+}
+
+query Model::getView(viewName : String) : Package {
+	var seq := self.packagedElement[Package]-> union(self.packagedElement[Package].packagedElement[Package]);
+	return seq -> selectOne(isStereotyped("CHESS::Core::CHESSViews::" + viewName));
+}
+
+query Element::isStereotyped(stereoName : String) : Boolean {
+	return self.getAppliedStereotype(stereoName) <> null
+}

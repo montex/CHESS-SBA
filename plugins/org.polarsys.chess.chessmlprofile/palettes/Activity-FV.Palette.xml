@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<paletteDefinition>
+	<content>
+		<drawer 
+		iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" 
+		id="Drawer__1309342024129" 
+		name="CHESS/Activity">
+			<aspectTool 
+				description="Create an Initial node" 
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/InitialNode.gif"
+				id="createInitialnode1CreationTool_1309342089771" name="Initial node" refToolId="createInitialnode1CreationTool"/>
+			<aspectTool description="Create a Call Operation Action node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/CallOperationAction.gif" id="createCallOperationAction12CreationTool_1309342114350" name="Call Operation Action" refToolId="createCallOperationAction3CreationTool"/>
+			<aspectTool description="Create a Decision node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/DecisionNode.gif" id="createDecisionnode4CreationTool_1309342122851" name="Decision node" refToolId="createDecisionnode4CreationTool"/>
+			<aspectTool description="Create an Activity final node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/ActivityFinalNode.gif" id="createActivityfinal2CreationTool_1309342729356" name="Activity final" refToolId="createActivityfinal2CreationTool"/>
+			<aspectTool description="Create a Control Flow" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/ControlFlow.gif" id="createControlFlow1CreationTool_1309342738936" name="Control Flow" refToolId="createControlFlow1CreationTool"/>
+		</drawer>
+	</content>
+</paletteDefinition>

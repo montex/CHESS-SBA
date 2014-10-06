@@ -1,0 +1,98 @@
+/*
+-----------------------------------------------------------------------
+--          			CHESS M2M plugin							 --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+*/
+
+library ProfileUtils;
+modeltype UML uses "http://www.eclipse.org/uml2/2.0.0/UML";
+modeltype MARTEP uses "http://www.eclipse.org/papyrus/MARTE/1";
+modeltype CHESS uses "http://CHESS";
+	
+
+
+modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
+
+
+property propertyPlatform : Component = null;
+
+/*
+  in initialization:
+  
+  propertyPlatform := model.allOwnedElements()[Component]->selectOne(isStereotyped(GaResourcesPlatformQN));
+
+
+*/
+
+query InstanceSpecification::instanceSpec2Property() : Property {
+	return propertyPlatform.ownedMember[Property]->selectOne(name = self.name);
+}
+
+query getConnector(myPort : Port, myProperty : Property) : Connector {
+	return myPort._end->selectOne(partWithPort = myProperty).owner.oclAsType(Connector);
+}
+
+//Deprecated since CHESS Specification states that a port must have only one connector
+query Port::getPiPort(op : chessmlprofile::RTComponentModel::CHRtSpecification) : Port {
+    // Find the connector that links the RI to a PI
+    var bindingConnector := getConnector(self, op.partWithPort);
+    var myConnectorEnd := (bindingConnector.allOwnedElements()[ConnectorEnd])->	selectOne(role <> self);
+    return myConnectorEnd.role.oclAsType(Port);
+}
+
+//Deprecated since CHESS Specification states that a port must have only one connector
+query Port::getPiPartWithPort(op : chessmlprofile::RTComponentModel::CHRtSpecification) : Property {
+    // Find the connector that links the RI to a PI
+    var bindingConnector := getConnector(self, op.partWithPort);
+    var myConnectorEnd := (bindingConnector.allOwnedElements()[ConnectorEnd])->	selectOne(role <> self);
+    return myConnectorEnd.partWithPort;
+}
+
+query Property::property2InstanceSpec() : InstanceSpecification {
+	return platform.ownedMember[InstanceSpecification]->selectOne(name = self.name);
+}
+
+//Test if it is a ditributed communication between the ports by returning the corresponding communication bus
+/*query getConnectingBus(riProp : Property, piProp : Property) : Property {
+	var senderHwInstance := getAssignToFrom(riProp);					
+	var receiverHwInstance := getAssignToFrom(piProp); 
+	if (senderHwInstance <> receiverHwInstance) then 
+	   return getConnectingBusInstance(senderHwInstance, receiverHwInstance)
+	endif;
+	return null;
+}*/
+
+
+/*query Property::linkedInstanceSpecifications() : Bag(InstanceSpecification) {
+	var res : Bag(InstanceSpecification) := Bag{};	
+	self.owner.ownedElement[Connector]->select(isLinkedWith(self))->forEach(c){
+	    res += c._end->selectOne(partWithPort<>self).partWithPort.property2InstanceSpec();
+	};
+	return res;
+}*/
+
+/*
+query getConnector(myPort : Port, myProperty : Property) : Connector {
+	var connectorSet  := model.allOwnedElements()[Connector];
+	
+	
+	//return connectorSet->selectOne(allOwnedElements()[ConnectorEnd]->selectOne(role = myPort and partWithPort = myProperty).oclIsUndefined()=false);
+	connectorSet->forEach(c) {
+		c.allSubobjectsOfKind(ConnectorEnd) [ConnectorEnd]->forEach(es) {
+			if (es.role = myPort and es.partWithPort = myProperty) then {
+				return c;
+			} endif;
+		};
+	};
+	return null;
+}*/

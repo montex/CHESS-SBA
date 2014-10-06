@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecore.uri_mapping">
+      <mapping
+            source="pathmap://CHESSML_PROFILE/"
+            target="platform:/plugin/org.polarsys.chess.chessmlprofile/model/"/>
+   </extension>
+
+   
+   
+   
+   
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS"
+            class="org.polarsys.chess.chessmlprofile.chessmlprofilePackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_EA6IcDcwEd-mWLzcI61s7Q"
+            uri="http://CHESS">
+      </profile>
+   </extension>
+   
+   
+      
+   
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Core"
+            class="org.polarsys.chess.chessmlprofile.Core.CorePackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_ad4owDgVEd-68Z_bhNRGsA"
+            uri="http://CHESS/Core">
+      </profile>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="core"
+            class="org.polarsys.chess.chessmlprofile.Core.util.CoreResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESS -->
+      <package
+            uri="http://CHESS"
+            class="org.polarsys.chess.chessmlprofile.chessmlprofilePackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESS -->
+      <package
+            uri="http://CHESS/Core"
+            class="org.polarsys.chess.chessmlprofile.Core.CorePackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="core"
+            class="org.polarsys.chess.chessmlprofile.Core.util.CoreResourceFactoryImpl"/>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Core/Views"
+            class="org.polarsys.chess.chessmlprofile.Core.CHESSViews.CHESSViewsPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="chessviews"
+            class="org.polarsys.chess.chessmlprofile.Core.CHESSViews.util.CHESSViewsResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_FttqgMJDEd-0jpzjleFnug"
+            uri="http://CHESS/Core/Views">
+      </profile>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="it.unipd.chess.chessmlprofileviews"
+            class="org.polarsys.chess.chessmlprofile.Core.CHESSViews.util.CHESSViewsResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Dependability/FailurePropagation"
+            class="org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="failurepropagation"
+            class="org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.util.FailurePropagationResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_hdOrwLwzEd-CDNLmLgazUQ"
+            uri="http://CHESS/Dependability/FailurePropagation">
+      </profile>
+   </extension>   
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="failurepropagation"
+            class="org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.util.FailurePropagationResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///CHESS/Dependability/FailurePropagation/FailurePropagationDataTypes.ecore"
+            class="org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.FailurePropagationDataTypesPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS.DependabilitySecurity/schemas/DataFlowCallGraph/_QB3mMMe6Ed-7etIj5eTw0Q/8"
+            class="org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.DataFlowCallGraphPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="dataflowcallgraph"
+            class="org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.util.DataFlowCallGraphResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_zBudQLwzEd-CDNLmLgazUQ"
+            uri="http://CHESS.DependabilitySecurity/schemas/DataFlowCallGraph/_QB3mMMe6Ed-7etIj5eTw0Q/8">
+      </profile>
+   </extension>      
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="dataflowcallgraph"
+            class="org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.util.DataFlowCallGraphResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///CHESS/Dependability/StateBased/StateBasedDataTypes.ecore"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.StateBasedDataTypesPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Dependability/StateBased/StateBasedComponents"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StateBasedComponentsPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="statebasedcomponents"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.util.StateBasedComponentsResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_d50lQL86Ed-TL8tpOyViyA"
+            uri="http://CHESS/Dependability/StateBased/StateBasedComponents">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="statebasedcomponents"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.util.StateBasedComponentsResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Dependability/StateBased/FaultTolerance"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.FaultTolerancePackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="faulttolerance"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.util.FaultToleranceResourceFactoryImpl"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_mbqqgL86Ed-TL8tpOyViyA"
+            uri="http://CHESS/Dependability/StateBased/FaultTolerance">
+      </profile>
+   </extension> 
+   
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="faulttolerance"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.util.FaultToleranceResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Dependability/StateBased/MaintenanceMonitoring"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.MaintenanceMonitoringPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="maintenancemonitoring"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.util.MaintenanceMonitoringResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_oUVxcL88Ed-TL8tpOyViyA"
+            uri="http://CHESS/Dependability/StateBased/MaintenanceMonitoring">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="maintenancemonitoring"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.util.MaintenanceMonitoringResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Dependability/StateBased/StateBasedAnalysis"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="statebasedanalysis"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.util.StateBasedAnalysisResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_Wgxh0L8_Ed-TL8tpOyViyA"
+            uri="http://CHESS/Dependability/StateBased/StateBasedAnalysis">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="statebasedanalysis"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.util.StateBasedAnalysisResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Dependability/DependableComponent"
+            class="org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="dependablecomponent"
+            class="org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.util.DependableComponentResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_uNKOgDQ2EeC0ueejuetpgA"
+            uri="http://CHESS/Dependability/DependableComponent">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="dependablecomponent"
+            class="org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.util.DependableComponentResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Dependability/ThreatsPropagation"
+            class="org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="threatspropagation"
+            class="org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.util.ThreatsPropagationResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_5g4wEDQ3EeC0ueejuetpgA"
+            uri="http://CHESS/Dependability/ThreatsPropagation">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="threatspropagation"
+            class="org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.util.ThreatsPropagationResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS.Dependability/schemas/FMEA/_wfALMFrLEeCvGuvlF-wh1g/9"
+            class="org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEAPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="fmea"
+            class="org.polarsys.chess.chessmlprofile.Dependability.FMEA.util.FMEAResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_Z59uoLwzEd-CDNLmLgazUQ"
+            uri="http://CHESS.Dependability/schemas/FMEA/_wfALMFrLEeCvGuvlF-wh1g/9">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="fmea"
+            class="org.polarsys.chess.chessmlprofile.Dependability.FMEA.util.FMEAResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///CHESS/Dependability/FMEA/FMEADataTypes.ecore"
+            class="org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEADataTypes.FMEADataTypesPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESS -->
+      <package
+            uri="http://CHESS.Dependability/MitigationMeans"
+            class="org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.MitigationMeansPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS.Predictability/schemas/TimingAnaylsis/_SGMOYMe6Ed-7etIj5eTw0Q/8"
+            class="org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAnalysisPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="timinganalysis"
+            class="org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.util.TimingAnalysisResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_u88ZMLwzEd-CDNLmLgazUQ"
+            uri="http://CHESS.Predictability/schemas/TimingAnaylsis/_SGMOYMe6Ed-7etIj5eTw0Q/8">
+      </profile>
+   </extension> 
+   
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="timinganalysis"
+            class="org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.util.TimingAnalysisResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS.Predictability.TimingAnaylsis/schemas/TimingConstraints/_ShUEIMe6Ed-7etIj5eTw0Q/8"
+            class="org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="timingconstraints"
+            class="org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.util.TimingConstraintsResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_dyWJQMF0Ed--atLXXafOiQ"
+            uri="http://CHESS.Predictability.TimingAnaylsis/schemas/TimingConstraints/_ShUEIMe6Ed-7etIj5eTw0Q/8">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="timingconstraints"
+            class="org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.util.TimingConstraintsResourceFactoryImpl"/>
+   </extension>
+
+   <!--extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///CHESS/Predictability/DeploymentConfiguration/HwDataTypes.ecore"
+            class="it.unipd.chess.chessmlprofile.Predictability.DeploymentConfiguration.HwDataTypes.HwDataTypesPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension-->
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Predictability/DeploymentConfiguration/HardwareBaseline"
+            class="org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="hardwarebaseline"
+            class="org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.util.HardwareBaselineResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_1TsX8MCpEd-RT45s8cwWMg"
+            uri="http://CHESS/Predictability/DeploymentConfiguration/HardwareBaseline">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="hardwarebaseline"
+            class="org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.util.HardwareBaselineResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Predictability/DeploymentConfiguration/DeploymentConfAnalysis"
+            class="org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.DeploymentConfAnalysisPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="deploymentconfanalysis"
+            class="org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.util.DeploymentConfAnalysisResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_1xBQUMCtEd-RT45s8cwWMg"
+            uri="http://CHESS/Predictability/DeploymentConfiguration/DeploymentConfAnalysis">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="deploymentconfanalysis"
+            class="org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.util.DeploymentConfAnalysisResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/Predictability/RTComponentModel"
+            class="org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="rtcomponentmodel"
+            class="org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.util.RTComponentModelResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_WgatoDgVEd-68Z_bhNRGsA"
+            uri="http://CHESS/Predictability/RTComponentModel">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="rtcomponentmodel"
+            class="org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.util.RTComponentModelResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///CHESS/Predictability/RTComponentModel/RTDataTypes.ecore"
+            class="org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTDataTypes.RTDataTypesPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS/ComponentModel"
+            class="org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CHESS -->
+      <parser
+            type="componentmodel"
+            class="org.polarsys.chess.chessmlprofile.ComponentModel.util.ComponentModelResourceFactoryImpl"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_MftccDQ2EeC0ueejuetpgA"
+            uri="http://CHESS/ComponentModel">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="componentmodel"
+            class="org.polarsys.chess.chessmlprofile.ComponentModel.util.ComponentModelResourceFactoryImpl"/>
+   </extension>
+   
+   
+   
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_kJICMFiIEeGbwa2cK55fPQ"
+            uri="http://CHESS.Dependability/MitigationMeans">
+      </profile>
+   </extension> 
+   
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://CHESS.Dependability/MitigationMeans"
+            class="org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.MitigationMeansPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="mitigationmeans"
+            class="org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.util.MitigationMeansResourceFactoryImpl"/>
+   </extension>  
+
+	
+	<extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="ClassDiagram-FV-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="ClassDiagram-FV-Palette"
+            path="/palettes/ClassDiag-FV.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.clazz">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="CSD-FV-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="CSD_FV-Palette"
+            path="/palettes/CompositeDiag-FV.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.composite">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+    <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="CSD-FV-RT-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="CSD_FV_RT-Palette"
+            path="/palettes/CompositeDiag-EFV-RT.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.composite">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="AD-FV-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="AD_FV-Palette"
+            path="/palettes/Activity-FV.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.activity">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="CSD-Deployment-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="CSD_Deployment-Palette"
+            path="/palettes/CompositeDiag-Deployment.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.composite">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="CD-Deployment-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="CD_Deployment-Palette"
+            path="/palettes/ClassDiag-Deployment.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.clazz">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="SM-FunctionalView-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="SM-FunctionalView-Palette"
+            path="/palettes/StateMachineDiag-FV.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.statemachine">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="SM-ErrorModel-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="SM-ErrorModel-Palette"
+            path="/palettes/StateMachineDiag-ErrorModel.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.statemachine">
+         </editor>
+      </paletteDefinition>
+   </extension>
+
+	<extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="CD-Analysis-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="CD-Analysis-Palette"
+            path="/palettes/ClassDiag-DependAnalysis.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.clazz">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="CSD-FPTC-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="CSD-FPTC-Palette"
+            path="/palettes/CompositeDiag-EFV-FPTC.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.composite">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="CSD-Railway-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="CSD-Railway-Palette"
+            path="/palettes/CompositeDiag-RailwayView.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.composite">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="SeqDiagram-EFV-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="SeqDiagram-EFV-Palette"
+            path="/palettes/Sequence-EFV.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.sequence">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLProfile">
+      <profile
+            description="UML, MARTE and SysML profile for CHESS (v0.2)"
+            iconpath="icons/CHESSicon.gif"
+            name="CHESS"
+            path="pathmap://CHESSML_PROFILE/CHESS.profile.uml"
+            provider="CHESS EDT">
+      </profile>
+   </extension>
+</plugin>
