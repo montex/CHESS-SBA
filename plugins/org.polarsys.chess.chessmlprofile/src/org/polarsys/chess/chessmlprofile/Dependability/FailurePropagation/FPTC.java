@@ -12,6 +12,7 @@
 package org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation;
 
 import org.eclipse.uml2.uml.Comment;
+import org.eclipse.uml2.uml.Connector;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent;
 
 /**
@@ -24,6 +25,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Depen
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC#getFptc <em>Fptc</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC#getBase_Comment <em>Base Comment</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC#getBase_Connector <em>Base Connector</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,5 +85,31 @@ public interface FPTC extends DependableComponent {
 	 * @generated
 	 */
 	void setBase_Comment(Comment value);
+
+	/**
+	 * Returns the value of the '<em><b>Base Connector</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Base Connector</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Base Connector</em>' reference.
+	 * @see #setBase_Connector(Connector)
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFPTC_Base_Connector()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	Connector getBase_Connector();
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC#getBase_Connector <em>Base Connector</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Base Connector</em>' reference.
+	 * @see #getBase_Connector()
+	 * @generated
+	 */
+	void setBase_Connector(Connector value);
 
 } // FPTC

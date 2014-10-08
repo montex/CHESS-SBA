@@ -202,13 +202,31 @@ public interface DependableComponentPackage extends EPackage {
 	int DEPENDABLE_COMPONENT__BASE_PROPERTY = 2;
 
 	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDABLE_COMPONENT__BASE_CLASS = 3;
+
+	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION = 4;
+
+	/**
 	 * The number of structural features of the '<em>Dependable Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEPENDABLE_COMPONENT_FEATURE_COUNT = 3;
+	int DEPENDABLE_COMPONENT_FEATURE_COUNT = 5;
 
 
 	/**
@@ -364,6 +382,28 @@ public interface DependableComponentPackage extends EPackage {
 	EReference getDependableComponent_Base_Property();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent#getBase_Class <em>Base Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Class</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent#getBase_Class()
+	 * @see #getDependableComponent()
+	 * @generated
+	 */
+	EReference getDependableComponent_Base_Class();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent#getBase_InstanceSpecification <em>Base Instance Specification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Instance Specification</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent#getBase_InstanceSpecification()
+	 * @see #getDependableComponent()
+	 * @generated
+	 */
+	EReference getDependableComponent_Base_InstanceSpecification();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -500,6 +540,22 @@ public interface DependableComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DEPENDABLE_COMPONENT__BASE_PROPERTY = eINSTANCE.getDependableComponent_Base_Property();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Class</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEPENDABLE_COMPONENT__BASE_CLASS = eINSTANCE.getDependableComponent_Base_Class();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Instance Specification</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getDependableComponent_Base_InstanceSpecification();
 
 	}
 

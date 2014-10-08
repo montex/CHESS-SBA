@@ -1099,7 +1099,7 @@
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_WSNEsMGMEd--atLXXafOiQ" name="Dependability">
-      <packagedElement xmi:type="uml:Profile" xmi:id="_hdOrwLwzEd-CDNLmLgazUQ" name="FailurePropagation" URI="http://CHESS/Dependability/FailurePropagation" metaclassReference="_tr9pIDQ6EeC0ueejuetpgA _1E4EkHpQEeCIAr4_5S9-cA _nxIhIHpREeCIAr4_5S9-cA">
+      <packagedElement xmi:type="uml:Profile" xmi:id="_hdOrwLwzEd-CDNLmLgazUQ" name="FailurePropagation" URI="http://CHESS/Dependability/FailurePropagation" metaclassReference="_tr9pIDQ6EeC0ueejuetpgA _1E4EkHpQEeCIAr4_5S9-cA _nxIhIHpREeCIAr4_5S9-cA _J_QO4E4lEeSrx7uvnaF3GQ">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_IFiz4MGbEd--atLXXafOiQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
           <contents xmi:type="ecore:EPackage" xmi:id="_vlrMsTROEeCPrptoDUJcNQ" name="FailurePropagation" nsURI="http://CHESS/Dependability/FailurePropagation" nsPrefix="FailurePropagation">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_vmRpoDROEeCPrptoDUJcNQ" source="PapyrusVersion">
@@ -1371,6 +1371,9 @@
         <elementImport xmi:type="uml:ElementImport" xmi:id="_nxIhIHpREeCIAr4_5S9-cA" alias="Slot">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Slot"/>
         </elementImport>
+        <elementImport xmi:type="uml:ElementImport" xmi:id="_J_QO4E4lEeSrx7uvnaF3GQ" alias="Connector">
+          <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Connector"/>
+        </elementImport>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_4m1fcMF0Ed--atLXXafOiQ" name="FPTC">
           <generalization xmi:type="uml:Generalization" xmi:id="_GHeyEHriEeCZzfQgCDrHbQ" general="_y0zvEDQ2EeC0ueejuetpgA"/>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_oLFpQMF1Ed--atLXXafOiQ" name="fptc" visibility="public">
@@ -1383,6 +1386,9 @@
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_uSrTwDROEeCPrptoDUJcNQ" name="base_Comment" association="_uSrTwTROEeCPrptoDUJcNQ">
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Comment"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_LFalsE4lEeSrx7uvnaF3GQ" name="base_Connector" association="_LFalsU4lEeSrx7uvnaF3GQ">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Connector"/>
           </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Package" xmi:id="_J_FksMF1Ed--atLXXafOiQ" name="FailurePropagationDataTypes">
@@ -1487,6 +1493,13 @@
           <ownedAttribute xmi:type="uml:Property" xmi:id="_oNcpsHpREeCIAr4_5S9-cA" name="base_Slot" association="_oNcpsXpREeCIAr4_5S9-cA">
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Slot"/>
           </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_NkRNwE4lEeSrx7uvnaF3GQ" name="failure" visibility="public" type="_UhqyoMF1Ed--atLXXafOiQ">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NkRNwU4lEeSrx7uvnaF3GQ"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NkRNwk4lEeSrx7uvnaF3GQ" value="*"/>
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_NkRNw04lEeSrx7uvnaF3GQ">
+              <value xsi:nil="true"/>
+            </defaultValue>
+          </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Association" xmi:id="_eMErYHpREeCIAr4_5S9-cA" name="fPTCPortSlot_fPTCSpecification_0" memberEnd="_eMErYXpREeCIAr4_5S9-cA _eL7hcHpREeCIAr4_5S9-cA">
           <ownedEnd xmi:type="uml:Property" xmi:id="_eMErYXpREeCIAr4_5S9-cA" name="fPTCPortSlot" type="_cSCAkHpREeCIAr4_5S9-cA" association="_eMErYHpREeCIAr4_5S9-cA">
@@ -1501,6 +1514,9 @@
           <generalization xmi:type="uml:Generalization" xmi:id="_bKzdQAFdEeG47Njvphl3lQ" general="_y0zvEDQ2EeC0ueejuetpgA"/>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_oTEUAAFdEeG47Njvphl3lQ" name="fi4fa">
             <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_KpFPAE4lEeSrx7uvnaF3GQ" name="base_Connector" association="_KpGdIE4lEeSrx7uvnaF3GQ">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Connector"/>
           </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_FfQhYAFeEeG47Njvphl3lQ" name="FI4FASpecification">
@@ -1558,6 +1574,12 @@
           <generalization xmi:type="uml:Generalization" xmi:id="_yRbX0CV-EeGFef9zQOfShA">
             <general xmi:type="uml:Stereotype" href="pathmap://Papyrus_PROFILES/MARTE.profile.uml#_9gc2ABKfEdyaWJN1BYon3A"/>
           </generalization>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_KpGdIE4lEeSrx7uvnaF3GQ" name="E_FI4FA_Connector1" memberEnd="_KpGdIU4lEeSrx7uvnaF3GQ _KpFPAE4lEeSrx7uvnaF3GQ">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_KpGdIU4lEeSrx7uvnaF3GQ" name="extension_FI4FA" type="_Z6PNQAFdEeG47Njvphl3lQ" aggregation="composite" association="_KpGdIE4lEeSrx7uvnaF3GQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_LFalsU4lEeSrx7uvnaF3GQ" name="E_FPTC_Connector1" memberEnd="_LFalsk4lEeSrx7uvnaF3GQ _LFalsE4lEeSrx7uvnaF3GQ">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_LFalsk4lEeSrx7uvnaF3GQ" name="extension_FPTC" type="_4m1fcMF0Ed--atLXXafOiQ" aggregation="composite" association="_LFalsU4lEeSrx7uvnaF3GQ"/>
         </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Profile" xmi:id="_zBudQLwzEd-CDNLmLgazUQ" name="DataFlowCallGraph" URI="http://CHESS.DependabilitySecurity/schemas/DataFlowCallGraph/_QB3mMMe6Ed-7etIj5eTw0Q/8">
@@ -3491,7 +3513,7 @@
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_EQfJASctEeG6n9L5cSMA1w" name="extension_ErrorModelAssign" type="_BszrUCctEeG6n9L5cSMA1w" aggregation="composite" association="_EQfJACctEeG6n9L5cSMA1w"/>
         </packagedElement>
       </packagedElement>
-      <packagedElement xmi:type="uml:Profile" xmi:id="_uNKOgDQ2EeC0ueejuetpgA" name="DependableComponent" URI="http://CHESS/Dependability/DependableComponent" metaclassReference="_1TXcMDQ2EeC0ueejuetpgA _vslkcDQ3EeC0ueejuetpgA _qUQRADQ7EeC0ueejuetpgA _lh57ADgaEeCE2sZUGxu35w _t9O3gEDsEeC5SOtkEXPa-w _Bxaf0E7nEeCiWfCHUearZQ">
+      <packagedElement xmi:type="uml:Profile" xmi:id="_uNKOgDQ2EeC0ueejuetpgA" name="DependableComponent" URI="http://CHESS/Dependability/DependableComponent" metaclassReference="_1TXcMDQ2EeC0ueejuetpgA _vslkcDQ3EeC0ueejuetpgA _qUQRADQ7EeC0ueejuetpgA _lh57ADgaEeCE2sZUGxu35w _t9O3gEDsEeC5SOtkEXPa-w _Bxaf0E7nEeCiWfCHUearZQ _XNejsE4lEeSrx7uvnaF3GQ">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__BchsDRPEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
           <contents xmi:type="ecore:EPackage" xmi:id="_291WAVquEeCgwNmo13tekQ" name="DependableComponent" nsURI="http://CHESS/Dependability/DependableComponent" nsPrefix="DependableComponent">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3BtJYFquEeCgwNmo13tekQ" source="PapyrusVersion">
@@ -4401,6 +4423,9 @@
         <elementImport xmi:type="uml:ElementImport" xmi:id="_Bxaf0E7nEeCiWfCHUearZQ" alias="InstanceSpecification">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
         </elementImport>
+        <elementImport xmi:type="uml:ElementImport" xmi:id="_XNejsE4lEeSrx7uvnaF3GQ" alias="Class">
+          <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+        </elementImport>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_uoIV0LzuEd-yoLyJo0JlOg" name="Propagation">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_2sU1wLzuEd-yoLyJo0JlOg" name="prob" visibility="public">
             <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
@@ -4449,6 +4474,9 @@
               <value xsi:nil="true"/>
             </defaultValue>
           </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_aD6lUE4lEeSrx7uvnaF3GQ" name="base_InstanceSpecification" association="_aD7MYE4lEeSrx7uvnaF3GQ">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+          </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_y0zvEDQ2EeC0ueejuetpgA" name="DependableComponent">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_1n7W8DQ2EeC0ueejuetpgA" name="base_Component" association="_1n7W8TQ2EeC0ueejuetpgA">
@@ -4463,6 +4491,12 @@
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_mJZY0DgaEeCE2sZUGxu35w" name="base_Property" association="_mJZY0TgaEeCE2sZUGxu35w">
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_YMbfQE4lEeSrx7uvnaF3GQ" name="base_Class" association="_YMcGUE4lEeSrx7uvnaF3GQ">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_YnSPQE4lEeSrx7uvnaF3GQ" name="base_InstanceSpecification" association="_YnS2UE4lEeSrx7uvnaF3GQ">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
           </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_1n7W8TQ2EeC0ueejuetpgA" name="E_DependableComponent_Component0" memberEnd="_1n7W8jQ2EeC0ueejuetpgA _1n7W8DQ2EeC0ueejuetpgA">
@@ -4485,6 +4519,15 @@
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_mPJhQVqlEeCgwNmo13tekQ" name="E_Propagation_Transition0" memberEnd="_mPJhQlqlEeCgwNmo13tekQ _mPJhQFqlEeCgwNmo13tekQ">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_mPJhQlqlEeCgwNmo13tekQ" name="extension_Propagation" type="_uoIV0LzuEd-yoLyJo0JlOg" aggregation="composite" association="_mPJhQVqlEeCgwNmo13tekQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_YMcGUE4lEeSrx7uvnaF3GQ" name="E_DependableComponent_Class1" memberEnd="_YMcGUU4lEeSrx7uvnaF3GQ _YMbfQE4lEeSrx7uvnaF3GQ">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_YMcGUU4lEeSrx7uvnaF3GQ" name="extension_DependableComponent" type="_y0zvEDQ2EeC0ueejuetpgA" aggregation="composite" association="_YMcGUE4lEeSrx7uvnaF3GQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_YnS2UE4lEeSrx7uvnaF3GQ" name="E_DependableComponent_InstanceSpecification1" memberEnd="_YnS2UU4lEeSrx7uvnaF3GQ _YnSPQE4lEeSrx7uvnaF3GQ">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_YnS2UU4lEeSrx7uvnaF3GQ" name="extension_DependableComponent" type="_y0zvEDQ2EeC0ueejuetpgA" aggregation="composite" association="_YnS2UE4lEeSrx7uvnaF3GQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_aD7MYE4lEeSrx7uvnaF3GQ" name="E_Propagation_InstanceSpecification1" memberEnd="_aD7MYU4lEeSrx7uvnaF3GQ _aD6lUE4lEeSrx7uvnaF3GQ">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_aD7MYU4lEeSrx7uvnaF3GQ" name="extension_Propagation" type="_uoIV0LzuEd-yoLyJo0JlOg" aggregation="composite" association="_aD7MYE4lEeSrx7uvnaF3GQ"/>
         </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Profile" xmi:id="_5g4wEDQ3EeC0ueejuetpgA" name="ThreatsPropagation" URI="http://CHESS/Dependability/ThreatsPropagation" metaclassReference="_AGLpEDQ4EeC0ueejuetpgA _EsXKADQ4EeC0ueejuetpgA _YOEPEDQ4EeC0ueejuetpgA">
@@ -10480,6 +10523,23 @@
     </packagedElement>
     <packagedElement xmi:type="uml:DataType" xmi:id="__Ya2gGviEeCFqs3XUsvipQ" name="dummy"/>
     <packagedElement xmi:type="uml:Interval" xmi:id="_bCFZ8P3lEeOmz-4FDV-1Kw" name="Interval"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_mlVegE4lEeSrx7uvnaF3GQ" name="SystemModel">
+      <packagedElement xmi:type="uml:Stereotype" xmi:id="_1UbwME4lEeSrx7uvnaF3GQ" name="Human">
+        <generalization xmi:type="uml:Generalization" xmi:id="_WDUoQE4mEeSrx7uvnaF3GQ">
+          <general xmi:type="uml:Stereotype" href="pathmap://SysML_PROFILES/SysML.profile.uml#_8J2A8LVAEdu2ieF4ON8UjA"/>
+        </generalization>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Stereotype" xmi:id="_2mJPsE4lEeSrx7uvnaF3GQ" name="Organizational">
+        <generalization xmi:type="uml:Generalization" xmi:id="_WWKrwE4mEeSrx7uvnaF3GQ">
+          <general xmi:type="uml:Stereotype" href="pathmap://SysML_PROFILES/SysML.profile.uml#_8J2A8LVAEdu2ieF4ON8UjA"/>
+        </generalization>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Stereotype" xmi:id="_OAyVME4mEeSrx7uvnaF3GQ" name="Technological">
+        <generalization xmi:type="uml:Generalization" xmi:id="_WqANwE4mEeSrx7uvnaF3GQ">
+          <general xmi:type="uml:Stereotype" href="pathmap://SysML_PROFILES/SysML.profile.uml#_8J2A8LVAEdu2ieF4ON8UjA"/>
+        </generalization>
+      </packagedElement>
+    </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_4nGdAFt2EeCB9JyGkIbTqQ">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_4nHEEFt2EeCB9JyGkIbTqQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA"/>
@@ -10522,4 +10582,5 @@
   <DataTypes:TupleType xmi:id="_UJoUYP3lEeOmz-4FDV-1Kw" base_DataType="_gg-JgL9BEd-TL8tpOyViyA"/>
   <DataTypes:ChoiceType xmi:id="_WmWOcP3lEeOmz-4FDV-1Kw" base_DataType="_JEphoL9EEd-TL8tpOyViyA"/>
   <DataTypes:TupleType xmi:id="_X13VkP3lEeOmz-4FDV-1Kw" base_DataType="_Nim6sL9EEd-TL8tpOyViyA"/>
+  <Ecore:EPackage xmi:id="_qstjkE4lEeSrx7uvnaF3GQ" base_Package="_mlVegE4lEeSrx7uvnaF3GQ" packageName="SystemModel" nsPrefix="SystemModel" nsURI="http://CHESS/SystemModel" prefix="SystemModel"/>
 </xmi:XMI>

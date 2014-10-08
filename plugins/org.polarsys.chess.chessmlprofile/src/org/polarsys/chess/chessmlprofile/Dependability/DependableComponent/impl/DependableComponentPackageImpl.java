@@ -25,6 +25,7 @@ import org.eclipse.papyrus.MARTE_Library.MeasurementUnits.MeasurementUnitsPackag
 import org.eclipse.papyrus.MARTE_Library.RS_Library.RS_LibraryPackage;
 import org.eclipse.papyrus.MARTE_Library.TimeLibrary.TimeLibraryPackage;
 import org.eclipse.papyrus.MARTE_Library.TimeTypesLibrary.TimeTypesLibraryPackage;
+import org.eclipse.papyrus.sysml.SysmlPackage;
 import org.eclipse.uml2.types.TypesPackage;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
@@ -74,6 +75,8 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
+import org.polarsys.chess.chessmlprofile.SystemModel.SystemModelPackage;
+import org.polarsys.chess.chessmlprofile.SystemModel.impl.SystemModelPackageImpl;
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
 
 /**
@@ -153,6 +156,7 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		TimeLibraryPackage.eINSTANCE.eClass();
 		RS_LibraryPackage.eINSTANCE.eClass();
 		MARTE_PrimitivesTypesPackage.eINSTANCE.eClass();
+		SysmlPackage.eINSTANCE.eClass();
 		BasicNFP_TypesPackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
@@ -178,6 +182,7 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
+		SystemModelPackageImpl theSystemModelPackage = (SystemModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SystemModelPackage.eNS_URI) instanceof SystemModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SystemModelPackage.eNS_URI) : SystemModelPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theDependableComponentPackage.createPackageContents();
@@ -203,6 +208,7 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
+		theSystemModelPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theDependableComponentPackage.initializePackageContents();
@@ -228,6 +234,7 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
+		theSystemModelPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theDependableComponentPackage.freeze();
@@ -369,6 +376,24 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getDependableComponent_Base_Class() {
+		return (EReference)dependableComponentEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDependableComponent_Base_InstanceSpecification() {
+		return (EReference)dependableComponentEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DependableComponentFactory getDependableComponentFactory() {
 		return (DependableComponentFactory)getEFactoryInstance();
 	}
@@ -407,6 +432,8 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		createEReference(dependableComponentEClass, DEPENDABLE_COMPONENT__BASE_COMPONENT);
 		createEReference(dependableComponentEClass, DEPENDABLE_COMPONENT__ERROR_MODEL);
 		createEReference(dependableComponentEClass, DEPENDABLE_COMPONENT__BASE_PROPERTY);
+		createEReference(dependableComponentEClass, DEPENDABLE_COMPONENT__BASE_CLASS);
+		createEReference(dependableComponentEClass, DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION);
 	}
 
 	/**
@@ -460,6 +487,8 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		initEReference(getDependableComponent_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, DependableComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getDependableComponent_ErrorModel(), theThreatsPropagationPackage.getErrorModel(), null, "errorModel", null, 0, 1, DependableComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getDependableComponent_Base_Property(), theUMLPackage.getProperty(), null, "base_Property", null, 1, 1, DependableComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getDependableComponent_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, DependableComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getDependableComponent_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, DependableComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //DependableComponentPackageImpl

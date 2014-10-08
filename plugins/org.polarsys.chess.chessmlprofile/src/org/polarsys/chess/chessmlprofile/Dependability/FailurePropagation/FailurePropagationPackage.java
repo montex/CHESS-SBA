@@ -104,6 +104,24 @@ public interface FailurePropagationPackage extends EPackage {
 	int FPTC__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
 
 	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FPTC__BASE_CLASS = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_CLASS;
+
+	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FPTC__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
+
+	/**
 	 * The feature id for the '<em><b>Fptc</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -122,13 +140,22 @@ public interface FailurePropagationPackage extends EPackage {
 	int FPTC__BASE_COMMENT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Base Connector</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FPTC__BASE_CONNECTOR = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>FPTC</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FPTC_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 2;
+	int FPTC_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FailurePropagationAnalysisImpl <em>Analysis</em>}' class.
@@ -287,13 +314,22 @@ public interface FailurePropagationPackage extends EPackage {
 	int FPTC_PORT_SLOT__BASE_SLOT = 1;
 
 	/**
+	 * The feature id for the '<em><b>Failure</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FPTC_PORT_SLOT__FAILURE = 2;
+
+	/**
 	 * The number of structural features of the '<em>FPTC Port Slot</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FPTC_PORT_SLOT_FEATURE_COUNT = 2;
+	int FPTC_PORT_SLOT_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FI4FAImpl <em>FI4FA</em>}' class.
@@ -333,6 +369,24 @@ public interface FailurePropagationPackage extends EPackage {
 	int FI4FA__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
 
 	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FI4FA__BASE_CLASS = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_CLASS;
+
+	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FI4FA__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
+
+	/**
 	 * The feature id for the '<em><b>Fi4fa</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -342,13 +396,22 @@ public interface FailurePropagationPackage extends EPackage {
 	int FI4FA__FI4FA = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Base Connector</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FI4FA__BASE_CONNECTOR = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>FI4FA</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FI4FA_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 1;
+	int FI4FA_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FI4FASpecificationImpl <em>FI4FA Specification</em>}' class.
@@ -641,6 +704,17 @@ public interface FailurePropagationPackage extends EPackage {
 	EReference getFPTC_Base_Comment();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC#getBase_Connector <em>Base Connector</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Connector</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC#getBase_Connector()
+	 * @see #getFPTC()
+	 * @generated
+	 */
+	EReference getFPTC_Base_Connector();
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationAnalysis <em>Analysis</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -726,6 +800,17 @@ public interface FailurePropagationPackage extends EPackage {
 	EReference getFPTCPortSlot_Base_Slot();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot#getFailure <em>Failure</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Failure</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot#getFailure()
+	 * @see #getFPTCPortSlot()
+	 * @generated
+	 */
+	EAttribute getFPTCPortSlot_Failure();
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FA <em>FI4FA</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -745,6 +830,17 @@ public interface FailurePropagationPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getFI4FA_Fi4fa();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FA#getBase_Connector <em>Base Connector</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Connector</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FA#getBase_Connector()
+	 * @see #getFI4FA()
+	 * @generated
+	 */
+	EReference getFI4FA_Base_Connector();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FASpecification <em>FI4FA Specification</em>}'.
@@ -945,6 +1041,14 @@ public interface FailurePropagationPackage extends EPackage {
 		EReference FPTC__BASE_COMMENT = eINSTANCE.getFPTC_Base_Comment();
 
 		/**
+		 * The meta object literal for the '<em><b>Base Connector</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FPTC__BASE_CONNECTOR = eINSTANCE.getFPTC_Base_Connector();
+
+		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FailurePropagationAnalysisImpl <em>Analysis</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1015,6 +1119,14 @@ public interface FailurePropagationPackage extends EPackage {
 		EReference FPTC_PORT_SLOT__BASE_SLOT = eINSTANCE.getFPTCPortSlot_Base_Slot();
 
 		/**
+		 * The meta object literal for the '<em><b>Failure</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FPTC_PORT_SLOT__FAILURE = eINSTANCE.getFPTCPortSlot_Failure();
+
+		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FI4FAImpl <em>FI4FA</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1031,6 +1143,14 @@ public interface FailurePropagationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute FI4FA__FI4FA = eINSTANCE.getFI4FA_Fi4fa();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Connector</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FI4FA__BASE_CONNECTOR = eINSTANCE.getFI4FA_Base_Connector();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FI4FASpecificationImpl <em>FI4FA Specification</em>}' class.
