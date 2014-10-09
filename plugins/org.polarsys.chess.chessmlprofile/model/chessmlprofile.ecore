@@ -832,8 +832,19 @@
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="SystemModel" nsURI="http://CHESS/SystemModel" nsPrefix="SystemModel">
-    <eClassifiers xsi:type="ecore:EClass" name="Human" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//blocks/Block"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Organizational" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//blocks/Block"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Technological" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//blocks/Block"/>
+    <eSubpackages name="STS" nsURI="http://CHESS/SystemModel/STS" nsPrefix="STS">
+      <eClassifiers xsi:type="ecore:EClass" name="Human">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Organizational">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Technological">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+      </eClassifiers>
+    </eSubpackages>
   </eSubpackages>
 </ecore:EPackage>

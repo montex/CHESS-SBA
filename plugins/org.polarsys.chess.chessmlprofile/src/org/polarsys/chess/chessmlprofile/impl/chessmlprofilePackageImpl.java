@@ -71,8 +71,8 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
-import org.polarsys.chess.chessmlprofile.SystemModel.SystemModelPackage;
-import org.polarsys.chess.chessmlprofile.SystemModel.impl.SystemModelPackageImpl;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -144,7 +144,6 @@ public class chessmlprofilePackageImpl extends EPackageImpl implements chessmlpr
 		TimeLibraryPackage.eINSTANCE.eClass();
 		RS_LibraryPackage.eINSTANCE.eClass();
 		MARTE_PrimitivesTypesPackage.eINSTANCE.eClass();
-		SysmlPackage.eINSTANCE.eClass();
 		BasicNFP_TypesPackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
@@ -170,7 +169,7 @@ public class chessmlprofilePackageImpl extends EPackageImpl implements chessmlpr
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
-		SystemModelPackageImpl theSystemModelPackage = (SystemModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SystemModelPackage.eNS_URI) instanceof SystemModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SystemModelPackage.eNS_URI) : SystemModelPackage.eINSTANCE);
+		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		thechessmlprofilePackage.createPackageContents();
@@ -196,7 +195,7 @@ public class chessmlprofilePackageImpl extends EPackageImpl implements chessmlpr
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
-		theSystemModelPackage.createPackageContents();
+		theSTSPackage.createPackageContents();
 
 		// Initialize created meta-data
 		thechessmlprofilePackage.initializePackageContents();
@@ -222,7 +221,7 @@ public class chessmlprofilePackageImpl extends EPackageImpl implements chessmlpr
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
-		theSystemModelPackage.initializePackageContents();
+		theSTSPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		thechessmlprofilePackage.freeze();
@@ -314,7 +313,7 @@ public class chessmlprofilePackageImpl extends EPackageImpl implements chessmlpr
 		DeploymentConfAnalysisPackage theDeploymentConfAnalysisPackage = (DeploymentConfAnalysisPackage)EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI);
 		RTComponentModelPackage theRTComponentModelPackage = (RTComponentModelPackage)EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI);
 		ComponentModelPackage theComponentModelPackage = (ComponentModelPackage)EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI);
-		SystemModelPackage theSystemModelPackage = (SystemModelPackage)EPackage.Registry.INSTANCE.getEPackage(SystemModelPackage.eNS_URI);
+		STSPackage theSTSPackage = (STSPackage)EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI);
 
 		// Add subpackages
 		getESubpackages().add(theCorePackage);
@@ -334,7 +333,7 @@ public class chessmlprofilePackageImpl extends EPackageImpl implements chessmlpr
 		getESubpackages().add(theDeploymentConfAnalysisPackage);
 		getESubpackages().add(theRTComponentModelPackage);
 		getESubpackages().add(theComponentModelPackage);
-		getESubpackages().add(theSystemModelPackage);
+		getESubpackages().add(theSTSPackage);
 
 		// Create type parameters
 

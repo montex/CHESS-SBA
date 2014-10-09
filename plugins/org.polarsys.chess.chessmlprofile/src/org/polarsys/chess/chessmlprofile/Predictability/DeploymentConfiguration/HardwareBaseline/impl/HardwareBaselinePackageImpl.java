@@ -93,8 +93,8 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
-import org.polarsys.chess.chessmlprofile.SystemModel.SystemModelPackage;
-import org.polarsys.chess.chessmlprofile.SystemModel.impl.SystemModelPackageImpl;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl;
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
 
 /**
@@ -279,7 +279,6 @@ public class HardwareBaselinePackageImpl extends EPackageImpl implements Hardwar
 		TimeLibraryPackage.eINSTANCE.eClass();
 		RS_LibraryPackage.eINSTANCE.eClass();
 		MARTE_PrimitivesTypesPackage.eINSTANCE.eClass();
-		SysmlPackage.eINSTANCE.eClass();
 		BasicNFP_TypesPackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
@@ -305,7 +304,7 @@ public class HardwareBaselinePackageImpl extends EPackageImpl implements Hardwar
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
-		SystemModelPackageImpl theSystemModelPackage = (SystemModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SystemModelPackage.eNS_URI) instanceof SystemModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SystemModelPackage.eNS_URI) : SystemModelPackage.eINSTANCE);
+		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theHardwareBaselinePackage.createPackageContents();
@@ -331,7 +330,7 @@ public class HardwareBaselinePackageImpl extends EPackageImpl implements Hardwar
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
-		theSystemModelPackage.createPackageContents();
+		theSTSPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theHardwareBaselinePackage.initializePackageContents();
@@ -357,7 +356,7 @@ public class HardwareBaselinePackageImpl extends EPackageImpl implements Hardwar
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
-		theSystemModelPackage.initializePackageContents();
+		theSTSPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theHardwareBaselinePackage.freeze();

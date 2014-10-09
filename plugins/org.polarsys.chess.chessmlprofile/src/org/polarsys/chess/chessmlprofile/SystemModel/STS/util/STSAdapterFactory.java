@@ -1,6 +1,6 @@
 /**
  */
-package org.polarsys.chess.chessmlprofile.SystemModel.util;
+package org.polarsys.chess.chessmlprofile.SystemModel.STS.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -9,26 +9,24 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.eclipse.papyrus.sysml.blocks.Block;
-
-import org.polarsys.chess.chessmlprofile.SystemModel.*;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.*;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.polarsys.chess.chessmlprofile.SystemModel.SystemModelPackage
+ * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage
  * @generated
  */
-public class SystemModelAdapterFactory extends AdapterFactoryImpl {
+public class STSAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static SystemModelPackage modelPackage;
+	protected static STSPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -36,9 +34,9 @@ public class SystemModelAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SystemModelAdapterFactory() {
+	public STSAdapterFactory() {
 		if (modelPackage == null) {
-			modelPackage = SystemModelPackage.eINSTANCE;
+			modelPackage = STSPackage.eINSTANCE;
 		}
 	}
 
@@ -67,8 +65,8 @@ public class SystemModelAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected SystemModelSwitch<Adapter> modelSwitch =
-		new SystemModelSwitch<Adapter>() {
+	protected STSSwitch<Adapter> modelSwitch =
+		new STSSwitch<Adapter>() {
 			@Override
 			public Adapter caseHuman(Human object) {
 				return createHumanAdapter();
@@ -80,10 +78,6 @@ public class SystemModelAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseTechnological(Technological object) {
 				return createTechnologicalAdapter();
-			}
-			@Override
-			public Adapter caseBlock(Block object) {
-				return createBlockAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -106,13 +100,13 @@ public class SystemModelAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.SystemModel.Human <em>Human</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.Human <em>Human</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.SystemModel.Human
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.Human
 	 * @generated
 	 */
 	public Adapter createHumanAdapter() {
@@ -120,13 +114,13 @@ public class SystemModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.SystemModel.Organizational <em>Organizational</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.Organizational <em>Organizational</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.SystemModel.Organizational
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.Organizational
 	 * @generated
 	 */
 	public Adapter createOrganizationalAdapter() {
@@ -134,30 +128,16 @@ public class SystemModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.SystemModel.Technological <em>Technological</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.Technological <em>Technological</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.SystemModel.Technological
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.Technological
 	 * @generated
 	 */
 	public Adapter createTechnologicalAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.papyrus.sysml.blocks.Block <em>Block</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.papyrus.sysml.blocks.Block
-	 * @generated
-	 */
-	public Adapter createBlockAdapter() {
 		return null;
 	}
 
@@ -173,4 +153,4 @@ public class SystemModelAdapterFactory extends AdapterFactoryImpl {
 		return null;
 	}
 
-} //SystemModelAdapterFactory
+} //STSAdapterFactory
