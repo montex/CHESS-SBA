@@ -131,13 +131,22 @@ public interface CorePackage extends EPackage {
 	int CHESS__SYSTEM_VIEW = 5;
 
 	/**
+	 * The feature id for the '<em><b>Psm View</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS__PSM_VIEW = 6;
+
+	/**
 	 * The number of structural features of the '<em>CHESS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CHESS_FEATURE_COUNT = 6;
+	int CHESS_FEATURE_COUNT = 7;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.CHGaResourcePlatformImpl <em>CH Ga Resource Platform</em>}' class.
@@ -430,6 +439,17 @@ public interface CorePackage extends EPackage {
 	EReference getCHESS_SystemView();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getPsmView <em>Psm View</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Psm View</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.CHESS#getPsmView()
+	 * @see #getCHESS()
+	 * @generated
+	 */
+	EReference getCHESS_PsmView();
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform <em>CH Ga Resource Platform</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -679,6 +699,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference CHESS__SYSTEM_VIEW = eINSTANCE.getCHESS_SystemView();
+
+		/**
+		 * The meta object literal for the '<em><b>Psm View</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CHESS__PSM_VIEW = eINSTANCE.getCHESS_PsmView();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.CHGaResourcePlatformImpl <em>CH Ga Resource Platform</em>}' class.

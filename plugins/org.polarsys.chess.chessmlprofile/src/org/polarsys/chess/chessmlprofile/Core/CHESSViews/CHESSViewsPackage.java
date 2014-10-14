@@ -362,13 +362,22 @@ public interface CHESSViewsPackage extends EPackage {
 	int ANALYSIS_VIEW__RTANALYSISVIEW = 1;
 
 	/**
+	 * The feature id for the '<em><b>Depanalysisview</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANALYSIS_VIEW__DEPANALYSISVIEW = 2;
+
+	/**
 	 * The number of structural features of the '<em>Analysis View</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ANALYSIS_VIEW_FEATURE_COUNT = 2;
+	int ANALYSIS_VIEW_FEATURE_COUNT = 3;
 
 
 	/**
@@ -615,6 +624,17 @@ public interface CHESSViewsPackage extends EPackage {
 	EReference getAnalysisView_Rtanalysisview();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView#getDepanalysisview <em>Depanalysisview</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Depanalysisview</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView#getDepanalysisview()
+	 * @see #getAnalysisView()
+	 * @generated
+	 */
+	EReference getAnalysisView_Depanalysisview();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -839,6 +859,14 @@ public interface CHESSViewsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ANALYSIS_VIEW__RTANALYSISVIEW = eINSTANCE.getAnalysisView_Rtanalysisview();
+
+		/**
+		 * The meta object literal for the '<em><b>Depanalysisview</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ANALYSIS_VIEW__DEPANALYSISVIEW = eINSTANCE.getAnalysisView_Depanalysisview();
 
 	}
 

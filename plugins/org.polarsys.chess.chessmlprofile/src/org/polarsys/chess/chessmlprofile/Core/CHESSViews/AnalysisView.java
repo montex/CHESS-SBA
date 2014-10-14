@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView#getBase_Package <em>Base Package</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView#getRtanalysisview <em>Rtanalysisview</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView#getDepanalysisview <em>Depanalysisview</em>}</li>
  * </ul>
  * </p>
  *
@@ -82,5 +83,31 @@ public interface AnalysisView extends EObject {
 	 * @generated
 	 */
 	void setRtanalysisview(RTAnalysisView value);
+
+	/**
+	 * Returns the value of the '<em><b>Depanalysisview</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Depanalysisview</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Depanalysisview</em>' reference.
+	 * @see #setDepanalysisview(DependabilityAnalysisView)
+	 * @see org.polarsys.chess.chessmlprofile.Core.CHESSViews.CHESSViewsPackage#getAnalysisView_Depanalysisview()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	DependabilityAnalysisView getDepanalysisview();
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView#getDepanalysisview <em>Depanalysisview</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Depanalysisview</em>' reference.
+	 * @see #getDepanalysisview()
+	 * @generated
+	 */
+	void setDepanalysisview(DependabilityAnalysisView value);
 
 } // AnalysisView

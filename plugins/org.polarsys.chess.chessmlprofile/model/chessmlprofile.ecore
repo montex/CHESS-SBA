@@ -19,6 +19,8 @@
           lowerBound="1" eType="#//Core/CHESSViews/ComponentView" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="systemView" ordered="false"
           lowerBound="1" eType="#//Core/CHESSViews/SystemView" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="psmView" ordered="false"
+          lowerBound="1" eType="#//Core/CHESSViews/PSMView"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="CHGaResourcePlatform" eSuperTypes="MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaResourcesPlatform">
       <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
@@ -99,6 +101,8 @@
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Package"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="rtanalysisview" ordered="false"
             lowerBound="1" eType="#//Core/CHESSViews/RTAnalysisView" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="depanalysisview" ordered="false"
+            lowerBound="1" eType="#//Core/CHESSViews/DependabilityAnalysisView"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>

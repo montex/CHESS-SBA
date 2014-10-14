@@ -513,6 +513,15 @@ public class CHESSViewsPackageImpl extends EPackageImpl implements CHESSViewsPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getAnalysisView_Depanalysisview() {
+		return (EReference)analysisViewEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CHESSViewsFactory getCHESSViewsFactory() {
 		return (CHESSViewsFactory)getEFactoryInstance();
 	}
@@ -568,6 +577,7 @@ public class CHESSViewsPackageImpl extends EPackageImpl implements CHESSViewsPac
 		analysisViewEClass = createEClass(ANALYSIS_VIEW);
 		createEReference(analysisViewEClass, ANALYSIS_VIEW__BASE_PACKAGE);
 		createEReference(analysisViewEClass, ANALYSIS_VIEW__RTANALYSISVIEW);
+		createEReference(analysisViewEClass, ANALYSIS_VIEW__DEPANALYSISVIEW);
 	}
 
 	/**
@@ -635,6 +645,7 @@ public class CHESSViewsPackageImpl extends EPackageImpl implements CHESSViewsPac
 		initEClass(analysisViewEClass, AnalysisView.class, "AnalysisView", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAnalysisView_Base_Package(), theUMLPackage.getPackage(), null, "base_Package", null, 1, 1, AnalysisView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getAnalysisView_Rtanalysisview(), this.getRTAnalysisView(), null, "rtanalysisview", null, 1, 1, AnalysisView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getAnalysisView_Depanalysisview(), this.getDependabilityAnalysisView(), null, "depanalysisview", null, 1, 1, AnalysisView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //CHESSViewsPackageImpl

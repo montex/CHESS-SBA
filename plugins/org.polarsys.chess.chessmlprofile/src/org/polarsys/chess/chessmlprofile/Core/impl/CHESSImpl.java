@@ -23,6 +23,7 @@ import org.polarsys.chess.chessmlprofile.Core.CorePackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.ComponentView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.DeploymentView;
+import org.polarsys.chess.chessmlprofile.Core.CHESSViews.PSMView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.RequirementView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.SystemView;
 
@@ -39,6 +40,7 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.SystemView;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getRequirementView <em>Requirement View</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getComponentView <em>Component View</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getSystemView <em>System View</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getPsmView <em>Psm View</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,6 +106,16 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 	 * @ordered
 	 */
 	protected SystemView systemView;
+
+	/**
+	 * The cached value of the '{@link #getPsmView() <em>Psm View</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPsmView()
+	 * @generated
+	 * @ordered
+	 */
+	protected PSMView psmView;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -382,6 +394,44 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public PSMView getPsmView() {
+		if (psmView != null && psmView.eIsProxy()) {
+			InternalEObject oldPsmView = (InternalEObject)psmView;
+			psmView = (PSMView)eResolveProxy(oldPsmView);
+			if (psmView != oldPsmView) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.CHESS__PSM_VIEW, oldPsmView, psmView));
+			}
+		}
+		return psmView;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PSMView basicGetPsmView() {
+		return psmView;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPsmView(PSMView newPsmView) {
+		PSMView oldPsmView = psmView;
+		psmView = newPsmView;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.CHESS__PSM_VIEW, oldPsmView, psmView));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -420,6 +470,9 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 				return getComponentView();
 			case CorePackage.CHESS__SYSTEM_VIEW:
 				return getSystemView();
+			case CorePackage.CHESS__PSM_VIEW:
+				if (resolve) return getPsmView();
+				return basicGetPsmView();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -449,6 +502,9 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 				return;
 			case CorePackage.CHESS__SYSTEM_VIEW:
 				setSystemView((SystemView)newValue);
+				return;
+			case CorePackage.CHESS__PSM_VIEW:
+				setPsmView((PSMView)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -480,6 +536,9 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 			case CorePackage.CHESS__SYSTEM_VIEW:
 				setSystemView((SystemView)null);
 				return;
+			case CorePackage.CHESS__PSM_VIEW:
+				setPsmView((PSMView)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -504,6 +563,8 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 				return componentView != null;
 			case CorePackage.CHESS__SYSTEM_VIEW:
 				return systemView != null;
+			case CorePackage.CHESS__PSM_VIEW:
+				return psmView != null;
 		}
 		return super.eIsSet(featureID);
 	}

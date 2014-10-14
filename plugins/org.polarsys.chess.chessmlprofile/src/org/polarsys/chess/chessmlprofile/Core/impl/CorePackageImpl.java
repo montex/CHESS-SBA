@@ -338,6 +338,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getCHESS_PsmView() {
+		return (EReference)chessEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCHGaResourcePlatform() {
 		return chGaResourcePlatformEClass;
 	}
@@ -512,6 +521,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(chessEClass, CHESS__REQUIREMENT_VIEW);
 		createEReference(chessEClass, CHESS__COMPONENT_VIEW);
 		createEReference(chessEClass, CHESS__SYSTEM_VIEW);
+		createEReference(chessEClass, CHESS__PSM_VIEW);
 
 		chGaResourcePlatformEClass = createEClass(CH_GA_RESOURCE_PLATFORM);
 		createEReference(chGaResourcePlatformEClass, CH_GA_RESOURCE_PLATFORM__BASE_INSTANCE_SPECIFICATION);
@@ -582,6 +592,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getCHESS_RequirementView(), theCHESSViewsPackage.getRequirementView(), null, "requirementView", null, 1, 1, org.polarsys.chess.chessmlprofile.Core.CHESS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCHESS_ComponentView(), theCHESSViewsPackage.getComponentView(), null, "componentView", null, 1, 1, org.polarsys.chess.chessmlprofile.Core.CHESS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCHESS_SystemView(), theCHESSViewsPackage.getSystemView(), null, "systemView", null, 1, 1, org.polarsys.chess.chessmlprofile.Core.CHESS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getCHESS_PsmView(), theCHESSViewsPackage.getPSMView(), null, "psmView", null, 1, 1, org.polarsys.chess.chessmlprofile.Core.CHESS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(chGaResourcePlatformEClass, CHGaResourcePlatform.class, "CHGaResourcePlatform", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCHGaResourcePlatform_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, CHGaResourcePlatform.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
