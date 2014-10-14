@@ -51,7 +51,6 @@ import org.eclipse.papyrus.infra.core.sasheditor.contentprovider.IPageManager;
 import org.eclipse.papyrus.infra.core.sasheditor.editor.ISashWindowsContainer;
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockCompositeEditPart;
 import org.eclipse.papyrus.sysml.diagram.internalblock.edit.part.InternalBlockDiagramEditPart;
-import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Component;
@@ -282,15 +281,15 @@ public class BuildInstanceCommand extends AbstractHandler {
 					
 					//check if instanceSpecifications has to be created starting from information stored in other diagram
 					Type type = ((Property)((ShapeImpl)obj).getElement()).getType();
-					if (type instanceof Class){// && UMLUtils.isComponentImplementation(type)){
+					if (type instanceof Component){// && UMLUtils.isComponentImplementation(type)){
 						//if property 'obj' is decomposed in the model but is leaf in this diagram then...
-						if (isLeafShape((ShapeImpl) obj) && isDecomposedComponent((Class)type)){
+						if (isLeafShape((ShapeImpl) obj) && isDecomposedComponent((Component)type)){
 							DiagramImpl childDiagram = getDiagram(editor, ((Property)((ShapeImpl)obj).getElement()).getType());
 							if (childDiagram != null){
 								buildPrototypeInstance(editor, null, childDiagram, childInstance, pack4instances, shape2instanceMap, warningMsg);
 							}else{
 								
-							   warningMsg.append(System.getProperty("line.separator")+"-cannot find CompositeStructureDiagram\\IBD for Component "+type.getName());
+							   warningMsg.append(System.getProperty("line.separator")+"-cannot find CompositeStructureDiagram for Component "+type.getName());
 						
 							}
 						}
@@ -664,13 +663,13 @@ public class BuildInstanceCommand extends AbstractHandler {
 	 * @param comp The componenImplementation
 	 * @return true if the given comp is decomposed, i.e. it has attributes typed with Component
 	 */
-	public static boolean isDecomposedComponent(Class comp){
+	public static boolean isDecomposedComponent(Component comp){
 		EList<Property> list = comp.getAttributes();
 		if (list.size() == 0)
 			return false;
 		for (Property p:list){
 			
-			if (UMLUtils.isComponentImplementation(p.getType()) || p.getType() instanceof Class)
+			if (UMLUtils.isComponentImplementation(p.getType()) || p.getType() instanceof Component)
 				return true;
 		}
 		return false;
