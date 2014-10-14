@@ -11,11 +11,9 @@
  *****************************************************************************/
 package org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.uml2.uml.Slot;
-import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.FailureType;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +25,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot#getFPTCSpecification <em>FPTC Specification</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot#getBase_Slot <em>Base Slot</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot#getFailure <em>Failure</em>}</li>
  * </ul>
  * </p>
  *
@@ -87,23 +84,5 @@ public interface FPTCPortSlot extends EObject {
 	 * @generated
 	 */
 	void setBase_Slot(Slot value);
-
-	/**
-	 * Returns the value of the '<em><b>Failure</b></em>' attribute list.
-	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.FailureType}.
-	 * The literals are from the enumeration {@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.FailureType}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Failure</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Failure</em>' attribute list.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.FailureType
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFPTCPortSlot_Failure()
-	 * @model ordered="false"
-	 * @generated
-	 */
-	EList<FailureType> getFailure();
 
 } // FPTCPortSlot

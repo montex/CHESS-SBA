@@ -103,24 +103,6 @@ public interface StateBasedComponentsPackage extends EPackage {
 	int STATEFUL_HARDWARE__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
 
 	/**
-	 * The feature id for the '<em><b>Base Class</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATEFUL_HARDWARE__BASE_CLASS = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_CLASS;
-
-	/**
-	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATEFUL_HARDWARE__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
-
-	/**
 	 * The feature id for the '<em><b>Prob Perm Fault</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -203,24 +185,6 @@ public interface StateBasedComponentsPackage extends EPackage {
 	int STATEFUL_SOFTWARE__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
 
 	/**
-	 * The feature id for the '<em><b>Base Class</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATEFUL_SOFTWARE__BASE_CLASS = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_CLASS;
-
-	/**
-	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATEFUL_SOFTWARE__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
-
-	/**
 	 * The feature id for the '<em><b>Error Latency</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -294,24 +258,6 @@ public interface StateBasedComponentsPackage extends EPackage {
 	int STATELESS_HARDWARE__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
 
 	/**
-	 * The feature id for the '<em><b>Base Class</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATELESS_HARDWARE__BASE_CLASS = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_CLASS;
-
-	/**
-	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATELESS_HARDWARE__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
-
-	/**
 	 * The feature id for the '<em><b>Prob Perm Fault</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -383,24 +329,6 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STATELESS_SOFTWARE__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Base Class</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATELESS_SOFTWARE__BASE_CLASS = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_CLASS;
-
-	/**
-	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATELESS_SOFTWARE__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
 
 	/**
 	 * The feature id for the '<em><b>Fault Occ</b></em>' attribute.

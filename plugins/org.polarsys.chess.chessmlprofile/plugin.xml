@@ -551,14 +551,6 @@
             type="componentmodel"
             class="org.polarsys.chess.chessmlprofile.ComponentModel.util.ComponentModelResourceFactoryImpl"/>
    </extension>
-
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated CHESS -->
-      <package
-            uri="http://CHESS/SystemModel"
-            class="org.polarsys.chess.chessmlprofile.SystemModel.SystemModelPackage"
-            genModel="model/CHESS.genmodel"/>
-   </extension>
    
    <extension
          point="org.eclipse.uml2.uml.generated_package">

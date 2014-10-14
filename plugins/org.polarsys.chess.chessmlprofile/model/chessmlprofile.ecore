@@ -110,8 +110,6 @@
             lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="FailurePropagationAnalysis" eSuperTypes="MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaAnalysisContext"/>
       <eClassifiers xsi:type="ecore:EClass" name="FPTCSpecification">
@@ -127,14 +125,10 @@
             ordered="false" lowerBound="1" eType="#//Dependability/FailurePropagation/FPTCSpecification"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Slot" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Slot"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="failure" ordered="false"
-            upperBound="-1" eType="#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="FI4FA" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="fi4fa" ordered="false"
             lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="FI4FASpecification" eSuperTypes="#//Dependability/FailurePropagation/FPTCSpecification"/>
       <eClassifiers xsi:type="ecore:EClass" name="ACIDAvoidable">
@@ -253,10 +247,6 @@
             eType="#//Dependability/ThreatsPropagation/ErrorModel"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Property" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
-            ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
       </eClassifiers>
     </eSubpackages>
     <eSubpackages name="ThreatsPropagation" nsURI="http://CHESS/Dependability/ThreatsPropagation"
@@ -830,10 +820,5 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceCodeLocation" ordered="false"
           upperBound="-1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
     </eClassifiers>
-  </eSubpackages>
-  <eSubpackages name="SystemModel" nsURI="http://CHESS/SystemModel" nsPrefix="SystemModel">
-    <eClassifiers xsi:type="ecore:EClass" name="Human" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//blocks/Block"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Organizational" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//blocks/Block"/>
-    <eClassifiers xsi:type="ecore:EClass" name="Technological" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//blocks/Block"/>
   </eSubpackages>
 </ecore:EPackage>

@@ -11,18 +11,14 @@
  *****************************************************************************/
 package org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl;
 
-import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.uml2.uml.Slot;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification;
-import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.FailureType;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage;
 
 /**
@@ -34,7 +30,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FPTCPortSlotImpl#getFPTCSpecification <em>FPTC Specification</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FPTCPortSlotImpl#getBase_Slot <em>Base Slot</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FPTCPortSlotImpl#getFailure <em>Failure</em>}</li>
  * </ul>
  * </p>
  *
@@ -60,16 +55,6 @@ public class FPTCPortSlotImpl extends EObjectImpl implements FPTCPortSlot {
 	 * @ordered
 	 */
 	protected Slot base_Slot;
-
-	/**
-	 * The cached value of the '{@link #getFailure() <em>Failure</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getFailure()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<FailureType> failure;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -171,18 +156,6 @@ public class FPTCPortSlotImpl extends EObjectImpl implements FPTCPortSlot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<FailureType> getFailure() {
-		if (failure == null) {
-			failure = new EDataTypeUniqueEList<FailureType>(FailureType.class, this, FailurePropagationPackage.FPTC_PORT_SLOT__FAILURE);
-		}
-		return failure;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -192,8 +165,6 @@ public class FPTCPortSlotImpl extends EObjectImpl implements FPTCPortSlot {
 			case FailurePropagationPackage.FPTC_PORT_SLOT__BASE_SLOT:
 				if (resolve) return getBase_Slot();
 				return basicGetBase_Slot();
-			case FailurePropagationPackage.FPTC_PORT_SLOT__FAILURE:
-				return getFailure();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -203,7 +174,6 @@ public class FPTCPortSlotImpl extends EObjectImpl implements FPTCPortSlot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -212,10 +182,6 @@ public class FPTCPortSlotImpl extends EObjectImpl implements FPTCPortSlot {
 				return;
 			case FailurePropagationPackage.FPTC_PORT_SLOT__BASE_SLOT:
 				setBase_Slot((Slot)newValue);
-				return;
-			case FailurePropagationPackage.FPTC_PORT_SLOT__FAILURE:
-				getFailure().clear();
-				getFailure().addAll((Collection<? extends FailureType>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -235,9 +201,6 @@ public class FPTCPortSlotImpl extends EObjectImpl implements FPTCPortSlot {
 			case FailurePropagationPackage.FPTC_PORT_SLOT__BASE_SLOT:
 				setBase_Slot((Slot)null);
 				return;
-			case FailurePropagationPackage.FPTC_PORT_SLOT__FAILURE:
-				getFailure().clear();
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -254,26 +217,8 @@ public class FPTCPortSlotImpl extends EObjectImpl implements FPTCPortSlot {
 				return fptcSpecification != null;
 			case FailurePropagationPackage.FPTC_PORT_SLOT__BASE_SLOT:
 				return base_Slot != null;
-			case FailurePropagationPackage.FPTC_PORT_SLOT__FAILURE:
-				return failure != null && !failure.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (failure: ");
-		result.append(failure);
-		result.append(')');
-		return result.toString();
 	}
 
 } //FPTCPortSlotImpl

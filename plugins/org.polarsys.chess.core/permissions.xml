@@ -604,7 +604,6 @@
                   <perm el="*" owner="true" write="true" visible="true"/>
                   <perm st="DelegationConstraint" owner="true" write="true" visible="true"/>
                   <perm st="AutomotiveBlock" owner="true" write="true" visible="true"/>
-                  <perm st="Human" owner="true" write="true" visible="true"/>
             </diagram>            
       </view>
       
