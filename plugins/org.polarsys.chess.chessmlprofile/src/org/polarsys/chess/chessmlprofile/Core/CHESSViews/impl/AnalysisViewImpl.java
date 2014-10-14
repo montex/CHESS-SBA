@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.CHESSViewsPackage;
+import org.polarsys.chess.chessmlprofile.Core.CHESSViews.DependabilityAnalysisView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.RTAnalysisView;
 
 /**
@@ -30,6 +31,7 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.RTAnalysisView;
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.AnalysisViewImpl#getBase_Package <em>Base Package</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.AnalysisViewImpl#getRtanalysisview <em>Rtanalysisview</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.AnalysisViewImpl#getDepanalysisview <em>Depanalysisview</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,6 +57,16 @@ public class AnalysisViewImpl extends EObjectImpl implements AnalysisView {
 	 * @ordered
 	 */
 	protected RTAnalysisView rtanalysisview;
+
+	/**
+	 * The cached value of the '{@link #getDepanalysisview() <em>Depanalysisview</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDepanalysisview()
+	 * @generated
+	 * @ordered
+	 */
+	protected DependabilityAnalysisView depanalysisview;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -161,6 +173,44 @@ public class AnalysisViewImpl extends EObjectImpl implements AnalysisView {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public DependabilityAnalysisView getDepanalysisview() {
+		if (depanalysisview != null && depanalysisview.eIsProxy()) {
+			InternalEObject oldDepanalysisview = (InternalEObject)depanalysisview;
+			depanalysisview = (DependabilityAnalysisView)eResolveProxy(oldDepanalysisview);
+			if (depanalysisview != oldDepanalysisview) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CHESSViewsPackage.ANALYSIS_VIEW__DEPANALYSISVIEW, oldDepanalysisview, depanalysisview));
+			}
+		}
+		return depanalysisview;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DependabilityAnalysisView basicGetDepanalysisview() {
+		return depanalysisview;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDepanalysisview(DependabilityAnalysisView newDepanalysisview) {
+		DependabilityAnalysisView oldDepanalysisview = depanalysisview;
+		depanalysisview = newDepanalysisview;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CHESSViewsPackage.ANALYSIS_VIEW__DEPANALYSISVIEW, oldDepanalysisview, depanalysisview));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -183,6 +233,9 @@ public class AnalysisViewImpl extends EObjectImpl implements AnalysisView {
 				return basicGetBase_Package();
 			case CHESSViewsPackage.ANALYSIS_VIEW__RTANALYSISVIEW:
 				return getRtanalysisview();
+			case CHESSViewsPackage.ANALYSIS_VIEW__DEPANALYSISVIEW:
+				if (resolve) return getDepanalysisview();
+				return basicGetDepanalysisview();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -200,6 +253,9 @@ public class AnalysisViewImpl extends EObjectImpl implements AnalysisView {
 				return;
 			case CHESSViewsPackage.ANALYSIS_VIEW__RTANALYSISVIEW:
 				setRtanalysisview((RTAnalysisView)newValue);
+				return;
+			case CHESSViewsPackage.ANALYSIS_VIEW__DEPANALYSISVIEW:
+				setDepanalysisview((DependabilityAnalysisView)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -219,6 +275,9 @@ public class AnalysisViewImpl extends EObjectImpl implements AnalysisView {
 			case CHESSViewsPackage.ANALYSIS_VIEW__RTANALYSISVIEW:
 				setRtanalysisview((RTAnalysisView)null);
 				return;
+			case CHESSViewsPackage.ANALYSIS_VIEW__DEPANALYSISVIEW:
+				setDepanalysisview((DependabilityAnalysisView)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -235,6 +294,8 @@ public class AnalysisViewImpl extends EObjectImpl implements AnalysisView {
 				return base_Package != null;
 			case CHESSViewsPackage.ANALYSIS_VIEW__RTANALYSISVIEW:
 				return rtanalysisview != null;
+			case CHESSViewsPackage.ANALYSIS_VIEW__DEPANALYSISVIEW:
+				return depanalysisview != null;
 		}
 		return super.eIsSet(featureID);
 	}

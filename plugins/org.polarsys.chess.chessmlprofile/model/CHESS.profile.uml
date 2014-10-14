@@ -149,6 +149,7 @@
           </defaultValue>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_G4dxMPWcEeG6etnsQZngdA" name="systemView" type="_-q1ocPWbEeG6etnsQZngdA" aggregation="composite"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_30_8UFOzEeS4RO3Q2Jk6sA" name="psmView" type="_eCaeYElHEeSHXILU_Im6sA"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Extension" xmi:id="_1Baf4DgXEd-68Z_bhNRGsA" name="Extension_CHESS" memberEnd="_1Baf4TgXEd-68Z_bhNRGsA _1Baf4jgXEd-68Z_bhNRGsA">
         <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_1Baf4TgXEd-68Z_bhNRGsA" name="extension_CHESS" type="_opjLUDgXEd-68Z_bhNRGsA" aggregation="composite" association="_1Baf4DgXEd-68Z_bhNRGsA"/>
@@ -940,6 +941,7 @@
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Ns7GUsJPEd-0jpzjleFnug" value="1"/>
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Ns7GUcJPEd-0jpzjleFnug" value="1"/>
           </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_vy9_kFOzEeS4RO3Q2Jk6sA" name="depanalysisview" type="_EBEuADqeEeCYT-iAb0LhsA"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_5XsXAcGoEd-sPbYkpPS5Bg" name="E_AnalysisView_Package1" memberEnd="_5XsXAsGoEd-sPbYkpPS5Bg _5XsXAMGoEd-sPbYkpPS5Bg">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_5XsXAsGoEd-sPbYkpPS5Bg" name="extension_AnalysisView" type="_KYAcoLwzEd-CDNLmLgazUQ" aggregation="composite" association="_5XsXAcGoEd-sPbYkpPS5Bg"/>

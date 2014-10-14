@@ -51,6 +51,8 @@
             createChild="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/componentView"/>
         <genFeatures xsi:type="genmodel:GenFeature" property="None" children="true"
             createChild="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/systemView"/>
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/psmView"/>
       </genClasses>
       <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHGaResourcePlatform">
         <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
@@ -127,13 +129,16 @@
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/AnalysisView/base_Package"/>
           <genFeatures xsi:type="genmodel:GenFeature" property="None" children="true"
               createChild="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/AnalysisView/rtanalysisview"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESSViews/AnalysisView/depanalysisview"/>
         </genClasses>
       </nestedGenPackages>
     </nestedGenPackages>
-    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="Dependability" disposableProviderFactory="true"
-        ecorePackage="chessmlprofile.ecore#//Dependability">
+    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="Dependability" basePackage="org.polarsys.chess.chessmlprofile"
+        disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability">
       <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FailurePropagation"
-          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/FailurePropagation">
+          basePackage="org.polarsys.chess.chessmlprofile.Dependability" resource="XML"
+          disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/FailurePropagation">
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FPTC">
           <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/FPTC/fptc"/>
           <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
@@ -175,6 +180,7 @@
         </genClasses>
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FI4FAAnalysis"/>
         <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FailurePropagationDataTypes"
+            basePackage="org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation"
             disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes">
           <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_avoidable">
             <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_avoidable/unspecified"/>
@@ -234,7 +240,8 @@
         </nestedGenPackages>
       </nestedGenPackages>
       <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="DependableComponent"
-          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/DependableComponent">
+          basePackage="org.polarsys.chess.chessmlprofile.Dependability" resource="XML"
+          disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/DependableComponent">
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/DependableComponent/Propagation">
           <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/prob"/>
           <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/propDelay"/>
@@ -261,7 +268,8 @@
         </genClasses>
       </nestedGenPackages>
       <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="ThreatsPropagation"
-          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/ThreatsPropagation">
+          basePackage="org.polarsys.chess.chessmlprofile.Dependability" resource="XML"
+          disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/ThreatsPropagation">
         <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/ThreatsPropagation/DurationType">
           <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/ThreatsPropagation/DurationType/transient"/>
           <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/ThreatsPropagation/DurationType/permanent"/>
@@ -341,15 +349,17 @@
         </genClasses>
       </nestedGenPackages>
       <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="DataFlowCallGraph"
-          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/DataFlowCallGraph">
+          basePackage="org.polarsys.chess.chessmlprofile.Dependability" resource="XML"
+          disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/DataFlowCallGraph">
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/DataFlowCallGraph/DataFlowCallGraphAnalysis">
           <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DataFlowCallGraph/DataFlowCallGraphAnalysis/result"/>
         </genClasses>
       </nestedGenPackages>
-      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="StateBased" disposableProviderFactory="true"
-          ecorePackage="chessmlprofile.ecore#//Dependability/StateBased">
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="StateBased" basePackage="org.polarsys.chess.chessmlprofile.Dependability"
+          disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/StateBased">
         <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="StateBasedDataTypes"
+            basePackage="org.polarsys.chess.chessmlprofile.Dependability.StateBased"
             disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes">
           <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/RedundancyKind">
             <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/RedundancyKind/TMR"/>
@@ -370,6 +380,7 @@
           <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedDataTypes/MTTF"/>
         </nestedGenPackages>
         <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="StateBasedComponents"
+            basePackage="org.polarsys.chess.chessmlprofile.Dependability.StateBased"
             resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents">
           <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatefulHardware">
             <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedComponents/StatefulHardware/probPermFault"/>
@@ -392,6 +403,7 @@
           </genClasses>
         </nestedGenPackages>
         <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FaultTolerance"
+            basePackage="org.polarsys.chess.chessmlprofile.Dependability.StateBased"
             resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance">
           <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/FaultTolerance/FaultTolerant">
             <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
@@ -416,6 +428,7 @@
           </genClasses>
         </nestedGenPackages>
         <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="MaintenanceMonitoring"
+            basePackage="org.polarsys.chess.chessmlprofile.Dependability.StateBased"
             resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring">
           <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/MaintenanceMonitoring/MMActivities">
             <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
@@ -455,6 +468,7 @@
           </genClasses>
         </nestedGenPackages>
         <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="StateBasedAnalysis"
+            basePackage="org.polarsys.chess.chessmlprofile.Dependability.StateBased"
             resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/StateBased/StateBasedAnalysis">
           <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/StateBased/StateBasedAnalysis/StateBasedAnalysis">
             <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/StateBased/StateBasedAnalysis/StateBasedAnalysis/measure"/>
@@ -467,8 +481,8 @@
           </genClasses>
         </nestedGenPackages>
       </nestedGenPackages>
-      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FMEA" resource="XML"
-          disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/FMEA">
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FMEA" basePackage="org.polarsys.chess.chessmlprofile.Dependability"
+          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/FMEA">
         <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FMEA/FMEAAnalysisType">
           <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FMEA/FMEAAnalysisType/frame"/>
           <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FMEA/FMEAAnalysisType/system"/>
@@ -492,16 +506,16 @@
           <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FMEA/ErrorModelAssign/to"/>
         </genClasses>
-        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FMEADataTypes" disposableProviderFactory="true"
-            ecorePackage="chessmlprofile.ecore#//Dependability/FMEA/FMEADataTypes">
+        <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="FMEADataTypes" basePackage="org.polarsys.chess.chessmlprofile.Dependability.FMEA"
+            disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/FMEA/FMEADataTypes">
           <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Dependability/FMEA/FMEADataTypes/Persistency">
             <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FMEA/FMEADataTypes/Persistency/transient"/>
             <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Dependability/FMEA/FMEADataTypes/Persistency/permanent"/>
           </genEnums>
         </nestedGenPackages>
       </nestedGenPackages>
-      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="MitigationMeans" resource="XML"
-          disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/MitigationMeans">
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="MitigationMeans" basePackage="org.polarsys.chess.chessmlprofile.Dependability"
+          resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Dependability/MitigationMeans">
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/MitigationMeans/TransmissionWithProtocol">
           <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/MitigationMeans/TransmissionWithProtocol/base_Connector"/>

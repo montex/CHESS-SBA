@@ -16,6 +16,7 @@ import org.eclipse.uml2.uml.Model;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.ComponentView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.DeploymentView;
+import org.polarsys.chess.chessmlprofile.Core.CHESSViews.PSMView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.RequirementView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.SystemView;
 
@@ -33,6 +34,7 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.SystemView;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getRequirementView <em>Requirement View</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getComponentView <em>Component View</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getSystemView <em>System View</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getPsmView <em>Psm View</em>}</li>
  * </ul>
  * </p>
  *
@@ -196,5 +198,31 @@ public interface CHESS extends EObject {
 	 * @generated
 	 */
 	void setSystemView(SystemView value);
+
+	/**
+	 * Returns the value of the '<em><b>Psm View</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Psm View</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Psm View</em>' reference.
+	 * @see #setPsmView(PSMView)
+	 * @see org.polarsys.chess.chessmlprofile.Core.CorePackage#getCHESS_PsmView()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	PSMView getPsmView();
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getPsmView <em>Psm View</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Psm View</em>' reference.
+	 * @see #getPsmView()
+	 * @generated
+	 */
+	void setPsmView(PSMView value);
 
 } // CHESS
