@@ -85,8 +85,8 @@ Export-Package: org.polarsys.chess.chessmlprofile;uses:="org.eclipse.ui.plugin,o
  org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.util,
  org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl,
  org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.util,
- org.polarsys.chess.chessmlprofile.SystemModel.STS,
- org.polarsys.chess.chessmlprofile.SystemModel.STS.impl,
- org.polarsys.chess.chessmlprofile.SystemModel.STS.util,
+ org.polarsys.chess.chessmlprofile.SystemModel,
+ org.polarsys.chess.chessmlprofile.SystemModel.impl,
+ org.polarsys.chess.chessmlprofile.SystemModel.util,
  org.polarsys.chess.chessmlprofile.impl,
  org.polarsys.chess.chessmlprofile.util

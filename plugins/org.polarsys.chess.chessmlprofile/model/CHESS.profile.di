@@ -142,13 +142,7 @@
           <emfPageIdentifier href="CHESS.profile.notation#_T56zMFiJEeG7ipvuc3Lqcg"/>
         </children>
         <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_iv4ggG2REd-OHNNfvuYr9g"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_X8kWoE-LEeS_UtY6QqQNMg"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_0AthkE-xEeSSpZfBcdLcOA"/>
+          <emfPageIdentifier href="CHESS.profile.notation#_zw12gE4lEeSrx7uvnaF3GQ"/>
         </children>
       </children>
     </windows>

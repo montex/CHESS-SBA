@@ -1,10 +1,9 @@
 /**
  */
-package org.polarsys.chess.chessmlprofile.SystemModel.STS.impl;
+package org.polarsys.chess.chessmlprofile.SystemModel.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
@@ -26,7 +25,9 @@ import org.eclipse.papyrus.MARTE_Library.TimeLibrary.TimeLibraryPackage;
 
 import org.eclipse.papyrus.MARTE_Library.TimeTypesLibrary.TimeTypesLibraryPackage;
 
-import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.papyrus.sysml.SysmlPackage;
+
+import org.eclipse.papyrus.sysml.blocks.BlocksPackage;
 
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage;
 
@@ -116,11 +117,11 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingCon
 
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
 
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.Human;
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.Organizational;
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSFactory;
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.Technological;
+import org.polarsys.chess.chessmlprofile.SystemModel.Human;
+import org.polarsys.chess.chessmlprofile.SystemModel.Organizational;
+import org.polarsys.chess.chessmlprofile.SystemModel.SystemModelFactory;
+import org.polarsys.chess.chessmlprofile.SystemModel.SystemModelPackage;
+import org.polarsys.chess.chessmlprofile.SystemModel.Technological;
 
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
 
@@ -132,7 +133,7 @@ import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
  * <!-- end-user-doc -->
  * @generated
  */
-public class STSPackageImpl extends EPackageImpl implements STSPackage {
+public class SystemModelPackageImpl extends EPackageImpl implements SystemModelPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -165,12 +166,12 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage#eNS_URI
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.SystemModelPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private STSPackageImpl() {
-		super(eNS_URI, STSFactory.eINSTANCE);
+	private SystemModelPackageImpl() {
+		super(eNS_URI, SystemModelFactory.eINSTANCE);
 	}
 
 	/**
@@ -183,7 +184,7 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
-	 * <p>This method is used to initialize {@link STSPackage#eINSTANCE} when that field is accessed.
+	 * <p>This method is used to initialize {@link SystemModelPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -192,11 +193,11 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static STSPackage init() {
-		if (isInited) return (STSPackage)EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI);
+	public static SystemModelPackage init() {
+		if (isInited) return (SystemModelPackage)EPackage.Registry.INSTANCE.getEPackage(SystemModelPackage.eNS_URI);
 
 		// Obtain or create and register package
-		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new STSPackageImpl());
+		SystemModelPackageImpl theSystemModelPackage = (SystemModelPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SystemModelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new SystemModelPackageImpl());
 
 		isInited = true;
 
@@ -210,6 +211,7 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		TimeLibraryPackage.eINSTANCE.eClass();
 		RS_LibraryPackage.eINSTANCE.eClass();
 		MARTE_PrimitivesTypesPackage.eINSTANCE.eClass();
+		SysmlPackage.eINSTANCE.eClass();
 		BasicNFP_TypesPackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
@@ -238,7 +240,7 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 
 		// Create package meta-data objects
-		theSTSPackage.createPackageContents();
+		theSystemModelPackage.createPackageContents();
 		thechessmlprofilePackage.createPackageContents();
 		theCorePackage.createPackageContents();
 		theCHESSViewsPackage.createPackageContents();
@@ -264,7 +266,7 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		theComponentModelPackage.createPackageContents();
 
 		// Initialize created meta-data
-		theSTSPackage.initializePackageContents();
+		theSystemModelPackage.initializePackageContents();
 		thechessmlprofilePackage.initializePackageContents();
 		theCorePackage.initializePackageContents();
 		theCHESSViewsPackage.initializePackageContents();
@@ -290,12 +292,12 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		theComponentModelPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
-		theSTSPackage.freeze();
+		theSystemModelPackage.freeze();
 
   
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(STSPackage.eNS_URI, theSTSPackage);
-		return theSTSPackage;
+		EPackage.Registry.INSTANCE.put(SystemModelPackage.eNS_URI, theSystemModelPackage);
+		return theSystemModelPackage;
 	}
 
 	/**
@@ -312,26 +314,8 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getHuman_Base_Class() {
-		return (EReference)humanEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getOrganizational() {
 		return organizationalEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getOrganizational_Base_Class() {
-		return (EReference)organizationalEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -348,17 +332,8 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTechnological_Base_Class() {
-		return (EReference)technologicalEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public STSFactory getSTSFactory() {
-		return (STSFactory)getEFactoryInstance();
+	public SystemModelFactory getSystemModelFactory() {
+		return (SystemModelFactory)getEFactoryInstance();
 	}
 
 	/**
@@ -381,13 +356,10 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 
 		// Create classes and their features
 		humanEClass = createEClass(HUMAN);
-		createEReference(humanEClass, HUMAN__BASE_CLASS);
 
 		organizationalEClass = createEClass(ORGANIZATIONAL);
-		createEReference(organizationalEClass, ORGANIZATIONAL__BASE_CLASS);
 
 		technologicalEClass = createEClass(TECHNOLOGICAL);
-		createEReference(technologicalEClass, TECHNOLOGICAL__BASE_CLASS);
 	}
 
 	/**
@@ -414,23 +386,23 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
+		BlocksPackage theBlocksPackage = (BlocksPackage)EPackage.Registry.INSTANCE.getEPackage(BlocksPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		humanEClass.getESuperTypes().add(theBlocksPackage.getBlock());
+		organizationalEClass.getESuperTypes().add(theBlocksPackage.getBlock());
+		technologicalEClass.getESuperTypes().add(theBlocksPackage.getBlock());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(humanEClass, Human.class, "Human", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getHuman_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, Human.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(organizationalEClass, Organizational.class, "Organizational", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getOrganizational_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, Organizational.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(technologicalEClass, Technological.class, "Technological", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTechnological_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, Technological.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
-} //STSPackageImpl
+} //SystemModelPackageImpl

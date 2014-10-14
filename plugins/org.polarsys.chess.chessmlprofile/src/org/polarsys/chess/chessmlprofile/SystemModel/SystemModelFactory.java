@@ -1,6 +1,6 @@
 /**
  */
-package org.polarsys.chess.chessmlprofile.SystemModel.STS;
+package org.polarsys.chess.chessmlprofile.SystemModel;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -9,17 +9,17 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage
+ * @see org.polarsys.chess.chessmlprofile.SystemModel.SystemModelPackage
  * @generated
  */
-public interface STSFactory extends EFactory {
+public interface SystemModelFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	STSFactory eINSTANCE = org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSFactoryImpl.init();
+	SystemModelFactory eINSTANCE = org.polarsys.chess.chessmlprofile.SystemModel.impl.SystemModelFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Human</em>'.
@@ -55,6 +55,6 @@ public interface STSFactory extends EFactory {
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	STSPackage getSTSPackage();
+	SystemModelPackage getSystemModelPackage();
 
-} //STSFactory
+} //SystemModelFactory

@@ -1,6 +1,6 @@
 /**
  */
-package org.polarsys.chess.chessmlprofile.SystemModel.STS.impl;
+package org.polarsys.chess.chessmlprofile.SystemModel.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.*;
+import org.polarsys.chess.chessmlprofile.SystemModel.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -18,24 +18,24 @@ import org.polarsys.chess.chessmlprofile.SystemModel.STS.*;
  * <!-- end-user-doc -->
  * @generated
  */
-public class STSFactoryImpl extends EFactoryImpl implements STSFactory {
+public class SystemModelFactoryImpl extends EFactoryImpl implements SystemModelFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static STSFactory init() {
+	public static SystemModelFactory init() {
 		try {
-			STSFactory theSTSFactory = (STSFactory)EPackage.Registry.INSTANCE.getEFactory(STSPackage.eNS_URI);
-			if (theSTSFactory != null) {
-				return theSTSFactory;
+			SystemModelFactory theSystemModelFactory = (SystemModelFactory)EPackage.Registry.INSTANCE.getEFactory(SystemModelPackage.eNS_URI);
+			if (theSystemModelFactory != null) {
+				return theSystemModelFactory;
 			}
 		}
 		catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
-		return new STSFactoryImpl();
+		return new SystemModelFactoryImpl();
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class STSFactoryImpl extends EFactoryImpl implements STSFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public STSFactoryImpl() {
+	public SystemModelFactoryImpl() {
 		super();
 	}
 
@@ -56,9 +56,9 @@ public class STSFactoryImpl extends EFactoryImpl implements STSFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case STSPackage.HUMAN: return createHuman();
-			case STSPackage.ORGANIZATIONAL: return createOrganizational();
-			case STSPackage.TECHNOLOGICAL: return createTechnological();
+			case SystemModelPackage.HUMAN: return createHuman();
+			case SystemModelPackage.ORGANIZATIONAL: return createOrganizational();
+			case SystemModelPackage.TECHNOLOGICAL: return createTechnological();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -99,8 +99,8 @@ public class STSFactoryImpl extends EFactoryImpl implements STSFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public STSPackage getSTSPackage() {
-		return (STSPackage)getEPackage();
+	public SystemModelPackage getSystemModelPackage() {
+		return (SystemModelPackage)getEPackage();
 	}
 
 	/**
@@ -110,8 +110,8 @@ public class STSFactoryImpl extends EFactoryImpl implements STSFactory {
 	 * @generated
 	 */
 	@Deprecated
-	public static STSPackage getPackage() {
-		return STSPackage.eINSTANCE;
+	public static SystemModelPackage getPackage() {
+		return SystemModelPackage.eINSTANCE;
 	}
 
-} //STSFactoryImpl
+} //SystemModelFactoryImpl

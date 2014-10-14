@@ -1,13 +1,15 @@
 /**
  */
-package org.polarsys.chess.chessmlprofile.SystemModel.STS.util;
+package org.polarsys.chess.chessmlprofile.SystemModel.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
 
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.*;
+import org.eclipse.papyrus.sysml.blocks.Block;
+
+import org.polarsys.chess.chessmlprofile.SystemModel.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,17 +21,17 @@ import org.polarsys.chess.chessmlprofile.SystemModel.STS.*;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage
+ * @see org.polarsys.chess.chessmlprofile.SystemModel.SystemModelPackage
  * @generated
  */
-public class STSSwitch<T> extends Switch<T> {
+public class SystemModelSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static STSPackage modelPackage;
+	protected static SystemModelPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -37,9 +39,9 @@ public class STSSwitch<T> extends Switch<T> {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public STSSwitch() {
+	public SystemModelSwitch() {
 		if (modelPackage == null) {
-			modelPackage = STSPackage.eINSTANCE;
+			modelPackage = SystemModelPackage.eINSTANCE;
 		}
 	}
 
@@ -66,21 +68,24 @@ public class STSSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case STSPackage.HUMAN: {
+			case SystemModelPackage.HUMAN: {
 				Human human = (Human)theEObject;
 				T result = caseHuman(human);
+				if (result == null) result = caseBlock(human);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case STSPackage.ORGANIZATIONAL: {
+			case SystemModelPackage.ORGANIZATIONAL: {
 				Organizational organizational = (Organizational)theEObject;
 				T result = caseOrganizational(organizational);
+				if (result == null) result = caseBlock(organizational);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case STSPackage.TECHNOLOGICAL: {
+			case SystemModelPackage.TECHNOLOGICAL: {
 				Technological technological = (Technological)theEObject;
 				T result = caseTechnological(technological);
+				if (result == null) result = caseBlock(technological);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -134,6 +139,21 @@ public class STSSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Block</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Block</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBlock(Block object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -149,4 +169,4 @@ public class STSSwitch<T> extends Switch<T> {
 		return null;
 	}
 
-} //STSSwitch
+} //SystemModelSwitch

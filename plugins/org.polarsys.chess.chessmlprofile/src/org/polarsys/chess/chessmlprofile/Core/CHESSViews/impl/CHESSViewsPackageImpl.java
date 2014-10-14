@@ -82,8 +82,8 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl;
+import org.polarsys.chess.chessmlprofile.SystemModel.SystemModelPackage;
+import org.polarsys.chess.chessmlprofile.SystemModel.impl.SystemModelPackageImpl;
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
 
 /**
@@ -219,6 +219,7 @@ public class CHESSViewsPackageImpl extends EPackageImpl implements CHESSViewsPac
 		TimeLibraryPackage.eINSTANCE.eClass();
 		RS_LibraryPackage.eINSTANCE.eClass();
 		MARTE_PrimitivesTypesPackage.eINSTANCE.eClass();
+		SysmlPackage.eINSTANCE.eClass();
 		BasicNFP_TypesPackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
@@ -244,7 +245,7 @@ public class CHESSViewsPackageImpl extends EPackageImpl implements CHESSViewsPac
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
-		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
+		SystemModelPackageImpl theSystemModelPackage = (SystemModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SystemModelPackage.eNS_URI) instanceof SystemModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SystemModelPackage.eNS_URI) : SystemModelPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theCHESSViewsPackage.createPackageContents();
@@ -270,7 +271,7 @@ public class CHESSViewsPackageImpl extends EPackageImpl implements CHESSViewsPac
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
-		theSTSPackage.createPackageContents();
+		theSystemModelPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theCHESSViewsPackage.initializePackageContents();
@@ -296,7 +297,7 @@ public class CHESSViewsPackageImpl extends EPackageImpl implements CHESSViewsPac
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
-		theSTSPackage.initializePackageContents();
+		theSystemModelPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theCHESSViewsPackage.freeze();
