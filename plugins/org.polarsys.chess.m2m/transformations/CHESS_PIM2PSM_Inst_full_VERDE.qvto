@@ -563,6 +563,7 @@ helper createSporadicRelatedNodes(in currentOp : chessmlprofile::RTComponentMode
 		//If the current operation is sporadic, attaches the "get" operation before the operation node 
 		//TODO Stefano: the following get operation should be set as subUsage of the sporadic SaStep Operation created in the PSM, it should not appear as activity
 		//return createGetOp(currentOp.base_Comment, currentSlot, e2eActivity, nextE2ENode);
+		return nextE2ENode;
 	} 
 	else
 		return prevE2ENode
