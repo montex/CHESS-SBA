@@ -162,7 +162,7 @@ public class PurgePIMHandler extends AbstractHandler {
 	}
 	
 	private Model removeRtAnalysis(Model m) {
-		Package rt = ViewUtils.getCHESSRtAnalysisPackage(m);
+		Package rt = ViewUtils.getCHESSPSMPackage(m);
 		System.out.println(rt.getName());
 		ArrayList<Element> l = new ArrayList<Element>(); 
 		for (Element e : rt.getOwnedElements()) {

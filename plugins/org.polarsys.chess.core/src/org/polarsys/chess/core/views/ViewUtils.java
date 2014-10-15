@@ -249,6 +249,18 @@ public class ViewUtils {
 		return false;
 	}
 	
+	private static boolean isPSMView(Package pkg) {
+		if ( pkg != null )
+		{
+			EList<Stereotype> list = pkg.getAppliedStereotypes();
+			for (Stereotype stereotype : list) {
+				if (stereotype.getName().equals(CHESSProfileManager.PSM_VIEW))
+					return true;
+			}
+		}
+		return false;
+	}
+	
 	public static boolean isView(EObject notifier) {
 		if (notifier instanceof Package
 				&& hasViewStereotypeApplied((Package) notifier))
@@ -374,6 +386,15 @@ public class ViewUtils {
 		}
 		return (Package)theModel;
 	}
+	
+	public static Package getCHESSPSMPackage(Model theModel) {
+		for (Element p : theModel.allOwnedElements()) {
+			if (p instanceof Package)
+				if (isPSMView((Package)p))
+					return (Package) p;
+		}
+		return (Package)theModel;
+	}
 
 	public static boolean hasConcurrentViews(DesignView currentView) {
 		for(String v : CHESSProfileManager.CONCURRENT_VIEWS_ASSOCIATION.keySet()){
@@ -397,7 +418,6 @@ public class ViewUtils {
 //			}
 //		}
 		return currentView.getName();
-	}
-	
+	}	
 	
 }

@@ -28,6 +28,7 @@ import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.GCMPackage;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HLAM.HLAMPackage;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HRMPackage;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.SRM.SW_Concurrency.SW_ConcurrencyPackage;
+import org.eclipse.papyrus.MARTE.MARTE_DesignModel.SRM.SW_Interaction.SW_InteractionPackage;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.AllocPackage;
 import org.eclipse.papyrus.uml.tools.utils.PackageUtil;
 import org.eclipse.uml2.uml.Element;
@@ -233,9 +234,14 @@ public class MARTEProfileManager {
 		PackageUtil.applyProfile(element, MARTE_VSL_DATATYPES, false);
 	}
 	
-	public static void applySwConcurrencyProfieTo(Package element) {
+	public static void applySwConcurrencyProfileTo(Package element) {
 		Profile MARTE_SW_CONCURRENCY =  UMLResourcesUtil.getProfile(SW_ConcurrencyPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, MARTE_SW_CONCURRENCY, false);
+	}
+	
+	public static void applySwInteractionProfileTo(Package element) {
+		Profile MARTE_SW_INTERACTION =  UMLResourcesUtil.getProfile(SW_InteractionPackage.eINSTANCE, element);
+		PackageUtil.applyProfile(element, MARTE_SW_INTERACTION, false);
 	}
 
 	public static void applyStereotypeTo(String stereoName, Element element) {
@@ -294,23 +300,21 @@ public class MARTEProfileManager {
 
 	public static void createModel(Model currentModel) {
 		applyGCMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.COMPONENT_VIEW));
-		
+		applyAllocProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.COMPONENT_VIEW));
 		//marte.applyHLAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.COMPONENT_VIEW));
 		
 		applyHRMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
 		applyAllocProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
-		applySwConcurrencyProfieTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
-		
-		
-		//bug #11482 
-		applyAllocProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.COMPONENT_VIEW));
+		applySwConcurrencyProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
+		applyGCMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
+		applyGQAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));		
 		
 		applySAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.ANALYSIS_VIEW).getNestedPackage(currentModel.getName() + CHESSProfileManager.RT_ANALYSIS_VIEW));
+		applyGQAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.ANALYSIS_VIEW).getNestedPackage(currentModel.getName() + CHESSProfileManager.RT_ANALYSIS_VIEW));
 		
-		applyGCMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
-		
-		//for GaExecHost and GaCommHost
-		applyGQAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
+		applySAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.PSM_VIEW));
+		applySwConcurrencyProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.PSM_VIEW));
+		applySwInteractionProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.PSM_VIEW));
 		
 		applyDataTypeProfileTo(currentModel);
 	}

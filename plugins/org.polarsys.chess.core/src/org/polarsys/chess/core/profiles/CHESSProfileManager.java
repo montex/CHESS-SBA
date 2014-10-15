@@ -69,6 +69,7 @@ public class CHESSProfileManager {
 	public static final String ANALYSIS_VIEW = "AnalysisView";
 	public static final String DEPENDABILITY_ANALYSIS_VIEW = "DependabilityAnalysisView";
 	public static final String RT_ANALYSIS_VIEW = "RTAnalysisView";
+	public static final String PSM_VIEW = "PSMView";
 	public static final String TIMING_DATAFLOW_VIEW = "TimingDataFlowView";
 	public static final String REQUIREMENT_VIEW = "RequirementView";
 	public static final String DEPENDABILITY_VIEW = "DependabilityView";
@@ -588,6 +589,8 @@ public class CHESSProfileManager {
 			innerpkg.applyProfile(failurePropProfile);
 			innerpkg.applyProfile(FMEAProfile);
 			applyViewStereotype(DEPENDABILITY_ANALYSIS_VIEW, innerpkg);
+			newpkg.setValue(viewStrt, "depanalysisview",
+					innerpkg.getStereotypeApplication(innerView));
 			// RealTimeAnalysis
 			innerView = getViewStereotype(newpkg, RT_ANALYSIS_VIEW);
 			Package innerpkgRT = newpkg.createNestedPackage(model.getName()
@@ -595,8 +598,15 @@ public class CHESSProfileManager {
 			applyViewStereotype(RT_ANALYSIS_VIEW, innerpkgRT);
 			newpkg.setValue(viewStrt, "rtanalysisview",
 					innerpkgRT.getStereotypeApplication(innerView));
-			innerpkgRT.applyProfile(deploymentConfiguration_AnalysisProfile);
-			innerpkgRT.applyProfile(timingProfile);
+			
+			view = PSM_VIEW;
+			newpkg = model.createNestedPackage(viewName(model, view));
+			viewStrt = applyViewStereotype(view, newpkg);
+			model.setValue(chessStereotype, "psmView",
+					newpkg.getStereotypeApplication(viewStrt));
+			// apply profile
+			newpkg.applyProfile(deploymentConfiguration_AnalysisProfile);
+			newpkg.applyProfile(timingProfile);
 
 		} catch (Exception e) {
 			System.out.println("stereotype application error: " + view
