@@ -1784,11 +1784,11 @@ endpoint rule EndRule() {
 ----				rep.Target <- rep.Target->including(t.getCorrespondingComponent);
 
 			rep.Target <-
-				let t : CHESS!Repair = CHESS!Repair.allInstances()->select( act | act.base_Activity.name.debug() = rep.Name.debug() )->first().targets.debug() in
+				let t : CHESS!Repair = CHESS!Repair.allInstances()->select( act | act.base_Activity.name = rep.Name )->first().targets in
 --				IM!Component.allInstances()->select(c | t.debug().includes(c.getSourceInstance.classifier.debug())).debug();
 				IM!Component.allInstances()->select(c | t->collect(targ | targ.type)->includes(c.getSourceInstance.classifier->first()));
 
-			rep.Target.debug();
+			rep.Target;
 		}
 
 		--PHASE 1: External Faults
