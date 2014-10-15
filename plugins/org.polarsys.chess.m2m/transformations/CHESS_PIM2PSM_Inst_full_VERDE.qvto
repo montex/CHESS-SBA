@@ -502,12 +502,13 @@ it sets the dependencies through the subusage field of the SaStep mapped to the 
 helper createSubUsage(requiringSlot : Slot, in reqCHRtSpec: chessmlprofile::RTComponentModel::CHRtSpecification, in providingSlot : Slot,  in provCHRtSpec: chessmlprofile::RTComponentModel::CHRtSpecification)  {
 	
 	var requiringPSMOperation = requiringSlot.resolve2SaStep(reqCHRtSpec.base_Comment);
-	//log("currentPSMOperation = " + currentPSMOperation.toString());       			
+	log("requiringPSMOperation = " + requiringPSMOperation.toString());
+	
 	var piPSMOperation = providingSlot.resolve2SaStep(provCHRtSpec.base_Comment);
-	//log("usedPSMOperation = " + usedPSMOperation.toString());	        			
+	log("usedPSMOperation = " + piPSMOperation.toString());	        			
 	var reqSaStep = requiringPSMOperation.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep); 		
 	var provSaStep = piPSMOperation.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);  			
-	//log("usedStep = " + usedSaStep.toString());
+	log("usedStep = " + provSaStep.toString());
 	reqSaStep.subUsage += provSaStep;
 }
 
@@ -543,7 +544,7 @@ query Slot::resolve2SaStep(chrt : Comment) : Operation {
 	endif;
 	
 	ops->forEach(op) {
-		if op.name = chrts.context.name then
+		if op.name = chrts.context.name() then
 			return op
 		endif;
 	};
@@ -561,7 +562,7 @@ helper createSporadicRelatedNodes(in currentOp : chessmlprofile::RTComponentMode
 		endif;
 		//If the current operation is sporadic, attaches the "get" operation before the operation node 
 		//TODO Stefano: the following get operation should be set as subUsage of the sporadic SaStep Operation created in the PSM, it should not appear as activity
-		return createGetOp(currentOp.base_Comment, currentSlot, e2eActivity, nextE2ENode);
+		//return createGetOp(currentOp.base_Comment, currentSlot, e2eActivity, nextE2ENode);
 	} 
 	else
 		return prevE2ENode
@@ -613,13 +614,14 @@ helper createOpaqueActionsChain(in currentIsGuarded : Boolean, in currentCHRtCom
 				if usedPiCHRtSpec.isDeferred() then {
 					// Calls "put" operation
 					//TODO Stefano: the following get operation should be set as subUsage of the sporadic SaStep Operation created in the PSM, it should not appear as activity
-					nextE2ENode := createPutOp(usedPiCHRtSpec.base_Comment, usedPiSlot, e2eActivity, nextE2ENode)       
+					//nextE2ENode := createPutOp(usedPiCHRtSpec.base_Comment, usedPiSlot, e2eActivity, nextE2ENode)       
 				}
 	        	else
 	        		//if the node is protected all its CallOperation must be inserted in the subUsage of the SaStep Operation (created in the Operation Package) instead of creating a SaStep node
 	        		if usedPiCHRtSpec.isProtected() then {
 	        			//Stefano: why should a create a subUsagesChain here?  Just a subusage is enough.
 	        			//nextE2ENode := createSubUsagesChain(currentOp.base_Comment, usedPiCHRtSpec.base_Comment, usedPiSlot, e2eActivity, nextE2ENode)
+						log("... and protected: create sub usage");
 	        			createSubUsage(currentSlot, currentCHRtComment.CHRtSpec(), usedPiSlot, usedPiCHRtSpec);
 
 	        		}

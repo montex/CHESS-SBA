@@ -83,7 +83,7 @@ public class TransUtil {
 	
 	// Remove the content of the RtAnalysisPackage
 	private static void purgeRTAPackage(Model m) throws IOException {
-		Package rt = ViewUtils.getCHESSRtAnalysisPackage(m);
+		Package rt = ViewUtils.getCHESSPSMPackage(m);
 		ArrayList<Element> l = new ArrayList<Element>(); 
 		for (Element e : rt.getOwnedElements()) {
 			if (e instanceof Package){
