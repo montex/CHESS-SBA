@@ -103,14 +103,24 @@ public class End2EndResultDialog extends Dialog {
 		resultLabel = new Label(container, SWT.NONE);
 		resultLabel.setFont(new Font(display,"Tahoma", 12, SWT.BOLD));
 		
-		//compute e2e analysis results:
-		String e2eTime = saE2EFlow.getEnd2EndT().get(0);
-		String e2eTimeUnit = getValue(e2eTime, "unit");
-		String e2eTimeVal = getValue(e2eTime, "worst");
+		String e2eTime = null;
+		String e2eTimeUnit = null;
+		String e2eTimeVal = null;
 
-		String e2eDl = saE2EFlow.getEnd2EndD().get(0);
-		String e2eDlVal = getValue(e2eDl, "value"); 
-		String e2eDlUnit =  getValue(e2eDl, "unit");
+		String e2eDl = null;
+		String e2eDlVal = null;
+		String e2eDlUnit = null;
+		
+		//compute e2e analysis results:
+		if(saE2EFlow.getEnd2EndT().size() > 0 && saE2EFlow.getEnd2EndD().size() > 0){
+			e2eTime = saE2EFlow.getEnd2EndT().get(0);
+			e2eTimeUnit = getValue(e2eTime, "unit");
+			e2eTimeVal = getValue(e2eTime, "worst");
+
+			e2eDl = saE2EFlow.getEnd2EndD().get(0);
+			e2eDlVal = getValue(e2eDl, "value"); 
+			e2eDlUnit =  getValue(e2eDl, "unit");
+		}
 
 		//if deadline is expressed in ms and response time is in s, use ms (other cases?)
 		if(e2eTimeVal != null && !e2eTimeVal.isEmpty() && e2eTimeUnit.equals("s")){
