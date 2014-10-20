@@ -9,7 +9,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Collections;
 
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.m2m.atl.core.ATLCoreException;
@@ -48,6 +51,7 @@ import org.eclipse.m2m.atl.core.service.CoreService;
 import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.uml2.uml.Component;
@@ -101,20 +105,21 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 	private static final String DEPENDABILITY_VIEW = "DependabilityAnalysisView";
 	private static final String STATEBASED_ANALYSIS = "CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis";
 	private static final String RESULT = "measureEvaluationResult";
+
+	private static Shell shell = new Shell();
+	private static final String ERROR_MSG = "Problems while perfoming State-Based Analysis: ";
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		
 		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
 		final ParameterList params = DEEMClient.getParameters();
-
-		Shell shell = new Shell();
 		try{
 			
 			ProgressMonitorDialog pmDialog = new ProgressMonitorDialog(shell);
 			pmDialog.run(true, true, new IRunnableWithProgress(){
 				@Override
-				public void run(IProgressMonitor monitor) {		
+				public void run(IProgressMonitor monitor) /*throws InterruptedException*/ {		
 					//int largeStep = params.getMaximumBatches();
 					int smallStep = params.getMinimumBatches();
 					int numSubTasks = 3*smallStep/10 + smallStep;
@@ -132,16 +137,15 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 					
 					monitor.subTask("Connecting to DEEM server...");
 					String res = connectToDeem(tr, monitor);
-								
-					monitor.subTask("Propagating analysis results to the model...");
-					backPropagation(res, editor);
-					monitor.worked(smallStep/10);
-					
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+
+					if(res != null && !res.isEmpty()){
+						monitor.subTask("Propagating analysis results to the model...");
+						backPropagation(res, editor);
+						monitor.worked(smallStep/10);
 					}
+					
+					//Thread.sleep(2000);
+
 					monitor.worked(1);
 					monitor.done();
 				}
@@ -149,9 +153,12 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 		}
 		
 		return null;
@@ -329,36 +336,63 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 			return null;
 		} catch (ATLCoreException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 			return null;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 			return null;
 		} catch (IOException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 			return null;
 		} catch (CoreException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 			return null;
 		} 
 	}
 	
 	private static String connectToDeem(IFile resultFile, IProgressMonitor monitor){
-		
-		DEEMClient c = new DEEMClient();
-		c.setProgressMonitor(monitor);
-		String res = c.sendAndReceiveFile(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString(), monitor);
-		return res;
+		try{
+			DEEMClient c = new DEEMClient();
+			c.setProgressMonitor(monitor);
+			String res = c.sendAndReceiveFile(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString(), monitor);
+			return res;
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+			return null;
+		} catch (SocketTimeoutException e) {
+			e.printStackTrace();
+			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+			return null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+			return null;
+		}
 	}
 	
 	private void backPropagation(String analysis, PapyrusMultiDiagramEditor editor) {
@@ -411,9 +445,11 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 		} 
 	}
 
@@ -460,5 +496,15 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 		}
 		return str;		
 	}
+	
+	public static void displayMessage(final Shell parent, final String message, final int kind){
 		
+		final String title = "State-Based Analysis";
+		parent.getDisplay().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				MessageDialog.open(kind, parent, title, message, SWT.NONE);
+			}
+		});
+	}
 }

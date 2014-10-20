@@ -1,7 +1,5 @@
 package org.chess.statebased;
 
-import org.polarsys.chess.core.util.CHESSProjectSupport;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,16 +12,12 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.Formatter;
-
-import javax.rmi.CORBA.Util;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class DEEMClient {
 
 	private final static int BUFLENGTH = 1024;
-	protected final static String HOST = "rcl.dsi.unifi.it";
+	protected final static String HOST = "rclserver.dsi.unifi.it";
 	protected final static int PORT = 5903;
 	protected final static int TIMEOUT = 60;
 	
@@ -31,96 +25,76 @@ public class DEEMClient {
 	private final String RESULTS_SAVEAS = "analysis-results";
 	private IProgressMonitor mon;
 
-	public String sendAndReceiveFile(String model, String folder, IProgressMonitor monitor) {
+	public String sendAndReceiveFile(String model, String folder, IProgressMonitor monitor) throws UnknownHostException, SocketTimeoutException, IOException, ClassNotFoundException {
 
-		try {
+		String host = Activator.getDefault().getPreferenceStore().getString("HOST");
+		int port = Activator.getDefault().getPreferenceStore().getInt("PORT");
+		int timeout = Activator.getDefault().getPreferenceStore().getInt("TIMEOUT")*1000;
+		System.out.println("connecting to: " + host+":"+port);
 
-			String host = Activator.getDefault().getPreferenceStore().getString("HOST");
-			int port = Activator.getDefault().getPreferenceStore().getInt("PORT");
-			int timeout = Activator.getDefault().getPreferenceStore().getInt("TIMEOUT")*1000;
-			System.out.println("connecting to: " + host+":"+port);
-			
-			Socket s = new Socket();
-			s.connect(new InetSocketAddress(host, port), timeout);
-			
-			FileInputStream fis = new FileInputStream(model);
-			OutputStream out = s.getOutputStream();
-			ObjectOutputStream oout = new ObjectOutputStream(out);
-			System.out.println("sending data...");
-			byte[] buf = new byte[BUFLENGTH];
-			int read = 0;
-			while ((read = fis.read(buf)) != -1) {
-				oout.write(buf, 0, read);
-			}
-			System.out.println("file sent");
-			monitor.worked(1);
-			
-			oout.writeObject(getParameters());
-			System.out.println("parameters sent");
-			
-			s.shutdownOutput();
-			
-			InputStream is = s.getInputStream();
-			
-			ObjectInputStream ois = new ObjectInputStream(is);
-			boolean bRunning = true;
-			DEEMProgressInformation progress = new DEEMProgressInformation();
-			bRunning = ois.readBoolean();
-			int lastCurrent = 0;
-			String taskName;
-			while(bRunning) {
-				progress = (DEEMProgressInformation)ois.readObject();
-				System.out.println(progress.getCurrent());
-				
-				taskName = "Simulation started: " + progress.getCurrent() + " / " + progress.getMaximum() + " (";
-				if(progress.minimumReached()) {
-					taskName += progress.getPercentToMax("%.2f") + "% of maximum batches)";
-				}else{
-					taskName += progress.getPercentToMin("%.2f") + "% of minimum batches)";
-				}
-				mon.subTask(taskName);
-				mon.worked(progress.getCurrent()-lastCurrent);
-				
-				lastCurrent = progress.getCurrent();
-				bRunning = ois.readBoolean();
-			}			
-			
-			System.out.println("receiving data...");
-			String res = folder + File.separator + RESULTS_SAVEAS;
-			FileOutputStream fos = new FileOutputStream(res);
-			buf = new byte[BUFLENGTH];
-			read = 0;
-			while ((read = ois.read(buf)) != -1) {
-				fos.write(buf, 0, read);
-			}
-			System.out.println("file received");
-			monitor.worked(1);
-			
-			fis.close();
-			oout.close();
-			out.close();
-			fos.close();
-			is.close();
-			s.close();
-			return res;
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-			return null;
-		} catch (SocketTimeoutException e) {
-			e.printStackTrace();
-			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-			return null;
-		} catch (IOException e) {
-			e.printStackTrace();
-			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-			return null;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-			return null;
+		Socket s = new Socket();
+		s.connect(new InetSocketAddress(host, port), timeout);
+
+		FileInputStream fis = new FileInputStream(model);
+		OutputStream out = s.getOutputStream();
+		ObjectOutputStream oout = new ObjectOutputStream(out);
+		System.out.println("sending data...");
+		byte[] buf = new byte[BUFLENGTH];
+		int read = 0;
+		while ((read = fis.read(buf)) != -1) {
+			oout.write(buf, 0, read);
 		}
-		
+		System.out.println("file sent");
+		monitor.worked(1);
+
+		oout.writeObject(getParameters());
+		System.out.println("parameters sent");
+
+		s.shutdownOutput();
+
+		InputStream is = s.getInputStream();
+
+		ObjectInputStream ois = new ObjectInputStream(is);
+		boolean bRunning = true;
+		DEEMProgressInformation progress = new DEEMProgressInformation();
+		bRunning = ois.readBoolean();
+		int lastCurrent = 0;
+		String taskName;
+		while(bRunning) {
+			progress = (DEEMProgressInformation)ois.readObject();
+			System.out.println(progress.getCurrent());
+
+			taskName = "Simulation started: " + progress.getCurrent() + " / " + progress.getMaximum() + " (";
+			if(progress.minimumReached()) {
+				taskName += progress.getPercentToMax("%.2f") + "% of maximum batches)";
+			}else{
+				taskName += progress.getPercentToMin("%.2f") + "% of minimum batches)";
+			}
+			mon.subTask(taskName);
+			mon.worked(progress.getCurrent()-lastCurrent);
+
+			lastCurrent = progress.getCurrent();
+			bRunning = ois.readBoolean();
+		}			
+
+		System.out.println("receiving data...");
+		String res = folder + File.separator + RESULTS_SAVEAS;
+		FileOutputStream fos = new FileOutputStream(res);
+		buf = new byte[BUFLENGTH];
+		read = 0;
+		while ((read = ois.read(buf)) != -1) {
+			fos.write(buf, 0, read);
+		}
+		System.out.println("file received");
+		monitor.worked(1);
+
+		fis.close();
+		oout.close();
+		out.close();
+		fos.close();
+		is.close();
+		s.close();
+		return res;	
 	}
 	
 	protected static ParameterList getParameters() {

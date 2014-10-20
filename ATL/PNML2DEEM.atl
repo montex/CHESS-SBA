@@ -1,11 +1,11 @@
 -- @path PNML=CHESSReviewDemo/metamodels/placeTransition.ecore
 
 query PNML2DEEM_query = PNML!PetriNet.allInstances()->
-	collect(x | x.toString());
+	collect(x | x.toString().writeTo('WO_Workstation/wo_workstation'));
 
 helper context PNML!PetriNet def: toString():String = 
 	'<NDFile-\'1.2\'>\n\n'+
-	'NET:"'+self.id+'",2000,2000;\n'+
+	'NET:"'+self.id.clean()+'",2000,2000;\n'+
 	'COLORS:White,Black,Black,Black,Black,Black;\n'
 	+'\n'+
 	PNML!Variable.allInstances()->iterate(i; acc:String=''| acc + i.toString())
@@ -24,17 +24,17 @@ helper context PNML!PetriNet def: toString():String =
 	
 helper context PNML!Place def: toString(): String =
 	if self.nodegraphics.oclIsUndefined() then
-		'PLACE:"'+self.id+'",1500,1500,'+self.initialMarking.text+',0;\n'
+		'PLACE:"'+self.id.clean()+'",1500,1500,'+self.initialMarking.text+',0;\n'
 	else
-		'PLACE:"'+self.id+'",'+ self.nodegraphics.position.x+','+self.nodegraphics.position.x+','+self.initialMarking.text+',0;\n'
+		'PLACE:"'+self.id.clean()+'",'+ self.nodegraphics.position.x+','+self.nodegraphics.position.x+','+self.initialMarking.text+',0;\n'
 	endif;
 	
 helper context PNML!GSPNImmediateTransition def: toString(): String = 
 --	'TRANS:"'+self.Name+'",1500,1500,V,Immediate,'+self.Priority+',0,\'\', \'\',\n'+
 	if(self.nodegraphics.oclIsUndefined()) then
-    	'TRANS:"'+self.id+'",1500,1500,V,Immediate,'
+		'TRANS:"'+self.id.clean()+'",1500,1500,V,Immediate,'
 	else
-		'TRANS:"'+self.id+'",'+self.nodegraphics.position.x+','+self.nodegraphics.position.y+',V,Immediate,'
+		'TRANS:"'+self.id.clean()+'",'+self.nodegraphics.position.x+','+self.nodegraphics.position.y+',V,Immediate,'
 	endif+
 	self.Priority+
 	',1,'+
@@ -49,9 +49,9 @@ helper context PNML!GSPNImmediateTransition def: toString(): String =
     
 helper context PNML!GSPNTimedTransition def: toString(): String = 
 	if(self.nodegraphics.oclIsUndefined()) then
-		'TRANS:"'+self.id+'",1500,1500,V,Timed,1,'
+		'TRANS:"'+self.id.clean()+'",1500,1500,V,Timed,1,'
 	else
-		'TRANS:"'+self.id+'",'+self.nodegraphics.position.x+','+self.nodegraphics.position.y+',V,Timed,1,'
+		'TRANS:"'+self.id.clean()+'",'+self.nodegraphics.position.x+','+self.nodegraphics.position.y+',V,Timed,1,'
 	endif+
 	self.Distribution.getCode()+
 	',\''+
@@ -101,10 +101,10 @@ helper context PNML!GSPNArc def: toString(): String =
 	--Input Arc / Inhibitor Arc
 		if self.type = #inhibitor then
 			--Inhibitor Arc
-			'OARC:"'+self.source.id+'","'+self.target.id+'",1,2,\''
+			'OARC:"'+self.source.id.clean()+'","'+self.target.id.clean()+'",1,2,\''
 		else
 			--Input Arc
-			'IARC:"'+self.source.id+'","'+self.target.id+'",1,0,\''
+			'IARC:"'+self.source.id.clean()+'","'+self.target.id.clean()+'",1,0,\''
 		endif
 		+if(self.MultiplicityFunction.oclIsUndefined()) then '' else self.MultiplicityFunction.toString() endif		
 		+'\',\n ('+
@@ -122,7 +122,7 @@ helper context PNML!GSPNArc def: toString(): String =
 		+'),1;\n'
 	else
 	--Output Arc
-		'OARC:"'+self.target.id+'","'+self.source.id+'",1,1,\''+
+		'OARC:"'+self.target.id.clean()+'","'+self.source.id.clean()+'",1,1,\''+
 		if(self.MultiplicityFunction.oclIsUndefined()) then '' else self.MultiplicityFunction.toString() endif
 		+'\',\n'+
 		' ('+
@@ -147,11 +147,12 @@ helper context PNML!OpOr def: toString(): String = '('+self.expression1.toString
 helper context PNML!OpSum def: toString(): String = self.expression1.toString() + '+' + self.expression2.toString();
 helper context PNML!OpGreater def: toString(): String = self.expression1.toString() + '>' + self.expression2.toString();
 helper context PNML!OpEqual def: toString(): String = self.expression1.toString() + '=' + self.expression2.toString();
+helper context PNML!OpTrue def: toString(): String = 'TRUE';
 
 helper context PNML!IfThenElse def: toString(): String =
 	'IF('+self.condition.toString()+')THEN('+self.ifTrue.toString()+')ELSE('+self.ifFalse.toString()+')';
 
-helper context PNML!MarkingExpression def: toString(): String = 'MARK('+self.place.id+')';
+helper context PNML!MarkingExpression def: toString(): String = 'MARK('+self.place.id.clean()+')';
 
 helper context PNML!Study def: toString(): String =
 	'STUDY:"'+self.name+'"'+	
@@ -178,3 +179,7 @@ helper context PNML!Measure def:toString(): String =
 helper context PNML!InstantOfTime def:toString(): String = '0';
 helper context PNML!IntervalOfTime def:toString(): String = '1';
 helper context PNML!IntervalOfTimeAveraged def:toString(): String = '2';
+
+--Fix to make DEEM happy (it does not like dots in element names)
+--Any dot is replace by a double underscore (to distinguish from single underscore)
+helper context String def:clean(): String = self.regexReplaceAll('\\.', '__');
