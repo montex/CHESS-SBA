@@ -244,6 +244,7 @@ property ClientServerPortQN = "MARTE::MARTE_DesignModel::GCM::ClientServerPort";
 property AssignQN = "MARTE::MARTE_Foundations::Alloc::Assign";
 property SchedulableResourceQN = "MARTE::MARTE_Foundations::GRM::SchedulableResource";
 property SaStepQN = "MARTE::MARTE_AnalysisModel::SAM::SaStep";
+property SaAnalysisContextQN = "MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext";
 property GaCommChannelQN = "MARTE::MARTE_AnalysisModel::GQAM::GaCommChannel";
 property HwComputingResourceQN = "MARTE::MARTE_DesignModel::HRM::HwLogical::HwComputing::HwComputingResource";
 property HwBusQN = "MARTE::MARTE_DesignModel::HRM::HwLogical::HwCommunication::HwBus";

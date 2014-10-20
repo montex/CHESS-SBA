@@ -17,11 +17,13 @@ public class AnalysisContextSelectionDialog extends Dialog {
 
 	private Combo chooseContextField;
 	private String context;
+	private String title;
 	private List<org.eclipse.uml2.uml.Class> contextList;
 	
-	public AnalysisContextSelectionDialog(Shell parentShell, List<Class> selection) {
+	public AnalysisContextSelectionDialog(Shell parentShell, List<Class> selection, String title) {
 		super(parentShell);
 		contextList = selection;
+		this.title = title;
 	}
 
 	@Override
@@ -34,7 +36,7 @@ public class AnalysisContextSelectionDialog extends Dialog {
 		layout.marginTop = 5;
 	
 		parent.setLayout(layout);
-		new Label(parent, SWT.NONE).setText("Scenarios found in model for End-To-End Analysis:");
+		new Label(parent, SWT.NONE).setText("Contexts found in model: ");
 		
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		chooseContextField = new Combo(parent, SWT.DROP_DOWN | SWT.READ_ONLY);
@@ -51,7 +53,7 @@ public class AnalysisContextSelectionDialog extends Dialog {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText("Select End-To-End Context to analyze");
+		shell.setText(title);
 	}
 
 	@Override

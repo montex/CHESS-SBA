@@ -40,7 +40,8 @@ property depView : Package = null;
 property MARTEProfile : Profile = null;
 property CHESSProfile : Profile = null;
 
-property platform : Package = null;
+--property platform : Package = null;
+property psmPackage : Package = null;
 property hostPackage : Package = null;
 property operationPackage : Package = null;
 property taskPackage : Package = null;
@@ -61,7 +62,8 @@ property currentSlot : Slot = null;
 	
 main() {
     log("*** CHESS PIM->PSM transformation   ***");
-    log("Performing " + analysisType + " Analysis");	
+    log("Performing " + analysisType + " Analysis");
+    log("Analysis Context is " + saAnalysis);	
 	model := source.rootObjects()![Model];
 	
 	MARTEProfile := model.getView("ComponentView").getAppliedProfiles()->selectOne(name="GCM").owner.owner.oclAsType(Profile);
@@ -86,27 +88,31 @@ mapping inout Model::psmModel() {
 		compView := self.getView("ComponentView");
 		depView := self.getView("DeploymentView");
 		
-		var platforms := compView.allOwnedElements()[Package]->select(isStereotyped(CHGaResourcePlatformQN))->asSequence();
-		platform := platforms->first();
+		var saAnalysisClass := self.allOwnedElements()[Class]->selectOne(c : Class | c.qualifiedName.equalsIgnoreCase(saAnalysis));
+		var saAnalysisCtx := saAnalysisClass.getMetaclass(SaAnalysisContextQN).oclAsType(MARTE::SAM::SaAnalysisContext);
 		
-		instSpecPackage := compView.allOwnedElements()[Package]->selectOne(name.endsWith("_instSpec"));
-		instSpecFullPackage := compView.allOwnedElements()[Package]->selectOne(name.endsWith("_instSpec_full"));
+		var platforms := saAnalysisCtx.platform->asSequence();
+		instSpecPackage := platforms->first().oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package;
+		instSpecFullPackage := compView.allOwnedElements()[Package]->selectOne(name.equalsIgnoreCase(instSpecPackage.name + "_full"));
 	}
 	
-	assert fatal (platform <> null)
-		with log("CHGaResourcesPlatform is not present: there should be one CHGaResourcePlatform in the model");
+	assert fatal (instSpecPackage <> null)
+		with log("CHGaResourcesPlatform is not present: there should be one CHGaResourcePlatform in the Analysis Context");
 	
-	assert fatal (platforms->size()=1) 
-		with log("Ambiguos analysis scenario: there should be only one CHGaResourcePlatform in the model");
+	assert fatal (instSpecPackage->size()=1) 
+		with log("Ambiguos analysis scenario: there should be only one CHGaResourcePlatform in the Analysis Context");
 			
 	log("<<CHGaResourcesPlatform>> found.");	
-	platform.map CHGaResourcePlatform2SaAnalysisContext();
+	instSpecPackage.map CHGaResourcePlatform2SaAnalysisContext();
 }
 
 mapping Package::CHGaResourcePlatform2SaAnalysisContext() : Class {
 	init{
 		log("Generating <<SaAnalysisContext>> and necessary packages.");
 		
+		psmPackage := object Package {
+			name := self.name + "_PSM";
+		};
 		hostPackage := object Package {
 			name := "Host";
 		};   
@@ -120,10 +126,11 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext() : Class {
 			name := "AnalysisContext";
 		};
 
-	    psmView.packagedElement += hostPackage;
-		psmView.packagedElement += operationPackage;
-		psmView.packagedElement += taskPackage;
-		psmView.packagedElement += analysisContextPackage;
+		psmView.packagedElement += psmPackage;
+	    psmPackage.packagedElement += hostPackage;
+		psmPackage.packagedElement += operationPackage;
+		psmPackage.packagedElement += taskPackage;
+		psmPackage.packagedElement += analysisContextPackage;
 	}
 	
 	// analysisContextPackage
@@ -287,7 +294,7 @@ mapping Interaction::Interaction2EndToEndWorkFlow(context : Class, pimContext : 
    	
    	result.name := self.name;
     // Add the action to the owned behaviors of RTAnalysisContext     
-    platform.resolveoneIn(Package::CHGaResourcePlatform2SaAnalysisContext, Class).ownedBehavior += result;
+    instSpecPackage.resolveoneIn(Package::CHGaResourcePlatform2SaAnalysisContext, Class).ownedBehavior += result;
     //Apply the stereotype <<SaEndtoEndFlow>> to the activity
 	result.applyStereotype(getMARTEStereotype("SaEndtoEndFlow"));
 	//Global Timing Requirement
@@ -1150,7 +1157,7 @@ mapping InstanceSpecification::Instance2EndToEndWorkFlow(chrt : Comment, slot : 
     
     result.name := actionName;
     // Add the action to the owned behaviors of RTAnalysisContext     
-    platform.resolveoneIn(Package::CHGaResourcePlatform2SaAnalysisContext, Class).ownedBehavior += result;
+    instSpecPackage.resolveoneIn(Package::CHGaResourcePlatform2SaAnalysisContext, Class).ownedBehavior += result;
     //Apply the stereotype <<SaEndtoEndFlow>> to the activity
 	result.applyStereotype(getMARTEStereotype("SaEndtoEndFlow"));
 	result.precondition += actConstraint;

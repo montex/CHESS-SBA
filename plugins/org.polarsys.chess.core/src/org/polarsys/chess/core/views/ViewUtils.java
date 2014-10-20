@@ -249,7 +249,7 @@ public class ViewUtils {
 		return false;
 	}
 	
-	private static boolean isPSMView(Package pkg) {
+	public static boolean isPSMView(Package pkg) {
 		if ( pkg != null )
 		{
 			EList<Stereotype> list = pkg.getAppliedStereotypes();

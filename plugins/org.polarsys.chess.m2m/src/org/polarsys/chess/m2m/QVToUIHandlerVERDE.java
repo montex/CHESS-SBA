@@ -34,9 +34,13 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaWorkloadBehavior;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.swt.widgets.Display;
@@ -44,22 +48,32 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
+import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.m2m.transformations.AbstractTransformation;
 import org.polarsys.chess.m2m.transformations.PIMPSMTransformationVERDE;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 public class QVToUIHandlerVERDE extends AbstractHandler {
-
+	
+	private Shell activeShell = null;
+	private Resource inResource = null;
+	private Class contextClass;
+	private String saAnalysisName;
+	
 	private IProject getActiveProject(IEditorPart editor) {
 		IFileEditorInput input = (IFileEditorInput) editor.getEditorInput();
 		IFile file = input.getFile();
@@ -72,6 +86,55 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		if (!(CHESSEditorUtils.isCHESSProject(editor)))
 			return null;
 		
+		try {
+			inResource = ResourceUtils.getUMLResource(((PapyrusMultiDiagramEditor) editor).getServicesRegistry());
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			MessageDialog.openError(activeShell, "CHESS", "Unable to load the model");
+		}
+		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+		activeShell = window.getShell();
+		
+		//open a dialog to select the schedulability analysis context to be analyzed
+		//first get all the classes stereotyped as SaAnalysisContext
+		final List<Class> selection = new ArrayList<Class>();
+		final Model model = (Model) inResource.getContents().get(0);
+		EList<Element> elemList = model.allOwnedElements();
+		for (Element elem : elemList) {
+			//we're looking for a class stereotyped <<saAnalysisContext>> and NOT in PSM
+			if(elem instanceof Class && elem.getAppliedStereotype(TransUtil.SA_ANALYSIS_CTX) != null 
+					&& !ViewUtils.isPSMView(ViewUtils.getView(elem))){
+				//as additional constraint, no workload is specified
+				SaAnalysisContext saAnalysisCtx = (SaAnalysisContext) elem.getStereotypeApplication
+						(elem.getAppliedStereotype(TransUtil.SA_ANALYSIS_CTX));		
+				if(saAnalysisCtx.getWorkload().size() == 0){
+					selection.add((Class) elem);
+				}
+			}
+		}
+		if(selection.size() == 0){
+			MessageDialog.openWarning(activeShell, "CHESS", "no suitable analysis contexts in the model");
+			return null;
+		}
+		//then open the dialog
+		String contextQN = null;
+		AnalysisContextSelectionDialog dialog = new AnalysisContextSelectionDialog(activeShell, selection, "Select Schedulability Context to analyze");
+		if (dialog.open() == Window.OK) {
+			contextQN = dialog.getContext();
+			if(contextQN == null || contextQN.isEmpty()){
+				return null;
+			}
+			for (Element elem : model.allOwnedElements()){
+				if(elem.getAppliedStereotype(TransUtil.SA_ANALYSIS_CTX) != null &&
+						((NamedElement) elem).getQualifiedName().equals(contextQN)){
+					contextClass = (Class) elem;
+				}
+			}
+		}else{
+			return null;
+		}
+		saAnalysisName = contextClass.getQualifiedName();
+		
 		final Job job = new Job("Transforming") {
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
@@ -80,7 +143,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 					TransformationResultsData result =null;
 					try {
 						//CHESSProjectSupport.installMAST();
-						result = QVToUIHandlerVERDE.this.execute_(editor, monitor);
+						result = QVToUIHandlerVERDE.this.execute_(editor, monitor, inResource);
 						//Reopen the editor
 						CHESSEditorUtils.reopenEditor(editor, false);
 					} catch (Exception e) {
@@ -136,28 +199,17 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 	 * 
 	 * @param editor
 	 * @param monitor
+	 * @param inResource 
 	 * @return the string resulting from the MAST execution (i.e. the system is/not schedulable
 	 * @throws Exception
 	 */
-	public TransformationResultsData execute_(IEditorPart editor, IProgressMonitor monitor) throws Exception {
+	public TransformationResultsData execute_(IEditorPart editor, IProgressMonitor monitor, Resource inResource) throws Exception {
 		monitor.beginTask("Transforming", 4);
-		if (!(CHESSEditorUtils.isCHESSProject(editor)))
-			return null;
 		
-//		IProject project = getActiveProject(editor);
-//		ModelSet resourceSet = getEditorResourceSet(editor);
-		
-		Resource inResource = null;
-		try {
-			inResource = ResourceUtils.getUMLResource(((PapyrusMultiDiagramEditor) editor).getServicesRegistry());
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			throw new Exception("Unable to load the model");
-		}
-			
 		IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
 		AbstractTransformation t = new PIMPSMTransformationVERDE();
 		Map<String, String> configProps = new HashMap<String, String>();
+		configProps.put("saAnalysis", saAnalysisName);
 		configProps.put("analysisType", "Schedulability");
 		t.setConfigProperty(configProps);
 		final TransformationResultsData result = t.performTransformation((PapyrusMultiDiagramEditor) editor, inputFile, monitor);

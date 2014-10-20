@@ -37,6 +37,7 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPor
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
+import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.m2m.transformations.PIMPSMTransformationEnd2End;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 import org.eclipse.core.commands.AbstractHandler;
@@ -54,6 +55,7 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaWorkloadBehavior;
@@ -123,15 +125,24 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 		final Model model = (Model) inResource.getContents().get(0);
 		EList<Element> elemList = model.allOwnedElements();
 		for (Element elem : elemList) {
-			if(elem instanceof Class && elem.getAppliedStereotype(SAANALYSISCONTEXT) != null &&
-					!(elem.getNearestPackage().getName().equals("AnalysisContext"))){
-				selection.add((Class) elem);
-				//System.out.println("**********" + ((Class) elem).getName());
+			//we're looking for a class stereotyped <<saAnalysisContext>> and NOT in PSM
+			if(elem instanceof Class && elem.getAppliedStereotype(SAANALYSISCONTEXT) != null
+					&& !ViewUtils.isPSMView(ViewUtils.getView(elem))){
+				//as additional constraint, at least one workload is specified
+				SaAnalysisContext saAnalysisCtx = (SaAnalysisContext) elem.getStereotypeApplication
+						(elem.getAppliedStereotype(SAANALYSISCONTEXT));		
+				if(saAnalysisCtx.getWorkload().size() > 0){
+					selection.add((Class) elem);
+				}
 			}
+		}
+		if(selection.size() == 0){
+			MessageDialog.openWarning(activeShell, "CHESS", "no suitable analysis contexts in the model");
+			return null;
 		}
 		//then open the dialog
 		String contextQN = null;
-		AnalysisContextSelectionDialog dialog = new AnalysisContextSelectionDialog(activeShell, selection);
+		AnalysisContextSelectionDialog dialog = new AnalysisContextSelectionDialog(activeShell, selection, "Select End-To-End Context to analyze");
 		if (dialog.open() == Window.OK) {
 			contextQN = dialog.getContext();
 			if(contextQN == null || contextQN.isEmpty()){

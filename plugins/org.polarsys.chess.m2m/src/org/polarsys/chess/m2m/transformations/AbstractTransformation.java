@@ -34,28 +34,29 @@ public abstract class AbstractTransformation {
 		this.configProperty = configProperty;
 	}
 
-	protected IFile s1(IFile model) throws Exception {
-		transDir = model.getProject().getFolder(folder);
+	protected IFile s1(IFile modelFile) throws Exception {
+		transDir = modelFile.getProject().getFolder(folder);
 
 		// Delete the working dir if it exists
 		CHESSProjectSupport.deleteFolder(transDir);
 
 		CHESSProjectSupport.createFolder(transDir);
 		// Work on a copy of the model
-		IFile modelCopy = CHESSProjectSupport.copyFile(model, folder,
-				model.getName());
-		// Remove the content of the RtAnalysisPackage and Backpropagation
-		// results
-		TransUtil.purgeModel(modelCopy);
+		IFile modelCopy = CHESSProjectSupport.copyFile(modelFile, folder,
+				modelFile.getName());
+		// Remove the content of the PSMPackage and Backpropagation results
+		//use saAnalysisName to get the correct PSM to be removed
+		String saAnalysisName = configProperty.get("saAnalysis");
+		TransUtil.purgeModel(modelCopy, saAnalysisName);
 		return modelCopy;
 	}
 
 	public TransformationResultsData performTransformation(
-			final PapyrusMultiDiagramEditor editor, IFile model, IProgressMonitor monitor)
+			final PapyrusMultiDiagramEditor editor, IFile modelFile, IProgressMonitor monitor)
 			throws Exception {
 		// Tidy up directories
 
-		IFile modelCopy = s1(model);
+		IFile modelCopy = s1(modelFile);
 		//Execute the various steps of the transformations
 		QVToTransformation.launchBuildMultiInstance(modelCopy, monitor);
 		build1(monitor, modelCopy);
@@ -66,8 +67,9 @@ public abstract class AbstractTransformation {
 		QVToTransformation.launchRemoveMultiInstance(modelCopy, monitor);
 
 		// Replace the input model file with the transformed model
-		CHESSProjectSupport.fileReplace(modelCopy, model);
-		return new TransformationResultsData(result, model);
+		CHESSProjectSupport.fileReplace(modelCopy, modelFile);
+		return new TransformationResultsData(result, modelFile);
+//		return new TransformationResultsData("TODO", modelFile);
 		// Finally delete the working dir
 		// CHESSProjectSupport.deleteFolder((IFolder) transDir);
 	}
