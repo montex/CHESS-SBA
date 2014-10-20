@@ -15,6 +15,7 @@ import java.net.UnknownHostException;
 import java.util.Collections;
 
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
+import org.polarsys.chess.chessmlprofile.Core.CHESS;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
@@ -101,13 +102,13 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 	
 	private static final String NETNAME = "NET_NAME";
 	private static final String MEASURE = " ->";
-	private static final String ANALYSIS_VIEW = "modelAnalysisView";
-	private static final String DEPENDABILITY_VIEW = "DependabilityAnalysisView";
-	private static final String STATEBASED_ANALYSIS = "CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis";
+	private static final String CHESS_QN = "CHESS::Core::CHESS";
+	private static final String STATEBASED_ANALYSIS_QN = "CHESS::Dependability::StateBased::StateBasedAnalysis::StateBasedAnalysis";
 	private static final String RESULT = "measureEvaluationResult";
 
 	private static Shell shell = new Shell();
 	private static final String ERROR_MSG = "Problems while perfoming State-Based Analysis: ";
+
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -419,9 +420,10 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
 			Model umlModel = ResourceUtils.getModel(res);
 			
+			//get the CHESS stereotype
+			CHESS chess = (CHESS) umlModel.getStereotypeApplication(umlModel.getAppliedStereotype(CHESS_QN));
 			//navigate and update the model with the analysis result
-			Package anView = (Package) umlModel.getPackagedElement(ANALYSIS_VIEW);
-			Package depView = (Package) anView.getPackagedElement(DEPENDABILITY_VIEW);
+			Package depView = chess.getAnalysisView().getDepanalysisview().getBase_Package();
 
 			EList<PackageableElement> packList = depView.getPackagedElements();
 			Component comp = null;
@@ -433,7 +435,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			
 			final String finalValue = value;
 			final Component com = comp;
-			final Stereotype stereotype = comp.getAppliedStereotype(STATEBASED_ANALYSIS);
+			final Stereotype stereotype = comp.getAppliedStereotype(STATEBASED_ANALYSIS_QN);
 			TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) editor.getEditingDomain();
 			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 				
