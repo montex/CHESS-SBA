@@ -588,6 +588,8 @@ public class CHESSProfileManager {
 			innerpkg.applyProfile(failurePropProfile);
 			innerpkg.applyProfile(FMEAProfile);
 			applyViewStereotype(DEPENDABILITY_ANALYSIS_VIEW, innerpkg);
+			newpkg.setValue(viewStrt, "depanalysisview",
+					innerpkg.getStereotypeApplication(innerView));
 			// RealTimeAnalysis
 			innerView = getViewStereotype(newpkg, RT_ANALYSIS_VIEW);
 			Package innerpkgRT = newpkg.createNestedPackage(model.getName()
