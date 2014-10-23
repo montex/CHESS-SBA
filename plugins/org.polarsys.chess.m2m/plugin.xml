@@ -112,7 +112,13 @@
                   </and>
                </visibleWhen>
             </command>
-            <command
+         <menu
+               id="chess.menu.analysis.id"
+               label="Analysis">
+            <menu
+                  id="chess.menu.analysis.realtime.id"
+                  label="Real-Time Analysis">
+                <command
                   commandId="it.unipd.chess.m2m.QvtoUIHandlerVERDE.id"
                   label="Schedulability (VERDE)"
                   style="push">
@@ -153,6 +159,8 @@
                </visibleWhen>
             </command>
          </menu>
+        </menu>
+       </menu>
       </menuContribution>
    </extension>
    <extension
