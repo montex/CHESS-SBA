@@ -82,6 +82,12 @@
             propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/MultiSlot/base_Slot"/>
         <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Core/MultiSlot/upperBound"/>
       </genClasses>
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/PSMPackage">
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/PSMPackage/base_Package"/>
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/PSMPackage/AnalysisContext"/>
+      </genClasses>
       <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="CHESSViews" basePackage="org.polarsys.chess.chessmlprofile.Core"
           resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Core/CHESSViews">
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/ExtraFunctionalView">

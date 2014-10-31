@@ -73,6 +73,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 	private Resource inResource = null;
 	private Class contextClass;
 	private String saAnalysisName;
+	private String psmPackageName;
 	
 	private IProject getActiveProject(IEditorPart editor) {
 		IFileEditorInput input = (IFileEditorInput) editor.getEditorInput();
@@ -134,6 +135,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 			return null;
 		}
 		saAnalysisName = contextClass.getQualifiedName();
+		psmPackageName = contextClass.getName() +"_PSM";
 		
 		final Job job = new Job("Transforming") {
 			protected IStatus run(IProgressMonitor monitor) {
@@ -143,7 +145,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 					TransformationResultsData result =null;
 					try {
 						//CHESSProjectSupport.installMAST();
-						result = QVToUIHandlerVERDE.this.execute_(editor, monitor, inResource);
+						result = QVToUIHandlerVERDE.this.execute_(editor, monitor);
 						//Reopen the editor
 						CHESSEditorUtils.reopenEditor(editor, false);
 					} catch (Exception e) {
@@ -203,7 +205,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 	 * @return the string resulting from the MAST execution (i.e. the system is/not schedulable
 	 * @throws Exception
 	 */
-	public TransformationResultsData execute_(IEditorPart editor, IProgressMonitor monitor, Resource inResource) throws Exception {
+	public TransformationResultsData execute_(IEditorPart editor, IProgressMonitor monitor) throws Exception {
 		monitor.beginTask("Transforming", 4);
 		
 		IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
@@ -212,6 +214,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		configProps.put("saAnalysis", saAnalysisName);
 		configProps.put("analysisType", "Schedulability");
 		t.setConfigProperty(configProps);
+		t.setPsmPackageName(psmPackageName);
 		final TransformationResultsData result = t.performTransformation((PapyrusMultiDiagramEditor) editor, inputFile, monitor);
 				
 		//CHESSProjectSupport.fileReplace(newFile, inputFile);

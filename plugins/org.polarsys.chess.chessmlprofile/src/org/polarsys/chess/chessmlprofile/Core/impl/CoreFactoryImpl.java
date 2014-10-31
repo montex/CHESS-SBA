@@ -68,6 +68,7 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 			case CorePackage.IDENTIF_SLOT: return createIdentifSlot();
 			case CorePackage.MULTI_INSTANCE: return createMultiInstance();
 			case CorePackage.MULTI_SLOT: return createMultiSlot();
+			case CorePackage.PSM_PACKAGE: return createPSMPackage();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -131,6 +132,16 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	public MultiSlot createMultiSlot() {
 		MultiSlotImpl multiSlot = new MultiSlotImpl();
 		return multiSlot;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PSMPackage createPSMPackage() {
+		PSMPackageImpl psmPackage = new PSMPackageImpl();
+		return psmPackage;
 	}
 
 	/**

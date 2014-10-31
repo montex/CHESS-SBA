@@ -39,6 +39,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaEndtoEndFlow;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.swt.widgets.Shell;
@@ -54,7 +55,10 @@ import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Stereotype;
+import org.polarsys.chess.chessmlprofile.Core.CHESS;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
+import org.polarsys.chess.chessmlprofile.Core.PSMPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwBus;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
@@ -148,12 +152,25 @@ public class PurgePIMHandler extends AbstractHandler {
 						saAnalysisName = contextClass.getQualifiedName();
 						saAnalysisCtx = (SaAnalysisContext) contextClass.getStereotypeApplication(contextClass.getAppliedStereotype(TransUtil.SA_ANALYSIS_CTX));
 						
-						CHGaResourcePlatform platform = (CHGaResourcePlatform) saAnalysisCtx.getPlatform().get(0);
+						//get the correct PSM package and platform...
+						Package psmPackage = null;
+						Package platform = ((CHGaResourcePlatform) saAnalysisCtx.getPlatform().get(0)).getBase_Package();
+						CHESS chess = (CHESS) m.getStereotypeApplication(m.getAppliedStereotype("CHESS::Core::CHESS"));
+						for (Package pkg : chess.getPsmView().getBase_Package().getNestedPackages()) {
+							Stereotype stereo = pkg.getAppliedStereotype("CHESS::Core::PSMPackage");
+							if(stereo != null){
+								PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
+								if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
+									psmPackage = pkg;
+//									platform = ((CHGaResourcePlatform) psmPkg.getAnalysisContext().getPlatform().get(0)).getBase_Package();
+								}
+							}
+						}		
 						// Remove the content of the RtAnalysisPackage
-						m = PurgePIMHandler.this.removeRtAnalysis(m, platform.getBase_Package());
+						m = PurgePIMHandler.this.removeRtAnalysis(m, psmPackage);
 						
 						//remove results of the backpropagation
-						m = PurgePIMHandler.this.resetStereotypeValues(m, platform.getBase_Package());
+						m = PurgePIMHandler.this.resetStereotypeValues(m, platform);
 						
 						m.eResource().save(null);
 						
@@ -188,7 +205,6 @@ public class PurgePIMHandler extends AbstractHandler {
 
 	
 	private Model resetStereotypeValues(Model m, Package platform) {
-		
 		String name = platform.getName();
 		name = name.substring(0, name.lastIndexOf('_'));
 		Component compPlatform = null;
@@ -199,7 +215,7 @@ public class PurgePIMHandler extends AbstractHandler {
 				}
 			}
 		}
-		if(compPlatform != null){
+		if(compPlatform  != null){
 			for (Element el : compPlatform.getOwnedComments()) {
 				CHRtSpecification chrt = UMLUtils.getStereotypeApplication(el, CHRtSpecification.class);
 				if (chrt != null){
@@ -211,8 +227,8 @@ public class PurgePIMHandler extends AbstractHandler {
 		}
 		
 		//TODO: should reset only CH_HwProcessor with sw instances allocated on it
-		Package rt = ViewUtils.getCHESSDeploymentPackage(m);
-		for (Element e : rt.allOwnedElements()) {
+		Package pkg = ViewUtils.getCHESSDeploymentPackage(m);
+		for (Element e : pkg.allOwnedElements()) {
 			if (e instanceof InstanceSpecification){
 				CH_HwProcessor pr = UMLUtils.getStereotypeApplication(e, CH_HwProcessor.class);
 				if (pr != null){
@@ -227,19 +243,29 @@ public class PurgePIMHandler extends AbstractHandler {
 				}
 			}
 		}
+		
+		pkg = (Package) ViewUtils.getCHESSRtAnalysisPackage(m);
+		for (Element e : pkg.allOwnedElements()) {
+			if (e instanceof org.eclipse.uml2.uml.Class){
+				
+				SaAnalysisContext s = UMLUtils.getStereotypeApplication(e, SaAnalysisContext.class);
+				if (s != null){
+					printlnToCHESSConsole("Resetting:" + e);
+					s.setIsSched("");
+					if(s.getWorkload().size() > 0){
+						SaEndtoEndFlow e2e = UMLUtils.getStereotypeApplication(s.getWorkload().get(0).getBase_NamedElement(), SaEndtoEndFlow.class);
+						e2e.getEnd2EndT().clear();
+					}
+				}
+			}
+		}
+		
 		return m;
 	}
 	
-	private Model removeRtAnalysis(Model m, Package platform) {
-		Package psmView = ViewUtils.getCHESSPSMPackage(m);
-		ArrayList<Element> l = new ArrayList<Element>(); 
-		for (Package pkg : psmView.getNestedPackages()) {
-			if(pkg.getName().equalsIgnoreCase(platform.getName() + "_PSM")){
-				l.add(pkg);
-			}
-		}
-		for (Element elem : l) {
-			elem.destroy();
+	private Model removeRtAnalysis(Model m, Package psmPackage) {
+		if(psmPackage != null){
+			psmPackage.destroy();
 		}
 		return m;
 	}

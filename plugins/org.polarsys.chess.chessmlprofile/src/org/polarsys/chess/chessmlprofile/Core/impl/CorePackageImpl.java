@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.papyrus.MARTE.MARTEPackage;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GQAMPackage;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SAMPackage;
 import org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.BasicNFP_TypesPackage;
 import org.eclipse.papyrus.MARTE_Library.GRM_BasicTypes.GRM_BasicTypesPackage;
 import org.eclipse.papyrus.MARTE_Library.MARTE_DataTypes.MARTE_DataTypesPackage;
@@ -38,6 +39,7 @@ import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Core.IdentifSlot;
 import org.polarsys.chess.chessmlprofile.Core.MultiInstance;
 import org.polarsys.chess.chessmlprofile.Core.MultiSlot;
+import org.polarsys.chess.chessmlprofile.Core.PSMPackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.CHESSViewsPackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.CHESSViewsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.DataFlowCallGraphPackage;
@@ -128,6 +130,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	private EClass multiSlotEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass psmPackageEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -491,6 +500,33 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getPSMPackage() {
+		return psmPackageEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPSMPackage_Base_Package() {
+		return (EReference)psmPackageEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPSMPackage_AnalysisContext() {
+		return (EReference)psmPackageEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CoreFactory getCoreFactory() {
 		return (CoreFactory)getEFactoryInstance();
 	}
@@ -543,6 +579,10 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		multiSlotEClass = createEClass(MULTI_SLOT);
 		createEReference(multiSlotEClass, MULTI_SLOT__BASE_SLOT);
 		createEAttribute(multiSlotEClass, MULTI_SLOT__UPPER_BOUND);
+
+		psmPackageEClass = createEClass(PSM_PACKAGE);
+		createEReference(psmPackageEClass, PSM_PACKAGE__BASE_PACKAGE);
+		createEReference(psmPackageEClass, PSM_PACKAGE__ANALYSIS_CONTEXT);
 	}
 
 	/**
@@ -573,6 +613,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		GQAMPackage theGQAMPackage = (GQAMPackage)EPackage.Registry.INSTANCE.getEPackage(GQAMPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
+		SAMPackage theSAMPackage = (SAMPackage)EPackage.Registry.INSTANCE.getEPackage(SAMPackage.eNS_URI);
 
 		// Add subpackages
 		getESubpackages().add(theCHESSViewsPackage);
@@ -614,6 +655,10 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEClass(multiSlotEClass, MultiSlot.class, "MultiSlot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getMultiSlot_Base_Slot(), theUMLPackage.getSlot(), null, "base_Slot", null, 1, 1, MultiSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getMultiSlot_UpperBound(), theTypesPackage.getInteger(), "upperBound", null, 1, 1, MultiSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(psmPackageEClass, PSMPackage.class, "PSMPackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPSMPackage_Base_Package(), theUMLPackage.getPackage(), null, "base_Package", null, 1, 1, PSMPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getPSMPackage_AnalysisContext(), theSAMPackage.getSaAnalysisContext(), null, "AnalysisContext", null, 1, 1, PSMPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //CorePackageImpl

@@ -99,6 +99,10 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 				return createMultiSlotAdapter();
 			}
 			@Override
+			public Adapter casePSMPackage(PSMPackage object) {
+				return createPSMPackageAdapter();
+			}
+			@Override
 			public Adapter caseGaResourcesPlatform(GaResourcesPlatform object) {
 				return createGaResourcesPlatformAdapter();
 			}
@@ -203,6 +207,20 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMultiSlotAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Core.PSMPackage <em>PSM Package</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Core.PSMPackage
+	 * @generated
+	 */
+	public Adapter createPSMPackageAdapter() {
 		return null;
 	}
 

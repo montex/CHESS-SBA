@@ -700,6 +700,39 @@
       <element xmi:type="uml:Stereotype" href="CHESS.profile.uml#_TU0mMFlGEeGy4eSU5cG5hA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_TU8iAVlGEeGy4eSU5cG5hA" x="41" y="395"/>
     </children>
+    <children xmi:type="notation:Shape" xmi:id="_dCa-YFhYEeSGgdhwaAUffg" type="1031">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dCmkkFhYEeSGgdhwaAUffg" source="Stereotype_Annotation">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dCnLoFhYEeSGgdhwaAUffg" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dCnLoVhYEeSGgdhwaAUffg" key="StereotypeList" value="StandardProfile::Metaclass"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dCnLolhYEeSGgdhwaAUffg" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dCnLo1hYEeSGgdhwaAUffg" key="PropStereoDisplay" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dCnysFhYEeSGgdhwaAUffg" key="StereotypePropertyLocation" value="Compartment"/>
+      </eAnnotations>
+      <children xmi:type="notation:DecorationNode" xmi:id="_dCkIUFhYEeSGgdhwaAUffg" type="1084"/>
+      <element xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dCkvYFhYEeSGgdhwaAUffg" x="148" y="554"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_dwCSUFhYEeSGgdhwaAUffg" type="1026">
+      <children xmi:type="notation:DecorationNode" xmi:id="_dwDgcFhYEeSGgdhwaAUffg" type="1034"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_dwEHgFhYEeSGgdhwaAUffg" type="1071">
+        <children xmi:type="notation:Node" xmi:id="_jQd1AFhYEeSGgdhwaAUffg" type="3002">
+          <element xmi:type="uml:Property" href="CHESS.profile.uml#_jN-hsFhYEeSGgdhwaAUffg"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_jQd1AVhYEeSGgdhwaAUffg"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_dwEHgVhYEeSGgdhwaAUffg"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_dwEHglhYEeSGgdhwaAUffg"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_dwEHg1hYEeSGgdhwaAUffg"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dwEHhFhYEeSGgdhwaAUffg"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_dwEHhVhYEeSGgdhwaAUffg" type="1019">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_dwEHhlhYEeSGgdhwaAUffg"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_dwEHh1hYEeSGgdhwaAUffg"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_dwEHiFhYEeSGgdhwaAUffg"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dwEHiVhYEeSGgdhwaAUffg"/>
+      </children>
+      <element xmi:type="uml:Stereotype" href="CHESS.profile.uml#_dusOgFhYEeSGgdhwaAUffg"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dwCSUVhYEeSGgdhwaAUffg" x="268" y="636"/>
+    </children>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_7EqPsW8VEd-8i8zc_Ad2sQ"/>
     <element xmi:type="uml:Profile" href="CHESS.profile.uml#_ad4owDgVEd-68Z_bhNRGsA"/>
     <edges xmi:type="notation:Connector" xmi:id="_KN_mUG8WEd-8i8zc_Ad2sQ" type="1013" source="_8D_lwG8VEd-8i8zc_Ad2sQ" target="_KMDsoG8WEd-8i8zc_Ad2sQ" lineColor="0">
@@ -773,6 +806,12 @@
       <element xmi:type="uml:Extension" href="CHESS.profile.uml#_UPPnEFlGEeGy4eSU5cG5hA"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_UPYxAllGEeGy4eSU5cG5hA" points="[10, -10, -105, 89]$[106, -124, -9, -25]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UPeQkFlGEeGy4eSU5cG5hA" id="(0.67,0.1)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_gT2S4FhYEeSGgdhwaAUffg" type="1013" source="_dwCSUFhYEeSGgdhwaAUffg" target="_dCa-YFhYEeSGgdhwaAUffg">
+      <styles xmi:type="notation:FontStyle" xmi:id="_gT2S4VhYEeSGgdhwaAUffg"/>
+      <element xmi:type="uml:Extension" href="CHESS.profile.uml#_gTdRUFhYEeSGgdhwaAUffg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_gT2S4lhYEeSGgdhwaAUffg" points="[-29, -23, 90, 57]$[-69, -76, 50, 4]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_gULDAFhYEeSGgdhwaAUffg" id="(0.49,0.23)"/>
     </edges>
   </notation:Diagram>
   <notation:Diagram xmi:id="_Z4j-MLzoEd-yoLyJo0JlOg" type="PapyrusUMLProfileDiagram" name="StateBasedProfile" measurementUnit="Pixel">

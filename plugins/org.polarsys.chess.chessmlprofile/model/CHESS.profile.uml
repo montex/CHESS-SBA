@@ -1099,6 +1099,17 @@
       <packagedElement xmi:type="uml:Extension" xmi:id="_UPPnEFlGEeGy4eSU5cG5hA" name="E_MultiSlot_Slot0" memberEnd="_UPPnEVlGEeGy4eSU5cG5hA _UPPAAFlGEeGy4eSU5cG5hA">
         <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_UPPnEVlGEeGy4eSU5cG5hA" name="extension_MultiSlot" type="_TU0mMFlGEeGy4eSU5cG5hA" aggregation="composite" association="_UPPnEFlGEeGy4eSU5cG5hA"/>
       </packagedElement>
+      <packagedElement xmi:type="uml:Stereotype" xmi:id="_dusOgFhYEeSGgdhwaAUffg" name="PSMPackage">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_gTcDMFhYEeSGgdhwaAUffg" name="base_Package" association="_gTdRUFhYEeSGgdhwaAUffg">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_jN-hsFhYEeSGgdhwaAUffg" name="AnalysisContext">
+          <type xmi:type="uml:Stereotype" href="pathmap://Papyrus_PROFILES/MARTE.profile.uml#_JAGTsBKhEdyxBYjIJwIrZA"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Extension" xmi:id="_gTdRUFhYEeSGgdhwaAUffg" name="E_PSMPackage_Package1" memberEnd="_gTdRUVhYEeSGgdhwaAUffg _gTcDMFhYEeSGgdhwaAUffg">
+        <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_gTdRUVhYEeSGgdhwaAUffg" name="extension_PSMPackage" type="_dusOgFhYEeSGgdhwaAUffg" aggregation="composite" association="_gTdRUFhYEeSGgdhwaAUffg"/>
+      </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_WSNEsMGMEd--atLXXafOiQ" name="Dependability">
       <packagedElement xmi:type="uml:Profile" xmi:id="_hdOrwLwzEd-CDNLmLgazUQ" name="FailurePropagation" URI="http://CHESS/Dependability/FailurePropagation" metaclassReference="_tr9pIDQ6EeC0ueejuetpgA _1E4EkHpQEeCIAr4_5S9-cA _nxIhIHpREeCIAr4_5S9-cA">

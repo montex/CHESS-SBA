@@ -26,12 +26,17 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.EmfUtil;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaEndtoEndFlow;
+import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Stereotype;
+import org.polarsys.chess.chessmlprofile.Core.CHESS;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
+import org.polarsys.chess.chessmlprofile.Core.PSMPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.ViewUtils;
@@ -83,41 +88,48 @@ public class TransUtil {
 	public static void purgeModel(IFile modelFile, String saAnalysisQN) throws IOException {
 		ModelContent inModel = loadModel(modelFile);
 		Model m = (Model) inModel.getContent().get(0);
-		//get the correct PSM package...
-		SaAnalysisContext saAnalysisCtx = null;
-		for (Element elem :	m.allOwnedElements()) {
-			if(elem instanceof Class){
-				Class cl = (Class) elem;
-				if(cl.getQualifiedName().equals(saAnalysisQN)){				
-					saAnalysisCtx = (SaAnalysisContext) cl.getStereotypeApplication(cl.getAppliedStereotype(SA_ANALYSIS_CTX));
+		//get the correct PSM package and platform...
+		Package psmPackage = null;
+		Package platform = null;
+		Class saAnalysisClass = null;
+		CHESS chess = (CHESS) m.getStereotypeApplication(m.getAppliedStereotype("CHESS::Core::CHESS"));
+		for (Package pkg : chess.getPsmView().getBase_Package().getNestedPackages()) {
+			Stereotype stereo = pkg.getAppliedStereotype("CHESS::Core::PSMPackage");
+			if(stereo != null){
+				PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
+				if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisQN)){
+					psmPackage = pkg;
+					platform = ((CHGaResourcePlatform) psmPkg.getAnalysisContext().getPlatform().get(0)).getBase_Package();
 				}
 			}
-		}if(saAnalysisCtx != null){
-			CHGaResourcePlatform platform = (CHGaResourcePlatform) saAnalysisCtx.getPlatform().get(0);
-			System.out.println(platform.getBase_Package().getName());
-			//...and remove it
-			purgeRTAPackage(m, platform.getBase_Package());
-			purgeBackpropagation(m, platform.getBase_Package());
+		}
+		//...get the analysis context...
+		for(Element elem : chess.getAnalysisView().getRtanalysisview().getBase_Package().allOwnedElements()){
+			if(elem instanceof Class && ((Class)elem).getQualifiedName().equals(saAnalysisQN)){
+				saAnalysisClass = (Class) elem;
+			}
+		}
+		
+		//...and remove the PSM package and clear the backpropagation (platform & context)
+		if(psmPackage != null && platform != null){
+			purgeRTAPackage(m, psmPackage);
+			purgeBackpropagation(m, platform);
+		}
+		
+		if(saAnalysisClass != null){
+			System.out.println(saAnalysisClass.getName());
+			purgeE2EResults(m, saAnalysisClass);
 		}
 		m.eResource().save(null);
 	}
 	
 	// Remove the content of the RtAnalysisPackage
-	private static void purgeRTAPackage(Model m, Package platform) throws IOException {
-		Package psmView = ViewUtils.getCHESSPSMPackage(m);
-		ArrayList<Element> l = new ArrayList<Element>(); 
-		for (Package pkg : psmView.getNestedPackages()) {
-			if(pkg.getName().equalsIgnoreCase(platform.getName() + "_PSM")){
-				l.add(pkg);
-			}
-		}
-		for (Element elem : l) {
-			elem.destroy();
-		}
+	private static void purgeRTAPackage(Model m, Package psmPackage) throws IOException {
+		psmPackage.destroy();
 	}
 	
 	
-	// Remove the values of the backpropagation results 
+	//Remove the values of the backpropagation results 
 	private static void purgeBackpropagation(Model m, Package platform) throws IOException {
 		String name = platform.getName();
 		name = name.substring(0, name.lastIndexOf('_'));
@@ -137,6 +149,16 @@ public class TransUtil {
 					chrt.getBlockT().clear();
 				}
 			}
+		}
+	}
+	
+	private static void purgeE2EResults(Model m, Class saAnalysisClass) {
+		SaAnalysisContext saCtx = UMLUtils.getStereotypeApplication(saAnalysisClass, SaAnalysisContext.class);
+		saCtx.setIsSched("");
+		if(saCtx.getWorkload().size() > 0){
+			Activity act = (Activity) saCtx.getWorkload().get(0).getBase_NamedElement();
+			SaEndtoEndFlow e2eflow = UMLUtils.getStereotypeApplication(act, SaEndtoEndFlow.class);
+			e2eflow.getEnd2EndT().clear();
 		}
 	}
 }

@@ -98,13 +98,15 @@ public class SchedResultDialog extends Dialog {
 			if(utilization != null){
 				item.setText(0, processor.getBase_InstanceSpecification().getName());
 				String utilValue = getValue(utilization, "value");
-				item.setText(1, utilValue  + "%");
-				if(Float.parseFloat(utilValue) <= 100){
-					item.setText(2, "OK");
-					item.setForeground(2, green);
-				}else{
-					item.setText(2, "NOT OK: utiliaztion over 100%");
-					item.setForeground(2, red);
+				if(utilValue != null && !utilValue.isEmpty()){
+					item.setText(1, utilValue  + "%");
+					if(Float.parseFloat(utilValue) <= 100){
+						item.setText(2, "OK");
+						item.setForeground(2, green);
+					}else{
+						item.setText(2, "NOT OK: utiliaztion over 100%");
+						item.setForeground(2, red);
+					}
 				}
 			}
 		}

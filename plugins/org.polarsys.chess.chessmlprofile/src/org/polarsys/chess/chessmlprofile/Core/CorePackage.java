@@ -363,6 +363,44 @@ public interface CorePackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.PSMPackageImpl <em>PSM Package</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Core.impl.PSMPackageImpl
+	 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getPSMPackage()
+	 * @generated
+	 */
+	int PSM_PACKAGE = 6;
+
+	/**
+	 * The feature id for the '<em><b>Base Package</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PSM_PACKAGE__BASE_PACKAGE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Analysis Context</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PSM_PACKAGE__ANALYSIS_CONTEXT = 1;
+
+	/**
+	 * The number of structural features of the '<em>PSM Package</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PSM_PACKAGE_FEATURE_COUNT = 2;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.CHESS <em>CHESS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -621,6 +659,38 @@ public interface CorePackage extends EPackage {
 	EAttribute getMultiSlot_UpperBound();
 
 	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.PSMPackage <em>PSM Package</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>PSM Package</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.PSMPackage
+	 * @generated
+	 */
+	EClass getPSMPackage();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.PSMPackage#getBase_Package <em>Base Package</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Package</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.PSMPackage#getBase_Package()
+	 * @see #getPSMPackage()
+	 * @generated
+	 */
+	EReference getPSMPackage_Base_Package();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.PSMPackage#getAnalysisContext <em>Analysis Context</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Analysis Context</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.PSMPackage#getAnalysisContext()
+	 * @see #getPSMPackage()
+	 * @generated
+	 */
+	EReference getPSMPackage_AnalysisContext();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -845,6 +915,32 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute MULTI_SLOT__UPPER_BOUND = eINSTANCE.getMultiSlot_UpperBound();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.PSMPackageImpl <em>PSM Package</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Core.impl.PSMPackageImpl
+		 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getPSMPackage()
+		 * @generated
+		 */
+		EClass PSM_PACKAGE = eINSTANCE.getPSMPackage();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Package</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PSM_PACKAGE__BASE_PACKAGE = eINSTANCE.getPSMPackage_Base_Package();
+
+		/**
+		 * The meta object literal for the '<em><b>Analysis Context</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PSM_PACKAGE__ANALYSIS_CONTEXT = eINSTANCE.getPSMPackage_AnalysisContext();
 
 	}
 

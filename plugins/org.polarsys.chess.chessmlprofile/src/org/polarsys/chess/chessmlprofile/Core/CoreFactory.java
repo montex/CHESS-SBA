@@ -85,6 +85,15 @@ public interface CoreFactory extends EFactory {
 	MultiSlot createMultiSlot();
 
 	/**
+	 * Returns a new object of class '<em>PSM Package</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>PSM Package</em>'.
+	 * @generated
+	 */
+	PSMPackage createPSMPackage();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

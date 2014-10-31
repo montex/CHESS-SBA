@@ -103,15 +103,15 @@ mapping inout Model::psmModel() {
 		with log("Ambiguos analysis scenario: there should be only one CHGaResourcePlatform in the Analysis Context");
 			
 	log("<<CHGaResourcesPlatform>> found.");	
-	instSpecPackage.map CHGaResourcePlatform2SaAnalysisContext();
+	instSpecPackage.map CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx);
 }
 
-mapping Package::CHGaResourcePlatform2SaAnalysisContext() : Class {
+mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::SAM::SaAnalysisContext) : Class {
 	init{
 		log("Generating <<SaAnalysisContext>> and necessary packages.");
 		
 		psmPackage := object Package {
-			name := self.name + "_PSM";
+			name := saAnalysisCtx.base_NamedElement.name + "_PSM";
 		};
 		hostPackage := object Package {
 			name := "Host";
@@ -131,6 +131,10 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext() : Class {
 		psmPackage.packagedElement += operationPackage;
 		psmPackage.packagedElement += taskPackage;
 		psmPackage.packagedElement += analysisContextPackage;
+		
+		var psmPkg := psmPackage.applyStereotype(getCHESSStereotype("PSMPackage")).oclAsType(CHESS::Core::PSMPackage);
+		psmPkg.AnalysisContext := saAnalysisCtx;
+		
 	}
 	
 	// analysisContextPackage
@@ -1114,7 +1118,6 @@ mapping InstanceSpecification::HwProcessor2SaExecHost() : Class {
 	result.name := self.name;
 	hostPackage.packagedElement += result;
 	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::SAM::SaExecHost);
-	
 	stHost.schedPriRange := "[1..256]";
 	stHost.speedFactor := hcr.speedFactor;
 }

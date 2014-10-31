@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
@@ -108,11 +109,10 @@ public class End2EndResultDialog extends Dialog {
 		String e2eTimeVal = null;
 
 		String e2eDl = null;
-		String e2eDlVal = null;
+		String e2eDlVal =null; 
 		String e2eDlUnit = null;
-		
 		//compute e2e analysis results:
-		if(saE2EFlow.getEnd2EndT().size() > 0 && saE2EFlow.getEnd2EndD().size() > 0){
+		if(saE2EFlow.getEnd2EndT().size() > 0){
 			e2eTime = saE2EFlow.getEnd2EndT().get(0);
 			e2eTimeUnit = getValue(e2eTime, "unit");
 			e2eTimeVal = getValue(e2eTime, "worst");
@@ -122,21 +122,26 @@ public class End2EndResultDialog extends Dialog {
 			e2eDlUnit =  getValue(e2eDl, "unit");
 		}
 
-		//if deadline is expressed in ms and response time is in s, use ms (other cases?)
-		if(e2eTimeVal != null && !e2eTimeVal.isEmpty() && e2eTimeUnit.equals("s")){
-			double conv = Float.parseFloat(e2eTimeVal)*1000;
-			conv = Math.round(conv*100)/100.0d;
-			e2eTimeVal = Double.toString(conv);
-			e2eTimeUnit = "ms";
-		}
 		boolean e2eResult = false;
-		if (!e2eTimeVal.isEmpty() && !e2eDlVal.isEmpty() && Float.parseFloat(e2eTimeVal) <= Float.parseFloat(e2eDlVal)){
-			e2eResult = true;
-		}
-		if(e2eResult){
-			resultLabel.setText("End-To-End Timing Constraints are Satisfied by the System");
+		if(e2eTimeVal == null){
+			resultLabel.setText("Problems while performing the analysis. Results not significant");
 		}else{
-			resultLabel.setText("End-To-End Timing Constraints are NOT Satisfied by the System");
+
+			//if deadline is expressed in ms and response time is in s, use ms (other cases?)
+			if(e2eTimeVal != null && !e2eTimeVal.isEmpty() && e2eTimeUnit.equals("s")){
+				double conv = Float.parseFloat(e2eTimeVal)*1000;
+				conv = Math.round(conv*100)/100.0d;
+				e2eTimeVal = Double.toString(conv);
+				e2eTimeUnit = "ms";
+			}
+			if (e2eTimeVal != null && !e2eTimeVal.isEmpty() && !e2eDlVal.isEmpty() && Float.parseFloat(e2eTimeVal) <= Float.parseFloat(e2eDlVal)){
+				e2eResult = true;
+			}
+			if(e2eResult){
+				resultLabel.setText("End-To-End Timing Constraints are Satisfied by the System");
+			}else{
+				resultLabel.setText("End-To-End Timing Constraints are NOT Satisfied by the System");
+			}
 		}
 		cpuLabel = new Label(container, SWT.NONE);
 		cpuLabel.setFont(new Font(display,"Tahoma", 12, SWT.ITALIC));
@@ -157,13 +162,15 @@ public class End2EndResultDialog extends Dialog {
 			if(utilization != null){
 				item.setText(0, processor.getBase_InstanceSpecification().getName());
 				String utilValue = getValue(utilization, "value");
+				if(utilValue != null){
 				item.setText(1, utilValue  + "%");
-				if(Float.parseFloat(utilValue) <= 100){
-					item.setText(2, "OK");
-					item.setForeground(2, green);
-				}else{
-					item.setText(2, "NOT OK: utilization over 100%");
-					item.setForeground(2, red);
+					if(Float.parseFloat(utilValue) <= 100){
+						item.setText(2, "OK");
+						item.setForeground(2, green);
+					}else{
+						item.setText(2, "NOT OK: utilization over 100%");
+						item.setForeground(2, red);
+					}
 				}
 			}
 		}
@@ -205,17 +212,19 @@ public class End2EndResultDialog extends Dialog {
 
 		item.setText(1, opSequence.toString());
 		
+		if(e2eTimeVal != null){
 		//set the response time and deadline
 		item.setText(2, e2eTimeVal + e2eTimeUnit);
 		item.setText(3, e2eDlVal + e2eDlUnit);
 		
 		//set the result
-		if(e2eResult){
-			item.setText(4, "OK");
-			item.setForeground(4, green);
-		}else{
-			item.setText(4, "NOT OK: Response Time > Deadline");
-			item.setForeground(4, red);
+			if(e2eResult){
+				item.setText(4, "OK");
+				item.setForeground(4, green);
+			}else{
+				item.setText(4, "NOT OK: Response Time > Deadline");
+				item.setForeground(4, red);
+			}
 		}
 		
 		for (int i = 0; i < e2eTitles.length; i++) {
@@ -385,6 +394,9 @@ public class End2EndResultDialog extends Dialog {
 	}
 
 	public void setSaAnalysisCtx(SaAnalysisContext saAnalysisCtx) {
+		if(saAnalysisCtx != null && saAnalysisCtx.eIsProxy()){
+			saAnalysisCtx = (SaAnalysisContext) EcoreUtil.resolve(saAnalysisCtx, saAnalysisCtx.eResource());
+		}
 		this.saAnalysisCtx = saAnalysisCtx;
 	}
 	
