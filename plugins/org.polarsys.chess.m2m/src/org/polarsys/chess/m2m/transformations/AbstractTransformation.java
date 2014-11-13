@@ -17,6 +17,7 @@ public abstract class AbstractTransformation {
 	private String folder = TransUtil.TRANSFORMATIONS_DIR;
 	private IFolder transDir;
 	protected Map<String, String> configProperty;
+	private String saAnalysisName;
 
 	public AbstractTransformation() {
 		super();
@@ -46,13 +47,14 @@ public abstract class AbstractTransformation {
 				model.getName());
 		// Remove the content of the RtAnalysisPackage and Backpropagation
 		// results
-		TransUtil.purgeModel(modelCopy);
+		TransUtil.purgeModel(modelCopy, saAnalysisName);
 		return modelCopy;
 	}
 
 	public TransformationResultsData performTransformation(
 			final PapyrusMultiDiagramEditor editor, IFile model, IProgressMonitor monitor)
 			throws Exception {
+		saAnalysisName = configProperty.get("saAnalysis");
 		// Tidy up directories
 
 		IFile modelCopy = s1(model);

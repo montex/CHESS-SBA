@@ -37,6 +37,7 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPor
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
+import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.m2m.transformations.PIMPSMTransformationEnd2End;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 import org.eclipse.core.commands.AbstractHandler;
@@ -80,6 +81,7 @@ import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Stereotype;
 
 @SuppressWarnings("restriction")
@@ -212,7 +214,7 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 						ModelContent inModel = TransUtil.loadModel(result.umlFile);
 						Model model = (Model) inModel.getContent().get(0);
 						
-						openE2EAnalysisReport(model, saAnalysisCtx, saE2EFlow, interaction);
+						openE2EAnalysisReport(model, saAnalysisName, interaction);
 					} catch (Exception e) {
 						e.printStackTrace();
 						throw new Exception("Unable to load the model and so open the schedAnalysisReport");
@@ -280,12 +282,25 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 	/***
 	 * 
 	 * @param model
+	 * @param interaction 
 	 * @param saAnalysis
 	 * @param saE2EFlow
 	 * @param interaction 
 	 */
-	public void openE2EAnalysisReport(final Model model, final SaAnalysisContext saAnalysisCtx, final SaEndtoEndFlow saE2EFlow, Interaction interaction){
+	public void openE2EAnalysisReport(final Model model, String saAnalysisName, Interaction interaction){
 		//get all the e2e analysis result info from the model and open a simple, user-friendly report
+		SaAnalysisContext saAnCtx = null;
+		SaEndtoEndFlow saflow = null;
+		Package anView = (Package) ViewUtils.getCHESSRtAnalysisPackage(model).getOwner();
+		for (Element elem : anView.allOwnedElements()) {
+			if(elem instanceof Class && ((Class)elem).getQualifiedName().equals(saAnalysisName)){
+				saAnCtx = UMLUtils.getStereotypeApplication(elem, SaAnalysisContext.class);
+				if(saAnCtx.getWorkload().size() > 0){
+					saflow = UMLUtils.getStereotypeApplication(saAnCtx.getWorkload().get(0).getBase_NamedElement(), SaEndtoEndFlow.class);
+				}
+			}
+		}
+		
 		EList<Message> messages = interaction.getMessages();
 		final List<Operation> e2eOperations = new ArrayList<Operation>();
 		for (Message msg : messages) {
@@ -314,8 +329,11 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 			if(assign != null){
 				assigns.add(assign);
 			}
-		};
-		
+		};	
+		launchDialog(model, cpus, saAnCtx, saflow, e2eOperations, assigns, specifications);
+	}
+	
+	private static void launchDialog(final Model model, final List<CH_HwProcessor> cpus, final SaAnalysisContext saAnCtx, final SaEndtoEndFlow saflow, final List<Operation> e2eOperations, final List<Assign> assigns, final List<CHRtPortSlot> specifications){
 		final Display display = PlatformUI.getWorkbench().getDisplay();
 		display.asyncExec(new Runnable() {
 			@Override
@@ -324,8 +342,8 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 				End2EndResultDialog e2eDialog = new End2EndResultDialog(shell, model);
 				e2eDialog.setCpus(cpus);
 				e2eDialog.setSpecifications(specifications);
-				e2eDialog.setSaAnalysisCtx(saAnalysisCtx);
-				e2eDialog.setSaE2EFlow(saE2EFlow);
+				e2eDialog.setSaAnalysisCtx(saAnCtx);
+				e2eDialog.setSaE2EFlow(saflow);
 				e2eDialog.setMessages(e2eOperations);
 				e2eDialog.setAssigns(assigns);
 				if (e2eDialog.open() == Window.OK) {

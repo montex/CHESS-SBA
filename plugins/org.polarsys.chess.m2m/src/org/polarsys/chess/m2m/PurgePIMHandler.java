@@ -34,6 +34,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaEndtoEndFlow;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.ui.IEditorPart;
@@ -125,10 +127,10 @@ public class PurgePIMHandler extends AbstractHandler {
 
 	
 	private Model resetStereotypeValues(Model m) {
-		Package rt;
-		rt = ViewUtils.getCHESSComponentPackage(m);
+		Package pkg;
+		pkg = ViewUtils.getCHESSComponentPackage(m);
 		
-		for (Element e : rt.allOwnedElements()) {
+		for (Element e : pkg.allOwnedElements()) {
 			if (e instanceof Comment){
 				
 				CHRtSpecification s = UMLUtils.getStereotypeApplication(e, CHRtSpecification.class);
@@ -142,8 +144,8 @@ public class PurgePIMHandler extends AbstractHandler {
 			}
 		}
 		
-		rt = ViewUtils.getCHESSDeploymentPackage(m);
-		for (Element e : rt.allOwnedElements()) {
+		pkg = ViewUtils.getCHESSDeploymentPackage(m);
+		for (Element e : pkg.allOwnedElements()) {
 			if (e instanceof InstanceSpecification){
 				CH_HwProcessor pr = UMLUtils.getStereotypeApplication(e, CH_HwProcessor.class);
 				if (pr != null){
@@ -155,6 +157,22 @@ public class PurgePIMHandler extends AbstractHandler {
 				if (bu != null){
 					bu.setUtilization(null);
 					printlnToCHESSConsole("Resetting:" + e);
+				}
+			}
+		}
+		
+		pkg = (Package) ViewUtils.getCHESSRtAnalysisPackage(m).getOwner();
+		for (Element e : pkg.allOwnedElements()) {
+			if (e instanceof org.eclipse.uml2.uml.Class){
+				
+				SaAnalysisContext s = UMLUtils.getStereotypeApplication(e, SaAnalysisContext.class);
+				if (s != null){
+					printlnToCHESSConsole("Resetting:" + e);
+					s.setIsSched("");
+					if(s.getWorkload().size() > 0){
+						SaEndtoEndFlow e2e = UMLUtils.getStereotypeApplication(s.getWorkload().get(0).getBase_NamedElement(), SaEndtoEndFlow.class);
+						e2e.getEnd2EndT().clear();
+					}
 				}
 			}
 		}
