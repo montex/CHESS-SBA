@@ -111,6 +111,14 @@ public class ViewDiagramAssociations {
 		deploymentDiagrams.add(stateMachineDiagram);
 		viewDiagramsAssociation.put(CHESSProfileManager.DEPLOYMENT_VIEW,
 				deploymentDiagrams);
+		
+		//diagrams for DepAnalysisView to be defined
+		HashSet<String> analysisDiagrams = new HashSet<String>();
+		analysisDiagrams.add("PapyrusUMLActivityDiagram");
+		analysisDiagrams.add("PapyrusUMLClassDiagram");
+		viewDiagramsAssociation.put(CHESSProfileManager.ANALYSIS_VIEW,
+				analysisDiagrams);
+		
 
 		// TODO diagrams for RtAnalysisView to be defined
 		HashSet<String> rtAnalysisDiagrams = new HashSet<String>();
