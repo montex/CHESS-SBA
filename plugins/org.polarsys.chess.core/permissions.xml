@@ -17,7 +17,15 @@
                   <perm el="IntervalConstraint" owner="true" write="true" visible="true"/>
                   <perm el="Interval" owner="true" write="true" visible="true"/>
                   <perm el="OpaqueExpression" owner="true" write="true" visible="true"/>
+                  <!-- to work with sequence diagram entities, also through the model browser-->
+                  <perm el="ExecutionOccurrenceSpecification" owner="true" write="true" visible="true"/>
+                  <perm el="ActionExecutionSpecification" owner="true" write="true" visible="true"/>
+                  <perm el="Lifeline" owner="true" write="true" visible="true"/>
+                  <perm el="Message" owner="true" write="true" visible="true"/>
+                  <perm el="BehaviorExecutionSpecification" owner="true" write="true" visible="true"/>
+                  <perm el="MessageOccurrenceSpecification" owner="true" write="true" visible="true"/>
                   
+                                                   
                   <!--      To delete activity BEGIN     -->
                   <perm el="Region" owner="true" write="true" visible="true"/>
                   <perm el="InitialNode" owner="true" write="true" visible="true"/>
@@ -226,6 +234,7 @@
                   <perm el="UseCase" owner="true" write="true" visible="true"/>
                   <perm el="Association" owner="true" write="true" visible="true"/>
             </diagram>
+            
       </view>
       <view name="ExtraFunctionalView">
             <!--perm owner="true" write="true" visible="true"/-->
