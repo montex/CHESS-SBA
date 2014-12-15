@@ -255,7 +255,7 @@ public class MARTEProfileManager {
 			}
 			Stereotype str = ((Profile) MARTE_Alloc).getOwnedStereotype("Allocate");
 			element.applyStereotype(str);*/
-			UMLUtils.applyStereotype(element, "MARTE::MARTE_Foundations::Alloc::Allocated");
+			UMLUtils.applyStereotype(element, "MARTE::MARTE_Foundations::Alloc::Allocate");
 		}
 		
 		if (stereoName.equalsIgnoreCase("ClientServerPort")) {
