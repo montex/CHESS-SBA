@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="CHESS-TimingAnalysisDrawer" name="Nodes">
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Class.gif" id="clazz.tool.class_1418744792127" name="SaAnalysisContext (Class)" refToolId="clazz.tool.class">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+		</drawer>
+	</content>
+</paletteDefinition>

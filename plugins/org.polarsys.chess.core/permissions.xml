@@ -546,7 +546,12 @@
       </view>
       <view name="RTAnalysisView">
             <diagram name="*">
-                  <perm owner="true" visible="true"/>
+                  <!--perm owner="true" visible="true"/-->
+                  <perm el="Class" owner="true" write="true" visible="true"/>
+                  <perm el="Package" owner="true" write="true" visible="true"/>
+                  <perm st="SaAnalysisContext" owner="true" write="true" visible="true"/>
+                  <perm st="PSMPackage" owner="true" write="true" visible="true"/> <!-- to delete saAnalysisContext-->
+                  
             </diagram>
       </view>
       <view name="DependabilityAnalysisView">

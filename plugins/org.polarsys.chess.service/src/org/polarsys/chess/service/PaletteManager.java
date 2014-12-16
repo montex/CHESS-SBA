@@ -224,9 +224,10 @@ public class PaletteManager {
 		
 		if (viewName.equals(CHESSProfileManager.RT_ANALYSIS_VIEW)){
 			if (diagramName.equals(ViewDiagramAssociations.classDiagram)){
-				paletteDrawer.setVisible(false);
-				if (paletteId.compareTo("AnalysisViewDrawer__1317300165546")!=0)
+				if (paletteId.compareTo("CHESS-TimingAnalysisDrawer")!=0)
 					paletteDrawer.setVisible(false);
+				else
+					paletteDrawer.setVisible(true);
 			}
 		}
 		
@@ -241,15 +242,4 @@ public class PaletteManager {
 	
 	}
 
-	private static IEditorPart getActiveSashPage(PapyrusMultiDiagramEditor editorPart) {
-		// Lookup ServiceRegistry
-		//IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		//IEditorPart editorPart = page.getActiveEditor();
-		//assert editorPart != null;
-		ISashWindowsContainer sashWindowsContainer = (ISashWindowsContainer)editorPart.getAdapter(ISashWindowsContainer.class);
-		if(sashWindowsContainer != null) {
-			return sashWindowsContainer.getActiveEditor();
-		}
-		return null;
-	}
 }

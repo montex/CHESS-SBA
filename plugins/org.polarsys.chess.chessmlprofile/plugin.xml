@@ -793,6 +793,24 @@
          </editor>
       </paletteDefinition>
    </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="CD-TimingAnalysis-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="CD-TimingAnalysis-Palette"
+            path="/palettes/ClassDiag-TimingAnalysis.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.clazz">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
    <extension
          point="org.eclipse.papyrus.uml.extensionpoints.UMLProfile">
       <profile
