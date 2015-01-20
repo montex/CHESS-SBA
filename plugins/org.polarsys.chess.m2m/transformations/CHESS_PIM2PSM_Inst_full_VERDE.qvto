@@ -240,28 +240,32 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext() : Class {
 		var pimActivity : Activity = model.allOwnedElements()[Activity]->selectOne(a : Activity | a.qualifiedName.equalsIgnoreCase(saE2EFlow));
 		var interactions : Set(Interaction) := model.allOwnedElements()[Interaction];
 		interactions->forEach(interaction){
-		if(interaction.qualifiedName.equalsIgnoreCase(scenario)) then {
-			log(">>>>> Found End-To-End Scenario: " + interaction.name);
-			interaction.map Interaction2EndToEndWorkFlow(result, pimContext, pimActivity);
-		} endif;
-		
-		log("e2e operations:");
-		e2eOperations->forEach(op){
-			log("   "+ op.name)
+			if(interaction.qualifiedName.equalsIgnoreCase(scenario)) then {
+				log(">>>>> Found End-To-End Scenario: " + interaction.name);
+				interaction.map Interaction2EndToEndWorkFlow(result, pimContext, pimActivity);
+			
+				log("e2e operations:");
+				e2eOperations->forEach(op){
+					log("   "+ op.name)
+				};
+				
+				//Proceeds to create the EndToEndWorkFlow for those tasks not involved in the e2e scenario"
+				log("*** Proceeds to create the EndToEndWorkFlow ***");
+				slotInstances->forEach(s){
+					var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
+					specs->forEach(spec){
+						
+						log("*** checking  ***"+spec.context.name +"...");
+						if(not e2eOperations->exists(op: Operation | op.name.equalsIgnoreCase(spec.context.name))) then {
+							
+							log("***... not found  ***");
+							log("Operation is: " +  spec.context.name);
+						    s.map slot2EndToEndWorkFlow(spec.base_Comment);
+						} endif;
+					};
+				};	
+			} endif;	
 		};
-		
-		//Proceeds to create the EndToEndWorkFlow for those tasks not involved in the e2e scenario"
-		log("*** Proceeds to create the EndToEndWorkFlow ***");
-		slotInstances->forEach(s){
-			var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
-			specs->forEach(spec){
-				if(not e2eOperations->exists(op: Operation | op.name.equalsIgnoreCase(spec.context.name))) then {
-					log("Operation is: " +  spec.context.name);
-				    s.map slot2EndToEndWorkFlow(spec.base_Comment);
-				} endif;
-			};
-		};		
-	};
 
 	} endif;
 	
@@ -1406,7 +1410,7 @@ query ConnectableElement::getLifeLineInstance(instances : Set(InstanceSpecificat
 	var nonNullInstances : Set(InstanceSpecification) := instances->select(instance : InstanceSpecification | not instance.name.oclIsUndefined());
 	// 20150114: SP corrected next line to avoid trouble in case of an InstanceSpecification whose name is a substring of another 
 	//return nonNullInstances->selectOne(instance : InstanceSpecification | instance.name.indexOf(name) > 0);
-	return nonNullInstances->selectOne(instance : InstanceSpecification | instance.name.indexOf("."+self.name) > 0);
+	return nonNullInstances->selectOne(instance : InstanceSpecification | instance.name.endsWith("."+self.name));
 }
 
 helper Message::getMsgChrts() : chessmlprofile::RTComponentModel::CHRtSpecification {
