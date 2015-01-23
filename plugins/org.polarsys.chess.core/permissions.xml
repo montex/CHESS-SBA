@@ -113,8 +113,13 @@
                   <perm st="SRAComponent" owner="true" write="true" visible="true"/>
                   <perm el="Association" owner="true" write="true" visible="true"/>
                   <perm st="ContractRefinement" owner="true" write="true" visible="true"/>
-                                    
-                 <!--DEBUG perm el="Lifeline" owner="true" write="true" visible="true"/-->
+                  
+                  <!-- Operational Modes-->
+                  <perm st="ModeBehavior" owner="true" write="true" visible="true"/>
+                  <perm st="Mode" owner="true" write="true" visible="true"/>
+                  <perm st="ModeTransition" owner="true" write="true" visible="true"/>
+                  
+            
             </diagram>
             <diagram name="Composite">
             	 <perm el="Component" owner="true" write="true" visible="true"/>
@@ -141,10 +146,9 @@
                  <perm el="Realization" owner="true" write="true" visible="true"/>
                  <perm el="Dependency" owner="true" write="true" visible="true"/>
                  
-                 <!--forever-->
+                 <!--contracts-->
                  <perm el="Class" owner="true" write="true" visible="true"/>
                  <perm st="DelegationConstraint" owner="true" write="true" visible="true"/>
-                 
                  
             </diagram>
             <diagram name="Class">
@@ -188,11 +192,15 @@
                  <perm st="Configuration" owner="true" visible="true"/>
                  <perm el="Property" owner="true" visible="true"/>
                  
-                 <!-- Forever -->
+                 <!-- Contracts -->
                  <perm st="Contract" owner="true" write="true" visible="true"/>
                  <perm st="FormalProperty" owner="true" write="true" visible="true"/>
                  <perm st="ConstraintBlock" owner="true" write="true" visible="true"/>
                  <perm st="ContractProperty" owner="true" write="true" visible="true"/>
+                 
+                  <!--Events-->
+                 <perm el="Signal" owner="true" write="true" visible="true"/>
+                 <perm el="Reception" owner="true" write="true" visible="true"/>
                  
             </diagram>
             <diagram name="Activity">
@@ -205,6 +213,7 @@
                   <perm el="InputPin" owner="true" write="true" visible="true"/>
                   <perm el="Activity" owner="true" write="true" visible="true"/>
                   <perm ft="classifierBehavior" owner="true" write="true" visible="true"/>
+                  <perm el="SendSignalAction" owner="true" write="true" visible="true"/>
                  
                   <!-- deletion -->
                   <perm st="Propagation" owner="true" visible="true"/>
@@ -437,6 +446,11 @@
                   <perm el="Association" owner="true" write="true" visible="true"/>
                   <perm st="ContractRefinement" owner="true" write="true" visible="true"/>
                   
+                  <!-- Operational Modes-->
+                  <perm st="ModeBehavior" owner="true" write="true" visible="true"/>
+                  <perm st="Mode" owner="true" write="true" visible="true"/>
+                  <perm st="ModeTransition" owner="true" write="true" visible="true"/>
+                  
                   
             </diagram>
             <diagram name="Class">
@@ -618,6 +632,12 @@
                   <perm el="*" owner="true" write="true" visible="true"/>
                   <perm st="DelegationConstraint" owner="true" write="true" visible="true"/>
                   <perm st="AutomotiveBlock" owner="true" write="true" visible="true"/>
+                  
+                  <!-- Operational Modes-->
+                  <perm st="ModeBehavior" owner="true" write="true" visible="true"/>
+                  <perm st="Mode" owner="true" write="true" visible="true"/>
+                  <perm st="ModeTransition" owner="true" write="true" visible="true"/>
+                  
             </diagram>            
       </view>
       

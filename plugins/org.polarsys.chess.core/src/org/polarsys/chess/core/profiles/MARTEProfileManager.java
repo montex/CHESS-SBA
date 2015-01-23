@@ -30,6 +30,7 @@ import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HRMPackage;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.SRM.SW_Concurrency.SW_ConcurrencyPackage;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.SRM.SW_Interaction.SW_InteractionPackage;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.AllocPackage;
+import org.eclipse.papyrus.MARTE.MARTE_Foundations.CoreElements.CoreElementsPackage;
 import org.eclipse.papyrus.uml.tools.utils.PackageUtil;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
@@ -243,46 +244,25 @@ public class MARTEProfileManager {
 		Profile MARTE_SW_INTERACTION =  UMLResourcesUtil.getProfile(SW_InteractionPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, MARTE_SW_INTERACTION, false);
 	}
+	
+	public static void applyCoreElementProfileTo(Package element) {
+		Profile MARTE_CORE_ELEMENT =  UMLResourcesUtil.getProfile(CoreElementsPackage.eINSTANCE, element);
+		PackageUtil.applyProfile(element, MARTE_CORE_ELEMENT, false);
+	}
 
 	public static void applyStereotypeTo(String stereoName, Element element) {
 		if (stereoName.equalsIgnoreCase("Allocate")) {
-			/*if(MARTE_Alloc == null){
-				if(MARTEProfile == null){ 
-					ResourceSet rs = element.eResource().getResourceSet();
-					MARTEProfile = (Profile) rs.getResource(URI.createURI(MARTE_PATH), true).getContents().get(0);
-				}
-				MARTE_Alloc = (Profile) MARTEProfile.getNestedPackage("MARTE_Foundations").getNestedPackage("Alloc");
-			}
-			Stereotype str = ((Profile) MARTE_Alloc).getOwnedStereotype("Allocate");
-			element.applyStereotype(str);*/
+			
 			UMLUtils.applyStereotype(element, "MARTE::MARTE_Foundations::Alloc::Allocate");
 		}
 		
 		if (stereoName.equalsIgnoreCase("ClientServerPort")) {
-			/*if(MARTE_gcmProfile == null){
-				if(MARTEProfile == null){ 
-					ResourceSet rs = element.eResource().getResourceSet();
-					MARTEProfile = (Profile) rs.getResource(URI.createURI(MARTE_PATH), true).getContents().get(0);
-				}
-				MARTE_gcmProfile = (Profile) MARTEProfile.getNestedPackage("MARTE_DesignModel").getNestedPackage("GCM");
-			}
-			Stereotype str = ((Profile) MARTE_gcmProfile).getOwnedStereotype("ClientServerPort");
-			element.applyStereotype(str);*/
+			
 			UMLUtils.applyStereotype(element, "MARTE::MARTE_DesignModel::GCM::ClientServerPort");
-			
-			
+
 		}
 		
 		if (stereoName.equalsIgnoreCase("FlowPort")) {
-			/*if(MARTE_gcmProfile == null){
-				if(MARTEProfile == null){ 
-					ResourceSet rs = element.eResource().getResourceSet();
-					MARTEProfile = (Profile) rs.getResource(URI.createURI(MARTE_PATH), true).getContents().get(0);
-				}
-				MARTE_gcmProfile = (Profile) MARTEProfile.getNestedPackage("MARTE_DesignModel").getNestedPackage("GCM");
-			}
-			Stereotype str = ((Profile) MARTE_gcmProfile).getOwnedStereotype("FlowPort");			
-			element.applyStereotype(str);*/
 			
 			UMLUtils.applyStereotype(element, "MARTE::MARTE_DesignModel::GCM::FlowPort");
 		}
@@ -315,6 +295,8 @@ public class MARTEProfileManager {
 		applySAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.PSM_VIEW));
 		applySwConcurrencyProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.PSM_VIEW));
 		applySwInteractionProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.PSM_VIEW));
+		
+		applyCoreElementProfileTo(currentModel);
 		
 		applyDataTypeProfileTo(currentModel);
 	}
