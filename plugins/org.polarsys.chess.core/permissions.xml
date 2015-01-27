@@ -638,6 +638,9 @@
                   <perm st="Mode" owner="true" write="true" visible="true"/>
                   <perm st="ModeTransition" owner="true" write="true" visible="true"/>
                   
+                   <!--Events-->
+                 <perm el="Signal" owner="true" write="true" visible="true"/>
+                                
             </diagram>            
       </view>
       
