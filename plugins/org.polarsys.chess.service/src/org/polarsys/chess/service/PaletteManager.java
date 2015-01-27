@@ -108,13 +108,21 @@ public class PaletteManager {
 		String label = paletteDrawer.getLabel();
 		String paletteId = paletteDrawer.getId();
 		if (viewName.equals(CHESSProfileManager.COMPONENT_VIEW)){
-			if (diagramName.equals(ViewDiagramAssociations.classDiagram)||
-				diagramName.equals(ViewDiagramAssociations.compositeDiagram)){
+			if (diagramName.equals(ViewDiagramAssociations.classDiagram)){
 				//set visibility only for the palette's functional tools
 				paletteDrawer.setVisible(false);
-				if (label.equals("CHESS FunctView") || label.equals("FoReVer")) //TODO here we should re-engineer the code to allow a more flexible management of additional profile palettes
+				if (paletteId.compareTo("CHESSNodesFunctionalViewDrawerID")==0 || 	
+						paletteId.compareTo("CHESSEdgeFunctionalViewDrawerID")==0 ||
+						paletteId.compareTo("ContractsClassDiagramDrawer")==0) //TODO here we should re-engineer the code to allow a more flexible management of additional profile palettes
 					paletteDrawer.setVisible(true);
 			}
+			if (diagramName.equals(ViewDiagramAssociations.compositeDiagram)){
+					//set visibility only for the palette's functional tools
+					paletteDrawer.setVisible(false);
+					if (paletteId.compareTo("CompositeDiagramFunctionalViewDrawerID")==0 || 	
+						paletteId.compareTo("CompositeFunctionalViewContractDrawerID")==0) //TODO here we should re-engineer the code to allow a more flexible management of additional profile palettes
+						paletteDrawer.setVisible(true);
+				}
 			if (diagramName.equals(ViewDiagramAssociations.activityDiagram)){
 				paletteDrawer.setVisible(false);
 				if (label.equals("CHESS/Activity"))
@@ -140,9 +148,6 @@ public class PaletteManager {
 		if (viewName.equals(CHESSProfileManager.EXTRAFUNCTIONAL_VIEW)){
 			//if (diagramName.equals(ViewDiagramAssociations.compositeDiagram)){
 				//hide the palette's functional tools
-				/*paletteDrawer.setVisible(true);
-				if (label.equals("CHESS FunctView") || label.equals("CHESS/Deployment") || label.equals("CHESS/Activity"))
-					paletteDrawer.setVisible(false);*/
 			//}
 				if (diagramName.equals(ViewDiagramAssociations.stateMachineDiagram)){
 					paletteDrawer.setVisible(true);
@@ -180,7 +185,7 @@ public class PaletteManager {
 			if (diagramName.equals(ViewDiagramAssociations.classDiagram)){
 				//hide the palette's functional tools
 				paletteDrawer.setVisible(false);
-				if (label.equals("CHESS/Deployment") || label.equals("FoReVerDeploymentCD"))
+				if (paletteId.compareTo("DeploymentClassDrawerID")==0 || paletteId.compareTo("DeploymentContractClassDrawerID")==0)
 					paletteDrawer.setVisible(true);
 			}
 			if (diagramName.equals(ViewDiagramAssociations.compositeDiagram)){

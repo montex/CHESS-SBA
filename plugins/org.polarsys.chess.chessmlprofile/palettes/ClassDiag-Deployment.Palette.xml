@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <paletteDefinition>
 	<content>
-		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="Drawer__1316779617160" name="CHESS/Deployment">
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="DeploymentClassDrawerID" name="PlatformSpecification">
 			<aspectTool description="Create new Package" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Package.gif" id="clazz.tool.package_1316779781926" name="Package" refToolId="clazz.tool.package"/>
 			<aspectTool description="Create a CH_HwProcessor component" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1316779719559" name="CH_HWProcessor (Component)" refToolId="clazz.tool.component">
 				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">

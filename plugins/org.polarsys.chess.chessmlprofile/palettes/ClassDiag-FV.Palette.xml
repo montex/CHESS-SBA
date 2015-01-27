@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <paletteDefinition>
 	<content>
-		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif"
-			id="Drawer__1301932755309" name="CHESS FunctView">
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" 
+			id="CHESSNodesFunctionalViewDrawerID" name="Nodes">
 			<aspectTool description="Create new Package"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Package.gif"
 				id="clazz.tool.package_1301932880986" name="Package" refToolId="clazz.tool.package" />
@@ -91,6 +91,10 @@
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/EnumerationLiteral.gif"
 				id="clazz.tool.enumerationliteral_1301932936629" name="Enumeration literal"
 				refToolId="clazz.tool.enumerationliteral" />
+			<aspectTool description="Create a signal" iconpath="bundleentry://1196.fwk371570992/icons/full/obj16/Signal.gif" id="clazz.tool.signal_1422267025205" name="Signal" refToolId="clazz.tool.signal"/>
+			<aspectTool description="Create a reception" iconpath="bundleentry://1196.fwk371570992/icons/full/obj16/Reception.gif" id="clazz.tool.reception_1422267072416" name="Reception" refToolId="clazz.tool.reception"/>
+		</drawer>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif"  id="CHESSEdgeFunctionalViewDrawerID" name="Edges">
 			<aspectTool description="Create a generalization"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Generalization.gif"
 				id="clazz.tool.generalization_1301932946786" name="Generalization"
