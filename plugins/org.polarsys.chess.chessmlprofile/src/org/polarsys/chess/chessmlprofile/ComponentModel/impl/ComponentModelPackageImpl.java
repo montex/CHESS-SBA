@@ -74,6 +74,8 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl;
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
 
 /**
@@ -178,6 +180,7 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		DeploymentConfAnalysisPackageImpl theDeploymentConfAnalysisPackage = (DeploymentConfAnalysisPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) instanceof DeploymentConfAnalysisPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) : DeploymentConfAnalysisPackage.eINSTANCE);
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
+		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theComponentModelPackage.createPackageContents();
@@ -203,6 +206,7 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		theDeploymentConfAnalysisPackage.createPackageContents();
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
+		theSTSPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theComponentModelPackage.initializePackageContents();
@@ -228,6 +232,7 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		theDeploymentConfAnalysisPackage.initializePackageContents();
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
+		theSTSPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theComponentModelPackage.freeze();

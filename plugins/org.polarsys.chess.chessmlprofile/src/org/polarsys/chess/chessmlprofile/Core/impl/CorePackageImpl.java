@@ -80,6 +80,8 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl;
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
 
 /**
@@ -219,6 +221,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
+		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theCorePackage.createPackageContents();
@@ -244,6 +247,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
+		theSTSPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theCorePackage.initializePackageContents();
@@ -269,6 +273,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
+		theSTSPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theCorePackage.freeze();

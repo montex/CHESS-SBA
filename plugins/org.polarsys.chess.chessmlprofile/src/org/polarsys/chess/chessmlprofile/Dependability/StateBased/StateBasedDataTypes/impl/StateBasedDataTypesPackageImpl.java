@@ -82,6 +82,8 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl;
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
 
 /**
@@ -249,6 +251,7 @@ public class StateBasedDataTypesPackageImpl extends EPackageImpl implements Stat
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
+		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theStateBasedDataTypesPackage.createPackageContents();
@@ -274,6 +277,7 @@ public class StateBasedDataTypesPackageImpl extends EPackageImpl implements Stat
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
+		theSTSPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theStateBasedDataTypesPackage.initializePackageContents();
@@ -299,6 +303,7 @@ public class StateBasedDataTypesPackageImpl extends EPackageImpl implements Stat
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
+		theSTSPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theStateBasedDataTypesPackage.freeze();

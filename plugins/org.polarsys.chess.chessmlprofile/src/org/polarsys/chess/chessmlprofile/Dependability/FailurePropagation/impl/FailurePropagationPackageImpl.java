@@ -80,6 +80,8 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl;
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
 
 /**
@@ -233,6 +235,7 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
+		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theFailurePropagationPackage.createPackageContents();
@@ -258,6 +261,7 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
+		theSTSPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theFailurePropagationPackage.initializePackageContents();
@@ -283,6 +287,7 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
+		theSTSPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theFailurePropagationPackage.freeze();
@@ -318,6 +323,15 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 */
 	public EReference getFPTC_Base_Comment() {
 		return (EReference)fptcEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFPTC_Base_Connector() {
+		return (EReference)fptcEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -397,6 +411,15 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getFPTCPortSlot_Failure() {
+		return (EAttribute)fptcPortSlotEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getFI4FA() {
 		return fi4FAEClass;
 	}
@@ -408,6 +431,15 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 */
 	public EAttribute getFI4FA_Fi4fa() {
 		return (EAttribute)fi4FAEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFI4FA_Base_Connector() {
+		return (EReference)fi4FAEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -567,6 +599,7 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		fptcEClass = createEClass(FPTC);
 		createEAttribute(fptcEClass, FPTC__FPTC);
 		createEReference(fptcEClass, FPTC__BASE_COMMENT);
+		createEReference(fptcEClass, FPTC__BASE_CONNECTOR);
 
 		failurePropagationAnalysisEClass = createEClass(FAILURE_PROPAGATION_ANALYSIS);
 
@@ -578,9 +611,11 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		fptcPortSlotEClass = createEClass(FPTC_PORT_SLOT);
 		createEReference(fptcPortSlotEClass, FPTC_PORT_SLOT__FPTC_SPECIFICATION);
 		createEReference(fptcPortSlotEClass, FPTC_PORT_SLOT__BASE_SLOT);
+		createEAttribute(fptcPortSlotEClass, FPTC_PORT_SLOT__FAILURE);
 
 		fi4FAEClass = createEClass(FI4FA);
 		createEAttribute(fi4FAEClass, FI4FA__FI4FA);
+		createEReference(fi4FAEClass, FI4FA__BASE_CONNECTOR);
 
 		fi4FASpecificationEClass = createEClass(FI4FA_SPECIFICATION);
 
@@ -649,6 +684,7 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		initEClass(fptcEClass, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, "FPTC", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFPTC_Fptc(), theTypesPackage.getString(), "fptc", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getFPTC_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFPTC_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(failurePropagationAnalysisEClass, FailurePropagationAnalysis.class, "FailurePropagationAnalysis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -660,9 +696,11 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		initEClass(fptcPortSlotEClass, FPTCPortSlot.class, "FPTCPortSlot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFPTCPortSlot_FPTCSpecification(), this.getFPTCSpecification(), null, "FPTCSpecification", null, 1, 1, FPTCPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getFPTCPortSlot_Base_Slot(), theUMLPackage.getSlot(), null, "base_Slot", null, 1, 1, FPTCPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFPTCPortSlot_Failure(), theFailurePropagationDataTypesPackage.getFailureType(), "failure", null, 0, -1, FPTCPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(fi4FAEClass, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FA.class, "FI4FA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFI4FA_Fi4fa(), theTypesPackage.getString(), "fi4fa", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFI4FA_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(fi4FASpecificationEClass, FI4FASpecification.class, "FI4FASpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

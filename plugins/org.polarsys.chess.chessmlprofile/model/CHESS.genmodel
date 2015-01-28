@@ -149,6 +149,8 @@
           <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/FPTC/fptc"/>
           <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/FPTC/base_Comment"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/FPTC/base_Connector"/>
         </genClasses>
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FailurePropagationAnalysis"/>
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FPTCSpecification">
@@ -163,9 +165,12 @@
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/FPTCPortSlot/FPTCSpecification"/>
           <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/FPTCPortSlot/base_Slot"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/FPTCPortSlot/failure"/>
         </genClasses>
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FI4FA">
           <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/FailurePropagation/FI4FA/fi4fa"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/FailurePropagation/FI4FA/base_Connector"/>
         </genClasses>
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/FI4FASpecification"/>
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/FailurePropagation/ACIDAvoidable">
@@ -758,6 +763,24 @@
         <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/OS"/>
         <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/sourceCodeLocation"/>
       </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="SystemModel" disposableProviderFactory="true"
+        ecorePackage="chessmlprofile.ecore#//SystemModel">
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="STS" disposableProviderFactory="true"
+          ecorePackage="chessmlprofile.ecore#//SystemModel/STS">
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//SystemModel/STS/Human">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//SystemModel/STS/Human/base_Class"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//SystemModel/STS/Organizational">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//SystemModel/STS/Organizational/base_Class"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//SystemModel/STS/Technological">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//SystemModel/STS/Technological/base_Class"/>
+        </genClasses>
+      </nestedGenPackages>
     </nestedGenPackages>
   </genPackages>
 </genmodel:GenModel>
