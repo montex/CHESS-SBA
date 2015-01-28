@@ -35,42 +35,10 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 /**
  * This class wraps the SysML profile resource and is used for loading the
  * profile and applying its stereotypes.
- * 
- * @author Stefano Puri
- *
  */
 
 public class SysMLProfileManager {
-	/*private static Profile SYSMLProfile;
-	private static Profile SYSML_requirementProfile;
-	private static Profile SYSML_blockProfile;*/
-
-	/*private static ResourceSet resSet = null;
-
-	private static SysMLProfileManager instance;
-
-	private SysMLProfileManager() {
-	}*/
-
-	public static SysMLProfileManager loadSysMLProfile(ResourceSet rs) {
-		/*if (instance == null) {
-			SYSMLProfile = (Profile) PackageUtil.loadPackage(
-					URI.createURI(SysmlResource.SYSML_PROFILE_URI), rs);
-			SYSML_requirementProfile = (Profile) SYSMLProfile
-					.getNestedPackage("Requirements");
-			SYSML_blockProfile = (Profile) SYSMLProfile
-					.getNestedPackage("Blocks");
-			instance = new SysMLProfileManager();
-		}
-		resSet = rs;
-		return instance;*/
-		return null;
-	}
-
-	/*public Profile getSysMLProfile() {
-		return SYSMLProfile;
-	}*/
-
+	
 	public static void applyRequirementProfileTo(Package element) {
 		Profile SYSML_requirementProfile =  UMLResourcesUtil.getProfile(RequirementsPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, SYSML_requirementProfile, true);
@@ -82,14 +50,9 @@ public class SysMLProfileManager {
 	}
 
 	public static void applySysMLProfileTo(Package element, boolean withSubProfiles) {
-		System.out.println("Applying SysML profile to " + element.getName()
-				+ "...");
-		// PackageUtil.applyProfile(element, SYSMLProfile, withSubProfiles);
-
+		
 		/**
-		 * the following is for solve an issue when creating new models
-		 * regarding the application of profiles TODO: refactor the forever part
-		 * and check for other solutions
+		 * the following is for avoid issues when creating new models
 		 */
 
 		ResourceSet rs = element.eResource().getResourceSet();
@@ -98,24 +61,11 @@ public class SysMLProfileManager {
 		if (sysml != null) {
 			PackageUtil.applyProfile(element, sysml, true);
 		}
-		/*
-		 * Profile ForeverProfile =
-		 * (Profile)PackageUtil.loadPackage(URI.createURI
-		 * ("pathmap://FOREVER_PROFILE/ForeverProfile.profile.uml"), resSet);
-		 * if(ForeverProfile != null) { PackageUtil.applyProfile(element,
-		 * ForeverProfile, true); }
-		 */
 
-		System.out.println("Applying SysML profile to " + element.getName()
-				+ "...DONE");
 	}
 
 	public static Stereotype applySatisfyStereotype(Abstraction abs) {
-//		Stereotype str = ((Profile) SYSMLProfile
-//				.getNestedPackage("Requirements"))
-//				.getOwnedStereotype("Satisfy");
-//		abs.applyStereotype(str);
-//		return str;
+
 		return UMLUtils.applyStereotype(abs, "SysML::Requirements::Satisfy");
 	}
 

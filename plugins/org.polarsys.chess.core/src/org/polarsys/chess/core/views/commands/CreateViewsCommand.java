@@ -19,7 +19,6 @@ package org.polarsys.chess.core.views.commands;
 
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.papyrus.infra.core.resource.ModelSet;
 import org.eclipse.papyrus.uml.tools.model.UmlUtils;
@@ -34,58 +33,35 @@ import org.polarsys.chess.core.util.uml.ResourceUtils;
 public class CreateViewsCommand extends RecordingCommand {
 
 	private ModelSet modelSet;
-	//private DiResourceSet resourceSet;
 
 	public CreateViewsCommand(ModelSet rs) {
 		super(rs.getTransactionalEditingDomain());
 		this.modelSet = rs;
 	}
 
-	/*public CreateViewsCommand(DiResourceSet rs) {
-		super(rs.getTransactionalEditingDomain());
-		this.resourceSet = rs;
-	}*/
-
 	@Override
 	protected void doExecute() {
 		Model currentModel = null;
-		CHESSProfileManager chess = null;
-		MARTEProfileManager marte = null;
-		SysMLProfileManager sysml = null;
 		if (modelSet != null) {
 			currentModel = ResourceUtils.getModel(UmlUtils.getUmlModel(modelSet)
 					.getResource());
-			chess = new CHESSProfileManager(modelSet);
-			//marte = MARTEProfileManager.loadMARTEProfile(modelSet);
-			//sysml = SysMLProfileManager.loadSysMLProfile(modelSet);
+			new CHESSProfileManager(modelSet);
+		
+		} 
 
-		} /*else {
-			currentModel = UMLUtils.getModel(resourceSet.getModelResource());
-			chess = CHESSProfileManager.loadCHESSProfile(resourceSet);
-			marte = MARTEProfileManager.loadMARTEProfile(resourceSet);
-			sysml = SysMLProfileManager.loadSysMLProfile(resourceSet);
-		}*/
-
-		viewsToModel(currentModel, modelSet/*, chess, marte, sysml*/);
+		viewsToModel(currentModel, modelSet);
 		
 	}
 
-	public static void viewsToModel(Model currentModel/*, CHESSProfileManager chess,
-			MARTEProfileManager marte, SysMLProfileManager sysml*/, ModelSet mset) {
+	public static void viewsToModel(Model currentModel, ModelSet mset) {
 		
 		CHESSProfileManager.createModel(currentModel);
-		
-		
 		MARTEProfileManager.createModel(currentModel);
-		
-		
 		SysMLProfileManager.createModel(currentModel);
 		
 		AddProfileHandler h = new AddProfileHandler();
 		IExtensionRegistry reg =  Platform.getExtensionRegistry();
-		h.executeAddProfile(reg, currentModel, mset);
-		
+		h.executeAddProfile(reg, currentModel, mset);	
 	}
 	
-
 }

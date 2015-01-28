@@ -50,6 +50,7 @@ import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAnalysisPackage;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
 import org.polarsys.chess.core.extensionpoint.AddProfileHandler;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
@@ -126,24 +127,6 @@ public class CHESSProfileManager {
 	public static final String VIEWS_PROFILE = "CHESSViews";
 
 	public static final String COMPONENTMODEL_PROFILE = "ComponentModel";
-
-	/*public static final String FAILUREPROPAGATION_PROFILE = "FailurePropagation";
-	public static final String FMEA_PROFILE = "FMEA";
-	public static final String DEPENDABLECOMPONENT_PROFILE = "DependableComponent";
-	public static final String THREATSPROPAGATION_PROFILE = "ThreatsPropagation";
-	public static final String STATEBASED_PROFILE = "StateBased";
-	public static final String STATEBASED_ANALYSIS_PROFILE = "StateBasedAnalysis";
-	public static final String STATEBASEDCOMPONENT_PROFILE = "StateBasedComponents";
-	public static final String STATEBASED_FAULTTOLERANCE_PROFILE = "FaultTolerance";
-	public static final String STATEBASED_MM_PROFILE = "MaintenanceMonitoring";
-	public static final String DEPLOYCONF_PROFILE = "DeploymentConfiguration";
-	public static final String DEPLOYCONF_ANALYSIS_PROFILE = "DeploymentConfAnalysis";
-	public static final String DEPLOYCONF_HWBASELINE = "HardwareBaseline";
-	public static final String RTCOMPONENTMODEL_PROFILE = "RTComponentModel";
-
-	public static final String MITIGATION_PROFILE = "MitigationMeans";
-
-	public static final String TIMING_PROFILE = "TimingAnalysis";*/
 
 	public static final String CHESS_STRT = "CHESS";
 
@@ -311,45 +294,7 @@ public class CHESSProfileManager {
 		}
 
 	}
-	//private ResourceSet resourceSet;
-
-	// private static CHESSProfileManager instance;
-
-	/*private Profile CHESSProfile;
-	private Profile coreProfile;
-	private Profile viewsProfile;*/
-
-	/*private Profile componentModelProfile;
-
-	private Profile failurePropProfile;
-
-	private Profile FMEAProfile;
-
-	private Profile dependableComponentProfile;
-
-	private Profile threatsPropagationProfile;
-
-	private Profile stateBasedProfile;
-
-	private Profile stateBased_AnalysisProfile;
-
-	private Profile stateBasedComponentProfile;
-
-	private Profile stateBased_FaultToleranceProfile;
-
-	private Profile stateBased_MaintainanceMonitoringProfile;
-
-	private Profile deploymentConfiguration_Profile;
-
-	private Profile deploymentConfiguration_AnalysisProfile;
-
-	private Profile deploymentConfiguration_HardwareBaselineProfile;
-
-	private Profile RTComponentModelProfile;
-
-	private Profile timingProfile;
-
-	private Profile mitigationProfile;*/
+	
 
 	public static boolean ARE_VIEWS_LOADED = false;
 
@@ -362,28 +307,14 @@ public class CHESSProfileManager {
 
 	public static Stereotype applyCH_HwComputingResourceStereotype(
 			Element element) {
-		/*
-		 * Stereotype str = ((Profile)
-		 * CHESSProfile.getNestedPackage("Predictability"
-		 * ).getNestedPackage("DeploymentConfiguration"
-		 * ).getNestedPackage("HardwareBaseline"))
-		 * .getOwnedStereotype("CH_HwComputingResource");
-		 * element.applyStereotype(str); return str;
-		 */
+		
 		return UMLUtils.applyStereotype(
 				element,
 				"CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwComputingResource");
 	}
 
 	public static Stereotype applyCH_HwProcessorStereotype(Element element) {
-		/*
-		 * Stereotype str = ((Profile)
-		 * CHESSProfile.getNestedPackage("Predictability"
-		 * ).getNestedPackage("DeploymentConfiguration"
-		 * ).getNestedPackage("HardwareBaseline"))
-		 * .getOwnedStereotype("CH_HwProcessor"); element.applyStereotype(str);
-		 * return str;
-		 */
+		
 		return UMLUtils.applyStereotype(
 				element,
 				"CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor");
@@ -403,14 +334,7 @@ public class CHESSProfileManager {
 	 * @param model
 	 */
 	public static void applyRecursively(Model model) {
-		// applyProfileRecursively(CHESSProfile, model);
-		// model.applyProfile(viewsProfile);
-		// model.applyProfile(CHESSProfile);
-		// model.applyProfile(coreProfile);		
 		
-		
-		//PackageUtil.applyProfile(model, viewsProfile, true);
-		//PackageUtil.applyProfile(model, CHESSProfile, true);
 		ResourceSet rs = model.eResource().getResourceSet();
 		Profile CHESSProfile = (Profile) PackageUtil.loadPackage(
 				URI.createURI(CHESSML_PATH), rs);
@@ -429,68 +353,6 @@ public class CHESSProfileManager {
 		return UMLUtils.getStereotype(element,"CHESS::Core::CHESSViews::"+viewName);
 	}
 	
-	
-
-	/*private void buildProfiles(Package profile) {
-		
-		if (profile instanceof Profile) {
-			// PREDEFINED_PROFILES.add(pkg.getName());
-			List<Profile> pp = PackageUtil.getSubProfiles(profile);
-			for (Profile pkg : pp) {
-
-				// load sub-profiles
-				// TODO this code should be refactored
-				if (pkg.getName().compareTo(FMEA_PROFILE) == 0)
-					FMEAProfile = (Profile) pkg;
-				if (pkg.getName().compareTo(STATEBASED_PROFILE) == 0) {
-					stateBasedProfile = (Profile) pkg;
-				}
-				if (pkg.getName().compareTo(STATEBASED_ANALYSIS_PROFILE) == 0) {
-					if (pkg.getOwner().equals(stateBasedProfile))
-						stateBased_AnalysisProfile = (Profile) pkg;
-				}
-				if (pkg.getName().compareTo(STATEBASEDCOMPONENT_PROFILE) == 0) {
-					stateBasedComponentProfile = (Profile) pkg;
-				}
-				if (pkg.getName().compareTo(STATEBASED_FAULTTOLERANCE_PROFILE) == 0) {
-					stateBased_FaultToleranceProfile = (Profile) pkg;
-				}
-				if (pkg.getName().compareTo(STATEBASED_MM_PROFILE) == 0) {
-					stateBased_MaintainanceMonitoringProfile = (Profile) pkg;
-				}
-				if (pkg.getName().compareTo(DEPLOYCONF_PROFILE) == 0) {
-					deploymentConfiguration_Profile = (Profile) pkg;
-				}
-				if (pkg.getName().compareTo(DEPLOYCONF_ANALYSIS_PROFILE) == 0) {
-					if (pkg.getOwner().equals(deploymentConfiguration_Profile))
-						deploymentConfiguration_AnalysisProfile = (Profile) pkg;
-				}
-
-				if (pkg.getName().compareTo(DEPLOYCONF_HWBASELINE) == 0) {
-					deploymentConfiguration_HardwareBaselineProfile = (Profile) pkg;
-				}
-				if (pkg.getName().compareTo(RTCOMPONENTMODEL_PROFILE) == 0)
-					RTComponentModelProfile = (Profile) pkg;
-
-				if (pkg.getName().compareTo(TIMING_PROFILE) == 0)
-					timingProfile = (Profile) pkg;
-
-				if (pkg.getName().compareTo(COMPONENTMODEL_PROFILE) == 0)
-					componentModelProfile = (Profile) pkg;
-
-				if (pkg.getName().compareTo(FAILUREPROPAGATION_PROFILE) == 0)
-					failurePropProfile = (Profile) pkg;
-
-				if (pkg.getName().compareTo(THREATSPROPAGATION_PROFILE) == 0)
-					threatsPropagationProfile = (Profile) pkg;
-				if (pkg.getName().compareTo(DEPENDABLECOMPONENT_PROFILE) == 0)
-					dependableComponentProfile = (Profile) pkg;
-
-				if (pkg.getName().equals(MITIGATION_PROFILE))
-					mitigationProfile = (Profile) pkg;
-			}
-		}
-	}*/
 	
 	public static String viewName(Model model, String name){
 		return model.getName() + name;
@@ -520,9 +382,8 @@ public class CHESSProfileManager {
 			Profile stateBased_AnalysisProfile =  UMLResourcesUtil.getProfile(StateBasedAnalysisPackage.eINSTANCE, model);
 			Profile timingProfile =  UMLResourcesUtil.getProfile(TimingAnalysisPackage.eINSTANCE, model);
 			
-			
-			
-			
+			Profile STSProfile =  UMLResourcesUtil.getProfile(STSPackage.eINSTANCE, model);
+						
 			view = REQUIREMENT_VIEW;
 			newpkg = model.createNestedPackage(viewName(model, view));
 			Stereotype viewStrt = applyViewStereotype(view, newpkg);
@@ -541,6 +402,7 @@ public class CHESSProfileManager {
 			newpkg.applyProfile(threatsPropagationProfile);
 			newpkg.applyProfile(dependableComponentProfile);
 			newpkg.applyProfile(mitigationProfile);
+			newpkg.applyProfile(STSProfile);
 
 			view = COMPONENT_VIEW;
 			newpkg = model.createNestedPackage(viewName(model, view));
@@ -615,21 +477,7 @@ public class CHESSProfileManager {
 
 	}
 
-	/*
-	 * public static <T extends EObject> T getApplication(Element element,
-	 * Class<T> clazz) {
-	 * 
-	 * // Sample use: // ClientServerPort = StUtils.getApplication (umlPort, //
-	 * ClientServerPort.class); for (EObject stereoApplication :
-	 * element.getStereotypeApplications()) { if
-	 * (clazz.isInstance(stereoApplication)) { return (T) stereoApplication; } }
-	 * return null; }
-	 */
-
-	/*public Profile getCHESSProfile() {
-		return CHESSProfile;
-	}*/
-
+	
 	public static Stereotype getComponentImplementation(Element element) {
 		return UMLUtils.getStereotype(element, "CHESS::ComponentModel::ComponentImplementation");
 		/*Stereotype str = ((Profile) CHESSProfile
