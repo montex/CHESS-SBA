@@ -450,6 +450,8 @@
                   <perm st="ModeBehavior" owner="true" write="true" visible="true"/>
                   <perm st="Mode" owner="true" write="true" visible="true"/>
                   <perm st="ModeTransition" owner="true" write="true" visible="true"/>
+                  <perm st="NfpConstraint" owner="true" write="true" visible="true"/>
+                  
                   
                   
             </diagram>

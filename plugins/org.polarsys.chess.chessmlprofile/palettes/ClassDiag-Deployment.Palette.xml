@@ -60,6 +60,7 @@
 		</aspectTool>
 			
 			<aspectTool description="Create a component" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1316779916487" name="Component" refToolId="clazz.tool.component"/>
+			<aspectTool description="Create new Constraint" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="composite.tool.constraint_14224537190" name="Constraint" refToolId="clazz.tool.constraint"/>
 			<aspectTool description="Create a comment" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif" id="clazz.tool.comment_1316779679320" name="Comment" refToolId="clazz.tool.comment"/>
 			<aspectTool description="Creation of a link for comment" id="clazz.tool.link_13167799276791" name="Link" refToolId="clazz.tool.link"/>
 			<aspectTool description="Create a Composition" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Association.gif" id="clazz.tool.association_1372928774312" name="Association" refToolId="clazz.tool.association"><postAction id="org.eclipse.papyrus.postaction.associationendactionprovider"><associationEnd index="0" name="source"/><associationEnd index="1" name="target"><aggregation value="composite"/><multiplicity value="1..1"/><navigable value="Yes"/><owner value="Class"/></associationEnd></postAction></aspectTool>

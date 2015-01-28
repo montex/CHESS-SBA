@@ -143,15 +143,11 @@ public class PaletteManager {
 					paletteDrawer.setVisible(false);
 			}
 			
-			
 		}
 		if (viewName.equals(CHESSProfileManager.EXTRAFUNCTIONAL_VIEW)){
-			//if (diagramName.equals(ViewDiagramAssociations.compositeDiagram)){
-				//hide the palette's functional tools
-			//}
+			
 				if (diagramName.equals(ViewDiagramAssociations.stateMachineDiagram)){
 					paletteDrawer.setVisible(true);
-					
 					if (paletteId.compareTo("SM_ErrorModelDrawer__1317126136270")!=0)
 						paletteDrawer.setVisible(false);
 				}
@@ -179,7 +175,6 @@ public class PaletteManager {
 						paletteDrawer.setVisible(false);
 				}
 				
-				
 		}
 		if (viewName.equals(CHESSProfileManager.DEPLOYMENT_VIEW)){
 			if (diagramName.equals(ViewDiagramAssociations.classDiagram)){
@@ -191,7 +186,7 @@ public class PaletteManager {
 			if (diagramName.equals(ViewDiagramAssociations.compositeDiagram)){
 				//hide the palette's functional tools
 				paletteDrawer.setVisible(false);
-				if (label.equals("CHESS/Deployment")|| label.equals("FoReVer"))
+				if (paletteId.compareTo("DeploymentCSDDrawerID")==0 || paletteId.compareTo("CompositeFunctionalViewContractDrawerID")==0)
 					paletteDrawer.setVisible(true);
 			}
 			
