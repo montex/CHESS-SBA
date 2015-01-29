@@ -26,7 +26,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
-import org.eclipse.papyrus.infra.core.sasheditor.editor.ISashWindowsContainer;
 import org.eclipse.ui.IEditorPart;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.views.DiagramStatus;
@@ -47,22 +46,17 @@ public class PaletteManager {
 	}
 	
 	public static void setPaletteVisibility(PapyrusMultiDiagramEditor editor, DiagramStatus ds) {
-		//INFO code from org.eclipse.papyrus.diagram.common.part.PaletteMenuAction
-		//if(true) return;
+		
 		try {
-			//final IEditorPart part = getActiveSashPage(editor);
-			//DiagramEditPart ep = editor.getDiagramEditPart();
+			
 			IEditorPart ep = editor.getActiveEditor();
 			ISelection selection = ep.getSite().getSelectionProvider().getSelection();
 			List<Object> selections = lookupSelectedElements(selection);
 			GraphicalEditPart a = (GraphicalEditPart) selections.get(0);
 			DiagramEditDomain de = (DiagramEditDomain) a.getDiagramEditDomain();
-			//TODO get palette working! see Marte profile palette
 			PaletteViewer pv = de.getPaletteViewer();
-			
-//			String viewName = ds.getCurrentView().getName();
+	
 			String viewName = ds.getActiveView();
-			//System.out.println("activew view" + viewName);
 			
 			String diagramName = ds.getCurrentView().getCurrentDiagramName();
 			
@@ -74,21 +68,8 @@ public class PaletteManager {
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			//Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage()));
 		}
-		//final List<String> hiddenPalettes = PapyrusPalettePreferences.getHiddenPalettes(part);
 		
-		//PapyrusPaletteService ps = PapyrusPaletteService.getInstance();
-		
-		
-//		for(PapyrusPaletteService.ProviderDescriptor descriptor : ps.getContributingProviders(part, pv.getPaletteRoot())) {
-//			
-//			String id = descriptor.getContributionID();
-//			String name = descriptor.getContributionName();
-//			CHESSProjectSupport.printlnToCHESSConsole(id + " " + name);
-//			//TODO what are the palette to hide/show given the current view and diagram?
-//			//PapyrusPalettePreferences.changePaletteVisibility(id, editor.getActiveEditor().getClass().getName(), false);
-//		}
 	}
 	//TODO this code is temporary needs refactoring
 	private static void setPaletteVisibility(PaletteDrawer paletteDrawer, String viewName,
