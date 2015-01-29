@@ -1,8 +1,10 @@
 package org.polarsys.chess.commands;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -27,6 +29,7 @@ import org.eclipse.ui.dialogs.ListDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Component;
+import org.eclipse.uml2.uml.ConnectableElement;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
@@ -37,12 +40,15 @@ import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.Stereotype;
+import org.eclipse.uml2.uml.StructuralFeature;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
 import org.polarsys.chess.chessmlprofile.Core.CHESS;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.DeploymentView;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation;
+import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
@@ -111,7 +117,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 						slotList.clear();
 						Package pkg = comp.getNearestPackage();
 						Package instPkg = pkg.createNestedPackage(comp.getName() + "_instSpec");
-						performBuildInstances(instPkg, comp);
+						performBuildInstances(instPkg, comp, new HashMap<Property, InstanceSpecification>());
 						regenerateAssignAllocations(umlModel);
 						MessageDialog.openInformation(shell, "CHESS", "BuildInstance command completed");
 					}
@@ -120,14 +126,12 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		} catch (Exception e) {
 			e.printStackTrace();
 			MessageDialog.openError(shell, "CHESS", "Problems while executing BuildInstance command: " + e.getMessage());
-			ds.setUserAction(true);
 		}
-		ds.setUserAction(true);
 		return null;
 
 	}
 
-	private void performBuildInstances(Package pkg, Component comp) {
+	private void performBuildInstances(Package pkg, Component comp, Map<Property, InstanceSpecification> property2InstMap) {
 		InstanceSpecification inst = UMLFactory.eINSTANCE.createInstanceSpecification();
 		inst.setName(comp.getName());
 		inst.getClassifiers().add(comp);
@@ -137,7 +141,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		for (Property prop : comp.getAttributes()) {
 			if(prop.getType() instanceof Component){
 				Component compImpl = (Component) prop.getType();
-				InstanceSpecification subInst = buildComponentInstance(pkg, compImpl, resPlatform, inst, prop);
+				InstanceSpecification subInst = buildComponentInstance(pkg, compImpl, resPlatform, inst, prop, property2InstMap);
 				Slot slot = UMLFactory.eINSTANCE.createSlot();
 				slot.setDefiningFeature(prop);
 				inst.getSlots().add(slot);
@@ -154,12 +158,12 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		}
 		//connectors
 		for (Connector conn : comp.getOwnedConnectors()) {
-			buildConnectorInstance(pkg, conn, resPlatform, inst);
+			buildConnectorInstance(pkg, conn, resPlatform, inst, property2InstMap);
 		}
 		instancesList.add(inst);
 	}
 
-	private InstanceSpecification buildComponentInstance(Package pkg, Component compImpl, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Property theProp) {
+	private InstanceSpecification buildComponentInstance(Package pkg, Component compImpl, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Property theProp, Map<Property, InstanceSpecification> property2InstMap) {
 		InstanceSpecification inst = UMLFactory.eINSTANCE.createInstanceSpecification();
 		String name = parentInstance.getName() + "." + theProp.getName();
 		inst.setName(name);
@@ -171,7 +175,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		for (Property subProp : compImpl.getAttributes()) {
 			if(subProp.getType() instanceof Component){
 				Component subCompImpl = (Component) subProp.getType();
-				InstanceSpecification subInst = buildComponentInstance(pkg, subCompImpl, resPlatform, inst, subProp);
+				InstanceSpecification subInst = buildComponentInstance(pkg, subCompImpl, resPlatform, inst, subProp, property2InstMap);
 				Slot slot = UMLFactory.eINSTANCE.createSlot();
 				slot.setDefiningFeature(subProp);
 				inst.getSlots().add(slot);
@@ -188,26 +192,45 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		}
 		//connectors
 		for (Connector conn : compImpl.getOwnedConnectors()) {
-			buildConnectorInstance(pkg, conn, resPlatform, inst);
+			buildConnectorInstance(pkg, conn, resPlatform, inst, property2InstMap);
 		}
 		instancesList.add(inst);
+		property2InstMap.put(theProp, inst);
 		return inst;
 	}
 
-	private void buildConnectorInstance(Package pkg, Connector conn, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance) {
-		InstanceSpecification inst = UMLFactory.eINSTANCE.createInstanceSpecification();
+	private void buildConnectorInstance(Package pkg, Connector conn, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Map<Property, InstanceSpecification> property2InstMap) {
+		InstanceSpecification connInst = UMLFactory.eINSTANCE.createInstanceSpecification();
 		String name = parentInstance.getName() + "." + conn.getName();
-		inst.setName(name);
-		pkg.getPackagedElements().add(inst);
-		UMLUtils.applyStereotype(inst, MARTE_RESOURCE);
-		Resource res = (Resource) inst.getStereotypeApplication(inst.getAppliedStereotype(MARTE_RESOURCE));
+		connInst.setName(name);
+		pkg.getPackagedElements().add(connInst);
+		UMLUtils.applyStereotype(connInst, MARTE_RESOURCE);
+		Resource res =  UMLUtils.getStereotypeApplication(connInst, Resource.class);
 		resPlatform.getResources().add(res);
-		//TODO - complete it
-		Slot sourceSlot = inst.createSlot();
-		Slot targetSlot = inst.createSlot();
-		sourceSlot.setDefiningFeature(conn.getEnds().get(0).getDefiningEnd());
-		targetSlot.setDefiningFeature(conn.getEnds().get(1).getDefiningEnd());
+		Slot sourceSlot = connInst.createSlot();
+		Slot targetSlot = connInst.createSlot();
+		Port sourcePort = (Port) conn.getEnds().get(0).getRole();
+		sourceSlot.setDefiningFeature(sourcePort);
+		InstanceValue value = (InstanceValue) sourceSlot.createValue("partWithPort", null, UMLPackage.Literals.INSTANCE_VALUE);
+		Property sourceProperty = conn.getEnds().get(0).getPartWithPort();
+		InstanceSpecification sourceInstance = property2InstMap.get(sourceProperty);
+		value.setInstance(sourceInstance);
+		targetSlot.setDefiningFeature((StructuralFeature) conn.getEnds().get(1).getRole());
+		value = (InstanceValue) targetSlot.createValue("partWithPort", null, UMLPackage.Literals.INSTANCE_VALUE);
+		Property targetProperty = conn.getEnds().get(1).getPartWithPort();
+		InstanceSpecification targetInstance = property2InstMap.get(targetProperty);
+		value.setInstance(targetInstance);
 		
+		//if the connector is <<propagation>> then attach <<propagation>> to instance specification also
+		Propagation origPropagation = UMLUtils.getStereotypeApplication(conn, Propagation.class);
+		if (origPropagation != null){
+			CHESSProfileManager.applyPropagationStereotype(connInst);
+			Propagation newPropagation = UMLUtils.getStereotypeApplication(connInst, Propagation.class);
+			newPropagation.setProb(origPropagation.getProb());
+			newPropagation.setPropDelay(origPropagation.getPropDelay());
+			newPropagation.getTransfFunct().addAll(origPropagation.getTransfFunct());
+			newPropagation.setWeight(origPropagation.getWeight());
+		}	
 	}
 	
 	private static void saveAssignAllocations(Model umlModel){
