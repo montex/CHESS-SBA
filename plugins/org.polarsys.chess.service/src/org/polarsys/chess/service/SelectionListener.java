@@ -50,7 +50,7 @@ public class SelectionListener extends SelectionListenerExtra {
 			part = ((PropertySheet) part).getSite().getWorkbenchWindow()
 					.getActivePage().getActiveEditor();
 		}
-		if (part instanceof IEditorPart && CHESSEditorUtils.isCHESSProject((IEditorPart)part)) {
+		if (part instanceof PapyrusMultiDiagramEditor && CHESSEditorUtils.isCHESSProject((IEditorPart)part)) {
 			// listens to sash page change events in the editor
 			PapyrusMultiDiagramEditor editor = (PapyrusMultiDiagramEditor) part;
 			IPage newPage = (editor).getISashWindowsContainer()
