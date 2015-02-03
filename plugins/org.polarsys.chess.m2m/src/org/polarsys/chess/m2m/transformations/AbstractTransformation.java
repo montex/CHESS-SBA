@@ -76,13 +76,14 @@ public abstract class AbstractTransformation {
 		// Tidy up directories
 		IFile modelCopy = s1(modelFile);
 		//Execute the various steps of the transformations
+		
+		// Remove the package with the multi instances, if any
+		QVToTransformation.launchRemoveMultiInstance(modelCopy, monitor);
+		
 		QVToTransformation.launchBuildMultiInstance(modelCopy, monitor);
 		build1(monitor, modelCopy);
 
 		String result = build2(monitor, modelCopy, editor);
-
-		// Remove the package with the multi instances
-		QVToTransformation.launchRemoveMultiInstance(modelCopy, monitor);
 
 		// Replace the input model file with the transformed model
 		CHESSProjectSupport.fileReplace(modelCopy, modelFile);
