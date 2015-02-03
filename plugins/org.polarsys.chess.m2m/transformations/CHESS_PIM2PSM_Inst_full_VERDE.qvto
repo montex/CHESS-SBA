@@ -1166,13 +1166,24 @@ mapping InstanceSpecification::Instance2EndToEndWorkFlow(chrt : Comment, slot : 
 		//actInitialNode.outgoing += controlFlowInit;
     }
     
+    /*Stefano
+   	//add entity to store traceability information in the model. This infomation can then be used later in the editor to show analysis results related to the PIM entites.
+   	//I would like to use a Dependency here between the Activity and the originating slot and chrt Comment, but in UML Comment cannot be referenced by dependecies.
+   	//so here I use Constraint...*/
+    var constr := new Constraint();
+    constr.constrainedElement += result;
+    constr.constrainedElement += slot;
+    constr.constrainedElement += chrt;
+    instSpecPackage.resolveoneIn(Package::CHGaResourcePlatform2SaAnalysisContext, Class).ownedRule += constr;
+    //end modification for traceability
+    
     result.name := actionName;
+   
     // Add the action to the owned behaviors of RTAnalysisContext     
     instSpecPackage.resolveoneIn(Package::CHGaResourcePlatform2SaAnalysisContext, Class).ownedBehavior += result;
     //Apply the stereotype <<SaEndtoEndFlow>> to the activity
 	result.applyStereotype(getMARTEStereotype("SaEndtoEndFlow"));
 	result.precondition += actConstraint;
-	//result.node += actInitialNode;
 	
 	var actInitialNode := result.createInitialNode();
 	actInitialNode.outgoing += controlFlowInit;
