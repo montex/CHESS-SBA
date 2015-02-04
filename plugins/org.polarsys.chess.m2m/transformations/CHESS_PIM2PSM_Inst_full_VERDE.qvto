@@ -335,6 +335,17 @@ mapping Interaction::Interaction2EndToEndWorkFlow(context : Class, pimContext : 
 	//result.node += finalNode;
 	
 	resultNode.outgoing![ControlFlow].target := finalNode;
+	
+	
+	/*Stefano
+   	//add entity to store traceability information in the model. This infomation can then be used later in the editor to show analysis results related to the PIM entites.
+	*/
+    var constr := new Constraint();
+    constr.constrainedElement += result;
+    constr.constrainedElement += pimActivity;
+    instSpecPackage.resolveoneIn(Package::CHGaResourcePlatform2SaAnalysisContext, Class).ownedRule += constr;
+   
+    //end modification for traceability
 }
 
 //Return the nextE2ENode TODO - work in progress!!!
