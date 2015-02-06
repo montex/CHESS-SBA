@@ -401,6 +401,44 @@ public interface CorePackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.FunctionalPartitionsImpl <em>Functional Partitions</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Core.impl.FunctionalPartitionsImpl
+	 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getFunctionalPartitions()
+	 * @generated
+	 */
+	int FUNCTIONAL_PARTITIONS = 7;
+
+	/**
+	 * The feature id for the '<em><b>Base Package</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTIONAL_PARTITIONS__BASE_PACKAGE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Component</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTIONAL_PARTITIONS__BASE_COMPONENT = 1;
+
+	/**
+	 * The number of structural features of the '<em>Functional Partitions</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTIONAL_PARTITIONS_FEATURE_COUNT = 2;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.CHESS <em>CHESS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -691,6 +729,38 @@ public interface CorePackage extends EPackage {
 	EReference getPSMPackage_AnalysisContext();
 
 	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions <em>Functional Partitions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Functional Partitions</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions
+	 * @generated
+	 */
+	EClass getFunctionalPartitions();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions#getBase_Package <em>Base Package</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Package</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions#getBase_Package()
+	 * @see #getFunctionalPartitions()
+	 * @generated
+	 */
+	EReference getFunctionalPartitions_Base_Package();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions#getBase_Component <em>Base Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Component</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions#getBase_Component()
+	 * @see #getFunctionalPartitions()
+	 * @generated
+	 */
+	EReference getFunctionalPartitions_Base_Component();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -941,6 +1011,32 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference PSM_PACKAGE__ANALYSIS_CONTEXT = eINSTANCE.getPSMPackage_AnalysisContext();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.FunctionalPartitionsImpl <em>Functional Partitions</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Core.impl.FunctionalPartitionsImpl
+		 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getFunctionalPartitions()
+		 * @generated
+		 */
+		EClass FUNCTIONAL_PARTITIONS = eINSTANCE.getFunctionalPartitions();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Package</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FUNCTIONAL_PARTITIONS__BASE_PACKAGE = eINSTANCE.getFunctionalPartitions_Base_Package();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Component</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FUNCTIONAL_PARTITIONS__BASE_COMPONENT = eINSTANCE.getFunctionalPartitions_Base_Component();
 
 	}
 

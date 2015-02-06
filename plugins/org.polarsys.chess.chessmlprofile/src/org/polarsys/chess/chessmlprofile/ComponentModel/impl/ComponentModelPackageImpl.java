@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -32,6 +32,7 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelFactory;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentType;
+import org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition;
 import org.polarsys.chess.chessmlprofile.Core.CorePackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.CHESSViewsPackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.CHESSViewsPackageImpl;
@@ -98,6 +99,13 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 	 * @generated
 	 */
 	private EClass componentImplementationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass functionalPartitionEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -311,6 +319,60 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getFunctionalPartition() {
+		return functionalPartitionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFunctionalPartition_Utilization() {
+		return (EAttribute)functionalPartitionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFunctionalPartition_Base_Component() {
+		return (EReference)functionalPartitionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFunctionalPartition_MAF() {
+		return (EAttribute)functionalPartitionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFunctionalPartition_MIF() {
+		return (EAttribute)functionalPartitionEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFunctionalPartition_SchedulingTable() {
+		return (EAttribute)functionalPartitionEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ComponentModelFactory getComponentModelFactory() {
 		return (ComponentModelFactory)getEFactoryInstance();
 	}
@@ -342,6 +404,13 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		createEAttribute(componentImplementationEClass, COMPONENT_IMPLEMENTATION__LANGUAGE);
 		createEAttribute(componentImplementationEClass, COMPONENT_IMPLEMENTATION__OS);
 		createEAttribute(componentImplementationEClass, COMPONENT_IMPLEMENTATION__SOURCE_CODE_LOCATION);
+
+		functionalPartitionEClass = createEClass(FUNCTIONAL_PARTITION);
+		createEAttribute(functionalPartitionEClass, FUNCTIONAL_PARTITION__UTILIZATION);
+		createEReference(functionalPartitionEClass, FUNCTIONAL_PARTITION__BASE_COMPONENT);
+		createEAttribute(functionalPartitionEClass, FUNCTIONAL_PARTITION__MAF);
+		createEAttribute(functionalPartitionEClass, FUNCTIONAL_PARTITION__MIF);
+		createEAttribute(functionalPartitionEClass, FUNCTIONAL_PARTITION__SCHEDULING_TABLE);
 	}
 
 	/**
@@ -370,6 +439,7 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		// Obtain other dependent packages
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
+		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -386,6 +456,13 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		initEAttribute(getComponentImplementation_Language(), theTypesPackage.getString(), "language", null, 0, 1, ComponentImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getComponentImplementation_OS(), theTypesPackage.getString(), "OS", null, 0, 1, ComponentImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getComponentImplementation_SourceCodeLocation(), theTypesPackage.getString(), "sourceCodeLocation", null, 0, -1, ComponentImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(functionalPartitionEClass, FunctionalPartition.class, "FunctionalPartition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getFunctionalPartition_Utilization(), theBasicNFP_TypesPackage.getNFP_Real(), "utilization", null, 0, 1, FunctionalPartition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFunctionalPartition_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, FunctionalPartition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFunctionalPartition_MAF(), theBasicNFP_TypesPackage.getNFP_Integer(), "MAF", null, 1, 1, FunctionalPartition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFunctionalPartition_MIF(), theBasicNFP_TypesPackage.getNFP_Integer(), "MIF", null, 1, 1, FunctionalPartition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFunctionalPartition_SchedulingTable(), theBasicNFP_TypesPackage.getNFP_String(), "SchedulingTable", null, 1, 1, FunctionalPartition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //ComponentModelPackageImpl

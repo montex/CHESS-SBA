@@ -19,26 +19,26 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
+import org.eclipse.uml2.uml.Component;
 
 import org.polarsys.chess.chessmlprofile.Core.CorePackage;
-import org.polarsys.chess.chessmlprofile.Core.PSMPackage;
+import org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>PSM Package</b></em>'.
+ * An implementation of the model object '<em><b>Functional Partitions</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.PSMPackageImpl#getBase_Package <em>Base Package</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.PSMPackageImpl#getAnalysisContext <em>Analysis Context</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.FunctionalPartitionsImpl#getBase_Package <em>Base Package</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.FunctionalPartitionsImpl#getBase_Component <em>Base Component</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
+public class FunctionalPartitionsImpl extends EObjectImpl implements FunctionalPartitions {
 	/**
 	 * The cached value of the '{@link #getBase_Package() <em>Base Package</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -50,21 +50,21 @@ public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
 	protected org.eclipse.uml2.uml.Package base_Package;
 
 	/**
-	 * The cached value of the '{@link #getAnalysisContext() <em>Analysis Context</em>}' reference.
+	 * The cached value of the '{@link #getBase_Component() <em>Base Component</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAnalysisContext()
+	 * @see #getBase_Component()
 	 * @generated
 	 * @ordered
 	 */
-	protected SaAnalysisContext analysisContext;
+	protected Component base_Component;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected PSMPackageImpl() {
+	protected FunctionalPartitionsImpl() {
 		super();
 	}
 
@@ -75,7 +75,7 @@ public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CorePackage.Literals.PSM_PACKAGE;
+		return CorePackage.Literals.FUNCTIONAL_PARTITIONS;
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
 			base_Package = (org.eclipse.uml2.uml.Package)eResolveProxy(oldBase_Package);
 			if (base_Package != oldBase_Package) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.PSM_PACKAGE__BASE_PACKAGE, oldBase_Package, base_Package));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.FUNCTIONAL_PARTITIONS__BASE_PACKAGE, oldBase_Package, base_Package));
 			}
 		}
 		return base_Package;
@@ -113,7 +113,7 @@ public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
 		org.eclipse.uml2.uml.Package oldBase_Package = base_Package;
 		base_Package = newBase_Package;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.PSM_PACKAGE__BASE_PACKAGE, oldBase_Package, base_Package));
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.FUNCTIONAL_PARTITIONS__BASE_PACKAGE, oldBase_Package, base_Package));
 	}
 
 	/**
@@ -121,16 +121,16 @@ public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SaAnalysisContext getAnalysisContext() {
-		if (analysisContext != null && analysisContext.eIsProxy()) {
-			InternalEObject oldAnalysisContext = (InternalEObject)analysisContext;
-			analysisContext = (SaAnalysisContext)eResolveProxy(oldAnalysisContext);
-			if (analysisContext != oldAnalysisContext) {
+	public Component getBase_Component() {
+		if (base_Component != null && base_Component.eIsProxy()) {
+			InternalEObject oldBase_Component = (InternalEObject)base_Component;
+			base_Component = (Component)eResolveProxy(oldBase_Component);
+			if (base_Component != oldBase_Component) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.PSM_PACKAGE__ANALYSIS_CONTEXT, oldAnalysisContext, analysisContext));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.FUNCTIONAL_PARTITIONS__BASE_COMPONENT, oldBase_Component, base_Component));
 			}
 		}
-		return analysisContext;
+		return base_Component;
 	}
 
 	/**
@@ -138,8 +138,8 @@ public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SaAnalysisContext basicGetAnalysisContext() {
-		return analysisContext;
+	public Component basicGetBase_Component() {
+		return base_Component;
 	}
 
 	/**
@@ -147,11 +147,11 @@ public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setAnalysisContext(SaAnalysisContext newAnalysisContext) {
-		SaAnalysisContext oldAnalysisContext = analysisContext;
-		analysisContext = newAnalysisContext;
+	public void setBase_Component(Component newBase_Component) {
+		Component oldBase_Component = base_Component;
+		base_Component = newBase_Component;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.PSM_PACKAGE__ANALYSIS_CONTEXT, oldAnalysisContext, analysisContext));
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.FUNCTIONAL_PARTITIONS__BASE_COMPONENT, oldBase_Component, base_Component));
 	}
 
 	/**
@@ -162,12 +162,12 @@ public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CorePackage.PSM_PACKAGE__BASE_PACKAGE:
+			case CorePackage.FUNCTIONAL_PARTITIONS__BASE_PACKAGE:
 				if (resolve) return getBase_Package();
 				return basicGetBase_Package();
-			case CorePackage.PSM_PACKAGE__ANALYSIS_CONTEXT:
-				if (resolve) return getAnalysisContext();
-				return basicGetAnalysisContext();
+			case CorePackage.FUNCTIONAL_PARTITIONS__BASE_COMPONENT:
+				if (resolve) return getBase_Component();
+				return basicGetBase_Component();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -180,11 +180,11 @@ public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CorePackage.PSM_PACKAGE__BASE_PACKAGE:
+			case CorePackage.FUNCTIONAL_PARTITIONS__BASE_PACKAGE:
 				setBase_Package((org.eclipse.uml2.uml.Package)newValue);
 				return;
-			case CorePackage.PSM_PACKAGE__ANALYSIS_CONTEXT:
-				setAnalysisContext((SaAnalysisContext)newValue);
+			case CorePackage.FUNCTIONAL_PARTITIONS__BASE_COMPONENT:
+				setBase_Component((Component)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -198,11 +198,11 @@ public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CorePackage.PSM_PACKAGE__BASE_PACKAGE:
+			case CorePackage.FUNCTIONAL_PARTITIONS__BASE_PACKAGE:
 				setBase_Package((org.eclipse.uml2.uml.Package)null);
 				return;
-			case CorePackage.PSM_PACKAGE__ANALYSIS_CONTEXT:
-				setAnalysisContext((SaAnalysisContext)null);
+			case CorePackage.FUNCTIONAL_PARTITIONS__BASE_COMPONENT:
+				setBase_Component((Component)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -216,12 +216,12 @@ public class PSMPackageImpl extends EObjectImpl implements PSMPackage {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CorePackage.PSM_PACKAGE__BASE_PACKAGE:
+			case CorePackage.FUNCTIONAL_PARTITIONS__BASE_PACKAGE:
 				return base_Package != null;
-			case CorePackage.PSM_PACKAGE__ANALYSIS_CONTEXT:
-				return analysisContext != null;
+			case CorePackage.FUNCTIONAL_PARTITIONS__BASE_COMPONENT:
+				return base_Component != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //PSMPackageImpl
+} //FunctionalPartitionsImpl

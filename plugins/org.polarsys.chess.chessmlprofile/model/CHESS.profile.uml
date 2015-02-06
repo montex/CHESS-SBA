@@ -46,7 +46,7 @@
     <packageImport xmi:type="uml:PackageImport" xmi:id="_KqvjMDcwEd-mWLzcI61s7Q">
       <importedPackage xmi:type="uml:Package" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_RTwjABgzEdyHL91mBnoLNQ"/>
     </packageImport>
-    <packagedElement xmi:type="uml:Profile" xmi:id="_ad4owDgVEd-68Z_bhNRGsA" name="Core" URI="http://CHESS/Core" metaclassReference="_x8t_0DgXEd-68Z_bhNRGsA _FEHugDgYEd-68Z_bhNRGsA _mUYGcE7nEeCiWfCHUearZQ _wDY7IFYfEeGwxKcMAge2Cg">
+    <packagedElement xmi:type="uml:Profile" xmi:id="_ad4owDgVEd-68Z_bhNRGsA" name="Core" URI="http://CHESS/Core" metaclassReference="_x8t_0DgXEd-68Z_bhNRGsA _FEHugDgYEd-68Z_bhNRGsA _mUYGcE7nEeCiWfCHUearZQ _wDY7IFYfEeGwxKcMAge2Cg _aKE3gKrGEeSm_c79BO815Q">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_p-a_7jgVEd-68Z_bhNRGsA" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <contents xmi:type="ecore:EPackage" xmi:id="_v7qw0U7nEeCiWfCHUearZQ" name="Core" nsURI="http://CHESS/Core" nsPrefix="Core">
           <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_v9v0cE7nEeCiWfCHUearZQ" source="PapyrusVersion">
@@ -127,6 +127,9 @@
       </elementImport>
       <elementImport xmi:type="uml:ElementImport" xmi:id="_wDY7IFYfEeGwxKcMAge2Cg" alias="Slot">
         <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Slot"/>
+      </elementImport>
+      <elementImport xmi:type="uml:ElementImport" xmi:id="_aKE3gKrGEeSm_c79BO815Q" alias="Component">
+        <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
       </elementImport>
       <packagedElement xmi:type="uml:Stereotype" xmi:id="_opjLUDgXEd-68Z_bhNRGsA" name="CHESS">
         <ownedAttribute xmi:type="uml:Property" xmi:id="_1Baf4jgXEd-68Z_bhNRGsA" name="base_Model" isUnique="false" association="_1Baf4DgXEd-68Z_bhNRGsA">
@@ -1109,6 +1112,26 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Extension" xmi:id="_gTdRUFhYEeSGgdhwaAUffg" name="E_PSMPackage_Package1" memberEnd="_gTdRUVhYEeSGgdhwaAUffg _gTcDMFhYEeSGgdhwaAUffg">
         <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_gTdRUVhYEeSGgdhwaAUffg" name="extension_PSMPackage" type="_dusOgFhYEeSGgdhwaAUffg" aggregation="composite" association="_gTdRUFhYEeSGgdhwaAUffg"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Stereotype" xmi:id="_V2ydYKrGEeSm_c79BO815Q" name="FunctionalPartitions">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_V2ydYarGEeSm_c79BO815Q" name="base_Package">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_V2ydYqrGEeSm_c79BO815Q" name="base_Component">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_Wm2oYKrGEeSm_c79BO815Q" name="base_Package" association="_Wm3PcKrGEeSm_c79BO815Q">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_a4hR4KrGEeSm_c79BO815Q" name="base_Component" association="_a4h48KrGEeSm_c79BO815Q">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Extension" xmi:id="_Wm3PcKrGEeSm_c79BO815Q" name="E_FunctionalPartitions_Package1" memberEnd="_Wm3PcarGEeSm_c79BO815Q _Wm2oYKrGEeSm_c79BO815Q">
+        <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Wm3PcarGEeSm_c79BO815Q" name="extension_FunctionalPartitions" type="_V2ydYKrGEeSm_c79BO815Q" aggregation="composite" association="_Wm3PcKrGEeSm_c79BO815Q"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Extension" xmi:id="_a4h48KrGEeSm_c79BO815Q" name="E_FunctionalPartitions_Component1" memberEnd="_a4h48arGEeSm_c79BO815Q _a4hR4KrGEeSm_c79BO815Q">
+        <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_a4h48arGEeSm_c79BO815Q" name="extension_FunctionalPartitions" type="_V2ydYKrGEeSm_c79BO815Q" aggregation="composite" association="_a4h48KrGEeSm_c79BO815Q"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_WSNEsMGMEd--atLXXafOiQ" name="Dependability">
@@ -10508,6 +10531,31 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Extension" xmi:id="_D0clYTRKEeChqekVLFmSjQ" name="E_ComponentImplementation_Component0" memberEnd="_D0clYjRKEeChqekVLFmSjQ _D0clYDRKEeChqekVLFmSjQ">
         <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_D0clYjRKEeChqekVLFmSjQ" name="extension_ComponentImplementation" type="_CuRAcDRKEeChqekVLFmSjQ" aggregation="composite" association="_D0clYTRKEeChqekVLFmSjQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Stereotype" xmi:id="_PYtcIKrFEeSm_c79BO815Q" name="FunctionalPartition">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_PYtcIarFEeSm_c79BO815Q" name="utilization">
+          <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_PYtcIqrFEeSm_c79BO815Q"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_PYtcI6rFEeSm_c79BO815Q" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_PYtcJKrFEeSm_c79BO815Q" name="base_Component">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_PYtcJarFEeSm_c79BO815Q" name="MAF">
+          <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_0KWSgBFQEdyUJeMeN__D-A"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_PYtcJqrFEeSm_c79BO815Q" name="MIF">
+          <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_0KWSgBFQEdyUJeMeN__D-A"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_PYtcJ6rFEeSm_c79BO815Q" name="SchedulingTable">
+          <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_B5VngBFQEdyUJeMeN__D-A"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_SfEJEKrFEeSm_c79BO815Q" name="base_Component" association="_SfEwIKrFEeSm_c79BO815Q">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Extension" xmi:id="_SfEwIKrFEeSm_c79BO815Q" name="E_FunctionalPartition_Component1" memberEnd="_SfEwIarFEeSm_c79BO815Q _SfEJEKrFEeSm_c79BO815Q">
+        <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_SfEwIarFEeSm_c79BO815Q" name="extension_FunctionalPartition" type="_PYtcIKrFEeSm_c79BO815Q" aggregation="composite" association="_SfEwIKrFEeSm_c79BO815Q"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:DataType" xmi:id="__Ya2gGviEeCFqs3XUsvipQ" name="dummy"/>

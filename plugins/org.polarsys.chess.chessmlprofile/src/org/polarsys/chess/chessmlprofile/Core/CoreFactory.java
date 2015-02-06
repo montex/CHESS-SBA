@@ -94,6 +94,15 @@ public interface CoreFactory extends EFactory {
 	PSMPackage createPSMPackage();
 
 	/**
+	 * Returns a new object of class '<em>Functional Partitions</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Functional Partitions</em>'.
+	 * @generated
+	 */
+	FunctionalPartitions createFunctionalPartitions();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

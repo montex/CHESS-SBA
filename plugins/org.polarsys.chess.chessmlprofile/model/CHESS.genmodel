@@ -88,6 +88,12 @@
         <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
             propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/PSMPackage/AnalysisContext"/>
       </genClasses>
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/FunctionalPartitions">
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/FunctionalPartitions/base_Package"/>
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/FunctionalPartitions/base_Component"/>
+      </genClasses>
       <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="CHESSViews" basePackage="org.polarsys.chess.chessmlprofile.Core"
           resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Core/CHESSViews">
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESSViews/ExtraFunctionalView">
@@ -763,11 +769,19 @@
         <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/OS"/>
         <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/sourceCodeLocation"/>
       </genClasses>
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//ComponentModel/FunctionalPartition">
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/FunctionalPartition/utilization"/>
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ComponentModel/FunctionalPartition/base_Component"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/FunctionalPartition/MAF"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/FunctionalPartition/MIF"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/FunctionalPartition/SchedulingTable"/>
+      </genClasses>
     </nestedGenPackages>
-    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="SystemModel" disposableProviderFactory="true"
-        ecorePackage="chessmlprofile.ecore#//SystemModel">
-      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="STS" disposableProviderFactory="true"
-          ecorePackage="chessmlprofile.ecore#//SystemModel/STS">
+    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="SystemModel" basePackage="org.polarsys.chess.chessmlprofile"
+        disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//SystemModel">
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="STS" basePackage="org.polarsys.chess.chessmlprofile.SystemModel"
+          disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//SystemModel/STS">
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//SystemModel/STS/Human">
           <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//SystemModel/STS/Human/base_Class"/>

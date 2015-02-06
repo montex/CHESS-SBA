@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials

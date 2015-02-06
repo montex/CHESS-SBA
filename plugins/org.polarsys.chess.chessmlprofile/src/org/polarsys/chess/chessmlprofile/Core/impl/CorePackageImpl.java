@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -35,6 +35,7 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentModelPacka
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 import org.polarsys.chess.chessmlprofile.Core.CoreFactory;
 import org.polarsys.chess.chessmlprofile.Core.CorePackage;
+import org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions;
 import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Core.IdentifSlot;
 import org.polarsys.chess.chessmlprofile.Core.MultiInstance;
@@ -139,6 +140,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	private EClass psmPackageEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass functionalPartitionsEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -532,6 +540,33 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getFunctionalPartitions() {
+		return functionalPartitionsEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFunctionalPartitions_Base_Package() {
+		return (EReference)functionalPartitionsEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFunctionalPartitions_Base_Component() {
+		return (EReference)functionalPartitionsEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CoreFactory getCoreFactory() {
 		return (CoreFactory)getEFactoryInstance();
 	}
@@ -588,6 +623,10 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		psmPackageEClass = createEClass(PSM_PACKAGE);
 		createEReference(psmPackageEClass, PSM_PACKAGE__BASE_PACKAGE);
 		createEReference(psmPackageEClass, PSM_PACKAGE__ANALYSIS_CONTEXT);
+
+		functionalPartitionsEClass = createEClass(FUNCTIONAL_PARTITIONS);
+		createEReference(functionalPartitionsEClass, FUNCTIONAL_PARTITIONS__BASE_PACKAGE);
+		createEReference(functionalPartitionsEClass, FUNCTIONAL_PARTITIONS__BASE_COMPONENT);
 	}
 
 	/**
@@ -664,6 +703,10 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEClass(psmPackageEClass, PSMPackage.class, "PSMPackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getPSMPackage_Base_Package(), theUMLPackage.getPackage(), null, "base_Package", null, 1, 1, PSMPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getPSMPackage_AnalysisContext(), theSAMPackage.getSaAnalysisContext(), null, "AnalysisContext", null, 1, 1, PSMPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(functionalPartitionsEClass, FunctionalPartitions.class, "FunctionalPartitions", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getFunctionalPartitions_Base_Package(), theUMLPackage.getPackage(), null, "base_Package", null, 1, 1, FunctionalPartitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFunctionalPartitions_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, FunctionalPartitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //CorePackageImpl

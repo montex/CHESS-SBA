@@ -103,6 +103,10 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 				return createPSMPackageAdapter();
 			}
 			@Override
+			public Adapter caseFunctionalPartitions(FunctionalPartitions object) {
+				return createFunctionalPartitionsAdapter();
+			}
+			@Override
 			public Adapter caseGaResourcesPlatform(GaResourcesPlatform object) {
 				return createGaResourcesPlatformAdapter();
 			}
@@ -221,6 +225,20 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPSMPackageAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions <em>Functional Partitions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions
+	 * @generated
+	 */
+	public Adapter createFunctionalPartitionsAdapter() {
 		return null;
 	}
 
