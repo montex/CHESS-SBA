@@ -292,40 +292,6 @@ public class CHESSProjectSupport {
 			return System.getProperties().get("osgi.install.area").toString().substring(6);
 	}
 	
-	//copy linux and windows version of MAST inside this plugin to the eclipse folder
-	public static void installMAST() {
-		String eclipseLocation = getEclipseInstallLocation();
-		
-		if (new Path(eclipseLocation+java.io.File.separator+"mast").toFile().exists()){
-			CHESSProjectSupport.CHESS_CONSOLE.println("MAST is already installed");
-			return;//already installed
-		}
-		URL mastDir = FileLocator.find(Activator.getDefault().getBundle(), new Path("/mast"), null);
-		
-		Activator.getDefault().getBundle().getEntryPaths("/mast");
-		
-		List<String> collectedPaths = new ArrayList<String>();
-		CHESSProjectSupport.getBundleContents(Activator.getDefault(), "/mast", collectedPaths);
-		
-		for (String p : collectedPaths) {
-			Path pa = new Path(p);
-			URL u = FileLocator.find(Activator.getDefault().getBundle(), pa, null);
-			  try {
-				InputStream in = u.openStream();
-				File f = new File(eclipseLocation+p);
-				if (f.setExecutable(true)){
-					CHESSProjectSupport.CHESS_CONSOLE.println("Exec permission set for " + f.getName());
-				}
-				f.getParentFile().mkdirs();
-				FileOutputStream o = new FileOutputStream(f);
-				CHESSProjectSupport.fileCopy(in, o);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
 	public static void bundleToProjectCopy(String pluginID, Plugin plugin, String pluginPath, IProject currentProject, String projectPath, boolean includeBundleFolder){
 		List<String> collectedPaths = new ArrayList<String>();
 		CHESSProjectSupport.getBundleContents(plugin, pluginPath, collectedPaths);
@@ -342,9 +308,6 @@ public class CHESSProjectSupport {
 			try {
 				InputStream in = u.openStream();
 				File f = new File(workingDir + "/" + collectedPath);
-				
-//				if (f.exists())
-//					continue;
 				
 				f.getParentFile().mkdirs();
 				FileOutputStream o = new FileOutputStream(f);
