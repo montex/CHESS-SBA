@@ -60,10 +60,11 @@ public class ViewPermissions {
 	static PermissionList DependabilityAnalysisViewPL;
 	static PermissionList DependabilityViewPL;
 	static PermissionList SystemViewPL;
+	static PermissionList PSMView;
 	
 	static PermissionEntry allowAll = new PermissionEntry(anyEntry, false, true, true);
 	static void initializeLists(){
-		componentViewPL = new PermissionList();
+		/*componentViewPL = new PermissionList();
 		extraFunctionalViewPL = new PermissionList();
 		deploymentViewPL = new PermissionList();
 		analysisViewPL = new PermissionList();
@@ -72,6 +73,7 @@ public class ViewPermissions {
 		DependabilityAnalysisViewPL = new PermissionList();
 		DependabilityViewPL = new PermissionList();
 		SystemViewPL = new PermissionList();
+		PSMView = new PermissionList();*/
 		
 //		permissions.put(CHESSProfileManager.COMPONENT_VIEW,
 //				ViewPermissions.componentViewPL);
@@ -107,6 +109,8 @@ public class ViewPermissions {
 		permissions.put(CHESSProfileManager.RAILWAY_VIEW,
 				new HashMap<String, PermissionList>());
 		permissions.put(CHESSProfileManager.SYSTEM_VIEW,
+				new HashMap<String, PermissionList>());
+		permissions.put(CHESSProfileManager.PSM_VIEW,
 				new HashMap<String, PermissionList>());
 	}	
 	

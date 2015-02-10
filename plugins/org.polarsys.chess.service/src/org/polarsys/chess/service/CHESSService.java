@@ -19,6 +19,7 @@ package org.polarsys.chess.service;
 import java.net.URL;
 import java.util.Hashtable;
 
+
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -59,7 +60,6 @@ public class CHESSService {
 	public boolean start(IWorkbenchPart part) {
 		
 			IEditorPart activeEditor = container.getActiveEditor();
-			ISashWindowsContainer t;
 			
 			
 			if (activeEditor!=null && CHESSEditorUtils.isCHESSProject(activeEditor)) {
@@ -74,7 +74,6 @@ public class CHESSService {
 						PapyrusMultiDiagramEditor editor =  (PapyrusMultiDiagramEditor)part;
 						serviceRegistry = (ServicesRegistry)editor.getAdapter(ServicesRegistry.class);
 						container = serviceRegistry.getService(ISashWindowsContainer.class);
-						IEditorPart e= container.getActiveEditor();
 						if (CHESSEditorUtils.isCHESSProject(editor)) {
 							initializeCHESS(editor);
 							return true;

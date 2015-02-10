@@ -37,9 +37,12 @@ import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
+import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Slot;
+import org.eclipse.uml2.uml.ValueSpecification;
 import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Core.IdentifSlot;
+import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 
 public class VSLUtils {
 
@@ -671,6 +674,38 @@ public class VSLUtils {
 			if (stereotypeClass.isInstance(stereoApplication)) {
 				return (T) stereoApplication;
 			}
+		}
+		return null;
+	}
+	
+	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
+	public  static Integer getNumberOfCores(IContext context, InstanceSpecification cpu) {
+		Integer i = 1;
+		CH_HwProcessor x = getStereotypeApplication(cpu, CH_HwProcessor.class);
+		if(x == null || x.getNbCores() == null)
+			return i;
+
+		try {
+			i = Integer.parseInt(x.getNbCores());
+		} catch (NumberFormatException e) {
+			//let it be 1...
+		}
+		return i;
+	}
+	
+	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
+	public  static String getCoreFromContraint(IContext context, Comment self) {
+		try {
+			Assign assign = getStereotypeApplication(self, Assign.class);
+			if(assign.getImpliedConstraint().size()>0){
+				NfpConstraint c = assign.getImpliedConstraint().get(0);
+				Constraint cc = c.getBase_Constraint();
+				ValueSpecification spec = cc.getSpecification();
+				LiteralString value = (LiteralString) spec;
+				return value.getValue();
+			}
+		} catch (Exception e) {
+			//TODO ugly piece of code I know....
 		}
 		return null;
 	}

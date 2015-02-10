@@ -120,7 +120,7 @@
                   label="Real-Time Analysis">
                 <command
                   commandId="it.unipd.chess.m2m.QvtoUIHandlerVERDE.id"
-                  label="Schedulability (VERDE)"
+                  label="Schedulability Analysis"
                   style="push">
                <visibleWhen
                      checkEnabled="false">

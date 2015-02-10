@@ -15,6 +15,9 @@
 */
 package org.polarsys.chess.validator.constraints;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class StringParser {
 	//String value = "PeriodicPattern(period(value=40,unit=ms),..)";
 	// ex: WCET -> "(value=40, unit=ms)"
@@ -33,6 +36,18 @@ public double getValuePattern(String value, String toSearch) {
 		return -1; 
 	}
 	
+	public String getComplexValuePattern(String value, String toSearch, String delimiter) {
+		String[] array = value.split("[()=, ]");
+		Pattern p = Pattern.compile(".*"+toSearch+".*value.*"+delimiter+"(.*)"+delimiter+"", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(value);
+		String group = "";
+		if(m.find()){
+			group = m.group(1);
+		}
+		
+		return group;
+	}
+
 	public double getValueNFP(String value) {
 		String[] array = value.split("[()=,]");
 		for(int i=0; i<array.length-1; i++) {

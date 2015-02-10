@@ -78,6 +78,7 @@ public abstract class AbstractTransformation {
 		//Execute the various steps of the transformations
 		
 		// Remove the package with the multi instances, if any
+		//TO COMMENT FOR DEBUG 
 		QVToTransformation.launchRemoveMultiInstance(modelCopy, monitor);
 		
 		QVToTransformation.launchBuildMultiInstance(modelCopy, monitor);

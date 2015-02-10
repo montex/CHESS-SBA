@@ -133,6 +133,11 @@ query InstanceSpecification::isBus() : Boolean {
 	return b;
 }
 
+query InstanceSpecification::isFunctionalPartition() : Boolean {
+	var b := self.isStereotyped(CHHwComputingResourceQN);
+	return b;
+}
+
 /*
   Return the related CHRtSpecification of a Comment
 */
@@ -229,6 +234,7 @@ query chessmlprofile::RTComponentModel::CHRtSpecification::schedulableResource(s
 -- CHESS Stereotype Qualified Names
 
 property ComponentImplementationQN = "CHESS::ComponentModel::ComponentImplementation";
+property FunctionalPartitionQN = "CHESS::ComponentModel::FunctionalPartition";
 property CHRtPortSlotQN = "CHESS::Predictability::RTComponentModel::CHRtPortSlot";
 property CHRtSpecificationQN = "CHESS::Predictability::RTComponentModel::CHRtSpecification";
 property CHGaResourcePlatformQN = "CHESS::Core::CHGaResourcePlatform";

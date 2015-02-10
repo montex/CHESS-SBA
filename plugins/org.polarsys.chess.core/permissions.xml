@@ -25,6 +25,10 @@
                   <perm el="BehaviorExecutionSpecification" owner="true" write="true" visible="true"/>
                   <perm el="MessageOccurrenceSpecification" owner="true" write="true" visible="true"/>
                   
+                  
+                   <!--      To use the automated creation of assignments     -->
+                   <perm st="DeploymentView" owner="true" write="true" visible="true"/> 
+                  
                                                    
                   <!--      To delete activity BEGIN     -->
                   <perm el="Region" owner="true" write="true" visible="true"/>
@@ -50,6 +54,10 @@
                   <perm el="Connector" owner="true" visible="true"/>
                   <!--      To delete component implementations END     -->  
                   
+                  <perm st="Assign" owner="true" write="true" visible="true"/>
+                  <perm st="FunctionalPartition" owner="true" write="true" visible="true"/>
+                  <perm st="FunctionalPartitions" owner="true" write="true" visible="true"/>
+
                   <!--      To delete component types BEGIN     -->
                   <perm st="ComponentType" owner="true" visible="true"/>
                   <perm el="InterfaceRealization" owner="true" visible="true"/>
@@ -385,6 +393,9 @@
                   <perm st="Documentation" owner="true" write="true" visible="true"/>
                   
                   <perm el="Dependency" owner="true" write="true" visible="true"/>
+                  
+                  <!--      To use the automated creation of assignments     -->
+                  <perm st="DeploymentView" owner="true" write="true" visible="true"/> 
             
  				  <!--in case of deletion of elements-->
                   <perm el="InstanceSpecification" owner="true" write="true" visible="true"/> 

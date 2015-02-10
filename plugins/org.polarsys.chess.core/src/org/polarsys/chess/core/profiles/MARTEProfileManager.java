@@ -182,6 +182,11 @@ public class MARTEProfileManager {
 		PackageUtil.applyProfile(element, MARTE_GQAM, false);
 	}
 	
+	public static void applyNFPsProfileTo(Package element) {
+		Profile MARTE_NFPs =  UMLResourcesUtil.getProfile(NFPsPackage.eINSTANCE, element);
+		PackageUtil.applyProfile(element, MARTE_NFPs, false);
+	}
+	
 	public static void applyVSLProfileTo(Package element) {
 		Profile MARTE_VSL =  UMLResourcesUtil.getProfile(VSLPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, MARTE_VSL, false);
@@ -216,6 +221,7 @@ public class MARTEProfileManager {
 	public static void applyStereotypeTo(String stereoName, Element element) {
 		if (stereoName.equalsIgnoreCase("Allocate")) {
 			
+			//UMLUtils.applyStereotype(element, "MARTE::MARTE_Foundations::Alloc::Allocated");
 			UMLUtils.applyStereotype(element, "MARTE::MARTE_Foundations::Alloc::Allocate");
 		}
 		

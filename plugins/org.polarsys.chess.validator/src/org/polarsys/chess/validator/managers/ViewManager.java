@@ -30,8 +30,10 @@ import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
+import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 import org.polarsys.chess.validator.Activator;
+import org.eclipse.uml2.uml.Package;
 
 /**
  * ViewManager is a singleton class which provides the data structure which contains the 
@@ -151,7 +153,16 @@ public class ViewManager {
 		
 		DesignView dview = 
 				ds.getCurrentView();
-		if(notification.getEventType() == PapyrusStereotypeListener.MODIFIED_STEREOTYPE &&
+		
+		boolean isCurrentPackageDeploymentView = false;
+		Object n = notification.getNotifier();
+		if (n instanceof Package) {
+			Package pkg = (Package) n;
+			isCurrentPackageDeploymentView=ViewUtils.isDeploymentView(pkg);
+		}
+		
+		
+		if(isCurrentPackageDeploymentView || notification.getEventType() == PapyrusStereotypeListener.MODIFIED_STEREOTYPE &&
 				dview.getName().equals(CHESSProfileManager.DEPLOYMENT_VIEW)){
 			return true;
 		}

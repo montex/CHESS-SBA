@@ -49,10 +49,13 @@ property psmPackage : Package = null;
 property hostPackage : Package = null;
 property operationPackage : Package = null;
 property taskPackage : Package = null;
+property partitionPackage : Package = null;
 property analysisContextPackage : Package = null;
 
 property assigns : Set(Comment) = null;
+property partitionAssigns : Set(Comment) = null;
 property specs : Set(Comment) = null;
+property partitions :Set(Classifier) = null;
 property slots : Set(Slot) = null;
 property slotInstances : Set(Slot) = null;
 property e2eOperations : Set(Operation) = null;
@@ -62,6 +65,10 @@ property instSpecFullPackage : Package = null;
 
 property currentConcurRes : MARTE::SRM::SW_Concurrency::SwSchedulableResource = null;
 property currentSlot : Slot = null;
+/*Global variable for partition processing*/
+property currentProcessor : InstanceSpecification = null;
+property currentCore : String = null;
+property currentHost : MARTE::SAM::SaExecHost = null;
 //property currentSharedRes : MARTE::SAM::SaSharedResource = null;
 	
 main() {
@@ -91,8 +98,11 @@ mapping inout Model::psmModel() {
 		
 		compView := self.getView("ComponentView");
 		depView := self.getView("DeploymentView");
+		//self.nestedPackage->asSequence()->at(4).nestedPackage![Package].ownedElement->selectOne(Class).qualifiedName=saAnalysis
+		var x = self.allOwnedElements()[Class]->selectOne(qualifiedName=saAnalysis);
 		
-		var saAnalysisClass := self.allOwnedElements()[Class]->selectOne(c : Class | c.qualifiedName.equalsIgnoreCase(saAnalysis));
+		//var saAnalysisClass := self.allOwnedElements()[Class]->selectOne(qualifiedName.equalsIgnoreCase(saAnalysis));
+		var saAnalysisClass := self.allOwnedElements()[Class]->selectOne(qualifiedName=saAnalysis);
 		var saAnalysisCtx := saAnalysisClass.getMetaclass(SaAnalysisContextQN).oclAsType(MARTE::SAM::SaAnalysisContext);
 		
 		var platforms := saAnalysisCtx.platform->asSequence();
@@ -126,14 +136,22 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 		taskPackage := object Package {
 			name := "Task";
 		};
+		
+		partitionPackage := object Package{
+			name := "Partition";
+		};
+		
 		analysisContextPackage := object Package{
 			name := "AnalysisContext";
 		};
+		
+		
 
 		psmView.packagedElement += psmPackage;
 	    psmPackage.packagedElement += hostPackage;
 		psmPackage.packagedElement += operationPackage;
 		psmPackage.packagedElement += taskPackage;
+		psmPackage.packagedElement += partitionPackage;
 		psmPackage.packagedElement += analysisContextPackage;
 		
 		var psmPkg := psmPackage.applyStereotype(getCHESSStereotype("PSMPackage")).oclAsType(CHESS::Core::PSMPackage);
@@ -169,18 +187,26 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 	// Retrieve all <<Assign>>
 	assigns := depView.allOwnedElements()[Comment]->select(isStereotyped(AssignQN))->asSet();
 	
+	partitionAssigns := compView.allOwnedElements()[Comment]->select(isStereotyped(AssignQN))->asSet();
+	
 	assert fatal (assigns <> null)
 		with log ("No <<Assign>> found in input model");	
 			
-	assigns.getTo()->asSet()->select(isProcessor())->map HwProcessor2SaExecHost();
-
-	assigns.getTo()->asSet()->select(isComputingResource())->map HwComputingResource2SaExecHost();
+	assigns.getTo()->asSet()->select(isProcessor())->HwProcessor2SaExecHostHelper();
+	
+	//TODO
+	//ComputingResource does not contain info about number of cores so the following line should be removed...
+	//assigns.getTo()->asSet()->select(isComputingResource())->map HwComputingResource2SaExecHost();
 	
 	self.ownedMember[InstanceSpecification]->select(isBus())->processBus();
 	
 	// operationPackage
 	
 	var comps := compView.allOwnedElements()[Component]->select(isStereotyped(ComponentImplementationQN));
+	
+	/*Partition support Begin*/
+	var functParts := compView.allOwnedElements()[Component]->select(isStereotyped(FunctionalPartitionQN));
+	/*Partition support End*/
 	
 	assert fatal (comps <> null)
 		with log ("No <<ComponentImplementation>> found in input model");
@@ -207,39 +233,109 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 		list->forEach(e){
 			var id := e.getMetaclass("CHESS::Core::IdentifInstance").oclAsType(CHESS::Core::IdentifInstance);
 			slotInstances += e.slot->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
+			if(id.sourceInstanceSpec.classifier.getMetaclass(FunctionalPartitionQN)->asSequence()->first()<>null){
+				partitions += id.sourceInstanceSpec.classifier;
+			/*it is a partition*/				
+			};
 		}
 	};
 	
-	log("Slot list:");
+	log("Slot list(" + slotInstances->size().toString()+"):");
 	slotInstances->forEach(s){
 		log("  "+s.definingFeature.name);
+	};
+	log("Partition list(" + partitions->size().toString()+"):");
+	partitions->forEach(s){
+		log("  "+s.name);
 	};
 	
 	log("");
 	log("*** Proceeds to create SwSchedulableResources and SaSteps ***");
-	
-	slotInstances->forEach(s){
-		var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
-		specs->forEach(spec){
-		    log("***Processing Slot" +s.getStringId()+ " defining feature " +s.getStringId()+ s.definingFeature.name+ " for " + s.owningInstance.name + s.owningInstance.getStringId() + " and operation "+ spec.context.name +".");
-		    
-		    //maps only if the operation is deferred
-			s.map CHRtSlot2SwSchedulableResource(spec.base_Comment);  
-			//now creates the <<SaStep>> operations
-		    s.CHRTComment2SaStep(spec.base_Comment);
-		}; 
+	/*If there are no functional partitions go here*/
+	if(slotInstances->size()<>0){
+		slotInstances->forEach(s){
+			var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
+			specs->forEach(spec){
+			    log("***Processing Slot" +s.getStringId()+ " defining feature " +s.getStringId()+ s.definingFeature.name+ " for " + s.owningInstance.name + s.owningInstance.getStringId() + " and operation "+ spec.context.name +".");
+			    
+			    //maps only if the operation is deferred
+				s.map CHRtSlot2SwSchedulableResource(spec.base_Comment);  
+				//now creates the <<SaStep>> operations
+			    s.CHRTComment2SaStep(spec.base_Comment);
+			}; 
+		};
+		/*else process functional partitions*/
+	} else if (partitions->size()<>0) {
+		partitions->forEach(p){
+			
+			var pInst := p.getPartitionInstance();
+			var pPSM := pInst.map Partition2Package();
+			
+			currentProcessor := pInst.getAssignedProcessor();
+			currentCore := pInst.getAssignedCore();
+			var partition := pInst.map Partition2PSM();
+			currentHost := partition.getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
+			
+			pInst.getComponentsOfPartition()->forEach(c){
+				log(c.classifier![Classifier].name);
+				var instances := c.slot->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
+				instances->forEach(s){
+					var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
+					specs->forEach(spec){
+					    log("***Processing Slot" +s.getStringId()+ " defining feature " +s.getStringId()+ s.definingFeature.name+ " for " + s.owningInstance.name + s.owningInstance.getStringId() + " and operation "+ spec.context.name +".");
+					    
+					    //maps only if the operation is deferred
+						var schedRes : Class := s.map CHRtSlot2SwSchedulableResource(spec.base_Comment);
+						var temp : Class;
+						/*create a class that refere to the schedulabe resource in the right partition package*/
+						object temp : Class {
+							name := schedRes.name;
+							redefinedClassifier+=schedRes;
+						};
+						pPSM.packagedElement+=temp;  
+						//now creates the <<SaStep>> operations
+					    s.CHRTComment2SaStep(spec.base_Comment);
+					}; 
+				};
+			};		
+		};
+	} else {
+		//TODO error!
 	};
 	
 	if(analysisType.equalsIgnoreCase("Schedulability")) then {
 		
-	//Proceeds to create the EndToEndWorkFlow now that all the necessary resources are generated
+	//Proceed to create the EndToEndWorkFlow now since all the necessary resources are generated
 		log("");
-		log("*** Proceeds to create the EndToEndWorkFlow ***");
+		log("***Creating the EndToEndWorkFlow ***");
+		if(slotInstances->size()<>0){
 		slotInstances->forEach(s){
 			var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
 			specs->forEach(spec){
 				s.map slot2EndToEndWorkFlow(spec.base_Comment);
 			};
+		};
+		} else if (partitions->size()<>0) {
+			partitions->forEach(p){
+			/*TODO what happens	 if  an operation calls an operation of a different partition?*/
+				var pInst := p.getPartitionInstance();
+				var pPSM := pInst.map Partition2PSM();
+				currentProcessor := pInst.getAssignedProcessor();
+				currentCore := pInst.getAssignedCore();
+				
+				pInst.getComponentsOfPartition()->forEach(c){
+					log(c.classifier![Classifier].name);
+					var instances := c.slot->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
+					instances->forEach(s){
+						var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
+						specs->forEach(spec){
+						    s.map slot2EndToEndWorkFlow(spec.base_Comment);
+						}; 
+					};
+				};		
+		};
+		} else {
+		//TODO error!
 		};
 	} endif;
 	
@@ -251,32 +347,28 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 		var pimActivity : Activity = model.allOwnedElements()[Activity]->selectOne(a : Activity | a.qualifiedName.equalsIgnoreCase(saE2EFlow));
 		var interactions : Set(Interaction) := model.allOwnedElements()[Interaction];
 		interactions->forEach(interaction){
-			if(interaction.qualifiedName.equalsIgnoreCase(scenario)) then {
-				log(">>>>> Found End-To-End Scenario: " + interaction.name);
-				interaction.map Interaction2EndToEndWorkFlow(result, pimContext, pimActivity);
-			
-				log("e2e operations:");
-				e2eOperations->forEach(op){
-					log("   "+ op.name)
-				};
-				
-				//Proceeds to create the EndToEndWorkFlow for those tasks not involved in the e2e scenario"
-				log("*** Proceeds to create the EndToEndWorkFlow ***");
-				slotInstances->forEach(s){
-					var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
-					specs->forEach(spec){
-						
-						log("*** checking  ***"+spec.context.name +"...");
-						if(not e2eOperations->exists(op: Operation | op.name.equalsIgnoreCase(spec.context.name))) then {
-							
-							log("***... not found  ***");
-							log("Operation is: " +  spec.context.name);
-						    s.map slot2EndToEndWorkFlow(spec.base_Comment);
-						} endif;
-					};
-				};	
-			} endif;	
+		if(interaction.qualifiedName.equalsIgnoreCase(scenario)) then {
+			log(">>>>> Found End-To-End Scenario: " + interaction.name);
+			interaction.map Interaction2EndToEndWorkFlow(result, pimContext, pimActivity);
+		} endif;
+		
+		log("e2e operations:");
+		e2eOperations->forEach(op){
+			log("   "+ op.name)
 		};
+		
+		//Proceeds to create the EndToEndWorkFlow for those tasks not involved in the e2e scenario"
+		log("*** Proceeds to create the EndToEndWorkFlow ***");
+		slotInstances->forEach(s){
+			var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
+			specs->forEach(spec){
+				if(not e2eOperations->exists(op: Operation | op.name.equalsIgnoreCase(spec.context.name))) then {
+					log("Operation is: " +  spec.context.name);
+				    s.map slot2EndToEndWorkFlow(spec.base_Comment);
+				} endif;
+			};
+		};		
+	};
 
 	} endif;
 	
@@ -426,6 +518,27 @@ mapping Slot::CHRtSlot2SwSchedulableResource(chrt : Comment) : Class when {chrt.
 	}
 }
 
+mapping InstanceSpecification::Partition2Package() : Package {
+	result.name := self.classifier![Classifier].name;
+	partitionPackage.packagedElement += result;
+}
+
+mapping InstanceSpecification::Partition2PSM() : Class {
+	result.name := self.classifier![Classifier].name;
+	var package := self.resolveoneIn(InstanceSpecification::Partition2Package, Package);
+	package.packagedElement += result;
+	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::SAM::SaExecHost);
+	stHost.host := currentProcessor.getHost(currentCore);
+	stHost.otherSchedPolicy := "IMA";
+	var sr := result.applyStereotype(getMARTEStereotype("SwSchedulableResource")).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);	
+	var par := self.classifier![Classifier].getMetaclass("CHESS::ComponentModel::FunctionalPartition").oclAsType(CHESS::ComponentModel::FunctionalPartition);
+	log("MAF");
+	log(par.MAF);	
+	var schedParamMAF := "MAF=(value=" + par.MAF +")";
+	var schedParamSchedTable := "SCHED_TABLE=(value=\""+par.SchedulingTable+"\")";	
+	sr.schedParams := "("+schedParamMAF+","+schedParamSchedTable+")";
+}
+
 mapping InstanceSpecification::Instance2SwSchedulableResource(chrt : Comment, slot : Slot) : Class when {chrt.CHRtSpec().isDeferred()} {
 	init{
 		var chrts := chrt.CHRtSpec();
@@ -443,9 +556,13 @@ mapping InstanceSpecification::Instance2SwSchedulableResource(chrt : Comment, sl
 	
 	//TODO assume <<Assign>> 'from' and 'to' typed as InstanceSpecification	
 	// Find the deployment node (InstanceSpecification), based on <<Assign>> directives
-
-	var hostClassifier := getAssignToFrom_MemoryPartition(slot.owningInstance);
-	sr.host := hostClassifier.getHost();
+	
+	if(currentHost <> null){
+		sr.host := currentHost;//currentProcessor.getHost(currentCore);
+	} else {
+		var hostClassifier := getAssignToFrom_MemoryPartition(slot.owningInstance);
+		sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot.owningInstance));
+	};
 	assert fatal (sr.host <> null)
 		with log("Null Host for SwSchedulableResource '" +result.name+ "'.");
 	sr.schedParams := schedParams;
@@ -457,8 +574,27 @@ mapping InstanceSpecification::Instance2SwSchedulableResource(chrt : Comment, sl
   Given a InstanceSpecification representing a Processor/ComputingResource,
   return the already generated SaExecHost
 */
-query InstanceSpecification::getHost() : MARTE::SAM::SaExecHost {
+query InstanceSpecification::getHost(core: String) : MARTE::SAM::SaExecHost {
+	if(core<>null) {
+			var ress := self.resolveIn(InstanceSpecification::HwProcessor2SaExecHost, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
+			
+			if(ress->size() = 1){
+				var cpu := ress->selectOne(base_Classifier.name=self.name);
+				assert fatal (cpu <> null)
+					with log("Host "+self.name+" not found.");
+				return cpu;
+			};
+			var res := ress->selectOne(base_Classifier.name=self.name+"_"+core);
+			if(res = null){
+				res := ress->selectOne(base_Classifier.name=self.name+"_core"+core);
+			};
+			if(res <> null){
+				return res;
+			};
+	};
 	var res := self.resolveoneIn(InstanceSpecification::HwProcessor2SaExecHost, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
+	
+	//TODO the following lines should be removed
 	if res.oclIsInvalid() or res = null then
 		return self.resolveoneIn(InstanceSpecification::HwComputingResource2SaExecHost, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost)
 	endif;
@@ -602,7 +738,7 @@ helper createSporadicRelatedNodes(in currentOp : chessmlprofile::RTComponentMode
 }
 
 //Return the nextE2ENode 
-helper createOpaqueActionsChain(in currentIsGuarded : Boolean, in currentCHRtComment : Comment, in currentSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode/*, currentOp : chessmlprofile::RTComponentModel::CHRtSpecification*/) : ActivityNode {
+helper createOpaqueActionsChainFull(in currentIsGuarded : Boolean, in currentCHRtComment : Comment, in currentSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode/*, currentOp : chessmlprofile::RTComponentModel::CHRtSpecification*/) : ActivityNode {
 	var currentOp := currentCHRtComment.CHRtSpec();
 	var nextE2ENode := prevE2ENode;
 	
@@ -658,7 +794,7 @@ helper createOpaqueActionsChain(in currentIsGuarded : Boolean, in currentCHRtCom
 	        		}
 	        		else{
 	        			//TODO Stefano: is this correct?
-	        			nextE2ENode := createOpaqueActionsChain(usedPiCHRtSpec.isProtected(),usedPiCHRtSpec.base_Comment, usedPiSlot, e2eActivity, nextE2ENode)
+	        			nextE2ENode := createOpaqueActionsChainFull(usedPiCHRtSpec.isProtected(),usedPiCHRtSpec.base_Comment, usedPiSlot, e2eActivity, nextE2ENode)
 	        		}endif
 	        						
 				endif	
@@ -1131,14 +1267,45 @@ mapping InstanceSpecification::HwComputingResource2SaExecHost() : Class {
 	stHost.speedFactor := hcr.speedFactor;//"(value=1.0)";
 }
 
-mapping InstanceSpecification::HwProcessor2SaExecHost() : Class {
-	log("Generating <<SaExecHost>> from instanceSpecification '"+self.name+"' corresponding to <<CH_HwProcessor>> '" + self.classifier().name + "'.");
+helper InstanceSpecification::HwProcessor2SaExecHostHelper() : OclVoid {
+	//log("Generating <<SaExecHost>> from instanceSpecification '"+self.name+"' corresponding to <<CH_HwProcessor>> '" + self.classifier().name + "'.");
+	var i: Integer := 0;
+	var n: Integer := self.getNumberOfCores();
+	
+	var p := self.map HwProcessor2SaExecHost(null);
+	var pHost := p.getMetaclass("SaExecHost").oclAsType(MARTE::SAM::SaExecHost);
+	pHost.otherSchedPolicy := "partitioned";//or global
+	//Generate cores and assign the processor as the host for each core
+	while(n>1 and i < n) {
+		var c := self.map HwProcessor2SaExecHost("_core"+i.toString());
+		//TODO the following lines may be removed
+		var cc := object Class {
+			redefinedClassifier+=c;
+			name := c.name;
+		};
+		p.nestedClassifier +=cc;
+		c.getMetaclass("SaExecHost").oclAsType(MARTE::SAM::SaExecHost).host := pHost;
+		i := i + 1;
+	}
+}
+
+mapping InstanceSpecification::HwProcessor2SaExecHost(core : String) : Class {
+	var message := "";
+	var name := self.name;
+	if(core<>null){
+		message := "'and Core " + core;
+		name := name + core;
+	};
+	var host := self.resolveoneIn(InstanceSpecification::HwProcessor2SaExecHost, Class);
+	var saHost := host.getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
+	log("Generating <<SaExecHost>> from instanceSpecification '"+self.name+"' corresponding to <<CH_HwProcessor>> '" + self.classifier().name + message);
     var hcr := self.getMetaclass(CHHwProcessorQN).oclAsType(chessmlprofile::HardwareBaseline::CH_HwProcessor);
-	result.name := self.name;
+	result.name := name;
 	hostPackage.packagedElement += result;
 	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::SAM::SaExecHost);
 	stHost.schedPriRange := "[1..256]";
 	stHost.speedFactor := hcr.speedFactor;
+	stHost.host := saHost;
 }
 
 //NOT USED
@@ -1213,7 +1380,7 @@ mapping InstanceSpecification::Instance2EndToEndWorkFlow(chrt : Comment, slot : 
 	var gaWorkloadEvent := actInitialNode.applyStereotype(getMARTEStereotype("GaWorkloadEvent")).oclAsType(MARTE::GQAM::GaWorkloadEvent);
 	gaWorkloadEvent.pattern := chrts.occKind;
 	
-	var resultNode := createOpaqueActionsChain(chrts.isProtected(), chrt, slot, result, actInitialNode);
+	var resultNode := createOpaqueActionsChainFull(chrts.isProtected(), chrt, slot, result, actInitialNode);
 
 	//create final node
 	//var finalNode := new ActivityFinalNode("ActivityFinalNode1");
@@ -1263,6 +1430,15 @@ query InstanceSpecification::linkedHwInstanceSpecifications() : Set(InstanceSpec
 	};
 	return res;
 }	
+
+/*
+  Given a InstanceSpecification representing a Functional Partition
+  return the Components assigned to it
+*/
+query InstanceSpecification::getPartitionComponents() : Set(InstanceSpecification) {
+		var res : Set(InstanceSpecification) := Set{};
+		return res;
+}
 
 query getConnectingBusInstance(senderProcessor: InstanceSpecification, receiverProcessor: InstanceSpecification) : InstanceSpecification {
 	// get the hw connections and buses
@@ -1323,8 +1499,43 @@ query Slot::listAll() : Slot {
 	return null;	
 }
 
+query Slot::getCorrespondingSlot() : Slot {
+	var riPiLinks := self.owner.owner.ownedElement[InstanceSpecification]->select(classifier -> size() = 0);
+	riPiLinks->forEach(l){
+	    //TODO Assumption: each link has 2 and only 2 ends
+		var ends := l.allOwnedElements()[InstanceValue]->asOrderedSet();
+		
+		// bug fixed: check also if the instance is the same, not only the slot
+		var bFirst := ends->first().instance![InstanceSpecification] = self.owningInstance;
+		bFirst := bFirst and 
+			ends->first().owner![Slot].definingFeature![Port] = self.definingFeature;
+			
+		var bLast := ends->last().instance![InstanceSpecification] = self.owningInstance;
+		bLast := bLast and 
+			ends->last().owner![Slot].definingFeature![Port] = self.definingFeature;
+				
+			
+		if bFirst then {
+	  	  var s :=  ends->last();
+	  	  return s.instance.slot->selectOne(definingFeature = s.owner![Slot].definingFeature);
+	  	} else
+	  	 
+	    if bLast then {
+	  	  var s := ends->first();//res += ends->first().instance//candidates->selectOne(ownedElement[Slot]->selectOne(s | s = ends->first()) <> null)
+	  	  return s.instance.slot->selectOne(definingFeature = s.owner![Slot].definingFeature);
+	    } endif
+		
+	    endif;
+	    
+	};
+	return null;
+}
+
 query Slot::getCorrespondingSlotFull() : Slot {
-	
+	/*if we are not working with instSpecFull, we are on instSpec so use simpler checks to get the corresponding slot*/
+	if(self.owner.owner![Package].name.endsWith("instSpec")) then {
+		return self.getCorrespondingSlot();
+	}endif;
 	var riPiLinks := self.owner.owner.ownedElement[InstanceSpecification]->select(classifier -> size() = 0);
 	riPiLinks->forEach(l){
 	    //TODO Assumption: each link has 2 and only 2 ends
@@ -1375,9 +1586,43 @@ query getAssignForInstance(p : InstanceSpecification) : MARTE::Alloc::Assign {
 	return assigns->selectOne(isAssignForInstance(p)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
 }
 
+query InstanceSpecification::getComponentsOfPartition() : Set(InstanceSpecification) {
+	return partitionAssigns->select(isAssignForPartition(self)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign)._from.oclAsType(InstanceSpecification)->asSet();
+}
+
+query Classifier::getPartitionInstance() : InstanceSpecification {
+	return partitionAssigns->selectOne(isAssignForPartition(self)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign).to![InstanceSpecification].oclAsType(InstanceSpecification);
+}
+
+query InstanceSpecification::getAssignedCore() : String {	
+	var c  := assigns->selectOne(isAssignFromPartitionInstance(self));
+	return c.getCoreFromContraint();
+}
+
+query InstanceSpecification::getAssignedProcessor() : InstanceSpecification {	
+	var c : MARTE::Alloc::Assign := assigns->selectOne(isAssignFromPartitionInstance(self)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	return c.to![InstanceSpecification];
+}
+
+query Comment::isAssignFromPartitionInstance(p : InstanceSpecification) : Boolean {
+	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	return ass._from![InstanceSpecification] = p;
+}
+
+
 query Comment::isAssignForInstance(spec : InstanceSpecification) : Boolean {
 	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
 	return ass._from![InstanceSpecification] = spec.getSourceInstanceSpec() and self.isReferringId(spec.getId());
+}
+
+query Comment::isAssignForPartition(p : InstanceSpecification) : Boolean {
+	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	return ass.to![InstanceSpecification] = p;
+}
+
+query Comment::isAssignForPartition(p : Classifier) : Boolean {
+	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	return ass.to![InstanceSpecification].classifier![Classifier] = p;
 }
 
 query getAssignToFrom_MemoryPartition(p : InstanceSpecification) : InstanceSpecification {
@@ -1390,6 +1635,24 @@ query getAssignToFrom_MemoryPartition(p : InstanceSpecification) : InstanceSpeci
 		return 	asg.to![InstanceSpecification];
 	} else //it is an hardware component
 		return 	ass.to![InstanceSpecification]
+	endif;
+	
+	return null;
+}
+
+
+query getAssignedCoreFrom_MemoryPartition(p : InstanceSpecification) : String {
+	
+	//TODO how do we get a core if there is a memory partition? 
+	var ass := getAssignForInstance(p);
+	var toInstance := ass.to![InstanceSpecification];
+	var toClass := toInstance.classifier![Classifier];
+	if toClass.isStereotyped(MemoryPartitionQN) then {
+		var a := assigns -> selectOne(isAssignedFrom(toInstance));
+		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+		return 	asg.base_Comment.getCoreFromContraint();
+	} else //it is an hardware component
+		return 	ass.base_Comment.getCoreFromContraint()
 	endif;
 	
 	return null;

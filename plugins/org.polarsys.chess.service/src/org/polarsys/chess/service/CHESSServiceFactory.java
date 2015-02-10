@@ -33,6 +33,7 @@ public class CHESSServiceFactory implements IServiceFactory {
 	private CHESSService service;
 	private ServicesRegistry serviceRegistry;
 	private ISashWindowsContainer container;
+	private IPartListener partListener;
 
 	/*
 	 * This service attach a PartListener upon its initialization to retrieve the needed ISashWindowsContainer service.
@@ -46,7 +47,15 @@ public class CHESSServiceFactory implements IServiceFactory {
 	public void init(ServicesRegistry servicesRegistry) throws ServiceException {
 		this.serviceRegistry = servicesRegistry;
 		IWorkbenchWindow w = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		w.getPartService().addPartListener(new IPartListener() {
+		partListener  = createPartListener();
+		w.getPartService().addPartListener(partListener);
+
+	}
+	
+	
+
+	private IPartListener createPartListener() {
+		return new IPartListener() {
 			
 			private void execute(IWorkbenchPart part) {
 				if (part instanceof PapyrusMultiDiagramEditor) {
@@ -55,13 +64,16 @@ public class CHESSServiceFactory implements IServiceFactory {
 						 createCHESSService();
 						boolean b = service.start(part);
 						if(b) {
-							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService().removePartListener(this);
+							removePartListner(this);
 						} else {
 							service = null;
 						}
 					} catch (ServiceException e) {
-						System.err.println(e.getMessage());
+						/*if ISashWindowsContainer does not exist probably the CHESS service was initialised during the 
+						 * creation of the CHESS model => nothing can be done other than removing the listener*/
+						//System.err.println(e.getMessage());
 						service = null;
+						removePartListner(this);
 					}
 				}
 			}
@@ -93,8 +105,7 @@ public class CHESSServiceFactory implements IServiceFactory {
 			public void partActivated(IWorkbenchPart part) {
 				execute(part);
 			}
-		});
-
+		};
 	}
 	
 	
@@ -106,11 +117,17 @@ public class CHESSServiceFactory implements IServiceFactory {
 	
 	@Override
 	public void disposeService() throws ServiceException {
+		removePartListner(partListener);
 		if (service !=null){
 			System.err.println("CHESS Service terminated.");
 			service.stopService();
 			service = null;
 		}
+	}
+	
+	private void removePartListner(IPartListener partListener) {
+		if (partListener != null)
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService().removePartListener(partListener);
 	}
 
 	private void createCHESSService() {

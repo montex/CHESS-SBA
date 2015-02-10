@@ -23,6 +23,7 @@ import java.util.Map;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerKind;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerPort;
 import org.eclipse.uml2.uml.Classifier;
@@ -45,6 +46,13 @@ import org.eclipse.uml2.uml.internal.impl.DependencyImpl;
 import org.polarsys.chess.core.views.ViewUtils;
 
 public class UMLUtils {
+	
+	public static String getElementID(Element el){
+		Resource resource = el.eResource();
+		if(resource != null)
+			return resource.getURIFragment(el);
+		return null;
+	}
 	
 	public static boolean hasPublicVisibility(Operation operation) {
 		if (operation.getVisibility().getValue() == VisibilityKind.PUBLIC)

@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -354,6 +355,10 @@ public class CHESSProfileManager {
 	}
 	
 	
+	@Deprecated
+	/*
+	 * Not safe to retrieve views based on the model name
+	 * */
 	public static String viewName(Model model, String name){
 		return model.getName() + name;
 	} 
@@ -547,8 +552,20 @@ public class CHESSProfileManager {
 		createViews(currentModel);
 	}
 	
+	@Deprecated
 	public static Package getView(Model model, String view){
 		return model.getNestedPackage(viewName(model, view));
+	}
+	
+	public static Package getViewByStereotype(Model model, String view){
+		EList<Package> packages = model.getNestedPackages();
+		for (Package package_ : packages) {
+			Stereotype x = package_.getAppliedStereotype("CHESS::Core::CHESSViews::"+view);
+			
+			if(x!=null)
+				return package_;
+		}
+		return null;
 	}
 
 }
