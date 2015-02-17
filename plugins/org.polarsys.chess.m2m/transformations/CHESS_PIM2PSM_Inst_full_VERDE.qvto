@@ -114,7 +114,7 @@ mapping inout Model::psmModel() {
 		with log("CHGaResourcesPlatform is not present: there should be one CHGaResourcePlatform in the Analysis Context");
 	
 	assert fatal (instSpecPackage->size()=1) 
-		with log("Ambiguos analysis scenario: there should be only one CHGaResourcePlatform in the Analysis Context");
+		with log("Ambiguous analysis scenario: there should be only one CHGaResourcePlatform in the Analysis Context");
 			
 	log("<<CHGaResourcesPlatform>> found.");	
 	instSpecPackage.map CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx);
