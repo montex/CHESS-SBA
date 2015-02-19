@@ -339,7 +339,7 @@ public class DiagramStatus {
 					String av = ViewUtils.getViewName(actualView);
 					String nv = ViewUtils.getViewName(newActualView);
 					
-					if (av!= null && nv!=null && av.equals(nv)){
+					if (av!= null && nv!=null && !av.equals(nv)){
 						disableAllToggles();
 					}
 				}
