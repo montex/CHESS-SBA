@@ -69,6 +69,8 @@ property currentSlot : Slot = null;
 property currentProcessor : InstanceSpecification = null;
 property currentCore : String = null;
 property currentHost : MARTE::SAM::SaExecHost = null;
+
+property slotinAssigns = false;
 //property currentSharedRes : MARTE::SAM::SaSharedResource = null;
 	
 main() {
@@ -230,6 +232,9 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 
 		//TODO assumption: one annotatedElement per Assign	
 		var list := ass.getInstances(instSpecPackage, instSpecFullPackage);
+		if(list->size()>0){
+			
+		slotinAssigns := false;
 		list->forEach(e){
 			var id := e.getMetaclass("CHESS::Core::IdentifInstance").oclAsType(CHESS::Core::IdentifInstance);
 			slotInstances += e.slot->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
@@ -238,6 +243,13 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 			/*it is a partition*/				
 			};
 		}
+		} else {
+			slotinAssigns := true;
+			var slotList := ass.getSlotInstances(instSpecPackage, instSpecFullPackage);
+			slotInstances += slotList;
+		
+		}
+		
 	};
 	
 	log("Slot list(" + slotInstances->size().toString()+"):");
@@ -560,8 +572,15 @@ mapping InstanceSpecification::Instance2SwSchedulableResource(chrt : Comment, sl
 	if(currentHost <> null){
 		sr.host := currentHost;//currentProcessor.getHost(currentCore);
 	} else {
-		var hostClassifier := getAssignToFrom_MemoryPartition(slot.owningInstance);
-		sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot.owningInstance));
+		
+		
+	   if(slotinAssigns){
+	   	  var hostClassifier := getAssignToFrom_MemoryPartition(slot);
+		  sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot));
+	   } else {
+		  var hostClassifier := getAssignToFrom_MemoryPartition(slot.owningInstance);
+		  sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot.owningInstance));
+	   }
 	};
 	assert fatal (sr.host <> null)
 		with log("Null Host for SwSchedulableResource '" +result.name+ "'.");
@@ -1586,6 +1605,10 @@ query getAssignForInstance(p : InstanceSpecification) : MARTE::Alloc::Assign {
 	return assigns->selectOne(isAssignForInstance(p)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
 }
 
+query getAssignForInstance(p : Slot) : MARTE::Alloc::Assign {
+	return assigns->selectOne(isAssignForInstance(p)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+}
+
 query InstanceSpecification::getComponentsOfPartition() : Set(InstanceSpecification) {
 	return partitionAssigns->select(isAssignForPartition(self)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign)._from.oclAsType(InstanceSpecification)->asSet();
 }
@@ -1615,6 +1638,11 @@ query Comment::isAssignForInstance(spec : InstanceSpecification) : Boolean {
 	return ass._from![InstanceSpecification] = spec.getSourceInstanceSpec() and self.isReferringId(spec.getId());
 }
 
+query Comment::isAssignForInstance(spec : Slot) : Boolean {
+	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	return ass._from![Slot].definingFeature = spec.definingFeature;
+}
+
 query Comment::isAssignForPartition(p : InstanceSpecification) : Boolean {
 	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
 	return ass.to![InstanceSpecification] = p;
@@ -1623,6 +1651,38 @@ query Comment::isAssignForPartition(p : InstanceSpecification) : Boolean {
 query Comment::isAssignForPartition(p : Classifier) : Boolean {
 	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
 	return ass.to![InstanceSpecification].classifier![Classifier] = p;
+}
+
+query getAssignToFrom_MemoryPartition(p : Slot) : InstanceSpecification {
+	var ass := getAssignForInstance(p);
+	var toInstance := ass.to![InstanceSpecification];
+	var toClass := toInstance.classifier![Classifier];
+	if toClass.isStereotyped(MemoryPartitionQN) then {
+		var a := assigns -> selectOne(isAssignedFrom(toInstance));
+		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+		return 	asg.to![InstanceSpecification];
+	} else //it is an hardware component
+		return 	ass.to![InstanceSpecification]
+	endif;
+	
+	return null;
+}
+
+query getAssignedCoreFrom_MemoryPartition(p : Slot) : String {
+	
+	//TODO how do we get a core if there is a memory partition? 
+	var ass := getAssignForInstance(p);
+	var toInstance := ass.to![InstanceSpecification];
+	var toClass := toInstance.classifier![Classifier];
+	if toClass.isStereotyped(MemoryPartitionQN) then {
+		var a := assigns -> selectOne(isAssignedFrom(toInstance));
+		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+		return 	asg.base_Comment.getCoreFromContraint();
+	} else //it is an hardware component
+		return 	ass.base_Comment.getCoreFromContraint()
+	endif;
+	
+	return null;
 }
 
 query getAssignToFrom_MemoryPartition(p : InstanceSpecification) : InstanceSpecification {
