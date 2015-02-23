@@ -66,6 +66,9 @@ property currentSlot : Slot = null;
 main() {
     log("*** CHESS PIM->PSM transformation   ***");
     log("Performing " + analysisType + " Analysis");	
+    log("Analysis Context is " + saAnalysis);
+ 	log("End2End Scenario is " + saE2EFlow);
+ 	
 	model := source.rootObjects()![Model];
 	
 	MARTEProfile := model.getView("ComponentView").getAppliedProfiles()->selectOne(name="GCM").owner.owner.oclAsType(Profile);
@@ -236,8 +239,9 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext() : Class {
 	if(analysisType.equalsIgnoreCase("EndToEnd")) then {
 		
 		//EndToEndWorkFlow for E2E Scenario
-		var pimContext : Class = model.allOwnedElements()[Class]->selectOne(c : Class | c.qualifiedName.equalsIgnoreCase(saAnalysis));
-		var pimActivity : Activity = model.allOwnedElements()[Activity]->selectOne(a : Activity | a.qualifiedName.equalsIgnoreCase(saE2EFlow));
+		--2015/02/23 - NP: added a check to avoid null pointers @ c.qualifiedName and @ a.qualifiedName 
+		var pimContext : Class = model.allOwnedElements()[Class]->selectOne(c : Class | not c.qualifiedName.oclIsUndefined() and c.qualifiedName.equalsIgnoreCase(saAnalysis));
+		var pimActivity : Activity = model.allOwnedElements()[Activity]->selectOne(a : Activity | not a.qualifiedName.oclIsUndefined() and a.qualifiedName.equalsIgnoreCase(saE2EFlow));
 		var interactions : Set(Interaction) := model.allOwnedElements()[Interaction];
 		interactions->forEach(interaction){
 			if(interaction.qualifiedName.equalsIgnoreCase(scenario)) then {
