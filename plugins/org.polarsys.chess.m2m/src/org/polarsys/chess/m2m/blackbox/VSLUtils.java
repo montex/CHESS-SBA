@@ -43,6 +43,7 @@ import org.eclipse.uml2.uml.ValueSpecification;
 import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Core.IdentifSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
+import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 
 public class VSLUtils {
 
@@ -521,6 +522,69 @@ public class VSLUtils {
 	}
 	
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
+	public static EList<Slot> getSlotInstances(IContext context,
+			org.eclipse.uml2.uml.Comment self,
+			org.eclipse.uml2.uml.Package inst,
+			org.eclipse.uml2.uml.Package instFull) {
+		EList<Slot> list = new BasicEList<Slot>();
+
+		Assign ass = getStereotypeApplication(self, Assign.class);
+		Slot slotInst = extractFirstSlot(ass.getFrom());
+		
+		InstanceSpecification originatingInst = slotInst.getOwningInstance();
+		
+		if (slotInst == null)
+			return list;
+		
+		if (!inst.allOwnedElements().contains(slotInst))
+			return list;
+		
+		
+		
+		int[] bounds = getBounds(self);
+		
+		if (bounds != null)
+			for (Element el : instFull.allOwnedElements()) {
+				
+				IdentifInstance id = getStereotypeApplication(el,
+						IdentifInstance.class);
+				
+				if (el instanceof InstanceSpecification && id != null) {
+					if (isInBounds(id.getId(), bounds)
+							&& id.getSourceInstanceSpec() == originatingInst){
+						
+						for (Element e : el.getOwnedElements()) {
+							if (!(e instanceof Slot)) continue;
+							Slot slot = (Slot) e;
+							if(slot.getDefiningFeature().equals(slotInst.getDefiningFeature())){
+								list.add((Slot) e);
+								break;
+							}
+						}
+					}
+				}
+			}
+		else
+			for (Element el : instFull.allOwnedElements()) {
+				IdentifInstance id = getStereotypeApplication(el,
+						IdentifInstance.class);
+				if (el instanceof InstanceSpecification && id != null
+						&& id.getSourceInstanceSpec() == originatingInst) {
+					for (Element e : el.getOwnedElements()) {
+						if (!(e instanceof Slot)) continue;
+						Slot slot = (Slot) e;
+						if(slot.getDefiningFeature().equals(slotInst.getDefiningFeature())){
+							list.add((Slot) e);
+							break;
+						}
+					}
+				}
+			}
+
+		return list;
+	}
+	
+	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static EList<InstanceSpecification> getInstances(IContext context,
 			org.eclipse.uml2.uml.Comment self,
 			org.eclipse.uml2.uml.Package inst,
@@ -528,7 +592,7 @@ public class VSLUtils {
 		EList<InstanceSpecification> list = new BasicEList<InstanceSpecification>();
 
 		Assign ass = getStereotypeApplication(self, Assign.class);
-		InstanceSpecification originatingInst = (InstanceSpecification) ass.getFrom().get(0);
+		InstanceSpecification originatingInst = extractFirstInstance(ass.getFrom());
 		
 		if (originatingInst == null)
 			return list;
@@ -578,6 +642,26 @@ public class VSLUtils {
 //		return list;
 //	}
 	
+	private static Slot extractFirstSlot(EList<Element> from) {
+		for (Element element : from) {
+			if (element instanceof Slot) {
+				Slot sl = (Slot) element;
+				return sl;
+			}
+		}
+		return null;
+	}
+	
+	private static InstanceSpecification extractFirstInstance(EList<Element> from) {
+		for (Element element : from) {
+			if (element instanceof InstanceSpecification) {
+				InstanceSpecification is = (InstanceSpecification) element;
+				return is;
+			}
+		}
+		return null;
+	}
+
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static Boolean isReferringId(IContext context,
 			org.eclipse.uml2.uml.Comment self, Integer id) {

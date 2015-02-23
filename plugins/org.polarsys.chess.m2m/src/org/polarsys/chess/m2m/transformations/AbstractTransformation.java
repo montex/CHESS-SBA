@@ -18,6 +18,7 @@ import org.polarsys.chess.m2m.TransformationResultsData;
 
 public abstract class AbstractTransformation {
 
+	private static final boolean DEBUG = false;
 	private String folder = TransUtil.TRANSFORMATIONS_DIR;
 	private IFolder transDir;
 	protected Map<String, String> configProperty;
@@ -78,8 +79,10 @@ public abstract class AbstractTransformation {
 		//Execute the various steps of the transformations
 		
 		// Remove the package with the multi instances, if any
-		//TO COMMENT FOR DEBUG 
-		QVToTransformation.launchRemoveMultiInstance(modelCopy, monitor);
+		//TO COMMENT FOR DEBUG
+		if(!DEBUG){
+			QVToTransformation.launchRemoveMultiInstance(modelCopy, monitor);
+		}
 		
 		QVToTransformation.launchBuildMultiInstance(modelCopy, monitor);
 		build1(monitor, modelCopy);
