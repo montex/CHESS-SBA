@@ -159,12 +159,6 @@
       </profile>
    </extension>      
 
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <parser
-            type="dataflowcallgraph"
-            class="org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.util.DataFlowCallGraphResourceFactoryImpl"/>
-   </extension>
-
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http:///CHESS/Dependability/StateBased/StateBasedDataTypes.ecore"
@@ -830,6 +824,23 @@
          </Priority>
          <editor
                id="org.eclipse.papyrus.uml.diagram.clazz">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="RTActivityDiagramDrawerID"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="AD-TimingAnalysis-Palette"
+            path="/palettes/Activity-RT.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.activity">
          </editor>
       </paletteDefinition>
    </extension>
