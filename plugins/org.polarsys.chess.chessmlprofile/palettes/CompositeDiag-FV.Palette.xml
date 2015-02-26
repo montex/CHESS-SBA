@@ -56,6 +56,17 @@
 				<postAction displayKind="IconStereotype" displayPlace="Compartment" id="org.eclipse.papyrus.postaction.changeStereotypeDisplayProvider"/>
 			</aspectTool>
 			
+			<aspectTool description="Create an NfpConstraint" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="composite.tool.constraint_1422452409009" name="NfpConstraint (Constraint)" refToolId="composite.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_Foundations::NFPs::NfpConstraint"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			
+			<aspectTool description="Create new Link for Comment\Constraint"
+				id="composite.tool.link_1317290422288" name="Link" refToolId="composite.tool.link" />
+			
 		</drawer>
 	</content>
 </paletteDefinition>
