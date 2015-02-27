@@ -783,16 +783,36 @@ public class VSLUtils {
 		return i;
 	}
 	
+	
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public  static String getCoreFromContraint(IContext context, Comment self) {
 		try {
 			Assign assign = getStereotypeApplication(self, Assign.class);
-			if(assign.getImpliedConstraint().size()>0){
-				NfpConstraint c = assign.getImpliedConstraint().get(0);
-				Constraint cc = c.getBase_Constraint();
+			for (NfpConstraint nfpc : assign.getImpliedConstraint()) {
+				Constraint cc = nfpc.getBase_Constraint();
 				ValueSpecification spec = cc.getSpecification();
-				LiteralString value = (LiteralString) spec;
-				return value.getValue();
+				if(spec.getName().equalsIgnoreCase("core")){
+					LiteralString value = (LiteralString) spec;
+					return value.getValue();
+				}
+			}
+		} catch (Exception e) {
+			//TODO ugly piece of code I know....
+		}
+		return null;
+	}
+	
+	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
+	public  static String getContextFromContraint(IContext context, Comment self) {
+		try {
+			Assign assign = getStereotypeApplication(self, Assign.class);
+			for (NfpConstraint nfpc : assign.getImpliedConstraint()) {
+				Constraint cc = nfpc.getBase_Constraint();
+				ValueSpecification spec = cc.getSpecification();
+				if(spec.getName().equalsIgnoreCase("context")){
+					LiteralString value = (LiteralString) spec;
+					return value.getValue();
+				}
 			}
 		} catch (Exception e) {
 			//TODO ugly piece of code I know....
