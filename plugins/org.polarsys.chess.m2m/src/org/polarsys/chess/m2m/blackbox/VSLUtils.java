@@ -531,57 +531,63 @@ public class VSLUtils {
 		Assign ass = getStereotypeApplication(self, Assign.class);
 		Slot slotInst = extractFirstSlot(ass.getFrom());
 		
-		InstanceSpecification originatingInst = slotInst.getOwningInstance();
-		
 		if (slotInst == null)
 			return list;
-		
+
+		InstanceSpecification originatingInst = slotInst.getOwningInstance();
+
 		if (!inst.allOwnedElements().contains(slotInst))
 			return list;
-		
-		
-		
-		int[] bounds = getBounds(self);
-		
-		if (bounds != null)
-			for (Element el : instFull.allOwnedElements()) {
-				
-				IdentifInstance id = getStereotypeApplication(el,
-						IdentifInstance.class);
-				
-				if (el instanceof InstanceSpecification && id != null) {
-					if (isInBounds(id.getId(), bounds)
-							&& id.getSourceInstanceSpec() == originatingInst){
-						
-						for (Element e : el.getOwnedElements()) {
-							if (!(e instanceof Slot)) continue;
-							Slot slot = (Slot) e;
-							if(slot.getDefiningFeature().equals(slotInst.getDefiningFeature())){
-								list.add((Slot) e);
-								break;
-							}
-						}
-					}
-				}
-			}
-		else
-			for (Element el : instFull.allOwnedElements()) {
-				IdentifInstance id = getStereotypeApplication(el,
-						IdentifInstance.class);
-				if (el instanceof InstanceSpecification && id != null
-						&& id.getSourceInstanceSpec() == originatingInst) {
-					for (Element e : el.getOwnedElements()) {
-						if (!(e instanceof Slot)) continue;
-						Slot slot = (Slot) e;
-						if(slot.getDefiningFeature().equals(slotInst.getDefiningFeature())){
-							list.add((Slot) e);
-							break;
-						}
-					}
-				}
-			}
 
+		int[] bounds = getBounds(self);
+
+		if (bounds != null) {
+			for (Element el : instFull.allOwnedElements()) {
+
+				IdentifInstance id = getStereotypeApplication(el,
+						IdentifInstance.class);
+
+				if (!(el instanceof InstanceSpecification && id != null))
+					continue;
+				InstanceSpecification y = (InstanceSpecification) el;
+
+				if (isInBounds(id.getId(), bounds)
+						&& id.getSourceInstanceSpec() == originatingInst) {
+
+					Slot x = slotFromInstance(slotInst, y);
+					if (x != null)
+						list.add(x);
+				}
+
+			}
+		} else {
+			for (Element el : instFull.allOwnedElements()) {
+				IdentifInstance id = getStereotypeApplication(el,
+						IdentifInstance.class);
+
+				if (!(el instanceof InstanceSpecification && id != null && id
+						.getSourceInstanceSpec() == originatingInst))
+					continue;
+				InstanceSpecification y = (InstanceSpecification) el;
+
+				Slot x = slotFromInstance(slotInst, y);
+				if (x != null)
+					list.add(x);
+			}
+		}
 		return list;
+	}
+
+	private static Slot slotFromInstance(Slot slotInst,
+			InstanceSpecification el) {
+		for (Element e : el.getOwnedElements()) {
+			if (!(e instanceof Slot)) continue;
+			Slot slot = (Slot) e;
+			if(slot.getDefiningFeature().equals(slotInst.getDefiningFeature())){
+				return (Slot) e;
+			}
+		}
+		return null;
 	}
 	
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
@@ -777,16 +783,36 @@ public class VSLUtils {
 		return i;
 	}
 	
+	
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public  static String getCoreFromContraint(IContext context, Comment self) {
 		try {
 			Assign assign = getStereotypeApplication(self, Assign.class);
-			if(assign.getImpliedConstraint().size()>0){
-				NfpConstraint c = assign.getImpliedConstraint().get(0);
-				Constraint cc = c.getBase_Constraint();
+			for (NfpConstraint nfpc : assign.getImpliedConstraint()) {
+				Constraint cc = nfpc.getBase_Constraint();
 				ValueSpecification spec = cc.getSpecification();
-				LiteralString value = (LiteralString) spec;
-				return value.getValue();
+				if(spec.getName().equalsIgnoreCase("core")){
+					LiteralString value = (LiteralString) spec;
+					return value.getValue();
+				}
+			}
+		} catch (Exception e) {
+			//TODO ugly piece of code I know....
+		}
+		return null;
+	}
+	
+	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
+	public  static String getContextFromContraint(IContext context, Comment self) {
+		try {
+			Assign assign = getStereotypeApplication(self, Assign.class);
+			for (NfpConstraint nfpc : assign.getImpliedConstraint()) {
+				Constraint cc = nfpc.getBase_Constraint();
+				ValueSpecification spec = cc.getSpecification();
+				if(spec.getName().equalsIgnoreCase("context")){
+					LiteralString value = (LiteralString) spec;
+					return value.getValue();
+				}
 			}
 		} catch (Exception e) {
 			//TODO ugly piece of code I know....

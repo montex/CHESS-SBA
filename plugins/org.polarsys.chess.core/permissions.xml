@@ -575,9 +575,18 @@
             <diagram name="*">
                   <!--perm owner="true" visible="true"/-->
                   <perm el="Class" owner="true" write="true" visible="true"/>
+                  <perm el="Activity" owner="true" write="true" visible="true"/>
+                  <perm el="CallBehaviorAction" owner="true" write="true" visible="true"/>
+                  <perm el="Interaction" owner="true" write="true" visible="true"/>
+                  <perm el="ControlFlow" owner="true" write="true" visible="true"/>
+                  <perm el="InitialNode" owner="true" write="true" visible="true"/>
+                  <perm el="ActivityFinalNode" owner="true" write="true" visible="true"/>
                   <perm el="Package" owner="true" write="true" visible="true"/>
                   <perm st="SaAnalysisContext" owner="true" write="true" visible="true"/>
                   <perm st="PSMPackage" owner="true" write="true" visible="true"/> <!-- to delete saAnalysisContext-->
+                  <perm st="GaWorkloadBehavior" owner="true" write="true" visible="true"/>
+                  <perm st="SaEndtoEndFlow" owner="true" write="true" visible="true"/>
+                  
                   
             </diagram>
       </view>

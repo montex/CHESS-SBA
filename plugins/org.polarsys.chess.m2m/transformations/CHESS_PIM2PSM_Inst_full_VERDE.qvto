@@ -577,8 +577,8 @@ mapping InstanceSpecification::Instance2SwSchedulableResource(chrt : Comment, sl
 		
 		
 	   if(slotinAssigns){
-	   	  var hostClassifier := getAssignToFrom_MemoryPartition(slot);
-		  sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot));
+	   	  var hostClassifier := getAssignToFrom_MemoryPartition(slot, chrt);
+		  sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot, chrt));
 	   } else {
 		  var hostClassifier := getAssignToFrom_MemoryPartition(slot.owningInstance);
 		  sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot.owningInstance));
@@ -1607,8 +1607,8 @@ query getAssignForInstance(p : InstanceSpecification) : MARTE::Alloc::Assign {
 	return assigns->selectOne(isAssignForInstance(p)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
 }
 
-query getAssignForInstance(p : Slot) : MARTE::Alloc::Assign {
-	return assigns->selectOne(isAssignForInstance(p)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+query getAssignForInstance(p : Slot, c : Comment) : MARTE::Alloc::Assign {
+	return assigns->selectOne(isAssignForInstance(p, c)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
 }
 
 query InstanceSpecification::getComponentsOfPartition() : Set(InstanceSpecification) {
@@ -1640,9 +1640,11 @@ query Comment::isAssignForInstance(spec : InstanceSpecification) : Boolean {
 	return ass._from![InstanceSpecification] = spec.getSourceInstanceSpec() and self.isReferringId(spec.getId());
 }
 
-query Comment::isAssignForInstance(spec : Slot) : Boolean {
+query Comment::isAssignForInstance(spec : Slot, chrt : Comment) : Boolean {
 	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
-	return ass._from![Slot].definingFeature = spec.definingFeature;
+	var context := self.getContextFromContraint();
+	
+	return ass._from![Slot].definingFeature = spec.definingFeature and context = chrt.CHRtSpec().context.name;
 }
 
 query Comment::isAssignForPartition(p : InstanceSpecification) : Boolean {
@@ -1655,8 +1657,8 @@ query Comment::isAssignForPartition(p : Classifier) : Boolean {
 	return ass.to![InstanceSpecification].classifier![Classifier] = p;
 }
 
-query getAssignToFrom_MemoryPartition(p : Slot) : InstanceSpecification {
-	var ass := getAssignForInstance(p);
+query getAssignToFrom_MemoryPartition(p : Slot, c : Comment) : InstanceSpecification {
+	var ass := getAssignForInstance(p, c);
 	var toInstance := ass.to![InstanceSpecification];
 	var toClass := toInstance.classifier![Classifier];
 	if toClass.isStereotyped(MemoryPartitionQN) then {
@@ -1670,10 +1672,10 @@ query getAssignToFrom_MemoryPartition(p : Slot) : InstanceSpecification {
 	return null;
 }
 
-query getAssignedCoreFrom_MemoryPartition(p : Slot) : String {
+query getAssignedCoreFrom_MemoryPartition(p : Slot, c : Comment) : String {
 	
 	//TODO how do we get a core if there is a memory partition? 
-	var ass := getAssignForInstance(p);
+	var ass := getAssignForInstance(p, c);
 	var toInstance := ass.to![InstanceSpecification];
 	var toClass := toInstance.classifier![Classifier];
 	if toClass.isStereotyped(MemoryPartitionQN) then {

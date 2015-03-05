@@ -209,6 +209,11 @@ public class PaletteManager {
 					paletteDrawer.setVisible(false);
 				else
 					paletteDrawer.setVisible(true);
+			}else if (diagramName.equals(ViewDiagramAssociations.activityDiagram)){
+				if (paletteId.compareTo("RTActivityDiagramDrawerID")!=0)
+					paletteDrawer.setVisible(false);
+				else
+					paletteDrawer.setVisible(true);
 			}
 		}
 		
