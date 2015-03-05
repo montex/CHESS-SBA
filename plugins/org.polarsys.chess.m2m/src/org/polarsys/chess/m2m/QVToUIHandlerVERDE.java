@@ -57,6 +57,7 @@ import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Stereotype;
+import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
@@ -238,7 +239,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		final List<CH_HwProcessor> cpus = new ArrayList<CH_HwProcessor>();
 		for (Element elem : model.allOwnedElements()) {
 			CHRtPortSlot chrtSlot = UMLUtils.getStereotypeApplication(elem, CHRtPortSlot.class);
-			if(chrtSlot != null){
+			if(chrtSlot != null && UMLUtils.getStereotypeApplication(chrtSlot.getBase_Slot().getOwner(), IdentifInstance.class) != null){
 				specifications.add(chrtSlot);
 			}
 			if(elem instanceof InstanceSpecification){
