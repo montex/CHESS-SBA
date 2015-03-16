@@ -101,8 +101,8 @@
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/EnumerationLiteral.gif"
 				id="clazz.tool.enumerationliteral_1301932936629" name="Enumeration literal"
 				refToolId="clazz.tool.enumerationliteral" />
-			<aspectTool description="Create a signal" iconpath="bundleentry://1196.fwk371570992/icons/full/obj16/Signal.gif" id="clazz.tool.signal_1422267025205" name="Signal" refToolId="clazz.tool.signal"/>
-			<aspectTool description="Create a reception" iconpath="bundleentry://1196.fwk371570992/icons/full/obj16/Reception.gif" id="clazz.tool.reception_1422267072416" name="Reception" refToolId="clazz.tool.reception"/>
+			<aspectTool description="Create a signal" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Signal.gif" id="clazz.tool.signal_1422267025205" name="Signal" refToolId="clazz.tool.signal"/>
+			<aspectTool description="Create a reception" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Reception.gif" id="clazz.tool.reception_1422267072416" name="Reception" refToolId="clazz.tool.reception"/>
 			<aspectTool description="Create new Constraint" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="composite.tool.constraint_142" name="Constraint" refToolId="clazz.tool.constraint"/>
 			<aspectTool description="Create a comment" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif" id="clazz.tool.comment_13167796793" name="Comment" refToolId="clazz.tool.comment"/>
 		</drawer>
