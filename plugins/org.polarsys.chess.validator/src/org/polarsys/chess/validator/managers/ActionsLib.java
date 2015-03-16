@@ -803,10 +803,15 @@ public class ActionsLib {
 	
 	
 	
+//	public static IAutomatedAction[] actionList = {portModificationAction,
+//			portRemovalAction, componentInterfaceRealizationAction,
+//			componentRealizationAction, removeRealizationOperationsAction,
+//			propagateOperationModification, propagateInterfaceModification,
+//			propagateParameterRemovalAction, propagateParameterAdditionAction,
+//			commentAction, portAdditionAction, propagatePortModification};
+	
 	public static IAutomatedAction[] actionList = {portModificationAction,
-			portRemovalAction, componentInterfaceRealizationAction,
-			componentRealizationAction, removeRealizationOperationsAction,
-			propagateOperationModification, propagateInterfaceModification,
-			propagateParameterRemovalAction, propagateParameterAdditionAction,
-			commentAction, portAdditionAction, propagatePortModification};
+			componentInterfaceRealizationAction, componentRealizationAction,
+			commentAction};
+	
 }

@@ -408,10 +408,12 @@ public class AddDiagramElement {
 									createGraphicalOperation((Component) compImpl, newOp);
 								}
 							}
-							Operation newOp = comp.createOwnedOperation(operation.getName(),null,null);
-							UMLUtils.copyOperation(operation, newOp);
-							
-							createGraphicalOperation(comp, newOp);			
+							//TODO try to avoid a possible Papyrus Bug (to be confirmed)
+							System.out.println("DEBUG size: " + comp.getOperations().size());
+								Operation newOp = comp.createOwnedOperation(operation.getName(),null,null);
+								UMLUtils.copyOperation(operation, newOp);
+
+								createGraphicalOperation(comp, newOp);
 						}
 					}
 				}
@@ -502,18 +504,20 @@ public class AddDiagramElement {
 		s.append("EDITPARTS SIZE " + editParts.size());
 		CHESSProjectSupport.CHESS_CONSOLE.println(s.toString());
 		
+		if(editParts.size() >0){
 		List<Object> childrenEparts = editParts.get(0).getChildren();
-		ComponentOperationCompartmentEditPart compAttrEpart = null;
-		for(int i=0; i<childrenEparts.size(); i++){
-			if(childrenEparts.get(i) instanceof ComponentOperationCompartmentEditPart){
-				compAttrEpart = (ComponentOperationCompartmentEditPart)childrenEparts.get(i);
-				org.eclipse.gef.commands.Command cmd = compAttrEpart.getTargetEditPart(dropObjectsRequest).getCommand(dropObjectsRequest);
-				//org.eclipse.gef.commands.Command cmd = compAttrEpart.getCommand(dropObjectsRequest);
-				s.delete(0, s.length());
-				s.append("EXEC GUI COMMAND" + editParts);
-				CHESSProjectSupport.CHESS_CONSOLE.println(s.toString());
-				diagramEP.getDiagramEditDomain().getDiagramCommandStack().execute(cmd);
-			}  
+			ComponentOperationCompartmentEditPart compAttrEpart = null;
+			for(int i=0; i<childrenEparts.size(); i++){
+				if(childrenEparts.get(i) instanceof ComponentOperationCompartmentEditPart){
+					compAttrEpart = (ComponentOperationCompartmentEditPart)childrenEparts.get(i);
+					org.eclipse.gef.commands.Command cmd = compAttrEpart.getTargetEditPart(dropObjectsRequest).getCommand(dropObjectsRequest);
+					//org.eclipse.gef.commands.Command cmd = compAttrEpart.getCommand(dropObjectsRequest);
+					s.delete(0, s.length());
+					s.append("EXEC GUI COMMAND" + editParts);
+					CHESSProjectSupport.CHESS_CONSOLE.println(s.toString());
+					diagramEP.getDiagramEditDomain().getDiagramCommandStack().execute(cmd);
+				}  
+			}
 		}
 		
 	}
@@ -578,7 +582,7 @@ public class AddDiagramElement {
 							EList<Comment> tmp = (EList<Comment>) deplViewPkg.getValue(deplView, "AssignList");
 							tmp.add(comm);
 							//editor.getDiagramStatus().setUserAction(false);
-							System.out.println(deplViewPkg.getValue(deplView, "AssignList").toString());
+							//System.out.println(deplViewPkg.getValue(deplView, "AssignList").toString());
 						}
 						
 					} catch (ServiceException e) {
