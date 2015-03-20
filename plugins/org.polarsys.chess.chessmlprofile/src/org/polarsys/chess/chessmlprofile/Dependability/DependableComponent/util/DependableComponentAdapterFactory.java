@@ -78,6 +78,18 @@ public class DependableComponentAdapterFactory extends AdapterFactoryImpl {
 				return createPropagationAdapter();
 			}
 			@Override
+			public Adapter caseFailureModeGroup(FailureModeGroup object) {
+				return createFailureModeGroupAdapter();
+			}
+			@Override
+			public Adapter caseFailureMode(FailureMode object) {
+				return createFailureModeAdapter();
+			}
+			@Override
+			public Adapter caseFailureModeSpecification(FailureModeSpecification object) {
+				return createFailureModeSpecificationAdapter();
+			}
+			@Override
 			public Adapter caseDependableComponent(DependableComponent object) {
 				return createDependableComponentAdapter();
 			}
@@ -112,6 +124,48 @@ public class DependableComponentAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPropagationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeGroup <em>Failure Mode Group</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeGroup
+	 * @generated
+	 */
+	public Adapter createFailureModeGroupAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode <em>Failure Mode</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode
+	 * @generated
+	 */
+	public Adapter createFailureModeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification <em>Failure Mode Specification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification
+	 * @generated
+	 */
+	public Adapter createFailureModeSpecificationAdapter() {
 		return null;
 	}
 

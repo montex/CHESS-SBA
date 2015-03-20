@@ -1135,7 +1135,7 @@
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_WSNEsMGMEd--atLXXafOiQ" name="Dependability">
-      <packagedElement xmi:type="uml:Profile" xmi:id="_hdOrwLwzEd-CDNLmLgazUQ" name="FailurePropagation" URI="http://CHESS/Dependability/FailurePropagation" metaclassReference="_tr9pIDQ6EeC0ueejuetpgA _1E4EkHpQEeCIAr4_5S9-cA _nxIhIHpREeCIAr4_5S9-cA _r_x7oKbSEeSHP5PnCeTneg">
+      <packagedElement xmi:type="uml:Profile" xmi:id="_hdOrwLwzEd-CDNLmLgazUQ" name="FailurePropagation" URI="http://CHESS/Dependability/FailurePropagation" metaclassReference="_tr9pIDQ6EeC0ueejuetpgA _1E4EkHpQEeCIAr4_5S9-cA _nxIhIHpREeCIAr4_5S9-cA _r_x7oKbSEeSHP5PnCeTneg _IZ-SsM2TEeSrt5YehnIlig _NAcukM2TEeSrt5YehnIlig">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_IFiz4MGbEd--atLXXafOiQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
           <contents xmi:type="ecore:EPackage" xmi:id="_vlrMsTROEeCPrptoDUJcNQ" name="FailurePropagation" nsURI="http://CHESS/Dependability/FailurePropagation" nsPrefix="FailurePropagation">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_vmRpoDROEeCPrptoDUJcNQ" source="PapyrusVersion">
@@ -1410,6 +1410,12 @@
         <elementImport xmi:type="uml:ElementImport" xmi:id="_r_x7oKbSEeSHP5PnCeTneg" alias="Connector">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Connector"/>
         </elementImport>
+        <elementImport xmi:type="uml:ElementImport" xmi:id="_IZ-SsM2TEeSrt5YehnIlig" alias="Constraint">
+          <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Constraint"/>
+        </elementImport>
+        <elementImport xmi:type="uml:ElementImport" xmi:id="_NAcukM2TEeSrt5YehnIlig" alias="Class">
+          <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+        </elementImport>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_4m1fcMF0Ed--atLXXafOiQ" name="FPTC">
           <generalization xmi:type="uml:Generalization" xmi:id="_GHeyEHriEeCZzfQgCDrHbQ" general="_y0zvEDQ2EeC0ueejuetpgA"/>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_oLFpQMF1Ed--atLXXafOiQ" name="fptc" visibility="public">
@@ -1613,6 +1619,23 @@
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_trTpUKbSEeSHP5PnCeTneg" name="E_FPTC_Connector1" memberEnd="_trTpUabSEeSHP5PnCeTneg _trTCQKbSEeSHP5PnCeTneg">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_trTpUabSEeSHP5PnCeTneg" name="extension_FPTC" type="_4m1fcMF0Ed--atLXXafOiQ" aggregation="composite" association="_trTpUKbSEeSHP5PnCeTneg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_E4Uw4M2TEeSrt5YehnIlig" name="FLASpecification">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_I64AUM2TEeSrt5YehnIlig" name="base_Constraint" association="_I64AUc2TEeSrt5YehnIlig">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Constraint"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_Nub18M2TEeSrt5YehnIlig" name="base_Class" association="_Nub18c2TEeSrt5YehnIlig">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_mCMWsM5BEeSP8r0TgY6H4g" name="expressions">
+            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_B5VngBFQEdyUJeMeN__D-A"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_I64AUc2TEeSrt5YehnIlig" name="E_FLASpecification_Constraint1" memberEnd="_I64AUs2TEeSrt5YehnIlig _I64AUM2TEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_I64AUs2TEeSrt5YehnIlig" name="extension_FLASpecification" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_I64AUc2TEeSrt5YehnIlig"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_Nub18c2TEeSrt5YehnIlig" name="E_FLASpecification_Class1" memberEnd="_Nub18s2TEeSrt5YehnIlig _Nub18M2TEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Nub18s2TEeSrt5YehnIlig" name="extension_FLASpecification" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_Nub18c2TEeSrt5YehnIlig"/>
         </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Profile" xmi:id="_zBudQLwzEd-CDNLmLgazUQ" name="DataFlowCallGraph" URI="http://CHESS.DependabilitySecurity/schemas/DataFlowCallGraph/_QB3mMMe6Ed-7etIj5eTw0Q/8">
@@ -2441,6 +2464,18 @@
               <defaultValue xmi:type="uml:LiteralString" xmi:id="_XcdLkEAjEeCQKOeIf0epIQ">
                 <value xsi:nil="true"/>
               </defaultValue>
+            </ownedAttribute>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Stereotype" xmi:id="_h4_aoM1aEeSrt5YehnIlig" name="StochasticFailureBehaviour">
+            <generalization xmi:type="uml:Generalization" xmi:id="_R3mlMM1bEeSrt5YehnIlig" general="_y0zvEDQ2EeC0ueejuetpgA"/>
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_UUdpMM1bEeSrt5YehnIlig" name="failureDistribution">
+              <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_Xk8igM1bEeSrt5YehnIlig" name="repairDistribution">
+              <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_bCg1kM1bEeSrt5YehnIlig" name="modes">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
             </ownedAttribute>
           </packagedElement>
         </packagedElement>
@@ -3546,7 +3581,7 @@
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_EQfJASctEeG6n9L5cSMA1w" name="extension_ErrorModelAssign" type="_BszrUCctEeG6n9L5cSMA1w" aggregation="composite" association="_EQfJACctEeG6n9L5cSMA1w"/>
         </packagedElement>
       </packagedElement>
-      <packagedElement xmi:type="uml:Profile" xmi:id="_uNKOgDQ2EeC0ueejuetpgA" name="DependableComponent" URI="http://CHESS/Dependability/DependableComponent" metaclassReference="_1TXcMDQ2EeC0ueejuetpgA _vslkcDQ3EeC0ueejuetpgA _qUQRADQ7EeC0ueejuetpgA _lh57ADgaEeCE2sZUGxu35w _t9O3gEDsEeC5SOtkEXPa-w _Bxaf0E7nEeCiWfCHUearZQ">
+      <packagedElement xmi:type="uml:Profile" xmi:id="_uNKOgDQ2EeC0ueejuetpgA" name="DependableComponent" URI="http://CHESS/Dependability/DependableComponent" metaclassReference="_1TXcMDQ2EeC0ueejuetpgA _vslkcDQ3EeC0ueejuetpgA _qUQRADQ7EeC0ueejuetpgA _lh57ADgaEeCE2sZUGxu35w _t9O3gEDsEeC5SOtkEXPa-w _Bxaf0E7nEeCiWfCHUearZQ _TBHGwM1iEeSrt5YehnIlig _-DpY4M1iEeSrt5YehnIlig _apYFYM1yEeSrt5YehnIlig">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__BchsDRPEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
           <contents xmi:type="ecore:EPackage" xmi:id="_291WAVquEeCgwNmo13tekQ" name="DependableComponent" nsURI="http://CHESS/Dependability/DependableComponent" nsPrefix="DependableComponent">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3BtJYFquEeCgwNmo13tekQ" source="PapyrusVersion">
@@ -4456,6 +4491,15 @@
         <elementImport xmi:type="uml:ElementImport" xmi:id="_Bxaf0E7nEeCiWfCHUearZQ" alias="InstanceSpecification">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
         </elementImport>
+        <elementImport xmi:type="uml:ElementImport" xmi:id="_TBHGwM1iEeSrt5YehnIlig" alias="Class">
+          <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+        </elementImport>
+        <elementImport xmi:type="uml:ElementImport" xmi:id="_-DpY4M1iEeSrt5YehnIlig" alias="Constraint">
+          <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Constraint"/>
+        </elementImport>
+        <elementImport xmi:type="uml:ElementImport" xmi:id="_apYFYM1yEeSrt5YehnIlig" alias="Port">
+          <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Port"/>
+        </elementImport>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_uoIV0LzuEd-yoLyJo0JlOg" name="Propagation">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_2sU1wLzuEd-yoLyJo0JlOg" name="prob" visibility="public">
             <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
@@ -4511,13 +4555,16 @@
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_5ti_IDRPEeCPrptoDUJcNQ" name="errorModel" visibility="public" type="_90It8DQ3EeC0ueejuetpgA">
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8KBBkDRPEeCPrptoDUJcNQ"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8KKLgDRPEeCPrptoDUJcNQ" value="1"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8KKLgDRPEeCPrptoDUJcNQ" value="*"/>
             <defaultValue xmi:type="uml:LiteralString" xmi:id="_8KKLgTRPEeCPrptoDUJcNQ">
               <value xsi:nil="true"/>
             </defaultValue>
           </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_mJZY0DgaEeCE2sZUGxu35w" name="base_Property" association="_mJZY0TgaEeCE2sZUGxu35w">
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="__hdJwM1ZEeSrt5YehnIlig" name="base_InstanceSpecification" association="__heX4M1ZEeSrt5YehnIlig">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
           </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_1n7W8TQ2EeC0ueejuetpgA" name="E_DependableComponent_Component0" memberEnd="_1n7W8jQ2EeC0ueejuetpgA _1n7W8DQ2EeC0ueejuetpgA">
@@ -4541,8 +4588,86 @@
         <packagedElement xmi:type="uml:Extension" xmi:id="_mPJhQVqlEeCgwNmo13tekQ" name="E_Propagation_Transition0" memberEnd="_mPJhQlqlEeCgwNmo13tekQ _mPJhQFqlEeCgwNmo13tekQ">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_mPJhQlqlEeCgwNmo13tekQ" name="extension_Propagation" type="_uoIV0LzuEd-yoLyJo0JlOg" aggregation="composite" association="_mPJhQVqlEeCgwNmo13tekQ"/>
         </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="__heX4M1ZEeSrt5YehnIlig" name="E_DependableComponent_InstanceSpecification1" memberEnd="__heX4c1ZEeSrt5YehnIlig __hdJwM1ZEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="__heX4c1ZEeSrt5YehnIlig" name="extension_DependableComponent" type="_y0zvEDQ2EeC0ueejuetpgA" aggregation="composite" association="__heX4M1ZEeSrt5YehnIlig"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_PsZNsM1iEeSrt5YehnIlig" name="FailureModeGroup">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_TrECsM1iEeSrt5YehnIlig" name="base_Class" association="_TrEpwM1iEeSrt5YehnIlig">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_ZMPzUM1iEeSrt5YehnIlig" name="failureMode" type="_VJH8IM1iEeSrt5YehnIlig" association="_ZMRBcM1iEeSrt5YehnIlig">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ZMPzUc1iEeSrt5YehnIlig" value="1"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZMPzUs1iEeSrt5YehnIlig" value="*"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_TrEpwM1iEeSrt5YehnIlig" name="E_FailureModeGroup_Class1" memberEnd="_TrEpwc1iEeSrt5YehnIlig _TrECsM1iEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_TrEpwc1iEeSrt5YehnIlig" name="extension_FailureModeGroup" type="_PsZNsM1iEeSrt5YehnIlig" aggregation="composite" association="_TrEpwM1iEeSrt5YehnIlig"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_VJH8IM1iEeSrt5YehnIlig" name="FailureMode">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_YfXfMM1iEeSrt5YehnIlig" name="base_Class" association="_YfYtUM1iEeSrt5YehnIlig">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_knrwUM1sEeSrt5YehnIlig" name="description">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_n7ki8M1sEeSrt5YehnIlig"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_n7lKAM1sEeSrt5YehnIlig" value="1"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_orKz4M1sEeSrt5YehnIlig" name="severity">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ugclMM1sEeSrt5YehnIlig"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ugdMQM1sEeSrt5YehnIlig" value="1"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_RzzBQM1xEeSrt5YehnIlig" name="exposure">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_VqXDIM1xEeSrt5YehnIlig"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VqXqMM1xEeSrt5YehnIlig" value="1"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_WcpbsM1xEeSrt5YehnIlig" name="controllability">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_YoWeQM1xEeSrt5YehnIlig"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_YoXFUM1xEeSrt5YehnIlig" value="1"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_LkslQM1yEeSrt5YehnIlig" name="permanent">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NvheEM1yEeSrt5YehnIlig"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NviFIM1yEeSrt5YehnIlig" value="1"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_YfYtUM1iEeSrt5YehnIlig" name="E_FailureMode_Class1" memberEnd="_YfYtUc1iEeSrt5YehnIlig _YfXfMM1iEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_YfYtUc1iEeSrt5YehnIlig" name="extension_FailureMode" type="_VJH8IM1iEeSrt5YehnIlig" aggregation="composite" association="_YfYtUM1iEeSrt5YehnIlig"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Association" xmi:id="_ZMRBcM1iEeSrt5YehnIlig" name="" memberEnd="_ZMRBcc1iEeSrt5YehnIlig _ZMPzUM1iEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:Property" xmi:id="_ZMRBcc1iEeSrt5YehnIlig" name="failureModeGroup" type="_PsZNsM1iEeSrt5YehnIlig" association="_ZMRBcM1iEeSrt5YehnIlig">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ZMRBcs1iEeSrt5YehnIlig" value="1"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZMRBc81iEeSrt5YehnIlig" value="1"/>
+          </ownedEnd>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_6YiZEM1iEeSrt5YehnIlig" name="FailureModeSpecification">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_-xEfkM1iEeSrt5YehnIlig" name="base_Constraint" association="_-xEfkc1iEeSrt5YehnIlig">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Constraint"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_bRrbgM1yEeSrt5YehnIlig" name="base_Port" association="_bRsCkM1yEeSrt5YehnIlig">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Port"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_evxTAM1yEeSrt5YehnIlig" name="failureModeGroup" type="_PsZNsM1iEeSrt5YehnIlig" association="_evyhIM1yEeSrt5YehnIlig">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_evxTAc1yEeSrt5YehnIlig" value="1"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_evx6EM1yEeSrt5YehnIlig" value="*"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_-xEfkc1iEeSrt5YehnIlig" name="E_FailureModeSpecification_Constraint1" memberEnd="_-xEfks1iEeSrt5YehnIlig _-xEfkM1iEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_-xEfks1iEeSrt5YehnIlig" name="extension_FailureModeSpecification" type="_6YiZEM1iEeSrt5YehnIlig" aggregation="composite" association="_-xEfkc1iEeSrt5YehnIlig"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_bRsCkM1yEeSrt5YehnIlig" name="E_FailureModeSpecification_Port1" memberEnd="_bRsCkc1yEeSrt5YehnIlig _bRrbgM1yEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_bRsCkc1yEeSrt5YehnIlig" name="extension_FailureModeSpecification" type="_6YiZEM1iEeSrt5YehnIlig" aggregation="composite" association="_bRsCkM1yEeSrt5YehnIlig"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Association" xmi:id="_evyhIM1yEeSrt5YehnIlig" name="" memberEnd="_evyhIc1yEeSrt5YehnIlig _evxTAM1yEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:Property" xmi:id="_evyhIc1yEeSrt5YehnIlig" name="failureModeSpecification" type="_6YiZEM1iEeSrt5YehnIlig" association="_evyhIM1yEeSrt5YehnIlig">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_evyhIs1yEeSrt5YehnIlig" value="1"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_evyhI81yEeSrt5YehnIlig" value="1"/>
+          </ownedEnd>
+        </packagedElement>
       </packagedElement>
-      <packagedElement xmi:type="uml:Profile" xmi:id="_5g4wEDQ3EeC0ueejuetpgA" name="ThreatsPropagation" URI="http://CHESS/Dependability/ThreatsPropagation" metaclassReference="_AGLpEDQ4EeC0ueejuetpgA _EsXKADQ4EeC0ueejuetpgA _YOEPEDQ4EeC0ueejuetpgA">
+      <packagedElement xmi:type="uml:Profile" xmi:id="_5g4wEDQ3EeC0ueejuetpgA" name="ThreatsPropagation" URI="http://CHESS/Dependability/ThreatsPropagation" metaclassReference="_AGLpEDQ4EeC0ueejuetpgA _EsXKADQ4EeC0ueejuetpgA _YOEPEDQ4EeC0ueejuetpgA _T6fIcMvmEeSajLw6mg2A8Q _-JLxoM2NEeSrt5YehnIlig">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ljHn0DQ8EeC0ueejuetpgA" source="http://www.eclipse.org/uml2/2.0.0/UML">
           <contents xmi:type="ecore:EPackage" xmi:id="_aeBTcI5vEeOjpOW2pJw89Q" name="ThreatsPropagation" nsURI="http://CHESS/Dependability/ThreatsPropagation" nsPrefix="ThreatsPropagation">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ai3-QI5vEeOjpOW2pJw89Q" source="PapyrusVersion">
@@ -6002,6 +6127,19 @@
             </eClassifiers>
           </contents>
         </eAnnotations>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_os37gM1VEeSrt5YehnIlig" annotatedElement="_WsXTUKcZEeCLJKy7uMU5GA _gtsGwDQ4EeC0ueejuetpgA">
+          <body>to be removed?</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_0B-ykM1VEeSrt5YehnIlig" annotatedElement="_tdSWgM1VEeSrt5YehnIlig">
+          <body>New Dep profile</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_osVNUM1zEeSrt5YehnIlig" annotatedElement="_eg3C0DQ4EeC0ueejuetpgA _-BcuMKcXEeCLJKy7uMU5GA">
+          <body>to be removed?</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_kA5A0M2SEeSrt5YehnIlig" annotatedElement="_C7ZisDQ4EeC0ueejuetpgA _OKTEEDQ4EeC0ueejuetpgA _uoIV0LzuEd-yoLyJo0JlOg _hh4TEKcTEeCLJKy7uMU5GA">
+          <body>To be deleted???&#xD;
+ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile</body>
+        </ownedComment>
         <elementImport xmi:type="uml:ElementImport" xmi:id="_AGLpEDQ4EeC0ueejuetpgA" alias="StateMachine">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#StateMachine"/>
         </elementImport>
@@ -6011,6 +6149,12 @@
         <elementImport xmi:type="uml:ElementImport" xmi:id="_YOEPEDQ4EeC0ueejuetpgA" alias="State">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#State"/>
         </elementImport>
+        <elementImport xmi:type="uml:ElementImport" xmi:id="_T6fIcMvmEeSajLw6mg2A8Q" alias="Constraint">
+          <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Constraint"/>
+        </elementImport>
+        <elementImport xmi:type="uml:ElementImport" xmi:id="_-JLxoM2NEeSrt5YehnIlig" alias="Event">
+          <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Event"/>
+        </elementImport>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_90It8DQ3EeC0ueejuetpgA" name="ErrorModel">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_Ag2y4DQ4EeC0ueejuetpgA" name="base_StateMachine" association="_Ag2y4TQ4EeC0ueejuetpgA">
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#StateMachine"/>
@@ -6019,7 +6163,7 @@
         <packagedElement xmi:type="uml:Extension" xmi:id="_Ag2y4TQ4EeC0ueejuetpgA" name="E_ErrorModel_StateMachine0" memberEnd="_Ag2y4jQ4EeC0ueejuetpgA _Ag2y4DQ4EeC0ueejuetpgA">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Ag2y4jQ4EeC0ueejuetpgA" name="extension_ErrorModel" type="_90It8DQ3EeC0ueejuetpgA" aggregation="composite" association="_Ag2y4TQ4EeC0ueejuetpgA"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_C7ZisDQ4EeC0ueejuetpgA" name="InternalFault">
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_C7ZisDQ4EeC0ueejuetpgA" name="CHInternalFault">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_FDw9YDQ4EeC0ueejuetpgA" name="base_Transition" association="_FDw9YTQ4EeC0ueejuetpgA">
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Transition"/>
           </ownedAttribute>
@@ -6054,10 +6198,10 @@
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_jspq0NiSEeCzEZgzjRUzHw" value="1"/>
           </ownedAttribute>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_FDw9YTQ4EeC0ueejuetpgA" name="E_InternalFault_Transition0" memberEnd="_FDw9YjQ4EeC0ueejuetpgA _FDw9YDQ4EeC0ueejuetpgA">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_FDw9YjQ4EeC0ueejuetpgA" name="extension_InternalFault" type="_C7ZisDQ4EeC0ueejuetpgA" aggregation="composite" association="_FDw9YTQ4EeC0ueejuetpgA"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_FDw9YTQ4EeC0ueejuetpgA" name="E_CHInternalFault_Transition1" memberEnd="_FDw9YjQ4EeC0ueejuetpgA _FDw9YDQ4EeC0ueejuetpgA">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_FDw9YjQ4EeC0ueejuetpgA" name="extension_CHInternalFault" type="_C7ZisDQ4EeC0ueejuetpgA" aggregation="composite" association="_FDw9YTQ4EeC0ueejuetpgA"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_OKTEEDQ4EeC0ueejuetpgA" name="ExternalFault">
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_OKTEEDQ4EeC0ueejuetpgA" name="CHExternalFault">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_PTxNkDQ4EeC0ueejuetpgA" name="base_Transition" association="_PTxNkTQ4EeC0ueejuetpgA">
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Transition"/>
           </ownedAttribute>
@@ -6101,8 +6245,8 @@
             </defaultValue>
           </ownedAttribute>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_PTxNkTQ4EeC0ueejuetpgA" name="E_ExternalFault_Transition0" memberEnd="_PTxNkjQ4EeC0ueejuetpgA _PTxNkDQ4EeC0ueejuetpgA">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_PTxNkjQ4EeC0ueejuetpgA" name="extension_ExternalFault" type="_OKTEEDQ4EeC0ueejuetpgA" aggregation="composite" association="_PTxNkTQ4EeC0ueejuetpgA"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_PTxNkTQ4EeC0ueejuetpgA" name="E_CHExternalFault_Transition1" memberEnd="_PTxNkjQ4EeC0ueejuetpgA _PTxNkDQ4EeC0ueejuetpgA">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_PTxNkjQ4EeC0ueejuetpgA" name="extension_CHExternalFault" type="_OKTEEDQ4EeC0ueejuetpgA" aggregation="composite" association="_PTxNkTQ4EeC0ueejuetpgA"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_W3CKsDQ4EeC0ueejuetpgA" name="Error">
           <generalization xmi:type="uml:Generalization" xmi:id="_Me6MML9UEeCOtecSzivGvQ" general="_C-dwsL9UEeCOtecSzivGvQ"/>
@@ -6220,6 +6364,101 @@
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_yaOKsI5rEeOCpeH37jWMhw" name="E_RampDown_State1" memberEnd="_yaOKsY5rEeOCpeH37jWMhw _yaNjoI5rEeOCpeH37jWMhw">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_yaOKsY5rEeOCpeH37jWMhw" name="extension_RampDown" type="_GdDcUI5rEeOCpeH37jWMhw" aggregation="composite" association="_yaOKsI5rEeOCpeH37jWMhw"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_tdSWgM1VEeSrt5YehnIlig" name="DegradedState">
+          <generalization xmi:type="uml:Generalization" xmi:id="_yV7gcM1VEeSrt5YehnIlig" general="_C-dwsL9UEeCOtecSzivGvQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_ua2QgM2NEeSrt5YehnIlig" name="InputEvent">
+          <generalization xmi:type="uml:Generalization" xmi:id="_XjZFsM2PEeSrt5YehnIlig" general="_SHHqQM2PEeSrt5YehnIlig"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_xgRPsM2VEeSrt5YehnIlig" name="port">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_JklkUM2WEeSrt5YehnIlig"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_JklkUc2WEeSrt5YehnIlig" value="1"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_vwGzQM2NEeSrt5YehnIlig" name="OutputEvent">
+          <generalization xmi:type="uml:Generalization" xmi:id="_X7VroM2PEeSrt5YehnIlig" general="_SHHqQM2PEeSrt5YehnIlig"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_Ln3qsM2WEeSrt5YehnIlig" name="port">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_PkR14M2WEeSrt5YehnIlig"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_PkU5MM2WEeSrt5YehnIlig" value="1"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_yV5w0M2NEeSrt5YehnIlig" name="InternalEvent">
+          <generalization xmi:type="uml:Generalization" xmi:id="_YYkaMM2PEeSrt5YehnIlig" general="_SHHqQM2PEeSrt5YehnIlig"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_MmtgQM2QEeSrt5YehnIlig" name="delay">
+            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_PMHcQM2QEeSrt5YehnIlig" name="probability">
+            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_1ZFN8M2NEeSrt5YehnIlig" name="ExternalFault">
+          <generalization xmi:type="uml:Generalization" xmi:id="_49KYsM2NEeSrt5YehnIlig" general="_ua2QgM2NEeSrt5YehnIlig"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_fFG4wM2REeSrt5YehnIlig" name="failure" type="_VJH8IM1iEeSrt5YehnIlig"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_3p_goM2NEeSrt5YehnIlig" name="NormalInput">
+          <generalization xmi:type="uml:Generalization" xmi:id="_5pRQwM2NEeSrt5YehnIlig" general="_ua2QgM2NEeSrt5YehnIlig"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_Wc8wIM2REeSrt5YehnIlig" name="recovery" type="_hrmr0M2PEeSrt5YehnIlig">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_aG22EM2REeSrt5YehnIlig"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_aG22Ec2REeSrt5YehnIlig" value="1"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_SD0UEM2OEeSrt5YehnIlig" name="E_DepEvent_Event1" memberEnd="_SD0UEc2OEeSrt5YehnIlig _TSOLcM2PEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_SD0UEc2OEeSrt5YehnIlig" name="extension_DepEvent" type="_SHHqQM2PEeSrt5YehnIlig" aggregation="composite" association="_SD0UEM2OEeSrt5YehnIlig"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_WHUlwM2OEeSrt5YehnIlig" name="NormalOutput">
+          <generalization xmi:type="uml:Generalization" xmi:id="_X18qwM2OEeSrt5YehnIlig" general="_vwGzQM2NEeSrt5YehnIlig"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_wgpikM2REeSrt5YehnIlig" name="recovery" type="_hrmr0M2PEeSrt5YehnIlig">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_zSILsM2REeSrt5YehnIlig"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zSILsc2REeSrt5YehnIlig" value="1"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_YSCJ0M2OEeSrt5YehnIlig" name="Failure">
+          <generalization xmi:type="uml:Generalization" xmi:id="_ZJvN4M2OEeSrt5YehnIlig" general="_vwGzQM2NEeSrt5YehnIlig"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_2NbfMM2REeSrt5YehnIlig" name="failure" type="_VJH8IM1iEeSrt5YehnIlig">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5POcQM2REeSrt5YehnIlig"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5PRfkM2REeSrt5YehnIlig" value="1"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_SHHqQM2PEeSrt5YehnIlig" name="DepEvent">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_TSOLcM2PEeSrt5YehnIlig" name="base_Event" association="_SD0UEM2OEeSrt5YehnIlig">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Event"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_ttZiYM2SEeSrt5YehnIlig" name="base_State" association="_ttZiYc2SEeSrt5YehnIlig">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#State"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_eNlFwM2PEeSrt5YehnIlig" name="NormalEvent">
+          <generalization xmi:type="uml:Generalization" xmi:id="_f6vyMM2PEeSrt5YehnIlig" general="_yV5w0M2NEeSrt5YehnIlig"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_hrmr0M2PEeSrt5YehnIlig" name="RecoveryEvent">
+          <generalization xmi:type="uml:Generalization" xmi:id="_jKTecM2PEeSrt5YehnIlig" general="_yV5w0M2NEeSrt5YehnIlig"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_8E-MQM2PEeSrt5YehnIlig" name="kind" type="_wYnS0M2PEeSrt5YehnIlig">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_C1KGoM2QEeSrt5YehnIlig"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_C1KGoc2QEeSrt5YehnIlig" value="1"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_nPqxUM2PEeSrt5YehnIlig" name="InternalThreat">
+          <generalization xmi:type="uml:Generalization" xmi:id="_oxty4M2PEeSrt5YehnIlig" general="_yV5w0M2NEeSrt5YehnIlig"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_p7yZUM2PEeSrt5YehnIlig" name="InternalFault">
+          <generalization xmi:type="uml:Generalization" xmi:id="_t7IjwM2PEeSrt5YehnIlig" general="_nPqxUM2PEeSrt5YehnIlig"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_W6WBUM2SEeSrt5YehnIlig" name="Occurrence">
+            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_rjZ3YM2PEeSrt5YehnIlig" name="InternalPropagation">
+          <generalization xmi:type="uml:Generalization" xmi:id="_udd0wM2PEeSrt5YehnIlig" general="_nPqxUM2PEeSrt5YehnIlig"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Enumeration" xmi:id="_wYnS0M2PEeSrt5YehnIlig" name="RecoveryKind">
+          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_zWbHwM2PEeSrt5YehnIlig" name="Repair"/>
+          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_0nAl4M2PEeSrt5YehnIlig" name="Compensation"/>
+          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_1stCoM2PEeSrt5YehnIlig" name="ErrorDetection"/>
+          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_2s-M0M2PEeSrt5YehnIlig" name="Reconfiguration"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_ttZiYc2SEeSrt5YehnIlig" name="E_DepEvent_State1" memberEnd="_ttZiYs2SEeSrt5YehnIlig _ttZiYM2SEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_ttZiYs2SEeSrt5YehnIlig" name="extension_DepEvent" type="_SHHqQM2PEeSrt5YehnIlig" aggregation="composite" association="_ttZiYc2SEeSrt5YehnIlig"/>
         </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Profile" xmi:id="_kJICMFiIEeGbwa2cK55fPQ" name="MitigationMeans" URI="http://CHESS.Dependability/MitigationMeans" metaclassReference="_YoYtcFiJEeG7ipvuc3Lqcg">
@@ -10559,7 +10798,6 @@
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:DataType" xmi:id="__Ya2gGviEeCFqs3XUsvipQ" name="dummy"/>
-    <packagedElement xmi:type="uml:Interval" xmi:id="_bCFZ8P3lEeOmz-4FDV-1Kw" name="Interval"/>
     <packagedElement xmi:type="uml:Package" xmi:id="_4NqqQKbREeSHP5PnCeTneg" name="SystemModel">
       <packagedElement xmi:type="uml:Profile" xmi:id="_-aQIUKbREeSHP5PnCeTneg" name="STS" metaclassReference="_b8XiYKbSEeSHP5PnCeTneg">
         <elementImport xmi:type="uml:ElementImport" xmi:id="_b8XiYKbSEeSHP5PnCeTneg" alias="Class">
@@ -10589,6 +10827,92 @@
         <packagedElement xmi:type="uml:Extension" xmi:id="_dsomIabSEeSHP5PnCeTneg" name="E_Technological_Class1" memberEnd="_dsomIqbSEeSHP5PnCeTneg _dsomIKbSEeSHP5PnCeTneg">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_dsomIqbSEeSHP5PnCeTneg" name="extension_Technological" type="_VU1NsKbSEeSHP5PnCeTneg" aggregation="composite" association="_dsomIabSEeSHP5PnCeTneg"/>
         </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_JmTMcM1SEeSrt5YehnIlig" name="Action">
+          <generalization xmi:type="uml:Generalization" xmi:id="_MC6Y0M1SEeSrt5YehnIlig" general="_RSRXMKbSEeSHP5PnCeTneg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_KrrgIM1SEeSrt5YehnIlig" name="Attention">
+          <generalization xmi:type="uml:Generalization" xmi:id="_MjeIMM1SEeSrt5YehnIlig" general="_RSRXMKbSEeSHP5PnCeTneg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_6RizgM1SEeSrt5YehnIlig" name="TimePressure">
+          <generalization xmi:type="uml:Generalization" xmi:id="_92drwM1SEeSrt5YehnIlig" general="_SUV4MKbSEeSHP5PnCeTneg"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Profile" xmi:id="_f-f6oMvrEeSajLw6mg2A8Q" name="Safety" metaclassReference="_l5GQ0MvrEeSajLw6mg2A8Q _ekTGIMvuEeSajLw6mg2A8Q">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_OibvkMvvEeSajLw6mg2A8Q" annotatedElement="_cUQWIMvuEeSajLw6mg2A8Q">
+        <body>Allows for a given provided port of a component instance to constrains the criticality level that a given component isntance must have in order to be able to access the port.&#xD;
+In case of base Constraint, the constrained element must refer a provided port+ instance or a slot, the latter as instance of a provided port.&#xD;
+In case of base Comment, its usage is the same of the CHRTSpecification.</body>
+      </ownedComment>
+      <elementImport xmi:type="uml:ElementImport" xmi:id="_l5GQ0MvrEeSajLw6mg2A8Q" alias="Constraint">
+        <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Constraint"/>
+      </elementImport>
+      <elementImport xmi:type="uml:ElementImport" xmi:id="_ekTGIMvuEeSajLw6mg2A8Q" alias="Comment">
+        <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Comment"/>
+      </elementImport>
+      <packagedElement xmi:type="uml:Stereotype" xmi:id="_0pf5IMviEeSajLw6mg2A8Q" name="CriticalityLevel">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_m5evwMvrEeSajLw6mg2A8Q" name="base_Constraint" association="_m5evwcvrEeSajLw6mg2A8Q">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Constraint"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_tydZwMvrEeSajLw6mg2A8Q" name="isHigherThan" type="_0pf5IMviEeSajLw6mg2A8Q" association="_tydZw8vrEeSajLw6mg2A8Q">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tydZwcvrEeSajLw6mg2A8Q"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tydZwsvrEeSajLw6mg2A8Q" value="*"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_AM7xAMvsEeSajLw6mg2A8Q" name="mapsTo" type="_0pf5IMviEeSajLw6mg2A8Q" association="_AM-0UMvsEeSajLw6mg2A8Q">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_AM7xAcvsEeSajLw6mg2A8Q"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_AM7xAsvsEeSajLw6mg2A8Q" value="*"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Extension" xmi:id="_m5evwcvrEeSajLw6mg2A8Q" name="E_CriticalityLevel_Constraint1" memberEnd="_m5evwsvrEeSajLw6mg2A8Q _m5evwMvrEeSajLw6mg2A8Q">
+        <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_m5evwsvrEeSajLw6mg2A8Q" name="extension_CriticalityLevel" type="_0pf5IMviEeSajLw6mg2A8Q" aggregation="composite" association="_m5evwcvrEeSajLw6mg2A8Q"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_tydZw8vrEeSajLw6mg2A8Q" name="" memberEnd="_tydZxMvrEeSajLw6mg2A8Q _tydZwMvrEeSajLw6mg2A8Q">
+        <ownedEnd xmi:type="uml:Property" xmi:id="_tydZxMvrEeSajLw6mg2A8Q" name="criticalityLevel" type="_0pf5IMviEeSajLw6mg2A8Q" association="_tydZw8vrEeSajLw6mg2A8Q">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tydZxcvrEeSajLw6mg2A8Q" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tydZxsvrEeSajLw6mg2A8Q" value="1"/>
+        </ownedEnd>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_AM-0UMvsEeSajLw6mg2A8Q" name="" memberEnd="_AM-0UcvsEeSajLw6mg2A8Q _AM7xAMvsEeSajLw6mg2A8Q">
+        <ownedEnd xmi:type="uml:Property" xmi:id="_AM-0UcvsEeSajLw6mg2A8Q" name="criticalityLevel" type="_0pf5IMviEeSajLw6mg2A8Q" association="_AM-0UMvsEeSajLw6mg2A8Q">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_AM-0UsvsEeSajLw6mg2A8Q" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_AM-0U8vsEeSajLw6mg2A8Q" value="1"/>
+        </ownedEnd>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Stereotype" xmi:id="_cUQWIMvuEeSajLw6mg2A8Q" name="CriticalityInterfaceSpecification">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_dBHcIMvuEeSajLw6mg2A8Q" name="base_Constraint" association="_dBIDMMvuEeSajLw6mg2A8Q">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Constraint"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_4NKWsMvuEeSajLw6mg2A8Q" name="acceptedCriticalityForClients" type="_0pf5IMviEeSajLw6mg2A8Q" association="_4NK9wMvuEeSajLw6mg2A8Q">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_4NKWscvuEeSajLw6mg2A8Q"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_4NKWssvuEeSajLw6mg2A8Q" value="*"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Extension" xmi:id="_dBIDMMvuEeSajLw6mg2A8Q" name="E_CriticalityInterfaceSpecification_Constraint1" memberEnd="_dBIDMcvuEeSajLw6mg2A8Q _dBHcIMvuEeSajLw6mg2A8Q">
+        <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_dBIDMcvuEeSajLw6mg2A8Q" name="extension_CriticalityInterfaceSpecification" type="_cUQWIMvuEeSajLw6mg2A8Q" aggregation="composite" association="_dBIDMMvuEeSajLw6mg2A8Q"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_4NK9wMvuEeSajLw6mg2A8Q" name="" memberEnd="_4NK9wcvuEeSajLw6mg2A8Q _4NKWsMvuEeSajLw6mg2A8Q">
+        <ownedEnd xmi:type="uml:Property" xmi:id="_4NK9wcvuEeSajLw6mg2A8Q" name="criticalitySpecification" type="_cUQWIMvuEeSajLw6mg2A8Q" association="_4NK9wMvuEeSajLw6mg2A8Q">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_4NK9wsvuEeSajLw6mg2A8Q" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_4NK9w8vuEeSajLw6mg2A8Q" value="1"/>
+        </ownedEnd>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Stereotype" xmi:id="_C408QMv8EeSEo9BsJH4uuw" name="CriticalitySpecification">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_Glbw4Mv8EeSEo9BsJH4uuw" name="base_Constraint" association="_Glc_AMv8EeSEo9BsJH4uuw">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Constraint"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_HR4AIMv8EeSEo9BsJH4uuw" name="criticalityLevel" type="_0pf5IMviEeSajLw6mg2A8Q" association="_HR5OQMv8EeSEo9BsJH4uuw">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_HR4AIcv8EeSEo9BsJH4uuw" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_HR4AIsv8EeSEo9BsJH4uuw" value="1"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Extension" xmi:id="_Glc_AMv8EeSEo9BsJH4uuw" name="E_CriticalitySpecification_Constraint1" memberEnd="_Glc_Acv8EeSEo9BsJH4uuw _Glbw4Mv8EeSEo9BsJH4uuw">
+        <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Glc_Acv8EeSEo9BsJH4uuw" name="extension_CriticalitySpecification" type="_C408QMv8EeSEo9BsJH4uuw" aggregation="composite" association="_Glc_AMv8EeSEo9BsJH4uuw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_HR5OQMv8EeSEo9BsJH4uuw" name="" memberEnd="_HR5OQcv8EeSEo9BsJH4uuw _HR4AIMv8EeSEo9BsJH4uuw">
+        <ownedEnd xmi:type="uml:Property" xmi:id="_HR5OQcv8EeSEo9BsJH4uuw" name="criticalitySpecification" type="_C408QMv8EeSEo9BsJH4uuw" association="_HR5OQMv8EeSEo9BsJH4uuw">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_HR5OQsv8EeSEo9BsJH4uuw" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_HR5OQ8v8EeSEo9BsJH4uuw" value="1"/>
+        </ownedEnd>
       </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_4nGdAFt2EeCB9JyGkIbTqQ">
@@ -10634,4 +10958,5 @@
   <DataTypes:ChoiceType xmi:id="_WmWOcP3lEeOmz-4FDV-1Kw" base_DataType="_JEphoL9EEd-TL8tpOyViyA"/>
   <DataTypes:TupleType xmi:id="_X13VkP3lEeOmz-4FDV-1Kw" base_DataType="_Nim6sL9EEd-TL8tpOyViyA"/>
   <Ecore:EPackage xmi:id="_FUVlkKbSEeSHP5PnCeTneg" base_Package="_-aQIUKbREeSHP5PnCeTneg" packageName="STS" nsPrefix="STS" nsURI="http://CHESS/SystemModel/STS" prefix="STS"/>
+  <Ecore:EPackage xmi:id="_XV73cMvtEeSajLw6mg2A8Q" base_Package="_f-f6oMvrEeSajLw6mg2A8Q" packageName="Safety" nsPrefix="Safety" nsURI="http://CHESS/Safety" prefix="Safety"/>
 </xmi:XMI>

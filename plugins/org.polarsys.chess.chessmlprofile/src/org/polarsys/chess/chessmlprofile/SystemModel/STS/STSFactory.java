@@ -58,6 +58,33 @@ public interface STSFactory extends EFactory {
 	Technological createTechnological();
 
 	/**
+	 * Returns a new object of class '<em>Action</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Action</em>'.
+	 * @generated
+	 */
+	Action createAction();
+
+	/**
+	 * Returns a new object of class '<em>Attention</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Attention</em>'.
+	 * @generated
+	 */
+	Attention createAttention();
+
+	/**
+	 * Returns a new object of class '<em>Time Pressure</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Time Pressure</em>'.
+	 * @generated
+	 */
+	TimePressure createTimePressure();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -125,12 +125,17 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingCon
 
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
 
+import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
+import org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.Action;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.Attention;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.Human;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.Organizational;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSFactory;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.Technological;
 
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.TimePressure;
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
 
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
@@ -162,6 +167,27 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	 * @generated
 	 */
 	private EClass technologicalEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass actionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attentionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass timePressureEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -245,6 +271,7 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
+		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theSTSPackage.createPackageContents();
@@ -271,6 +298,7 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
+		theSafetyPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theSTSPackage.initializePackageContents();
@@ -297,6 +325,7 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
+		theSafetyPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theSTSPackage.freeze();
@@ -366,6 +395,33 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getAction() {
+		return actionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAttention() {
+		return attentionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTimePressure() {
+		return timePressureEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public STSFactory getSTSFactory() {
 		return (STSFactory)getEFactoryInstance();
 	}
@@ -397,6 +453,12 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 
 		technologicalEClass = createEClass(TECHNOLOGICAL);
 		createEReference(technologicalEClass, TECHNOLOGICAL__BASE_CLASS);
+
+		actionEClass = createEClass(ACTION);
+
+		attentionEClass = createEClass(ATTENTION);
+
+		timePressureEClass = createEClass(TIME_PRESSURE);
 	}
 
 	/**
@@ -430,6 +492,9 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		actionEClass.getESuperTypes().add(this.getHuman());
+		attentionEClass.getESuperTypes().add(this.getHuman());
+		timePressureEClass.getESuperTypes().add(this.getOrganizational());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(humanEClass, Human.class, "Human", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -440,6 +505,12 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 
 		initEClass(technologicalEClass, Technological.class, "Technological", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTechnological_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, Technological.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(attentionEClass, Attention.class, "Attention", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(timePressureEClass, TimePressure.class, "TimePressure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 	}
 
 } //STSPackageImpl

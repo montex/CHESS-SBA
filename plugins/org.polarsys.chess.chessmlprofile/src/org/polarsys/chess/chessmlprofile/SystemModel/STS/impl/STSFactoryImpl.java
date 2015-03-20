@@ -68,6 +68,9 @@ public class STSFactoryImpl extends EFactoryImpl implements STSFactory {
 			case STSPackage.HUMAN: return createHuman();
 			case STSPackage.ORGANIZATIONAL: return createOrganizational();
 			case STSPackage.TECHNOLOGICAL: return createTechnological();
+			case STSPackage.ACTION: return createAction();
+			case STSPackage.ATTENTION: return createAttention();
+			case STSPackage.TIME_PRESSURE: return createTimePressure();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -101,6 +104,36 @@ public class STSFactoryImpl extends EFactoryImpl implements STSFactory {
 	public Technological createTechnological() {
 		TechnologicalImpl technological = new TechnologicalImpl();
 		return technological;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Action createAction() {
+		ActionImpl action = new ActionImpl();
+		return action;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Attention createAttention() {
+		AttentionImpl attention = new AttentionImpl();
+		return attention;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TimePressure createTimePressure() {
+		TimePressureImpl timePressure = new TimePressureImpl();
+		return timePressure;
 	}
 
 	/**

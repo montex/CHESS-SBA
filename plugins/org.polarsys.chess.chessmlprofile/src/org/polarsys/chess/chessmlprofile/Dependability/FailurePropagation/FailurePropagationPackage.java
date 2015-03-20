@@ -86,7 +86,7 @@ public interface FailurePropagationPackage extends EPackage {
 	int FPTC__BASE_COMPONENT = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_COMPONENT;
 
 	/**
-	 * The feature id for the '<em><b>Error Model</b></em>' reference.
+	 * The feature id for the '<em><b>Error Model</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -102,6 +102,15 @@ public interface FailurePropagationPackage extends EPackage {
 	 * @ordered
 	 */
 	int FPTC__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FPTC__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
 
 	/**
 	 * The feature id for the '<em><b>Fptc</b></em>' attribute.
@@ -333,7 +342,7 @@ public interface FailurePropagationPackage extends EPackage {
 	int FI4FA__BASE_COMPONENT = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_COMPONENT;
 
 	/**
-	 * The feature id for the '<em><b>Error Model</b></em>' reference.
+	 * The feature id for the '<em><b>Error Model</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -349,6 +358,15 @@ public interface FailurePropagationPackage extends EPackage {
 	 * @ordered
 	 */
 	int FI4FA__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FI4FA__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
 
 	/**
 	 * The feature id for the '<em><b>Fi4fa</b></em>' attribute.
@@ -633,6 +651,53 @@ public interface FailurePropagationPackage extends EPackage {
 	 * @ordered
 	 */
 	int FI4FA_ANALYSIS_FEATURE_COUNT = GQAMPackage.GA_ANALYSIS_CONTEXT_FEATURE_COUNT + 0;
+
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLASpecificationImpl <em>FLA Specification</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLASpecificationImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FailurePropagationPackageImpl#getFLASpecification()
+	 * @generated
+	 */
+	int FLA_SPECIFICATION = 9;
+
+	/**
+	 * The feature id for the '<em><b>Base Constraint</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLA_SPECIFICATION__BASE_CONSTRAINT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLA_SPECIFICATION__BASE_CLASS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Expressions</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLA_SPECIFICATION__EXPRESSIONS = 2;
+
+	/**
+	 * The number of structural features of the '<em>FLA Specification</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FLA_SPECIFICATION_FEATURE_COUNT = 3;
 
 
 	/**
@@ -957,6 +1022,49 @@ public interface FailurePropagationPackage extends EPackage {
 	EClass getFI4FAAnalysis();
 
 	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification <em>FLA Specification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>FLA Specification</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification
+	 * @generated
+	 */
+	EClass getFLASpecification();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Constraint <em>Base Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Constraint</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Constraint()
+	 * @see #getFLASpecification()
+	 * @generated
+	 */
+	EReference getFLASpecification_Base_Constraint();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Class <em>Base Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Class</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Class()
+	 * @see #getFLASpecification()
+	 * @generated
+	 */
+	EReference getFLASpecification_Base_Class();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getExpressions <em>Expressions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Expressions</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getExpressions()
+	 * @see #getFLASpecification()
+	 * @generated
+	 */
+	EAttribute getFLASpecification_Expressions();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1235,6 +1343,40 @@ public interface FailurePropagationPackage extends EPackage {
 		 * @generated
 		 */
 		EClass FI4FA_ANALYSIS = eINSTANCE.getFI4FAAnalysis();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLASpecificationImpl <em>FLA Specification</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLASpecificationImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FailurePropagationPackageImpl#getFLASpecification()
+		 * @generated
+		 */
+		EClass FLA_SPECIFICATION = eINSTANCE.getFLASpecification();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Constraint</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FLA_SPECIFICATION__BASE_CONSTRAINT = eINSTANCE.getFLASpecification_Base_Constraint();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Class</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FLA_SPECIFICATION__BASE_CLASS = eINSTANCE.getFLASpecification_Base_Class();
+
+		/**
+		 * The meta object literal for the '<em><b>Expressions</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FLA_SPECIFICATION__EXPRESSIONS = eINSTANCE.getFLASpecification_Expressions();
 
 	}
 

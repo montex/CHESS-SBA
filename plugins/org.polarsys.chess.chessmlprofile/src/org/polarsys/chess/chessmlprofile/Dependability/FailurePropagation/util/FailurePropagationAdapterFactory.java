@@ -114,6 +114,10 @@ public class FailurePropagationAdapterFactory extends AdapterFactoryImpl {
 				return createFI4FAAnalysisAdapter();
 			}
 			@Override
+			public Adapter caseFLASpecification(FLASpecification object) {
+				return createFLASpecificationAdapter();
+			}
+			@Override
 			public Adapter caseDependableComponent(DependableComponent object) {
 				return createDependableComponentAdapter();
 			}
@@ -272,6 +276,20 @@ public class FailurePropagationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createFI4FAAnalysisAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification <em>FLA Specification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification
+	 * @generated
+	 */
+	public Adapter createFLASpecificationAdapter() {
 		return null;
 	}
 

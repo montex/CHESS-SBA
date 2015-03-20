@@ -26,6 +26,11 @@ import org.eclipse.uml2.uml.Transition;
  * A representation of the model object '<em><b>Propagation</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * To be deleted???
+ * ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

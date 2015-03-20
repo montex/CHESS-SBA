@@ -67,6 +67,15 @@ public interface StateBasedComponentsFactory extends EFactory {
 	StatelessSoftware createStatelessSoftware();
 
 	/**
+	 * Returns a new object of class '<em>Stochastic Failure Behaviour</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stochastic Failure Behaviour</em>'.
+	 * @generated
+	 */
+	StochasticFailureBehaviour createStochasticFailureBehaviour();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

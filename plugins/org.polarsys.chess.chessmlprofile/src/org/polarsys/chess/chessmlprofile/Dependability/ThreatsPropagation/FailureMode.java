@@ -21,6 +21,10 @@ import org.eclipse.uml2.uml.Type;
  * A representation of the model object '<em><b>Failure Mode</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * to be removed?
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

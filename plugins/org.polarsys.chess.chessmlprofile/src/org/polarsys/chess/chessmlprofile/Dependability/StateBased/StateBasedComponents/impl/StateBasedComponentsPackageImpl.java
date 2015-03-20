@@ -25,6 +25,7 @@ import org.eclipse.papyrus.MARTE_Library.MeasurementUnits.MeasurementUnitsPackag
 import org.eclipse.papyrus.MARTE_Library.RS_Library.RS_LibraryPackage;
 import org.eclipse.papyrus.MARTE_Library.TimeLibrary.TimeLibraryPackage;
 import org.eclipse.papyrus.MARTE_Library.TimeTypesLibrary.TimeTypesLibraryPackage;
+import org.eclipse.uml2.types.TypesPackage;
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentModelPackageImpl;
@@ -58,6 +59,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComp
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StatefulSoftware;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StatelessHardware;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StatelessSoftware;
+import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StochasticFailureBehaviour;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.StateBasedDataTypesPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.impl.StateBasedDataTypesPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
@@ -74,6 +76,8 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
+import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
+import org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl;
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
@@ -112,6 +116,13 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 	 * @generated
 	 */
 	private EClass statelessSoftwareEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stochasticFailureBehaviourEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -195,6 +206,7 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
+		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theStateBasedComponentsPackage.createPackageContents();
@@ -221,6 +233,7 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
+		theSafetyPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theStateBasedComponentsPackage.initializePackageContents();
@@ -247,6 +260,7 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
+		theSafetyPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theStateBasedComponentsPackage.freeze();
@@ -397,6 +411,42 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStochasticFailureBehaviour() {
+		return stochasticFailureBehaviourEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStochasticFailureBehaviour_FailureDistribution() {
+		return (EAttribute)stochasticFailureBehaviourEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStochasticFailureBehaviour_RepairDistribution() {
+		return (EAttribute)stochasticFailureBehaviourEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStochasticFailureBehaviour_Modes() {
+		return (EAttribute)stochasticFailureBehaviourEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public StateBasedComponentsFactory getStateBasedComponentsFactory() {
 		return (StateBasedComponentsFactory)getEFactoryInstance();
 	}
@@ -438,6 +488,11 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 
 		statelessSoftwareEClass = createEClass(STATELESS_SOFTWARE);
 		createEAttribute(statelessSoftwareEClass, STATELESS_SOFTWARE__FAULT_OCC);
+
+		stochasticFailureBehaviourEClass = createEClass(STOCHASTIC_FAILURE_BEHAVIOUR);
+		createEAttribute(stochasticFailureBehaviourEClass, STOCHASTIC_FAILURE_BEHAVIOUR__FAILURE_DISTRIBUTION);
+		createEAttribute(stochasticFailureBehaviourEClass, STOCHASTIC_FAILURE_BEHAVIOUR__REPAIR_DISTRIBUTION);
+		createEAttribute(stochasticFailureBehaviourEClass, STOCHASTIC_FAILURE_BEHAVIOUR__MODES);
 	}
 
 	/**
@@ -466,6 +521,7 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 		// Obtain other dependent packages
 		DependableComponentPackage theDependableComponentPackage = (DependableComponentPackage)EPackage.Registry.INSTANCE.getEPackage(DependableComponentPackage.eNS_URI);
 		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
+		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -476,6 +532,7 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 		statefulSoftwareEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
 		statelessHardwareEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
 		statelessSoftwareEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
+		stochasticFailureBehaviourEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(statefulHardwareEClass, StatefulHardware.class, "StatefulHardware", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -496,6 +553,11 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 
 		initEClass(statelessSoftwareEClass, StatelessSoftware.class, "StatelessSoftware", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStatelessSoftware_FaultOcc(), theBasicNFP_TypesPackage.getNFP_Frequency(), "faultOcc", null, 0, 1, StatelessSoftware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(stochasticFailureBehaviourEClass, StochasticFailureBehaviour.class, "StochasticFailureBehaviour", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStochasticFailureBehaviour_FailureDistribution(), theBasicNFP_TypesPackage.getNFP_Real(), "failureDistribution", null, 1, 1, StochasticFailureBehaviour.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getStochasticFailureBehaviour_RepairDistribution(), theBasicNFP_TypesPackage.getNFP_Real(), "repairDistribution", null, 1, 1, StochasticFailureBehaviour.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getStochasticFailureBehaviour_Modes(), theTypesPackage.getString(), "modes", null, 1, 1, StochasticFailureBehaviour.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //StateBasedComponentsPackageImpl

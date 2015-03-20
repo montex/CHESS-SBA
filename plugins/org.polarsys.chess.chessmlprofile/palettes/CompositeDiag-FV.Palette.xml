@@ -64,6 +64,14 @@
 				</postAction>
 			</aspectTool>
 			
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="composite.tool.constraint_1422453719096_1426783342710" name="CriticalityInterfaceSpecification (Constraint)" refToolId="composite.tool.constraint_1422453719096">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Safety::CriticalityInterfaceSpecification"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			
 			<aspectTool description="Create new Link for Comment\Constraint"
 				id="composite.tool.link_1317290422288" name="Link" refToolId="composite.tool.link" />
 			

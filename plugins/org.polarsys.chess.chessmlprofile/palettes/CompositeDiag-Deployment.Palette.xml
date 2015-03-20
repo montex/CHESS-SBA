@@ -75,10 +75,27 @@
 			</aspectTool>
 			<aspectTool description="Create new Constraint" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="composite.tool.constraint_1422453719096" name="Constraint" refToolId="composite.tool.constraint"/>
 						
+			<aspectTool description="Create a CriticalitySpecification" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="composite.tool.constraint_1422453719096_1426783342710" name="CriticalitySpecification (Constraint)" refToolId="composite.tool.constraint_1422453719096">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Safety::CriticalitySpecification"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			
 			<aspectTool description="Create new Connector"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Connector.gif"
 				id="composite.tool.connector_1309350703600" name="Connector"
 				refToolId="composite.tool.connector" />
+			
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Abstraction.gif" id="composite.tool.abstraction_1426783050107" name="Allocate (Abstraction)" refToolId="composite.tool.abstraction">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_Foundations::Alloc::Allocate"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>	
+			
 			<aspectTool description="Create new Link for Comment"
 				id="composite.tool.link_1317290422288" name="Link" refToolId="composite.tool.link" />
 										

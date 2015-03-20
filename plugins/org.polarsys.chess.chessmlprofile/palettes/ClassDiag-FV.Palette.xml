@@ -104,6 +104,22 @@
 			<aspectTool description="Create a signal" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Signal.gif" id="clazz.tool.signal_1422267025205" name="Signal" refToolId="clazz.tool.signal"/>
 			<aspectTool description="Create a reception" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Reception.gif" id="clazz.tool.reception_1422267072416" name="Reception" refToolId="clazz.tool.reception"/>
 			<aspectTool description="Create new Constraint" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="composite.tool.constraint_142" name="Constraint" refToolId="clazz.tool.constraint"/>
+			
+			<aspectTool description="Create new CriticalityLevel" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="clazz.tool.constraint_1426786335331" name="CriticalityLevel" refToolId="clazz.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Safety::CriticalityLevel"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create new CriticalitySpecification" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="clazz.tool.constraint_1426786335331" name="CriticalitySpecification" refToolId="clazz.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Safety::CriticalitySpecification"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			
 			<aspectTool description="Create a comment" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif" id="clazz.tool.comment_13167796793" name="Comment" refToolId="clazz.tool.comment"/>
 		</drawer>
 		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif"  id="CHESSEdgeFunctionalViewDrawerID" name="Edges">

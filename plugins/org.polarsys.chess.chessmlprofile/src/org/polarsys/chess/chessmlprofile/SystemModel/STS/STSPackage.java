@@ -149,6 +149,91 @@ public interface STSPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.ActionImpl <em>Action</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.ActionImpl
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl#getAction()
+	 * @generated
+	 */
+	int ACTION = 3;
+
+	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTION__BASE_CLASS = HUMAN__BASE_CLASS;
+
+	/**
+	 * The number of structural features of the '<em>Action</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTION_FEATURE_COUNT = HUMAN_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.AttentionImpl <em>Attention</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.AttentionImpl
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl#getAttention()
+	 * @generated
+	 */
+	int ATTENTION = 4;
+
+	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTENTION__BASE_CLASS = HUMAN__BASE_CLASS;
+
+	/**
+	 * The number of structural features of the '<em>Attention</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTENTION_FEATURE_COUNT = HUMAN_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.TimePressureImpl <em>Time Pressure</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.TimePressureImpl
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl#getTimePressure()
+	 * @generated
+	 */
+	int TIME_PRESSURE = 5;
+
+	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TIME_PRESSURE__BASE_CLASS = ORGANIZATIONAL__BASE_CLASS;
+
+	/**
+	 * The number of structural features of the '<em>Time Pressure</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TIME_PRESSURE_FEATURE_COUNT = ORGANIZATIONAL_FEATURE_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.Human <em>Human</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -210,6 +295,36 @@ public interface STSPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTechnological_Base_Class();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.Action <em>Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Action</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.Action
+	 * @generated
+	 */
+	EClass getAction();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.Attention <em>Attention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attention</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.Attention
+	 * @generated
+	 */
+	EClass getAttention();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.TimePressure <em>Time Pressure</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Time Pressure</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.TimePressure
+	 * @generated
+	 */
+	EClass getTimePressure();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -286,6 +401,36 @@ public interface STSPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TECHNOLOGICAL__BASE_CLASS = eINSTANCE.getTechnological_Base_Class();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.ActionImpl <em>Action</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.ActionImpl
+		 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl#getAction()
+		 * @generated
+		 */
+		EClass ACTION = eINSTANCE.getAction();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.AttentionImpl <em>Attention</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.AttentionImpl
+		 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl#getAttention()
+		 * @generated
+		 */
+		EClass ATTENTION = eINSTANCE.getAttention();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.TimePressureImpl <em>Time Pressure</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.TimePressureImpl
+		 * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl#getTimePressure()
+		 * @generated
+		 */
+		EClass TIME_PRESSURE = eINSTANCE.getTimePressure();
 
 	}
 

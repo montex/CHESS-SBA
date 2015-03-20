@@ -47,6 +47,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDAv
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDMitigation;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FAAnalysis;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FASpecification;
+import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationAnalysis;
@@ -80,6 +81,8 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
+import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
+import org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl;
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
@@ -153,6 +156,13 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 * @generated
 	 */
 	private EClass fi4FAAnalysisEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass flaSpecificationEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -236,6 +246,7 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
+		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theFailurePropagationPackage.createPackageContents();
@@ -262,6 +273,7 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
+		theSafetyPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theFailurePropagationPackage.initializePackageContents();
@@ -288,6 +300,7 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
+		theSafetyPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theFailurePropagationPackage.freeze();
@@ -573,6 +586,42 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getFLASpecification() {
+		return flaSpecificationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLASpecification_Base_Constraint() {
+		return (EReference)flaSpecificationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLASpecification_Base_Class() {
+		return (EReference)flaSpecificationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFLASpecification_Expressions() {
+		return (EAttribute)flaSpecificationEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public FailurePropagationFactory getFailurePropagationFactory() {
 		return (FailurePropagationFactory)getEFactoryInstance();
 	}
@@ -634,6 +683,11 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		createEAttribute(acidMitigationEClass, ACID_MITIGATION__D);
 
 		fi4FAAnalysisEClass = createEClass(FI4FA_ANALYSIS);
+
+		flaSpecificationEClass = createEClass(FLA_SPECIFICATION);
+		createEReference(flaSpecificationEClass, FLA_SPECIFICATION__BASE_CONSTRAINT);
+		createEReference(flaSpecificationEClass, FLA_SPECIFICATION__BASE_CLASS);
+		createEAttribute(flaSpecificationEClass, FLA_SPECIFICATION__EXPRESSIONS);
 	}
 
 	/**
@@ -665,6 +719,7 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		GQAMPackage theGQAMPackage = (GQAMPackage)EPackage.Registry.INSTANCE.getEPackage(GQAMPackage.eNS_URI);
+		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 
 		// Add subpackages
 		getESubpackages().add(theFailurePropagationDataTypesPackage);
@@ -719,6 +774,11 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		initEAttribute(getACIDMitigation_D(), theFailurePropagationDataTypesPackage.getD_mitigation(), "d", null, 0, 1, ACIDMitigation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(fi4FAAnalysisEClass, FI4FAAnalysis.class, "FI4FAAnalysis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(flaSpecificationEClass, FLASpecification.class, "FLASpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getFLASpecification_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFLASpecification_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFLASpecification_Expressions(), theBasicNFP_TypesPackage.getNFP_String(), "expressions", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		// Create annotations
 		// http://www.eclipse.org/uml2/2.0.0/UML

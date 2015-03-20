@@ -127,6 +127,10 @@
                   <perm st="Mode" owner="true" write="true" visible="true"/>
                   <perm st="ModeTransition" owner="true" write="true" visible="true"/>
                   
+                  <perm st="CriticalityLevel" owner="true" write="true" visible="true"/>
+                  <perm st="CriticalitySpecification" owner="true" write="true" visible="true"/>
+                  <perm st="CriticalityInterfaceSpecification" owner="true" write="true" visible="true"/>
+                  
             
             </diagram>
             <diagram name="Composite">
@@ -418,6 +422,9 @@
                   <perm st="CHGaResourcePlatform" owner="true" write="true" visible="true"/>
                   <perm st="GaExecHost" owner="true" write="true" visible="true"/>
                   <perm st="GaCommHost" owner="true" write="true" visible="true"/>
+                  <perm st="MemoryPartition" owner="true" write="true" visible="true"/>
+                  <perm st="HwRAM" owner="true" write="true" visible="true"/>
+                  <perm st="HwComputingResource" owner="true" write="true" visible="true"/>
                   
                   
                   <!--deletion-->
@@ -462,6 +469,13 @@
                   <perm st="Mode" owner="true" write="true" visible="true"/>
                   <perm st="ModeTransition" owner="true" write="true" visible="true"/>
                   <perm st="NfpConstraint" owner="true" write="true" visible="true"/>
+                  
+                  <perm st="CriticalityLevel" owner="true" write="true" visible="true"/>
+                  <perm st="CriticalitySpecification" owner="true" write="true" visible="true"/>
+                  <perm st="CriticalityInterfaceSpecification" owner="true" write="true" visible="true"/>
+                  
+                  <perm el="Abstraction" owner="true" write="true" visible="true"/>
+                  <perm st="Allocate" owner="true" write="true" visible="true"/>
                   
                   
                   
@@ -662,6 +676,10 @@
                   
                    <!--Events-->
                  <perm el="Signal" owner="true" write="true" visible="true"/>
+                 
+                 <perm st="CriticalityLevel" owner="true" write="true" visible="true"/>
+                 <perm st="CriticalitySpecification" owner="true" write="true" visible="true"/>
+                 <perm st="CriticalityInterfaceSpecification" owner="true" write="true" visible="true"/>
                                 
             </diagram>            
       </view>

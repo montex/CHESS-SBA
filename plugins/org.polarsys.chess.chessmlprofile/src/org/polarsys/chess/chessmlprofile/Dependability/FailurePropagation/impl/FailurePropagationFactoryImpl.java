@@ -71,6 +71,7 @@ public class FailurePropagationFactoryImpl extends EFactoryImpl implements Failu
 			case FailurePropagationPackage.ACID_AVOIDABLE: return createACIDAvoidable();
 			case FailurePropagationPackage.ACID_MITIGATION: return createACIDMitigation();
 			case FailurePropagationPackage.FI4FA_ANALYSIS: return createFI4FAAnalysis();
+			case FailurePropagationPackage.FLA_SPECIFICATION: return createFLASpecification();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -164,6 +165,16 @@ public class FailurePropagationFactoryImpl extends EFactoryImpl implements Failu
 	public FI4FAAnalysis createFI4FAAnalysis() {
 		FI4FAAnalysisImpl fi4FAAnalysis = new FI4FAAnalysisImpl();
 		return fi4FAAnalysis;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FLASpecification createFLASpecification() {
+		FLASpecificationImpl flaSpecification = new FLASpecificationImpl();
+		return flaSpecification;
 	}
 
 	/**

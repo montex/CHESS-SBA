@@ -39,6 +39,9 @@ import org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.impl.Da
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentFactory;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeGroup;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation;
 import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEAPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEADataTypes.FMEADataTypesPackage;
@@ -74,6 +77,8 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
+import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
+import org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl;
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
@@ -91,6 +96,27 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 * @generated
 	 */
 	private EClass propagationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass failureModeGroupEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass failureModeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass failureModeSpecificationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -181,6 +207,7 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
+		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theDependableComponentPackage.createPackageContents();
@@ -207,6 +234,7 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
+		theSafetyPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theDependableComponentPackage.initializePackageContents();
@@ -233,6 +261,7 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
+		theSafetyPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theDependableComponentPackage.freeze();
@@ -338,6 +367,132 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getFailureModeGroup() {
+		return failureModeGroupEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFailureModeGroup_Base_Class() {
+		return (EReference)failureModeGroupEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFailureModeGroup_FailureMode() {
+		return (EReference)failureModeGroupEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getFailureMode() {
+		return failureModeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFailureMode_Base_Class() {
+		return (EReference)failureModeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFailureMode_Description() {
+		return (EAttribute)failureModeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFailureMode_Severity() {
+		return (EAttribute)failureModeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFailureMode_Exposure() {
+		return (EAttribute)failureModeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFailureMode_Controllability() {
+		return (EAttribute)failureModeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFailureMode_Permanent() {
+		return (EAttribute)failureModeEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getFailureModeSpecification() {
+		return failureModeSpecificationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFailureModeSpecification_Base_Constraint() {
+		return (EReference)failureModeSpecificationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFailureModeSpecification_Base_Port() {
+		return (EReference)failureModeSpecificationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFailureModeSpecification_FailureModeGroup() {
+		return (EReference)failureModeSpecificationEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDependableComponent() {
 		return dependableComponentEClass;
 	}
@@ -367,6 +522,15 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 */
 	public EReference getDependableComponent_Base_Property() {
 		return (EReference)dependableComponentEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDependableComponent_Base_InstanceSpecification() {
+		return (EReference)dependableComponentEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -408,10 +572,28 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		createEReference(propagationEClass, PROPAGATION__BASE_TRANSITION);
 		createEAttribute(propagationEClass, PROPAGATION__WEIGHT);
 
+		failureModeGroupEClass = createEClass(FAILURE_MODE_GROUP);
+		createEReference(failureModeGroupEClass, FAILURE_MODE_GROUP__BASE_CLASS);
+		createEReference(failureModeGroupEClass, FAILURE_MODE_GROUP__FAILURE_MODE);
+
+		failureModeEClass = createEClass(FAILURE_MODE);
+		createEReference(failureModeEClass, FAILURE_MODE__BASE_CLASS);
+		createEAttribute(failureModeEClass, FAILURE_MODE__DESCRIPTION);
+		createEAttribute(failureModeEClass, FAILURE_MODE__SEVERITY);
+		createEAttribute(failureModeEClass, FAILURE_MODE__EXPOSURE);
+		createEAttribute(failureModeEClass, FAILURE_MODE__CONTROLLABILITY);
+		createEAttribute(failureModeEClass, FAILURE_MODE__PERMANENT);
+
+		failureModeSpecificationEClass = createEClass(FAILURE_MODE_SPECIFICATION);
+		createEReference(failureModeSpecificationEClass, FAILURE_MODE_SPECIFICATION__BASE_CONSTRAINT);
+		createEReference(failureModeSpecificationEClass, FAILURE_MODE_SPECIFICATION__BASE_PORT);
+		createEReference(failureModeSpecificationEClass, FAILURE_MODE_SPECIFICATION__FAILURE_MODE_GROUP);
+
 		dependableComponentEClass = createEClass(DEPENDABLE_COMPONENT);
 		createEReference(dependableComponentEClass, DEPENDABLE_COMPONENT__BASE_COMPONENT);
 		createEReference(dependableComponentEClass, DEPENDABLE_COMPONENT__ERROR_MODEL);
 		createEReference(dependableComponentEClass, DEPENDABLE_COMPONENT__BASE_PROPERTY);
+		createEReference(dependableComponentEClass, DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION);
 	}
 
 	/**
@@ -461,10 +643,28 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		initEReference(getPropagation_Base_Transition(), theUMLPackage.getTransition(), null, "base_Transition", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getPropagation_Weight(), theBasicNFP_TypesPackage.getNFP_Real(), "weight", null, 0, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
+		initEClass(failureModeGroupEClass, FailureModeGroup.class, "FailureModeGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getFailureModeGroup_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, FailureModeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFailureModeGroup_FailureMode(), this.getFailureMode(), null, "failureMode", null, 1, -1, FailureModeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(failureModeEClass, FailureMode.class, "FailureMode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getFailureMode_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFailureMode_Description(), theTypesPackage.getString(), "description", null, 0, 1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFailureMode_Severity(), theTypesPackage.getString(), "severity", null, 0, 1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFailureMode_Exposure(), theTypesPackage.getString(), "exposure", null, 0, 1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFailureMode_Controllability(), theTypesPackage.getString(), "controllability", null, 0, 1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFailureMode_Permanent(), theTypesPackage.getBoolean(), "permanent", null, 0, 1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(failureModeSpecificationEClass, FailureModeSpecification.class, "FailureModeSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getFailureModeSpecification_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, FailureModeSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFailureModeSpecification_Base_Port(), theUMLPackage.getPort(), null, "base_Port", null, 1, 1, FailureModeSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFailureModeSpecification_FailureModeGroup(), this.getFailureModeGroup(), null, "failureModeGroup", null, 1, -1, FailureModeSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
 		initEClass(dependableComponentEClass, DependableComponent.class, "DependableComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDependableComponent_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, DependableComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getDependableComponent_ErrorModel(), theThreatsPropagationPackage.getErrorModel(), null, "errorModel", null, 0, 1, DependableComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getDependableComponent_ErrorModel(), theThreatsPropagationPackage.getErrorModel(), null, "errorModel", null, 0, -1, DependableComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getDependableComponent_Base_Property(), theUMLPackage.getProperty(), null, "base_Property", null, 1, 1, DependableComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getDependableComponent_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, DependableComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //DependableComponentPackageImpl

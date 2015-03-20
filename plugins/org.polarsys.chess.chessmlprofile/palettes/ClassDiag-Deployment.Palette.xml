@@ -51,8 +51,16 @@
 				</stereotypesToApply>
 			</postAction>
 		</aspectTool>
+		<aspectTool description="Create a HwRAM" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.class_1426783992572" name="HwRAM (Component)" refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="MARTE::MARTE_DesignModel::HRM::HwLogical::HwStorage::HwMemory::HwRAM"/>
+					</stereotypesToApply>
+				</postAction>
+				<postAction displayKind="TextIconStereotype" displayPlace="Compartment" id="org.eclipse.papyrus.postaction.changeStereotypeDisplayProvider"/>
+			</aspectTool>
 		
-		<aspectTool description="Create Partition" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_partition" name="Partition (Component)" refToolId="clazz.tool.component">
+		<aspectTool description="Create MemoryPartition" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_partition" name="MemoryPartition" refToolId="clazz.tool.component">
 			<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
 				<stereotypesToApply><stereotype stereotypeName="MARTE::MARTE_DesignModel::SRM::SW_Concurrency::MemoryPartition"/>
 				</stereotypesToApply>
@@ -61,6 +69,23 @@
 			
 			<aspectTool description="Create a component" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1316779916487" name="Component" refToolId="clazz.tool.component"/>
 			<aspectTool description="Create new Constraint" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="composite.tool.constraint_14224537190" name="Constraint" refToolId="clazz.tool.constraint"/>
+			
+			<aspectTool description="Create new CriticalityLevel" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="clazz.tool.constraint_1426786335331" name="CriticalityLevel" refToolId="clazz.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Safety::CriticalityLevel"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create new CriticalitySpecification" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="clazz.tool.constraint_1426786335331" name="CriticalitySpecification" refToolId="clazz.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Safety::CriticalitySpecification"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			
+			
 			<aspectTool description="Create a comment" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif" id="clazz.tool.comment_1316779679320" name="Comment" refToolId="clazz.tool.comment"/>
 			<aspectTool description="Creation of a link for comment" id="clazz.tool.link_13167799276791" name="Link" refToolId="clazz.tool.link"/>
 			<aspectTool description="Create a Composition" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Association.gif" id="clazz.tool.association_1372928774312" name="Association" refToolId="clazz.tool.association"><postAction id="org.eclipse.papyrus.postaction.associationendactionprovider"><associationEnd index="0" name="source"/><associationEnd index="1" name="target"><aggregation value="composite"/><multiplicity value="1..1"/><navigable value="Yes"/><owner value="Class"/></associationEnd></postAction></aspectTool>
