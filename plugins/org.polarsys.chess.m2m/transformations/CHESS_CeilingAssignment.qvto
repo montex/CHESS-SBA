@@ -15,8 +15,8 @@
 -----------------------------------------------------------------------
 */
 
-import ProfileUtils;
-import UMLUtils;
+import ProfileUtils_Inst_full;
+import UMLUtils_Inst_full;
 import chess.lib;
 	
 modeltype UML uses "http://www.eclipse.org/uml2/2.0.0/UML";
@@ -57,7 +57,7 @@ mapping inout Model::ModelWithCeiling() {
 
 	// Initialization of own ceilings of cyclic and sporadic operations
 	// Initialization of ceiling of protected operation
-	// Initialization of ceiling of unprotected operation		
+	// Initialization of ceiling of unprotected operation
 	chrtPortSlotList->forEach(ps) {
 		var specs : Sequence(chessmlprofile::RTComponentModel::CHRtSpecification) := (ps.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot)).cH_RtSpecification->asSequence();
 	    specs->forEach(spec) {
@@ -163,6 +163,13 @@ query InstanceSpecification::isConnectorInstance() : Boolean {
 	return false;
 }
 
+query Element::isNullOrInvalid() : Boolean {
+	if(self.oclIsInvalid() or self.oclIsUndefined())then
+		return true
+	endif;
+	return self.isNull();
+}
+
 query Slot::getConnectedSlot(compInst : InstanceSpecification) : Slot {
 	var riPort := self.definingFeature.oclAsType(Port);
 	var myInstanceValue : InstanceValue := null;
@@ -172,9 +179,10 @@ query Slot::getConnectedSlot(compInst : InstanceSpecification) : Slot {
 	var connectorInstList := InstanceSpecification.allInstances()->select(classifier->size() = 0);
 	connectorInstList->forEach(connInst) {
 	    var candidateSlot : Slot := connInst.slot->selectOne(definingFeature = riPort);
-	    if (candidateSlot <> null) then {
+	    
+	    if (not candidateSlot.isNullOrInvalid()) then {
 	       myInstanceValue := (candidateSlot.allOwnedElements()[InstanceValue])->selectOne(instance = compInst);
-	       if (myInstanceValue <> null) then {
+	       if (not myInstanceValue.isNullOrInvalid()) then {
 	          connectorPIslot := connInst.slot->selectOne(definingFeature <> riPort);
 	          targetInstance := connectorPIslot.value->selectOne(true).oclAsType(InstanceValue).instance;
 	          return targetInstance.slot->selectOne(definingFeature = connectorPIslot.definingFeature);
@@ -211,7 +219,7 @@ query Activity::collectCallOperationNodes() : Sequence(CallOperationAction) {
 	var nextNode : ActivityNode;
 	while(true){
 		nextNode := prevNode.outgoing->any(true).target.oclAsType(CallOperationAction);
-		if nextNode <> null then {
+		if (not nextNode.isNullOrInvalid()) then {
 			nodes += nextNode.oclAsType(CallOperationAction);
 			prevNode := nextNode;
 		}

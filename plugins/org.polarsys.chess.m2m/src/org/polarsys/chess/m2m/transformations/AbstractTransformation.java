@@ -84,7 +84,10 @@ public abstract class AbstractTransformation {
 			QVToTransformation.launchRemoveMultiInstance(modelCopy, monitor);
 		}
 		
+		QVToTransformation.launchCeilingAssignment(modelCopy, monitor);
+		
 		QVToTransformation.launchBuildMultiInstance(modelCopy, monitor);
+
 		build1(monitor, modelCopy);
 
 		String result = build2(monitor, modelCopy, editor);
@@ -92,7 +95,7 @@ public abstract class AbstractTransformation {
 		// Replace the input model file with the transformed model
 		CHESSProjectSupport.fileReplace(modelCopy, modelFile);
 		return new TransformationResultsData(result, modelFile);
-//		return new TransformationResultsData("TODO", modelFile);
+		
 		// Finally delete the working dir
 		// CHESSProjectSupport.deleteFolder((IFolder) transDir);
 	}

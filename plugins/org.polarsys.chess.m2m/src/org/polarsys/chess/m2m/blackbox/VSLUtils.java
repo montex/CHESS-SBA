@@ -44,6 +44,9 @@ import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Core.IdentifSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
+import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
+import org.polarsys.chess.core.util.uml.UMLUtils;
+import org.polarsys.chess.validator.constraints.StringParser;
 
 public class VSLUtils {
 
@@ -755,6 +758,28 @@ public class VSLUtils {
 			}
 		}
 		return null;
+	}
+	
+	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
+	public  static String getWCET(IContext context, Comment self) {
+		CHRtSpecification chRtSpecification = getStereotypeApplication(self, CHRtSpecification.class);
+		StringParser sp = new StringParser();
+		double x = -1;
+		String wcet = chRtSpecification.getLocalWCET();
+		if(wcet!=null){
+			x = sp.getValueNFP(wcet);
+		}
+		if(x != -1)
+			return wcet;
+		
+		wcet = chRtSpecification.getWCET();
+		
+		if(wcet!=null){
+			x = sp.getValueNFP(wcet);
+		}
+		if(x != -1)
+			return wcet;
+		return "ERROR!";
 	}
 
 	@SuppressWarnings("unchecked")

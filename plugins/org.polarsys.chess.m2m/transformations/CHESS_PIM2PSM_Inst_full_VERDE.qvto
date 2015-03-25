@@ -1001,7 +1001,7 @@ mapping InstanceSpecification::InstanceUnprotected2SaStep(chrt : Comment, slot :
 	owner.ownedOperation += result;
 	// Convert the newly created operation to a <<saStep>>
 	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
-	saStep.execTime += chrts.localWCET;
+	saStep.execTime += chrt.getWCET();//chrts.localWCET;
 	
 	//createSubUsageForPSMOperation(selfOperation, result, slot.owningInstance)
 }
@@ -1054,7 +1054,7 @@ mapping InstanceSpecification::InstanceProtected2SaStepStrict(chrt : Comment, sl
 	owner.ownedOperation += result;
 	// Convert the newly created operation to a <<saStep>>
 	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
-	saStep.execTime += chrts.localWCET;	
+	saStep.execTime += chrt.getWCET();//chrts.localWCET;	
 	// The sharedRes will be set on the SaStep of the end to end workflow
 	saStep.sharedRes += saSharedRes;
 }
@@ -1085,7 +1085,7 @@ mapping InstanceSpecification::InstanceProtected2SaStep(chrt : Comment, slot : S
 	owner.ownedOperation += result;
 	// Convert the newly created operation to a <<saStep>>
 	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
-	saStep.execTime += chrts.localWCET;	
+	saStep.execTime += chrt.getWCET();//chrts.localWCET;
 	// The sharedRes will be set on the SaStep of the end to end workflow
 	saStep.sharedRes += saSharedRes;
 }
@@ -1152,7 +1152,7 @@ mapping InstanceSpecification::InstanceSporadic2SaStep(chrt : Comment, slot : Sl
 	owner.ownedOperation += result;
 	// Convert the newly created operation to a <<saStep>>
 	var localSaStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
-	localSaStep.execTime += chrts.localWCET;
+	localSaStep.execTime += chrt.getWCET();//chrts.localWCET;
 	
 	//createSubUsageForPSMOperation(selfOperation, result, slot.owningInstance)
 	
