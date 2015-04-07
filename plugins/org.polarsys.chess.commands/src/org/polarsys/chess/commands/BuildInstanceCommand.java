@@ -87,7 +87,6 @@ public class BuildInstanceCommand extends AbstractHandler {
 	private static ArrayList<InstanceSpecification> instancesList = new ArrayList<InstanceSpecification>();
 	private static ArrayList<Slot> slotList =  new ArrayList<Slot>();
 	private static EList<Comment> comments = null;
-	private String warningMsg = "";
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
@@ -95,8 +94,7 @@ public class BuildInstanceCommand extends AbstractHandler {
 		if (editor == null || ds == null) 
 			return null;
 		try {
-		//PapyrusMultiDiagramEditor editor = (PapyrusMultiDiagramEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		
+				
 		Object temp = getEditPart();
 		
 		if (temp == null ||  ( !(temp instanceof CompositeStructureDiagramEditPart) && !(temp instanceof InternalBlockDiagramEditPart)) )
