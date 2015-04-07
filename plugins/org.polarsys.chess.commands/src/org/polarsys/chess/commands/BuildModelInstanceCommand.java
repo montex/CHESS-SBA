@@ -63,6 +63,7 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpe
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
+import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 public class BuildModelInstanceCommand extends AbstractHandler implements
@@ -86,7 +87,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		final Shell shell = window.getShell();
 		//get the CEHSS Editor
 		PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
-//		final DiagramStatus ds = CHESSEditorUtils.getDiagramStatus(editor);
+		final DiagramStatus ds = CHESSEditorUtils.getDiagramStatus(editor);
 		List<Component> compImplList = new ArrayList<Component>();
 		try{
 			//get the UML model
@@ -120,6 +121,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 				TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(comp);
 				editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 					protected void doExecute() {
+						ds.setUserAction(false);
 						saveAssignAllocations(umlModel);
 						//clear instance package, if present
 						for(Element elem : comp.getOwner().getOwnedElements()){
@@ -144,11 +146,12 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 				});
 			}
 		} catch (Exception e) {
+			ds.setUserAction(false);
 			e.printStackTrace();
 			MessageDialog.openError(shell, "CHESS", "Problems while executing BuildInstance command: " + e.getMessage());
 		}
+		ds.setUserAction(false);
 		return null;
-
 	}
 	
 	private InstanceSpecification buildComponentInstance(Package pkg, Component comp, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Property theProp, Map<Property, InstanceSpecification> property2InstMap, List<Comment> commList) {
