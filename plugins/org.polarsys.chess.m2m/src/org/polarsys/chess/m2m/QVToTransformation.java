@@ -58,7 +58,6 @@ public class QVToTransformation {
 	
 	public static void launchRemoveMultiInstance(IFile model, IProgressMonitor monitor)
 			throws Exception {
-
 		launchTransformation(TransUtil.QVTO_REMMULTIINSTANCE, "RemoveMultiInstance", false,
 				model, monitor, new HashMap<String, String>());
 	}
@@ -81,6 +80,8 @@ public class QVToTransformation {
 	public static void launchTransformation(String transURI, String transName,
 			boolean generateTrace, IFile model, IProgressMonitor monitor, Map<String, String> configProps)
 			throws Exception {
+		
+		System.out.println("executing "+transName);
 		String modelURIString = URI.createPlatformResourceURI(
 				model.getFullPath().toString(), false).toString();
 		String traceURIString = generateTrace ? modelURIString.substring(0,
