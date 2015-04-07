@@ -131,6 +131,7 @@
                   <perm st="CriticalitySpecification" owner="true" write="true" visible="true"/>
                   <perm st="CriticalityInterfaceSpecification" owner="true" write="true" visible="true"/>
                   
+                  <perm st="Resource" owner="true" write="true" visible="true"/>
             
             </diagram>
             <diagram name="Composite">
@@ -476,7 +477,7 @@
                   
                   <perm el="Abstraction" owner="true" write="true" visible="true"/>
                   <perm st="Allocate" owner="true" write="true" visible="true"/>
-                  
+                  <perm st="Resource" owner="true" write="true" visible="true"/>
                   
                   
             </diagram>

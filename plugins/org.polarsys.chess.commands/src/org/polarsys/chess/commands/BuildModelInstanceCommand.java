@@ -14,6 +14,7 @@ import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.GRM.Resource;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
@@ -21,7 +22,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
-import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.uml.tools.providers.UMLLabelProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -29,8 +29,8 @@ import org.eclipse.ui.dialogs.ListDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.ConnectableElement;
 import org.eclipse.uml2.uml.Connector;
+import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.InstanceValue;
@@ -48,18 +48,19 @@ import org.polarsys.chess.chessmlprofile.Core.CHESS;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.DeploymentView;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation;
+import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
+import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
-import org.polarsys.chess.core.views.DiagramStatus;
-import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 public class BuildModelInstanceCommand extends AbstractHandler implements
 		IHandler {
 
 	private static final String CHESS = "CHESS::Core::CHESS";
-	private static final String CHESS_COMPIMPL = "CHESS::ComponentModel::ComponentImplementation";
+//	private static final String CHESS_COMPIMPL = "CHESS::ComponentModel::ComponentImplementation";
+	private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponentModel::CHRtSpecification";
 	private static final String CHESS_RESPLATFORM = "CHESS::Core::CHGaResourcePlatform";
 	private static final String MARTE_CSP = "MARTE::MARTE_DesignModel::GCM::ClientServerPort";
 	private static final String MARTE_RESOURCE = "MARTE::MARTE_Foundations::GRM::Resource";
@@ -73,13 +74,16 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		final Shell shell = window.getShell();
+		//get the CEHSS Editor
 		PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
-		final DiagramStatus ds = CHESSEditorUtils.getDiagramStatus(editor);
+//		final DiagramStatus ds = CHESSEditorUtils.getDiagramStatus(editor);
 		List<Component> compImplList = new ArrayList<Component>();
 		try{
+			//get the UML model
 			org.eclipse.emf.ecore.resource.Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
 			final Model umlModel = ResourceUtils.getModel(res);
 			CHESS chess = (CHESS) umlModel.getStereotypeApplication(umlModel.getAppliedStereotype(CHESS));		
+			//get the Components (implementation) of the componentView and deploymentView
 			for (Element elem : chess.getComponentView().getBase_Package().allOwnedElements()) {
 				if (UMLUtils.getStereotypeApplication(elem, ComponentImplementation.class) != null) {
 					compImplList.add((Component) elem);
@@ -90,6 +94,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 					compImplList.add((Component) elem);
 				}
 			}
+			//launch the dialog
 			ListDialog selectionDialog = new ListDialog(shell);
 			selectionDialog.setInput(compImplList);
 			selectionDialog.setContentProvider(new ArrayContentProvider());
@@ -115,10 +120,15 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 						}
 						instancesList.clear();
 						slotList.clear();
+						//create the instance package
 						Package pkg = comp.getNearestPackage();
 						Package instPkg = pkg.createNestedPackage(comp.getName() + "_instSpec");
-						performBuildInstances(instPkg, comp, new HashMap<Property, InstanceSpecification>());
+						UMLUtils.applyStereotype(instPkg, CHESS_RESPLATFORM);
+						//perform build instances
+						buildComponentInstance(instPkg, comp, null, null, null, new HashMap<Property, InstanceSpecification>(), comp.getOwnedComments());
 						regenerateAssignAllocations(umlModel);
+						//to keep the support to the existing transformations for RT analysis, 
+						//apply the <<CHGaResourcePlatform>> stereotype also on the package
 						MessageDialog.openInformation(shell, "CHESS", "BuildInstance command completed");
 					}
 				});
@@ -130,52 +140,31 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		return null;
 
 	}
-
-	private void performBuildInstances(Package pkg, Component comp, Map<Property, InstanceSpecification> property2InstMap) {
+	
+	private InstanceSpecification buildComponentInstance(Package pkg, Component comp, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Property theProp, Map<Property, InstanceSpecification> property2InstMap, List<Comment> commList) {
 		InstanceSpecification inst = UMLFactory.eINSTANCE.createInstanceSpecification();
-		inst.setName(comp.getName());
+		if(theProp != null){
+			String name = parentInstance.getName() + "." + theProp.getName();
+			inst.setName(name);
+		}else{
+			inst.setName(comp.getName());
+		}
 		inst.getClassifiers().add(comp);
 		pkg.getPackagedElements().add(inst);
-		Stereotype stereo = UMLUtils.applyStereotype(inst, CHESS_RESPLATFORM);
-		CHGaResourcePlatform resPlatform = (CHGaResourcePlatform) inst.getStereotypeApplication(stereo);
-		for (Property prop : comp.getAttributes()) {
-			if(prop.getType() instanceof Component){
-				Component compImpl = (Component) prop.getType();
-				InstanceSpecification subInst = buildComponentInstance(pkg, compImpl, resPlatform, inst, prop, property2InstMap);
-				Slot slot = UMLFactory.eINSTANCE.createSlot();
-				slot.setDefiningFeature(prop);
-				inst.getSlots().add(slot);
-				InstanceValue instValue = (InstanceValue) slot.createValue(prop.getName(), null, UMLPackage.Literals.INSTANCE_VALUE);
-				instValue.setInstance(subInst);
-			}
-			//ports
-			if(prop.getAppliedStereotype(MARTE_CSP) != null){
-				Slot slot = UMLFactory.eINSTANCE.createSlot();
-				slot.setDefiningFeature(prop);
-				inst.getSlots().add(slot);
-				slotList.add(slot);
-			}
+		if(parentInstance != null){
+			UMLUtils.applyStereotype(inst, MARTE_RESOURCE);
+			Resource res = (Resource) inst.getStereotypeApplication(inst.getAppliedStereotype(MARTE_RESOURCE));
+			resPlatform.getResources().add(res);
+		}else{
+			Stereotype stereo = UMLUtils.applyStereotype(inst, CHESS_RESPLATFORM);
+			resPlatform = (CHGaResourcePlatform) inst.getStereotypeApplication(stereo);
 		}
-		//connectors
-		for (Connector conn : comp.getOwnedConnectors()) {
-			buildConnectorInstance(pkg, conn, resPlatform, inst, property2InstMap);
-		}
-		instancesList.add(inst);
-	}
-
-	private InstanceSpecification buildComponentInstance(Package pkg, Component compImpl, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Property theProp, Map<Property, InstanceSpecification> property2InstMap) {
-		InstanceSpecification inst = UMLFactory.eINSTANCE.createInstanceSpecification();
-		String name = parentInstance.getName() + "." + theProp.getName();
-		inst.setName(name);
-		inst.getClassifiers().add(compImpl);
-		pkg.getPackagedElements().add(inst);
-		UMLUtils.applyStereotype(inst, MARTE_RESOURCE);
-		Resource res = (Resource) inst.getStereotypeApplication(inst.getAppliedStereotype(MARTE_RESOURCE));
-		resPlatform.getResources().add(res);
-		for (Property subProp : compImpl.getAttributes()) {
+		for (Property subProp : comp.getAttributes()) {
+			//properties
 			if(subProp.getType() instanceof Component){
 				Component subCompImpl = (Component) subProp.getType();
-				InstanceSpecification subInst = buildComponentInstance(pkg, subCompImpl, resPlatform, inst, subProp, property2InstMap);
+				commList.addAll(subCompImpl.getOwnedComments());
+				InstanceSpecification subInst = buildComponentInstance(pkg, subCompImpl, resPlatform, inst, subProp, property2InstMap, commList);
 				Slot slot = UMLFactory.eINSTANCE.createSlot();
 				slot.setDefiningFeature(subProp);
 				inst.getSlots().add(slot);
@@ -188,14 +177,30 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 				slot.setDefiningFeature(subProp);
 				inst.getSlots().add(slot);
 				slotList.add(slot);
+				//check if there are CHRtSpecifications linked to the port
+				List<CHRtSpecification> tmpList = new ArrayList<CHRtSpecification>();
+				for (Comment comm : commList) {
+					if(comm.getAppliedStereotype(CHESS_CHRTSPEC) != null && comm.getAnnotatedElements().contains(subProp)){
+						Stereotype chrtStereo = comm.getAppliedStereotype(CHESS_CHRTSPEC);
+						CHRtSpecification chrt = (CHRtSpecification) comm.getStereotypeApplication(chrtStereo);
+						tmpList.add(chrt);
+					}
+				}
+				if(tmpList.size() > 0){
+					Stereotype portSlotStereo = CHESSProfileManager.applyChRTPortSlotStereotype(slot);
+					CHRtPortSlot portSlot = (CHRtPortSlot) slot.getStereotypeApplication(portSlotStereo);
+					portSlot.getCH_RtSpecification().addAll(tmpList);
+				}
 			}
 		}
 		//connectors
-		for (Connector conn : compImpl.getOwnedConnectors()) {
+		for (Connector conn : comp.getOwnedConnectors()) {
 			buildConnectorInstance(pkg, conn, resPlatform, inst, property2InstMap);
 		}
 		instancesList.add(inst);
-		property2InstMap.put(theProp, inst);
+		if(theProp != null){
+			property2InstMap.put(theProp, inst);
+		}
 		return inst;
 	}
 

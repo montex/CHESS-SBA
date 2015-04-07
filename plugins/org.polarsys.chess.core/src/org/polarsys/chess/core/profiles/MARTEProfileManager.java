@@ -31,6 +31,7 @@ import org.eclipse.papyrus.MARTE.MARTE_DesignModel.SRM.SW_Concurrency.SW_Concurr
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.SRM.SW_Interaction.SW_InteractionPackage;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.AllocPackage;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.CoreElements.CoreElementsPackage;
+import org.eclipse.papyrus.MARTE.MARTE_Foundations.GRM.GRMPackage;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.NFPs.NFPsPackage;
 import org.eclipse.papyrus.uml.tools.utils.PackageUtil;
 import org.eclipse.uml2.uml.Element;
@@ -217,6 +218,10 @@ public class MARTEProfileManager {
 		PackageUtil.applyProfile(element, NFPs, false);
 	}
 	
+	public static void applyGRMProfileTo(Package element) {
+		Profile MARTE_GRMProfile =  UMLResourcesUtil.getProfile(GRMPackage.eINSTANCE, element);
+		PackageUtil.applyProfile(element, MARTE_GRMProfile, true);
+	}
 
 	public static void applyStereotypeTo(String stereoName, Element element) {
 		if (stereoName.equalsIgnoreCase("Allocate")) {
@@ -268,6 +273,10 @@ public class MARTEProfileManager {
 		applyCoreElementProfileTo(currentModel);
 		
 		applyDataTypeProfileTo(currentModel);
+		
+		applyGRMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.COMPONENT_VIEW));
+		applyGRMProfileTo(deploViewPack);
+		
 	}
 	
 	
