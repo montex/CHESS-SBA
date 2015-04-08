@@ -173,7 +173,9 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 			resPlatform = (CHGaResourcePlatform) inst.getStereotypeApplication(stereo);
 		}
 		//apply stereotypes to instances according to those applied to the property or the property type
-		mapStereotypesFromPropertyToInstance(theProp, inst);
+		if(theProp != null){
+			mapStereotypesFromPropertyToInstance(theProp, inst);
+		}
 		for (Property subProp : comp.getAttributes()) {
 			//properties
 			if(subProp.getType() instanceof Component){
