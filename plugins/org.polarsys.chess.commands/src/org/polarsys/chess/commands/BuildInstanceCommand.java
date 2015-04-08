@@ -418,7 +418,7 @@ public class BuildInstanceCommand extends AbstractHandler {
 		//create port instances
 		buildPortInstances((org.eclipse.uml2.uml.Class) property.getType(), newInstance, propertyShape);
 		
-		mapStereotypesFromPropertyToInstance(property, newInstance);
+		BuildModelInstanceCommand.mapStereotypesFromPropertyToInstance(property, newInstance);
 		
 		//check inner properties in the current diagram
 		Iterator inners = getInnerShapes(propertyShape).iterator();
@@ -804,53 +804,6 @@ public class BuildInstanceCommand extends AbstractHandler {
 //					System.out.println(comments.get(i).getValue(comments.get(i).getAppliedStereotype(ASSIGN), "from").toString());
 //					System.out.println(comments.get(i).getValue(comments.get(i).getAppliedStereotype(ASSIGN), "to").toString());
 //				}
-	}
-	
-	private static void mapStereotypesFromPropertyToInstance(Property property, InstanceSpecification instance){
-		Type type = property.getType();
-		EObject stereo = property.getStereotypeApplication(CHESSProfileManager.getCH_HWBus(property));
-		Element elem = property;
-		if (stereo == null){
-			//try to use the classifier
-			 stereo = type.getStereotypeApplication(CHESSProfileManager.getCH_HWBus(type));
-			 elem = type;
-		}
-		if (stereo != null){
-			Stereotype chHwBus = CHESSProfileManager.applyCH_HwBusStereotype(instance);
-			instance.setValue(chHwBus, "transmMode", elem.getValue(chHwBus, "transmMode"));
-			instance.setValue(chHwBus, "blockT", elem.getValue(chHwBus, "blockT"));
-			instance.setValue(chHwBus, "packetT", elem.getValue(chHwBus, "packetT"));
-			instance.setValue(chHwBus, "speedFactor", elem.getValue(chHwBus, "speedFactor"));
-			instance.setValue(chHwBus, "resMult", elem.getValue(chHwBus, "resMult"));
-		}
-		stereo = property.getStereotypeApplication(CHESSProfileManager.getCH_HWComputingResource(property));
-		elem = property;
-		if (stereo == null){
-			//try to use the classifier
-			stereo = type.getStereotypeApplication(CHESSProfileManager.getCH_HWComputingResource(type));
-			elem = type;
-		}
-		if (stereo != null){
-			Stereotype chHwComputingRes = CHESSProfileManager.applyCH_HwComputingResourceStereotype(instance);
-			instance.setValue(chHwComputingRes, "speedFactor", elem.getValue(chHwComputingRes, "speedFactor"));
-			instance.setValue(chHwComputingRes, "resMult", elem.getValue(chHwComputingRes, "resMult"));
-		}
-		
-		stereo = property.getStereotypeApplication(CHESSProfileManager.getCH_HWProcessor(property));
-		elem = property;
-		if (stereo == null){
-			//try to use the classifier
-			stereo = type.getStereotypeApplication(CHESSProfileManager.getCH_HWProcessor(type));
-			elem = type;
-		}
-		if (stereo != null){
-			Stereotype chHwComputingRes = CHESSProfileManager.applyCH_HwProcessorStereotype(instance);
-			instance.setValue(chHwComputingRes, "speedFactor", elem.getValue(chHwComputingRes, "speedFactor"));
-			instance.setValue(chHwComputingRes, "resMult", elem.getValue(chHwComputingRes, "resMult"));
-			instance.setValue(chHwComputingRes, "nbCores", elem.getValue(chHwComputingRes, "nbCores"));
-		}
-		
-		
 	}
 	
 }

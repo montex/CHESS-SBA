@@ -24,7 +24,7 @@ import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.GRM.Resource;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
@@ -40,7 +40,6 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Connector;
-import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.InstanceValue;
@@ -51,6 +50,7 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.StructuralFeature;
+import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
@@ -172,6 +172,8 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 			Stereotype stereo = UMLUtils.applyStereotype(inst, CHESS_RESPLATFORM);
 			resPlatform = (CHGaResourcePlatform) inst.getStereotypeApplication(stereo);
 		}
+		//apply stereotypes to instances according to those applied to the property or the property type
+		mapStereotypesFromPropertyToInstance(theProp, inst);
 		for (Property subProp : comp.getAttributes()) {
 			//properties
 			if(subProp.getType() instanceof Component){
@@ -216,6 +218,52 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		}
 		return inst;
 	}
+	
+	//this method has been moved from BuildInstanceCommand (and made public)
+	public static void mapStereotypesFromPropertyToInstance(Property property, InstanceSpecification instance){
+		Type type = property.getType();
+		EObject stereo = property.getStereotypeApplication(CHESSProfileManager.getCH_HWBus(property));
+		Element elem = property;
+		if (stereo == null){
+			//try to use the classifier
+			 stereo = type.getStereotypeApplication(CHESSProfileManager.getCH_HWBus(type));
+			 elem = type;
+		}
+		if (stereo != null){
+			Stereotype chHwBus = CHESSProfileManager.applyCH_HwBusStereotype(instance);
+			instance.setValue(chHwBus, "transmMode", elem.getValue(chHwBus, "transmMode"));
+			instance.setValue(chHwBus, "blockT", elem.getValue(chHwBus, "blockT"));
+			instance.setValue(chHwBus, "packetT", elem.getValue(chHwBus, "packetT"));
+			instance.setValue(chHwBus, "speedFactor", elem.getValue(chHwBus, "speedFactor"));
+			instance.setValue(chHwBus, "resMult", elem.getValue(chHwBus, "resMult"));
+		}
+		stereo = property.getStereotypeApplication(CHESSProfileManager.getCH_HWComputingResource(property));
+		elem = property;
+		if (stereo == null){
+			//try to use the classifier
+			stereo = type.getStereotypeApplication(CHESSProfileManager.getCH_HWComputingResource(type));
+			elem = type;
+		}
+		if (stereo != null){
+			Stereotype chHwComputingRes = CHESSProfileManager.applyCH_HwComputingResourceStereotype(instance);
+			instance.setValue(chHwComputingRes, "speedFactor", elem.getValue(chHwComputingRes, "speedFactor"));
+			instance.setValue(chHwComputingRes, "resMult", elem.getValue(chHwComputingRes, "resMult"));
+		}
+		
+		stereo = property.getStereotypeApplication(CHESSProfileManager.getCH_HWProcessor(property));
+		elem = property;
+		if (stereo == null){
+			//try to use the classifier
+			stereo = type.getStereotypeApplication(CHESSProfileManager.getCH_HWProcessor(type));
+			elem = type;
+		}
+		if (stereo != null){
+			Stereotype chHwComputingRes = CHESSProfileManager.applyCH_HwProcessorStereotype(instance);
+			instance.setValue(chHwComputingRes, "speedFactor", elem.getValue(chHwComputingRes, "speedFactor"));
+			instance.setValue(chHwComputingRes, "resMult", elem.getValue(chHwComputingRes, "resMult"));
+			instance.setValue(chHwComputingRes, "nbCores", elem.getValue(chHwComputingRes, "nbCores"));
+		}
+	}
 
 	private void buildConnectorInstance(Package pkg, Connector conn, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Map<Property, InstanceSpecification> property2InstMap) {
 		InstanceSpecification connInst = UMLFactory.eINSTANCE.createInstanceSpecification();
@@ -239,7 +287,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		InstanceSpecification targetInstance = property2InstMap.get(targetProperty);
 		value.setInstance(targetInstance);
 		
-		//if the connector is <<propagation>> then attach <<propagation>> to instance specification also
+		//if the connector is <<propagation>> then attach <<propagation>> to instance specification as well
 		Propagation origPropagation = UMLUtils.getStereotypeApplication(conn, Propagation.class);
 		if (origPropagation != null){
 			CHESSProfileManager.applyPropagationStereotype(connInst);
