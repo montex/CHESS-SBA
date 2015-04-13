@@ -45,6 +45,7 @@ import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.InstanceValue;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Slot;
@@ -123,19 +124,30 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 					protected void doExecute() {
 						ds.setUserAction(false);
 						saveAssignAllocations(umlModel);
-						//clear instance package, if present
+						//get the instance Package, if present
+						Package instPkg = null;
 						for(Element elem : comp.getOwner().getOwnedElements()){
 							if(elem instanceof Package && ((Package) elem).getName().equals(comp.getName() + "_instSpec")){
-								Package pkg = (Package) elem;
-								pkg.destroy();
+								instPkg = (Package) elem;
 							}
+						}
+						//reuse instance package, if present, but destroy its children
+						if(instPkg != null){
+							EList<PackageableElement> elems = instPkg.getPackagedElements();
+							int size = elems.size(); 
+							for(int i = 0; i < size; i++){
+								PackageableElement pe = elems.get(0);
+								pe.destroy();
+							}
+						}else{
+							//create the instance package, if needed.
+							Package pkg = comp.getNearestPackage();
+							instPkg = pkg.createNestedPackage(comp.getName() + "_instSpec");
+							UMLUtils.applyStereotype(instPkg, CHESS_RESPLATFORM);
 						}
 						instancesList.clear();
 						slotList.clear();
-						//create the instance package
-						Package pkg = comp.getNearestPackage();
-						Package instPkg = pkg.createNestedPackage(comp.getName() + "_instSpec");
-						UMLUtils.applyStereotype(instPkg, CHESS_RESPLATFORM);
+						
 						//perform build instances
 						buildComponentInstance(instPkg, comp, null, null, null, new HashMap<Property, InstanceSpecification>(), comp.getOwnedComments());
 						regenerateAssignAllocations(umlModel);
@@ -263,7 +275,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 			Stereotype chHwComputingRes = CHESSProfileManager.applyCH_HwProcessorStereotype(instance);
 			instance.setValue(chHwComputingRes, "speedFactor", elem.getValue(chHwComputingRes, "speedFactor"));
 			instance.setValue(chHwComputingRes, "resMult", elem.getValue(chHwComputingRes, "resMult"));
-			instance.setValue(chHwComputingRes, "nbCores", elem.getValue(chHwComputingRes, "nbCores"));
+//			instance.setValue(chHwComputingRes, "nbCores", elem.getValue(chHwComputingRes, "nbCores"));
 		}
 	}
 
