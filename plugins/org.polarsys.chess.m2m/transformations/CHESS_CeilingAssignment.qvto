@@ -242,6 +242,8 @@ query getDeploymentProcessor(p : InstanceSpecification) : InstanceSpecification 
 /*
   Given an ICB-Activity return the list of all its CallOperationAction nodes,
   assuming that their are all connected in a single chain: no loops and branches.
+  
+  older version. current one has been moved in UMLUtils_Inst_full.qvto
 */
 query Activity::collectCallOperationNodesOLD() : Sequence(CallOperationAction) {
 	var nodes : Sequence(CallOperationAction) := Sequence{};
@@ -256,28 +258,6 @@ query Activity::collectCallOperationNodesOLD() : Sequence(CallOperationAction) {
 		}
 		else{
 			break;
-		}
-		endif;
-	};
-	return nodes;
-}
-
-query Activity::collectCallOperationNodes() : Sequence(CallOperationAction) {
-	var nodes : Sequence(CallOperationAction) := Sequence{};
-	var prevNode : ActivityNode := self.node![InitialNode];
-	var nextNode : ActivityNode;
-	while(true){
-		//TODO Assumption one edge per node 
-		nextNode := prevNode.outgoing->any(true).target;
-		if (nextNode <> null and nextNode.oclIsKindOf(CallOperationAction)) then {
-			nodes += nextNode.oclAsType(CallOperationAction);
-			prevNode := nextNode;
-		}
-		else{
-			if (nextNode.oclIsKindOf(ActivityFinalNode)) then {
-				break;
-			}
-			endif;
 		}
 		endif;
 	};

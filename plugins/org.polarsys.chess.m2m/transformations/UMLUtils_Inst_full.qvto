@@ -127,6 +127,36 @@ query BehavioralFeature::name() : String {
 	return n;
 }
 
+/*
+  Given an ICB-Activity return the list of all its CallOperationAction nodes,
+  assuming that their are all connected in a single chain: no loops and branches.
+  
+  Used in CHESS_PIM2PSM_Inst_full_VERDE.qvto and CHESS_CeilingAssignment.qvto
+  
+  TODO: consider decision nodes and branches (no loops?)
+*/
+query Activity::collectCallOperationNodes() : Sequence(CallOperationAction) {
+	var nodes : Sequence(CallOperationAction) := Sequence{};
+	var prevNode : ActivityNode := self.node![InitialNode];
+	var nextNode : ActivityNode;
+	while(true){
+		//TODO Assumption one edge per node 
+		nextNode := prevNode.outgoing->any(true).target;
+		if (nextNode <> null and nextNode.oclIsKindOf(CallOperationAction)) then {
+			nodes += nextNode.oclAsType(CallOperationAction);
+			prevNode := nextNode;
+		}
+		else{
+			if (nextNode.oclIsKindOf(ActivityFinalNode)) then {
+				break;
+			}
+			endif;
+		}
+		endif;
+	};
+	return nodes;
+}
+
 // Constructors
 
 constructor Operation::Operation(n : String) {
