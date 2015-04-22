@@ -1,0 +1,125 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module ComponentType('http://www.eclipse.org/uml2/3.0.0/UML', 'http://www.eclipse.org/papyrus/GCM/1')]
+[import org::polarsys::chess::codegen::ada::main::Copyright /]
+
+[template public generateComponentType(model : Model, procNode : InstanceSpecification, ct : Component) {
+	ptList : Sequence(Port) = ct.ownedAttribute->filter(Port)->asSequence();
+    procNodeName : String = procNode.name;
+    clSvPortStName : String = 'MARTE::MARTE_DesignModel::GCM::ClientServerPort';
+}
+]
+
+[file (procNodeName.concat('/src/component_repository/type/').concat(ct.name).concat('s.ads').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model)/]
+
+[comment With section to import Interfaces referenced as PI and RI /]
+[for (pt : Port | ct.ownedAttribute->filter("Port"))]
+	    [if (isProvidedPort(pt, clSvPortStName))]
+with [getProvidedInterface(pt, clSvPortStName).name /];
+        [/if]
+        [if (isRequiredPort(pt, clSvPortStName))]
+with [getRequiredInterface(pt, clSvPortStName).name /];
+        [/if]
+[/for]
+
+
+[comment Package declaration and type declaration /]
+package [ct.name.concat('s')/] is
+   
+   -- Declaration of the component type
+   type [ct.name/] is abstract new [getProvidedInterfaceListAsQualifiedString(ptList, clSvPortStName)/] with private;
+
+   -- Setters for the RI
+
+  [for (pt : Port | ct.ownedAttribute->filter("Port"))]
+    [let st : Stereotype = pt.getAppliedStereotype(clSvPortStName)]
+  	  [if (isRequiredPort(pt, clSvPortStName))]
+  procedure Set_[pt.name/] (Self: in out [ct.name/];
+                             ptr : in [getRequiredInterface(pt, clSvPortStName).name/].[getRequiredInterface(pt, clSvPortStName).name/]_ptr);
+
+      [/if]
+    [/let]
+  [/for]
+
+private
+
+   [if hasRequiredInterface(ptList, clSvPortStName)]
+
+   type [ct.name/] is abstract new [getProvidedInterfaceListAsQualifiedString(ptList, clSvPortStName)/] with record
+
+      -- List of RI
+      [for (pt : Port | ct.ownedAttribute->filter("Port"))]
+        [if (isRequiredPort(pt, clSvPortStName))]
+      [pt.name/] : [getRequiredInterface(pt, clSvPortStName).name/].[getRequiredInterface(pt, clSvPortStName).name/]_ptr;
+        [/if]
+      [/for]      
+   end record;
+   [else]
+
+   type [ct.name/] is abstract new [getProvidedInterfaceListAsQualifiedString(ptList, clSvPortStName)/] with null record;
+   [/if]
+
+end [ct.name.concat('s')/];
+[/file]
+
+[comment Generate .adb only if RI list is not empty 
+ (The declaration of setter bodies is then necessary) /]
+ 
+[if hasRequiredInterface(ptList, clSvPortStName)]
+[file (procNodeName.concat('/src/component_repository/type/').concat(ct.name).concat('s.adb').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model)/]
+
+package body [ct.name.concat('s')/] is
+
+   -- Setters for the RI
+
+  [for (pt : Port | ct.ownedAttribute->filter("Port"))]
+     [if (isRequiredPort(pt, clSvPortStName))]
+  procedure Set_[pt.name/] (Self: in out [ct.name/];
+                             ptr : in [getRequiredInterface(pt, clSvPortStName).name/].[getRequiredInterface(pt, clSvPortStName).name/]_ptr) is
+  begin
+    Self.[pt.name/] := ptr;
+  end Set_[pt.name/];
+     [/if]
+  [/for]
+
+
+end [ct.name.concat('s')/];
+[/file]
+[/if]
+
+[/template]
+
+[query public getProvidedInterface(arg0 : Port, arg1 : String) : Interface
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedInterface(org.eclipse.uml2.uml.Port, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getRequiredInterface(arg0 : Port, arg1 : String) : Interface
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getRequiredInterface(org.eclipse.uml2.uml.Port, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public isProvidedPort(arg0 : Port, arg1: String) : Boolean
+    = invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'isProvidedPort(org.eclipse.uml2.uml.Port, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public isRequiredPort(arg0 : Port, arg1: String) : Boolean
+    = invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'isRequiredPort(org.eclipse.uml2.uml.Port, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getProvidedInterfaceListAsQualifiedString(arg0 : Sequence(OclAny), arg1 : String) : String
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedInterfaceListAsQualifiedString(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public hasRequiredInterface(arg0 : Sequence(OclAny), arg1 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'hasRequiredInterface(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]

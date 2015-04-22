@@ -1,0 +1,68 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module GNATadc('http://www.eclipse.org/uml2/3.0.0/UML')]
+
+[template public generateGNATadc(model : Model, procNode : InstanceSpecification) {
+   procNodeName : String = procNode.name;
+   chHwProcessorStName  : String = 'CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor';
+   isSingleNodeSystem : Boolean = isSingleNodeSystem(InstanceSpecification.allInstances()->asSequence(), chHwProcessorStName);}
+]
+[file (procNodeName.concat('/').concat('gnat.adc').toLower(), false, 'UTF-8')]
+[if (isSingleNodeSystem)]
+
+-- Compliance to the Ravenscar Profile
+pragma Profile (Ravenscar);
+
+
+-- From AdaCore's High Integrity manual
+
+pragma Restrictions (No_Unchecked_Deallocation);
+--pragma Restrictions (No_Local_Allocators);
+
+
+
+-- From Annex H (High Integrity Systems)
+
+pragma Restrictions (No_Recursion);
+pragma Restrictions (No_Unchecked_Access); 
+[else]
+
+-- Compliance to the Ravenscar Profile
+pragma Profile (Ravenscar);
+
+
+-- From AdaCore's High Integrity manual
+
+--pragma Restrictions (No_Unchecked_Deallocation);
+--pragma Restrictions (No_Local_Allocators);
+
+
+
+-- From Annex H (High Integrity Systems)
+
+pragma Restrictions (No_Recursion);
+--pragma Restrictions (No_Unchecked_Access);
+[/if]
+[/file]
+[/template]
+
+[query public hasCimplementation(arg0 : Sequence(OclAny), arg1 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'hasCimplementation(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public isSingleNodeSystem(arg0 : Sequence(OclAny), arg1 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'isSingleNodeSystem(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]

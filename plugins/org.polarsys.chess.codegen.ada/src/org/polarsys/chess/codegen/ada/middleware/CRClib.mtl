@@ -1,0 +1,104 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module CRClib('http://www.eclipse.org/uml2/3.0.0/UML')]
+[import org::polarsys::chess::codegen::ada::main::Copyright /]
+
+[template public generateCRClib(model : Model, procNode: InstanceSpecification) {
+    procNodeName : String = procNode.name;   
+}
+]
+
+[comment crc_lib.ads /]
+[file (procNodeName.concat('/middleware/src/crc_lib.ads').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model)/]
+
+with GNAT.CRC32;
+with Interfaces;
+with Ada.Text_IO;
+
+package CRC_lib is
+   
+   procedure Init;
+   procedure Update (i : in Integer);
+   procedure Update (f : in Float);
+   procedure Update (b : in Boolean);
+   function Get_Value return Interfaces.Unsigned_32;
+   
+   
+private
+   package IIO is new Ada.Text_IO.Modular_IO (Interfaces.Unsigned_32);
+   crc : GNAT.CRC32.CRC32;
+   num : Interfaces.Unsigned_32;
+   str : String := "The quick brown fox jumps over the lazy dog";
+   
+end CRC_lib;
+[/file]
+
+[comment crc_lib.adb /]
+[file (procNodeName.concat('/middleware/src/crc_lib.adb').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model)/]
+
+package body CRC_lib is
+
+   procedure Init is
+      begin
+      GNAT.CRC32.Initialize(crc);
+   end Init;
+   
+   function Get_Value return Interfaces.Unsigned_32 is
+   begin
+      return GNAT.CRC32.Get_Value(crc);
+   end Get_Value;
+   
+   procedure Update (i : in Integer) is
+   begin
+      GNAT.CRC32.Update(crc, Integer'Image(i));
+      null;
+   end Update;
+
+   procedure Update (f : in Float) is
+   begin
+      GNAT.CRC32.Update(crc, Float'Image(f));
+      null;
+   end Update;
+   
+   procedure Update(b : in Boolean) is
+   begin
+      GNAT.CRC32.Update(crc, Boolean'Image(b));
+      null;
+   end Update;
+  
+end CRC_lib;
+[/file]
+
+[/template]
+
+[query public getProvidedInterface(arg0 : Port, arg1 : String) : Interface
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedInterface(org.eclipse.uml2.uml.Port, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getProvidedInterfaceSlotList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedInterfaceSlotList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getComponentInstanceList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getComponentInstanceList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getAllComponentTypeList(arg0: Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getAllComponentTypeList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getProvidedOperationList(arg0: Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedOperationList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
