@@ -227,6 +227,7 @@
                   <perm el="Activity" owner="true" write="true" visible="true"/>
                   <perm ft="classifierBehavior" owner="true" write="true" visible="true"/>
                   <perm el="SendSignalAction" owner="true" write="true" visible="true"/>
+                  <perm el="DecisionNode" owner="true" write="true" visible="true"/>
                  
                   <!-- deletion -->
                   <perm st="Propagation" owner="true" visible="true"/>
