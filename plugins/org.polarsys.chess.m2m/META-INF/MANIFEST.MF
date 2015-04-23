@@ -34,3 +34,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.polarsys.chess.m2m
 Bundle-Vendor: University of Padova
+Bundle-Name: PIM to PSM model transformations plug-in (Incubation)

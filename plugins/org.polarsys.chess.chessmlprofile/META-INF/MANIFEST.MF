@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CHESS ML profile
+Bundle-Name: CHESS ML profile plug-in (Incubation)
 Bundle-SymbolicName: org.polarsys.chess.chessmlprofile;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
