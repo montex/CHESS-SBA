@@ -11,8 +11,7 @@ New features:
 - Improved support for C component implementations
 - Support for structs and enumeration passing between Ada and C and viceversa. 
 - Several minor improvements
-- The code generator is released under GPLv2 license (previously GPLv2+)
-- The generated code is now under GPLv3 license (for compatibility with YAMI)
+- The code generator is released under EPL license 
 
 **** Change log v0.2 ****
 
