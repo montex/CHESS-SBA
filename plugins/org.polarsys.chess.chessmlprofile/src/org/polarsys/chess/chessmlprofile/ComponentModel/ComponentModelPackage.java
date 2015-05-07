@@ -214,6 +214,71 @@ public interface ComponentModelPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.HwAbstractionComponentImplImpl <em>Hw Abstraction Component Impl</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.impl.HwAbstractionComponentImplImpl
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentModelPackageImpl#getHwAbstractionComponentImpl()
+	 * @generated
+	 */
+	int HW_ABSTRACTION_COMPONENT_IMPL = 3;
+
+	/**
+	 * The feature id for the '<em><b>Base Component</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT = COMPONENT_IMPLEMENTATION__BASE_COMPONENT;
+
+	/**
+	 * The feature id for the '<em><b>Language</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HW_ABSTRACTION_COMPONENT_IMPL__LANGUAGE = COMPONENT_IMPLEMENTATION__LANGUAGE;
+
+	/**
+	 * The feature id for the '<em><b>OS</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HW_ABSTRACTION_COMPONENT_IMPL__OS = COMPONENT_IMPLEMENTATION__OS;
+
+	/**
+	 * The feature id for the '<em><b>Source Code Location</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HW_ABSTRACTION_COMPONENT_IMPL__SOURCE_CODE_LOCATION = COMPONENT_IMPLEMENTATION__SOURCE_CODE_LOCATION;
+
+	/**
+	 * The feature id for the '<em><b>Hw Res</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HW_ABSTRACTION_COMPONENT_IMPL__HW_RES = COMPONENT_IMPLEMENTATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Hw Abstraction Component Impl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HW_ABSTRACTION_COMPONENT_IMPL_FEATURE_COUNT = COMPONENT_IMPLEMENTATION_FEATURE_COUNT + 1;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.ComponentModel.ComponentType <em>Component Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -354,6 +419,27 @@ public interface ComponentModelPackage extends EPackage {
 	EAttribute getFunctionalPartition_SchedulingTable();
 
 	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl <em>Hw Abstraction Component Impl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Hw Abstraction Component Impl</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl
+	 * @generated
+	 */
+	EClass getHwAbstractionComponentImpl();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl#getHwRes <em>Hw Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Hw Res</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl#getHwRes()
+	 * @see #getHwAbstractionComponentImpl()
+	 * @generated
+	 */
+	EReference getHwAbstractionComponentImpl_HwRes();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -484,6 +570,24 @@ public interface ComponentModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute FUNCTIONAL_PARTITION__SCHEDULING_TABLE = eINSTANCE.getFunctionalPartition_SchedulingTable();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.HwAbstractionComponentImplImpl <em>Hw Abstraction Component Impl</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.ComponentModel.impl.HwAbstractionComponentImplImpl
+		 * @see org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentModelPackageImpl#getHwAbstractionComponentImpl()
+		 * @generated
+		 */
+		EClass HW_ABSTRACTION_COMPONENT_IMPL = eINSTANCE.getHwAbstractionComponentImpl();
+
+		/**
+		 * The meta object literal for the '<em><b>Hw Res</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference HW_ABSTRACTION_COMPONENT_IMPL__HW_RES = eINSTANCE.getHwAbstractionComponentImpl_HwRes();
 
 	}
 

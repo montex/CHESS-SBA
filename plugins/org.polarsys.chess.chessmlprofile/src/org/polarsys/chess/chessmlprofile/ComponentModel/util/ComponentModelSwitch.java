@@ -91,6 +91,13 @@ public class ComponentModelSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL: {
+				HwAbstractionComponentImpl hwAbstractionComponentImpl = (HwAbstractionComponentImpl)theEObject;
+				T result = caseHwAbstractionComponentImpl(hwAbstractionComponentImpl);
+				if (result == null) result = caseComponentImplementation(hwAbstractionComponentImpl);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -137,6 +144,21 @@ public class ComponentModelSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseFunctionalPartition(FunctionalPartition object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Hw Abstraction Component Impl</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Hw Abstraction Component Impl</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseHwAbstractionComponentImpl(HwAbstractionComponentImpl object) {
 		return null;
 	}
 

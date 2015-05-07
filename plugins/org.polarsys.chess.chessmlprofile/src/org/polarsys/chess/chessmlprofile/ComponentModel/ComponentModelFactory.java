@@ -58,6 +58,15 @@ public interface ComponentModelFactory extends EFactory {
 	FunctionalPartition createFunctionalPartition();
 
 	/**
+	 * Returns a new object of class '<em>Hw Abstraction Component Impl</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Hw Abstraction Component Impl</em>'.
+	 * @generated
+	 */
+	HwAbstractionComponentImpl createHwAbstractionComponentImpl();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

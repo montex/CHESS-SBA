@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.papyrus.MARTE.MARTEPackage;
+import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HwGeneral.HwGeneralPackage;
 import org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.BasicNFP_TypesPackage;
 import org.eclipse.papyrus.MARTE_Library.GRM_BasicTypes.GRM_BasicTypesPackage;
 import org.eclipse.papyrus.MARTE_Library.MARTE_DataTypes.MARTE_DataTypesPackage;
@@ -33,6 +34,7 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelFactory;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentType;
 import org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition;
+import org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl;
 import org.polarsys.chess.chessmlprofile.Core.CorePackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.CHESSViewsPackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.CHESSViewsPackageImpl;
@@ -108,6 +110,13 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 	 * @generated
 	 */
 	private EClass functionalPartitionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass hwAbstractionComponentImplEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -378,6 +387,24 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getHwAbstractionComponentImpl() {
+		return hwAbstractionComponentImplEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getHwAbstractionComponentImpl_HwRes() {
+		return (EReference)hwAbstractionComponentImplEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ComponentModelFactory getComponentModelFactory() {
 		return (ComponentModelFactory)getEFactoryInstance();
 	}
@@ -416,6 +443,9 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		createEAttribute(functionalPartitionEClass, FUNCTIONAL_PARTITION__MAF);
 		createEAttribute(functionalPartitionEClass, FUNCTIONAL_PARTITION__MIF);
 		createEAttribute(functionalPartitionEClass, FUNCTIONAL_PARTITION__SCHEDULING_TABLE);
+
+		hwAbstractionComponentImplEClass = createEClass(HW_ABSTRACTION_COMPONENT_IMPL);
+		createEReference(hwAbstractionComponentImplEClass, HW_ABSTRACTION_COMPONENT_IMPL__HW_RES);
 	}
 
 	/**
@@ -445,12 +475,14 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
+		HwGeneralPackage theHwGeneralPackage = (HwGeneralPackage)EPackage.Registry.INSTANCE.getEPackage(HwGeneralPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		hwAbstractionComponentImplEClass.getESuperTypes().add(this.getComponentImplementation());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(componentTypeEClass, ComponentType.class, "ComponentType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -468,6 +500,9 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		initEAttribute(getFunctionalPartition_MAF(), theBasicNFP_TypesPackage.getNFP_Integer(), "MAF", null, 1, 1, FunctionalPartition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getFunctionalPartition_MIF(), theBasicNFP_TypesPackage.getNFP_Integer(), "MIF", null, 1, 1, FunctionalPartition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getFunctionalPartition_SchedulingTable(), theBasicNFP_TypesPackage.getNFP_String(), "SchedulingTable", null, 1, 1, FunctionalPartition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(hwAbstractionComponentImplEClass, HwAbstractionComponentImpl.class, "HwAbstractionComponentImpl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getHwAbstractionComponentImpl_HwRes(), theHwGeneralPackage.getHwResource(), null, "hwRes", null, 1, 1, HwAbstractionComponentImpl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //ComponentModelPackageImpl

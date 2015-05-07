@@ -252,7 +252,7 @@
         nsPrefix="DependableComponent">
       <eClassifiers xsi:type="ecore:EClass" name="Propagation">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile"/>
+          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile"/>
         </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="prob" ordered="false"
             lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
@@ -338,7 +338,7 @@
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EEnum" name="DurationType">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile"/>
+          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile"/>
         </eAnnotations>
         <eLiterals name="transient"/>
         <eLiterals name="permanent" value="1"/>
@@ -360,7 +360,7 @@
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="CHInternalFault">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile"/>
+          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile"/>
         </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
@@ -379,7 +379,7 @@
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="CHExternalFault">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile"/>
+          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile"/>
         </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
@@ -984,6 +984,10 @@
           lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Integer"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="SchedulingTable" ordered="false"
           lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_String"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="HwAbstractionComponentImpl" eSuperTypes="#//ComponentModel/ComponentImplementation">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="hwRes" ordered="false"
+          lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_DesignModel/HRM/HwGeneral/HwResource"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="SystemModel" nsURI="http:///CHESS/SystemModel.ecore" nsPrefix="CHESS.SystemModel">

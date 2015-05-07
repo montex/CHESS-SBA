@@ -24,7 +24,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * <!-- end-user-doc -->
  * <!-- begin-model-doc -->
  * To be deleted???
- * ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile
+ * ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile
  * <!-- end-model-doc -->
  * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage#getDurationType()
  * @model

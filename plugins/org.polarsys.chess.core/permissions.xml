@@ -132,6 +132,7 @@
                   <perm st="CriticalityInterfaceSpecification" owner="true" write="true" visible="true"/>
                   
                   <perm st="Resource" owner="true" write="true" visible="true"/>
+                  <perm st="HwAbstractionComponentImpl" owner="true" write="true" visible="true"/>
             
             </diagram>
             <diagram name="Composite">

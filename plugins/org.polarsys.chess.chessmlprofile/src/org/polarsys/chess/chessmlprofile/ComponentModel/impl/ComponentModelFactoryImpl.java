@@ -65,6 +65,7 @@ public class ComponentModelFactoryImpl extends EFactoryImpl implements Component
 			case ComponentModelPackage.COMPONENT_TYPE: return createComponentType();
 			case ComponentModelPackage.COMPONENT_IMPLEMENTATION: return createComponentImplementation();
 			case ComponentModelPackage.FUNCTIONAL_PARTITION: return createFunctionalPartition();
+			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL: return createHwAbstractionComponentImpl();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -98,6 +99,16 @@ public class ComponentModelFactoryImpl extends EFactoryImpl implements Component
 	public FunctionalPartition createFunctionalPartition() {
 		FunctionalPartitionImpl functionalPartition = new FunctionalPartitionImpl();
 		return functionalPartition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public HwAbstractionComponentImpl createHwAbstractionComponentImpl() {
+		HwAbstractionComponentImplImpl hwAbstractionComponentImpl = new HwAbstractionComponentImplImpl();
+		return hwAbstractionComponentImpl;
 	}
 
 	/**
