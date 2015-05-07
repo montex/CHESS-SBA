@@ -5499,7 +5499,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ONX_ifQFEeSYU563tLwCJg"/>
       </children>
       <element xmi:type="uml:Stereotype" href="CHESS.profile.uml#_ONO1kPQFEeSYU563tLwCJg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ONWxYfQFEeSYU563tLwCJg" x="300" y="385"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ONWxYfQFEeSYU563tLwCJg" x="705" y="70"/>
     </children>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_VFbVETQ2EeC0ueejuetpgA"/>
     <element xmi:type="uml:Profile" href="CHESS.profile.uml#_MftccDQ2EeC0ueejuetpgA"/>
@@ -5523,15 +5523,11 @@
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Sffm4qrFEeSm_c79BO815Q" points="[-29, -21, 162, 109]$[-141, -127, 50, 3]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SfuQYKrFEeSm_c79BO815Q" id="(0.2727272727272727,0.1390728476821192)"/>
     </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_UJTycPQFEeSYU563tLwCJg" type="4002" source="_ONWxYPQFEeSYU563tLwCJg" target="_Cuj7YDRKEeChqekVLFmSjQ">
-      <children xmi:type="notation:DecorationNode" xmi:id="_UJUZgPQFEeSYU563tLwCJg" type="6007">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_UJUZgfQFEeSYU563tLwCJg" y="60"/>
-      </children>
-      <styles xmi:type="notation:FontStyle" xmi:id="_UJTycfQFEeSYU563tLwCJg"/>
-      <element xmi:type="uml:Generalization" href="CHESS.profile.uml#_UJQIEPQFEeSYU563tLwCJg"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_UJTycvQFEeSYU563tLwCJg" points="[1, -11, -14, 78]$[-2, -63, -17, 26]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UKQ0sPQFEeSYU563tLwCJg" id="(0.6946107784431138,0.10679611650485436)"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UKQ0sfQFEeSYU563tLwCJg" id="(0.3781094527363184,0.8015267175572519)"/>
+    <edges xmi:type="notation:Connector" xmi:id="_UrVaAPTMEeS54qNpVReixA" type="1013" source="_ONWxYPQFEeSYU563tLwCJg" target="_akXqADQ2EeC0ueejuetpgA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_UrVaAfTMEeS54qNpVReixA"/>
+      <element xmi:type="uml:Extension" href="CHESS.profile.uml#_UqhhsPTMEeS54qNpVReixA"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_UrVaAvTMEeS54qNpVReixA" points="[-20, -3, 237, 1]$[-207, -3, 50, 1]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UrdV0PTMEeS54qNpVReixA" id="(0.11976047904191617,0.2815533980582524)"/>
     </edges>
   </notation:Diagram>
   <notation:Diagram xmi:id="_wtNJYDQ2EeC0ueejuetpgA" type="PapyrusUMLProfileDiagram" name="DependableComponent" measurementUnit="Pixel">

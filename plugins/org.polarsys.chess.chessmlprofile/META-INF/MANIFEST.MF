@@ -18,7 +18,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.uml2.types;visibility:=reexport,
  org.eclipse.papyrus.uml.diagram.common;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
-Export-Package: org.polarsys.chess.chessmlprofile;uses:="org.eclipse.ui.plugin,org.osgi.framework",
+Export-Package: org.polarsys.chess.chessmlprofile;
+  uses:="org.eclipse.ui.plugin,
+   org.osgi.framework",
  org.polarsys.chess.chessmlprofile.ComponentModel,
  org.polarsys.chess.chessmlprofile.ComponentModel.impl,
  org.polarsys.chess.chessmlprofile.ComponentModel.util,

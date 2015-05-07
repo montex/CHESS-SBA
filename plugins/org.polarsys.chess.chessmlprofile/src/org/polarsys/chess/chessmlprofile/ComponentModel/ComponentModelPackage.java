@@ -224,49 +224,22 @@ public interface ComponentModelPackage extends EPackage {
 	int HW_ABSTRACTION_COMPONENT_IMPL = 3;
 
 	/**
-	 * The feature id for the '<em><b>Base Component</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT = COMPONENT_IMPLEMENTATION__BASE_COMPONENT;
-
-	/**
-	 * The feature id for the '<em><b>Language</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HW_ABSTRACTION_COMPONENT_IMPL__LANGUAGE = COMPONENT_IMPLEMENTATION__LANGUAGE;
-
-	/**
-	 * The feature id for the '<em><b>OS</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HW_ABSTRACTION_COMPONENT_IMPL__OS = COMPONENT_IMPLEMENTATION__OS;
-
-	/**
-	 * The feature id for the '<em><b>Source Code Location</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int HW_ABSTRACTION_COMPONENT_IMPL__SOURCE_CODE_LOCATION = COMPONENT_IMPLEMENTATION__SOURCE_CODE_LOCATION;
-
-	/**
 	 * The feature id for the '<em><b>Hw Res</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HW_ABSTRACTION_COMPONENT_IMPL__HW_RES = COMPONENT_IMPLEMENTATION_FEATURE_COUNT + 0;
+	int HW_ABSTRACTION_COMPONENT_IMPL__HW_RES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Component</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT = 1;
 
 	/**
 	 * The number of structural features of the '<em>Hw Abstraction Component Impl</em>' class.
@@ -275,7 +248,7 @@ public interface ComponentModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int HW_ABSTRACTION_COMPONENT_IMPL_FEATURE_COUNT = COMPONENT_IMPLEMENTATION_FEATURE_COUNT + 1;
+	int HW_ABSTRACTION_COMPONENT_IMPL_FEATURE_COUNT = 2;
 
 
 	/**
@@ -440,6 +413,17 @@ public interface ComponentModelPackage extends EPackage {
 	EReference getHwAbstractionComponentImpl_HwRes();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl#getBase_Component <em>Base Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Component</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl#getBase_Component()
+	 * @see #getHwAbstractionComponentImpl()
+	 * @generated
+	 */
+	EReference getHwAbstractionComponentImpl_Base_Component();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -588,6 +572,14 @@ public interface ComponentModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference HW_ABSTRACTION_COMPONENT_IMPL__HW_RES = eINSTANCE.getHwAbstractionComponentImpl_HwRes();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Component</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT = eINSTANCE.getHwAbstractionComponentImpl_Base_Component();
 
 	}
 

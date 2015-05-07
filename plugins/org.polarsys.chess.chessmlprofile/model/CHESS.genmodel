@@ -867,6 +867,8 @@
       <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//ComponentModel/HwAbstractionComponentImpl">
         <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
             propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ComponentModel/HwAbstractionComponentImpl/hwRes"/>
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ComponentModel/HwAbstractionComponentImpl/base_Component"/>
       </genClasses>
     </nestedGenPackages>
     <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="SystemModel" basePackage="org.polarsys.chess.chessmlprofile"

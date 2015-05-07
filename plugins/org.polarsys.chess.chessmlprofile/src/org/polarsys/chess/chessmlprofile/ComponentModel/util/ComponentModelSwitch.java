@@ -94,7 +94,6 @@ public class ComponentModelSwitch<T> extends Switch<T> {
 			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL: {
 				HwAbstractionComponentImpl hwAbstractionComponentImpl = (HwAbstractionComponentImpl)theEObject;
 				T result = caseHwAbstractionComponentImpl(hwAbstractionComponentImpl);
-				if (result == null) result = caseComponentImplementation(hwAbstractionComponentImpl);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

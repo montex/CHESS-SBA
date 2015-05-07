@@ -9,8 +9,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HwGeneral.HwResource;
 
+import org.eclipse.uml2.uml.Component;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl;
 
@@ -22,12 +24,13 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentIm
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.HwAbstractionComponentImplImpl#getHwRes <em>Hw Res</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.HwAbstractionComponentImplImpl#getBase_Component <em>Base Component</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class HwAbstractionComponentImplImpl extends ComponentImplementationImpl implements HwAbstractionComponentImpl {
+public class HwAbstractionComponentImplImpl extends EObjectImpl implements HwAbstractionComponentImpl {
 	/**
 	 * The cached value of the '{@link #getHwRes() <em>Hw Res</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -37,6 +40,16 @@ public class HwAbstractionComponentImplImpl extends ComponentImplementationImpl 
 	 * @ordered
 	 */
 	protected HwResource hwRes;
+
+	/**
+	 * The cached value of the '{@link #getBase_Component() <em>Base Component</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBase_Component()
+	 * @generated
+	 * @ordered
+	 */
+	protected Component base_Component;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -100,12 +113,53 @@ public class HwAbstractionComponentImplImpl extends ComponentImplementationImpl 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Component getBase_Component() {
+		if (base_Component != null && base_Component.eIsProxy()) {
+			InternalEObject oldBase_Component = (InternalEObject)base_Component;
+			base_Component = (Component)eResolveProxy(oldBase_Component);
+			if (base_Component != oldBase_Component) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT, oldBase_Component, base_Component));
+			}
+		}
+		return base_Component;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Component basicGetBase_Component() {
+		return base_Component;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBase_Component(Component newBase_Component) {
+		Component oldBase_Component = base_Component;
+		base_Component = newBase_Component;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT, oldBase_Component, base_Component));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL__HW_RES:
 				if (resolve) return getHwRes();
 				return basicGetHwRes();
+			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT:
+				if (resolve) return getBase_Component();
+				return basicGetBase_Component();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -120,6 +174,9 @@ public class HwAbstractionComponentImplImpl extends ComponentImplementationImpl 
 		switch (featureID) {
 			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL__HW_RES:
 				setHwRes((HwResource)newValue);
+				return;
+			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT:
+				setBase_Component((Component)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -136,6 +193,9 @@ public class HwAbstractionComponentImplImpl extends ComponentImplementationImpl 
 			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL__HW_RES:
 				setHwRes((HwResource)null);
 				return;
+			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT:
+				setBase_Component((Component)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -150,6 +210,8 @@ public class HwAbstractionComponentImplImpl extends ComponentImplementationImpl 
 		switch (featureID) {
 			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL__HW_RES:
 				return hwRes != null;
+			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT:
+				return base_Component != null;
 		}
 		return super.eIsSet(featureID);
 	}

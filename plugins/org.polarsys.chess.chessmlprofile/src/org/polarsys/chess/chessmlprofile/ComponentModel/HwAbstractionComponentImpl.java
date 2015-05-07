@@ -2,7 +2,9 @@
  */
 package org.polarsys.chess.chessmlprofile.ComponentModel;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HwGeneral.HwResource;
+import org.eclipse.uml2.uml.Component;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,6 +15,7 @@ import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HwGeneral.HwResource;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl#getHwRes <em>Hw Res</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl#getBase_Component <em>Base Component</em>}</li>
  * </ul>
  * </p>
  *
@@ -20,7 +23,7 @@ import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HwGeneral.HwResource;
  * @model
  * @generated
  */
-public interface HwAbstractionComponentImpl extends ComponentImplementation {
+public interface HwAbstractionComponentImpl extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Hw Res</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -46,5 +49,31 @@ public interface HwAbstractionComponentImpl extends ComponentImplementation {
 	 * @generated
 	 */
 	void setHwRes(HwResource value);
+
+	/**
+	 * Returns the value of the '<em><b>Base Component</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Base Component</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Base Component</em>' reference.
+	 * @see #setBase_Component(Component)
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage#getHwAbstractionComponentImpl_Base_Component()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	Component getBase_Component();
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl#getBase_Component <em>Base Component</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Base Component</em>' reference.
+	 * @see #getBase_Component()
+	 * @generated
+	 */
+	void setBase_Component(Component value);
 
 } // HwAbstractionComponentImpl

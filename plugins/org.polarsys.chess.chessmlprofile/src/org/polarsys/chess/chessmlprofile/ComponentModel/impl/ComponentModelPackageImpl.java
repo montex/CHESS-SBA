@@ -405,6 +405,15 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getHwAbstractionComponentImpl_Base_Component() {
+		return (EReference)hwAbstractionComponentImplEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ComponentModelFactory getComponentModelFactory() {
 		return (ComponentModelFactory)getEFactoryInstance();
 	}
@@ -446,6 +455,7 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 
 		hwAbstractionComponentImplEClass = createEClass(HW_ABSTRACTION_COMPONENT_IMPL);
 		createEReference(hwAbstractionComponentImplEClass, HW_ABSTRACTION_COMPONENT_IMPL__HW_RES);
+		createEReference(hwAbstractionComponentImplEClass, HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT);
 	}
 
 	/**
@@ -482,7 +492,6 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		hwAbstractionComponentImplEClass.getESuperTypes().add(this.getComponentImplementation());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(componentTypeEClass, ComponentType.class, "ComponentType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -503,6 +512,7 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 
 		initEClass(hwAbstractionComponentImplEClass, HwAbstractionComponentImpl.class, "HwAbstractionComponentImpl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getHwAbstractionComponentImpl_HwRes(), theHwGeneralPackage.getHwResource(), null, "hwRes", null, 1, 1, HwAbstractionComponentImpl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getHwAbstractionComponentImpl_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, HwAbstractionComponentImpl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //ComponentModelPackageImpl

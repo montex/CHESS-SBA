@@ -985,9 +985,11 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="SchedulingTable" ordered="false"
           lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_String"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="HwAbstractionComponentImpl" eSuperTypes="#//ComponentModel/ComponentImplementation">
+    <eClassifiers xsi:type="ecore:EClass" name="HwAbstractionComponentImpl">
       <eStructuralFeatures xsi:type="ecore:EReference" name="hwRes" ordered="false"
           lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_DesignModel/HRM/HwGeneral/HwResource"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="base_Component" ordered="false"
+          lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="SystemModel" nsURI="http:///CHESS/SystemModel.ecore" nsPrefix="CHESS.SystemModel">

@@ -10797,10 +10797,15 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
         <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_SfEwIarFEeSm_c79BO815Q" name="extension_FunctionalPartition" type="_PYtcIKrFEeSm_c79BO815Q" aggregation="composite" association="_SfEwIKrFEeSm_c79BO815Q"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Stereotype" xmi:id="_ONO1kPQFEeSYU563tLwCJg" name="HwAbstractionComponentImpl">
-        <generalization xmi:type="uml:Generalization" xmi:id="_UJQIEPQFEeSYU563tLwCJg" general="_CuRAcDRKEeChqekVLFmSjQ"/>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_QpZ9EPQFEeSYU563tLwCJg" name="hwRes">
           <type xmi:type="uml:Stereotype" href="pathmap://Papyrus_PROFILES/MARTE.profile.uml#_LDER0BJxEdygQ5HMNSpiZw"/>
         </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_UqPN0PTMEeS54qNpVReixA" name="base_Component" association="_UqhhsPTMEeS54qNpVReixA">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Extension" xmi:id="_UqhhsPTMEeS54qNpVReixA" name="E_HwAbstractionComponentImpl_Component1" memberEnd="_UqhhsfTMEeS54qNpVReixA _UqPN0PTMEeS54qNpVReixA">
+        <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_UqhhsfTMEeS54qNpVReixA" name="extension_HwAbstractionComponentImpl" type="_ONO1kPQFEeSYU563tLwCJg" aggregation="composite" association="_UqhhsPTMEeS54qNpVReixA"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:DataType" xmi:id="__Ya2gGviEeCFqs3XUsvipQ" name="dummy"/>
