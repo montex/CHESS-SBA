@@ -7,7 +7,7 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.8.0",
  org.eclipse.papyrus.infra.discovery
 Bundle-Vendor: %providerName
 Bundle-ActivationPolicy: lazy
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.9.0.qualifier
 Bundle-Localization: plugin
 Bundle-Name: %pluginName
 Bundle-Activator: org.polarsys.chess.discovery.Activator

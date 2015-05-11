@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CHESS ML profile plug-in (Incubation)
 Bundle-SymbolicName: org.polarsys.chess.chessmlprofile;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.9.0.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: University of Padova
+Bundle-Vendor: University of Padova, Intecs
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
