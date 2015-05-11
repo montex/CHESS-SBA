@@ -1,7 +1,11 @@
 
 
-This Eclipse plugin includes contains the Ada infrastructural code generator (v0.3) for the v0.3 of the 
+This Eclipse plugin includes contains the Ada infrastructural code generator for the 
 code archetypes for the CHESS component model.
+
+**** Change log v0.5 ****
+Extended support for data types.
+Added support for Functions.
 
 
 **** Change log v0.3 ****
