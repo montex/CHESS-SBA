@@ -375,7 +375,7 @@ rule DependableComponent2Component(dc: CHESS!DependableComponent, inst: UML2!Ins
 
 	do{
 
-		if (dc.errorModel = OclUndefined){
+		if (dc.errorModel = OclUndefined or dc.errorModel.isEmpty()){
 			--check if the component is a statebased (atomic) component and transform it accordingly
 			if (dc.oclIsTypeOf(CHESS!StatefulHardware)){
 				thisModule.StatefulHardware2Component(dc,inst);
@@ -1167,7 +1167,8 @@ rule Propagation_Phase1 (p : CHESS!Propagation, server : UML2!Component, client 
 		if(serverInst.getCorrespondingComponent <> OclUndefined and clientInst.getCorrespondingComponent <> OclUndefined){
 
 			--1) both client and server have an ErrorModel
-			if(serverDepComp.errorModel <> OclUndefined and clientDepComp.errorModel <> OclUndefined){
+			if((serverDepComp.errorModel <> OclUndefined and serverDepComp.errorModel.notEmpty())
+					and (clientDepComp.errorModel <> OclUndefined and clientDepComp.errorModel.notEmpty())){
 
 				--for each server's FailureMode that affect the port interested by the connection...
 				for (r in serverDepComp.errorModel.base_StateMachine.region){
@@ -1303,7 +1304,8 @@ rule Propagation_Phase2 (p : CHESS!Propagation, server : UML2!Component, client 
 		if(serverInst.getCorrespondingComponent <> OclUndefined and clientInst.getCorrespondingComponent <> OclUndefined){
 
 			--1) both client and server have an ErrorModel
-			if(serverDepComp.errorModel <> OclUndefined and clientDepComp.errorModel <> OclUndefined){
+			if((serverDepComp.errorModel <> OclUndefined and serverDepComp.errorModel.notEmpty())
+					and (clientDepComp.errorModel <> OclUndefined and clientDepComp.errorModel.notEmpty())){
 
 				--for each client's ExternalFault that originates from the port interested by the connection...
 				for (r in clientDepComp.errorModel.base_StateMachine.region){
