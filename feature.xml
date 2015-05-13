@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.chess.statebased.feature"
+      label="CHESS State Based Analysis"
+      version="0.9.0.qualifier"
+      provider-name="Intecs-UNIFI">
+
+   <description>
+      CHESS extension for state based analysis.
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      Copyright (c) 2015 Intecs S.p.A, UNIFI
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      Copyright (c) 2011-2014 UPD-Intecs
+All rights reserved.   This program and the accompanying materials
+are made available under the terms of the Eclipse Public License
+v1.0 which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+   </license>
+
+   <plugin
+         id="org.chess.statebased"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
