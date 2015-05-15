@@ -79,15 +79,38 @@ import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 
 
+
+/**
+ * The Class BuildInstanceCommand.
+ * @deprecated  replaced by {@link org.polarsys.chess.commands.BuildModelInstanceCommand}
+ *
+ */
+@Deprecated
 public class BuildInstanceCommand extends AbstractHandler {
 	
+	/** The Constant ASSIGN. */
 	private static final String ASSIGN = "MARTE::MARTE_Foundations::Alloc::Assign";
+	
+	/** The Constant PLATFORM. */
 	private static final String PLATFORM = "CHESS::Core::CHGaResourcePlatform";
+	
+	/** The ac list. */
 	private static ArrayList<AssignCopy> acList;
+	
+	/** The instances list. */
 	private static ArrayList<InstanceSpecification> instancesList = new ArrayList<InstanceSpecification>();
+	
+	/** The slot list. */
 	private static ArrayList<Slot> slotList =  new ArrayList<Slot>();
+	
+	/** The comments. */
 	private static EList<Comment> comments = null;
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 *
+	 */
+	@Deprecated
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
 		final DiagramStatus ds = CHESSEditorUtils.getDiagramStatus(editor);
@@ -128,6 +151,13 @@ public class BuildInstanceCommand extends AbstractHandler {
 		return null;
 	}
 
+	/**
+	 * Gets the edits the part.
+	 *
+	 * @return the edits the part
+	 *
+	 */
+	 @Deprecated
 	private Object getEditPart() {
 		Object ep = null;
 		try {
@@ -141,15 +171,16 @@ public class BuildInstanceCommand extends AbstractHandler {
 	
 	/**
 	 * Build the prototype instance starting frmo the given Composite Structure Diagram, 
-	 * saving and restoring the information 'from' 'to' available in the Assign entities
-	 * @param editor 
-	 * @param csd_ep
-	 * 
-	 * @param element the semantic element
+	 * saving and restoring the information 'from' 'to' available in the Assign entities.
+	 *
+	 * @param editor the editor
+	 * @param csd_ep the csd_ep
+	 * @param resultMsg the result msg
 	 * @return the edit part of the element, null if it doesn't exist
-	 * @throws Exception 
+	 * 
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Deprecated
 	public static InstanceSpecification buildPrototypeInstanceRestoringAssigns(PapyrusMultiDiagramEditor editor, DiagramEditPart csd_ep, StringBuffer resultMsg) {
 		saveAssignAllocations(editor);
 		InstanceSpecification instance = buildPrototypeInstance(editor, csd_ep, (DiagramImpl) csd_ep.getModel(), null, null, new HashMap(), resultMsg);
@@ -160,18 +191,20 @@ public class BuildInstanceCommand extends AbstractHandler {
 	
 	
 	/**
-	 * Build the prototype instance starting from the given Composite Structure Diagram,
+	 * Build the prototype instance starting from the given Composite Structure Diagram,.
+	 *
 	 * @param editor The current CHESS editor
 	 * @param csd_ep The CompositeStructureDiagramEditPart, needed for the top level diagram only
 	 * @param diagram The current diagram from which InstanceSpecifications need to be created
 	 * @param instanceRoot The InstanceSpecification which is the context of the current diagram
 	 * @param pack4instances The Package where InstanceSpecifications need to be created
 	 * @param shape2instanceMap The Map owning associations between GMF shape and UML InstanceSpecification
+	 * @param warningMsg the warning msg
 	 * @return the InstanceSpecification which is the context of this diagram
-	 * @throws Exception 
 	 * @see buildPrototypeInstance(CHESSEditor editor, CompositeStructureDiagramEditPart csd_ep, StringBuffer resultMsg)
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Deprecated
 	private static InstanceSpecification buildPrototypeInstance(PapyrusMultiDiagramEditor editor, DiagramEditPart csd_ep, DiagramImpl diagram, InstanceSpecification instanceRoot, Package pack4instances, Map shape2instanceMap, StringBuffer warningMsg) {
 			
 		//assert diagram != null;
@@ -366,7 +399,17 @@ public class BuildInstanceCommand extends AbstractHandler {
 	}
 	
 	
+	/**
+	 * Builds the instance4 property.
+	 *
+	 * @param propertyShape the property shape
+	 * @param pack the pack
+	 * @param parentInstance the parent instance
+	 * @param shape2instanceMap the shape2instance map
+	 * @return the instance specification
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Deprecated
 	public static InstanceSpecification  buildInstance4Property(ShapeImpl propertyShape, Package pack, InstanceSpecification parentInstance, Map shape2instanceMap) {
 		Property property = (Property) propertyShape.getElement();
 				
@@ -434,7 +477,14 @@ public class BuildInstanceCommand extends AbstractHandler {
 	}
 	
 	
+	/**
+	 * Gets the comments for port ep.
+	 *
+	 * @param portEP the port ep
+	 * @return the comments for port ep
+	 */
 	@SuppressWarnings("rawtypes")
+	@Deprecated
 	public static List<Comment> getCommentsForPortEP(PortEditPart portEP){
 		List<Comment> v = new Vector<Comment>();
 		List targetConnsList = portEP.getTargetConnections();
@@ -455,6 +505,13 @@ public class BuildInstanceCommand extends AbstractHandler {
 		return v;
 	}
 	
+	/**
+	 * Gets the comments for port shape.
+	 *
+	 * @param portShape the port shape
+	 * @return the comments for port shape
+	 */
+	@Deprecated
 	public static List<Comment> getCommentsForPortShape(ShapeImpl portShape){
 		List<Comment> v = new Vector<Comment>();
 		List targetConnsList = portShape.getTargetEdges();
@@ -474,7 +531,15 @@ public class BuildInstanceCommand extends AbstractHandler {
 	}
 	
 	
+	/**
+	 * Gets the port edit part.
+	 *
+	 * @param propertyEP the property ep
+	 * @param port the port
+	 * @return the port edit part
+	 */
 	@SuppressWarnings("rawtypes")
+	@Deprecated
 	public static PortEditPart getPortEditPart(NamedElementEditPart propertyEP, Port port){
 		List listEP = propertyEP.getChildren();
 		Object temp = null;
@@ -489,6 +554,14 @@ public class BuildInstanceCommand extends AbstractHandler {
 		return null;
 	}
 	
+	/**
+	 * Gets the port shape.
+	 *
+	 * @param propertyShape the property shape
+	 * @param port the port
+	 * @return the port shape
+	 */
+	@Deprecated
 	public static ShapeImpl getPortShape(ShapeImpl propertyShape, Port port){
 		Vector<ShapeImpl> v = getInnerPortShapes(propertyShape);
 		if (v.isEmpty())
@@ -503,6 +576,14 @@ public class BuildInstanceCommand extends AbstractHandler {
 		return null;
 	}
 	
+	/**
+	 * Gets the CH rt specification.
+	 *
+	 * @param propertyEP the property ep
+	 * @param port the port
+	 * @return the CH rt specification
+	 */
+	@Deprecated
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List<Comment> getCHRtSpecification(NamedElementEditPart propertyEP, Port port){
 		PortEditPart portEP = getPortEditPart(propertyEP, port);
@@ -514,6 +595,14 @@ public class BuildInstanceCommand extends AbstractHandler {
 	}
 
 	
+	/**
+	 * Gets the comments.
+	 *
+	 * @param propertyShape the property shape
+	 * @param port the port
+	 * @return the comments
+	 */
+	@Deprecated
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List<Comment> getComments(ShapeImpl propertyShape, Port port){
 		ShapeImpl portShape = getPortShape(propertyShape, port);
@@ -525,11 +614,26 @@ public class BuildInstanceCommand extends AbstractHandler {
 		return getCommentsForPortShape(portShape);
 	}
 	
+	/**
+	 * Builds the inner instance4 property.
+	 *
+	 * @param propertyEP the property ep
+	 * @param pack the pack
+	 */
+	@Deprecated
 	public static void buildInnerInstance4Property(PropertyPartEditPartCN propertyEP, Package pack){
 		
 	}
 	
 	
+	/**
+	 * Builds the port instances.
+	 *
+	 * @param classifier the classifier
+	 * @param ownerInstance the owner instance
+	 * @param propertyShape the property shape
+	 */
+	@Deprecated
 	private static void buildPortInstances(org.eclipse.uml2.uml.Class classifier, InstanceSpecification ownerInstance,
 			ShapeImpl propertyShape){
 		List<Port> ports = classifier.getOwnedPorts();
@@ -588,6 +692,13 @@ public class BuildInstanceCommand extends AbstractHandler {
 		}
 	}
 	
+	/**
+	 * Gets the inner shapes.
+	 *
+	 * @param shape the shape
+	 * @return the inner shapes
+	 */
+	@Deprecated
 	protected static EList getInnerShapes(ShapeImpl shape){
 		
 			Iterator tempIter = shape.getPersistedChildren().iterator();
@@ -603,6 +714,13 @@ public class BuildInstanceCommand extends AbstractHandler {
 			return null;
 	}
 	
+	/**
+	 * Gets the inner port shapes.
+	 *
+	 * @param shape the shape
+	 * @return the inner port shapes
+	 */
+	@Deprecated
 	protected static Vector<ShapeImpl> getInnerPortShapes(ShapeImpl shape){
 		Vector<ShapeImpl> v = new Vector<ShapeImpl>();
 		Iterator tempIter = shape.getPersistedChildren().iterator();
@@ -618,6 +736,13 @@ public class BuildInstanceCommand extends AbstractHandler {
 }
 	
 	
+	/**
+	 * Gets the i sash windows container.
+	 *
+	 * @param editor the editor
+	 * @return the i sash windows container
+	 */
+	@Deprecated
 	public ISashWindowsContainer getISashWindowsContainer(PapyrusMultiDiagramEditor editor){		
 		ServicesRegistry serviceRegistry = editor.getServicesRegistry();
 				
@@ -632,6 +757,14 @@ public class BuildInstanceCommand extends AbstractHandler {
 		return container;
 	}
 	
+	/**
+	 * Gets the diagram.
+	 *
+	 * @param editor the editor
+	 * @param comp the comp
+	 * @return the diagram
+	 */
+	@Deprecated
 	private static DiagramImpl getDiagram(PapyrusMultiDiagramEditor editor, Type comp){
 		ServicesRegistry serviceRegistry = editor.getServicesRegistry();
 		IPageManager pageMngr = null;
@@ -658,10 +791,12 @@ public class BuildInstanceCommand extends AbstractHandler {
 	}
 	
 	/**
-	 * 
+	 * Checks if is decomposed component.
+	 *
 	 * @param comp The componenImplementation
 	 * @return true if the given comp is decomposed, i.e. it has attributes typed with Component
 	 */
+	@Deprecated
 	public static boolean isDecomposedComponent(Class comp){
 		EList<Property> list = comp.getAttributes();
 		if (list.size() == 0)
@@ -674,6 +809,13 @@ public class BuildInstanceCommand extends AbstractHandler {
 		return false;
 	}
 	
+	/**
+	 * Checks if is leaf shape.
+	 *
+	 * @param shape the shape
+	 * @return true, if is leaf shape
+	 */
+	@Deprecated
 	public static boolean isLeafShape(ShapeImpl shape){
 		Iterator inners = getInnerShapes(shape).iterator();
 		Object obj = null;
@@ -689,8 +831,11 @@ public class BuildInstanceCommand extends AbstractHandler {
 	}
 	
 	/**
-	 * set 'acList' and 'comments' self variable
+	 * set 'acList' and 'comments' self variable.
+	 *
+	 * @param editor the editor
 	 */
+	@Deprecated
 	private static void saveAssignAllocations(PapyrusMultiDiagramEditor editor){
 		//saving assign allocations before destroying and regenerating instance specifications
 		EList<Comment> tmp = null;
@@ -716,18 +861,14 @@ public class BuildInstanceCommand extends AbstractHandler {
 		acList = AssignCopy.toAssignCopyList(comments);
 	}
 	
+	/**
+	 * Regenerate assign allocations.
+	 */
+	@Deprecated
 	private static void regenerateAssignAllocations(){
 		//regenerating, if possible, assign allocations
 		Iterator<InstanceSpecification> instIt;
 		Iterator<Slot> slotIt;
-//				slotIt = slotList.iterator();
-//				while(slotIt.hasNext()){
-//					Slot s = slotIt.next();
-//					System.out.println(s.toString());
-//					System.out.println(s.getOwningInstance().getQualifiedName() + 
-//										" " + s.getDefiningFeature().getName());
-//					
-//				}
 				
 		for (int i = 0; i < acList.size(); i++){
 			Comment com = comments.get(i);
@@ -797,13 +938,6 @@ public class BuildInstanceCommand extends AbstractHandler {
 				}
 			}
 		}
-		
-//				//only to test comments
-//				System.out.println("AFTER");
-//				for (int i=0; i<comments.size(); i++){
-//					System.out.println(comments.get(i).getValue(comments.get(i).getAppliedStereotype(ASSIGN), "from").toString());
-//					System.out.println(comments.get(i).getValue(comments.get(i).getAppliedStereotype(ASSIGN), "to").toString());
-//				}
 	}
 	
 }

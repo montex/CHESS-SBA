@@ -67,21 +67,46 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
+
+/**
+ * BuildModelInstanceCommand allows to create UML InstanceSpecifications starting from a Component definition
+ */
 public class BuildModelInstanceCommand extends AbstractHandler implements
 		IHandler {
 
+	/** The Constant CHESS. */
 	private static final String CHESS = "CHESS::Core::CHESS";
-//	private static final String CHESS_COMPIMPL = "CHESS::ComponentModel::ComponentImplementation";
-	private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponentModel::CHRtSpecification";
+	/** The Constant CHESS_CHRTSPEC. */
+private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponentModel::CHRtSpecification";
+	
+	/** The Constant CHESS_RESPLATFORM. */
 	private static final String CHESS_RESPLATFORM = "CHESS::Core::CHGaResourcePlatform";
+	
+	/** The Constant MARTE_CSP. */
 	private static final String MARTE_CSP = "MARTE::MARTE_DesignModel::GCM::ClientServerPort";
+	
+	/** The Constant MARTE_RESOURCE. */
 	private static final String MARTE_RESOURCE = "MARTE::MARTE_Foundations::GRM::Resource";
+	
+	/** The Constant MARTE_ASSIGN. */
 	private static final String MARTE_ASSIGN = "MARTE::MARTE_Foundations::Alloc::Assign";
+	
+	/** The ac list. */
 	private static ArrayList<AssignCopy> acList;
+	
+	/** The assigns. */
 	private static EList<Comment> assigns;
+	
+	/** The instances list. */
 	private static ArrayList<InstanceSpecification> instancesList = new ArrayList<InstanceSpecification>();
+	
+	/** The slot list. */
 	private static ArrayList<Slot> slotList =  new ArrayList<Slot>();
 
+	/* (non-Javadoc)
+	 * Launches the dialog to select the Component from which InstanceSpecifications (i.e. the object view) needs to be created
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
@@ -166,6 +191,18 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		return null;
 	}
 	
+	/**
+	 * Builds the instance-level representation of the given Component structure.
+	 *
+	 * @param pkg the Package owner of the created instance level entities
+	 * @param comp the Component for which the instance-level representation has to be created
+	 * @param resPlatform the MARTE CHGaResourcePlatform owning the reference to the Resource instances.
+	 * @param parentInstance the parent instance
+	 * @param theProp the UML property for which the instance-level representation has to be created
+	 * @param property2InstMap the properties to instances map
+	 * @param commList the list of CHRtSPecification from which the instance-level representation has to be created
+	 * @return the instance specification, stereotyped as MARTE Resource
+	 */
 	private InstanceSpecification buildComponentInstance(Package pkg, Component comp, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Property theProp, Map<Property, InstanceSpecification> property2InstMap, List<Comment> commList) {
 		InstanceSpecification inst = UMLFactory.eINSTANCE.createInstanceSpecification();
 		if(theProp != null){
@@ -234,6 +271,12 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 	}
 	
 	//this method has been moved from BuildInstanceCommand (and made public)
+	/**
+	 * Map stereotypes from property to instance.
+	 *
+	 * @param property the property
+	 * @param instance the instance
+	 */
 	public static void mapStereotypesFromPropertyToInstance(Property property, InstanceSpecification instance){
 		Type type = property.getType();
 		EObject stereo = property.getStereotypeApplication(CHESSProfileManager.getCH_HWBus(property));
@@ -279,6 +322,15 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		}
 	}
 
+	/**
+	 * Builds the connector instance.
+	 *
+	 * @param pkg the pkg
+	 * @param conn the conn
+	 * @param resPlatform the res platform
+	 * @param parentInstance the parent instance
+	 * @param property2InstMap the property2 inst map
+	 */
 	private void buildConnectorInstance(Package pkg, Connector conn, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Map<Property, InstanceSpecification> property2InstMap) {
 		InstanceSpecification connInst = UMLFactory.eINSTANCE.createInstanceSpecification();
 		String name = parentInstance.getName() + "." + conn.getName();
@@ -313,6 +365,11 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		}	
 	}
 	
+	/**
+	 * Save assign allocations, in case the build instance command is invoked to update the instance level view
+	 *
+	 * @param umlModel the uml model
+	 */
 	private static void saveAssignAllocations(Model umlModel){
 		//save assign allocations before build instance specifications
 		CHESS chess = UMLUtils.getStereotypeApplication(umlModel, CHESS.class);		
@@ -327,6 +384,11 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		acList = AssignCopy.toAssignCopyList(assigns);
 	}
 	
+	/**
+	 * Regenerate assign allocations.
+	 *
+	 * @param umlModel the uml model
+	 */
 	private static void regenerateAssignAllocations(Model umlModel){
 		//regenerate, if possible, assign allocations
 		Iterator<InstanceSpecification> instIt;
