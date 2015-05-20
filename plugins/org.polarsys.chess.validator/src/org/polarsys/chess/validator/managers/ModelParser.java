@@ -35,14 +35,27 @@ import org.polarsys.chess.core.preferences.FilterableConstraint;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
 import org.polarsys.chess.validator.Activator;
+import org.polarsys.chess.validator.libs.ConstraintsLib;
+import org.polarsys.chess.validator.messages.Messages;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ModelParser.
+ */
 public class ModelParser {
 
+	/** The model outside view. */
 	private IStatus modelOutsideView = new Status(IStatus.ERROR,
 			Activator.PLUGIN_ID, Messages.NullViewMsg);
 
 	
 	
+	/**
+	 * Gets the IPreferencePage given the id. (never used?)
+	 * 
+	 * @param id the id of the IPreferencePage
+	 * @return the IPreferencePage corresponding to the given id, or null
+	 */
 	public IPreferencePage getId(String id) {
 	    PreferenceManager pm = PlatformUI.getWorkbench().getPreferenceManager();
 	    List list = pm.getElements(PreferenceManager.PRE_ORDER);
@@ -58,6 +71,9 @@ public class ModelParser {
 	    return null;
 	}
 
+	/**
+	 * Instantiates a new model parser.
+	 */
 	public ModelParser() {
 		
 		
@@ -111,7 +127,17 @@ public class ModelParser {
 //		ConstraintsLib.AddRemoveDependency,
 //		ConstraintsLib.checkModifiedOperation};
 	
-	public Command check(Notification notification, Object _notifier, DesignView currentView, boolean superuser) throws RollbackException {
+	/**
+ * Check.
+ *
+ * @param notification the notification
+ * @param _notifier the _notifier
+ * @param currentView the current view
+ * @param superuser the superuser
+ * @return the command
+ * @throws RollbackException the rollback exception
+ */
+public Command check(Notification notification, Object _notifier, DesignView currentView, boolean superuser) throws RollbackException {
 		Object notifier = notification.getNotifier();
 		Command command = null;
 		if (currentView == null) {

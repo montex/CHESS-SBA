@@ -27,13 +27,20 @@ import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Connector_01.
+ */
 public class Connector_01 extends AbstractModelConstraint {
 
+	/** The Constant CSPORT. */
 	private static final String CSPORT = "MARTE::MARTE_DesignModel::GCM::ClientServerPort";
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
+	 */
 	@Override
 	public IStatus validate(IValidationContext ctx) {
-		// TODO Auto-generated method stub
 		IStatus success = ctx.createSuccessStatus();
 		IStatus failure = ctx.createFailureStatus();
 		

@@ -5,7 +5,7 @@
  <extension point="org.polarsys.chess.resourceListener">
       <listener
             name="resource listener"
-            realization="org.polarsys.chess.validator.ResourceListener">
+            realization="org.polarsys.chess.validator.managers.ResourceListener">
       </listener>
    </extension>
  
@@ -14,7 +14,7 @@
             default="false"
             id="CHESSvalidationContextID">
          <selector
-               class="org.polarsys.chess.validator.ValidationDelegateClientSelector">
+               class="org.polarsys.chess.validator.managers.ValidationDelegateClientSelector">
          </selector>
       </clientContext>
       <binding

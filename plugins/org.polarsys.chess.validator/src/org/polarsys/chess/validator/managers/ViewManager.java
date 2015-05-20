@@ -33,8 +33,10 @@ import org.polarsys.chess.core.views.DiagramStatus.DesignView;
 import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 import org.polarsys.chess.validator.Activator;
+import org.polarsys.chess.validator.messages.Messages;
 import org.eclipse.uml2.uml.Package;
 
+// TODO: Auto-generated Javadoc
 /**
  * ViewManager is a singleton class which provides the data structure which contains the 
  * view-diagram association.
@@ -42,10 +44,17 @@ import org.eclipse.uml2.uml.Package;
  */
 public class ViewManager {
 	
+	/** The class diagram kind. */
 	public static String classDiagramKind = "PapyrusUMLClassDiagram";
 
+	/** The instance. */
 	private static ViewManager instance = new ViewManager();
 
+	/**
+	 * Load view manager.
+	 *
+	 * @return the single ViewManager instance
+	 */
 	public static ViewManager loadViewManager() {
 		return instance;
 	}
@@ -62,9 +71,14 @@ public class ViewManager {
 	/**
 	 * Check constraints concerning view ownership of diagrams. 
 	 * A diagram must be created as a child of a view which allows its creation
-	 * @param domain 
-	 * @param currentView 
+	 *
+	 * @param notifier the notifier Object
+	 * @param s the StringBuffer used to store messages to be printed to the CHESSConsole
+	 * @param currentView the CHESS current view
+	 * @param domain the TransactionalEditingDomain domain of the diagram
+	 * @throws RollbackException in case of DynamicConstraint failure
 	 */
+	@Deprecated
 	public void check(Object notifier, StringBuffer s, DesignView currentView, TransactionalEditingDomain domain)
 			throws RollbackException {
 		if (notifier instanceof PageRef) {
@@ -86,8 +100,12 @@ public class ViewManager {
 	/**
 	 * Check constraints concerning view ownership of diagrams. 
 	 * A diagram must be created as a child of a view which allows its creation
-	 * @param domain 
-	 * @param currentView 
+	 *
+	 * @param diagram the Diagram about to be created
+	 * @param s the StringBuffer used to store messages to be printed to the CHESSConsole
+	 * @param currentView the CHESS current view
+	 * @param domain the TransactionalEditingDomain domain of the diagram
+	 * @throws RollbackException in case of DynamicConstraint failure
 	 */
 	public void check(Diagram diagram, StringBuffer s, DesignView currentView, TransactionalEditingDomain domain)
 			throws RollbackException {
@@ -142,6 +160,11 @@ public class ViewManager {
 	/**
 	 * Check if a stereotype representing a CHESS view has been modified.
 	 * A stereotype representing a CHESS must not be modified or removed.
+	 * 
+	 * @see org.polarsys.chess.validator.libs.ConstraintsLib
+	 * 
+	 * @param notification the EMF notification
+	 * @return true, if successful
 	 */
 	public boolean checkViewStereotype(Notification notification) {
 		
