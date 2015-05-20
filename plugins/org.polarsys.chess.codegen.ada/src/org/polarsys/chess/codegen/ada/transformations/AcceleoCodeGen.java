@@ -55,16 +55,11 @@ public class AcceleoCodeGen {
 
 	/**
 	 * Constructor.
-	 * 
-	 * @param modelURI
-	 *            is the URI of the model.
-	 * @param targetFolder
-	 *            is the output folder
-	 * @param arguments
-	 *            are the other arguments
-	 * @throws IOException
-	 *             Thrown when the output cannot be saved.
-	 * @generated
+	 *
+	 * @param modelURI            is the URI of the model.
+	 * @param targetFolder            is the output folder
+	 * @param arguments            are the other arguments
+	 * @generated 
 	 */
 	public AcceleoCodeGen(URI modelURI, IContainer targetFolder, List<? extends Object> arguments) {
 		this.modelURI = modelURI;
@@ -96,14 +91,12 @@ public class AcceleoCodeGen {
 	
 	/**
 	 * Finds the template in the plug-in. Returns the template plug-in URI.
-	 * 
-	 * @param bundleID
-	 *            is the plug-in ID
-	 * @param relativePath
-	 *            is the relative path of the template in the plug-in
+	 *
+	 * @param bundleID            is the plug-in ID
+	 * @param relativePath            is the relative path of the template in the plug-in
 	 * @return the template URI
-	 * @throws IOException
-	 * @generated
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @generated 
 	 */
 	@SuppressWarnings("unused")
 	private URI getTemplateURI(final String bundleID, final IPath relativePath) throws IOException {
@@ -143,6 +136,14 @@ public class AcceleoCodeGen {
 		return result;
 	}
 	
+	/**
+	 * Run codegen.
+	 *
+	 * @param model the model
+	 * @param target the target folder
+	 * @param monitor the monitor used to display progress information to the user
+	 * @throws Exception the exception
+	 */
 	public static void runCodegen(IFile model, IContainer target, IProgressMonitor monitor) throws Exception {
 		URI modelURI = URI.createPlatformResourceURI(model.getFullPath().toString(), true);
 		AcceleoCodeGen generator = new AcceleoCodeGen(modelURI, target, new ArrayList<String>());

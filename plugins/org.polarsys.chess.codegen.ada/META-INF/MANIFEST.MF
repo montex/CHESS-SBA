@@ -36,6 +36,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true
 Export-Package: org.polarsys.chess.codegen.ada,
+ org.polarsys.chess.codegen.ada.handlers,
  org.polarsys.chess.codegen.ada.main,
- org.polarsys.chess.codegen.ada.service
+ org.polarsys.chess.codegen.ada.transformations,
+ org.polarsys.chess.codegen.ada.util
 

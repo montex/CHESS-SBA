@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import org.polarsys.chess.codegen.ada.transformations.Transformations;
+import org.polarsys.chess.codegen.ada.util.AdaGenUtil;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.m2m.Activator;
@@ -40,15 +41,20 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+/**
+ * The Class AdaGenUIHandler is the handler of the Ada code generation command (org.polarsys.chess.codegen.ada.ada.id)
+ * registered through the org.eclipse.ui.commands extension point
+ */
 public class AdaGenUIHandler extends AbstractHandler {
 
-
-	private IProject getActiveProject(IEditorPart editor) {
-		IFileEditorInput input = (IFileEditorInput) editor.getEditorInput();
-		IFile file = input.getFile();
-		return file.getProject();
-	}
-
+	/**
+	 *  implementation of the Ada code generation command as an Eclipse Job.
+	 *  Calls the internal implementation, refreshes the active project and prints messages to the CHESS console
+	 *
+	 * @param event the execution event
+	 * @return the object (always null)
+	 * @throws ExecutionException the execution exception
+	 */
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final IEditorPart editor = HandlerUtil.getActiveEditor(event);
 		
@@ -62,7 +68,7 @@ public class AdaGenUIHandler extends AbstractHandler {
 					} catch (Exception e) {
 						throw e;
 					} finally {
-						getActiveProject(editor).refreshLocal(IResource.DEPTH_INFINITE, monitor);
+						AdaGenUtil.getActiveProject(editor).refreshLocal(IResource.DEPTH_INFINITE, monitor);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -94,10 +100,18 @@ public class AdaGenUIHandler extends AbstractHandler {
 		return null;
 	}
 	
-	public Object execute_(IEditorPart editor, IProgressMonitor monitor) throws Exception {
+	/**
+	 * Internal implementation of the Ada code generation command.
+	 * Loads the UML model and calls the code generation
+	 *
+	 * @param editor the active editor
+	 * @param monitor the progress monitor
+	 * @throws Exception if unable to load the UML model
+	 */
+	private void execute_(IEditorPart editor, IProgressMonitor monitor) throws Exception {
 		monitor.beginTask("Transforming", 4);
 		if (!(editor instanceof PapyrusMultiDiagramEditor))
-			return null;
+			return;
 		PapyrusMultiDiagramEditor cEditor = (PapyrusMultiDiagramEditor) editor;
 		Resource inResource = null;
 		try {
@@ -111,6 +125,6 @@ public class AdaGenUIHandler extends AbstractHandler {
 		Transformations.performCodeGeneration((PapyrusMultiDiagramEditor)editor, inputFile, monitor);
 		
 		//CHESSProjectSupport.fileReplace(newFile, inputFile);
-		return null;
+		return;
 	}
 }
