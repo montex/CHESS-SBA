@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.wizards;
+package org.polarsys.chess.wizards.wizards;
 
 import java.net.URI;
 
@@ -29,19 +29,34 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 
+/**
+ * The Class CHESSNewProjectWizard is the implementation of the wizard used to create a new CHESS project
+ */
 public class CHESSNewProjectWizard extends Wizard implements INewWizard, IExecutableExtension {
 
+	/** The Constant WIZARD_NAME. */
 	private static final String WIZARD_NAME = "CHESS";
+	
+	/** The page one. */
 	private WizardNewProjectCreationPage pageOne;
+	
+	/** The configuration element. */
 	private IConfigurationElement configurationElement;
 	
+	/**
+	 * Instantiates a new CHESS new project wizard.
+	 */
 	public CHESSNewProjectWizard() {
 		setWindowTitle(WIZARD_NAME);
 	}
 	
+	/**
+	 * Sets title and description of the page and adds it to the wizard 
+	 * 
+	 * @see org.eclipse.jface.wizard.Wizard#addPages()
+	 */
 	@Override
 	public void addPages() {
-		// TODO Auto-generated method stub
 		super.addPages();
 		pageOne = new WizardNewProjectCreationPage("CHESS Project Wizard");
 		
@@ -51,6 +66,11 @@ public class CHESSNewProjectWizard extends Wizard implements INewWizard, IExecut
 		addPage(pageOne);
 	}
 
+	/**
+	 * Creates the CHESS Project and updates the eclipse perspective
+	 * 
+	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
+	 */
 	@Override
 	public boolean performFinish() {
 		String name = pageOne.getProjectName();
@@ -64,11 +84,21 @@ public class CHESSNewProjectWizard extends Wizard implements INewWizard, IExecut
 		return true;
 	}
 
+	/**
+	 * Not Implemented
+	 * 
+	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
+	 */
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		// TODO Auto-generated method stub
 
 	}
 	
+	/** 
+	 * Initializes the wizard configuration
+	 * 
+	 * @see org.eclipse.core.runtime.IExecutableExtension#setInitializationData(org.eclipse.core.runtime.IConfigurationElement, java.lang.String, java.lang.Object)
+	 */
 	public void setInitializationData(IConfigurationElement config,
 			String propertyName, Object data) throws CoreException {
 		configurationElement = config;

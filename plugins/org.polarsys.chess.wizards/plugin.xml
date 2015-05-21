@@ -8,7 +8,7 @@
 	</category>
 	<wizard
          category="it.unipd.chess.wizards.category"
-         class="org.polarsys.chess.wizards.CHESSNewProjectWizard"
+         class="org.polarsys.chess.wizards.wizards.CHESSNewProjectWizard"
          finalPerspective="org.eclipse.papyrus.infra.core.perspective"         
          icon="resources/CHESSicon.gif"
          id="it.unipd.chess.wizards.createproject"
@@ -20,7 +20,7 @@
 	</wizard>
     <wizard
          category="it.unipd.chess.wizards.category"
-         class="org.polarsys.chess.wizards.InitModelWizard"
+         class="org.polarsys.chess.wizards.wizards.InitModelWizard"
          finalPerspective="org.eclipse.papyrus.infra.core.perspective"
          icon="resources/CHESSicon.gif"
          id="it.unipd.chess.wizards.createmodel"

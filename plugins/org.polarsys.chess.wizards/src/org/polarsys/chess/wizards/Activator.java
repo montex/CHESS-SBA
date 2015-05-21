@@ -18,17 +18,29 @@ import org.eclipse.papyrus.infra.core.log.LogHelper;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+/**
+ * The Class Activator.
+ */
 public class Activator extends AbstractUIPlugin {
 
+	/** The Constant PLUGIN_ID. */
 	public static final String PLUGIN_ID = "org.eclipse.papyrus.uml.diagram.wizards"; //$NON-NLS-1$
 
+	/** The plugin. */
 	private static Activator plugin;
 
+	/** The log. */
 	public static LogHelper log;
 
+	/**
+	 * Instantiates a new activator.
+	 */
 	public Activator() {
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
@@ -36,12 +48,20 @@ public class Activator extends AbstractUIPlugin {
 		log = new LogHelper(plugin);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
 
+	/**
+	 * Gets the default.
+	 *
+	 * @return the default
+	 */
 	public static Activator getDefault() {
 		return plugin;
 	}
