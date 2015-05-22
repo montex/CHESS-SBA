@@ -43,11 +43,13 @@ import org.eclipse.uml2.uml.ValueSpecification;
 import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Core.IdentifSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
-import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.validator.constraints.StringParser;
 
+
+/**
+ * MARTE VSL utility class for QVT-o transformation.
+ */
 public class VSLUtils {
 
 	/**
@@ -55,7 +57,9 @@ public class VSLUtils {
 	 * 
 	 * <p>
 	 * i.e. periodic(period=(value=0.6,unit=ms))
-	 * 
+	 *
+	 * @param context the QVT context
+	 * @param self the VSL string to be analyzed
 	 * @return the 'pattern' data, or null if no data was found
 	 */
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
@@ -70,6 +74,12 @@ public class VSLUtils {
 
 	}// end parseArrivalPattern
 
+	/**
+	 * Checks if is real number.
+	 *
+	 * @param n the string to be parsed
+	 * @return true, if is real number
+	 */
 	private static boolean isRealNumber(String n) {
 		try {
 			Double.parseDouble(n);
@@ -85,13 +95,9 @@ public class VSLUtils {
 	 * 
 	 * <p>
 	 * i.e. (value=6)
-	 * 
-	 * @param inputText
-	 *            VSL formatted input string
-	 * 
-	 * @param propertyName
-	 *            property whose value we want
-	 * 
+	 *
+	 * @param context the context
+	 * @param self the self
 	 * @return the parsed value of the property
 	 */
 	@Operation(kind = Kind.OPERATION, contextual = true, withExecutionContext = true)
@@ -251,13 +257,10 @@ public class VSLUtils {
 	 * 
 	 * <p>
 	 * i.e. (value=0.6,unit=ms)
-	 * 
-	 * @param self
-	 *            VSL formatted input string
-	 * 
-	 * @param propertyName
-	 *            property whose value we want
-	 * 
+	 *
+	 * @param context the context
+	 * @param self            VSL formatted input string
+	 * @param propertyName            property whose value we want
 	 * @return the parsed value of the property
 	 */
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
@@ -352,6 +355,14 @@ public class VSLUtils {
 
 	}// end parseNFP_Duration
 
+	/**
+	 * Parses the nfp real.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @param propertyName the property name
+	 * @return the string
+	 */
 	@Operation(kind = Kind.OPERATION, contextual = true, withExecutionContext = true)
 	public static String parseNFPReal(IContext context, String self,
 			String propertyName) {
@@ -395,6 +406,13 @@ public class VSLUtils {
 
 	}// end parseNFP_Real
 
+	/**
+	 * Sets the ceiling.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @param ceiling the ceiling
+	 */
 	@Operation(kind = Kind.OPERATION, contextual = true, withExecutionContext = true)
 	public static void setCeiling(IContext context,
 			org.eclipse.uml2.uml.Class self, String ceiling) {
@@ -422,6 +440,13 @@ public class VSLUtils {
 		}
 	}
 
+	/**
+	 * Sets the ceiling2.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @param ceiling the ceiling
+	 */
 	@Operation(kind = Kind.OPERATION, contextual = true, withExecutionContext = true)
 	public static void setCeiling2(IContext context,
 			org.eclipse.uml2.uml.Class self, String ceiling) {
@@ -439,6 +464,13 @@ public class VSLUtils {
 		}
 	}
 
+	/**
+	 * Sets the ceiling3.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @param ceiling the ceiling
+	 */
 	@Operation(kind = Kind.OPERATION, contextual = true, withExecutionContext = true)
 	public static void setCeiling3(IContext context,
 			org.eclipse.uml2.uml.Class self, String ceiling) {
@@ -457,6 +489,13 @@ public class VSLUtils {
 		}
 	}
 
+	/**
+	 * Sets the protect kind.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @param type the type
+	 */
 	@Operation(kind = Kind.OPERATION, contextual = true, withExecutionContext = true)
 	public static void setProtectKind(IContext context,
 			org.eclipse.uml2.uml.Class self, String type) {
@@ -475,6 +514,13 @@ public class VSLUtils {
 
 	}
 
+	/**
+	 * Sets the protect kind2.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @param type the type
+	 */
 	@Operation(kind = Kind.OPERATION, contextual = true, withExecutionContext = true)
 	public static void setProtectKind2(IContext context,
 			org.eclipse.uml2.uml.Class self, String type) {
@@ -487,6 +533,13 @@ public class VSLUtils {
 		}
 	}
 
+	/**
+	 * Sets the protect kind3.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @param type the type
+	 */
 	@Operation(kind = Kind.OPERATION, contextual = true, withExecutionContext = true)
 	public static void setProtectKind3(IContext context,
 			org.eclipse.uml2.uml.Class self, String type) {
@@ -499,6 +552,15 @@ public class VSLUtils {
 		}
 	}
 
+	/**
+	 * Port to slots by rule.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @param onPort the on port
+	 * @param rule the rule
+	 * @return the e list
+	 */
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static EList<Slot> portToSlotsByRule(IContext context,
 			org.eclipse.uml2.uml.InstanceSpecification self, org.eclipse.uml2.uml.Port onPort, org.eclipse.uml2.uml.Constraint rule) {
@@ -524,6 +586,15 @@ public class VSLUtils {
 		return list;
 	}
 	
+	/**
+	 * Gets the slot instances.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @param inst the inst
+	 * @param instFull the inst full
+	 * @return the slot instances
+	 */
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static EList<Slot> getSlotInstances(IContext context,
 			org.eclipse.uml2.uml.Comment self,
@@ -581,6 +652,13 @@ public class VSLUtils {
 		return list;
 	}
 
+	/**
+	 * Slot from instance.
+	 *
+	 * @param slotInst the slot inst
+	 * @param el the el
+	 * @return the slot
+	 */
 	private static Slot slotFromInstance(Slot slotInst,
 			InstanceSpecification el) {
 		for (Element e : el.getOwnedElements()) {
@@ -593,6 +671,15 @@ public class VSLUtils {
 		return null;
 	}
 	
+	/**
+	 * Gets the instances.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @param inst the inst
+	 * @param instFull the inst full
+	 * @return the instances
+	 */
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static EList<InstanceSpecification> getInstances(IContext context,
 			org.eclipse.uml2.uml.Comment self,
@@ -651,7 +738,13 @@ public class VSLUtils {
 //		return list;
 //	}
 	
-	private static Slot extractFirstSlot(EList<Element> from) {
+	/**
+ * Extract first slot.
+ *
+ * @param from the from
+ * @return the slot
+ */
+private static Slot extractFirstSlot(EList<Element> from) {
 		for (Element element : from) {
 			if (element instanceof Slot) {
 				Slot sl = (Slot) element;
@@ -661,6 +754,12 @@ public class VSLUtils {
 		return null;
 	}
 	
+	/**
+	 * Extract first instance.
+	 *
+	 * @param from the from
+	 * @return the instance specification
+	 */
 	private static InstanceSpecification extractFirstInstance(EList<Element> from) {
 		for (Element element : from) {
 			if (element instanceof InstanceSpecification) {
@@ -671,6 +770,14 @@ public class VSLUtils {
 		return null;
 	}
 
+	/**
+	 * Checks if is referring id.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @param id the id
+	 * @return the boolean
+	 */
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static Boolean isReferringId(IContext context,
 			org.eclipse.uml2.uml.Comment self, Integer id) {
@@ -684,10 +791,24 @@ public class VSLUtils {
 		return isInBounds(id, bounds);
 	}
 
+	/**
+	 * Checks if is in bounds.
+	 *
+	 * @param id the id
+	 * @param bounds the bounds
+	 * @return the boolean
+	 */
 	private static Boolean isInBounds(int id, int[] bounds) {
 		return id >= bounds[0] && id <= bounds[1];
 	}
 	
+	/**
+	 * Checks if is in bounds.
+	 *
+	 * @param id the id
+	 * @param bounds the bounds
+	 * @return the boolean
+	 */
 	private static Boolean isInBounds(int id, java.util.List<int[]> bounds) {
 		for (int[] b : bounds) {
 			if (isInBounds(id, b))
@@ -696,6 +817,12 @@ public class VSLUtils {
 		return false;
 	}
 	
+	/**
+	 * Gets the bounds.
+	 *
+	 * @param comment the comment
+	 * @return the bounds
+	 */
 	private static int[] getBounds(Comment comment) {
 		if (!comment.getAnnotatedElements().isEmpty()) {
 			// TODO assumption: one and only nfpConstrant
@@ -713,6 +840,12 @@ public class VSLUtils {
 	//match all variants of "    [  1   ..   10   ]   " result: [1, 10]
 	//match all variants of "    [  1   ]   		  " result: [1, 1]
 	//match all variants of "      10   			  " result: [10, 10]
+	/**
+	 * Gets the bounds.
+	 *
+	 * @param value the value
+	 * @return the bounds
+	 */
 	private static int[] getBounds(String value) {
 		String regex = "\\s*\\[\\s*(\\d+)\\s*\\.*\\s*(\\d+)\\]\\s*";
 		Pattern pattern = Pattern.compile(regex);
@@ -750,6 +883,12 @@ public class VSLUtils {
 		return null;
 	}
 
+	/**
+	 * Gets the nfp constraint.
+	 *
+	 * @param list the list
+	 * @return the nfp constraint
+	 */
 	private static Constraint getNfpConstraint(EList<Element> list) {
 		for (Element element : list) {
 			if (element instanceof Constraint) {
@@ -760,6 +899,13 @@ public class VSLUtils {
 		return null;
 	}
 	
+	/**
+	 * Gets the wcet.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @return the wcet
+	 */
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public  static String getWCET(IContext context, Comment self) {
 		CHRtSpecification chRtSpecification = getStereotypeApplication(self, CHRtSpecification.class);
@@ -782,6 +928,14 @@ public class VSLUtils {
 		return "ERROR!";
 	}
 
+	/**
+	 * Gets the stereotype application.
+	 *
+	 * @param <T> the generic type
+	 * @param element the element
+	 * @param stereotypeClass the stereotype class
+	 * @return the stereotype application
+	 */
 	@SuppressWarnings("unchecked")
 	private static <T extends EObject> T getStereotypeApplication(
 			Element element, Class<T> stereotypeClass) {
@@ -793,6 +947,13 @@ public class VSLUtils {
 		return null;
 	}
 	
+	/**
+	 * Gets the number of cores for a given CPU instance
+	 *
+	 * @param context the QVT context
+	 * @param cpu the cpu instance
+	 * @return the number of cores
+	 */
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public  static Integer getNumberOfCores(IContext context, InstanceSpecification cpu) {
 		Integer i = 1;
@@ -809,6 +970,13 @@ public class VSLUtils {
 	}
 	
 	
+	/**
+	 * Gets the core (as String) constraining the given <<Assign>> Comment.
+	 *
+	 * @param context the QVT context
+	 * @param self the <<Assign>> Comment
+	 * @return the core (as String)
+	 */
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public  static String getCoreFromContraint(IContext context, Comment self) {
 		try {
@@ -827,6 +995,13 @@ public class VSLUtils {
 		return null;
 	}
 	
+	/**
+	 * Gets the context from constraint.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @return the context from constraint
+	 */
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public  static String getContextFromContraint(IContext context, Comment self) {
 		try {
