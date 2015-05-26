@@ -14,12 +14,13 @@
 -----------------------------------------------------------------------
  */
 
-package org.polarsys.chess.m2m;
+package org.polarsys.chess.m2m.transformations;
 
 
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -39,9 +40,24 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 
+/**
+ * Utility class to launch QVTo transformations.
+ * Provides the following transformations too:
+ * -ceiling priorities assignment
+ * -multi-instance package creation
+ * -multi-instance package deletion
+ * 
+ */
 @SuppressWarnings("restriction")
 public class QVToTransformation {
 
+	/**
+	 * Launch ceiling assignment transformation.
+	 *
+	 * @param model the model on which the ceiling assignment has to be applied
+	 * @param monitor the monitor
+	 * @throws Exception the exception
+	 */
 	public static void launchCeilingAssignment(IFile model, IProgressMonitor monitor)
 			throws Exception {
 
@@ -49,6 +65,13 @@ public class QVToTransformation {
 				model, monitor, new HashMap<String, String>());
 	}
 	
+	/**
+	 * Launch build multi instances transformation.
+	 *
+	 * @param model the model on which the multiple instances package need to be created
+	 * @param monitor the monitor
+	 * @throws Exception the exception
+	 */
 	public static void launchBuildMultiInstance(IFile model, IProgressMonitor monitor)
 			throws Exception {
 
@@ -56,27 +79,32 @@ public class QVToTransformation {
 				model, monitor, new HashMap<String, String>());
 	}
 	
+	/**
+	 * Launch remove multi instance transformation.
+	 *
+	 * @param model  the model on which the multiple instances package need to be removed
+	 * @param monitor the monitor
+	 * @throws Exception the exception
+	 */
 	public static void launchRemoveMultiInstance(IFile model, IProgressMonitor monitor)
 			throws Exception {
 		launchTransformation(TransUtil.QVTO_REMMULTIINSTANCE, "RemoveMultiInstance", false,
 				model, monitor, new HashMap<String, String>());
 	}
 	
-	
-//	public static void launchPIM2PSMVERDE(IFile model, IProgressMonitor monitor,  Map<String, String> configProps) 
-//			throws Exception {
-//		
-//		launchTransformation(TransUtil.QVTO_PIM2PSMVERDE, "CHESS_PIM2PSMVERDE", true,
-//				model, monitor, configProps);
-//	}
-//	
-//	public static void launchPIM2PSMEndToEnd(IFile model, IProgressMonitor monitor, Map<String, String> configProps) 
-//			throws Exception {
-//		
-//		launchTransformation(TransUtil.QVTO_PIM2PSMVERDE, "CHESS_PIM2PSMEndToEnd", true,
-//				model, monitor, configProps);
-//	}
 
+	/**
+	 * Utility method to launch QVT-o transformation
+	 *
+	 * @param transURI the URI of the transformation to be executed on the given model
+	 * @param transName the name of the transformation
+	 * @param generateTrace true if the trace of the model transformation has to be generated
+	 * @param model the model on which the transformation is applied
+	 * @param monitor the progress monitor
+	 * @param configProps the map of configuration properties
+	 * @throws Exception the exception
+	 * @see org.eclipse.m2m.internal.qvt.oml.common.launch.IQvtLaunchConstants
+	 */
 	public static void launchTransformation(String transURI, String transName,
 			boolean generateTrace, IFile model, IProgressMonitor monitor, Map<String, String> configProps)
 			throws Exception {
@@ -139,18 +167,4 @@ public class QVToTransformation {
 				instance, context);
 		qvtTransformation.cleanup();
 	}
-
-//	private static EvaluationMonitor createMonitor() {
-//		return new EvaluationMonitor() {
-//			boolean fIsCanceled = false;
-//
-//			public void cancel() {
-//				fIsCanceled = true;
-//			}
-//
-//			public boolean isCanceled() {
-//				return fIsCanceled;
-//			}
-//		};
-//	}
 }

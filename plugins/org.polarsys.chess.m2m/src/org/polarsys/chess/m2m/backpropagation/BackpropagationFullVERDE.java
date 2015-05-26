@@ -49,7 +49,6 @@ import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Slot;
-import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwBus;
@@ -57,13 +56,30 @@ import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.core.util.uml.UMLUtils;
-import org.polarsys.chess.m2m.TransUtil;
+import org.polarsys.chess.m2m.transformations.TransUtil;
 
-@SuppressWarnings({ "restriction", "unchecked", "rawtypes" })
+
+
+/**
+ * The Class implements the back propagation of timing analysis results.
+ * The back annotation of results to CHRtSpecifications is no more required;
+ * currently it is used only to allow visualization of analysis results in the dedicated dialogs;
+ * The way dialogs retrieve the information should be changed; then this class could be removed.
+ * @deprecated
+ */
+@Deprecated
 public class BackpropagationFullVERDE{
 
+	/** The rules. */
 	protected static List<BackpropagationRule> rules = new ArrayList<BackpropagationRule>();
 
+	/**
+	 * Process qvto trace file.
+	 *
+	 * @param editor the current active editor
+	 * @param model the model analyzed with MAST
+	 * @throws Exception the exception
+	 */
 	public static void processQVTOTraceFile(PapyrusMultiDiagramEditor editor, IFile model) throws Exception {
 		printlnToCHESSConsole("*** CHESS PSM->PIM backpropagation ***");
 		ModelContent inModel = TransUtil.loadModel(model);		
@@ -102,24 +118,57 @@ public class BackpropagationFullVERDE{
 		printlnToCHESSConsole("*** End of CHESS PSM->PIM backpropagation   ***");
 	}
 	
+	/**
+	 * The Class BackpropagationRule.
+	 *
+	 * @param <I> the generic type
+	 * @param <O> the generic type
+	 */
 	static public abstract class BackpropagationRule<I, O> {
+		
+		/** The input type. */
 		private Class<I> inputType;
+		
+		/** The output type. */
 		private Class<O> outputType;
 		
+		/**
+		 * Gets the input type.
+		 *
+		 * @return the input type
+		 */
 		public Class<I> getInputType() {
 			return inputType;
 		}
 		
+		/**
+		 * Gets the output type.
+		 *
+		 * @return the output type
+		 */
 		public Class<O> getOutputType() {
 			return outputType;
 		}
 		
+		/**
+		 * Instantiates a new backpropagation rule.
+		 *
+		 * @param inputType the input type
+		 * @param outputType the output type
+		 */
 		public BackpropagationRule(Class<I> inputType, Class<O> outputType) {
 			this.inputType = inputType;
 			this.outputType = outputType;
 			rules.add(this);
 		}
 		
+		/**
+		 * Prints the status.
+		 *
+		 * @param property the property
+		 * @param theElement the the element
+		 * @param value the value
+		 */
 		public void printStatus(final String property, final Element theElement, final String value){
 			if (value == null || theElement ==null)
 				return;
@@ -132,23 +181,18 @@ public class BackpropagationFullVERDE{
 			printlnToCHESSConsole(s.toString());
 		}	
 		
+		/**
+		 * Rule.
+		 *
+		 * @param inEl the in el
+		 * @param outEl the out el
+		 * @param rec the rec
+		 */
 		abstract void rule(I inEl, O outEl, TraceRecord rec);
 	}
 	
-	/*@SuppressWarnings("unused")
-	private ModelSet getEditorResourceSet(IEditorPart editor)
-			throws Exception {
-		ModelSet resourceSet = null;
-		try {
-			resourceSet = (ModelSet)((ServicesRegistry)editor.getAdapter(ServicesRegistry.class)).getService(ModelSet.class);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			throw new Exception("Unable to get the service registry");
-		}
-		return resourceSet;
-	}*/
-	
-	
+		
+	/** The CHRT comment2 sa step. */
 	static BackpropagationRule<InstanceSpecification, Operation> CHRTComment2SaStep = new BackpropagationRule<InstanceSpecification, Operation>(InstanceSpecification.class, Operation.class) {
 		@Override
 		void rule(InstanceSpecification inEl, Operation outEl, TraceRecord rec) {
@@ -183,6 +227,7 @@ public class BackpropagationFullVERDE{
 		}
 	};
 	
+	/** The Hw computing resource2 sa exec host. */
 	static BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Class> HwComputingResource2SaExecHost = new BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Class>(InstanceSpecification.class, org.eclipse.uml2.uml.Class.class) {
 		@Override
 		void rule(InstanceSpecification inEl, org.eclipse.uml2.uml.Class outEl, TraceRecord rec) {
@@ -197,6 +242,7 @@ public class BackpropagationFullVERDE{
 		}
 	};
 	
+	/** The Hw processor2 sa exec host. */
 	static BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Class> HwProcessor2SaExecHost = new BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Class>(InstanceSpecification.class, org.eclipse.uml2.uml.Class.class) {
 		@Override
 		void rule(InstanceSpecification inEl, org.eclipse.uml2.uml.Class outEl, TraceRecord rec) {
@@ -211,6 +257,7 @@ public class BackpropagationFullVERDE{
 		}
 	};
 	
+	/** The Hw bus2 sa comm host. */
 	static BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Class> HwBus2SaCommHost = new BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Class>(InstanceSpecification.class, org.eclipse.uml2.uml.Class.class) {
 		@Override
 		void rule(InstanceSpecification inEl, org.eclipse.uml2.uml.Class outEl, TraceRecord rec) {
@@ -225,6 +272,7 @@ public class BackpropagationFullVERDE{
 		}
 	};
 	
+	/** The CH ga resource platform2 sa analysis context. */
 	static BackpropagationRule<Component, org.eclipse.uml2.uml.Class> CHGaResourcePlatform2SaAnalysisContext = new BackpropagationRule<Component, org.eclipse.uml2.uml.Class>(Component.class, org.eclipse.uml2.uml.Class.class) {
 		@Override
 		void rule(Component inEl, org.eclipse.uml2.uml.Class outEl, TraceRecord rec) {
@@ -236,6 +284,7 @@ public class BackpropagationFullVERDE{
 		}
 	};
 	
+	/** The Operation2 sa shared resource. */
 	static BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Class> Operation2SaSharedResource = new BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Class>(InstanceSpecification.class, org.eclipse.uml2.uml.Class.class) {
 		@Override
 		void rule(InstanceSpecification inEl, org.eclipse.uml2.uml.Class outEl, TraceRecord rec) {
@@ -265,6 +314,7 @@ public class BackpropagationFullVERDE{
 	};
 	
 	
+	/** The slot2 end to end work flow. */
 	static BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Activity> slot2EndToEndWorkFlow = new BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Activity>(InstanceSpecification.class, org.eclipse.uml2.uml.Activity.class) {
 		@Override
 		void rule(InstanceSpecification inEl, org.eclipse.uml2.uml.Activity outEl, TraceRecord rec) {
@@ -300,6 +350,7 @@ public class BackpropagationFullVERDE{
 		}
 	};
 	
+	/** The Interaction2 end to end work flow. */
 	static BackpropagationRule<Interaction, Activity> Interaction2EndToEndWorkFlow = new BackpropagationRule<Interaction, Activity>(Interaction.class, Activity.class) {
 		@Override
 		void rule(Interaction inEl, Activity outEl, TraceRecord rec) {

@@ -15,7 +15,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.m2m;
+package org.polarsys.chess.m2m.handlers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,24 +64,59 @@ import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.ViewUtils;
+import org.polarsys.chess.m2m.Activator;
 import org.polarsys.chess.m2m.transformations.AbstractTransformation;
 import org.polarsys.chess.m2m.transformations.PIMPSMTransformationVERDE;
+import org.polarsys.chess.m2m.transformations.TransUtil;
+import org.polarsys.chess.m2m.transformations.TransformationResultsData;
+import org.polarsys.chess.m2m.ui.AnalysisContextSelectionDialog;
+import org.polarsys.chess.m2m.ui.SchedResultDialog;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class QVToUIHandlerVERDErealizes the handler for the scehdulability analysis command.
+ */
 public class QVToUIHandlerVERDE extends AbstractHandler {
 	
+	/** The active shell. */
 	private Shell activeShell = null;
+	
+	/** The in resource. */
 	private Resource inResource = null;
+	
+	/** The context class. */
 	private Class contextClass;
+	
+	/** The sa analysis name. */
 	private String saAnalysisName;
+	
+	/** The psm package name. */
 	private String psmPackageName;
 	
+	/**
+	 * Gets the active project.
+	 *
+	 * @param editor the editor
+	 * @return the active project
+	 */
 	private IProject getActiveProject(IEditorPart editor) {
 		IFileEditorInput input = (IFileEditorInput) editor.getEditorInput();
 		IFile file = input.getFile();
 		return file.getProject();
 	}
 
+	/**
+	 * Executes the schedulability analysis and shows the results.
+	 * The analysis context to be analyzed is asked to the user through a dedicated dialog.
+	 *
+	 * @param event the event resulting fro the invocation of the command
+	 * @return null 
+	 * @throws ExecutionException the execution exception
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 * @see org.polarsys.chess.m2m.ui.AnalysisContextSelectionDialog
+	 */
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final IEditorPart editor = HandlerUtil.getActiveEditor(event);
 		
@@ -146,7 +181,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 					TransformationResultsData result =null;
 					try {
 						//CHESSProjectSupport.installMAST();
-						result = QVToUIHandlerVERDE.this.execute_(editor, monitor);
+						result = QVToUIHandlerVERDE.this.executeTimingAnalysis(editor, monitor);
 						//Reopen the editor
 						CHESSEditorUtils.reopenEditor(editor, false);
 					} catch (Exception e) {
@@ -198,35 +233,37 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		return null;
 	}
 	
-	/***
-	 * 
-	 * @param editor
-	 * @param monitor
-	 * @param inResource 
-	 * @return the string resulting from the MAST execution (i.e. the system is/not schedulable
-	 * @throws Exception
+	/**
+	 * Collects all the needed information and invokes the PIMPSMTransformationVERDE.performTimingAnalysisWithMAST method
+	 *
+	 * @param editor the editor
+	 * @param monitor the monitor
+	 * @return the string resulting from the MAST execution (i.e. the system is/not schedulable) and the modified model
+	 * @throws Exception the exception
+	 * @see org.polarsys.chess.m2m.transformations.PIMPSMTransformationVERDE#performTimingAnalysisWithMAST(PapyrusMultiDiagramEditor, IFile, IProgressMonitor)
 	 */
-	public TransformationResultsData execute_(IEditorPart editor, IProgressMonitor monitor) throws Exception {
+	public TransformationResultsData executeTimingAnalysis(IEditorPart editor, IProgressMonitor monitor) throws Exception {
 		monitor.beginTask("Transforming", 4);
 		
 		IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
-		AbstractTransformation t = new PIMPSMTransformationVERDE();
+		PIMPSMTransformationVERDE t = new PIMPSMTransformationVERDE();
 		Map<String, String> configProps = new HashMap<String, String>();
 		configProps.put("saAnalysis", saAnalysisName);
 		configProps.put("analysisType", "Schedulability");
 		t.setConfigProperty(configProps);
 		t.setPsmPackageName(psmPackageName);
-		final TransformationResultsData result = t.performTransformation((PapyrusMultiDiagramEditor) editor, inputFile, monitor);
+		final TransformationResultsData result = t.performTimingAnalysisWithMAST((PapyrusMultiDiagramEditor) editor, inputFile, monitor);
 				
 		//CHESSProjectSupport.fileReplace(newFile, inputFile);
 		return result;
 	}
 	
 
-	/***
-	 * 
-	 * @param model
-	 * @param result
+	/**
+	 * *.
+	 *
+	 * @param model the model
+	 * @param result the result
 	 */
 	public void openSchedAnalysisReport(Model model, final String result){
 		

@@ -15,7 +15,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.m2m;
+package org.polarsys.chess.m2m.handlers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +29,12 @@ import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.ViewUtils;
+import org.polarsys.chess.m2m.Activator;
 import org.polarsys.chess.m2m.transformations.PIMPSMTransformationEnd2End;
+import org.polarsys.chess.m2m.transformations.TransUtil;
+import org.polarsys.chess.m2m.transformations.TransformationResultsData;
+import org.polarsys.chess.m2m.ui.AnalysisContextSelectionDialog;
+import org.polarsys.chess.m2m.ui.End2EndResultDialog;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -76,28 +81,71 @@ import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Stereotype;
 
-@SuppressWarnings("restriction")
+
+/**
+ * The Class QVToUIHandlerEnd2End realizes the handler for the end-to-end analysis command.
+ */
 public class QVToUIHandlerEnd2End extends AbstractHandler {
 
+	/** The Constant SAANALYSISCONTEXT. */
 	private static final String SAANALYSISCONTEXT = "MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext";
+	
+	/** The Constant SAENDTOENDFLOW. */
 	private static final String SAENDTOENDFLOW = "MARTE::MARTE_AnalysisModel::SAM::SaEndtoEndFlow";
+	
+	/** The active shell. */
 	private Shell activeShell = null;
+	
+	/** The in resource. */
 	private Resource inResource = null;
+	
+	/** The context class. */
 	private Class contextClass;
+	
+	/** The deadline. */
 	private String deadline;
+	
+	/** The scenario. */
 	private String scenario;
+	
+	/** The sa analysis name. */
 	private String saAnalysisName;
+	
+	/** The sa e2 e flow name. */
 	private String saE2EFlowName;
+	
+	/** The sa e2 e flow. */
 	private SaEndtoEndFlow saE2EFlow;
+	
+	/** The sa analysis ctx. */
 	private SaAnalysisContext saAnalysisCtx;
+	
+	/** The psm package name. */
 	private String psmPackageName;
 	
+	/**
+	 * Gets the active project.
+	 *
+	 * @param editor the editor
+	 * @return the active project
+	 */
 	private IProject getActiveProject(IEditorPart editor) {
 		IFileEditorInput input = (IFileEditorInput) editor.getEditorInput();
 		IFile file = input.getFile();
 		return file.getProject();
 	}
 
+	/**
+	 * Executes the end-to-end response time analysis and shows the results.
+	 * The end-to-end analysis context to be analyzed is asked to the user through a dedicated dialog.
+	 * 
+	 *
+	 * @param event the event resulting from the command invocation
+	 * @return null
+	 * @throws ExecutionException the execution exception
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 * @see org.polarsys.chess.m2m.ui.AnalysisContextSelectionDialog
+	 */
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final IEditorPart editor = HandlerUtil.getActiveEditor(event);
 		if (!(CHESSEditorUtils.isCHESSProject(editor)))
@@ -150,7 +198,7 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 		}else{
 			return null;
 		}
-		//System.out.println("!!!!!!!!!!!!" + contextClass.getQualifiedName());
+		
 		saAnalysisName = contextClass.getQualifiedName();
 		psmPackageName = contextClass.getName() +"_PSM";
 		Stereotype stereo = contextClass.getAppliedStereotype(SAANALYSISCONTEXT);
@@ -181,7 +229,7 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 				callbehaviour = (CallBehaviorAction)activityNode;
 			}
 		}
-		//System.out.println("***********" + callbehaviour.getName());
+		
 		if (!(callbehaviour.getBehavior() instanceof Interaction)){
 			return null;
 		}
@@ -193,11 +241,10 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					
-					//IWorkbenchPage page =  editor.getEditorSite().getPage();
 					TransformationResultsData result =null;
 					try {
-						//CHESSProjectSupport.installMAST();
-						result = QVToUIHandlerEnd2End.this.execute_(editor, monitor);
+					
+						result = QVToUIHandlerEnd2End.this.executeTimingAnalysis(editor, monitor);
 						//Reopen the editor
 						CHESSEditorUtils.reopenEditor(editor, false);
 					} catch (Exception e) {
@@ -248,23 +295,20 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 		return null;
 	}
 	
-	/***
-	 * 
-	 * @param editor
-	 * @param monitor
-	 * @param scenario 
-	 * @param deadline 
-	 * @return the string resulting from the MAST execution (i.e. the system is/not schedulable
-	 * @throws Exception
+	/**
+	 * Collects all the needed information and invokes the PIMPSMTransformationEnd2End.performTimingAnalysisWithMAST method
+	 *
+	 * @param editor the current active editor
+	 * @param monitor the progress monitor
+	 * @return the string resulting from the MAST execution (i.e. the system is/not schedulable) and the modified model
+	 * @throws Exception the exception
+	 * @see org.polarsys.chess.m2m.transformations.PIMPSMTransformationEnd2End#performTimingAnalysisWithMAST(PapyrusMultiDiagramEditor, IFile, IProgressMonitor)
 	 */
-	public TransformationResultsData execute_(IEditorPart editor, IProgressMonitor monitor) throws Exception {
+	public TransformationResultsData executeTimingAnalysis(IEditorPart editor, IProgressMonitor monitor) throws Exception {
 		monitor.beginTask("Transforming", 4);
 		if (!(CHESSEditorUtils.isCHESSProject(editor)))
 			return null;
-		
-//		IProject project = getActiveProject(editor);
-//		ModelSet resourceSet = getEditorResourceSet(editor);
-			
+
 		IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
 		
 		//finally call the transformation
@@ -278,17 +322,17 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 		configProps.put("analysisType", "EndToEnd");
 		t.setConfigProperty(configProps);
 		t.setPsmPackageName(psmPackageName);
-		TransformationResultsData result = t.performTransformation((PapyrusMultiDiagramEditor) editor, inputFile, monitor);
+		TransformationResultsData result = t.performTimingAnalysisWithMAST((PapyrusMultiDiagramEditor) editor, inputFile, monitor);
 				
 		return result;
 	}
 	
-	/***
-	 * 
-	 * @param model
-	 * @param saAnalysis
-	 * @param saE2EFlow
-	 * @param interaction 
+	/**
+	 * Opens the end-to-end analysis report dialog
+	 *
+	 * @param model the model
+	 * @param saAnalysisName the sa analysis name
+	 * @param interaction the interaction
 	 */
 	public void openE2EAnalysisReport(final Model model, String saAnalysisName, Interaction interaction){
 		//get all the e2e analysis result info from the model and open a simple, user-friendly report
@@ -336,6 +380,17 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 		launchDialog(model, cpus, saAnCtx, saflow, e2eOperations, assigns, specifications);
 	}
 	
+	/**
+	 * Launch dialog.
+	 *
+	 * @param model the model
+	 * @param cpus the cpus
+	 * @param saAnCtx the sa an ctx
+	 * @param saflow the saflow
+	 * @param e2eOperations the e2e operations
+	 * @param assigns the assigns
+	 * @param specifications the specifications
+	 */
 	private static void launchDialog(final Model model, final List<CH_HwProcessor> cpus, final SaAnalysisContext saAnCtx, final SaEndtoEndFlow saflow, final List<Operation> e2eOperations, final List<Assign> assigns, final List<CHRtPortSlot> specifications){
 		final Display display = PlatformUI.getWorkbench().getDisplay();
 		display.asyncExec(new Runnable() {
@@ -356,16 +411,5 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 		});
 	}
 	
-//	@SuppressWarnings("unused")
-//	private ModelSet getEditorResourceSet(IEditorPart editor)
-//			throws Exception {
-//		ModelSet resourceSet = null;
-//		try {
-//			resourceSet = (ModelSet)((ServicesRegistry)editor.getAdapter(ServicesRegistry.class)).getService(ModelSet.class);
-//		} catch (ServiceException e) {
-//			e.printStackTrace();
-//			throw new Exception("Unable to get the service registry");
-//		}
-//		return resourceSet;
-//	}
+
 }

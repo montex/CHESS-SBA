@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.m2m;
+package org.polarsys.chess.m2m.transformations;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,59 +40,104 @@ import org.polarsys.chess.chessmlprofile.Core.PSMPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.ViewUtils;
+import org.polarsys.chess.m2m.Activator;
 
-//import es.unican.ctr.marte2mast.Marte2mast;
 
+/**
+ * Utility class for the QVT transformations
+ */
 public class TransUtil {	
+	
+	/** The Constant TRANSPATH. */
 	public static final String TRANSPATH = "/transformations/";
 	
+	/** The Constant QVTO_PIM2PSM. */
 	public static final String QVTO_PIM2PSM = "platform:/plugin/" + Activator.PLUGIN_ID + TRANSPATH + "CHESS_PIM2PSM.qvto";
 	
+	/** The Constant QVTO_PIM2PSMVERDE. */
 	public static final String QVTO_PIM2PSMVERDE = "platform:/plugin/" + Activator.PLUGIN_ID + TRANSPATH + "CHESS_PIM2PSM_Inst_full_VERDE.qvto";
 	
+	/** The Constant QVTO_PIM2PSM_FULL. */
 	public static final String QVTO_PIM2PSM_FULL = "platform:/plugin/" + Activator.PLUGIN_ID + TRANSPATH + "CHESS_PIM2PSM_Inst_full.qvto";
 	
+	/** The Constant QVTO_CEILING. */
 	public static final String QVTO_CEILING = "platform:/plugin/" + Activator.PLUGIN_ID + TRANSPATH + "CHESS_CeilingAssignment.qvto";
 
+	/** The Constant QVTO_MULTIINSTANCE. */
 	public static final String QVTO_MULTIINSTANCE = "platform:/plugin/" + Activator.PLUGIN_ID + TRANSPATH + "BuildMultiInstance.qvto";
 	
+	/** The Constant QVTO_REMMULTIINSTANCE. */
 	public static final String QVTO_REMMULTIINSTANCE = "platform:/plugin/" + Activator.PLUGIN_ID + TRANSPATH + "RemoveMultiInstance.qvto";
 	
+	/** The Constant TRANSFORMATIONS_DIR. */
 	public static final String TRANSFORMATIONS_DIR = "schedulability_analysis";
 	
+	/** The Constant TRANSFORMATIONS_FULL_DIR. */
 	public static final String TRANSFORMATIONS_FULL_DIR = "schedulability_analysis_full";
 	
+	/** The Constant CODEGEN_DIR. */
 	public static final String CODEGEN_DIR = "src-gen";
 	
+	/** The Constant PIM_PSM_DIR. */
 	public static final String PIM_PSM_DIR = "m2m-temp";
 
+	/** The Constant TRANSFORMATIONS_DIR_VERDE. */
 	public static final String TRANSFORMATIONS_DIR_VERDE = "schedulability_analysis_full_VERDE";
 	
+	/** The Constant TRANSFORMATIONS_DIR_E2E. */
 	public static final String TRANSFORMATIONS_DIR_E2E= "End-To-End_schedulability_analysis";
 
+	/** The Constant QVTO_PIM2PSME2E. */
 	public static final String QVTO_PIM2PSME2E = "platform:/plugin/" + Activator.PLUGIN_ID + TRANSPATH + "CHESS_PIM2PSM_EndToEnd.qvto";
 
+	/** The Constant RESULTS_DIR_E2E. */
 	public static final String RESULTS_DIR_E2E = "End-To-End_analysis_results";
 	
+	/** The Constant SA_ANALYSIS_CTX. */
 	public static final String SA_ANALYSIS_CTX = "MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext";
 
 	
-	public static ModelContent loadModel(Resource inResource){
-		return EmfUtil.loadModel(inResource.getURI());
-	}
 	
+	/**
+	 * Load mode as QVT ModelContent.
+	 *
+	 * @param modelFile the model file
+	 * @return the QVT ModelContent stored in the given model file
+	 * 
+	 * @see org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent
+	 */
 	public static ModelContent loadModel(IFile modelFile){
 		return EmfUtil.loadModel(URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true));
 	}
 	
+	/**
+	 * Purge the model.
+	 *
+	 * @param modelFile the model file
+	 * @param saAnalysisQN the qualified name of MARTE <<SaAnalysisContext>> Class on which the purge needs to be applied
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @see #purgeModel(Model, String)
+	 */
 	public static void purgeModel(IFile modelFile, String saAnalysisQN) throws IOException {
 		ModelContent inModel = loadModel(modelFile);
 		Model m = (Model) inModel.getContent().get(0);
+		purgeModel(m, saAnalysisQN);
+	}
+	
+	/**
+	 * Purge the model
+	 *
+	 * @param the CHESS model file
+	 * @param saAnalysisQN the qualified name of MARTE <<SaAnalysisContext>> Class on which the purge needs to be applied
+	 * @throws IOException Signals that an I/O exception has occurred during saving the model resource.
+	 */
+	public static void purgeModel(Model model, String saAnalysisQN) throws IOException {
+		
 		//get the correct PSM package and platform...
 		Package psmPackage = null;
 		Package platform = null;
 		Class saAnalysisClass = null;
-		CHESS chess = (CHESS) m.getStereotypeApplication(m.getAppliedStereotype("CHESS::Core::CHESS"));
+		CHESS chess = (CHESS) model.getStereotypeApplication(model.getAppliedStereotype("CHESS::Core::CHESS"));
 		for (Package pkg : chess.getPsmView().getBase_Package().getNestedPackages()) {
 			Stereotype stereo = pkg.getAppliedStereotype("CHESS::Core::PSMPackage");
 			if(stereo != null){
@@ -112,25 +157,29 @@ public class TransUtil {
 		
 		//...and remove the PSM package and clear the backpropagation (platform & context)
 		if(psmPackage != null && platform != null){
-			purgeRTAPackage(m, psmPackage);
-			purgeBackpropagation(m, platform);
+			psmPackage.destroy();
+			purgeBackpropagation(model, platform);
 		}
 		
 		if(saAnalysisClass != null){
-			System.out.println(saAnalysisClass.getName());
-			purgeE2EResults(m, saAnalysisClass);
+			purgeE2EResults(model, saAnalysisClass);
 		}
-		m.eResource().save(null);
+		
 	}
 	
-	// Remove the content of the RtAnalysisPackage
-	private static void purgeRTAPackage(Model m, Package psmPackage) throws IOException {
-		psmPackage.destroy();
-	}
 	
 	
 	//Remove the values of the backpropagation results 
-	private static void purgeBackpropagation(Model m, Package platform) throws IOException {
+	/**
+	 * Purge backpropagation data.
+	 * The back propagation of analysis results to CHRtSpecification stereotype is deprecated.
+	 *
+	 * @param m the m
+	 * @param platform the platform
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Deprecated
+	private static void purgeBackpropagation(Model m, Package platform)  {
 		String name = platform.getName();
 		name = name.substring(0, name.lastIndexOf('_'));
 		Component compPlatform = null;
@@ -152,6 +201,12 @@ public class TransUtil {
 		}
 	}
 	
+	/**
+	 * Purge e2 e results.
+	 *
+	 * @param m the m
+	 * @param saAnalysisClass the sa analysis class
+	 */
 	private static void purgeE2EResults(Model m, Class saAnalysisClass) {
 		SaAnalysisContext saCtx = UMLUtils.getStereotypeApplication(saAnalysisClass, SaAnalysisContext.class);
 		saCtx.setIsSched("");
