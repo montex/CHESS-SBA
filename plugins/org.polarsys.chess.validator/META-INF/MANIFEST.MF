@@ -36,7 +36,6 @@ Export-Package: org.polarsys.chess.validator;
  org.polarsys.chess.validator.constraints,
  org.polarsys.chess.validator.managers;
   uses:="org.eclipse.osgi.util,
-   it.unipd.chess.views,
    org.eclipse.emf.common.command,
    org.eclipse.emf.transaction,
    org.eclipse.uml2.uml,
