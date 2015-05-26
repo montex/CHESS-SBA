@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.validator;
+package org.polarsys.chess.validator.managers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,9 +72,22 @@ import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddDiagramElement contains Commands to create new elements in the model
+ *  and adds them to the current diagram, if possible
+ */
 @SuppressWarnings("restriction")
 public class AddDiagramElement {
 	
+	/**
+	 * Creates an interface realization from a Component to the Interface provided by its Port
+	 *
+	 * @param domain the TransactionalEditingDomain of the model
+	 * @param comp the Component owner of the port
+	 * @param port the ClientServerPort providing and Interface
+	 * @return the command
+	 */
 	public static Command createDependencies(TransactionalEditingDomain domain, final Component comp, final ClientServerPort port){
 		return new RecordingCommand(domain) {
 			
@@ -133,6 +146,13 @@ public class AddDiagramElement {
 		};
 	}
 	
+	/**
+	 * Removes dependencies from the model
+	 *
+	 * @param domain the TransactionalEditingDomain of the model
+	 * @param deps the dependencies to be removed
+	 * @return the command
+	 */
 	public static Command destroyDependencies(TransactionalEditingDomain domain, final EList<? extends Dependency> deps){
 		return new RecordingCommand(domain) {
 			@Override
@@ -145,6 +165,14 @@ public class AddDiagramElement {
 	}
 	
 	
+	/**
+	 * Adds all the operations contained in a Classifier interf to a Component comp
+	 *
+	 * @param domain the TransactionalEditingDomain of the model
+	 * @param interf the Classifier containing the operations
+	 * @param comp the Component where the operation will be copied
+	 * @return the command
+	 */
 	public static Command addOperationCommand(
 			TransactionalEditingDomain domain, final Classifier interf, final Component comp) {
 		
@@ -250,7 +278,15 @@ public class AddDiagramElement {
 //		}
 //	}
 	
-	public static Command addAllPortsCommand(TransactionalEditingDomain domain, final Component providerComp, final Component clientComp) {
+	/**
+	 * Adds all the ports contained in a Component providerComp to a Component clientComp
+	 *
+	 * @param domain the TransactionalEditingDomain of the model
+	 * @param providerComp the Component containing the ports
+	 * @param clientComp the Component where the ports will be copied
+	 * @return the command
+	 */
+public static Command addAllPortsCommand(TransactionalEditingDomain domain, final Component providerComp, final Component clientComp) {
 		return new RecordingCommand(domain) {
 			@Override
 			protected void doExecute() {
@@ -366,8 +402,18 @@ public class AddDiagramElement {
 	
 	
 	
-	public static Command addPortCommand(TransactionalEditingDomain domain, final Component providerComp, final Component clientComp, final Port supplierPort) {
-		return new RecordingCommand(domain) {
+
+/**
+ * Adds the specified supplierPort contained in a Component providerComp to a Component clientComp
+ *
+ * @param domain the TransactionalEditingDomain of the model
+ * @param providerComp the Component containing the port
+ * @param clientComp the Component where the port will be copied
+ * @param supplierPort the supplier port
+ * @return the command
+ */
+public static Command addPortCommand(TransactionalEditingDomain domain, final Component providerComp, final Component clientComp, final Port supplierPort) {
+	return new RecordingCommand(domain) {
 			@Override
 			protected void doExecute() {
 				//addClientServerPort(comp, interf.getClientDependencies());
@@ -391,6 +437,15 @@ public class AddDiagramElement {
 	
 	
 	//add operation to the interface's clients
+	/**
+	 * Copies an operation from an Interface to all the Component Type that realizes the Interface
+	 * and to all the ComponentImplementation that realizes the ComponentType(s)
+	 *
+	 * @param domain the TransactionalEditingDomain of the model
+	 * @param interf the Interface containing the operation
+	 * @param operation the Operation to be copied
+	 * @return the command
+	 */
 	public static Command addOperationCommand1(TransactionalEditingDomain domain, final Interface interf, final Operation operation){
 		return new RecordingCommand(domain) {
 
@@ -458,6 +513,12 @@ public class AddDiagramElement {
 		
 	}*/
 	
+	/**
+	 * Creates a graphical action for a new Operation added to to a Component
+	 *
+	 * @param containerComp the container Component
+	 * @param newOp the new Operation
+	 */
 	private static void createGraphicalOperation(Component containerComp, Operation newOp){
 		IMultiDiagramEditor editor = EditorUtils.getMultiDiagramEditor();
 		/*ISashWindowsContainer container = null;
@@ -522,6 +583,12 @@ public class AddDiagramElement {
 		
 	}
 	
+	/**
+	 * Creates a graphical action for a new Port added to to a Component
+	 *
+	 * @param containerComp the container Component
+	 * @param port the new Port
+	 */
 	private static void createGraphicalPort(Component containerComp, Port port){
 		IMultiDiagramEditor editor = EditorUtils.getMultiDiagramEditor();
 		Diagram diagram = (Diagram)editor.getAdapter(Diagram.class);
@@ -557,7 +624,13 @@ public class AddDiagramElement {
 	}
 	
 	
-	//adds a Comment stereotyped with Assign to the assignList of the deployment view
+	/**
+	 * Adds the specified Comment stereotyped with Assign to the assignList of the deployment view
+	 *
+	 * @param domain the TransactionalEditingDomain of the model
+	 * @param comm the Comment stereotyped as <<Assign>> to be added
+	 * @return the command
+	 */
 	public static Command addCommentCommand(
 			TransactionalEditingDomain domain, final Comment comm) {
 		
@@ -593,7 +666,14 @@ public class AddDiagramElement {
 			}
 		};
 	}
-	
+		
+	/**
+	 * Removes the specified Comment stereotyped with Assign to the assignList of the deployment view
+	 *
+	 * @param domain the TransactionalEditingDomain of the model
+	 * @param comm the Comment stereotyped as <<Assign>> to be removed
+	 * @return the command
+	 */
 	public static Command removeCommentCommand(
 			TransactionalEditingDomain domain, final Comment comm) {
 
@@ -629,6 +709,16 @@ public class AddDiagramElement {
 
 	}
 	
+	/**
+	 * Copies the specified parameter added to an operation of an interface to the 
+	 * corresponding operation in the Components that realize the interface
+	 *
+	 * @param opCont the Interface containing the operation
+	 * @param param the Parameter to be copied
+	 * @param operation the Operation containing the parameter
+	 * @param TransactionalEditingDomain of the model
+	 * @return the command
+	 */
 	public static Command addParameterCommand(final Interface opCont, final Parameter param, final Operation operation, TransactionalEditingDomain domain) {
 		return new RecordingCommand(domain) {
 		
@@ -652,7 +742,15 @@ public class AddDiagramElement {
 	}
 	
 	
-	//TODO very similar to addAllPortsCommand: refactor? 
+	/**
+	 * Updates the ports, stereotyped as <<ClientServerPort>>, of the ComponentImplementations
+	 * 
+	 * @see addAllPortsCommand
+	 *
+	 * @param domain the TransactionalEditingDomain of the model
+	 * @param cspSupplied the Port stereotyped as <<ClientServerPort>>
+	 * @return the command
+	 */
 	public static Command updateImplementationsPorts(
 			TransactionalEditingDomain domain, final ClientServerPort cspSupplied) {
 		
@@ -687,6 +785,15 @@ public class AddDiagramElement {
 	}
 	
 	
+	/**
+	 * Updates the ports, stereotyped as <<FlowPort>>, of the ComponentImplementations
+	 * 
+	 * @see addAllPortsCommand
+	 *
+	 * @param domain the TransactionalEditingDomain of the model
+	 * @param flPort the Port stereotyped as <<FlowPort>>
+	 * @return the command
+	 */
 	public static Command updateImplementationsFlowPorts(
 			TransactionalEditingDomain domain, final FlowPort flPort) {
 		
@@ -718,6 +825,13 @@ public class AddDiagramElement {
 	}
 	
 	
+	/**
+	 * Removes the specified port of the ComponentImplementations
+	 *
+	 * @param domain the TransactionalEditingDomain of the model
+	 * @param supplierPort the Port to be removed
+	 * @return the command
+	 */
 	public static Command removeImplementationsPorts(
 			TransactionalEditingDomain domain, final Port supplierPort) {
 		

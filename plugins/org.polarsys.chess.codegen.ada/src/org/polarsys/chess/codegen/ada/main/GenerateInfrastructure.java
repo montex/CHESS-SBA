@@ -310,11 +310,10 @@ public class GenerateInfrastructure extends AbstractAcceleoGenerator {
     
     /**
      * Adds a properties file in the list of properties files.
-     * 
-     * @param propertiesFile
-     *            The properties file to add.
-     * @generated
+     *
+     * @param propertiesFile            The properties file to add.
      * @since 3.1
+     * @generated 
      */
     @Override
     public void addPropertiesFile(String propertiesFile) {

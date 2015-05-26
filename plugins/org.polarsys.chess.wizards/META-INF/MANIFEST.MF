@@ -20,7 +20,9 @@ Require-Bundle: org.eclipse.papyrus.infra.core;bundle-version="1.0.0",
  org.eclipse.papyrus.uml.diagram.wizards;bundle-version="1.0.0",
  org.eclipse.papyrus.infra.emf,
  org.eclipse.papyrus.editor
-Export-Package: org.polarsys.chess.wizards
+Export-Package: org.polarsys.chess.wizards,
+ org.polarsys.chess.wizards.providers,
+ org.polarsys.chess.wizards.wizards
 Bundle-Vendor: %pluginProvider
 Bundle-ActivationPolicy: lazy
 Bundle-Version: 0.9.0.qualifier

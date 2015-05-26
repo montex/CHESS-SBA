@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
  */
 
-package org.polarsys.chess.validator.managers;
+package org.polarsys.chess.validator.libs;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
@@ -31,8 +31,22 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.util.UMLUtil;
 import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
+import org.polarsys.chess.validator.managers.ViewManager;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CrossViewActionLib.
+ */
 public class CrossViewActionLib {
+	
+	/**
+	 * Cross view deployment action.
+	 *
+	 * @param notifier the Object notifier
+	 * @param notification the notification
+	 * @param currentView the Package representing the current view
+	 * @return true, if successful
+	 */
 	public static boolean crossViewDeploymentAction(Object notifier,
 			Notification notification, Package currentView) {
 		PapyrusMultiDiagramEditor editor = (PapyrusMultiDiagramEditor) PlatformUI
@@ -60,6 +74,14 @@ public class CrossViewActionLib {
 		return false;
 	}
 
+	/**
+	 * Cross view deployment action.
+	 *
+	 * @param notifier the Object notifier
+	 * @param notification the notification
+	 * @param currentView the DesignView representing current view
+	 * @return true, if successful
+	 */
 	public static boolean crossViewDeploymentAction(Object notifier,
 			Notification notification, DesignView currentView) {
 		PapyrusMultiDiagramEditor editor = (PapyrusMultiDiagramEditor) PlatformUI

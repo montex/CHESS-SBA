@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.validator.managers;
+package org.polarsys.chess.validator.libs;
 
 
 import java.util.ArrayList;
@@ -69,10 +69,16 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 import org.polarsys.chess.validator.Activator;
-import org.polarsys.chess.validator.AddDiagramElement;
+import org.polarsys.chess.validator.managers.AddDiagramElement;
+import org.polarsys.chess.validator.messages.Messages;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ActionsLib contains the implementation of the Automated Actions
+ */
 public class ActionsLib {
 	
+	/** The port modification action. */
 	public static IAutomatedAction portModificationAction = new IAutomatedAction() {
 		@Override
 		public Command compile(Notification notification, List<Notification> notificationList,
@@ -137,6 +143,7 @@ public class ActionsLib {
 		}
 	};
 
+	/** The port removal action. */
 	public static IAutomatedAction portRemovalAction = new IAutomatedAction() {
 		@Override
 		public Command compile(Notification notification, List<Notification> notificationList,
@@ -176,6 +183,7 @@ public class ActionsLib {
 	/*
 	 * inherited operations are automatically added
 	 */
+	/** The component interface realization action. */
 	public static IAutomatedAction componentInterfaceRealizationAction = new IAutomatedAction() {
 		@Override
 		public Command compile(Notification notification, List<Notification> notificationList,
@@ -197,6 +205,7 @@ public class ActionsLib {
 		}
 	};
 	
+	/** The component realization action. */
 	public static IAutomatedAction componentRealizationAction = new IAutomatedAction() {
 		@Override
 		public Command compile(Notification notification, List<Notification> notificationList,
@@ -235,6 +244,7 @@ public class ActionsLib {
 
 	};
 	
+	/** The remove realization operations action. */
 	public static IAutomatedAction removeRealizationOperationsAction = new IAutomatedAction() {
 		
 		private IStatus operationAborted = new Status(IStatus.ERROR,
@@ -385,6 +395,7 @@ public class ActionsLib {
 		}
 	};
 	
+	/** The propagate operation modification. */
 	public static IAutomatedAction propagateOperationModification = new IAutomatedAction() {
 		
 		@Override
@@ -439,6 +450,7 @@ public class ActionsLib {
 	};
 	
 	
+	/** The propagate interface modification. */
 	public static IAutomatedAction propagateInterfaceModification = new IAutomatedAction() {
 		
 		private IStatus operationAborted = new Status(IStatus.ERROR,
@@ -557,6 +569,7 @@ public class ActionsLib {
 	};
 		
 
+	/** The propagate parameter removal action. */
 	public static IAutomatedAction propagateParameterRemovalAction = new IAutomatedAction() {
 		
 		@Override
@@ -645,6 +658,7 @@ public class ActionsLib {
 		}
 	};
 	
+	/** The propagate parameter addition action. */
 	public static IAutomatedAction propagateParameterAdditionAction = new IAutomatedAction() {
 		
 		@Override
@@ -697,6 +711,7 @@ public class ActionsLib {
 	};
 	
 	
+	/** The comment action. */
 	public static IAutomatedAction commentAction = new IAutomatedAction() {
 		
 		@Override
@@ -716,6 +731,7 @@ public class ActionsLib {
 		}
 	};
 		
+	/** The port addition action. */
 	public static IAutomatedAction portAdditionAction = new IAutomatedAction() {
 		@Override
 		public Command compile(Notification notification,
@@ -742,6 +758,7 @@ public class ActionsLib {
 	};
 	
 	
+	/** The propagate port modification. */
 	public static IAutomatedAction propagatePortModification = new IAutomatedAction() {
 		
 		@Override
@@ -810,7 +827,8 @@ public class ActionsLib {
 //			propagateParameterRemovalAction, propagateParameterAdditionAction,
 //			commentAction, portAdditionAction, propagatePortModification};
 	
-	public static IAutomatedAction[] actionList = {portModificationAction,
+	/** The action list. */
+public static IAutomatedAction[] actionList = {portModificationAction,
 			componentInterfaceRealizationAction, componentRealizationAction,
 			commentAction};
 	

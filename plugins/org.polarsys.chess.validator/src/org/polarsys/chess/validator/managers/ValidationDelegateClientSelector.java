@@ -13,12 +13,16 @@
 -- http://www.eclipse.org/legal/epl-v10.html                         --
 -----------------------------------------------------------------------
 */
-package org.polarsys.chess.validator;
+package org.polarsys.chess.validator.managers;
 
 import org.eclipse.emf.validation.model.IClientSelector;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ValidationDelegateClientSelector.
+ */
 public class ValidationDelegateClientSelector
 
 

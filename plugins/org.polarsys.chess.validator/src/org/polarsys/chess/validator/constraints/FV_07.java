@@ -26,8 +26,15 @@ import org.eclipse.emf.validation.IValidationContext;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FV_07.
+ */
 public class FV_07 extends AbstractModelConstraint {
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
+	 */
 	@Override
 	public IStatus validate(IValidationContext ctx) {
 		EObject eObject = ctx.getTarget();

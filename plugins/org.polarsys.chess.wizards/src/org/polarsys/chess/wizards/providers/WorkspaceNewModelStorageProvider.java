@@ -1,4 +1,4 @@
-package org.polarsys.chess.wizards;
+package org.polarsys.chess.wizards.providers;
 
 import static org.eclipse.papyrus.uml.diagram.wizards.utils.WizardsHelper.adapt;
 
@@ -20,18 +20,33 @@ import org.eclipse.papyrus.uml.diagram.wizards.pages.NewModelFilePage;
 import org.eclipse.papyrus.uml.diagram.wizards.utils.WizardsHelper;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
-import org.polarsys.chess.wizards.InitModelWizard.NewDiagramForExistingModelPage;
+import org.polarsys.chess.wizards.wizards.CreateCHESSModelWizard;
+import org.polarsys.chess.wizards.wizards.InitModelWizard.NewDiagramForExistingModelPage;
 
+/**
+ * The Class WorkspaceNewModelStorageProvider.
+ */
 public class WorkspaceNewModelStorageProvider {
 
+	/** The wizard. */
 	private CreateCHESSModelWizard wizard;
 
+	/** The new model file page. */
 	private NewModelFilePage newModelFilePage;
 
+	/**
+	 * Instantiates a new workspace new model storage provider.
+	 */
 	public WorkspaceNewModelStorageProvider() {
 		super();
 	}
 
+	/**
+	 * Checks if the WorkspaceNewModelStorageProvider can handle the structured selection in input
+	 *
+	 * @param initialSelection the initial structured selection
+	 * @return true, if successful
+	 */
 	public boolean canHandle(IStructuredSelection initialSelection) {
 		boolean result = false;
 
@@ -45,11 +60,22 @@ public class WorkspaceNewModelStorageProvider {
 		return result;
 	}
 
+	/**
+	 * Initializes the wizard.
+	 *
+	 * @param wizard the wizard
+	 * @param selection the selection
+	 */
 	public void init(CreateCHESSModelWizard wizard, IStructuredSelection selection) {
 		this.wizard = wizard;
 		newModelFilePage = createNewModelFilePage(selection);
 	}
 
+	/**
+	 * Creates the wizard pages.
+	 *
+	 * @return the list of wizards pages
+	 */
 	public List<? extends IWizardPage> createPages() {
 		if(newModelFilePage == null) {
 			return Collections.emptyList();
@@ -58,6 +84,12 @@ public class WorkspaceNewModelStorageProvider {
 		return Arrays.asList(newModelFilePage);
 	}
 
+	/**
+	 * Validates the diagram categories.
+	 *
+	 * @param newCategories the new categories
+	 * @return the status of the validation
+	 */
 	public IStatus validateDiagramCategories(String... newCategories) {
 		if(newModelFilePage != null) {
 			String firstCategory = newCategories.length > 0 ? newCategories[0] : null;
@@ -70,6 +102,12 @@ public class WorkspaceNewModelStorageProvider {
 	}
 
 
+	/**
+	 * Creates the new model file page.
+	 *
+	 * @param selection the current structured selection
+	 * @return the new model file page
+	 */
 	protected NewModelFilePage createNewModelFilePage(IStructuredSelection selection) {
 
 		if(wizard.isCreateProjectWizard() || wizard.isCreateMultipleModelsWizard()) {
@@ -87,19 +125,42 @@ public class WorkspaceNewModelStorageProvider {
 		return new NewModelFilePage(selection, wizard.getModelKindName());
 	}
 
+	/**
+	 * Gets the diagram file name.
+	 *
+	 * @param domainModelURI the domain model URI
+	 * @return the diagram file name
+	 */
 	protected String getDiagramFileName(URI domainModelURI) {
 		return domainModelURI.trimFileExtension().lastSegment();
 	}
 
+	/**
+	 * Checks if the wizards creates the from existing domain model.
+	 *
+	 * @return false
+	 */
 	protected boolean isCreateFromExistingDomainModel() {
 		return false;
 	}
 
+	/**
+	 * Creates the new model URI
+	 *
+	 * @param categoryId the category id
+	 * @return the URI
+	 */
 	public URI createNewModelURI(String categoryId) {
 		IFile newFile = newModelFilePage.createNewFile();
 		return (newFile == null) ? null : URI.createPlatformResourceURI(newFile.getFullPath().toString(), true);
 	}
 	
+	/**
+	 * Creates the editor input.
+	 *
+	 * @param uri the URI
+	 * @return the editor input
+	 */
 	public IEditorInput createEditorInput(URI uri) {
 		if (uri.isPlatformResource()) {
 			return new FileEditorInput(ResourcesPlugin.getWorkspace().getRoot()

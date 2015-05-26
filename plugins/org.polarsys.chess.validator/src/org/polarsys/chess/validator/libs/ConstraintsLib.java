@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.validator.managers;
+package org.polarsys.chess.validator.libs;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
@@ -51,8 +51,10 @@ import org.polarsys.chess.core.util.uml.ProfileUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
 import org.polarsys.chess.core.views.ViewUtils;
+import org.polarsys.chess.validator.managers.ViewManager;
 
 
+// TODO: Auto-generated Javadoc
 /*
  * Framework usage:
  * 
@@ -76,14 +78,24 @@ import org.polarsys.chess.core.views.ViewUtils;
 
 
 
+/**
+ * The Class ConstraintsLib contains the implementation of Dynamic Constraints
+ */
 public class ConstraintsLib {
 
+	/** The Constant CSPORT. */
 	protected static final String CSPORT = "MARTE::MARTE_DesignModel::GCM::ClientServerPort";
 
+	/** The viewmgr. */
 	private static ViewManager viewmgr = ViewManager.loadViewManager();
 
+	/** The successfully verified. */
 	static boolean successfullyVerified;
+	
+	/** The diagram. */
 	static Diagram diagram = null;
+	
+	/** The notifier. */
 	static Object notifier;
 
 
@@ -92,6 +104,7 @@ public class ConstraintsLib {
 	 * @FilterableDynamicConstraint R_S_1
 	 * 
 	 */
+	/** The R_ s_1. */
 	public static FilterableDynamicConstraint R_S_1 = 
 		new FilterableDynamicConstraint("R_S_1", IConstraint.ERROR, "A predefined profile cannot be removed") {
 		@Override
@@ -111,6 +124,7 @@ public class ConstraintsLib {
 	/*
 	 * @FilterableDynamicConstraint V_SR_1
 	 */
+	/** The V_ s r_1. */
 	public static FilterableDynamicConstraint V_SR_1 = 
 		new FilterableDynamicConstraint("V_SR_1", IConstraint.ERROR, "A view cannot be modified or removed") {
 		@Override
@@ -129,6 +143,7 @@ public class ConstraintsLib {
 	 * @FilterableDynamicConstraint S_S_1
 	 * a predefined stereotype cannot be removed
 	 */
+	/** The S_ s_1. */
 	public static FilterableDynamicConstraint S_S_1 = new FilterableDynamicConstraint("S_S_1",
 			IConstraint.ERROR, "a predefined stereotype cannot be removed") {
 		@Override
@@ -156,6 +171,7 @@ public class ConstraintsLib {
 	 * @FilterableDynamicConstraint M_A_1
 	 * cannot apply profiles
 	 */
+	/** The M_ a_1. */
 	public static FilterableDynamicConstraint M_A_1 = new FilterableDynamicConstraint("M_A_1",
 			IConstraint.ERROR, "Cannot apply further profiles in the model") {
 		@Override
@@ -176,6 +192,7 @@ public class ConstraintsLib {
 	 * @FilterableDynamicConstraint C_A_1
 	 * Interface realization is not allowed because owned operations does not match.
 	 */
+	/** The C_ a_1. */
 	public static FilterableDynamicConstraint C_A_1 = 
 		new FilterableDynamicConstraint("C_A_1", IConstraint.ERROR, "Interface realization is not allowed because owned operations does not match.") {
 		@Override
@@ -253,6 +270,7 @@ public class ConstraintsLib {
 	 * FilterableDynamicConstraint O_S_1 
 	 * Interface operations in the Functional View must have public visibility.
 	 */
+	/** The O_ s_1. */
 	public static FilterableDynamicConstraint O_S_1 = 
 		new FilterableDynamicConstraint("O_S_1", IConstraint.ERROR, "Interface operations in the Functional View must have public visibility.") {
 		@Override
@@ -279,6 +297,7 @@ public class ConstraintsLib {
 	};
 
 
+	/** The Add remove dependency. */
 	public static FilterableDynamicConstraint AddRemoveDependency = 
 		new FilterableDynamicConstraint("ADD_REMOVEDependency", IConstraint.ERROR, "Cannot modify dependency for ComponentType") {
 		@Override
@@ -326,7 +345,8 @@ public class ConstraintsLib {
 	 * @FilterableDynamicConstraint P_T_1 
 	 * view stereotype cannot be applied
 	 */
-	public static FilterableDynamicConstraint P_T_1 = 
+	/** The P_ t_1. */
+public static FilterableDynamicConstraint P_T_1 = 
 		new FilterableDynamicConstraint("P_T_1", IConstraint.ERROR, "Appling a view stereotype is forbidden.") {
 		@Override
 		public boolean checkConstraint(Notification notification, DesignView currentView) {
@@ -347,6 +367,7 @@ public class ConstraintsLib {
 	 * @FilterableDynamicConstraint P_A_1 
 	 * an interface can be added only in functionalView or deploymentView
 	 */
+	/** The P_ a_1. */
 	public static FilterableDynamicConstraint P_A_1 = 
 		new FilterableDynamicConstraint("P_A_1", IConstraint.ERROR, 
 				"Creation of interfaces is only allowed in the Functional View and Deployment View.") {
@@ -446,6 +467,7 @@ public class ConstraintsLib {
 //		}
 //	};
 
+	/** The E_ s_1_ new. */
 	public static DynamicConstraint E_S_1_NEW = 
 		new DynamicConstraint("E_S_1", IConstraint.ERROR, 
 		"The view \"{0}\" has no write access on the {1} \"{2}\", therefore it cannot be modified.") {
@@ -502,6 +524,7 @@ public class ConstraintsLib {
 	};
 
 	
+		/** The check modified operation. */
 		public static FilterableDynamicConstraint checkModifiedOperation = 
 			new FilterableDynamicConstraint("ModifiedOperation", IConstraint.WARNING, 
 			"Cannot modify inherited operations.") {
