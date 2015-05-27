@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.papyrus.infra.gmfdiag.common;bundle-version="1.0.0",
  org.polarsys.chess.service
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Vendor: University of Padova
+Bundle-Vendor: Polarsys CHESS Project
 Export-Package: org.polarsys.chess.validator;
   uses:="org.eclipse.core.runtime,
    org.eclipse.ui,

@@ -8,7 +8,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.polarsys.chess.core;uses:="org.eclipse.jface.resource,org.eclipse.ui.plugin,org.osgi.framework",
  org.polarsys.chess.core.automatedActions,
- org.polarsys.chess.core.constraint;uses:="org.eclipse.core.runtime,it.unipd.chess.views,org.eclipse.emf.common.notify",
+ org.polarsys.chess.core.constraint;uses:="org.eclipse.core.runtime,org.eclipse.emf.common.notify",
  org.polarsys.chess.core.extensionpoint,
  org.polarsys.chess.core.natures;uses:="org.eclipse.core.resources",
  org.polarsys.chess.core.notifications;uses:="org.eclipse.papyrus.ui.toolbox.notification",
@@ -20,7 +20,6 @@ Export-Package: org.polarsys.chess.core;uses:="org.eclipse.jface.resource,org.ec
    org.eclipse.jface.viewers",
  org.polarsys.chess.core.resourcelistener;
   uses:="org.eclipse.ui,
-   it.unipd.chess.util,
    org.eclipse.jface.viewers,
    org.eclipse.emf.common.command,
    org.eclipse.emf.transaction",
@@ -40,7 +39,7 @@ Export-Package: org.polarsys.chess.core;uses:="org.eclipse.jface.resource,org.ec
  org.polarsys.chess.core.views,
  org.polarsys.chess.core.views.commands,
  org.polarsys.chess.core.views.permissions
-Bundle-Vendor: University of Padova, Intecs
+Bundle-Vendor: Polarsys CHESS Project
 Require-Bundle: org.eclipse.papyrus.editor;bundle-version="0.8.1",
  org.eclipse.papyrus.sysml;bundle-version="0.8.1",
  org.eclipse.debug.ui,
