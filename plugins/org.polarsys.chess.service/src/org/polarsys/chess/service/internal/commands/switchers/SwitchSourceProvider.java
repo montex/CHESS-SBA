@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.service.commands;
+package org.polarsys.chess.service.internal.commands.switchers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +27,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.part.WorkbenchPart;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
 import org.polarsys.chess.core.views.ViewUtils;
@@ -42,9 +43,6 @@ public class SwitchSourceProvider extends AbstractSourceProvider {
 	
 	
 	public static List<String> commandsToRefresh = new ArrayList<String>();
-	
-//	public final static String VIEW = "org.polarsys.chess.service.commands.currentView";
-//    String viewName;
 
 	public void dispose() {
 	}
@@ -57,7 +55,7 @@ public class SwitchSourceProvider extends AbstractSourceProvider {
 	}
 
 	public String[] getProvidedSourceNames() {
-		return new String[] { SWITCH/*, VIEW*/ };
+		return new String[] { SWITCH };
 	}
 	
 	private void setEnabledValue(String v) {
@@ -70,7 +68,7 @@ public class SwitchSourceProvider extends AbstractSourceProvider {
 			if (!CHESSEditorUtils.isCHESSProject(activeEditor)) {
 				setEnabledValue(DISABLED);
 			} else {
-			
+				
 				DiagramStatus ds = CHESSEditorUtils.getDiagramStatus((PapyrusMultiDiagramEditor) activeEditor);
 				if (ds == null) {
 					setEnabledValue(DISABLED);
@@ -80,8 +78,6 @@ public class SwitchSourceProvider extends AbstractSourceProvider {
 				if (currentView != null && (ViewUtils.hasConcurrentViews(currentView) || ViewUtils.isConcurrentView(currentView))){
 					String name = ViewUtils.getBaseViewName(currentView);
 					setEnabledValue(name);
-//					System.out.println("base view name " + name);
-//					System.out.println("active view " + ((CHESSEditor) activeEditor).getDiagramStatus().getActiveView());
 				}
 				
 				
@@ -89,15 +85,14 @@ public class SwitchSourceProvider extends AbstractSourceProvider {
 					setEnabledValue(DISABLED);
 				}
 			} 
-			refreshElements();
+			refreshElements(activeEditor);
 		} catch (Exception e) {
 			return;
 		}
 	}
 
-	private void refreshElements() {
-		ICommandService service = (ICommandService) PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getService(ICommandService.class);
+	private void refreshElements(IEditorPart activeEditor) {
+		ICommandService service = (ICommandService) activeEditor.getSite().getWorkbenchWindow().getService(ICommandService.class);
 		
 		for (String commandId : commandsToRefresh) {
 			service.refreshElements(commandId, null);

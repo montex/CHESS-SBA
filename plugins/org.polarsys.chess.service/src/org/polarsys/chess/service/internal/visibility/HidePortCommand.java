@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.service.commands;
+package org.polarsys.chess.service.internal.visibility;
 
 import java.util.List;
 
@@ -24,7 +24,9 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 
-class HidePortCommand {
+//TODO The functionality provided by this class does not work.
+//Either remove the class or investigate an alternative solution.
+public class HidePortCommand {
 
 	private PapyrusMultiDiagramEditor editor;
 	private List<View> elements;

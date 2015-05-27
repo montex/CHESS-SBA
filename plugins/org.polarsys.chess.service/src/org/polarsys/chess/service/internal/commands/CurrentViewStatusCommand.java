@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.service.commands;
+package org.polarsys.chess.service.internal.commands;
 
 import java.util.Map;
 
@@ -28,13 +28,14 @@ import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.views.DiagramStatus;
-import org.polarsys.chess.service.CHESSService;
-import org.polarsys.chess.service.CHESSServiceFactory;
+import org.polarsys.chess.service.internal.commands.switchers.SwitchSourceProvider;
+import org.polarsys.chess.service.internal.service.CHESSService;
+import org.polarsys.chess.service.internal.service.CHESSServiceFactory;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
-public class CurrentViewStatus extends AbstractHandler implements IElementUpdater {
+public class CurrentViewStatusCommand extends AbstractHandler implements IElementUpdater {
 	
-	public CurrentViewStatus() {
+	public CurrentViewStatusCommand() {
 		SwitchSourceProvider.commandsToRefresh.add(COMMAND_ID);
 	}
 

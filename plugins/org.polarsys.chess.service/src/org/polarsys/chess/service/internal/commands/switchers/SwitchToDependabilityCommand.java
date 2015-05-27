@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.service.commands;
+package org.polarsys.chess.service.internal.commands.switchers;
 
 import java.util.Map;
 
@@ -25,7 +25,7 @@ import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 
-public class SwitchToDependability extends AbstractHandler implements
+public class SwitchToDependabilityCommand extends AbstractHandler implements
 		IElementUpdater {
 
 	public static String COMMAND_ID = "org.polarsys.chess.service.switchDEPCommand";

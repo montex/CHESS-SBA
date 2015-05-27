@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.service;
+package org.polarsys.chess.service.internal.palette;
 
 import java.util.List;
 

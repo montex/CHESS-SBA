@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.service.commands;
+package org.polarsys.chess.service.internal.commands;
 
 import java.util.Map;
 
@@ -41,7 +41,7 @@ public class SupersuserToggleCommand extends AbstractHandler implements IElement
 			throws org.eclipse.core.commands.ExecutionException {
 		
 		IEditorPart editor = HandlerUtil.getActiveEditorChecked(event);
-		;
+		
 		if (CHESSEditorUtils.isCHESSProject(editor) && CHESSProfileManager.ARE_VIEWS_LOADED) {
 
 			DiagramStatus diagramStatus = CHESSEditorUtils.getDiagramStatus((PapyrusMultiDiagramEditor) editor);

@@ -14,7 +14,7 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.service.commands;
+package org.polarsys.chess.service.internal.commands.switchers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,10 @@ import org.eclipse.ui.menus.UIElement;
 import org.eclipse.ui.services.ISourceProviderService;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.views.DiagramStatus;
-import org.polarsys.chess.service.PaletteManager;
+import org.polarsys.chess.core.views.DiagramStatus.DesignView;
+import org.polarsys.chess.service.internal.palette.PaletteManager;
+import org.polarsys.chess.service.internal.utils.CHESSInternalEditorUtils;
+import org.polarsys.chess.service.internal.visibility.HidePortCommand;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 public class SwitchToView {
@@ -88,12 +91,12 @@ public class SwitchToView {
 		return null;
 	}
 
-	//TODO extends
+	//TODO currently this method does not work. Do no use it.
 	private void hideShowElements(PapyrusMultiDiagramEditor editor) {
 		if (false){
 			List<View> elements = new ArrayList<View>();
 			try {
-				elements = CHESSEditorUtils.getDiagramAllVisiblePort(CHESSEditorUtils.getDiagram(editor));
+				elements = CHESSInternalEditorUtils.getDiagramAllVisiblePort(CHESSEditorUtils.getDiagram(editor));
 				new HidePortCommand(elements, editor).execute();
 			} catch (Exception e) {}
 		}
@@ -107,8 +110,9 @@ public class SwitchToView {
 			if (st== null)
 				return;
 //			System.out.println("switcher for " + theView);
-			selected = selected
-					&& st.getCurrentView().isEnabled(theView);
+			DesignView currentView = st.getCurrentView();
+			if(selected && currentView != null)
+				selected = st.getCurrentView().isEnabled(theView);
 		}
 		element.setChecked(selected);
 		if (selected)
