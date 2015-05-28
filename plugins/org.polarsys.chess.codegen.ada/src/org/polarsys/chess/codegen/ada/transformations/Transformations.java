@@ -21,7 +21,7 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.uml2.uml.Model;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
-import org.polarsys.chess.m2m.TransUtil;
+import org.polarsys.chess.m2m.transformations.TransUtil;
 
 /**
  * The Class Transformations.
