@@ -1,7 +1,7 @@
 -- @path PNML=CHESSReviewDemo/metamodels/placeTransition.ecore
 
 query PNML2DEEM_query = PNML!PetriNet.allInstances()->
-	collect(x | x.toString());
+	collect(x | x.toString()); 
 
 helper context PNML!PetriNet def: toString():String = 
 	'<NDFile-\'1.2\'>\n\n'+

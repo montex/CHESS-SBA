@@ -280,7 +280,7 @@ rule FailureMode{
 rule InternalFault{
 
 	from
-		f : CHESS!InternalFault(
+		f : CHESS!CHInternalFault(
 			thisModule.Transitions->exists(s | s = f.base_Transition)
 		)
 	do{
@@ -292,7 +292,7 @@ rule InternalFault{
 rule ExternalFault{
 
 	from
-		f : CHESS!ExternalFault(
+		f : CHESS!CHExternalFault(
 			thisModule.Transitions->exists(s | s = f.base_Transition)
 		)
 	do{
@@ -443,7 +443,7 @@ rule ComponentErrorModel(dc: CHESS!DependableComponent, inst: UML2!InsanceSpecif
 	do{
 		thisModule.InstanceMap <- thisModule.InstanceMap.including(inst, c);
 
-		for (r in dc.errorModel.base_StateMachine.region){
+		for (r in dc.errorModel->first().base_StateMachine.region){
 			for(s in r.subvertex){
 				if (thisModule.Errors->exists(e | e.base_State = s)){
 					thisModule.CreateAndAddError(s, c, inst);
@@ -580,7 +580,7 @@ rule CreateAndAddFailureMode(s : UML2!State, c : IM!Component, inst: UML2!Instan
 	}
 }
 
-rule CreateAndAddIntFault(t : UML2!Transition, ift : CHESS!InternalFault, c : IM!Component, inst : UML2!InstanceSpecification){
+rule CreateAndAddIntFault(t : UML2!Transition, ift : CHESS!CHInternalFault, c : IM!Component, inst : UML2!InstanceSpecification){
 
 	using{
 		oc : String = t.getInternalFault.occurrence;
@@ -1166,12 +1166,15 @@ rule Propagation_Phase1 (p : CHESS!Propagation, server : UML2!Component, client 
 	do{
 		if(serverInst.getCorrespondingComponent <> OclUndefined and clientInst.getCorrespondingComponent <> OclUndefined){
 
+			--Important: in checking the presence of the error model use !oclIsUndefined() if a single error model is expected,
+			--           or notEmpty() if instead a collection of error models are expected
+			--           (depending on the multiplicity of the errorModel attribute)
+						
 			--1) both client and server have an ErrorModel
-			if((serverDepComp.errorModel <> OclUndefined and serverDepComp.errorModel.notEmpty())
-					and (clientDepComp.errorModel <> OclUndefined and clientDepComp.errorModel.notEmpty())){
+			if(serverDepComp.errorModel.notEmpty()	and clientDepComp.errorModel.notEmpty()){
 
 				--for each server's FailureMode that affect the port interested by the connection...
-				for (r in serverDepComp.errorModel.base_StateMachine.region){
+				for (r in serverDepComp.errorModel->first().base_StateMachine.region){
 					for(s in r.subvertex){
 						if (thisModule.FailureModes->exists(e | e.base_State = s)){
 
@@ -1187,7 +1190,7 @@ rule Propagation_Phase1 (p : CHESS!Propagation, server : UML2!Component, client 
 					}
 				}
 
-			} else if(serverDepComp.errorModel = OclUndefined and clientDepComp.errorModel <> OclUndefined) {
+			} else if(serverDepComp.errorModel.isEmpty() and clientDepComp.errorModel.notEmpty()) {
 				--2) server has NOT error model, client has error model
 
 				--for each client's ExternalFault that originates from the port interested by the connection...
@@ -1195,7 +1198,7 @@ rule Propagation_Phase1 (p : CHESS!Propagation, server : UML2!Component, client 
 					thisModule.SetExternalFaultClient(clientInst.getCorrespondingComponent, f);
 				}
 
-			} else if(serverDepComp.errorModel <> OclUndefined and clientDepComp.errorModel = OclUndefined) {
+			} else if(serverDepComp.errorModel.notEmpty() and clientDepComp.errorModel.isEmpty()) {
 				--3) server has error model, client has NOT error model
 				if (MARTE!Assign.allInstances()->exists(e | e.base_Comment = p.base_Comment)) {
 					--Assign relation: server is a hardware component, client is a the sowftware allocated to it,
@@ -1206,7 +1209,7 @@ rule Propagation_Phase1 (p : CHESS!Propagation, server : UML2!Component, client 
 				}else {
 					--Normal connector
 					--for each server's FailureMode that affect the port interested by the connection...
-					for (r in serverDepComp.errorModel.base_StateMachine.region){
+					for (r in serverDepComp.errorModel->first().base_StateMachine.region){
 						for(s in r.subvertex){
 							if (thisModule.FailureModes->exists(e | e.base_State = s)){
 
@@ -1223,7 +1226,7 @@ rule Propagation_Phase1 (p : CHESS!Propagation, server : UML2!Component, client 
 					}
 				}
 
-			} else if(serverDepComp <> OclUndefined and clientDepComp <> OclUndefined){
+			} else if(serverDepComp.errorModel.isEmpty() and clientDepComp.errorModel.isEmpty()){
 				--4) BOTH server and client do NOT have the error model, propagate the only failuremode of the server to the client
 				thisModule.SetExternalFaultAndFGEClient(clientInst.getCorrespondingComponent, serverInst.getCorrespondingComponent.FailureModes->first(), p);
 			}
@@ -1303,12 +1306,15 @@ rule Propagation_Phase2 (p : CHESS!Propagation, server : UML2!Component, client 
 	do{
 		if(serverInst.getCorrespondingComponent <> OclUndefined and clientInst.getCorrespondingComponent <> OclUndefined){
 
+			--Important: in checking the presence of the error model use !oclIsUndefined() if a single error model is expected,
+			--           or notEmpty() if instead a collection of error models are expected
+			--           (depending on the multiplicity of the errorModel attribute)
+			
 			--1) both client and server have an ErrorModel
-			if((serverDepComp.errorModel <> OclUndefined and serverDepComp.errorModel.notEmpty())
-					and (clientDepComp.errorModel <> OclUndefined and clientDepComp.errorModel.notEmpty())){
+			if(serverDepComp.errorModel.notEmpty() and clientDepComp.errorModel.notEmpty()){
 
 				--for each client's ExternalFault that originates from the port interested by the connection...
-				for (r in clientDepComp.errorModel.base_StateMachine.region){
+				for (r in clientDepComp.errorModel->first().base_StateMachine.region){
 					for(t in r.transition){
 						if (thisModule.ExternalFaults->exists(e | e.base_Transition = t)){
 							if (thisModule.ExternalFaults->select(e | e.base_Transition = t)->
@@ -1321,9 +1327,9 @@ rule Propagation_Phase2 (p : CHESS!Propagation, server : UML2!Component, client 
 					}
 				}
 
-			} else if(serverDepComp.errorModel = OclUndefined and clientDepComp.errorModel <> OclUndefined) {
+			} else if(serverDepComp.errorModel.isEmpty() and clientDepComp.errorModel.notEmpty()) {
 
-				for (r in clientDepComp.errorModel.base_StateMachine.region){
+				for (r in clientDepComp.errorModel->first().base_StateMachine.region){
 					for(t in r.transition){
 						if (thisModule.ExternalFaults->exists(e | e.base_Transition = t)){
 							if (thisModule.ExternalFaults->select(e | e.base_Transition = t)->
@@ -1341,12 +1347,12 @@ rule Propagation_Phase2 (p : CHESS!Propagation, server : UML2!Component, client 
 					}
 				}
 
-			} else if(serverDepComp.errorModel <> OclUndefined and clientDepComp.errorModel = OclUndefined) {
+			} else if(serverDepComp.errorModel.notEmpty() and clientDepComp.errorModel.isEmpty()) {
 				--3) server has error model, client has NOT error model
 
 				--Everything already done in PHASE#1
 
-			} else if(serverDepComp <> OclUndefined and clientDepComp <> OclUndefined){
+			} else if(serverDepComp.errorModel.isEmpty() and clientDepComp.errorModel.isEmpty()){
 				--4) BOTH server and client do NOT have the error model, propagate the only failuremode of the server to the client
 
 				--Everything already done in PHASE#1
@@ -1916,8 +1922,8 @@ helper def : CSPort : Set(MARTE!ClientServerPort) = Set{};
 helper def : FlowPort : Set(MARTE!FlowPort) = Set{};
 helper def : Errors : Set(CHESS!Errores) = Set{};
 helper def : FailureModes : Set(CHESS!FailureMode) = Set{};
-helper def : InternalFaults : Set(CHESS!InternalFault) = Set{};
-helper def : ExternalFaults : Set(CHESS!InternalFault) = Set{};
+helper def : InternalFaults : Set(CHESS!CHInternalFault) = Set{};
+helper def : ExternalFaults : Set(CHESS!CHInternalFault) = Set{};
 
 helper def : StatefulHW : Set(CHESS!StatefulHardware) = Set {};
 helper def : StatelessHW : Set(CHESS!StatelessHardware) = Set {};
@@ -1973,10 +1979,10 @@ helper context UML2!State def : getError : CHESS!Error =
 helper context UML2!State def : getFailureMode : CHESS!FailureMode =
 			thisModule.FailureModes->select(e | e.base_State = self)->first();
 
-helper context UML2!Transition def : getInternalFault : CHESS!InternalFault =
+helper context UML2!Transition def : getInternalFault : CHESS!CHInternalFault =
 			thisModule.InternalFaults->select(ift | ift.base_Transition = self)->first();
 
-helper context UML2!Transition def : getExternalFault : CHESS!ExternalFault =
+helper context UML2!Transition def : getExternalFault : CHESS!CHExternalFault =
 			thisModule.ExternalFaults->select(ift | ift.base_Transition = self)->first();
 
 --Trim whitespaces, remove brackets, remove the equal symbol
@@ -2029,6 +2035,6 @@ helper context IM!FaultsExpressionFaultNode def: toString(): String = self.Fault
 helper context IM!FaultsExpressionOrNode def: toString(): String = '(' + self.FaultsExpression1.toString() + ' OR ' + self.FaultsExpression2.toString() + ')';
 helper context IM!FaultsExpressionAndNode def: toString() : String = '(' + self.FaultsExpression1.toString() + ' AND ' + self.FaultsExpression2.toString() + ')';
 
-
 helper context IM!ErrorsExpressionErrorNode def: toString(): String = self.Error.Name;
 helper context IM!ErrorsExpressionOrNode def: toString(): String = '(' + self.ErrorsExpression1.toString() + ' OR ' + self.ErrorsExpression2.toString() + ')';
+
