@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Test Category"
+            id="org.polarsys.chess.test.runtime.commands.category">
+      </category>
+      <command
+            name="Launch CHESS Runtime Tests"
+            categoryId="org.polarsys.chess.test.runtime.commands.category"
+            id="org.polarsys.chess.test.runtime.commands.testCommand">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.polarsys.chess.test.runtime.commands.testCommand"
+            class="org.polarsys.chess.test.runtime.handlers.TestsHandler">
+      </handler>
+   </extension>
+  <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="org.polarsys.chess.mainMenu"
+               label="CHESS"
+               mnemonic="E">
+            <menu
+                  id="chess.menu.tests.id"
+                  label="Tests">
+            		<command
+                  		commandId="org.polarsys.chess.test.runtime.commands.testCommand"
+                  		mnemonic="S"
+                  		id="org.polarsys.chess.test.runtime.menus.testCommand">
+           			</command>
+		 	</menu>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>
