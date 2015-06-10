@@ -67,6 +67,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 
 	private static final String PLUGIN_PATH = "platform:/plugin/org.chess.statebased";
 	
+	private static final String sysmlPath = "http://www.eclipse.org/papyrus/0.7.0/SysML";
 	private static final String martePath = "http://www.eclipse.org/papyrus/MARTE/1";
 	private static final String chessPath = "http://schemas/CHESS/_PfAJsMe6Ed-7etIj5eTw0Q/19";
 	private static final String umlPath	= "http://www.eclipse.org/uml2/3.0.0/UML";
@@ -88,6 +89,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 	private static IInjector injector;
 	private static IExtractor extractor;
 	
+	private static IReferenceModel sysmlMetamodel;
 	private static IReferenceModel marteMetamodel;
 	private static IReferenceModel chessMetamodel;
 	private static IReferenceModel umlMetamodel;
@@ -194,12 +196,14 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			ModelFactory factory = CoreService.getModelFactory("EMF");
 			
 			//IReferenceModel(s) for the meta-models
+			sysmlMetamodel = factory.newReferenceModel();
 			marteMetamodel = factory.newReferenceModel();
 			chessMetamodel = factory.newReferenceModel();
 			umlMetamodel = factory.newReferenceModel();
 			imMetamodel = factory.newReferenceModel();
 			
 			//Register EPackages
+			EPackage.Registry.INSTANCE.put(sysmlPath, org.eclipse.papyrus.sysml.SysmlPackage.eINSTANCE);
 			EPackage.Registry.INSTANCE.put(martePath, org.eclipse.papyrus.MARTE.MARTEPackage.eINSTANCE);
 			EPackage.Registry.INSTANCE.put(chessPath, chessmlprofilePackage.eINSTANCE);
 			EPackage.Registry.INSTANCE.put(umlPath, org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
@@ -212,18 +216,21 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			 */
 			
 			//Load meta-models
+			injector.inject(sysmlMetamodel, sysmlPath);
 			injector.inject(marteMetamodel, martePath);
 			injector.inject(chessMetamodel, chessPath);
 			injector.inject(umlMetamodel, umlPath);
 			injector.inject(imMetamodel, imPath);
 			
 			// Create models
+			IModel sysmlModel = factory.newModel(sysmlMetamodel);
 			IModel marteModel = factory.newModel(marteMetamodel);
 			IModel chessModel = factory.newModel(chessMetamodel);
 			IModel umlModel = factory.newModel(umlMetamodel);
 			IModel imModel = factory.newModel(imMetamodel);
 			
 			// Load the chess model
+			injector.inject(sysmlModel, chessModelPath);
 			injector.inject(marteModel, chessModelPath);
 			injector.inject(chessModel, chessModelPath);
 			injector.inject(umlModel, chessModelPath);
@@ -237,6 +244,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			launcher.addInModel(chessModel, "IN1", "CHESS");
 			launcher.addInModel(chessModel, "IN2", "UML2");
 			launcher.addInModel(marteModel, "IN3", "MARTE");
+			launcher.addInModel(sysmlModel, "IN4", "SYSML");
 			launcher.addOutModel(imModel, "OUT", "IM");
 			
 			//Create a module of the CHESS2IM transformation

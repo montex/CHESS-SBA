@@ -1,9 +1,10 @@
--- @path IM=/CHESSReviewDemo/metamodels/IM2.ecore
--- @path CHESS=/CHESSReviewDemo/metamodels/chessmlprofile.ecore
+-- @path IM=/org.chess.statebased/metamodels/IM2.ecore
+-- @path CHESS=/org.chess.chessmlprofile/model/chessmlprofile.ecore
 -- @nsURI MARTE=http://www.eclipse.org/papyrus/MARTE/1
+-- @nsURI SYSML=http://www.eclipse.org/papyrus/0.7.0/SysML
 
 module CHESS2IM;
-create OUT : IM from IN1 : CHESS, IN2 : MARTE, IN3 : UML2;
+create OUT : IM from IN1 : CHESS, IN2 : MARTE, IN3 : UML2, IN4 : SYSML;
 
 
 --entrypoint rule to call those rules who needs to be applied before anything else
@@ -204,6 +205,19 @@ rule FlowPort{
 
 	from
 		s : MARTE!FlowPort (
+			thisModule.Ports->exists(c | c = s.base_Port)
+		)
+
+	do{
+		thisModule.FlowPort.add(s);
+	}
+}
+
+--filter the FlowPort in the resources platform from the rest (system view)
+rule FlowPort_SysML{
+
+	from
+		s : SYSML!FlowPort (
 			thisModule.Ports->exists(c | c = s.base_Port)
 		)
 

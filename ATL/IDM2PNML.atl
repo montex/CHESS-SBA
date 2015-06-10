@@ -1,7 +1,7 @@
 -- @atlcompiler atl2010
 
--- @path IDM=/CHESSReviewDemo/metamodels/IM2.ecore
--- @path PNML=/CHESSReviewDemo/metamodels/placeTransition.ecore
+-- @path IDM=/org.chess.statebased/metamodels/IM2.ecore
+-- @path PNML=/org.chess.statebased/metamodels/placeTransition.ecore
 
 module IDM2PNML;
 create OUT : PNML from IN : IDM;
