@@ -120,10 +120,7 @@ public abstract class AbstractTransformation {
 				modelFile.getName());
 		// Remove the content of the PSMPackage and Backpropagation results
 		//use saAnalysisName to get the correct PSM to be removed
-		TransUtil.purgeModel(modelCopy, saAnalysisName);
-		
-		ModelContent inModel = TransUtil.loadModel(modelCopy);
-		Model m = (Model) inModel.getContent().get(0);
+		Model m = TransUtil.purgeModel(modelCopy, saAnalysisName);
 		
 		m.eResource().save(null);
 		return modelCopy;

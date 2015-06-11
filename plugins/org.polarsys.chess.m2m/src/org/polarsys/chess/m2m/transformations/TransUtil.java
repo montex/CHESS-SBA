@@ -117,11 +117,13 @@ public class TransUtil {
 	 * @param saAnalysisQN the qualified name of MARTE <<SaAnalysisContext>> Class on which the purge needs to be applied
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @see #purgeModel(Model, String)
+	 * @return the Model purged
 	 */
-	public static void purgeModel(IFile modelFile, String saAnalysisQN) throws IOException {
+	public static Model purgeModel(IFile modelFile, String saAnalysisQN) throws IOException {
 		ModelContent inModel = loadModel(modelFile);
 		Model m = (Model) inModel.getContent().get(0);
 		purgeModel(m, saAnalysisQN);
+		return m;
 	}
 	
 	/**
