@@ -20,6 +20,8 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.GRM.Resource;
 import org.eclipse.emf.common.util.BasicEList;
@@ -62,9 +64,11 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propa
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
+import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
+import org.polarsys.chess.m2m.QVToTransformation;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 public class BuildModelInstanceCommand extends AbstractHandler implements
@@ -81,18 +85,21 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 	private static EList<Comment> assigns;
 	private static ArrayList<InstanceSpecification> instancesList = new ArrayList<InstanceSpecification>();
 	private static ArrayList<Slot> slotList =  new ArrayList<Slot>();
+	private boolean ignoreErrors;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		ignoreErrors = false;
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		final Shell shell = window.getShell();
 		//get the CEHSS Editor
 		PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
 		final DiagramStatus ds = CHESSEditorUtils.getDiagramStatus(editor);
 		List<Component> compImplList = new ArrayList<Component>();
-		try{
+		try{;
 			//get the UML model
-			org.eclipse.emf.ecore.resource.Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
+			final org.eclipse.emf.ecore.resource.Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
+			final IFile modelFile = CHESSProjectSupport.resourceToFile(res);
 			final Model umlModel = ResourceUtils.getModel(res);
 			CHESS chess = (CHESS) umlModel.getStereotypeApplication(umlModel.getAppliedStereotype(CHESS));		
 			//get the Components (implementation) of the componentView and deploymentView
@@ -151,16 +158,33 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 						//perform build instances
 						buildComponentInstance(instPkg, comp, null, null, null, new HashMap<Property, InstanceSpecification>(), comp.getOwnedComments());
 						regenerateAssignAllocations(umlModel);
-						//to keep the support to the existing transformations for RT analysis, 
-						//apply the <<CHGaResourcePlatform>> stereotype also on the package
-						MessageDialog.openInformation(shell, "CHESS", "BuildInstance command completed");
+						try {
+							//TODO: WARNING - saving the resource probably is not the best way to deal with
+							//the problem of creating the multi instances at this moment
+							
+							res.save(null);
+							
+							// Remove the package with the multi instances, if any
+							QVToTransformation.launchRemoveMultiInstance(modelFile, new NullProgressMonitor());
+							//perform build multi instances
+							QVToTransformation.launchBuildMultiInstance(modelFile, new NullProgressMonitor());
+							
+							MessageDialog.openInformation(shell, "CHESS", "BuildInstance command completed");
+							ignoreErrors = true;
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
+						
 				});
 			}
 		} catch (Exception e) {
+			if(!ignoreErrors){
 			ds.setUserAction(false);
 			e.printStackTrace();
 			MessageDialog.openError(shell, "CHESS", "Problems while executing BuildInstance command: " + e.getMessage());
+			}
 		}
 		ds.setUserAction(false);
 		return null;

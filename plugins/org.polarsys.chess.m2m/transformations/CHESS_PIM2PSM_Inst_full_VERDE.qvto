@@ -1357,6 +1357,10 @@ mapping InstanceSpecification::Instance2EndToEndWorkFlow(chrt : Comment, slot : 
     //Apply the stereotype <<SaEndtoEndFlow>> to the activity
 	result.applyStereotype(getMARTEStereotype("SaEndtoEndFlow"));
 	result.precondition += actConstraint;
+	//we need to have the original deadline in a field not overritten by the MAST analysis
+	var e2estereo : Stereotype := result.getApplicableStereotype("MARTE::MARTE_AnalysisModel::SAM::SaEndtoEndFlow");
+	var e2eflow : MARTE::SAM::SaEndtoEndFlow = result.getStereotypeApplication(e2estereo).oclAsType(MARTE::SAM::SaEndtoEndFlow);
+	e2eflow.end2EndD += chrts.rlDl;
 	
 	var actInitialNode := result.createInitialNode();
 	actInitialNode.outgoing += controlFlowInit;
