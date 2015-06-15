@@ -63,7 +63,7 @@ import org.eclipse.uml2.uml.Realization;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.internal.impl.RealizationImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
-import org.polarsys.chess.core.automatedActions.IAutomatedAction;
+import org.polarsys.chess.validator.automatedActions.IAutomatedAction;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.ViewUtils;

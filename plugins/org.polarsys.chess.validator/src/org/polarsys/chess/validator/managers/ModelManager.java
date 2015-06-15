@@ -35,7 +35,7 @@ import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Type;
-import org.polarsys.chess.core.automatedActions.IAutomatedAction;
+import org.polarsys.chess.validator.automatedActions.IAutomatedAction;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.ViewUtils;
