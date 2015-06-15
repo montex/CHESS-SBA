@@ -37,6 +37,7 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
+import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEAPackage;
@@ -52,12 +53,15 @@ import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAnalysisPackage;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
-import org.polarsys.chess.core.extensionpoint.AddProfileHandler;
+import org.polarsys.chess.core.internal.extensionpoint.AddProfileHandler;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
 /**
  * This class wraps the CHESS profile resource and is used for loading the
  * profile and applying its stereotypes.
+ * 
+ * It contains also a set of constants to identify a number of item, such as Design Views, subprofile names,
+ * stereotypes, ...
  * 
  * @author Alessandro Zovi
  * 
@@ -81,14 +85,20 @@ public class CHESSProfileManager {
 
 	public static final String NULL_VIEW = "NullView";
 
+	
+	/**
+	 * List of views that reside in the CHESS profile but are not applied to the CHESS model.
+	 */
 	// TODO temporary, created for TIMING_DATAFLOW_VIEW
 	public static final ArrayList<String> UNUSED_VIEWS = new ArrayList<String>();
 	static {
 		UNUSED_VIEWS.add(TIMING_DATAFLOW_VIEW);
 	}
 
-	// views that may be simultaneously active on top of a view
-	// They are virtual views
+	/**
+	 * Views that may be simultaneously active on top of a view.
+	 * They are virtual views.
+	 */
 	public static final ArrayList<String> CONCURRENT_VIEWS = new ArrayList<String>();
 	static {
 		CONCURRENT_VIEWS.add(EXTRAFUNCTIONAL_VIEW);
@@ -96,25 +106,36 @@ public class CHESSProfileManager {
 		CONCURRENT_VIEWS.add(RAILWAY_VIEW);
 	}
 
-	// views that are inside other views
-	// They are concrete views like root views.
+	/**
+	 * Views that are inside other views.
+	 * They are concrete views like root views.
+	 */
 	public static final ArrayList<String> SUBVIEWS = new ArrayList<String>();
 	static {
 		SUBVIEWS.add(RT_ANALYSIS_VIEW);
 		SUBVIEWS.add(DEPENDABILITY_ANALYSIS_VIEW);
 	}
 
+	/**
+	 * The concurrent views of the component (functional) view.
+	 */
 	public static final ArrayList<String> CONCURRENT_VIEWS_COMPONENT = new ArrayList<String>();
 	static {
 		CONCURRENT_VIEWS_COMPONENT.add(EXTRAFUNCTIONAL_VIEW);
 		CONCURRENT_VIEWS_COMPONENT.add(RAILWAY_VIEW);
 	}
 
+	/**
+	 * The concurrent views of the deployment view.
+	 */
 	public static final ArrayList<String> CONCURRENT_VIEWS_DEPLOYMENT = new ArrayList<String>();
 	static {
 		CONCURRENT_VIEWS_DEPLOYMENT.add(DEPENDABILITY_VIEW);
 	}
 
+	/**
+	 * The map from concrete views to concurrent views.
+	 */
 	public static final HashMap<String, ArrayList<String>> CONCURRENT_VIEWS_ASSOCIATION = new HashMap<String, ArrayList<String>>();
 	static {
 		CONCURRENT_VIEWS_ASSOCIATION.put(COMPONENT_VIEW,
@@ -131,126 +152,171 @@ public class CHESSProfileManager {
 
 	public static final String CHESS_STRT = "CHESS";
 
+	/**
+	 * The Design View list
+	 */
 	public static HashSet<String> CHESS_VIEWS_LIST = new HashSet<String>();
 
+	/**
+	 *  The list of views applied to the root packages
+	 */
 	public static HashSet<String> ROOT_VIEWS = new HashSet<String>();
 
+	/**
+	 * The predefined profiles list
+	 */
 	public static ArrayList<String> PREDEFINED_PROFILES = new ArrayList<String>();
 
+	/**
+	 * The pathmap url of the profile
+	 */
 	public static final String CHESSML_PATH = "pathmap://CHESSML_PROFILE/CHESS.profile.uml";
 
+	/**
+	 * Applies the CH_HwBus stereotype to the given element.
+	 * 
+	 * @param element  the element
+	 * @return  the stereotype applied
+	 */
 	public static Stereotype applyCH_HwBusStereotype(Element element) {
-		/*
-		 * Stereotype str = ((Profile)
-		 * CHESSProfile.getNestedPackage("Predictability"
-		 * ).getNestedPackage("DeploymentConfiguration"
-		 * ).getNestedPackage("HardwareBaseline"))
-		 * .getOwnedStereotype("CH_HwBus"); element.applyStereotype(str);
-		 */
 		return UMLUtils.applyStereotype(element,
 				"CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwBus");
 	}
 
+	/**
+	 * Applies the CHGaResourcePlatform stereotype to the given element.
+	 * 
+	 * @param element  the element
+	 * @return  the stereotype applied
+	 */
 	public static Stereotype applyCHGaResourcePlatformStereotype(Package pack) {
-		// Stereotype str = ((Profile)
-		// CHESSProfile.getNestedPackage("Core")).getOwnedStereotype("CHGaResourcePlatform");
 		return UMLUtils.applyStereotype(pack, "CHESS::Core::CHGaResourcePlatform");
 	}
 
+	/**
+	 * Applies the CHRtPortSlot stereotype to the given element.
+	 * 
+	 * @param element  the element
+	 * @return  the stereotype applied
+	 */
 	public static Stereotype applyChRTPortSlotStereotype(Slot element) {
-		/*
-		 * Stereotype str = ((Profile)
-		 * CHESSProfile.getNestedPackage("Predictability"
-		 * ).getNestedPackage("RTComponentModel"))
-		 * .getOwnedStereotype("CHRtPortSlot");
-		 */
 		return UMLUtils.applyStereotype(element,
 				"CHESS::Predictability::RTComponentModel::CHRtPortSlot");
 	}
 
+	/**
+	 * Applies the FPTCPortSlot stereotype to the given element.
+	 * 
+	 * @param element  the element
+	 * @return  the stereotype applied
+	 */
 	public static Stereotype applyFPTCPortSlotStereotype(Slot element) {
-		// Stereotype str = ((Profile)
-		// CHESSProfile.getNestedPackage("Dependability").getNestedPackage("FailurePropagation")).getOwnedStereotype("FPTCPortSlot");
 		return UMLUtils.applyStereotype(element,
 				"CHESS::Dependability::FailurePropagation::FPTCPortSlot");
 	}
 
+	/**
+	 * Applies the MultiInstance stereotype to the given element.
+	 * 
+	 * @param element  the element
+	 * @return  the stereotype applied
+	 */
 	public static Stereotype applyMultiInstanceStereotype(
 			InstanceSpecification element) {
-		// Stereotype str = ((Profile)
-		// CHESSProfile.getNestedPackage("Core")).getOwnedStereotype("MultiInstance");
 		return UMLUtils.applyStereotype(element, "CHESS::Core::MultiInstance");
 	}
 
+	/**
+	 * Applies the Propagation stereotype to the given element.
+	 * 
+	 * @param element  the element
+	 * @return  the stereotype applied
+	 */
 	public static Stereotype applyMultiSlotStereotype(Slot element) {
-		// Stereotype str = ((Profile)
-		// CHESSProfile.getNestedPackage("Core")).getOwnedStereotype("MultiSlot");
 		return UMLUtils.applyStereotype(element, "CHESS::Core::MultSlot");
 	}
 
+	/**
+	 * Applies the Propagation stereotype to the given element.
+	 * 
+	 * @param element  the element
+	 * @return  the stereotype applied
+	 */
 	public static Stereotype applyPropagationStereotype(
 			InstanceSpecification element) {
-		/*
-		 * Stereotype str = ((Profile)
-		 * CHESSProfile.getNestedPackage("Dependability"
-		 * ).getNestedPackage("DependableComponent"))
-		 * .getOwnedStereotype("Propagation");
-		 */
+		
 		return UMLUtils.applyStereotype(element,
 				"CHESS::Dependability::DependableComponent::Propagation");
 	}
 
+	/**
+	 * Returns the CH_HwBus stereotype of an element.
+	 * 
+	 * @param element
+	 * @return
+	 */
 	public static Stereotype getCH_HWBus(Element element) {
 		return UMLUtils.getStereotype(element,
 				"CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwBus");
 	}
 
+	/**
+	 * Returns the CH_HwComputingResource stereotype of an element.
+	 * 
+	 * @param element
+	 * @return
+	 */
 	public static Stereotype getCH_HWComputingResource(Element element) {
 		return UMLUtils.getStereotype(
 				element,
 				"CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwComputingResource");
-		// Stereotype str = ((Profile)
-		// CHESSProfile.getNestedPackage("Predictability").getNestedPackage("DeploymentConfiguration")
-		// .getNestedPackage("HardwareBaseline"))
-		// .getOwnedStereotype("CH_HwComputingResource");
-		// return str;
 	}
 
+	/**
+	 * Returns the CH_HwProcessor stereotype of an element.
+	 * 
+	 * @param element
+	 * @return
+	 */
 	public static Stereotype getCH_HWProcessor(Element element) {
 		return UMLUtils.getStereotype(
 				element,
 				"CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor");
-		// Stereotype str = ((Profile)
-		// CHESSProfile.getNestedPackage("Predictability").getNestedPackage("DeploymentConfiguration")
-		// .getNestedPackage("HardwareBaseline"))
-		// .getOwnedStereotype("CH_HwProcessor");
-		// return str;
 	}
 
+	/**
+	 * Returns the CHRtSpecification stereotype of an element.
+	 * 
+	 * @param element
+	 * @return
+	 */
 	public static Stereotype getCHRTSpecification(Element element) {
-		/*
-		 * Stereotype str = ((Profile)
-		 * CHESSProfile.getNestedPackage("Predictability"
-		 * ).getNestedPackage("RTComponentModel")) -
-		 * .getOwnedStereotype("CHRtSpecification"); return str;
-		 */
 		return UMLUtils.getStereotype(element,
 				"CHESS::Predictability::RTComponentModel::CHRtSpecification");
 	}
 
+	/**
+	 * Returns the FPTCSpecification stereotype of an element.
+	 * 
+	 * @param element
+	 * @return
+	 */
 	public static Stereotype getFI4FASpecification(Element element) {
-		/*
-		 * Stereotype str = ((Profile)
-		 * CHESSProfile.getNestedPackage("Dependability"
-		 * ).getNestedPackage("FailurePropagation"))
-		 * .getOwnedStereotype("FI4FASpecification");
-		 */
 		Stereotype str = UMLUtils.getStereotype(element,
-				"CHESS::Dependability::FailurePropagation::FPTCSpecification");
+				"CHESS::Dependability::FailurePropagation::FI4FASpecification");
 
+		/*UMLUtils.getStereotype(element,
+				"CHESS::Dependability::FailurePropagation::FPTCSpecification");*/
+		
 		return str;
 	}
 
+	/**
+	 * Returns the FPTCSpecification stereotype of an element.
+	 * 
+	 * @param element  the element
+	 * @return the stereotype
+	 */
 	public static Stereotype getFPTCSpecification(Element element) {
 		/*
 		 * Stereotype str = ((Profile)
@@ -263,6 +329,11 @@ public class CHESSProfileManager {
 
 	}
 
+	/**
+	 * Populates the profile list. It is done only once.
+	 * 
+	 * @param CHESSProfile  the CHESS profile
+	 */
 	public static synchronized void initializeProfileList(Profile CHESSProfile) {
 		if (!ARE_PROFILES_LOADED) {
 
@@ -275,6 +346,11 @@ public class CHESSProfileManager {
 
 	}
 
+	/**
+	 * Populates the static Design View list. It is done only once.
+	 * 
+	 * @param viewsProfile  the profile containing the views
+	 */
 	public static synchronized void initializeViewList(Profile viewsProfile) {
 		if (!ARE_VIEWS_LOADED) {
 			for (Stereotype str : viewsProfile.getOwnedStereotypes()) {
@@ -284,8 +360,10 @@ public class CHESSProfileManager {
 			for (String v : CONCURRENT_VIEWS) {
 				CHESS_VIEWS_LIST.add(v);
 			}
+			// Add null view
 			CHESS_VIEWS_LIST.add(NULL_VIEW);
 
+			
 			for (String v : CHESS_VIEWS_LIST) {
 				if (!(v.equals(NULL_VIEW) || CONCURRENT_VIEWS.contains(v)
 						|| SUBVIEWS.contains(v) || UNUSED_VIEWS.contains(v)))
@@ -301,11 +379,22 @@ public class CHESSProfileManager {
 
 	private static boolean ARE_PROFILES_LOADED;
 
+	/**
+	 * Creates the CHESS profile manager for the given resource set.
+	 * 
+	 * @param rs  the resource set
+	 */
 	public CHESSProfileManager(ResourceSet rs) {
 		//this.resourceSet = rs;
 		loadCHESSProfile(rs);
 	}
 
+	/**
+	 * Apply the CH_HwComputingResource to the given element.
+	 * 
+	 * @param element  the element
+	 * @return the stereotype applied
+	 */
 	public static Stereotype applyCH_HwComputingResourceStereotype(
 			Element element) {
 		
@@ -314,6 +403,12 @@ public class CHESSProfileManager {
 				"CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwComputingResource");
 	}
 
+	/**
+	 * Apply the CH_HwProcessor to the given element.
+	 * 
+	 * @param element  the element
+	 * @return the stereotype applied
+	 */
 	public static Stereotype applyCH_HwProcessorStereotype(Element element) {
 		
 		return UMLUtils.applyStereotype(
@@ -321,6 +416,12 @@ public class CHESSProfileManager {
 				"CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor");
 	}
 
+	/**
+	 * Applies the CHESS Stereotype to the element.
+	 * 
+	 * @param element  the element
+	 * @return  the CHESS stereotype applied
+	 */
 	public static Stereotype applyCHESSStereotype(Element element) {
 		/*
 		 * Stereotype str = coreProfile.getOwnedStereotype(CHESS_STRT);
@@ -355,15 +456,21 @@ public class CHESSProfileManager {
 	}
 	
 	
-	@Deprecated
-	/*
-	 * Not safe to retrieve views based on the model name
+	
+	/**
+	 * @deprecated Not safe to retrieve views based on the model name
 	 * */
+	@Deprecated
 	public static String viewName(Model model, String name){
 		return model.getName() + name;
 	} 
 
-	public static void createViews(Model model) {
+	/**
+	 * Creates the concrete Design Views (packages) in the given model.
+	 * 
+	 * @param model  the model
+	 */
+	public static void createViews(final Model model) {
 
 		Stereotype chessStereotype = model
 				.getAppliedStereotype("CHESS::Core::CHESS");
@@ -483,14 +590,22 @@ public class CHESSProfileManager {
 	}
 
 	
+	/**
+	 * Returns the {@link ComponentImplementation} stereotype of the given model elemment. 
+	 * 
+	 * @param element  the element
+	 * @return the {@link ComponentImplementation}  stereotype
+	 */
 	public static Stereotype getComponentImplementation(Element element) {
 		return UMLUtils.getStereotype(element, "CHESS::ComponentModel::ComponentImplementation");
-		/*Stereotype str = ((Profile) CHESSProfile
-				.getNestedPackage("ComponentModel"))
-				.getOwnedStereotype("ComponentImplementation");
-		return str;*/
 	}
 
+	/**
+	 * Returns the {@link ComponentType} stereotype of the given model elemment. 
+	 * 
+	 * @param element  the element
+	 * @return the {@link ComponentType}  stereotype
+	 */
 	public static Stereotype getComponentType(Element element) {
 		return UMLUtils.getStereotype(element, "CHESS::ComponentModel::ComponentType");
 		/*Stereotype str = ((Profile) CHESSProfile
@@ -499,6 +614,13 @@ public class CHESSProfileManager {
 		return str;*/
 	}
 
+	/**
+	 * Loads the profiles for the given resource set. 
+	 * 
+	 * The profiles are loaded through their respective managers registered in the extension-point. 
+	 * 
+	 * @param rs  the resource set.
+	 */
 	public static void loadExternalProfiles(ResourceSet rs) {
 		//loadCHESSViewsList(rs);
 		//MARTEProfileManager marte = MARTEProfileManager.loadMARTEProfile(rs);
@@ -508,6 +630,11 @@ public class CHESSProfileManager {
 		h.executeLoadProfile(reg, rs);
 	}
 
+	/**
+	 * Load the Design View list for the given ResourceSet.
+	 * 
+	 * @param rs  the resource set
+	 */
 	public static void loadCHESSProfile(ResourceSet rs) {
 		// if (instance == null) {
 		loadCHESSViewsList(rs);
@@ -515,7 +642,7 @@ public class CHESSProfileManager {
 		// }
 	}
 
-	public static void loadCHESSViewsList(ResourceSet rs) {
+	private static void loadCHESSViewsList(ResourceSet rs) {
 		// if (instance == null) {
 		Profile CHESSProfile = (Profile) PackageUtil.loadPackage(
 				URI.createURI(CHESSML_PATH), rs);
@@ -546,6 +673,11 @@ public class CHESSProfileManager {
 		}
 	}
 
+	/**
+	 * Initialize the given Model with the necessary elements in order to create a CHESS Model.
+	 * 
+	 * @param currentModel  the model
+	 */
 	public static void createModel(Model currentModel) {
 		applyRecursively(currentModel);
 		applyCHESSStereotype(currentModel);		

@@ -14,11 +14,11 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.core.views;
+package org.polarsys.chess.core.internal.views;
 
-import static org.polarsys.chess.core.views.permissions.EntryId.ANY;
-import static org.polarsys.chess.core.views.permissions.EntryId.NONE;
-import static org.polarsys.chess.core.views.permissions.EntryId.anyEntry;
+import static org.polarsys.chess.core.internal.views.permissions.EntryId.ANY;
+import static org.polarsys.chess.core.internal.views.permissions.EntryId.NONE;
+import static org.polarsys.chess.core.internal.views.permissions.EntryId.anyEntry;
 
 import java.io.File;
 import java.net.URI;
@@ -31,11 +31,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.polarsys.chess.core.Activator;
+import org.polarsys.chess.core.internal.views.permissions.EntryId;
+import org.polarsys.chess.core.internal.views.permissions.PermissionEntry;
+import org.polarsys.chess.core.internal.views.permissions.PermissionList;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
-import org.polarsys.chess.core.views.permissions.EntryId;
-import org.polarsys.chess.core.views.permissions.PermissionEntry;
-import org.polarsys.chess.core.views.permissions.PermissionList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -44,12 +44,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 /**
- * @author Alessandro Zovi
- *
+ * This class parses the permissions.xml file and create the permissions structure.
  */
 public class ViewPermissions {
 	
-	static HashMap<String, HashMap<String, PermissionList>> permissions = new HashMap<String, HashMap<String, PermissionList>>();	
+	public static HashMap<String, HashMap<String, PermissionList>> permissions = new HashMap<String, HashMap<String, PermissionList>>();	
 	
 	static PermissionList componentViewPL;
 	static PermissionList extraFunctionalViewPL;
@@ -63,7 +62,7 @@ public class ViewPermissions {
 	static PermissionList PSMView;
 	
 	static PermissionEntry allowAll = new PermissionEntry(anyEntry, false, true, true);
-	static void initializeLists(){
+	public static void initializeLists(){
 		/*componentViewPL = new PermissionList();
 		extraFunctionalViewPL = new PermissionList();
 		deploymentViewPL = new PermissionList();
@@ -137,7 +136,7 @@ public class ViewPermissions {
 	}
 	
 	
-	static void readXMLPermissions(){
+	public static void readXMLPermissions(){
 	    try {
 
 	    	URL url = FileLocator.find(Activator.getDefault().getBundle(), new Path("permissions.xml"), null);

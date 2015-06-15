@@ -5,7 +5,7 @@
 --                    Copyright (C) 2011-2012                        --
 --                 University of Padova, ITALY                       --
 --                                                                   --
--- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
+-- Author: Alessandro Zovi         azovi@math.unipd.it               --
 --                                                                   --
 -- All rights reserved. This program and the accompanying materials  --
 -- are made available under the terms of the Eclipse Public License  --
@@ -14,26 +14,26 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.core.resourcelistener;
+package org.polarsys.chess.core.internal.preferences;
 
-import org.eclipse.emf.transaction.ResourceSetListenerImpl;
-import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
+import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 
 /**
- * An extension of the {@link ResourceSetListenerImpl} that knows the Papyrus
- * service registry. 
- *
+ * Class used to initialize default preference values.
  */
-public class ResourceSetListenerExtra extends ResourceSetListenerImpl{
+public class ConstraintPreferenceInitializer extends AbstractPreferenceInitializer {
 
-	protected ServicesRegistry sr;
-	
-	/**
-	 * Sets the service registry.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param sr  the service registry
+	 * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#initializeDefaultPreferences()
 	 */
-	public void setRegistry(ServicesRegistry sr){
-		this.sr = sr;
+	public void initializeDefaultPreferences() {
+//		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+//		for (ParsableConstraint c : ConstraintList.getList()) {
+//			IDynamicConstraint cc = c.getConstraint();
+//			store.setDefault(cc.getName(), true);
+//		}
 	}
+
 }

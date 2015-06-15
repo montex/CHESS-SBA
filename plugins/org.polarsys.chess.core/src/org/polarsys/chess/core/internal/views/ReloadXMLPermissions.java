@@ -14,26 +14,22 @@
 -----------------------------------------------------------------------
 */
 
-package org.polarsys.chess.core.resourcelistener;
+package org.polarsys.chess.core.internal.views;
 
-import org.eclipse.emf.transaction.ResourceSetListenerImpl;
-import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.polarsys.chess.core.util.CHESSProjectSupport;
 
-/**
- * An extension of the {@link ResourceSetListenerImpl} that knows the Papyrus
- * service registry. 
- *
- */
-public class ResourceSetListenerExtra extends ResourceSetListenerImpl{
+public class ReloadXMLPermissions extends AbstractHandler {
 
-	protected ServicesRegistry sr;
-	
-	/**
-	 * Sets the service registry.
-	 * 
-	 * @param sr  the service registry
-	 */
-	public void setRegistry(ServicesRegistry sr){
-		this.sr = sr;
+	@Override
+	public Object execute(ExecutionEvent event)
+			throws org.eclipse.core.commands.ExecutionException {
+		CHESSProjectSupport.printlnToCHESSConsole("Load permissions...");
+		ViewPermissions.initializeLists();
+		ViewPermissions.readXMLPermissions();
+		CHESSProjectSupport.printlnToCHESSConsole("Permissions loaded.");
+		return null;
 	}
+
 }

@@ -39,16 +39,34 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 
 public class SysMLProfileManager {
 	
+	
+	/**
+	 * Applies the Requirement profile and its subprofiles to the given element.
+	 * 
+	 * @param element
+	 */
 	public static void applyRequirementProfileTo(Package element) {
 		Profile SYSML_requirementProfile =  UMLResourcesUtil.getProfile(RequirementsPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, SYSML_requirementProfile, true);
 	}
 
+	/**
+	 * Applies the Block profile to the given element
+	 * 
+	 * @param element  the element
+	 * @param withSubProfiles whether the subprofiles should also be applied
+	 */
 	public static void applyBlockProfileTo(Package element, boolean withSubProfiles) {
 		Profile SYSML_blockProfile =  UMLResourcesUtil.getProfile(BlocksPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, SYSML_blockProfile, withSubProfiles);
 	}
 
+	/**
+	 * Applies the SysML profile to the given element
+	 * 
+	 * @param element  the element
+	 * @param withSubProfiles whether the subprofiles should also be applied
+	 */
 	public static void applySysMLProfileTo(Package element, boolean withSubProfiles) {
 		
 		/**
@@ -64,11 +82,22 @@ public class SysMLProfileManager {
 
 	}
 
+	/**
+	 * Applies the Satisfy stereotype to the given {@link Abstraction}.
+	 * 
+	 * @param abs  the abstraction
+	 * @return the stereotype applied
+	 */
 	public static Stereotype applySatisfyStereotype(Abstraction abs) {
 
 		return UMLUtils.applyStereotype(abs, "SysML::Requirements::Satisfy");
 	}
 
+	/**
+	 * Initialize the model with the needed elements.
+	 * 
+	 * @param currentModel  the model
+	 */
 	public static void createModel(Model currentModel) {
 		applyRequirementProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.REQUIREMENT_VIEW));
 		applyBlockProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.REQUIREMENT_VIEW), true);

@@ -20,13 +20,20 @@ import java.util.ArrayList;
 
 import org.polarsys.chess.core.preferences.FilterableConstraint;
 
+/**
+ * This class contains the list of all the constraints used for the model validation.
+ *
+ */
 public class ConstraintList {
 	private static ArrayList <FilterableConstraint> list = new ArrayList<FilterableConstraint>();
 	
-	public static void add(IDynamicConstraint c) {
+	static void add(IConstraint c) {
 		list.add(new FilterableConstraint(c));
 	}
 	
+	/**
+	 * Get the list of all the constraints.
+	 */
 	public static ArrayList<FilterableConstraint> getList(){
 		return list;
 	}

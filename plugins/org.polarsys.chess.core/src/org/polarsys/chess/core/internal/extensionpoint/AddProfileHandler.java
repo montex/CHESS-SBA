@@ -1,4 +1,4 @@
-package org.polarsys.chess.core.extensionpoint;
+package org.polarsys.chess.core.internal.extensionpoint;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -8,6 +8,8 @@ import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 //import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.uml2.uml.Model;
+import org.polarsys.chess.core.Activator;
+import org.polarsys.chess.core.extensionpoint.IAddProfile;
 
 
 public class AddProfileHandler {
@@ -33,6 +35,7 @@ public class AddProfileHandler {
 	      }
 	    } catch (CoreException ex) {
 	      System.out.println(ex.getMessage());
+	      Activator.error("evaluateAddProfile error", ex);
 	    }
 	  }
 
@@ -41,6 +44,7 @@ public class AddProfileHandler {
 	      @Override
 	      public void handleException(Throwable e) {
 	        System.out.println("Exception in client");
+	        Activator.error("Exception in client", e);
 	      }
 
 	      @Override
@@ -70,6 +74,7 @@ public class AddProfileHandler {
 	      }
 	    } catch (CoreException ex) {
 	      System.out.println(ex.getMessage());
+	      Activator.error("EvaluateLoadProfile error", ex);
 	    }
 	  }
 	  
@@ -78,6 +83,7 @@ public class AddProfileHandler {
 		      @Override
 		      public void handleException(Throwable e) {
 		        System.out.println("Exception in client");
+		        Activator.error("Exception in client", e);
 		      }
 
 		      @Override

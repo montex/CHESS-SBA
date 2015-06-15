@@ -50,7 +50,24 @@ import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
 
+/**
+ * This class contains a list of methods which create editing commands to add elements to a model. 
+ *
+ */
+/**
+ * @author Alessandro
+ *
+ */
 public class AddDiagramElement {
+	
+	/**
+	 * Creates all the operations of a given interface into the given implementing component.
+	 * 
+	 * @param domain  the editing domain
+	 * @param interf  the interface
+	 * @param comp  the component
+	 * @return  the provisioning command
+	 */
 	public static Command addOperationCommand(
 			TransactionalEditingDomain domain, final Interface interf, final Component comp) {
 		
@@ -74,18 +91,18 @@ public class AddDiagramElement {
 					if ( !UMLUtils.isOperationContained(comp, operation) )
 					{
 						s.delete(0, s.length());
-						s.append("OP DA CREARE");
+						s.append("OP TO CREATE");
 						CHESSProjectSupport.CHESS_CONSOLE.println(s.toString());
 						
 						//EList<String> paramNames = UMLUtils.getParamNames(operation.getOwnedParameters());
 						Operation newOp = comp.createOwnedOperation(operation.getName(),null,null);
 						s.delete(0, s.length());
-						s.append("OP CREATA");
+						s.append("OP CREATED");
 						CHESSProjectSupport.CHESS_CONSOLE.println(s.toString());
 						
 						UMLUtils.copyOperation(operation, newOp);
 						s.delete(0, s.length());
-						s.append("OP COPIATA");
+						s.append("OP COPIED");
 						CHESSProjectSupport.CHESS_CONSOLE.println(s.toString());
 						
 						
@@ -98,22 +115,30 @@ public class AddDiagramElement {
 		};
 	}
 	
-	public static Command addOperationCommand(TransactionalEditingDomain domain, final Component interf, final Component comp) {
+	/**
+	 * Creates all the operations of a given component into the given extending component.
+	 * 
+	 * @param domain  the transactional editing domain
+	 * @param sourceComponent  the source component
+	 * @param targetComponent  the extending component
+	 * @return  the provisioning command
+	 */
+	public static Command addOperationCommand(TransactionalEditingDomain domain, final Component sourceComponent, final Component targetComponent) {
 		
 		return new RecordingCommand(domain) {
 
 			@Override
 			protected void doExecute() {
 				PapyrusMultiDiagramEditor editor = (PapyrusMultiDiagramEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-				for (Operation operation : interf.getAllOperations()) 
+				for (Operation operation : sourceComponent.getAllOperations()) 
 				{
-					if ( !UMLUtils.isOperationContained(comp, operation) )
+					if ( !UMLUtils.isOperationContained(targetComponent, operation) )
 					{
 						//EList<String> paramNames = UMLUtils.getParamNames(operation.getOwnedParameters());
-						Operation newOp = comp.createOwnedOperation(operation.getName(),null,null);
+						Operation newOp = targetComponent.createOwnedOperation(operation.getName(),null,null);
 						UMLUtils.copyOperation(operation, newOp);
 						
-						createGraphicalOperation(comp, newOp);
+						createGraphicalOperation(targetComponent, newOp);
 					}
 				}
 				
@@ -122,6 +147,12 @@ public class AddDiagramElement {
 		};
 	}
 
+	/**
+	 * Creates client/server port into the given component based on the given dependencies.
+	 * 
+	 * @param comp  the component
+	 * @param dependencies  the dependencies of the component to create the ports from
+	 */
 	public static void addClientServerPort(Component comp, EList<Dependency> dependencies)
 	{
 		Profile gcm = null;
@@ -187,7 +218,16 @@ public class AddDiagramElement {
 		}
 	}
 	
-	public static Command addPortCommand(TransactionalEditingDomain domain, final Component interf, final Component comp) {
+	/**
+	 * Creates client/server port into the given target component based on the dependencies with the given source
+	 * component.
+	 * 
+	 * @param domain  the editing domain
+	 * @param sourceComponent  the source component
+	 * @param targetComponenet  the target component
+	 * @return  the provisioning command
+	 */
+	public static Command addPortCommand(TransactionalEditingDomain domain, final Component sourceComponent, final Component targetComponenet) {
 		
 		return new RecordingCommand(domain) {
 
@@ -196,7 +236,7 @@ public class AddDiagramElement {
 				//addClientServerPort(comp, interf.getClientDependencies());
 				Profile gcm = null;
 				Stereotype stereo = null;
-				EList<Profile> profiles = comp.getNearestPackage().getAppliedProfiles();
+				EList<Profile> profiles = targetComponenet.getNearestPackage().getAppliedProfiles();
 				
 				for (Profile profile : profiles) 
 				{
@@ -209,13 +249,13 @@ public class AddDiagramElement {
 				
 				stereo = gcm.getOwnedStereotype("ClientServerPort");
 				
-				for (Dependency dependency : interf.getClientDependencies()) 
+				for (Dependency dependency : sourceComponent.getClientDependencies()) 
 				{
 					for (NamedElement dep_sup : dependency.getSuppliers()) 
 					{
-						if ( comp.getOwnedPort(dep_sup.getName(), (Interface)dep_sup) == null )
+						if ( targetComponenet.getOwnedPort(dep_sup.getName(), (Interface)dep_sup) == null )
 						{
-							Port port = comp.createOwnedPort(dep_sup.getName(), (Interface)dep_sup);
+							Port port = targetComponenet.createOwnedPort(dep_sup.getName(), (Interface)dep_sup);
 							
 							EObject p = port.applyStereotype(stereo);
 							
@@ -248,7 +288,7 @@ public class AddDiagramElement {
 								}
 							}
 							
-							createGraphicalPort(comp, port);
+							createGraphicalPort(targetComponenet, port);
 						}
 					}
 				}
@@ -260,6 +300,14 @@ public class AddDiagramElement {
 
 	
 	//add operation to the interface's clients
+	/**
+	 * Copies the given operation into all the descendants of the given interface.
+	 * 
+	 * @param domain  the transactional editing domain
+	 * @param interf  the interface
+	 * @param operation  the operation
+	 * @return  the provisioning command
+	 */
 	public static Command addOperationCommand1(TransactionalEditingDomain domain, final Interface interf, final Operation operation){
 		return new RecordingCommand(domain) {
 

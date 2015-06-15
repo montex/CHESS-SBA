@@ -14,16 +14,41 @@
 -----------------------------------------------------------------------
 */
 
-package it.unipd.chess.annotations;
-public class IEl {
-	private String name;
+package org.polarsys.chess.core.internal.preferences;
 
-	public IEl(String name) {
-		this.name = name;
+import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
+
+public class CHESSMainPage extends PreferencePage implements
+		IWorkbenchPreferencePage {
+
+	public CHESSMainPage() {
+		// TODO Auto-generated constructor stub
 	}
-	
+
+	public CHESSMainPage(String title) {
+		super(title);
+		// TODO Auto-generated constructor stub
+	}
+
+	public CHESSMainPage(String title, ImageDescriptor image) {
+		super(title, image);
+		// TODO Auto-generated constructor stub
+	}
+
+	public void init(IWorkbench workbench) {
+		// TODO Auto-generated method stub
+
+	}
+
 	@Override
-	public String toString() {
-		return "Element: " + name;
+	protected Control createContents(Composite parent) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 }

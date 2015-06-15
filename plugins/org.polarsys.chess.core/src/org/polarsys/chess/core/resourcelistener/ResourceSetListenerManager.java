@@ -28,6 +28,10 @@ import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
 import org.osgi.framework.Bundle;
 
+/**
+ * This class manages the resorceListener extension-point.
+ *
+ */
 public class ResourceSetListenerManager extends ResourceSetListenerExtra {
 	// list of of listener
 	private Hashtable<String, ResourceSetListenerExtra> listenerRegistry;
@@ -46,7 +50,7 @@ public class ResourceSetListenerManager extends ResourceSetListenerExtra {
 	}
 
 	/**
-	 * Load all listeners of the model
+	 * Load all registered listeners for the model
 	 */
 	private void initializeListenerList() {
 		
@@ -86,13 +90,10 @@ public class ResourceSetListenerManager extends ResourceSetListenerExtra {
 	/**
 	 * Load an instance of a class
 	 * 
-	 * @param element
-	 *            the extension point
-	 * @param classAttribute
-	 *            the name of the class to load
+	 * @param element  the extension point
+	 * @param classAttribute  the name of the class to load
 	 * @return the loaded Class
-	 * @throws Exception
-	 *             if the class is not loaded
+	 * @throws Exception  if the class is not loaded
 	 */
 	private static Object createExtension(final IConfigurationElement element,
 			final String classAttribute) throws Exception {
@@ -110,9 +111,9 @@ public class ResourceSetListenerManager extends ResourceSetListenerExtra {
 			throw new Exception("unable to create Extension" + e);
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
 		String out = "ModelListener: \n";
@@ -126,6 +127,9 @@ public class ResourceSetListenerManager extends ResourceSetListenerExtra {
 		return out;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.transaction.ResourceSetListenerImpl#transactionAboutToCommit(org.eclipse.emf.transaction.ResourceSetChangeEvent)
+	 */
 	@Override
 	public Command transactionAboutToCommit(ResourceSetChangeEvent event)
 			throws RollbackException {
