@@ -16,7 +16,19 @@
 
 package org.polarsys.chess.core.preferences;
 
+/**
+ * This interface enables constraints to be checked during the model validation (activated) or skipped (deactivated).
+ *
+ */
 public interface IFilterable {
-	public void setActive(boolean b);
+	/**
+	 * Sets the status. True for active/ false otherwise.
+	 * @param active
+	 */
+	public void setActive(boolean active);
+	
+	/**
+	 * @return true if active/ false otherwise
+	 */
 	public boolean isActive();
 }

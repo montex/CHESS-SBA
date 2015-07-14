@@ -22,6 +22,11 @@ import java.util.Set;
 
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 
+/**
+ * A collection of constants that defines the association between diagrams and design views and a mapping
+ * from Papyrus diagram names to UML names used internally by CHESS permissions.
+ *
+ */
 public class ViewDiagramAssociations {
 
 	private static Set<String> UMLDiagrams = new HashSet<String>();
@@ -48,6 +53,9 @@ public class ViewDiagramAssociations {
 	public static String parametricDiagram = "Parametric";
 	public static String requirementDiagram = "RequirementDiagram";
 	
+	/**
+	 * Maps Papyrus diagram names to UML names used internally by CHESS permissions.
+	 */
 	public static HashMap<String, String> papyrusNames2Standard = new HashMap<String, String>(12);
 	
 	

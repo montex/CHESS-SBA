@@ -9,13 +9,24 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.papyrus.infra.core.resource.ModelSet;
 import org.eclipse.papyrus.uml.tools.model.UmlUtils;
 import org.eclipse.uml2.uml.Model;
-import org.polarsys.chess.core.extensionpoint.AddProfileHandler;
-import org.polarsys.chess.core.views.commands.CreateViewsCommand;
+import org.polarsys.chess.core.internal.extensionpoint.AddProfileHandler;
+import org.polarsys.chess.core.internal.views.commands.CreateViewsCommand;
 
+/**
+ * This class extends the {@link RecordingCommand} class to implement the command to initialize a
+ * CHESS model.
+ *
+ */
 public class InitCHESSModelCommand extends RecordingCommand {
 
 	private ModelSet modelSet;
 
+	/**
+	 * Initializes the command.
+	 * 
+	 * @param editingDomain  the editing domain where the command takes place
+	 * @param modelSet  the model set where the command works in
+	 */
 	public InitCHESSModelCommand(TransactionalEditingDomain editingDomain, ModelSet modelSet) {
 			super(editingDomain);
 			this.modelSet = modelSet;
@@ -23,9 +34,6 @@ public class InitCHESSModelCommand extends RecordingCommand {
 	
 	@Override
 	protected void doExecute() {
-		//CHESSProfileManager chess = new CHESSProfileManager(modelSet);
-		//MARTEProfileManager marte = MARTEProfileManager.loadMARTEProfile(modelSet);
-		//SysMLProfileManager sysml = SysMLProfileManager.loadSysMLProfile(modelSet);
 		
 		EObject  owner = getRootElement(UmlUtils.getUmlResource(modelSet));
 		CreateViewsCommand.viewsToModel((Model)owner, modelSet/*, chess, marte, sysml*/);	

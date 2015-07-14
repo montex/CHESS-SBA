@@ -1,8 +1,8 @@
 /*
 -----------------------------------------------------------------------
---          			CHESS editor plugin							 --
+--          			CHESS Service plug-in						 --
 --                                                                   --
---                    Copyright (C) 2011-2012                        --
+--                    Copyright (C) 2011-2015                        --
 --                 University of Padova, ITALY                       --
 --                                                                   --
 -- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
@@ -16,14 +16,10 @@
 
 package org.polarsys.chess.service.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.ecore.EObject;
@@ -32,9 +28,6 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramCommandStack;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.notation.Diagram;
-import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.editor.IMultiDiagramEditor;
@@ -42,7 +35,6 @@ import org.eclipse.papyrus.infra.core.sashwindows.di.PageRef;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
 import org.eclipse.papyrus.infra.core.utils.EditorUtils;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -51,69 +43,21 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
-import org.eclipse.uml2.uml.Port;
 import org.polarsys.chess.core.natures.CHESSNature;
 import org.polarsys.chess.core.views.DiagramStatus;
-import org.polarsys.chess.service.CHESSService;
+import org.polarsys.chess.service.internal.Activator;
+import org.polarsys.chess.service.internal.service.CHESSService;
+import org.polarsys.chess.service.internal.utils.CHESSInternalEditorUtils;
 
 public class CHESSEditorUtils {
-	static public DiagramCommandStack getDiagramCommandStack() {
-		try {
-			Object stack = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-					.getActivePage().getActivePart()
-					.getAdapter(CommandStack.class);
-			return (stack instanceof DiagramCommandStack) ? (DiagramCommandStack) stack
-					: null;
-		} catch (Exception e) {
-		}
-		return null;
-	}
 
-	static public Diagram getDiagram() {
-		IMultiDiagramEditor editor = EditorUtils.getMultiDiagramEditor();
-		return (Diagram) editor.getAdapter(Diagram.class);
-	}
-
-	static public DiagramEditPart getDiagramEditPart() {
-		IMultiDiagramEditor editor = EditorUtils.getMultiDiagramEditor();
-		return (DiagramEditPart) editor.getAdapter(DiagramEditPart.class);
-	}
-
-	static public IDiagramGraphicalViewer getDiagramGraphicalViewer() {
-		DiagramEditPart diagramEP = getDiagramEditPart();
-		return (IDiagramGraphicalViewer) diagramEP.getViewer();
-	}
-
-	static public List<View> getDiagramAllVisiblePort(final View diagram) {
-		return getDiagramAllVisiblePortRecur(new ArrayList<View>(), diagram);
-	}
-
-	static private List<View> getDiagramAllVisiblePortRecur(List<View> list,
-			View view) {
-		for (Object v : view.getVisibleChildren()) {
-			if (!(v instanceof View))
-				continue;
-			if (((View) v).getElement() instanceof Port)
-				list.add((View) v);
-			getDiagramAllVisiblePortRecur(list, (View) v);
-		}
-		return list;
-
-	}
-
-	public static IEditorPart getEditor() {
-		IEditorPart editor;
-		try {
-			editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-					.getActivePage().getActiveEditor();
-		} catch (Exception e) {
-			editor = null;
-		}
-		return editor;
-	}
-
-	public static PapyrusMultiDiagramEditor getCHESSEditor() {
-		IEditorPart editor = getEditor();
+	/**
+	 * If the active editor's input belongs to a project with the CHESS nature then return the 
+	 * editor.
+	 * @return the editor if it is a CHESS editor, null otherwise.
+	 */
+	public static /*@Nullable*/ PapyrusMultiDiagramEditor getCHESSEditor() {
+		IEditorPart editor = CHESSInternalEditorUtils.getEditor();
 		PapyrusMultiDiagramEditor r = null;
 		if (editor != null && editor instanceof PapyrusMultiDiagramEditor
 				&& isCHESSProject(editor))
@@ -121,124 +65,23 @@ public class CHESSEditorUtils {
 		return r;
 	}
 
-	public static DiagramStatus getDiagramStatus(
-			PapyrusMultiDiagramEditor editor) {
-		DiagramStatus ds = null;
-		try {
-			CHESSService cs = editor.getServicesRegistry().getService(CHESSService.class);
-			ds = cs.getDiagramStatus();
-		} catch (ServiceException e) {
-		}
-		return ds;
+	/**
+	 * Get the current active diagram from the active editor.
+	 * It uses the org.eclipse.papyrus.infra.core.utils.EditorUtils.getMultiDiagramEditor()
+	 * utility method.
+	 * @return the active Diagram object. It can be null.
+	 */
+	static public /*@Nullable*/ Diagram getDiagram() {
+		IMultiDiagramEditor editor = EditorUtils.getMultiDiagramEditor();
+		return (Diagram) editor.getAdapter(Diagram.class);
 	}
 
-	public static MessageDialog showConfirmDialog(EditorPart editor,
-			String dialogTitle, String dialogMessage) {
-		MessageDialog md = new MessageDialog(editor.getSite().getShell(),
-				dialogTitle, null, dialogMessage, MessageDialog.CONFIRM,
-				new String[] { "OK", "No", "Cancel" }, 0);
-		md.setBlockOnOpen(true);
-		return md;
-	}
-
-	public static MessageDialog showYesNoDialog(EditorPart editor,
-			String dialogTitle, String dialogMessage) {
-		MessageDialog md = new MessageDialog(editor.getSite().getShell(),
-				dialogTitle, null, dialogMessage, MessageDialog.CONFIRM,
-				new String[] { "Yes", "No" }, 0);
-		md.setBlockOnOpen(true);
-		return md;
-	}
-
-	public static int StatusDialog(EditorPart editor, String dialogTitle,
-			String dialogMessage, IStatus st) {
-		// return ErrorDialog.openError(editor.getSite().getShell(),
-		// dialogTitle, dialogMessage, st);
-		ErrorDialog er = new ErrorDialog(editor.getSite().getShell(),
-				dialogTitle, dialogMessage, st, IStatus.ERROR) {
-
-			protected void createButtonsForButtonBar(Composite parent) {
-				// create OK and Details buttons
-				createButton(parent, IDialogConstants.YES_ID,
-						IDialogConstants.YES_LABEL, true);
-				createButton(parent, IDialogConstants.NO_ID,
-						IDialogConstants.NO_LABEL, true);
-				createDetailsButton(parent);
-			}
-
-			protected void buttonPressed(int id) {
-				if (id == IDialogConstants.YES_ID)
-					id = IDialogConstants.OK_ID;
-				if (id == IDialogConstants.NO_ID) {
-					setReturnCode(5);
-					close();
-				} else {
-					super.buttonPressed(id);
-				}
-			}
-		};
-		return er.open();
-		// md = new
-		// MessageDialog mm = new MessageDialog(
-		// editor.getSite().getShell(),
-		// dialogTitle,
-		// null,
-		// dialogMessage,
-		// MessageDialog.CONFIRM, new String[] { "Yes", "No" }, 0);
-		// md.setBlockOnOpen(true);
-		// return md;
-	}
-
-	public static void reopenEditor(final IEditorPart editor, final Boolean save) {
-		Display.getDefault().syncExec(new Runnable() {
-			public void run() {
-				IWorkbenchPage page = editor.getEditorSite().getPage();
-				IEditorInput input = editor.getEditorInput();
-				page.closeEditor(editor, save);
-
-				// IEditorDescriptor desc =
-				// page.getWorkbenchWindow().getWorkbench().getEditorRegistry().findEditor(CHESSEditor.ID);
-
-				// IEditorDescriptor desc =
-				// page.getWorkbenchWindow().getWorkbench().getEditorRegistry().getDefaultEditor(input.getName());
-				try {
-					page.openEditor(input, PapyrusMultiDiagramEditor.EDITOR_ID, save);
-				} catch (PartInitException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public static boolean isCHESSProject(IEditorPart editor) {
-		IEditorInput x = editor.getEditorInput();
-		
-		IProjectNature nature = null;
-		
-		if (x instanceof URIEditorInput) {
-			URIEditorInput h = (URIEditorInput) x;
-			IFile f = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(h.getURI().toPlatformString(true)));
-			try {
-				nature = f.getProject().getNature(CHESSNature.NATURE_ID);
-			} catch (CoreException e) {
-				System.err.println(e.getStackTrace());
-			}
-		}else
-		
-		
-		if (x instanceof IFileEditorInput) {
-			IFile y = ((IFileEditorInput) x).getFile();
-
-			try {
-				nature = y.getProject().getNature(CHESSNature.NATURE_ID);
-			} catch (CoreException e) {
-				System.err.println(e.getStackTrace());
-			}
-		}
-		return nature != null;
-	}
-	
-	public static Diagram getDiagram(PapyrusMultiDiagramEditor editor) {
+	/**
+	 * Get the current active diagram given the editor.
+	 * @param the editor. It should be not null.
+	 * @return the active Diagram object. It can be null.
+	 */
+	public static /*@Nullable*/ Diagram getDiagram(/*@NunNull*/PapyrusMultiDiagramEditor editor) {
 		Object model = editor.getISashWindowsContainer()
 				.getActiveSashWindowsPage().getRawModel();
 		Diagram diagram = null;
@@ -252,15 +95,172 @@ public class CHESSEditorUtils {
 		return diagram;
 	}
 
-	public static DiagramStatus getDiagramStatus(ServicesRegistry registry) {
+	
+
+	/**
+	 * Return the DiagramEditPart from the active workbench page.
+	 * @return the DiagramCommandStack. It can be null.
+	 */
+	static public /*@Nullable*/ DiagramCommandStack getDiagramCommandStack() {
+		try {
+			Object stack = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getActivePage().getActivePart()
+					.getAdapter(CommandStack.class);
+			return (stack instanceof DiagramCommandStack) ? (DiagramCommandStack) stack
+					: null;
+		} catch (Exception e) {
+			Activator.error("Unexpected error", e);
+		}
+		return null;
+	}
+
+	/**
+	 * Return the DiagramEditPart from the active editor. It uses the 
+	 * org.eclipse.papyrus.infra.core.utils.EditorUtils.getMultiDiagramEditor()
+	 * utility method.
+	 * @return the DiagramEditPart. It can be null.
+	 */
+	static public /*@Nullable*/ DiagramEditPart getDiagramEditPart() {
+		IMultiDiagramEditor editor = EditorUtils.getMultiDiagramEditor();
+		if (editor != null)
+			return (DiagramEditPart) editor.getAdapter(DiagramEditPart.class);
+		else
+			return null;
+	}
+
+	/**
+	 * Return the graphical viewer from the active editor. It uses the 
+	 * org.eclipse.papyrus.infra.core.utils.EditorUtils.getMultiDiagramEditor()
+	 * utility method.
+	 * @return the IDiagramGraphicalViewer. It can be null.
+	 */
+	static public /*@Nullable*/ IDiagramGraphicalViewer getDiagramGraphicalViewer() {
+		DiagramEditPart diagramEP = getDiagramEditPart();
+		if (diagramEP != null)
+			return (IDiagramGraphicalViewer) diagramEP.getViewer();
+		else
+			return null;
+	}
+
+	/**
+	 * Get the DiagramStatus object of the CHESS Service given the Papyrus editor.
+	 * @param the editor It should be not null.
+	 * @return the DiagramStatus object. It can be null.
+	 */
+	public static /*@Nullable*/ DiagramStatus getDiagramStatus(
+			/* @NonNull */ final PapyrusMultiDiagramEditor editor) {
+		DiagramStatus ds = null;
+		try {
+			ServicesRegistry servicesRegistry = editor.getServicesRegistry();
+			CHESSService cs = servicesRegistry.getService(
+					CHESSService.class);
+			
+			ds = cs.getDiagramStatus();
+		} catch (ServiceException e) {
+			Activator.error("CHESS service does not exist.", e);
+		}  catch (NullPointerException e) {
+			Activator.error("DiagramStatus does not exist", e);
+		}
+		return ds;
+	}
+
+	/**
+	 * Get the DiagramStatus object of the CHESS Service given the Papyrus service registry. 
+	 * @param registry. It should be not null.
+	 * @return the DiagramStatus object. It can be null.
+	 */
+	public static /*@Nullable*/DiagramStatus getDiagramStatus(/* @NonNull */final ServicesRegistry registry) {
 		DiagramStatus ds = null;
 		CHESSService cs;
 		try {
 			cs = registry.getService(CHESSService.class);
 			ds = cs.getDiagramStatus();
 		} catch (ServiceException e) {
+			Activator.error("CHESS service does not exist.", e);
+		} catch (NullPointerException e) {
+			Activator.error("DiagramStatus does not exist", e);
 		}
 		return ds;
 	}
 
+	/**
+	 * Check if the editor passed as a parameter is a CHESS editor; that is if
+	 * the input of the editor belongs to a project with the CHESS nature
+	 * 
+	 * @param the
+	 *            editor. It should be not null.
+	 * @return true if it is a CHESS editor, false otherwise.
+	 */
+	public static boolean isCHESSProject(/* @NonNull */final IEditorPart editor) {
+		IEditorInput x = editor.getEditorInput();
+
+		IProjectNature nature = null;
+		IFile f = null;
+		if (x instanceof URIEditorInput) {
+			URIEditorInput input = (URIEditorInput) x;
+			f = ResourcesPlugin.getWorkspace().getRoot()
+					.getFile(new Path(input.getURI().toPlatformString(true)));
+		} else if (x instanceof IFileEditorInput) {
+			f = ((IFileEditorInput) x).getFile();
+		} else {
+			// TODO are there other types of input?
+		}
+
+		try {
+			if (f != null)
+				nature = f.getProject().getNature(CHESSNature.NATURE_ID);
+		} catch (CoreException e) {
+			System.err.println(e.getStackTrace());
+		}
+
+		return nature != null;
+	}
+
+	/**
+	 * Reopen the Papyrus Editor specified in the parameter. Optionally the
+	 * editor input can be saved before reopening.
+	 * 
+	 * @param editor
+	 *            the Editor to reopen. It should be not null.
+	 * @param save
+	 *            set this parameter to true to save the input
+	 */
+	public static void reopenEditor(/* @NonNull */final IEditorPart editor,
+			final Boolean save) {
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				IWorkbenchPage page = editor.getEditorSite().getPage();
+				IEditorInput input = editor.getEditorInput();
+				page.closeEditor(editor, save);
+				try {
+					page.openEditor(input, PapyrusMultiDiagramEditor.EDITOR_ID,
+							save);
+				} catch (PartInitException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Utility function to create a confirmation Dialog with "OK", "no" and
+	 * "cancel" buttons.
+	 * 
+	 * @param editor
+	 *            the editor the dialog belongs to. It should be not null.
+	 * @param dialogTitle
+	 *            the title of the dialog
+	 * @param dialogMessage
+	 *            the message to display
+	 * @return the MessageDialog created.
+	 */
+	public static /* @NonNull */ MessageDialog showConfirmDialog(
+	/* @NonNull */final EditorPart editor, String dialogTitle,
+			String dialogMessage) {
+		MessageDialog md = new MessageDialog(editor.getSite().getShell(),
+				dialogTitle, null, dialogMessage, MessageDialog.CONFIRM,
+				new String[] { "OK", "No", "Cancel" }, 0);
+		md.setBlockOnOpen(true);
+		return md;
+	}
 }

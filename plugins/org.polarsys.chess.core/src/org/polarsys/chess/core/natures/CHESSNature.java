@@ -20,27 +20,46 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
 
+
+/**
+ * This class defines the CHESS Nature.
+ *
+ */
 public class CHESSNature implements IProjectNature {
 
+	/**
+	 * The ID of the nature
+	 */
 	public static String NATURE_ID = "org.polarsys.chess.CHESSNature"; ////$NON-NLS-N$
+	
+	private IProject project;
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.core.resources.IProjectNature#configure()
+	 */
 	public void configure() throws CoreException {
-		// TODO Auto-generated method stub
-
+		// do nothing
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.core.resources.IProjectNature#deconfigure()
+	 */
 	public void deconfigure() throws CoreException {
-		// TODO Auto-generated method stub
-
+		// do nothing
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.core.resources.IProjectNature#getProject()
+	 */
 	public IProject getProject() {
-		// TODO Auto-generated method stub
-		return null;
+		return project;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.core.resources.IProjectNature#setProject(org.eclipse.core.resources.IProject)
+	 */
 	public void setProject(IProject project) {
-		// TODO Auto-generated method stub
-
+		this.project = project;
 	}
 
 }

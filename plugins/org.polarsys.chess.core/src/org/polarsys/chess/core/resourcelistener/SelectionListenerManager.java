@@ -26,8 +26,11 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
 import org.eclipse.ui.IWorkbenchPart;
 import org.osgi.framework.Bundle;
-import org.polarsys.chess.core.util.MainRegistry;
 
+/**
+ * Manages the extension-point 'org.polarsys.chess.selectionListener'.
+ *
+ */
 public class SelectionListenerManager extends SelectionListenerExtra{
 
 	// list of of listener
@@ -42,7 +45,8 @@ public class SelectionListenerManager extends SelectionListenerExtra{
 
 	/**
 	 * Constructor
-	 * @param servicesRegistry 
+	 * 
+	 * @param servicesRegistry  the Papyrus service registry 
 	 */
 	public SelectionListenerManager(ServicesRegistry serviceRegistry) {
 		super();
@@ -53,7 +57,7 @@ public class SelectionListenerManager extends SelectionListenerExtra{
 	}
 
 	/**
-	 * Load all listeners of the model
+	 * Loads all listeners of the model
 	 */
 	private void initializeListenerList() {
 		// Reading data from plugins
@@ -67,7 +71,7 @@ public class SelectionListenerManager extends SelectionListenerExtra{
 	}
 
 	/**
-	 * Load one listener
+	 * Loads one listener
 	 * 
 	 * @param element
 	 *        the extension point
@@ -95,9 +99,9 @@ public class SelectionListenerManager extends SelectionListenerExtra{
 			throw new Exception("unable to create Extension " + e);
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
 		String out = "ModelListener: \n";
@@ -110,8 +114,8 @@ public class SelectionListenerManager extends SelectionListenerExtra{
 		return out;
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.resourcelistener.SelectionListenerExtra#selectionChanged(org.eclipse.ui.IWorkbenchPart, org.eclipse.jface.viewers.ISelection)
 	 */
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		Enumeration<SelectionListenerExtra> listenersEnum = listenerRegistry.elements();

@@ -26,8 +26,15 @@ import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
 import org.polarsys.chess.core.views.ViewUtils;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EFVRT_04.
+ */
 public class EFVRT_04 extends AbstractModelConstraint {	
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
+	 */
 	@Override
 	public IStatus validate(IValidationContext ctx) {
 		EObject eObject = ctx.getTarget();

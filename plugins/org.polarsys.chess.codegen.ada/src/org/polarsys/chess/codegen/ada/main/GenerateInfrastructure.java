@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2011 Obeo.
+ * Copyright (c) 2008, 2015 Obeo.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -310,11 +310,10 @@ public class GenerateInfrastructure extends AbstractAcceleoGenerator {
     
     /**
      * Adds a properties file in the list of properties files.
-     * 
-     * @param propertiesFile
-     *            The properties file to add.
-     * @generated
+     *
+     * @param propertiesFile            The properties file to add.
      * @since 3.1
+     * @generated 
      */
     @Override
     public void addPropertiesFile(String propertiesFile) {
@@ -342,6 +341,9 @@ public class GenerateInfrastructure extends AbstractAcceleoGenerator {
     @Override
     public void registerPackages(ResourceSet resourceSet) {
         super.registerPackages(resourceSet);
+        if (!isInWorkspace(org.eclipse.uml2.uml.UMLPackage.class)) {
+            resourceSet.getPackageRegistry().put(org.eclipse.uml2.uml.UMLPackage.eINSTANCE.getNsURI(), org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+        }
         
         /*
          * If you want to change the content of this method, do NOT forget to change the "@generated"

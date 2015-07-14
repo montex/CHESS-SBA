@@ -23,6 +23,10 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
+/**
+ * Manages the extension-point 'org.polarsys.chess.transformationExecutor'
+ *
+ */
 public class TransformationExecutorManager {
 
 	// list of of listener
@@ -38,15 +42,16 @@ public class TransformationExecutorManager {
 	private static TransformationExecutorManager instance; 
 
 	
+	/**
+	 * Creates the singleton instance of the manager.
+	 * @return
+	 */
 	public static TransformationExecutorManager instance(){
 		if (instance == null)
 			instance = new TransformationExecutorManager();
 		return instance;
 	}
-	/**
-	 * Constructor
-	 * @param servicesRegistry 
-	 */
+	
 	private TransformationExecutorManager() {
 		super();
 		executorRegistry = new Hashtable<String, ITransformationExecutor>();
@@ -54,7 +59,7 @@ public class TransformationExecutorManager {
 	}
 
 	/**
-	 * Load all listeners of the model
+	 * Loads all listeners of the model
 	 */
 	private void initializeExecutorList() {
 		// Reading data from plugins
@@ -68,7 +73,7 @@ public class TransformationExecutorManager {
 	}
 
 	/**
-	 * Load one listener
+	 * Loads one listener
 	 * 
 	 * @param element
 	 *        the extension point
@@ -96,9 +101,19 @@ public class TransformationExecutorManager {
 		}
 	}
 	
-	public ITransformationExecutor getExecutor(String name){
+	/**
+	 * Retrieves the transformation to execute given its name.
+	 * 
+	 * @param name  the name of the transformation
+	 * @return  the executor
+	 */
+	public ITransformationExecutor getExecutor(final String name){
 		return executorRegistry.get(name);
 	}
+	
+	/**
+	 * Initializes the manager. 
+	 */
 	public static void init() {
 		instance();
 	}
