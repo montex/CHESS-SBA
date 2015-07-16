@@ -285,7 +285,9 @@ public class BuildInstanceCommand extends AbstractHandler {
 			
 			//create port instances for root instance
 			if (rootcomponent instanceof org.eclipse.uml2.uml.Class)
-				buildPortInstances((org.eclipse.uml2.uml.Class) rootcomponent, instanceRoot, (ShapeImpl) compositeEP.getModel() );
+				// LB 20150701: porting to MARS casting to compositeEP (following eclipse's suggestion) 
+				//buildPortInstances((org.eclipse.uml2.uml.Class) rootcomponent, instanceRoot, (ShapeImpl) compositeEP.getModel() );
+				buildPortInstances((org.eclipse.uml2.uml.Class) rootcomponent, instanceRoot, (ShapeImpl) ((EditPart) compositeEP).getModel() );
 		}
 		
 		
@@ -541,7 +543,9 @@ public class BuildInstanceCommand extends AbstractHandler {
 	@SuppressWarnings("rawtypes")
 	@Deprecated
 	public static PortEditPart getPortEditPart(NamedElementEditPart propertyEP, Port port){
-		List listEP = propertyEP.getChildren();
+		// LB 20150701: porting MARS casting to propertyEP (following eclipse's suggestion)
+		//List listEP = propertyEP.getChildren();
+		List listEP = ((EditPart) propertyEP).getChildren();
 		Object temp = null;
 		for (int i=0; i<listEP.size(); i++){
 			temp = listEP.get(i);

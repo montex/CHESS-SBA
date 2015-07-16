@@ -77,11 +77,15 @@ public class ShowRTInformationCommand extends AbstractHandler{
 					
 				}
 				
-				if (showHideRT((Shape)compositeEP.getModel(), true)){
+				// LB 20150701 porting to MARTE added casting to compositeEP (following Eclipse's suggestion)
+				//if (showHideRT((Shape)compositeEP.getModel(), true)){
+				if (showHideRT((Shape)((EditPart) compositeEP).getModel(), true)){
 					ds.setUserAction(false);
 				}
 				
-				EditPart mainEditPart = (EditPart)(compositeEP.getRoot().getChildren().get(0));
+				// LB 20150701 porting to MARTE added parenthesis around cast and casting to EditPart (following Eclipse's suggestion)
+				//EditPart mainEditPart = (EditPart)(compositeEP.getRoot().getChildren().get(0));
+				EditPart mainEditPart = (EditPart) (((EditPart) compositeEP).getRoot().getChildren().get(0));
 				CanonicalEditPolicy cep = (CanonicalEditPolicy)mainEditPart.getEditPolicy(EditPolicyRoles.CANONICAL_ROLE);
 				if (cep!=null)
 					cep.refresh();

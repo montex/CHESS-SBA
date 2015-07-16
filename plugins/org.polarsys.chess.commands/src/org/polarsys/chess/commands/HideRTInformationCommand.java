@@ -73,7 +73,9 @@ public class HideRTInformationCommand extends AbstractHandler{
 						
 					}
 					
-					if (ShowRTInformationCommand.showHideRT((Shape)compositeEP.getModel(), false)){
+					// LB 20150701 porting to MARS added cast to compositeEp (following Eclipse's suggestion)
+					//if (ShowRTInformationCommand.showHideRT((Shape)compositeEP.getModel(), false)){
+					if (ShowRTInformationCommand.showHideRT((Shape)((EditPart) compositeEP).getModel(), false)){
 						ds.setUserAction(false);
 					}
 				}

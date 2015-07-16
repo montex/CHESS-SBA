@@ -20,9 +20,10 @@ Require-Bundle: org.eclipse.papyrus.infra.gmfdiag.common;bundle-version="1.0.0",
  org.eclipse.papyrus.infra.services.markerlistener;bundle-version="1.0.0",
  org.eclipse.papyrus.infra.core;bundle-version="1.0.0",
  org.eclipse.papyrus.infra.services.validation;bundle-version="1.0.0",
- org.polarsys.chess.service
+ org.polarsys.chess.service,
+ org.eclipse.gmf.tooling.runtime;bundle-version="3.3.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: Polarsys CHESS Project
 Export-Package: org.polarsys.chess.validator;
   uses:="org.eclipse.core.runtime,

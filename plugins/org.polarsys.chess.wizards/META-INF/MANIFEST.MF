@@ -31,5 +31,5 @@ Bundle-Name: %pluginName
 Bundle-ManifestVersion: 2
 Bundle-Activator: org.polarsys.chess.wizards.Activator
 Bundle-SymbolicName: org.polarsys.chess.wizards;singleton:=true
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 
