@@ -47,6 +47,10 @@ public class DV_01 extends AbstractModelConstraint {
 		IStatus success = ctx.createSuccessStatus();
 		String errorMsg = null;
 		
+		//<<IdentifInstance>> InstanceSpecification does not need to have an allocation to HW
+		if (instSpec.getAppliedStereotype("CHESS::Core::IdentifInstance")!=null)
+			return success;
+		
 		Collection<Comment> allAssignComment = new ArrayList<Comment>();
 				
 		TreeIterator<EObject> it = instSpec.getModel().eAllContents();
