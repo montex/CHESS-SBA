@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="generateInfrastructure" name="org.polarsys.chess.codegen.ada">
-    <property name="ECLIPSE_HOME" value="../../../../../../../Programs/eclipse-modeling-luna-SR2-win32-x86_64/eclipse"/>
-    <property name="ECLIPSE_WORKSPACE" value="../../../../../../01_Concerto/LavoroDiMerge"/>
+    <property name="ECLIPSE_HOME" value="../../../../../eclipse"/>
+    <property name="ECLIPSE_WORKSPACE" value="../../../../../workspace"/>
 
     <!-- The classpath with only the dependencies used by the project -->
     <path id="org.polarsys.chess.codegen.ada.libraryclasspath">
@@ -36,23 +36,23 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.acceleo.engine_3.5.1.201409021433.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.codegen.ecore_2.10.2.v20150123-0452.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.codegen_2.10.0.v20150123-0452.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.marte.static.profile_1.0.2.v201504031223.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.marte.static.profile_1.0.2.v201502181446.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.core.commands_3.6.100.v20140528-1422.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.core.resources_3.9.1.v20140825-1431.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.infra.core_1.0.2.v201504030953.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.infra.core.sasheditor_1.0.2.v201504030953.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.infra.core.sasheditor.di_1.0.2.v201504030953.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.editor_1.0.2.v201504030953.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.infra.core_1.0.2.v201502181349.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.infra.core.sasheditor_1.0.2.v201502181349.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.infra.core.sasheditor.di_1.0.2.v201502181349.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.editor_1.0.2.v201502181349.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.m2m.qvt.oml.common_3.4.0.v20140306-0649.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.m2m.qvt.oml.emf.util_3.4.0.v20140306-0718.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.ui_3.106.1.v20141002-1150.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.swt_3.103.2.v20150203-1313.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.swt.win32.win32.x86_64_3.103.2.v20150203-1351.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.swt.gtk.linux.x86_64_3.103.2.v20150203-1351.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.jface_3.10.2.v20141021-1035.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.ui.workbench_3.106.2.v20150204-1030.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.e4.ui.workbench3_0.12.0.v20140227-2118.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.ui.ide_3.10.2.v20141118-1227.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.sysml_1.0.2.v201504030953.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.sysml_1.0.2.v201502181349.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.uml2.uml.profile.standard_1.0.0.v20150202-0947.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.ui.views_3.7.0.v20140408-0703.jar"/>
     </path>
