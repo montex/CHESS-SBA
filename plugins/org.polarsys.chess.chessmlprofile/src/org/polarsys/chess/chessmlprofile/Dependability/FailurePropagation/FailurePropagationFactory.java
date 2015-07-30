@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -110,6 +110,15 @@ public interface FailurePropagationFactory extends EFactory {
 	 * @generated
 	 */
 	FI4FAAnalysis createFI4FAAnalysis();
+
+	/**
+	 * Returns a new object of class '<em>FLA Specification</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>FLA Specification</em>'.
+	 * @generated
+	 */
+	FLASpecification createFLASpecification();
 
 	/**
 	 * Returns the package supported by this factory.

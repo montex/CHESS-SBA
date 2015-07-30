@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -63,6 +63,9 @@ public class DependableComponentFactoryImpl extends EFactoryImpl implements Depe
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case DependableComponentPackage.PROPAGATION: return createPropagation();
+			case DependableComponentPackage.FAILURE_MODE_GROUP: return createFailureModeGroup();
+			case DependableComponentPackage.FAILURE_MODE: return createFailureMode();
+			case DependableComponentPackage.FAILURE_MODE_SPECIFICATION: return createFailureModeSpecification();
 			case DependableComponentPackage.DEPENDABLE_COMPONENT: return createDependableComponent();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -77,6 +80,36 @@ public class DependableComponentFactoryImpl extends EFactoryImpl implements Depe
 	public Propagation createPropagation() {
 		PropagationImpl propagation = new PropagationImpl();
 		return propagation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FailureModeGroup createFailureModeGroup() {
+		FailureModeGroupImpl failureModeGroup = new FailureModeGroupImpl();
+		return failureModeGroup;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FailureMode createFailureMode() {
+		FailureModeImpl failureMode = new FailureModeImpl();
+		return failureMode;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FailureModeSpecification createFailureModeSpecification() {
+		FailureModeSpecificationImpl failureModeSpecification = new FailureModeSpecificationImpl();
+		return failureModeSpecification;
 	}
 
 	/**

@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2015 Intecs.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Stefano Puri, stefano.puri@intecs.it
+ *******************************************************************************/
+
 package org.polarsys.chess.validator.command;
 
 import java.util.ArrayList;
@@ -32,17 +43,38 @@ import org.eclipse.papyrus.infra.services.markerlistener.util.MarkerListenerUtil
 import org.eclipse.papyrus.infra.services.validation.commands.AbstractValidateCommand;
 import org.eclipse.papyrus.infra.services.validation.ValidationTool;
 import org.eclipse.swt.widgets.Shell;
+import org.polarsys.chess.validator.command.util.ChessGenericDiagnostician;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ChessGenericValidateCommand.
+ * @see org.eclipse.papyrus.infra.services.validation.commands.AbstractValidateCommand
+ */
 public class ChessGenericValidateCommand extends AbstractValidateCommand {
 	
+	/** The plugin ids. */
 	public Collection<String> pluginIds;
 	
+	/**
+	 * Instantiates a new ChessGenericValidateCommand.
+	 *
+	 * @param label the label
+	 * @param pluginId the plugin id
+	 * @param selectedElement the selected element
+	 */
 	public ChessGenericValidateCommand(String label, String pluginId, EObject selectedElement) {
 		super(label, TransactionUtil.getEditingDomain (selectedElement), selectedElement);
 		this.pluginIds = new ArrayList<String>();
 		this.pluginIds.add(pluginId);
 	}
 
+	/**
+	 * Instantiates a new ChessGenericValidateCommand.
+	 *
+	 * @param label the label
+	 * @param pluginIds the list of plugin ids
+	 * @param selectedElement the selected element
+	 */
 	public ChessGenericValidateCommand(String label,
 			Collection<String> pluginIds, EObject selectedElement) {
 		super(label, TransactionUtil.getEditingDomain (selectedElement), selectedElement);
@@ -53,6 +85,9 @@ public class ChessGenericValidateCommand extends AbstractValidateCommand {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand#doExecuteWithResult(org.eclipse.core.runtime.IProgressMonitor, org.eclipse.core.runtime.IAdaptable)
+	 */
 	@Override
 	protected CommandResult doExecuteWithResult(IProgressMonitor arg0,
 		IAdaptable arg1) throws ExecutionException {
@@ -86,6 +121,10 @@ public class ChessGenericValidateCommand extends AbstractValidateCommand {
 
 	/**
 	 * This simply execute the command.
+	 *
+	 * @param progressMonitor the progress monitor
+	 * @param validateElement the validate element
+	 * @return the diagnostic
 	 */
 	@Override
 	protected Diagnostic validate(IProgressMonitor progressMonitor, EObject validateElement)
@@ -124,6 +163,14 @@ public class ChessGenericValidateCommand extends AbstractValidateCommand {
 
 	
 	//@Override
+	/**
+	 * Creates the ChessGenericDiagnostician.
+	 *
+	 * @param adapterFactory the adapter factory
+	 * @param progressMonitor the progress monitor
+	 * @param filter the filter
+	 * @return the ChessGenericDiagnostician
+	 */
 	protected ChessGenericDiagnostician createChessGenericDiagnostician(final AdapterFactory adapterFactory, final IProgressMonitor progressMonitor, final IConstraintFilter filter)
 	{
 		return new ChessGenericDiagnostician(filter) {
@@ -145,6 +192,12 @@ public class ChessGenericValidateCommand extends AbstractValidateCommand {
 	}
 
 	
+	/**
+	 * Process the markers
+	 *
+	 * @param resource the resource
+	 * @throws CoreException the core exception
+	 */
 	static protected void processMarkers(IResource resource) throws CoreException {
 		
 		//System.err.println("processMarkers for resource " + resource.getName());
@@ -170,6 +223,9 @@ public class ChessGenericValidateCommand extends AbstractValidateCommand {
     	
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.papyrus.infra.services.validation.commands.AbstractValidateCommand#handleDiagnostic(org.eclipse.core.runtime.IProgressMonitor, org.eclipse.emf.common.util.Diagnostic, org.eclipse.emf.ecore.EObject, org.eclipse.swt.widgets.Shell)
+	 */
 	@Override
 	protected void handleDiagnostic(IProgressMonitor monitor, Diagnostic diagnostic, final EObject validateElement, final Shell shell){
 		Resource resource = getValidationResource();

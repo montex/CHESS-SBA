@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -82,6 +82,24 @@ public class DependableComponentSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case DependableComponentPackage.FAILURE_MODE_GROUP: {
+				FailureModeGroup failureModeGroup = (FailureModeGroup)theEObject;
+				T result = caseFailureModeGroup(failureModeGroup);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependableComponentPackage.FAILURE_MODE: {
+				FailureMode failureMode = (FailureMode)theEObject;
+				T result = caseFailureMode(failureMode);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependableComponentPackage.FAILURE_MODE_SPECIFICATION: {
+				FailureModeSpecification failureModeSpecification = (FailureModeSpecification)theEObject;
+				T result = caseFailureModeSpecification(failureModeSpecification);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case DependableComponentPackage.DEPENDABLE_COMPONENT: {
 				DependableComponent dependableComponent = (DependableComponent)theEObject;
 				T result = caseDependableComponent(dependableComponent);
@@ -104,6 +122,51 @@ public class DependableComponentSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T casePropagation(Propagation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Failure Mode Group</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Failure Mode Group</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFailureModeGroup(FailureModeGroup object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Failure Mode</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Failure Mode</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFailureMode(FailureMode object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Failure Mode Specification</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Failure Mode Specification</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFailureModeSpecification(FailureModeSpecification object) {
 		return null;
 	}
 

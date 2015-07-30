@@ -37,51 +37,6 @@
         </library>
      </unit>
 	</extension>
-	 
-  <!--<extension point="org.eclipse.ui.popupMenus">
-      <objectContribution
-            adaptable="true"
-            objectClass="org.eclipse.core.resources.IFile"
-            nameFilter="*.qvtotrace"
-            id="it.unipd.chess.m2m.popupMenus.contribution.IFile">
-         <action
-               class="it.unipd.chess.m2m.backpropagation.BackpropagationUIAction"
-               enablesFor="1"
-               id="it.unipd.chess.m2m.popupMenus.backpropagationAction"
-               icon="icons/default.gif"
-               label="Backpropagation"/>
-      </objectContribution>
-   </extension>-->
-   <!--<extension point="org.eclipse.ui.popupMenus">
-      <objectContribution
-            adaptable="true"
-            objectClass="org.eclipse.core.resources.IFile"
-            nameFilter="*.uml"
-            id="it.unipd.chess.m2m.popupMenus.contribution.uml">
-         <action
-               class="it.unipd.chess.m2m.QVToUIAction"
-               enablesFor="1"
-               id="it.unipd.chess.m2m.popupMenus.qvtoUIAction"
-               icon="icons/default.gif"
-               label="Schedulability Analysis"/>
-      </objectContribution>
-   </extension>-->
-   <!--<extension
-         point="org.eclipse.m2m.qvt.oml.runtime.qvtTransformation">
-      <transformation
-            file="transformation/AlePIM2PSM.qvto"
-            id="transformation/AlePIM2PSM">
-         <input
-               metamodel="http://www.eclipse.org/uml2/2.0.0/UML"
-               metaclass="UML/Model">
-         </input>
-         <output
-               metamodel="http://www.eclipse.org/uml2/2.0.0/UML"
-               metaclass="UML/Model">
-         </output>
-            
-      </transformation>
-   </extension>-->
    
    <extension
          point="org.eclipse.ui.menus">
@@ -94,7 +49,7 @@
                mnemonic="E">
             <command
                   commandId="it.unipd.chess.m2m.purgePIM"
-                  label="Purge user model"
+                  label="Purge Analysis Context"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -120,7 +75,7 @@
                   label="Real-Time Analysis">
                 <command
                   commandId="it.unipd.chess.m2m.QvtoUIHandlerVERDE.id"
-                  label="Schedulability (VERDE)"
+                  label="Schedulability Analysis"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -175,19 +130,19 @@
       <command
             category="it.unipd.chess.category"
             categoryId="it.unipd.chess.commands.category"
-            defaultHandler="org.polarsys.chess.m2m.PurgePIMHandler"
+            defaultHandler="org.polarsys.chess.m2m.handlers.PurgePSMHandler"
             id="it.unipd.chess.m2m.purgePIM"
-            name="Purge user model">
+            name="Purge Timing Analysis">
       </command>
       <command
             categoryId="it.unipd.chess.commands.category"
-            defaultHandler="org.polarsys.chess.m2m.QVToUIHandlerVERDE"
+            defaultHandler="org.polarsys.chess.m2m.handlers.QVToUIHandlerVERDE"
             id="it.unipd.chess.m2m.QvtoUIHandlerVERDE.id"
             name="Schedulability Analysis (VERDE)">
       </command>
       <command
             categoryId="it.unipd.chess.commands.category"
-            defaultHandler="org.polarsys.chess.m2m.QVToUIHandlerEnd2End"
+            defaultHandler="org.polarsys.chess.m2m.handlers.QVToUIHandlerEnd2End"
             id="it.unipd.chess.m2m.QVToUIHandlerEnd2End.id"
             name="End-To-End Scenario Analysis">
       </command>

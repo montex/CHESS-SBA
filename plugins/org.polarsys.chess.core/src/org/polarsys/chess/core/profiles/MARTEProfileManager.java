@@ -24,11 +24,16 @@ import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GQAMPackage;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SAMPackage;
 import org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.VSLPackage;
 import org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.DataTypes.DataTypesPackage;
+import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerPort;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.GCMPackage;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HLAM.HLAMPackage;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HRMPackage;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.SRM.SW_Concurrency.SW_ConcurrencyPackage;
+import org.eclipse.papyrus.MARTE.MARTE_DesignModel.SRM.SW_Interaction.SW_InteractionPackage;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.AllocPackage;
+import org.eclipse.papyrus.MARTE.MARTE_Foundations.CoreElements.CoreElementsPackage;
+import org.eclipse.papyrus.MARTE.MARTE_Foundations.GRM.GRMPackage;
+import org.eclipse.papyrus.MARTE.MARTE_Foundations.NFPs.NFPsPackage;
 import org.eclipse.papyrus.uml.tools.utils.PackageUtil;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
@@ -36,7 +41,6 @@ import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Profile;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
 /**
@@ -136,51 +140,13 @@ public class MARTEProfileManager {
 	
 	public static void loadMARTEProfile(ResourceSet rs) {
 		
-//		//TODO this method should be refactored	in two, one for the singletone pattern and the other for the loading of the profile...
-//		if (instance == null){
-//			instance = new MARTEProfileManager();
-//		}
-		
-		/*MARTEProfile = (Profile) rs
-				.getResource(URI.createURI(MARTE_PATH), true).getContents()
-				.get(0);
-		MARTE_gcmProfile = (Profile) MARTEProfile.getNestedPackage(
-				"MARTE_DesignModel").getNestedPackage("GCM");
-		Object obj = MARTE_gcmProfile.getEAnnotations();
-		System.out.println(obj);
-		
-		MARTE_HRMProfile = (Profile) MARTEProfile.getNestedPackage(
-		"MARTE_DesignModel").getNestedPackage("HRM");
-		
-		MARTE_SAMProfile = (Profile) MARTEProfile.getNestedPackage(
-		"MARTE_AnalysisModel").getNestedPackage("SAM");
-		
-		MARTE_HLAMProfile = (Profile) MARTEProfile.getNestedPackage(
-		"MARTE_DesignModel").getNestedPackage("HLAM");
-		
-		MARTE_Alloc = (Profile) MARTEProfile.getNestedPackage(
-		"MARTE_Foundations").getNestedPackage("Alloc");
-		
-		MARTE_GQAM = (Profile) MARTEProfile.getNestedPackage(
-				"MARTE_AnalysisModel").getNestedPackage("GQAM");
-		
-		MARTE_VSL = (Profile) MARTEProfile.getNestedPackage(
-				"MARTE_Annexes").getNestedPackage("VSL");
-		
-		MARTE_VSL_DATATYPES = (Profile) MARTEProfile.getNestedPackage(
-				"MARTE_Annexes").getNestedPackage("VSL").getNestedPackage("DataTypes");		
-		
-		MARTE_SW_CONCURRENCY = (Profile) MARTEProfile.getNestedPackage(
-				"MARTE_DesignModel").getNestedPackage("SRM").getNestedPackage("SW_Concurrency");
-		*/
-		
-//		return instance;
 	}
 
-	/*public Profile getCHESSProfile() {
-		return MARTEProfile;
-	}*/
-
+	/**
+	 * Applies the MARTE profile to the model.
+	 * 
+	 * @param model  the model
+	 */
 	public static void applyTo(Model model) {
 		ResourceSet rs = model.eResource().getResourceSet();
 		Profile MARTEProfile = (Profile) rs
@@ -190,7 +156,8 @@ public class MARTEProfileManager {
 	}
 	
 	/**
-	 * applies HRM and nested profiles
+	 * Applies HRM and nested profiles to the given element.
+	 *  
 	 * @param element
 	 */
 	public static void applyHRMProfileTo(Package element) {
@@ -198,85 +165,156 @@ public class MARTEProfileManager {
 		PackageUtil.applyProfile(element, MARTE_HRMProfile, true);
 	}
 	
+	/**
+	 * Applied the GCM profile to the given element.
+	 * 
+	 * @param element
+	 */
 	public static void applyGCMProfileTo(Package element) {
 		Profile MARTE_gcmProfile =  UMLResourcesUtil.getProfile(GCMPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, MARTE_gcmProfile, false);
 	}
 	
+	/**
+	 * Applied the SAM profile to the given element.
+	 * 
+	 * @param element
+	 */
 	public static void applySAMProfileTo(Package element) {
 		Profile MARTE_SAMProfile =  UMLResourcesUtil.getProfile(SAMPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, MARTE_SAMProfile, false);
 	}
 	
+	/**
+	 * Applied the SAM profile to the given element.
+	 * 
+	 * @param element
+	 */
 	public static void applyHLAMProfileTo(Package element) {
 		Profile MARTE_HLAMProfile =  UMLResourcesUtil.getProfile(HLAMPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, MARTE_HLAMProfile, false);
 	}
 	
+	/**
+	 * Applied the SAM profile to the given element.
+	 * 
+	 * @param element
+	 */
 	public static void applyAllocProfileTo(Package element) {
 		Profile MARTE_Alloc =  UMLResourcesUtil.getProfile(AllocPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, MARTE_Alloc, false);
 	}
 	
+	/**
+	 * Applied the SAM profile to the given element.
+	 * 
+	 * @param element
+	 */
 	public static void applyGQAMProfileTo(Package element) {
 		Profile MARTE_GQAM =  UMLResourcesUtil.getProfile(GQAMPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, MARTE_GQAM, false);
 	}
 	
+	/**
+	 * Applied the SAM profile to the given element.
+	 * 
+	 * @param element
+	 */
+	public static void applyNFPsProfileTo(Package element) {
+		Profile MARTE_NFPs =  UMLResourcesUtil.getProfile(NFPsPackage.eINSTANCE, element);
+		PackageUtil.applyProfile(element, MARTE_NFPs, false);
+	}
+	
+	/**
+	 * Applied the SAM profile to the given element.
+	 * 
+	 * @param element
+	 */
 	public static void applyVSLProfileTo(Package element) {
 		Profile MARTE_VSL =  UMLResourcesUtil.getProfile(VSLPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, MARTE_VSL, false);
 	}
 	
+	/**
+	 * Applied the SAM profile to the given element.
+	 * 
+	 * @param element
+	 */
 	public static void applyDataTypeProfileTo(Package element) {
 		Profile MARTE_VSL_DATATYPES =  UMLResourcesUtil.getProfile(DataTypesPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, MARTE_VSL_DATATYPES, false);
 	}
 	
-	public static void applySwConcurrencyProfieTo(Package element) {
+	/**
+	 * Applied the SAM profile to the given element.
+	 * 
+	 * @param element
+	 */
+	public static void applySwConcurrencyProfileTo(Package element) {
 		Profile MARTE_SW_CONCURRENCY =  UMLResourcesUtil.getProfile(SW_ConcurrencyPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, MARTE_SW_CONCURRENCY, false);
 	}
+	
+	/**
+	 * Applied the SwInteraction profile to the given element.
+	 * 
+	 * @param element
+	 */
+	public static void applySwInteractionProfileTo(Package element) {
+		Profile MARTE_SW_INTERACTION =  UMLResourcesUtil.getProfile(SW_InteractionPackage.eINSTANCE, element);
+		PackageUtil.applyProfile(element, MARTE_SW_INTERACTION, false);
+	}
+	
+	/**
+	 * Applied the Core profile to the given element.
+	 * 
+	 * @param element
+	 */
+	public static void applyCoreElementProfileTo(Package element) {
+		Profile MARTE_CORE_ELEMENT =  UMLResourcesUtil.getProfile(CoreElementsPackage.eINSTANCE, element);
+		PackageUtil.applyProfile(element, MARTE_CORE_ELEMENT, false);
+	}
+	
+	/**
+	 * Applied the NFP profile to the given element.
+	 * 
+	 * @param element
+	 */
+	public static void applyNFPProfileTo(Package element) {
+		Profile NFPs =  UMLResourcesUtil.getProfile(NFPsPackage.eINSTANCE, element);
+		PackageUtil.applyProfile(element, NFPs, false);
+	}
+	
+	/**
+	 * Applied the GRM and nested profiles to the given element.
+	 * 
+	 * @param element
+	 */
+	public static void applyGRMProfileTo(Package element) {
+		Profile MARTE_GRMProfile =  UMLResourcesUtil.getProfile(GRMPackage.eINSTANCE, element);
+		PackageUtil.applyProfile(element, MARTE_GRMProfile, true);
+	}
 
+	/**
+	 * Applies the stereotype referenced by its name to the given element.
+	 * 
+	 * @param stereoName  the name (not the qualified name)
+	 * @param element  the element
+	 */
 	public static void applyStereotypeTo(String stereoName, Element element) {
 		if (stereoName.equalsIgnoreCase("Allocate")) {
-			/*if(MARTE_Alloc == null){
-				if(MARTEProfile == null){ 
-					ResourceSet rs = element.eResource().getResourceSet();
-					MARTEProfile = (Profile) rs.getResource(URI.createURI(MARTE_PATH), true).getContents().get(0);
-				}
-				MARTE_Alloc = (Profile) MARTEProfile.getNestedPackage("MARTE_Foundations").getNestedPackage("Alloc");
-			}
-			Stereotype str = ((Profile) MARTE_Alloc).getOwnedStereotype("Allocate");
-			element.applyStereotype(str);*/
-			UMLUtils.applyStereotype(element, "MARTE::MARTE_Foundations::Alloc::Allocated");
+			
+			//UMLUtils.applyStereotype(element, "MARTE::MARTE_Foundations::Alloc::Allocated");
+			UMLUtils.applyStereotype(element, "MARTE::MARTE_Foundations::Alloc::Allocate");
 		}
 		
 		if (stereoName.equalsIgnoreCase("ClientServerPort")) {
-			/*if(MARTE_gcmProfile == null){
-				if(MARTEProfile == null){ 
-					ResourceSet rs = element.eResource().getResourceSet();
-					MARTEProfile = (Profile) rs.getResource(URI.createURI(MARTE_PATH), true).getContents().get(0);
-				}
-				MARTE_gcmProfile = (Profile) MARTEProfile.getNestedPackage("MARTE_DesignModel").getNestedPackage("GCM");
-			}
-			Stereotype str = ((Profile) MARTE_gcmProfile).getOwnedStereotype("ClientServerPort");
-			element.applyStereotype(str);*/
+			
 			UMLUtils.applyStereotype(element, "MARTE::MARTE_DesignModel::GCM::ClientServerPort");
-			
-			
+
 		}
 		
 		if (stereoName.equalsIgnoreCase("FlowPort")) {
-			/*if(MARTE_gcmProfile == null){
-				if(MARTEProfile == null){ 
-					ResourceSet rs = element.eResource().getResourceSet();
-					MARTEProfile = (Profile) rs.getResource(URI.createURI(MARTE_PATH), true).getContents().get(0);
-				}
-				MARTE_gcmProfile = (Profile) MARTEProfile.getNestedPackage("MARTE_DesignModel").getNestedPackage("GCM");
-			}
-			Stereotype str = ((Profile) MARTE_gcmProfile).getOwnedStereotype("FlowPort");			
-			element.applyStereotype(str);*/
 			
 			UMLUtils.applyStereotype(element, "MARTE::MARTE_DesignModel::GCM::FlowPort");
 		}
@@ -284,35 +322,50 @@ public class MARTEProfileManager {
 		// else if ...
 	}
 	
+	/**
+	 * Return the {@link ClientServerPort} stereotype of the given element.
+	 * 
+	 * @param element  the element
+	 * @return  the stereotype applied
+	 */
 	public static Stereotype getClientServerPort(Element element)
 	{
-		/*Stereotype str = ((Profile) MARTEProfile.getNestedPackage("MARTE_DesignModel").getNestedPackage("GCM")).getOwnedStereotype("ClientServerPort");
-		return str;*/
+
 		return UMLUtils.getStereotype(element, "MARTE::MARTE_DesignModel::GCM::ClientServerPort");
 		
 	}
 
+	/**
+	 * Initialize the model with the needed profiles.
+	 * 
+	 * @param currentModel  the model
+	 */
 	public static void createModel(Model currentModel) {
 		applyGCMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.COMPONENT_VIEW));
-		
-		//marte.applyHLAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.COMPONENT_VIEW));
-		
-		applyHRMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
-		applyAllocProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
-		applySwConcurrencyProfieTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
-		
-		
-		//bug #11482 
 		applyAllocProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.COMPONENT_VIEW));
 		
+		Package deploViewPack = currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW);
+		applyHRMProfileTo(deploViewPack);
+		applyAllocProfileTo(deploViewPack);
+		applySwConcurrencyProfileTo(deploViewPack);
+		applyGCMProfileTo(deploViewPack);
+		applyGQAMProfileTo(deploViewPack);
+		applyNFPProfileTo(currentModel);
+		
 		applySAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.ANALYSIS_VIEW).getNestedPackage(currentModel.getName() + CHESSProfileManager.RT_ANALYSIS_VIEW));
+		applyGQAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.ANALYSIS_VIEW).getNestedPackage(currentModel.getName() + CHESSProfileManager.RT_ANALYSIS_VIEW));
 		
-		applyGCMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
+		applySAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.PSM_VIEW));
+		applySwConcurrencyProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.PSM_VIEW));
+		applySwInteractionProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.PSM_VIEW));
 		
-		//for GaExecHost and GaCommHost
-		applyGQAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.DEPLOYMENT_VIEW));
+		applyCoreElementProfileTo(currentModel);
 		
 		applyDataTypeProfileTo(currentModel);
+		
+		applyGRMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.COMPONENT_VIEW));
+		applyGRMProfileTo(deploViewPack);
+		
 	}
 	
 	

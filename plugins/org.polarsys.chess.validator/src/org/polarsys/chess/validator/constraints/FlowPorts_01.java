@@ -10,11 +10,21 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Port;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FlowPorts_01.
+ */
 public class FlowPorts_01 extends AbstractModelConstraint {
 
+	/** The Constant FLOWPORT. */
 	public static final String FLOWPORT = "MARTE::MARTE_DesignModel::GCM::FlowPort";
+	
+	/** The Constant ALLOCATE. */
 	public static final String ALLOCATE = "MARTE::MARTE_Foundations::Alloc::Allocate";
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
+	 */
 	@Override
 	public IStatus validate(IValidationContext ctx) {
 

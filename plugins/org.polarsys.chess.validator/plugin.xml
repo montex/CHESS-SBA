@@ -5,7 +5,7 @@
  <extension point="org.polarsys.chess.resourceListener">
       <listener
             name="resource listener"
-            realization="org.polarsys.chess.validator.ResourceListener">
+            realization="org.polarsys.chess.validator.managers.ResourceListener">
       </listener>
    </extension>
  
@@ -14,7 +14,7 @@
             default="false"
             id="CHESSvalidationContextID">
          <selector
-               class="org.polarsys.chess.validator.ValidationDelegateClientSelector">
+               class="org.polarsys.chess.validator.managers.ValidationDelegateClientSelector">
          </selector>
       </clientContext>
       <binding
@@ -896,6 +896,39 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
          </constraints>
       </constraintProvider>
       
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.papyrus.views.modelexplorer.popup.validation">
+         <menu
+               icon="icons/CHESSval.gif"
+               id="org.polarsys.chess.validator.mainmenuId"
+               label="CHESS">
+            <command
+                  commandId="org.polarsys.chess.validator.command1"
+                  id="org.polarsys.chess.validator.validateAllCommandId"
+                  label="Validate all constraints"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.polarsys.chess.validator.commandId"
+                  id="org.polarsys.chess.validator.validationCommandId"
+                  label="Validate core constraints"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.polarsys.chess.validator.command.CHESSCoreValidationHandler"
+            description="Validate the CHESS constraints on the current model."
+            id="org.polarsys.chess.validator.commandId"
+            name="Validate CHESS model">
+      </command>
    </extension>
 
 </plugin>

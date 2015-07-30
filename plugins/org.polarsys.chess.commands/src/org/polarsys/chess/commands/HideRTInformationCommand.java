@@ -28,57 +28,69 @@ import org.polarsys.chess.core.notifications.ResourceNotification;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
+
+/**
+ * Allows to hide the CHRtSpecification Comments available on the selected Papyrus diagram
+ */
 public class HideRTInformationCommand extends AbstractHandler{
 
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	/* (non-Javadoc)
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 * hides CHRtSpecification Comment on the current diagram
+	 */
+	public Object hide() throws ExecutionException {
 		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
 		final DiagramStatus ds = CHESSEditorUtils.getDiagramStatus(editor);
 		if (editor == null || ds == null) 
 			return null;
 		try {
 			
-			//PapyrusMultiDiagramEditor editor = (PapyrusMultiDiagramEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		
-		Object temp = CHESSEditorUtils.getDiagramGraphicalViewer().getRootEditPart().getChildren().get(0);
-		
-		if (temp == null || !(temp instanceof CompositeStructureDiagramEditPart))
-			return null;
-		
-		final CompositeStructureDiagramEditPart csd_ep = (CompositeStructureDiagramEditPart) temp;
-		TransactionalEditingDomain editingDomain = csd_ep.getEditingDomain();
-		
-		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
-			protected void doExecute() {
 				
-				List l = csd_ep.getChildren();
-				EditPart epTemp = null;
-				NamedElementEditPart compositeEP = null;
-				for (int i=0; i< l.size(); i++){
-					epTemp = (EditPart) l.get(i);
-					if (epTemp instanceof ComponentCompositeEditPart){
-						compositeEP = (ComponentCompositeEditPart) epTemp;
-						break;
-					}
-					if (epTemp instanceof ClassCompositeEditPart){
-						compositeEP = (ClassCompositeEditPart) epTemp;
-						break;
+			Object temp = CHESSEditorUtils.getDiagramGraphicalViewer().getRootEditPart().getChildren().get(0);
+			
+			if (temp == null || !(temp instanceof CompositeStructureDiagramEditPart))
+				return null;
+			
+			final CompositeStructureDiagramEditPart csd_ep = (CompositeStructureDiagramEditPart) temp;
+			TransactionalEditingDomain editingDomain = csd_ep.getEditingDomain();
+			
+			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+				protected void doExecute() {
+					
+					List l = csd_ep.getChildren();
+					EditPart epTemp = null;
+					NamedElementEditPart compositeEP = null;
+					for (int i=0; i< l.size(); i++){
+						epTemp = (EditPart) l.get(i);
+						if (epTemp instanceof ComponentCompositeEditPart){
+							compositeEP = (ComponentCompositeEditPart) epTemp;
+							break;
+						}
+						if (epTemp instanceof ClassCompositeEditPart){
+							compositeEP = (ClassCompositeEditPart) epTemp;
+							break;
+						}
+						
 					}
 					
+					if (ShowRTInformationCommand.showHideRT((Shape)compositeEP.getModel(), false)){
+						ds.setUserAction(false);
+					}
 				}
-				
-				if (ShowRTInformationCommand.showHideRT((Shape)compositeEP.getModel(), false)){
-					ds.setUserAction(false);
-				}
+			});
+			
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				ResourceNotification.showInfo(e.getMessage());
+				ds.setUserAction(true);
 			}
-		});
-		
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			ResourceNotification.showInfo(e.getMessage());
 			ds.setUserAction(true);
+			return null;
 		}
-		ds.setUserAction(true);
-		return null;
+
+	@Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		// TODO Auto-generated method stub
+		return hide();
 	}
-	
 }

@@ -20,15 +20,30 @@ import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.Stereotype;
 
+
+/**
+ * The Class AssignCopy, used to store temporary information about MARTE Assign entity.
+ */
 public class AssignCopy {
 	
+	/** The Constant ASSIGN. */
 	private static final String ASSIGN = "MARTE::MARTE_Foundations::Alloc::Assign";
 	
+	/** The tmp. */
 	private static EList<Element> tmp;
 	
+	/** The from. */
 	private List<String> from;
+	
+	/** The to. */
 	private List<String>  to;
 
+	/**
+	 * Copy the content of the MARTE Assign to AssignCopy entities
+	 *
+	 * @param list the list of MARTE Assign Comment
+	 * @return the array list
+	 */
 	@SuppressWarnings("unchecked")
 	public static ArrayList<AssignCopy> toAssignCopyList(EList<Comment> list) {
 
@@ -76,21 +91,44 @@ public class AssignCopy {
 		return aclist;
 	}
 	
+	/**
+	 * Instantiates a new assign copy.
+	 */
 	public AssignCopy() {
 	}
 
+	/**
+	 * Sets the from.
+	 *
+	 * @param from the new from
+	 */
 	public void setFrom(List<String> from) {
 		this.from = from;
 	}
 
+	/**
+	 * Gets the from.
+	 *
+	 * @return the from
+	 */
 	public List<String> getFrom() {
 		return from;
 	}
 
+	/**
+	 * Sets the to.
+	 *
+	 * @param to the new to
+	 */
 	public void setTo(List<String> to) {
 		this.to = to;
 	}
 
+	/**
+	 * Gets the to.
+	 *
+	 * @return the to
+	 */
 	public List<String> getTo() {
 		return to;
 	}

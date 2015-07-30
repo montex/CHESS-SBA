@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -83,6 +83,24 @@ public interface CoreFactory extends EFactory {
 	 * @generated
 	 */
 	MultiSlot createMultiSlot();
+
+	/**
+	 * Returns a new object of class '<em>PSM Package</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>PSM Package</em>'.
+	 * @generated
+	 */
+	PSMPackage createPSMPackage();
+
+	/**
+	 * Returns a new object of class '<em>Functional Partitions</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Functional Partitions</em>'.
+	 * @generated
+	 */
+	FunctionalPartitions createFunctionalPartitions();
 
 	/**
 	 * Returns the package supported by this factory.

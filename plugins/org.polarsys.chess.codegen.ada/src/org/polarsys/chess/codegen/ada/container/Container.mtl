@@ -1,0 +1,621 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module Container('http://www.eclipse.org/uml2/3.0.0/UML',
+                  'http://CHESS/Predictability/RTComponentModel')/]
+[import org::polarsys::chess::codegen::ada::main::Copyright /]
+
+[template public generateContainer(model : Model, procNode: InstanceSpecification, instSpec : InstanceSpecification, cImpl : Component) {
+    pkgName : String = 'CT_'.concat(instSpec.name.replaceAll('\\.','_')).replaceAll('\\.', '_').concat('s');
+	procNodeName : String = procNode.name;
+    ptList : Sequence(Port) = instSpec.classifier.oclAsType(Component).ownedAttribute->asSequence()->filter(Port);
+    clSvPortStName : String = 'MARTE::MARTE_DesignModel::GCM::ClientServerPort';
+    CHRtPortStName : String = 'CHESS::Dependability::RTComponentModel::CHRtPortSlot';
+    CHRtSpecificationStName : String = 'CHESS::Dependability::RTComponentModel::CHRtSpecification';
+    cType : Component = cImpl.clientDependency.supplier->asSequence()->first().oclAsType(Component);
+    instTypePkg : String = cType.name.concat('s.').concat(cImpl.name).concat('s');
+    slotSeq : Sequence(OclAny) = instSpec.slot->asSequence();
+    cyclicOpList : Sequence(Operation) = getCyclicOperationList(slotSeq, CHRtPortStName)->filter(Operation);
+    sporadicOpList : Sequence(Operation) = getSporadicOperationList(slotSeq, CHRtPortStName)->filter(Operation);
+    protectedOpList : Sequence(Operation) = getProtectedOperationList(slotSeq, CHRtPortStName)->filter(Operation);
+    unprotectedOpList : Sequence(Operation) = getUnprotectedOperationList(slotSeq, CHRtPortStName)->filter(Operation);
+    providedIntList : Sequence(Interface) = getProvidedInterfaceList(ptList, clSvPortStName)
+}
+]
+
+[file (procNodeName.concat('/src/container/').concat(pkgName).concat('.ads').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model) /]
+
+[comment With section /]
+-- Comment the with below if you do not use user-defined datatypes
+with Datatype; use Datatype;
+
+[comment With of interface packages/]
+-- with of interface and component implementation packages
+[for (aInterface: Interface | getProvidedInterfaceList(ptList, clSvPortStName)->filter(Interface))]
+with [aInterface.name/];
+[/for]
+[for (aInterface: Interface | getRequiredInterfaceList(ptList, clSvPortStName)->filter(Interface))]
+with [aInterface.name/];
+[/for]
+[comment With of the component implementation/]
+with [cType.name/]s.[cImpl.name/]s;
+[comment With of packages to enforce extra-functional properties/]
+
+--with of packages for enforcement of extra-functional properties
+[for (str: String | getPackageToWithSpec(slotSeq, CHRtPortStName, CHRtSpecificationStName)->filter(String))]
+[str/]
+[/for]
+
+
+package [pkgName/] is 
+ 
+   procedure Initialize_Container;
+
+   -- Getter subprograms for provided interfaces
+   [for (aInterface: Interface | getProvidedInterfaceList(ptList, clSvPortStName)->filter(Interface))]
+   function Get_[aInterface.name/] return [aInterface.name/].[aInterface.name/]_ptr;
+ 
+   [/for]
+
+   -- Setter subprograms for required interfaces
+   [for (pt : Port | ptList)]
+  	     [if (isRequiredPort(pt, clSvPortStName))]
+   procedure Set_[pt.name/] (ptr : in [getRequiredInterface(pt, clSvPortStName).name/].[getRequiredInterface(pt, clSvPortStName).name/]_ptr);
+         [/if]
+   [/for]
+
+private
+   
+   -- Component instance
+   [instSpec.name.replaceAll('\\.','_')/]: aliased [instTypePkg/].[cImpl.name/];
+   -- Access pointers to the instance (1 x PI)
+   [for (aInterface: Interface | getProvidedInterfaceList(ptList, clSvPortStName)->filter(Interface))]
+   [instSpec.name.replaceAll('\\.','_')/]_as_[aInterface.name/]_ptr : [aInterface.name/].[aInterface.name/]_ptr := [instSpec.name.replaceAll('\\.','_')/]'access;
+   [/for]
+   
+   -- Type definition for the container
+   type ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T is new [getProvidedInterfaceListAsQualifiedString(ptList, clSvPortStName)/] with null record;
+
+   -- Overriding of operations of interfaces
+   [for (op: Operation | cImpl.ownedOperation)]
+
+	[if (isFunction(op))]
+		[if (op.ownedParameter->size() = 1)]
+   overriding   
+   function [op.name/] (Self : in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T) return [getReturnParam(op).type.name/];
+		[else]
+   overriding   
+   function [op.name/] (Self : in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T [for (par : Parameter | op.ownedParameter)][if(not par.direction.toString().equalsIgnoreCase('return'))];
+                           [par.name/] : [par.direction/] [par.type.name/][/if][/for]) return [getReturnParam(op).type.name/];
+		[/if]
+	[else]
+      [if (op.ownedParameter->size() = 0)]
+   overriding 
+   procedure [op.name /] (Self : in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T)[if (isCyclicOperation(slotSeq, op, CHRtPortStName))] is null[/if];
+      [else]
+   overriding 
+   procedure [op.name/] (Self: in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T[for (par : Parameter | op.ownedParameter)];
+                          [par.name/] : [if(par.direction.toString().equalsIgnoreCase('return'))]out[else][par.direction/][/if] [par.type.name/][/for]);
+      [/if]
+	[/if]
+   [/for]
+
+   -- Instantiation of the container
+   ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T_inst_0 : aliased ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T;
+   
+
+
+   -- Entities for the enforcement of extra-functional properties --
+   [comment Cyclic operations /]
+   [for (op : Operation | cyclicOpList)]
+   
+   -- Wrapper procedure for the cyclic operation
+   procedure [op.name/];
+
+   procedure Enqueueing_Procedure_My_Thread_[i-1/] (Release : out Time);
+
+   My_CPA_[i-1/] : aliased Release_Control_OBCS([getCeiling(slotSeq, op, CHRtPortStName)/]);
+
+   My_Thread_[i-1/] : aliased Cyclic_Task.Thread_T(Data_Structure.Generate_Task_ID, [getPriority(slotSeq, op, CHRtPortStName)/], 0, [getPeriodOrMIAT(slotSeq, op, CHRtPortStName)/],
+                                  Enqueueing_Procedure_My_Thread_[i-1/]'access,
+                                  [op.name/]'access);
+   [/for]
+   [comment end Cyclic operations /]
+   [comment Sporadic operations /]
+   [if (sporadicOpList->notEmpty()) ]
+   -- Configuration parameters for all queues and OBCS
+   Param_Queue_Size : constant Integer := 3;
+   OBCS_Queue_Size : constant Integer := Param_Queue_Size * 2;
+
+   -- Instantiation of queues and OBCS
+   [/if]
+   [for (op : Operation | sporadicOpList)]
+      [let aInterface : Interface = getInterface(op, ptList, clSvPortStName)]
+   [op.name/]_OBCS_Ceiling : System.Priority := [getCeiling(slotSeq, op, CHRtPortStName)/];
+
+   type [op.name/]_Param_T is new Data_Structure.Param_Type with record
+      OPCS_Instance : [aInterface.name/].[aInterface.name/]_ptr;
+      [for (par : Parameter | op.ownedParameter)]
+      [par.name/] : [par.type.name/];
+      [/for]
+   end record;
+   type [op.name/]_Param_T_Ref is access all [op.name/]_Param_T;
+
+   type [op.name/]_Param_Arr is array(Integer range <>) of aliased [op.name/]_Param_T;
+
+   overriding
+   procedure My_OPCS(Self : in out [op.name/]_Param_T);
+
+   -- create an OBCS that matches the interface of the OPCS
+   protected type [op.name/]_OBCS(Ceiling : System.Any_Priority;
+                       [op.name/]_Params_Arr_Ref_P : Data_Structure.Param_Arr_Ref) is
+      pragma Priority(Ceiling);
+      entry Get_Request(Req : out Data_Structure.Request_Descriptor_T;
+                        Release : out Time);
+
+      -- Subprograms
+      [if (op.ownedParameter->size() = 0)] [comment 0 parameters/]
+      procedure [op.name/];
+      [else]
+         [let parList : OrderedSet(Parameter) = op.ownedParameter]
+            [if (parList->size() = 1)] [comment 1 parameter /]
+      procedure [op.name/] ([parList->first().name/] : [if(parList->first().direction.toString().equalsIgnoreCase('return'))]out[else][parList->first().direction/][/if] [parList->first().type.name/]);
+            [else] [comment more than 1 parameter/]
+      procedure [op.name/] ([for (par : Parameter | parList)]
+                            [par.name/] : [if(par.direction.toString().equalsIgnoreCase('return'))]out[else][par.direction/][/if] [par.type.name/][if not(par = parList->last())];[/if][/for]);
+            [/if]
+          [/let]
+      [/if]
+
+   private
+      -- The queue system for [op.name/]_OBCS
+      [op.name/]_OBCS_Queue : Data_Structure.Request_Queue(OBCS_Queue_Size);
+      -- Arrays to store a set of reified invocations for [op.name/]
+      [op.name/]_Params : Data_Structure.Param_Buffer_T(Param_Queue_Size) :=
+        (Size => Param_Queue_Size, Index => 1, Buffer => [op.name/]_Params_Arr_Ref_P.all);
+      Pending : Standard.Boolean := False;
+   end [op.name/]_OBCS;
+      [/let]
+   [/for]
+   [comment End Sporadic operations /]
+   [comment Protected operations /]
+   [for (sl : Slot | slotSeq->filter(Slot))]
+      [let protectedOpList : Sequence(Operation) = getSlotProtectedOperation(sl, CHRtPortStName)]
+        [if (protectedOpList->notEmpty())]
+
+   [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO_Ceiling : System.Priority := [getCeiling(slotSeq, protectedOpList->first(), CHRtPortStName)/];   
+
+   protected type [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO is
+      pragma Priority([instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO_Ceiling);
+
+      -- Subprograms
+		[for (op : Operation | protectedOpList)]
+		[let parList : OrderedSet(Parameter) = op.ownedParameter]
+			[if (isFunction(op))]
+				[if (op.ownedParameter->size() = 1)]
+      function [op.name/] return [getReturnParam(op).type.name/];
+				[else]
+				[let parmListNoReturn : OrderedSet(Parameter) = parList->excluding(getReturnParam(op))]
+      function [op.name/]([for (par : Parameter | parmListNoReturn)][par.name/] : [par.direction/] [par.type.name/][if (not(par = parmListNoReturn->last()))]; [/if][/for]) return [getReturnParam(op).type.name/];
+				[/let]				
+				[/if]
+			[else]
+                [if (op.ownedParameter->size() = 0)] [comment 0 parameters/]
+      procedure [op.name/];
+                [else]
+      procedure [op.name/] ([for (par : Parameter | parList)][par.name/] : [if(par.direction.toString().equalsIgnoreCase('return'))]out[else][par.direction/][/if] [par.type.name/][if not( par = parList->last())]; [/if][/for]);
+				[/if]		
+			[/if]
+		[/let]
+		[/for]
+
+   private
+
+   end [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO;
+         [/if]
+      [/let]
+   [/for]
+  [comment end Protected Operations /]
+
+end [pkgName/];
+[/file]
+
+[file (procNodeName.concat('/src/container/').concat(pkgName).concat('.adb').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model)/]
+
+[comment Package "Sporadic_Task" is to be with'ed if there is at 
+         least one sporadic operation to be supported /]
+[if (sporadicOpList->notEmpty())]
+with Sporadic_Task;
+
+-- With of data types and Default Values. 
+-- Remove it if it is already included in the spec.
+with Datatype; use Datatype;
+[/if]
+--with Ada.Text_IO;
+
+package body [pkgName/] is 
+
+
+   procedure Initialize_Container is
+   begin
+      --Ada.Text_IO.Put_Line("-- Container [pkgName/].Initialize_Container -- ");
+      null;
+   end Initialize_Container;
+
+   [comment getters for Provided Interfaces /]
+   -- Getter subprograms for Provided Interfaces
+
+   [for (aInterface: Interface | getProvidedInterfaceList(ptList, clSvPortStName)->filter(Interface))]
+   function Get_[aInterface.name/] return [aInterface.name/].[aInterface.name/]_ptr is
+   begin
+      return ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T_inst_0'access;
+   end Get_[aInterface.name/];
+
+   [/for]
+
+   [comment setters for Required Interfaces /]
+   -- Setter subprograms for Required Interfaces
+
+   [for (pt : Port | ptList)]
+  	     [if (isRequiredPort(pt, clSvPortStName))]
+   procedure Set_[pt.name/] (ptr : in [getRequiredInterface(pt, clSvPortStName).name/].[getRequiredInterface(pt, clSvPortStName).name/]_ptr) is
+      use type [getRequiredInterface(pt, clSvPortStName).name/].[getRequiredInterface(pt, clSvPortStName).name/]_ptr;
+   begin
+      if ptr /= null then
+         [instSpec.name.replaceAll('\\.','_')/].Set_[pt.name/](ptr);
+      end if;
+   end Set_[pt.name/];
+         [/if]
+
+   [/for]
+
+   [comment Cyclic operations BODY /]
+   [for (op : Operation | cyclicOpList)]
+   procedure Enqueueing_Procedure_My_Thread_[i-1/] (Release : out Time) is
+   begin
+      My_CPA_[i-1/].Enqueue_for_Release(Release);
+   end Enqueueing_Procedure_My_Thread_[i-1/];
+   
+   -- Wrapper procedure for the cyclic operation
+   procedure [op.name/] is
+   begin
+      [instSpec.name.replaceAll('\\.','_')/].[op.name/];
+   end [op.name/];
+
+   [/for]
+   [comment end Cyclic operations BODY /]
+   [comment Sporadic operations BODY /]
+   [for (op : Operation | sporadicOpList)]
+      [let aInterface : Interface = getInterface(op, ptList, clSvPortStName)]
+
+   -- Redefinition of My_OPCS. 
+   -- Call [op.name/] and set In_Use to false.
+   procedure My_OPCS(Self : in out [op.name/]_Param_T) is
+   begin
+         [if (op.ownedParameter->size() = 0)] [comment 0 parameters/]
+      Self.OPCS_Instance.[op.name/];
+         [else]
+            [let parList : OrderedSet(Parameter) = op.ownedParameter]
+               [if (parList->size() = 1)] [comment 1 parameter /]
+      Self.OPCS_Instance.[op.name/](Self.[parList->first().name/]);
+               [else] [comment more than 1 parameter/]
+      Self.OPCS_Instance.[op.name/](Self.[parList->first().name/],[for (par : Parameter | parList->excluding(parList->first())->asOrderedSet())]Self.[par.name/][/for]);
+               [/if]
+            [/let]
+         [/if]       
+       Self.In_Use := False;
+   end My_OPCS;
+
+   protected body [op.name/]_OBCS is
+
+      procedure Update_Barrier is
+      begin
+         Pending := ([op.name/]_OBCS_Queue.Request_Pending) > 0;
+      end Update_Barrier;
+
+      -- Get_Request stores the time of the release of the task,
+      -- gets the next request (according to the OBCS queueing policy),
+      -- and updates the guard.
+      entry Get_Request (Req : out Data_Structure.Request_Descriptor_T;
+                         Release : out Time)
+        when Pending is
+      begin
+        -- Ada.Text_IO.Put_Line("OBCS: Executing entry Get_Request");
+         Release := Clock;
+         Data_Structure.Get([op.name/]_OBCS_Queue, Req);
+         Update_Barrier;
+      end Get_Request;
+
+      -- When a client calls [op.name/], the request is reified and put in the OBCS queue.
+         [if (op.ownedParameter->size() = 0)] [comment 0 parameters/]
+      procedure [op.name/] is
+         [else]
+            [let parList : OrderedSet(Parameter) = op.ownedParameter]
+               [if (parList->size() = 1)] [comment 1 parameter /]
+      procedure [op.name/] ([parList->first().name/] : [parList->first().direction/] [parList->first().type.name/]) is
+               [else] [comment more than 1 parameter/]
+      procedure [op.name/] ([parList->first().name/] : [parList->first().direction/] [parList->first().type.name/][for (par : Parameter | parList->excluding(parList->first())->asOrderedSet())];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]) is
+               [/if]
+             [/let]
+          [/if]         
+      begin
+         --Ada.Text_IO.Put_Line("OBCS: [op.name/]");
+         if [op.name/]_Params.Buffer([op.name/]_Params.Index).In_Use then
+            Data_Structure.Increase_Index([op.name/]_Params);
+         end if;
+
+         [for (par : Parameter | op.ownedParameter)]
+         [op.name/]_Param_T_Ref([op.name/]_Params.Buffer([op.name/]_Params.Index)).[par.name/] := [par.name/];
+         [/for]
+         Data_Structure.Put([op.name/]_OBCS_Queue, [op.name/]_Params.Buffer([op.name/]_Params.Index));
+         Data_Structure.Increase_Index([op.name/]_Params);
+         Update_Barrier;
+      end [op.name/];
+   end [op.name/]_OBCS;
+
+   [op.name/]_Par_Arr : [op.name/]_Param_Arr(1..Param_Queue_Size):=
+     (others =>  (In_Use => false,
+                  OPCS_Instance => [instSpec.name.replaceAll('\\.','_')/]'access,
+             [let parList : OrderedSet(Parameter) = op.ownedParameter]
+                [if (parList->size() > 0)]
+                  [parList->first().name/] => [parList->first().type.name/]_Default_Value[for (par : Parameter | parList->excluding(parList->first())->asOrderedSet())],
+                  [par.name/] => [par.type.name/]_Default_Value [/for]));
+                [/if]
+            [/let]
+
+   [op.name/]_Ref_Par_Arr : aliased Data_Structure.Param_Arr :=
+     ([op.name/]_Par_Arr(1)'access,
+      [op.name/]_Par_Arr(2)'access,
+      [op.name/]_Par_Arr(3)'access);
+
+
+   -- Instance of OBCS
+   [op.name/]_OBCS_inst : aliased [op.name/]_OBCS([op.name/]_OBCS_Ceiling, [op.name/]_Ref_Par_Arr'access);
+
+   -- Wrapper for OBCS_inst entry
+   procedure Enqueue_in_Entry_[op.name/](Req : out Data_Structure.Request_Descriptor_T;
+                              Release : out Time) is
+   begin
+      [op.name/]_OBCS_inst.Get_Request(Req, Release);
+   end Enqueue_in_Entry_[op.name/];
+
+   -- Sporadic Task
+   My_Thread_[i-1/] : aliased Sporadic_Task.Thread_T(Data_Structure.Generate_Task_ID, [getPriority(slotSeq, op, CHRtPortStName)/], [getPeriodOrMIAT(slotSeq, op, CHRtPortStName)/],
+                                                Enqueue_In_Entry_[op.name/]'access);
+
+         [if (op.ownedParameter->size() = 0)]
+   procedure [op.name/] (Self : in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T) is
+         [else]
+   procedure [op.name/] (Self: in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T[for (par : Parameter | op.ownedParameter)];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]) is
+         [/if]
+      pragma Warnings (Off, Self);
+   begin
+      --Ada.Text_IO.Put_Line("Container ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/] : Reifiying [op.name/] call to OBCS ");
+         [if (op.ownedParameter->size() = 0)] [comment 0 parameters/]
+      [op.name/]_OBCS_inst.[op.name/];
+         [else]
+            [let parList : OrderedSet(Parameter) = op.ownedParameter]
+      [op.name/]_OBCS_inst.[op.name/]([parList->first().name/][for (par : Parameter | parList->excluding(parList->first())->asOrderedSet())], [par.name/][/for]);
+            [/let]
+         [/if]         
+   end [op.name/];
+
+      [/let]
+   [/for]
+   [comment End Sporadic operations BODY /]
+   [comment Protected operations BODY /]
+   [for (sl : Slot | slotSeq->filter(Slot))]
+      [let protectedOpList : Sequence(Operation) = getSlotProtectedOperation(sl, CHRtPortStName)]
+        [if (protectedOpList->notEmpty())]
+
+   -- Instance of [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/] protected object
+   [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO_inst : aliased [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO;
+
+   protected body [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO is
+
+	[for (op : Operation | protectedOpList)]
+		[let parList : OrderedSet(Parameter) = op.ownedParameter]
+			[if (isFunction(op))]
+				[if (op.ownedParameter->size() = 1)]
+      function [op.name/] return [getReturnParam(op).type.name/] is
+				[else]
+      			[let parmListNoReturn : OrderedSet(Parameter) = parList->excluding(getReturnParam(op))]
+      function [op.name/]([for (par : Parameter | parmListNoReturn)][par.name/] : [par.direction/] [par.type.name/][if (not(par = parmListNoReturn->last()))]; [/if][/for]) return [getReturnParam(op).type.name/] is
+				[/let]	
+				[/if]
+			[else]
+                [if (op.ownedParameter->size() = 0)] [comment 0 parameters/]
+      procedure [op.name/] is
+                [else]
+      procedure [op.name/] ([for (par : Parameter | parList)][par.name/] : [if(par.direction.toString().equalsIgnoreCase('return'))]out[else][par.direction/][/if] [par.type.name/][if not( par = parList->last())]; [/if][/for]) is
+				[/if]		
+			[/if]
+		[/let]      
+      begin
+         --Ada.Text_IO.Put_Line("PO.[op.name/]");
+		[if (isFunction(op))]
+			[if (op.ownedParameter->size() = 1)]
+        return [instSpec.name.replaceAll('\\.','_')/].[op.name/];
+			[else]
+				[let parmListNoReturn : OrderedSet(Parameter) = op.ownedParameter->excluding(getReturnParam(op))]
+		return [instSpec.name.replaceAll('\\.','_')/].[op.name/]([for (par : Parameter | parmListNoReturn)][par.name/][if not(par = parmListNoReturn->last())], [/if][/for]);
+				[/let]
+			[/if] 
+		[else]
+         [if (op.ownedParameter->size() = 0)] [comment 0 parameters/]
+         [instSpec.name.replaceAll('\\.','_')/].[op.name/];
+         [else]
+            [let parList : OrderedSet(Parameter) = op.ownedParameter]
+         [instSpec.name.replaceAll('\\.','_')/].[op.name/]([for (par : Parameter | parList)][par.name/][if not(par = parList->last())], [/if][/for]);
+            [/let]
+         [/if] 
+		[/if]        
+      end [op.name/];
+
+            [/for]
+   end [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO;
+
+-- Redefinition of procedures of the container
+        [for (op : Operation | protectedOpList)]
+			[if (isFunction(op))]
+				[if (op.ownedParameter->size() = 1)]
+   function [op.name/] (Self : in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T) return [getReturnParam(op).type.name/] is
+			[else]
+			[let parmListNoReturn : OrderedSet(Parameter) = op.ownedParameter->excluding(getReturnParam(op))]
+   function [op.name/] (Self : in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T[for (par : Parameter | parmListNoReturn)];
+                           [par.name/] : [par.direction/] [par.type.name/][/for]) return [getReturnParam(op).type.name/] is
+			[/let]
+			[/if]
+			[else]
+               [if (op.ownedParameter->size() = 0)]
+   procedure [op.name/] (Self : in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T) is
+               [else]
+   procedure [op.name/] (Self: in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T[for (par : Parameter | op.ownedParameter)];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]) is
+               [/if]
+			[/if]
+      pragma Warnings (Off, Self);
+   begin
+      --Ada.Text_IO.Put_Line("Container ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/] : Indirection to PO.[op.name/]");
+    [if (isFunction(op))]
+		[if (op.ownedParameter->size() = 1)]
+      return [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO_inst.[op.name/];
+			[else]
+				[let parmListNoReturn : OrderedSet(Parameter) = op.ownedParameter->excluding(getReturnParam(op))]
+      return [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO_inst.[op.name/]([for (par : Parameter | parmListNoReturn)][par.name/][if not(par = parmListNoReturn->last())], [/if][/for]);
+				[/let]
+			[/if] 
+		[else]           
+		[if (op.ownedParameter->size() = 0)] [comment 0 parameters/]
+      [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO_inst.[op.name/];
+         [else]
+            [let parList : OrderedSet(Parameter) = op.ownedParameter]
+      [instSpec.name.replaceAll('\\.','_')/]_[sl.definingFeature.name/]_PO_inst.[op.name/]([for (par : Parameter | parList)][par.name/][if not(par = parList->last())], [/if][/for]);
+             [/let]
+		[/if]
+	[/if]         
+   end [op.name/];
+            [/for]
+         [/if]
+      [/let]
+   [/for]
+   [comment End protected operations /]
+   [comment Unprotected Operations /]
+   [for (op: Operation | unprotectedOpList)]
+
+      [if (isFunction(op))]
+			[if (op.ownedParameter->size() = 1)]
+   function [op.name/] (Self : in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T) return [getReturnParam(op).type.name/] is
+			[else]
+				[let parmListNoReturn : OrderedSet(Parameter) = op.ownedParameter->excluding(getReturnParam(op))]
+   function [op.name/] (Self : in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T [for (par : Parameter | parmListNoReturn)]; [par.name/] : [par.direction/] [par.type.name/][/for]) return [getReturnParam(op).type.name/] is
+				[/let]
+			[/if]
+			[else]
+               [if (op.ownedParameter->size() = 0)]
+   procedure [op.name/] (Self : in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T) is
+               [else]
+   procedure [op.name/] (Self: in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T[for (par : Parameter | op.ownedParameter)];
+                          [par.name/] : [par.direction/] [par.type.name/][/for]) is
+				[/if]
+			[/if]
+      pragma Warnings (Off, Self);
+   begin
+      --Ada.Text_IO.Put_Line("Container ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/] : Unprotected execution of [op.name/]");
+	[if (isFunction(op))]
+		[if (op.ownedParameter->size() = 1)]
+      return [instSpec.name.replaceAll('\\.','_')/].[op.name/];
+			[else]
+				[let parmListNoReturn : OrderedSet(Parameter) = op.ownedParameter->excluding(getReturnParam(op))]
+      return [instSpec.name.replaceAll('\\.','_')/].[op.name/]([for (par : Parameter | parmListNoReturn)][par.name/][if not(par = parmListNoReturn->last())], [/if][/for]);
+				[/let]
+			[/if] 
+		[else]           
+		[if (op.ownedParameter->size() = 0)] [comment 0 parameters/]
+      [instSpec.name.replaceAll('\\.','_')/].[op.name/];
+         [else]
+            [let parList : OrderedSet(Parameter) = op.ownedParameter]
+      [instSpec.name.replaceAll('\\.','_')/].[op.name/]([for (par : Parameter | parList)][par.name/][if not(par = parList->last())], [/if][/for]);
+             [/let]
+		[/if]
+	[/if]        
+   end [op.name/];
+   [/for]
+   [comment end Unprotected Operations /]
+
+end [pkgName/];
+[/file]
+
+[/template]
+
+[query public getRequiredInterface(arg0 : Port, arg1 : String) : Interface
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getRequiredInterface(org.eclipse.uml2.uml.Port, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public isRequiredPort(arg0 : Port, arg1 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'isRequiredPort(org.eclipse.uml2.uml.Port, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getProvidedInterfaceList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedInterfaceList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getProvidedInterfaceListAsQualifiedString(arg0 : Sequence(OclAny), arg1 : String) : String
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedInterfaceListAsQualifiedString(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getRequiredInterfaceList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getRequiredInterfaceList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getPackageToWithSpec(arg0 : Sequence(OclAny), arg1 : String, arg2 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getPackageToWithSpec(java.util.List, java.lang.String, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
+
+[query public getPriority(arg0 : Sequence(OclAny), arg1 : Operation, arg2 : String) : String
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getPriority(java.util.List, org.eclipse.uml2.uml.Operation, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
+
+[query public getPeriodOrMIAT(arg0 : Sequence(OclAny), arg1 : Operation, arg2 : String) : String
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getPeriodOrMIAT(java.util.List, org.eclipse.uml2.uml.Operation, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
+
+[query public getCeiling(arg0 : Sequence(OclAny), arg1 : Operation, arg2 : String) : String
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getCeiling(java.util.List, org.eclipse.uml2.uml.Operation, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
+
+[query public getCyclicOperationList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getCyclicOperationList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getSporadicOperationList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getSporadicOperationList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getProtectedOperationList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProtectedOperationList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getUnprotectedOperationList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getUnprotectedOperationList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getSlotProtectedOperation(arg0 : Slot, arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getSlotProtectedOperation(org.eclipse.uml2.uml.Slot, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public isCyclicOperation(arg0 : Sequence(OclAny), arg1 : Operation, arg2 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'isCyclicOperation(java.util.List, org.eclipse.uml2.uml.Operation, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
+
+[query public getInterface(arg0 : Operation, arg1 : Sequence(OclAny), arg2 : String) : Interface
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getInterface(org.eclipse.uml2.uml.Operation, java.util.List, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
+
+[query public isFunction(arg : Operation) : Boolean 
+	= invoke ('org.polarsys.chess.codegen.ada.service.UML2Service', 'isFunction(org.eclipse.uml2.uml.Operation)', Sequence{arg}) /]
+
+[query public getReturnParam(arg : Operation) : Parameter 
+	= invoke ('org.polarsys.chess.codegen.ada.service.UML2Service', 'getReturnParam(org.eclipse.uml2.uml.Operation)', Sequence{arg}) /]

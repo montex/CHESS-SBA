@@ -34,7 +34,7 @@
       </category>
       <command
             categoryId="org.polarsys.chess.categoryDebug"
-            defaultHandler="org.polarsys.chess.core.views.ReloadXMLPermissions"
+            defaultHandler="org.polarsys.chess.core.internal.views.ReloadXMLPermissions"
             id="org.polarsys.chess.command.xmlPerm"
             name="reload XML permissions">
       </command>
@@ -74,7 +74,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="org.polarsys.chess.core.preferences.CHESSMainPage"
+            class="org.polarsys.chess.core.internal.preferences.CHESSMainPage"
             id="org.polarsys.chess.preferences"
             name="CHESS">
       </page>
@@ -83,7 +83,7 @@
          point="org.eclipse.ui.preferencePages">
       <page
             category="org.polarsys.chess.preferences"
-            class="org.polarsys.chess.core.preferences.ConstraintPreferencePage"
+            class="org.polarsys.chess.core.internal.preferences.ConstraintPreferencePage"
             id="org.polarsys.chess.preferences.constraints"
             name="Constraints">
       </page>
@@ -91,7 +91,7 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="org.polarsys.chess.core.preferences.ConstraintPreferenceInitializer">
+            class="org.polarsys.chess.core.internal.preferences.ConstraintPreferenceInitializer">
       </initializer>
    </extension>
 </plugin>

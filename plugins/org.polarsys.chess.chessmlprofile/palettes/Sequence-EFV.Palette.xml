@@ -4,11 +4,13 @@
 	
 		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="CHESSSequenceDiagramPalette_Nodes" name="Nodes">
 			<aspectTool description="Create a Lifeline" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Lifeline.gif" id="createLifeline1CreationTool_1329924064080" name="Lifeline" refToolId="createLifeline1CreationTool"/>
+			<aspectTool description="Create an Action Execution Specification" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/ActionExecutionSpecification.gif" id="createActionExecutionSpecification2CreationTool_1418295416531" name="Action Execution Specification" refToolId="createActionExecutionSpecification2CreationTool"/>
 			<!--aspectTool description="Create a constraint" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="createConstraint10CreationTool_1329924079584" name="Constraint" refToolId="createConstraint10CreationTool"/-->
 			<!--aspectTool description="Create a Time Observation" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/TimeObservation.gif" id="createTimeObservation14CreationTool_1329924089424" name="Time Observation" refToolId="createTimeObservation14CreationTool"/-->
 		</drawer>
 		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="CHESSSequenceDiagramPalette_Edges" name="Edges">
 			<aspectTool description="Create MessageFound" iconpath="platform:/plugin/org.eclipse.papyrus.uml.diagram.sequence/icons/obj16/MessageFound.gif" id="createMessageFoundTool_1410449611774" name="Message Found" refToolId="createMessageFoundTool"/>
+			<aspectTool description="Create MessageSync" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Message_synchCall.gif" id="createMessageSyncTool_1418290874870" name="Message Sync" refToolId="createMessageSyncTool"/>
 			<aspectTool description="Create MessageAsync" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Message_asynchCall.gif" id="createMessageAsync2CreationTool_1329924074090" name="Message Async" refToolId="createMessageAsync2CreationTool"/>
 			<!--aspectTool description="Create a constraint link" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="createConstraintlink10CreationTool_1329924084208" name="Constraint link" refToolId="createConstraintlink10CreationTool"/-->
 		</drawer>

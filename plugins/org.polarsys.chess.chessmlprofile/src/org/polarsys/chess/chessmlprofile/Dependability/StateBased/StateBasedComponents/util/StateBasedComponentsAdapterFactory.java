@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -91,6 +91,10 @@ public class StateBasedComponentsAdapterFactory extends AdapterFactoryImpl {
 				return createStatelessSoftwareAdapter();
 			}
 			@Override
+			public Adapter caseStochasticFailureBehaviour(StochasticFailureBehaviour object) {
+				return createStochasticFailureBehaviourAdapter();
+			}
+			@Override
 			public Adapter caseDependableComponent(DependableComponent object) {
 				return createDependableComponentAdapter();
 			}
@@ -167,6 +171,20 @@ public class StateBasedComponentsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStatelessSoftwareAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StochasticFailureBehaviour <em>Stochastic Failure Behaviour</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StochasticFailureBehaviour
+	 * @generated
+	 */
+	public Adapter createStochasticFailureBehaviourAdapter() {
 		return null;
 	}
 

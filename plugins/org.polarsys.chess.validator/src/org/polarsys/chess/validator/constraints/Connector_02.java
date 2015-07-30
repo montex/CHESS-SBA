@@ -11,10 +11,18 @@ import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Connector_02.
+ */
 public class Connector_02 extends AbstractModelConstraint {
 
+	/** The Constant FLOWPORT. */
 	private static final String FLOWPORT = "MARTE::MARTE_DesignModel::GCM::FlowPort";
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
+	 */
 	@Override
 	public IStatus validate(IValidationContext ctx) {
 
@@ -69,12 +77,7 @@ public class Connector_02 extends AbstractModelConstraint {
 				}
 			}
 			return failure;
-		}
-		
-		//check mappings??? (maybe not needed)
-//		EList<Dependency> firstDepList = firstPort.getClientDependencies();
-//		EList<Dependency> secondDepList = secondPort.getClientDependencies();
-		
+		}		
 		
 		return success;
 	}

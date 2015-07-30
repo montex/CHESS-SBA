@@ -1,23 +1,20 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CHESS Commands plugin
+Bundle-Name: CHESS Commands plug-in (Incubation)
 Bundle-SymbolicName: org.polarsys.chess.commands;singleton:=true
-Bundle-Version: 0.9.2.qualifier
+Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.polarsys.chess.commands.Activator
-Bundle-Vendor: Intecs
+Bundle-Vendor: Polarsys CHESS Project
 Require-Bundle: org.eclipse.ui.ide;bundle-version="3.10.0",
  org.eclipse.core.resources,
  org.eclipse.core.commands,
- org.polarsys.chess.core;bundle-version="0.9.2",
+ org.polarsys.chess.core;bundle-version="0.9.0",
  org.eclipse.core.runtime;bundle-version="3.10.0",
  org.eclipse.swt,
  org.eclipse.jface,
  org.eclipse.ui.workbench,
- org.eclipse.m2m.atl.core,
- org.eclipse.m2m.atl.core.emf,
- org.eclipse.m2m.atl.engine.emfvm.launch,
  org.eclipse.papyrus.marte.static.profile;bundle-version="1.0.0",
- org.polarsys.chess.chessmlprofile;bundle-version="1.0.0",
+ org.polarsys.chess.chessmlprofile;bundle-version="0.9.0",
  org.eclipse.uml2.uml;bundle-version="5.0.0",
  org.eclipse.emf.ecore,
  org.eclipse.papyrus.infra.core,
@@ -31,7 +28,9 @@ Require-Bundle: org.eclipse.ui.ide;bundle-version="3.10.0",
  org.eclipse.papyrus.editor;bundle-version="1.0.0",
  org.eclipse.papyrus.sysml.diagram.common,
  org.eclipse.papyrus.sysml.diagram.internalblock;bundle-version="1.0.0",
- org.polarsys.chess.service
+ org.polarsys.chess.service,
+ org.eclipse.papyrus.uml.tools,
+ org.eclipse.papyrus.infra.emf;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.polarsys.chess.commands

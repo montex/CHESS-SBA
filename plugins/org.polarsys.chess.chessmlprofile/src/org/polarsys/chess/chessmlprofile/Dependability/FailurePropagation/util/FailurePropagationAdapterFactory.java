@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -112,6 +112,10 @@ public class FailurePropagationAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseFI4FAAnalysis(FI4FAAnalysis object) {
 				return createFI4FAAnalysisAdapter();
+			}
+			@Override
+			public Adapter caseFLASpecification(FLASpecification object) {
+				return createFLASpecificationAdapter();
 			}
 			@Override
 			public Adapter caseDependableComponent(DependableComponent object) {
@@ -272,6 +276,20 @@ public class FailurePropagationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createFI4FAAnalysisAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification <em>FLA Specification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification
+	 * @generated
+	 */
+	public Adapter createFLASpecificationAdapter() {
 		return null;
 	}
 

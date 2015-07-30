@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -149,6 +149,71 @@ public interface ComponentModelPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.FunctionalPartitionImpl <em>Functional Partition</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.impl.FunctionalPartitionImpl
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentModelPackageImpl#getFunctionalPartition()
+	 * @generated
+	 */
+	int FUNCTIONAL_PARTITION = 2;
+
+	/**
+	 * The feature id for the '<em><b>Utilization</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTIONAL_PARTITION__UTILIZATION = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Component</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTIONAL_PARTITION__BASE_COMPONENT = 1;
+
+	/**
+	 * The feature id for the '<em><b>MAF</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTIONAL_PARTITION__MAF = 2;
+
+	/**
+	 * The feature id for the '<em><b>MIF</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTIONAL_PARTITION__MIF = 3;
+
+	/**
+	 * The feature id for the '<em><b>Scheduling Table</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTIONAL_PARTITION__SCHEDULING_TABLE = 4;
+
+	/**
+	 * The number of structural features of the '<em>Functional Partition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FUNCTIONAL_PARTITION_FEATURE_COUNT = 5;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.ComponentModel.ComponentType <em>Component Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -222,6 +287,71 @@ public interface ComponentModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getComponentImplementation_SourceCodeLocation();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition <em>Functional Partition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Functional Partition</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition
+	 * @generated
+	 */
+	EClass getFunctionalPartition();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition#getUtilization <em>Utilization</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Utilization</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition#getUtilization()
+	 * @see #getFunctionalPartition()
+	 * @generated
+	 */
+	EAttribute getFunctionalPartition_Utilization();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition#getBase_Component <em>Base Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Component</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition#getBase_Component()
+	 * @see #getFunctionalPartition()
+	 * @generated
+	 */
+	EReference getFunctionalPartition_Base_Component();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition#getMAF <em>MAF</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>MAF</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition#getMAF()
+	 * @see #getFunctionalPartition()
+	 * @generated
+	 */
+	EAttribute getFunctionalPartition_MAF();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition#getMIF <em>MIF</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>MIF</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition#getMIF()
+	 * @see #getFunctionalPartition()
+	 * @generated
+	 */
+	EAttribute getFunctionalPartition_MIF();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition#getSchedulingTable <em>Scheduling Table</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Scheduling Table</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition#getSchedulingTable()
+	 * @see #getFunctionalPartition()
+	 * @generated
+	 */
+	EAttribute getFunctionalPartition_SchedulingTable();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -304,6 +434,56 @@ public interface ComponentModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute COMPONENT_IMPLEMENTATION__SOURCE_CODE_LOCATION = eINSTANCE.getComponentImplementation_SourceCodeLocation();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.FunctionalPartitionImpl <em>Functional Partition</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.ComponentModel.impl.FunctionalPartitionImpl
+		 * @see org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentModelPackageImpl#getFunctionalPartition()
+		 * @generated
+		 */
+		EClass FUNCTIONAL_PARTITION = eINSTANCE.getFunctionalPartition();
+
+		/**
+		 * The meta object literal for the '<em><b>Utilization</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FUNCTIONAL_PARTITION__UTILIZATION = eINSTANCE.getFunctionalPartition_Utilization();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Component</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FUNCTIONAL_PARTITION__BASE_COMPONENT = eINSTANCE.getFunctionalPartition_Base_Component();
+
+		/**
+		 * The meta object literal for the '<em><b>MAF</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FUNCTIONAL_PARTITION__MAF = eINSTANCE.getFunctionalPartition_MAF();
+
+		/**
+		 * The meta object literal for the '<em><b>MIF</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FUNCTIONAL_PARTITION__MIF = eINSTANCE.getFunctionalPartition_MIF();
+
+		/**
+		 * The meta object literal for the '<em><b>Scheduling Table</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FUNCTIONAL_PARTITION__SCHEDULING_TABLE = eINSTANCE.getFunctionalPartition_SchedulingTable();
 
 	}
 

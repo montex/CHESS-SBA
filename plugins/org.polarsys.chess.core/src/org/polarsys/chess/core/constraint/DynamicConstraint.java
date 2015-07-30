@@ -22,7 +22,9 @@ import org.polarsys.chess.core.Activator;
 import org.polarsys.chess.core.notifications.ResourceNotification;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
 
-/*
+/**
+ * Implements the {@link IConstraint} interface.
+ * 
  * Framework usage:
  * 
  * In a Library of constraints: 
@@ -43,7 +45,7 @@ import org.polarsys.chess.core.views.DiagramStatus.DesignView;
  *   }
  * */
 
-public abstract class DynamicConstraint implements IDynamicConstraint {
+public abstract class DynamicConstraint implements IConstraint {
 	
 	private String name;
 	
@@ -53,35 +55,64 @@ public abstract class DynamicConstraint implements IDynamicConstraint {
 	
 	SettableStatus status;
 	
+	/**
+	 * Creates the constraint and add it to the {@link ConstraintList}
+	 */
 	public DynamicConstraint(){
 		ConstraintList.add(this);
 	};
 	
+	/**
+	 * Creates the constraint and add it to the {@link ConstraintList}
+	 * 
+	 * @param name  the name of the constraint
+	 * @param severity  the severity, see {@link IConstraint} constants
+	 * @param messagePattern  the message pattern of the constraint
+	 */
 	public DynamicConstraint(String name, int severity, String messagePattern){
 		setName(name);
 		setStatus(severity, messagePattern);
+		ConstraintList.add(this);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.constraint.IConstraint#getName()
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.constraint.IConstraint#setName(java.lang.String)
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.constraint.IConstraint#getSeverity()
+	 */
 	public int getSeverity() {
 		return severity;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.constraint.IConstraint#setSeverity(int)
+	 */
 	public void setSeverity(int severity) {
 		this.severity = severity;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.constraint.IConstraint#getStatus()
+	 */
 	public SettableStatus getStatus() {
 		return status;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.constraint.IConstraint#showUserNotification()
+	 */
 	public void showUserNotification() {
 		switch (status.getSeverity()) {
 		case IStatus.ERROR:
@@ -93,34 +124,65 @@ public abstract class DynamicConstraint implements IDynamicConstraint {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.constraint.IConstraint#getMessage()
+	 */
 	public String getMessage() {
 		return message;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.constraint.IConstraint#setMessage(java.lang.String)
+	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}
 	
+	/**
+	 * Sets the message.
+	 * 
+	 * @param message
+	 */
 	public void setStatusMessage(String message) {
 		status.setMessagePattern(message);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.constraint.IConstraint#setStatus(int, java.lang.String)
+	 */
 	public void setStatus(int severity, String messagePattern) {
 		setSeverity(severity);
 		setMessage(messagePattern);
 		status = new SettableStatus(severity, Activator.PLUGIN_ID, messagePattern);
 	}
 	
+	/**
+	 * Execute {@link #checkConstraint(Notification, DesignView)} method given the current {@link DesignView}.
+	 * 
+	 * @param notification
+	 * @param currentView
+	 * @return
+	 */
 	public IStatus check(Notification notification, DesignView currentView){
 		status.setSuccess(checkConstraint(notification, currentView));
 		return status;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.constraint.IConstraint#check(org.eclipse.emf.common.notify.Notification)
+	 */
 	public IStatus check(Notification notification){
 		status.setSuccess(checkConstraint(notification, null));
 		return status;
 	}
 	
+	/**
+	 * This is the method to implement in order to perform all the checks required by this constraint.
+	 * 
+	 * @param notification  the {@link Notification} this constraint is run against
+	 * @param currentView  the current {@link DesignView}
+	 * @return true if the constraint passes / false otherwise
+	 */
 	public abstract boolean checkConstraint(Notification notification, DesignView currentView);
 
 }

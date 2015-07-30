@@ -1,0 +1,78 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module DistributionNamingData('http://www.eclipse.org/uml2/3.0.0/UML', 'http://www.eclipse.org/papyrus/GCM/1')]
+[import org::polarsys::chess::codegen::ada::main::Copyright /]
+
+[template public generateDistributionNamingData(model : Model, procNode: InstanceSpecification) {
+    procNodeName : String = procNode.name;
+    clSvPortStName : String = 'MARTE::MARTE_DesignModel::GCM::ClientServerPort';
+    assignStName   : String = 'MARTE::MARTE_Foundations::Alloc::Assign';
+	chHwProcessorStName  : String = 'CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor';
+	compTypeStName : String = 'CHESS::ComponentModel::ComponentType';
+    compImplStName : String = 'CHESS::ComponentModel::ComponentImplementation';
+    allCompInstList : Sequence(InstanceSpecification) = getComponentInstanceList(InstanceSpecification.allInstances()->asSequence(), compImplStName)->filter(InstanceSpecification);
+    cTypeList : Sequence(Component) = getAllComponentTypeList(Component.allInstances()->asSequence(), compTypeStName)->filter(Component);
+	providedOperationList : Sequence(Operation) = getProvidedOperationList(cTypeList, clSvPortStName)->filter(Operation);
+    
+}
+]
+
+[comment distribution_naming_data.ads /]
+[file (procNodeName.concat('/middleware/src/distribution_naming_data.ads').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model)/]
+
+package Distribution_Naming_Data is
+
+--   pragma Pure(Distribution_Naming_Data);
+
+   [if (allCompInstList->size() = 1)]
+   type Destination_Instance_Name is ([allCompInstList->first().name.replaceAll('\\.','_')/]);
+
+   for Destination_Instance_Name use ([allCompInstList->first().name.replaceAll('\\.','_')/]);
+   [else]
+   type Destination_Instance_Name is ([allCompInstList->first().name.replaceAll('\\.','_')/][for (is : InstanceSpecification | allCompInstList->excluding(allCompInstList->first()))],
+                                      [is.name.replaceAll('\\.','_')/][/for]);
+
+   for Destination_Instance_Name use ([allCompInstList->first().name.replaceAll('\\.','_')/]		=> 0[for (is : InstanceSpecification | allCompInstList->excluding(allCompInstList->first()))],
+                                      [is.name.replaceAll('\\.','_')/]		=> [i/][/for]);
+   [/if]
+
+   type Instance_Operation_Name is ([providedOperationList->first().name/][for (op : Operation | providedOperationList->excluding(providedOperationList->first()))],
+                                    [op.name/][/for]);
+
+   for Instance_Operation_Name use ([providedOperationList->first().name/]		=> 0[for (op : Operation | providedOperationList->excluding(providedOperationList->first()))],
+                                    [op.name/]		=> [i/][/for]);
+
+end Distribution_Naming_Data;
+[/file]
+[/template]
+
+[query public getProvidedInterface(arg0 : Port, arg1 : String) : Interface
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedInterface(org.eclipse.uml2.uml.Port, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getProvidedInterfaceSlotList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedInterfaceSlotList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getComponentInstanceList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getComponentInstanceList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getAllComponentTypeList(arg0: Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getAllComponentTypeList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getProvidedOperationList(arg0: Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedOperationList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]

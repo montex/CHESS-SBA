@@ -6,27 +6,22 @@
         id="Build Instance Command"
         point="org.eclipse.ui.commands">
       <command
-            category="it.unipd.chess.category"
-            categoryId="it.unipd.chess.commands.category"
             id="org.chess.BuildInstanceCommandID"
             name="buildInstanceCommand">
       </command>
       <command
-         category="it.unipd.chess.category"
-         categoryId="it.unipd.chess.commands.category"
+            id="org.chess.BuildModelInstanceCommandID"
+            name="buildModelInstanceCommand">
+      </command>
+      <command
          id="org.chess.ShowRTCommandID"
          name="showRTCommand">
       </command>
       <command
-         category="it.unipd.chess.category"
-         categoryId="it.unipd.chess.commands.category"
          id="org.chess.HideRTCommandID"
          name="hideRTCommand">
       </command>
-      
       <command
-         category="it.unipd.chess.category"
-         categoryId="it.unipd.chess.commands.category"
          id="org.chess.Filters"
          name="Filter">
       </command>
@@ -108,6 +103,40 @@
             <command
                   commandId="org.chess.BuildInstanceCommandID"
                   label="Build Instances"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <or>
+                     <with
+                           variable="activeEditorId">
+                        <equals
+                              value="org.eclipse.uml2.uml.editor.presentation.UMLEditorID">
+                        </equals>
+                     </with>
+                     <with
+                           variable="activeEditorInput">
+                        <adapt
+                              type="org.eclipse.core.resources.IResource">
+                           <test
+                                 property="org.eclipse.core.resources.projectNature"
+                                 value="org.polarsys.chess.CHESSNature">
+                           </test>
+                        </adapt>
+                     </with>
+                  </or>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="org.polarsys.chess.mainMenu"
+               label="CHESS">
+            <command
+                  commandId="org.chess.BuildModelInstanceCommandID"
+                  label="Build Instances from Model"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -230,6 +259,11 @@
       <handler
             class="org.polarsys.chess.commands.BuildInstanceCommand"
             commandId="org.chess.BuildInstanceCommandID">
+      </handler>
+      
+      <handler
+            class="org.polarsys.chess.commands.BuildModelInstanceCommand"
+            commandId="org.chess.BuildModelInstanceCommandID">
       </handler>
       
       <handler

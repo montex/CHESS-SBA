@@ -14,8 +14,15 @@ import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Port;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FlowPorts_03.
+ */
 public class FlowPorts_03 extends AbstractModelConstraint {
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
+	 */
 	@Override
 	public IStatus validate(IValidationContext ctx) {
 		IStatus success = ctx.createSuccessStatus();
@@ -70,6 +77,13 @@ public class FlowPorts_03 extends AbstractModelConstraint {
 		return null;
 	}
 
+	/**
+	 * Provided.
+	 *
+	 * @param op the op
+	 * @param comp the comp
+	 * @return true, if successful
+	 */
 	private boolean provided(Operation op, Component comp) {
 		boolean provided = false;
 		for (Operation operation : comp.getAllOperations()) {

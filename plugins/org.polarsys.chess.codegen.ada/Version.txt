@@ -1,0 +1,27 @@
+
+
+This Eclipse plugin includes contains the Ada infrastructural code generator for the 
+code archetypes for the CHESS component model.
+
+**** Change log v0.5 ****
+Extended support for data types.
+Added support for Functions.
+
+
+**** Change log v0.3 ****
+
+New features:
+- Preliminary support for multi-node systems on Linux platform, based on the YAMI middleware
+- Improved support for C component implementations
+- Support for structs and enumeration passing between Ada and C and viceversa. 
+- Several minor improvements
+- The code generator is released under EPL license 
+
+**** Change log v0.2 ****
+
+New features:
+- Component implementations written in C or comprising imperative C++ code are now supported;
+- Added protected code section in Ada component implementations to define local variables, package body declarations.
+  and private declaration (in the implementation specification);
+Bug fixes:
+- Fixed two mistakes in one conditional branch for the generation of OBCS and sporadic operations.

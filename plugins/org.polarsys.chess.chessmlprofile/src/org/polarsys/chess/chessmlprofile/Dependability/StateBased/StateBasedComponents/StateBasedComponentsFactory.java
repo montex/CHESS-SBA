@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -65,6 +65,15 @@ public interface StateBasedComponentsFactory extends EFactory {
 	 * @generated
 	 */
 	StatelessSoftware createStatelessSoftware();
+
+	/**
+	 * Returns a new object of class '<em>Stochastic Failure Behaviour</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stochastic Failure Behaviour</em>'.
+	 * @generated
+	 */
+	StochasticFailureBehaviour createStochasticFailureBehaviour();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -23,7 +23,6 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.notation.Shape;
 import org.eclipse.gmf.runtime.notation.impl.BasicCompartmentImpl;
-import org.eclipse.gmf.runtime.notation.impl.ShapeImpl;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.uml.diagram.common.editparts.NamedElementEditPart;
 import org.eclipse.papyrus.uml.diagram.composite.edit.parts.ClassCompositeEditPart;
@@ -36,15 +35,21 @@ import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
+
+/**
+ * Allows to show the CHRtSpecification Comments available on the selected Papyrus diagram
+ */
 public class ShowRTInformationCommand extends AbstractHandler{
 
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+	/* (non-Javadoc)
+	 * Allows to show the CHRtSpecification Comments available on the selected Papyrus diagram
+	 */ 
+	public Object show() throws ExecutionException {
 		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
 		final DiagramStatus ds = CHESSEditorUtils.getDiagramStatus(editor);
 		if (editor == null || ds == null) 
 			return null;
 		try {
-		//PapyrusMultiDiagramEditor editor = (PapyrusMultiDiagramEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		
 		Object temp = CHESSEditorUtils.getDiagramGraphicalViewer().getRootEditPart().getChildren().get(0);
 		
@@ -80,8 +85,6 @@ public class ShowRTInformationCommand extends AbstractHandler{
 				CanonicalEditPolicy cep = (CanonicalEditPolicy)mainEditPart.getEditPolicy(EditPolicyRoles.CANONICAL_ROLE);
 				if (cep!=null)
 					cep.refresh();
-				
-				
 			}
 		});
 		
@@ -94,6 +97,13 @@ public class ShowRTInformationCommand extends AbstractHandler{
 		return null;
 	}
 	
+	/**
+	 * Sets the visibility on the given Comment CHRtSpecification shape
+	 *
+	 * @param shape the Comment CHRtSpecification shape
+	 * @param visibility the visibility
+	 * @return true, if successful
+	 */
 	public static boolean showHideRT(Shape shape, boolean visibility){
 		if (shape.getElement() instanceof Port)
 			return false;
@@ -119,10 +129,10 @@ public class ShowRTInformationCommand extends AbstractHandler{
 		return true;
 	}
 	
-	public static void hideRtForComponent(ShapeImpl propertyComponent){
-		int i= 0;
-		i +=1;
-		
+	
+	@Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		return show();
 	}
 	
 }

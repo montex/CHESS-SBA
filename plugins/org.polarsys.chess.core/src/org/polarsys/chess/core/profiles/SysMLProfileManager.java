@@ -35,61 +35,42 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 /**
  * This class wraps the SysML profile resource and is used for loading the
  * profile and applying its stereotypes.
- * 
- * @author Stefano Puri
- *
  */
 
 public class SysMLProfileManager {
-	/*private static Profile SYSMLProfile;
-	private static Profile SYSML_requirementProfile;
-	private static Profile SYSML_blockProfile;*/
-
-	/*private static ResourceSet resSet = null;
-
-	private static SysMLProfileManager instance;
-
-	private SysMLProfileManager() {
-	}*/
-
-	public static SysMLProfileManager loadSysMLProfile(ResourceSet rs) {
-		/*if (instance == null) {
-			SYSMLProfile = (Profile) PackageUtil.loadPackage(
-					URI.createURI(SysmlResource.SYSML_PROFILE_URI), rs);
-			SYSML_requirementProfile = (Profile) SYSMLProfile
-					.getNestedPackage("Requirements");
-			SYSML_blockProfile = (Profile) SYSMLProfile
-					.getNestedPackage("Blocks");
-			instance = new SysMLProfileManager();
-		}
-		resSet = rs;
-		return instance;*/
-		return null;
-	}
-
-	/*public Profile getSysMLProfile() {
-		return SYSMLProfile;
-	}*/
-
+	
+	
+	/**
+	 * Applies the Requirement profile and its subprofiles to the given element.
+	 * 
+	 * @param element
+	 */
 	public static void applyRequirementProfileTo(Package element) {
 		Profile SYSML_requirementProfile =  UMLResourcesUtil.getProfile(RequirementsPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, SYSML_requirementProfile, true);
 	}
 
+	/**
+	 * Applies the Block profile to the given element
+	 * 
+	 * @param element  the element
+	 * @param withSubProfiles whether the subprofiles should also be applied
+	 */
 	public static void applyBlockProfileTo(Package element, boolean withSubProfiles) {
 		Profile SYSML_blockProfile =  UMLResourcesUtil.getProfile(BlocksPackage.eINSTANCE, element);
 		PackageUtil.applyProfile(element, SYSML_blockProfile, withSubProfiles);
 	}
 
+	/**
+	 * Applies the SysML profile to the given element
+	 * 
+	 * @param element  the element
+	 * @param withSubProfiles whether the subprofiles should also be applied
+	 */
 	public static void applySysMLProfileTo(Package element, boolean withSubProfiles) {
-		System.out.println("Applying SysML profile to " + element.getName()
-				+ "...");
-		// PackageUtil.applyProfile(element, SYSMLProfile, withSubProfiles);
-
+		
 		/**
-		 * the following is for solve an issue when creating new models
-		 * regarding the application of profiles TODO: refactor the forever part
-		 * and check for other solutions
+		 * the following is for avoid issues when creating new models
 		 */
 
 		ResourceSet rs = element.eResource().getResourceSet();
@@ -98,27 +79,25 @@ public class SysMLProfileManager {
 		if (sysml != null) {
 			PackageUtil.applyProfile(element, sysml, true);
 		}
-		/*
-		 * Profile ForeverProfile =
-		 * (Profile)PackageUtil.loadPackage(URI.createURI
-		 * ("pathmap://FOREVER_PROFILE/ForeverProfile.profile.uml"), resSet);
-		 * if(ForeverProfile != null) { PackageUtil.applyProfile(element,
-		 * ForeverProfile, true); }
-		 */
 
-		System.out.println("Applying SysML profile to " + element.getName()
-				+ "...DONE");
 	}
 
+	/**
+	 * Applies the Satisfy stereotype to the given {@link Abstraction}.
+	 * 
+	 * @param abs  the abstraction
+	 * @return the stereotype applied
+	 */
 	public static Stereotype applySatisfyStereotype(Abstraction abs) {
-//		Stereotype str = ((Profile) SYSMLProfile
-//				.getNestedPackage("Requirements"))
-//				.getOwnedStereotype("Satisfy");
-//		abs.applyStereotype(str);
-//		return str;
+
 		return UMLUtils.applyStereotype(abs, "SysML::Requirements::Satisfy");
 	}
 
+	/**
+	 * Initialize the model with the needed elements.
+	 * 
+	 * @param currentModel  the model
+	 */
 	public static void createModel(Model currentModel) {
 		applyRequirementProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.REQUIREMENT_VIEW));
 		applyBlockProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.REQUIREMENT_VIEW), true);

@@ -19,10 +19,20 @@ package org.polarsys.chess.core.util;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.papyrus.uml.tools.listeners.PapyrusStereotypeListener;
 
+/**
+ * This class handles the output of a {@link Notification}. 
+ *
+ */
 public class NotificationManager {
 	private static StringBuffer s = new StringBuffer();
 	
-	public static String printNotification(Notification notif){
+	/**
+	 * Converts a {@link Notification} to string with a predefined template.
+	 * 
+	 * @param notif  the notification
+	 * @return  the converted notification
+	 */
+	public static /*@NonNull*/ String printNotification(/*@NonNull*/final Notification notif){
 		StringBuffer s = new StringBuffer();
 		s.append("Notification type: ");
 		s.append(NotificationManager.printEventType(notif));
@@ -34,8 +44,14 @@ public class NotificationManager {
 	}
 	
 
+	/**
+	 * Converts the notification event type to string with a predefined template.
+	 * 
+	 * @param notification  the notification
+	 * @return  the converted notification event type
+	 */
 	@SuppressWarnings("deprecation")
-	public static String printEventType(Notification notification) {
+	public static String printEventType(final Notification notification) {
 		s.delete(0, s.length());
 		switch (notification.getEventType()) {
 		case Notification.ADD:

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -25,6 +25,11 @@ import org.eclipse.uml2.uml.Transition;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Propagation</b></em>'.
  * <!-- end-user-doc -->
+ *
+ * <!-- begin-model-doc -->
+ * To be deleted???
+ * ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile
+ * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:

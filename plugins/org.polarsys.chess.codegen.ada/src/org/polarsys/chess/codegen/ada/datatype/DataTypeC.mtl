@@ -1,0 +1,59 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module DataTypeC('http://www.eclipse.org/uml2/3.0.0/UML')]
+[import org::polarsys::chess::codegen::ada::main::Copyright /]
+
+[template public generateDataTypeC(model: Model, procNode : InstanceSpecification) {
+    procNodeName : String = procNode.name;
+    enumerationList : Sequence(Enumeration) = Enumeration.allInstances()->asSequence();
+	dataTypeList : Sequence(DataType) = DataType.allInstances()->select(dt | dt.oclIsTypeOf(DataType))->asSequence();
+}
+]
+
+[file (procNodeName.concat('/src/datatype/datatype.h').toLower(), false, 'UTF-8')]
+[generateCopyrightC(model)/]
+
+#ifndef DATATYPE_H_
+#define DATATYPE_H_
+
+[for (en : Enumeration | enumerationList)]
+   enum [en.name/] {[en.ownedLiteral->first().name/] = 0[for (el : EnumerationLiteral | en.ownedLiteral->excluding(en.ownedLiteral->first()))], [el.name/] = [i/][/for]};
+[/for]
+
+[for (dt : DataType | dataTypeList)]
+   [if (dt.attribute->size() > 0)]
+   struct [dt.name/] {
+      [for (p : Property | dt.attribute)]
+         [if (p.type->filter(PrimitiveType)->size() = 1 and p.type.name <> 'Integer' and p.type.name <> 'Boolean')]
+      float [p.name/];
+         [else]
+      [adaTypeToCtype(p.type)/] [p.name/];
+         [/if]
+      [/for]
+   };
+   
+   [else]
+   struct [dt.name/] {};
+   [/if]
+[/for]
+#endif /* DATATYPE_H_ */
+[/file]
+[/template]
+
+[query public adaTypeToCtype(arg0: Type) : String
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'adaTypeToCtype(org.eclipse.uml2.uml.Type)', Sequence{arg0}) /]

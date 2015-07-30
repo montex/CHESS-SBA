@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<paletteDefinition>
+	<content>
+		<drawer 
+		iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" 
+		id="RTActivityDiagramDrawerID" 
+		name="Activity">
+			<aspectTool description="Create an Initial node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/InitialNode.gif" id="createInitialnode1CreationTool_1424870789837" name="Initial node" refToolId="createInitialnode1CreationTool"/>
+			<aspectTool description="Create an Call Behavior Action node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/CallBehaviorAction.gif" id="createCallBehaviorAction2CreationTool_1424870793972" name="Call Behavior Action" refToolId="createCallBehaviorAction2CreationTool"/>
+			<aspectTool description="Create an Activity final node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/ActivityFinalNode.gif" id="createActivityfinal2CreationTool_1424870805460" name="Activity final" refToolId="createActivityfinal2CreationTool"/>
+			<aspectTool description="Create a Control Flow" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/ControlFlow.gif" id="createControlFlow1CreationTool_1424870871684" name="Control Flow" refToolId="createControlFlow1CreationTool"/>
+		</drawer>
+	</content>
+</paletteDefinition>

@@ -1,0 +1,355 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module RemoteMsgClient('http://www.eclipse.org/uml2/3.0.0/UML', 'http://www.eclipse.org/papyrus/GCM/1')]
+[import org::polarsys::chess::codegen::ada::main::Copyright /]
+[import org::polarsys::chess::codegen::ada::middleware::CRClib /]
+
+[template public generateRemoteMsgClient(model : Model, procNode: InstanceSpecification, compInstInputList : Sequence(OclAny), connectorInstInputList: Sequence(OclAny)) {
+    procNodeName : String = procNode.name;
+    clSvPortStName : String = 'MARTE::MARTE_DesignModel::GCM::ClientServerPort';
+    assignStName   : String = 'MARTE::MARTE_Foundations::Alloc::Assign';
+    compImplStName : String = 'CHESS::ComponentModel::ComponentImplementation';
+    transmissionWithProtocolStName : String = 'CHESS::Dependability::MitigationMeans::TransmissionWithProtocol';
+	chHwProcessorStName  : String = 'CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor';
+    isSingleNodeSystem : Boolean = isSingleNodeSystem(InstanceSpecification.allInstances()->asSequence(), chHwProcessorStName);
+    compInstList : Sequence(InstanceSpecification) = compInstInputList->filter(InstanceSpecification);
+    requiredInterfaceSlotList : Sequence(Slot) = getRequiredInterfaceSlotList(compInstList, clSvPortStName)->filter(Slot);
+    providedInterfaceSlotList : Sequence(Slot) = getProvidedInterfaceSlotList(compInstList, clSvPortStName)->filter(Slot);
+    connectorInstList : Sequence(InstanceSpecification) = connectorInstInputList->filter(InstanceSpecification);
+    remoteRIslotList : Sequence(Slot) = getRemoteRIslotList(requiredInterfaceSlotList, procNode, connectorInstList, Comment.allInstances()->asSequence(), assignStName)->filter(Slot);
+    isRemoteMsgClientNecessary : Boolean = isRemoteMsgClientNecessary(requiredInterfaceSlotList, procNode, connectorInstList, Comment.allInstances()->asSequence(), assignStName);
+}
+]
+
+[comment RemoteMsgClient.ads /]
+[if (isRemoteMsgClientNecessary)]
+[file (procNodeName.concat('/middleware/src/remote_msg_client.ads').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model)/]
+
+[for (boundSlot : Slot | remoteRIslotList)]
+with [getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).name/];
+[/for]
+with Datatype; use Datatype;
+
+package Remote_Msg_Client is
+
+[for (boundSlot : Slot | remoteRIslotList)]
+   function Get_[getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).name/] return [getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).name/].[getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).name/]_ptr;
+[/for]
+
+   procedure Init_Remote_Msg_Client;
+
+private
+
+  type Remote_Msg_Client_T is new [getProvidedInterface((remoteRIslotList->first().definingFeature.oclAsType(Port)), clSvPortStName).name/].[getProvidedInterface((remoteRIslotList->first().definingFeature.oclAsType(Port)), clSvPortStName).name/][for (boundSlot : Slot | remoteRIslotList->excluding(remoteRIslotList->first()))] and [getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).name/].[getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).name/][/for] with null record;
+  
+[for (boundSlot : Slot | remoteRIslotList)]
+   [for (op : Operation | getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).ownedOperation)]
+   [if not (isFunction(op))]
+	 [if (op.ownedParameter->size() = 0)]
+   overriding
+   procedure [op.name /] (Self : in out Remote_Msg_Client_T);
+      [else]
+   overriding
+   procedure [op.name /] (Self : in out Remote_Msg_Client_T[for (par : Parameter | op.ownedParameter)];
+                           [par.name/] : [par.direction/] [par.type.name/][/for]);
+      [/if]
+   [/if]  
+   [/for]
+[/for]
+
+   Remote_Msg_Client_T_inst0 : aliased Remote_Msg_Client_T;
+
+end Remote_Msg_Client;
+[/file]
+
+[comment RemoteMsgClient.adb /]
+[file (procNodeName.concat('/middleware/src/remote_msg_client.adb').toLower(), false, 'UTF-8')]
+[generateCopyrightAda(model)/]
+
+with Ada.Streams;
+with YAMI.Core.Agents;
+with YAMI.Core.Closed_Connection_Handlers;
+with YAMI.Core.Message_Progress_Handlers;
+with YAMI.Core.New_Connection_Handlers;
+with YAMI.Parameters;
+with Ada.Real_Time;
+with Distribution_Naming_Data; use Distribution_Naming_Data;
+with Ada.Text_IO;
+with CRC_lib;
+with Interfaces;
+
+package body Remote_Msg_Client is
+
+   type New_Connection_Handler is
+      new YAMI.Core.New_Connection_Handlers.Handler with null record;
+
+   type Closed_Connection_Handler is
+      new YAMI.Core.Closed_Connection_Handlers.Handler with null record;
+
+   type Message_Progress_Handler is
+      new YAMI.Core.Message_Progress_Handlers.Handler with null record;
+
+   overriding
+   procedure New_Connection (H : in out New_Connection_Handler;
+                             Source : in String;
+                             Channel : in YAMI.Core.Channel_Descriptor);
+
+   overriding
+   procedure Closed_Connection (H : in out Closed_Connection_Handler;
+                                Source : in String);
+
+   overriding
+   procedure Progress (H : in out Message_Progress_Handler;
+                       Sent_Bytes : in Ada.Streams.Stream_Element_Count;
+                       Total_Byte_Count : in Ada.Streams.Stream_Element_Count);
+
+   Client_Target : String (1 .. YAMI.Core.Agents.Max_Target_Length);
+   Client_Target_Last : Natural;
+   
+   Closed_Connection_Called : Boolean := False;
+   pragma Volatile (Closed_Connection_Called);
+   
+   Progress_Called : Boolean := False;
+   pragma Volatile (Progress_Called);
+
+   Call_Called : Boolean := False;
+   pragma Volatile (Call_Called);
+
+   procedure New_Connection (H : in out New_Connection_Handler;
+                             Source : in String;
+                             Channel : in YAMI.Core.Channel_Descriptor) is
+   begin
+      Client_Target_Last := Source'Length;
+      Client_Target (1 .. Client_Target_Last) := Source;
+   end New_Connection;
+
+   procedure Closed_Connection (H : in out Closed_Connection_Handler;
+                                Source : in String) is
+   begin
+       pragma Assert (Source = Client_Target (1 .. Client_Target_Last));
+       Closed_Connection_Called := True;
+   end Closed_Connection;
+
+
+   procedure Progress (H : in out Message_Progress_Handler;
+                       Sent_Bytes : in Ada.Streams.Stream_Element_Count;
+                       Total_Byte_Count : in Ada.Streams.Stream_Element_Count) is
+
+      use type Ada.Streams.Stream_Element_Count;
+   begin
+      --  assume that the whole message fits in a single frame
+      --  and that the whole frame can be pushed as a single I/O operation
+      pragma Assert (Sent_Bytes = Total_Byte_Count);
+      pragma Assert (Sent_Bytes > 0);
+      Progress_Called := True;
+   end Progress;
+
+
+   My_New_Connection_Handler : aliased New_Connection_Handler;
+   My_Closed_Connection_Handler : aliased Closed_Connection_Handler;
+   My_Message_Progress_Handler : aliased Message_Progress_Handler;
+
+   Resolved_Target : String (1 .. YAMI.Core.Agents.Max_Target_Length);
+   Resolved_Target_Last : Natural := 21;
+   Timed_Out : Boolean;
+   Delay_Time : constant Ada.Real_Time.Time_Span := Ada.Real_Time.To_Time_Span(2.0);
+
+   Client_Agent : YAMI.Core.Agents.Agent;
+   Channel : YAMI.Core.Channel_Descriptor;
+
+   Outgoing_Header : YAMI.Parameters.Parameters_Collection;
+   Outgoing_Body : YAMI.Parameters.Parameters_Collection;
+
+   Created_New : Boolean;
+
+   procedure Init_Remote_Msg_Client is
+      use type YAMI.Parameters.Count_Type;
+   begin
+      Ada.Text_IO.Put_Line("Initializing Remote Msg Client...");
+      Resolved_Target (1 .. Resolved_Target_Last) := "tcp://127.0.0.1:12207";
+
+      YAMI.Core.Agents.Init_Agent(Client_Agent, null, null);
+
+      YAMI.Parameters.Init_Parameters(Outgoing_Header);
+      YAMI.Parameters.Init_Parameters(Outgoing_Body);
+
+      --  open new connection
+
+	  Ada.Text_IO.Put_Line("Opening TCP channel...");
+      Client_Agent.Open
+          (Resolved_Target (1 .. Resolved_Target_Last),
+           Channel, Created_New);
+
+      Ada.Text_IO.Put_Line("Remote Msg Client initialized.");
+
+   end Init_Remote_Msg_Client;
+
+
+[for (boundSlot : Slot | remoteRIslotList)]
+   function Get_[getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).name/] return [getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).name/].[getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).name/]_ptr is
+   begin
+      return Remote_Msg_Client_T_inst0'access;
+   end Get_[getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).name/];
+[/for]
+
+[for (boundSlot : Slot | remoteRIslotList)]
+   [for (op : Operation | getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).ownedOperation)]
+
+   --Sequence ID counter
+   [boundSlot.definingFeature.name/]_[op.name/]_Sequence_ID : Integer := 0;
+      
+      [if (op.ownedParameter->size() = 0)]
+   overriding
+   procedure [op.name /] (Self : in out Remote_Msg_Client_T) is
+      [else]
+   overriding
+   procedure [op.name /] (Self : in out Remote_Msg_Client_T[for (par : Parameter | op.ownedParameter)];
+                           [par.name/] : [par.direction/] [par.type.name/][/for]) is
+      [/if]
+      pragma Warnings (Off, Self);
+   begin      
+      -- Preparing message for operation [getProvidedInterface((boundSlot.definingFeature.oclAsType(Port)), clSvPortStName).name/].[op.name/]
+      Outgoing_Header.Set_String("Source_Instance", "UNSUPPORTED_FEATURE");
+      [let useSequenceID : Boolean = useSequenceID(boundSlot, connectorInstList, Connector.allInstances()->asSequence(), transmissionWithProtocolStName)]
+      Outgoing_Header.Set_Boolean("Has_Sequence_ID", [useSequenceID/]);
+         [if useSequenceID]
+      -- Adding Sequence ID to the message header
+      Outgoing_Header.Set_Integer("Sequence_ID", YAMI.Parameters.YAMI_Integer([boundSlot.definingFeature.name/]_[op.name/]_Sequence_ID));
+      [boundSlot.definingFeature.name/]_[op.name/]_Sequence_ID := [boundSlot.definingFeature.name/]_[op.name/]_Sequence_ID + 1;
+         [/if]
+      [/let]
+      
+      Outgoing_Body.Set_Integer("Destination_Instance_Name", Destination_Instance_Name'Pos([boundSlot.owningInstance.name.replaceAll('\\.','_')/]));
+      Outgoing_Body.Set_Integer("Instance_Operation_Name", Instance_Operation_Name'Pos([op.name/]));
+      [if (op.ownedParameter->size() > 0)]
+         [for (p : Parameter | op.ownedParameter)]
+            [if (p.type.name = 'Float')]
+      Outgoing_Body.Set_Long_Float("[p.name/]", YAMI.Parameters.YAMI_Long_Float([p.name/]));
+            [elseif (p.type.name = 'Integer')]
+      Outgoing_Body.Set_Integer("[p.name/]", YAMI.Parameters.YAMI_Integer([p.name/]));
+            [elseif (p.type.name = 'Boolean')]
+      Outgoing_Body.Set_Boolean("[p.name/]", [p.name/]);
+			[elseif (p.type->filter(Enumeration)->size() = 1)]
+      Outgoing_Body.Set_Integer("[p.name/]", YAMI.Parameters.YAMI_Integer'Pos([p.name/]));
+            [elseif (p.type->filter(DataType)->size() = 1)]
+               [for (pr : Property | p.type->filter(DataType).attribute)]
+                  [if (p.type.name = 'Float')]
+      Outgoing_Body.Set_Long_Float("[p.name/].[pr.name/]", YAMI.Parameters.YAMI_Long_Float([p.name/].[pr.name/]));
+                  [elseif (p.type.name = 'Integer')]
+      Outgoing_Body.Set_Integer("[p.name/].[pr.name/]", YAMI.Parameters.YAMI_Integer([p.name/].[pr.name/]));
+                  [elseif (p.type.name = 'Boolean')]
+      Outgoing_Body.Set_Boolean("[p.name/].[pr.name/]", [p.name/].[pr.name/]);
+                  [elseif (pr.type->filter(Enumeration)->size() = 1)]
+      Outgoing_Body.Set_Integer("[p.name/].[pr.name/]", YAMI.Parameters.YAMI_Integer([pr.type.name/]'Pos([p.name/].[pr.name/])));                              
+                  [else]
+      Outgoing_Body.Set_Long_Float("[p.name/].[pr.name/]", YAMI.Parameters.YAMI_Long_Float([p.name/].[pr.name/]));
+                  [/if]
+                [/for]
+            [/if]
+         [/for]
+      [/if]
+
+      [let CRClib : String = getCRClib(boundSlot, connectorInstList, Connector.allInstances()->asSequence(), transmissionWithProtocolStName)]
+         [if (CRClib = 'CRC32')]
+      Outgoing_Header.Set_Boolean("Has_Payload_CRC", true);
+      --Initialize CRC
+      CRC_lib.Init;
+      -- Updating CRC with values of destination and instance
+      CRC_lib.Update(Destination_Instance_Name'Pos([boundSlot.owningInstance.name/]));
+      CRC_lib.Update(Instance_Operation_Name'Pos([op.name/]));
+            [if (op.ownedParameter->size() > 0)]
+      -- Updating CRC with values of operation parameters
+               [for (p : Parameter | op.ownedParameter)]
+                  [if (p.type.name = 'Float' or p.type.name = 'Integer' or p.type.name = 'Boolean')]
+      CRC_lib.Update([p.name/]);
+   		          [elseif (p.type->filter(Enumeration)->size() = 1)]
+      CRC_lib.Update([p.type/]'Pos([p.name/]));
+                  [elseif (p.type->filter(DataType)->size() = 1)]
+                     [for (pr : Property | p.type->filter(DataType).attribute)]
+                        [if ((pr.type.name = 'Float') or (pr.type.name = 'Integer') or (pr.type.name = 'Boolean')) ]
+      CRC_lib.Update([p.name/].[pr.name/]);
+                        [elseif (pr.type->filter(Enumeration)->size() = 1)]
+      CRC_lib.Update([pr.type.name/]'Pos([p.name/].[pr.name/]));                              
+                        [else]
+      CRC_lib.Update(Float([p.name/].[pr.name/]));
+                        [/if]
+                     [/for]
+                  [/if]
+               [/for]
+            [/if]
+      
+      --Inserting CRC in message header
+      Ada.Text_IO.Put_Line("Payload_CRC: " & Interfaces.Unsigned_32'Image(CRC_lib.Get_Value));
+      Outgoing_Header.Set_String("Payload_CRC", Interfaces.Unsigned_32'Image(CRC_lib.Get_Value));
+         [else]
+      Outgoing_Header.Set_Boolean("Has_Payload_CRC", false);
+         [/if]
+      [/let]      
+
+      -- Sending message
+      Client_Agent.Post
+         (Channel, Outgoing_Header, Outgoing_Body, 0,
+          My_Message_Progress_Handler'Unchecked_Access);
+
+      Client_Agent.Do_Some_Work (0.0, Timed_Out);
+      pragma Assert (not Timed_Out);
+
+   end [op.name/];
+
+   [/for]
+[/for]
+
+end Remote_Msg_Client;
+[/file]
+[/if]
+[/template]
+
+
+[query public getBoundPIslot(arg0 : Slot, arg1 : Sequence(OclAny)) : Slot
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getBoundPIslot(org.eclipse.uml2.uml.Slot, java.util.List)', Sequence{arg0, arg1}) /]
+
+[query public getDeploymentProcessingNode(arg0: Slot, arg1 : Sequence(OclAny), arg2 : String) : InstanceSpecification
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getDeploymentProcessingNode(org.eclipse.uml2.uml.Slot, java.util.List, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
+
+[query public isSingleNodeSystem(arg0 : Sequence(OclAny), arg1 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'isSingleNodeSystem(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getProvidedInterface(arg0 : Port, arg1 : String) : Interface
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedInterface(org.eclipse.uml2.uml.Port, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getProvidedInterfaceSlotList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getProvidedInterfaceSlotList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getRequiredInterfaceSlotList(arg0 : Sequence(OclAny), arg1 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getRequiredInterfaceSlotList(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+
+[query public getRemoteRIslotList(arg0 : Sequence(OclAny), arg1 : InstanceSpecification, arg2 : Sequence(OclAny), arg3 : Sequence(OclAny), arg4 : String) : Sequence(OclAny)
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getRemoteRIslotList(java.util.List, org.eclipse.uml2.uml.InstanceSpecification, java.util.List, java.util.List, java.lang.String)', Sequence{arg0, arg1, arg2, arg3, arg4}) /]
+
+[query public isRemoteMsgClientNecessary(arg0: Sequence(OclAny), arg1 : InstanceSpecification, arg2 : Sequence(OclAny), arg3 : Sequence(OclAny), arg4 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'isRemoteMsgClientNecessary(java.util.List, org.eclipse.uml2.uml.InstanceSpecification, java.util.List, java.util.List, java.lang.String)', Sequence{arg0, arg1, arg2, arg3, arg4}) /]
+
+[query public useSequenceID(arg0 : Slot, arg1 : Sequence(OclAny), arg2 : Sequence(OclAny), arg3 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'useSequenceID(org.eclipse.uml2.uml.Slot, java.util.List, java.util.List, java.lang.String)', Sequence{arg0, arg1, arg2, arg3}) /]
+
+[query public getCRClib(arg0 : Slot, arg1 : Sequence(OclAny), arg2 : Sequence(OclAny), arg3 : String) : String
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getCRClib(org.eclipse.uml2.uml.Slot, java.util.List, java.util.List, java.lang.String)', Sequence{arg0, arg1, arg2, arg3}) /]
+
+[query public isFunction(arg : Operation) : Boolean 
+	= invoke ('org.polarsys.chess.codegen.ada.service.UML2Service', 'isFunction(org.eclipse.uml2.uml.Operation)', Sequence{arg}) /]

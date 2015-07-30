@@ -19,10 +19,20 @@ package org.polarsys.chess.core.resourcelistener;
 import org.eclipse.emf.transaction.ResourceSetListenerImpl;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
 
+/**
+ * An extension of the {@link ResourceSetListenerImpl} that knows the Papyrus
+ * service registry. 
+ *
+ */
 public class ResourceSetListenerExtra extends ResourceSetListenerImpl{
 
 	protected ServicesRegistry sr;
 	
+	/**
+	 * Sets the service registry.
+	 * 
+	 * @param sr  the service registry
+	 */
 	public void setRegistry(ServicesRegistry sr){
 		this.sr = sr;
 	}

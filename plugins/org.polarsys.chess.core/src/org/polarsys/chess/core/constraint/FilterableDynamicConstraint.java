@@ -17,11 +17,16 @@
 package org.polarsys.chess.core.constraint;
 
 
+/**
+ * 
+ * @deprecated use the super class {@link DynamicConstraint} instead.
+ */
+@Deprecated
 public abstract class FilterableDynamicConstraint extends DynamicConstraint {
 
+	@Deprecated
 	public FilterableDynamicConstraint(String name, int severity, String messagePattern){
 		super(name, severity, messagePattern);
-		ConstraintList.add(this);
 	}
 
 }

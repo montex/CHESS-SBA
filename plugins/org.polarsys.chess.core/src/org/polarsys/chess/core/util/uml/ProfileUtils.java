@@ -27,11 +27,15 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.profiles.MARTEProfileManager;
 
+/**
+ * This class contains a list of utility methods to manage UML Profiles.
+ *
+ */
 public class ProfileUtils {
 
 	
 	/**
-	 * @deprecated use PackageUtil.loadPackage
+	 * @deprecated use {@link PackageUtil#loadPackage(URI, ResourceSet)} instead.
 	 */
 	@Deprecated
 	public static Profile loadProfile(ResourceSet rs, String profileUri) {
@@ -40,7 +44,14 @@ public class ProfileUtils {
 		return p;
 	}
 
-	public static void writeProfileRecursively(Package pkg, BufferedWriter f)
+	/**
+	 * Recursively outputs the list of profiles to a {@link BufferedWriter} starting from the given package.
+	 * 
+	 * @param pkg
+	 * @param f
+	 * @throws IOException
+	 */
+	private static void writeProfileRecursively(Package pkg, BufferedWriter f)
 			throws IOException {
 		if (pkg instanceof Profile) {
 			String name = ((Profile) pkg).getName();
@@ -60,6 +71,13 @@ public class ProfileUtils {
 		}
 	}
 
+	/**
+	 * Writes the list of applied profile given a package to a file.
+	 * 
+	 * @param pkg
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public static void writeProfileRecursivelyToFile(Package pkg,
 			String fileName) throws IOException {
 		FileWriter f = null;
@@ -72,13 +90,19 @@ public class ProfileUtils {
 	}
 
 	/**
-	 * @deprecated use directly org.eclipse.papyrus.uml.tools.utils.PackageUtil.applyProfile
+	 * @deprecated use directly {@link PackageUtil#applyProfile(Package, Profile, boolean)} instead.
 	 */
 	@Deprecated
 	public static void applyProfileRecursively(Profile pkg, Package model) {
 		PackageUtil.applyProfile(model, pkg, true);
 	}
 
+	/**
+	 * Checks if the given profile is defined in the CHESS or MARTE profiles.
+	 * 
+	 * @param profile  the profile
+	 * @return true if it is defined in CHESS or MARTE profiles
+	 */
 	public static boolean isPredefinedProfile(Object profile) {
 		if (profile instanceof Profile) {
 			Profile p = (Profile)profile;
@@ -90,6 +114,12 @@ public class ProfileUtils {
 		return false;
 	}
 
+	/**
+	 * Checks if the given stereotype represents a Design View. 
+	 * 
+	 * @param strt  the stereotype
+	 * @return true if it is a Design View
+	 */
 	public static boolean isPredefinedStereotype(Object strt) {
 		if (strt instanceof Stereotype) {
 			if (CHESSProfileManager.CHESS_VIEWS_LIST.contains(((Stereotype) strt).getName()))

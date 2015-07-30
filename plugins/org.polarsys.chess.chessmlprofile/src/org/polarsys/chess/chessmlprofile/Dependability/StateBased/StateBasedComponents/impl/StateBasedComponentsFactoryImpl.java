@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -66,6 +66,7 @@ public class StateBasedComponentsFactoryImpl extends EFactoryImpl implements Sta
 			case StateBasedComponentsPackage.STATEFUL_SOFTWARE: return createStatefulSoftware();
 			case StateBasedComponentsPackage.STATELESS_HARDWARE: return createStatelessHardware();
 			case StateBasedComponentsPackage.STATELESS_SOFTWARE: return createStatelessSoftware();
+			case StateBasedComponentsPackage.STOCHASTIC_FAILURE_BEHAVIOUR: return createStochasticFailureBehaviour();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -109,6 +110,16 @@ public class StateBasedComponentsFactoryImpl extends EFactoryImpl implements Sta
 	public StatelessSoftware createStatelessSoftware() {
 		StatelessSoftwareImpl statelessSoftware = new StatelessSoftwareImpl();
 		return statelessSoftware;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StochasticFailureBehaviour createStochasticFailureBehaviour() {
+		StochasticFailureBehaviourImpl stochasticFailureBehaviour = new StochasticFailureBehaviourImpl();
+		return stochasticFailureBehaviour;
 	}
 
 	/**

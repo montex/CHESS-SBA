@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -13,7 +13,9 @@ package org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.uml2.uml.Connector;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FA;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage;
@@ -26,6 +28,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FI4FAImpl#getFi4fa <em>Fi4fa</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FI4FAImpl#getBase_Connector <em>Base Connector</em>}</li>
  * </ul>
  * </p>
  *
@@ -51,6 +54,16 @@ public class FI4FAImpl extends DependableComponentImpl implements FI4FA {
 	 * @ordered
 	 */
 	protected String fi4fa = FI4FA_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getBase_Connector() <em>Base Connector</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBase_Connector()
+	 * @generated
+	 * @ordered
+	 */
+	protected Connector base_Connector;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -97,11 +110,52 @@ public class FI4FAImpl extends DependableComponentImpl implements FI4FA {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Connector getBase_Connector() {
+		if (base_Connector != null && base_Connector.eIsProxy()) {
+			InternalEObject oldBase_Connector = (InternalEObject)base_Connector;
+			base_Connector = (Connector)eResolveProxy(oldBase_Connector);
+			if (base_Connector != oldBase_Connector) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FailurePropagationPackage.FI4FA__BASE_CONNECTOR, oldBase_Connector, base_Connector));
+			}
+		}
+		return base_Connector;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Connector basicGetBase_Connector() {
+		return base_Connector;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBase_Connector(Connector newBase_Connector) {
+		Connector oldBase_Connector = base_Connector;
+		base_Connector = newBase_Connector;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FI4FA__BASE_CONNECTOR, oldBase_Connector, base_Connector));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case FailurePropagationPackage.FI4FA__FI4FA:
 				return getFi4fa();
+			case FailurePropagationPackage.FI4FA__BASE_CONNECTOR:
+				if (resolve) return getBase_Connector();
+				return basicGetBase_Connector();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -116,6 +170,9 @@ public class FI4FAImpl extends DependableComponentImpl implements FI4FA {
 		switch (featureID) {
 			case FailurePropagationPackage.FI4FA__FI4FA:
 				setFi4fa((String)newValue);
+				return;
+			case FailurePropagationPackage.FI4FA__BASE_CONNECTOR:
+				setBase_Connector((Connector)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -132,6 +189,9 @@ public class FI4FAImpl extends DependableComponentImpl implements FI4FA {
 			case FailurePropagationPackage.FI4FA__FI4FA:
 				setFi4fa(FI4FA_EDEFAULT);
 				return;
+			case FailurePropagationPackage.FI4FA__BASE_CONNECTOR:
+				setBase_Connector((Connector)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -146,6 +206,8 @@ public class FI4FAImpl extends DependableComponentImpl implements FI4FA {
 		switch (featureID) {
 			case FailurePropagationPackage.FI4FA__FI4FA:
 				return FI4FA_EDEFAULT == null ? fi4fa != null : !FI4FA_EDEFAULT.equals(fi4fa);
+			case FailurePropagationPackage.FI4FA__BASE_CONNECTOR:
+				return base_Connector != null;
 		}
 		return super.eIsSet(featureID);
 	}

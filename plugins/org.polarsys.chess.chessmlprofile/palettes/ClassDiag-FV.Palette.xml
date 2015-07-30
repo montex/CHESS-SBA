@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <paletteDefinition>
 	<content>
-		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif"
-			id="Drawer__1301932755309" name="CHESS FunctView">
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" 
+			id="CHESSNodesFunctionalViewDrawerID" name="Nodes">
 			<aspectTool description="Create new Package"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Package.gif"
 				id="clazz.tool.package_1301932880986" name="Package" refToolId="clazz.tool.package" />
@@ -23,6 +23,16 @@
 				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
 					<stereotypesToApply>
 						<stereotype stereotypeName="CHESS::ComponentModel::ComponentImplementation" />
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif"
+				id="clazz.tool.component_1301932822500" name="FunctionalPartition (Component)"
+				refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::ComponentModel::FunctionalPartition" />
 					</stereotypesToApply>
 				</postAction>
 			</aspectTool>
@@ -91,6 +101,28 @@
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/EnumerationLiteral.gif"
 				id="clazz.tool.enumerationliteral_1301932936629" name="Enumeration literal"
 				refToolId="clazz.tool.enumerationliteral" />
+			<aspectTool description="Create a signal" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Signal.gif" id="clazz.tool.signal_1422267025205" name="Signal" refToolId="clazz.tool.signal"/>
+			<aspectTool description="Create a reception" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Reception.gif" id="clazz.tool.reception_1422267072416" name="Reception" refToolId="clazz.tool.reception"/>
+			<aspectTool description="Create new Constraint" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="composite.tool.constraint_142" name="Constraint" refToolId="clazz.tool.constraint"/>
+			
+			<aspectTool description="Create new CriticalityLevel" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="clazz.tool.constraint_1426786335331" name="CriticalityLevel" refToolId="clazz.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Safety::CriticalityLevel"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create new CriticalitySpecification" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="clazz.tool.constraint_1426786335331" name="CriticalitySpecification" refToolId="clazz.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Safety::CriticalitySpecification"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			
+			<aspectTool description="Create a comment" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif" id="clazz.tool.comment_13167796793" name="Comment" refToolId="clazz.tool.comment"/>
+		</drawer>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif"  id="CHESSEdgeFunctionalViewDrawerID" name="Edges">
 			<aspectTool description="Create a generalization"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Generalization.gif"
 				id="clazz.tool.generalization_1301932946786" name="Generalization"
@@ -118,9 +150,11 @@
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Dependency.gif"
 				id="clazz.tool.dependency_1301932902690" name="Dependency"
 				refToolId="clazz.tool.dependency" />
+			<aspectTool description="Creation of a link for comment\constraint" id="clazz.tool.link_13167799276791" name="Link" refToolId="clazz.tool.link"/>
 			<!--aspectTool description="Create an InterfaceRealization" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/InterfaceRealization.gif" 
 				id="clazz.tool.interfacerealization_1301932871048" name="InterfaceRealization" 
 				refToolId="clazz.tool.interfacerealization"/ -->
+				
 		</drawer>
 	</content>
 </paletteDefinition>

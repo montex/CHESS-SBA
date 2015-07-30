@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -40,6 +40,15 @@ public interface ThreatsPropagationFactory extends EFactory {
 	InternalFault createInternalFault();
 
 	/**
+	 * Returns a new object of class '<em>Internal Propagation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Internal Propagation</em>'.
+	 * @generated
+	 */
+	InternalPropagation createInternalPropagation();
+
+	/**
 	 * Returns a new object of class '<em>External Fault</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -47,6 +56,60 @@ public interface ThreatsPropagationFactory extends EFactory {
 	 * @generated
 	 */
 	ExternalFault createExternalFault();
+
+	/**
+	 * Returns a new object of class '<em>Normal Input</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Normal Input</em>'.
+	 * @generated
+	 */
+	NormalInput createNormalInput();
+
+	/**
+	 * Returns a new object of class '<em>Recovery Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Recovery Event</em>'.
+	 * @generated
+	 */
+	RecoveryEvent createRecoveryEvent();
+
+	/**
+	 * Returns a new object of class '<em>Normal Output</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Normal Output</em>'.
+	 * @generated
+	 */
+	NormalOutput createNormalOutput();
+
+	/**
+	 * Returns a new object of class '<em>Failure</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Failure</em>'.
+	 * @generated
+	 */
+	Failure createFailure();
+
+	/**
+	 * Returns a new object of class '<em>Normal Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Normal Event</em>'.
+	 * @generated
+	 */
+	NormalEvent createNormalEvent();
+
+	/**
+	 * Returns a new object of class '<em>Internal Threat</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Internal Threat</em>'.
+	 * @generated
+	 */
+	InternalThreat createInternalThreat();
 
 	/**
 	 * Returns a new object of class '<em>Error</em>'.
@@ -94,6 +157,15 @@ public interface ThreatsPropagationFactory extends EFactory {
 	FailureMode createFailureMode();
 
 	/**
+	 * Returns a new object of class '<em>Degraded State</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Degraded State</em>'.
+	 * @generated
+	 */
+	DegradedState createDegradedState();
+
+	/**
 	 * Returns a new object of class '<em>Failure Free</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -101,6 +173,24 @@ public interface ThreatsPropagationFactory extends EFactory {
 	 * @generated
 	 */
 	FailureFree createFailureFree();
+
+	/**
+	 * Returns a new object of class '<em>CH Internal Fault</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CH Internal Fault</em>'.
+	 * @generated
+	 */
+	CHInternalFault createCHInternalFault();
+
+	/**
+	 * Returns a new object of class '<em>CH External Fault</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CH External Fault</em>'.
+	 * @generated
+	 */
+	CHExternalFault createCHExternalFault();
 
 	/**
 	 * Returns a new object of class '<em>Unclassified Failure</em>'.
@@ -146,6 +236,42 @@ public interface ThreatsPropagationFactory extends EFactory {
 	 * @generated
 	 */
 	RampDown createRampDown();
+
+	/**
+	 * Returns a new object of class '<em>Input Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Input Event</em>'.
+	 * @generated
+	 */
+	InputEvent createInputEvent();
+
+	/**
+	 * Returns a new object of class '<em>Dep Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dep Event</em>'.
+	 * @generated
+	 */
+	DepEvent createDepEvent();
+
+	/**
+	 * Returns a new object of class '<em>Output Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Output Event</em>'.
+	 * @generated
+	 */
+	OutputEvent createOutputEvent();
+
+	/**
+	 * Returns a new object of class '<em>Internal Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Internal Event</em>'.
+	 * @generated
+	 */
+	InternalEvent createInternalEvent();
 
 	/**
 	 * Returns a new object of class '<em>Error Model</em>'.

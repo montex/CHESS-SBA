@@ -15,11 +15,25 @@
 */
 package org.polarsys.chess.validator.constraints;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StringParser.
+ */
 public class StringParser {
 	//String value = "PeriodicPattern(period(value=40,unit=ms),..)";
 	// ex: WCET -> "(value=40, unit=ms)"
 	
-public double getValuePattern(String value, String toSearch) {
+/**
+	 * Gets the value pattern.
+	 *
+	 * @param value the value
+	 * @param toSearch the to search
+	 * @return the value pattern
+	 */
+	public double getValuePattern(String value, String toSearch) {
 		
 		String[] array = value.split("[()=, ]");
 		for(int i=0; i<array.length-1; i++) {
@@ -33,6 +47,32 @@ public double getValuePattern(String value, String toSearch) {
 		return -1; 
 	}
 	
+	/**
+	 * Gets the complex value pattern.
+	 *
+	 * @param value the value
+	 * @param toSearch the to search
+	 * @param delimiter the delimiter
+	 * @return the complex value pattern
+	 */
+	public String getComplexValuePattern(String value, String toSearch, String delimiter) {
+		String[] array = value.split("[()=, ]");
+		Pattern p = Pattern.compile(".*"+toSearch+".*value.*"+delimiter+"(.*)"+delimiter+"", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(value);
+		String group = "";
+		if(m.find()){
+			group = m.group(1);
+		}
+		
+		return group;
+	}
+
+	/**
+	 * Gets the value nfp.
+	 *
+	 * @param value the value
+	 * @return the value nfp
+	 */
 	public double getValueNFP(String value) {
 		String[] array = value.split("[()=,]");
 		for(int i=0; i<array.length-1; i++) {

@@ -31,14 +31,25 @@ import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DV_01.
+ */
 public class DV_01 extends AbstractModelConstraint {
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
+	 */
 	@Override
 	public IStatus validate(IValidationContext ctx) {
 		EObject eObject = ctx.getTarget();
 		InstanceSpecification instSpec = (InstanceSpecification)eObject;
 		IStatus success = ctx.createSuccessStatus();
 		String errorMsg = null;
+		
+		//<<IdentifInstance>> InstanceSpecification does not need to have an allocation to HW
+		if (instSpec.getAppliedStereotype("CHESS::Core::IdentifInstance")!=null)
+			return success;
 		
 		Collection<Comment> allAssignComment = new ArrayList<Comment>();
 				

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -64,6 +64,7 @@ public class ComponentModelFactoryImpl extends EFactoryImpl implements Component
 		switch (eClass.getClassifierID()) {
 			case ComponentModelPackage.COMPONENT_TYPE: return createComponentType();
 			case ComponentModelPackage.COMPONENT_IMPLEMENTATION: return createComponentImplementation();
+			case ComponentModelPackage.FUNCTIONAL_PARTITION: return createFunctionalPartition();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -87,6 +88,16 @@ public class ComponentModelFactoryImpl extends EFactoryImpl implements Component
 	public ComponentImplementation createComponentImplementation() {
 		ComponentImplementationImpl componentImplementation = new ComponentImplementationImpl();
 		return componentImplementation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FunctionalPartition createFunctionalPartition() {
+		FunctionalPartitionImpl functionalPartition = new FunctionalPartitionImpl();
+		return functionalPartition;
 	}
 
 	/**

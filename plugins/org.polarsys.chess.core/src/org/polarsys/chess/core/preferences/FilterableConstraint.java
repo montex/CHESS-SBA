@@ -17,34 +17,54 @@
 package org.polarsys.chess.core.preferences;
 
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.polarsys.chess.core.constraint.IConstraint;
 import org.polarsys.chess.core.Activator;
-import org.polarsys.chess.core.constraint.IDynamicConstraint;
 
+/**
+ * This class is a wrapper for {@link IConstraint} that is exposed to the preference store of Eclipse
+ * and allows to enable/disable the check of the constraint during the model validation.
+ */
 public class FilterableConstraint implements IFilterable {
 	private boolean isActive;
-	private IDynamicConstraint c;
+	private IConstraint constraint;
 	
-	public FilterableConstraint(IDynamicConstraint c) {
-		this.c = c;
+	/**
+	 * Wraps the IConstraint passed as parameter and set its status accordingly to the one set in the preferences.
+	 * If there are no preferences set, then it sets the status to active by default.
+	 */
+	public FilterableConstraint(IConstraint constraint) {
+		this.constraint = constraint;
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		if (store.contains(c.getName()))
-			setActive(store.getBoolean(c.getName()));
+		if (store.contains(constraint.getName()))
+			setActive(store.getBoolean(constraint.getName()));
 		else
 			isActive = true;
-		store.setDefault(c.getName(), true);
+		store.setDefault(constraint.getName(), true);
     }
 	
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.preferences.IFilterable#setActive(boolean)
+	 */
 	@Override
 	public void setActive(boolean b) {
 		isActive = b;
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.preferences.IFilterable#isActive()
+	 */
 	@Override
 	public boolean isActive() {
 		return isActive;
 	}
 
-	public IDynamicConstraint getConstraint() {
-		return c;
+	/**
+	 * Returns the wrapped constraint.
+	 * 
+	 * @return the wrapped constraint.
+	 */
+	public IConstraint getConstraint() {
+		return constraint;
 	}
 
 }

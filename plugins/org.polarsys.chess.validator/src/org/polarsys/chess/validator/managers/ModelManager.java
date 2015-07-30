@@ -35,23 +35,49 @@ import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Type;
-import org.polarsys.chess.core.automatedActions.IAutomatedAction;
+import org.polarsys.chess.validator.automatedActions.IAutomatedAction;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.ViewUtils;
+import org.polarsys.chess.validator.libs.ActionsLib;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ModelManager.
+ */
 public class ModelManager {
 
+	/** The instance. */
 	private static ModelManager instance = new ModelManager();
 
 
+	/**
+	 * Instantiates a new model manager.
+	 */
 	private ModelManager() {
 	}
 
+	/**
+	 * Load model manager.
+	 *
+	 * @return the model manager
+	 */
 	public static ModelManager loadModelManager() {
 		return instance;
 	}
 
+	/**
+	 * Check.
+	 *
+	 * @param notificationList the notification list
+	 * @param notification the notification
+	 * @param _notifier the _notifier
+	 * @param s the s
+	 * @param diagramStatus the diagram status
+	 * @param domain the domain
+	 * @return the command
+	 * @throws RollbackException the rollback exception
+	 */
 	public Command check(List<Notification> notificationList, Notification notification,
 			Object _notifier, StringBuffer s, DiagramStatus diagramStatus,
 			TransactionalEditingDomain domain) throws RollbackException {

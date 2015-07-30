@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -59,15 +59,30 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComp
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.StateBasedDataTypesPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.impl.StateBasedDataTypesPackageImpl;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DegradedState;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DurationType;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorFree;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ExternalFault;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failure;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureFree;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InputEvent;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalFault;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalPropagation;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalThreat;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Inverted;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalEvent;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalInput;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalOutput;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.OutputEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RampDown;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryKind;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.StuckAt;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.StuckAtFixed;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatState;
@@ -87,6 +102,10 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAna
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
+import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
+import org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.STSPackageImpl;
 import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
 
 /**
@@ -108,7 +127,56 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass internalPropagationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass externalFaultEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass normalInputEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass recoveryEventEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass normalOutputEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass failureEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass normalEventEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass internalThreatEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -150,7 +218,28 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass degradedStateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass failureFreeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass chInternalFaultEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass chExternalFaultEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -192,6 +281,34 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass inputEventEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass depEventEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass outputEventEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass internalEventEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass errorModelEClass = null;
 
 	/**
@@ -200,6 +317,13 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * @generated
 	 */
 	private EEnum durationTypeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum recoveryKindEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -282,6 +406,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
+		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
+		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theThreatsPropagationPackage.createPackageContents();
@@ -307,6 +433,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
+		theSTSPackage.createPackageContents();
+		theSafetyPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theThreatsPropagationPackage.initializePackageContents();
@@ -332,6 +460,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
+		theSTSPackage.initializePackageContents();
+		theSafetyPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theThreatsPropagationPackage.freeze();
@@ -356,53 +486,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getInternalFault_Base_Transition() {
-		return (EReference)internalFaultEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getInternalFault_PermanentProb() {
-		return (EAttribute)internalFaultEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getInternalFault_TransfFunct() {
-		return (EAttribute)internalFaultEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getInternalFault_Property() {
-		return (EReference)internalFaultEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getInternalFault_ChildFailure() {
-		return (EReference)internalFaultEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getInternalFault_Occurrence() {
-		return (EAttribute)internalFaultEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)internalFaultEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -410,8 +495,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getInternalFault_TransientDuration() {
-		return (EAttribute)internalFaultEClass.getEStructuralFeatures().get(6);
+	public EClass getInternalPropagation() {
+		return internalPropagationEClass;
 	}
 
 	/**
@@ -428,7 +513,7 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getExternalFault_Base_Transition() {
+	public EReference getExternalFault_Failure() {
 		return (EReference)externalFaultEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -437,8 +522,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getExternalFault_FromPort() {
-		return (EReference)externalFaultEClass.getEStructuralFeatures().get(1);
+	public EClass getNormalInput() {
+		return normalInputEClass;
 	}
 
 	/**
@@ -446,8 +531,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getExternalFault_PropagationCondition() {
-		return (EAttribute)externalFaultEClass.getEStructuralFeatures().get(2);
+	public EReference getNormalInput_Recovery() {
+		return (EReference)normalInputEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -455,8 +540,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getExternalFault_Probability() {
-		return (EAttribute)externalFaultEClass.getEStructuralFeatures().get(3);
+	public EClass getRecoveryEvent() {
+		return recoveryEventEClass;
 	}
 
 	/**
@@ -464,8 +549,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getExternalFault_Unit() {
-		return (EAttribute)externalFaultEClass.getEStructuralFeatures().get(4);
+	public EAttribute getRecoveryEvent_Kind() {
+		return (EAttribute)recoveryEventEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -473,8 +558,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getExternalFault_Type() {
-		return (EAttribute)externalFaultEClass.getEStructuralFeatures().get(5);
+	public EClass getNormalOutput() {
+		return normalOutputEClass;
 	}
 
 	/**
@@ -482,8 +567,44 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getExternalFault_TransfFunct() {
-		return (EAttribute)externalFaultEClass.getEStructuralFeatures().get(6);
+	public EReference getNormalOutput_Recovery() {
+		return (EReference)normalOutputEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getFailure() {
+		return failureEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFailure_Failure() {
+		return (EReference)failureEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNormalEvent() {
+		return normalEventEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getInternalThreat() {
+		return internalThreatEClass;
 	}
 
 	/**
@@ -599,8 +720,161 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getDegradedState() {
+		return degradedStateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getFailureFree() {
 		return failureFreeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCHInternalFault() {
+		return chInternalFaultEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCHInternalFault_Base_Transition() {
+		return (EReference)chInternalFaultEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHInternalFault_PermanentProb() {
+		return (EAttribute)chInternalFaultEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHInternalFault_TransfFunct() {
+		return (EAttribute)chInternalFaultEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCHInternalFault_Property() {
+		return (EReference)chInternalFaultEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCHInternalFault_ChildFailure() {
+		return (EReference)chInternalFaultEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHInternalFault_Occurrence() {
+		return (EAttribute)chInternalFaultEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHInternalFault_TransientDuration() {
+		return (EAttribute)chInternalFaultEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCHExternalFault() {
+		return chExternalFaultEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCHExternalFault_Base_Transition() {
+		return (EReference)chExternalFaultEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCHExternalFault_FromPort() {
+		return (EReference)chExternalFaultEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHExternalFault_PropagationCondition() {
+		return (EAttribute)chExternalFaultEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHExternalFault_Probability() {
+		return (EAttribute)chExternalFaultEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHExternalFault_Unit() {
+		return (EAttribute)chExternalFaultEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHExternalFault_Type() {
+		return (EAttribute)chExternalFaultEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHExternalFault_TransfFunct() {
+		return (EAttribute)chExternalFaultEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -752,6 +1026,96 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getInputEvent() {
+		return inputEventEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getInputEvent_Port() {
+		return (EReference)inputEventEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDepEvent() {
+		return depEventEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDepEvent_Base_Event() {
+		return (EReference)depEventEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDepEvent_Base_State() {
+		return (EReference)depEventEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getOutputEvent() {
+		return outputEventEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getOutputEvent_Port() {
+		return (EReference)outputEventEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getInternalEvent() {
+		return internalEventEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInternalEvent_Delay() {
+		return (EAttribute)internalEventEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInternalEvent_Probability() {
+		return (EAttribute)internalEventEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getErrorModel() {
 		return errorModelEClass;
 	}
@@ -772,6 +1136,15 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 */
 	public EEnum getDurationType() {
 		return durationTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getRecoveryKind() {
+		return recoveryKindEEnum;
 	}
 
 	/**
@@ -802,44 +1175,46 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		isCreated = true;
 
 		// Create classes and their features
-		internalFaultEClass = createEClass(INTERNAL_FAULT);
-		createEReference(internalFaultEClass, INTERNAL_FAULT__BASE_TRANSITION);
-		createEAttribute(internalFaultEClass, INTERNAL_FAULT__PERMANENT_PROB);
-		createEAttribute(internalFaultEClass, INTERNAL_FAULT__TRANSF_FUNCT);
-		createEReference(internalFaultEClass, INTERNAL_FAULT__PROPERTY);
-		createEReference(internalFaultEClass, INTERNAL_FAULT__CHILD_FAILURE);
-		createEAttribute(internalFaultEClass, INTERNAL_FAULT__OCCURRENCE);
-		createEAttribute(internalFaultEClass, INTERNAL_FAULT__TRANSIENT_DURATION);
-
-		externalFaultEClass = createEClass(EXTERNAL_FAULT);
-		createEReference(externalFaultEClass, EXTERNAL_FAULT__BASE_TRANSITION);
-		createEReference(externalFaultEClass, EXTERNAL_FAULT__FROM_PORT);
-		createEAttribute(externalFaultEClass, EXTERNAL_FAULT__PROPAGATION_CONDITION);
-		createEAttribute(externalFaultEClass, EXTERNAL_FAULT__PROBABILITY);
-		createEAttribute(externalFaultEClass, EXTERNAL_FAULT__UNIT);
-		createEAttribute(externalFaultEClass, EXTERNAL_FAULT__TYPE);
-		createEAttribute(externalFaultEClass, EXTERNAL_FAULT__TRANSF_FUNCT);
-
-		errorEClass = createEClass(ERROR);
-		createEAttribute(errorEClass, ERROR__TYPE);
-		createEAttribute(errorEClass, ERROR__VANISHING_TIME);
+		unclassifiedFailureEClass = createEClass(UNCLASSIFIED_FAILURE);
 
 		threatStateEClass = createEClass(THREAT_STATE);
 		createEReference(threatStateEClass, THREAT_STATE__BASE_STATE);
 		createEAttribute(threatStateEClass, THREAT_STATE__PROBABILITY);
 		createEAttribute(threatStateEClass, THREAT_STATE__UNIT);
 
-		errorFreeEClass = createEClass(ERROR_FREE);
-
-		unclassifiedErrorEClass = createEClass(UNCLASSIFIED_ERROR);
-
 		failureModeEClass = createEClass(FAILURE_MODE);
 		createEReference(failureModeEClass, FAILURE_MODE__AFFECTED_PORTS);
 		createEAttribute(failureModeEClass, FAILURE_MODE__TYPE);
 
+		degradedStateEClass = createEClass(DEGRADED_STATE);
+
+		unclassifiedErrorEClass = createEClass(UNCLASSIFIED_ERROR);
+
 		failureFreeEClass = createEClass(FAILURE_FREE);
 
-		unclassifiedFailureEClass = createEClass(UNCLASSIFIED_FAILURE);
+		chInternalFaultEClass = createEClass(CH_INTERNAL_FAULT);
+		createEReference(chInternalFaultEClass, CH_INTERNAL_FAULT__BASE_TRANSITION);
+		createEAttribute(chInternalFaultEClass, CH_INTERNAL_FAULT__PERMANENT_PROB);
+		createEAttribute(chInternalFaultEClass, CH_INTERNAL_FAULT__TRANSF_FUNCT);
+		createEReference(chInternalFaultEClass, CH_INTERNAL_FAULT__PROPERTY);
+		createEReference(chInternalFaultEClass, CH_INTERNAL_FAULT__CHILD_FAILURE);
+		createEAttribute(chInternalFaultEClass, CH_INTERNAL_FAULT__OCCURRENCE);
+		createEAttribute(chInternalFaultEClass, CH_INTERNAL_FAULT__TRANSIENT_DURATION);
+
+		chExternalFaultEClass = createEClass(CH_EXTERNAL_FAULT);
+		createEReference(chExternalFaultEClass, CH_EXTERNAL_FAULT__BASE_TRANSITION);
+		createEReference(chExternalFaultEClass, CH_EXTERNAL_FAULT__FROM_PORT);
+		createEAttribute(chExternalFaultEClass, CH_EXTERNAL_FAULT__PROPAGATION_CONDITION);
+		createEAttribute(chExternalFaultEClass, CH_EXTERNAL_FAULT__PROBABILITY);
+		createEAttribute(chExternalFaultEClass, CH_EXTERNAL_FAULT__UNIT);
+		createEAttribute(chExternalFaultEClass, CH_EXTERNAL_FAULT__TYPE);
+		createEAttribute(chExternalFaultEClass, CH_EXTERNAL_FAULT__TRANSF_FUNCT);
+
+		errorEClass = createEClass(ERROR);
+		createEAttribute(errorEClass, ERROR__TYPE);
+		createEAttribute(errorEClass, ERROR__VANISHING_TIME);
+
+		errorFreeEClass = createEClass(ERROR_FREE);
 
 		stuckAtEClass = createEClass(STUCK_AT);
 		createEReference(stuckAtEClass, STUCK_AT__PROPERTY);
@@ -860,11 +1235,50 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		createEAttribute(rampDownEClass, RAMP_DOWN__DECR);
 		createEAttribute(rampDownEClass, RAMP_DOWN__END_VALUE);
 
+		inputEventEClass = createEClass(INPUT_EVENT);
+		createEReference(inputEventEClass, INPUT_EVENT__PORT);
+
+		depEventEClass = createEClass(DEP_EVENT);
+		createEReference(depEventEClass, DEP_EVENT__BASE_EVENT);
+		createEReference(depEventEClass, DEP_EVENT__BASE_STATE);
+
+		outputEventEClass = createEClass(OUTPUT_EVENT);
+		createEReference(outputEventEClass, OUTPUT_EVENT__PORT);
+
+		internalEventEClass = createEClass(INTERNAL_EVENT);
+		createEAttribute(internalEventEClass, INTERNAL_EVENT__DELAY);
+		createEAttribute(internalEventEClass, INTERNAL_EVENT__PROBABILITY);
+
+		externalFaultEClass = createEClass(EXTERNAL_FAULT);
+		createEReference(externalFaultEClass, EXTERNAL_FAULT__FAILURE);
+
+		normalInputEClass = createEClass(NORMAL_INPUT);
+		createEReference(normalInputEClass, NORMAL_INPUT__RECOVERY);
+
+		recoveryEventEClass = createEClass(RECOVERY_EVENT);
+		createEAttribute(recoveryEventEClass, RECOVERY_EVENT__KIND);
+
+		normalOutputEClass = createEClass(NORMAL_OUTPUT);
+		createEReference(normalOutputEClass, NORMAL_OUTPUT__RECOVERY);
+
+		failureEClass = createEClass(FAILURE);
+		createEReference(failureEClass, FAILURE__FAILURE);
+
+		normalEventEClass = createEClass(NORMAL_EVENT);
+
+		internalThreatEClass = createEClass(INTERNAL_THREAT);
+
+		internalFaultEClass = createEClass(INTERNAL_FAULT);
+		createEAttribute(internalFaultEClass, INTERNAL_FAULT__OCCURRENCE);
+
+		internalPropagationEClass = createEClass(INTERNAL_PROPAGATION);
+
 		errorModelEClass = createEClass(ERROR_MODEL);
 		createEReference(errorModelEClass, ERROR_MODEL__BASE_STATE_MACHINE);
 
 		// Create enums
 		durationTypeEEnum = createEEnum(DURATION_TYPE);
+		recoveryKindEEnum = createEEnum(RECOVERY_KIND);
 	}
 
 	/**
@@ -894,58 +1308,74 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
+		DependableComponentPackage theDependableComponentPackage = (DependableComponentPackage)EPackage.Registry.INSTANCE.getEPackage(DependableComponentPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		unclassifiedFailureEClass.getESuperTypes().add(this.getThreatState());
+		failureModeEClass.getESuperTypes().add(this.getThreatState());
+		degradedStateEClass.getESuperTypes().add(this.getThreatState());
+		unclassifiedErrorEClass.getESuperTypes().add(this.getThreatState());
+		failureFreeEClass.getESuperTypes().add(this.getThreatState());
 		errorEClass.getESuperTypes().add(this.getThreatState());
 		errorFreeEClass.getESuperTypes().add(this.getThreatState());
-		unclassifiedErrorEClass.getESuperTypes().add(this.getThreatState());
-		failureModeEClass.getESuperTypes().add(this.getThreatState());
-		failureFreeEClass.getESuperTypes().add(this.getThreatState());
-		unclassifiedFailureEClass.getESuperTypes().add(this.getThreatState());
+		inputEventEClass.getESuperTypes().add(this.getDepEvent());
+		outputEventEClass.getESuperTypes().add(this.getDepEvent());
+		internalEventEClass.getESuperTypes().add(this.getDepEvent());
+		externalFaultEClass.getESuperTypes().add(this.getInputEvent());
+		normalInputEClass.getESuperTypes().add(this.getInputEvent());
+		recoveryEventEClass.getESuperTypes().add(this.getInternalEvent());
+		normalOutputEClass.getESuperTypes().add(this.getOutputEvent());
+		failureEClass.getESuperTypes().add(this.getOutputEvent());
+		normalEventEClass.getESuperTypes().add(this.getInternalEvent());
+		internalThreatEClass.getESuperTypes().add(this.getInternalEvent());
+		internalFaultEClass.getESuperTypes().add(this.getInternalThreat());
+		internalPropagationEClass.getESuperTypes().add(this.getInternalThreat());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(internalFaultEClass, InternalFault.class, "InternalFault", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getInternalFault_Base_Transition(), theUMLPackage.getTransition(), null, "base_Transition", null, 1, 1, InternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getInternalFault_PermanentProb(), theBasicNFP_TypesPackage.getNFP_Real(), "permanentProb", null, 1, 1, InternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getInternalFault_TransfFunct(), theTypesPackage.getString(), "transfFunct", null, 0, 1, InternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getInternalFault_Property(), theUMLPackage.getProperty(), null, "property", null, 0, 1, InternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getInternalFault_ChildFailure(), theUMLPackage.getState(), null, "childFailure", null, 0, 1, InternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getInternalFault_Occurrence(), theTypesPackage.getString(), "occurrence", null, 0, 1, InternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getInternalFault_TransientDuration(), theTypesPackage.getString(), "transientDuration", null, 0, 1, InternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(externalFaultEClass, ExternalFault.class, "ExternalFault", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getExternalFault_Base_Transition(), theUMLPackage.getTransition(), null, "base_Transition", null, 1, 1, ExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getExternalFault_FromPort(), theUMLPackage.getPort(), null, "fromPort", null, 1, -1, ExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getExternalFault_PropagationCondition(), theTypesPackage.getString(), "propagationCondition", null, 0, 1, ExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getExternalFault_Probability(), theBasicNFP_TypesPackage.getNFP_Real(), "probability", null, 1, 1, ExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getExternalFault_Unit(), theTypesPackage.getString(), "unit", null, 0, 1, ExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getExternalFault_Type(), this.getDurationType(), "type", null, 1, 1, ExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getExternalFault_TransfFunct(), theTypesPackage.getString(), "transfFunct", null, 0, -1, ExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(errorEClass, org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Error.class, "Error", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getError_Type(), this.getDurationType(), "type", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Error.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getError_VanishingTime(), theTypesPackage.getString(), "vanishingTime", null, 0, 1, org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Error.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEClass(unclassifiedFailureEClass, UnclassifiedFailure.class, "UnclassifiedFailure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(threatStateEClass, ThreatState.class, "ThreatState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getThreatState_Base_State(), theUMLPackage.getState(), null, "base_State", null, 1, 1, ThreatState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getThreatState_Probability(), theBasicNFP_TypesPackage.getNFP_Real(), "probability", null, 1, 1, ThreatState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getThreatState_Unit(), theTypesPackage.getString(), "unit", null, 0, 1, ThreatState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
-		initEClass(errorFreeEClass, ErrorFree.class, "ErrorFree", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(unclassifiedErrorEClass, UnclassifiedError.class, "UnclassifiedError", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
 		initEClass(failureModeEClass, FailureMode.class, "FailureMode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFailureMode_AffectedPorts(), theUMLPackage.getPort(), null, "affectedPorts", null, 0, -1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getFailureMode_Type(), this.getDurationType(), "type", null, 1, 1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
+		initEClass(degradedStateEClass, DegradedState.class, "DegradedState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(unclassifiedErrorEClass, UnclassifiedError.class, "UnclassifiedError", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
 		initEClass(failureFreeEClass, FailureFree.class, "FailureFree", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(unclassifiedFailureEClass, UnclassifiedFailure.class, "UnclassifiedFailure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(chInternalFaultEClass, CHInternalFault.class, "CHInternalFault", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCHInternalFault_Base_Transition(), theUMLPackage.getTransition(), null, "base_Transition", null, 1, 1, CHInternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHInternalFault_PermanentProb(), theBasicNFP_TypesPackage.getNFP_Real(), "permanentProb", null, 1, 1, CHInternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHInternalFault_TransfFunct(), theTypesPackage.getString(), "transfFunct", null, 0, 1, CHInternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getCHInternalFault_Property(), theUMLPackage.getProperty(), null, "property", null, 0, 1, CHInternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getCHInternalFault_ChildFailure(), theUMLPackage.getState(), null, "childFailure", null, 0, 1, CHInternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHInternalFault_Occurrence(), theTypesPackage.getString(), "occurrence", null, 0, 1, CHInternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHInternalFault_TransientDuration(), theTypesPackage.getString(), "transientDuration", null, 0, 1, CHInternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(chExternalFaultEClass, CHExternalFault.class, "CHExternalFault", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCHExternalFault_Base_Transition(), theUMLPackage.getTransition(), null, "base_Transition", null, 1, 1, CHExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getCHExternalFault_FromPort(), theUMLPackage.getPort(), null, "fromPort", null, 1, -1, CHExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHExternalFault_PropagationCondition(), theTypesPackage.getString(), "propagationCondition", null, 0, 1, CHExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHExternalFault_Probability(), theBasicNFP_TypesPackage.getNFP_Real(), "probability", null, 1, 1, CHExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHExternalFault_Unit(), theTypesPackage.getString(), "unit", null, 0, 1, CHExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHExternalFault_Type(), this.getDurationType(), "type", null, 1, 1, CHExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHExternalFault_TransfFunct(), theTypesPackage.getString(), "transfFunct", null, 0, -1, CHExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(errorEClass, org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Error.class, "Error", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getError_Type(), this.getDurationType(), "type", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Error.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getError_VanishingTime(), theTypesPackage.getString(), "vanishingTime", null, 0, 1, org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Error.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(errorFreeEClass, ErrorFree.class, "ErrorFree", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(stuckAtEClass, StuckAt.class, "StuckAt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getStuckAt_Property(), theUMLPackage.getProperty(), null, "property", null, 1, 1, StuckAt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -966,6 +1396,44 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		initEAttribute(getRampDown_Decr(), theTypesPackage.getString(), "decr", null, 1, 1, RampDown.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getRampDown_EndValue(), theTypesPackage.getString(), "endValue", null, 1, 1, RampDown.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
+		initEClass(inputEventEClass, InputEvent.class, "InputEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getInputEvent_Port(), theUMLPackage.getProperty(), null, "port", null, 0, 1, InputEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(depEventEClass, DepEvent.class, "DepEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDepEvent_Base_Event(), theUMLPackage.getEvent(), null, "base_Event", null, 1, 1, DepEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getDepEvent_Base_State(), theUMLPackage.getState(), null, "base_State", null, 1, 1, DepEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(outputEventEClass, OutputEvent.class, "OutputEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getOutputEvent_Port(), theUMLPackage.getProperty(), null, "port", null, 0, 1, OutputEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(internalEventEClass, InternalEvent.class, "InternalEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getInternalEvent_Delay(), theBasicNFP_TypesPackage.getNFP_Real(), "delay", null, 1, 1, InternalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getInternalEvent_Probability(), theBasicNFP_TypesPackage.getNFP_Real(), "probability", null, 1, 1, InternalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(externalFaultEClass, ExternalFault.class, "ExternalFault", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getExternalFault_Failure(), theDependableComponentPackage.getFailureMode(), null, "failure", null, 1, 1, ExternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(normalInputEClass, NormalInput.class, "NormalInput", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getNormalInput_Recovery(), this.getRecoveryEvent(), null, "recovery", null, 0, 1, NormalInput.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(recoveryEventEClass, RecoveryEvent.class, "RecoveryEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getRecoveryEvent_Kind(), this.getRecoveryKind(), "kind", null, 0, 1, RecoveryEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(normalOutputEClass, NormalOutput.class, "NormalOutput", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getNormalOutput_Recovery(), this.getRecoveryEvent(), null, "recovery", null, 0, 1, NormalOutput.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(failureEClass, Failure.class, "Failure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getFailure_Failure(), theDependableComponentPackage.getFailureMode(), null, "failure", null, 0, 1, Failure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(normalEventEClass, NormalEvent.class, "NormalEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(internalThreatEClass, InternalThreat.class, "InternalThreat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(internalFaultEClass, InternalFault.class, "InternalFault", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getInternalFault_Occurrence(), theBasicNFP_TypesPackage.getNFP_Real(), "Occurrence", null, 1, 1, InternalFault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(internalPropagationEClass, InternalPropagation.class, "InternalPropagation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
 		initEClass(errorModelEClass, ErrorModel.class, "ErrorModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getErrorModel_Base_StateMachine(), theUMLPackage.getStateMachine(), null, "base_StateMachine", null, 1, 1, ErrorModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
@@ -973,6 +1441,12 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		initEEnum(durationTypeEEnum, DurationType.class, "DurationType");
 		addEEnumLiteral(durationTypeEEnum, DurationType.TRANSIENT);
 		addEEnumLiteral(durationTypeEEnum, DurationType.PERMANENT);
+
+		initEEnum(recoveryKindEEnum, RecoveryKind.class, "RecoveryKind");
+		addEEnumLiteral(recoveryKindEEnum, RecoveryKind.REPAIR);
+		addEEnumLiteral(recoveryKindEEnum, RecoveryKind.COMPENSATION);
+		addEEnumLiteral(recoveryKindEEnum, RecoveryKind.ERROR_DETECTION);
+		addEEnumLiteral(recoveryKindEEnum, RecoveryKind.RECONFIGURATION);
 	}
 
 } //ThreatsPropagationPackageImpl

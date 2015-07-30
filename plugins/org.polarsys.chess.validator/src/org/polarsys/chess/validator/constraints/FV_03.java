@@ -37,8 +37,15 @@ import org.eclipse.emf.validation.IValidationContext;
 import org.eclipse.emf.validation.model.ConstraintStatus;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FV_03.
+ */
 public class FV_03 extends AbstractModelConstraint {
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
+	 */
 	@Override
 	public IStatus validate(IValidationContext ctx) {
 		EObject eObject = ctx.getTarget();
@@ -117,6 +124,13 @@ public class FV_03 extends AbstractModelConstraint {
 		
 	}
 	
+	/**
+	 * Compare operations.
+	 *
+	 * @param op1 the op1
+	 * @param op2 the op2
+	 * @return the boolean
+	 */
 	private Boolean compareOperations(Operation op1, Operation op2) {
 		Boolean result = true;
 
@@ -156,6 +170,12 @@ public class FV_03 extends AbstractModelConstraint {
 		return result;
 	}
 	
+	/**
+	 * Removes the return parameter.
+	 *
+	 * @param ownedParameters the owned parameters
+	 * @return the collection
+	 */
 	private Collection<Parameter> removeReturnParameter(
 			EList<Parameter> ownedParameters) {
 		Collection<Parameter> result = new ArrayList<Parameter>();

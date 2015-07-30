@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
+ * Copyright (c) 2011, 2015 University of Padova, Intecs
  *
  *    
  * All rights reserved. This program and the accompanying materials
@@ -47,6 +47,15 @@ public interface ComponentModelFactory extends EFactory {
 	 * @generated
 	 */
 	ComponentImplementation createComponentImplementation();
+
+	/**
+	 * Returns a new object of class '<em>Functional Partition</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Functional Partition</em>'.
+	 * @generated
+	 */
+	FunctionalPartition createFunctionalPartition();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -6,14 +6,16 @@ import org.eclipse.uml2.uml.Model;
 public interface IAddProfile {
 
 	/**
-	 * used to add a profile for the given model
+	 * Applies a profile to the given model and resourceset
+	 * 
 	 * @param owner
 	 * @param resourceSet
 	 */
 	void addProfile(Model owner, ResourceSet resourceSet);
-	
+
 	/**
-	 * used to load a profile to the given ResourceSet
+	 * Loads a profile for the given ResourceSet
+	 * 
 	 * @param resourceSet
 	 */
 	void loadProfile(ResourceSet resourceSet);

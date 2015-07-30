@@ -1,0 +1,36 @@
+[comment encoding = UTF-8 /]
+[comment
+-----------------------------------------------------------------------
+--                Ada infrastructural code generator                 -- 
+--                  for the CHESS component model                    --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Author: Marco Panunzio         panunzio@math.unipd.it             --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+/]
+[module ComponentImplementation('http://www.eclipse.org/uml2/3.0.0/UML')/]
+[import org::polarsys::chess::codegen::ada::main::Copyright /]
+[import org::polarsys::chess::codegen::ada::component::ComponentImplementationAda /]
+[import org::polarsys::chess::codegen::ada::component::ComponentImplementationC /]
+
+[template public generateComponentImplementation(model : Model, procNode: InstanceSpecification, cImpl : Component, rType : Component ) {
+    cImplStName : String = 'CHESS::ComponentModel::ComponentImplementation';
+}
+]
+[if (getImplementationLanguage(cImpl, cImplStName) = 'Ada') or (getImplementationLanguage(cImpl, cImplStName) = 'ada')]
+[generateComponentImplementationAda(model, procNode, cImpl, rType)/]
+[elseif (getImplementationLanguage(cImpl, cImplStName) = 'C')]
+[generateComponentImplementationC(model, procNode, cImpl, rType)/] 
+[/if]
+[/template]
+
+
+[query public getImplementationLanguage (arg0 : Component, arg1 : String) : String
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getImplementationLanguage(org.eclipse.uml2.uml.Component , java.lang.String)', Sequence{arg0, arg1}) /]

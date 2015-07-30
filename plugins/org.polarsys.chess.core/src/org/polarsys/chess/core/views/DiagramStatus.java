@@ -25,13 +25,14 @@ import java.util.Stack;
 
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.viewers.TreeSelection;
-import org.eclipse.papyrus.emf.facet.custom.metamodel.v0_2_0.internal.treeproxy.impl.EObjectTreeElementImpl;
+import org.eclipse.papyrus.emf.facet.custom.metamodel.v0_2_0.internal.treeproxy.EObjectTreeElement;
 import org.eclipse.papyrus.infra.core.sasheditor.editor.IPage;
 import org.eclipse.papyrus.infra.core.sashwindows.di.PageRef;
 import org.eclipse.uml2.uml.Package;
+import org.polarsys.chess.core.internal.views.InternalViewUtils;
+import org.polarsys.chess.core.internal.views.ViewPermissions;
+import org.polarsys.chess.core.internal.views.permissions.PermissionList;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
-import org.polarsys.chess.core.views.permissions.EntryId;
-import org.polarsys.chess.core.views.permissions.PermissionList;
 
 
 /**
@@ -44,6 +45,12 @@ import org.polarsys.chess.core.views.permissions.PermissionList;
  * 
  */
 public class DiagramStatus {
+	
+	
+	/**
+	 * The DesignView must be treated as a singleton service class. It is an integral part of DiagramStatus service.
+	 *
+	 */
 	public static class DesignView {
 
 		Hashtable<String, Boolean> views;
@@ -115,21 +122,19 @@ public class DiagramStatus {
 			--concurNum;
 		}
 		
-//		private String getBaseViewName(String concurrentView){
-//			for(String baseView : CHESSProfileManager.CONCURRENT_VIEWS_ASSOCIATION.keySet()){
-//				for (String cView : CHESSProfileManager.CONCURRENT_VIEWS_ASSOCIATION.get(baseView)) {
-//					if (cView.equals(concurrentView))
-//						return baseView;
-//				}
-//			}
-//			return null;
-//		}
 
+		/**
+		 * Gets the names of the active design views.
+		 * 
+		 * If more that one design view is active then this method concatenates the names.
+		 * 
+		 * @return the resulting name.
+		 */
 		public String getName() {
 			ArrayList<String> names = new ArrayList<String>();
 			
 			for (String v : CHESSProfileManager.CHESS_VIEWS_LIST) {
-				if (views.get(v) == true) {
+				if (views.get(v)) {
 					names.add(v);
 				}
 			}
@@ -143,29 +148,42 @@ public class DiagramStatus {
 			Collections.sort(names);
 			
 			StringBuffer name = new StringBuffer();
-			int count = 0;
-			for (String v : names) {
-				count++;
-				if (count > 1)
-					name.append('-');
-				name.append(v);
+			
+			for (int i = 0; i < names.size() - 1; i++) {
+				name.append(names.get(i)).append('-');
 			}
+			name.append(names.get(names.size()-1));
+			
 			return name.toString();
 		}
 
+		/**
+		 * Checks is a view is enabled by providing its name.
+		 * 
+		 * @param view  the view name
+		 * @return true if it is enable
+		 */
 		public boolean isEnabled(String view) {
 			return views.get(view);
 		}
-
-//		public void setPermissions(String view, PermissionList list) {
-//			ViewPermissions.permissions.put(view, list);
-//		}
 		
+		/**
+		 * Returns the current active diagram name
+		 * 
+		 * @return the name of the active diagram
+		 */
 		public String getCurrentDiagramName(){
 			return currentDiagram;
 		}
 
-		public PermissionList getViewPermissions(String view, String diagram) {
+		/**
+		 * Returns the permissions associated with the view and the diagram provided by name.
+		 * 
+		 * @param view  the name of the view
+		 * @param diagram  the name of the diagram
+		 * @return the {@link PermissionList} associated with the view and the diagram
+		 */
+		private PermissionList getViewPermissions(String view, String diagram) {
 			
 			if (diagram.equals(ViewDiagramAssociations.ANYDIAGRAM)){
 				return ViewPermissions.permissions.get(view).get(diagram);
@@ -183,7 +201,14 @@ public class DiagramStatus {
 			}
 		}
 		
-		private PermissionList getEnabledPermissions() {
+		/**
+		 * Returns all the enabled permissions based on the enabled views.
+		 * 
+		 * @return the {@link PermissionList} with all the enabled permissions
+		 */
+		public PermissionList getEnabledPermissions() {
+			//TODO code must be refactored to avoid continuous generation of permissions!
+
 			if (concurNum > 1) {
 				PermissionList union = new PermissionList();
 				for (String v : CHESSProfileManager.CONCURRENT_VIEWS) {
@@ -201,23 +226,21 @@ public class DiagramStatus {
 			return null;
 		}
 		
-		public boolean checkPermission(EntryId entryId, byte permission) {
-			//TODO code must be refactored to avoid continuous generation of permissions!
-			if (entryId.isANY())
-				return true;
-			PermissionList l = getEnabledPermissions();
-			if (l != null && !l.checkPermission(entryId, permission))
-				return false;
-			return true;
-		}
-
-		public boolean isDiagramAllowed(Diagram d) {
+		/**
+		 * Checks if the diagram passed as a parameter is allowed in the enabled views.
+		 * 
+		 * A diagram is allowed in a view if that view contains a permissions list for the diagram.
+		 * 
+		 * @param diagram  the diagram
+		 * @return true if the diagram is allowed
+		 */
+		public boolean isDiagramAllowed(final Diagram diagram) {
 			if (concurNum > 1) {
 				for (String v : CHESSProfileManager.CONCURRENT_VIEWS) {
 					HashSet<String> h;
 					if (views.get(v) &&
 					    null != (h = ViewDiagramAssociations.viewDiagramsAssociation.get(v))) {
-						if (h.contains(d.getType())) {
+						if (h.contains(diagram.getType())) {
 							return true;
 						}
 					}
@@ -228,7 +251,7 @@ public class DiagramStatus {
 					HashSet<String> h;
 					if (views.get(v) &&
 						null != (h = ViewDiagramAssociations.viewDiagramsAssociation.get(v))) {
-						return (h.contains(d.getType()));
+						return (h.contains(diagram.getType()));
 					}
 				}
 				return false;
@@ -240,11 +263,14 @@ public class DiagramStatus {
 
 	// private IPage currentDiagram;
 
+	/**
+	 * Represents the concrete view, that is the design view associated to the root Package
+	 * containing all the elements that model a specific concern.
+	 */
 	private Package actualView;
 
-	private DesignView currentView = new DesignView();
+	private DesignView currentDesignView = new DesignView();
 
-	//private boolean extraFunctionalToggle;
 	private HashMap<String, Boolean> concurrentToggles = new HashMap<String, Boolean>(CHESSProfileManager.CONCURRENT_VIEWS.size());
 
 	private boolean isUser = true;
@@ -257,51 +283,45 @@ public class DiagramStatus {
 		disableAllToggles();
 	}
 
+	/**
+	 * Creates the DiagramStatus service given the initial {@link IPage} that corresponds to a Papyrus diagram
+	 * 
+	 * @param initialDiagram  the initial IPage that corresponds to a Papyrus diagram
+	 */
 	public DiagramStatus(IPage initialDiagram) {
-		// this.currentDiagram = initialDiagram;
-		// setActualView(currentDiagram);
 		disableAllToggles();
 		setActualView(initialDiagram);
 		
 	}
 
 	private void disableAllToggles() {
-		//extraFunctionalToggle = false;
 		for (String view : CHESSProfileManager.CONCURRENT_VIEWS) {
 			concurrentToggles.put(view, false);
 		}
 	}
 
-	@Deprecated
+	/*@Deprecated
 	public Package getActualView() {
 		return actualView;
-	}
-
-	// public IPage getCurrentIPage() {
-	// return currentDiagram;
-	// }
+	}*/
 
 	public synchronized DesignView getCurrentView() {
 		if (actualView == null)
 			return null;
-		return currentView;
+		return currentDesignView;
 	}
 
 	/**
-	 * Request extra functional view, and return whether the extra functional
+	 * Request the extra-functional view, and return whether the extra functional
 	 * view is being activated or not
+	 * 
+	 * @param view  the name of the requested view
+	 * @param activate  true to request the view and activate it, false to deactivate it
+	 * @return
 	 */
-//	private boolean requestExtraFunctionalView(boolean yes) {
-////		extraFunctionalToggle = yes;
-//		concurrentToggles.put(CHESSProfileManager.EXTRAFUNCTIONAL_VIEW, yes);
-//		setCurrentView();
-////		return extraFunctionalToggle;
-//		return concurrentToggles.get(CHESSProfileManager.EXTRAFUNCTIONAL_VIEW);
-//	}
-	
-	private boolean requestConcurrentView(String view, boolean yes) {
-		concurrentToggles.put(view, yes);
-		if (yes)
+	private boolean requestConcurrentView(String view, boolean activate) {
+		concurrentToggles.put(view, activate);
+		if (activate)
 			lastToggledView.push(view);
 		else if (lastToggledView.peek().equals(view))
 			lastToggledView.pop();
@@ -309,21 +329,36 @@ public class DiagramStatus {
 		return concurrentToggles.get(view);
 	}
 	
+	/**
+	 * Returns the name of the active view.
+	 * 
+	 * @return the name of the active view
+	 */
 	public String getActiveView(){
 		return lastToggledView.peek();
 	}
 
-	public boolean requestView(String view, boolean b) {
-//		if (view.equals(CHESSProfileManager.EXTRAFUNCTIONAL_VIEW))
-//			return requestExtraFunctionalView(b);
+	/**
+	 * Request the activation/deactivation of a view given its name.
+	 * 
+	 * 
+	 * @param view  the name of the view
+	 * @param activate  true to request the activation, false to request the deactivation
+	 * @return  true when the request succeed
+	 */
+	public boolean requestView(String view, boolean activate) {
 		if (CHESSProfileManager.CONCURRENT_VIEWS.contains(view))
-			return requestConcurrentView(view, b);
+			return requestConcurrentView(view, activate);
 		return false;
 	}
 
+	/**
+	 * Set the actual view given a diagram represented by an {@link IPage}
+	 * 
+	 * @param currentDiagram  the diagram
+	 */
 	public synchronized void setActualView(IPage currentDiagram) {
-		// this.currentDiagram = currentDiagram;
-		if (currentDiagram != null) {
+  		if (currentDiagram != null) {
 			if (((PageRef) currentDiagram.getRawModel()).getEmfPageIdentifier() instanceof Diagram) {
 				Diagram dg = ((Diagram) ((PageRef) currentDiagram.getRawModel())
 						.getEmfPageIdentifier());
@@ -331,16 +366,16 @@ public class DiagramStatus {
 						.getView(dg.getElement());
 				// System.out.println(actualView == null ? "null view" :
 				// actualView.getName());
-				currentView.currentDiagram = dg.getType();
+				currentDesignView.currentDiagram = dg.getType();
 				
 				if (actualView != null && 
 						newActualView != null){
 					
-					String av = ViewUtils.getViewName(actualView);
-					String nv = ViewUtils.getViewName(newActualView);
+					String av = InternalViewUtils.getViewName(actualView);
+					String nv = InternalViewUtils.getViewName(newActualView);
 					
-					if (av.equals(nv)){
-//						disableAllToggles();
+					if (av!= null && nv!=null && !av.equals(nv)){
+						disableAllToggles();
 					}
 				}
 					
@@ -349,104 +384,102 @@ public class DiagramStatus {
 				
 				setCurrentView();
 			}
-			/*
-			 * else if (
-			 * ((PageRef)currentDiagram.getRawModel()).getEmfPageIdentifier()
-			 * instanceof EObject ) { EObject ob =
-			 * (EObject)(((PageRef)currentDiagram
-			 * .getRawModel()).getEmfPageIdentifier()); ob.
-			 * 
-			 * }
-			 */
 		}
 	}
 
+	/**
+	 * Sets the actual view given the tree selection.
+	 * 
+	 * @param currentTreeViewSelection  the tree selection
+	 */
 	public synchronized void setActualView(
 			TreeSelection currentTreeViewSelection) {
 		TreeSelection tSelection = currentTreeViewSelection;
-		EObjectTreeElementImpl elem = (EObjectTreeElementImpl) tSelection.getFirstElement();
+		EObjectTreeElement elem = (EObjectTreeElement) tSelection.getFirstElement();
 		
 		Package newActualView = currentTreeViewSelection == null ? null : ViewUtils
 				.getView(elem.getEObject());
 		
-		currentView.currentDiagram = ViewDiagramAssociations.ANYDIAGRAM;
+		currentDesignView.currentDiagram = ViewDiagramAssociations.ANYDIAGRAM;
 		
-		if (actualView != null && !ViewUtils.getViewName(actualView).equals(ViewUtils.getViewName(newActualView)))
+		if (actualView != null && !InternalViewUtils.getViewName(actualView).equals(InternalViewUtils.getViewName(newActualView)))
 			disableAllToggles();
 		
 		actualView = newActualView;
 		
 		setCurrentView();
-		// System.out.println(currentView == null ? "null view" :
-		// currentView.getName());
 	}
 
-//	private synchronized void setCurrentViewOLD() {
-//		if (actualView == null) {
-//			currentView.enableView(null);
-//		} else if (ViewUtils.isComponentView(actualView)) {
-//			// inspect toggles
-//			if (extraFunctionalToggle) {
-//				currentView
-//						.enableView(CHESSProfileManager.EXTRAFUNCTIONAL_VIEW);
-//			} else {
-//				currentView.enableView(ViewUtils.getViewName(actualView));
-//			}
-//		} else {
-//			// match currentView with actualView and disable toggles
-//			currentView.enableView(ViewUtils.getViewName(actualView));
-//			disableAllToggles();
-//		}
-//	}
-	
 	private synchronized void setCurrentView() {
 		if (actualView == null) {
-			currentView.enableView(null);
+			currentDesignView.enableView(null);
 			lastToggledView.removeAllElements();
 			disableAllToggles();
-		} else if (ViewUtils.hasConcurrentViews(ViewUtils.getViewName(actualView))) {
+		} else if (ViewUtils.hasConcurrentViews(InternalViewUtils.getViewName(actualView))) {
 			// inspect toggles
 			boolean toggled = false;
-			for (String concurrentView : CHESSProfileManager.CONCURRENT_VIEWS_ASSOCIATION.get(ViewUtils.getViewName(actualView))) {
+			for (String concurrentView : CHESSProfileManager.CONCURRENT_VIEWS_ASSOCIATION.get(InternalViewUtils.getViewName(actualView))) {
 				if (concurrentToggles.get(concurrentView)){
-					currentView.enableView(concurrentView);
+					currentDesignView.enableView(concurrentView);
 //					if (concurrentView.equals(lastToggledView))
 						toggled = true;
 				} else {
-					currentView.disableView(concurrentView);
+					currentDesignView.disableView(concurrentView);
 				}
 			}
 			if (!toggled) {
 				
 				//lastToggledView = ViewUtils.getViewName(actualView);
 				lastToggledView.removeAllElements();
-				lastToggledView.push(ViewUtils.getViewName(actualView));
-				currentView.enableView(ViewUtils.getViewName(actualView));
+				lastToggledView.push(InternalViewUtils.getViewName(actualView));
+				currentDesignView.enableView(InternalViewUtils.getViewName(actualView));
 			}
 		} else {
 			// if this views has no concurrent views,
 			// match currentView with actualView and disable toggles
 			//lastToggledView = ViewUtils.getViewName(actualView);
 			lastToggledView.removeAllElements();
-			lastToggledView.push(ViewUtils.getViewName(actualView));
-			currentView.enableView(ViewUtils.getViewName(actualView));
+			lastToggledView.push(InternalViewUtils.getViewName(actualView));
+			currentDesignView.enableView(InternalViewUtils.getViewName(actualView));
 			disableAllToggles();
 		}
 	}
 
-	//set if the action is done by the user or is done by something else:
-	//for example an automated action is not a user action
+	/**
+	 * Set if the action is done by the user or is done by something else.
+	 * 
+	 * For example an automated action is not a user action.
+	 * An automated action usually undergo less permission checks.
+	 * 
+	 * @param b  true to set the action to true.
+	 */
 	public synchronized void setUserAction(boolean b) {
 		isUser = b;
 	}
+	
+	/**
+	 * Checks if the action is done by the user or not.
+	 */
 	public boolean isUserAction(){
 		return isUser;
 	}
 
+	/**
+	 * Checks if the DiagramStatus service is in superuser mode.
+	 * 
+	 * In this mode permissions are not checked.
+	 * 
+	 * @return true if DiagramStatus is in superuser mode.
+	 */
 	public boolean isSuperuser() {
 		return superuser;
 	}
 	
+	/**
+	 * Sets the superuser mode.
+	 * 
+	 * @param b  true to set the superuser mode, false otherwise
+	 */
 	public void setSuperuser(boolean b){
 		superuser = b;
 	}

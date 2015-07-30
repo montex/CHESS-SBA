@@ -150,6 +150,14 @@
             type="dataflowcallgraph"
             class="org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.util.DataFlowCallGraphResourceFactoryImpl"/>
    </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESS -->
+      <package
+            uri="http:///CHESS/Dependability/StateBased/StateBasedDataTypes.ecore"
+            class="org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.StateBasedDataTypesPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
    
    <extension
          point="org.eclipse.uml2.uml.generated_package">
@@ -158,12 +166,6 @@
             uri="http://CHESS.DependabilitySecurity/schemas/DataFlowCallGraph/_QB3mMMe6Ed-7etIj5eTw0Q/8">
       </profile>
    </extension>      
-
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <parser
-            type="dataflowcallgraph"
-            class="org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.util.DataFlowCallGraphResourceFactoryImpl"/>
-   </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
@@ -551,6 +553,42 @@
             type="componentmodel"
             class="org.polarsys.chess.chessmlprofile.ComponentModel.util.ComponentModelResourceFactoryImpl"/>
    </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESS -->
+      <package
+            uri="http://CHESS/SystemModel/STS"
+            class="org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_-aQIUKbREeSHP5PnCeTneg"
+            uri="http://CHESS/SystemModel/STS">
+      </profile>
+   </extension> 
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESS -->
+      <package
+            uri="http://CHESS/Safety"
+            class="org.polarsys.chess.chessmlprofile.Safety.SafetyPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_f-f6oMvrEeSajLw6mg2A8Q"
+            uri="http://CHESS/Safety">
+      </profile>
+   </extension> 
+   
+   
+   
+   
    
    <extension
          point="org.eclipse.uml2.uml.generated_package">
@@ -793,6 +831,41 @@
          </editor>
       </paletteDefinition>
    </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="CD-TimingAnalysis-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="CD-TimingAnalysis-Palette"
+            path="/palettes/ClassDiag-TimingAnalysis.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.clazz">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="RTActivityDiagramDrawerID"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            icon="/icons/CHESSicon.gif"
+            name="AD-TimingAnalysis-Palette"
+            path="/palettes/Activity-RT.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.activity">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
    <extension
          point="org.eclipse.papyrus.uml.extensionpoints.UMLProfile">
       <profile

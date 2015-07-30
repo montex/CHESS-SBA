@@ -32,5 +32,24 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.polarsys.chess.m2m
-Bundle-Vendor: University of Padova
+Bundle-Vendor: Polarsys CHESS Project
+Bundle-Name: PIM to PSM model transformations plug-in (Incubation)
+Export-Package: org.polarsys.chess.m2m;
+  uses:="org.eclipse.emf.ecore.resource,
+   org.eclipse.core.runtime,
+   org.eclipse.m2m.internal.qvt.oml.emf.util,
+   org.eclipse.papyrus.editor,
+   org.eclipse.ui,
+   org.eclipse.ui.plugin,
+   org.eclipse.ui.actions,
+   org.eclipse.core.commands,
+   org.eclipse.jface.action,
+   org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM,
+   org.eclipse.core.resources,
+   org.eclipse.jface.viewers,
+   org.osgi.framework,
+   org.eclipse.uml2.uml,
+   org.eclipse.swt.widgets,
+   org.eclipse.jface.dialogs",
+ org.polarsys.chess.m2m.transformations,
+ org.polarsys.chess.m2m.ui
