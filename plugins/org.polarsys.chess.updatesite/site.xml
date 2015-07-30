@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.polarsys.chess.feature_0.9.0.201507281729.jar" id="org.polarsys.chess.feature" version="0.9.0.201507281729">
+      <category name="org.polarsys.chess.category"/>
+   </feature>
+   <category-def name="org.polarsys.chess.category" label="polarsys.chess"/>
+</site>
