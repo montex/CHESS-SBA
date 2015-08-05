@@ -78,20 +78,24 @@ public class FailurePropagationAdapterFactory extends AdapterFactoryImpl {
 	protected FailurePropagationSwitch<Adapter> modelSwitch =
 		new FailurePropagationSwitch<Adapter>() {
 			@Override
-			public Adapter caseFPTC(FPTC object) {
-				return createFPTCAdapter();
-			}
-			@Override
-			public Adapter caseFailurePropagationAnalysis(FailurePropagationAnalysis object) {
-				return createFailurePropagationAnalysisAdapter();
-			}
-			@Override
 			public Adapter caseFPTCSpecification(FPTCSpecification object) {
 				return createFPTCSpecificationAdapter();
 			}
 			@Override
 			public Adapter caseFPTCPortSlot(FPTCPortSlot object) {
 				return createFPTCPortSlotAdapter();
+			}
+			@Override
+			public Adapter caseFPTC(FPTC object) {
+				return createFPTCAdapter();
+			}
+			@Override
+			public Adapter caseFLASpecification(FLASpecification object) {
+				return createFLASpecificationAdapter();
+			}
+			@Override
+			public Adapter caseFailurePropagationAnalysis(FailurePropagationAnalysis object) {
+				return createFailurePropagationAnalysisAdapter();
 			}
 			@Override
 			public Adapter caseFI4FA(FI4FA object) {
@@ -112,10 +116,6 @@ public class FailurePropagationAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseFI4FAAnalysis(FI4FAAnalysis object) {
 				return createFI4FAAnalysisAdapter();
-			}
-			@Override
-			public Adapter caseFLASpecification(FLASpecification object) {
-				return createFLASpecificationAdapter();
 			}
 			@Override
 			public Adapter caseDependableComponent(DependableComponent object) {

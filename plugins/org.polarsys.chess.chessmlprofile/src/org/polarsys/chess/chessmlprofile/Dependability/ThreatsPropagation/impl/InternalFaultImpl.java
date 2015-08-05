@@ -30,12 +30,14 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalFaultImpl#getOccurrence <em>Occurrence</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalFaultImpl#getBase_Transition <em>Base Transition</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalFaultImpl#getWeight <em>Weight</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class InternalFaultImpl extends InternalThreatImpl implements InternalFault {
+public class InternalFaultImpl extends EObjectImpl implements InternalFault {
 	/**
 	 * The default value of the '{@link #getOccurrence() <em>Occurrence</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -55,6 +57,36 @@ public class InternalFaultImpl extends InternalThreatImpl implements InternalFau
 	 * @ordered
 	 */
 	protected String occurrence = OCCURRENCE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getBase_Transition() <em>Base Transition</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBase_Transition()
+	 * @generated
+	 * @ordered
+	 */
+	protected Transition base_Transition;
+
+	/**
+	 * The default value of the '{@link #getWeight() <em>Weight</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWeight()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String WEIGHT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getWeight() <em>Weight</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWeight()
+	 * @generated
+	 * @ordered
+	 */
+	protected String weight = WEIGHT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -101,11 +133,75 @@ public class InternalFaultImpl extends InternalThreatImpl implements InternalFau
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Transition getBase_Transition() {
+		if (base_Transition != null && base_Transition.eIsProxy()) {
+			InternalEObject oldBase_Transition = (InternalEObject)base_Transition;
+			base_Transition = (Transition)eResolveProxy(oldBase_Transition);
+			if (base_Transition != oldBase_Transition) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ThreatsPropagationPackage.INTERNAL_FAULT__BASE_TRANSITION, oldBase_Transition, base_Transition));
+			}
+		}
+		return base_Transition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Transition basicGetBase_Transition() {
+		return base_Transition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBase_Transition(Transition newBase_Transition) {
+		Transition oldBase_Transition = base_Transition;
+		base_Transition = newBase_Transition;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.INTERNAL_FAULT__BASE_TRANSITION, oldBase_Transition, base_Transition));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getWeight() {
+		return weight;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWeight(String newWeight) {
+		String oldWeight = weight;
+		weight = newWeight;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.INTERNAL_FAULT__WEIGHT, oldWeight, weight));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ThreatsPropagationPackage.INTERNAL_FAULT__OCCURRENCE:
 				return getOccurrence();
+			case ThreatsPropagationPackage.INTERNAL_FAULT__BASE_TRANSITION:
+				if (resolve) return getBase_Transition();
+				return basicGetBase_Transition();
+			case ThreatsPropagationPackage.INTERNAL_FAULT__WEIGHT:
+				return getWeight();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -120,6 +216,12 @@ public class InternalFaultImpl extends InternalThreatImpl implements InternalFau
 		switch (featureID) {
 			case ThreatsPropagationPackage.INTERNAL_FAULT__OCCURRENCE:
 				setOccurrence((String)newValue);
+				return;
+			case ThreatsPropagationPackage.INTERNAL_FAULT__BASE_TRANSITION:
+				setBase_Transition((Transition)newValue);
+				return;
+			case ThreatsPropagationPackage.INTERNAL_FAULT__WEIGHT:
+				setWeight((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -136,6 +238,12 @@ public class InternalFaultImpl extends InternalThreatImpl implements InternalFau
 			case ThreatsPropagationPackage.INTERNAL_FAULT__OCCURRENCE:
 				setOccurrence(OCCURRENCE_EDEFAULT);
 				return;
+			case ThreatsPropagationPackage.INTERNAL_FAULT__BASE_TRANSITION:
+				setBase_Transition((Transition)null);
+				return;
+			case ThreatsPropagationPackage.INTERNAL_FAULT__WEIGHT:
+				setWeight(WEIGHT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -150,6 +258,10 @@ public class InternalFaultImpl extends InternalThreatImpl implements InternalFau
 		switch (featureID) {
 			case ThreatsPropagationPackage.INTERNAL_FAULT__OCCURRENCE:
 				return OCCURRENCE_EDEFAULT == null ? occurrence != null : !OCCURRENCE_EDEFAULT.equals(occurrence);
+			case ThreatsPropagationPackage.INTERNAL_FAULT__BASE_TRANSITION:
+				return base_Transition != null;
+			case ThreatsPropagationPackage.INTERNAL_FAULT__WEIGHT:
+				return WEIGHT_EDEFAULT == null ? weight != null : !WEIGHT_EDEFAULT.equals(weight);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -164,8 +276,10 @@ public class InternalFaultImpl extends InternalThreatImpl implements InternalFau
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (Occurrence: ");
+		result.append(" (occurrence: ");
 		result.append(occurrence);
+		result.append(", weight: ");
+		result.append(weight);
 		result.append(')');
 		return result.toString();
 	}

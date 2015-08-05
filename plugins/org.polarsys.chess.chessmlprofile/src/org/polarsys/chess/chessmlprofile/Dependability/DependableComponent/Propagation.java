@@ -27,15 +27,17 @@ import org.eclipse.uml2.uml.Transition;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
+ * obsolete
  * To be deleted???
  * ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile
+ * transfFunct and weight are obsolete
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getProb <em>Prob</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getPropDelay <em>Prop Delay</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getDelay <em>Delay</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Abstraction <em>Base Abstraction</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Comment <em>Base Comment</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Connector <em>Base Connector</em>}</li>
@@ -62,7 +64,7 @@ public interface Propagation extends EObject {
 	 * @return the value of the '<em>Prob</em>' attribute.
 	 * @see #setProb(String)
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getPropagation_Prob()
-	 * @model dataType="org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.NFP_Real" required="true" ordered="false"
+	 * @model dataType="org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.NFP_Real" ordered="false"
 	 * @generated
 	 */
 	String getProb();
@@ -78,30 +80,30 @@ public interface Propagation extends EObject {
 	void setProb(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Prop Delay</b></em>' attribute.
+	 * Returns the value of the '<em><b>Delay</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Prop Delay</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Delay</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Prop Delay</em>' attribute.
-	 * @see #setPropDelay(String)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getPropagation_PropDelay()
-	 * @model dataType="org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.NFP_Duration" required="true" ordered="false"
+	 * @return the value of the '<em>Delay</em>' attribute.
+	 * @see #setDelay(String)
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getPropagation_Delay()
+	 * @model dataType="org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.NFP_Duration" ordered="false"
 	 * @generated
 	 */
-	String getPropDelay();
+	String getDelay();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getPropDelay <em>Prop Delay</em>}' attribute.
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getDelay <em>Delay</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Prop Delay</em>' attribute.
-	 * @see #getPropDelay()
+	 * @param value the new value of the '<em>Delay</em>' attribute.
+	 * @see #getDelay()
 	 * @generated
 	 */
-	void setPropDelay(String value);
+	void setDelay(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Base Abstraction</b></em>' reference.

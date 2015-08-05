@@ -35,7 +35,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Failu
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeImpl#getSeverity <em>Severity</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeImpl#getExposure <em>Exposure</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeImpl#getControllability <em>Controllability</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeImpl#isPermanent <em>Permanent</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeImpl#getLikelihood <em>Likelihood</em>}</li>
  * </ul>
  * </p>
  *
@@ -133,24 +133,24 @@ public class FailureModeImpl extends EObjectImpl implements FailureMode {
 	protected String controllability = CONTROLLABILITY_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isPermanent() <em>Permanent</em>}' attribute.
+	 * The default value of the '{@link #getLikelihood() <em>Likelihood</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isPermanent()
+	 * @see #getLikelihood()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean PERMANENT_EDEFAULT = false;
+	protected static final String LIKELIHOOD_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #isPermanent() <em>Permanent</em>}' attribute.
+	 * The cached value of the '{@link #getLikelihood() <em>Likelihood</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isPermanent()
+	 * @see #getLikelihood()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean permanent = PERMANENT_EDEFAULT;
+	protected String likelihood = LIKELIHOOD_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -298,8 +298,8 @@ public class FailureModeImpl extends EObjectImpl implements FailureMode {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isPermanent() {
-		return permanent;
+	public String getLikelihood() {
+		return likelihood;
 	}
 
 	/**
@@ -307,11 +307,11 @@ public class FailureModeImpl extends EObjectImpl implements FailureMode {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPermanent(boolean newPermanent) {
-		boolean oldPermanent = permanent;
-		permanent = newPermanent;
+	public void setLikelihood(String newLikelihood) {
+		String oldLikelihood = likelihood;
+		likelihood = newLikelihood;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.FAILURE_MODE__PERMANENT, oldPermanent, permanent));
+			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.FAILURE_MODE__LIKELIHOOD, oldLikelihood, likelihood));
 	}
 
 	/**
@@ -333,8 +333,8 @@ public class FailureModeImpl extends EObjectImpl implements FailureMode {
 				return getExposure();
 			case DependableComponentPackage.FAILURE_MODE__CONTROLLABILITY:
 				return getControllability();
-			case DependableComponentPackage.FAILURE_MODE__PERMANENT:
-				return isPermanent();
+			case DependableComponentPackage.FAILURE_MODE__LIKELIHOOD:
+				return getLikelihood();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -362,8 +362,8 @@ public class FailureModeImpl extends EObjectImpl implements FailureMode {
 			case DependableComponentPackage.FAILURE_MODE__CONTROLLABILITY:
 				setControllability((String)newValue);
 				return;
-			case DependableComponentPackage.FAILURE_MODE__PERMANENT:
-				setPermanent((Boolean)newValue);
+			case DependableComponentPackage.FAILURE_MODE__LIKELIHOOD:
+				setLikelihood((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -392,8 +392,8 @@ public class FailureModeImpl extends EObjectImpl implements FailureMode {
 			case DependableComponentPackage.FAILURE_MODE__CONTROLLABILITY:
 				setControllability(CONTROLLABILITY_EDEFAULT);
 				return;
-			case DependableComponentPackage.FAILURE_MODE__PERMANENT:
-				setPermanent(PERMANENT_EDEFAULT);
+			case DependableComponentPackage.FAILURE_MODE__LIKELIHOOD:
+				setLikelihood(LIKELIHOOD_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -417,8 +417,8 @@ public class FailureModeImpl extends EObjectImpl implements FailureMode {
 				return EXPOSURE_EDEFAULT == null ? exposure != null : !EXPOSURE_EDEFAULT.equals(exposure);
 			case DependableComponentPackage.FAILURE_MODE__CONTROLLABILITY:
 				return CONTROLLABILITY_EDEFAULT == null ? controllability != null : !CONTROLLABILITY_EDEFAULT.equals(controllability);
-			case DependableComponentPackage.FAILURE_MODE__PERMANENT:
-				return permanent != PERMANENT_EDEFAULT;
+			case DependableComponentPackage.FAILURE_MODE__LIKELIHOOD:
+				return LIKELIHOOD_EDEFAULT == null ? likelihood != null : !LIKELIHOOD_EDEFAULT.equals(likelihood);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -441,8 +441,8 @@ public class FailureModeImpl extends EObjectImpl implements FailureMode {
 		result.append(exposure);
 		result.append(", controllability: ");
 		result.append(controllability);
-		result.append(", permanent: ");
-		result.append(permanent);
+		result.append(", likelihood: ");
+		result.append(likelihood);
 		result.append(')');
 		return result.toString();
 	}

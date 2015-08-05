@@ -62,11 +62,12 @@ public class StateBasedComponentsFactoryImpl extends EFactoryImpl implements Sta
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case StateBasedComponentsPackage.STATEFUL_HARDWARE: return createStatefulHardware();
-			case StateBasedComponentsPackage.STATEFUL_SOFTWARE: return createStatefulSoftware();
-			case StateBasedComponentsPackage.STATELESS_HARDWARE: return createStatelessHardware();
-			case StateBasedComponentsPackage.STATELESS_SOFTWARE: return createStatelessSoftware();
 			case StateBasedComponentsPackage.STOCHASTIC_FAILURE_BEHAVIOUR: return createStochasticFailureBehaviour();
+			case StateBasedComponentsPackage.STATEFUL_HARDWARE: return createStatefulHardware();
+			case StateBasedComponentsPackage.STATELESS_SOFTWARE: return createStatelessSoftware();
+			case StateBasedComponentsPackage.STATELESS_HARDWARE: return createStatelessHardware();
+			case StateBasedComponentsPackage.STATEFUL_SOFTWARE: return createStatefulSoftware();
+			case StateBasedComponentsPackage.SIMPLE_STOCHASTIC_BEHAVIOR: return createSimpleStochasticBehavior();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -90,6 +91,16 @@ public class StateBasedComponentsFactoryImpl extends EFactoryImpl implements Sta
 	public StatefulSoftware createStatefulSoftware() {
 		StatefulSoftwareImpl statefulSoftware = new StatefulSoftwareImpl();
 		return statefulSoftware;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SimpleStochasticBehavior createSimpleStochasticBehavior() {
+		SimpleStochasticBehaviorImpl simpleStochasticBehavior = new SimpleStochasticBehaviorImpl();
+		return simpleStochasticBehavior;
 	}
 
 	/**

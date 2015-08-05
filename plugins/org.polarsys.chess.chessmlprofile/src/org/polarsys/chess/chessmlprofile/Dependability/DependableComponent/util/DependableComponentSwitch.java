@@ -76,27 +76,15 @@ public class DependableComponentSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case DependableComponentPackage.FAILURE_MODES: {
+				FailureModes failureModes = (FailureModes)theEObject;
+				T result = caseFailureModes(failureModes);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case DependableComponentPackage.PROPAGATION: {
 				Propagation propagation = (Propagation)theEObject;
 				T result = casePropagation(propagation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case DependableComponentPackage.FAILURE_MODE_GROUP: {
-				FailureModeGroup failureModeGroup = (FailureModeGroup)theEObject;
-				T result = caseFailureModeGroup(failureModeGroup);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case DependableComponentPackage.FAILURE_MODE: {
-				FailureMode failureMode = (FailureMode)theEObject;
-				T result = caseFailureMode(failureMode);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case DependableComponentPackage.FAILURE_MODE_SPECIFICATION: {
-				FailureModeSpecification failureModeSpecification = (FailureModeSpecification)theEObject;
-				T result = caseFailureModeSpecification(failureModeSpecification);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -106,8 +94,35 @@ public class DependableComponentSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case DependableComponentPackage.ERROR_MODEL: {
+				ErrorModel errorModel = (ErrorModel)theEObject;
+				T result = caseErrorModel(errorModel);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependableComponentPackage.FAILURE_MODE: {
+				FailureMode failureMode = (FailureMode)theEObject;
+				T result = caseFailureMode(failureMode);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Failure Modes</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Failure Modes</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFailureModes(FailureModes object) {
+		return null;
 	}
 
 	/**
@@ -122,21 +137,6 @@ public class DependableComponentSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T casePropagation(Propagation object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Failure Mode Group</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Failure Mode Group</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseFailureModeGroup(FailureModeGroup object) {
 		return null;
 	}
 
@@ -156,21 +156,6 @@ public class DependableComponentSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Failure Mode Specification</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Failure Mode Specification</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseFailureModeSpecification(FailureModeSpecification object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Dependable Component</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -182,6 +167,21 @@ public class DependableComponentSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDependableComponent(DependableComponent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Error Model</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Error Model</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseErrorModel(ErrorModel object) {
 		return null;
 	}
 

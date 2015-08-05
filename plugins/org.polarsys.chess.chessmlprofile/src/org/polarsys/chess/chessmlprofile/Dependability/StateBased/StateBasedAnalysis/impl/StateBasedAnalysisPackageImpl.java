@@ -53,6 +53,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.impl.FaultTolerancePackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.MaintenanceMonitoringPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.MaintenanceMonitoringPackageImpl;
+import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisFactory;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage;
@@ -93,6 +94,13 @@ public class StateBasedAnalysisPackageImpl extends EPackageImpl implements State
 	 * @generated
 	 */
 	private EClass stateBasedAnalysisEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass sbaInitialConditionsEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -300,6 +308,60 @@ public class StateBasedAnalysisPackageImpl extends EPackageImpl implements State
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getStateBasedAnalysis_TargetPort() {
+		return (EReference)stateBasedAnalysisEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStateBasedAnalysis_InitialConditions() {
+		return (EReference)stateBasedAnalysisEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSBAInitialConditions() {
+		return sbaInitialConditionsEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSBAInitialConditions_Base_Class() {
+		return (EReference)sbaInitialConditionsEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSBAInitialConditions_TargetInstance() {
+		return (EReference)sbaInitialConditionsEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSBAInitialConditions_Setup() {
+		return (EAttribute)sbaInitialConditionsEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public StateBasedAnalysisFactory getStateBasedAnalysisFactory() {
 		return (StateBasedAnalysisFactory)getEFactoryInstance();
 	}
@@ -329,6 +391,13 @@ public class StateBasedAnalysisPackageImpl extends EPackageImpl implements State
 		createEAttribute(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__EVAL_METHOD);
 		createEReference(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__TARGET_FAILURE_MODE);
 		createEReference(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__TARGET_DEP_COMPONENT);
+		createEReference(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__TARGET_PORT);
+		createEReference(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__INITIAL_CONDITIONS);
+
+		sbaInitialConditionsEClass = createEClass(SBA_INITIAL_CONDITIONS);
+		createEReference(sbaInitialConditionsEClass, SBA_INITIAL_CONDITIONS__BASE_CLASS);
+		createEReference(sbaInitialConditionsEClass, SBA_INITIAL_CONDITIONS__TARGET_INSTANCE);
+		createEAttribute(sbaInitialConditionsEClass, SBA_INITIAL_CONDITIONS__SETUP);
 	}
 
 	/**
@@ -370,10 +439,17 @@ public class StateBasedAnalysisPackageImpl extends EPackageImpl implements State
 		// Initialize classes and features; add operations and parameters
 		initEClass(stateBasedAnalysisEClass, StateBasedAnalysis.class, "StateBasedAnalysis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStateBasedAnalysis_Measure(), theTypesPackage.getString(), "measure", null, 1, 1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getStateBasedAnalysis_MeasureEvaluationResult(), theTypesPackage.getString(), "measureEvaluationResult", null, 1, 1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getStateBasedAnalysis_EvalMethod(), theTypesPackage.getString(), "evalMethod", null, 1, 1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getStateBasedAnalysis_MeasureEvaluationResult(), theTypesPackage.getString(), "measureEvaluationResult", null, 0, 1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getStateBasedAnalysis_EvalMethod(), theTypesPackage.getString(), "evalMethod", null, 0, 1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getStateBasedAnalysis_TargetFailureMode(), theThreatsPropagationPackage.getFailureMode(), null, "targetFailureMode", null, 0, -1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getStateBasedAnalysis_TargetDepComponent(), theUMLPackage.getInstanceSpecification(), null, "targetDepComponent", null, 0, -1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getStateBasedAnalysis_TargetPort(), theUMLPackage.getSlot(), null, "targetPort", null, 0, -1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getStateBasedAnalysis_InitialConditions(), this.getSBAInitialConditions(), null, "initialConditions", null, 0, -1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(sbaInitialConditionsEClass, SBAInitialConditions.class, "SBAInitialConditions", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSBAInitialConditions_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, SBAInitialConditions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getSBAInitialConditions_TargetInstance(), theUMLPackage.getInstanceSpecification(), null, "targetInstance", null, 1, 1, SBAInitialConditions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getSBAInitialConditions_Setup(), theTypesPackage.getString(), "setup", null, 1, 1, SBAInitialConditions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //StateBasedAnalysisPackageImpl

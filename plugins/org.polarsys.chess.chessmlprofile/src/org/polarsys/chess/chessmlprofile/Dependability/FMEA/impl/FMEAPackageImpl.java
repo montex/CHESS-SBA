@@ -471,7 +471,7 @@ public class FMEAPackageImpl extends EPackageImpl implements FMEAPackage {
 
 		initEClass(errorModelAssignEClass, ErrorModelAssign.class, "ErrorModelAssign", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getErrorModelAssign_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, ErrorModelAssign.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getErrorModelAssign_From(), theThreatsPropagationPackage.getErrorModel(), null, "from", null, 1, -1, ErrorModelAssign.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getErrorModelAssign_From(), theThreatsPropagationPackage.getErrorModelBehavior(), null, "from", null, 1, -1, ErrorModelAssign.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getErrorModelAssign_To(), theUMLPackage.getSlot(), null, "to", null, 1, -1, ErrorModelAssign.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		// Initialize enums and add enum literals

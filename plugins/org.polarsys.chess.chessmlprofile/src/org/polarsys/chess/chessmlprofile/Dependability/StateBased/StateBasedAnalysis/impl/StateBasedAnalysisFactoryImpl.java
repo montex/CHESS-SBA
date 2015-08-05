@@ -63,6 +63,7 @@ public class StateBasedAnalysisFactoryImpl extends EFactoryImpl implements State
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS: return createStateBasedAnalysis();
+			case StateBasedAnalysisPackage.SBA_INITIAL_CONDITIONS: return createSBAInitialConditions();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -76,6 +77,16 @@ public class StateBasedAnalysisFactoryImpl extends EFactoryImpl implements State
 	public StateBasedAnalysis createStateBasedAnalysis() {
 		StateBasedAnalysisImpl stateBasedAnalysis = new StateBasedAnalysisImpl();
 		return stateBasedAnalysis;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SBAInitialConditions createSBAInitialConditions() {
+		SBAInitialConditionsImpl sbaInitialConditions = new SBAInitialConditionsImpl();
+		return sbaInitialConditions;
 	}
 
 	/**

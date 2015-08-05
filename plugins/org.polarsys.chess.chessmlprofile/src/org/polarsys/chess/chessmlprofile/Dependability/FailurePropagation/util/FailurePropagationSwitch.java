@@ -77,22 +77,6 @@ public class FailurePropagationSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case FailurePropagationPackage.FPTC: {
-				FPTC fptc = (FPTC)theEObject;
-				T result = caseFPTC(fptc);
-				if (result == null) result = caseDependableComponent(fptc);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case FailurePropagationPackage.FAILURE_PROPAGATION_ANALYSIS: {
-				FailurePropagationAnalysis failurePropagationAnalysis = (FailurePropagationAnalysis)theEObject;
-				T result = caseFailurePropagationAnalysis(failurePropagationAnalysis);
-				if (result == null) result = caseGaAnalysisContext(failurePropagationAnalysis);
-				if (result == null) result = caseConfiguration(failurePropagationAnalysis);
-				if (result == null) result = caseExpressionContext(failurePropagationAnalysis);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case FailurePropagationPackage.FPTC_SPECIFICATION: {
 				FPTCSpecification fptcSpecification = (FPTCSpecification)theEObject;
 				T result = caseFPTCSpecification(fptcSpecification);
@@ -102,6 +86,28 @@ public class FailurePropagationSwitch<T> extends Switch<T> {
 			case FailurePropagationPackage.FPTC_PORT_SLOT: {
 				FPTCPortSlot fptcPortSlot = (FPTCPortSlot)theEObject;
 				T result = caseFPTCPortSlot(fptcPortSlot);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FailurePropagationPackage.FPTC: {
+				FPTC fptc = (FPTC)theEObject;
+				T result = caseFPTC(fptc);
+				if (result == null) result = caseDependableComponent(fptc);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FailurePropagationPackage.FLA_SPECIFICATION: {
+				FLASpecification flaSpecification = (FLASpecification)theEObject;
+				T result = caseFLASpecification(flaSpecification);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FailurePropagationPackage.FAILURE_PROPAGATION_ANALYSIS: {
+				FailurePropagationAnalysis failurePropagationAnalysis = (FailurePropagationAnalysis)theEObject;
+				T result = caseFailurePropagationAnalysis(failurePropagationAnalysis);
+				if (result == null) result = caseGaAnalysisContext(failurePropagationAnalysis);
+				if (result == null) result = caseConfiguration(failurePropagationAnalysis);
+				if (result == null) result = caseExpressionContext(failurePropagationAnalysis);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -137,12 +143,6 @@ public class FailurePropagationSwitch<T> extends Switch<T> {
 				if (result == null) result = caseGaAnalysisContext(fi4FAAnalysis);
 				if (result == null) result = caseConfiguration(fi4FAAnalysis);
 				if (result == null) result = caseExpressionContext(fi4FAAnalysis);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case FailurePropagationPackage.FLA_SPECIFICATION: {
-				FLASpecification flaSpecification = (FLASpecification)theEObject;
-				T result = caseFLASpecification(flaSpecification);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

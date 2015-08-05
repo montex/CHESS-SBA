@@ -17,6 +17,10 @@ package org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation;
  * A representation of the model object '<em><b>Error Free</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * to be removed?
+ * <!-- end-model-doc -->
+ *
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage#getErrorFree()
  * @model

@@ -26,6 +26,7 @@ import org.eclipse.uml2.uml.StateMachine;
 import org.polarsys.chess.chessmlprofile.Dependability.FMEA.ErrorModelAssign;
 import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEAPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior;
 
 /**
  * <!-- begin-user-doc -->
@@ -61,7 +62,7 @@ public class ErrorModelAssignImpl extends EObjectImpl implements ErrorModelAssig
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ErrorModel> from;
+	protected EList<ErrorModelBehavior> from;
 
 	/**
 	 * The cached value of the '{@link #getTo() <em>To</em>}' reference list.
@@ -135,9 +136,9 @@ public class ErrorModelAssignImpl extends EObjectImpl implements ErrorModelAssig
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ErrorModel> getFrom() {
+	public EList<ErrorModelBehavior> getFrom() {
 		if (from == null) {
-			from = new EObjectResolvingEList<ErrorModel>(ErrorModel.class, this, FMEAPackage.ERROR_MODEL_ASSIGN__FROM);
+			from = new EObjectResolvingEList<ErrorModelBehavior>(ErrorModelBehavior.class, this, FMEAPackage.ERROR_MODEL_ASSIGN__FROM);
 		}
 		return from;
 	}
@@ -187,7 +188,7 @@ public class ErrorModelAssignImpl extends EObjectImpl implements ErrorModelAssig
 				return;
 			case FMEAPackage.ERROR_MODEL_ASSIGN__FROM:
 				getFrom().clear();
-				getFrom().addAll((Collection<? extends ErrorModel>)newValue);
+				getFrom().addAll((Collection<? extends ErrorModelBehavior>)newValue);
 				return;
 			case FMEAPackage.ERROR_MODEL_ASSIGN__TO:
 				getTo().clear();

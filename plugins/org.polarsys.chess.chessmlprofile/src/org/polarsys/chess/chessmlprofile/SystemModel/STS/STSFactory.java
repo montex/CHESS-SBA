@@ -40,13 +40,13 @@ public interface STSFactory extends EFactory {
 	Human createHuman();
 
 	/**
-	 * Returns a new object of class '<em>Organizational</em>'.
+	 * Returns a new object of class '<em>Organization</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Organizational</em>'.
+	 * @return a new object of class '<em>Organization</em>'.
 	 * @generated
 	 */
-	Organizational createOrganizational();
+	Organization createOrganization();
 
 	/**
 	 * Returns a new object of class '<em>Technological</em>'.
@@ -58,24 +58,6 @@ public interface STSFactory extends EFactory {
 	Technological createTechnological();
 
 	/**
-	 * Returns a new object of class '<em>Action</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Action</em>'.
-	 * @generated
-	 */
-	Action createAction();
-
-	/**
-	 * Returns a new object of class '<em>Attention</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Attention</em>'.
-	 * @generated
-	 */
-	Attention createAttention();
-
-	/**
 	 * Returns a new object of class '<em>Time Pressure</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -83,6 +65,168 @@ public interface STSFactory extends EFactory {
 	 * @generated
 	 */
 	TimePressure createTimePressure();
+
+	/**
+	 * Returns a new object of class '<em>OU Mission Management</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>OU Mission Management</em>'.
+	 * @generated
+	 */
+	OUMissionManagement createOUMissionManagement();
+
+	/**
+	 * Returns a new object of class '<em>OU Rules Regulation Management</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>OU Rules Regulation Management</em>'.
+	 * @generated
+	 */
+	OURulesRegulationManagement createOURulesRegulationManagement();
+
+	/**
+	 * Returns a new object of class '<em>OU Climate Management</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>OU Climate Management</em>'.
+	 * @generated
+	 */
+	OUClimateManagement createOUClimateManagement();
+
+	/**
+	 * Returns a new object of class '<em>OU Oversight Management</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>OU Oversight Management</em>'.
+	 * @generated
+	 */
+	OUOversightManagement createOUOversightManagement();
+
+	/**
+	 * Returns a new object of class '<em>OU Process Management</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>OU Process Management</em>'.
+	 * @generated
+	 */
+	OUProcessManagement createOUProcessManagement();
+
+	/**
+	 * Returns a new object of class '<em>OU Resource Management</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>OU Resource Management</em>'.
+	 * @generated
+	 */
+	OUResourceManagement createOUResourceManagement();
+
+	/**
+	 * Returns a new object of class '<em>HS Attention</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HS Attention</em>'.
+	 * @generated
+	 */
+	HSAttention createHSAttention();
+
+	/**
+	 * Returns a new object of class '<em>Human Sensor Unit</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Human Sensor Unit</em>'.
+	 * @generated
+	 */
+	HumanSensorUnit createHumanSensorUnit();
+
+	/**
+	 * Returns a new object of class '<em>HS Perception</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HS Perception</em>'.
+	 * @generated
+	 */
+	HSPerception createHSPerception();
+
+	/**
+	 * Returns a new object of class '<em>HS Knowledge Perception</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HS Knowledge Perception</em>'.
+	 * @generated
+	 */
+	HSKnowledgePerception createHSKnowledgePerception();
+
+	/**
+	 * Returns a new object of class '<em>HS Sensory</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HS Sensory</em>'.
+	 * @generated
+	 */
+	HSSensory createHSSensory();
+
+	/**
+	 * Returns a new object of class '<em>HA Feedback</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HA Feedback</em>'.
+	 * @generated
+	 */
+	HAFeedback createHAFeedback();
+
+	/**
+	 * Returns a new object of class '<em>HA Intent</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HA Intent</em>'.
+	 * @generated
+	 */
+	HAIntent createHAIntent();
+
+	/**
+	 * Returns a new object of class '<em>HA Communication</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HA Communication</em>'.
+	 * @generated
+	 */
+	HACommunication createHACommunication();
+
+	/**
+	 * Returns a new object of class '<em>HA Time Management</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HA Time Management</em>'.
+	 * @generated
+	 */
+	HATimeManagement createHATimeManagement();
+
+	/**
+	 * Returns a new object of class '<em>HA Selection</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HA Selection</em>'.
+	 * @generated
+	 */
+	HASelection createHASelection();
+
+	/**
+	 * Returns a new object of class '<em>HA Response</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HA Response</em>'.
+	 * @generated
+	 */
+	HAResponse createHAResponse();
+
+	/**
+	 * Returns a new object of class '<em>HA Knowledge Decision</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>HA Knowledge Decision</em>'.
+	 * @generated
+	 */
+	HAKnowledgeDecision createHAKnowledgeDecision();
 
 	/**
 	 * Returns the package supported by this factory.

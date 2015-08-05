@@ -62,16 +62,16 @@ public class FailurePropagationFactoryImpl extends EFactoryImpl implements Failu
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case FailurePropagationPackage.FPTC: return createFPTC();
-			case FailurePropagationPackage.FAILURE_PROPAGATION_ANALYSIS: return createFailurePropagationAnalysis();
 			case FailurePropagationPackage.FPTC_SPECIFICATION: return createFPTCSpecification();
 			case FailurePropagationPackage.FPTC_PORT_SLOT: return createFPTCPortSlot();
+			case FailurePropagationPackage.FPTC: return createFPTC();
+			case FailurePropagationPackage.FLA_SPECIFICATION: return createFLASpecification();
+			case FailurePropagationPackage.FAILURE_PROPAGATION_ANALYSIS: return createFailurePropagationAnalysis();
 			case FailurePropagationPackage.FI4FA: return createFI4FA();
 			case FailurePropagationPackage.FI4FA_SPECIFICATION: return createFI4FASpecification();
 			case FailurePropagationPackage.ACID_AVOIDABLE: return createACIDAvoidable();
 			case FailurePropagationPackage.ACID_MITIGATION: return createACIDMitigation();
 			case FailurePropagationPackage.FI4FA_ANALYSIS: return createFI4FAAnalysis();
-			case FailurePropagationPackage.FLA_SPECIFICATION: return createFLASpecification();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

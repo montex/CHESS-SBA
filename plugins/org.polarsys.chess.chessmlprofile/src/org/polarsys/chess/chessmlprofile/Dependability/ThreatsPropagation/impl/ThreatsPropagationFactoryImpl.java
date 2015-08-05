@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.*;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DegradedState;
@@ -96,13 +97,14 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 			case ThreatsPropagationPackage.UNCLASSIFIED_FAILURE: return createUnclassifiedFailure();
 			case ThreatsPropagationPackage.THREAT_STATE: return createThreatState();
 			case ThreatsPropagationPackage.FAILURE_MODE: return createFailureMode();
+			case ThreatsPropagationPackage.ERROR_FREE: return createErrorFree();
 			case ThreatsPropagationPackage.DEGRADED_STATE: return createDegradedState();
+			case ThreatsPropagationPackage.NORMAL_STATE: return createNormalState();
 			case ThreatsPropagationPackage.UNCLASSIFIED_ERROR: return createUnclassifiedError();
 			case ThreatsPropagationPackage.FAILURE_FREE: return createFailureFree();
 			case ThreatsPropagationPackage.CH_INTERNAL_FAULT: return createCHInternalFault();
 			case ThreatsPropagationPackage.CH_EXTERNAL_FAULT: return createCHExternalFault();
-			case ThreatsPropagationPackage.ERROR: return createError();
-			case ThreatsPropagationPackage.ERROR_FREE: return createErrorFree();
+			case ThreatsPropagationPackage.ERROR_STATE: return createErrorState();
 			case ThreatsPropagationPackage.STUCK_AT: return createStuckAt();
 			case ThreatsPropagationPackage.STUCK_AT_FIXED: return createStuckAtFixed();
 			case ThreatsPropagationPackage.INVERTED: return createInverted();
@@ -120,7 +122,10 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 			case ThreatsPropagationPackage.INTERNAL_THREAT: return createInternalThreat();
 			case ThreatsPropagationPackage.INTERNAL_FAULT: return createInternalFault();
 			case ThreatsPropagationPackage.INTERNAL_PROPAGATION: return createInternalPropagation();
-			case ThreatsPropagationPackage.ERROR_MODEL: return createErrorModel();
+			case ThreatsPropagationPackage.ERROR_DETECTION: return createErrorDetection();
+			case ThreatsPropagationPackage.ERROR_HANDLING: return createErrorHandling();
+			case ThreatsPropagationPackage.FAULT_HANDLING: return createFaultHandling();
+			case ThreatsPropagationPackage.ERROR_MODEL_BEHAVIOR: return createErrorModelBehavior();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -178,6 +183,46 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	public InternalPropagation createInternalPropagation() {
 		InternalPropagationImpl internalPropagation = new InternalPropagationImpl();
 		return internalPropagation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorDetection createErrorDetection() {
+		ErrorDetectionImpl errorDetection = new ErrorDetectionImpl();
+		return errorDetection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorHandling createErrorHandling() {
+		ErrorHandlingImpl errorHandling = new ErrorHandlingImpl();
+		return errorHandling;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FaultHandling createFaultHandling() {
+		FaultHandlingImpl faultHandling = new FaultHandlingImpl();
+		return faultHandling;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorModelBehavior createErrorModelBehavior() {
+		ErrorModelBehaviorImpl errorModelBehavior = new ErrorModelBehaviorImpl();
+		return errorModelBehavior;
 	}
 
 	/**
@@ -255,16 +300,6 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Error createError() {
-		ErrorImpl error = new ErrorImpl();
-		return error;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ThreatState createThreatState() {
 		ThreatStateImpl threatState = new ThreatStateImpl();
 		return threatState;
@@ -315,6 +350,16 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public NormalState createNormalState() {
+		NormalStateImpl normalState = new NormalStateImpl();
+		return normalState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public FailureFree createFailureFree() {
 		FailureFreeImpl failureFree = new FailureFreeImpl();
 		return failureFree;
@@ -338,6 +383,16 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	public CHExternalFault createCHExternalFault() {
 		CHExternalFaultImpl chExternalFault = new CHExternalFaultImpl();
 		return chExternalFault;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorState createErrorState() {
+		ErrorStateImpl errorState = new ErrorStateImpl();
+		return errorState;
 	}
 
 	/**
@@ -428,16 +483,6 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	public InternalEvent createInternalEvent() {
 		InternalEventImpl internalEvent = new InternalEventImpl();
 		return internalEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorModel createErrorModel() {
-		ErrorModelImpl errorModel = new ErrorModelImpl();
-		return errorModel;
 	}
 
 	/**

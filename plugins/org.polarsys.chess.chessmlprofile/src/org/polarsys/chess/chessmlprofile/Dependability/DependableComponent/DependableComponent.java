@@ -17,11 +17,16 @@ import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior;
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Dependable Component</b></em>'.
  * <!-- end-user-doc -->
+ *
+ * <!-- begin-model-doc -->
+ * obsolete, use ErrorModel
+ * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
@@ -66,7 +71,7 @@ public interface DependableComponent extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Error Model</b></em>' reference list.
-	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel}.
+	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Error Model</em>' reference isn't clear,
@@ -78,7 +83,7 @@ public interface DependableComponent extends EObject {
 	 * @model ordered="false"
 	 * @generated
 	 */
-	EList<ErrorModel> getErrorModel();
+	EList<ErrorModelBehavior> getErrorModel();
 
 	/**
 	 * Returns the value of the '<em><b>Base Property</b></em>' reference.

@@ -25,6 +25,7 @@ import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior;
 
 /**
  * <!-- begin-user-doc -->
@@ -61,7 +62,7 @@ public class DependableComponentImpl extends EObjectImpl implements DependableCo
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ErrorModel> errorModel;
+	protected EList<ErrorModelBehavior> errorModel;
 
 	/**
 	 * The cached value of the '{@link #getBase_Property() <em>Base Property</em>}' reference.
@@ -145,9 +146,9 @@ public class DependableComponentImpl extends EObjectImpl implements DependableCo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ErrorModel> getErrorModel() {
+	public EList<ErrorModelBehavior> getErrorModel() {
 		if (errorModel == null) {
-			errorModel = new EObjectResolvingEList<ErrorModel>(ErrorModel.class, this, DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL);
+			errorModel = new EObjectResolvingEList<ErrorModelBehavior>(ErrorModelBehavior.class, this, DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL);
 		}
 		return errorModel;
 	}
@@ -265,7 +266,7 @@ public class DependableComponentImpl extends EObjectImpl implements DependableCo
 				return;
 			case DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL:
 				getErrorModel().clear();
-				getErrorModel().addAll((Collection<? extends ErrorModel>)newValue);
+				getErrorModel().addAll((Collection<? extends ErrorModelBehavior>)newValue);
 				return;
 			case DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY:
 				setBase_Property((Property)newValue);

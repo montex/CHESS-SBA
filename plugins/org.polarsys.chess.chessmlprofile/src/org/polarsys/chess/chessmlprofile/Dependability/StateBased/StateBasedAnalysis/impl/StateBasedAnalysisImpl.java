@@ -20,6 +20,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.impl.GaAnalysisContextImpl;
 import org.eclipse.uml2.uml.InstanceSpecification;
+import org.eclipse.uml2.uml.Slot;
+import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
@@ -36,6 +38,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failur
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisImpl#getEvalMethod <em>Eval Method</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisImpl#getTargetFailureMode <em>Target Failure Mode</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisImpl#getTargetDepComponent <em>Target Dep Component</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisImpl#getTargetPort <em>Target Port</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisImpl#getInitialConditions <em>Initial Conditions</em>}</li>
  * </ul>
  * </p>
  *
@@ -121,6 +125,26 @@ public class StateBasedAnalysisImpl extends GaAnalysisContextImpl implements Sta
 	 * @ordered
 	 */
 	protected EList<InstanceSpecification> targetDepComponent;
+
+	/**
+	 * The cached value of the '{@link #getTargetPort() <em>Target Port</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTargetPort()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Slot> targetPort;
+
+	/**
+	 * The cached value of the '{@link #getInitialConditions() <em>Initial Conditions</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInitialConditions()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<SBAInitialConditions> initialConditions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -258,6 +282,30 @@ public class StateBasedAnalysisImpl extends GaAnalysisContextImpl implements Sta
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Slot> getTargetPort() {
+		if (targetPort == null) {
+			targetPort = new EObjectResolvingEList<Slot>(Slot.class, this, StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_PORT);
+		}
+		return targetPort;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<SBAInitialConditions> getInitialConditions() {
+		if (initialConditions == null) {
+			initialConditions = new EObjectResolvingEList<SBAInitialConditions>(SBAInitialConditions.class, this, StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__INITIAL_CONDITIONS);
+		}
+		return initialConditions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -271,6 +319,10 @@ public class StateBasedAnalysisImpl extends GaAnalysisContextImpl implements Sta
 				return getTargetFailureMode();
 			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_DEP_COMPONENT:
 				return getTargetDepComponent();
+			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_PORT:
+				return getTargetPort();
+			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__INITIAL_CONDITIONS:
+				return getInitialConditions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -301,6 +353,14 @@ public class StateBasedAnalysisImpl extends GaAnalysisContextImpl implements Sta
 				getTargetDepComponent().clear();
 				getTargetDepComponent().addAll((Collection<? extends InstanceSpecification>)newValue);
 				return;
+			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_PORT:
+				getTargetPort().clear();
+				getTargetPort().addAll((Collection<? extends Slot>)newValue);
+				return;
+			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__INITIAL_CONDITIONS:
+				getInitialConditions().clear();
+				getInitialConditions().addAll((Collection<? extends SBAInitialConditions>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -328,6 +388,12 @@ public class StateBasedAnalysisImpl extends GaAnalysisContextImpl implements Sta
 			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_DEP_COMPONENT:
 				getTargetDepComponent().clear();
 				return;
+			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_PORT:
+				getTargetPort().clear();
+				return;
+			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__INITIAL_CONDITIONS:
+				getInitialConditions().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -350,6 +416,10 @@ public class StateBasedAnalysisImpl extends GaAnalysisContextImpl implements Sta
 				return targetFailureMode != null && !targetFailureMode.isEmpty();
 			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_DEP_COMPONENT:
 				return targetDepComponent != null && !targetDepComponent.isEmpty();
+			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_PORT:
+				return targetPort != null && !targetPort.isEmpty();
+			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__INITIAL_CONDITIONS:
+				return initialConditions != null && !initialConditions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

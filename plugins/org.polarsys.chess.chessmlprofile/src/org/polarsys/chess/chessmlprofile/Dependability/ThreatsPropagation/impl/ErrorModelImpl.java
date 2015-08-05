@@ -60,7 +60,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ThreatsPropagationPackage.Literals.ERROR_MODEL;
+		return ThreatsPropagationPackage.Literals.ERROR_MODEL_BEHAVIOR;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 			base_StateMachine = (StateMachine)eResolveProxy(oldBase_StateMachine);
 			if (base_StateMachine != oldBase_StateMachine) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ThreatsPropagationPackage.ERROR_MODEL__BASE_STATE_MACHINE, oldBase_StateMachine, base_StateMachine));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ThreatsPropagationPackage.ERROR_MODEL_BEHAVIOR__BASE_STATE_MACHINE, oldBase_StateMachine, base_StateMachine));
 			}
 		}
 		return base_StateMachine;
@@ -98,7 +98,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 		StateMachine oldBase_StateMachine = base_StateMachine;
 		base_StateMachine = newBase_StateMachine;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.ERROR_MODEL__BASE_STATE_MACHINE, oldBase_StateMachine, base_StateMachine));
+			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.ERROR_MODEL_BEHAVIOR__BASE_STATE_MACHINE, oldBase_StateMachine, base_StateMachine));
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.ERROR_MODEL__BASE_STATE_MACHINE:
+			case ThreatsPropagationPackage.ERROR_MODEL_BEHAVIOR__BASE_STATE_MACHINE:
 				if (resolve) return getBase_StateMachine();
 				return basicGetBase_StateMachine();
 		}
@@ -124,7 +124,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.ERROR_MODEL__BASE_STATE_MACHINE:
+			case ThreatsPropagationPackage.ERROR_MODEL_BEHAVIOR__BASE_STATE_MACHINE:
 				setBase_StateMachine((StateMachine)newValue);
 				return;
 		}
@@ -139,7 +139,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.ERROR_MODEL__BASE_STATE_MACHINE:
+			case ThreatsPropagationPackage.ERROR_MODEL_BEHAVIOR__BASE_STATE_MACHINE:
 				setBase_StateMachine((StateMachine)null);
 				return;
 		}
@@ -154,7 +154,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.ERROR_MODEL__BASE_STATE_MACHINE:
+			case ThreatsPropagationPackage.ERROR_MODEL_BEHAVIOR__BASE_STATE_MACHINE:
 				return base_StateMachine != null;
 		}
 		return super.eIsSet(featureID);
