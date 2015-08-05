@@ -91,13 +91,6 @@ main() {
 mapping inout Model::psmModel() {
 	init{
 		psmView := self.getView("PSMView");
-		//TODO apply the SAM profile during the creation of the CHESS model!!!
-		psmView.applyProfile(getMARTEProfile("SAM"));
-		psmView.applyProfile(getCHESSProfile("TimingAnalysis"));
-		psmView.applyProfile(getCHESSProfile("DeploymentConfAnalysis"));
-		psmView.applyProfile(getMARTEProfile("SW_Interaction"));
-		psmView.applyProfile(getMARTEProfile("SW_Concurrency"));
-		
 		
 		compView := self.getView("ComponentView");
 		depView := self.getView("DeploymentView");
