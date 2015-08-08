@@ -162,6 +162,11 @@ public Command check(Notification notification, Object _notifier, DesignView cur
 			if (!fC.isActive())
 				continue;
 			DynamicConstraint constr = (DynamicConstraint) fC.getConstraint();
+			
+			//skip E_S_1_NEW since it was already checked 
+			if("E_S_1".equals(constr.getName()))
+					continue;
+			
 			if (!constr.check(notification, currentView).isOK()){
 				CHESSProjectSupport.printlnToCHESSConsole(constr.getMessage());
 				throw new RollbackException(constr.getStatus());
