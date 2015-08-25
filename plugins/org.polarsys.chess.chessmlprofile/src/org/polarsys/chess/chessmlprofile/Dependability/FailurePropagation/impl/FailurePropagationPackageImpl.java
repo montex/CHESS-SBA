@@ -48,7 +48,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDMi
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FAAnalysis;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FASpecification;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior;
-import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationAnalysis;

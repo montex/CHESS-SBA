@@ -39,11 +39,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.impl.Da
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentFactory;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode;
-import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeGroup;
-import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation;
 import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEAPackage;
