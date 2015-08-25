@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.*;
 
 /**
@@ -78,8 +79,24 @@ public class RTComponentModelAdapterFactory extends AdapterFactoryImpl {
 				return createCHRtPortSlotAdapter();
 			}
 			@Override
+			public Adapter caseARINCComponentImpl(ARINCComponentImpl object) {
+				return createARINCComponentImplAdapter();
+			}
+			@Override
+			public Adapter caseARINCProcess(ARINCProcess object) {
+				return createARINCProcessAdapter();
+			}
+			@Override
+			public Adapter caseARINCFunction(ARINCFunction object) {
+				return createARINCFunctionAdapter();
+			}
+			@Override
 			public Adapter caseCHRtSpecification(CHRtSpecification object) {
 				return createCHRtSpecificationAdapter();
+			}
+			@Override
+			public Adapter caseComponentImplementation(ComponentImplementation object) {
+				return createComponentImplementationAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -116,6 +133,48 @@ public class RTComponentModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.ARINCComponentImpl <em>ARINC Component Impl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.ARINCComponentImpl
+	 * @generated
+	 */
+	public Adapter createARINCComponentImplAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.ARINCProcess <em>ARINC Process</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.ARINCProcess
+	 * @generated
+	 */
+	public Adapter createARINCProcessAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.ARINCFunction <em>ARINC Function</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.ARINCFunction
+	 * @generated
+	 */
+	public Adapter createARINCFunctionAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification <em>CH Rt Specification</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -126,6 +185,20 @@ public class RTComponentModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCHRtSpecificationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation <em>Component Implementation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation
+	 * @generated
+	 */
+	public Adapter createComponentImplementationAdapter() {
 		return null;
 	}
 

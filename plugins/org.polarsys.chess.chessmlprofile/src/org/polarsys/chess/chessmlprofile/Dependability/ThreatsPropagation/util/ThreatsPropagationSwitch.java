@@ -14,6 +14,7 @@ package org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.*;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DegradedState;
@@ -120,10 +121,23 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ThreatsPropagationPackage.ERROR_FREE: {
+				ErrorFree errorFree = (ErrorFree)theEObject;
+				T result = caseErrorFree(errorFree);
+				if (result == null) result = caseThreatState(errorFree);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ThreatsPropagationPackage.DEGRADED_STATE: {
 				DegradedState degradedState = (DegradedState)theEObject;
 				T result = caseDegradedState(degradedState);
 				if (result == null) result = caseThreatState(degradedState);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ThreatsPropagationPackage.NORMAL_STATE: {
+				NormalState normalState = (NormalState)theEObject;
+				T result = caseNormalState(normalState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -153,17 +167,10 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ThreatsPropagationPackage.ERROR: {
-				org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Error error = (org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Error)theEObject;
-				T result = caseError(error);
-				if (result == null) result = caseThreatState(error);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ThreatsPropagationPackage.ERROR_FREE: {
-				ErrorFree errorFree = (ErrorFree)theEObject;
-				T result = caseErrorFree(errorFree);
-				if (result == null) result = caseThreatState(errorFree);
+			case ThreatsPropagationPackage.ERROR_STATE: {
+				ErrorState errorState = (ErrorState)theEObject;
+				T result = caseErrorState(errorState);
+				if (result == null) result = caseThreatState(errorState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -253,8 +260,6 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 			case ThreatsPropagationPackage.FAILURE: {
 				Failure failure = (Failure)theEObject;
 				T result = caseFailure(failure);
-				if (result == null) result = caseOutputEvent(failure);
-				if (result == null) result = caseDepEvent(failure);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -277,18 +282,30 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 			case ThreatsPropagationPackage.INTERNAL_FAULT: {
 				InternalFault internalFault = (InternalFault)theEObject;
 				T result = caseInternalFault(internalFault);
-				if (result == null) result = caseInternalThreat(internalFault);
-				if (result == null) result = caseInternalEvent(internalFault);
-				if (result == null) result = caseDepEvent(internalFault);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ThreatsPropagationPackage.INTERNAL_PROPAGATION: {
 				InternalPropagation internalPropagation = (InternalPropagation)theEObject;
 				T result = caseInternalPropagation(internalPropagation);
-				if (result == null) result = caseInternalThreat(internalPropagation);
-				if (result == null) result = caseInternalEvent(internalPropagation);
-				if (result == null) result = caseDepEvent(internalPropagation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ThreatsPropagationPackage.ERROR_DETECTION: {
+				ErrorDetection errorDetection = (ErrorDetection)theEObject;
+				T result = caseErrorDetection(errorDetection);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ThreatsPropagationPackage.ERROR_HANDLING: {
+				ErrorHandling errorHandling = (ErrorHandling)theEObject;
+				T result = caseErrorHandling(errorHandling);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ThreatsPropagationPackage.FAULT_HANDLING: {
+				FaultHandling faultHandling = (FaultHandling)theEObject;
+				T result = caseFaultHandling(faultHandling);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -329,6 +346,66 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseInternalPropagation(InternalPropagation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Error Detection</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Error Detection</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseErrorDetection(ErrorDetection object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Error Handling</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Error Handling</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseErrorHandling(ErrorHandling object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Fault Handling</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Fault Handling</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFaultHandling(FaultHandling object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Error Model</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Error Model</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseErrorModel(ErrorModel object) {
 		return null;
 	}
 
@@ -438,21 +515,6 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Error</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Error</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseError(org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Error object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Threat State</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -528,6 +590,21 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Normal State</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Normal State</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNormalState(NormalState object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Failure Free</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -569,6 +646,21 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCHExternalFault(CHExternalFault object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Error State</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Error State</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseErrorState(ErrorState object) {
 		return null;
 	}
 
@@ -704,21 +796,6 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseInternalEvent(InternalEvent object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Error Model</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Error Model</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseErrorModel(ErrorModel object) {
 		return null;
 	}
 

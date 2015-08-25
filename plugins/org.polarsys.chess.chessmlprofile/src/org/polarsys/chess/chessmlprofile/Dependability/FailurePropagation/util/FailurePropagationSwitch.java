@@ -77,22 +77,6 @@ public class FailurePropagationSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case FailurePropagationPackage.FPTC: {
-				FPTC fptc = (FPTC)theEObject;
-				T result = caseFPTC(fptc);
-				if (result == null) result = caseDependableComponent(fptc);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case FailurePropagationPackage.FAILURE_PROPAGATION_ANALYSIS: {
-				FailurePropagationAnalysis failurePropagationAnalysis = (FailurePropagationAnalysis)theEObject;
-				T result = caseFailurePropagationAnalysis(failurePropagationAnalysis);
-				if (result == null) result = caseGaAnalysisContext(failurePropagationAnalysis);
-				if (result == null) result = caseConfiguration(failurePropagationAnalysis);
-				if (result == null) result = caseExpressionContext(failurePropagationAnalysis);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case FailurePropagationPackage.FPTC_SPECIFICATION: {
 				FPTCSpecification fptcSpecification = (FPTCSpecification)theEObject;
 				T result = caseFPTCSpecification(fptcSpecification);
@@ -102,6 +86,28 @@ public class FailurePropagationSwitch<T> extends Switch<T> {
 			case FailurePropagationPackage.FPTC_PORT_SLOT: {
 				FPTCPortSlot fptcPortSlot = (FPTCPortSlot)theEObject;
 				T result = caseFPTCPortSlot(fptcPortSlot);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FailurePropagationPackage.FPTC: {
+				FPTC fptc = (FPTC)theEObject;
+				T result = caseFPTC(fptc);
+				if (result == null) result = caseDependableComponent(fptc);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FailurePropagationPackage.FLA_BEHAVIOR: {
+				FLABehavior flaBehavior = (FLABehavior)theEObject;
+				T result = caseFLABehavior(flaBehavior);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FailurePropagationPackage.FAILURE_PROPAGATION_ANALYSIS: {
+				FailurePropagationAnalysis failurePropagationAnalysis = (FailurePropagationAnalysis)theEObject;
+				T result = caseFailurePropagationAnalysis(failurePropagationAnalysis);
+				if (result == null) result = caseGaAnalysisContext(failurePropagationAnalysis);
+				if (result == null) result = caseConfiguration(failurePropagationAnalysis);
+				if (result == null) result = caseExpressionContext(failurePropagationAnalysis);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -140,12 +146,6 @@ public class FailurePropagationSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case FailurePropagationPackage.FLA_SPECIFICATION: {
-				FLASpecification flaSpecification = (FLASpecification)theEObject;
-				T result = caseFLASpecification(flaSpecification);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -162,6 +162,21 @@ public class FailurePropagationSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseFPTC(FPTC object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>FLA Behavior</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>FLA Behavior</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFLABehavior(FLABehavior object) {
 		return null;
 	}
 
@@ -282,21 +297,6 @@ public class FailurePropagationSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseFI4FAAnalysis(FI4FAAnalysis object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>FLA Specification</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>FLA Specification</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseFLASpecification(FLASpecification object) {
 		return null;
 	}
 

@@ -17,11 +17,16 @@ import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior;
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Dependable Component</b></em>'.
  * <!-- end-user-doc -->
+ *
+ * <!-- begin-model-doc -->
+ * obsolete, use ErrorModelBehavior
+ * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:

@@ -23,5 +23,5 @@ package org.polarsys.chess.chessmlprofile.SystemModel.STS;
  * @model
  * @generated
  */
-public interface TimePressure extends Organizational {
+public interface TimePressure extends OrganizationUnit {
 } // TimePressure

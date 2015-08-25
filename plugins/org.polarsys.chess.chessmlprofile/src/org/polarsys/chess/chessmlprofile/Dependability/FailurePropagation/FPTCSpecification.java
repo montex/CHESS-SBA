@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Property;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.FailureType;
 
 /**
@@ -22,12 +23,18 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  * A representation of the model object '<em><b>FPTC Specification</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * this allows to work with FPTC at instance level by using composite diagrams. It allows to decorate ports of the parts.
+ * attribute 'failure' is deprecated, use 'failureModes'
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification#getBase_Comment <em>Base Comment</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification#getFailure <em>Failure</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification#getPartWithPort <em>Part With Port</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification#getFailureMode <em>Failure Mode</em>}</li>
  * </ul>
  * </p>
  *
@@ -105,5 +112,21 @@ public interface FPTCSpecification extends EObject {
 	 * @generated
 	 */
 	void setPartWithPort(Property value);
+
+	/**
+	 * Returns the value of the '<em><b>Failure Mode</b></em>' reference list.
+	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Failure Mode</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Failure Mode</em>' reference list.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFPTCSpecification_FailureMode()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	EList<FailureMode> getFailureMode();
 
 } // FPTCSpecification

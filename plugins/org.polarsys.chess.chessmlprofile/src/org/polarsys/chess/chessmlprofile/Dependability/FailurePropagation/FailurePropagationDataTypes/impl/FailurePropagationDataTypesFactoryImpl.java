@@ -82,8 +82,6 @@ public class FailurePropagationDataTypesFactoryImpl extends EFactoryImpl impleme
 				return createI_avoidableFromString(eDataType, initialValue);
 			case FailurePropagationDataTypesPackage.CAVOIDABLE:
 				return createC_avoidableFromString(eDataType, initialValue);
-			case FailurePropagationDataTypesPackage.FAILURE_TYPE:
-				return createFailureTypeFromString(eDataType, initialValue);
 			case FailurePropagationDataTypesPackage.AAVOIDABLE:
 				return createA_avoidableFromString(eDataType, initialValue);
 			case FailurePropagationDataTypesPackage.AMITIGATION:
@@ -94,6 +92,8 @@ public class FailurePropagationDataTypesFactoryImpl extends EFactoryImpl impleme
 				return createI_mitigationFromString(eDataType, initialValue);
 			case FailurePropagationDataTypesPackage.DMITIGATION:
 				return createD_mitigationFromString(eDataType, initialValue);
+			case FailurePropagationDataTypesPackage.FAILURE_TYPE:
+				return createFailureTypeFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -113,8 +113,6 @@ public class FailurePropagationDataTypesFactoryImpl extends EFactoryImpl impleme
 				return convertI_avoidableToString(eDataType, instanceValue);
 			case FailurePropagationDataTypesPackage.CAVOIDABLE:
 				return convertC_avoidableToString(eDataType, instanceValue);
-			case FailurePropagationDataTypesPackage.FAILURE_TYPE:
-				return convertFailureTypeToString(eDataType, instanceValue);
 			case FailurePropagationDataTypesPackage.AAVOIDABLE:
 				return convertA_avoidableToString(eDataType, instanceValue);
 			case FailurePropagationDataTypesPackage.AMITIGATION:
@@ -125,6 +123,8 @@ public class FailurePropagationDataTypesFactoryImpl extends EFactoryImpl impleme
 				return convertI_mitigationToString(eDataType, instanceValue);
 			case FailurePropagationDataTypesPackage.DMITIGATION:
 				return convertD_mitigationToString(eDataType, instanceValue);
+			case FailurePropagationDataTypesPackage.FAILURE_TYPE:
+				return convertFailureTypeToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}

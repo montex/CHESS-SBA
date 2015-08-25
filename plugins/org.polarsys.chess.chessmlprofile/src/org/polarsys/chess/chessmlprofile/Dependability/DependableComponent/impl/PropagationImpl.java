@@ -37,7 +37,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propa
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getProb <em>Prob</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getPropDelay <em>Prop Delay</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getDelay <em>Delay</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getBase_Abstraction <em>Base Abstraction</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getBase_Comment <em>Base Comment</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getBase_Connector <em>Base Connector</em>}</li>
@@ -72,24 +72,24 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 	protected String prob = PROB_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getPropDelay() <em>Prop Delay</em>}' attribute.
+	 * The default value of the '{@link #getDelay() <em>Delay</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPropDelay()
+	 * @see #getDelay()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PROP_DELAY_EDEFAULT = null;
+	protected static final String DELAY_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getPropDelay() <em>Prop Delay</em>}' attribute.
+	 * The cached value of the '{@link #getDelay() <em>Delay</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPropDelay()
+	 * @see #getDelay()
 	 * @generated
 	 * @ordered
 	 */
-	protected String propDelay = PROP_DELAY_EDEFAULT;
+	protected String delay = DELAY_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getBase_Abstraction() <em>Base Abstraction</em>}' reference.
@@ -216,8 +216,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getPropDelay() {
-		return propDelay;
+	public String getDelay() {
+		return delay;
 	}
 
 	/**
@@ -225,11 +225,11 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPropDelay(String newPropDelay) {
-		String oldPropDelay = propDelay;
-		propDelay = newPropDelay;
+	public void setDelay(String newDelay) {
+		String oldDelay = delay;
+		delay = newDelay;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.PROPAGATION__PROP_DELAY, oldPropDelay, propDelay));
+			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.PROPAGATION__DELAY, oldDelay, delay));
 	}
 
 	/**
@@ -465,8 +465,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 		switch (featureID) {
 			case DependableComponentPackage.PROPAGATION__PROB:
 				return getProb();
-			case DependableComponentPackage.PROPAGATION__PROP_DELAY:
-				return getPropDelay();
+			case DependableComponentPackage.PROPAGATION__DELAY:
+				return getDelay();
 			case DependableComponentPackage.PROPAGATION__BASE_ABSTRACTION:
 				if (resolve) return getBase_Abstraction();
 				return basicGetBase_Abstraction();
@@ -502,8 +502,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 			case DependableComponentPackage.PROPAGATION__PROB:
 				setProb((String)newValue);
 				return;
-			case DependableComponentPackage.PROPAGATION__PROP_DELAY:
-				setPropDelay((String)newValue);
+			case DependableComponentPackage.PROPAGATION__DELAY:
+				setDelay((String)newValue);
 				return;
 			case DependableComponentPackage.PROPAGATION__BASE_ABSTRACTION:
 				setBase_Abstraction((Abstraction)newValue);
@@ -542,8 +542,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 			case DependableComponentPackage.PROPAGATION__PROB:
 				setProb(PROB_EDEFAULT);
 				return;
-			case DependableComponentPackage.PROPAGATION__PROP_DELAY:
-				setPropDelay(PROP_DELAY_EDEFAULT);
+			case DependableComponentPackage.PROPAGATION__DELAY:
+				setDelay(DELAY_EDEFAULT);
 				return;
 			case DependableComponentPackage.PROPAGATION__BASE_ABSTRACTION:
 				setBase_Abstraction((Abstraction)null);
@@ -580,8 +580,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 		switch (featureID) {
 			case DependableComponentPackage.PROPAGATION__PROB:
 				return PROB_EDEFAULT == null ? prob != null : !PROB_EDEFAULT.equals(prob);
-			case DependableComponentPackage.PROPAGATION__PROP_DELAY:
-				return PROP_DELAY_EDEFAULT == null ? propDelay != null : !PROP_DELAY_EDEFAULT.equals(propDelay);
+			case DependableComponentPackage.PROPAGATION__DELAY:
+				return DELAY_EDEFAULT == null ? delay != null : !DELAY_EDEFAULT.equals(delay);
 			case DependableComponentPackage.PROPAGATION__BASE_ABSTRACTION:
 				return base_Abstraction != null;
 			case DependableComponentPackage.PROPAGATION__BASE_COMMENT:
@@ -612,8 +612,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (prob: ");
 		result.append(prob);
-		result.append(", propDelay: ");
-		result.append(propDelay);
+		result.append(", delay: ");
+		result.append(delay);
 		result.append(", transfFunct: ");
 		result.append(transfFunct);
 		result.append(", weight: ");

@@ -49,6 +49,15 @@ public interface StateBasedComponentsFactory extends EFactory {
 	StatefulSoftware createStatefulSoftware();
 
 	/**
+	 * Returns a new object of class '<em>Simple Stochastic Behavior</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Simple Stochastic Behavior</em>'.
+	 * @generated
+	 */
+	SimpleStochasticBehavior createSimpleStochasticBehavior();
+
+	/**
 	 * Returns a new object of class '<em>Stateless Hardware</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

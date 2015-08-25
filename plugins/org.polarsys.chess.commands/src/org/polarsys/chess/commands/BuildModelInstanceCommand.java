@@ -383,7 +383,7 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 			CHESSProfileManager.applyPropagationStereotype(connInst);
 			Propagation newPropagation = UMLUtils.getStereotypeApplication(connInst, Propagation.class);
 			newPropagation.setProb(origPropagation.getProb());
-			newPropagation.setPropDelay(origPropagation.getPropDelay());
+			newPropagation.setDelay(origPropagation.getDelay());
 			newPropagation.getTransfFunct().addAll(origPropagation.getTransfFunct());
 			newPropagation.setWeight(origPropagation.getWeight());
 		}	

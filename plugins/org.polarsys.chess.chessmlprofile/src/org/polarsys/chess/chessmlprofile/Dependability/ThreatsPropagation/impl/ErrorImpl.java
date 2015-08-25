@@ -88,7 +88,7 @@ public class ErrorImpl extends ThreatStateImpl implements org.polarsys.chess.che
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ThreatsPropagationPackage.Literals.ERROR;
+		return ThreatsPropagationPackage.Literals.ERROR_STATE;
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class ErrorImpl extends ThreatStateImpl implements org.polarsys.chess.che
 		DurationType oldType = type;
 		type = newType == null ? TYPE_EDEFAULT : newType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.ERROR__TYPE, oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.ERROR_STATE__TYPE, oldType, type));
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class ErrorImpl extends ThreatStateImpl implements org.polarsys.chess.che
 		String oldVanishingTime = vanishingTime;
 		vanishingTime = newVanishingTime;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.ERROR__VANISHING_TIME, oldVanishingTime, vanishingTime));
+			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.ERROR_STATE__VANISHING_TIME, oldVanishingTime, vanishingTime));
 	}
 
 	/**
@@ -141,9 +141,9 @@ public class ErrorImpl extends ThreatStateImpl implements org.polarsys.chess.che
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.ERROR__TYPE:
+			case ThreatsPropagationPackage.ERROR_STATE__TYPE:
 				return getType();
-			case ThreatsPropagationPackage.ERROR__VANISHING_TIME:
+			case ThreatsPropagationPackage.ERROR_STATE__VANISHING_TIME:
 				return getVanishingTime();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -157,10 +157,10 @@ public class ErrorImpl extends ThreatStateImpl implements org.polarsys.chess.che
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.ERROR__TYPE:
+			case ThreatsPropagationPackage.ERROR_STATE__TYPE:
 				setType((DurationType)newValue);
 				return;
-			case ThreatsPropagationPackage.ERROR__VANISHING_TIME:
+			case ThreatsPropagationPackage.ERROR_STATE__VANISHING_TIME:
 				setVanishingTime((String)newValue);
 				return;
 		}
@@ -175,10 +175,10 @@ public class ErrorImpl extends ThreatStateImpl implements org.polarsys.chess.che
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.ERROR__TYPE:
+			case ThreatsPropagationPackage.ERROR_STATE__TYPE:
 				setType(TYPE_EDEFAULT);
 				return;
-			case ThreatsPropagationPackage.ERROR__VANISHING_TIME:
+			case ThreatsPropagationPackage.ERROR_STATE__VANISHING_TIME:
 				setVanishingTime(VANISHING_TIME_EDEFAULT);
 				return;
 		}
@@ -193,9 +193,9 @@ public class ErrorImpl extends ThreatStateImpl implements org.polarsys.chess.che
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.ERROR__TYPE:
+			case ThreatsPropagationPackage.ERROR_STATE__TYPE:
 				return type != TYPE_EDEFAULT;
-			case ThreatsPropagationPackage.ERROR__VANISHING_TIME:
+			case ThreatsPropagationPackage.ERROR_STATE__VANISHING_TIME:
 				return VANISHING_TIME_EDEFAULT == null ? vanishingTime != null : !VANISHING_TIME_EDEFAULT.equals(vanishingTime);
 		}
 		return super.eIsSet(featureID);

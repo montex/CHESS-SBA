@@ -127,10 +127,28 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.Timi
 
 import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
 import org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl;
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.Action;
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.Attention;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HACommunication;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HAFeedback;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HAIntent;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HAKnowledgeDecision;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HAResponse;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HASelection;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HATimeManagement;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HSAttention;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HSKnowledgePerception;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HSPerception;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HSSensory;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.Human;
-import org.polarsys.chess.chessmlprofile.SystemModel.STS.Organizational;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HumanActuatorUnit;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.HumanSensorUnit;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.OUClimateManagement;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.OUMissionManagement;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.OUOversightManagement;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.OUProcessManagement;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.OUResourceManagement;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.OURulesRegulationManagement;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.Organization;
+import org.polarsys.chess.chessmlprofile.SystemModel.STS.OrganizationUnit;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSFactory;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.Technological;
@@ -159,7 +177,14 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass organizationalEClass = null;
+	private EClass organizationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass organizationUnitEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -173,21 +198,140 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass actionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass attentionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass timePressureEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass ouMissionManagementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass ouRulesRegulationManagementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass ouClimateManagementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass ouOversightManagementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass ouProcessManagementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass ouResourceManagementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass hsAttentionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass humanSensorUnitEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass hsPerceptionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass hsKnowledgePerceptionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass hsSensoryEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass haFeedbackEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass humanActuatorUnitEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass haIntentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass haCommunicationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass haTimeManagementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass haSelectionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass haResponseEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass haKnowledgeDecisionEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -359,8 +503,8 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getOrganizational() {
-		return organizationalEClass;
+	public EClass getOrganization() {
+		return organizationEClass;
 	}
 
 	/**
@@ -368,8 +512,26 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getOrganizational_Base_Class() {
-		return (EReference)organizationalEClass.getEStructuralFeatures().get(0);
+	public EReference getOrganization_Base_Class() {
+		return (EReference)organizationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getOrganizationUnit() {
+		return organizationUnitEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getOrganizationUnit_Base_Class() {
+		return (EReference)organizationUnitEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -395,26 +557,197 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getAction() {
-		return actionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getAttention() {
-		return attentionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getTimePressure() {
 		return timePressureEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getOUMissionManagement() {
+		return ouMissionManagementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getOURulesRegulationManagement() {
+		return ouRulesRegulationManagementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getOUClimateManagement() {
+		return ouClimateManagementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getOUOversightManagement() {
+		return ouOversightManagementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getOUProcessManagement() {
+		return ouProcessManagementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getOUResourceManagement() {
+		return ouResourceManagementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHSAttention() {
+		return hsAttentionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHumanSensorUnit() {
+		return humanSensorUnitEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getHumanSensorUnit_Base_Class() {
+		return (EReference)humanSensorUnitEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHSPerception() {
+		return hsPerceptionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHSKnowledgePerception() {
+		return hsKnowledgePerceptionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHSSensory() {
+		return hsSensoryEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHAFeedback() {
+		return haFeedbackEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHumanActuatorUnit() {
+		return humanActuatorUnitEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getHumanActuatorUnit_Base_Class() {
+		return (EReference)humanActuatorUnitEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHAIntent() {
+		return haIntentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHACommunication() {
+		return haCommunicationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHATimeManagement() {
+		return haTimeManagementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHASelection() {
+		return haSelectionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHAResponse() {
+		return haResponseEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getHAKnowledgeDecision() {
+		return haKnowledgeDecisionEClass;
 	}
 
 	/**
@@ -448,17 +781,56 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		humanEClass = createEClass(HUMAN);
 		createEReference(humanEClass, HUMAN__BASE_CLASS);
 
-		organizationalEClass = createEClass(ORGANIZATIONAL);
-		createEReference(organizationalEClass, ORGANIZATIONAL__BASE_CLASS);
+		organizationEClass = createEClass(ORGANIZATION);
+		createEReference(organizationEClass, ORGANIZATION__BASE_CLASS);
+
+		organizationUnitEClass = createEClass(ORGANIZATION_UNIT);
+		createEReference(organizationUnitEClass, ORGANIZATION_UNIT__BASE_CLASS);
 
 		technologicalEClass = createEClass(TECHNOLOGICAL);
 		createEReference(technologicalEClass, TECHNOLOGICAL__BASE_CLASS);
 
-		actionEClass = createEClass(ACTION);
-
-		attentionEClass = createEClass(ATTENTION);
-
 		timePressureEClass = createEClass(TIME_PRESSURE);
+
+		ouMissionManagementEClass = createEClass(OU_MISSION_MANAGEMENT);
+
+		ouRulesRegulationManagementEClass = createEClass(OU_RULES_REGULATION_MANAGEMENT);
+
+		ouClimateManagementEClass = createEClass(OU_CLIMATE_MANAGEMENT);
+
+		ouOversightManagementEClass = createEClass(OU_OVERSIGHT_MANAGEMENT);
+
+		ouProcessManagementEClass = createEClass(OU_PROCESS_MANAGEMENT);
+
+		ouResourceManagementEClass = createEClass(OU_RESOURCE_MANAGEMENT);
+
+		hsAttentionEClass = createEClass(HS_ATTENTION);
+
+		humanSensorUnitEClass = createEClass(HUMAN_SENSOR_UNIT);
+		createEReference(humanSensorUnitEClass, HUMAN_SENSOR_UNIT__BASE_CLASS);
+
+		hsPerceptionEClass = createEClass(HS_PERCEPTION);
+
+		hsKnowledgePerceptionEClass = createEClass(HS_KNOWLEDGE_PERCEPTION);
+
+		hsSensoryEClass = createEClass(HS_SENSORY);
+
+		haFeedbackEClass = createEClass(HA_FEEDBACK);
+
+		humanActuatorUnitEClass = createEClass(HUMAN_ACTUATOR_UNIT);
+		createEReference(humanActuatorUnitEClass, HUMAN_ACTUATOR_UNIT__BASE_CLASS);
+
+		haIntentEClass = createEClass(HA_INTENT);
+
+		haCommunicationEClass = createEClass(HA_COMMUNICATION);
+
+		haTimeManagementEClass = createEClass(HA_TIME_MANAGEMENT);
+
+		haSelectionEClass = createEClass(HA_SELECTION);
+
+		haResponseEClass = createEClass(HA_RESPONSE);
+
+		haKnowledgeDecisionEClass = createEClass(HA_KNOWLEDGE_DECISION);
 	}
 
 	/**
@@ -492,25 +864,79 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		actionEClass.getESuperTypes().add(this.getHuman());
-		attentionEClass.getESuperTypes().add(this.getHuman());
-		timePressureEClass.getESuperTypes().add(this.getOrganizational());
+		timePressureEClass.getESuperTypes().add(this.getOrganizationUnit());
+		ouMissionManagementEClass.getESuperTypes().add(this.getOrganizationUnit());
+		ouRulesRegulationManagementEClass.getESuperTypes().add(this.getOrganizationUnit());
+		ouClimateManagementEClass.getESuperTypes().add(this.getOrganizationUnit());
+		ouOversightManagementEClass.getESuperTypes().add(this.getOrganizationUnit());
+		ouProcessManagementEClass.getESuperTypes().add(this.getOrganizationUnit());
+		ouResourceManagementEClass.getESuperTypes().add(this.getOrganizationUnit());
+		hsAttentionEClass.getESuperTypes().add(this.getHumanSensorUnit());
+		hsPerceptionEClass.getESuperTypes().add(this.getHumanSensorUnit());
+		hsKnowledgePerceptionEClass.getESuperTypes().add(this.getHumanSensorUnit());
+		hsSensoryEClass.getESuperTypes().add(this.getHumanSensorUnit());
+		haFeedbackEClass.getESuperTypes().add(this.getHumanActuatorUnit());
+		haIntentEClass.getESuperTypes().add(this.getHumanActuatorUnit());
+		haCommunicationEClass.getESuperTypes().add(this.getHumanActuatorUnit());
+		haTimeManagementEClass.getESuperTypes().add(this.getHumanActuatorUnit());
+		haSelectionEClass.getESuperTypes().add(this.getHumanActuatorUnit());
+		haResponseEClass.getESuperTypes().add(this.getHumanActuatorUnit());
+		haKnowledgeDecisionEClass.getESuperTypes().add(this.getHumanActuatorUnit());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(humanEClass, Human.class, "Human", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getHuman_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, Human.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
-		initEClass(organizationalEClass, Organizational.class, "Organizational", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getOrganizational_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, Organizational.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEClass(organizationEClass, Organization.class, "Organization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getOrganization_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, Organization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(organizationUnitEClass, OrganizationUnit.class, "OrganizationUnit", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getOrganizationUnit_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, OrganizationUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(technologicalEClass, Technological.class, "Technological", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTechnological_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, Technological.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
-		initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(attentionEClass, Attention.class, "Attention", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
 		initEClass(timePressureEClass, TimePressure.class, "TimePressure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(ouMissionManagementEClass, OUMissionManagement.class, "OUMissionManagement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(ouRulesRegulationManagementEClass, OURulesRegulationManagement.class, "OURulesRegulationManagement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(ouClimateManagementEClass, OUClimateManagement.class, "OUClimateManagement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(ouOversightManagementEClass, OUOversightManagement.class, "OUOversightManagement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(ouProcessManagementEClass, OUProcessManagement.class, "OUProcessManagement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(ouResourceManagementEClass, OUResourceManagement.class, "OUResourceManagement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(hsAttentionEClass, HSAttention.class, "HSAttention", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(humanSensorUnitEClass, HumanSensorUnit.class, "HumanSensorUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getHumanSensorUnit_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, HumanSensorUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(hsPerceptionEClass, HSPerception.class, "HSPerception", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(hsKnowledgePerceptionEClass, HSKnowledgePerception.class, "HSKnowledgePerception", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(hsSensoryEClass, HSSensory.class, "HSSensory", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(haFeedbackEClass, HAFeedback.class, "HAFeedback", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(humanActuatorUnitEClass, HumanActuatorUnit.class, "HumanActuatorUnit", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getHumanActuatorUnit_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, HumanActuatorUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(haIntentEClass, HAIntent.class, "HAIntent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(haCommunicationEClass, HACommunication.class, "HACommunication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(haTimeManagementEClass, HATimeManagement.class, "HATimeManagement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(haSelectionEClass, HASelection.class, "HASelection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(haResponseEClass, HAResponse.class, "HAResponse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(haKnowledgeDecisionEClass, HAKnowledgeDecision.class, "HAKnowledgeDecision", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 	}
 
 } //STSPackageImpl

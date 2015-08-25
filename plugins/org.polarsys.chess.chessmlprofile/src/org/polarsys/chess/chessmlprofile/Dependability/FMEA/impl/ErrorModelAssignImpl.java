@@ -26,6 +26,7 @@ import org.eclipse.uml2.uml.StateMachine;
 import org.polarsys.chess.chessmlprofile.Dependability.FMEA.ErrorModelAssign;
 import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEAPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior;
 
 /**
  * <!-- begin-user-doc -->

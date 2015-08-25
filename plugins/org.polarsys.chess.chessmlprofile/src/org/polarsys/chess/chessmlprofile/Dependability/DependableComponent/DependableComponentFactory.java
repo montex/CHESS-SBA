@@ -31,6 +31,15 @@ public interface DependableComponentFactory extends EFactory {
 	DependableComponentFactory eINSTANCE = org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentFactoryImpl.init();
 
 	/**
+	 * Returns a new object of class '<em>Failure Modes</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Failure Modes</em>'.
+	 * @generated
+	 */
+	FailureModes createFailureModes();
+
+	/**
 	 * Returns a new object of class '<em>Propagation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -38,15 +47,6 @@ public interface DependableComponentFactory extends EFactory {
 	 * @generated
 	 */
 	Propagation createPropagation();
-
-	/**
-	 * Returns a new object of class '<em>Failure Mode Group</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Failure Mode Group</em>'.
-	 * @generated
-	 */
-	FailureModeGroup createFailureModeGroup();
 
 	/**
 	 * Returns a new object of class '<em>Failure Mode</em>'.
@@ -58,15 +58,6 @@ public interface DependableComponentFactory extends EFactory {
 	FailureMode createFailureMode();
 
 	/**
-	 * Returns a new object of class '<em>Failure Mode Specification</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Failure Mode Specification</em>'.
-	 * @generated
-	 */
-	FailureModeSpecification createFailureModeSpecification();
-
-	/**
 	 * Returns a new object of class '<em>Dependable Component</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -74,6 +65,15 @@ public interface DependableComponentFactory extends EFactory {
 	 * @generated
 	 */
 	DependableComponent createDependableComponent();
+
+	/**
+	 * Returns a new object of class '<em>Error Model Behavior</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Error Model Behavior</em>'.
+	 * @generated
+	 */
+	ErrorModelBehavior createErrorModelBehavior();
 
 	/**
 	 * Returns the package supported by this factory.

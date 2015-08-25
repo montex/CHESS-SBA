@@ -49,6 +49,42 @@ public interface ThreatsPropagationFactory extends EFactory {
 	InternalPropagation createInternalPropagation();
 
 	/**
+	 * Returns a new object of class '<em>Error Detection</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Error Detection</em>'.
+	 * @generated
+	 */
+	ErrorDetection createErrorDetection();
+
+	/**
+	 * Returns a new object of class '<em>Error Handling</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Error Handling</em>'.
+	 * @generated
+	 */
+	ErrorHandling createErrorHandling();
+
+	/**
+	 * Returns a new object of class '<em>Fault Handling</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Fault Handling</em>'.
+	 * @generated
+	 */
+	FaultHandling createFaultHandling();
+
+	/**
+	 * Returns a new object of class '<em>Error Model</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Error Model</em>'.
+	 * @generated
+	 */
+	ErrorModel createErrorModel();
+
+	/**
 	 * Returns a new object of class '<em>External Fault</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -112,15 +148,6 @@ public interface ThreatsPropagationFactory extends EFactory {
 	InternalThreat createInternalThreat();
 
 	/**
-	 * Returns a new object of class '<em>Error</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Error</em>'.
-	 * @generated
-	 */
-	Error createError();
-
-	/**
 	 * Returns a new object of class '<em>Threat State</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -166,6 +193,15 @@ public interface ThreatsPropagationFactory extends EFactory {
 	DegradedState createDegradedState();
 
 	/**
+	 * Returns a new object of class '<em>Normal State</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Normal State</em>'.
+	 * @generated
+	 */
+	NormalState createNormalState();
+
+	/**
 	 * Returns a new object of class '<em>Failure Free</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -191,6 +227,15 @@ public interface ThreatsPropagationFactory extends EFactory {
 	 * @generated
 	 */
 	CHExternalFault createCHExternalFault();
+
+	/**
+	 * Returns a new object of class '<em>Error State</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Error State</em>'.
+	 * @generated
+	 */
+	ErrorState createErrorState();
 
 	/**
 	 * Returns a new object of class '<em>Unclassified Failure</em>'.
@@ -272,15 +317,6 @@ public interface ThreatsPropagationFactory extends EFactory {
 	 * @generated
 	 */
 	InternalEvent createInternalEvent();
-
-	/**
-	 * Returns a new object of class '<em>Error Model</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Error Model</em>'.
-	 * @generated
-	 */
-	ErrorModel createErrorModel();
 
 	/**
 	 * Returns the package supported by this factory.

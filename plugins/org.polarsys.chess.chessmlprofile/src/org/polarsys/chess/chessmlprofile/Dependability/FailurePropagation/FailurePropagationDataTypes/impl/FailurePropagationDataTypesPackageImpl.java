@@ -412,12 +412,12 @@ public class FailurePropagationDataTypesPackageImpl extends EPackageImpl impleme
 		d_avoidableEEnum = createEEnum(DAVOIDABLE);
 		i_avoidableEEnum = createEEnum(IAVOIDABLE);
 		c_avoidableEEnum = createEEnum(CAVOIDABLE);
-		failureTypeEEnum = createEEnum(FAILURE_TYPE);
 		a_avoidableEEnum = createEEnum(AAVOIDABLE);
 		a_mitigationEEnum = createEEnum(AMITIGATION);
 		c_mitigationEEnum = createEEnum(CMITIGATION);
 		i_mitigationEEnum = createEEnum(IMITIGATION);
 		d_mitigationEEnum = createEEnum(DMITIGATION);
+		failureTypeEEnum = createEEnum(FAILURE_TYPE);
 	}
 
 	/**
@@ -459,17 +459,6 @@ public class FailurePropagationDataTypesPackageImpl extends EPackageImpl impleme
 		addEEnumLiteral(c_avoidableEEnum, C_avoidable.INCONSISTENCY);
 		addEEnumLiteral(c_avoidableEEnum, C_avoidable.NONE);
 
-		initEEnum(failureTypeEEnum, FailureType.class, "FailureType");
-		addEEnumLiteral(failureTypeEEnum, FailureType.LATE);
-		addEEnumLiteral(failureTypeEEnum, FailureType.EARLY);
-		addEEnumLiteral(failureTypeEEnum, FailureType.VALUE_SUBTLE);
-		addEEnumLiteral(failureTypeEEnum, FailureType.VALUE_COARSE);
-		addEEnumLiteral(failureTypeEEnum, FailureType.OMISSION);
-		addEEnumLiteral(failureTypeEEnum, FailureType.COMMISSION);
-		addEEnumLiteral(failureTypeEEnum, FailureType.NO_FAILURE);
-		addEEnumLiteral(failureTypeEEnum, FailureType.VARIABLE);
-		addEEnumLiteral(failureTypeEEnum, FailureType.WILDCARD);
-
 		initEEnum(a_avoidableEEnum, A_avoidable.class, "A_avoidable");
 		addEEnumLiteral(a_avoidableEEnum, A_avoidable.UNSPECIFIED);
 		addEEnumLiteral(a_avoidableEEnum, A_avoidable.INCOMPLETION);
@@ -498,6 +487,17 @@ public class FailurePropagationDataTypesPackageImpl extends EPackageImpl impleme
 		addEEnumLiteral(d_mitigationEEnum, D_mitigation.NO_LOSS);
 		addEEnumLiteral(d_mitigationEEnum, D_mitigation.PARTIAL_LOSS_ALLOWED);
 		addEEnumLiteral(d_mitigationEEnum, D_mitigation.NONE);
+
+		initEEnum(failureTypeEEnum, FailureType.class, "FailureType");
+		addEEnumLiteral(failureTypeEEnum, FailureType.LATE);
+		addEEnumLiteral(failureTypeEEnum, FailureType.EARLY);
+		addEEnumLiteral(failureTypeEEnum, FailureType.VALUE_SUBTLE);
+		addEEnumLiteral(failureTypeEEnum, FailureType.VALUE_COARSE);
+		addEEnumLiteral(failureTypeEEnum, FailureType.OMISSION);
+		addEEnumLiteral(failureTypeEEnum, FailureType.COMMISSION);
+		addEEnumLiteral(failureTypeEEnum, FailureType.NO_FAILURE);
+		addEEnumLiteral(failureTypeEEnum, FailureType.VARIABLE);
+		addEEnumLiteral(failureTypeEEnum, FailureType.WILDCARD);
 	}
 
 } //FailurePropagationDataTypesPackageImpl

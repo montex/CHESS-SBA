@@ -40,6 +40,15 @@ public interface StateBasedAnalysisFactory extends EFactory {
 	StateBasedAnalysis createStateBasedAnalysis();
 
 	/**
+	 * Returns a new object of class '<em>SBA Initial Conditions</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>SBA Initial Conditions</em>'.
+	 * @generated
+	 */
+	SBAInitialConditions createSBAInitialConditions();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

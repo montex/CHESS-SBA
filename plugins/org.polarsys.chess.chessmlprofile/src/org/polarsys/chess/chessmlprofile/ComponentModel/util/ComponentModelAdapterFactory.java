@@ -78,16 +78,16 @@ public class ComponentModelAdapterFactory extends AdapterFactoryImpl {
 				return createComponentTypeAdapter();
 			}
 			@Override
-			public Adapter caseComponentImplementation(ComponentImplementation object) {
-				return createComponentImplementationAdapter();
-			}
-			@Override
 			public Adapter caseFunctionalPartition(FunctionalPartition object) {
 				return createFunctionalPartitionAdapter();
 			}
 			@Override
 			public Adapter caseHwAbstractionComponentImpl(HwAbstractionComponentImpl object) {
 				return createHwAbstractionComponentImplAdapter();
+			}
+			@Override
+			public Adapter caseComponentImplementation(ComponentImplementation object) {
+				return createComponentImplementationAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {

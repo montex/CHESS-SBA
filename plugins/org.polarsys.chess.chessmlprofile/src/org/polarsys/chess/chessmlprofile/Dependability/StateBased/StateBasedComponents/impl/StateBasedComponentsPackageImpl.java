@@ -26,6 +26,7 @@ import org.eclipse.papyrus.MARTE_Library.RS_Library.RS_LibraryPackage;
 import org.eclipse.papyrus.MARTE_Library.TimeLibrary.TimeLibraryPackage;
 import org.eclipse.papyrus.MARTE_Library.TimeTypesLibrary.TimeTypesLibraryPackage;
 import org.eclipse.uml2.types.TypesPackage;
+import org.eclipse.uml2.uml.UMLPackage;
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentModelPackageImpl;
@@ -53,6 +54,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMon
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.MaintenanceMonitoringPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisPackageImpl;
+import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StateBasedComponentsFactory;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StateBasedComponentsPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StatefulHardware;
@@ -102,6 +104,13 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 	 * @generated
 	 */
 	private EClass statefulSoftwareEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass simpleStochasticBehaviorEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -357,6 +366,78 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getSimpleStochasticBehavior() {
+		return simpleStochasticBehaviorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSimpleStochasticBehavior_Base_Class() {
+		return (EReference)simpleStochasticBehaviorEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSimpleStochasticBehavior_Base_Connector() {
+		return (EReference)simpleStochasticBehaviorEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSimpleStochasticBehavior_Base_InstanceSpecification() {
+		return (EReference)simpleStochasticBehaviorEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSimpleStochasticBehavior_FailureOccurrence() {
+		return (EAttribute)simpleStochasticBehaviorEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSimpleStochasticBehavior_RepairDelay() {
+		return (EAttribute)simpleStochasticBehaviorEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSimpleStochasticBehavior_FailureModesDistribution() {
+		return (EAttribute)simpleStochasticBehaviorEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSimpleStochasticBehavior_Base_Property() {
+		return (EReference)simpleStochasticBehaviorEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getStatelessHardware() {
 		return statelessHardwareEClass;
 	}
@@ -470,29 +551,38 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 		isCreated = true;
 
 		// Create classes and their features
+		stochasticFailureBehaviourEClass = createEClass(STOCHASTIC_FAILURE_BEHAVIOUR);
+		createEAttribute(stochasticFailureBehaviourEClass, STOCHASTIC_FAILURE_BEHAVIOUR__FAILURE_DISTRIBUTION);
+		createEAttribute(stochasticFailureBehaviourEClass, STOCHASTIC_FAILURE_BEHAVIOUR__REPAIR_DISTRIBUTION);
+		createEAttribute(stochasticFailureBehaviourEClass, STOCHASTIC_FAILURE_BEHAVIOUR__MODES);
+
 		statefulHardwareEClass = createEClass(STATEFUL_HARDWARE);
 		createEAttribute(statefulHardwareEClass, STATEFUL_HARDWARE__PROB_PERM_FAULT);
 		createEAttribute(statefulHardwareEClass, STATEFUL_HARDWARE__ERROR_LATENCY);
 		createEAttribute(statefulHardwareEClass, STATEFUL_HARDWARE__REPAIR_DELAY);
 		createEAttribute(statefulHardwareEClass, STATEFUL_HARDWARE__FAULT_OCC);
 
-		statefulSoftwareEClass = createEClass(STATEFUL_SOFTWARE);
-		createEAttribute(statefulSoftwareEClass, STATEFUL_SOFTWARE__ERROR_LATENCY);
-		createEAttribute(statefulSoftwareEClass, STATEFUL_SOFTWARE__REPAIR_DELAY);
-		createEAttribute(statefulSoftwareEClass, STATEFUL_SOFTWARE__FAULT_OCC);
+		statelessSoftwareEClass = createEClass(STATELESS_SOFTWARE);
+		createEAttribute(statelessSoftwareEClass, STATELESS_SOFTWARE__FAULT_OCC);
 
 		statelessHardwareEClass = createEClass(STATELESS_HARDWARE);
 		createEAttribute(statelessHardwareEClass, STATELESS_HARDWARE__PROB_PERM_FAULT);
 		createEAttribute(statelessHardwareEClass, STATELESS_HARDWARE__REPAIR_DELAY);
 		createEAttribute(statelessHardwareEClass, STATELESS_HARDWARE__FAULT_OCC);
 
-		statelessSoftwareEClass = createEClass(STATELESS_SOFTWARE);
-		createEAttribute(statelessSoftwareEClass, STATELESS_SOFTWARE__FAULT_OCC);
+		statefulSoftwareEClass = createEClass(STATEFUL_SOFTWARE);
+		createEAttribute(statefulSoftwareEClass, STATEFUL_SOFTWARE__ERROR_LATENCY);
+		createEAttribute(statefulSoftwareEClass, STATEFUL_SOFTWARE__REPAIR_DELAY);
+		createEAttribute(statefulSoftwareEClass, STATEFUL_SOFTWARE__FAULT_OCC);
 
-		stochasticFailureBehaviourEClass = createEClass(STOCHASTIC_FAILURE_BEHAVIOUR);
-		createEAttribute(stochasticFailureBehaviourEClass, STOCHASTIC_FAILURE_BEHAVIOUR__FAILURE_DISTRIBUTION);
-		createEAttribute(stochasticFailureBehaviourEClass, STOCHASTIC_FAILURE_BEHAVIOUR__REPAIR_DISTRIBUTION);
-		createEAttribute(stochasticFailureBehaviourEClass, STOCHASTIC_FAILURE_BEHAVIOUR__MODES);
+		simpleStochasticBehaviorEClass = createEClass(SIMPLE_STOCHASTIC_BEHAVIOR);
+		createEReference(simpleStochasticBehaviorEClass, SIMPLE_STOCHASTIC_BEHAVIOR__BASE_CLASS);
+		createEReference(simpleStochasticBehaviorEClass, SIMPLE_STOCHASTIC_BEHAVIOR__BASE_CONNECTOR);
+		createEReference(simpleStochasticBehaviorEClass, SIMPLE_STOCHASTIC_BEHAVIOR__BASE_INSTANCE_SPECIFICATION);
+		createEAttribute(simpleStochasticBehaviorEClass, SIMPLE_STOCHASTIC_BEHAVIOR__FAILURE_OCCURRENCE);
+		createEAttribute(simpleStochasticBehaviorEClass, SIMPLE_STOCHASTIC_BEHAVIOR__REPAIR_DELAY);
+		createEAttribute(simpleStochasticBehaviorEClass, SIMPLE_STOCHASTIC_BEHAVIOR__FAILURE_MODES_DISTRIBUTION);
+		createEReference(simpleStochasticBehaviorEClass, SIMPLE_STOCHASTIC_BEHAVIOR__BASE_PROPERTY);
 	}
 
 	/**
@@ -522,42 +612,72 @@ public class StateBasedComponentsPackageImpl extends EPackageImpl implements Sta
 		DependableComponentPackage theDependableComponentPackage = (DependableComponentPackage)EPackage.Registry.INSTANCE.getEPackage(DependableComponentPackage.eNS_URI);
 		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
+		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		statefulHardwareEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
-		statefulSoftwareEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
-		statelessHardwareEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
-		statelessSoftwareEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
 		stochasticFailureBehaviourEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
+		statefulHardwareEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
+		statelessSoftwareEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
+		statelessHardwareEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
+		statefulSoftwareEClass.getESuperTypes().add(theDependableComponentPackage.getDependableComponent());
 
 		// Initialize classes and features; add operations and parameters
+		initEClass(stochasticFailureBehaviourEClass, StochasticFailureBehaviour.class, "StochasticFailureBehaviour", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStochasticFailureBehaviour_FailureDistribution(), theBasicNFP_TypesPackage.getNFP_Real(), "failureDistribution", null, 1, 1, StochasticFailureBehaviour.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getStochasticFailureBehaviour_RepairDistribution(), theBasicNFP_TypesPackage.getNFP_Real(), "repairDistribution", null, 1, 1, StochasticFailureBehaviour.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getStochasticFailureBehaviour_Modes(), theTypesPackage.getString(), "modes", null, 1, 1, StochasticFailureBehaviour.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
 		initEClass(statefulHardwareEClass, StatefulHardware.class, "StatefulHardware", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStatefulHardware_ProbPermFault(), theBasicNFP_TypesPackage.getNFP_Real(), "probPermFault", null, 1, 1, StatefulHardware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getStatefulHardware_ErrorLatency(), theBasicNFP_TypesPackage.getNFP_Duration(), "errorLatency", null, 1, 1, StatefulHardware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getStatefulHardware_RepairDelay(), theBasicNFP_TypesPackage.getNFP_Duration(), "repairDelay", null, 1, 1, StatefulHardware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getStatefulHardware_FaultOcc(), theBasicNFP_TypesPackage.getNFP_Frequency(), "faultOcc", null, 0, 1, StatefulHardware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
-		initEClass(statefulSoftwareEClass, StatefulSoftware.class, "StatefulSoftware", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStatefulSoftware_ErrorLatency(), theBasicNFP_TypesPackage.getNFP_Duration(), "errorLatency", null, 1, 1, StatefulSoftware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getStatefulSoftware_RepairDelay(), theBasicNFP_TypesPackage.getNFP_Duration(), "repairDelay", null, 1, 1, StatefulSoftware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getStatefulSoftware_FaultOcc(), theBasicNFP_TypesPackage.getNFP_Frequency(), "faultOcc", null, 0, 1, StatefulSoftware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEClass(statelessSoftwareEClass, StatelessSoftware.class, "StatelessSoftware", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStatelessSoftware_FaultOcc(), theBasicNFP_TypesPackage.getNFP_Frequency(), "faultOcc", null, 0, 1, StatelessSoftware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(statelessHardwareEClass, StatelessHardware.class, "StatelessHardware", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStatelessHardware_ProbPermFault(), theBasicNFP_TypesPackage.getNFP_Real(), "probPermFault", null, 1, 1, StatelessHardware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getStatelessHardware_RepairDelay(), theBasicNFP_TypesPackage.getNFP_Duration(), "repairDelay", null, 1, 1, StatelessHardware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getStatelessHardware_FaultOcc(), theBasicNFP_TypesPackage.getNFP_Frequency(), "faultOcc", null, 0, 1, StatelessHardware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
-		initEClass(statelessSoftwareEClass, StatelessSoftware.class, "StatelessSoftware", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStatelessSoftware_FaultOcc(), theBasicNFP_TypesPackage.getNFP_Frequency(), "faultOcc", null, 0, 1, StatelessSoftware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEClass(statefulSoftwareEClass, StatefulSoftware.class, "StatefulSoftware", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStatefulSoftware_ErrorLatency(), theBasicNFP_TypesPackage.getNFP_Duration(), "errorLatency", null, 1, 1, StatefulSoftware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getStatefulSoftware_RepairDelay(), theBasicNFP_TypesPackage.getNFP_Duration(), "repairDelay", null, 1, 1, StatefulSoftware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getStatefulSoftware_FaultOcc(), theBasicNFP_TypesPackage.getNFP_Frequency(), "faultOcc", null, 0, 1, StatefulSoftware.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
-		initEClass(stochasticFailureBehaviourEClass, StochasticFailureBehaviour.class, "StochasticFailureBehaviour", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStochasticFailureBehaviour_FailureDistribution(), theBasicNFP_TypesPackage.getNFP_Real(), "failureDistribution", null, 1, 1, StochasticFailureBehaviour.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getStochasticFailureBehaviour_RepairDistribution(), theBasicNFP_TypesPackage.getNFP_Real(), "repairDistribution", null, 1, 1, StochasticFailureBehaviour.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getStochasticFailureBehaviour_Modes(), theTypesPackage.getString(), "modes", null, 1, 1, StochasticFailureBehaviour.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEClass(simpleStochasticBehaviorEClass, SimpleStochasticBehavior.class, "SimpleStochasticBehavior", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSimpleStochasticBehavior_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, SimpleStochasticBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getSimpleStochasticBehavior_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, SimpleStochasticBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getSimpleStochasticBehavior_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, SimpleStochasticBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getSimpleStochasticBehavior_FailureOccurrence(), theBasicNFP_TypesPackage.getNFP_Real(), "failureOccurrence", null, 1, 1, SimpleStochasticBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getSimpleStochasticBehavior_RepairDelay(), theBasicNFP_TypesPackage.getNFP_Real(), "repairDelay", null, 0, 1, SimpleStochasticBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getSimpleStochasticBehavior_FailureModesDistribution(), theTypesPackage.getString(), "failureModesDistribution", null, 0, 1, SimpleStochasticBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getSimpleStochasticBehavior_Base_Property(), theUMLPackage.getProperty(), null, "base_Property", null, 1, 1, SimpleStochasticBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		// Create annotations
+		// http://www.eclipse.org/uml2/2.0.0/UML
+		createUMLAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/uml2/2.0.0/UML</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createUMLAnnotations() {
+		String source = "http://www.eclipse.org/uml2/2.0.0/UML";	
+		addAnnotation
+		  (getSimpleStochasticBehavior_FailureOccurrence(), 
+		   source, 
+		   new String[] {
+			 "originalName", "failureOccurrence "
+		   });
 	}
 
 } //StateBasedComponentsPackageImpl

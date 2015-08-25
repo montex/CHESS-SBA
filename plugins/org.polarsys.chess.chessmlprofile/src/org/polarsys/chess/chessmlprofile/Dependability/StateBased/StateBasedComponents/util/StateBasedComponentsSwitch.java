@@ -77,24 +77,17 @@ public class StateBasedComponentsSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case StateBasedComponentsPackage.STOCHASTIC_FAILURE_BEHAVIOUR: {
+				StochasticFailureBehaviour stochasticFailureBehaviour = (StochasticFailureBehaviour)theEObject;
+				T result = caseStochasticFailureBehaviour(stochasticFailureBehaviour);
+				if (result == null) result = caseDependableComponent(stochasticFailureBehaviour);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case StateBasedComponentsPackage.STATEFUL_HARDWARE: {
 				StatefulHardware statefulHardware = (StatefulHardware)theEObject;
 				T result = caseStatefulHardware(statefulHardware);
 				if (result == null) result = caseDependableComponent(statefulHardware);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case StateBasedComponentsPackage.STATEFUL_SOFTWARE: {
-				StatefulSoftware statefulSoftware = (StatefulSoftware)theEObject;
-				T result = caseStatefulSoftware(statefulSoftware);
-				if (result == null) result = caseDependableComponent(statefulSoftware);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case StateBasedComponentsPackage.STATELESS_HARDWARE: {
-				StatelessHardware statelessHardware = (StatelessHardware)theEObject;
-				T result = caseStatelessHardware(statelessHardware);
-				if (result == null) result = caseDependableComponent(statelessHardware);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -105,10 +98,23 @@ public class StateBasedComponentsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case StateBasedComponentsPackage.STOCHASTIC_FAILURE_BEHAVIOUR: {
-				StochasticFailureBehaviour stochasticFailureBehaviour = (StochasticFailureBehaviour)theEObject;
-				T result = caseStochasticFailureBehaviour(stochasticFailureBehaviour);
-				if (result == null) result = caseDependableComponent(stochasticFailureBehaviour);
+			case StateBasedComponentsPackage.STATELESS_HARDWARE: {
+				StatelessHardware statelessHardware = (StatelessHardware)theEObject;
+				T result = caseStatelessHardware(statelessHardware);
+				if (result == null) result = caseDependableComponent(statelessHardware);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case StateBasedComponentsPackage.STATEFUL_SOFTWARE: {
+				StatefulSoftware statefulSoftware = (StatefulSoftware)theEObject;
+				T result = caseStatefulSoftware(statefulSoftware);
+				if (result == null) result = caseDependableComponent(statefulSoftware);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case StateBasedComponentsPackage.SIMPLE_STOCHASTIC_BEHAVIOR: {
+				SimpleStochasticBehavior simpleStochasticBehavior = (SimpleStochasticBehavior)theEObject;
+				T result = caseSimpleStochasticBehavior(simpleStochasticBehavior);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -143,6 +149,21 @@ public class StateBasedComponentsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStatefulSoftware(StatefulSoftware object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Simple Stochastic Behavior</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Simple Stochastic Behavior</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSimpleStochasticBehavior(SimpleStochasticBehavior object) {
 		return null;
 	}
 

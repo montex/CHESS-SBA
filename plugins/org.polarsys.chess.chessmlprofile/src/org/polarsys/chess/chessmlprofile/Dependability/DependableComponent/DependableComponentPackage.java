@@ -65,6 +65,61 @@ public interface DependableComponentPackage extends EPackage {
 	DependableComponentPackage eINSTANCE = org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl.init();
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModesImpl <em>Failure Modes</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModesImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getFailureModes()
+	 * @generated
+	 */
+	int FAILURE_MODES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Slot</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODES__BASE_SLOT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Port</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODES__BASE_PORT = 1;
+
+	/**
+	 * The feature id for the '<em><b>Failure Mode</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODES__FAILURE_MODE = 2;
+
+	/**
+	 * The feature id for the '<em><b>FPTC Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODES__FPTC_SPECIFICATION = 3;
+
+	/**
+	 * The number of structural features of the '<em>Failure Modes</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODES_FEATURE_COUNT = 4;
+
+	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl <em>Propagation</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -72,7 +127,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getPropagation()
 	 * @generated
 	 */
-	int PROPAGATION = 0;
+	int PROPAGATION = 1;
 
 	/**
 	 * The feature id for the '<em><b>Prob</b></em>' attribute.
@@ -84,13 +139,13 @@ public interface DependableComponentPackage extends EPackage {
 	int PROPAGATION__PROB = 0;
 
 	/**
-	 * The feature id for the '<em><b>Prop Delay</b></em>' attribute.
+	 * The feature id for the '<em><b>Delay</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPAGATION__PROP_DELAY = 1;
+	int PROPAGATION__DELAY = 1;
 
 	/**
 	 * The feature id for the '<em><b>Base Abstraction</b></em>' reference.
@@ -165,43 +220,6 @@ public interface DependableComponentPackage extends EPackage {
 	int PROPAGATION_FEATURE_COUNT = 9;
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeGroupImpl <em>Failure Mode Group</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeGroupImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getFailureModeGroup()
-	 * @generated
-	 */
-	int FAILURE_MODE_GROUP = 1;
-
-	/**
-	 * The feature id for the '<em><b>Base Class</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE_GROUP__BASE_CLASS = 0;
-
-	/**
-	 * The feature id for the '<em><b>Failure Mode</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE_GROUP__FAILURE_MODE = 1;
-
-	/**
-	 * The number of structural features of the '<em>Failure Mode Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE_GROUP_FEATURE_COUNT = 2;
-
-	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeImpl <em>Failure Mode</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -209,116 +227,61 @@ public interface DependableComponentPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getFailureMode()
 	 * @generated
 	 */
-	int FAILURE_MODE = 2;
+	int FAILURE_MODE = 4;
 
 	/**
-	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes <em>Failure Modes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Failure Modes</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes
 	 * @generated
-	 * @ordered
 	 */
-	int FAILURE_MODE__BASE_CLASS = 0;
+	EClass getFailureModes();
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getBase_Slot <em>Base Slot</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Slot</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getBase_Slot()
+	 * @see #getFailureModes()
 	 * @generated
-	 * @ordered
 	 */
-	int FAILURE_MODE__DESCRIPTION = 1;
+	EReference getFailureModes_Base_Slot();
 
 	/**
-	 * The feature id for the '<em><b>Severity</b></em>' attribute.
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getBase_Port <em>Base Port</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Port</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getBase_Port()
+	 * @see #getFailureModes()
 	 * @generated
-	 * @ordered
 	 */
-	int FAILURE_MODE__SEVERITY = 2;
+	EReference getFailureModes_Base_Port();
 
 	/**
-	 * The feature id for the '<em><b>Exposure</b></em>' attribute.
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getFailureMode <em>Failure Mode</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Failure Mode</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getFailureMode()
+	 * @see #getFailureModes()
 	 * @generated
-	 * @ordered
 	 */
-	int FAILURE_MODE__EXPOSURE = 3;
+	EReference getFailureModes_FailureMode();
 
 	/**
-	 * The feature id for the '<em><b>Controllability</b></em>' attribute.
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getFPTCSpecification <em>FPTC Specification</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE__CONTROLLABILITY = 4;
-
-	/**
-	 * The feature id for the '<em><b>Permanent</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE__PERMANENT = 5;
-
-	/**
-	 * The number of structural features of the '<em>Failure Mode</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE_FEATURE_COUNT = 6;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeSpecificationImpl <em>Failure Mode Specification</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeSpecificationImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getFailureModeSpecification()
+	 * @return the meta object for the reference '<em>FPTC Specification</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getFPTCSpecification()
+	 * @see #getFailureModes()
 	 * @generated
 	 */
-	int FAILURE_MODE_SPECIFICATION = 3;
-
-	/**
-	 * The feature id for the '<em><b>Base Constraint</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE_SPECIFICATION__BASE_CONSTRAINT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Base Port</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE_SPECIFICATION__BASE_PORT = 1;
-
-	/**
-	 * The feature id for the '<em><b>Failure Mode Group</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE_SPECIFICATION__FAILURE_MODE_GROUP = 2;
-
-	/**
-	 * The number of structural features of the '<em>Failure Mode Specification</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE_SPECIFICATION_FEATURE_COUNT = 3;
+	EReference getFailureModes_FPTCSpecification();
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentImpl <em>Dependable Component</em>}' class.
@@ -328,7 +291,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getDependableComponent()
 	 * @generated
 	 */
-	int DEPENDABLE_COMPONENT = 4;
+	int DEPENDABLE_COMPONENT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Base Component</b></em>' reference.
@@ -377,6 +340,134 @@ public interface DependableComponentPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl <em>Error Model Behavior</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getErrorModelBehavior()
+	 * @generated
+	 */
+	int ERROR_MODEL_BEHAVIOR = 3;
+
+	/**
+	 * The feature id for the '<em><b>Error Model</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_MODEL_BEHAVIOR__ERROR_MODEL = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_MODEL_BEHAVIOR__BASE_CLASS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_MODEL_BEHAVIOR__BASE_INSTANCE_SPECIFICATION = 2;
+
+	/**
+	 * The feature id for the '<em><b>Base Property</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_MODEL_BEHAVIOR__BASE_PROPERTY = 3;
+
+	/**
+	 * The feature id for the '<em><b>Base Connector</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR = 4;
+
+	/**
+	 * The number of structural features of the '<em>Error Model Behavior</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_MODEL_BEHAVIOR_FEATURE_COUNT = 5;
+
+	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODE__BASE_CLASS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODE__DESCRIPTION = 1;
+
+	/**
+	 * The feature id for the '<em><b>Severity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODE__SEVERITY = 2;
+
+	/**
+	 * The feature id for the '<em><b>Exposure</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODE__EXPOSURE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Controllability</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODE__CONTROLLABILITY = 4;
+
+	/**
+	 * The feature id for the '<em><b>Likelihood</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODE__LIKELIHOOD = 5;
+
+	/**
+	 * The number of structural features of the '<em>Failure Mode</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_MODE_FEATURE_COUNT = 6;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation <em>Propagation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -398,15 +489,15 @@ public interface DependableComponentPackage extends EPackage {
 	EAttribute getPropagation_Prob();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getPropDelay <em>Prop Delay</em>}'.
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getDelay <em>Delay</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Prop Delay</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getPropDelay()
+	 * @return the meta object for the attribute '<em>Delay</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getDelay()
 	 * @see #getPropagation()
 	 * @generated
 	 */
-	EAttribute getPropagation_PropDelay();
+	EAttribute getPropagation_Delay();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Abstraction <em>Base Abstraction</em>}'.
@@ -486,38 +577,6 @@ public interface DependableComponentPackage extends EPackage {
 	EAttribute getPropagation_Weight();
 
 	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeGroup <em>Failure Mode Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Failure Mode Group</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeGroup
-	 * @generated
-	 */
-	EClass getFailureModeGroup();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeGroup#getBase_Class <em>Base Class</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Class</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeGroup#getBase_Class()
-	 * @see #getFailureModeGroup()
-	 * @generated
-	 */
-	EReference getFailureModeGroup_Base_Class();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeGroup#getFailureMode <em>Failure Mode</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Failure Mode</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeGroup#getFailureMode()
-	 * @see #getFailureModeGroup()
-	 * @generated
-	 */
-	EReference getFailureModeGroup_FailureMode();
-
-	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode <em>Failure Mode</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -583,58 +642,15 @@ public interface DependableComponentPackage extends EPackage {
 	EAttribute getFailureMode_Controllability();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#isPermanent <em>Permanent</em>}'.
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#getLikelihood <em>Likelihood</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Permanent</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#isPermanent()
+	 * @return the meta object for the attribute '<em>Likelihood</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#getLikelihood()
 	 * @see #getFailureMode()
 	 * @generated
 	 */
-	EAttribute getFailureMode_Permanent();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification <em>Failure Mode Specification</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Failure Mode Specification</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification
-	 * @generated
-	 */
-	EClass getFailureModeSpecification();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification#getBase_Constraint <em>Base Constraint</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Constraint</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification#getBase_Constraint()
-	 * @see #getFailureModeSpecification()
-	 * @generated
-	 */
-	EReference getFailureModeSpecification_Base_Constraint();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification#getBase_Port <em>Base Port</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Port</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification#getBase_Port()
-	 * @see #getFailureModeSpecification()
-	 * @generated
-	 */
-	EReference getFailureModeSpecification_Base_Port();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification#getFailureModeGroup <em>Failure Mode Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Failure Mode Group</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModeSpecification#getFailureModeGroup()
-	 * @see #getFailureModeSpecification()
-	 * @generated
-	 */
-	EReference getFailureModeSpecification_FailureModeGroup();
+	EAttribute getFailureMode_Likelihood();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent <em>Dependable Component</em>}'.
@@ -691,6 +707,71 @@ public interface DependableComponentPackage extends EPackage {
 	EReference getDependableComponent_Base_InstanceSpecification();
 
 	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior <em>Error Model Behavior</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Error Model Behavior</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior
+	 * @generated
+	 */
+	EClass getErrorModelBehavior();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getErrorModel <em>Error Model</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Error Model</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getErrorModel()
+	 * @see #getErrorModelBehavior()
+	 * @generated
+	 */
+	EReference getErrorModelBehavior_ErrorModel();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Class <em>Base Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Class</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Class()
+	 * @see #getErrorModelBehavior()
+	 * @generated
+	 */
+	EReference getErrorModelBehavior_Base_Class();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_InstanceSpecification <em>Base Instance Specification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Instance Specification</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_InstanceSpecification()
+	 * @see #getErrorModelBehavior()
+	 * @generated
+	 */
+	EReference getErrorModelBehavior_Base_InstanceSpecification();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Property <em>Base Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Property</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Property()
+	 * @see #getErrorModelBehavior()
+	 * @generated
+	 */
+	EReference getErrorModelBehavior_Base_Property();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Connector <em>Base Connector</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Connector</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Connector()
+	 * @see #getErrorModelBehavior()
+	 * @generated
+	 */
+	EReference getErrorModelBehavior_Base_Connector();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -713,6 +794,48 @@ public interface DependableComponentPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModesImpl <em>Failure Modes</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModesImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getFailureModes()
+		 * @generated
+		 */
+		EClass FAILURE_MODES = eINSTANCE.getFailureModes();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Slot</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FAILURE_MODES__BASE_SLOT = eINSTANCE.getFailureModes_Base_Slot();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Port</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FAILURE_MODES__BASE_PORT = eINSTANCE.getFailureModes_Base_Port();
+
+		/**
+		 * The meta object literal for the '<em><b>Failure Mode</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FAILURE_MODES__FAILURE_MODE = eINSTANCE.getFailureModes_FailureMode();
+
+		/**
+		 * The meta object literal for the '<em><b>FPTC Specification</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FAILURE_MODES__FPTC_SPECIFICATION = eINSTANCE.getFailureModes_FPTCSpecification();
+
+		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl <em>Propagation</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -731,12 +854,12 @@ public interface DependableComponentPackage extends EPackage {
 		EAttribute PROPAGATION__PROB = eINSTANCE.getPropagation_Prob();
 
 		/**
-		 * The meta object literal for the '<em><b>Prop Delay</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Delay</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PROPAGATION__PROP_DELAY = eINSTANCE.getPropagation_PropDelay();
+		EAttribute PROPAGATION__DELAY = eINSTANCE.getPropagation_Delay();
 
 		/**
 		 * The meta object literal for the '<em><b>Base Abstraction</b></em>' reference feature.
@@ -795,32 +918,6 @@ public interface DependableComponentPackage extends EPackage {
 		EAttribute PROPAGATION__WEIGHT = eINSTANCE.getPropagation_Weight();
 
 		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeGroupImpl <em>Failure Mode Group</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeGroupImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getFailureModeGroup()
-		 * @generated
-		 */
-		EClass FAILURE_MODE_GROUP = eINSTANCE.getFailureModeGroup();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Class</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FAILURE_MODE_GROUP__BASE_CLASS = eINSTANCE.getFailureModeGroup_Base_Class();
-
-		/**
-		 * The meta object literal for the '<em><b>Failure Mode</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FAILURE_MODE_GROUP__FAILURE_MODE = eINSTANCE.getFailureModeGroup_FailureMode();
-
-		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeImpl <em>Failure Mode</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -871,46 +968,12 @@ public interface DependableComponentPackage extends EPackage {
 		EAttribute FAILURE_MODE__CONTROLLABILITY = eINSTANCE.getFailureMode_Controllability();
 
 		/**
-		 * The meta object literal for the '<em><b>Permanent</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Likelihood</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute FAILURE_MODE__PERMANENT = eINSTANCE.getFailureMode_Permanent();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeSpecificationImpl <em>Failure Mode Specification</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeSpecificationImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getFailureModeSpecification()
-		 * @generated
-		 */
-		EClass FAILURE_MODE_SPECIFICATION = eINSTANCE.getFailureModeSpecification();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Constraint</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FAILURE_MODE_SPECIFICATION__BASE_CONSTRAINT = eINSTANCE.getFailureModeSpecification_Base_Constraint();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Port</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FAILURE_MODE_SPECIFICATION__BASE_PORT = eINSTANCE.getFailureModeSpecification_Base_Port();
-
-		/**
-		 * The meta object literal for the '<em><b>Failure Mode Group</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FAILURE_MODE_SPECIFICATION__FAILURE_MODE_GROUP = eINSTANCE.getFailureModeSpecification_FailureModeGroup();
+		EAttribute FAILURE_MODE__LIKELIHOOD = eINSTANCE.getFailureMode_Likelihood();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentImpl <em>Dependable Component</em>}' class.
@@ -953,6 +1016,56 @@ public interface DependableComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getDependableComponent_Base_InstanceSpecification();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl <em>Error Model Behavior</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getErrorModelBehavior()
+		 * @generated
+		 */
+		EClass ERROR_MODEL_BEHAVIOR = eINSTANCE.getErrorModelBehavior();
+
+		/**
+		 * The meta object literal for the '<em><b>Error Model</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ERROR_MODEL_BEHAVIOR__ERROR_MODEL = eINSTANCE.getErrorModelBehavior_ErrorModel();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Class</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ERROR_MODEL_BEHAVIOR__BASE_CLASS = eINSTANCE.getErrorModelBehavior_Base_Class();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Instance Specification</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ERROR_MODEL_BEHAVIOR__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getErrorModelBehavior_Base_InstanceSpecification();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Property</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ERROR_MODEL_BEHAVIOR__BASE_PROPERTY = eINSTANCE.getErrorModelBehavior_Base_Property();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Connector</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR = eINSTANCE.getErrorModelBehavior_Base_Connector();
 
 	}
 
