@@ -1,13 +1,3 @@
-/*******************************************************************************
- *  * Copyright (c) 2015 University of Padova, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
 /**
  */
 package org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl;
@@ -22,31 +12,31 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.Constraint;
-
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Property;
-import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification;
+
+import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>FLA Specification</b></em>'.
+ * An implementation of the model object '<em><b>FLA Behavior</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLASpecificationImpl#getBase_Constraint <em>Base Constraint</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLASpecificationImpl#getBase_Class <em>Base Class</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLASpecificationImpl#getFptc <em>Fptc</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLASpecificationImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLASpecificationImpl#getBase_Property <em>Base Property</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLASpecificationImpl#getBase_Connector <em>Base Connector</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLABehaviorImpl#getBase_Constraint <em>Base Constraint</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLABehaviorImpl#getBase_Class <em>Base Class</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLABehaviorImpl#getFptc <em>Fptc</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLABehaviorImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLABehaviorImpl#getBase_Property <em>Base Property</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLABehaviorImpl#getBase_Connector <em>Base Connector</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class FLASpecificationImpl extends EObjectImpl implements FLASpecification {
+public class FLABehaviorImpl extends EObjectImpl implements FLABehavior {
 	/**
 	 * The cached value of the '{@link #getBase_Constraint() <em>Base Constraint</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -122,7 +112,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected FLASpecificationImpl() {
+	protected FLABehaviorImpl() {
 		super();
 	}
 
@@ -133,7 +123,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return FailurePropagationPackage.Literals.FLA_SPECIFICATION;
+		return FailurePropagationPackage.Literals.FLA_BEHAVIOR;
 	}
 
 	/**
@@ -147,7 +137,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 			base_Constraint = (Constraint)eResolveProxy(oldBase_Constraint);
 			if (base_Constraint != oldBase_Constraint) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONSTRAINT, oldBase_Constraint, base_Constraint));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONSTRAINT, oldBase_Constraint, base_Constraint));
 			}
 		}
 		return base_Constraint;
@@ -171,7 +161,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 		Constraint oldBase_Constraint = base_Constraint;
 		base_Constraint = newBase_Constraint;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONSTRAINT, oldBase_Constraint, base_Constraint));
+			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONSTRAINT, oldBase_Constraint, base_Constraint));
 	}
 
 	/**
@@ -185,7 +175,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 			base_Class = (org.eclipse.uml2.uml.Class)eResolveProxy(oldBase_Class);
 			if (base_Class != oldBase_Class) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FailurePropagationPackage.FLA_SPECIFICATION__BASE_CLASS, oldBase_Class, base_Class));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FailurePropagationPackage.FLA_BEHAVIOR__BASE_CLASS, oldBase_Class, base_Class));
 			}
 		}
 		return base_Class;
@@ -209,7 +199,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 		org.eclipse.uml2.uml.Class oldBase_Class = base_Class;
 		base_Class = newBase_Class;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_SPECIFICATION__BASE_CLASS, oldBase_Class, base_Class));
+			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_BEHAVIOR__BASE_CLASS, oldBase_Class, base_Class));
 	}
 
 	/**
@@ -230,7 +220,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 		String oldFptc = fptc;
 		fptc = newFptc;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_SPECIFICATION__FPTC, oldFptc, fptc));
+			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_BEHAVIOR__FPTC, oldFptc, fptc));
 	}
 
 	/**
@@ -244,7 +234,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 			base_InstanceSpecification = (InstanceSpecification)eResolveProxy(oldBase_InstanceSpecification);
 			if (base_InstanceSpecification != oldBase_InstanceSpecification) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FailurePropagationPackage.FLA_SPECIFICATION__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FailurePropagationPackage.FLA_BEHAVIOR__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
 			}
 		}
 		return base_InstanceSpecification;
@@ -268,7 +258,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 		InstanceSpecification oldBase_InstanceSpecification = base_InstanceSpecification;
 		base_InstanceSpecification = newBase_InstanceSpecification;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_SPECIFICATION__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
+			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_BEHAVIOR__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
 	}
 
 	/**
@@ -282,7 +272,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 			base_Property = (Property)eResolveProxy(oldBase_Property);
 			if (base_Property != oldBase_Property) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FailurePropagationPackage.FLA_SPECIFICATION__BASE_PROPERTY, oldBase_Property, base_Property));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FailurePropagationPackage.FLA_BEHAVIOR__BASE_PROPERTY, oldBase_Property, base_Property));
 			}
 		}
 		return base_Property;
@@ -306,7 +296,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 		Property oldBase_Property = base_Property;
 		base_Property = newBase_Property;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_SPECIFICATION__BASE_PROPERTY, oldBase_Property, base_Property));
+			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_BEHAVIOR__BASE_PROPERTY, oldBase_Property, base_Property));
 	}
 
 	/**
@@ -320,7 +310,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 			base_Connector = (Connector)eResolveProxy(oldBase_Connector);
 			if (base_Connector != oldBase_Connector) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONNECTOR, oldBase_Connector, base_Connector));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONNECTOR, oldBase_Connector, base_Connector));
 			}
 		}
 		return base_Connector;
@@ -344,7 +334,7 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 		Connector oldBase_Connector = base_Connector;
 		base_Connector = newBase_Connector;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONNECTOR, oldBase_Connector, base_Connector));
+			eNotify(new ENotificationImpl(this, Notification.SET, FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONNECTOR, oldBase_Connector, base_Connector));
 	}
 
 	/**
@@ -355,21 +345,21 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONSTRAINT:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONSTRAINT:
 				if (resolve) return getBase_Constraint();
 				return basicGetBase_Constraint();
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CLASS:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CLASS:
 				if (resolve) return getBase_Class();
 				return basicGetBase_Class();
-			case FailurePropagationPackage.FLA_SPECIFICATION__FPTC:
+			case FailurePropagationPackage.FLA_BEHAVIOR__FPTC:
 				return getFptc();
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_INSTANCE_SPECIFICATION:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_INSTANCE_SPECIFICATION:
 				if (resolve) return getBase_InstanceSpecification();
 				return basicGetBase_InstanceSpecification();
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_PROPERTY:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_PROPERTY:
 				if (resolve) return getBase_Property();
 				return basicGetBase_Property();
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONNECTOR:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONNECTOR:
 				if (resolve) return getBase_Connector();
 				return basicGetBase_Connector();
 		}
@@ -384,22 +374,22 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONSTRAINT:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONSTRAINT:
 				setBase_Constraint((Constraint)newValue);
 				return;
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CLASS:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CLASS:
 				setBase_Class((org.eclipse.uml2.uml.Class)newValue);
 				return;
-			case FailurePropagationPackage.FLA_SPECIFICATION__FPTC:
+			case FailurePropagationPackage.FLA_BEHAVIOR__FPTC:
 				setFptc((String)newValue);
 				return;
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_INSTANCE_SPECIFICATION:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_INSTANCE_SPECIFICATION:
 				setBase_InstanceSpecification((InstanceSpecification)newValue);
 				return;
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_PROPERTY:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_PROPERTY:
 				setBase_Property((Property)newValue);
 				return;
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONNECTOR:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONNECTOR:
 				setBase_Connector((Connector)newValue);
 				return;
 		}
@@ -414,22 +404,22 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONSTRAINT:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONSTRAINT:
 				setBase_Constraint((Constraint)null);
 				return;
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CLASS:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CLASS:
 				setBase_Class((org.eclipse.uml2.uml.Class)null);
 				return;
-			case FailurePropagationPackage.FLA_SPECIFICATION__FPTC:
+			case FailurePropagationPackage.FLA_BEHAVIOR__FPTC:
 				setFptc(FPTC_EDEFAULT);
 				return;
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_INSTANCE_SPECIFICATION:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_INSTANCE_SPECIFICATION:
 				setBase_InstanceSpecification((InstanceSpecification)null);
 				return;
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_PROPERTY:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_PROPERTY:
 				setBase_Property((Property)null);
 				return;
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONNECTOR:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONNECTOR:
 				setBase_Connector((Connector)null);
 				return;
 		}
@@ -444,17 +434,17 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONSTRAINT:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONSTRAINT:
 				return base_Constraint != null;
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CLASS:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CLASS:
 				return base_Class != null;
-			case FailurePropagationPackage.FLA_SPECIFICATION__FPTC:
+			case FailurePropagationPackage.FLA_BEHAVIOR__FPTC:
 				return FPTC_EDEFAULT == null ? fptc != null : !FPTC_EDEFAULT.equals(fptc);
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_INSTANCE_SPECIFICATION:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_INSTANCE_SPECIFICATION:
 				return base_InstanceSpecification != null;
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_PROPERTY:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_PROPERTY:
 				return base_Property != null;
-			case FailurePropagationPackage.FLA_SPECIFICATION__BASE_CONNECTOR:
+			case FailurePropagationPackage.FLA_BEHAVIOR__BASE_CONNECTOR:
 				return base_Connector != null;
 		}
 		return super.eIsSet(featureID);
@@ -476,4 +466,4 @@ public class FLASpecificationImpl extends EObjectImpl implements FLASpecificatio
 		return result.toString();
 	}
 
-} //FLASpecificationImpl
+} //FLABehaviorImpl

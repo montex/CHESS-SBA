@@ -1647,14 +1647,14 @@ public interface ThreatsPropagationPackage extends EPackage {
 	int FAULT_HANDLING_FEATURE_COUNT = 3;
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorModelBehaviorImpl <em>Error Model Behavior</em>}' class.
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorModelImpl <em>Error Model</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorModelBehaviorImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getErrorModelBehavior()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorModelImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getErrorModel()
 	 * @generated
 	 */
-	int ERROR_MODEL_BEHAVIOR = 31;
+	int ERROR_MODEL = 31;
 
 	/**
 	 * The feature id for the '<em><b>Base State Machine</b></em>' reference.
@@ -1663,16 +1663,16 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_MODEL_BEHAVIOR__BASE_STATE_MACHINE = 0;
+	int ERROR_MODEL__BASE_STATE_MACHINE = 0;
 
 	/**
-	 * The number of structural features of the '<em>Error Model Behavior</em>' class.
+	 * The number of structural features of the '<em>Error Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_MODEL_BEHAVIOR_FEATURE_COUNT = 1;
+	int ERROR_MODEL_FEATURE_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DurationType <em>Duration Type</em>}' enum.
@@ -1923,25 +1923,25 @@ public interface ThreatsPropagationPackage extends EPackage {
 	EAttribute getFaultHandling_SuccessProbability();
 
 	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior <em>Error Model Behavior</em>}'.
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel <em>Error Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Error Model Behavior</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior
+	 * @return the meta object for class '<em>Error Model</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel
 	 * @generated
 	 */
-	EClass getErrorModelBehavior();
+	EClass getErrorModel();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior#getBase_StateMachine <em>Base State Machine</em>}'.
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel#getBase_StateMachine <em>Base State Machine</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Base State Machine</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior#getBase_StateMachine()
-	 * @see #getErrorModelBehavior()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel#getBase_StateMachine()
+	 * @see #getErrorModel()
 	 * @generated
 	 */
-	EReference getErrorModelBehavior_Base_StateMachine();
+	EReference getErrorModel_Base_StateMachine();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ExternalFault <em>External Fault</em>}'.
@@ -2930,14 +2930,14 @@ public interface ThreatsPropagationPackage extends EPackage {
 		EAttribute FAULT_HANDLING__SUCCESS_PROBABILITY = eINSTANCE.getFaultHandling_SuccessProbability();
 
 		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorModelBehaviorImpl <em>Error Model Behavior</em>}' class.
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorModelImpl <em>Error Model</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorModelBehaviorImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getErrorModelBehavior()
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorModelImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getErrorModel()
 		 * @generated
 		 */
-		EClass ERROR_MODEL_BEHAVIOR = eINSTANCE.getErrorModelBehavior();
+		EClass ERROR_MODEL = eINSTANCE.getErrorModel();
 
 		/**
 		 * The meta object literal for the '<em><b>Base State Machine</b></em>' reference feature.
@@ -2945,7 +2945,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ERROR_MODEL_BEHAVIOR__BASE_STATE_MACHINE = eINSTANCE.getErrorModelBehavior_Base_StateMachine();
+		EReference ERROR_MODEL__BASE_STATE_MACHINE = eINSTANCE.getErrorModel_Base_StateMachine();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ExternalFaultImpl <em>External Fault</em>}' class.

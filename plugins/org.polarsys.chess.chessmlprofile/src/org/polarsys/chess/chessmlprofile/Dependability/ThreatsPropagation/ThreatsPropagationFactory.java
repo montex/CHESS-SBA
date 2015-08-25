@@ -76,13 +76,13 @@ public interface ThreatsPropagationFactory extends EFactory {
 	FaultHandling createFaultHandling();
 
 	/**
-	 * Returns a new object of class '<em>Error Model Behavior</em>'.
+	 * Returns a new object of class '<em>Error Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Error Model Behavior</em>'.
+	 * @return a new object of class '<em>Error Model</em>'.
 	 * @generated
 	 */
-	ErrorModelBehavior createErrorModelBehavior();
+	ErrorModel createErrorModel();
 
 	/**
 	 * Returns a new object of class '<em>External Fault</em>'.

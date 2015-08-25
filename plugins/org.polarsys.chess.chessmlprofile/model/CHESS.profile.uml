@@ -1405,7 +1405,7 @@
           <body>deprecated, use FailureModes</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_pfGoQDHzEeWt8Ovv2G_EJg" annotatedElement="_4m1fcMF0Ed--atLXXafOiQ">
-          <body>deprecated, use ErrorModel instead&#xD;
+          <body>deprecated, use FLABehavior instead&#xD;
 </body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_Ky2DMDa9EeW314N4GP8y1Q" annotatedElement="_J31DEDH0EeWt8Ovv2G_EJg">
@@ -1413,10 +1413,10 @@
 So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &lt;&lt;FPTCSpecification>> Comments.</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_8-bmMDa-EeW314N4GP8y1Q" annotatedElement="_I64AUc2TEeSrt5YehnIlig">
-          <body>???</body>
+          <body>to be removed</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_ntzfMDbUEeW5DJdhCjCHFw" annotatedElement="_E4Uw4M2TEeSrt5YehnIlig">
-          <body>deprecated: use ErrorModel</body>
+          <body>replace the old FPTC stereotype</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_0FQkEDbUEeW5DJdhCjCHFw" annotatedElement="_aN9sgHpQEeCIAr4_5S9-cA">
           <body>attribute 'failure' is deprecated, use 'failureModes'</body>
@@ -1653,7 +1653,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
         <packagedElement xmi:type="uml:Extension" xmi:id="_trTpUKbSEeSHP5PnCeTneg" name="E_FPTC_Connector1" memberEnd="_trTpUabSEeSHP5PnCeTneg _trTCQKbSEeSHP5PnCeTneg">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_trTpUabSEeSHP5PnCeTneg" name="extension_FPTC" type="_4m1fcMF0Ed--atLXXafOiQ" aggregation="composite" association="_trTpUKbSEeSHP5PnCeTneg"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_E4Uw4M2TEeSrt5YehnIlig" name="FLASpecification">
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_E4Uw4M2TEeSrt5YehnIlig" name="FLABehavior">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_I64AUM2TEeSrt5YehnIlig" name="base_Constraint" association="_I64AUc2TEeSrt5YehnIlig">
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Constraint"/>
           </ownedAttribute>
@@ -1673,20 +1673,20 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Connector"/>
           </ownedAttribute>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_I64AUc2TEeSrt5YehnIlig" name="E_FLASpecification_Constraint1" memberEnd="_I64AUs2TEeSrt5YehnIlig _I64AUM2TEeSrt5YehnIlig">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_I64AUs2TEeSrt5YehnIlig" name="extension_FLASpecification" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_I64AUc2TEeSrt5YehnIlig"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_I64AUc2TEeSrt5YehnIlig" name="E_FLABehavior_Constraint1" memberEnd="_I64AUs2TEeSrt5YehnIlig _I64AUM2TEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_I64AUs2TEeSrt5YehnIlig" name="extension_FLABehavior" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_I64AUc2TEeSrt5YehnIlig"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_Nub18c2TEeSrt5YehnIlig" name="E_FLASpecification_Class1" memberEnd="_Nub18s2TEeSrt5YehnIlig _Nub18M2TEeSrt5YehnIlig">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Nub18s2TEeSrt5YehnIlig" name="extension_FLASpecification" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_Nub18c2TEeSrt5YehnIlig"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_Nub18c2TEeSrt5YehnIlig" name="E_FLABehavior_Class1" memberEnd="_Nub18s2TEeSrt5YehnIlig _Nub18M2TEeSrt5YehnIlig">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Nub18s2TEeSrt5YehnIlig" name="extension_FLABehavior" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_Nub18c2TEeSrt5YehnIlig"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_lpgsMTHyEeWt8Ovv2G_EJg" name="E_FLASpecification_InstanceSpecification1" memberEnd="_lpgsMjHyEeWt8Ovv2G_EJg _lpgsMDHyEeWt8Ovv2G_EJg">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_lpgsMjHyEeWt8Ovv2G_EJg" name="extension_FLASpecification" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_lpgsMTHyEeWt8Ovv2G_EJg"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_lpgsMTHyEeWt8Ovv2G_EJg" name="E_FLABehavior_InstanceSpecification1" memberEnd="_lpgsMjHyEeWt8Ovv2G_EJg _lpgsMDHyEeWt8Ovv2G_EJg">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_lpgsMjHyEeWt8Ovv2G_EJg" name="extension_FLABehavior" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_lpgsMTHyEeWt8Ovv2G_EJg"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_mB1FkDHyEeWt8Ovv2G_EJg" name="E_FLASpecification_Property1" memberEnd="_mB1FkTHyEeWt8Ovv2G_EJg _mByCQDHyEeWt8Ovv2G_EJg">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_mB1FkTHyEeWt8Ovv2G_EJg" name="extension_FLASpecification" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_mB1FkDHyEeWt8Ovv2G_EJg"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_mB1FkDHyEeWt8Ovv2G_EJg" name="E_FLABehavior_Property1" memberEnd="_mB1FkTHyEeWt8Ovv2G_EJg _mByCQDHyEeWt8Ovv2G_EJg">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_mB1FkTHyEeWt8Ovv2G_EJg" name="extension_FLABehavior" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_mB1FkDHyEeWt8Ovv2G_EJg"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_mYJT0THyEeWt8Ovv2G_EJg" name="E_FLASpecification_Connector1" memberEnd="_mYJT0jHyEeWt8Ovv2G_EJg _mYJT0DHyEeWt8Ovv2G_EJg">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_mYJT0jHyEeWt8Ovv2G_EJg" name="extension_FLASpecification" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_mYJT0THyEeWt8Ovv2G_EJg"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_mYJT0THyEeWt8Ovv2G_EJg" name="E_FLABehavior_Connector1" memberEnd="_mYJT0jHyEeWt8Ovv2G_EJg _mYJT0DHyEeWt8Ovv2G_EJg">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_mYJT0jHyEeWt8Ovv2G_EJg" name="extension_FLABehavior" type="_E4Uw4M2TEeSrt5YehnIlig" aggregation="composite" association="_mYJT0THyEeWt8Ovv2G_EJg"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Association" xmi:id="_Hj80kDH3EeWt8Ovv2G_EJg" name="fPTCSpecification_failureMode_1" memberEnd="_Hj80kTH3EeWt8Ovv2G_EJg _Hj8NgDH3EeWt8Ovv2G_EJg">
           <ownedEnd xmi:type="uml:Property" xmi:id="_Hj80kTH3EeWt8Ovv2G_EJg" name="fPTCSpecification" type="_aN9sgHpQEeCIAr4_5S9-cA" association="_Hj80kDH3EeWt8Ovv2G_EJg">
@@ -4645,13 +4645,13 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
           <body>obsolete</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_64fbIDbDEeW314N4GP8y1Q" annotatedElement="_y0zvEDQ2EeC0ueejuetpgA">
-          <body>obsolete, use ErrorModel</body>
+          <body>obsolete, use ErrorModelBehavior</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_zoiUMDbGEeW314N4GP8y1Q" annotatedElement="_Z8-cUDbDEeW314N4GP8y1Q">
           <body>Properties as instance of component, block</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_4EpTIDbGEeW314N4GP8y1Q" annotatedElement="_Z8-cUDbDEeW314N4GP8y1Q _aZR90DbDEeW314N4GP8y1Q">
-          <body>This is to allow using ErrorModel in composite diagram\internal block diagram, as kind of instance view. However the usage of InstanceSpecification should be preferred.</body>
+          <body>This is to allow using ErrorModelBehavior in composite diagram\internal block diagram, as kind of instance view. However the usage of InstanceSpecification should be preferred.</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_K0hSoDbHEeW314N4GP8y1Q" annotatedElement="_ZJyE0DbDEeW314N4GP8y1Q">
           <body>as Components, Blocks</body>
@@ -4660,7 +4660,8 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
           <body>as instances of components, blocks, connectors</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_XzS2MDbHEeW314N4GP8y1Q" annotatedElement="_H5GnMDbDEeW314N4GP8y1Q">
-          <body>This stereotype is used to attach an error model brahvior and\or fptc expression to an architectural element. It replaces the DependableComponent and FPTC stereottypes.</body>
+          <body>This stereotype is used to attach a user defined error model to an architectural element. It replaces the DependableComponent.&#xD;
+See also FLABehavior and SimpleStochasticBehavior.</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_gzKTMDbSEeW5DJdhCjCHFw" annotatedElement="_VJH8IM1iEeSrt5YehnIlig">
           <body>UMLConstraints can be attached to FailureMode to specify compliance between them (to be confirmed). FailureModes can appear in generalization relationships; in this case the compatibility between FailureMmodes follows the UML generalization semantics.</body>
@@ -4874,7 +4875,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_J31DEzH0EeWt8Ovv2G_EJg" value="1"/>
           </ownedEnd>
         </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_H5GnMDbDEeW314N4GP8y1Q" name="ErrorModel">
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_H5GnMDbDEeW314N4GP8y1Q" name="ErrorModelBehavior">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_Nmr1EDbDEeW314N4GP8y1Q" name="errorModel" visibility="public" type="_90It8DQ3EeC0ueejuetpgA">
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Nmr1ETbDEeW314N4GP8y1Q"/>
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Nmr1EjbDEeW314N4GP8y1Q" value="*"/>
@@ -4894,23 +4895,18 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
           <ownedAttribute xmi:type="uml:Property" xmi:id="_aZRWwDbDEeW314N4GP8y1Q" name="base_Connector" association="_aZR90DbDEeW314N4GP8y1Q">
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Connector"/>
           </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_hjqg4DbDEeW314N4GP8y1Q" name="fptc">
-            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_B5VngBFQEdyUJeMeN__D-A"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_jnjEMDbDEeW314N4GP8y1Q"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_jnjrQDbDEeW314N4GP8y1Q" value="1"/>
-          </ownedAttribute>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_ZJyE0DbDEeW314N4GP8y1Q" name="E_ErrorModel_Class1" memberEnd="_ZJyE0TbDEeW314N4GP8y1Q _ZJxdwDbDEeW314N4GP8y1Q">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_ZJyE0TbDEeW314N4GP8y1Q" name="extension_ErrorModel" type="_H5GnMDbDEeW314N4GP8y1Q" aggregation="composite" association="_ZJyE0DbDEeW314N4GP8y1Q"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_ZJyE0DbDEeW314N4GP8y1Q" name="E_ErrorModelBehavior_Class1" memberEnd="_ZJyE0TbDEeW314N4GP8y1Q _ZJxdwDbDEeW314N4GP8y1Q">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_ZJyE0TbDEeW314N4GP8y1Q" name="extension_ErrorModelBehavior" type="_H5GnMDbDEeW314N4GP8y1Q" aggregation="composite" association="_ZJyE0DbDEeW314N4GP8y1Q"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_ZhzjQDbDEeW314N4GP8y1Q" name="E_ErrorModel_InstanceSpecification1" memberEnd="_ZhzjQTbDEeW314N4GP8y1Q _Zhy8MDbDEeW314N4GP8y1Q">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_ZhzjQTbDEeW314N4GP8y1Q" name="extension_ErrorModel" type="_H5GnMDbDEeW314N4GP8y1Q" aggregation="composite" association="_ZhzjQDbDEeW314N4GP8y1Q"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_ZhzjQDbDEeW314N4GP8y1Q" name="E_ErrorModelBehavior_InstanceSpecification1" memberEnd="_ZhzjQTbDEeW314N4GP8y1Q _Zhy8MDbDEeW314N4GP8y1Q">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_ZhzjQTbDEeW314N4GP8y1Q" name="extension_ErrorModelBehavior" type="_H5GnMDbDEeW314N4GP8y1Q" aggregation="composite" association="_ZhzjQDbDEeW314N4GP8y1Q"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_Z8-cUDbDEeW314N4GP8y1Q" name="E_ErrorModel_Property1" memberEnd="_Z8-cUTbDEeW314N4GP8y1Q _Z891QDbDEeW314N4GP8y1Q">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Z8-cUTbDEeW314N4GP8y1Q" name="extension_ErrorModel" type="_H5GnMDbDEeW314N4GP8y1Q" aggregation="composite" association="_Z8-cUDbDEeW314N4GP8y1Q"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_Z8-cUDbDEeW314N4GP8y1Q" name="E_ErrorModelBehavior_Property1" memberEnd="_Z8-cUTbDEeW314N4GP8y1Q _Z891QDbDEeW314N4GP8y1Q">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Z8-cUTbDEeW314N4GP8y1Q" name="extension_ErrorModelBehavior" type="_H5GnMDbDEeW314N4GP8y1Q" aggregation="composite" association="_Z8-cUDbDEeW314N4GP8y1Q"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_aZR90DbDEeW314N4GP8y1Q" name="E_ErrorModel_Connector1" memberEnd="_aZR90TbDEeW314N4GP8y1Q _aZRWwDbDEeW314N4GP8y1Q">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_aZR90TbDEeW314N4GP8y1Q" name="extension_ErrorModel" type="_H5GnMDbDEeW314N4GP8y1Q" aggregation="composite" association="_aZR90DbDEeW314N4GP8y1Q"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_aZR90DbDEeW314N4GP8y1Q" name="E_ErrorModelBehavior_Connector1" memberEnd="_aZR90TbDEeW314N4GP8y1Q _aZRWwDbDEeW314N4GP8y1Q">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_aZR90TbDEeW314N4GP8y1Q" name="extension_ErrorModelBehavior" type="_H5GnMDbDEeW314N4GP8y1Q" aggregation="composite" association="_aZR90DbDEeW314N4GP8y1Q"/>
         </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Profile" xmi:id="_5g4wEDQ3EeC0ueejuetpgA" name="ThreatsPopagation" URI="http://CHESS/Dependability/ThreatsPropagation" metaclassReference="_AGLpEDQ4EeC0ueejuetpgA _EsXKADQ4EeC0ueejuetpgA _YOEPEDQ4EeC0ueejuetpgA _T6fIcMvmEeSajLw6mg2A8Q _-JLxoM2NEeSrt5YehnIlig">
@@ -6386,9 +6382,6 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
           <body>To be deleted???&#xD;
 ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile</body>
         </ownedComment>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_2OAsMDbHEeW314N4GP8y1Q" annotatedElement="_90It8DQ3EeC0ueejuetpgA">
-          <body>was ErrorModel in previous release</body>
-        </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_KTl2MDbPEeW5DJdhCjCHFw" annotatedElement="_uoIV0LzuEd-yoLyJo0JlOg">
           <body>transfFunct and weight are obsolete</body>
         </ownedComment>
@@ -6410,13 +6403,13 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
         <elementImport xmi:type="uml:ElementImport" xmi:id="_-JLxoM2NEeSrt5YehnIlig" alias="Event">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Event"/>
         </elementImport>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_90It8DQ3EeC0ueejuetpgA" name="ErrorModelBehavior">
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_90It8DQ3EeC0ueejuetpgA" name="ErrorModel">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_Ag2y4DQ4EeC0ueejuetpgA" name="base_StateMachine" association="_Ag2y4TQ4EeC0ueejuetpgA">
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#StateMachine"/>
           </ownedAttribute>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_Ag2y4TQ4EeC0ueejuetpgA" name="E_ErrorModelBehavior_StateMachine1" memberEnd="_Ag2y4jQ4EeC0ueejuetpgA _Ag2y4DQ4EeC0ueejuetpgA">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Ag2y4jQ4EeC0ueejuetpgA" name="extension_ErrorModelBehavior" type="_90It8DQ3EeC0ueejuetpgA" aggregation="composite" association="_Ag2y4TQ4EeC0ueejuetpgA"/>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_Ag2y4TQ4EeC0ueejuetpgA" name="E_ErrorModel_StateMachine1" memberEnd="_Ag2y4jQ4EeC0ueejuetpgA _Ag2y4DQ4EeC0ueejuetpgA">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Ag2y4jQ4EeC0ueejuetpgA" name="extension_ErrorModel" type="_90It8DQ3EeC0ueejuetpgA" aggregation="composite" association="_Ag2y4TQ4EeC0ueejuetpgA"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_C7ZisDQ4EeC0ueejuetpgA" name="CHInternalFault">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_FDw9YDQ4EeC0ueejuetpgA" name="base_Transition" association="_FDw9YTQ4EeC0ueejuetpgA">
@@ -9385,7 +9378,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
           </packagedElement>
         </packagedElement>
       </packagedElement>
-      <packagedElement xmi:type="uml:Profile" xmi:id="_WgatoDgVEd-68Z_bhNRGsA" name="RTComponentModel" URI="http://CHESS/Predictability/RTComponentModel" metaclassReference="_KH7CgDi7Ed-BkomQ9Pp_0A _d-TA0Dg0EeCE2sZUGxu35w _QvznAEAbEeCQKOeIf0epIQ _6dTt4NqwEeCgKdScvhOcyQ">
+      <packagedElement xmi:type="uml:Profile" xmi:id="_WgatoDgVEd-68Z_bhNRGsA" name="RTComponentModel" URI="http://CHESS/Predictability/RTComponentModel" metaclassReference="_KH7CgDi7Ed-BkomQ9Pp_0A _d-TA0Dg0EeCE2sZUGxu35w _QvznAEAbEeCQKOeIf0epIQ _6dTt4NqwEeCgKdScvhOcyQ _T9iikDzbEeW-QPagynd_rQ">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_p90hgDgVEd-68Z_bhNRGsA" source="http://www.eclipse.org/uml2/2.0.0/UML">
           <contents xmi:type="ecore:EPackage" xmi:id="_COpr0FbyEeCnrfzYY69gqg" name="RTComponentModel" nsURI="http://CHESS/Predictability/RTComponentModel" nsPrefix="RTComponentModel">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CZiGIFbyEeCnrfzYY69gqg" source="PapyrusVersion">
@@ -10738,6 +10731,12 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
             </eClassifiers>
           </contents>
         </eAnnotations>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_WVeDQDzbEeW-QPagynd_rQ" annotatedElement="_VhoykDzbEeW-QPagynd_rQ _f6fK0TzdEeW-QPagynd_rQ">
+          <body>to be applied together with CHRtSpecification to set ARINC properties at instance level</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_dQVjoDzbEeW-QPagynd_rQ" annotatedElement="_VKW7ATzbEeW-QPagynd_rQ _fCRJYTzdEeW-QPagynd_rQ">
+          <body>used to set ARINC properties at classifier level</body>
+        </ownedComment>
         <elementImport xmi:type="uml:ElementImport" xmi:id="_WP3MMDcwEd-mWLzcI61s7Q" alias="RtSpecification">
           <importedElement xmi:type="uml:Stereotype" href="pathmap://Papyrus_PROFILES/MARTE.profile.uml#_AZ8eMEFeEd6UW4qJC-Vahw"/>
         </elementImport>
@@ -10755,6 +10754,9 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
         </elementImport>
         <elementImport xmi:type="uml:ElementImport" xmi:id="_6dTt4NqwEeCgKdScvhOcyQ" alias="InstanceSpecification">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+        </elementImport>
+        <elementImport xmi:type="uml:ElementImport" xmi:id="_T9iikDzbEeW-QPagynd_rQ" alias="Operation">
+          <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
         </elementImport>
         <packagedElement xmi:type="uml:Association" xmi:id="_gmfo0DcwEd-mWLzcI61s7Q" name="A_Stereotype_0_Property" memberEnd="_gnE3oDcwEd-mWLzcI61s7Q _gnGFwjcwEd-mWLzcI61s7Q">
           <ownedEnd xmi:type="uml:Property" xmi:id="_gnGFwjcwEd-mWLzcI61s7Q" name="stereotype_0" type="_Y4GZwDcwEd-mWLzcI61s7Q" isUnique="false" association="_gmfo0DcwEd-mWLzcI61s7Q">
@@ -11027,6 +11029,69 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
           <ownedEnd xmi:type="uml:Property" xmi:id="_kN5PAUApEeCgBsnPy5jVRQ" name="cHRtSpecification" type="_Y4GZwDcwEd-mWLzcI61s7Q" association="_kN5PAEApEeCgBsnPy5jVRQ">
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_kN5PA0ApEeCgBsnPy5jVRQ" value="1"/>
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_kN5PAkApEeCgBsnPy5jVRQ" value="1"/>
+          </ownedEnd>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_KGFdEDxeEeWGMtwulVMCiA" name="ARINCComponentImpl">
+          <generalization xmi:type="uml:Generalization" xmi:id="_1hOxIDzaEeW-QPagynd_rQ" general="_CuRAcDRKEeChqekVLFmSjQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_PQwyMDxeEeWGMtwulVMCiA" name="ARINCProcess">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_VKW7ADzbEeW-QPagynd_rQ" name="base_Operation" association="_VKW7ATzbEeW-QPagynd_rQ">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_VhlvQDzbEeW-QPagynd_rQ" name="base_Comment" association="_VhoykDzbEeW-QPagynd_rQ">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Comment"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_fi-fMDzcEeW-QPagynd_rQ" name="operationsGroups">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_T2bjEDzdEeW-QPagynd_rQ"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_T2emYDzdEeW-QPagynd_rQ" value="1"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_QtSakDxeEeWGMtwulVMCiA" name="ARINCFunction">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_fCRJYDzdEeW-QPagynd_rQ" name="base_Operation" association="_fCRJYTzdEeW-QPagynd_rQ">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_f6fK0DzdEeW-QPagynd_rQ" name="base_Comment" association="_f6fK0TzdEeW-QPagynd_rQ">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Comment"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_oMJfADzdEeW-QPagynd_rQ" name="followedBy" association="_oMJfAzzdEeW-QPagynd_rQ">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oMJfATzdEeW-QPagynd_rQ"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oMJfAjzdEeW-QPagynd_rQ" value="*"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_tLuXYDzdEeW-QPagynd_rQ" name="precededBy" association="_tLuXYzzdEeW-QPagynd_rQ">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tLuXYTzdEeW-QPagynd_rQ"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tLuXYjzdEeW-QPagynd_rQ" value="*"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_yIfzYDzdEeW-QPagynd_rQ" name="rateDivider">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0kBaoDzdEeW-QPagynd_rQ"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0kBaoTzdEeW-QPagynd_rQ" value="1"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_VKW7ATzbEeW-QPagynd_rQ" name="E_ARINCProcess_Operation1" memberEnd="_VKW7AjzbEeW-QPagynd_rQ _VKW7ADzbEeW-QPagynd_rQ">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_VKW7AjzbEeW-QPagynd_rQ" name="extension_ARINCProcess" type="_PQwyMDxeEeWGMtwulVMCiA" aggregation="composite" association="_VKW7ATzbEeW-QPagynd_rQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_VhoykDzbEeW-QPagynd_rQ" name="E_ARINCProcess_Comment1" memberEnd="_VhoykTzbEeW-QPagynd_rQ _VhlvQDzbEeW-QPagynd_rQ">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_VhoykTzbEeW-QPagynd_rQ" name="extension_ARINCProcess" type="_PQwyMDxeEeWGMtwulVMCiA" aggregation="composite" association="_VhoykDzbEeW-QPagynd_rQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_fCRJYTzdEeW-QPagynd_rQ" name="E_ARINCFunction_Operation1" memberEnd="_fCRJYjzdEeW-QPagynd_rQ _fCRJYDzdEeW-QPagynd_rQ">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_fCRJYjzdEeW-QPagynd_rQ" name="extension_ARINCFunction" type="_QtSakDxeEeWGMtwulVMCiA" aggregation="composite" association="_fCRJYTzdEeW-QPagynd_rQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_f6fK0TzdEeW-QPagynd_rQ" name="E_ARINCFunction_Comment1" memberEnd="_f6fK0jzdEeW-QPagynd_rQ _f6fK0DzdEeW-QPagynd_rQ">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_f6fK0jzdEeW-QPagynd_rQ" name="extension_ARINCFunction" type="_QtSakDxeEeWGMtwulVMCiA" aggregation="composite" association="_f6fK0TzdEeW-QPagynd_rQ"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Association" xmi:id="_oMJfAzzdEeW-QPagynd_rQ" name="" memberEnd="_oMJfBDzdEeW-QPagynd_rQ _oMJfADzdEeW-QPagynd_rQ">
+          <ownedEnd xmi:type="uml:Property" xmi:id="_oMJfBDzdEeW-QPagynd_rQ" name="aRINCFunction" type="_QtSakDxeEeWGMtwulVMCiA" association="_oMJfAzzdEeW-QPagynd_rQ">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oMJfBTzdEeW-QPagynd_rQ" value="1"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oMJfBjzdEeW-QPagynd_rQ" value="1"/>
+          </ownedEnd>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Association" xmi:id="_tLuXYzzdEeW-QPagynd_rQ" name="" memberEnd="_tLuXZDzdEeW-QPagynd_rQ _tLuXYDzdEeW-QPagynd_rQ">
+          <ownedEnd xmi:type="uml:Property" xmi:id="_tLuXZDzdEeW-QPagynd_rQ" name="aRINCFunction" type="_QtSakDxeEeWGMtwulVMCiA" association="_tLuXYzzdEeW-QPagynd_rQ">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tLuXZTzdEeW-QPagynd_rQ" value="1"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tLuXZjzdEeW-QPagynd_rQ" value="1"/>
           </ownedEnd>
         </packagedElement>
       </packagedElement>

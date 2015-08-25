@@ -226,8 +226,8 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 				return createFaultHandlingAdapter();
 			}
 			@Override
-			public Adapter caseErrorModelBehavior(ErrorModelBehavior object) {
-				return createErrorModelBehaviorAdapter();
+			public Adapter caseErrorModel(ErrorModel object) {
+				return createErrorModelAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -320,16 +320,16 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior <em>Error Model Behavior</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel <em>Error Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel
 	 * @generated
 	 */
-	public Adapter createErrorModelBehaviorAdapter() {
+	public Adapter createErrorModelAdapter() {
 		return null;
 	}
 

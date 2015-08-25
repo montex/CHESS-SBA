@@ -1,13 +1,3 @@
-/*******************************************************************************
- *  * Copyright (c) 2015 University of Padova, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
 /**
  */
 package org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation;
@@ -21,30 +11,30 @@ import org.eclipse.uml2.uml.Property;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>FLA Specification</b></em>'.
+ * A representation of the model object '<em><b>FLA Behavior</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * deprecated: use ErrorModel
+ * replace the old FPTC stereotype
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Constraint <em>Base Constraint</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Class <em>Base Class</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getFptc <em>Fptc</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Property <em>Base Property</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Connector <em>Base Connector</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Constraint <em>Base Constraint</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Class <em>Base Class</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getFptc <em>Fptc</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Property <em>Base Property</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Connector <em>Base Connector</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLASpecification()
+ * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLABehavior()
  * @model
  * @generated
  */
-public interface FLASpecification extends EObject {
+public interface FLABehavior extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Base Constraint</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -55,14 +45,14 @@ public interface FLASpecification extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Base Constraint</em>' reference.
 	 * @see #setBase_Constraint(Constraint)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLASpecification_Base_Constraint()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLABehavior_Base_Constraint()
 	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	Constraint getBase_Constraint();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Constraint <em>Base Constraint</em>}' reference.
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Constraint <em>Base Constraint</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Base Constraint</em>' reference.
@@ -81,14 +71,14 @@ public interface FLASpecification extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Base Class</em>' reference.
 	 * @see #setBase_Class(org.eclipse.uml2.uml.Class)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLASpecification_Base_Class()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLABehavior_Base_Class()
 	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	org.eclipse.uml2.uml.Class getBase_Class();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Class <em>Base Class</em>}' reference.
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Class <em>Base Class</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Base Class</em>' reference.
@@ -107,14 +97,14 @@ public interface FLASpecification extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Fptc</em>' attribute.
 	 * @see #setFptc(String)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLASpecification_Fptc()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLABehavior_Fptc()
 	 * @model dataType="org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.NFP_String" required="true" ordered="false"
 	 * @generated
 	 */
 	String getFptc();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getFptc <em>Fptc</em>}' attribute.
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getFptc <em>Fptc</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Fptc</em>' attribute.
@@ -133,14 +123,14 @@ public interface FLASpecification extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Base Instance Specification</em>' reference.
 	 * @see #setBase_InstanceSpecification(InstanceSpecification)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLASpecification_Base_InstanceSpecification()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLABehavior_Base_InstanceSpecification()
 	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	InstanceSpecification getBase_InstanceSpecification();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_InstanceSpecification <em>Base Instance Specification</em>}' reference.
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_InstanceSpecification <em>Base Instance Specification</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Base Instance Specification</em>' reference.
@@ -159,14 +149,14 @@ public interface FLASpecification extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Base Property</em>' reference.
 	 * @see #setBase_Property(Property)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLASpecification_Base_Property()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLABehavior_Base_Property()
 	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	Property getBase_Property();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Property <em>Base Property</em>}' reference.
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Property <em>Base Property</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Base Property</em>' reference.
@@ -185,14 +175,14 @@ public interface FLASpecification extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Base Connector</em>' reference.
 	 * @see #setBase_Connector(Connector)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLASpecification_Base_Connector()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLABehavior_Base_Connector()
 	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	Connector getBase_Connector();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification#getBase_Connector <em>Base Connector</em>}' reference.
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Connector <em>Base Connector</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Base Connector</em>' reference.
@@ -201,4 +191,4 @@ public interface FLASpecification extends EObject {
 	 */
 	void setBase_Connector(Connector value);
 
-} // FLASpecification
+} // FLABehavior

@@ -125,7 +125,7 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 			case ThreatsPropagationPackage.ERROR_DETECTION: return createErrorDetection();
 			case ThreatsPropagationPackage.ERROR_HANDLING: return createErrorHandling();
 			case ThreatsPropagationPackage.FAULT_HANDLING: return createFaultHandling();
-			case ThreatsPropagationPackage.ERROR_MODEL_BEHAVIOR: return createErrorModelBehavior();
+			case ThreatsPropagationPackage.ERROR_MODEL: return createErrorModel();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -220,9 +220,9 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorModelBehavior createErrorModelBehavior() {
-		ErrorModelBehaviorImpl errorModelBehavior = new ErrorModelBehaviorImpl();
-		return errorModelBehavior;
+	public ErrorModel createErrorModel() {
+		ErrorModelImpl errorModel = new ErrorModelImpl();
+		return errorModel;
 	}
 
 	/**

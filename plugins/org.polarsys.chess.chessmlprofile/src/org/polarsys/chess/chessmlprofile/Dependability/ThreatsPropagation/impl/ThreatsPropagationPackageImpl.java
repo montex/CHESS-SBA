@@ -161,7 +161,7 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass errorModelBehaviorEClass = null;
+	private EClass errorModelEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -700,8 +700,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getErrorModelBehavior() {
-		return errorModelBehaviorEClass;
+	public EClass getErrorModel() {
+		return errorModelEClass;
 	}
 
 	/**
@@ -709,8 +709,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getErrorModelBehavior_Base_StateMachine() {
-		return (EReference)errorModelBehaviorEClass.getEStructuralFeatures().get(0);
+	public EReference getErrorModel_Base_StateMachine() {
+		return (EReference)errorModelEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1531,8 +1531,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		createEAttribute(faultHandlingEClass, FAULT_HANDLING__DELAY);
 		createEAttribute(faultHandlingEClass, FAULT_HANDLING__SUCCESS_PROBABILITY);
 
-		errorModelBehaviorEClass = createEClass(ERROR_MODEL_BEHAVIOR);
-		createEReference(errorModelBehaviorEClass, ERROR_MODEL_BEHAVIOR__BASE_STATE_MACHINE);
+		errorModelEClass = createEClass(ERROR_MODEL);
+		createEReference(errorModelEClass, ERROR_MODEL__BASE_STATE_MACHINE);
 
 		// Create enums
 		durationTypeEEnum = createEEnum(DURATION_TYPE);
@@ -1715,8 +1715,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		initEAttribute(getFaultHandling_Delay(), theBasicNFP_TypesPackage.getNFP_Real(), "delay", null, 0, 1, FaultHandling.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getFaultHandling_SuccessProbability(), theBasicNFP_TypesPackage.getNFP_Real(), "successProbability", null, 0, 1, FaultHandling.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
-		initEClass(errorModelBehaviorEClass, ErrorModelBehavior.class, "ErrorModelBehavior", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getErrorModelBehavior_Base_StateMachine(), theUMLPackage.getStateMachine(), null, "base_StateMachine", null, 1, 1, ErrorModelBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEClass(errorModelEClass, ErrorModel.class, "ErrorModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getErrorModel_Base_StateMachine(), theUMLPackage.getStateMachine(), null, "base_StateMachine", null, 1, 1, ErrorModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(durationTypeEEnum, DurationType.class, "DurationType");

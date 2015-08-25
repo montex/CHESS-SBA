@@ -62,7 +62,7 @@ public class DependableComponentImpl extends EObjectImpl implements DependableCo
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ErrorModelBehavior> errorModel;
+	protected EList<ErrorModel> errorModel;
 
 	/**
 	 * The cached value of the '{@link #getBase_Property() <em>Base Property</em>}' reference.
@@ -146,9 +146,9 @@ public class DependableComponentImpl extends EObjectImpl implements DependableCo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ErrorModelBehavior> getErrorModel() {
+	public EList<ErrorModel> getErrorModel() {
 		if (errorModel == null) {
-			errorModel = new EObjectResolvingEList<ErrorModelBehavior>(ErrorModelBehavior.class, this, DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL);
+			errorModel = new EObjectResolvingEList<ErrorModel>(ErrorModel.class, this, DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL);
 		}
 		return errorModel;
 	}
@@ -266,7 +266,7 @@ public class DependableComponentImpl extends EObjectImpl implements DependableCo
 				return;
 			case DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL:
 				getErrorModel().clear();
-				getErrorModel().addAll((Collection<? extends ErrorModelBehavior>)newValue);
+				getErrorModel().addAll((Collection<? extends ErrorModel>)newValue);
 				return;
 			case DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY:
 				setBase_Property((Property)newValue);

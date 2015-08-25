@@ -65,7 +65,7 @@ public class FailurePropagationFactoryImpl extends EFactoryImpl implements Failu
 			case FailurePropagationPackage.FPTC_SPECIFICATION: return createFPTCSpecification();
 			case FailurePropagationPackage.FPTC_PORT_SLOT: return createFPTCPortSlot();
 			case FailurePropagationPackage.FPTC: return createFPTC();
-			case FailurePropagationPackage.FLA_SPECIFICATION: return createFLASpecification();
+			case FailurePropagationPackage.FLA_BEHAVIOR: return createFLABehavior();
 			case FailurePropagationPackage.FAILURE_PROPAGATION_ANALYSIS: return createFailurePropagationAnalysis();
 			case FailurePropagationPackage.FI4FA: return createFI4FA();
 			case FailurePropagationPackage.FI4FA_SPECIFICATION: return createFI4FASpecification();
@@ -85,6 +85,16 @@ public class FailurePropagationFactoryImpl extends EFactoryImpl implements Failu
 	public FPTC createFPTC() {
 		FPTCImpl fptc = new FPTCImpl();
 		return fptc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FLABehavior createFLABehavior() {
+		FLABehaviorImpl flaBehavior = new FLABehaviorImpl();
+		return flaBehavior;
 	}
 
 	/**
@@ -165,16 +175,6 @@ public class FailurePropagationFactoryImpl extends EFactoryImpl implements Failu
 	public FI4FAAnalysis createFI4FAAnalysis() {
 		FI4FAAnalysisImpl fi4FAAnalysis = new FI4FAAnalysisImpl();
 		return fi4FAAnalysis;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public FLASpecification createFLASpecification() {
-		FLASpecificationImpl flaSpecification = new FLASpecificationImpl();
-		return flaSpecification;
 	}
 
 	/**

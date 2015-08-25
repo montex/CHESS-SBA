@@ -340,14 +340,14 @@ public interface DependableComponentPackage extends EPackage {
 
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelImpl <em>Error Model</em>}' class.
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl <em>Error Model Behavior</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getErrorModel()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getErrorModelBehavior()
 	 * @generated
 	 */
-	int ERROR_MODEL = 3;
+	int ERROR_MODEL_BEHAVIOR = 3;
 
 	/**
 	 * The feature id for the '<em><b>Error Model</b></em>' reference list.
@@ -356,7 +356,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_MODEL__ERROR_MODEL = 0;
+	int ERROR_MODEL_BEHAVIOR__ERROR_MODEL = 0;
 
 	/**
 	 * The feature id for the '<em><b>Base Class</b></em>' reference.
@@ -365,7 +365,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_MODEL__BASE_CLASS = 1;
+	int ERROR_MODEL_BEHAVIOR__BASE_CLASS = 1;
 
 	/**
 	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
@@ -374,7 +374,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_MODEL__BASE_INSTANCE_SPECIFICATION = 2;
+	int ERROR_MODEL_BEHAVIOR__BASE_INSTANCE_SPECIFICATION = 2;
 
 	/**
 	 * The feature id for the '<em><b>Base Property</b></em>' reference.
@@ -383,7 +383,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_MODEL__BASE_PROPERTY = 3;
+	int ERROR_MODEL_BEHAVIOR__BASE_PROPERTY = 3;
 
 	/**
 	 * The feature id for the '<em><b>Base Connector</b></em>' reference.
@@ -392,25 +392,16 @@ public interface DependableComponentPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_MODEL__BASE_CONNECTOR = 4;
+	int ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR = 4;
 
 	/**
-	 * The feature id for the '<em><b>Fptc</b></em>' attribute.
+	 * The number of structural features of the '<em>Error Model Behavior</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_MODEL__FPTC = 5;
-
-	/**
-	 * The number of structural features of the '<em>Error Model</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_MODEL_FEATURE_COUNT = 6;
+	int ERROR_MODEL_BEHAVIOR_FEATURE_COUNT = 5;
 
 	/**
 	 * The feature id for the '<em><b>Base Class</b></em>' reference.
@@ -716,80 +707,69 @@ public interface DependableComponentPackage extends EPackage {
 	EReference getDependableComponent_Base_InstanceSpecification();
 
 	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel <em>Error Model</em>}'.
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior <em>Error Model Behavior</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Error Model</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel
+	 * @return the meta object for class '<em>Error Model Behavior</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior
 	 * @generated
 	 */
-	EClass getErrorModel();
+	EClass getErrorModelBehavior();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getErrorModel <em>Error Model</em>}'.
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getErrorModel <em>Error Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Error Model</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getErrorModel()
-	 * @see #getErrorModel()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getErrorModel()
+	 * @see #getErrorModelBehavior()
 	 * @generated
 	 */
-	EReference getErrorModel_ErrorModel();
+	EReference getErrorModelBehavior_ErrorModel();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getBase_Class <em>Base Class</em>}'.
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Class <em>Base Class</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Base Class</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getBase_Class()
-	 * @see #getErrorModel()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Class()
+	 * @see #getErrorModelBehavior()
 	 * @generated
 	 */
-	EReference getErrorModel_Base_Class();
+	EReference getErrorModelBehavior_Base_Class();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getBase_InstanceSpecification <em>Base Instance Specification</em>}'.
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_InstanceSpecification <em>Base Instance Specification</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Base Instance Specification</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getBase_InstanceSpecification()
-	 * @see #getErrorModel()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_InstanceSpecification()
+	 * @see #getErrorModelBehavior()
 	 * @generated
 	 */
-	EReference getErrorModel_Base_InstanceSpecification();
+	EReference getErrorModelBehavior_Base_InstanceSpecification();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getBase_Property <em>Base Property</em>}'.
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Property <em>Base Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Base Property</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getBase_Property()
-	 * @see #getErrorModel()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Property()
+	 * @see #getErrorModelBehavior()
 	 * @generated
 	 */
-	EReference getErrorModel_Base_Property();
+	EReference getErrorModelBehavior_Base_Property();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getBase_Connector <em>Base Connector</em>}'.
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Connector <em>Base Connector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Base Connector</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getBase_Connector()
-	 * @see #getErrorModel()
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Connector()
+	 * @see #getErrorModelBehavior()
 	 * @generated
 	 */
-	EReference getErrorModel_Base_Connector();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getFptc <em>Fptc</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Fptc</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel#getFptc()
-	 * @see #getErrorModel()
-	 * @generated
-	 */
-	EAttribute getErrorModel_Fptc();
+	EReference getErrorModelBehavior_Base_Connector();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1038,14 +1018,14 @@ public interface DependableComponentPackage extends EPackage {
 		EReference DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getDependableComponent_Base_InstanceSpecification();
 
 		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelImpl <em>Error Model</em>}' class.
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl <em>Error Model Behavior</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getErrorModel()
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getErrorModelBehavior()
 		 * @generated
 		 */
-		EClass ERROR_MODEL = eINSTANCE.getErrorModel();
+		EClass ERROR_MODEL_BEHAVIOR = eINSTANCE.getErrorModelBehavior();
 
 		/**
 		 * The meta object literal for the '<em><b>Error Model</b></em>' reference list feature.
@@ -1053,7 +1033,7 @@ public interface DependableComponentPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ERROR_MODEL__ERROR_MODEL = eINSTANCE.getErrorModel_ErrorModel();
+		EReference ERROR_MODEL_BEHAVIOR__ERROR_MODEL = eINSTANCE.getErrorModelBehavior_ErrorModel();
 
 		/**
 		 * The meta object literal for the '<em><b>Base Class</b></em>' reference feature.
@@ -1061,7 +1041,7 @@ public interface DependableComponentPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ERROR_MODEL__BASE_CLASS = eINSTANCE.getErrorModel_Base_Class();
+		EReference ERROR_MODEL_BEHAVIOR__BASE_CLASS = eINSTANCE.getErrorModelBehavior_Base_Class();
 
 		/**
 		 * The meta object literal for the '<em><b>Base Instance Specification</b></em>' reference feature.
@@ -1069,7 +1049,7 @@ public interface DependableComponentPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ERROR_MODEL__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getErrorModel_Base_InstanceSpecification();
+		EReference ERROR_MODEL_BEHAVIOR__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getErrorModelBehavior_Base_InstanceSpecification();
 
 		/**
 		 * The meta object literal for the '<em><b>Base Property</b></em>' reference feature.
@@ -1077,7 +1057,7 @@ public interface DependableComponentPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ERROR_MODEL__BASE_PROPERTY = eINSTANCE.getErrorModel_Base_Property();
+		EReference ERROR_MODEL_BEHAVIOR__BASE_PROPERTY = eINSTANCE.getErrorModelBehavior_Base_Property();
 
 		/**
 		 * The meta object literal for the '<em><b>Base Connector</b></em>' reference feature.
@@ -1085,15 +1065,7 @@ public interface DependableComponentPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ERROR_MODEL__BASE_CONNECTOR = eINSTANCE.getErrorModel_Base_Connector();
-
-		/**
-		 * The meta object literal for the '<em><b>Fptc</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ERROR_MODEL__FPTC = eINSTANCE.getErrorModel_Fptc();
+		EReference ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR = eINSTANCE.getErrorModelBehavior_Base_Connector();
 
 	}
 

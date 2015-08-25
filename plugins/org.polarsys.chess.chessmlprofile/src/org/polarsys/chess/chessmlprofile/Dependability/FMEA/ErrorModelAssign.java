@@ -67,7 +67,7 @@ public interface ErrorModelAssign extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>From</b></em>' reference list.
-	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior}.
+	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>From</em>' reference list isn't clear,
@@ -79,7 +79,7 @@ public interface ErrorModelAssign extends EObject {
 	 * @model required="true" ordered="false"
 	 * @generated
 	 */
-	EList<ErrorModelBehavior> getFrom();
+	EList<ErrorModel> getFrom();
 
 	/**
 	 * Returns the value of the '<em><b>To</b></em>' reference list.

@@ -67,13 +67,13 @@ public interface DependableComponentFactory extends EFactory {
 	DependableComponent createDependableComponent();
 
 	/**
-	 * Returns a new object of class '<em>Error Model</em>'.
+	 * Returns a new object of class '<em>Error Model Behavior</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Error Model</em>'.
+	 * @return a new object of class '<em>Error Model Behavior</em>'.
 	 * @generated
 	 */
-	ErrorModel createErrorModel();
+	ErrorModelBehavior createErrorModelBehavior();
 
 	/**
 	 * Returns the package supported by this factory.

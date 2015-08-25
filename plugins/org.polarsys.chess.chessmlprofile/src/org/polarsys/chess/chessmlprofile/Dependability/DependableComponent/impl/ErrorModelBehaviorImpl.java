@@ -21,29 +21,28 @@ import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Property;
 
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModel;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior;
 
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Error Model</b></em>'.
+ * An implementation of the model object '<em><b>Error Model Behavior</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelImpl#getErrorModel <em>Error Model</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelImpl#getBase_Class <em>Base Class</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelImpl#getBase_Property <em>Base Property</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelImpl#getBase_Connector <em>Base Connector</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelImpl#getFptc <em>Fptc</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl#getErrorModel <em>Error Model</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl#getBase_Class <em>Base Class</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl#getBase_Property <em>Base Property</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl#getBase_Connector <em>Base Connector</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
+public class ErrorModelBehaviorImpl extends EObjectImpl implements ErrorModelBehavior {
 	/**
 	 * The cached value of the '{@link #getErrorModel() <em>Error Model</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -52,7 +51,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ErrorModelBehavior> errorModel;
+	protected EList<ErrorModel> errorModel;
 
 	/**
 	 * The cached value of the '{@link #getBase_Class() <em>Base Class</em>}' reference.
@@ -95,31 +94,11 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	protected Connector base_Connector;
 
 	/**
-	 * The default value of the '{@link #getFptc() <em>Fptc</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getFptc()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String FPTC_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getFptc() <em>Fptc</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getFptc()
-	 * @generated
-	 * @ordered
-	 */
-	protected String fptc = FPTC_EDEFAULT;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ErrorModelImpl() {
+	protected ErrorModelBehaviorImpl() {
 		super();
 	}
 
@@ -130,7 +109,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return DependableComponentPackage.Literals.ERROR_MODEL;
+		return DependableComponentPackage.Literals.ERROR_MODEL_BEHAVIOR;
 	}
 
 	/**
@@ -138,9 +117,9 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ErrorModelBehavior> getErrorModel() {
+	public EList<ErrorModel> getErrorModel() {
 		if (errorModel == null) {
-			errorModel = new EObjectResolvingEList<ErrorModelBehavior>(ErrorModelBehavior.class, this, DependableComponentPackage.ERROR_MODEL__ERROR_MODEL);
+			errorModel = new EObjectResolvingEList<ErrorModel>(ErrorModel.class, this, DependableComponentPackage.ERROR_MODEL_BEHAVIOR__ERROR_MODEL);
 		}
 		return errorModel;
 	}
@@ -156,7 +135,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 			base_Class = (org.eclipse.uml2.uml.Class)eResolveProxy(oldBase_Class);
 			if (base_Class != oldBase_Class) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.ERROR_MODEL__BASE_CLASS, oldBase_Class, base_Class));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CLASS, oldBase_Class, base_Class));
 			}
 		}
 		return base_Class;
@@ -180,7 +159,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 		org.eclipse.uml2.uml.Class oldBase_Class = base_Class;
 		base_Class = newBase_Class;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.ERROR_MODEL__BASE_CLASS, oldBase_Class, base_Class));
+			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CLASS, oldBase_Class, base_Class));
 	}
 
 	/**
@@ -194,7 +173,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 			base_InstanceSpecification = (InstanceSpecification)eResolveProxy(oldBase_InstanceSpecification);
 			if (base_InstanceSpecification != oldBase_InstanceSpecification) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.ERROR_MODEL__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
 			}
 		}
 		return base_InstanceSpecification;
@@ -218,7 +197,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 		InstanceSpecification oldBase_InstanceSpecification = base_InstanceSpecification;
 		base_InstanceSpecification = newBase_InstanceSpecification;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.ERROR_MODEL__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
+			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
 	}
 
 	/**
@@ -232,7 +211,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 			base_Property = (Property)eResolveProxy(oldBase_Property);
 			if (base_Property != oldBase_Property) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.ERROR_MODEL__BASE_PROPERTY, oldBase_Property, base_Property));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_PROPERTY, oldBase_Property, base_Property));
 			}
 		}
 		return base_Property;
@@ -256,7 +235,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 		Property oldBase_Property = base_Property;
 		base_Property = newBase_Property;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.ERROR_MODEL__BASE_PROPERTY, oldBase_Property, base_Property));
+			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_PROPERTY, oldBase_Property, base_Property));
 	}
 
 	/**
@@ -270,7 +249,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 			base_Connector = (Connector)eResolveProxy(oldBase_Connector);
 			if (base_Connector != oldBase_Connector) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.ERROR_MODEL__BASE_CONNECTOR, oldBase_Connector, base_Connector));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR, oldBase_Connector, base_Connector));
 			}
 		}
 		return base_Connector;
@@ -294,28 +273,7 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 		Connector oldBase_Connector = base_Connector;
 		base_Connector = newBase_Connector;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.ERROR_MODEL__BASE_CONNECTOR, oldBase_Connector, base_Connector));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getFptc() {
-		return fptc;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setFptc(String newFptc) {
-		String oldFptc = fptc;
-		fptc = newFptc;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.ERROR_MODEL__FPTC, oldFptc, fptc));
+			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR, oldBase_Connector, base_Connector));
 	}
 
 	/**
@@ -326,22 +284,20 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case DependableComponentPackage.ERROR_MODEL__ERROR_MODEL:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__ERROR_MODEL:
 				return getErrorModel();
-			case DependableComponentPackage.ERROR_MODEL__BASE_CLASS:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CLASS:
 				if (resolve) return getBase_Class();
 				return basicGetBase_Class();
-			case DependableComponentPackage.ERROR_MODEL__BASE_INSTANCE_SPECIFICATION:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_INSTANCE_SPECIFICATION:
 				if (resolve) return getBase_InstanceSpecification();
 				return basicGetBase_InstanceSpecification();
-			case DependableComponentPackage.ERROR_MODEL__BASE_PROPERTY:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_PROPERTY:
 				if (resolve) return getBase_Property();
 				return basicGetBase_Property();
-			case DependableComponentPackage.ERROR_MODEL__BASE_CONNECTOR:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR:
 				if (resolve) return getBase_Connector();
 				return basicGetBase_Connector();
-			case DependableComponentPackage.ERROR_MODEL__FPTC:
-				return getFptc();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -355,24 +311,21 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case DependableComponentPackage.ERROR_MODEL__ERROR_MODEL:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__ERROR_MODEL:
 				getErrorModel().clear();
-				getErrorModel().addAll((Collection<? extends ErrorModelBehavior>)newValue);
+				getErrorModel().addAll((Collection<? extends ErrorModel>)newValue);
 				return;
-			case DependableComponentPackage.ERROR_MODEL__BASE_CLASS:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CLASS:
 				setBase_Class((org.eclipse.uml2.uml.Class)newValue);
 				return;
-			case DependableComponentPackage.ERROR_MODEL__BASE_INSTANCE_SPECIFICATION:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_INSTANCE_SPECIFICATION:
 				setBase_InstanceSpecification((InstanceSpecification)newValue);
 				return;
-			case DependableComponentPackage.ERROR_MODEL__BASE_PROPERTY:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_PROPERTY:
 				setBase_Property((Property)newValue);
 				return;
-			case DependableComponentPackage.ERROR_MODEL__BASE_CONNECTOR:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR:
 				setBase_Connector((Connector)newValue);
-				return;
-			case DependableComponentPackage.ERROR_MODEL__FPTC:
-				setFptc((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -386,23 +339,20 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case DependableComponentPackage.ERROR_MODEL__ERROR_MODEL:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__ERROR_MODEL:
 				getErrorModel().clear();
 				return;
-			case DependableComponentPackage.ERROR_MODEL__BASE_CLASS:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CLASS:
 				setBase_Class((org.eclipse.uml2.uml.Class)null);
 				return;
-			case DependableComponentPackage.ERROR_MODEL__BASE_INSTANCE_SPECIFICATION:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_INSTANCE_SPECIFICATION:
 				setBase_InstanceSpecification((InstanceSpecification)null);
 				return;
-			case DependableComponentPackage.ERROR_MODEL__BASE_PROPERTY:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_PROPERTY:
 				setBase_Property((Property)null);
 				return;
-			case DependableComponentPackage.ERROR_MODEL__BASE_CONNECTOR:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR:
 				setBase_Connector((Connector)null);
-				return;
-			case DependableComponentPackage.ERROR_MODEL__FPTC:
-				setFptc(FPTC_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -416,36 +366,18 @@ public class ErrorModelImpl extends EObjectImpl implements ErrorModel {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case DependableComponentPackage.ERROR_MODEL__ERROR_MODEL:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__ERROR_MODEL:
 				return errorModel != null && !errorModel.isEmpty();
-			case DependableComponentPackage.ERROR_MODEL__BASE_CLASS:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CLASS:
 				return base_Class != null;
-			case DependableComponentPackage.ERROR_MODEL__BASE_INSTANCE_SPECIFICATION:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_INSTANCE_SPECIFICATION:
 				return base_InstanceSpecification != null;
-			case DependableComponentPackage.ERROR_MODEL__BASE_PROPERTY:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_PROPERTY:
 				return base_Property != null;
-			case DependableComponentPackage.ERROR_MODEL__BASE_CONNECTOR:
+			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR:
 				return base_Connector != null;
-			case DependableComponentPackage.ERROR_MODEL__FPTC:
-				return FPTC_EDEFAULT == null ? fptc != null : !FPTC_EDEFAULT.equals(fptc);
 		}
 		return super.eIsSet(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (fptc: ");
-		result.append(fptc);
-		result.append(')');
-		return result.toString();
-	}
-
-} //ErrorModelImpl
+} //ErrorModelBehaviorImpl

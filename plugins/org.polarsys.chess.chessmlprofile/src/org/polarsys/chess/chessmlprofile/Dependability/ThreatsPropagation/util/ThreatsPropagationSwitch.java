@@ -309,9 +309,9 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ThreatsPropagationPackage.ERROR_MODEL_BEHAVIOR: {
-				ErrorModelBehavior errorModelBehavior = (ErrorModelBehavior)theEObject;
-				T result = caseErrorModelBehavior(errorModelBehavior);
+			case ThreatsPropagationPackage.ERROR_MODEL: {
+				ErrorModel errorModel = (ErrorModel)theEObject;
+				T result = caseErrorModel(errorModel);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -395,17 +395,17 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Error Model Behavior</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Error Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Error Model Behavior</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Error Model</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseErrorModelBehavior(ErrorModelBehavior object) {
+	public T caseErrorModel(ErrorModel object) {
 		return null;
 	}
 

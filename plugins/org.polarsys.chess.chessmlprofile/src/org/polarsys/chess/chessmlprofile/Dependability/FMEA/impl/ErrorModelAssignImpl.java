@@ -62,7 +62,7 @@ public class ErrorModelAssignImpl extends EObjectImpl implements ErrorModelAssig
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ErrorModelBehavior> from;
+	protected EList<ErrorModel> from;
 
 	/**
 	 * The cached value of the '{@link #getTo() <em>To</em>}' reference list.
@@ -136,9 +136,9 @@ public class ErrorModelAssignImpl extends EObjectImpl implements ErrorModelAssig
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ErrorModelBehavior> getFrom() {
+	public EList<ErrorModel> getFrom() {
 		if (from == null) {
-			from = new EObjectResolvingEList<ErrorModelBehavior>(ErrorModelBehavior.class, this, FMEAPackage.ERROR_MODEL_ASSIGN__FROM);
+			from = new EObjectResolvingEList<ErrorModel>(ErrorModel.class, this, FMEAPackage.ERROR_MODEL_ASSIGN__FROM);
 		}
 		return from;
 	}
@@ -188,7 +188,7 @@ public class ErrorModelAssignImpl extends EObjectImpl implements ErrorModelAssig
 				return;
 			case FMEAPackage.ERROR_MODEL_ASSIGN__FROM:
 				getFrom().clear();
-				getFrom().addAll((Collection<? extends ErrorModelBehavior>)newValue);
+				getFrom().addAll((Collection<? extends ErrorModel>)newValue);
 				return;
 			case FMEAPackage.ERROR_MODEL_ASSIGN__TO:
 				getTo().clear();

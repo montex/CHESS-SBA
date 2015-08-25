@@ -40,6 +40,33 @@ public interface RTComponentModelFactory extends EFactory {
 	CHRtPortSlot createCHRtPortSlot();
 
 	/**
+	 * Returns a new object of class '<em>ARINC Component Impl</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>ARINC Component Impl</em>'.
+	 * @generated
+	 */
+	ARINCComponentImpl createARINCComponentImpl();
+
+	/**
+	 * Returns a new object of class '<em>ARINC Process</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>ARINC Process</em>'.
+	 * @generated
+	 */
+	ARINCProcess createARINCProcess();
+
+	/**
+	 * Returns a new object of class '<em>ARINC Function</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>ARINC Function</em>'.
+	 * @generated
+	 */
+	ARINCFunction createARINCFunction();
+
+	/**
 	 * Returns a new object of class '<em>CH Rt Specification</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

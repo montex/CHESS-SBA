@@ -25,7 +25,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorM
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * obsolete, use ErrorModel
+ * obsolete, use ErrorModelBehavior
  * <!-- end-model-doc -->
  *
  * <p>
@@ -71,7 +71,7 @@ public interface DependableComponent extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Error Model</b></em>' reference list.
-	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior}.
+	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Error Model</em>' reference isn't clear,
@@ -83,7 +83,7 @@ public interface DependableComponent extends EObject {
 	 * @model ordered="false"
 	 * @generated
 	 */
-	EList<ErrorModelBehavior> getErrorModel();
+	EList<ErrorModel> getErrorModel();
 
 	/**
 	 * Returns the value of the '<em><b>Base Property</b></em>' reference.

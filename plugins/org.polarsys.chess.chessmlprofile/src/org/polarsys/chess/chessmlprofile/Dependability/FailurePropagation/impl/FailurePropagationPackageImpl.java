@@ -47,6 +47,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDAv
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDMitigation;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FAAnalysis;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FASpecification;
+import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification;
@@ -106,6 +107,13 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass flaBehaviorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass failurePropagationAnalysisEClass = null;
 
 	/**
@@ -156,13 +164,6 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 * @generated
 	 */
 	private EClass fi4FAAnalysisEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass flaSpecificationEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -345,6 +346,69 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 */
 	public EReference getFPTC_Base_Connector() {
 		return (EReference)fptcEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getFLABehavior() {
+		return flaBehaviorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLABehavior_Base_Constraint() {
+		return (EReference)flaBehaviorEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLABehavior_Base_Class() {
+		return (EReference)flaBehaviorEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFLABehavior_Fptc() {
+		return (EAttribute)flaBehaviorEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLABehavior_Base_InstanceSpecification() {
+		return (EReference)flaBehaviorEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLABehavior_Base_Property() {
+		return (EReference)flaBehaviorEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLABehavior_Base_Connector() {
+		return (EReference)flaBehaviorEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -595,69 +659,6 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getFLASpecification() {
-		return flaSpecificationEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getFLASpecification_Base_Constraint() {
-		return (EReference)flaSpecificationEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getFLASpecification_Base_Class() {
-		return (EReference)flaSpecificationEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getFLASpecification_Fptc() {
-		return (EAttribute)flaSpecificationEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getFLASpecification_Base_InstanceSpecification() {
-		return (EReference)flaSpecificationEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getFLASpecification_Base_Property() {
-		return (EReference)flaSpecificationEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getFLASpecification_Base_Connector() {
-		return (EReference)flaSpecificationEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public FailurePropagationFactory getFailurePropagationFactory() {
 		return (FailurePropagationFactory)getEFactoryInstance();
 	}
@@ -697,13 +698,13 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		createEReference(fptcEClass, FPTC__BASE_COMMENT);
 		createEReference(fptcEClass, FPTC__BASE_CONNECTOR);
 
-		flaSpecificationEClass = createEClass(FLA_SPECIFICATION);
-		createEReference(flaSpecificationEClass, FLA_SPECIFICATION__BASE_CONSTRAINT);
-		createEReference(flaSpecificationEClass, FLA_SPECIFICATION__BASE_CLASS);
-		createEAttribute(flaSpecificationEClass, FLA_SPECIFICATION__FPTC);
-		createEReference(flaSpecificationEClass, FLA_SPECIFICATION__BASE_INSTANCE_SPECIFICATION);
-		createEReference(flaSpecificationEClass, FLA_SPECIFICATION__BASE_PROPERTY);
-		createEReference(flaSpecificationEClass, FLA_SPECIFICATION__BASE_CONNECTOR);
+		flaBehaviorEClass = createEClass(FLA_BEHAVIOR);
+		createEReference(flaBehaviorEClass, FLA_BEHAVIOR__BASE_CONSTRAINT);
+		createEReference(flaBehaviorEClass, FLA_BEHAVIOR__BASE_CLASS);
+		createEAttribute(flaBehaviorEClass, FLA_BEHAVIOR__FPTC);
+		createEReference(flaBehaviorEClass, FLA_BEHAVIOR__BASE_INSTANCE_SPECIFICATION);
+		createEReference(flaBehaviorEClass, FLA_BEHAVIOR__BASE_PROPERTY);
+		createEReference(flaBehaviorEClass, FLA_BEHAVIOR__BASE_CONNECTOR);
 
 		failurePropagationAnalysisEClass = createEClass(FAILURE_PROPAGATION_ANALYSIS);
 
@@ -792,13 +793,13 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		initEReference(getFPTC_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getFPTC_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
-		initEClass(flaSpecificationEClass, FLASpecification.class, "FLASpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getFLASpecification_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getFLASpecification_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getFLASpecification_Fptc(), theBasicNFP_TypesPackage.getNFP_String(), "fptc", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getFLASpecification_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getFLASpecification_Base_Property(), theUMLPackage.getProperty(), null, "base_Property", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getFLASpecification_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEClass(flaBehaviorEClass, FLABehavior.class, "FLABehavior", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getFLABehavior_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFLABehavior_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFLABehavior_Fptc(), theBasicNFP_TypesPackage.getNFP_String(), "fptc", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFLABehavior_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFLABehavior_Base_Property(), theUMLPackage.getProperty(), null, "base_Property", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFLABehavior_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(failurePropagationAnalysisEClass, FailurePropagationAnalysis.class, "FailurePropagationAnalysis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

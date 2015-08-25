@@ -100,53 +100,7 @@ public interface ComponentModelPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentModelPackageImpl#getComponentImplementation()
 	 * @generated
 	 */
-	int COMPONENT_IMPLEMENTATION = 1;
-
-	/**
-	 * The feature id for the '<em><b>Base Component</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_IMPLEMENTATION__BASE_COMPONENT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Language</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_IMPLEMENTATION__LANGUAGE = 1;
-
-	/**
-	 * The feature id for the '<em><b>OS</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_IMPLEMENTATION__OS = 2;
-
-	/**
-	 * The feature id for the '<em><b>Source Code Location</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_IMPLEMENTATION__SOURCE_CODE_LOCATION = 3;
-
-	/**
-	 * The number of structural features of the '<em>Component Implementation</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_IMPLEMENTATION_FEATURE_COUNT = 4;
-
+	int COMPONENT_IMPLEMENTATION = 3;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.FunctionalPartitionImpl <em>Functional Partition</em>}' class.
@@ -156,7 +110,7 @@ public interface ComponentModelPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentModelPackageImpl#getFunctionalPartition()
 	 * @generated
 	 */
-	int FUNCTIONAL_PARTITION = 2;
+	int FUNCTIONAL_PARTITION = 1;
 
 	/**
 	 * The feature id for the '<em><b>Utilization</b></em>' attribute.
@@ -221,7 +175,7 @@ public interface ComponentModelPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentModelPackageImpl#getHwAbstractionComponentImpl()
 	 * @generated
 	 */
-	int HW_ABSTRACTION_COMPONENT_IMPL = 3;
+	int HW_ABSTRACTION_COMPONENT_IMPL = 2;
 
 	/**
 	 * The feature id for the '<em><b>Hw Res</b></em>' reference.
@@ -249,6 +203,51 @@ public interface ComponentModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int HW_ABSTRACTION_COMPONENT_IMPL_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Base Component</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_IMPLEMENTATION__BASE_COMPONENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Language</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_IMPLEMENTATION__LANGUAGE = 1;
+
+	/**
+	 * The feature id for the '<em><b>OS</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_IMPLEMENTATION__OS = 2;
+
+	/**
+	 * The feature id for the '<em><b>Source Code Location</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_IMPLEMENTATION__SOURCE_CODE_LOCATION = 3;
+
+	/**
+	 * The number of structural features of the '<em>Component Implementation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_IMPLEMENTATION_FEATURE_COUNT = 4;
 
 
 	/**
