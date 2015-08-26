@@ -11,6 +11,8 @@
  *****************************************************************************/
 package org.polarsys.chess.chessmlprofile.util;
 
+import org.eclipse.uml2.uml.Stereotype;
+
 public class Constants {
 
 	// Components stereotypes
@@ -25,6 +27,7 @@ public class Constants {
 	public static final String CSPORT_KIND = "kind";
 	public static final String CSPORT_KIND_PROREQ = "proreq";
 	public static final String CSPORT_KIND_REQUIRED = "required";
+	public static final String CSPORT_KIND_PROVIDED = "provided";
 
 	public static final String FLOW_PORT = "MARTE::MARTE_DesignModel::GCM::FlowPort";
 	public static final String FLOW_PORT_DIRECTION = "direction";
@@ -111,6 +114,23 @@ public class Constants {
 	public static final String SATISFY = "SysML::Requirements::Satisfy";
 	
 	
+	// TODO added the following constants! To be committed!
+	//CHESS CriticalityInterfaceSpecification stereotype 
+	public static final String CH_CRITICALITYINTERFACESPECIFICATION = "CHESS::Safety::CriticalityInterfaceSpecification";
+	public static final String CH_CRITICALITYINTERFACESPECIFICATION_ACCEPTEDCRITICALITYFORCLIENTS = "acceptedCriticalityForClients";
+	public static final String CH_CRITICALITYINTERFACESPECIFICATION_BASE_CONSTRAINT = "base_constraint";
+	
+	//CHESS CriticalitySpecification stereotype 
+	public static final String CH_CRITICALITYSPECITICATION = "CHESS::Safety::CriticalitySpecification";
+	public static final String CH_CRITICALITYSPECITICATION_CRITICALITYLEVEL = "criticalityLevel";
+	
+	//MARTE NfpConstraint  
+	public static final String MARTE_NFPS = "MARTE::MARTE_Foundations::NFPs::NfpConstraint";
+	public static final String MARTE_NFPS_KIND ="kind";
+	public static final String MARTE_NFPS_MODE = "mode";
+	
+	// MARTE MemoryPartition
+	public static final String MARTE_MEMORYPARTITION ="MARTE::MARTE_DesignModel::SRM::SW_Concurrency::MemoryPartition";
 	
 	
 	
