@@ -57,7 +57,8 @@ public class Constants {
 	public static final String CHRTSPEC_OCCKIND = "occKind";
 	public static final String CHRTSPEC_OCCKIND_PERIODIC = "periodic";
 	public static final String CH_HWPROCESSOR = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor";
-
+	
+	public static final String CHRTPORTSLOT = "CHESS::Predictability::RTComponentModel::CHRtPortSlot";
 	
 	// CHESS views
 	public static final String DEPENDABILITY_ANALYSIS_VIEW = "CHESS::Core::CHESSViews::DependabilityAnalysisView";
