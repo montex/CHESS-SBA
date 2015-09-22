@@ -183,6 +183,7 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 						//perform build instances
 						buildComponentInstance(instPkg, comp, null, null, null, new HashMap<Property, InstanceSpecification>(), comp.getOwnedComments());
 						regenerateAssignAllocations(umlModel);
+						/*The multi instance support has to be re-engineered
 						try {
 							//TODO: WARNING - saving the resource probably is not the best way to deal with
 							//the problem of creating the multi instances at this moment
@@ -199,7 +200,7 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
+						}*/
 					}
 						
 				});

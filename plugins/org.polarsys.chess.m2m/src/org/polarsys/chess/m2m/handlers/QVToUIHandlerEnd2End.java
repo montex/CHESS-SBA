@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
@@ -362,7 +361,8 @@ public class QVToUIHandlerEnd2End extends AbstractHandler {
 		final List<Assign> assigns = new ArrayList<Assign>();
 		for (Element elem : model.allOwnedElements()) {
 			CHRtPortSlot chrtSlot = UMLUtils.getStereotypeApplication(elem, CHRtPortSlot.class);
-			if(chrtSlot != null && UMLUtils.getStereotypeApplication(chrtSlot.getBase_Slot().getOwner(), IdentifInstance.class) != null){
+			//if(chrtSlot != null && UMLUtils.getStereotypeApplication(chrtSlot.getBase_Slot().getOwner(), IdentifInstance.class) != null){
+			if(chrtSlot != null){
 				specifications.add(chrtSlot);
 			}
 			if(elem instanceof InstanceSpecification){

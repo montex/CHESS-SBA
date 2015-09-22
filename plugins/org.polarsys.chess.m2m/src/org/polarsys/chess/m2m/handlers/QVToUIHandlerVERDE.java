@@ -39,7 +39,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
-import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaWorkloadBehavior;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
@@ -47,7 +46,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -56,8 +54,6 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Stereotype;
-import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
@@ -65,7 +61,6 @@ import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.m2m.Activator;
-import org.polarsys.chess.m2m.transformations.AbstractTransformation;
 import org.polarsys.chess.m2m.transformations.PIMPSMTransformationVERDE;
 import org.polarsys.chess.m2m.transformations.TransUtil;
 import org.polarsys.chess.m2m.transformations.TransformationResultsData;
@@ -177,7 +172,6 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					
-					IWorkbenchPage page =  editor.getEditorSite().getPage();
 					TransformationResultsData result =null;
 					try {
 						//CHESSProjectSupport.installMAST();
@@ -276,7 +270,8 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		final List<CH_HwProcessor> cpus = new ArrayList<CH_HwProcessor>();
 		for (Element elem : model.allOwnedElements()) {
 			CHRtPortSlot chrtSlot = UMLUtils.getStereotypeApplication(elem, CHRtPortSlot.class);
-			if(chrtSlot != null && UMLUtils.getStereotypeApplication(chrtSlot.getBase_Slot().getOwner(), IdentifInstance.class) != null){
+			//if(chrtSlot != null && UMLUtils.getStereotypeApplication(chrtSlot.getBase_Slot().getOwner(), IdentifInstance.class) != null){
+			if(chrtSlot != null){	
 				specifications.add(chrtSlot);
 			}
 			if(elem instanceof InstanceSpecification){

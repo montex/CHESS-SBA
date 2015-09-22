@@ -61,7 +61,7 @@ property slotInstances : Set(Slot) = null;
 property e2eOperations : Set(Operation) = null;
 
 property instSpecPackage : Package = null;
-property instSpecFullPackage : Package = null;
+//property instSpecFullPackage : Package = null;
 
 property currentConcurRes : MARTE::SRM::SW_Concurrency::SwSchedulableResource = null;
 property currentSlot : Slot = null;
@@ -103,7 +103,7 @@ mapping inout Model::psmModel() {
 		
 		var platforms := saAnalysisCtx.platform->asSequence();
 		instSpecPackage := platforms->first().oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package;
-		instSpecFullPackage := compView.allOwnedElements()[Package]->selectOne(name.equalsIgnoreCase(instSpecPackage.name + "_full"));
+		//instSpecFullPackage := compView.allOwnedElements()[Package]->selectOne(name.equalsIgnoreCase(instSpecPackage.name + "_full"));
 	}
 	
 	assert fatal (instSpecPackage <> null)
@@ -225,21 +225,21 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 		var asg := ass.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
 
 		//TODO assumption: one annotatedElement per Assign	
-		var list := ass.getInstances(instSpecPackage, instSpecFullPackage);
+		var list := ass.getInstances(instSpecPackage);
 		if(list->size()>0){
 			
-		slotinAssigns := false;
-		list->forEach(e){
-			var id := e.getMetaclass("CHESS::Core::IdentifInstance").oclAsType(CHESS::Core::IdentifInstance);
-			slotInstances += e.slot->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
-			if(id.sourceInstanceSpec.classifier.getMetaclass(FunctionalPartitionQN)->asSequence()->first()<>null){
-				partitions += id.sourceInstanceSpec.classifier;
-			/*it is a partition*/				
-			};
-		}
+			slotinAssigns := false;
+			list->forEach(e){
+				//var id := e.getMetaclass("CHESS::Core::IdentifInstance").oclAsType(CHESS::Core::IdentifInstance);
+				slotInstances += e.slot->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
+				if(e.classifier.getMetaclass(FunctionalPartitionQN)->asSequence()->first()<>null){
+					partitions += e.classifier;
+				/*it is a partition*/				
+				};
+			}
 		} else {
 			slotinAssigns := true;
-			var slotList := ass.getSlotInstances(instSpecPackage, instSpecFullPackage);
+			var slotList := ass.getSlotInstances(instSpecPackage);
 			slotInstances += slotList;
 		
 		}
@@ -708,7 +708,7 @@ query Slot::resolve2SaStep(chrt : Comment) : Operation {
 helper createSporadicRelatedNodes(in currentOp : chessmlprofile::RTComponentModel::CHRtSpecification, in currentSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
 	if currentOp.isSporadic() then {
 		var nextE2ENode := prevE2ENode;
-		var riSlot := currentSlot.getCorrespondingSlotFull();
+		var riSlot := currentSlot.getCorrespondingSlot();
 		//If the current operation responds to a remote call, creates the "receive" node first
 		var connectingBus = getConnectingBus(currentSlot.owningInstance, riSlot.owningInstance);
 		if connectingBus <> null then
@@ -747,7 +747,7 @@ helper createOpaqueActionsChainFull(in currentIsGuarded : Boolean, in currentCHR
 		var riSlots := calledOpNode.portToSlotFull(currentSlot.owningInstance);
 		riSlots->forEach(riSlot){
 			log("  Search for piSlot from riSlot '" + riSlot.owningInstance.name + riSlot.owningInstance.getStringId() + riSlot.definingFeature.name + riSlot.getStringId() + "'.");
-			var usedPiSlot := riSlot.getCorrespondingSlotFull();
+			var usedPiSlot := riSlot.getCorrespondingSlot();
 			log("  Found piSlot '" + usedPiSlot.owningInstance.name+usedPiSlot.owningInstance.getStringId() + usedPiSlot.definingFeature.name + usedPiSlot.getStringId() + "'.");
 	        var usedPiCHRtSpec := usedPiSlot.CHRtSpecForOperation(calledOpNode.operation);
 	        var bus := getConnectingBus(currentSlot.owningInstance, usedPiSlot.owningInstance);
@@ -810,7 +810,7 @@ helper createSubUsagesChain(in enclosingCHRTComment : Comment, in currentCHRtCom
 		
 		var riSlots := calledOpNode.portToSlotFull(currentSlot.owningInstance);
 		riSlots->forEach(riSlot){
-			var piSlot := riSlot.getCorrespondingSlotFull();
+			var piSlot := riSlot.getCorrespondingSlot();
 	        var piOp := piSlot.CHRtSpecForOperation(calledOpNode.operation);
 	        var bus := getConnectingBus(currentSlot.owningInstance, piSlot.owningInstance);
 	        
@@ -1523,8 +1523,9 @@ query Slot::getCorrespondingSlot() : Slot {
 	return null;
 }
 
+/*
 query Slot::getCorrespondingSlotFull() : Slot {
-	/*if we are not working with instSpecFull, we are on instSpec so use simpler checks to get the corresponding slot*/
+	/*if we are not working with instSpecFull, we are on instSpec so use simpler checks to get the corresponding slot*
 	if(self.owner.owner![Package].name.endsWith("instSpec")) then {
 		return self.getCorrespondingSlot();
 	}endif;
@@ -1563,7 +1564,7 @@ query Slot::getCorrespondingSlotFull() : Slot {
 	    
 	};
 	return null;
-}
+}*/
 
 /*
  Return the "to" attribute of a given <Assign>Comment
@@ -1608,7 +1609,8 @@ query Comment::isAssignFromPartitionInstance(p : InstanceSpecification) : Boolea
 
 query Comment::isAssignForInstance(spec : InstanceSpecification) : Boolean {
 	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
-	return ass._from![InstanceSpecification] = spec.getSourceInstanceSpec() and self.isReferringId(spec.getId());
+	//return ass._from![InstanceSpecification] = spec.getSourceInstanceSpec() and self.isReferringId(spec.getId());
+	return ass._from![InstanceSpecification] = spec;
 }
 
 query Comment::isAssignForInstance(spec : Slot, chrt : Comment) : Boolean {
@@ -1760,7 +1762,7 @@ helper Message::getMsgChrts() : chessmlprofile::RTComponentModel::CHRtSpecificat
    	//get the instance related to Lifeline's' "represents" feature
 	log("Found Lifeline for property: " + lifeline.represents.name + " with Type: " + lifeline.represents.type.name);
 	//search for instance in the CHGaResourcePlatform
-	var instance := lifeline.represents.getLifeLineInstance(instSpecFullPackage.allOwnedElements()[InstanceSpecification]);
+	var instance := lifeline.represents.getLifeLineInstance(instSpecPackage.allOwnedElements()[InstanceSpecification]);
 	log("Found Instance " + instance.name);
 		
 	//get the instance's chrtPortSlots with a ChRtSpecification comment whose context is equal to the inital operation

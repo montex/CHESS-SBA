@@ -174,6 +174,7 @@ query Slot::getId() : Integer {
 	return 0;
 }
 
+
 query InstanceSpecification::getStringId() : String {
 	var ids := self.getMetaclass(IdentifInstanceQN).oclAsType(CHESS::Core::IdentifInstance);
 	if not (ids.oclIsInvalid() or ids.oclIsUndefined()) then
@@ -182,14 +183,16 @@ query InstanceSpecification::getStringId() : String {
 	return "";
 }
 
+/*
 query InstanceSpecification::getId() : Integer {
 	var ids := self.getMetaclass(IdentifInstanceQN).oclAsType(CHESS::Core::IdentifInstance);
 	if not (ids.oclIsInvalid() and ids.oclIsUndefined()) then
 		return ids.id
 	endif;
 	return 0;
-}
+}*/
 
+/*
 query InstanceSpecification::getSourceInstanceSpec() : InstanceSpecification {
 	var ids := self.getMetaclass(IdentifInstanceQN).oclAsType(CHESS::Core::IdentifInstance);
 	if not (ids.oclIsInvalid() and ids.oclIsUndefined()) then
@@ -198,7 +201,7 @@ query InstanceSpecification::getSourceInstanceSpec() : InstanceSpecification {
 	assert fatal (false)
 		with log ("Cannot find source instance specification for " + self.qualifiedName);
 	return null
-}
+}*/
 
 // Naming conventions
 

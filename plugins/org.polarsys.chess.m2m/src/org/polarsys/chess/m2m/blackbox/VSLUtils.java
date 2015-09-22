@@ -40,8 +40,7 @@ import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.ValueSpecification;
-import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
-import org.polarsys.chess.chessmlprofile.Core.IdentifSlot;
+
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.validator.constraints.StringParser;
@@ -561,11 +560,12 @@ public class VSLUtils {
 	 * @param rule the rule
 	 * @return the e list
 	 */
+	@Deprecated	
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static EList<Slot> portToSlotsByRule(IContext context,
 			org.eclipse.uml2.uml.InstanceSpecification self, org.eclipse.uml2.uml.Port onPort, org.eclipse.uml2.uml.Constraint rule) {
 		EList<Slot> list = new BasicEList<Slot>();
-		
+		/*
 		String values[] = rule.getSpecification().stringValue().trim().split(" ");
 		ArrayList<int[]> boundsList = new ArrayList<int[]>();
 		for (String value : values) {
@@ -581,7 +581,7 @@ public class VSLUtils {
 			else if (slot.getDefiningFeature() == onPort) {
 				list.add(slot);
 			}
-		}
+		}*/
 		
 		return list;
 	}
@@ -598,8 +598,7 @@ public class VSLUtils {
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static EList<Slot> getSlotInstances(IContext context,
 			org.eclipse.uml2.uml.Comment self,
-			org.eclipse.uml2.uml.Package inst,
-			org.eclipse.uml2.uml.Package instFull) {
+			org.eclipse.uml2.uml.Package inst) {
 		EList<Slot> list = new BasicEList<Slot>();
 
 		Assign ass = getStereotypeApplication(self, Assign.class);
@@ -613,6 +612,14 @@ public class VSLUtils {
 		if (!inst.allOwnedElements().contains(slotInst))
 			return list;
 
+		EList<Element> asslist = ass.getFrom();
+		for (Element elem : asslist){
+			list.add((Slot) elem);
+		}
+		
+		return list;
+		
+		/*
 		int[] bounds = getBounds(self);
 
 		if (bounds != null) {
@@ -650,6 +657,7 @@ public class VSLUtils {
 			}
 		}
 		return list;
+		*/
 	}
 
 	/**
@@ -683,8 +691,7 @@ public class VSLUtils {
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static EList<InstanceSpecification> getInstances(IContext context,
 			org.eclipse.uml2.uml.Comment self,
-			org.eclipse.uml2.uml.Package inst,
-			org.eclipse.uml2.uml.Package instFull) {
+			org.eclipse.uml2.uml.Package inst) {
 		EList<InstanceSpecification> list = new BasicEList<InstanceSpecification>();
 
 		Assign ass = getStereotypeApplication(self, Assign.class);
@@ -693,11 +700,18 @@ public class VSLUtils {
 		if (originatingInst == null)
 			return list;
 		
-		if (!inst.allOwnedElements().contains(originatingInst))
-			return list;
+//		if (!inst.allOwnedElements().contains(originatingInst))
+//			return list;
+		
+		EList<Element> asslist = ass.getFrom();
+		for (Element elem : asslist){
+			list.add((InstanceSpecification) elem);
+		}
 		
 		
+		return list;
 		
+		/*
 		int[] bounds = getBounds(self);
 		
 		if (bounds != null)
@@ -707,8 +721,8 @@ public class VSLUtils {
 						IdentifInstance.class);
 				
 				if (el instanceof InstanceSpecification && id != null) {
-					if (isInBounds(id.getId(), bounds)
-							&& id.getSourceInstanceSpec() == originatingInst)
+					if (isInBounds(id.getId(), bounds))
+//							&& id.getSourceInstanceSpec() == originatingInst)
 						list.add((InstanceSpecification) el);
 				}
 			}
@@ -716,13 +730,13 @@ public class VSLUtils {
 			for (Element el : instFull.allOwnedElements()) {
 				IdentifInstance id = getStereotypeApplication(el,
 						IdentifInstance.class);
-				if (el instanceof InstanceSpecification && id != null
-						&& id.getSourceInstanceSpec() == originatingInst) {
+				if (el instanceof InstanceSpecification && id != null){
+//						&& id.getSourceInstanceSpec() == originatingInst) {
 					list.add((InstanceSpecification) el);
 				}
 			}
 
-		return list;
+		return list;*/
 	}
 
 //	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
