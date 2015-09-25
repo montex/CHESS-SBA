@@ -94,6 +94,8 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 	
 	/** The Constant MARTE_ASSIGN. */
 	private static final String MARTE_ASSIGN = "MARTE::MARTE_Foundations::Alloc::Assign";
+	/** The Constant MARTE_MEMORYPARTITION. */
+	private static final String MARTE_MEMORYPARTITION = "MARTE::MARTE_DesignModel::SRM::SW_Concurrency::MemoryPartition";
 	
 	/** The ac list. */
 	private static ArrayList<AssignCopy> acList;
@@ -261,6 +263,11 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 				inst.getSlots().add(slot);
 				InstanceValue instValue = (InstanceValue) slot.createValue(subProp.getName(), null, UMLPackage.Literals.INSTANCE_VALUE);
 				instValue.setInstance(subInst);
+				//if the property is stereotyped, then apply the same stereotype to the instance (if applicable)
+				Stereotype memPartition = subProp.getAppliedStereotype(MARTE_MEMORYPARTITION);
+				if (memPartition != null){
+					subInst.applyStereotype(memPartition);
+				}
 			}
 			//ports
 			if(subProp.getAppliedStereotype(MARTE_CSP) != null){
