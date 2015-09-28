@@ -63,6 +63,7 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.DeploymentView;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
+import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
@@ -109,6 +110,9 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 	/** The slot list. */
 	private static ArrayList<Slot> slotList =  new ArrayList<Slot>();
 	private boolean ignoreErrors;
+	
+	private InstanceSpecification oldRootInstance = null;
+	private Package oldInstancePackage = null;
 
 	/* (non-Javadoc)
 	 * Launches the dialog to select the Component from which InstanceSpecifications (i.e. the object view) needs to be created
@@ -168,10 +172,20 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 						//reuse instance package, if present, but destroy its children
 						if(instPkg != null){
 							EList<PackageableElement> elems = instPkg.getPackagedElements();
+							
+							//save the root old instance
+							Package pkg = comp.getNearestPackage();
+							oldInstancePackage = pkg.createNestedPackage(comp.getName() + "_oldinstSpec");
+							//oldInstancePackage = UMLFactory.eINSTANCE.createPackage();
+							
+							
 							int size = elems.size(); 
 							for(int i = 0; i < size; i++){
 								PackageableElement pe = elems.get(0);
-								pe.destroy();
+								if (!pe.getName().contains("."))
+									oldRootInstance = (InstanceSpecification) pe;
+								//pe.destroy();
+								oldInstancePackage.getPackagedElements().add(pe);
 							}
 						}else{
 							//create the instance package, if needed.
@@ -183,7 +197,7 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 						slotList.clear();
 						
 						//perform build instances
-						buildComponentInstance(instPkg, comp, null, null, null, new HashMap<Property, InstanceSpecification>(), comp.getOwnedComments());
+						buildComponentInstance(instPkg, comp, null, null, null, new HashMap<Property, InstanceSpecification>(), comp.getOwnedComments(), oldRootInstance);
 						regenerateAssignAllocations(umlModel);
 						/*The multi instance support has to be re-engineered
 						try {
@@ -203,6 +217,7 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}*/
+						oldInstancePackage.destroy();
 					}
 						
 				});
@@ -228,9 +243,10 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 	 * @param theProp the UML property for which the instance-level representation has to be created
 	 * @param property2InstMap the properties to instances map
 	 * @param commList the list of CHRtSPecification from which the instance-level representation has to be created
+	 * @param oldInst the instanceSpecification that will be replaced in the model; it allows to retrieve available properties on the instance, to be applied to the new one. It can be null
 	 * @return the instance specification, stereotyped as MARTE Resource
 	 */
-	private InstanceSpecification buildComponentInstance(Package pkg, Component comp, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Property theProp, Map<Property, InstanceSpecification> property2InstMap, List<Comment> commList) {
+	private InstanceSpecification buildComponentInstance(Package pkg, Component comp, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Property theProp, Map<Property, InstanceSpecification> property2InstMap, List<Comment> commList, InstanceSpecification oldInst) {
 		InstanceSpecification inst = UMLFactory.eINSTANCE.createInstanceSpecification();
 		if(theProp != null){
 			String name = parentInstance.getName() + "." + theProp.getName();
@@ -257,17 +273,19 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 			if(subProp.getType() instanceof Component){
 				Component subCompImpl = (Component) subProp.getType();
 				commList.addAll(subCompImpl.getOwnedComments());
-				InstanceSpecification subInst = buildComponentInstance(pkg, subCompImpl, resPlatform, inst, subProp, property2InstMap, commList);
+				InstanceSpecification oldsubInst = getCorrespondingOldChildInstance (subProp, oldInst);
+				InstanceSpecification subInst = buildComponentInstance(pkg, subCompImpl, resPlatform, inst, subProp, property2InstMap, commList, oldsubInst);
 				Slot slot = UMLFactory.eINSTANCE.createSlot();
 				slot.setDefiningFeature(subProp);
 				inst.getSlots().add(slot);
 				InstanceValue instValue = (InstanceValue) slot.createValue(subProp.getName(), null, UMLPackage.Literals.INSTANCE_VALUE);
 				instValue.setInstance(subInst);
+				/*
 				//if the property is stereotyped, then apply the same stereotype to the instance (if applicable)
 				Stereotype memPartition = subProp.getAppliedStereotype(MARTE_MEMORYPARTITION);
 				if (memPartition != null){
 					subInst.applyStereotype(memPartition);
-				}
+				}*/
 			}
 			//ports
 			if(subProp.getAppliedStereotype(MARTE_CSP) != null){
@@ -284,11 +302,32 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 						tmpList.add(chrt);
 					}
 				}
+				CHRtPortSlot chrtportSlot = null;
 				if(tmpList.size() > 0){
 					Stereotype portSlotStereo = CHESSProfileManager.applyChRTPortSlotStereotype(slot);
-					CHRtPortSlot portSlot = (CHRtPortSlot) slot.getStereotypeApplication(portSlotStereo);
-					portSlot.getCH_RtSpecification().addAll(tmpList);
+					chrtportSlot = (CHRtPortSlot) slot.getStereotypeApplication(portSlotStereo);
+					chrtportSlot.getCH_RtSpecification().addAll(tmpList);
 				}
+				
+				//check old slot
+				Slot oldSlot = getCorrespondingOldChildSlot(subProp, oldInst);
+				if (oldSlot != null){
+					Stereotype oldstereo = oldSlot.getApplicableStereotype(Constants.CH_CHRtPortSlot);
+					if (oldstereo != null){
+						CHRtPortSlot oldchrtportSlot = (CHRtPortSlot) oldSlot.getStereotypeApplication(oldstereo);
+						if (oldchrtportSlot != null){
+							if (chrtportSlot == null){
+								Stereotype portSlotStereo = CHESSProfileManager.applyChRTPortSlotStereotype(slot);
+								chrtportSlot = (CHRtPortSlot) slot.getStereotypeApplication(portSlotStereo);
+							}
+							
+							chrtportSlot.getCH_RtSpecification().addAll(oldchrtportSlot.getCH_RtSpecification());
+						}
+						
+					}
+					
+				}
+				
 			}
 		}
 		//connectors
@@ -351,6 +390,11 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 			instance.setValue(chHwComputingRes, "speedFactor", elem.getValue(chHwComputingRes, "speedFactor"));
 			instance.setValue(chHwComputingRes, "resMult", elem.getValue(chHwComputingRes, "resMult"));
 //			instance.setValue(chHwComputingRes, "nbCores", elem.getValue(chHwComputingRes, "nbCores"));
+		}
+		//if the property is stereotyped, then apply the same stereotype to the instance (if applicable)
+		Stereotype memPartition = property.getAppliedStereotype(MARTE_MEMORYPARTITION);
+		if (memPartition != null){
+			instance.applyStereotype(memPartition);
 		}
 	}
 
@@ -494,5 +538,32 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 				}
 			}
 		}
+		
 	}
+	
+	private InstanceSpecification getCorrespondingOldChildInstance (Property prop, InstanceSpecification inst){
+		if (inst == null)
+			return null;
+		EList<Slot> slots = inst.getSlots();
+		for (Slot s: slots){
+			if (s.getDefiningFeature().equals(prop)){
+				InstanceValue instvalue = (InstanceValue) s.getValues().get(0);
+				return instvalue.getInstance();
+			}
+		}
+		return null;
+	}
+	
+	private Slot getCorrespondingOldChildSlot (Property prop, InstanceSpecification inst){
+		if (inst == null)
+			return null;
+		EList<Slot> slots = inst.getSlots();
+		for (Slot s: slots){
+			if (s.getDefiningFeature().equals(prop)){
+				return s;
+			}
+		}
+		return null;
+	}
+	
 }
