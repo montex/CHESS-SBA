@@ -10,53 +10,63 @@ import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
+import org.polarsys.chess.chessmlprofile.util.Constants;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Connector_02.
+ * Check that flow ports on the ends of a connection have compatible directions 
  */
 public class Connector_02 extends AbstractModelConstraint {
 
-	/** The Constant FLOWPORT. */
-	private static final String FLOWPORT = "MARTE::MARTE_DesignModel::GCM::FlowPort";
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
 	 */
 	@Override
-	public IStatus validate(IValidationContext ctx) {
-
-		IStatus success = ctx.createSuccessStatus();
-		IStatus failure = ctx.createFailureStatus();
+	public IStatus validate(IValidationContext ctx) {		
 		
 		Connector con = (Connector) ctx.getTarget();
 		
+		String thisElement = con.getName();
+		//System.out.println("... Connector: "+thisElement);
+		
+		String errorMsg = "";
+		
+		IStatus success = ctx.createSuccessStatus();
+		IStatus failure = ctx.createFailureStatus(
+				thisElement,			  		
+				errorMsg	
+				); 
+		
 		ConnectorEnd firstEnd = con.getEnds().get(0);
 		if(!(firstEnd.getRole() instanceof Port)){
+			failure = ctx.createFailureStatus(
+					thisElement,			  		
+					errorMsg	
+					); 
 			return failure;
 		}
 		
 		Port firstPort = (Port) firstEnd.getRole();
-		Stereotype firstStereo = firstPort.getAppliedStereotype(FLOWPORT);
+		Stereotype firstStereo = firstPort.getAppliedStereotype(Constants.FLOW_PORT);
 		if(firstStereo == null){
 			return success;
 		}
 
 		ConnectorEnd secondEnd = con.getEnds().get(1);
 		if(!(secondEnd.getRole() instanceof Port)){
+			failure = ctx.createFailureStatus(
+					thisElement,			  		
+					errorMsg	
+					); 
 			return failure;
 		}
 		
 		Port secondPort = (Port) secondEnd.getRole();
-		Stereotype secondStereo = secondPort.getAppliedStereotype(FLOWPORT);
+		Stereotype secondStereo = secondPort.getAppliedStereotype(Constants.FLOW_PORT);
 		if(secondStereo == null){
 			return success;
 		}		
-		
-		//check types
-		if(!(firstPort.getType().equals(secondPort.getType()))){
-			return failure;
-		}
 		
 		//check directions:
 		//out -> in; in -> out; inout -> whatever
@@ -76,6 +86,10 @@ public class Connector_02 extends AbstractModelConstraint {
 					return success;
 				}
 			}
+			failure = ctx.createFailureStatus(
+					thisElement,			  		
+					errorMsg	
+					); 
 			return failure;
 		}		
 		

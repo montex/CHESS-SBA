@@ -30,6 +30,7 @@ import org.eclipse.uml2.uml.Stereotype;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Connector_01.
+ * Check if Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
  */
 public class Connector_01 extends AbstractModelConstraint {
 
@@ -42,23 +43,43 @@ public class Connector_01 extends AbstractModelConstraint {
 	@Override
 	public IStatus validate(IValidationContext ctx) {
 		IStatus success = ctx.createSuccessStatus();
-		IStatus failure = ctx.createFailureStatus();
+		
 		
 		Connector con = (Connector) ctx.getTarget();
+		
+		String thisElement = con.getName();
+		String errorMsg = "";
+		IStatus failure = ctx.createFailureStatus(
+				thisElement,			  		
+				errorMsg	
+				); 
+		
 		try{
 			//check that ports are compatible (provided-required)
 			ConnectorEnd ceFir = con.getEnds().get(0);
 			if(!(ceFir.getRole() instanceof Port)){
+				failure = ctx.createFailureStatus(
+						thisElement,			  		
+						errorMsg	
+						);
 				return failure;
 			}
 			Port portFir = (Port) ceFir.getRole();
 			Stereotype sFirst = portFir.getAppliedStereotype(CSPORT);
 			if(sFirst == null){
+				failure = ctx.createFailureStatus(
+						thisElement,			  		
+						errorMsg	
+						);
 				return success;
 			}
 			String first = portFir.getValue(sFirst, "kind").toString();
 			ConnectorEnd ceSec = con.getEnds().get(1);
 			if(!(ceSec.getRole() instanceof Port)){
+				failure = ctx.createFailureStatus(
+						thisElement,			  		
+						errorMsg	
+						);
 				return failure;
 			}
 			Port portSec = (Port) ceSec.getRole();
@@ -80,7 +101,11 @@ public class Connector_01 extends AbstractModelConstraint {
 						return success;
 					}
 				}
-				
+				errorMsg = "Port directions are not compatible.";
+				failure = ctx.createFailureStatus(
+						thisElement,			  		
+						errorMsg	
+						);
 				return failure;
 			}
 			//check that the ports are owned by components at the "same level" (no parent-child)
@@ -104,17 +129,33 @@ public class Connector_01 extends AbstractModelConstraint {
 			if(!iFirst.equals(iSecond)){
 				if(first.equals("provided")){
 					if(!iFirst.allParents().contains(iSecond)){
+						errorMsg = "Interface types are not compatible.";
+						failure = ctx.createFailureStatus(
+								thisElement,			  		
+								errorMsg	
+								);
 						return failure;
 					}
 				}else if(second.equals("provided")){
 					if(!iSecond.allParents().contains(iFirst)){
+						errorMsg = "Interface types are not compatible.";
+						failure = ctx.createFailureStatus(
+								thisElement,			  		
+								errorMsg	
+								);
 						return failure;
 					}
 				}
 			}
 			
 			return success;
-		}catch(IndexOutOfBoundsException e){
+		}
+		catch(IndexOutOfBoundsException e){
+			errorMsg= e.toString();
+			failure = ctx.createFailureStatus(
+					thisElement,			  		
+					errorMsg	
+					);
 			return failure;
 		}
 	}

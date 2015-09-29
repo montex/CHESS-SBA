@@ -51,7 +51,6 @@ public class FV_03 extends AbstractModelConstraint {
 		EObject eObject = ctx.getTarget();
 		Component component = (Component)eObject;
 		IStatus success = ctx.createSuccessStatus();
-
 		
 		Stereotype componentImpl = component.getAppliedStereotype(Constants.COMPONENT_IMPLEMENTATION);
 		if (componentImpl!=null) {
@@ -86,7 +85,7 @@ public class FV_03 extends AbstractModelConstraint {
 				}
 			}
 			if (count!=1) {
-				String errorMsg = "The component " + component.getName() + " must realize exactly one <<ComponentType>> (Currently : " + count +")";
+				String errorMsg = "The componentImplementation " + component.getName() + " must realize exactly one <<ComponentType>> (Currently : " + count +")";
 				IStatus failure = ctx.createFailureStatus(
 						component,
 						errorMsg
@@ -96,7 +95,7 @@ public class FV_03 extends AbstractModelConstraint {
 			}
 			else {
 				// Additional constraint.
-				// A ComponentImplementation has to define the same operations than the ComponentType it realizes
+				// A ComponentImplementation has to define the same operations as the ComponentType it realizes
 				for (Operation ctOp : realizedComponent.getOperations()) {
 					// So for operation ctOp, the component has to define the same
 					//System.err.println("checking for operation : "  + ctOp.getName());

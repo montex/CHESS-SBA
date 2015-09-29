@@ -27,10 +27,17 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
 import org.polarsys.chess.chessmlprofile.util.Constants;
+import org.polarsys.chess.core.util.uml.UMLUtils;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class DV_02.
+ * DV_02 checks that the attribute “from” and “to” of stereotype Assign must be valued with exactly 
+ * one value on each end and with the correct types: 
+ * the value of the attribute 'from' in stereotype Assign must be an instance (InstanceSpecification) 
+ * of a ComponentImplementation or of a Functional Partition or a <<CHRtPortSlot>> Slot. 
+ * The value of the attribute 'to' in stereotype Assign must be an instance 
+ * (InstanceSpecification) of a CH_HwProcessor or a Functional Partition.
  */
 public class DV_02 extends AbstractModelConstraint {
 
@@ -49,70 +56,48 @@ public class DV_02 extends AbstractModelConstraint {
 		if (assign!=null) {
 			List<Element> from = (List<Element>) comment.getValue(assign, Constants.ASSIGN_FROM);
 			if (from==null) {
-				errorMsg = "The attribute 'from' of stereotype Assign must be valued with exactly one Element";
-				
+				errorMsg = "The attribute 'from' of stereotype Assign must be valued with exactly one Element. Currently none.";				
 			}
 			else {
 				if (from.size()!=1) {
-					errorMsg = "The attribute 'from' of stereotype Assign must be valued with exactly one Element";
-										
+					errorMsg = "The attribute 'from' of stereotype Assign must be valued with exactly one Element. Currently "+from.size();										
 				}
 				else {
 					// This Element must be an instance specification of a ComponentImplementation
 					Element fromElem = from.iterator().next();
-					if (fromElem instanceof InstanceSpecification) {
-						// Then it must be stereotyped with ComponentImplementation
-						if (((InstanceSpecification) fromElem).getClassifiers().size()==1) {
-							// Otherwise, an error is raised elsewhere
-							Classifier clazz = ((InstanceSpecification) fromElem).getClassifiers().iterator().next();
-							
-							if (clazz.getAppliedStereotype(Constants.COMPONENT_IMPLEMENTATION)==null) {
-								errorMsg = "The value of the attribute 'from' in stereotype Assign must be an instance of a ComponentImplementation";
-								
-							}
-						}
-					}
-					else {
-						errorMsg ="The value of the attribute 'from' in stereotype Assign must be an InstanceSpecification";
-						
-					}
+					
+					if (!UMLUtils.elementIsComponentInstance(fromElem) && 
+							!UMLUtils.elementIsPartitionInstance(fromElem)&&
+							!(UMLUtils.elementIsCHRtPortSlot(fromElem))) {
+						errorMsg = "The value of the attribute 'from' in stereotype Assign must be an instance of a ComponentImplementation or of a Functional Partition or a CHRtPortSlot";
+					}					
 				}
 			}
 			List<Element> to = (List<Element>) comment.getValue(assign, Constants.ASSIGN_TO);
 			if (to==null) {
-				errorMsg = "The attribute 'to' of stereotype Assign must be valued with exactly one Element";
+				errorMsg = "The attribute 'to' of stereotype Assign must be valued with exactly one Element. Currently none.";
 				
 			}
 			else {
 				if (to.size()!=1) {
-					errorMsg = "The attribute 'to' of stereotype Assign must be valued with exactly one Element";
+					errorMsg = "The attribute 'to' of stereotype Assign must be valued with exactly one Element. Currently "+to.size();
 					
 				}
 				else {
 					// This Element must be an instance specification of a ComponentImplementation
+					// OR a Functional Partition (20150917 LB modified for Concerto ToDo #36 managing functional partitions
 					Element toElem = to.iterator().next();
-					if (toElem instanceof InstanceSpecification) {
-						// Then it must be stereotyped with ComponentImplementation
-						if (((InstanceSpecification) toElem).getClassifiers().size()==1) {
-							// Otherwise, an error is raised elsewhere
-							if ((((InstanceSpecification) toElem).getClassifiers().iterator().next().getAppliedStereotype(Constants.CH_HWPROCESSOR)==null)) {
-								errorMsg = "The value of the attribute 'to' in stereotype Assign must be an instance of a CH_HwProcessor";
-								
-							}
-						}
-					}
-					else {
-						errorMsg ="The value of the attribute 'to' in stereotype Assign must be an InstanceSpecification";
-						
-					}
+					if (!UMLUtils.elementIsProcessorInstance(toElem) && 
+							!UMLUtils.elementIsPartitionInstance(toElem)) {
+						errorMsg = "The value of the attribute 'to' in stereotype Assign must be an instance of a CH_HwProcessor or of a Functional Partition";
+					}										
 				}
-			}
-			
+			}			
 		}
 	
 		if (errorMsg != null){
 			IStatus failure = ctx.createFailureStatus(
-					comment,
+					comment.getAnnotatedElements(),
 					errorMsg
 			);
 			return failure;

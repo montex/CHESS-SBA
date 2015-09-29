@@ -90,32 +90,24 @@
                categories="CHESSModelConstraints/ExtraFunctionalView">
                
                <constraint
+               	  class="org.polarsys.chess.validator.constraints.EFVRT_01"
                   id="EFVRT_01"
                   isEnabledByDefault="true"
-                  lang="OCL"
+                  lang="java"
                   mode="Batch"
                   name="EFVRT_01"
                   severity="ERROR"
                   statusCode="ev01">
-               <message>
-                  The attribute&quot;context&quot; of {0} must be set
+               <message>                  
+                  The attribute&quot;context&quot; of {0} must be set to an operation of the component (e.g. not of the interface). Currently it is {1}. 
                </message>
                <description>
-                 The attribute 'context' of CHRtSpecification must be set.
+                 The attribute 'context' of CHRtSpecification must be set to an operation of the component (e.g. not of the interface).
                </description>
                <target
-                     class="Comment">
+                     class="InstanceSpecification">
                </target>
-               <![CDATA[
-  
-               if(self.getAppliedStereotype('CHESS::Predictability::RTComponentModel::CHRtSpecification') <> null) then
-  
-           			 self.getValue(self.getAppliedStereotype('CHESS::Predictability::RTComponentModel::CHRtSpecification'), 'context') <> null
-           			
-           			else
-           				true
-           				endif               	
-               	]]>
+               
             </constraint>
             <constraint
                   class="org.polarsys.chess.validator.constraints.EFVRT_02"
@@ -293,7 +285,7 @@
                   severity="ERROR"
                   statusCode="DV_02">
                <message>
-                  {1}
+                  Not allowed Assignment {0}. {1}
                </message>
                <target class="Comment">
                </target>
@@ -343,6 +335,44 @@
                  The attribute 'speedFactor' of stereotype CH_HwProcessor is null, default (value=1.0) will be used
                </description>
             </constraint> 
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.DV_05"
+                  id="DV_05"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="DV_05"
+                  severity="ERROR"
+                  statusCode="DV_05">
+               <message>
+                  {1}
+               </message>
+               <target class="InstanceSpecification">
+               </target>
+               <description>
+                 The Partition must be deployed on exactly one processing unit.
+               </description>
+            </constraint>   
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.DV_06"
+                  id="DV_06"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="DV_06"
+                  severity="WARNING"
+                  statusCode="DV_06">
+               <message>
+                  {1}
+               </message>
+               <target class="InstanceSpecification">
+               </target>
+               <description>
+                 The Partition must be deployed on exactly one processing unit (but no component is allocated on it).
+               </description>
+            </constraint>               
                
             <!--constraint
                   id="DV_05"
@@ -488,7 +518,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
             
             <constraint
                   class="org.polarsys.chess.validator.constraints.FV_04"
-                  id="FV_03"
+                  id="FV_04"
                   isEnabledByDefault="true"
                   lang="java"
                   mode="Batch"
@@ -499,7 +529,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   {1}
                </message>
                <description>
-               The ComponentType does not define the same operations from the interface it realizes
+               The ComponentType does not define the same operations as the interface it realizes
                </description>
                <target class="Component">
                </target>
@@ -649,7 +679,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   severity="WARNING"
                   statusCode="FV_10">
                <message>
-                  Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
+                  Connector {0} not allowed. Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
                </message>
                <description>
                Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
@@ -666,15 +696,37 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   lang="java"
                   mode="Live"
                   name="Connector_02"
-                  severity="WARNING"
+                  severity="ERROR"
                   statusCode="FV_11">
                <message>
-                  TODO: work in progress
+               		Connector {0} not allowed. Flow ports on ends do not have compatible directions.
                </message>
+               <description>
+               		Flow ports on ends of connection must have compatible directions (either opposite, or both INOUT, or the same if delegation).
+               </description>
                <target class="Connector">
                </target>
             </constraint>
             
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.Connector_03"
+                  id="FV_12"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Live"
+                  name="Connector_03"
+                  severity="WARNING"
+                  statusCode="FV_12">
+               <message>
+                  Flow ports on the ends of connection do not have compatible types. 
+               </message>
+                <description>
+               		Flow ports on ends of connection must have compatible types
+               </description>
+               <target class="Connector">
+               </target>
+            </constraint>
+                        
             <constraint
                   class="org.polarsys.chess.validator.constraints.FlowPorts_01"
                   id="FlowPorts_01"
