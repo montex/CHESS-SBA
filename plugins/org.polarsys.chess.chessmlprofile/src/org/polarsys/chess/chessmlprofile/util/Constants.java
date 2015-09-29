@@ -57,8 +57,7 @@ public class Constants {
 	public static final String CHRTSPEC_OCCKIND = "occKind";
 	public static final String CHRTSPEC_OCCKIND_PERIODIC = "periodic";
 	public static final String CH_HWPROCESSOR = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor";
-	
-	public static final String CHRTPORTSLOT = "CHESS::Predictability::RTComponentModel::CHRtPortSlot";
+
 	
 	// CHESS views
 	public static final String DEPENDABILITY_ANALYSIS_VIEW = "CHESS::Core::CHESSViews::DependabilityAnalysisView";
@@ -115,7 +114,6 @@ public class Constants {
 	public static final String SATISFY = "SysML::Requirements::Satisfy";
 	
 	
-	// TODO added the following constants! To be committed!
 	//CHESS CriticalityInterfaceSpecification stereotype 
 	public static final String CH_CRITICALITYINTERFACESPECIFICATION = "CHESS::Safety::CriticalityInterfaceSpecification";
 	public static final String CH_CRITICALITYINTERFACESPECIFICATION_ACCEPTEDCRITICALITYFORCLIENTS = "acceptedCriticalityForClients";
@@ -132,6 +130,15 @@ public class Constants {
 	
 	// MARTE MemoryPartition
 	public static final String MARTE_MEMORYPARTITION ="MARTE::MARTE_DesignModel::SRM::SW_Concurrency::MemoryPartition";
+	
+	
+	// CHESS Views
+	public static final String DEPLOYMENT_VIEW_NAME = "DeploymentView";
+	public static final String COMPONENT_VIEW_NAME = "ComponentView";
+	
+	// CHESS CHRtPortSlot stereotype
+	public static final String CH_CHRtPortSlot = "CHESS::Predictability::RTComponentModel::CHRtPortSlot";
+	public static final String CH_CHRtPortSlot_CHRTSPECIFICATION = "cH_RtSpecification";
 	
 	
 	
