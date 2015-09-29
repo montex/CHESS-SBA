@@ -12,12 +12,13 @@
 -- v1.0 which accompanies this distribution, and is available at     --
 -- http://www.eclipse.org/legal/epl-v10.html                         --
 -----------------------------------------------------------------------
-*/
+ */
 
 package org.polarsys.chess.core.util.uml;
 
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -26,13 +27,16 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerKind;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerPort;
+import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
+import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Package;
@@ -40,10 +44,16 @@ import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Realization;
 import org.eclipse.uml2.uml.Relationship;
+import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.VisibilityKind;
 import org.eclipse.uml2.uml.internal.impl.DependencyImpl;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
+import org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition;
+import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
+import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
+import org.polarsys.chess.chessmlprofile.util.Constants;
+import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.views.ViewUtils;
 
 /**
@@ -51,7 +61,7 @@ import org.polarsys.chess.core.views.ViewUtils;
  *
  */
 public class UMLUtils {
-	
+
 	/**
 	 * Returns the XML ID (UUID) of a model element.
 	 * It may be useful for external tools to precisely refer to a model element.
@@ -65,7 +75,7 @@ public class UMLUtils {
 			return resource.getURIFragment(el);
 		return null;
 	}
-	
+
 	/**
 	 * Checks if the given operation is public.
 	 * 
@@ -159,8 +169,8 @@ public class UMLUtils {
 		target.setIsStatic(source.isStatic());
 		//target.getRedefinedOperations().add(source);
 	}
-	
-/*	public static boolean isOperationEquals(Operation source, Operation target) {
+
+	/*	public static boolean isOperationEquals(Operation source, Operation target) {
 		// check the parameters
 		Parameter param, aux;
 		EList<Parameter> targetList = target.getOwnedParameters();
@@ -199,8 +209,8 @@ public class UMLUtils {
 
 		return true;
 	}*/
-	
-	
+
+
 	/**
 	 * If parameter 'p' is null checks if the operations are the same, that is if they have the same signature.
 	 * If parameter 'p' is not null returns true only if the target operation plus 'p' has the same signature of the source operation.
@@ -213,17 +223,17 @@ public class UMLUtils {
 	 */
 	public static boolean areOperationsEqual(Operation source, Operation target, Parameter p)
 	{
-		
+
 		if ( !source.getName().equalsIgnoreCase(target.getName()))
 			return false;
-		
+
 		// check the parameters
 		Parameter param, aux;
 		EList<Parameter> targetList = target.getOwnedParameters();
 		EList<Parameter> sourceList = source.getOwnedParameters();
 		// check their order
-		
-		
+
+
 		if ( p == null )
 		{
 			if (targetList.size() != sourceList.size())
@@ -264,8 +274,8 @@ public class UMLUtils {
 
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Checks if the list of parameters of two operations are equal.
 	 * If 'p' is not null returns true only if source operation deprived of 'p' has the same list of parameters
@@ -294,7 +304,7 @@ public class UMLUtils {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Checks if the parameters of two operations are the same.
 	 * 
@@ -306,7 +316,7 @@ public class UMLUtils {
 	{
 		return areParametersEquals(source,target,null);
 	}
-	
+
 	/**
 	 * Checks if two operations are equal.
 	 * 
@@ -316,7 +326,7 @@ public class UMLUtils {
 	 */
 	public static boolean isOperationEquals(Operation source, Operation target) {
 		return UMLUtils.areOperationsEqual(source, target, null);
-			}
+	}
 
 	/**
 	 * Checks if there given Component offers an operation that is equal
@@ -337,7 +347,7 @@ public class UMLUtils {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Retrieves all the clients of a given {@link Interface}.
 	 * 
@@ -408,7 +418,7 @@ public class UMLUtils {
 			return true;
 		return false;
 	}
-	
+
 	/**
 	 * Checks if the given object is a {@link ComponentImplementation}.
 	 * 
@@ -420,8 +430,8 @@ public class UMLUtils {
 			return true;
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * Retrieves the list of {@link ClientServerPort} of a given Component.
 	 * 
@@ -463,28 +473,28 @@ public class UMLUtils {
 						cDependentInterfaces.add((Interface)el);
 						cDependenciesToRemoveMap.put((Interface)el, dependency);
 					}
-					
+
 				}
 			}
 		}
-		
+
 		EList<ClientServerPort> ports = UMLUtils.getComponentClientServerPorts(comp);
-		
+
 		EList<Interface>  portInts = new BasicEList<Interface>();
 		for (ClientServerPort csp : ports) {
 			if (csp.getKind() == ClientServerKind.REQUIRED || csp.getKind() == ClientServerKind.PROREQ) {
 				portInts.addAll(csp.getReqInterface());
 			}
 		}
-		
+
 		if (portInts != null)
 			cDependentInterfaces.removeAll(portInts);
 		EList<Dependency> cDependenciesToRemove = new BasicEList<Dependency>();
 		for (Interface el : cDependentInterfaces) {
-				Dependency dep = cDependenciesToRemoveMap.get(el);
-				if (dep != null){
-					cDependenciesToRemove.add(dep);
-				}
+			Dependency dep = cDependenciesToRemoveMap.get(el);
+			if (dep != null){
+				cDependenciesToRemove.add(dep);
+			}
 		}
 		return cDependenciesToRemove;
 	}
@@ -502,27 +512,27 @@ public class UMLUtils {
 		Map<Interface, InterfaceRealization> cRealizationsToRemoveMap = new HashMap<Interface, InterfaceRealization>();
 		for (InterfaceRealization ir : cRealizations) {
 			//it MUST BE exactly a Dependency since a InterfaceRealization is a subtype of Dependency :(
-				cRealizedInterfaces.add(ir.getContract());
-				cRealizationsToRemoveMap.put(ir.getContract(), ir);
+			cRealizedInterfaces.add(ir.getContract());
+			cRealizationsToRemoveMap.put(ir.getContract(), ir);
 		}
-		
-        EList<ClientServerPort> ports = UMLUtils.getComponentClientServerPorts(comp);
-		
+
+		EList<ClientServerPort> ports = UMLUtils.getComponentClientServerPorts(comp);
+
 		EList<Interface>  portInts = new BasicEList<Interface>();
 		for (ClientServerPort csp : ports) {
 			if (csp.getKind() == ClientServerKind.PROVIDED || csp.getKind() == ClientServerKind.PROREQ) {
 				portInts.addAll(csp.getProvInterface());
 			}
 		}
-		
+
 		if (portInts != null)
 			cRealizedInterfaces.removeAll(portInts);
 		EList<InterfaceRealization> cRealizationsToRemove = new BasicEList<InterfaceRealization>();
 		for (Interface el : cRealizedInterfaces) {
 			InterfaceRealization dep = cRealizationsToRemoveMap.get(el);
-				if (dep != null){
-					cRealizationsToRemove.add(dep);
-				}
+			if (dep != null){
+				cRealizationsToRemove.add(dep);
+			}
 		}
 		return cRealizationsToRemove;
 	}
@@ -538,7 +548,7 @@ public class UMLUtils {
 			return true;
 		return false;
 	}
-	
+
 	/**
 	 * Returns the CHRtSpecification of the given element.
 	 * Returns null if the element is not a the comment
@@ -563,9 +573,9 @@ public class UMLUtils {
 	public static EList<Comment> getCHRtSpecificationComments(Package pkg, Port portFilter) {
 		EList<Comment> chrtspecs = new BasicEList<Comment>();
 		for (Element el : pkg.getOwnedElements()) {
-			
+
 			if (!(el instanceof Component)) continue;
-			
+
 			for (Comment comm : el.getOwnedComments()) {
 				Stereotype chrtspecification;
 				if ((chrtspecification = getCHRtSpecification(comm)) != null) {
@@ -579,11 +589,11 @@ public class UMLUtils {
 					}
 				}
 			}
-			
+
 		}
 		return chrtspecs;
 	}
-	
+
 	/**
 	 * Returns the stereotype object given the stereotype class and the model element.
 	 *  
@@ -617,7 +627,7 @@ public class UMLUtils {
 				if (!compList.isEmpty())
 					list.addAll(compList);
 			}
-			
+
 		};
 		return list;
 	}
@@ -651,6 +661,409 @@ public class UMLUtils {
 		if (str != null)
 			element.applyStereotype(str);
 		return str;
+	}
+
+
+	/**
+	 * Returns the list of assignments found in viewName where 
+	 * the source is a Component Instance and the target is a Processor Instance
+	 * @param umlModel
+	 * @param viewName
+	 * @return
+	 * @throws ModelError
+	 */
+	public static EList<Assign> getComponent2CoreAssignments(Model umlModel,
+			String viewName) throws ModelError {
+
+		// LB 20150928 look in all the package (some models may not have the CHGAResourcePlatform component)
+		//Component rpc = getResourcePlatformComponent(umlModel, viewName);
+		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
+				viewName);
+		
+		EList<Element> all = parent.allOwnedElements();
+		EList<Assign> assignments = new BasicEList<Assign>();
+		Stereotype stereo = null;
+		for (Element element : all) {
+			if((element.getAppliedStereotype(Constants.ASSIGN)!=null)) {
+				stereo = element.getAppliedStereotype(Constants.ASSIGN);
+				EObject eobj = element.getStereotypeApplication(stereo);
+				Assign a = (Assign)eobj;
+				Element assignmentSource = a.getFrom().get(0);
+				Element assignmentTarget = a.getTo().get(0);
+				// SOURCE must be a Component
+				// TARGET must be a Processor
+				if (elementIsProcessorInstance(assignmentTarget)) {
+					if(elementIsComponentInstance(assignmentSource)) {
+						InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
+						if (isComponentInstance(componentInst)) {
+							assignments.add(a);
+						}
+					}
+				}				
+			}
+		}
+		return assignments;
+	}	
+
+
+	/**
+	 * Returns the list of assignments found in viewName where 
+	 * the source is a Component Instance 
+	 * @param umlModel
+	 * @param viewName
+	 * @return
+	 * @throws ModelError
+	 */
+	public static EList<Assign> getComponentAssignments(Model umlModel, String viewName) throws ModelError {
+
+		// LB 20150928 look in all the package (some models may not have the CHGAResourcePlatform component)
+		//Component rpc = getResourcePlatformComponent(umlModel, viewName);
+		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
+				viewName);
+		EList<Element> all = parent.allOwnedElements();
+		EList<Assign> assignments = new BasicEList<Assign>();
+		Stereotype stereo = null;
+		for (Element element : all) {
+			if((element.getAppliedStereotype(Constants.ASSIGN)!=null)) {
+				stereo = element.getAppliedStereotype(Constants.ASSIGN);
+				EObject eobj = element.getStereotypeApplication(stereo);
+				Assign a = (Assign)eobj;
+				Element assignmentSource = a.getFrom().get(0);				
+				// SOURCE must be a Component
+				// TARGET can be anything
+
+				if(elementIsComponentInstance(assignmentSource)) {
+					InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
+					if (isComponentInstance(componentInst)) {
+						assignments.add(a);
+					}
+				}
+
+			}
+		}
+		return assignments;
+	}	
+
+	/**
+	 * 
+	 * @param umlModel
+	 * @param viewName
+	 * @return
+	 * @throws ModelError
+	 */
+	public static Component getResourcePlatformComponent(Model umlModel, String viewName) throws ModelError {
+		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
+				viewName);
+
+		if(parent == null)
+			throw new ModelError(viewName+" not found.");
+
+		/* breath-first search */
+		final LinkedList<Element> breadthFirstList = new LinkedList<Element>();
+
+		breadthFirstList.addAll(parent.getOwnedElements());
+		while (!breadthFirstList.isEmpty()) {
+			final Element t = breadthFirstList.poll();
+
+			if (t instanceof Component) {
+				Component candidate = (Component) t;
+				CHGaResourcePlatform a = UMLUtils.getStereotypeApplication(
+						candidate, CHGaResourcePlatform.class);
+				if (a != null)
+					return candidate;
+			}
+			for (final Element e : t.getOwnedElements()) {
+				breadthFirstList.addLast(e);
+			}
+		}
+
+		throw new ModelError("CHGaResourcePlatform not found in "+viewName+" view.");
+	}
+
+	/**
+	 * Returns TRUE if the element is a processor instance, FALSE otherwise
+	 * @param element
+	 * @return  
+	 */
+	public static boolean elementIsProcessorInstance(Element element) {
+		if (!(element instanceof InstanceSpecification)) {
+			return false;
+		}
+		InstanceSpecification is = (InstanceSpecification) element;
+		if (is.getQualifiedName() != null
+				&& isProcessorInstance(is)) {
+			return true;
+		}		
+		return false;
+	}
+
+	/**
+	 * Returns TRUE if the instanceSpecification is a processor instance, FALSE otherwise
+	 * @param e
+	 * @return
+	 */
+	public static boolean isProcessorInstance(InstanceSpecification e) {
+		for (Classifier c : e.getClassifiers()) {
+			if (UMLUtils.getStereotypeApplication(c, CH_HwProcessor.class) != null)
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Returns TRUE if the element is a component instance, false otherwise
+	 * @param element
+	 * @return  
+	 */
+	public static boolean elementIsComponentInstance(Element element) {
+		if (!(element instanceof InstanceSpecification)) {
+			return false;
+		}
+		InstanceSpecification is = (InstanceSpecification) element;
+		if (is.getQualifiedName() != null
+				&& isComponentInstance(is)) {
+			return true;
+		}		
+		return false;
+	}
+
+	/**
+	 * Returns TRUE if the InstanceSpecification is a component instance, false otherwise
+	 * @param element
+	 * @return  
+	 */
+	public static boolean isComponentInstance(InstanceSpecification e) {
+		for (Classifier c : e.getClassifiers()) {
+			if (UMLUtils.getStereotypeApplication(c,
+					ComponentImplementation.class) != null)
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Returns the number of CPUs to which the InstanceSpecification is assigned 
+	 * @param i
+	 * @param assignments
+	 * @return
+	 */
+	public static int isAssigned2HowManyProcessingUnits(InstanceSpecification i,
+			EList<Assign> assignments) {
+		int count = 0;
+		for (Assign theAssignment : assignments) {			
+			if (theAssignment != null) {
+				if (theAssignment.getFrom().contains((Object)i) &&
+						elementIsProcessorInstance(theAssignment.getTo().get(0))) {	
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+
+	/**
+	 * Returns the number of CPUs to which the InstanceSpecification is assigned 
+	 * @param i
+	 * @param assignments
+	 * @return
+	 */
+	public static int isAssigned2HowManyProcessingUnitsOrPartitions(InstanceSpecification i,
+			EList<Assign> assignments) {
+		int count = 0;
+		for (Assign theAssignment : assignments) {			
+			if (theAssignment != null) {
+				Element toElem = theAssignment.getTo().get(0);
+				if (theAssignment.getFrom().contains((Object)i) &&
+						(elementIsProcessorInstance(toElem) ||
+								elementIsPartitionInstance(toElem))) {	
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * Returns the list of all partition instances in the model
+	 * @param umlModel
+	 * @return
+	 * @throws ModelError
+	 */
+	public static EList<InstanceSpecification> getAllPartitionInstances(
+			Model umlModel) throws ModelError {
+
+		Package cmpv = CHESSProfileManager.getViewByStereotype(umlModel,
+				CHESSProfileManager.COMPONENT_VIEW);
+
+		if(cmpv==null)
+			throw new ModelError("Component view not found.");
+
+		cmpv = getResourcePlatformPackage(cmpv);
+
+		if(cmpv==null)
+			throw new ModelError("CHGaResourcePlatform not found in Component View.");
+
+
+		EList<Element> all = cmpv.allOwnedElements();
+		EList<InstanceSpecification> partitions = new BasicEList<InstanceSpecification>();
+		for (Element element : all) {
+			if (!(element instanceof InstanceSpecification)) continue;
+
+			InstanceSpecification is = (InstanceSpecification) element;
+
+			if (!(is.getQualifiedName() != null
+					&& isPartitionInstance(is))) continue;
+			partitions.add(is);
+		}
+
+		if(partitions.size()==0)
+			throw new ModelError("Partition Instances not found.");
+
+		return partitions;
+	}
+
+	/**
+	 * 
+	 * @param cmpv
+	 * @return
+	 */
+	public static Package getResourcePlatformPackage(Package cmpv) {
+		/* breath-first search */
+		final LinkedList<Package> breadthFirstList = new LinkedList<Package>();
+		breadthFirstList.addFirst(cmpv);
+		while (!breadthFirstList.isEmpty()) {
+			final Package candidate = breadthFirstList.poll();
+
+			CHGaResourcePlatform a = UMLUtils.getStereotypeApplication(
+					candidate, CHGaResourcePlatform.class);
+
+			if (a != null)
+				return candidate;
+
+			for (final Package p : candidate.getNestedPackages()) {
+				breadthFirstList.addLast(p);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns TRUE if the instance specification is a partition instance
+	 * @param e
+	 * @return
+	 */
+	public static boolean isPartitionInstance(InstanceSpecification e) {
+		for (Classifier c : e.getClassifiers()) {
+
+			if (UMLUtils.getStereotypeApplication(c, FunctionalPartition.class) != null)
+				return true;
+
+		}
+		return false;
+	}
+
+	/**
+	 * 
+	 * @param element
+	 * @return true if the element is a partition instance, false otherwise
+	 */
+	public static boolean elementIsPartitionInstance(Element element) {
+		if (!(element instanceof InstanceSpecification)) {
+			return false;
+		}
+		InstanceSpecification is = (InstanceSpecification) element;
+		if (is.getQualifiedName() != null
+				&& isPartitionInstance(is)) {
+			return true;
+		}		
+		return false;
+	}
+
+
+	/**
+	 * Check if this Partition is assigned to a CPU 
+	 * @param i
+	 * @param assignments
+	 * @return
+	 */
+	public static boolean isAssigned2Core(InstanceSpecification i,
+			EList<Assign> assignments) {
+		for (Assign theAssignment : assignments) {			
+			if (theAssignment != null) {
+				if (theAssignment.getFrom().contains((Object)i) &&
+						elementIsProcessorInstance(theAssignment.getTo().get(0))) {	
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Check if this Partition has at least a component assigned to it
+	 * @param i
+	 * @param assignments
+	 * @return
+	 */
+	public static boolean hasComponentAssigned(InstanceSpecification i,
+			EList<Assign> assignments) {
+		for (Assign theAssignment : assignments) {			
+			if (theAssignment != null) {
+				if (theAssignment.getTo().contains((Object)i) &&
+						elementIsPartitionInstance(theAssignment.getTo().get(0))) {	
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+
+	/**
+	 * Returns the list of assignments found in viewName  
+	 * @param umlModel
+	 * @param viewName
+	 * @return
+	 * @throws ModelError
+	 */
+	public static EList<Assign> getAssignments(Model umlModel, String viewName) throws ModelError {
+
+		// LB 20150928 look in all the package (some models may not have the CHGAResourcePlatform component)
+		//Component rpc = getResourcePlatformComponent(umlModel, viewName);
+		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
+				viewName);
+		EList<Element> all = parent.allOwnedElements();
+		EList<Assign> assignments = new BasicEList<Assign>();
+		Stereotype stereo = null;
+		for (Element element : all) {
+			if((element.getAppliedStereotype(Constants.ASSIGN)!=null)) {
+				stereo = element.getAppliedStereotype(Constants.ASSIGN);
+				EObject eobj = element.getStereotypeApplication(stereo);
+				Assign a = (Assign)eobj;
+				assignments.add(a);							
+			}
+		}
+		return assignments;
+	}	
+
+	public static boolean elementIsSlotInstance(Element element) {
+		return element instanceof Slot;
+	}
+
+	/**
+	 * Verifies if element is a CHRtPortSlot Slot
+	 * @param elem
+	 * @return
+	 */
+	public static boolean elementIsCHRtPortSlot(Element elem) {
+		if (!elementIsSlotInstance(elem)) {
+			return false;
+		}
+		if(elem.getAppliedStereotype(Constants.CH_CHRtPortSlot) != null) {
+			return true;
+		}
+		return false;
 	}
 
 }
