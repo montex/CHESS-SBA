@@ -64,6 +64,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propa
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.chessmlprofile.util.Constants;
+
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
@@ -71,7 +72,7 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.m2m.transformations.QVToTransformation;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
-
+import static org.polarsys.chess.core.util.CHESSProjectSupport.printlnToCHESSConsole;
 
 /**
  * BuildModelInstanceCommand allows to create UML InstanceSpecifications starting from a Component definition
@@ -135,9 +136,18 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 			CHESS chess = (CHESS) umlModel.getStereotypeApplication(umlModel.getAppliedStereotype(CHESS));		
 			//get the Components (implementation) of the componentView and deploymentView
 			for (Element elem : chess.getComponentView().getBase_Package().allOwnedElements()) {
-				if (UMLUtils.getStereotypeApplication(elem, ComponentImplementation.class) != null) {
-					compImplList.add((Component) elem);
-				}
+					//check if the component owns property of type ComponentImplementation
+					if (elem instanceof Component){
+						Component comp = (Component) elem;
+						for (Property prop : comp.getAttributes()){
+							if (prop.getType() == null)
+								continue;
+							if (UMLUtils.getStereotypeApplication(prop.getType(), ComponentImplementation.class) != null){
+								compImplList.add((Component) elem);
+								break;
+							}
+						}
+					}
 			}
 			for (Element elem : chess.getDeploymentView().getBase_Package().allOwnedElements()) {
 				if (elem instanceof Component) {
@@ -198,6 +208,7 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 						
 						//perform build instances
 						buildComponentInstance(instPkg, comp, null, null, null, new HashMap<Property, InstanceSpecification>(), comp.getOwnedComments(), oldRootInstance);
+		
 						regenerateAssignAllocations(umlModel);
 						/*The multi instance support has to be re-engineered
 						try {
@@ -217,7 +228,8 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}*/
-						oldInstancePackage.destroy();
+						if (oldInstancePackage != null)
+							oldInstancePackage.destroy();
 					}
 						
 				});
@@ -247,6 +259,7 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 	 * @return the instance specification, stereotyped as MARTE Resource
 	 */
 	private InstanceSpecification buildComponentInstance(Package pkg, Component comp, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Property theProp, Map<Property, InstanceSpecification> property2InstMap, List<Comment> commList, InstanceSpecification oldInst) {
+		
 		InstanceSpecification inst = UMLFactory.eINSTANCE.createInstanceSpecification();
 		if(theProp != null){
 			String name = parentInstance.getName() + "." + theProp.getName();
@@ -408,6 +421,7 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 	 * @param property2InstMap the property2 inst map
 	 */
 	private void buildConnectorInstance(Package pkg, Connector conn, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Map<Property, InstanceSpecification> property2InstMap) {
+		
 		InstanceSpecification connInst = UMLFactory.eINSTANCE.createInstanceSpecification();
 		String name = parentInstance.getName() + "." + conn.getName();
 		connInst.setName(name);
