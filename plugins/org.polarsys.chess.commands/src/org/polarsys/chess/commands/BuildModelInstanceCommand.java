@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -64,7 +65,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propa
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.chessmlprofile.util.Constants;
-
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
@@ -72,6 +72,7 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.m2m.transformations.QVToTransformation;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
+
 import static org.polarsys.chess.core.util.CHESSProjectSupport.printlnToCHESSConsole;
 
 /**
@@ -186,17 +187,17 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 							//save the root old instance
 							Package pkg = comp.getNearestPackage();
 							oldInstancePackage = pkg.createNestedPackage(comp.getName() + "_oldinstSpec");
-							//oldInstancePackage = UMLFactory.eINSTANCE.createPackage();
-							
+														EList<PackageableElement> tempElems = new BasicEList<PackageableElement>();
 							
 							int size = elems.size(); 
 							for(int i = 0; i < size; i++){
-								PackageableElement pe = elems.get(0);
-								if (!pe.getName().contains("."))
+								PackageableElement pe = elems.get(i);
+								if (pe.getName() != null && !pe.getName().contains("."))
 									oldRootInstance = (InstanceSpecification) pe;
-								//pe.destroy();
-								oldInstancePackage.getPackagedElements().add(pe);
+								tempElems.add(pe);
 							}
+							oldInstancePackage.getPackagedElements().addAll(tempElems);
+							
 						}else{
 							//create the instance package, if needed.
 							Package pkg = comp.getNearestPackage();
