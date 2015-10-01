@@ -1065,5 +1065,89 @@ public class UMLUtils {
 		}
 		return false;
 	}
+	
+	
+	/**
+	 * Returns a list of all Component Instances found in the Component View
+	 * @param umlModel
+	 * @return 
+	 * @throws ModelError
+	 */
+	public static EList<InstanceSpecification> getAllComponentInstances(
+			Model umlModel) throws ModelError {
+
+		Package cmpv = CHESSProfileManager.getViewByStereotype(umlModel,
+				CHESSProfileManager.COMPONENT_VIEW);
+
+		if(cmpv==null)
+			throw new ModelError("Component view not found.");
+
+		cmpv = UMLUtils.getResourcePlatformPackage(cmpv);
+
+		if(cmpv==null)
+			throw new ModelError("CHGaResourcePlatform not found in Component View.");
+
+
+		EList<Element> all = cmpv.allOwnedElements();
+		EList<InstanceSpecification> components = new BasicEList<InstanceSpecification>();
+		for (Element element : all) {
+			if (!(element instanceof InstanceSpecification)) continue;
+
+			InstanceSpecification is = (InstanceSpecification) element;
+
+			if (!(is.getQualifiedName() != null
+					&& UMLUtils.isComponentInstance(is))) continue;
+			components.add(is);
+
+		}
+		if(components.size()==0)
+			throw new ModelError("Component Instances not found.");
+
+		return components;
+	}
+
+	
+	/**
+	 * Looks for all the Component to Functional Partition Assignments in the specified View
+	 * @param umlModel
+	 * @param viewName
+	 * @return
+	 * @throws ModelError
+	 */
+	public static EList<Assign> getComponent2PartitionAssignments(Model umlModel,
+			String viewName) throws ModelError {
+		// LB 20150708 we now look for assignments in the CHGA resource platform component
+		//Package cmpv = CHESSProfileManager.getViewByStereotype(umlModel, viewName);
+		//cmpv = QueryUtils.getResourcePlatformPackage(cmpv);
+
+		
+		//Component rpc = QueryUtils.getResourcePlatformComponent(umlModel, viewName);
+		// LB 20150928 look in all the package (some models may not have the CHGAResourcePlatform component)
+		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
+						viewName);
+		EList<Element> all = parent.allOwnedElements();
+		EList<Assign> assignments = new BasicEList<Assign>();
+		Stereotype stereo = null;
+		for (Element element : all) {
+			if((element.getAppliedStereotype(Constants.ASSIGN)!=null)) {
+				stereo = element.getAppliedStereotype(Constants.ASSIGN);
+				EObject eobj = element.getStereotypeApplication(stereo);
+				Assign a = (Assign)eobj;
+				Element assignmentSource = a.getFrom().get(0);
+				Element assignmentTarget = a.getTo().get(0);
+				// SOURCE must be a Component
+				// TARGET must be a Partition
+				if (elementIsPartitionInstance(assignmentTarget)) {
+					if(elementIsComponentInstance(assignmentSource)) {
+						InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
+						if (isComponentInstance(componentInst)) {
+							assignments.add(a);
+						}
+					}
+				}				
+			}
+		}
+		return assignments;
+	}	
 
 }
