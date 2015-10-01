@@ -174,10 +174,10 @@
                   lang="OCL"
                   mode="Batch"
                   name="EFVRT_05"
-                  severity="ERROR"
+                  severity="WARNING"
                   statusCode="ev05">
                <message>
-                  In the {0} the attribute&quot;partWithPort&quot; must not be null
+                  In the {0} the attribute&quot;partWithPort&quot; is null
                </message>
                <target
                      class="Comment">
