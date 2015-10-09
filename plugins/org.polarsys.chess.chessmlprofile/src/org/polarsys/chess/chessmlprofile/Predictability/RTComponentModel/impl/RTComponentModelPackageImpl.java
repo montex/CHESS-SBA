@@ -61,6 +61,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedData
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.impl.StateBasedDataTypesPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.DeploymentConfAnalysisPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.impl.DeploymentConfAnalysisPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
@@ -97,27 +99,6 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 	 * @generated
 	 */
 	private EClass chRtPortSlotEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass arincComponentImplEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass arincProcessEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass arincFunctionEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -206,6 +187,7 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		HardwareBaselinePackageImpl theHardwareBaselinePackage = (HardwareBaselinePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(HardwareBaselinePackage.eNS_URI) instanceof HardwareBaselinePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(HardwareBaselinePackage.eNS_URI) : HardwareBaselinePackage.eINSTANCE);
 		DeploymentConfAnalysisPackageImpl theDeploymentConfAnalysisPackage = (DeploymentConfAnalysisPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) instanceof DeploymentConfAnalysisPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) : DeploymentConfAnalysisPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
+		ARINCComponentModelPackageImpl theARINCComponentModelPackage = (ARINCComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) instanceof ARINCComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) : ARINCComponentModelPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
@@ -233,6 +215,7 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		theHardwareBaselinePackage.createPackageContents();
 		theDeploymentConfAnalysisPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
+		theARINCComponentModelPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
 		theSafetyPackage.createPackageContents();
@@ -260,6 +243,7 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		theHardwareBaselinePackage.initializePackageContents();
 		theDeploymentConfAnalysisPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
+		theARINCComponentModelPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
 		theSafetyPackage.initializePackageContents();
@@ -298,105 +282,6 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 	 */
 	public EReference getCHRtPortSlot_CH_RtSpecification() {
 		return (EReference)chRtPortSlotEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getARINCComponentImpl() {
-		return arincComponentImplEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getARINCProcess() {
-		return arincProcessEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getARINCProcess_Base_Operation() {
-		return (EReference)arincProcessEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getARINCProcess_Base_Comment() {
-		return (EReference)arincProcessEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getARINCProcess_OperationsGroups() {
-		return (EAttribute)arincProcessEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getARINCFunction() {
-		return arincFunctionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getARINCFunction_Base_Operation() {
-		return (EReference)arincFunctionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getARINCFunction_Base_Comment() {
-		return (EReference)arincFunctionEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getARINCFunction_FollowedBy() {
-		return (EReference)arincFunctionEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getARINCFunction_PrecededBy() {
-		return (EReference)arincFunctionEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getARINCFunction_RateDivider() {
-		return (EAttribute)arincFunctionEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -584,20 +469,6 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__BASE_SLOT);
 		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__CH_RT_SPECIFICATION);
 
-		arincComponentImplEClass = createEClass(ARINC_COMPONENT_IMPL);
-
-		arincProcessEClass = createEClass(ARINC_PROCESS);
-		createEReference(arincProcessEClass, ARINC_PROCESS__BASE_OPERATION);
-		createEReference(arincProcessEClass, ARINC_PROCESS__BASE_COMMENT);
-		createEAttribute(arincProcessEClass, ARINC_PROCESS__OPERATIONS_GROUPS);
-
-		arincFunctionEClass = createEClass(ARINC_FUNCTION);
-		createEReference(arincFunctionEClass, ARINC_FUNCTION__BASE_OPERATION);
-		createEReference(arincFunctionEClass, ARINC_FUNCTION__BASE_COMMENT);
-		createEReference(arincFunctionEClass, ARINC_FUNCTION__FOLLOWED_BY);
-		createEReference(arincFunctionEClass, ARINC_FUNCTION__PRECEDED_BY);
-		createEAttribute(arincFunctionEClass, ARINC_FUNCTION__RATE_DIVIDER);
-
 		chRtSpecificationEClass = createEClass(CH_RT_SPECIFICATION);
 		createEReference(chRtSpecificationEClass, CH_RT_SPECIFICATION__PART_WITH_PORT);
 		createEAttribute(chRtSpecificationEClass, CH_RT_SPECIFICATION__WCET);
@@ -643,8 +514,6 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		// Obtain other dependent packages
 		RTDataTypesPackage theRTDataTypesPackage = (RTDataTypesPackage)EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI);
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
-		ComponentModelPackage theComponentModelPackage = (ComponentModelPackage)EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI);
-		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 		HLAMPackage theHLAMPackage = (HLAMPackage)EPackage.Registry.INSTANCE.getEPackage(HLAMPackage.eNS_URI);
 
@@ -656,26 +525,11 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		arincComponentImplEClass.getESuperTypes().add(theComponentModelPackage.getComponentImplementation());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(chRtPortSlotEClass, CHRtPortSlot.class, "CHRtPortSlot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCHRtPortSlot_Base_Slot(), theUMLPackage.getSlot(), null, "base_Slot", null, 1, 1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCHRtPortSlot_CH_RtSpecification(), this.getCHRtSpecification(), null, "cH_RtSpecification", null, 0, -1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(arincComponentImplEClass, ARINCComponentImpl.class, "ARINCComponentImpl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(arincProcessEClass, ARINCProcess.class, "ARINCProcess", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getARINCProcess_Base_Operation(), theUMLPackage.getOperation(), null, "base_Operation", null, 1, 1, ARINCProcess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getARINCProcess_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, ARINCProcess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getARINCProcess_OperationsGroups(), theTypesPackage.getString(), "operationsGroups", null, 0, 1, ARINCProcess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(arincFunctionEClass, ARINCFunction.class, "ARINCFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getARINCFunction_Base_Operation(), theUMLPackage.getOperation(), null, "base_Operation", null, 1, 1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getARINCFunction_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getARINCFunction_FollowedBy(), theUMLPackage.getOperation(), null, "followedBy", null, 0, -1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getARINCFunction_PrecededBy(), theUMLPackage.getOperation(), null, "precededBy", null, 0, -1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getARINCFunction_RateDivider(), theTypesPackage.getInteger(), "rateDivider", null, 0, 1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(chRtSpecificationEClass, CHRtSpecification.class, "CHRtSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCHRtSpecification_PartWithPort(), theUMLPackage.getProperty(), null, "partWithPort", null, 0, 1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);

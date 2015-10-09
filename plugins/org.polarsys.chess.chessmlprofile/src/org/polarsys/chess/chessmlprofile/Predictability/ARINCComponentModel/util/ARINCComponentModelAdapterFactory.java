@@ -1,39 +1,34 @@
-/*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
- *
- *    
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- *
- *****************************************************************************/
-package org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.util;
+/**
+ */
+package org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
+
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.*;
+
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.*;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage
+ * @see org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage
  * @generated
  */
-public class RTComponentModelAdapterFactory extends AdapterFactoryImpl {
+public class ARINCComponentModelAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static RTComponentModelPackage modelPackage;
+	protected static ARINCComponentModelPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -41,9 +36,9 @@ public class RTComponentModelAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RTComponentModelAdapterFactory() {
+	public ARINCComponentModelAdapterFactory() {
 		if (modelPackage == null) {
-			modelPackage = RTComponentModelPackage.eINSTANCE;
+			modelPackage = ARINCComponentModelPackage.eINSTANCE;
 		}
 	}
 
@@ -72,15 +67,19 @@ public class RTComponentModelAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected RTComponentModelSwitch<Adapter> modelSwitch =
-		new RTComponentModelSwitch<Adapter>() {
+	protected ARINCComponentModelSwitch<Adapter> modelSwitch =
+		new ARINCComponentModelSwitch<Adapter>() {
 			@Override
-			public Adapter caseCHRtPortSlot(CHRtPortSlot object) {
-				return createCHRtPortSlotAdapter();
+			public Adapter caseARINCComponentImpl(ARINCComponentImpl object) {
+				return createARINCComponentImplAdapter();
 			}
 			@Override
-			public Adapter caseCHRtSpecification(CHRtSpecification object) {
-				return createCHRtSpecificationAdapter();
+			public Adapter caseARINCProcess(ARINCProcess object) {
+				return createARINCProcessAdapter();
+			}
+			@Override
+			public Adapter caseARINCFunction(ARINCFunction object) {
+				return createARINCFunctionAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -103,30 +102,44 @@ public class RTComponentModelAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot <em>CH Rt Port Slot</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentImpl <em>ARINC Component Impl</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentImpl
 	 * @generated
 	 */
-	public Adapter createCHRtPortSlotAdapter() {
+	public Adapter createARINCComponentImplAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification <em>CH Rt Specification</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCProcess <em>ARINC Process</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCProcess
 	 * @generated
 	 */
-	public Adapter createCHRtSpecificationAdapter() {
+	public Adapter createARINCProcessAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCFunction <em>ARINC Function</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCFunction
+	 * @generated
+	 */
+	public Adapter createARINCFunctionAdapter() {
 		return null;
 	}
 
@@ -142,4 +155,4 @@ public class RTComponentModelAdapterFactory extends AdapterFactoryImpl {
 		return null;
 	}
 
-} //RTComponentModelAdapterFactory
+} //ARINCComponentModelAdapterFactory

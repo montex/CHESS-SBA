@@ -1,20 +1,15 @@
-/*****************************************************************************
- * Copyright (c) 2011, 2015 University of Padova, Intecs
- *
- *    
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- *
- *****************************************************************************/
-package org.polarsys.chess.chessmlprofile.ComponentModel.util;
+/**
+ */
+package org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.util.Switch;
-import org.polarsys.chess.chessmlprofile.ComponentModel.*;
+
+import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
+
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,17 +21,17 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.*;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage
+ * @see org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage
  * @generated
  */
-public class ComponentModelSwitch<T> extends Switch<T> {
+public class ARINCComponentModelSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static ComponentModelPackage modelPackage;
+	protected static ARINCComponentModelPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -44,9 +39,9 @@ public class ComponentModelSwitch<T> extends Switch<T> {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ComponentModelSwitch() {
+	public ARINCComponentModelSwitch() {
 		if (modelPackage == null) {
-			modelPackage = ComponentModelPackage.eINSTANCE;
+			modelPackage = ARINCComponentModelPackage.eINSTANCE;
 		}
 	}
 
@@ -73,27 +68,21 @@ public class ComponentModelSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case ComponentModelPackage.COMPONENT_TYPE: {
-				ComponentType componentType = (ComponentType)theEObject;
-				T result = caseComponentType(componentType);
+			case ARINCComponentModelPackage.ARINC_COMPONENT_IMPL: {
+				ARINCComponentImpl arincComponentImpl = (ARINCComponentImpl)theEObject;
+				T result = caseARINCComponentImpl(arincComponentImpl);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ComponentModelPackage.COMPONENT_IMPLEMENTATION: {
-				ComponentImplementation componentImplementation = (ComponentImplementation)theEObject;
-				T result = caseComponentImplementation(componentImplementation);
+			case ARINCComponentModelPackage.ARINC_PROCESS: {
+				ARINCProcess arincProcess = (ARINCProcess)theEObject;
+				T result = caseARINCProcess(arincProcess);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ComponentModelPackage.FUNCTIONAL_PARTITION: {
-				FunctionalPartition functionalPartition = (FunctionalPartition)theEObject;
-				T result = caseFunctionalPartition(functionalPartition);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL: {
-				HwAbstractionComponentImpl hwAbstractionComponentImpl = (HwAbstractionComponentImpl)theEObject;
-				T result = caseHwAbstractionComponentImpl(hwAbstractionComponentImpl);
+			case ARINCComponentModelPackage.ARINC_FUNCTION: {
+				ARINCFunction arincFunction = (ARINCFunction)theEObject;
+				T result = caseARINCFunction(arincFunction);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -102,62 +91,47 @@ public class ComponentModelSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Component Type</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>ARINC Component Impl</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Component Type</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>ARINC Component Impl</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseComponentType(ComponentType object) {
+	public T caseARINCComponentImpl(ARINCComponentImpl object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Component Implementation</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>ARINC Process</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Component Implementation</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>ARINC Process</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseComponentImplementation(ComponentImplementation object) {
+	public T caseARINCProcess(ARINCProcess object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Functional Partition</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>ARINC Function</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Functional Partition</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>ARINC Function</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseFunctionalPartition(FunctionalPartition object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Hw Abstraction Component Impl</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Hw Abstraction Component Impl</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseHwAbstractionComponentImpl(HwAbstractionComponentImpl object) {
+	public T caseARINCFunction(ARINCFunction object) {
 		return null;
 	}
 
@@ -177,4 +151,4 @@ public class ComponentModelSwitch<T> extends Switch<T> {
 		return null;
 	}
 
-} //ComponentModelSwitch
+} //ARINCComponentModelSwitch

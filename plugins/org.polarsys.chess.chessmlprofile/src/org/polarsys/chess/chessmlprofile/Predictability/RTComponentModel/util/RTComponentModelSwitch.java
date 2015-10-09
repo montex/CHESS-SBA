@@ -80,25 +80,6 @@ public class RTComponentModelSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case RTComponentModelPackage.ARINC_COMPONENT_IMPL: {
-				ARINCComponentImpl arincComponentImpl = (ARINCComponentImpl)theEObject;
-				T result = caseARINCComponentImpl(arincComponentImpl);
-				if (result == null) result = caseComponentImplementation(arincComponentImpl);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case RTComponentModelPackage.ARINC_PROCESS: {
-				ARINCProcess arincProcess = (ARINCProcess)theEObject;
-				T result = caseARINCProcess(arincProcess);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case RTComponentModelPackage.ARINC_FUNCTION: {
-				ARINCFunction arincFunction = (ARINCFunction)theEObject;
-				T result = caseARINCFunction(arincFunction);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case RTComponentModelPackage.CH_RT_SPECIFICATION: {
 				CHRtSpecification chRtSpecification = (CHRtSpecification)theEObject;
 				T result = caseCHRtSpecification(chRtSpecification);
@@ -125,51 +106,6 @@ public class RTComponentModelSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>ARINC Component Impl</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>ARINC Component Impl</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseARINCComponentImpl(ARINCComponentImpl object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>ARINC Process</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>ARINC Process</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseARINCProcess(ARINCProcess object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>ARINC Function</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>ARINC Function</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseARINCFunction(ARINCFunction object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>CH Rt Specification</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -181,21 +117,6 @@ public class RTComponentModelSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCHRtSpecification(CHRtSpecification object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Component Implementation</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Component Implementation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseComponentImplementation(ComponentImplementation object) {
 		return null;
 	}
 

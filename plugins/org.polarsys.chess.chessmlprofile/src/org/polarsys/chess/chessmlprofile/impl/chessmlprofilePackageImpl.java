@@ -58,6 +58,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedData
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.impl.StateBasedDataTypesPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.DeploymentConfAnalysisPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.impl.DeploymentConfAnalysisPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
@@ -169,6 +171,7 @@ public class chessmlprofilePackageImpl extends EPackageImpl implements chessmlpr
 		DeploymentConfAnalysisPackageImpl theDeploymentConfAnalysisPackage = (DeploymentConfAnalysisPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) instanceof DeploymentConfAnalysisPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) : DeploymentConfAnalysisPackage.eINSTANCE);
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
+		ARINCComponentModelPackageImpl theARINCComponentModelPackage = (ARINCComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) instanceof ARINCComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) : ARINCComponentModelPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
@@ -196,6 +199,7 @@ public class chessmlprofilePackageImpl extends EPackageImpl implements chessmlpr
 		theDeploymentConfAnalysisPackage.createPackageContents();
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
+		theARINCComponentModelPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
 		theSafetyPackage.createPackageContents();
@@ -223,6 +227,7 @@ public class chessmlprofilePackageImpl extends EPackageImpl implements chessmlpr
 		theDeploymentConfAnalysisPackage.initializePackageContents();
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
+		theARINCComponentModelPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
 		theSafetyPackage.initializePackageContents();
@@ -316,6 +321,7 @@ public class chessmlprofilePackageImpl extends EPackageImpl implements chessmlpr
 		HardwareBaselinePackage theHardwareBaselinePackage = (HardwareBaselinePackage)EPackage.Registry.INSTANCE.getEPackage(HardwareBaselinePackage.eNS_URI);
 		DeploymentConfAnalysisPackage theDeploymentConfAnalysisPackage = (DeploymentConfAnalysisPackage)EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI);
 		RTComponentModelPackage theRTComponentModelPackage = (RTComponentModelPackage)EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI);
+		ARINCComponentModelPackage theARINCComponentModelPackage = (ARINCComponentModelPackage)EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI);
 		ComponentModelPackage theComponentModelPackage = (ComponentModelPackage)EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI);
 		STSPackage theSTSPackage = (STSPackage)EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI);
 		SafetyPackage theSafetyPackage = (SafetyPackage)EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI);
@@ -337,6 +343,7 @@ public class chessmlprofilePackageImpl extends EPackageImpl implements chessmlpr
 		getESubpackages().add(theHardwareBaselinePackage);
 		getESubpackages().add(theDeploymentConfAnalysisPackage);
 		getESubpackages().add(theRTComponentModelPackage);
+		getESubpackages().add(theARINCComponentModelPackage);
 		getESubpackages().add(theComponentModelPackage);
 		getESubpackages().add(theSTSPackage);
 		getESubpackages().add(theSafetyPackage);

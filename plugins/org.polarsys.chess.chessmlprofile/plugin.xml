@@ -541,12 +541,30 @@
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESS -->
+      <package
+            uri="http://CHESS/Predictability/ARINCComponentModel"
+            class="org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESS -->
       <package
             uri="http://CHESS/ComponentModel"
             class="org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage"
             genModel="model/CHESS.genmodel"/>
    </extension>
 
+	<extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_GMlQEGwuEeWvYIaEJT1qow"
+            uri="http://CHESS/Predictability/ARINCComponentModel">
+      </profile>
+   </extension> 
+
+  
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <!-- @generated CHESS -->
       <parser

@@ -63,9 +63,9 @@ public class ComponentModelFactoryImpl extends EFactoryImpl implements Component
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case ComponentModelPackage.COMPONENT_TYPE: return createComponentType();
+			case ComponentModelPackage.COMPONENT_IMPLEMENTATION: return createComponentImplementation();
 			case ComponentModelPackage.FUNCTIONAL_PARTITION: return createFunctionalPartition();
 			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL: return createHwAbstractionComponentImpl();
-			case ComponentModelPackage.COMPONENT_IMPLEMENTATION: return createComponentImplementation();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

@@ -1,17 +1,8 @@
-/*******************************************************************************
- *  * Copyright (c) 2015 University of Padova, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
 /**
  */
-package org.polarsys.chess.chessmlprofile.Safety.impl;
+package org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -35,6 +26,8 @@ import org.eclipse.papyrus.MARTE_Library.RS_Library.RS_LibraryPackage;
 import org.eclipse.papyrus.MARTE_Library.TimeLibrary.TimeLibraryPackage;
 
 import org.eclipse.papyrus.MARTE_Library.TimeTypesLibrary.TimeTypesLibraryPackage;
+
+import org.eclipse.uml2.types.TypesPackage;
 
 import org.eclipse.uml2.uml.UMLPackage;
 
@@ -102,8 +95,12 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
 
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl;
 
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentImpl;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelFactory;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
-import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCFunction;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCProcess;
+
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.DeploymentConfAnalysisPackage;
 
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.impl.DeploymentConfAnalysisPackageImpl;
@@ -128,11 +125,9 @@ import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingCon
 
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
 
-import org.polarsys.chess.chessmlprofile.Safety.CriticalityInterfaceSpecification;
-import org.polarsys.chess.chessmlprofile.Safety.CriticalityLevel;
-import org.polarsys.chess.chessmlprofile.Safety.CriticalitySpecification;
-import org.polarsys.chess.chessmlprofile.Safety.SafetyFactory;
 import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
+
+import org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl;
 
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
 
@@ -148,27 +143,27 @@ import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
  * <!-- end-user-doc -->
  * @generated
  */
-public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
+public class ARINCComponentModelPackageImpl extends EPackageImpl implements ARINCComponentModelPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass criticalityInterfaceSpecificationEClass = null;
+	private EClass arincComponentImplEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass criticalitySpecificationEClass = null;
+	private EClass arincProcessEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass criticalityLevelEClass = null;
+	private EClass arincFunctionEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -181,12 +176,12 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.polarsys.chess.chessmlprofile.Safety.SafetyPackage#eNS_URI
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private SafetyPackageImpl() {
-		super(eNS_URI, SafetyFactory.eINSTANCE);
+	private ARINCComponentModelPackageImpl() {
+		super(eNS_URI, ARINCComponentModelFactory.eINSTANCE);
 	}
 
 	/**
@@ -199,7 +194,7 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
-	 * <p>This method is used to initialize {@link SafetyPackage#eINSTANCE} when that field is accessed.
+	 * <p>This method is used to initialize {@link ARINCComponentModelPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -208,11 +203,11 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static SafetyPackage init() {
-		if (isInited) return (SafetyPackage)EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI);
+	public static ARINCComponentModelPackage init() {
+		if (isInited) return (ARINCComponentModelPackage)EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI);
 
 		// Obtain or create and register package
-		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new SafetyPackageImpl());
+		ARINCComponentModelPackageImpl theARINCComponentModelPackage = (ARINCComponentModelPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ARINCComponentModelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ARINCComponentModelPackageImpl());
 
 		isInited = true;
 
@@ -251,12 +246,12 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		DeploymentConfAnalysisPackageImpl theDeploymentConfAnalysisPackage = (DeploymentConfAnalysisPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) instanceof DeploymentConfAnalysisPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) : DeploymentConfAnalysisPackage.eINSTANCE);
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
-		ARINCComponentModelPackageImpl theARINCComponentModelPackage = (ARINCComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) instanceof ARINCComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) : ARINCComponentModelPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
+		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
 
 		// Create package meta-data objects
-		theSafetyPackage.createPackageContents();
+		theARINCComponentModelPackage.createPackageContents();
 		thechessmlprofilePackage.createPackageContents();
 		theCorePackage.createPackageContents();
 		theCHESSViewsPackage.createPackageContents();
@@ -279,12 +274,12 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		theDeploymentConfAnalysisPackage.createPackageContents();
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
-		theARINCComponentModelPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
+		theSafetyPackage.createPackageContents();
 
 		// Initialize created meta-data
-		theSafetyPackage.initializePackageContents();
+		theARINCComponentModelPackage.initializePackageContents();
 		thechessmlprofilePackage.initializePackageContents();
 		theCorePackage.initializePackageContents();
 		theCHESSViewsPackage.initializePackageContents();
@@ -307,17 +302,17 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		theDeploymentConfAnalysisPackage.initializePackageContents();
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
-		theARINCComponentModelPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
+		theSafetyPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
-		theSafetyPackage.freeze();
+		theARINCComponentModelPackage.freeze();
 
   
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(SafetyPackage.eNS_URI, theSafetyPackage);
-		return theSafetyPackage;
+		EPackage.Registry.INSTANCE.put(ARINCComponentModelPackage.eNS_URI, theARINCComponentModelPackage);
+		return theARINCComponentModelPackage;
 	}
 
 	/**
@@ -325,8 +320,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getCriticalityInterfaceSpecification() {
-		return criticalityInterfaceSpecificationEClass;
+	public EClass getARINCComponentImpl() {
+		return arincComponentImplEClass;
 	}
 
 	/**
@@ -334,8 +329,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCriticalityInterfaceSpecification_Base_Constraint() {
-		return (EReference)criticalityInterfaceSpecificationEClass.getEStructuralFeatures().get(0);
+	public EReference getARINCComponentImpl_Base_Component() {
+		return (EReference)arincComponentImplEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -343,8 +338,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCriticalityInterfaceSpecification_AcceptedCriticalityForClients() {
-		return (EReference)criticalityInterfaceSpecificationEClass.getEStructuralFeatures().get(1);
+	public EClass getARINCProcess() {
+		return arincProcessEClass;
 	}
 
 	/**
@@ -352,8 +347,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getCriticalitySpecification() {
-		return criticalitySpecificationEClass;
+	public EReference getARINCProcess_Base_Operation() {
+		return (EReference)arincProcessEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -361,8 +356,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCriticalitySpecification_Base_Constraint() {
-		return (EReference)criticalitySpecificationEClass.getEStructuralFeatures().get(0);
+	public EReference getARINCProcess_Base_Comment() {
+		return (EReference)arincProcessEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -370,8 +365,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCriticalitySpecification_CriticalityLevel() {
-		return (EReference)criticalitySpecificationEClass.getEStructuralFeatures().get(1);
+	public EAttribute getARINCProcess_OperationsGroups() {
+		return (EAttribute)arincProcessEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -379,8 +374,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getCriticalityLevel() {
-		return criticalityLevelEClass;
+	public EClass getARINCFunction() {
+		return arincFunctionEClass;
 	}
 
 	/**
@@ -388,8 +383,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCriticalityLevel_Base_Constraint() {
-		return (EReference)criticalityLevelEClass.getEStructuralFeatures().get(0);
+	public EReference getARINCFunction_Base_Operation() {
+		return (EReference)arincFunctionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -397,8 +392,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCriticalityLevel_IsHigherThan() {
-		return (EReference)criticalityLevelEClass.getEStructuralFeatures().get(1);
+	public EReference getARINCFunction_Base_Comment() {
+		return (EReference)arincFunctionEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -406,8 +401,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCriticalityLevel_MapsTo() {
-		return (EReference)criticalityLevelEClass.getEStructuralFeatures().get(2);
+	public EReference getARINCFunction_FollowedBy() {
+		return (EReference)arincFunctionEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -415,8 +410,17 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SafetyFactory getSafetyFactory() {
-		return (SafetyFactory)getEFactoryInstance();
+	public EAttribute getARINCFunction_RateDivider() {
+		return (EAttribute)arincFunctionEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ARINCComponentModelFactory getARINCComponentModelFactory() {
+		return (ARINCComponentModelFactory)getEFactoryInstance();
 	}
 
 	/**
@@ -438,18 +442,19 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		criticalityInterfaceSpecificationEClass = createEClass(CRITICALITY_INTERFACE_SPECIFICATION);
-		createEReference(criticalityInterfaceSpecificationEClass, CRITICALITY_INTERFACE_SPECIFICATION__BASE_CONSTRAINT);
-		createEReference(criticalityInterfaceSpecificationEClass, CRITICALITY_INTERFACE_SPECIFICATION__ACCEPTED_CRITICALITY_FOR_CLIENTS);
+		arincComponentImplEClass = createEClass(ARINC_COMPONENT_IMPL);
+		createEReference(arincComponentImplEClass, ARINC_COMPONENT_IMPL__BASE_COMPONENT);
 
-		criticalityLevelEClass = createEClass(CRITICALITY_LEVEL);
-		createEReference(criticalityLevelEClass, CRITICALITY_LEVEL__BASE_CONSTRAINT);
-		createEReference(criticalityLevelEClass, CRITICALITY_LEVEL__IS_HIGHER_THAN);
-		createEReference(criticalityLevelEClass, CRITICALITY_LEVEL__MAPS_TO);
+		arincProcessEClass = createEClass(ARINC_PROCESS);
+		createEReference(arincProcessEClass, ARINC_PROCESS__BASE_OPERATION);
+		createEReference(arincProcessEClass, ARINC_PROCESS__BASE_COMMENT);
+		createEAttribute(arincProcessEClass, ARINC_PROCESS__OPERATIONS_GROUPS);
 
-		criticalitySpecificationEClass = createEClass(CRITICALITY_SPECIFICATION);
-		createEReference(criticalitySpecificationEClass, CRITICALITY_SPECIFICATION__BASE_CONSTRAINT);
-		createEReference(criticalitySpecificationEClass, CRITICALITY_SPECIFICATION__CRITICALITY_LEVEL);
+		arincFunctionEClass = createEClass(ARINC_FUNCTION);
+		createEReference(arincFunctionEClass, ARINC_FUNCTION__BASE_OPERATION);
+		createEReference(arincFunctionEClass, ARINC_FUNCTION__BASE_COMMENT);
+		createEReference(arincFunctionEClass, ARINC_FUNCTION__FOLLOWED_BY);
+		createEAttribute(arincFunctionEClass, ARINC_FUNCTION__RATE_DIVIDER);
 	}
 
 	/**
@@ -477,6 +482,7 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 
 		// Obtain other dependent packages
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
+		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -485,18 +491,19 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		// Add supertypes to classes
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(criticalityInterfaceSpecificationEClass, CriticalityInterfaceSpecification.class, "CriticalityInterfaceSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCriticalityInterfaceSpecification_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, CriticalityInterfaceSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getCriticalityInterfaceSpecification_AcceptedCriticalityForClients(), this.getCriticalityLevel(), null, "acceptedCriticalityForClients", null, 0, -1, CriticalityInterfaceSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEClass(arincComponentImplEClass, ARINCComponentImpl.class, "ARINCComponentImpl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getARINCComponentImpl_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, ARINCComponentImpl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
-		initEClass(criticalityLevelEClass, CriticalityLevel.class, "CriticalityLevel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCriticalityLevel_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, CriticalityLevel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getCriticalityLevel_IsHigherThan(), this.getCriticalityLevel(), null, "isHigherThan", null, 0, -1, CriticalityLevel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getCriticalityLevel_MapsTo(), this.getCriticalityLevel(), null, "mapsTo", null, 0, -1, CriticalityLevel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEClass(arincProcessEClass, ARINCProcess.class, "ARINCProcess", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getARINCProcess_Base_Operation(), theUMLPackage.getOperation(), null, "base_Operation", null, 1, 1, ARINCProcess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getARINCProcess_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, ARINCProcess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getARINCProcess_OperationsGroups(), theTypesPackage.getString(), "operationsGroups", null, 0, 1, ARINCProcess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
-		initEClass(criticalitySpecificationEClass, CriticalitySpecification.class, "CriticalitySpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCriticalitySpecification_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, CriticalitySpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getCriticalitySpecification_CriticalityLevel(), this.getCriticalityLevel(), null, "criticalityLevel", null, 1, 1, CriticalitySpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEClass(arincFunctionEClass, ARINCFunction.class, "ARINCFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getARINCFunction_Base_Operation(), theUMLPackage.getOperation(), null, "base_Operation", null, 1, 1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getARINCFunction_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getARINCFunction_FollowedBy(), theUMLPackage.getOperation(), null, "followedBy", null, 0, -1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getARINCFunction_RateDivider(), theTypesPackage.getInteger(), "rateDivider", null, 0, 1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
-} //SafetyPackageImpl
+} //ARINCComponentModelPackageImpl

@@ -1,6 +1,6 @@
 /**
  */
-package org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl;
+package org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -13,8 +13,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Operation;
 
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.ARINCProcess;
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCProcess;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,9 +23,9 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTCompo
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.ARINCProcessImpl#getBase_Operation <em>Base Operation</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.ARINCProcessImpl#getBase_Comment <em>Base Comment</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.ARINCProcessImpl#getOperationsGroups <em>Operations Groups</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCProcessImpl#getBase_Operation <em>Base Operation</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCProcessImpl#getBase_Comment <em>Base Comment</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCProcessImpl#getOperationsGroups <em>Operations Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -88,7 +88,7 @@ public class ARINCProcessImpl extends EObjectImpl implements ARINCProcess {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return RTComponentModelPackage.Literals.ARINC_PROCESS;
+		return ARINCComponentModelPackage.Literals.ARINC_PROCESS;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class ARINCProcessImpl extends EObjectImpl implements ARINCProcess {
 			base_Operation = (Operation)eResolveProxy(oldBase_Operation);
 			if (base_Operation != oldBase_Operation) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RTComponentModelPackage.ARINC_PROCESS__BASE_OPERATION, oldBase_Operation, base_Operation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ARINCComponentModelPackage.ARINC_PROCESS__BASE_OPERATION, oldBase_Operation, base_Operation));
 			}
 		}
 		return base_Operation;
@@ -126,7 +126,7 @@ public class ARINCProcessImpl extends EObjectImpl implements ARINCProcess {
 		Operation oldBase_Operation = base_Operation;
 		base_Operation = newBase_Operation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RTComponentModelPackage.ARINC_PROCESS__BASE_OPERATION, oldBase_Operation, base_Operation));
+			eNotify(new ENotificationImpl(this, Notification.SET, ARINCComponentModelPackage.ARINC_PROCESS__BASE_OPERATION, oldBase_Operation, base_Operation));
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class ARINCProcessImpl extends EObjectImpl implements ARINCProcess {
 			base_Comment = (Comment)eResolveProxy(oldBase_Comment);
 			if (base_Comment != oldBase_Comment) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RTComponentModelPackage.ARINC_PROCESS__BASE_COMMENT, oldBase_Comment, base_Comment));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ARINCComponentModelPackage.ARINC_PROCESS__BASE_COMMENT, oldBase_Comment, base_Comment));
 			}
 		}
 		return base_Comment;
@@ -164,7 +164,7 @@ public class ARINCProcessImpl extends EObjectImpl implements ARINCProcess {
 		Comment oldBase_Comment = base_Comment;
 		base_Comment = newBase_Comment;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RTComponentModelPackage.ARINC_PROCESS__BASE_COMMENT, oldBase_Comment, base_Comment));
+			eNotify(new ENotificationImpl(this, Notification.SET, ARINCComponentModelPackage.ARINC_PROCESS__BASE_COMMENT, oldBase_Comment, base_Comment));
 	}
 
 	/**
@@ -185,7 +185,7 @@ public class ARINCProcessImpl extends EObjectImpl implements ARINCProcess {
 		String oldOperationsGroups = operationsGroups;
 		operationsGroups = newOperationsGroups;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RTComponentModelPackage.ARINC_PROCESS__OPERATIONS_GROUPS, oldOperationsGroups, operationsGroups));
+			eNotify(new ENotificationImpl(this, Notification.SET, ARINCComponentModelPackage.ARINC_PROCESS__OPERATIONS_GROUPS, oldOperationsGroups, operationsGroups));
 	}
 
 	/**
@@ -196,13 +196,13 @@ public class ARINCProcessImpl extends EObjectImpl implements ARINCProcess {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case RTComponentModelPackage.ARINC_PROCESS__BASE_OPERATION:
+			case ARINCComponentModelPackage.ARINC_PROCESS__BASE_OPERATION:
 				if (resolve) return getBase_Operation();
 				return basicGetBase_Operation();
-			case RTComponentModelPackage.ARINC_PROCESS__BASE_COMMENT:
+			case ARINCComponentModelPackage.ARINC_PROCESS__BASE_COMMENT:
 				if (resolve) return getBase_Comment();
 				return basicGetBase_Comment();
-			case RTComponentModelPackage.ARINC_PROCESS__OPERATIONS_GROUPS:
+			case ARINCComponentModelPackage.ARINC_PROCESS__OPERATIONS_GROUPS:
 				return getOperationsGroups();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -216,13 +216,13 @@ public class ARINCProcessImpl extends EObjectImpl implements ARINCProcess {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case RTComponentModelPackage.ARINC_PROCESS__BASE_OPERATION:
+			case ARINCComponentModelPackage.ARINC_PROCESS__BASE_OPERATION:
 				setBase_Operation((Operation)newValue);
 				return;
-			case RTComponentModelPackage.ARINC_PROCESS__BASE_COMMENT:
+			case ARINCComponentModelPackage.ARINC_PROCESS__BASE_COMMENT:
 				setBase_Comment((Comment)newValue);
 				return;
-			case RTComponentModelPackage.ARINC_PROCESS__OPERATIONS_GROUPS:
+			case ARINCComponentModelPackage.ARINC_PROCESS__OPERATIONS_GROUPS:
 				setOperationsGroups((String)newValue);
 				return;
 		}
@@ -237,13 +237,13 @@ public class ARINCProcessImpl extends EObjectImpl implements ARINCProcess {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case RTComponentModelPackage.ARINC_PROCESS__BASE_OPERATION:
+			case ARINCComponentModelPackage.ARINC_PROCESS__BASE_OPERATION:
 				setBase_Operation((Operation)null);
 				return;
-			case RTComponentModelPackage.ARINC_PROCESS__BASE_COMMENT:
+			case ARINCComponentModelPackage.ARINC_PROCESS__BASE_COMMENT:
 				setBase_Comment((Comment)null);
 				return;
-			case RTComponentModelPackage.ARINC_PROCESS__OPERATIONS_GROUPS:
+			case ARINCComponentModelPackage.ARINC_PROCESS__OPERATIONS_GROUPS:
 				setOperationsGroups(OPERATIONS_GROUPS_EDEFAULT);
 				return;
 		}
@@ -258,11 +258,11 @@ public class ARINCProcessImpl extends EObjectImpl implements ARINCProcess {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case RTComponentModelPackage.ARINC_PROCESS__BASE_OPERATION:
+			case ARINCComponentModelPackage.ARINC_PROCESS__BASE_OPERATION:
 				return base_Operation != null;
-			case RTComponentModelPackage.ARINC_PROCESS__BASE_COMMENT:
+			case ARINCComponentModelPackage.ARINC_PROCESS__BASE_COMMENT:
 				return base_Comment != null;
-			case RTComponentModelPackage.ARINC_PROCESS__OPERATIONS_GROUPS:
+			case ARINCComponentModelPackage.ARINC_PROCESS__OPERATIONS_GROUPS:
 				return OPERATIONS_GROUPS_EDEFAULT == null ? operationsGroups != null : !OPERATIONS_GROUPS_EDEFAULT.equals(operationsGroups);
 		}
 		return super.eIsSet(featureID);

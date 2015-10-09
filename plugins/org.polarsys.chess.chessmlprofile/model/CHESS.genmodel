@@ -884,25 +884,6 @@
           <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtPortSlot/cH_RtSpecification"/>
         </genClasses>
-        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/ARINCComponentImpl"/>
-        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/ARINCProcess">
-          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
-              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/ARINCProcess/base_Operation"/>
-          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
-              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/ARINCProcess/base_Comment"/>
-          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/ARINCProcess/operationsGroups"/>
-        </genClasses>
-        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/ARINCFunction">
-          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
-              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/ARINCFunction/base_Operation"/>
-          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
-              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/ARINCFunction/base_Comment"/>
-          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
-              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/ARINCFunction/followedBy"/>
-          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
-              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/ARINCFunction/precededBy"/>
-          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/ARINCFunction/rateDivider"/>
-        </genClasses>
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification">
           <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/partWithPort"/>
@@ -934,12 +915,43 @@
           <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/RTComponentModel/RTDataTypes/TA_ArbitraryPattern"/>
         </nestedGenPackages>
       </nestedGenPackages>
+      <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="ARINCComponentModel"
+          basePackage="org.polarsys.chess.chessmlprofile.Predictability" disposableProviderFactory="true"
+          ecorePackage="chessmlprofile.ecore#//Predictability/ARINCComponentModel">
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/ARINCComponentModel/ARINCComponentImpl">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/ARINCComponentModel/ARINCComponentImpl/base_Component"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/ARINCComponentModel/ARINCProcess">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/ARINCComponentModel/ARINCProcess/base_Operation"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/ARINCComponentModel/ARINCProcess/base_Comment"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/ARINCComponentModel/ARINCProcess/operationsGroups"/>
+        </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Predictability/ARINCComponentModel/ARINCFunction">
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/ARINCComponentModel/ARINCFunction/base_Operation"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/ARINCComponentModel/ARINCFunction/base_Comment"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/ARINCComponentModel/ARINCFunction/followedBy"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/ARINCComponentModel/ARINCFunction/rateDivider"/>
+        </genClasses>
+      </nestedGenPackages>
     </nestedGenPackages>
     <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="ComponentModel" basePackage="org.polarsys.chess.chessmlprofile"
         resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//ComponentModel">
       <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//ComponentModel/ComponentType">
         <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
             propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ComponentModel/ComponentType/base_Component"/>
+      </genClasses>
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//ComponentModel/ComponentImplementation">
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ComponentModel/ComponentImplementation/base_Component"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/language"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/OS"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/sourceCodeLocation"/>
       </genClasses>
       <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//ComponentModel/FunctionalPartition">
         <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/FunctionalPartition/utilization"/>
@@ -954,13 +966,6 @@
             propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ComponentModel/HwAbstractionComponentImpl/hwRes"/>
         <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
             propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ComponentModel/HwAbstractionComponentImpl/base_Component"/>
-      </genClasses>
-      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//ComponentModel/ComponentImplementation">
-        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
-            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ComponentModel/ComponentImplementation/base_Component"/>
-        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/language"/>
-        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/OS"/>
-        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ComponentModel/ComponentImplementation/sourceCodeLocation"/>
       </genClasses>
     </nestedGenPackages>
     <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="SystemModel" basePackage="org.polarsys.chess.chessmlprofile"

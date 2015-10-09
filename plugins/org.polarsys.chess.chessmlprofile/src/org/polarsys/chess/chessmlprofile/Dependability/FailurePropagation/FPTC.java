@@ -21,7 +21,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Depen
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * deprecated, use ErrorModelBehavior instead
+ * deprecated, use FLABehavior instead
  * 
  * <!-- end-model-doc -->
  *

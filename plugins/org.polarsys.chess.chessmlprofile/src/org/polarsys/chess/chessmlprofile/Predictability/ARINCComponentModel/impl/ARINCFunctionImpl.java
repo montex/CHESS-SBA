@@ -1,6 +1,6 @@
 /**
  */
-package org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl;
+package org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl;
 
 import java.util.Collection;
 
@@ -21,8 +21,8 @@ import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Type;
 
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.ARINCFunction;
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCFunction;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,11 +31,10 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTCompo
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.ARINCFunctionImpl#getBase_Operation <em>Base Operation</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.ARINCFunctionImpl#getBase_Comment <em>Base Comment</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.ARINCFunctionImpl#getFollowedBy <em>Followed By</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.ARINCFunctionImpl#getPrecededBy <em>Preceded By</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.ARINCFunctionImpl#getRateDivider <em>Rate Divider</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCFunctionImpl#getBase_Operation <em>Base Operation</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCFunctionImpl#getBase_Comment <em>Base Comment</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCFunctionImpl#getFollowedBy <em>Followed By</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCFunctionImpl#getRateDivider <em>Rate Divider</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,16 +72,6 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 	protected EList<Operation> followedBy;
 
 	/**
-	 * The cached value of the '{@link #getPrecededBy() <em>Preceded By</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPrecededBy()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Operation> precededBy;
-
-	/**
 	 * The default value of the '{@link #getRateDivider() <em>Rate Divider</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -118,7 +107,7 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return RTComponentModelPackage.Literals.ARINC_FUNCTION;
+		return ARINCComponentModelPackage.Literals.ARINC_FUNCTION;
 	}
 
 	/**
@@ -132,7 +121,7 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 			base_Operation = (Operation)eResolveProxy(oldBase_Operation);
 			if (base_Operation != oldBase_Operation) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RTComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION, oldBase_Operation, base_Operation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ARINCComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION, oldBase_Operation, base_Operation));
 			}
 		}
 		return base_Operation;
@@ -156,7 +145,7 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 		Operation oldBase_Operation = base_Operation;
 		base_Operation = newBase_Operation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RTComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION, oldBase_Operation, base_Operation));
+			eNotify(new ENotificationImpl(this, Notification.SET, ARINCComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION, oldBase_Operation, base_Operation));
 	}
 
 	/**
@@ -170,7 +159,7 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 			base_Comment = (Comment)eResolveProxy(oldBase_Comment);
 			if (base_Comment != oldBase_Comment) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RTComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT, oldBase_Comment, base_Comment));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ARINCComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT, oldBase_Comment, base_Comment));
 			}
 		}
 		return base_Comment;
@@ -194,7 +183,7 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 		Comment oldBase_Comment = base_Comment;
 		base_Comment = newBase_Comment;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RTComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT, oldBase_Comment, base_Comment));
+			eNotify(new ENotificationImpl(this, Notification.SET, ARINCComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT, oldBase_Comment, base_Comment));
 	}
 
 	/**
@@ -204,7 +193,7 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 	 */
 	public EList<Operation> getFollowedBy() {
 		if (followedBy == null) {
-			followedBy = new EObjectResolvingEList<Operation>(Operation.class, this, RTComponentModelPackage.ARINC_FUNCTION__FOLLOWED_BY);
+			followedBy = new EObjectResolvingEList<Operation>(Operation.class, this, ARINCComponentModelPackage.ARINC_FUNCTION__FOLLOWED_BY);
 		}
 		return followedBy;
 	}
@@ -248,52 +237,6 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Operation> getPrecededBy() {
-		if (precededBy == null) {
-			precededBy = new EObjectResolvingEList<Operation>(Operation.class, this, RTComponentModelPackage.ARINC_FUNCTION__PRECEDED_BY);
-		}
-		return precededBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Operation getPrecededBy(String name, EList<String> ownedParameterNames, EList<Type> ownedParameterTypes) {
-		return getPrecededBy(name, ownedParameterNames, ownedParameterTypes, false);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Operation getPrecededBy(String name, EList<String> ownedParameterNames, EList<Type> ownedParameterTypes, boolean ignoreCase) {
-		precededByLoop: for (Operation precededBy : getPrecededBy()) {
-			if (name != null && !(ignoreCase ? name.equalsIgnoreCase(precededBy.getName()) : name.equals(precededBy.getName())))
-				continue precededByLoop;
-			EList<Parameter> ownedParameterList = precededBy.getOwnedParameters();
-			int ownedParameterListSize = ownedParameterList.size();
-			if (ownedParameterNames != null && ownedParameterNames.size() != ownedParameterListSize || (ownedParameterTypes != null && ownedParameterTypes.size() != ownedParameterListSize))
-				continue  precededByLoop;
-			for (int j = 0; j < ownedParameterListSize; j++) {
-				Parameter ownedParameter = ownedParameterList.get(j);
-				if (ownedParameterNames != null && !(ignoreCase ? (ownedParameterNames.get(j)).equalsIgnoreCase(ownedParameter.getName()) : ownedParameterNames.get(j).equals(ownedParameter.getName())))
-					continue precededByLoop;
-				if (ownedParameterTypes != null && !ownedParameterTypes.get(j).equals(ownedParameter.getType()))
-					continue precededByLoop;
-			}
-			return precededBy;
-		}
-		return null;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public int getRateDivider() {
 		return rateDivider;
 	}
@@ -307,7 +250,7 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 		int oldRateDivider = rateDivider;
 		rateDivider = newRateDivider;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RTComponentModelPackage.ARINC_FUNCTION__RATE_DIVIDER, oldRateDivider, rateDivider));
+			eNotify(new ENotificationImpl(this, Notification.SET, ARINCComponentModelPackage.ARINC_FUNCTION__RATE_DIVIDER, oldRateDivider, rateDivider));
 	}
 
 	/**
@@ -318,17 +261,15 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case RTComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION:
 				if (resolve) return getBase_Operation();
 				return basicGetBase_Operation();
-			case RTComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT:
 				if (resolve) return getBase_Comment();
 				return basicGetBase_Comment();
-			case RTComponentModelPackage.ARINC_FUNCTION__FOLLOWED_BY:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__FOLLOWED_BY:
 				return getFollowedBy();
-			case RTComponentModelPackage.ARINC_FUNCTION__PRECEDED_BY:
-				return getPrecededBy();
-			case RTComponentModelPackage.ARINC_FUNCTION__RATE_DIVIDER:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__RATE_DIVIDER:
 				return getRateDivider();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -343,21 +284,17 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case RTComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION:
 				setBase_Operation((Operation)newValue);
 				return;
-			case RTComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT:
 				setBase_Comment((Comment)newValue);
 				return;
-			case RTComponentModelPackage.ARINC_FUNCTION__FOLLOWED_BY:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__FOLLOWED_BY:
 				getFollowedBy().clear();
 				getFollowedBy().addAll((Collection<? extends Operation>)newValue);
 				return;
-			case RTComponentModelPackage.ARINC_FUNCTION__PRECEDED_BY:
-				getPrecededBy().clear();
-				getPrecededBy().addAll((Collection<? extends Operation>)newValue);
-				return;
-			case RTComponentModelPackage.ARINC_FUNCTION__RATE_DIVIDER:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__RATE_DIVIDER:
 				setRateDivider((Integer)newValue);
 				return;
 		}
@@ -372,19 +309,16 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case RTComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION:
 				setBase_Operation((Operation)null);
 				return;
-			case RTComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT:
 				setBase_Comment((Comment)null);
 				return;
-			case RTComponentModelPackage.ARINC_FUNCTION__FOLLOWED_BY:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__FOLLOWED_BY:
 				getFollowedBy().clear();
 				return;
-			case RTComponentModelPackage.ARINC_FUNCTION__PRECEDED_BY:
-				getPrecededBy().clear();
-				return;
-			case RTComponentModelPackage.ARINC_FUNCTION__RATE_DIVIDER:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__RATE_DIVIDER:
 				setRateDivider(RATE_DIVIDER_EDEFAULT);
 				return;
 		}
@@ -399,15 +333,13 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case RTComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__BASE_OPERATION:
 				return base_Operation != null;
-			case RTComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__BASE_COMMENT:
 				return base_Comment != null;
-			case RTComponentModelPackage.ARINC_FUNCTION__FOLLOWED_BY:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__FOLLOWED_BY:
 				return followedBy != null && !followedBy.isEmpty();
-			case RTComponentModelPackage.ARINC_FUNCTION__PRECEDED_BY:
-				return precededBy != null && !precededBy.isEmpty();
-			case RTComponentModelPackage.ARINC_FUNCTION__RATE_DIVIDER:
+			case ARINCComponentModelPackage.ARINC_FUNCTION__RATE_DIVIDER:
 				return rateDivider != RATE_DIVIDER_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

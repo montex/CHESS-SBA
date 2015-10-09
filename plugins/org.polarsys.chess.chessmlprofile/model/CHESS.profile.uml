@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ActionLanguage="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile" xmlns:DataTypes="http://www.eclipse.org/papyrus/DataTypes/1" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/5" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g http://www.eclipse.org/papyrus/DataTypes/1 http://www.eclipse.org/papyrus/MARTE/1#//VSL/DataTypes http://www.eclipse.org/uml2/schemas/Ecore/5 pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:DataTypes="http://www.eclipse.org/papyrus/DataTypes/1" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/5" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/papyrus/DataTypes/1 http://www.eclipse.org/papyrus/MARTE/1#//VSL/DataTypes http://www.eclipse.org/uml2/schemas/Ecore/5 pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA">
   <uml:Profile xmi:id="_EA6IcDcwEd-mWLzcI61s7Q" name="CHESS" URI="http://CHESS" metaclassReference="_f4IT8LzoEd-yoLyJo0JlOg _hi07MLzoEd-yoLyJo0JlOg _06BxsLzuEd-yoLyJo0JlOg _xsRxML88Ed-TL8tpOyViyA _IuJJQMAMEd-Dn5_MBIs5Vw _BWmhsMAREd-Dn5_MBIs5Vw">
     <elementImport xmi:type="uml:ElementImport" xmi:id="_f4IT8LzoEd-yoLyJo0JlOg" alias="Component">
       <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
@@ -652,7 +652,7 @@
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Package"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_43soMjkkEeCuLetZbbIvGw" name="errormodelingview" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_43soMzkkEeCuLetZbbIvGw" name="ExtraFunctionalView">
@@ -726,7 +726,7 @@
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Package"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_kDogMTkgEeCuLetZbbIvGw" name="errormodelingview" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_kDogMjkgEeCuLetZbbIvGw" name="ExtraFunctionalView">
@@ -800,7 +800,7 @@
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Package"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_NxxdITkfEeCuLetZbbIvGw" name="errormodelingview" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_NxxdIjkfEeCuLetZbbIvGw" name="ExtraFunctionalView">
@@ -1154,7 +1154,7 @@
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_vlrMuDROEeCPrptoDUJcNQ" name="fptc" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_vlrMujROEeCPrptoDUJcNQ" name="base_Comment" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
@@ -2244,10 +2244,10 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_Q0rjO8e6Ed-7etIj5eTw0Q" name="FailureMode">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Q0rjPMe6Ed-7etIj5eTw0Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_Q0rjPce6Ed-7etIj5eTw0Q" name="name" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_Q0rjP8e6Ed-7etIj5eTw0Q" name="description" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Q0rjRce6Ed-7etIj5eTw0Q" name="PropagationLogics" ordered="false" lowerBound="1">
                   <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//OpaqueExpression"/>
@@ -3500,7 +3500,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_RR4Dhae8EeCfNM3HjUZ3Ag" name="config" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_RR4Dh6e8EeCfNM3HjUZ3Ag" name="FMEAAnalysis">
@@ -3508,7 +3508,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               <eSuperTypes xmi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/MARTE/1#//GQAM/GaAnalysisContext"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_RR4Diae8EeCfNM3HjUZ3Ag" name="errorType" ordered="false" eType="_SWZ1Z6e3EeCfNM3HjUZ3Ag"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_RR4Di6e8EeCfNM3HjUZ3Ag" name="simulationRuns" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_RR4Djae8EeCfNM3HjUZ3Ag" name="analysisType" ordered="false" lowerBound="1" eType="_RR4EDKe8EeCfNM3HjUZ3Ag"/>
             </eClassifiers>
@@ -3582,7 +3582,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_YFsGNaenEeCXsNuM83eyAA" name="config" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_YFsGN6enEeCXsNuM83eyAA" name="FMEAAnalysis">
@@ -3590,7 +3590,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               <eSuperTypes xmi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/MARTE/1#//GQAM/GaAnalysisContext"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_YFsGOaenEeCXsNuM83eyAA" name="errorType" ordered="false" eType="_G6-lIVquEeCgwNmo13tekQ"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_YFsGO6enEeCXsNuM83eyAA" name="simulationRuns" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_YFsGPaenEeCXsNuM83eyAA" name="analysisType" ordered="false" lowerBound="1" eType="_YFsGvKenEeCXsNuM83eyAA"/>
             </eClassifiers>
@@ -3664,7 +3664,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_wfJVJVrLEeCvGuvlF-wh1g" name="config" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
           </contents>
@@ -3771,7 +3771,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_291WEFquEeCgwNmo13tekQ" name="tf" ordered="false" upperBound="-1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_291WElquEeCgwNmo13tekQ" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
@@ -4931,7 +4931,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBTe45vEeOjpOW2pJw89Q" name="transfFunct" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_aeBTfY5vEeOjpOW2pJw89Q" name="property" ordered="false">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
@@ -4940,10 +4940,10 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBTgY5vEeOjpOW2pJw89Q" name="occurrence" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBTg45vEeOjpOW2pJw89Q" name="transientDuration" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeXRsI5vEeOjpOW2pJw89Q" name="permanentProb" ordered="false" lowerBound="1" eType="_aeXRso5vEeOjpOW2pJw89Q"/>
             </eClassifiers>
@@ -5001,14 +5001,14 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBT-Y5vEeOjpOW2pJw89Q" name="propagationCondition" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBT_Y5vEeOjpOW2pJw89Q" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBT_45vEeOjpOW2pJw89Q" name="type" ordered="false" lowerBound="1" eType="_aeBUA45vEeOjpOW2pJw89Q"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBUAY5vEeOjpOW2pJw89Q" name="transfFunct" ordered="false" upperBound="-1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_afXXQI5vEeOjpOW2pJw89Q" name="probability" ordered="false" lowerBound="1" eType="_aeXRso5vEeOjpOW2pJw89Q"/>
             </eClassifiers>
@@ -5021,7 +5021,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUCI5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_W3CKsDQ4EeC0ueejuetpgA"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBUCY5vEeOjpOW2pJw89Q" name="type" ordered="false" lowerBound="1" eType="_aeBUA45vEeOjpOW2pJw89Q"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBUC45vEeOjpOW2pJw89Q" name="vanishingTime" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_aeBUDo5vEeOjpOW2pJw89Q" name="ThreatState">
@@ -5030,7 +5030,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBUFI5vEeOjpOW2pJw89Q" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_agCFoI5vEeOjpOW2pJw89Q" name="probability" ordered="false" lowerBound="1" eType="_aeXRso5vEeOjpOW2pJw89Q"/>
             </eClassifiers>
@@ -5059,7 +5059,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBULY5vEeOjpOW2pJw89Q" name="value" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_aeBUL45vEeOjpOW2pJw89Q" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
@@ -5092,10 +5092,10 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBUQ45vEeOjpOW2pJw89Q" name="decr" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBURY5vEeOjpOW2pJw89Q" name="endValue" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EDataType" xmi:id="_aeXRso5vEeOjpOW2pJw89Q" name="NFP_Real" instanceClassName="java.lang.String">
@@ -5124,7 +5124,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEv3242FEeOAr5SJygOCbw" name="transfFunct" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_CEv33Y2FEeOAr5SJygOCbw" name="property" ordered="false">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
@@ -5133,10 +5133,10 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEv34Y2FEeOAr5SJygOCbw" name="occurrence" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEv3442FEeOAr5SJygOCbw" name="transientDuration" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CFeQkI2FEeOAr5SJygOCbw" name="permanentProb" ordered="false" lowerBound="1" eType="_CFeQko2FEeOAr5SJygOCbw"/>
             </eClassifiers>
@@ -5194,14 +5194,14 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEv4WY2FEeOAr5SJygOCbw" name="propagationCondition" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEwe4I2FEeOAr5SJygOCbw" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEwe4o2FEeOAr5SJygOCbw" name="type" ordered="false" lowerBound="1" eType="_CEwe5o2FEeOAr5SJygOCbw"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEwe5I2FEeOAr5SJygOCbw" name="transfFunct" ordered="false" upperBound="-1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CH3dQI2FEeOAr5SJygOCbw" name="probability" ordered="false" lowerBound="1" eType="_CFeQko2FEeOAr5SJygOCbw"/>
             </eClassifiers>
@@ -5214,7 +5214,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwe642FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_W3CKsDQ4EeC0ueejuetpgA"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEwe7I2FEeOAr5SJygOCbw" name="type" ordered="false" lowerBound="1" eType="_CEwe5o2FEeOAr5SJygOCbw"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEwe7o2FEeOAr5SJygOCbw" name="vanishingTime" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_CEwe8Y2FEeOAr5SJygOCbw" name="ThreatState">
@@ -5223,7 +5223,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEwe942FEeOAr5SJygOCbw" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CJt3YI2FEeOAr5SJygOCbw" name="probability" ordered="false" lowerBound="1" eType="_CFeQko2FEeOAr5SJygOCbw"/>
             </eClassifiers>
@@ -5252,7 +5252,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEwfEI2FEeOAr5SJygOCbw" name="value" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEwfEo2FEeOAr5SJygOCbw" name="effectType" ordered="false" lowerBound="1" eType="_CEwfFo2FEeOAr5SJygOCbw"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_CEwfFI2FEeOAr5SJygOCbw" name="base_State" ordered="false" lowerBound="1">
@@ -5292,7 +5292,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6dRS41_EeOAr5SJygOCbw" name="transfFunct" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_G6dRTY1_EeOAr5SJygOCbw" name="property" ordered="false">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
@@ -5301,10 +5301,10 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6dRUY1_EeOAr5SJygOCbw" name="occurrence" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6dRU41_EeOAr5SJygOCbw" name="transientDuration" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6xaUI1_EeOAr5SJygOCbw" name="permanentProb" ordered="false" lowerBound="1" eType="_G6xaUo1_EeOAr5SJygOCbw"/>
             </eClassifiers>
@@ -5362,14 +5362,14 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6dRyY1_EeOAr5SJygOCbw" name="propagationCondition" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6dRzY1_EeOAr5SJygOCbw" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6dRz41_EeOAr5SJygOCbw" name="type" ordered="false" lowerBound="1" eType="_G6dR041_EeOAr5SJygOCbw"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6dR0Y1_EeOAr5SJygOCbw" name="transfFunct" ordered="false" upperBound="-1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G7o9AI1_EeOAr5SJygOCbw" name="probability" ordered="false" lowerBound="1" eType="_G6xaUo1_EeOAr5SJygOCbw"/>
             </eClassifiers>
@@ -5382,7 +5382,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6dR2I1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_W3CKsDQ4EeC0ueejuetpgA"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6dR2Y1_EeOAr5SJygOCbw" name="type" ordered="false" lowerBound="1" eType="_G6dR041_EeOAr5SJygOCbw"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6dR241_EeOAr5SJygOCbw" name="vanishingTime" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6dR3o1_EeOAr5SJygOCbw" name="ThreatState">
@@ -5391,7 +5391,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6d4UY1_EeOAr5SJygOCbw" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_G6d4U41_EeOAr5SJygOCbw" name="effectModel" ordered="false" eType="_G6d4VY1_EeOAr5SJygOCbw"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G8VgkI1_EeOAr5SJygOCbw" name="probability" ordered="false" lowerBound="1" eType="_G6xaUo1_EeOAr5SJygOCbw"/>
@@ -5402,7 +5402,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6d4WY1_EeOAr5SJygOCbw" name="value" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6d4W41_EeOAr5SJygOCbw" name="effectType" ordered="false" lowerBound="1" eType="_G6d4X41_EeOAr5SJygOCbw"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_G6d4XY1_EeOAr5SJygOCbw" name="base_State" ordered="false" lowerBound="1">
@@ -5461,7 +5461,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWke4mREeOqf4JlfFwBNg" name="transfFunct" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_PJWkfYmREeOqf4JlfFwBNg" name="property" ordered="false">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
@@ -5470,10 +5470,10 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWkgYmREeOqf4JlfFwBNg" name="occurrence" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWkg4mREeOqf4JlfFwBNg" name="transientDuration" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJoRQImREeOqf4JlfFwBNg" name="permanentProb" ordered="false" lowerBound="1" eType="_PJoRQomREeOqf4JlfFwBNg"/>
             </eClassifiers>
@@ -5531,14 +5531,14 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWk-YmREeOqf4JlfFwBNg" name="propagationCondition" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWk_YmREeOqf4JlfFwBNg" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWk_4mREeOqf4JlfFwBNg" name="type" ordered="false" lowerBound="1" eType="_PJWlA4mREeOqf4JlfFwBNg"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWlAYmREeOqf4JlfFwBNg" name="transfFunct" ordered="false" upperBound="-1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PKaUYImREeOqf4JlfFwBNg" name="probability" ordered="false" lowerBound="1" eType="_PJoRQomREeOqf4JlfFwBNg"/>
             </eClassifiers>
@@ -5551,7 +5551,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlCImREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_W3CKsDQ4EeC0ueejuetpgA"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWlCYmREeOqf4JlfFwBNg" name="type" ordered="false" lowerBound="1" eType="_PJWlA4mREeOqf4JlfFwBNg"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWlC4mREeOqf4JlfFwBNg" name="vanishingTime" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_PJWlDomREeOqf4JlfFwBNg" name="ThreatState">
@@ -5560,7 +5560,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWlFImREeOqf4JlfFwBNg" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_PJWlFomREeOqf4JlfFwBNg" name="effectModel" ordered="false" eType="_PJWlGImREeOqf4JlfFwBNg"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PLB_cImREeOqf4JlfFwBNg" name="probability" ordered="false" lowerBound="1" eType="_PJoRQomREeOqf4JlfFwBNg"/>
@@ -5572,7 +5572,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWlHImREeOqf4JlfFwBNg" name="value" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWlHomREeOqf4JlfFwBNg" name="effectType" ordered="false" lowerBound="1" eType="_PJWlIYmREeOqf4JlfFwBNg"/>
             </eClassifiers>
@@ -5628,7 +5628,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SWZ066e3EeCfNM3HjUZ3Ag" name="transfFunct" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_SWZ07ae3EeCfNM3HjUZ3Ag" name="property" ordered="false">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
@@ -5692,7 +5692,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SWZ1Zae3EeCfNM3HjUZ3Ag" name="propagationCondition" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_SWZ1Z6e3EeCfNM3HjUZ3Ag" name="Error">
@@ -5701,7 +5701,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SWZ1a6e3EeCfNM3HjUZ3Ag" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SWZ1b6e3EeCfNM3HjUZ3Ag" name="type" ordered="false" lowerBound="1" eType="_SWZ1cae3EeCfNM3HjUZ3Ag"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SYL9kKe3EeCfNM3HjUZ3Ag" name="probability" ordered="false" lowerBound="1" eType="_SW2g0qe3EeCfNM3HjUZ3Ag"/>
@@ -5717,7 +5717,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SWZ1e6e3EeCfNM3HjUZ3Ag" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SY7kcKe3EeCfNM3HjUZ3Ag" name="probability" ordered="false" lowerBound="1" eType="_SW2g0qe3EeCfNM3HjUZ3Ag"/>
             </eClassifiers>
@@ -5727,7 +5727,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SWZ1g6e3EeCfNM3HjUZ3Ag" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SZ-tUKe3EeCfNM3HjUZ3Ag" name="probability" ordered="false" lowerBound="1" eType="_SW2g0qe3EeCfNM3HjUZ3Ag"/>
             </eClassifiers>
@@ -5740,7 +5740,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SWZ1jae3EeCfNM3HjUZ3Ag" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SWZ1j6e3EeCfNM3HjUZ3Ag" name="type" ordered="false" lowerBound="1" eType="_SWZ1cae3EeCfNM3HjUZ3Ag"/>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_Sa3eIKe3EeCfNM3HjUZ3Ag" name="probability" ordered="false" lowerBound="1" eType="_SW2g0qe3EeCfNM3HjUZ3Ag"/>
@@ -5751,7 +5751,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SWZ1l6e3EeCfNM3HjUZ3Ag" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SbnFAae3EeCfNM3HjUZ3Ag" name="probability" ordered="false" lowerBound="1" eType="_SW2g0qe3EeCfNM3HjUZ3Ag"/>
             </eClassifiers>
@@ -5761,7 +5761,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SWZ1n6e3EeCfNM3HjUZ3Ag" name="unit" ordered="false">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_Scgc4Ke3EeCfNM3HjUZ3Ag" name="probability" ordered="false" lowerBound="1" eType="_SW2g0qe3EeCfNM3HjUZ3Ag"/>
             </eClassifiers>
@@ -5846,7 +5846,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6-lH1quEeCgwNmo13tekQ" name="logic" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6-lIVquEeCgwNmo13tekQ" name="Error">
@@ -5960,7 +5960,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_-YoqP1qlEeCgwNmo13tekQ" name="logic" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_-YoqQVqlEeCgwNmo13tekQ" name="Error">
@@ -6074,7 +6074,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_2F5Q30QQEeCQRfAVtSc0sw" name="logic" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_2F5Q4UQQEeCQRfAVtSc0sw" name="Error">
@@ -6113,7 +6113,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_2F5Q_0QQEeCQRfAVtSc0sw" name="tf" ordered="false" upperBound="-1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_2fYHYEQQEeCQRfAVtSc0sw" name="probability" ordered="false" lowerBound="1" eType="_2aBGQkQQEeCQRfAVtSc0sw"/>
             </eClassifiers>
@@ -6198,7 +6198,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_U0lKbzRoEeCPrptoDUJcNQ" name="logic" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_U0lKcTRoEeCPrptoDUJcNQ" name="Error">
@@ -6237,7 +6237,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_U0lKjzRoEeCPrptoDUJcNQ" name="tf" ordered="false" upperBound="-1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_U4TMUDRoEeCPrptoDUJcNQ" name="probability" ordered="false" lowerBound="1" eType="_U04E4jRoEeCPrptoDUJcNQ"/>
             </eClassifiers>
@@ -6322,7 +6322,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_ljRZTzQ8EeC0ueejuetpgA" name="logic" ordered="false" lowerBound="1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_ljRZUTQ8EeC0ueejuetpgA" name="Error">
@@ -6358,7 +6358,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_ljRZbTQ8EeC0ueejuetpgA" name="tf" ordered="false" upperBound="-1">
-                <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_lmsgQTQ8EeC0ueejuetpgA" name="probability" ordered="false" lowerBound="1" eType="_lj3OsjQ8EeC0ueejuetpgA"/>
             </eClassifiers>
@@ -7432,11 +7432,11 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                   <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//DataType"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_m5QdvqvEEeCQLtqIc6Ik6Q" name="bitLength" ordered="false">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_m5QdwKvEEeCQLtqIc6Ik6Q" name="operation" ordered="false" lowerBound="1" eType="_m5QdxqvEEeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_m5QdwqvEEeCQLtqIc6Ik6Q" name="executionCylces" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_m5QdxKvEEeCQLtqIc6Ik6Q" name="type" ordered="false" lowerBound="1" eType="_m5QdzavEEeCQLtqIc6Ik6Q"/>
               </eClassifiers>
@@ -7513,7 +7513,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                   <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//DataType"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_m5QeTqvEEeCQLtqIc6Ik6Q" name="bitSize" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
                 </eStructuralFeatures>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_m5QeUKvEEeCQLtqIc6Ik6Q" name="ComputeComplexity">
@@ -7528,7 +7528,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_m5QeWavEEeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_veeesKlhEeC6PYeyk6yc0A"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_m5QeWqvEEeCQLtqIc6Ik6Q" name="operation" ordered="false" lowerBound="1" eType="_m5QdxqvEEeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_m5QeXKvEEeCQLtqIc6Ik6Q" name="count" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_m5QeXqvEEeCQLtqIc6Ik6Q" name="base_Class" ordered="false" lowerBound="1">
                   <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
@@ -7547,25 +7547,25 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_m5QebKvEEeCQLtqIc6Ik6Q" name="FloatSWDataType" eSuperTypes="_m5QeSqvEEeCQLtqIc6Ik6Q">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_m5QebavEEeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_X8RTQKu_EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_m5QebqvEEeCQLtqIc6Ik6Q" name="signed" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
                 </eStructuralFeatures>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_m5QecavEEeCQLtqIc6Ik6Q" name="FixedSWDataType" eSuperTypes="_m5QeSqvEEeCQLtqIc6Ik6Q">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_m5QecqvEEeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_ckro0Ku_EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_m5Qec6vEEeCQLtqIc6Ik6Q" name="signed" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
                 </eStructuralFeatures>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_m5QedqvEEeCQLtqIc6Ik6Q" name="IntegerSWDataType" eSuperTypes="_m5QeSqvEEeCQLtqIc6Ik6Q">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_m5Qed6vEEeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_j4Yf8Ku_EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_m5QeeKvEEeCQLtqIc6Ik6Q" name="signed" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
                 </eStructuralFeatures>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_m5Qee6vEEeCQLtqIc6Ik6Q" name="CharSWDataType" eSuperTypes="_m5QeSqvEEeCQLtqIc6Ik6Q">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_m5QefKvEEeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_r0I1kKu_EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_m5QefavEEeCQLtqIc6Ik6Q" name="signed" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
                 </eStructuralFeatures>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_m5QegKvEEeCQLtqIc6Ik6Q" name="BooleanSWDataType" eSuperTypes="_m5QeSqvEEeCQLtqIc6Ik6Q">
@@ -7594,7 +7594,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dI9lIqvAEeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_7_W-sMCpEd-RT45s8cwWMg"/>
                 <eSuperTypes xmi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/MARTE/1#//HwComputing/HwProcessor"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI9lI6vAEeCQLtqIc6Ik6Q" name="dataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI9lJavAEeCQLtqIc6Ik6Q" name="operation" ordered="false" lowerBound="1" eType="_dI9lKqvAEeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dJMOoKvAEeCQLtqIc6Ik6Q" name="executionCycles" ordered="false" lowerBound="1" eType="_dJMOoqvAEeCQLtqIc6Ik6Q"/>
@@ -7665,7 +7665,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                   <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//DataType"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI9lrKvAEeCQLtqIc6Ik6Q" name="bitSize" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
                 </eStructuralFeatures>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_dI9lrqvAEeCQLtqIc6Ik6Q" name="HWDateType">
@@ -7674,11 +7674,11 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                   <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//DataType"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI9lsqvAEeCQLtqIc6Ik6Q" name="bitLength" ordered="false">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI9ltKvAEeCQLtqIc6Ik6Q" name="operation" ordered="false" lowerBound="1" eType="_dI9lKqvAEeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI9ltqvAEeCQLtqIc6Ik6Q" name="executionCylces" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI-MMKvAEeCQLtqIc6Ik6Q" name="type" ordered="false" lowerBound="1" eType="_dI-MMqvAEeCQLtqIc6Ik6Q"/>
               </eClassifiers>
@@ -7701,7 +7701,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dI-MQavAEeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_veeesKlhEeC6PYeyk6yc0A"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI-MQqvAEeCQLtqIc6Ik6Q" name="operation" ordered="false" lowerBound="1" eType="_dI9lKqvAEeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI-MRKvAEeCQLtqIc6Ik6Q" name="count" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_dI-MRqvAEeCQLtqIc6Ik6Q" name="base_Class" ordered="false" lowerBound="1">
                   <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
@@ -7720,25 +7720,25 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_dI-MVKvAEeCQLtqIc6Ik6Q" name="FloatSWDataType" eSuperTypes="_dI9lqKvAEeCQLtqIc6Ik6Q">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dI-MVavAEeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_X8RTQKu_EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI-MVqvAEeCQLtqIc6Ik6Q" name="signed" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
                 </eStructuralFeatures>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_dI-MWavAEeCQLtqIc6Ik6Q" name="FixedSWDataType" eSuperTypes="_dI9lqKvAEeCQLtqIc6Ik6Q">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dI-MWqvAEeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_ckro0Ku_EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI-MW6vAEeCQLtqIc6Ik6Q" name="signed" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
                 </eStructuralFeatures>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_dI-MXqvAEeCQLtqIc6Ik6Q" name="IntegerSWDataType" eSuperTypes="_dI9lqKvAEeCQLtqIc6Ik6Q">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dI-MX6vAEeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_j4Yf8Ku_EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI-MYKvAEeCQLtqIc6Ik6Q" name="signed" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
                 </eStructuralFeatures>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_dI-MY6vAEeCQLtqIc6Ik6Q" name="CharSWDataType" eSuperTypes="_dI9lqKvAEeCQLtqIc6Ik6Q">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dI-MZKvAEeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_r0I1kKu_EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_dI-MZavAEeCQLtqIc6Ik6Q" name="signed" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
                 </eStructuralFeatures>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_dI-MaKvAEeCQLtqIc6Ik6Q" name="BooleanSWDataType" eSuperTypes="_dI9lqKvAEeCQLtqIc6Ik6Q">
@@ -7767,7 +7767,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_307gMqu6EeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_7_W-sMCpEd-RT45s8cwWMg"/>
                 <eSuperTypes xmi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/MARTE/1#//HwComputing/HwProcessor"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_307gM6u6EeCQLtqIc6Ik6Q" name="dataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_307gNau6EeCQLtqIc6Ik6Q" name="operation" ordered="false" lowerBound="1" eType="_307gOqu6EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_31KJsKu6EeCQLtqIc6Ik6Q" name="executionCycles" ordered="false" lowerBound="1" eType="_31KJsqu6EeCQLtqIc6Ik6Q"/>
@@ -7829,17 +7829,17 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_308HWqu6EeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
                 <eSuperTypes xmi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/MARTE/1#//Alloc/Allocate"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_308HW6u6EeCQLtqIc6Ik6Q" name="swDataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_308HXau6EeCQLtqIc6Ik6Q" name="hwDataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_313UUKu6EeCQLtqIc6Ik6Q" name="executionCycles" ordered="false" lowerBound="1" eType="_31KJsqu6EeCQLtqIc6Ik6Q"/>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_308HYqu6EeCQLtqIc6Ik6Q" name="ComputeComplexity">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_308HY6u6EeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_WEDSwKlhEeC6PYeyk6yc0A"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_308HZKu6EeCQLtqIc6Ik6Q" name="swDataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_308HZqu6EeCQLtqIc6Ik6Q" name="opCount" ordered="false" lowerBound="1" upperBound="-1" eType="_308Haqu6EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_308HaKu6EeCQLtqIc6Ik6Q" name="base_Class" ordered="false" lowerBound="1">
@@ -7850,7 +7850,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_308Ha6u6EeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_veeesKlhEeC6PYeyk6yc0A"/>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_308HbKu6EeCQLtqIc6Ik6Q" name="operation" ordered="false" lowerBound="1" eType="_308Hcqu6EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_308Hbqu6EeCQLtqIc6Ik6Q" name="count" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_308HcKu6EeCQLtqIc6Ik6Q" name="base_Class" ordered="false" lowerBound="1">
                   <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
@@ -7895,7 +7895,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_rbxdEqu4EeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_7_W-sMCpEd-RT45s8cwWMg"/>
                 <eSuperTypes xmi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/MARTE/1#//HwComputing/HwProcessor"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_rbxdE6u4EeCQLtqIc6Ik6Q" name="dataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_rbxdFau4EeCQLtqIc6Ik6Q" name="operation" ordered="false" lowerBound="1" eType="_rbxdGqu4EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_rcCi0Ku4EeCQLtqIc6Ik6Q" name="executionCycles" ordered="false" lowerBound="1" eType="_rcDJ4Ku4EeCQLtqIc6Ik6Q"/>
@@ -7957,17 +7957,17 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_rbyEa6u4EeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
                 <eSuperTypes xmi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/MARTE/1#//Alloc/Allocate"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_rbyEbKu4EeCQLtqIc6Ik6Q" name="swDataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_rbyEbqu4EeCQLtqIc6Ik6Q" name="hwDataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_rc10EKu4EeCQLtqIc6Ik6Q" name="executionCycles" ordered="false" lowerBound="1" eType="_rcDJ4Ku4EeCQLtqIc6Ik6Q"/>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_rbyEc6u4EeCQLtqIc6Ik6Q" name="ComputeComplexity">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_rbyEdKu4EeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_WEDSwKlhEeC6PYeyk6yc0A"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_rbyEdau4EeCQLtqIc6Ik6Q" name="swDataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_rbyEd6u4EeCQLtqIc6Ik6Q" name="opCount" ordered="false" lowerBound="1" upperBound="-1" eType="_rbyEe6u4EeCQLtqIc6Ik6Q"/>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_rbyEeau4EeCQLtqIc6Ik6Q" name="base_Class" ordered="false" lowerBound="1">
@@ -7977,10 +7977,10 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_rbyEe6u4EeCQLtqIc6Ik6Q" name="OperationCount">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_rbyEfKu4EeCQLtqIc6Ik6Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_veeesKlhEeC6PYeyk6yc0A"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_rbyEfau4EeCQLtqIc6Ik6Q" name="operation" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_rbyEf6u4EeCQLtqIc6Ik6Q" name="count" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_rbyEgau4EeCQLtqIc6Ik6Q" name="base_Class" ordered="false" lowerBound="1">
                   <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
@@ -8019,7 +8019,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_8RPmkqlhEeC6PYeyk6yc0A" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_7_W-sMCpEd-RT45s8cwWMg"/>
                 <eSuperTypes xmi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/MARTE/1#//HwComputing/HwProcessor"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_8RPmk6lhEeC6PYeyk6yc0A" name="dataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_8RPmlalhEeC6PYeyk6yc0A" name="operation" ordered="false" lowerBound="1" eType="_8RPmmqlhEeC6PYeyk6yc0A"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_8RfeMKlhEeC6PYeyk6yc0A" name="executionCycles" ordered="false" lowerBound="1" eType="_8RfeMqlhEeC6PYeyk6yc0A"/>
@@ -8081,20 +8081,20 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_8RPnEKlhEeC6PYeyk6yc0A" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
                 <eSuperTypes xmi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/MARTE/1#//Alloc/Allocate"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_8RPnEalhEeC6PYeyk6yc0A" name="swDataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_8RPnE6lhEeC6PYeyk6yc0A" name="hwDataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_8SdukKlhEeC6PYeyk6yc0A" name="executionCycles" ordered="false" lowerBound="1" eType="_8RfeMqlhEeC6PYeyk6yc0A"/>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_8RPnGKlhEeC6PYeyk6yc0A" name="ComputeComplexity">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_8RPnGalhEeC6PYeyk6yc0A" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_WEDSwKlhEeC6PYeyk6yc0A"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_8RPnGqlhEeC6PYeyk6yc0A" name="swDataType" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_8RPnHKlhEeC6PYeyk6yc0A" name="opCount" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_8RPnHqlhEeC6PYeyk6yc0A" name="base_Class" ordered="false" lowerBound="1">
                   <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
@@ -8103,10 +8103,10 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_8RPnIKlhEeC6PYeyk6yc0A" name="OperationCount">
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_8RPnIalhEeC6PYeyk6yc0A" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_veeesKlhEeC6PYeyk6yc0A"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_8RPnIqlhEeC6PYeyk6yc0A" name="operation" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_8RPnJKlhEeC6PYeyk6yc0A" name="count" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_8RPnJqlhEeC6PYeyk6yc0A" name="base_Class" ordered="false" lowerBound="1">
                   <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
@@ -8692,7 +8692,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_N1EGSFrMEeCvGuvlF-wh1g" name="goal" ordered="false" lowerBound="1" eType="_N1EGT1rMEeCvGuvlF-wh1g"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_N1EGSlrMEeCvGuvlF-wh1g" name="bottomUpAnalysis" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_N1EGTFrMEeCvGuvlF-wh1g" name="resultingMapping" ordered="false" lowerBound="1" upperBound="-1">
                   <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/MARTE/1#//Alloc/Assign"/>
@@ -8810,7 +8810,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_TUjvGDqyEeCUI4z76XHrLw" name="goal" ordered="false" lowerBound="1" eType="_TUjvHzqyEeCUI4z76XHrLw"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_TUjvGjqyEeCUI4z76XHrLw" name="bottomUpAnalysis" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_TUjvHDqyEeCUI4z76XHrLw" name="resultingMapping" ordered="false" lowerBound="1" upperBound="-1">
                   <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/papyrus/MARTE/1#//Alloc/Allocate"/>
@@ -8911,7 +8911,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_TUjvnTqyEeCUI4z76XHrLw" name="statQ" ordered="false" unique="false" eType="_TUjvqzqyEeCUI4z76XHrLw"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_TUjvnzqyEeCUI4z76XHrLw" name="dir" ordered="false" unique="false" eType="_TUjvtjqyEeCUI4z76XHrLw"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_TUjvoTqyEeCUI4z76XHrLw" name="mode" ordered="false" unique="false" upperBound="-1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
                 </eStructuralFeatures>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EDataType" xmi:id="_TUjvozqyEeCUI4z76XHrLw" name="MARTE_Library_MARTE_DataTypes_VSL_Expression" instanceClassName="java.lang.String">
@@ -9032,7 +9032,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_T3AEt8e6Ed-7etIj5eTw0Q" name="goal" ordered="false" lowerBound="1" eType="_T3AHiMe6Ed-7etIj5eTw0Q"/>
                 <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_T3AEuce6Ed-7etIj5eTw0Q" name="bottomUpAnalysis" ordered="false" lowerBound="1">
-                  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+                  <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
                 </eStructuralFeatures>
                 <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_T3AEu8e6Ed-7etIj5eTw0Q" name="resultingMapping" ordered="false" lowerBound="1" upperBound="-1">
                   <eType xmi:type="ecore:EClass" href="pathmap://Papyrus_PROFILES/MARTE.profile.uml#_b7sgXLG3Ed-tmN4hwNCxXQ"/>
@@ -9378,7 +9378,7 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
           </packagedElement>
         </packagedElement>
       </packagedElement>
-      <packagedElement xmi:type="uml:Profile" xmi:id="_WgatoDgVEd-68Z_bhNRGsA" name="RTComponentModel" URI="http://CHESS/Predictability/RTComponentModel" metaclassReference="_KH7CgDi7Ed-BkomQ9Pp_0A _d-TA0Dg0EeCE2sZUGxu35w _QvznAEAbEeCQKOeIf0epIQ _6dTt4NqwEeCgKdScvhOcyQ _T9iikDzbEeW-QPagynd_rQ">
+      <packagedElement xmi:type="uml:Profile" xmi:id="_WgatoDgVEd-68Z_bhNRGsA" name="RTComponentModel" URI="http://CHESS/Predictability/RTComponentModel" metaclassReference="_KH7CgDi7Ed-BkomQ9Pp_0A _d-TA0Dg0EeCE2sZUGxu35w _QvznAEAbEeCQKOeIf0epIQ _6dTt4NqwEeCgKdScvhOcyQ _T9iikDzbEeW-QPagynd_rQ _SwSXIG5xEeWR-9VJ87ZvRA">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_p90hgDgVEd-68Z_bhNRGsA" source="http://www.eclipse.org/uml2/2.0.0/UML">
           <contents xmi:type="ecore:EPackage" xmi:id="_COpr0FbyEeCnrfzYY69gqg" name="RTComponentModel" nsURI="http://CHESS/Predictability/RTComponentModel" nsPrefix="RTComponentModel">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CZiGIFbyEeCnrfzYY69gqg" source="PapyrusVersion">
@@ -10731,12 +10731,6 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
             </eClassifiers>
           </contents>
         </eAnnotations>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_WVeDQDzbEeW-QPagynd_rQ" annotatedElement="_VhoykDzbEeW-QPagynd_rQ _f6fK0TzdEeW-QPagynd_rQ">
-          <body>to be applied together with CHRtSpecification to set ARINC properties at instance level</body>
-        </ownedComment>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_dQVjoDzbEeW-QPagynd_rQ" annotatedElement="_VKW7ATzbEeW-QPagynd_rQ _fCRJYTzdEeW-QPagynd_rQ">
-          <body>used to set ARINC properties at classifier level</body>
-        </ownedComment>
         <elementImport xmi:type="uml:ElementImport" xmi:id="_WP3MMDcwEd-mWLzcI61s7Q" alias="RtSpecification">
           <importedElement xmi:type="uml:Stereotype" href="pathmap://Papyrus_PROFILES/MARTE.profile.uml#_AZ8eMEFeEd6UW4qJC-Vahw"/>
         </elementImport>
@@ -10757,6 +10751,9 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
         </elementImport>
         <elementImport xmi:type="uml:ElementImport" xmi:id="_T9iikDzbEeW-QPagynd_rQ" alias="Operation">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+        </elementImport>
+        <elementImport xmi:type="uml:ElementImport" xmi:id="_SwSXIG5xEeWR-9VJ87ZvRA" alias="Component">
+          <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
         </elementImport>
         <packagedElement xmi:type="uml:Association" xmi:id="_gmfo0DcwEd-mWLzcI61s7Q" name="A_Stereotype_0_Property" memberEnd="_gnE3oDcwEd-mWLzcI61s7Q _gnGFwjcwEd-mWLzcI61s7Q">
           <ownedEnd xmi:type="uml:Property" xmi:id="_gnGFwjcwEd-mWLzcI61s7Q" name="stereotype_0" type="_Y4GZwDcwEd-mWLzcI61s7Q" isUnique="false" association="_gmfo0DcwEd-mWLzcI61s7Q">
@@ -11031,8 +11028,18 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_kN5PAkApEeCgBsnPy5jVRQ" value="1"/>
           </ownedEnd>
         </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Profile" xmi:id="_GMlQEGwuEeWvYIaEJT1qow" name="ARINCComponentModel">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_WVeDQDzbEeW-QPagynd_rQ" annotatedElement="_VhoykDzbEeW-QPagynd_rQ _f6fK0TzdEeW-QPagynd_rQ">
+          <body>to be applied together with CHRtSpecification to set ARINC properties at instance level</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_dQVjoDzbEeW-QPagynd_rQ" annotatedElement="_VKW7ATzbEeW-QPagynd_rQ _fCRJYTzdEeW-QPagynd_rQ">
+          <body>used to set ARINC properties at classifier level</body>
+        </ownedComment>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_KGFdEDxeEeWGMtwulVMCiA" name="ARINCComponentImpl">
-          <generalization xmi:type="uml:Generalization" xmi:id="_1hOxIDzaEeW-QPagynd_rQ" general="_CuRAcDRKEeChqekVLFmSjQ"/>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_WKYfcG5xEeWR-9VJ87ZvRA" name="base_Component" association="_WKYfcW5xEeWR-9VJ87ZvRA">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
+          </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_PQwyMDxeEeWGMtwulVMCiA" name="ARINCProcess">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_VKW7ADzbEeW-QPagynd_rQ" name="base_Operation" association="_VKW7ATzbEeW-QPagynd_rQ">
@@ -11059,11 +11066,6 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oMJfATzdEeW-QPagynd_rQ"/>
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oMJfAjzdEeW-QPagynd_rQ" value="*"/>
           </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_tLuXYDzdEeW-QPagynd_rQ" name="precededBy" association="_tLuXYzzdEeW-QPagynd_rQ">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tLuXYTzdEeW-QPagynd_rQ"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tLuXYjzdEeW-QPagynd_rQ" value="*"/>
-          </ownedAttribute>
           <ownedAttribute xmi:type="uml:Property" xmi:id="_yIfzYDzdEeW-QPagynd_rQ" name="rateDivider">
             <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0kBaoDzdEeW-QPagynd_rQ"/>
@@ -11088,11 +11090,8 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oMJfBjzdEeW-QPagynd_rQ" value="1"/>
           </ownedEnd>
         </packagedElement>
-        <packagedElement xmi:type="uml:Association" xmi:id="_tLuXYzzdEeW-QPagynd_rQ" name="" memberEnd="_tLuXZDzdEeW-QPagynd_rQ _tLuXYDzdEeW-QPagynd_rQ">
-          <ownedEnd xmi:type="uml:Property" xmi:id="_tLuXZDzdEeW-QPagynd_rQ" name="aRINCFunction" type="_QtSakDxeEeWGMtwulVMCiA" association="_tLuXYzzdEeW-QPagynd_rQ">
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tLuXZTzdEeW-QPagynd_rQ" value="1"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tLuXZjzdEeW-QPagynd_rQ" value="1"/>
-          </ownedEnd>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_WKYfcW5xEeWR-9VJ87ZvRA" name="E_ARINCComponentImpl_Component1" memberEnd="_WKYfcm5xEeWR-9VJ87ZvRA _WKYfcG5xEeWR-9VJ87ZvRA">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_WKYfcm5xEeWR-9VJ87ZvRA" name="extension_ARINCComponentImpl" type="_KGFdEDxeEeWGMtwulVMCiA" aggregation="composite" association="_WKYfcW5xEeWR-9VJ87ZvRA"/>
         </packagedElement>
       </packagedElement>
     </packagedElement>
@@ -11118,10 +11117,10 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
               <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
             </eStructuralFeatures>
             <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_xt9pqTUkEeC3rNpnAhYo0w" name="language" ordered="false">
-              <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+              <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
             </eStructuralFeatures>
             <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_xt9pqzUkEeC3rNpnAhYo0w" name="OS" ordered="false">
-              <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+              <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
             </eStructuralFeatures>
           </eClassifiers>
         </contents>
@@ -11145,10 +11144,10 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
               <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
             </eStructuralFeatures>
             <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_OopHyTRKEeChqekVLFmSjQ" name="language" ordered="false">
-              <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+              <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
             </eStructuralFeatures>
             <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_OopHyzRKEeChqekVLFmSjQ" name="OS" ordered="false">
-              <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+              <eType xmi:type="ecore:EDataType" href="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
             </eStructuralFeatures>
           </eClassifiers>
         </contents>
@@ -11491,5 +11490,5 @@ In case of base Comment, its usage is the same of the CHRTSpecification.</body>
   <DataTypes:TupleType xmi:id="_X13VkP3lEeOmz-4FDV-1Kw" base_DataType="_Nim6sL9EEd-TL8tpOyViyA"/>
   <Ecore:EPackage xmi:id="_FUVlkKbSEeSHP5PnCeTneg" base_Package="_-aQIUKbREeSHP5PnCeTneg" packageName="STS" nsPrefix="STS" nsURI="http://CHESS/SystemModel/STS" prefix="STS"/>
   <Ecore:EPackage xmi:id="_XV73cMvtEeSajLw6mg2A8Q" base_Package="_f-f6oMvrEeSajLw6mg2A8Q" packageName="Safety" nsPrefix="Safety" nsURI="http://CHESS/Safety" prefix="Safety"/>
-  <ActionLanguage:TextualRepresentation xmi:id="_GV4OADbQEeW5DJdhCjCHFw" language="org.eclipse.papyrus.uml.textedit.property.xtext.UmlProperty"/>
+  <Ecore:EPackage xmi:id="_RT8mEGwuEeWvYIaEJT1qow" base_Package="_GMlQEGwuEeWvYIaEJT1qow" packageName="ARINCComponentModel" nsPrefix="ARINCComponentModel" nsURI="http://CHESS/Predictability/ARINCComponentModel" prefix="ARINCComponentModel"/>
 </xmi:XMI>

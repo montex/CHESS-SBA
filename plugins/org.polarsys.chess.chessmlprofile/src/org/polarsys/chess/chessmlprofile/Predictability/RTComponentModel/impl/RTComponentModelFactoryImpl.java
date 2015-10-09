@@ -63,9 +63,6 @@ public class RTComponentModelFactoryImpl extends EFactoryImpl implements RTCompo
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case RTComponentModelPackage.CH_RT_PORT_SLOT: return createCHRtPortSlot();
-			case RTComponentModelPackage.ARINC_COMPONENT_IMPL: return createARINCComponentImpl();
-			case RTComponentModelPackage.ARINC_PROCESS: return createARINCProcess();
-			case RTComponentModelPackage.ARINC_FUNCTION: return createARINCFunction();
 			case RTComponentModelPackage.CH_RT_SPECIFICATION: return createCHRtSpecification();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -80,36 +77,6 @@ public class RTComponentModelFactoryImpl extends EFactoryImpl implements RTCompo
 	public CHRtPortSlot createCHRtPortSlot() {
 		CHRtPortSlotImpl chRtPortSlot = new CHRtPortSlotImpl();
 		return chRtPortSlot;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ARINCComponentImpl createARINCComponentImpl() {
-		ARINCComponentImplImpl arincComponentImpl = new ARINCComponentImplImpl();
-		return arincComponentImpl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ARINCProcess createARINCProcess() {
-		ARINCProcessImpl arincProcess = new ARINCProcessImpl();
-		return arincProcess;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ARINCFunction createARINCFunction() {
-		ARINCFunctionImpl arincFunction = new ARINCFunctionImpl();
-		return arincFunction;
 	}
 
 	/**

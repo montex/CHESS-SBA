@@ -65,6 +65,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedData
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.impl.StateBasedDataTypesPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.DeploymentConfAnalysisPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.impl.DeploymentConfAnalysisPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
@@ -199,6 +201,7 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		DeploymentConfAnalysisPackageImpl theDeploymentConfAnalysisPackage = (DeploymentConfAnalysisPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) instanceof DeploymentConfAnalysisPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) : DeploymentConfAnalysisPackage.eINSTANCE);
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
 		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
+		ARINCComponentModelPackageImpl theARINCComponentModelPackage = (ARINCComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) instanceof ARINCComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) : ARINCComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
 
@@ -226,6 +229,7 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		theDeploymentConfAnalysisPackage.createPackageContents();
 		theRTComponentModelPackage.createPackageContents();
 		theRTDataTypesPackage.createPackageContents();
+		theARINCComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
 		theSafetyPackage.createPackageContents();
 
@@ -253,6 +257,7 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		theDeploymentConfAnalysisPackage.initializePackageContents();
 		theRTComponentModelPackage.initializePackageContents();
 		theRTDataTypesPackage.initializePackageContents();
+		theARINCComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
 		theSafetyPackage.initializePackageContents();
 
@@ -440,6 +445,12 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		componentTypeEClass = createEClass(COMPONENT_TYPE);
 		createEReference(componentTypeEClass, COMPONENT_TYPE__BASE_COMPONENT);
 
+		componentImplementationEClass = createEClass(COMPONENT_IMPLEMENTATION);
+		createEReference(componentImplementationEClass, COMPONENT_IMPLEMENTATION__BASE_COMPONENT);
+		createEAttribute(componentImplementationEClass, COMPONENT_IMPLEMENTATION__LANGUAGE);
+		createEAttribute(componentImplementationEClass, COMPONENT_IMPLEMENTATION__OS);
+		createEAttribute(componentImplementationEClass, COMPONENT_IMPLEMENTATION__SOURCE_CODE_LOCATION);
+
 		functionalPartitionEClass = createEClass(FUNCTIONAL_PARTITION);
 		createEAttribute(functionalPartitionEClass, FUNCTIONAL_PARTITION__UTILIZATION);
 		createEReference(functionalPartitionEClass, FUNCTIONAL_PARTITION__BASE_COMPONENT);
@@ -450,12 +461,6 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		hwAbstractionComponentImplEClass = createEClass(HW_ABSTRACTION_COMPONENT_IMPL);
 		createEReference(hwAbstractionComponentImplEClass, HW_ABSTRACTION_COMPONENT_IMPL__HW_RES);
 		createEReference(hwAbstractionComponentImplEClass, HW_ABSTRACTION_COMPONENT_IMPL__BASE_COMPONENT);
-
-		componentImplementationEClass = createEClass(COMPONENT_IMPLEMENTATION);
-		createEReference(componentImplementationEClass, COMPONENT_IMPLEMENTATION__BASE_COMPONENT);
-		createEAttribute(componentImplementationEClass, COMPONENT_IMPLEMENTATION__LANGUAGE);
-		createEAttribute(componentImplementationEClass, COMPONENT_IMPLEMENTATION__OS);
-		createEAttribute(componentImplementationEClass, COMPONENT_IMPLEMENTATION__SOURCE_CODE_LOCATION);
 	}
 
 	/**
@@ -483,9 +488,9 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 
 		// Obtain other dependent packages
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
+		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 		HwGeneralPackage theHwGeneralPackage = (HwGeneralPackage)EPackage.Registry.INSTANCE.getEPackage(HwGeneralPackage.eNS_URI);
-		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -497,6 +502,12 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		initEClass(componentTypeEClass, ComponentType.class, "ComponentType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComponentType_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, ComponentType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
+		initEClass(componentImplementationEClass, ComponentImplementation.class, "ComponentImplementation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getComponentImplementation_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, ComponentImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getComponentImplementation_Language(), theTypesPackage.getString(), "language", null, 0, 1, ComponentImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getComponentImplementation_OS(), theTypesPackage.getString(), "OS", null, 0, 1, ComponentImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getComponentImplementation_SourceCodeLocation(), theTypesPackage.getString(), "sourceCodeLocation", null, 0, -1, ComponentImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
 		initEClass(functionalPartitionEClass, FunctionalPartition.class, "FunctionalPartition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFunctionalPartition_Utilization(), theBasicNFP_TypesPackage.getNFP_Real(), "utilization", null, 0, 1, FunctionalPartition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getFunctionalPartition_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, FunctionalPartition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -507,12 +518,6 @@ public class ComponentModelPackageImpl extends EPackageImpl implements Component
 		initEClass(hwAbstractionComponentImplEClass, HwAbstractionComponentImpl.class, "HwAbstractionComponentImpl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getHwAbstractionComponentImpl_HwRes(), theHwGeneralPackage.getHwResource(), null, "hwRes", null, 1, 1, HwAbstractionComponentImpl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getHwAbstractionComponentImpl_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, HwAbstractionComponentImpl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(componentImplementationEClass, ComponentImplementation.class, "ComponentImplementation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getComponentImplementation_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, ComponentImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getComponentImplementation_Language(), theTypesPackage.getString(), "language", null, 0, 1, ComponentImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getComponentImplementation_OS(), theTypesPackage.getString(), "OS", null, 0, 1, ComponentImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getComponentImplementation_SourceCodeLocation(), theTypesPackage.getString(), "sourceCodeLocation", null, 0, -1, ComponentImplementation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //ComponentModelPackageImpl
