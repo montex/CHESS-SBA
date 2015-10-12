@@ -57,6 +57,7 @@ public class Constants {
 	public static final String CHRTSPEC_OCCKIND = "occKind";
 	public static final String CHRTSPEC_OCCKIND_PERIODIC = "periodic";
 	public static final String CH_HWPROCESSOR = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor";
+	public static final String CHHWPROCESSOR_NB_CORES = "nbCores";
 
 	
 	// CHESS views
@@ -139,6 +140,9 @@ public class Constants {
 	// CHESS CHRtPortSlot stereotype
 	public static final String CH_CHRtPortSlot = "CHESS::Predictability::RTComponentModel::CHRtPortSlot";
 	public static final String CH_CHRtPortSlot_CHRTSPECIFICATION = "cH_RtSpecification";
+	
+	// CHESS Functional Partitions stereotype
+	public static final String CH_FunctionalPartition="CHESS::ComponentModel::FunctionalPartition";
 	
 	
 	
