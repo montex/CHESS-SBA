@@ -99,13 +99,13 @@
                   severity="ERROR"
                   statusCode="ev01">
                <message>                  
-                  The attribute&quot;context&quot; of {0} must be set to an operation of the component (e.g. not of the interface). Currently it is {1}. 
+                  The attribute&quot;context&quot; of chrtSpec {0} must be set to an operation of the component (e.g. not of the interface). Currently it is {1}. 
                </message>
                <description>
                  The attribute 'context' of CHRtSpecification must be set to an operation of the component (e.g. not of the interface).
                </description>
                <target
-                     class="InstanceSpecification">
+                     class="Comment"> 
                </target>
                
             </constraint>
