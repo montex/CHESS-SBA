@@ -666,6 +666,36 @@ public class UMLUtils {
 
 	/**
 	 * Returns the list of assignments found in viewName where 
+	 * the source anything and the target is a Processor Instance
+	 * @param umlModel
+	 * @param viewName
+	 * @return
+	 * @throws ModelError
+	 */
+	public static EList<Assign> getAll2CoreAssignments(Model umlModel,
+			String viewName) throws ModelError {
+
+		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
+				viewName);
+
+		EList<Element> all = parent.allOwnedElements();
+		EList<Assign> assignments = new BasicEList<Assign>();
+		Stereotype stereo = null;
+		for (Element element : all) {
+			if((element.getAppliedStereotype(Constants.ASSIGN)!=null)) {
+				stereo = element.getAppliedStereotype(Constants.ASSIGN);
+				EObject eobj = element.getStereotypeApplication(stereo);
+				Assign a = (Assign)eobj;
+				// get them all
+				assignments.add(a);
+			}
+		}
+		return assignments;
+	}	
+
+
+	/**
+	 * Returns the list of assignments found in viewName where 
 	 * the source is a Component Instance and the target is a Processor Instance
 	 * @param umlModel
 	 * @param viewName
@@ -675,11 +705,9 @@ public class UMLUtils {
 	public static EList<Assign> getComponent2CoreAssignments(Model umlModel,
 			String viewName) throws ModelError {
 
-		// LB 20150928 look in all the package (some models may not have the CHGAResourcePlatform component)
-		//Component rpc = getResourcePlatformComponent(umlModel, viewName);
 		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
 				viewName);
-		
+
 		EList<Element> all = parent.allOwnedElements();
 		EList<Assign> assignments = new BasicEList<Assign>();
 		Stereotype stereo = null;
@@ -706,6 +734,195 @@ public class UMLUtils {
 	}	
 
 
+
+	/**
+	 * Returns the list of assignments found in viewName where 
+	 * the source is a Partition Instance and the target is a Processor Instance
+	 * @param umlModel
+	 * @param viewName
+	 * @return
+	 * @throws ModelError
+	 */
+	public static EList<Assign> getAllPartitionAssignments(Model umlModel,
+			String viewName) throws ModelError {
+
+		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
+				viewName);
+		EList<Element> all = parent.allOwnedElements();
+		EList<Assign> assignments = new BasicEList<Assign>();
+		Stereotype stereo = null;
+		for (Element element : all) {
+			if((element.getAppliedStereotype(Constants.ASSIGN)!=null)) {
+				stereo = element.getAppliedStereotype(Constants.ASSIGN);
+				EObject eobj = element.getStereotypeApplication(stereo);
+				Assign a = (Assign)eobj;
+				Element assignmentSource = a.getFrom().get(0);
+				Element assignmentTarget = a.getTo().get(0);
+				// SOURCE must be a Partition
+				// TARGET must be a Processor
+				if (elementIsPartitionInstance(assignmentSource) && 
+						elementIsProcessorInstance(assignmentTarget)) {		
+					assignments.add(a);
+				}
+				// SOURCE must be a Component
+				// TARGET must be a Partition
+				if (elementIsPartitionInstance(assignmentTarget)) {
+					if(elementIsComponentInstance(assignmentSource)) {
+						InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
+						if (isComponentInstance(componentInst)) {
+							assignments.add(a);
+						}
+					}
+				}
+			}	
+		}
+		return assignments;
+	}	
+
+
+	/**
+	 * Returns all the assignments that have the input functional partition 
+	 * either in the To field (Component to Partition Assignment), or
+	 * in the From field (Partition to ProcessorAssignment)
+	 * @param umlModel
+	 * @param functPart
+	 * @param viewName
+	 * @return
+	 * @throws ModelError
+	 */
+	public static EList<Assign> getPartitionAssignments(Model umlModel, FunctionalPartition functPart) 
+			throws ModelError {
+
+		// We look for the Assignments from Partition to Core in the Deployment View
+		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
+				Constants.DEPLOYMENT_VIEW_NAME);
+		EList<Element> allDeplViewElems = parent.allOwnedElements();
+		EList<Assign> assignments = new BasicEList<Assign>();
+		Stereotype stereo = null;
+		for (Element element : allDeplViewElems) {
+			if((element.getAppliedStereotype(Constants.ASSIGN)!=null)) {
+				stereo = element.getAppliedStereotype(Constants.ASSIGN);
+				EObject eobj = element.getStereotypeApplication(stereo);
+				Assign a = (Assign)eobj;
+				Element assignmentSource = a.getFrom().get(0);
+				Element assignmentTarget = a.getTo().get(0);
+				// SOURCE must be a Partition
+				// TARGET must be a Processor
+				if (elementIsPartitionInstance(assignmentSource)) { 
+					if(elementIsProcessorInstance(assignmentTarget)) {	
+						// Check if the involved partition is functPart
+						InstanceSpecification instSpecSource = (InstanceSpecification)assignmentSource;
+
+						if (instSpecSource.getClassifiers().get(0).equals(functPart.getBase_Component())) {						
+							assignments.add(a);
+						}
+					}
+				}
+			}
+		}
+		
+		// We look for the Assignments from Component to Partition in the Component View
+		parent = CHESSProfileManager.getViewByStereotype(umlModel,
+				Constants.COMPONENT_VIEW_NAME);
+		EList<Element> allCompViewElems = parent.allOwnedElements();		
+		
+		for (Element element : allCompViewElems) {
+			if((element.getAppliedStereotype(Constants.ASSIGN)!=null)) {
+				stereo = element.getAppliedStereotype(Constants.ASSIGN);
+				EObject eobj = element.getStereotypeApplication(stereo);
+				Assign a = (Assign)eobj;
+				Element assignmentSource = a.getFrom().get(0);
+				Element assignmentTarget = a.getTo().get(0);
+
+				// SOURCE must be a Component
+				// TARGET must be a Partition
+				if (elementIsPartitionInstance(assignmentTarget)) {
+					if(elementIsComponentInstance(assignmentSource)) {
+						InstanceSpecification instSpecSource = (InstanceSpecification) assignmentSource;
+						if (isComponentInstance(instSpecSource)) {
+							InstanceSpecification instSpecTarget = (InstanceSpecification)assignmentTarget;
+
+							// its type should be the same as the input functional Partition							
+							if (instSpecTarget.getClassifiers().get(0).equals(functPart.getBase_Component())) {								
+								assignments.add(a);
+							}
+						}
+					}
+				}	
+			}
+		}
+		return assignments;
+	}
+
+
+	/**
+	 * Returns the list of assignments found in viewName where 
+	 * the source is a Partition Instance and the target is a Processor Instance
+	 * @param umlModel
+	 * @param viewName
+	 * @return
+	 * @throws ModelError
+	 */
+	public static EList<Assign> getPartition2CoreAssignments(Model umlModel,
+			String viewName) throws ModelError {
+
+		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
+				viewName);
+		EList<Element> all = parent.allOwnedElements();
+		EList<Assign> assignments = new BasicEList<Assign>();
+		Stereotype stereo = null;
+		for (Element element : all) {
+			if((element.getAppliedStereotype(Constants.ASSIGN)!=null)) {
+				stereo = element.getAppliedStereotype(Constants.ASSIGN);
+				EObject eobj = element.getStereotypeApplication(stereo);
+				Assign a = (Assign)eobj;
+				Element assignmentSource = a.getFrom().get(0);
+				Element assignmentTarget = a.getTo().get(0);
+				// SOURCE must be a Partition
+				// TARGET must be a Processor
+				if (elementIsPartitionInstance(assignmentSource) && 
+						elementIsProcessorInstance(assignmentTarget)) {		
+					assignments.add(a);
+				}
+			}	
+		}
+		return assignments;
+	}	
+
+	/**
+	 * Returns the list of assignments found in viewName where 
+	 * the source is a Slot Instance and the target is a Processor Instance
+	 * @param umlModel
+	 * @param viewName
+	 * @return
+	 * @throws ModelError
+	 */
+	public static EList<Assign> getTask2CoreAssignments(Model umlModel,
+			String viewName) throws ModelError {
+
+		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
+				viewName);
+		EList<Element> all = parent.allOwnedElements();
+		EList<Assign> assignments = new BasicEList<Assign>();
+		Stereotype stereo = null;
+		for (Element element : all) {
+			if((element.getAppliedStereotype(Constants.ASSIGN)!=null)) {
+				stereo = element.getAppliedStereotype(Constants.ASSIGN);
+				EObject eobj = element.getStereotypeApplication(stereo);
+				Assign a = (Assign)eobj;
+				Element assignmentSource = a.getFrom().get(0);
+				Element assignmentTarget = a.getTo().get(0);
+				// SOURCE must be a Task
+				// TARGET must be a Processor
+				if (elementIsSlotInstance(assignmentSource) && 
+						elementIsProcessorInstance(assignmentTarget)) {		
+					assignments.add(a);
+				}
+			}	
+		}
+		return assignments;
+	}	
+
 	/**
 	 * Returns the list of assignments found in viewName where 
 	 * the source is a Component Instance 
@@ -716,8 +933,6 @@ public class UMLUtils {
 	 */
 	public static EList<Assign> getComponentAssignments(Model umlModel, String viewName) throws ModelError {
 
-		// LB 20150928 look in all the package (some models may not have the CHGAResourcePlatform component)
-		//Component rpc = getResourcePlatformComponent(umlModel, viewName);
 		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
 				viewName);
 		EList<Element> all = parent.allOwnedElements();
@@ -1065,8 +1280,8 @@ public class UMLUtils {
 		}
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * Returns a list of all Component Instances found in the Component View
 	 * @param umlModel
@@ -1106,7 +1321,7 @@ public class UMLUtils {
 		return components;
 	}
 
-	
+
 	/**
 	 * Looks for all the Component to Functional Partition Assignments in the specified View
 	 * @param umlModel
@@ -1120,11 +1335,11 @@ public class UMLUtils {
 		//Package cmpv = CHESSProfileManager.getViewByStereotype(umlModel, viewName);
 		//cmpv = QueryUtils.getResourcePlatformPackage(cmpv);
 
-		
+
 		//Component rpc = QueryUtils.getResourcePlatformComponent(umlModel, viewName);
 		// LB 20150928 look in all the package (some models may not have the CHGAResourcePlatform component)
 		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
-						viewName);
+				viewName);
 		EList<Element> all = parent.allOwnedElements();
 		EList<Assign> assignments = new BasicEList<Assign>();
 		Stereotype stereo = null;
