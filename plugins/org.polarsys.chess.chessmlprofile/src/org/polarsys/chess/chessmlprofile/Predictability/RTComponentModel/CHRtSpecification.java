@@ -19,13 +19,29 @@ import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HLAM.CallConcurrencyKind;
 
 import org.eclipse.uml2.uml.BehavioralFeature;
 import org.eclipse.uml2.uml.Comment;
+import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Slot;
+import org.eclipse.uml2.uml.Type;
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>CH Rt Specification</b></em>'.
  * <!-- end-user-doc -->
+ *
+ * <!-- begin-model-doc -->
+ * The following attributes are deprecated:
+ * -respT
+ * -blockT
+ * operationReqForSporadicOcc: the list of operations that need to be invoked to allow the sporadic occurrence of the "context" operation.
+ * 
+ * Constraints:
+ * Only for sporadic occurrence kind.
+ * The operations in the list must be owned by the Component which owns the 'context' operation.
+ * If the list is not empty the "context" operation must have private visibility and it cannot be invoked directly by other operations.
+ * If the list is empty the "context" operation must be invoked directly by other operations.
+ * 
+ * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
@@ -46,6 +62,7 @@ import org.eclipse.uml2.uml.Slot;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getContext <em>Context</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getRespT <em>Resp T</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getBlockT <em>Block T</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getOperationReqForSporadicOcc <em>Operation Req For Sporadic Occ</em>}</li>
  * </ul>
  * </p>
  *
@@ -452,5 +469,48 @@ public interface CHRtSpecification extends EObject {
 	 * @generated
 	 */
 	EList<String> getBlockT();
+
+	/**
+	 * Returns the value of the '<em><b>Operation Req For Sporadic Occ</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.uml2.uml.Operation}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Operation Req For Sporadic Occ</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Operation Req For Sporadic Occ</em>' reference list.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage#getCHRtSpecification_OperationReqForSporadicOcc()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	EList<Operation> getOperationReqForSporadicOcc();
+
+	/**
+	 * Retrieves the first {@link org.eclipse.uml2.uml.Operation} with the specified '<em><b>Name</b></em>', '<em><b>Owned Parameter Names</b></em>', and '<em><b>Owned Parameter Types</b></em>' from the '<em><b>Operation Req For Sporadic Occ</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param name The '<em><b>Name</b></em>' of the {@link org.eclipse.uml2.uml.Operation} to retrieve, or <code>null</code>.
+	 * @param ownedParameterNames The '<em><b>Owned Parameter Names</b></em>' of the {@link org.eclipse.uml2.uml.Operation} to retrieve, or <code>null</code>.
+	 * @param ownedParameterTypes The '<em><b>Owned Parameter Types</b></em>' of the {@link org.eclipse.uml2.uml.Operation} to retrieve, or <code>null</code>.
+	 * @return The first {@link org.eclipse.uml2.uml.Operation} with the specified '<em><b>Name</b></em>', '<em><b>Owned Parameter Names</b></em>', and '<em><b>Owned Parameter Types</b></em>', or <code>null</code>.
+	 * @see #getOperationReqForSporadicOcc()
+	 * @generated
+	 */
+	Operation getOperationReqForSporadicOcc(String name, EList<String> ownedParameterNames, EList<Type> ownedParameterTypes);
+
+	/**
+	 * Retrieves the first {@link org.eclipse.uml2.uml.Operation} with the specified '<em><b>Name</b></em>', '<em><b>Owned Parameter Names</b></em>', and '<em><b>Owned Parameter Types</b></em>' from the '<em><b>Operation Req For Sporadic Occ</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param name The '<em><b>Name</b></em>' of the {@link org.eclipse.uml2.uml.Operation} to retrieve, or <code>null</code>.
+	 * @param ownedParameterNames The '<em><b>Owned Parameter Names</b></em>' of the {@link org.eclipse.uml2.uml.Operation} to retrieve, or <code>null</code>.
+	 * @param ownedParameterTypes The '<em><b>Owned Parameter Types</b></em>' of the {@link org.eclipse.uml2.uml.Operation} to retrieve, or <code>null</code>.
+	 * @param ignoreCase Whether to ignore case in {@link java.lang.String} comparisons.
+	 * @return The first {@link org.eclipse.uml2.uml.Operation} with the specified '<em><b>Name</b></em>', '<em><b>Owned Parameter Names</b></em>', and '<em><b>Owned Parameter Types</b></em>', or <code>null</code>.
+	 * @see #getOperationReqForSporadicOcc()
+	 * @generated
+	 */
+	Operation getOperationReqForSporadicOcc(String name, EList<String> ownedParameterNames, EList<Type> ownedParameterTypes, boolean ignoreCase);
 
 } // CHRtSpecification

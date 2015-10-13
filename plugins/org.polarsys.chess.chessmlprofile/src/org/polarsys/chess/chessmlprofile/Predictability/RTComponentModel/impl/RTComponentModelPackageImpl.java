@@ -442,6 +442,15 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getCHRtSpecification_OperationReqForSporadicOcc() {
+		return (EReference)chRtSpecificationEClass.getEStructuralFeatures().get(16);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public RTComponentModelFactory getRTComponentModelFactory() {
 		return (RTComponentModelFactory)getEFactoryInstance();
 	}
@@ -486,6 +495,7 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		createEReference(chRtSpecificationEClass, CH_RT_SPECIFICATION__CONTEXT);
 		createEAttribute(chRtSpecificationEClass, CH_RT_SPECIFICATION__RESP_T);
 		createEAttribute(chRtSpecificationEClass, CH_RT_SPECIFICATION__BLOCK_T);
+		createEReference(chRtSpecificationEClass, CH_RT_SPECIFICATION__OPERATION_REQ_FOR_SPORADIC_OCC);
 	}
 
 	/**
@@ -548,6 +558,7 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		initEReference(getCHRtSpecification_Context(), theUMLPackage.getBehavioralFeature(), null, "context", null, 1, 1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getCHRtSpecification_RespT(), theBasicNFP_TypesPackage.getNFP_Duration(), "respT", null, 0, -1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getCHRtSpecification_BlockT(), theBasicNFP_TypesPackage.getNFP_Duration(), "blockT", null, 0, -1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getCHRtSpecification_OperationReqForSporadicOcc(), theUMLPackage.getOperation(), null, "operationReqForSporadicOcc", null, 0, -1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //RTComponentModelPackageImpl

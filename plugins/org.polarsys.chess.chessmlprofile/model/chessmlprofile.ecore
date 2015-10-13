@@ -1068,6 +1068,9 @@
             ordered="false" upperBound="-1" eType="#//Predictability/RTComponentModel/CHRtSpecification"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="CHRtSpecification">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The following attributes are deprecated:&#xD;&#xA;-respT&#xD;&#xA;-blockT&#xD;&#xA;operationReqForSporadicOcc: the list of operations that need to be invoked to allow the sporadic occurrence of the &quot;context&quot; operation.&#xD;&#xA;&#xD;&#xA;Constraints:&#xD;&#xA;Only for sporadic occurrence kind.&#xD;&#xA;The operations in the list must be owned by the Component which owns the 'context' operation.&#xD;&#xA;If the list is not empty the &quot;context&quot; operation must have private visibility and it cannot be invoked directly by other operations.&#xD;&#xA;If the list is empty the &quot;context&quot; operation must be invoked directly by other operations.&#xD;&#xA;"/>
+        </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="partWithPort" ordered="false"
             unique="false" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="WCET" ordered="false"
@@ -1100,6 +1103,8 @@
             upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockT" ordered="false"
             upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="operationReqForSporadicOcc"
+            ordered="false" upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Operation"/>
       </eClassifiers>
       <eSubpackages name="RTDataTypes" nsURI="http:///CHESS/Predictability/RTComponentModel/RTDataTypes.ecore"
           nsPrefix="CHESS.Predictability.RTComponentModel.RTDataTypes">

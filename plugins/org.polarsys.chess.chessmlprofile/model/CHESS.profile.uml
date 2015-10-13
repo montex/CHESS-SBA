@@ -10731,6 +10731,24 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
             </eClassifiers>
           </contents>
         </eAnnotations>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_a1ASIHD7EeWsMJjT42u20Q" annotatedElement="_Y4GZwDcwEd-mWLzcI61s7Q">
+          <body>The following attributes are deprecated:&#xD;
+-respT&#xD;
+-blockT</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_gAqz0HD9EeWsMJjT42u20Q" annotatedElement="_hMroYzg0EeCE2sZUGxu35w">
+          <body>to be removed</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_UbCWwHGoEeWnWZfsnDCUoA" annotatedElement="_Y4GZwDcwEd-mWLzcI61s7Q">
+          <body>operationReqForSporadicOcc: the list of operations that need to be invoked to allow the sporadic occurrence of the &quot;context&quot; operation.&#xD;
+&#xD;
+Constraints:&#xD;
+Only for sporadic occurrence kind.&#xD;
+The operations in the list must be owned by the Component which owns the 'context' operation.&#xD;
+If the list is not empty the &quot;context&quot; operation must have private visibility and it cannot be invoked directly by other operations.&#xD;
+If the list is empty the &quot;context&quot; operation must be invoked directly by other operations.&#xD;
+</body>
+        </ownedComment>
         <elementImport xmi:type="uml:ElementImport" xmi:id="_WP3MMDcwEd-mWLzcI61s7Q" alias="RtSpecification">
           <importedElement xmi:type="uml:Stereotype" href="pathmap://Papyrus_PROFILES/MARTE.profile.uml#_AZ8eMEFeEd6UW4qJC-Vahw"/>
         </elementImport>
@@ -10869,6 +10887,11 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
             <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_kMwX8BFREdyUJeMeN__D-A"/>
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ox1AENqvEeCgKdScvhOcyQ"/>
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ox-xENqvEeCgKdScvhOcyQ" value="*"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_8GvscHGnEeWnWZfsnDCUoA" name="operationReqForSporadicOcc" association="_8Gvsc3GnEeWnWZfsnDCUoA">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Operation"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8GvscXGnEeWnWZfsnDCUoA"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8GvscnGnEeWnWZfsnDCUoA" value="*"/>
           </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Package" xmi:id="_B55pwMAWEd-Dn5_MBIs5Vw" name="RTDataTypes">
@@ -11026,6 +11049,12 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
           <ownedEnd xmi:type="uml:Property" xmi:id="_kN5PAUApEeCgBsnPy5jVRQ" name="cHRtSpecification" type="_Y4GZwDcwEd-mWLzcI61s7Q" association="_kN5PAEApEeCgBsnPy5jVRQ">
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_kN5PA0ApEeCgBsnPy5jVRQ" value="1"/>
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_kN5PAkApEeCgBsnPy5jVRQ" value="1"/>
+          </ownedEnd>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Association" xmi:id="_8Gvsc3GnEeWnWZfsnDCUoA" name="cHRtSpecification_operation_1" memberEnd="_8GvsdHGnEeWnWZfsnDCUoA _8GvscHGnEeWnWZfsnDCUoA">
+          <ownedEnd xmi:type="uml:Property" xmi:id="_8GvsdHGnEeWnWZfsnDCUoA" name="cHRtSpecification" type="_Y4GZwDcwEd-mWLzcI61s7Q" association="_8Gvsc3GnEeWnWZfsnDCUoA">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8GvsdXGnEeWnWZfsnDCUoA" value="1"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8GvsdnGnEeWnWZfsnDCUoA" value="1"/>
           </ownedEnd>
         </packagedElement>
       </packagedElement>

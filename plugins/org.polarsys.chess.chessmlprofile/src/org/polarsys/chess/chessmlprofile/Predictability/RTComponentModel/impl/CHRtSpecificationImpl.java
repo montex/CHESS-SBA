@@ -20,11 +20,15 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HLAM.CallConcurrencyKind;
 import org.eclipse.uml2.uml.BehavioralFeature;
 import org.eclipse.uml2.uml.Comment;
+import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Slot;
+import org.eclipse.uml2.uml.Type;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage;
 
@@ -51,6 +55,7 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTCompo
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl#getContext <em>Context</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl#getRespT <em>Resp T</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl#getBlockT <em>Block T</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl#getOperationReqForSporadicOcc <em>Operation Req For Sporadic Occ</em>}</li>
  * </ul>
  * </p>
  *
@@ -316,6 +321,16 @@ public class CHRtSpecificationImpl extends EObjectImpl implements CHRtSpecificat
 	 * @ordered
 	 */
 	protected EList<String> blockT;
+
+	/**
+	 * The cached value of the '{@link #getOperationReqForSporadicOcc() <em>Operation Req For Sporadic Occ</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOperationReqForSporadicOcc()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Operation> operationReqForSporadicOcc;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -727,6 +742,52 @@ public class CHRtSpecificationImpl extends EObjectImpl implements CHRtSpecificat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Operation> getOperationReqForSporadicOcc() {
+		if (operationReqForSporadicOcc == null) {
+			operationReqForSporadicOcc = new EObjectResolvingEList<Operation>(Operation.class, this, RTComponentModelPackage.CH_RT_SPECIFICATION__OPERATION_REQ_FOR_SPORADIC_OCC);
+		}
+		return operationReqForSporadicOcc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Operation getOperationReqForSporadicOcc(String name, EList<String> ownedParameterNames, EList<Type> ownedParameterTypes) {
+		return getOperationReqForSporadicOcc(name, ownedParameterNames, ownedParameterTypes, false);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Operation getOperationReqForSporadicOcc(String name, EList<String> ownedParameterNames, EList<Type> ownedParameterTypes, boolean ignoreCase) {
+		operationReqForSporadicOccLoop: for (Operation operationReqForSporadicOcc : getOperationReqForSporadicOcc()) {
+			if (name != null && !(ignoreCase ? name.equalsIgnoreCase(operationReqForSporadicOcc.getName()) : name.equals(operationReqForSporadicOcc.getName())))
+				continue operationReqForSporadicOccLoop;
+			EList<Parameter> ownedParameterList = operationReqForSporadicOcc.getOwnedParameters();
+			int ownedParameterListSize = ownedParameterList.size();
+			if (ownedParameterNames != null && ownedParameterNames.size() != ownedParameterListSize || (ownedParameterTypes != null && ownedParameterTypes.size() != ownedParameterListSize))
+				continue  operationReqForSporadicOccLoop;
+			for (int j = 0; j < ownedParameterListSize; j++) {
+				Parameter ownedParameter = ownedParameterList.get(j);
+				if (ownedParameterNames != null && !(ignoreCase ? (ownedParameterNames.get(j)).equalsIgnoreCase(ownedParameter.getName()) : ownedParameterNames.get(j).equals(ownedParameter.getName())))
+					continue operationReqForSporadicOccLoop;
+				if (ownedParameterTypes != null && !ownedParameterTypes.get(j).equals(ownedParameter.getType()))
+					continue operationReqForSporadicOccLoop;
+			}
+			return operationReqForSporadicOcc;
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -766,6 +827,8 @@ public class CHRtSpecificationImpl extends EObjectImpl implements CHRtSpecificat
 				return getRespT();
 			case RTComponentModelPackage.CH_RT_SPECIFICATION__BLOCK_T:
 				return getBlockT();
+			case RTComponentModelPackage.CH_RT_SPECIFICATION__OPERATION_REQ_FOR_SPORADIC_OCC:
+				return getOperationReqForSporadicOcc();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -829,6 +892,10 @@ public class CHRtSpecificationImpl extends EObjectImpl implements CHRtSpecificat
 				getBlockT().clear();
 				getBlockT().addAll((Collection<? extends String>)newValue);
 				return;
+			case RTComponentModelPackage.CH_RT_SPECIFICATION__OPERATION_REQ_FOR_SPORADIC_OCC:
+				getOperationReqForSporadicOcc().clear();
+				getOperationReqForSporadicOcc().addAll((Collection<? extends Operation>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -889,6 +956,9 @@ public class CHRtSpecificationImpl extends EObjectImpl implements CHRtSpecificat
 			case RTComponentModelPackage.CH_RT_SPECIFICATION__BLOCK_T:
 				getBlockT().clear();
 				return;
+			case RTComponentModelPackage.CH_RT_SPECIFICATION__OPERATION_REQ_FOR_SPORADIC_OCC:
+				getOperationReqForSporadicOcc().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -933,6 +1003,8 @@ public class CHRtSpecificationImpl extends EObjectImpl implements CHRtSpecificat
 				return respT != null && !respT.isEmpty();
 			case RTComponentModelPackage.CH_RT_SPECIFICATION__BLOCK_T:
 				return blockT != null && !blockT.isEmpty();
+			case RTComponentModelPackage.CH_RT_SPECIFICATION__OPERATION_REQ_FOR_SPORADIC_OCC:
+				return operationReqForSporadicOcc != null && !operationReqForSporadicOcc.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

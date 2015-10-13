@@ -88,9 +88,6 @@
           <emfPageIdentifier href="CHESS.profile.notation#_VFbVEDQ2EeC0ueejuetpgA"/>
         </children>
         <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_3OelYMF0Ed--atLXXafOiQ"/>
-        </children>
-        <children>
           <emfPageIdentifier href="CHESS.profile.notation#_q0aMYL86Ed-TL8tpOyViyA"/>
         </children>
         <children>

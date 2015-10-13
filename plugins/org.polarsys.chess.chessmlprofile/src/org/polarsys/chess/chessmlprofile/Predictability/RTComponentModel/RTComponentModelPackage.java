@@ -257,13 +257,22 @@ public interface RTComponentModelPackage extends EPackage {
 	int CH_RT_SPECIFICATION__BLOCK_T = 15;
 
 	/**
+	 * The feature id for the '<em><b>Operation Req For Sporadic Occ</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CH_RT_SPECIFICATION__OPERATION_REQ_FOR_SPORADIC_OCC = 16;
+
+	/**
 	 * The number of structural features of the '<em>CH Rt Specification</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CH_RT_SPECIFICATION_FEATURE_COUNT = 16;
+	int CH_RT_SPECIFICATION_FEATURE_COUNT = 17;
 
 
 	/**
@@ -485,6 +494,17 @@ public interface RTComponentModelPackage extends EPackage {
 	EAttribute getCHRtSpecification_BlockT();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getOperationReqForSporadicOcc <em>Operation Req For Sporadic Occ</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Operation Req For Sporadic Occ</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getOperationReqForSporadicOcc()
+	 * @see #getCHRtSpecification()
+	 * @generated
+	 */
+	EReference getCHRtSpecification_OperationReqForSporadicOcc();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -669,6 +689,14 @@ public interface RTComponentModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CH_RT_SPECIFICATION__BLOCK_T = eINSTANCE.getCHRtSpecification_BlockT();
+
+		/**
+		 * The meta object literal for the '<em><b>Operation Req For Sporadic Occ</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CH_RT_SPECIFICATION__OPERATION_REQ_FOR_SPORADIC_OCC = eINSTANCE.getCHRtSpecification_OperationReqForSporadicOcc();
 
 	}
 

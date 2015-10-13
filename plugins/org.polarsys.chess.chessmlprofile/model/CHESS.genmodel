@@ -905,6 +905,8 @@
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/context"/>
           <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/respT"/>
           <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/blockT"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Predictability/RTComponentModel/CHRtSpecification/operationReqForSporadicOcc"/>
         </genClasses>
         <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="RTDataTypes" basePackage="org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel"
             disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Predictability/RTComponentModel/RTDataTypes">
