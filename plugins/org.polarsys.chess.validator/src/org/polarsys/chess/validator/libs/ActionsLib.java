@@ -5,14 +5,15 @@
 --                    Copyright (C) 2011-2012                        --
 --                 University of Padova, ITALY                       --
 --                                                                   --
--- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
+-- Author: Alessandro Zovi         azovi@math.unipd.it 	             --
+--	       Stefano Puri            stefano.puri@intecs.it            --
 --                                                                   --
 -- All rights reserved. This program and the accompanying materials  --
 -- are made available under the terms of the Eclipse Public License  --
 -- v1.0 which accompanies this distribution, and is available at     --
 -- http://www.eclipse.org/legal/epl-v10.html                         --
 -----------------------------------------------------------------------
-*/
+ */
 
 package org.polarsys.chess.validator.libs;
 
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.RollbackException;
@@ -41,6 +43,8 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.DestroyElementRequest;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerPort;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.FlowPort;
+import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
+import org.eclipse.papyrus.MARTE.MARTE_Foundations.NFPs.NfpConstraint;
 import org.eclipse.papyrus.commands.wrappers.EMFtoGMFCommandWrapper;
 import org.eclipse.papyrus.commands.wrappers.GMFtoEMFCommandWrapper;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
@@ -48,23 +52,32 @@ import org.eclipse.papyrus.infra.services.edit.service.ElementEditServiceUtils;
 import org.eclipse.papyrus.infra.services.edit.service.IElementEditService;
 import org.eclipse.papyrus.uml.tools.listeners.PapyrusStereotypeListener;
 import org.eclipse.uml2.uml.Behavior;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Component;
+import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
+import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Port;
+import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Realization;
+import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Type;
-import org.eclipse.uml2.uml.internal.impl.RealizationImpl;
+import org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition;
+import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
+import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.validator.automatedActions.IAutomatedAction;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
+import org.polarsys.chess.core.util.uml.ModelError;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
@@ -72,12 +85,12 @@ import org.polarsys.chess.validator.Activator;
 import org.polarsys.chess.validator.managers.AddDiagramElement;
 import org.polarsys.chess.validator.messages.Messages;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class ActionsLib contains the implementation of the Automated Actions
  */
 public class ActionsLib {
-	
+
 	/** The port modification action. */
 	public static IAutomatedAction portModificationAction = new IAutomatedAction() {
 		@Override
@@ -94,7 +107,7 @@ public class ActionsLib {
 						Component comp = (Component) ((Port) notifier).getOwner();
 						if (!(UMLUtils.isComponentType(comp) && ViewUtils.isComponentView(ViewUtils.getView(comp))))
 							return null;
-						
+
 
 						ClientServerPort port = (ClientServerPort) notification.getNewValue();
 
@@ -124,15 +137,15 @@ public class ActionsLib {
 						return ccc;
 					}
 				}
-				
+
 				else if(notification.getNewValue() instanceof FlowPort){
 					if (((Port) notifier).getOwner() instanceof Component) {
 						Component comp = (Component) ((Port) notifier).getOwner();
 						if (!(UMLUtils.isComponentType(comp) && ViewUtils.isComponentView(ViewUtils.getView(comp))))
 							return null;
-						
+
 						FlowPort flPort = (FlowPort) notification.getNewValue();
-						
+
 						CompoundCommand cc = new CompoundCommand("portAutomations");
 						cc.append(AddDiagramElement.updateImplementationsFlowPorts(domain, flPort));
 						return cc;
@@ -157,7 +170,7 @@ public class ActionsLib {
 						&& notification.getNewValue() == null) {
 					Port p = (Port) notification.getOldValue();
 					Element el = p.getOwner();
-					
+
 					if (!(el instanceof NamedElement 
 							&& UMLUtils.isComponentType((NamedElement) el) 
 							&& ViewUtils.isComponentView(ViewUtils.getView(el))))
@@ -179,7 +192,7 @@ public class ActionsLib {
 			return null;
 		}
 	};
-	
+
 	/*
 	 * inherited operations are automatically added
 	 */
@@ -204,7 +217,7 @@ public class ActionsLib {
 			return null;
 		}
 	};
-	
+
 	/** The component realization action. */
 	public static IAutomatedAction componentRealizationAction = new IAutomatedAction() {
 		@Override
@@ -243,14 +256,14 @@ public class ActionsLib {
 		}
 
 	};
-	
+
 	/** The remove realization operations action. */
 	public static IAutomatedAction removeRealizationOperationsAction = new IAutomatedAction() {
-		
+
 		private IStatus operationAborted = new Status(IStatus.ERROR,
 				Activator.PLUGIN_ID, Messages.operationAborted);
-		
-		
+
+
 		@Override
 		public Command compile(Notification notification, List<Notification> notificationList,
 				TransactionalEditingDomain domain) throws RollbackException {
@@ -260,7 +273,7 @@ public class ActionsLib {
 
 				// Deletion of a Realization link
 				if (notification.getEventType() == Notification.REMOVE
-						&& notification.getOldValue().getClass().equals(RealizationImpl.class) && notification.getFeature() instanceof EReference && ((EReference)notification.getFeature()).getName().equals("clientDependency")) {
+						&& notification.getOldValue().getClass().equals(Realization.class) && notification.getFeature() instanceof EReference && ((EReference)notification.getFeature()).getName().equals("clientDependency")) {
 					Package view = ViewUtils.getView((Component) notifier);
 					// checks to be verified only in case the current component
 					// belongs to the functional view
@@ -286,8 +299,8 @@ public class ActionsLib {
 			}
 			return null;
 		}
-		
-		
+
+
 		//TODO it needs to be checked 
 		private Command deleteOperations(Component component, Package view,
 				TransactionalEditingDomain domain) {
@@ -394,10 +407,10 @@ public class ActionsLib {
 			return null;
 		}
 	};
-	
+
 	/** The propagate operation modification. */
 	public static IAutomatedAction propagateOperationModification = new IAutomatedAction() {
-		
+
 		@Override
 		public Command compile(Notification notification, List<Notification> notificationList,
 				TransactionalEditingDomain domain) throws RollbackException {
@@ -407,22 +420,22 @@ public class ActionsLib {
 				if (notification.getEventType() == Notification.SET) {
 					Operation op = (Operation) notifier;
 					EObject container = op.eContainer();
-//					if (container == null && notification.getOldValue() instanceof Interface){
-//						container = (EObject) notification.getOldValue();
-//					}
-						
+					//					if (container == null && notification.getOldValue() instanceof Interface){
+					//						container = (EObject) notification.getOldValue();
+					//					}
+
 					if (!(container instanceof Interface))
 						return null;
 					if (!ViewUtils.isComponentView(ViewUtils.getView(container))) 
 						return null;
-					
+
 					EList<Component> relationships = UMLUtils.getAllInterfaceComponents((Interface) container);
 					if (relationships == null || relationships.isEmpty()) 
 						return null;
-					
+
 					CompositeCommand cmd = new CompositeCommand("setCommand");
 					for (Component comp : relationships) {
-							propagateFeature(notification, domain, op, cmd,	comp);
+						propagateFeature(notification, domain, op, cmd,	comp);
 					}
 					if (!cmd.isEmpty())
 						return new GMFtoEMFCommandWrapper(cmd);
@@ -448,24 +461,24 @@ public class ActionsLib {
 			}
 		}
 	};
-	
-	
+
+
 	/** The propagate interface modification. */
 	public static IAutomatedAction propagateInterfaceModification = new IAutomatedAction() {
-		
+
 		private IStatus operationAborted = new Status(IStatus.ERROR,
 				Activator.PLUGIN_ID, Messages.operationAborted);
-		
+
 		@Override
 		public Command compile(Notification notification, List<Notification> notificationList,
 				TransactionalEditingDomain domain) throws RollbackException {
 			Object notifier = notification.getNotifier();
 			if (notifier instanceof Interface) {
 				Interface interfce = (Interface) notifier;
-				
+
 				if (notification.getEventType() == Notification.ADD
 						&& notification.getNewValue() instanceof Operation) {
-					
+
 					Operation operation = (Operation) notification.getNewValue();
 					// checks to be verified only in case the current component
 					// belongs to the functional view
@@ -473,22 +486,22 @@ public class ActionsLib {
 						return AddDiagramElement.addOperationCommand1(domain, interfce, operation);
 					}
 				}
-				
+
 				// Deletion of an operation belonging to an interface
 				if (notification.getEventType() == Notification.REMOVE
 						&& notification.getOldValue() instanceof Operation) {
 					Operation operation = (Operation) notification.getOldValue();
 					if (!ViewUtils.isComponentView(ViewUtils.getView(interfce)))
 						return null;
-						
+
 					PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
 					if (editor == null) 
 						return null;
 					MessageDialog md = CHESSEditorUtils.showConfirmDialog(editor, "Confirm", "Do you want to propagate the removal of "+operation.getName()+" from all the  related model elements?");
 					// * 0 - OK
 					int result = md.open();
-					
-					
+
+
 					// * 0 - OK
 					// * 1 - No
 					// * 2 - Cancel
@@ -496,11 +509,11 @@ public class ActionsLib {
 					case 0:
 						EList<Component> relationships = UMLUtils.getAllInterfaceComponents(interfce);
 						CompositeCommand cmd = new CompositeCommand("delOpCommand");
-						
+
 						ArrayList<Operation> opToDel = new ArrayList<Operation>();
 						ArrayList<Behavior> behaviorToDel = new ArrayList<Behavior>();
 
-						
+
 						//opToDel.add(operation);
 						for (Component cmp : relationships) {
 							for (Operation op : cmp.getOwnedOperations()) {
@@ -567,11 +580,11 @@ public class ActionsLib {
 			return null;
 		}
 	};
-		
+
 
 	/** The propagate parameter removal action. */
 	public static IAutomatedAction propagateParameterRemovalAction = new IAutomatedAction() {
-		
+
 		@Override
 		public Command compile(Notification notification,
 				List<Notification> notificationList,
@@ -593,18 +606,18 @@ public class ActionsLib {
 						return null;
 					for (Component comp : relationships) {
 						checkOperation:
-						for (Operation op : comp.getOwnedOperations()) {
-							if (!UMLUtils.areOperationsEqual(op, operation, param))
-								continue;
-							for (Parameter p : op.getOwnedParameters()) {
-								if (UMLUtils.areParametersEqual(p, param)) {
-									cmd.add(new DestroyElementCommand(new DestroyElementRequest(p, false)));
-									break checkOperation;
+							for (Operation op : comp.getOwnedOperations()) {
+								if (!UMLUtils.areOperationsEqual(op, operation, param))
+									continue;
+								for (Parameter p : op.getOwnedParameters()) {
+									if (UMLUtils.areParametersEqual(p, param)) {
+										cmd.add(new DestroyElementCommand(new DestroyElementRequest(p, false)));
+										break checkOperation;
+									}
 								}
+
 							}
-							
-						}
-					
+
 					}
 
 					if (!cmd.isEmpty())
@@ -622,62 +635,62 @@ public class ActionsLib {
 							Parameter param = (Parameter) ob;
 							Operation operation = (Operation) notifier;
 							CompositeCommand cmd = new CompositeCommand("delCommand");
-							
+
 							EObject opCont = operation.eContainer();
 							if (!(opCont instanceof Interface) || !ViewUtils.isComponentView(ViewUtils.getView(opCont)))
 								return null;
 							EList<Component> relationships = UMLUtils.getAllInterfaceComponents((Interface) opCont);
 							for (Component comp : relationships) {
 								checkOperation:
-								for (Operation op : comp.getOwnedOperations()) {
-									if (!UMLUtils.areOperationsEqual(op, operation, param))
-										continue;
-									for (Parameter p : op.getOwnedParameters()) {
-										if (UMLUtils.areParametersEqual(p, param)) {
-											cmd.add(new DestroyElementCommand(new DestroyElementRequest(p, false)));
-											break checkOperation;
+									for (Operation op : comp.getOwnedOperations()) {
+										if (!UMLUtils.areOperationsEqual(op, operation, param))
+											continue;
+										for (Parameter p : op.getOwnedParameters()) {
+											if (UMLUtils.areParametersEqual(p, param)) {
+												cmd.add(new DestroyElementCommand(new DestroyElementRequest(p, false)));
+												break checkOperation;
+											}
 										}
+
 									}
-									
-								}
-							
+
 							}
 							if (!cmd.isEmpty())
 								return new GMFtoEMFCommandWrapper(cmd);
 						}
 					}
 				}
-				
-				
+
+
 				// end case
-				
-				
-				
+
+
+
 			}
 			return null;
 		}
 	};
-	
+
 	/** The propagate parameter addition action. */
 	public static IAutomatedAction propagateParameterAdditionAction = new IAutomatedAction() {
-		
+
 		@Override
 		public Command compile(Notification notification,
 				List<Notification> notificationList,
 				TransactionalEditingDomain domain) throws RollbackException {
-			
+
 			Object notifier = notification.getNotifier();
 			if (notifier instanceof Operation) {
 				if ((notification.getEventType() == Notification.ADD && notification
 						.getNewValue() instanceof Parameter)) {
 					Parameter param = (Parameter) notification.getNewValue();
 					Operation operation = param.getOperation();
-					
+
 					EObject opCont = operation.eContainer();
 					if ((opCont instanceof Interface) && ViewUtils.isComponentView(ViewUtils.getView(opCont)))
 						return AddDiagramElement.addParameterCommand((Interface) opCont, param, operation, domain);
 				}
-				
+
 				if (notification.getEventType() == Notification.ADD_MANY && notification.getNewValue() instanceof EList){
 
 					@SuppressWarnings("rawtypes")
@@ -709,11 +722,11 @@ public class ActionsLib {
 			return null;
 		}
 	};
-	
-	
+
+
 	/** The comment action. */
 	public static IAutomatedAction commentAction = new IAutomatedAction() {
-		
+
 		@Override
 		public Command compile(Notification notification,
 				List<Notification> notificationList,
@@ -730,7 +743,7 @@ public class ActionsLib {
 			return null;
 		}
 	};
-		
+
 	/** The port addition action. */
 	public static IAutomatedAction portAdditionAction = new IAutomatedAction() {
 		@Override
@@ -742,13 +755,13 @@ public class ActionsLib {
 				Element supplierComp = port.getOwner();
 				if (!(UMLUtils.isClientServerPort(port) && UMLUtils.isComponentType(supplierComp)))
 					return null;
-				
+
 				CompositeCommand cc = new CompositeCommand("portAndOpCommand");
 				for(Component cImpl: UMLUtils.getComponentImplementations((Component) supplierComp)){
 					Command cmd2 = AddDiagramElement.addPortCommand(domain, (Component) supplierComp, cImpl, port);
 					cc.add(new EMFtoGMFCommandWrapper(cmd2));
 				}
-				
+
 				if (!cc.isEmpty()) {
 					return new GMFtoEMFCommandWrapper(cc);
 				}
@@ -756,11 +769,11 @@ public class ActionsLib {
 			return null;
 		}
 	};
-	
-	
+
+
 	/** The propagate port modification. */
 	public static IAutomatedAction propagatePortModification = new IAutomatedAction() {
-		
+
 		@Override
 		public Command compile(Notification notification, List<Notification> notificationList,
 				TransactionalEditingDomain domain) throws RollbackException {
@@ -771,25 +784,25 @@ public class ActionsLib {
 					//PAPYRUS BUG: do NOT propagate the name "Port0"
 					if (notification.getFeature() instanceof EAttribute && ((EAttribute)notification.getFeature()).getName().equals("name") && notification.getNewValue().equals("Port0"))
 						return null;
-					
-					
+
+
 					Port port = (Port) notifier;
 					EObject container = port.eContainer();
-						
+
 					if (!(container instanceof Component))
 						return null;
 					if (!ViewUtils.isComponentView(ViewUtils.getView(container)) || !UMLUtils.isComponentType(container)) 
 						return null;
-					
-					
-					
+
+
+
 					EList<Component> relationships = UMLUtils.getComponentImplementations((Component) container);
 					if (relationships == null || relationships.isEmpty()) 
 						return null;
-					
+
 					CompositeCommand cmd = new CompositeCommand("setCommand");
 					for (Component comp : relationships) {
-							propagateFeature(notification, domain, port, cmd, comp);
+						propagateFeature(notification, domain, port, cmd, comp);
 					}
 					if (!cmd.isEmpty())
 						return new GMFtoEMFCommandWrapper(cmd);
@@ -815,21 +828,324 @@ public class ActionsLib {
 			cmd.add(new EMFtoGMFCommandWrapper(setC));
 		}
 	};
+
+
+	// LB 20150929 for todo#26
+	/** The core modification action. */
+	public static IAutomatedAction coreModificationAction = new IAutomatedAction() {
+		private IStatus operationAborted = new Status(IStatus.ERROR,
+				Activator.PLUGIN_ID, Messages.operationAborted);
+
+		@Override
+		public Command compile(Notification notification,
+				List<Notification> notificationList,
+				TransactionalEditingDomain domain) throws RollbackException {
+			Object notifier = notification.getNotifier();						
+
+			if (notifier instanceof CH_HwProcessor) {
+				CH_HwProcessor chHwProcessor = (CH_HwProcessor) notifier;
+				
+				if (chHwProcessor.getBase_Classifier() == null){
+					return null;
+				}
+
+				String chHwProcessorName = chHwProcessor.getBase_Classifier().getName();				
+
+				if (notification.getEventType() == Notification.SET) {
+					if (notification.getFeature() instanceof EAttribute && 
+							((EAttribute)notification.getFeature()).getName().equals(Constants.CHHWPROCESSOR_NB_CORES)) {
+												
+						Object oldValue = notification.getOldValue();
+						Object newValue = notification.getNewValue();
+						
+						if (oldValue!=null && newValue!=null &&
+								Integer.parseInt(oldValue.toString()) <= Integer.parseInt(newValue.toString())) {
+							// if we are increasing the number of cores or not changing it, do nothing
+							return null;
+						}
+						
+						// Ask user if he is sure he wants to modify this attribute, 
+						// warning that the associations to the processor will be deleted
+						PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();																		
+
+						if (editor == null) {							
+							return null;
+						}
+
+						MessageDialog md = CHESSEditorUtils.showConfirmDialog(editor, "Confirm", "Do you want to propagate the removal of the associations related to this processor "+chHwProcessorName);
+
+						int result = md.open();
+
+						if (result == 0) {
+							Model umlModel = ((Element)chHwProcessor.getBase_Classifier()).getModel();	
+							Classifier chHwProcClassifier = chHwProcessor.getBase_Classifier();							
+							return deleteAssignments(umlModel, chHwProcClassifier, Constants.DEPLOYMENT_VIEW_NAME, domain);
+						}
+						// CANCEL
+						if (result == 2) {
+							CHESSProjectSupport.CHESS_CONSOLE.println(operationAborted.getMessage());
+							// TODO why?
+							//throw new RollbackException(operationAborted);
+						}	
+					}
+					return null;					
+				}
+			}
+			return null;
+		}
+	};
+
+
+	/**
+	 * Delete all assignments to this processor: this deletes all the comments that are assignments to the 
+	 * processor and all the related nfpConstraints (if any)
+	 * @param chHwProcClassifier
+	 * @param umlModel
+	 * @param viewName
+	 * @param domain
+	 * @return
+	 */
+	private static Command deleteAssignments(Model umlModel, Classifier chHwProcClassifier, String viewName, 
+			TransactionalEditingDomain domain) {
+		CompositeCommand cmd = new CompositeCommand("delAssignmentsCommand");
+
+		//Delete all assignments to this Processor
+		ArrayList<Comment> assignmentsToDel = new ArrayList<Comment>();
+		ArrayList<Constraint> nfpConstraintsToDel = new ArrayList<Constraint>();
+		try {
+			for (Assign assignment : UMLUtils.getAll2CoreAssignments(umlModel , viewName)) {				
+				Element to = assignment.getTo().get(0);					
+				Comment assignComment =assignment.getBase_Comment();					
+
+				if (to instanceof InstanceSpecification) {
+					InstanceSpecification instSpec = (InstanceSpecification)to;
+					Classifier theClassifier = instSpec.getClassifiers().get(0);
+					if (theClassifier.equals(chHwProcClassifier)) {						
+						assignmentsToDel.add(assignComment);			
+						if (assignment.getImpliedConstraint().size() > 0) {
+							for (Object c : assignment.getImpliedConstraint().toArray()) {
+								if (c instanceof NfpConstraint) {
+									NfpConstraint n = (NfpConstraint) c;
+									nfpConstraintsToDel.add(n.getBase_Constraint());									
+								}
+							}
+						}
+					}
+				}				
+			}
+		} 
+
+		catch (ModelError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		if (assignmentsToDel.size()>0) {
+			for (int i = 0; i < assignmentsToDel.size(); i++) {
+				IElementEditService provider = ElementEditServiceUtils
+						.getCommandProvider(assignmentsToDel.get(i));
+				if (provider == null) {
+					continue;					
+				}
+				// Retrieve delete command from the Element Edit
+				// service
+				DestroyElementRequest request = new DestroyElementRequest(
+						assignmentsToDel.get(i), false);
+				ICommand deleteCommand = provider
+						.getEditCommand(request);
+
+				cmd.add(deleteCommand);				
+			}
+		}	
+
+		if(nfpConstraintsToDel.size()>0) {
+			for (int i = 0; i < nfpConstraintsToDel.size(); i++) {
+				IElementEditService provider = ElementEditServiceUtils
+						.getCommandProvider(nfpConstraintsToDel.get(i));
+				if (provider == null) {
+					continue;					
+				}
+				// Retrieve delete command from the Element Edit
+				// service
+				DestroyElementRequest request = new DestroyElementRequest(
+						nfpConstraintsToDel.get(i), false);
+				ICommand deleteCommand = provider
+						.getEditCommand(request);
+
+				cmd.add(deleteCommand);				
+			}
+		}
+
+		if (!cmd.isEmpty())
+			return new GMFtoEMFCommandWrapper(cmd);
+		return null;
+	};
+
 	
-	
-	
-	
-	
-//	public static IAutomatedAction[] actionList = {portModificationAction,
-//			portRemovalAction, componentInterfaceRealizationAction,
-//			componentRealizationAction, removeRealizationOperationsAction,
-//			propagateOperationModification, propagateInterfaceModification,
-//			propagateParameterRemovalAction, propagateParameterAdditionAction,
-//			commentAction, portAdditionAction, propagatePortModification};
-	
-	/** The action list. */
-public static IAutomatedAction[] actionList = {portModificationAction,
-			componentInterfaceRealizationAction, componentRealizationAction,
-			commentAction};
-	
+	/** The partitions modification action. */
+	public static IAutomatedAction partitionsModificationAction = new IAutomatedAction() {
+		private IStatus operationAborted = new Status(IStatus.ERROR,
+				Activator.PLUGIN_ID, Messages.operationAborted);
+
+		@Override
+		public Command compile(Notification notification,
+				List<Notification> notificationList,
+				TransactionalEditingDomain domain) throws RollbackException {
+			Object notifier = notification.getNotifier();
+			if (!(notifier instanceof Element)) {
+				return null;
+			}			
+
+			if (notification.getEventType() == Notification.SET) {							
+				if (notifier instanceof Property) {					
+					Object oldValue = notification.getOldValue();
+					if(oldValue == null) {
+						return null;
+					}					
+					Object feature = notification.getFeature();					
+					if (feature instanceof EReferenceImpl) {
+						EReferenceImpl feat = (EReferenceImpl)feature;			
+						if(feat.getName().equals("type")) {
+							if (oldValue instanceof Component) {	
+								Component oldValueComponent = (Component)oldValue;														
+								if(oldValueComponent.getAppliedStereotype(Constants.CH_FunctionalPartition)!=null) {
+									Stereotype functionalPartitionStereo = oldValueComponent.getAppliedStereotype(Constants.CH_FunctionalPartition);
+									EObject functPartObj = oldValueComponent.getStereotypeApplication(functionalPartitionStereo);
+
+									FunctionalPartition functPart = (FunctionalPartition)functPartObj;
+									System.out.println("found a functional partition"+functPart.toString());						
+
+									// Ask user if he is sure he wants to modify this attribute, 
+									// warning that the associations to the processor will be deleted
+									PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();																		
+
+									if (editor == null) {							
+										return null;
+									}
+
+									MessageDialog md = CHESSEditorUtils.showConfirmDialog(editor, "Confirm", "Do you want to propagate the removal of the associations related to functional partitions?");
+
+									int result = md.open();
+
+									if (result == 0) {
+										Model umlModel = functPart.getBase_Component().getModel();
+
+										return deletePartitionAssignments(umlModel, functPart, domain);
+									}
+									// CANCEL
+									if (result == 2) {
+										CHESSProjectSupport.CHESS_CONSOLE.println(operationAborted.getMessage());
+										// TODO why?
+										//throw new RollbackException(operationAborted);
+									}	
+
+								}
+							}
+						}
+					}
+				}
+
+				return null;					
+			}
+
+			//		}
+			return null;
+		}
+
+
+		/**
+		 * Delete all assignments that have the input functional partition 
+		 * either in the To field (Component to Partition Assignment), or
+		 * in the From field (Partition to ProcessorAssignment)
+		 * and all the related nfpConstraints (if any)
+		 * 
+		 * @param umlModel
+		 * @param functPart
+		 * @param viewName
+		 * @param domain
+		 * @return
+		 */
+		private Command deletePartitionAssignments(Model umlModel, FunctionalPartition functPart, 
+				TransactionalEditingDomain domain) {
+			CompositeCommand cmd = new CompositeCommand("delPartitionAssignmentsCommand");
+
+			//Delete all assignments to or from Partitions
+			ArrayList<Comment> assignmentsToDel = new ArrayList<Comment>();
+			ArrayList<Constraint> nfpConstraintsToDel = new ArrayList<Constraint>();
+			try {
+				for (Assign assignment : UMLUtils.getPartitionAssignments(umlModel , functPart)) {						
+					Comment assignComment =assignment.getBase_Comment();										
+					assignmentsToDel.add(assignComment);			
+					if (assignment.getImpliedConstraint().size() > 0) {
+						for (Object c : assignment.getImpliedConstraint().toArray()) {
+							if (c instanceof NfpConstraint) {
+								NfpConstraint n = (NfpConstraint) c;
+								nfpConstraintsToDel.add(n.getBase_Constraint());									
+							}
+						}
+					}
+				}
+			}
+			catch (ModelError e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if (assignmentsToDel.size()>0) {
+				for (int i = 0; i < assignmentsToDel.size(); i++) {
+					IElementEditService provider = ElementEditServiceUtils
+							.getCommandProvider(assignmentsToDel.get(i));
+					if (provider == null) {
+						continue;					
+					}
+					// Retrieve delete command from the Element Edit
+					// service
+					DestroyElementRequest request = new DestroyElementRequest(
+							assignmentsToDel.get(i), false);
+					ICommand deleteCommand = provider
+							.getEditCommand(request);
+
+					cmd.add(deleteCommand);				
+				}
+			}	
+
+			if(nfpConstraintsToDel.size()>0) {
+				for (int i = 0; i < nfpConstraintsToDel.size(); i++) {
+					IElementEditService provider = ElementEditServiceUtils
+							.getCommandProvider(nfpConstraintsToDel.get(i));
+					if (provider == null) {
+						continue;					
+					}
+					// Retrieve delete command from the Element Edit
+					// service
+					DestroyElementRequest request = new DestroyElementRequest(
+							nfpConstraintsToDel.get(i), false);
+					ICommand deleteCommand = provider
+							.getEditCommand(request);
+
+					cmd.add(deleteCommand);				
+				}
+			}
+
+			if (!cmd.isEmpty())
+				return new GMFtoEMFCommandWrapper(cmd);
+			return null;
+
+		}
+	};
+
+
+	//	public static IAutomatedAction[] actionList = {portModificationAction,
+	//			portRemovalAction, componentInterfaceRealizationAction,
+	//			componentRealizationAction, removeRealizationOperationsAction,
+	//			propagateOperationModification, propagateInterfaceModification,
+	//			propagateParameterRemovalAction, propagateParameterAdditionAction,
+	//			commentAction, portAdditionAction, propagatePortModification};
+
+	/** The static list of the actions that will be checked at run-time. */
+	public static IAutomatedAction[] actionList = {portModificationAction,
+		componentInterfaceRealizationAction, componentRealizationAction,
+		commentAction, coreModificationAction, partitionsModificationAction};
+
 }
+
