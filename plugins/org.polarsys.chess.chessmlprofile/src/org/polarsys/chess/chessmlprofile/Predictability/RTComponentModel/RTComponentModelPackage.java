@@ -94,13 +94,22 @@ public interface RTComponentModelPackage extends EPackage {
 	int CH_RT_PORT_SLOT__CH_RT_SPECIFICATION = 1;
 
 	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION = 2;
+
+	/**
 	 * The number of structural features of the '<em>CH Rt Port Slot</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CH_RT_PORT_SLOT_FEATURE_COUNT = 2;
+	int CH_RT_PORT_SLOT_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl <em>CH Rt Specification</em>}' class.
@@ -306,6 +315,17 @@ public interface RTComponentModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCHRtPortSlot_CH_RtSpecification();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot#getBase_InstanceSpecification <em>Base Instance Specification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Instance Specification</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot#getBase_InstanceSpecification()
+	 * @see #getCHRtPortSlot()
+	 * @generated
+	 */
+	EReference getCHRtPortSlot_Base_InstanceSpecification();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification <em>CH Rt Specification</em>}'.
@@ -551,6 +571,14 @@ public interface RTComponentModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CH_RT_PORT_SLOT__CH_RT_SPECIFICATION = eINSTANCE.getCHRtPortSlot_CH_RtSpecification();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Instance Specification</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getCHRtPortSlot_Base_InstanceSpecification();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl <em>CH Rt Specification</em>}' class.

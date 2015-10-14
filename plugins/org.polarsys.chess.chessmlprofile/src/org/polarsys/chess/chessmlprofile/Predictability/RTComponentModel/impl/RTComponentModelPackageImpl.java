@@ -289,6 +289,15 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getCHRtPortSlot_Base_InstanceSpecification() {
+		return (EReference)chRtPortSlotEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCHRtSpecification() {
 		return chRtSpecificationEClass;
 	}
@@ -477,6 +486,7 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		chRtPortSlotEClass = createEClass(CH_RT_PORT_SLOT);
 		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__BASE_SLOT);
 		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__CH_RT_SPECIFICATION);
+		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION);
 
 		chRtSpecificationEClass = createEClass(CH_RT_SPECIFICATION);
 		createEReference(chRtSpecificationEClass, CH_RT_SPECIFICATION__PART_WITH_PORT);
@@ -540,6 +550,7 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		initEClass(chRtPortSlotEClass, CHRtPortSlot.class, "CHRtPortSlot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCHRtPortSlot_Base_Slot(), theUMLPackage.getSlot(), null, "base_Slot", null, 1, 1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCHRtPortSlot_CH_RtSpecification(), this.getCHRtSpecification(), null, "cH_RtSpecification", null, 0, -1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getCHRtPortSlot_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(chRtSpecificationEClass, CHRtSpecification.class, "CHRtSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCHRtSpecification_PartWithPort(), theUMLPackage.getProperty(), null, "partWithPort", null, 0, 1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);

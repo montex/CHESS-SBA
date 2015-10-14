@@ -277,6 +277,23 @@
       <element xmi:type="uml:Comment" href="CHESS.profile.uml#_UbCWwHGoEeWnWZfsnDCUoA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ub5SYXGoEeWnWZfsnDCUoA" x="725" y="419" width="263"/>
     </children>
+    <children xmi:type="notation:Shape" xmi:id="__wwnYHJoEeWA88Dv12-yjw" type="1031">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__w2uAXJoEeWA88Dv12-yjw" source="Stereotype_Annotation">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="__w2uAnJoEeWA88Dv12-yjw" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="__w2uA3JoEeWA88Dv12-yjw" key="StereotypeList" value="StandardProfile::Metaclass"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="__w2uBHJoEeWA88Dv12-yjw" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="__w2uBXJoEeWA88Dv12-yjw" key="PropStereoDisplay" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="__w2uBnJoEeWA88Dv12-yjw" key="StereotypePropertyLocation" value="Compartment"/>
+      </eAnnotations>
+      <children xmi:type="notation:DecorationNode" xmi:id="__wzqsHJoEeWA88Dv12-yjw" type="1084"/>
+      <element xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="__w2uAHJoEeWA88Dv12-yjw" x="259" y="618"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_Auy88HJpEeWA88Dv12-yjw" type="1002">
+      <children xmi:type="notation:DecorationNode" xmi:id="_Au2AQHJpEeWA88Dv12-yjw" type="3"/>
+      <element xmi:type="uml:Comment" href="CHESS.profile.uml#_AuLR4HJpEeWA88Dv12-yjw"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Auy88XJpEeWA88Dv12-yjw" x="515" y="634"/>
+    </children>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_TvxXUW2REd-OHNNfvuYr9g"/>
     <element xmi:type="uml:Profile" href="CHESS.profile.uml#_WgatoDgVEd-68Z_bhNRGsA"/>
     <edges xmi:type="notation:Connector" xmi:id="_wncp8G8VEd-8i8zc_Ad2sQ" type="4001" source="_wlgwQG8VEd-8i8zc_Ad2sQ" target="_r2te0G8VEd-8i8zc_Ad2sQ" lineColor="0">
@@ -401,6 +418,19 @@
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_o0aDonGoEeWnWZfsnDCUoA" points="[-42, -15, 73, 27]$[-90, -25, 25, 17]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_o0gKQHGoEeWnWZfsnDCUoA" id="(0.1762295081967213,0.20833333333333334)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_o0gKQXGoEeWnWZfsnDCUoA" id="(0.9161073825503355,0.7993197278911565)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_AXAIAHJpEeWA88Dv12-yjw" type="1013" source="__u0NoDg3EeCE2sZUGxu35w" target="__wwnYHJoEeWA88Dv12-yjw">
+      <styles xmi:type="notation:FontStyle" xmi:id="_AXAIAXJpEeWA88Dv12-yjw"/>
+      <element xmi:type="uml:Extension" href="CHESS.profile.uml#_AWhm4XJpEeWA88Dv12-yjw"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_AXAIAnJpEeWA88Dv12-yjw" points="[-33, 10, 156, -52]$[-167, 54, 22, -8]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AXGOoHJpEeWA88Dv12-yjw" id="(0.21153846153846154,0.5492957746478874)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AXGOoXJpEeWA88Dv12-yjw" id="(0.8035714285714286,0.26)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_H9hNcHJpEeWA88Dv12-yjw" type="1022" source="_Auy88HJpEeWA88Dv12-yjw" target="__u0NoDg3EeCE2sZUGxu35w">
+      <styles xmi:type="notation:FontStyle" xmi:id="_H9hNcXJpEeWA88Dv12-yjw"/>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_H9hNcnJpEeWA88Dv12-yjw" points="[2, -11, 7, 69]$[2, -44, 7, 36]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_H9nUEHJpEeWA88Dv12-yjw" id="(0.73,0.18333333333333332)"/>
     </edges>
   </notation:Diagram>
   <notation:Diagram xmi:id="_iv4ggG2REd-OHNNfvuYr9g" type="PapyrusUMLProfileDiagram" name="CHESS-ML" measurementUnit="Pixel">

@@ -10775,6 +10775,9 @@ If the list is not empty the &quot;context&quot; operation must have private vis
 If the list is empty the &quot;context&quot; operation must be invoked directly by other operations.&#xD;
 </body>
         </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_AuLR4HJpEeWA88Dv12-yjw" annotatedElement="__uhSsDg3EeCE2sZUGxu35w">
+          <body>To be renamed with CHRtFeature</body>
+        </ownedComment>
         <elementImport xmi:type="uml:ElementImport" xmi:id="_WP3MMDcwEd-mWLzcI61s7Q" alias="RtSpecification">
           <importedElement xmi:type="uml:Stereotype" href="pathmap://Papyrus_PROFILES/MARTE.profile.uml#_AZ8eMEFeEd6UW4qJC-Vahw"/>
         </elementImport>
@@ -11058,6 +11061,9 @@ If the list is empty the &quot;context&quot; operation must be invoked directly 
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_CNOJwjg4EeCE2sZUGxu35w"/>
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_CNOJwTg4EeCE2sZUGxu35w" value="*"/>
           </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_AWhm4HJpEeWA88Dv12-yjw" name="base_InstanceSpecification" association="_AWhm4XJpEeWA88Dv12-yjw">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+          </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_BXSAQTg4EeCE2sZUGxu35w" name="E_CHRtPortSlot_Slot0" memberEnd="_BXSAQjg4EeCE2sZUGxu35w _BXSAQDg4EeCE2sZUGxu35w">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_BXSAQjg4EeCE2sZUGxu35w" name="extension_CHRtPortSlot" type="__uhSsDg3EeCE2sZUGxu35w" aggregation="composite" association="_BXSAQTg4EeCE2sZUGxu35w"/>
@@ -11082,6 +11088,9 @@ If the list is empty the &quot;context&quot; operation must be invoked directly 
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8GvsdXGnEeWnWZfsnDCUoA" value="1"/>
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8GvsdnGnEeWnWZfsnDCUoA" value="1"/>
           </ownedEnd>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_AWhm4XJpEeWA88Dv12-yjw" name="E_CHRtPortSlot_InstanceSpecification1" memberEnd="_AWhm4nJpEeWA88Dv12-yjw _AWhm4HJpEeWA88Dv12-yjw">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_AWhm4nJpEeWA88Dv12-yjw" name="extension_CHRtPortSlot" type="__uhSsDg3EeCE2sZUGxu35w" aggregation="composite" association="_AWhm4XJpEeWA88Dv12-yjw"/>
         </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Profile" xmi:id="_GMlQEGwuEeWvYIaEJT1qow" name="ARINCComponentModel">

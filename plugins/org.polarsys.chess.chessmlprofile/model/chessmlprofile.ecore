@@ -1081,10 +1081,15 @@
     <eSubpackages name="RTComponentModel" nsURI="http://CHESS/Predictability/RTComponentModel"
         nsPrefix="RTComponentModel">
       <eClassifiers xsi:type="ecore:EClass" name="CHRtPortSlot">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="To be renamed with CHRtFeature"/>
+        </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Slot" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Slot"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="cH_RtSpecification"
             ordered="false" upperBound="-1" eType="#//Predictability/RTComponentModel/CHRtSpecification"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
+            ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="CHRtSpecification">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
