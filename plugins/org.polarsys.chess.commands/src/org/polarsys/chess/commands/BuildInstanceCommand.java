@@ -461,7 +461,7 @@ public class BuildInstanceCommand extends AbstractHandler {
 		//create port instances
 		buildPortInstances((org.eclipse.uml2.uml.Class) property.getType(), newInstance, propertyShape);
 		
-		BuildModelInstanceCommand.mapStereotypesFromPropertyToInstance(property, newInstance);
+		BuildModelInstanceCommand.mapStereotypesFromPropertyToInstance(property, newInstance, null);
 		
 		//check inner properties in the current diagram
 		Iterator inners = getInnerShapes(propertyShape).iterator();

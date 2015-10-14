@@ -280,7 +280,7 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 		}
 		//apply stereotypes to instances according to those applied to the property or the property type
 		if(theProp != null){
-			mapStereotypesFromPropertyToInstance(theProp, inst);
+			mapStereotypesFromPropertyToInstance(theProp, inst, oldInst);
 		}
 		for (Property subProp : comp.getAttributes()) {
 			//properties
@@ -362,7 +362,7 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 	 * @param property the property
 	 * @param instance the instance
 	 */
-	public static void mapStereotypesFromPropertyToInstance(Property property, InstanceSpecification instance){
+	public static void mapStereotypesFromPropertyToInstance(Property property, InstanceSpecification instance, InstanceSpecification oldinstance){
 		Type type = property.getType();
 		EObject stereo = property.getStereotypeApplication(CHESSProfileManager.getCH_HWBus(property));
 		Element elem = property;
@@ -410,6 +410,24 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 		if (memPartition != null){
 			instance.applyStereotype(memPartition);
 		}
+		
+		if (oldinstance != null){
+			
+			Stereotype oldstereo = oldinstance.getApplicableStereotype(Constants.CH_CHRtPortSlot);
+			CHRtPortSlot oldchrtportSlot = (CHRtPortSlot) oldinstance.getStereotypeApplication(oldstereo);
+				if (oldchrtportSlot != null){
+					Stereotype newstereo = instance.getApplicableStereotype(Constants.CH_CHRtPortSlot);
+					CHRtPortSlot chrtportSlot = (CHRtPortSlot) instance.getStereotypeApplication(newstereo);
+					if (chrtportSlot == null){
+						Stereotype portSlotStereo = CHESSProfileManager.applyChRTPortSlotStereotype(instance);
+						chrtportSlot = (CHRtPortSlot) instance.getStereotypeApplication(portSlotStereo);
+					}
+					chrtportSlot.getCH_RtSpecification().addAll(oldchrtportSlot.getCH_RtSpecification());
+				}
+				
+			
+		}
+		
 	}
 
 	/**

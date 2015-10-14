@@ -203,6 +203,17 @@ public class CHESSProfileManager {
 		return UMLUtils.applyStereotype(element,
 				"CHESS::Predictability::RTComponentModel::CHRtPortSlot");
 	}
+	
+	/**
+	 * Applies the CHRtPortSlot stereotype to the given element.
+	 * 
+	 * @param element  the element
+	 * @return  the stereotype applied
+	 */
+	public static Stereotype applyChRTPortSlotStereotype(InstanceSpecification element) {
+		return UMLUtils.applyStereotype(element,
+				"CHESS::Predictability::RTComponentModel::CHRtPortSlot");
+	}
 
 	/**
 	 * Applies the FPTCPortSlot stereotype to the given element.
