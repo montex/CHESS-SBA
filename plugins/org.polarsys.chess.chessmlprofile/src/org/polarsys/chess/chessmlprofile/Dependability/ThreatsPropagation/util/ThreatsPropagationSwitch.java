@@ -25,7 +25,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Extern
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failure;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureFree;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InputEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalPropagation;
@@ -34,7 +33,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Invert
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalInput;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalOutput;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.OutputEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RampDown;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.StuckAt;
@@ -174,6 +172,50 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ThreatsPropagationPackage.EXTERNAL_FAULT: {
+				ExternalFault externalFault = (ExternalFault)theEObject;
+				T result = caseExternalFault(externalFault);
+				if (result == null) result = caseDepEvent(externalFault);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ThreatsPropagationPackage.DEP_EVENT: {
+				DepEvent depEvent = (DepEvent)theEObject;
+				T result = caseDepEvent(depEvent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ThreatsPropagationPackage.INTERNAL_EVENT: {
+				InternalEvent internalEvent = (InternalEvent)theEObject;
+				T result = caseInternalEvent(internalEvent);
+				if (result == null) result = caseDepEvent(internalEvent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ThreatsPropagationPackage.NORMAL_EVENT: {
+				NormalEvent normalEvent = (NormalEvent)theEObject;
+				T result = caseNormalEvent(normalEvent);
+				if (result == null) result = caseInternalEvent(normalEvent);
+				if (result == null) result = caseDepEvent(normalEvent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ThreatsPropagationPackage.RECOVERY_EVENT: {
+				RecoveryEvent recoveryEvent = (RecoveryEvent)theEObject;
+				T result = caseRecoveryEvent(recoveryEvent);
+				if (result == null) result = caseInternalEvent(recoveryEvent);
+				if (result == null) result = caseDepEvent(recoveryEvent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ThreatsPropagationPackage.INTERNAL_THREAT: {
+				InternalThreat internalThreat = (InternalThreat)theEObject;
+				T result = caseInternalThreat(internalThreat);
+				if (result == null) result = caseInternalEvent(internalThreat);
+				if (result == null) result = caseDepEvent(internalThreat);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ThreatsPropagationPackage.STUCK_AT: {
 				StuckAt stuckAt = (StuckAt)theEObject;
 				T result = caseStuckAt(stuckAt);
@@ -198,61 +240,16 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ThreatsPropagationPackage.INPUT_EVENT: {
-				InputEvent inputEvent = (InputEvent)theEObject;
-				T result = caseInputEvent(inputEvent);
-				if (result == null) result = caseDepEvent(inputEvent);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ThreatsPropagationPackage.DEP_EVENT: {
-				DepEvent depEvent = (DepEvent)theEObject;
-				T result = caseDepEvent(depEvent);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ThreatsPropagationPackage.OUTPUT_EVENT: {
-				OutputEvent outputEvent = (OutputEvent)theEObject;
-				T result = caseOutputEvent(outputEvent);
-				if (result == null) result = caseDepEvent(outputEvent);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ThreatsPropagationPackage.INTERNAL_EVENT: {
-				InternalEvent internalEvent = (InternalEvent)theEObject;
-				T result = caseInternalEvent(internalEvent);
-				if (result == null) result = caseDepEvent(internalEvent);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ThreatsPropagationPackage.EXTERNAL_FAULT: {
-				ExternalFault externalFault = (ExternalFault)theEObject;
-				T result = caseExternalFault(externalFault);
-				if (result == null) result = caseInputEvent(externalFault);
-				if (result == null) result = caseDepEvent(externalFault);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ThreatsPropagationPackage.NORMAL_INPUT: {
 				NormalInput normalInput = (NormalInput)theEObject;
 				T result = caseNormalInput(normalInput);
-				if (result == null) result = caseInputEvent(normalInput);
 				if (result == null) result = caseDepEvent(normalInput);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ThreatsPropagationPackage.RECOVERY_EVENT: {
-				RecoveryEvent recoveryEvent = (RecoveryEvent)theEObject;
-				T result = caseRecoveryEvent(recoveryEvent);
-				if (result == null) result = caseInternalEvent(recoveryEvent);
-				if (result == null) result = caseDepEvent(recoveryEvent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ThreatsPropagationPackage.NORMAL_OUTPUT: {
 				NormalOutput normalOutput = (NormalOutput)theEObject;
 				T result = caseNormalOutput(normalOutput);
-				if (result == null) result = caseOutputEvent(normalOutput);
 				if (result == null) result = caseDepEvent(normalOutput);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -260,22 +257,6 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 			case ThreatsPropagationPackage.FAILURE: {
 				Failure failure = (Failure)theEObject;
 				T result = caseFailure(failure);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ThreatsPropagationPackage.NORMAL_EVENT: {
-				NormalEvent normalEvent = (NormalEvent)theEObject;
-				T result = caseNormalEvent(normalEvent);
-				if (result == null) result = caseInternalEvent(normalEvent);
-				if (result == null) result = caseDepEvent(normalEvent);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ThreatsPropagationPackage.INTERNAL_THREAT: {
-				InternalThreat internalThreat = (InternalThreat)theEObject;
-				T result = caseInternalThreat(internalThreat);
-				if (result == null) result = caseInternalEvent(internalThreat);
-				if (result == null) result = caseDepEvent(internalThreat);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -740,21 +721,6 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Input Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Input Event</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseInputEvent(InputEvent object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Dep Event</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -766,21 +732,6 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDepEvent(DepEvent object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Output Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Output Event</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseOutputEvent(OutputEvent object) {
 		return null;
 	}
 

@@ -42,7 +42,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
  *
  * @generated
  */
-public class ExternalFaultImpl extends InputEventImpl implements ExternalFault {
+public class ExternalFaultImpl extends DepEventImpl implements ExternalFault {
 	/**
 	 * The cached value of the '{@link #getFailure() <em>Failure</em>}' reference.
 	 * <!-- begin-user-doc -->

@@ -283,33 +283,6 @@ public interface ThreatsPropagationFactory extends EFactory {
 	RampDown createRampDown();
 
 	/**
-	 * Returns a new object of class '<em>Input Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Input Event</em>'.
-	 * @generated
-	 */
-	InputEvent createInputEvent();
-
-	/**
-	 * Returns a new object of class '<em>Dep Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Dep Event</em>'.
-	 * @generated
-	 */
-	DepEvent createDepEvent();
-
-	/**
-	 * Returns a new object of class '<em>Output Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Output Event</em>'.
-	 * @generated
-	 */
-	OutputEvent createOutputEvent();
-
-	/**
 	 * Returns a new object of class '<em>Internal Event</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

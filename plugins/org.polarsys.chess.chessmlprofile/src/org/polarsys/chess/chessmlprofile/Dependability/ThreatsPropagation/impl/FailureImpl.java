@@ -39,6 +39,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureImpl#getBase_Transition <em>Base Transition</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureImpl#getMode <em>Mode</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureImpl#getDelay <em>Delay</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureImpl#getWeight <em>Weight</em>}</li>
  * </ul>
  * </p>
  *
@@ -81,6 +82,24 @@ public class FailureImpl extends EObjectImpl implements Failure {
 	 * @ordered
 	 */
 	protected String delay = DELAY_EDEFAULT;
+	/**
+	 * The default value of the '{@link #getWeight() <em>Weight</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWeight()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String WEIGHT_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getWeight() <em>Weight</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWeight()
+	 * @generated
+	 * @ordered
+	 */
+	protected String weight = WEIGHT_EDEFAULT;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -176,6 +195,27 @@ public class FailureImpl extends EObjectImpl implements Failure {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getWeight() {
+		return weight;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWeight(String newWeight) {
+		String oldWeight = weight;
+		weight = newWeight;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.FAILURE__WEIGHT, oldWeight, weight));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -186,6 +226,8 @@ public class FailureImpl extends EObjectImpl implements Failure {
 				return getMode();
 			case ThreatsPropagationPackage.FAILURE__DELAY:
 				return getDelay();
+			case ThreatsPropagationPackage.FAILURE__WEIGHT:
+				return getWeight();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -209,6 +251,9 @@ public class FailureImpl extends EObjectImpl implements Failure {
 			case ThreatsPropagationPackage.FAILURE__DELAY:
 				setDelay((String)newValue);
 				return;
+			case ThreatsPropagationPackage.FAILURE__WEIGHT:
+				setWeight((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -230,6 +275,9 @@ public class FailureImpl extends EObjectImpl implements Failure {
 			case ThreatsPropagationPackage.FAILURE__DELAY:
 				setDelay(DELAY_EDEFAULT);
 				return;
+			case ThreatsPropagationPackage.FAILURE__WEIGHT:
+				setWeight(WEIGHT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -248,6 +296,8 @@ public class FailureImpl extends EObjectImpl implements Failure {
 				return mode != null && !mode.isEmpty();
 			case ThreatsPropagationPackage.FAILURE__DELAY:
 				return DELAY_EDEFAULT == null ? delay != null : !DELAY_EDEFAULT.equals(delay);
+			case ThreatsPropagationPackage.FAILURE__WEIGHT:
+				return WEIGHT_EDEFAULT == null ? weight != null : !WEIGHT_EDEFAULT.equals(weight);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -266,6 +316,8 @@ public class FailureImpl extends EObjectImpl implements Failure {
 		result.append(mode);
 		result.append(", delay: ");
 		result.append(delay);
+		result.append(", weight: ");
+		result.append(weight);
 		result.append(')');
 		return result.toString();
 	}

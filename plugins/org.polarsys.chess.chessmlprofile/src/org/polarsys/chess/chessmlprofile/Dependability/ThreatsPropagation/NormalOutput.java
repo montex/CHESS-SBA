@@ -29,7 +29,7 @@ package org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation;
  * @model
  * @generated
  */
-public interface NormalOutput extends OutputEvent {
+public interface NormalOutput extends DepEvent {
 	/**
 	 * Returns the value of the '<em><b>Recovery</b></em>' reference.
 	 * <!-- begin-user-doc -->

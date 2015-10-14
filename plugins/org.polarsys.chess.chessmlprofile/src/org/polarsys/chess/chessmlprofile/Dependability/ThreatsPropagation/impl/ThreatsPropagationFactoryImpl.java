@@ -29,7 +29,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Extern
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failure;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureFree;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InputEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalPropagation;
@@ -38,7 +37,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Invert
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalInput;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalOutput;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.OutputEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RampDown;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryKind;
@@ -105,21 +103,18 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 			case ThreatsPropagationPackage.CH_INTERNAL_FAULT: return createCHInternalFault();
 			case ThreatsPropagationPackage.CH_EXTERNAL_FAULT: return createCHExternalFault();
 			case ThreatsPropagationPackage.ERROR_STATE: return createErrorState();
+			case ThreatsPropagationPackage.EXTERNAL_FAULT: return createExternalFault();
+			case ThreatsPropagationPackage.INTERNAL_EVENT: return createInternalEvent();
+			case ThreatsPropagationPackage.NORMAL_EVENT: return createNormalEvent();
+			case ThreatsPropagationPackage.RECOVERY_EVENT: return createRecoveryEvent();
+			case ThreatsPropagationPackage.INTERNAL_THREAT: return createInternalThreat();
 			case ThreatsPropagationPackage.STUCK_AT: return createStuckAt();
 			case ThreatsPropagationPackage.STUCK_AT_FIXED: return createStuckAtFixed();
 			case ThreatsPropagationPackage.INVERTED: return createInverted();
 			case ThreatsPropagationPackage.RAMP_DOWN: return createRampDown();
-			case ThreatsPropagationPackage.INPUT_EVENT: return createInputEvent();
-			case ThreatsPropagationPackage.DEP_EVENT: return createDepEvent();
-			case ThreatsPropagationPackage.OUTPUT_EVENT: return createOutputEvent();
-			case ThreatsPropagationPackage.INTERNAL_EVENT: return createInternalEvent();
-			case ThreatsPropagationPackage.EXTERNAL_FAULT: return createExternalFault();
 			case ThreatsPropagationPackage.NORMAL_INPUT: return createNormalInput();
-			case ThreatsPropagationPackage.RECOVERY_EVENT: return createRecoveryEvent();
 			case ThreatsPropagationPackage.NORMAL_OUTPUT: return createNormalOutput();
 			case ThreatsPropagationPackage.FAILURE: return createFailure();
-			case ThreatsPropagationPackage.NORMAL_EVENT: return createNormalEvent();
-			case ThreatsPropagationPackage.INTERNAL_THREAT: return createInternalThreat();
 			case ThreatsPropagationPackage.INTERNAL_FAULT: return createInternalFault();
 			case ThreatsPropagationPackage.INTERNAL_PROPAGATION: return createInternalPropagation();
 			case ThreatsPropagationPackage.ERROR_DETECTION: return createErrorDetection();
@@ -443,36 +438,6 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	public RampDown createRampDown() {
 		RampDownImpl rampDown = new RampDownImpl();
 		return rampDown;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public InputEvent createInputEvent() {
-		InputEventImpl inputEvent = new InputEventImpl();
-		return inputEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DepEvent createDepEvent() {
-		DepEventImpl depEvent = new DepEventImpl();
-		return depEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public OutputEvent createOutputEvent() {
-		OutputEventImpl outputEvent = new OutputEventImpl();
-		return outputEvent;
 	}
 
 	/**

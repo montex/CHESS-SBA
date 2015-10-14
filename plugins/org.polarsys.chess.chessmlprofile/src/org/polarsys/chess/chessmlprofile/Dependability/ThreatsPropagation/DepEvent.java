@@ -15,7 +15,9 @@ package org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.uml2.uml.Event;
+import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.State;
+import org.eclipse.uml2.uml.Transition;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,66 +27,93 @@ import org.eclipse.uml2.uml.State;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent#getBase_Event <em>Base Event</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent#getBase_State <em>Base State</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent#getPort <em>Port</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent#getBase_Transition <em>Base Transition</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent#getWeight <em>Weight</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage#getDepEvent()
- * @model
+ * @model abstract="true"
  * @generated
  */
 public interface DepEvent extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Base Event</b></em>' reference.
+	 * Returns the value of the '<em><b>Port</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Base Event</em>' reference isn't clear,
+	 * If the meaning of the '<em>Port</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Base Event</em>' reference.
-	 * @see #setBase_Event(Event)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage#getDepEvent_Base_Event()
-	 * @model required="true" ordered="false"
+	 * @return the value of the '<em>Port</em>' reference.
+	 * @see #setPort(Property)
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage#getDepEvent_Port()
+	 * @model ordered="false"
 	 * @generated
 	 */
-	Event getBase_Event();
+	Property getPort();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent#getBase_Event <em>Base Event</em>}' reference.
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent#getPort <em>Port</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Base Event</em>' reference.
-	 * @see #getBase_Event()
+	 * @param value the new value of the '<em>Port</em>' reference.
+	 * @see #getPort()
 	 * @generated
 	 */
-	void setBase_Event(Event value);
+	void setPort(Property value);
 
 	/**
-	 * Returns the value of the '<em><b>Base State</b></em>' reference.
+	 * Returns the value of the '<em><b>Base Transition</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Base State</em>' reference isn't clear,
+	 * If the meaning of the '<em>Base Transition</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Base State</em>' reference.
-	 * @see #setBase_State(State)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage#getDepEvent_Base_State()
+	 * @return the value of the '<em>Base Transition</em>' reference.
+	 * @see #setBase_Transition(Transition)
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage#getDepEvent_Base_Transition()
 	 * @model required="true" ordered="false"
 	 * @generated
 	 */
-	State getBase_State();
+	Transition getBase_Transition();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent#getBase_State <em>Base State</em>}' reference.
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent#getBase_Transition <em>Base Transition</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Base State</em>' reference.
-	 * @see #getBase_State()
+	 * @param value the new value of the '<em>Base Transition</em>' reference.
+	 * @see #getBase_Transition()
 	 * @generated
 	 */
-	void setBase_State(State value);
+	void setBase_Transition(Transition value);
+
+	/**
+	 * Returns the value of the '<em><b>Weight</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Weight</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Weight</em>' attribute.
+	 * @see #setWeight(String)
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage#getDepEvent_Weight()
+	 * @model dataType="org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.NFP_Real" ordered="false"
+	 * @generated
+	 */
+	String getWeight();
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent#getWeight <em>Weight</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Weight</em>' attribute.
+	 * @see #getWeight()
+	 * @generated
+	 */
+	void setWeight(String value);
 
 } // DepEvent

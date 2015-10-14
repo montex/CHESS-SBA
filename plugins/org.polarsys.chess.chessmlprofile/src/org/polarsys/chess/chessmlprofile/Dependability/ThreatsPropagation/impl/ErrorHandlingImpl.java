@@ -25,6 +25,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorHandlingImpl#getBase_Transition <em>Base Transition</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorHandlingImpl#getDelay <em>Delay</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorHandlingImpl#getSuccessProbability <em>Success Probability</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorHandlingImpl#getWeight <em>Weight</em>}</li>
  * </ul>
  * </p>
  *
@@ -80,6 +81,26 @@ public class ErrorHandlingImpl extends EObjectImpl implements ErrorHandling {
 	 * @ordered
 	 */
 	protected String successProbability = SUCCESS_PROBABILITY_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getWeight() <em>Weight</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWeight()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String WEIGHT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getWeight() <em>Weight</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWeight()
+	 * @generated
+	 * @ordered
+	 */
+	protected String weight = WEIGHT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -185,6 +206,27 @@ public class ErrorHandlingImpl extends EObjectImpl implements ErrorHandling {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getWeight() {
+		return weight;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWeight(String newWeight) {
+		String oldWeight = weight;
+		weight = newWeight;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.ERROR_HANDLING__WEIGHT, oldWeight, weight));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -195,6 +237,8 @@ public class ErrorHandlingImpl extends EObjectImpl implements ErrorHandling {
 				return getDelay();
 			case ThreatsPropagationPackage.ERROR_HANDLING__SUCCESS_PROBABILITY:
 				return getSuccessProbability();
+			case ThreatsPropagationPackage.ERROR_HANDLING__WEIGHT:
+				return getWeight();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -215,6 +259,9 @@ public class ErrorHandlingImpl extends EObjectImpl implements ErrorHandling {
 				return;
 			case ThreatsPropagationPackage.ERROR_HANDLING__SUCCESS_PROBABILITY:
 				setSuccessProbability((String)newValue);
+				return;
+			case ThreatsPropagationPackage.ERROR_HANDLING__WEIGHT:
+				setWeight((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -237,6 +284,9 @@ public class ErrorHandlingImpl extends EObjectImpl implements ErrorHandling {
 			case ThreatsPropagationPackage.ERROR_HANDLING__SUCCESS_PROBABILITY:
 				setSuccessProbability(SUCCESS_PROBABILITY_EDEFAULT);
 				return;
+			case ThreatsPropagationPackage.ERROR_HANDLING__WEIGHT:
+				setWeight(WEIGHT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -255,6 +305,8 @@ public class ErrorHandlingImpl extends EObjectImpl implements ErrorHandling {
 				return DELAY_EDEFAULT == null ? delay != null : !DELAY_EDEFAULT.equals(delay);
 			case ThreatsPropagationPackage.ERROR_HANDLING__SUCCESS_PROBABILITY:
 				return SUCCESS_PROBABILITY_EDEFAULT == null ? successProbability != null : !SUCCESS_PROBABILITY_EDEFAULT.equals(successProbability);
+			case ThreatsPropagationPackage.ERROR_HANDLING__WEIGHT:
+				return WEIGHT_EDEFAULT == null ? weight != null : !WEIGHT_EDEFAULT.equals(weight);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -273,6 +325,8 @@ public class ErrorHandlingImpl extends EObjectImpl implements ErrorHandling {
 		result.append(delay);
 		result.append(", successProbability: ");
 		result.append(successProbability);
+		result.append(", weight: ");
+		result.append(weight);
 		result.append(')');
 		return result.toString();
 	}

@@ -36,7 +36,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
  *
  * @generated
  */
-public class NormalOutputImpl extends OutputEventImpl implements NormalOutput {
+public class NormalOutputImpl extends DepEventImpl implements NormalOutput {
 	/**
 	 * The cached value of the '{@link #getRecovery() <em>Recovery</em>}' reference.
 	 * <!-- begin-user-doc -->

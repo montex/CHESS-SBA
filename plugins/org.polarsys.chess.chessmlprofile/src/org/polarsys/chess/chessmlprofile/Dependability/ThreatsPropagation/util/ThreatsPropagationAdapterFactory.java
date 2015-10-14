@@ -26,7 +26,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Extern
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failure;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureFree;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InputEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalPropagation;
@@ -35,7 +34,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Invert
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalInput;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalOutput;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.OutputEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RampDown;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.StuckAt;
@@ -146,6 +144,30 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 				return createErrorStateAdapter();
 			}
 			@Override
+			public Adapter caseExternalFault(ExternalFault object) {
+				return createExternalFaultAdapter();
+			}
+			@Override
+			public Adapter caseDepEvent(DepEvent object) {
+				return createDepEventAdapter();
+			}
+			@Override
+			public Adapter caseInternalEvent(InternalEvent object) {
+				return createInternalEventAdapter();
+			}
+			@Override
+			public Adapter caseNormalEvent(NormalEvent object) {
+				return createNormalEventAdapter();
+			}
+			@Override
+			public Adapter caseRecoveryEvent(RecoveryEvent object) {
+				return createRecoveryEventAdapter();
+			}
+			@Override
+			public Adapter caseInternalThreat(InternalThreat object) {
+				return createInternalThreatAdapter();
+			}
+			@Override
 			public Adapter caseStuckAt(StuckAt object) {
 				return createStuckAtAdapter();
 			}
@@ -162,32 +184,8 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 				return createRampDownAdapter();
 			}
 			@Override
-			public Adapter caseInputEvent(InputEvent object) {
-				return createInputEventAdapter();
-			}
-			@Override
-			public Adapter caseDepEvent(DepEvent object) {
-				return createDepEventAdapter();
-			}
-			@Override
-			public Adapter caseOutputEvent(OutputEvent object) {
-				return createOutputEventAdapter();
-			}
-			@Override
-			public Adapter caseInternalEvent(InternalEvent object) {
-				return createInternalEventAdapter();
-			}
-			@Override
-			public Adapter caseExternalFault(ExternalFault object) {
-				return createExternalFaultAdapter();
-			}
-			@Override
 			public Adapter caseNormalInput(NormalInput object) {
 				return createNormalInputAdapter();
-			}
-			@Override
-			public Adapter caseRecoveryEvent(RecoveryEvent object) {
-				return createRecoveryEventAdapter();
 			}
 			@Override
 			public Adapter caseNormalOutput(NormalOutput object) {
@@ -196,14 +194,6 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseFailure(Failure object) {
 				return createFailureAdapter();
-			}
-			@Override
-			public Adapter caseNormalEvent(NormalEvent object) {
-				return createNormalEventAdapter();
-			}
-			@Override
-			public Adapter caseInternalThreat(InternalThreat object) {
-				return createInternalThreatAdapter();
 			}
 			@Override
 			public Adapter caseInternalFault(InternalFault object) {
@@ -642,20 +632,6 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InputEvent <em>Input Event</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InputEvent
-	 * @generated
-	 */
-	public Adapter createInputEventAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent <em>Dep Event</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -666,20 +642,6 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDepEventAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.OutputEvent <em>Output Event</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.OutputEvent
-	 * @generated
-	 */
-	public Adapter createOutputEventAdapter() {
 		return null;
 	}
 

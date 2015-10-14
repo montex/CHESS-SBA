@@ -25,6 +25,10 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Failu
  * A representation of the model object '<em><b>External Fault</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * to be deleted?
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -36,7 +40,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Failu
  * @model
  * @generated
  */
-public interface ExternalFault extends InputEvent {
+public interface ExternalFault extends DepEvent {
 	/**
 	 * Returns the value of the '<em><b>Failure</b></em>' reference.
 	 * <!-- begin-user-doc -->

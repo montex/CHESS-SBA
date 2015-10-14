@@ -18,6 +18,10 @@ package org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation;
  * A representation of the model object '<em><b>Internal Threat</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * to be deleted?
+ * <!-- end-model-doc -->
+ *
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage#getInternalThreat()
  * @model
