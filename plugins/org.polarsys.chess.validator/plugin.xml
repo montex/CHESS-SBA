@@ -887,7 +887,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
             </constraints>
          
          <constraints
-               categories="AnalysisView">
+               categories="CHESSModelConstraints/AnalysisView">
                <constraint
                   id="AV_01"
                   isEnabledByDefault="true"
@@ -945,6 +945,27 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
 			   else true
 			   endif ]]>
             </constraint-->
+            
+            <constraint
+               	  class="org.polarsys.chess.validator.constraints.AV_03"
+                  id="AV_03"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="AV_03"
+                  severity="ERROR"
+                  statusCode="av03">
+               <message>                  
+                  The &lt;&lt;SaAnalysisContext&gt;&gt; {0} must have as its &quot;Platform&quot; a Package in the Component View stereotyped as &lt;&lt;CHGaResourcePlatform&gt;&gt;. {1}
+               </message>
+               <description>
+                 The &lt;&lt;SaAnalysisContext&gt;&gt; must have its &quot;Platform&quot; property that a Package in the Component View stereotyped as &lt;&lt;CHGaResourcePlatform&gt;&gt;
+               </description>
+               <target
+                     class="Classifier"> 
+               </target>
+               </constraint>
+            
          </constraints>
       </constraintProvider>
       

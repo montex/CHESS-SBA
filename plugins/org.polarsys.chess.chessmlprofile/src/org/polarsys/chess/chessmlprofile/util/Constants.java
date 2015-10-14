@@ -136,6 +136,7 @@ public class Constants {
 	// CHESS Views
 	public static final String DEPLOYMENT_VIEW_NAME = "DeploymentView";
 	public static final String COMPONENT_VIEW_NAME = "ComponentView";
+	public static final String ANALYSIS_VIEW_NAME = "AnalysisView";
 	
 	// CHESS CHRtPortSlot stereotype
 	public static final String CH_CHRtPortSlot = "CHESS::Predictability::RTComponentModel::CHRtPortSlot";
@@ -144,6 +145,8 @@ public class Constants {
 	// CHESS Functional Partitions stereotype
 	public static final String CH_FunctionalPartition="CHESS::ComponentModel::FunctionalPartition";
 	
+	// MARTE GQAM stereotypes
+	public static final String MARTE_SaAnalysisContext = "MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext";
 	
 	
 }
