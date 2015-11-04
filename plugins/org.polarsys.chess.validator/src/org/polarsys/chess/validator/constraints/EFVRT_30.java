@@ -12,26 +12,26 @@
 -- v1.0 which accompanies this distribution, and is available at     --
 -- http://www.eclipse.org/legal/epl-v10.html                         --
 -----------------------------------------------------------------------
-*/
+ */
 package org.polarsys.chess.validator.constraints;
-
-import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Comment;
-import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
-import org.polarsys.chess.core.views.ViewUtils;
+import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
+import org.polarsys.chess.chessmlprofile.util.Constants;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class EFVRT_30.
+ * This class implements the following constraint (invoked by the EMF validation framework):
+ * In CH_RtSpecification if occKind=SporadicPattern, then if relativePriority is set, it must be >= 0
  */
 public class EFVRT_30 extends AbstractModelConstraint {	
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
 	 */
@@ -44,54 +44,34 @@ public class EFVRT_30 extends AbstractModelConstraint {
 		IStatus failure = ctx.createFailureStatus(
 				c.getAnnotatedElements(),  // name of element annotated by this comment {0}
 				c.getNearestPackage().getName()// package owning this {1}
-		);  
+				);  
 
-		// view control:
-		boolean rightView = false;
-		Package ownerP = c.getNearestPackage();
-		if(ViewUtils.isExtraFunctionalView(ownerP))
-			rightView = true;
-		else {
-			List<Package> pkg = c.getNearestPackage().allOwningPackages();
-			for(Package it : pkg) {
-				if(ViewUtils.isExtraFunctionalView(it))
-					rightView = true;
-			}
-		}
-		
-		if(rightView) {
-		
-			StringParser parser = new StringParser();
-			Stereotype s = c.getAppliedStereotype("CHESS-ML::Predictability::RTComponentModel::CH_RtSpecification");	
 
-			if(s == null)
-				return success;
-			else {
-
-				if(c.getValue(s, "partWithPort") == null)
-					return success;
-				else {
-					String occValue = (String) c.getValue(s, "occKind");
-					String priority =  (String) c.getValue(s, "priority");
-					String relPriority =  (String) c.getValue(s, "relativePriority");
-					//bufferCeilingPriority to add
-
-					if(occValue == null || !(occValue.contains("SporadicPattern")))
-						return success;
-					else {
-
-						double priorityVal = parser.getValueNFP(priority);
-						if(priority != null) 
-							if(!(priorityVal > 0))
-								return failure;
-						double relPriorityVal = parser.getValueNFP(relPriority);
-						if(relPriority != null)
-							if(!(relPriorityVal > 0))
-								return failure;
-					}
-				}
-			}
+		Stereotype chrtSpecStereo = c.getAppliedStereotype(Constants.CHRT_SPECIFICATION);	
+		if(chrtSpecStereo == null) {
 			return success;
+		}
+
+		CHRtSpecification chRtSpec = (CHRtSpecification)c.getStereotypeApplication(chrtSpecStereo);
+		Property partWithPort = chRtSpec.getPartWithPort();
+		if (partWithPort == null) {
+			return success;
+		}
+
+		StringParser parser = new StringParser();
+
+		String occValue = chRtSpec.getOccKind();
+		String relPriority =  chRtSpec.getRelativePriority();
+
+		if(occValue == null || !(occValue.contains(Constants.CHRTSPEC_OCCKIND_SPORADIC))) {
+			return success;
+		}
+
+		double relPriorityVal = parser.getDoubleValue(relPriority);
+		if(relPriority != null) {
+			if(!(relPriorityVal > 0)) {
+				return failure;
+			}
 		}
 		return success;
 	}

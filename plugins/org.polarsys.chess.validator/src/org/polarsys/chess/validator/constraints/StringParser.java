@@ -84,4 +84,20 @@ public class StringParser {
 		return -1; 
 	}
 	
+	
+	/**
+	 * Gets the value of the input string.
+	 *
+	 * @param value the value
+	 * @return the value as double
+	 */
+	public double getDoubleValue(String value) {
+		try {
+			value = value.trim();	
+			return Double.valueOf(value);			
+		} 
+		catch (Exception e) {
+			return -1; 
+		}
+	}
 }

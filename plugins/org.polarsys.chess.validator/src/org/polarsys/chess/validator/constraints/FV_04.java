@@ -33,12 +33,12 @@ import org.eclipse.uml2.uml.Realization;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
-import org.eclipse.emf.validation.model.ConstraintStatus;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FV_04.
+ * This class implements the following constraint (invoked by the EMF validation framework):
+ * The ComponentType must define the same operations as the Interface it realizes
  */
 public class FV_04 extends AbstractModelConstraint {
 
@@ -51,15 +51,13 @@ public class FV_04 extends AbstractModelConstraint {
 		Component component = (Component)eObject;
 		IStatus success = ctx.createSuccessStatus();
 
-		Stereotype componentType = component.getAppliedStereotype(Constants.COMPONENT_TYPE);
-		if (componentType!=null) {
+		Stereotype componentTypeStereo = component.getAppliedStereotype(Constants.COMPONENT_TYPE);
+		if (componentTypeStereo!=null) {
 			// This component is a ComponentType
 			// If it realizes an interface, then it has to define at least the same operations 
-			//System.err.println("---------------------------------------------\nComponent " + component.getName() + " is a ComponentType");
 			for (Realization realization : component.getRealizations()) {
 				if (realization instanceof InterfaceRealization) {
 					// Skip realizations that are not InterfaceRealization
-					//System.err.println(" -> found InterfaceRealization : " + realization.getName());
 					Boolean isClient = false;
 					for (NamedElement elem : realization.getClients()) {
 						if (elem.equals(component)) {
@@ -69,9 +67,7 @@ public class FV_04 extends AbstractModelConstraint {
 					if (isClient) {
 						// Check that the component defines the same operations as the Interface
 						for (NamedElement elem : realization.getSuppliers()) {
-							//System.err.println("  - supplier : " + elem.getName());
 							if (elem instanceof Interface) {
-								//System.err.println("   -> the supplier is an interface");
 								Interface rInt = (Interface) elem;
 								for (Operation op : rInt.getOwnedOperations()) {
 									// For each operation, the component type must define the same

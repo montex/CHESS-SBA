@@ -21,20 +21,14 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaResourcesPlatform;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
-import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
-import org.eclipse.uml2.uml.BehavioralFeature;
 import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 
@@ -66,7 +60,9 @@ public class AV_03 extends AbstractModelConstraint {
 				errorMsg	
 				); 
 		
-		if (cl.getAppliedStereotype(Constants.MARTE_SaAnalysisContext)!=null) {
+		Stereotype marteSaAnalysisContextStereo = cl.getAppliedStereotype(Constants.MARTE_SaAnalysisContext);
+		
+		if (marteSaAnalysisContextStereo!=null) {
 			// we only want to make this validation on the SaAnalysisContext that are inside the Analysis View
 			Model umlModel = cl.getModel();
 			Package analysisViewPack = CHESSProfileManager.getViewByStereotype(umlModel, Constants.ANALYSIS_VIEW_NAME);
@@ -82,8 +78,7 @@ public class AV_03 extends AbstractModelConstraint {
 				return success;
 			}						
 			
-			Stereotype marteAnalysisContext = cl.getAppliedStereotype(Constants.MARTE_SaAnalysisContext);
-			SaAnalysisContext saAnalysisCont = (SaAnalysisContext)cl.getStereotypeApplication(marteAnalysisContext);
+			SaAnalysisContext saAnalysisCont = (SaAnalysisContext)cl.getStereotypeApplication(marteSaAnalysisContextStereo);
 			// look at its "Platform" property
 			boolean isChgaResPlat = false;
 			EList<GaResourcesPlatform> platforms = saAnalysisCont.getPlatform();

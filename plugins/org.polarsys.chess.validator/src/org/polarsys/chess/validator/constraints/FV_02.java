@@ -15,20 +15,21 @@
 */
 package org.polarsys.chess.validator.constraints;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Component;
+import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
+import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentType;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FV_02.
+ * This class implements the following constraint (invoked by the EMF validation framework):
+ * ComponentType must provide an Interface
  */
 public class FV_02 extends AbstractModelConstraint {
 
@@ -40,21 +41,25 @@ public class FV_02 extends AbstractModelConstraint {
 		EObject eObject = ctx.getTarget();
 		Component component = (Component)eObject;
 		IStatus success = ctx.createSuccessStatus();
+		
+		String componentName = "";
+		componentName = component.getName();
+		
 		IStatus failure = ctx.createFailureStatus(
 				component,
-				component.getName()
+				componentName
 		);
 
-		Stereotype componentType = component.getAppliedStereotype(Constants.COMPONENT_TYPE);
-		if (componentType!=null) {
-			//System.err.println("Component " + component.getName() + " is a ComponentType");
-			// It must provide an interface
-			if (component.getProvideds().size()==0) {
-				//String errorMsg = "The ComponentType " + component.getName() + " does not provide an Interface";
-				return failure;		
-			}
+		Stereotype componentTypeStereo = component.getAppliedStereotype(Constants.COMPONENT_TYPE);
+		if (componentTypeStereo==null) {
+			return success;			
 		}
-		return success;
+				
+		EList<Interface> componentInterfaces = component.getProvideds();
+		if (componentInterfaces==null ||componentInterfaces.size()==0) {
+			return failure;		
+		}	
 		
+		return success;		
 	}
 }			

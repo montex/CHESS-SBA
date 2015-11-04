@@ -99,7 +99,7 @@
                   severity="ERROR"
                   statusCode="ev01">
                <message>                  
-                  The attribute&quot;context&quot; of chrtSpec {0} must be set to an operation of the component (e.g. not of the interface). Currently it is {1}. 
+                  In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] the attribute&quot;context&quot; must be set to an operation of the component (e.g. not of the interface). Currently it is {1}. 
                </message>
                <description>
                  The attribute 'context' of CHRtSpecification must be set to an operation of the component (e.g. not of the interface).
@@ -119,7 +119,7 @@
                   severity="ERROR"
                   statusCode="ev02">
                <message>
-                  The attribute&quot;occKind&quot; of &lt;&lt;CHRtSpecification&gt;&gt; tmust be an instance of PeriodicPattern, SporadicPattern or BurstPattern, otherwise Protection must be 'guarded' or 'concurrent'
+                  In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}] the attribute &quot;occKind&quot; must be Periodic, Sporadic or Burst, otherwise Protection must be Guarded or Concurrent.
                </message>
                <description>
                  The attribute 'occKind' of CHRtSpecification must be set or protection must be 'guarded' or 'concurrent'.
@@ -138,10 +138,10 @@
                   severity="ERROR"
                   statusCode="ev03">
                <message>
-                  In the&lt;&lt;CH_RtSpecification&gt;&gt; note of the element: [{0}] in the package [{1}] having &quot;occKind&quot; member = &quot;PeriodicPattern&quot; : period must be &gt;=0 and WCET and relDl must be both &gt;=0
+					In the&lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}] having &quot;occKind&quot;=Periodic, &quot;period&quot;,  &quot;WCET&quot; and &quot;relDl&quot; must all be &gt;=0
                </message>
                <description>
-               PeriodicPattern period must > 0 and WCET and relDl must be > 0
+               		In CHRtSpecification, if occKind is Periodic, then the attributes 'period' and 'WCET' and 'relDl' must all be >= 0
                </description>
                <target
                      class="Comment">
@@ -158,13 +158,13 @@
                   severity="ERROR"
                   statusCode="ev04">
                <message>
-                  In the&lt;&lt;CH_RtSpecification&gt;&gt; note of the element: [{0}] in the package [{1}] having &quot;occKind&quot; member = &quot;PeriodicPattern&quot; : phase,priority and relativePriority attributes are not null and then must be all &gt; 0
+                  	In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}] having &quot;occKind&quot; = Periodic, the attributes &quot;phase&quot; (if present in occKind) and &quot;relativePriority&quot; must both be &gt;= 0
                </message>
                <target
                      class="Comment">
                </target>
                <description>
-               In CH_RtSpecificationhaving occKind= PeriodicPattern, phase,priority and relativePriority attributes must be >= 0
+               		In CH_RtSpecificationhaving occKind= Periodic, phase (if present in occKind) and relativePriority attributes must be >= 0
                </description>
             </constraint>
             
@@ -204,7 +204,7 @@
                   severity="ERROR"
                   statusCode="ev20">
                <message>
-                  In the&lt;&lt;CH_RtSpecification&gt;&gt; comment note of the element: [{0}] in the package [{1}] having &quot;occKind&quot; member = &quot;SporadicPattern&quot; : minInterarrival, WCET and relDl attributes must be all &gt;= 0
+                  In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}] having &quot;occKind&quot;=Sporadic, attributes &quot;minInterarrival&quot;, &quot;WCET&quot; and &quot;relDl&quot; must be all &gt;= 0
                </message>
                <description>
                 In CH_RtSpecification having occKind=SporadicPattern, minInterarrival, WCET and relDl attributes must be >= 0
@@ -223,11 +223,10 @@
                   severity="ERROR"
                   statusCode="ev30">
                <message>
-                  In the&lt;&lt;CH_RtSpecification&gt;&gt; comment note of the element: [{0}] in the package [{1}] attribute localWCET is not null and then must be &gt; 0
-                  
+                  In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}], having &quot;occKind&quot;=Sporadic, if attribute relativePriority is not null, it must be &gt;= 0                  
                </message>
                <description>
-                In CH_RtSpecification attribute priority and relativePriority must be >= 0
+                In CH_RtSpecification with occKind=Sporadic, if attribute relativePriority is not null, it must be >= 0
                </description>
                <target
                      class="Comment">
@@ -246,7 +245,7 @@
                      class="Comment">
                </target> 
                <message>
-                  In the&lt;&lt;CH_RtSpecification&gt;&gt; comment note of the element: [{0}] in the package [{1}] the attribute &quot;localWCET&quot; is not null then must be &gt; 0
+                  In the&lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] the attribute &quot;localWCET&quot; must be &gt;= 0 (or null). {1} 
                </message>
                <description>
                 In CH_RtSpecification attribute localWCET must be >= 0
@@ -311,7 +310,8 @@
                <target class="Component">
                </target>
                <description>
-                 The attribute HW_BUS_PACKETT of stereotype HwBus must be set
+                 The attributes &quot;packetT&quot;, &quot;speedFactor&quot;, &quot;blockT&quot; of stereotype &lt;&lt;CH_HwBus&gt;&gt; must be set
+ 				 The attribute &quot;speedFactor&quot; of stereotype &lt;&lt;CH_HwProcessor&gt;&gt; must be set
                </description>
             </constraint> 
             
@@ -490,7 +490,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   ComponentType {0} does not provide an Interface
                </message>
                <description>
-                  ComponentType does not provide an Interface
+                  ComponentTypes must provide an Interface
                </description>
                <target class="Component">
                </target>
@@ -510,7 +510,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                </message>
                <description>
                   The ComponentImplementation must realize exactly one ComponentType
-                  The ComponentImplementation must define the same operation as the ComponentType it realizes
+                  The ComponentImplementation must define the same operations as the ComponentType it realizes
                </description>
                <target class="Component">
                </target>
@@ -529,7 +529,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   {1}
                </message>
                <description>
-               The ComponentType does not define the same operations as the interface it realizes
+               The ComponentType must define the same operations as the Interface it realizes
                </description>
                <target class="Component">
                </target>
@@ -548,9 +548,9 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   {1}
                </message>
                <description>
-               The Port  must be stereotyped by ClientServerPort FlowPort
+               The Port owned by a ComponentType or by a ComponentImplementation must be stereotyped by &lt;&lt;ClientServerPort&gt;&gt; or &lt;&lt;FlowPort&gt;&gt;
                </description>
-               <target class="Component">
+               <target class="Port">
                </target>
             </constraint>
             
@@ -569,7 +569,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                <description>
                The value of ClientServerPort stereotype's attribute SPEC_KIND  must be set to INTERFACEBASED
                </description>
-               <target class="Component">
+               <target class="Port">
                </target>
             </constraint>
             
@@ -588,7 +588,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                <description>
                ClientServerPorts with kind PROREQ are not allowed in ComponentTypes and ComponentImplementations
                </description>
-               <target class="Component">
+               <target class="Port">
                </target>
             </constraint>
             
@@ -640,7 +640,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   Operations should be created only in packages that are descendants of the root package with the stereotype CHESS::ComponentView
                </message>     	
                <description>
-               Operations shuold be created only in packages that are descendants of the root package with the stereotype CHESS::ComponentView
+               Operations should be created only in packages that are descendants of the root package with the stereotype CHESS::ComponentView
                </description>
                <target
                      class="Interface">
@@ -679,10 +679,10 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   severity="WARNING"
                   statusCode="FV_10">
                <message>
-                  Connector {0} not allowed. Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
+               	Connector {0} not allowed. Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
                </message>
                <description>
-               Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
+               	Interfaces provided and/or required in Ports must be compatible, and components must be at the same level
                </description>
                
                <target class="Connector">
@@ -699,7 +699,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   severity="ERROR"
                   statusCode="FV_11">
                <message>
-               		Connector {0} not allowed. Flow ports on ends do not have compatible directions.
+               		Connector {0} not allowed. Flow ports on ends must have compatible directions. {1}
                </message>
                <description>
                		Flow ports on ends of connection must have compatible directions (either opposite, or both INOUT, or the same if delegation).
@@ -740,7 +740,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   The &lt;&lt;FlowPort&gt;&gt; is not mapped to a parameter of a required or provided operation
                </message>
                <description>
-               	The FlowPort is not mapped to a parameter of a required or provided operation
+               	The FlowPort should be mapped to a parameter of a required or provided operation
                </description>
                <target class="Port">
                </target>

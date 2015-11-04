@@ -12,23 +12,27 @@
 -- v1.0 which accompanies this distribution, and is available at     --
 -- http://www.eclipse.org/legal/epl-v10.html                         --
 -----------------------------------------------------------------------
-*/
+ */
 package org.polarsys.chess.validator.constraints;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerKind;
+import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerPort;
 import org.eclipse.uml2.uml.Component;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
 import org.polarsys.chess.chessmlprofile.util.Constants;
+import org.polarsys.chess.core.util.uml.UMLUtils;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class FV_07.
+ * This class implements the following constraint (invoked by the EMF validation framework):
+ * ClientServerPorts with kind PROREQ are not allowed in ComponentTypes and ComponentImplementations
  */
 public class FV_07 extends AbstractModelConstraint {
 
@@ -37,45 +41,33 @@ public class FV_07 extends AbstractModelConstraint {
 	 */
 	@Override
 	public IStatus validate(IValidationContext ctx) {
-		EObject eObject = ctx.getTarget();
-		Component component = (Component)eObject;
 		IStatus success = ctx.createSuccessStatus();
-		
-		// Look for ComponentType and ComponentImplementation
-		if ( component.getAppliedStereotype(Constants.COMPONENT_TYPE)!=null ||
-			 (component.getAppliedStereotype(Constants.COMPONENT_IMPLEMENTATION)!=null) ) {
-		
-			
-			//System.err.println("Component " + component.getName());
-			for (Property prop : component.getAllAttributes()) {
-				if (prop instanceof Port) {
-					//System.err.println(" found port : " + prop.getName());
-					Stereotype clientServerPort = prop.getAppliedStereotype(Constants.CLIENTSERVER_PORT);
-					Stereotype flowPort = prop.getAppliedStereotype(Constants.FLOW_PORT);
 
-					if (clientServerPort!=null) {
+		Port port = (Port) ctx.getTarget();
 
-						// check kind (constraint 6)
-						String kind = prop.getValue(clientServerPort, Constants.CSPORT_KIND).toString();
-						//System.err.println("  ClientServerPort's kind is " + kind);
-						if (kind==(Constants.CSPORT_KIND_PROREQ)) {
-							String errorMsg="ClientServerPorts with kind " + Constants.CSPORT_KIND_PROREQ + " are not allowed in ComponentTypes and ComponentImplementations";
-							IStatus failure = ctx.createFailureStatus(
-									component,
-									errorMsg
-							);
-							return failure;
-						}
-					}
-				}
-				
-			}
+		Element owner = port.getOwner();
+		if(!UMLUtils.isComponentType(owner) && !UMLUtils.isComponentImplementation(owner)){
+			return success;
 		}
+		// The owner of the Port is either a ComponentType or a ComponentImplementation
 
-			
+		Stereotype clientServerPortStereo = port.getAppliedStereotype(Constants.CLIENTSERVER_PORT);
+		//Stereotype flowPortStereo = prop.getAppliedStereotype(Constants.FLOW_PORT);
+
+		if (clientServerPortStereo!=null) {
+			ClientServerPort clientServerPort = (ClientServerPort) port.getStereotypeApplication(clientServerPortStereo);						
+			ClientServerKind clientServerKind = clientServerPort.getKind();
+			if (clientServerKind.equals(ClientServerKind.PROREQ)) {	
+				String portName = "";
+				portName = port.getName();
+				String errorMsg="ClientServerPort "+portName+" with kind " + ClientServerKind.PROREQ.getLiteral() + " are not allowed in ComponentTypes and ComponentImplementations";
+				IStatus failure = ctx.createFailureStatus(
+						port,
+						errorMsg
+						);
+				return failure;
+			}
+		}			
 		return success;
-		
 	}
-	
-
 }			

@@ -23,8 +23,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Interface;
-import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
@@ -34,12 +32,12 @@ import org.eclipse.uml2.uml.Relationship;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
-import org.eclipse.emf.validation.model.ConstraintStatus;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FV_03.
+ * This class implements the following constraint (invoked by the EMF validation framework):
+ * The ComponentImplementation must define the same operation as the ComponentType it realizes
  */
 public class FV_03 extends AbstractModelConstraint {
 
@@ -52,11 +50,9 @@ public class FV_03 extends AbstractModelConstraint {
 		Component component = (Component)eObject;
 		IStatus success = ctx.createSuccessStatus();
 		
-		Stereotype componentImpl = component.getAppliedStereotype(Constants.COMPONENT_IMPLEMENTATION);
-		if (componentImpl!=null) {
+		Stereotype componentImplStereo = component.getAppliedStereotype(Constants.COMPONENT_IMPLEMENTATION);
+		if (componentImplStereo!=null) {
 			// This is a ComponentImplementation
-			//System.err.println("Component " + component.getName() + " is a ComponentImplementation");
-			//
 			int count=0;
 			Component realizedComponent = null;
 			
@@ -75,8 +71,7 @@ public class FV_03 extends AbstractModelConstraint {
 						//check if it realizes a component type
 						for (NamedElement elem :  ((Realization) rel).getSuppliers()) {
 							Stereotype componentType = elem.getAppliedStereotype(Constants.COMPONENT_TYPE);
-							if (componentType!=null) {
-								//System.err.println(" it realizes " + elem.getName());
+							if (componentType!=null) {								
 								realizedComponent=(Component) elem;
 								count++;
 							}
@@ -85,7 +80,9 @@ public class FV_03 extends AbstractModelConstraint {
 				}
 			}
 			if (count!=1) {
-				String errorMsg = "The componentImplementation " + component.getName() + " must realize exactly one <<ComponentType>> (Currently : " + count +")";
+				String componentName = "";
+				componentName = component.getName();
+				String errorMsg = "The componentImplementation " + componentName + " must realize exactly one <<ComponentType>> (Currently : " + count +")";
 				IStatus failure = ctx.createFailureStatus(
 						component,
 						errorMsg
@@ -97,8 +94,7 @@ public class FV_03 extends AbstractModelConstraint {
 				// Additional constraint.
 				// A ComponentImplementation has to define the same operations as the ComponentType it realizes
 				for (Operation ctOp : realizedComponent.getOperations()) {
-					// So for operation ctOp, the component has to define the same
-					//System.err.println("checking for operation : "  + ctOp.getName());
+					// So for operation ctOp, the component has to define the same operation
 					Boolean opFound=false;
 					for (Operation op : component.getOperations()) {
 						if ( compareOperations(ctOp, op) ) {
@@ -106,7 +102,9 @@ public class FV_03 extends AbstractModelConstraint {
 						}
 					}
 					if (!opFound) {
-						String errorMsg = "The ComponentImplementation " + component.getName() + " must define the same operation " + ctOp.getName() + " as the ComponentType it realizes";
+						String componentName = "";
+						componentName = component.getName();
+						String errorMsg = "The ComponentImplementation " + componentName + " must define the same operation " + ctOp.getName() + " as the ComponentType it realizes";
 						IStatus failure = ctx.createFailureStatus(
 								component,
 								errorMsg

@@ -32,6 +32,8 @@ public class Constants {
 	public static final String FLOW_PORT = "MARTE::MARTE_DesignModel::GCM::FlowPort";
 	public static final String FLOW_PORT_DIRECTION = "direction";
 	public static final String FLOW_PORT_DIRECTION_INOUT = "inout";
+	public static final String FLOW_PORT_DIRECTION_IN = "in";
+	public static final String FLOW_PORT_DIRECTION_OUT = "out";
 	
 	// MARTE Assign stereotype
 	public static final String ASSIGN = "MARTE::MARTE_Foundations::Alloc::Assign";
@@ -56,6 +58,10 @@ public class Constants {
 	public static final String CHRTSPEC_LOCALWCET = "localWCET";
 	public static final String CHRTSPEC_OCCKIND = "occKind";
 	public static final String CHRTSPEC_OCCKIND_PERIODIC = "periodic";
+	public static final String CHRTSPEC_OCCKIND_SPORADIC = "sporadic";
+	public static final String CHRTSPEC_OCCKIND_BURST = "burst";
+	public static final String CHRTSPEC_OCCKIND_SPORADIC_MININTERARRIVAL = "minInterarrival";
+	public static final String CHRTSPEC_OCCKIND_PERIODIC_PHASE = "phase";
 	public static final String CH_HWPROCESSOR = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor";
 	public static final String CHHWPROCESSOR_NB_CORES = "nbCores";
 
@@ -147,6 +153,13 @@ public class Constants {
 	
 	// MARTE GQAM stereotypes
 	public static final String MARTE_SaAnalysisContext = "MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext";
+	public static final String MARTE_ALLOCATE = "MARTE::MARTE_Foundations::Alloc::Allocate";
+	
+	// CHESS IdentifInstance
+	public static final String CH_IDENTIFINSTANCE = "CHESS::Core::IdentifInstance";
+	
+	
+	public static final String CH_HW_BUS = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwBus";
 	
 	
 }

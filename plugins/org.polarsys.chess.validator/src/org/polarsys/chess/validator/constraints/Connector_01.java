@@ -20,22 +20,21 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
+import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerKind;
+import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerPort;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
+import org.polarsys.chess.chessmlprofile.util.Constants;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Connector_01.
  * Check if Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
  */
 public class Connector_01 extends AbstractModelConstraint {
-
-	/** The Constant CSPORT. */
-	private static final String CSPORT = "MARTE::MARTE_DesignModel::GCM::ClientServerPort";
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
@@ -43,11 +42,12 @@ public class Connector_01 extends AbstractModelConstraint {
 	@Override
 	public IStatus validate(IValidationContext ctx) {
 		IStatus success = ctx.createSuccessStatus();
-		
-		
+				
 		Connector con = (Connector) ctx.getTarget();
 		
-		String thisElement = con.getName();
+		String thisElement = "";
+		thisElement = con.getName();
+		
 		String errorMsg = "";
 		IStatus failure = ctx.createFailureStatus(
 				thisElement,			  		
@@ -58,6 +58,7 @@ public class Connector_01 extends AbstractModelConstraint {
 			//check that ports are compatible (provided-required)
 			ConnectorEnd ceFir = con.getEnds().get(0);
 			if(!(ceFir.getRole() instanceof Port)){
+				errorMsg = "First end is not a port";
 				failure = ctx.createFailureStatus(
 						thisElement,			  		
 						errorMsg	
@@ -65,17 +66,19 @@ public class Connector_01 extends AbstractModelConstraint {
 				return failure;
 			}
 			Port portFir = (Port) ceFir.getRole();
-			Stereotype sFirst = portFir.getAppliedStereotype(CSPORT);
-			if(sFirst == null){
-				failure = ctx.createFailureStatus(
-						thisElement,			  		
-						errorMsg	
-						);
+			//Stereotype sFirst = portFir.getAppliedStereotype(Constants.CLIENTSERVER_PORT);
+			Stereotype clientServerPortStereo1 = portFir.getAppliedStereotype(Constants.CLIENTSERVER_PORT);
+			if(clientServerPortStereo1 == null){				
 				return success;
 			}
-			String first = portFir.getValue(sFirst, "kind").toString();
+			
+			ClientServerPort clientServerPort1 = (ClientServerPort) portFir.getStereotypeApplication(clientServerPortStereo1);
+			ClientServerKind kind1 = clientServerPort1.getKind();
+			
+			//String first = portFir.getValue(sFirst, Constants.CSPORT_KIND).toString();
 			ConnectorEnd ceSec = con.getEnds().get(1);
 			if(!(ceSec.getRole() instanceof Port)){
+				errorMsg = "Second end is not a port";
 				failure = ctx.createFailureStatus(
 						thisElement,			  		
 						errorMsg	
@@ -83,12 +86,14 @@ public class Connector_01 extends AbstractModelConstraint {
 				return failure;
 			}
 			Port portSec = (Port) ceSec.getRole();
-			Stereotype sSecond = portSec.getAppliedStereotype(CSPORT);
-			if(sSecond == null){
+			Stereotype clientServerPortStereo2 = portSec.getAppliedStereotype(Constants.CLIENTSERVER_PORT);
+			if(clientServerPortStereo2 == null){
 				return success;
 			}
-			String second = portSec.getValue(sSecond, "kind").toString();
-			if(first.equals(second)){
+			ClientServerPort clientServerPort2 = (ClientServerPort)portSec.getStereotypeApplication(clientServerPortStereo2);
+			ClientServerKind kind2 = clientServerPort2.getKind();
+			
+			if(kind1.equals(kind2)){
 				//it's not an automatic failure if it's port delegation between parent and child
 				if(ceFir.getPartWithPort() == null || ceSec.getPartWithPort() == null){
 					return success;
@@ -97,7 +102,8 @@ public class Connector_01 extends AbstractModelConstraint {
 					Property prFirst = ceFir.getPartWithPort();
 					Property prSec = ceSec.getPartWithPort();
 					//check that the one of the properties contains the other
-					if(prFirst.getType().getOwnedElements().contains(prSec) || prSec.getType().getOwnedElements().contains(prFirst)){
+					if(prFirst.getType().getOwnedElements().contains(prSec) || 
+							prSec.getType().getOwnedElements().contains(prFirst)){
 						return success;
 					}
 				}
@@ -115,19 +121,32 @@ public class Connector_01 extends AbstractModelConstraint {
 			
 			//check that interfaces provided/required are compatible (i.e the same interface or the provided can be a subtype of the required)
 			Interface iFirst = null, iSecond = null;
-			if (first.equals("provided")){
-				iFirst = (Interface)((EObjectResolvingEList) portFir.getValue(sFirst, "provInterface")).get(0);
-			} else if(first.equals("required")){
-				iFirst = (Interface)((EObjectResolvingEList) portFir.getValue(sFirst, "reqInterface")).get(0);
+			//if (first.equals(Constants.CSPORT_KIND_PROVIDED)){
+			if (kind1.equals(ClientServerKind.PROVIDED)) {
+				//iFirst = (Interface)((EObjectResolvingEList) portFir.getValue(clientServerPort1, "provInterface")).get(0);
+				iFirst = clientServerPort1.getProvInterface().get(0);
+			} else if(kind1.equals(ClientServerKind.REQUIRED)){
+				//iFirst = (Interface)((EObjectResolvingEList) portFir.getValue(sFirst, "reqInterface")).get(0);
+				iFirst = clientServerPort1.getReqInterface().get(0);
 			}
-			if (second.equals("provided")){
-				iSecond =  (Interface)((EObjectResolvingEList) portSec.getValue(sSecond, "provInterface")).get(0);
-			} else if(second.equals("required")){
-				iSecond =  (Interface)((EObjectResolvingEList) portSec.getValue(sSecond, "reqInterface")).get(0);
+			else if(kind1.equals(ClientServerKind.PROREQ)) {
+				// this is managed by constraint FV_07
+				return success;
+			}
+			if (kind2.equals(ClientServerKind.PROVIDED)){
+				//iSecond =  (Interface)((EObjectResolvingEList) portSec.getValue(sSecond, "provInterface")).get(0);
+				iSecond =  clientServerPort2.getProvInterface().get(0);
+			} else if(kind2.equals(ClientServerKind.REQUIRED)){
+				//iSecond =  (Interface)((EObjectResolvingEList) portSec.getValue(sSecond, "reqInterface")).get(0);
+				iSecond = clientServerPort2.getReqInterface().get(0);
+			}
+			else if(kind2.equals(ClientServerKind.PROREQ)) {
+				// this is managed by constraint FV_07
+				return success;
 			}
 			//if they are different it's ok only if the Provided interface inherits the Required Interface
 			if(!iFirst.equals(iSecond)){
-				if(first.equals("provided")){
+				if(kind1.equals(ClientServerKind.PROVIDED)){
 					if(!iFirst.allParents().contains(iSecond)){
 						errorMsg = "Interface types are not compatible.";
 						failure = ctx.createFailureStatus(
@@ -136,7 +155,7 @@ public class Connector_01 extends AbstractModelConstraint {
 								);
 						return failure;
 					}
-				}else if(second.equals("provided")){
+				}else if(kind2.equals(ClientServerKind.PROVIDED)){
 					if(!iSecond.allParents().contains(iFirst)){
 						errorMsg = "Interface types are not compatible.";
 						failure = ctx.createFailureStatus(

@@ -9,22 +9,28 @@
 -- v1.0 which accompanies this distribution, and is available at     --
 -- http://www.eclipse.org/legal/epl-v10.html                         --
 -----------------------------------------------------------------------
-*/
+ */
 package org.polarsys.chess.validator.constraints;
 
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
+import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwBus;
+import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class DV_04.
+ * This class implements the following constraint (invoked by the EMF validation framework):
+ * If the attribute 'speedFactor' of stereotype <<HwBus>> is null, default (value=1.0) will be used
+ * If the attribute 'blockT' of stereotype <<HwBus>> is null, default (worst=0.0,unit=ms) will be used
+ * If the attribute 'speedFactor' of stereotype <<CH_HwProcessor>> is null, default (value=1.0) will be used
  */
 public class DV_04 extends AbstractModelConstraint {
 
@@ -38,71 +44,46 @@ public class DV_04 extends AbstractModelConstraint {
 		IStatus success = ctx.createSuccessStatus();
 		String errorMsg = null;
 
-		
-			Stereotype hwBus = elem.getAppliedStereotype(Constants.HW_BUS);
-			if (hwBus!=null) {
-				// HwBus.PacketT cannot be null
-				Object packetT =elem.getValue(hwBus, Constants.HW_BUS_PACKETT);
-				//System.err.println(obj.getValue(hwBus, Constants.HW_BUS_PACKETT));
-				
-				// Warning if HwBus.SpeedFactor is null
-				Object speedFactor = elem.getValue(hwBus, Constants.HW_BUS_SPEEDFACTOR);
-				if (speedFactor==null) {
-					errorMsg="The attribute 'speedFactor' of stereotype HwBus is null, default (value=1.0) will be used";
-					
-				}
-				else {
-					if (speedFactor.toString().length()==0) {
-						errorMsg="The attribute 'speedFactor' of stereotype HwBus is null, default (value=1.0) will be used";
-						
-					}
-					//System.err.println("speedFactor:" + speedFactor.toString());
-				}
-				// Warning if HwBus.BlockT is null
-				Object blockT = elem.getValue(hwBus, Constants.HW_BUS_BLOCKT);
-				if (blockT==null) {
-					errorMsg="The attribute 'blockT' of stereotype HwBus is null, default (worst=0.0,unit=ms) will be used";
-					
-				}
-				else {
-					if (blockT.toString().length()==0) {
-						errorMsg="The attribute 'speedFactor' of stereotype HwBus is null, default (worst=0.0,unit=ms) will be used";
-						
-					}
-					
-				}			
+
+		Stereotype chHwBusStereo = elem.getAppliedStereotype(Constants.CH_HW_BUS);
+		if (chHwBusStereo != null){
+			CH_HwBus chHwBus = (CH_HwBus) elem.getStereotypeApplication(chHwBusStereo);
+
+			// Check speedFactor
+			String speedFactor = chHwBus.getSpeedFactor();
+			if (speedFactor==null || speedFactor.length()==0) {
+				errorMsg="The attribute 'speedFactor' of stereotype CH_HwBus is null, default (value=1.0) will be used.";						
 			}
-			
-			if (!(elem instanceof Connector)) {
-				// Then it can be a HwComputingResource
-				Stereotype hwProcessor = elem.getAppliedStereotype(Constants.CH_HWPROCESSOR);
-				if (hwProcessor!=null) {
-					//System.err.println("Object " + obj + " is a HwComputingResource");
-					Object speedFactor = elem.getValue(hwProcessor, Constants.HW_BUS_SPEEDFACTOR);
-					if (speedFactor==null) {
-						errorMsg="The attribute 'speedFactor' of stereotype CH_HwProcessor is null, default (value=1.0) will be used";
-						
-					}
-					else {
-						if (speedFactor.toString().length()==0) {
-							errorMsg="The attribute 'speedFactor' of stereotype CH_HwProcessor is null, default (value=1.0) will be used";
-							
-						}
-						//System.err.println("speedFactor:" + speedFactor.toString());
-					}
-				
+
+			// Check blockT
+			EList<String> blockT = chHwBus.getBlockT();
+			if (blockT==null || blockT.size()==0) {
+				errorMsg +=" The attribute 'blockT' of stereotype CH_HwBus is null, default (worst=0.0,unit=ms) will be used.";					
+			}			
+		}
+
+		if (!(elem instanceof Connector)) {
+			// Then it can be a HwComputingResource
+			Stereotype hwProcessorStereo = elem.getAppliedStereotype(Constants.CH_HWPROCESSOR);
+			if (hwProcessorStereo!=null) {
+				CH_HwProcessor chHwProcessor = (CH_HwProcessor) elem.getStereotypeApplication(hwProcessorStereo);
+				String speedFactor = chHwProcessor.getSpeedFactor();
+				if (speedFactor==null || speedFactor.length()==0) {
+					errorMsg="The attribute 'speedFactor' of stereotype CH_HwProcessor is null, default (value=1.0) will be used";							
 				}
 			}
-	
+		}
+
 		if (errorMsg != null){
 			IStatus failure = ctx.createFailureStatus(
-					elem,	errorMsg
-			);
+					elem,	
+					errorMsg
+					);
 			return failure;
 		}
-		
+
 		return success;
-		
+
 	}
-	
+
 }			

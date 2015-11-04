@@ -15,23 +15,16 @@
 */
 package org.polarsys.chess.validator.constraints;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
 import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Stereotype;
-import org.eclipse.uml2.uml.util.UMLUtil;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
 import org.polarsys.chess.chessmlprofile.util.Constants;
@@ -56,22 +49,10 @@ public class DV_01 extends AbstractModelConstraint {
 		String errorMsg = null;
 				
 		//<<IdentifInstance>> InstanceSpecification does not need to have an allocation to HW
-		if (instSpec.getAppliedStereotype("CHESS::Core::IdentifInstance")!=null)
+		if (instSpec.getAppliedStereotype(Constants.CH_IDENTIFINSTANCE)!=null)
 			return success;
 		
-//		Collection<Comment> allAssignComment = new ArrayList<Comment>();
-		
 		Model umlModel = instSpec.getModel();
-				
-//		TreeIterator<EObject> it = instSpec.getModel().eAllContents();
-//		while (it.hasNext()) {
-//			EObject obj = it.next();
-//			
-//			if (obj instanceof Comment && (((Comment) obj).getAppliedStereotype(Constants.ASSIGN)) != null) {
-//				allAssignComment.add((Comment) obj);
-//			}
-//		}
-		
 
 		if (instSpec.getClassifiers().size()!=0) {
 			
@@ -84,10 +65,7 @@ public class DV_01 extends AbstractModelConstraint {
 					// There should be exactly one Assign.from referencing the component
 					int count=0;
 					
-					// LB 20150917 begin
-					/* change for Concerto ToDo #36 to solve problems that may arise due to multi-core and 
-					 * partitioning 
-					 */
+					// to manage multi-core and partitioning issues					 
 					EList<Assign> assignments = new BasicEList<Assign>();
 					EList<Assign> compViewAssignments = new BasicEList<Assign>();
 					try {
@@ -96,35 +74,18 @@ public class DV_01 extends AbstractModelConstraint {
 						// Assignments of components to functional partitions are in the Component View
 						compViewAssignments = UMLUtils.getComponentAssignments(umlModel, Constants.COMPONENT_VIEW_NAME);						
 						assignments.addAll(compViewAssignments);											
-					} catch (ModelError e) {						
-						System.out.println("ERROR in Model: "+e.getMessage());
+					} catch (ModelError e) {	
+						errorMsg = "ERROR in Model: "+e.getMessage();
 						e.printStackTrace();
 					}
 					
 					count = UMLUtils.isAssigned2HowManyProcessingUnitsOrPartitions(instSpec, assignments);		
 					
-				
-//					Stereotype assignStereotype=null;
-//					for (Comment comment : allAssignComment) {
-//						assignStereotype = comment.getAppliedStereotype(Constants.ASSIGN);
-//						if (assignStereotype!=null) {
-//							//System.err.println("  - assign");
-//							List<Object> from = (List<Object>) comment.getValue(assignStereotype, Constants.ASSIGN_FROM);
-//							//System.err.println("  - from:" + from + "-" + instSpec);
-//							//System.err.println("  - to  :" +comment.getValue(assign, Constants.ASSIGN_TO));
-//							if (from.contains(instSpec)) {
-//								//System.err.println("That's the one !");
-//								
-//								count++;
-//							}
-//						}
-//					}
-					// LB 20150917 end
+					String instSpecName = "";
+					instSpecName = instSpec.getName();
 					if (count!=1) {
-						errorMsg = "The ComponentImplementation instance " + instSpec.getName() +" must be deployed on exactly one processing unit or functional partition. (Currently " + count +")";
-						System.out.println(errorMsg);
-					}
-					
+						errorMsg = "The ComponentImplementation instance " + instSpecName +" must be deployed on exactly one processing unit or functional partition. (Currently " + count +")";
+					}					
 				}
 			}
 		}
@@ -137,8 +98,7 @@ public class DV_01 extends AbstractModelConstraint {
 			return failure;
 		}
 		
-		return success;
-		
+		return success;	
 	}
 	
 }			

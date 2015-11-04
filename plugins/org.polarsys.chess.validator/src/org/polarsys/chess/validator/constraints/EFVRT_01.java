@@ -74,10 +74,10 @@ public class EFVRT_01 extends AbstractModelConstraint {
 						Element operationOwner = theContext.getOwner();
 						String operationName = theContext.getName();
 						if (operationOwner.getAppliedStereotype(Constants.COMPONENT_IMPLEMENTATION)==null) {
-							errorMsg=c.getBody()+" is not defined on the component implementation!";							
+							//errorMsg=c.getBody()+" is not defined on the component implementation!";									
 							IStatus failure = ctx.createFailureStatus(											
-									errorMsg, 										
-									operationName
+									c.getAnnotatedElements(),									
+									operationName									
 									);
 							return failure;
 						}
