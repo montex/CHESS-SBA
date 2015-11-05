@@ -995,6 +995,40 @@ public class UMLUtils {
 		throw new ModelError("CHGaResourcePlatform not found in "+viewName+" view.");
 	}
 
+	
+	/**
+	 * Looks inside the input package pack, and returns a Component stereotyped as CHGaResourcePlatform 
+	 * @param umlModel
+	 * @param pack
+	 * @return
+	 * @throws ModelError
+	 */
+	public static Component getResourcePlatformComponentInPackage(Model umlModel, 
+			Package pack) throws ModelError {
+
+		/* breath-first search */
+		final LinkedList<Element> breadthFirstList = new LinkedList<Element>();
+
+		breadthFirstList.addAll(pack.getOwnedElements());
+		while (!breadthFirstList.isEmpty()) {
+			final Element t = breadthFirstList.poll();
+
+			if (t instanceof Component) {
+				Component candidate = (Component) t;
+				CHGaResourcePlatform a = UMLUtils.getStereotypeApplication(
+						candidate, CHGaResourcePlatform.class);
+				if (a != null)
+					return candidate;
+			}
+			for (final Element e : t.getOwnedElements()) {
+				breadthFirstList.addLast(e);
+			}
+		}
+
+		throw new ModelError("CHGaResourcePlatform not found in "+pack.getName()+" package.");
+	}
+
+	
 	/**
 	 * Returns TRUE if the element is a processor instance, FALSE otherwise
 	 * @param element
