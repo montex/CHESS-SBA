@@ -33,6 +33,7 @@ import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.GRM.MutualExclusionResource;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.NFPs.NfpConstraint;
 import org.eclipse.papyrus.MARTE_Library.GRM_BasicTypes.ProtectProtocolKind;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
@@ -40,7 +41,6 @@ import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.ValueSpecification;
-
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.validator.constraints.StringParser;
@@ -962,7 +962,7 @@ private static Slot extractFirstSlot(EList<Element> from) {
 	}
 	
 	/**
-	 * Gets the number of cores for a given CPU instance
+	 * Gets the number of cores for a given CPU instance. The number of cores is derived from the associated classifier.
 	 *
 	 * @param context the QVT context
 	 * @param cpu the cpu instance
@@ -971,7 +971,8 @@ private static Slot extractFirstSlot(EList<Element> from) {
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public  static Integer getNumberOfCores(IContext context, InstanceSpecification cpu) {
 		Integer i = 1;
-		CH_HwProcessor x = getStereotypeApplication(cpu, CH_HwProcessor.class);
+		Classifier classifier = cpu.getClassifiers().get(0);
+		CH_HwProcessor x = getStereotypeApplication(classifier, CH_HwProcessor.class);
 		if(x == null || x.getNbCores() == null)
 			return i;
 
