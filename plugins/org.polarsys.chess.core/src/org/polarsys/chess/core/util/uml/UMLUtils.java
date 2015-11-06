@@ -1398,5 +1398,30 @@ public class UMLUtils {
 		}
 		return assignments;
 	}	
+	
+	/**
+	 * Returns the root instance in the package 
+	 * @param thePack is the Package owning the set of InstanceSpecification
+	 * @return the root InstanceSpecification
+	 * //the assumptions are: 
+	 * 1) the package owns the InstanceSpecification, 
+	 * 2) there is only one root instance in the package, 
+	 * 3) the name of a root instances must not contain the '.' character
+	 * 4) the name of a child instance must contain the '.' character (<namespace>.<name of the instance>)
+	 */
+	public static InstanceSpecification getRootInstanceInPackage(Package thePack) {		
+		EList<Element> allElems = thePack.allOwnedElements();
+		String elementName = "";
+		for (Element elem : allElems) {
+			if (elem instanceof InstanceSpecification) {
+				InstanceSpecification instSpec = (InstanceSpecification)elem;
+				elementName = instSpec.getName();
+				if (!elementName.contains(".")) {
+					return instSpec;
+				}
+			}
+		}
+		return null;
+	}
 
 }
