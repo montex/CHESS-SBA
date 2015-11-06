@@ -16,8 +16,11 @@ import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.ActivityFinalNode;
 import org.eclipse.uml2.uml.InitialNode;
+import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.OpaqueAction;
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.UMLFactory;
+import org.polarsys.chess.core.util.uml.UMLUtils;
 
 
 /**
@@ -76,5 +79,17 @@ public class Java4QVTutils {
 		
 
 	}// end createOpaqueAction
+	
+	/**
+	 * Gets the root instance.
+	 *
+	 * @param context the context
+	 * @param self the self
+	 * @return the context from constraint
+	 */
+	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
+	public  static InstanceSpecification getRootInstanceInPackage(IContext context, Package self) {
+		return UMLUtils.getRootInstanceInPackage(self);
+	}
 	
 }

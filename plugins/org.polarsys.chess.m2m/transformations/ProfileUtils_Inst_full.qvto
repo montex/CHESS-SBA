@@ -244,6 +244,8 @@ property CHGaResourcePlatformQN = "CHESS::Core::CHGaResourcePlatform";
 property CHHwComputingResourceQN = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwComputingResource";
 property CHHwProcessorQN = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwProcessor";
 property CHHwBusQN = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwBus";
+property DeploymentViewQN ="CHESS::Core::CHESSViews::DeploymentView";
+property ComponentViewQN ="CHESS::Core::CHESSViews::ComponentView";
 
 property IdentifInstanceQN = "CHESS::Core::IdentifInstance";
 property IdentifSlotQN = "CHESS::Core::IdentifSlot";	

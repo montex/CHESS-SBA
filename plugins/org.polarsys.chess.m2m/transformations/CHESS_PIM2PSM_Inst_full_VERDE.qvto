@@ -94,16 +94,13 @@ mapping inout Model::psmModel() {
 		
 		compView := self.getView("ComponentView");
 		depView := self.getView("DeploymentView");
-		//self.nestedPackage->asSequence()->at(4).nestedPackage![Package].ownedElement->selectOne(Class).qualifiedName=saAnalysis
-		var x = self.allOwnedElements()[Class]->selectOne(qualifiedName=saAnalysis);
-		
-		//var saAnalysisClass := self.allOwnedElements()[Class]->selectOne(qualifiedName.equalsIgnoreCase(saAnalysis));
+			
 		var saAnalysisClass := self.allOwnedElements()[Class]->selectOne(qualifiedName=saAnalysis);
 		var saAnalysisCtx := saAnalysisClass.getMetaclass(SaAnalysisContextQN).oclAsType(MARTE::SAM::SaAnalysisContext);
 		
-		var platforms := saAnalysisCtx.platform->asSequence();
-		instSpecPackage := platforms->first().oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package;
-		//instSpecFullPackage := compView.allOwnedElements()[Package]->selectOne(name.equalsIgnoreCase(instSpecPackage.name + "_full"));
+		//var platforms := saAnalysisCtx.platform->asSequence();
+		//instSpecPackage := platforms->first().oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package;
+		instSpecPackage := saAnalysisCtx.getSwSystemInstPackage();
 	}
 	
 	assert fatal (instSpecPackage <> null)
@@ -181,7 +178,11 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 	
 	
 	// Retrieve all <<Assign>>
-	assigns := depView.allOwnedElements()[Comment]->select(isStereotyped(AssignQN))->asSet();
+	//assumption: Assign are owned by the System component in the DeploymentView
+	var systemComp = saAnalysisCtx.getSystem();
+	assert fatal (systemComp <> null)
+		with log("<<CHGaResourcesPlatform>> System is not present: there should be a CHGaResourcePlatform Package in the AnalysisContext.platform pointing to the System instances");
+	assigns := systemComp.allOwnedElements()[Comment]->select(isStereotyped(AssignQN))->asSet();
 	
 	partitionAssigns := compView.allOwnedElements()[Comment]->select(isStereotyped(AssignQN))->asSet();
 	
@@ -1256,9 +1257,11 @@ mapping InstanceSpecification::HwComputingResource2SaExecHost() : Class {
 }
 
 helper InstanceSpecification::HwProcessor2SaExecHostHelper() : OclVoid {
-	//log("Generating <<SaExecHost>> from instanceSpecification '"+self.name+"' corresponding to <<CH_HwProcessor>> '" + self.classifier().name + "'.");
+	log("Generating <<SaExecHost>> from instanceSpecification '"+self.name+"' corresponding to <<CH_HwProcessor>> '" + self.classifier().name + "'.");
 	var i: Integer := 0;
 	var n: Integer := self.getNumberOfCores();
+	
+	log("number of cores "+n.toString());
 	
 	var p := self.map HwProcessor2SaExecHost(null);
 	var pHost := p.getMetaclass("SaExecHost").oclAsType(MARTE::SAM::SaExecHost);
@@ -1780,3 +1783,72 @@ helper Message::getMsgChrts() : chessmlprofile::RTComponentModel::CHRtSpecificat
    	//log("+++++++++++++ context: " + startChrts.context.name);
 	return chrts;
 }
+
+//assumption: the SaAnalysisContext.platform owns the reference to the package of the HW instances (to be considered for the analysis) available in the DeploymentView.
+//returns the component which types the root HW instance stored in the package of the HW instances available in the DeploymentView.
+query MARTE::SAM::SaAnalysisContext::getSystem() : Component {
+	
+	var platforms : Set(MARTE::GQAM::GaResourcesPlatform) := self.platform->asSet();
+	platforms->forEach (plat){
+		var package : Element := plat.oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package;
+		var found : Boolean = false;
+		while (not found) {
+			var owner : Element = package.owner;
+			if (owner.isStereotyped(DeploymentViewQN)){
+				found :=true;
+				break;
+			}else{
+				if (owner.oclIsTypeOf(Model)){
+					break;
+				}
+			};
+			package := owner;
+		};
+		if (found) {
+			package := plat.oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package;
+			//package is in the deploymentView, search the system Component
+			var rootInst : InstanceSpecification := package.oclAsType(Package).getRootInstanceInPackage();
+			var classifier := rootInst.classifier -> asSequence() -> first();
+			log("found system component "+ classifier.name);
+			return classifier.oclAsType(Component);
+			
+		}
+	};
+	return null;
+		
+}
+
+
+//assumption: the SaAnalysisContext.platform owns the reference to the package of the SW instances (to be considered for the analysis) available in the ComponentView.
+//returns the packages of the SW instances referred by SaAnalysisContext.platform 
+	
+query MARTE::SAM::SaAnalysisContext::getSwSystemInstPackage() : Package {
+	
+	var platforms : Set(MARTE::GQAM::GaResourcesPlatform) := self.platform->asSet();
+	platforms->forEach (plat){
+		var package : Element := plat.oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package;
+		var found : Boolean = false;
+		while (not found) {
+			var owner : Element = package.owner;
+			if (owner.isStereotyped(ComponentViewQN)){
+				found :=true;
+				break;
+			}else{
+				if (owner.oclIsTypeOf(Model)){
+					break;
+				}
+			};
+			package := owner;
+		};
+		if (found) {
+			log("found SwSystemInstPackage "+ plat.oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package.oclAsType(Package).name);
+			return plat.oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package.oclAsType(Package);
+		}
+	};
+	
+	return null;
+		
+}
+
+
+
