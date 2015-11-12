@@ -90,6 +90,7 @@ public class StringParser {
 	 *
 	 * @param value the value
 	 * @return the value as double
+	 * @since 0.10
 	 */
 	public double getDoubleValue(String value) {
 		try {
