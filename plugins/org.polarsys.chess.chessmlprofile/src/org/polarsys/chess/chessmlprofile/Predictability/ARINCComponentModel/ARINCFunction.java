@@ -127,6 +127,7 @@ public interface ARINCFunction extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Rate Divider</b></em>' attribute.
+	 * The default value is <code>"1"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Rate Divider</em>' attribute isn't clear,
@@ -136,7 +137,7 @@ public interface ARINCFunction extends EObject {
 	 * @return the value of the '<em>Rate Divider</em>' attribute.
 	 * @see #setRateDivider(int)
 	 * @see org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage#getARINCFunction_RateDivider()
-	 * @model dataType="org.eclipse.uml2.types.Integer" ordered="false"
+	 * @model default="1" dataType="org.eclipse.uml2.types.Integer" ordered="false"
 	 * @generated
 	 */
 	int getRateDivider();

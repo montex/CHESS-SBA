@@ -503,7 +503,7 @@ public class ARINCComponentModelPackageImpl extends EPackageImpl implements ARIN
 		initEReference(getARINCFunction_Base_Operation(), theUMLPackage.getOperation(), null, "base_Operation", null, 1, 1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getARINCFunction_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getARINCFunction_FollowedBy(), theUMLPackage.getOperation(), null, "followedBy", null, 0, -1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getARINCFunction_RateDivider(), theTypesPackage.getInteger(), "rateDivider", null, 0, 1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getARINCFunction_RateDivider(), theTypesPackage.getInteger(), "rateDivider", "1", 0, 1, ARINCFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //ARINCComponentModelPackageImpl

@@ -79,7 +79,7 @@ public class ARINCFunctionImpl extends EObjectImpl implements ARINCFunction {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int RATE_DIVIDER_EDEFAULT = 0;
+	protected static final int RATE_DIVIDER_EDEFAULT = 1;
 
 	/**
 	 * The cached value of the '{@link #getRateDivider() <em>Rate Divider</em>}' attribute.

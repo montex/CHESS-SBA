@@ -11134,6 +11134,7 @@ If the list is empty the &quot;context&quot; operation must be invoked directly 
             <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0kBaoDzdEeW-QPagynd_rQ"/>
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0kBaoTzdEeW-QPagynd_rQ" value="1"/>
+            <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_CWOWMIoBEeWJR8K6BvHC5w" value="1"/>
           </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_VKW7ATzbEeW-QPagynd_rQ" name="E_ARINCProcess_Operation1" memberEnd="_VKW7AjzbEeW-QPagynd_rQ _VKW7ADzbEeW-QPagynd_rQ">
