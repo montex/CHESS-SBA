@@ -365,6 +365,7 @@ public class MARTEProfileManager {
 		
 		applyGRMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.COMPONENT_VIEW));
 		applyGRMProfileTo(deploViewPack);
+		applyGRMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.SYSTEM_VIEW));
 		
 	}
 	
