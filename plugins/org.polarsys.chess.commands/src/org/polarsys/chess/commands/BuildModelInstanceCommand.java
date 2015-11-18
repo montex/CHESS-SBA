@@ -14,15 +14,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.GRM.Resource;
 import org.eclipse.emf.common.util.BasicEList;
@@ -31,17 +28,18 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.window.Window;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
-import org.eclipse.papyrus.uml.tools.providers.UMLLabelProvider;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.papyrus.emf.facet.custom.metamodel.v0_2_0.internal.treeproxy.EObjectTreeElement;
+import org.eclipse.papyrus.sysml.blocks.Block;
+import org.eclipse.papyrus.sysml.portandflows.FlowPort;
+import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.dialogs.ListDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Component;
+import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
@@ -57,7 +55,7 @@ import org.eclipse.uml2.uml.StructuralFeature;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
-import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
+import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentType;
 import org.polarsys.chess.chessmlprofile.Core.CHESS;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.DeploymentView;
@@ -65,12 +63,11 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propa
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.chessmlprofile.util.Constants;
+import org.polarsys.chess.core.notifications.ResourceNotification;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
-import org.polarsys.chess.core.util.CHESSProjectSupport;
-import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
-import org.polarsys.chess.m2m.transformations.QVToTransformation;
+import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 import static org.polarsys.chess.core.util.CHESSProjectSupport.printlnToCHESSConsole;
@@ -80,14 +77,6 @@ import static org.polarsys.chess.core.util.CHESSProjectSupport.printlnToCHESSCon
  */
 public class BuildModelInstanceCommand extends AbstractHandler implements
 		IHandler {
-
-	/** The Constant CHESS. */
-	private static final String CHESS = "CHESS::Core::CHESS";
-	/** The Constant CHESS_CHRTSPEC. */
-private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponentModel::CHRtSpecification";
-	
-	/** The Constant CHESS_RESPLATFORM. */
-	private static final String CHESS_RESPLATFORM = "CHESS::Core::CHGaResourcePlatform";
 	
 	/** The Constant MARTE_CSP. */
 	private static final String MARTE_CSP = "MARTE::MARTE_DesignModel::GCM::ClientServerPort";
@@ -115,194 +104,203 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 	
 	private InstanceSpecification oldRootInstance = null;
 	private Package oldInstancePackage = null;
+	
+	//holds the mapping between a Property and the corresponding InstanceSpecification
+	private Map<Property, InstanceSpecification> property2InstMap = new HashMap<Property, InstanceSpecification>();
+	
+	//the MARTE CHGaResourcePlatform stereotype applied to the root instance: it owns the reference to the Resource instances.
+	private CHGaResourcePlatform resPlatform = null;
 
 	/* (non-Javadoc)
-	 * Launches the dialog to select the Component from which InstanceSpecifications (i.e. the object view) needs to be created
+	 * from the current selection retrieves the Component from which InstanceSpecifications (i.e. the object view) needs to be created.
+	 * This handler is expected to the be invoked through the Papyrus ModelExplorer popup command
 	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ignoreErrors = false;
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-		final Shell shell = window.getShell();
-		//get the CEHSS Editor
+		
+		
+		ISelectionService selectionService = window.getSelectionService();
+		ISelection selectionX = selectionService.getSelection();
+		if (!(selectionX instanceof ITreeSelection)){
+			ResourceNotification.showOk("Please invoke the Build Instance command on a single selection on the ModelExplorer");
+			return null;
+		}
+		ITreeSelection treesel = (ITreeSelection)selectionX;
+		if (treesel.getPaths().length == 0 ||  treesel.getPaths().length > 1){
+			ResourceNotification.showError("Please invoke the Build Instance command on a single selection on the ModelExplorer");
+			return null;
+		}
+		
+		Object obj = treesel.getFirstElement();
+		if (!(obj instanceof EObjectTreeElement)){
+			ResourceNotification.showError("Please invoke the Build Instance command on a single selection on the ModelExplorer");
+		}
+		EObject eobj = ((EObjectTreeElement) obj).getEObject();
+		final Package view = ViewUtils.getView(eobj);
+		
+		final Model umlModel = view.getModel();
+		final Class umlClass = (Class) eobj;
+		
+		if (!ViewUtils.isDesignView(view, CHESSProfileManager.SYSTEM_VIEW) &&
+				!ViewUtils.isDesignView(view, CHESSProfileManager.COMPONENT_VIEW) &&
+				!ViewUtils.isDesignView(view, CHESSProfileManager.DEPLOYMENT_VIEW)) {
+			ResourceNotification.showError("Build Instance command can only be invoked on resources of the SystemView, ComponentView and DeploymentView");
+			return null;
+		}
+		
+		if (ViewUtils.isDesignView(view, CHESSProfileManager.COMPONENT_VIEW)){
+			if (UMLUtils.getStereotypeApplication(umlClass, ComponentType.class)!= null){
+				ResourceNotification.showError("Build Instance command cannot be invoked on ComponentType");
+				return null;
+			}
+		}
+		
+		return buildInstance(umlClass);
+	}
+	
+	/**
+	 * Prepares the package which will own the instances and create the instances for the given UML::Class and its internals, i.e. the owned properties and connectors.
+	 * Extra functional information specified at class\property level is applied also to the instance level, where required by the CHESS methodology
+	 * (e.g. the CHRtSpecification specified for the ports are applied to the instances of the ports).
+	 * The model is updated by using a transactional command.
+	 * 
+	 * @param umlClass the Class for which the instance-level representation has to be created
+	 * @return the instance specification, stereotyped as MARTE Resource
+	 * @since 0.10
+	 */
+	
+	public InstanceSpecification buildInstance(final Class umlClass){
 		PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
 		final DiagramStatus ds = CHESSEditorUtils.getDiagramStatus(editor);
-		List<Component> compImplList = new ArrayList<Component>();
-		try{;
-			//get the UML model
-			final org.eclipse.emf.ecore.resource.Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
-			final IFile modelFile = CHESSProjectSupport.resourceToFile(res);
-			final Model umlModel = ResourceUtils.getModel(res);
-			CHESS chess = (CHESS) umlModel.getStereotypeApplication(umlModel.getAppliedStereotype(CHESS));		
-			//get the Components (implementation) of the componentView and deploymentView
-			for (Element elem : chess.getComponentView().getBase_Package().allOwnedElements()) {
-					//check if the component owns property of type ComponentImplementation
-					if (elem instanceof Component){
-						Component comp = (Component) elem;
-						for (Property prop : comp.getAttributes()){
-							if (prop.getType() == null)
-								continue;
-							if (UMLUtils.getStereotypeApplication(prop.getType(), ComponentImplementation.class) != null){
-								compImplList.add((Component) elem);
-								break;
-							}
-						}
-					}
-			}
-			for (Element elem : chess.getDeploymentView().getBase_Package().allOwnedElements()) {
-				if (elem instanceof Component) {
-					compImplList.add((Component) elem);
-				}
-			}
-			//launch the dialog
-			ListDialog selectionDialog = new ListDialog(shell);
-			selectionDialog.setInput(compImplList);
-			selectionDialog.setContentProvider(new ArrayContentProvider());
-			selectionDialog.setLabelProvider(new UMLLabelProvider());
-			selectionDialog.setTitle("Select the Component for Build Instances");
-			Object[] selection = null;
-			if(selectionDialog.open() == Window.OK){
-				selection = selectionDialog.getResult();
-			}
-			if(selection != null && selection.length > 0){
-				Object obj = selection[0];
-				final Component comp = (Component) obj;
-				TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(comp);
-				editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
-					protected void doExecute() {
-						ds.setUserAction(false);
-						saveAssignAllocations(umlModel);
-						//get the instance Package, if present
-						Package instPkg = null;
-						for(Element elem : comp.getOwner().getOwnedElements()){
-							if(elem instanceof Package && ((Package) elem).getName().equals(comp.getName() + "_instSpec")){
-								instPkg = (Package) elem;
-							}
-						}
-						//reuse instance package, if present, but destroy its children
-						if(instPkg != null){
-							EList<PackageableElement> elems = instPkg.getPackagedElements();
-							
-							//save the root old instance
-							Package pkg = comp.getNearestPackage();
-							oldInstancePackage = pkg.createNestedPackage(comp.getName() + "_oldinstSpec");
-														EList<PackageableElement> tempElems = new BasicEList<PackageableElement>();
-							
-							int size = elems.size(); 
-							for(int i = 0; i < size; i++){
-								PackageableElement pe = elems.get(i);
-								if (pe.getName() != null && !pe.getName().contains("."))
-									oldRootInstance = (InstanceSpecification) pe;
-								tempElems.add(pe);
-							}
-							oldInstancePackage.getPackagedElements().addAll(tempElems);
-							
-						}else{
-							//create the instance package, if needed.
-							Package pkg = comp.getNearestPackage();
-							instPkg = pkg.createNestedPackage(comp.getName() + "_instSpec");
-							UMLUtils.applyStereotype(instPkg, CHESS_RESPLATFORM);
-						}
-						instancesList.clear();
-						slotList.clear();
-						
-						//perform build instances
-						buildComponentInstance(instPkg, comp, null, null, null, new HashMap<Property, InstanceSpecification>(), comp.getOwnedComments(), oldRootInstance);
+		final Package view = ViewUtils.getView(umlClass);
+		final Model umlModel = view.getModel();
 		
-						regenerateAssignAllocations(umlModel);
-						/*The multi instance support has to be re-engineered
-						try {
-							//TODO: WARNING - saving the resource probably is not the best way to deal with
-							//the problem of creating the multi instances at this moment
-							
-							res.save(null);
-							
-							// Remove the package with the multi instances, if any
-							QVToTransformation.launchRemoveMultiInstance(modelFile, new NullProgressMonitor());
-							//perform build multi instances
-							QVToTransformation.launchBuildMultiInstance(modelFile, new NullProgressMonitor());
-							
-							MessageDialog.openInformation(shell, "CHESS", "BuildInstance command completed");
-							ignoreErrors = true;
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}*/
-						if (oldInstancePackage != null)
-							oldInstancePackage.destroy();
+		try{;
+
+			TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(umlClass);
+			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+				protected void doExecute() {
+					ds.setUserAction(false);
+					saveAssignAllocations(umlModel);
+					//get the instance Package, if present
+					Package instPkg = null;
+					for(Element elem : umlClass.getOwner().getOwnedElements()){
+						if(elem instanceof Package && ((Package) elem).getName().equals(umlClass.getName() + "_instSpec")){
+							instPkg = (Package) elem;
+						}
 					}
+					//reuse instance package, if present, but destroy its children
+					if(instPkg != null){
+						EList<PackageableElement> elems = instPkg.getPackagedElements();
 						
-				});
-			}
+						//save the root old instance
+						Package pkg = umlClass.getNearestPackage();
+						oldInstancePackage = pkg.createNestedPackage(umlClass.getName() + "_oldinstSpec");
+													EList<PackageableElement> tempElems = new BasicEList<PackageableElement>();
+						
+						int size = elems.size(); 
+						for(int i = 0; i < size; i++){
+							PackageableElement pe = elems.get(i);
+							if (pe.getName() != null && !pe.getName().contains("."))
+								oldRootInstance = (InstanceSpecification) pe;
+							tempElems.add(pe);
+						}
+						oldInstancePackage.getPackagedElements().addAll(tempElems);
+						
+					}else{
+						//create the instance package, if needed.
+						Package pkg = umlClass.getNearestPackage();
+						instPkg = pkg.createNestedPackage(umlClass.getName() + "_instSpec");
+						UMLUtils.applyStereotype(instPkg, Constants.CHGARESOURCEPLATFORM);
+					}
+					instancesList.clear();
+					slotList.clear();
+					
+					//perform build instances
+					buildComponentInstance(instPkg, umlClass, null, null, oldRootInstance);
+					
+					//Assign are not used in the SystemView
+					if (!ViewUtils.isDesignView(view, CHESSProfileManager.SYSTEM_VIEW))
+						regenerateAssignAllocations(umlModel);
+					if (oldInstancePackage != null)
+						oldInstancePackage.destroy();
+					
+					ResourceNotification.showOk("Instances have been successfully generated under the  "+instPkg.getName()+" Package.");
+				}
+					
+			});
+		
 		} catch (Exception e) {
 			if(!ignoreErrors){
 			ds.setUserAction(false);
 			e.printStackTrace();
-			MessageDialog.openError(shell, "CHESS", "Problems while executing BuildInstance command: " + e.getMessage());
+			ResourceNotification.showError("Problems while executing BuildInstance command: " + e.getMessage());
 			}
 		}
 		ds.setUserAction(false);
 		return null;
 	}
 	
+	
 	/**
-	 * Builds the instance-level representation of the given Component structure.
+	 * Builds the instance-level representation of the given Component\Property.
+	 * For a given UML::Class, instances are created for the Class itself and for its internal, i.e.: owned properties and connectors. 
 	 *
-	 * @param pkg the Package owner of the created instance level entities
-	 * @param comp the Component for which the instance-level representation has to be created
-	 * @param resPlatform the MARTE CHGaResourcePlatform owning the reference to the Resource instances.
-	 * @param parentInstance the parent instance
-	 * @param theProp the UML property for which the instance-level representation has to be created
-	 * @param property2InstMap the properties to instances map
-	 * @param commList the list of CHRtSPecification from which the instance-level representation has to be created
+	 * @param pkg the Package which will own the created instance entities
+	 * @param umlClass the Class for which the instance-level representation has to be created. If theProp is provided then comp must be the type of theProp.
+	 * @param parentInstance the parent instance; it can be null.
+	 * @param theProp the UML property for which the instance-level representation has to be created. It can be null.
 	 * @param oldInst the instanceSpecification that will be replaced in the model; it allows to retrieve available properties on the instance, to be applied to the new one. It can be null
 	 * @return the instance specification, stereotyped as MARTE Resource
 	 */
-	private InstanceSpecification buildComponentInstance(Package pkg, Component comp, CHGaResourcePlatform resPlatform, InstanceSpecification parentInstance, Property theProp, Map<Property, InstanceSpecification> property2InstMap, List<Comment> commList, InstanceSpecification oldInst) {
+	private InstanceSpecification buildComponentInstance(Package pkg, Class umlClass, InstanceSpecification parentInstance, Property theProp, InstanceSpecification oldInst) {
+		
+		//the list of CHRtSPecification from which the instance-level representation has to be created
+		//assumption: when a CHRtSpecification is created for a given port instance, it is placed in the namespace of the Class owning the Port.
+		List<Comment> commList = umlClass.getOwnedComments();
 		
 		InstanceSpecification inst = UMLFactory.eINSTANCE.createInstanceSpecification();
 		if(theProp != null){
 			String name = parentInstance.getName() + "." + theProp.getName();
 			inst.setName(name);
 		}else{
-			inst.setName(comp.getName());
+			inst.setName(umlClass.getName());
 		}
-		inst.getClassifiers().add(comp);
+		inst.getClassifiers().add(umlClass);
 		pkg.getPackagedElements().add(inst);
 		if(parentInstance != null){
 			UMLUtils.applyStereotype(inst, MARTE_RESOURCE);
 			Resource res = (Resource) inst.getStereotypeApplication(inst.getAppliedStereotype(MARTE_RESOURCE));
 			resPlatform.getResources().add(res);
 		}else{
-			Stereotype stereo = UMLUtils.applyStereotype(inst, CHESS_RESPLATFORM);
+			Stereotype stereo = UMLUtils.applyStereotype(inst, Constants.CHGARESOURCEPLATFORM);
 			resPlatform = (CHGaResourcePlatform) inst.getStereotypeApplication(stereo);
 		}
 		//apply stereotypes to instances according to those applied to the property or the property type
 		if(theProp != null){
 			mapStereotypesFromPropertyToInstance(theProp, inst, oldInst);
 		}
-		for (Property subProp : comp.getAttributes()) {
+		for (Property subProp : umlClass.getAttributes()) {
 			//properties
-			if(subProp.getType() instanceof Component){
-				Component subCompImpl = (Component) subProp.getType();
-				commList.addAll(subCompImpl.getOwnedComments());
+			if(subProp.getType() instanceof Class){
+				Class subCompImpl = (Class) subProp.getType();
+				if (!(subCompImpl instanceof Component) && (UMLUtils.getStereotypeApplication(subCompImpl, Block.class)== null)){
+					continue;
+				}
+				//commList.addAll(subCompImpl.getOwnedComments());
 				InstanceSpecification oldsubInst = getCorrespondingOldChildInstance (subProp, oldInst);
-				InstanceSpecification subInst = buildComponentInstance(pkg, subCompImpl, resPlatform, inst, subProp, property2InstMap, commList, oldsubInst);
+				InstanceSpecification subInst = buildComponentInstance(pkg, subCompImpl, inst, subProp, oldsubInst);
 				Slot slot = UMLFactory.eINSTANCE.createSlot();
 				slot.setDefiningFeature(subProp);
 				inst.getSlots().add(slot);
 				InstanceValue instValue = (InstanceValue) slot.createValue(subProp.getName(), null, UMLPackage.Literals.INSTANCE_VALUE);
 				instValue.setInstance(subInst);
-				/*
-				//if the property is stereotyped, then apply the same stereotype to the instance (if applicable)
-				Stereotype memPartition = subProp.getAppliedStereotype(MARTE_MEMORYPARTITION);
-				if (memPartition != null){
-					subInst.applyStereotype(memPartition);
-				}*/
 			}
 			//ports
-			if(subProp.getAppliedStereotype(MARTE_CSP) != null){
+			if(subProp.getAppliedStereotype(MARTE_CSP) != null || (UMLUtils.getStereotypeApplication(subProp, FlowPort.class)!=null)){
 				Slot slot = UMLFactory.eINSTANCE.createSlot();
 				slot.setDefiningFeature(subProp);
 				inst.getSlots().add(slot);
@@ -310,8 +308,8 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 				//check if there are CHRtSpecifications linked to the port
 				List<CHRtSpecification> tmpList = new ArrayList<CHRtSpecification>();
 				for (Comment comm : commList) {
-					if(comm.getAppliedStereotype(CHESS_CHRTSPEC) != null && comm.getAnnotatedElements().contains(subProp)){
-						Stereotype chrtStereo = comm.getAppliedStereotype(CHESS_CHRTSPEC);
+					if(comm.getAppliedStereotype(Constants.CHRT_SPECIFICATION) != null && comm.getAnnotatedElements().contains(subProp)){
+						Stereotype chrtStereo = comm.getAppliedStereotype(Constants.CHRT_SPECIFICATION);
 						CHRtSpecification chrt = (CHRtSpecification) comm.getStereotypeApplication(chrtStereo);
 						tmpList.add(chrt);
 					}
@@ -345,7 +343,7 @@ private static final String CHESS_CHRTSPEC = "CHESS::Predictability::RTComponent
 			}
 		}
 		//connectors
-		for (Connector conn : comp.getOwnedConnectors()) {
+		for (Connector conn : umlClass.getOwnedConnectors()) {
 			buildConnectorInstance(pkg, conn, resPlatform, inst, property2InstMap);
 		}
 		instancesList.add(inst);
