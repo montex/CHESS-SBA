@@ -154,6 +154,9 @@ public class Constants {
 	// MARTE GQAM stereotypes
 	public static final String MARTE_SaAnalysisContext = "MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext";
 	public static final String MARTE_ALLOCATE = "MARTE::MARTE_Foundations::Alloc::Allocate";
+	public static final String MARTE_SaStep = "MARTE::MARTE_AnalysisModel::SAM::SaStep";
+	public static final String MARTE_EndtoEndFlow = "MARTE::MARTE_AnalysisModel::SAM::SaEndtoEndFlow";
+	public static final String MARTE_SaExecHost = "MARTE::MARTE_AnalysisModel::SAM::SaExecHost";
 	
 	// CHESS IdentifInstance
 	public static final String CH_IDENTIFINSTANCE = "CHESS::Core::IdentifInstance";
@@ -161,5 +164,12 @@ public class Constants {
 	
 	public static final String CH_HW_BUS = "CHESS::Predictability::DeploymentConfiguration::HardwareBaseline::CH_HwBus";
 	
+	
+	// MARTE
+	public static final String GAWORKLOADEVENT = "MARTE::MARTE_AnalysisModel::GQAM::GaWorkloadEvent";
+	public static final String GAWORKLOADBEHAVIOR = "MARTE::MARTE_AnalysisModel::GQAM::GaWorkloadBehavior";
+	
+	
+	public static final String CH_PsmPackage = "CHESS::Core::PSMPackage";
 	
 }
