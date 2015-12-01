@@ -37,9 +37,19 @@
         </library>
      </unit>
 	</extension>
-   
+	
    <extension
          point="org.eclipse.ui.menus">
+         
+         <menuContribution locationURI="popup:org.eclipse.papyrus.views.modelexplorer.modelexplorer.popup">
+ 			<command
+   				commandId="org.polarsys.chess.m2m.commands.CompareAnalysisResultsCommandID"
+   				id="org.polarsys.chess.m2m.commands.CompareAnalysisResultsMenuID"   
+   				label="Compare Analysis Results"
+  				style="push">
+ 			</command>
+  		 </menuContribution>
+  
       <menuContribution
             allPopups="false"
             locationURI="menu:org.eclipse.ui.main.menu">
@@ -121,6 +131,13 @@
    <extension
          id="Build Instance Command"
          point="org.eclipse.ui.commands">
+        
+      <command
+            defaultHandler="org.polarsys.chess.m2m.handlers.CompareAnalysisResultsHandler"
+            id="org.polarsys.chess.m2m.commands.CompareAnalysisResultsCommandID"
+            name="Compare Analysis Results">
+      </command>
+      
       <!--command
             categoryId="it.unipd.chess.commands.category"
             defaultHandler="org.polarsys.chess.m2m.QVToUIHandlerFull"
@@ -155,5 +172,8 @@
       </command>
       -->
    </extension>
+   
+
+   
    
 </plugin>

@@ -13,7 +13,7 @@
 -- v1.0 which accompanies this distribution, and is available at     --
 -- http://www.eclipse.org/legal/epl-v10.html                         --
 -----------------------------------------------------------------------
-*/
+ */
 
 package org.polarsys.chess.m2m.handlers;
 
@@ -36,9 +36,11 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaResourcesPlatform;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
@@ -54,9 +56,12 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Stereotype;
+import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
+import org.polarsys.chess.core.util.HWAnalysisResultData;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.ViewUtils;
@@ -74,22 +79,22 @@ import org.polarsys.chess.service.utils.CHESSEditorUtils;
  * The Class QVToUIHandlerVERDErealizes the handler for the scehdulability analysis command.
  */
 public class QVToUIHandlerVERDE extends AbstractHandler {
-	
+
 	/** The active shell. */
 	private Shell activeShell = null;
-	
+
 	/** The in resource. */
 	private Resource inResource = null;
-	
+
 	/** The context class. */
-	private Class contextClass;
-	
+//	private Class contextClass;
+
 	/** The sa analysis name. */
 	private String saAnalysisName;
-	
+
 	/** The psm package name. */
 	private String psmPackageName;
-	
+
 	/**
 	 * Gets the active project.
 	 *
@@ -99,7 +104,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 	private IProject getActiveProject(IEditorPart editor) {
 		IFileEditorInput input = (IFileEditorInput) editor.getEditorInput();
 		IFile file = input.getFile();
-		return file.getProject();
+		return file.getProject(); 
 	}
 
 	/**
@@ -115,9 +120,10 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final IEditorPart editor = HandlerUtil.getActiveEditor(event);
 		
+
 		if (!(CHESSEditorUtils.isCHESSProject(editor)))
 			return null;
-		
+
 		try {
 			inResource = ResourceUtils.getUMLResource(((PapyrusMultiDiagramEditor) editor).getServicesRegistry());
 		} catch (ServiceException e) {
@@ -126,7 +132,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		}
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		activeShell = window.getShell();
-		
+
 		//open a dialog to select the schedulability analysis context to be analyzed
 		//first get all the classes stereotyped as SaAnalysisContext
 		final List<Class> selection = new ArrayList<Class>();
@@ -148,30 +154,41 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 			MessageDialog.openWarning(activeShell, "CHESS", "no suitable analysis contexts in the model");
 			return null;
 		}
+		final List<CH_HwProcessor> chHwProcList = new ArrayList<CH_HwProcessor>();
 		//then open the dialog
 		String contextQN = null;
 		AnalysisContextSelectionDialog dialog = new AnalysisContextSelectionDialog(activeShell, selection, "Select Schedulability Context to analyze");
 		if (dialog.open() == Window.OK) {
-			contextQN = dialog.getContext();
-			if(contextQN == null || contextQN.isEmpty()){
-				return null;
-			}
-			for (Element elem : model.allOwnedElements()){
-				if(elem.getAppliedStereotype(TransUtil.SA_ANALYSIS_CTX) != null &&
-						((NamedElement) elem).getQualifiedName().equals(contextQN)){
-					contextClass = (Class) elem;
-				}
-			}
+		
 		}else{
 			return null;
 		}
+		contextQN = dialog.getContext();
+		if(contextQN == null || contextQN.isEmpty()){
+			return null;
+		}
+		
+		Class contextClassTmp = null;
+		for (Element elem : model.allOwnedElements()) {
+			Stereotype saAnalysisContextStereo = elem.getAppliedStereotype(TransUtil.SA_ANALYSIS_CTX);
+			if(saAnalysisContextStereo != null &&
+					((NamedElement) elem).getQualifiedName().equals(contextQN)){
+				contextClassTmp = (Class) elem;
+					
+				SaAnalysisContext saAnalysisContext = (SaAnalysisContext) elem.getStereotypeApplication(saAnalysisContextStereo);
+				List<CH_HwProcessor> tmpList = getPlatformChHwProcessors(saAnalysisContext, model);
+				chHwProcList.addAll(tmpList);
+
+			}
+		}
+		final Class contextClass = contextClassTmp;
 		saAnalysisName = contextClass.getQualifiedName();
 		psmPackageName = contextClass.getName() +"_PSM";
-		
+
 		final Job job = new Job("Transforming") {
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
-					
+
 					TransformationResultsData result =null;
 					try {
 						//CHESSProjectSupport.installMAST();
@@ -182,27 +199,26 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 						throw e;
 					} finally {
 						getActiveProject(editor).refreshLocal(IResource.DEPTH_INFINITE, monitor);
-						
+
 					}
-					
+
 					//open sched analysis result
-					
+
 					try {
 						//can active editor be different from just reopened CHESS ones? it should be not the case given that it has been just reopened
 						//inResource = ResourceUtils.getUMLResource(((CHESSEditor) editor).getServicesRegistry());
 						//Model model = (Model) inResource.getContents().get(0);
-						
-							ModelContent inModel = TransUtil.loadModel(result.umlFile);
-							Model model = (Model) inModel.getContent().get(0);
-						
-						
-						openSchedAnalysisReport(model, result.res);
+
+						ModelContent inModel = TransUtil.loadModel(result.umlFile);
+						Model model = (Model) inModel.getContent().get(0);
+
+						openSchedAnalysisReport(model, result.res, chHwProcList, contextClass);
 					} catch (Exception e) {
 						e.printStackTrace();
 						throw new Exception("Unable to load the model and so open the schedAnalysisReport");
 					}
 
-		
+
 				} catch (Exception e) {
 					e.printStackTrace();
 					return new Status(Status.ERROR, Activator.PLUGIN_ID, 1,
@@ -226,75 +242,116 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		job.schedule();
 		return null;
 	}
-	
+
 	/**
-	 * Collects all the needed information and invokes the PIMPSMTransformationVERDE.performTimingAnalysisWithMAST method
-	 *
-	 * @param editor the editor
-	 * @param monitor the monitor
-	 * @return the string resulting from the MAST execution (i.e. the system is/not schedulable) and the modified model
-	 * @throws Exception the exception
-	 * @see org.polarsys.chess.m2m.transformations.PIMPSMTransformationVERDE#performTimingAnalysisWithMAST(PapyrusMultiDiagramEditor, IFile, IProgressMonitor)
+	 * Returns the list of CH_HwProcessors in this analysisContext
+	 * @param saAnalysisContext
+	 * @param model
+	 * @return
 	 */
-	public TransformationResultsData executeTimingAnalysis(IEditorPart editor, IProgressMonitor monitor) throws Exception {
-		monitor.beginTask("Transforming", 4);
-		
-		IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
-		PIMPSMTransformationVERDE t = new PIMPSMTransformationVERDE();
-		Map<String, String> configProps = new HashMap<String, String>();
-		configProps.put("saAnalysis", saAnalysisName);
-		configProps.put("analysisType", "Schedulability");
-		t.setConfigProperty(configProps);
-		t.setPsmPackageName(psmPackageName);
-		final TransformationResultsData result = t.performTimingAnalysisWithMAST((PapyrusMultiDiagramEditor) editor, inputFile, monitor);
+	private List<CH_HwProcessor> getPlatformChHwProcessors(
+			SaAnalysisContext saAnalysisContext,
+			Model model) {
+		CH_HwProcessor chHwProcessor = null;
+		List<CH_HwProcessor> chHwProcessorList = new ArrayList<CH_HwProcessor>();
+
+		EList<GaResourcesPlatform> platformList = saAnalysisContext.getPlatform();
+		for (GaResourcesPlatform theGaResPlatform : platformList) {
+			if (theGaResPlatform instanceof CHGaResourcePlatform) {
+				CHGaResourcePlatform chGaResPlat = (CHGaResourcePlatform)theGaResPlatform;
+				org.eclipse.uml2.uml.Package thePackage = ViewUtils.getView(chGaResPlat.getBase_Package());
 				
-		//CHESSProjectSupport.fileReplace(newFile, inputFile);
-		return result;
-	}
-	
-
-	/**
-	 * *.
-	 *
-	 * @param model the model
-	 * @param result the result
-	 */
-	public void openSchedAnalysisReport(Model model, final String result){
-		
-		//TODO Not the best solution 			
-		if (result == null)
-			return;
-		//and open a simple, user-friendly report
-
-		final List<CHRtPortSlot> specifications = new ArrayList<CHRtPortSlot>();
-		final List<CH_HwProcessor> cpus = new ArrayList<CH_HwProcessor>();
-		for (Element elem : model.allOwnedElements()) {
-			CHRtPortSlot chrtSlot = UMLUtils.getStereotypeApplication(elem, CHRtPortSlot.class);
-			//if(chrtSlot != null && UMLUtils.getStereotypeApplication(chrtSlot.getBase_Slot().getOwner(), IdentifInstance.class) != null){
-			if(chrtSlot != null){	
-				specifications.add(chrtSlot);
-			}
-			if(elem instanceof InstanceSpecification){
-				CH_HwProcessor chHwProc = UMLUtils.getStereotypeApplication(elem, CH_HwProcessor.class);
-				if(chHwProc != null){
-					cpus.add(chHwProc);
+				if (ViewUtils.getCHESSDeploymentPackage(model)	== thePackage) {
+					EList<Element> allElems = (chGaResPlat.getBase_Package().allOwnedElements());
+					for (Element theElement : allElems) {
+						if (theElement instanceof InstanceSpecification) {
+							InstanceSpecification e = (InstanceSpecification) theElement;
+							if (e.getQualifiedName() != null
+									&& UMLUtils.isProcessorInstance(e)) {
+								chHwProcessor = UMLUtils.getStereotypeApplication(e, CH_HwProcessor.class);	
+								chHwProcessorList.add(chHwProcessor);
+							}
+						}
+					}			
 				}
 			}
-		};
-		
-		final Display display = PlatformUI.getWorkbench().getDisplay();
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				Shell shell = new Shell(display);
-				SchedResultDialog dialog = new SchedResultDialog(shell, result, specifications, cpus);
-				if (dialog.open() == Window.OK) {
-				    System.out.println("OK");
-				}
-			}
-		});
+		}
+		return chHwProcessorList;
+	}
+
+/**
+ * Collects all the needed information and invokes the PIMPSMTransformationVERDE.performTimingAnalysisWithMAST method
+ *
+ * @param editor the editor
+ * @param monitor the monitor
+ * @return the string resulting from the MAST execution (i.e. the system is/not schedulable) and the modified model
+ * @throws Exception the exception
+ * @see org.polarsys.chess.m2m.transformations.PIMPSMTransformationVERDE#performTimingAnalysisWithMAST(PapyrusMultiDiagramEditor, IFile, IProgressMonitor)
+ */
+public TransformationResultsData executeTimingAnalysis(IEditorPart editor, IProgressMonitor monitor) throws Exception {
+	monitor.beginTask("Transforming", 4);
+
+	IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
+	PIMPSMTransformationVERDE t = new PIMPSMTransformationVERDE();
+	Map<String, String> configProps = new HashMap<String, String>();
+	configProps.put("saAnalysis", saAnalysisName);
+	configProps.put("analysisType", "Schedulability");
+	t.setConfigProperty(configProps);
+	t.setPsmPackageName(psmPackageName);
+	final TransformationResultsData result = t.performTimingAnalysisWithMAST((PapyrusMultiDiagramEditor) editor, inputFile, monitor);
+
+	//CHESSProjectSupport.fileReplace(newFile, inputFile);
+	return result;
+}
+
+
+/**
+ * Open a simple, user-friendly report to display the analysis results
+ *
+ * @param model the model
+ * @param result the result
+ */
+public void openSchedAnalysisReport(Model model, final String result, 
+		final List<CH_HwProcessor> cpus, 
+		Class saAnalysisContextClass){
+ 			
+	if (result == null)
+		return;
+	
+	if (saAnalysisContextClass == null) {
+		return;
 	}
 	
+	if(saAnalysisContextClass.eIsProxy()){
+		saAnalysisContextClass = (Class) EcoreUtil.resolve(saAnalysisContextClass, model);
+	}
+		
+	final List<HWAnalysisResultData> hwResults = UMLUtils.getHWAnalysisResults(saAnalysisContextClass);
+	//and open a simple, user-friendly report
+	final List<CHRtPortSlot> specifications = new ArrayList<CHRtPortSlot>();
+	for (Element elem : model.allOwnedElements()) {
+		CHRtPortSlot chrtSlot = UMLUtils.getStereotypeApplication(elem, CHRtPortSlot.class);
+		//if(chrtSlot != null && UMLUtils.getStereotypeApplication(chrtSlot.getBase_Slot().getOwner(), IdentifInstance.class) != null){
+		if(chrtSlot != null){	
+			specifications.add(chrtSlot);
+		}
+	};
+
+	final Display display = PlatformUI.getWorkbench().getDisplay();
+	display.asyncExec(new Runnable() {
+		@Override
+		public void run() {
+			Shell shell = new Shell(display);
+
+			//SchedResultDialog dialog = new SchedResultDialog(shell, result, specifications, cpus, hwResults);
+			SchedResultDialog dialog = new SchedResultDialog(shell, result, specifications, hwResults);
+			if (dialog.open() == Window.OK) {
+				System.out.println("OK");
+			}
+		}
+	});
+}
+
 //	@SuppressWarnings("unused")
 //	private ModelSet getEditorResourceSet(IEditorPart editor)
 //			throws Exception {

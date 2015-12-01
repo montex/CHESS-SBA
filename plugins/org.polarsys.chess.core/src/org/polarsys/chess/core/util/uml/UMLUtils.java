@@ -17,20 +17,38 @@
 package org.polarsys.chess.core.util.uml;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaWorkloadEvent;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaEndtoEndFlow;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaExecHost;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaStep;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerKind;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerPort;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
+import org.eclipse.papyrus.infra.emf.utils.BusinessModelResolver;
+import org.eclipse.papyrus.infra.emf.utils.EMFHelper;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.uml2.uml.Activity;
+import org.eclipse.uml2.uml.ActivityNode;
+import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Component;
+import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
@@ -51,9 +69,13 @@ import org.eclipse.uml2.uml.internal.impl.DependencyImpl;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
 import org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
+import org.polarsys.chess.chessmlprofile.Core.PSMPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
+import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
+import org.polarsys.chess.core.util.AnalysisResultData;
+import org.polarsys.chess.core.util.HWAnalysisResultData;
 import org.polarsys.chess.core.views.ViewUtils;
 
 /**
@@ -414,7 +436,7 @@ public class UMLUtils {
 	 * @return true if it is a {@link ComponentType}
 	 */
 	public static boolean isComponentType(Object el) {
-		if (el instanceof Component && ((Element) el).getAppliedStereotype("CHESS::ComponentModel::ComponentType") != null)
+		if (el instanceof Component && ((Element) el).getAppliedStereotype(Constants.COMPONENT_TYPE) != null)
 			return true;
 		return false;
 	}
@@ -426,7 +448,7 @@ public class UMLUtils {
 	 * @return true if it is a {@link ComponentImplementation}
 	 */
 	public static boolean isComponentImplementation(Object el) {
-		if (el instanceof Component && ((Element) el).getAppliedStereotype("CHESS::ComponentModel::ComponentImplementation") != null)
+		if (el instanceof Component && ((Element) el).getAppliedStereotype(Constants.COMPONENT_IMPLEMENTATION) != null)
 			return true;
 		return false;
 	}
@@ -544,7 +566,7 @@ public class UMLUtils {
 	 * @return true if the object is a Client/Server port
 	 */
 	public static boolean isClientServerPort(final Object el) {
-		if(el instanceof Port && ((Element) el).getAppliedStereotype("MARTE::MARTE_DesignModel::GCM::ClientServerPort") != null)
+		if(el instanceof Port && ((Element) el).getAppliedStereotype(Constants.CLIENTSERVER_PORT) != null)
 			return true;
 		return false;
 	}
@@ -558,7 +580,7 @@ public class UMLUtils {
 	 */
 	public static Stereotype getCHRtSpecification(final Object el) {
 		if(el instanceof Comment)
-			return ((Element) el).getAppliedStereotype("CHESS::Predictability::RTComponentModel::CHRtSpecification");
+			return ((Element) el).getAppliedStereotype(Constants.CHRT_SPECIFICATION);
 		return null;
 	}
 
@@ -580,8 +602,8 @@ public class UMLUtils {
 				Stereotype chrtspecification;
 				if ((chrtspecification = getCHRtSpecification(comm)) != null) {
 					if (portFilter!=null){
-						if (comm.getValue(chrtspecification, "partWithPort") != null
-								&& comm.getValue(chrtspecification,	"partWithPort").equals(portFilter)) {
+						if (comm.getValue(chrtspecification, Constants.CHRTSPEC_PARTWITHPORT) != null
+								&& comm.getValue(chrtspecification,	Constants.CHRTSPEC_PARTWITHPORT).equals(portFilter)) {
 							chrtspecs.add(comm);
 						}
 					} else {
@@ -603,7 +625,7 @@ public class UMLUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends EObject> T getStereotypeApplication(
-			final Element element, final Class<T> stereotypeClass) {
+			final Element element, final java.lang.Class<T> stereotypeClass) {
 		for (EObject stereoApplication : element.getStereotypeApplications()) {
 			if (stereotypeClass.isInstance(stereoApplication)) {
 				return (T) stereoApplication;
@@ -820,12 +842,12 @@ public class UMLUtils {
 				}
 			}
 		}
-		
+
 		// We look for the Assignments from Component to Partition in the Component View
 		parent = CHESSProfileManager.getViewByStereotype(umlModel,
 				Constants.COMPONENT_VIEW_NAME);
 		EList<Element> allCompViewElems = parent.allOwnedElements();		
-		
+
 		for (Element element : allCompViewElems) {
 			if((element.getAppliedStereotype(Constants.ASSIGN)!=null)) {
 				stereo = element.getAppliedStereotype(Constants.ASSIGN);
@@ -995,7 +1017,7 @@ public class UMLUtils {
 		throw new ModelError("CHGaResourcePlatform not found in "+viewName+" view.");
 	}
 
-	
+
 	/**
 	 * Looks inside the input package pack, and returns a Component stereotyped as CHGaResourcePlatform 
 	 * @param umlModel
@@ -1028,7 +1050,7 @@ public class UMLUtils {
 		throw new ModelError("CHGaResourcePlatform not found in "+pack.getName()+" package.");
 	}
 
-	
+
 	/**
 	 * Returns TRUE if the element is a processor instance, FALSE otherwise
 	 * @param element
@@ -1183,7 +1205,6 @@ public class UMLUtils {
 		breadthFirstList.addFirst(cmpv);
 		while (!breadthFirstList.isEmpty()) {
 			final Package candidate = breadthFirstList.poll();
-
 			CHGaResourcePlatform a = UMLUtils.getStereotypeApplication(
 					candidate, CHGaResourcePlatform.class);
 
@@ -1398,7 +1419,7 @@ public class UMLUtils {
 		}
 		return assignments;
 	}	
-	
+
 	/**
 	 * Returns the root instance in the package 
 	 * @param thePack is the Package owning the set of InstanceSpecification
@@ -1422,6 +1443,423 @@ public class UMLUtils {
 			}
 		}
 		return null;
+	}
+	
+/**
+ * Returns the value of the field identified by the match parameter within the s string 
+ * The s string is expected to be in the form: name1=value1,name2=value2,name3=value3
+ * with or without surrounding parenthesis
+ * @param s
+ * @param match
+ * @return
+ */
+	public static String getValue(String s, String match) {
+
+		if (s== null)
+			return"";
+
+		String found = null;
+		String[] splits = s.split(",");
+		for (String split : splits) {
+			if(split.contains(match)){
+				String[] ssplits = split.split("=");
+				for (String str : ssplits) {
+					if(!str.contains(match)){
+						found =  str;
+					}
+				}
+			}
+		}
+		if(found != null){
+			found = found.trim();
+			if (found.startsWith("(")){
+				found = found.substring(1, found.length());
+			}
+			if (found.endsWith(")")){
+				found = found.substring(0, found.length()-1);
+			}
+		}
+		return found;
+	}
+
+/**
+ * Returns the response time and unit
+ * if rldl is expressed in ms by the user convert blockT in ms too
+ * if rldl is expressed in us by the user convert blockT in us too
+ * @param spec
+ * @param opSaStep
+ * @return
+ */
+	private static String getResponseTimeString(CHRtSpecification spec, SaStep opSaStep) {
+		String respT = "";
+		String respUnit = "";
+		String respValue ="";
+
+		String rldl = spec.getRlDl();
+		String rldlUnit = getValue(rldl, "unit");
+
+		if(!opSaStep.getRespT().isEmpty()){
+			respT = opSaStep.getRespT().get(0);
+			respUnit = getValue(respT, "unit");
+			respValue = getValue(respT, "worst");
+		}
+
+
+		//if rldl is expressed in ms by the user convert blockT in ms too
+		if(respValue != null && !respValue.isEmpty() && rldlUnit.equals("ms")){
+			double conv = Float.parseFloat(respValue)*1000;
+			conv = Math.round(conv*100)/100.0d;
+			respValue = Double.toString(conv);
+			respUnit = "ms";
+		}
+
+		//if rldl is expressed in us by the user convert blockT in us too
+		if(respValue != null && !respValue.isEmpty() && rldlUnit.equals("us")){
+			double conv = Float.parseFloat(respValue)*1000000;
+			conv = Math.round(conv*100)/100.0d;
+			respValue = Double.toString(conv);
+			respUnit = "us";
+		}
+
+		return respValue + respUnit;
+	}
+
+	/**
+	 * Returns the blocking time and unit
+	 * if rldl is expressed in ms by the user convert blockT in ms too
+	 * if rldl is expressed in us by the user convert blockT in us too
+	 * @param spec
+	 * @param opSaStep
+	 * @return
+	 */
+	public static String getBlockingTimeString(CHRtSpecification spec, SaStep opSaStep){
+		String blockT = "";
+		String blockUnit = "";
+		String blockValue ="";
+
+		String rldl = spec.getRlDl();
+		String rldlUnit = getValue(rldl, "unit");
+
+		blockT = opSaStep.getBlockT();
+		blockUnit = getValue(blockT, "unit");
+		blockValue = getValue(blockT, "worst");
+
+
+		//if rldl is expressed in ms by the user convert blockT in ms too
+		if(blockValue != null && !blockValue.isEmpty() && rldlUnit.equals("ms")){
+			double conv = Float.parseFloat(blockValue)*1000;
+			conv = Math.round(conv*100)/100.0d;
+			blockValue = Double.toString(conv);
+			blockUnit = "ms";
+		}
+
+		//if rldl is expressed in us by the user convert blockT in us too
+		if(blockValue != null && !blockValue.isEmpty() && rldlUnit.equals("us")){
+			double conv = Float.parseFloat(blockValue)*1000000;
+			conv = Math.round(conv*100)/100.0d;
+			blockValue = Double.toString(conv);
+			blockUnit = "us";
+		}
+
+		return blockValue + blockUnit;
+	}
+
+	/**
+	 * Returns the list of AnalysisResultData contained in the PSM Package
+	 * @param contextClass
+	 * @return
+	 */
+	public static List<AnalysisResultData> getAnalysisResults(Class contextClass){
+
+		List<AnalysisResultData> listData = new ArrayList<AnalysisResultData>();
+		Model model = contextClass.getModel();
+		Package psm = ViewUtils.getCHESSPSMPackage(model);
+
+		if(contextClass.getAppliedStereotype(Constants.MARTE_SaAnalysisContext) == null
+				){
+			return listData;
+		}
+
+		String saAnalysisName = contextClass.getQualifiedName();
+		//		SaAnalysisContext saAnalysisCtx = (SaAnalysisContext) contextClass.getStereotypeApplication(contextClass.getAppliedStereotype(Constants.MARTE_SaAnalysisContext));
+		Package psmPackage;
+
+		SaEndtoEndFlow saEndtoEndFlow = null;
+		SaStep saStep = null;
+		SaAnalysisContext psmAnalysisContext = null;
+
+		for (Package pkg: psm.getNestedPackages()){
+			Stereotype stereo = pkg.getAppliedStereotype(Constants.CH_PsmPackage);
+			if(stereo != null){
+				PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
+				//the following condition could be done directly comparing the objects and not their names
+				if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
+					psmPackage = pkg;
+					//					platform = ((CHGaResourcePlatform) psmPkg.getAnalysisContext().getPlatform().get(0)).getBase_Package();
+					Slot slot = null;
+					Comment chrtComm = null;
+					//					Activity pimsaEndtoEndFlow = null;
+					//ASSUMPTION psmPackage owns a AnalysisContext Package
+					Package psmAnalysisContextPack = (Package) psmPackage.getOwnedMember("AnalysisContext");
+					Class psmAnalysisContextClass = null;
+					for (Element elem : psmAnalysisContextPack.getOwnedElements()){
+						if (!(elem instanceof Class))
+							continue;
+						psmAnalysisContextClass = (Class) elem;
+						psmAnalysisContext = (SaAnalysisContext) psmAnalysisContextClass.getStereotypeApplication(psmAnalysisContextClass.getAppliedStereotype(Constants.MARTE_SaAnalysisContext));
+					}
+
+					for (Element elem: psmAnalysisContextClass.allOwnedElements()){
+						if (! (elem instanceof Activity))
+							continue;
+						Activity activity = (Activity) elem;
+						if (elem.getAppliedStereotype(Constants.MARTE_EndtoEndFlow) == null)
+							continue;
+
+						psmAnalysisContext = (SaAnalysisContext) psmAnalysisContextClass.getStereotypeApplication(psmAnalysisContextClass.getAppliedStereotype(Constants.MARTE_SaAnalysisContext));
+						saEndtoEndFlow = (SaEndtoEndFlow) elem.getStereotypeApplication(elem.getAppliedStereotype(Constants.MARTE_EndtoEndFlow));
+						//assumption: one SaStep inside each SaEndtoEndFlow
+						for (ActivityNode node: activity.getNodes()){
+							if (node.getAppliedStereotype(Constants.MARTE_SaStep) == null)
+								continue;
+							saStep = (SaStep) node.getStereotypeApplication(node.getAppliedStereotype(Constants.MARTE_SaStep));
+							//now obtain the link to the originating PIM
+							//ASSUMPTION: constraints are generated under the contextClass to store information about traceability to PIM
+							//ASSUMPTION: constrained elements are: SaEndtoEndFlow Activity, ChRtPortSlot Slot, CHRtSpecification Comment.
+							for (Constraint constr : psmAnalysisContextClass.getOwnedRules()){
+								if (!constr.getConstrainedElements().contains(activity))
+									continue;
+								for (Element constrained : constr.getConstrainedElements()){
+									if (constrained instanceof Slot)
+										slot = (Slot) constrained;
+									if (constrained instanceof Comment)
+										chrtComm = (Comment) constrained;
+								}
+							}
+
+							if (chrtComm == null || slot == null){
+								break;
+							}
+
+							//ASSUMPTION slot, chrtComm not empty
+							CHRtSpecification chrt = (CHRtSpecification) chrtComm.getStereotypeApplication(chrtComm.getApplicableStereotype(Constants.CHRT_SPECIFICATION));
+
+							AnalysisResultData resultData = new AnalysisResultData();
+							InstanceSpecification inst =  slot.getOwningInstance();
+							/*
+								Stereotype idInstStereo = inst.getAppliedStereotype(TabbedPropertiesUtils.IDENTIFINST);
+								if(idInstStereo != null){
+									IdentifInstance idInst = (IdentifInstance) inst.getStereotypeApplication(idInstStereo);
+									resultData.instSpec = idInst.getSourceInstanceSpec();
+								}*/
+							resultData.instSpec = inst;
+							resultData.ctxOP = (Operation) chrt.getContext();
+							resultData.instance = slot.getOwningInstance().getName();
+							resultData.context = chrt.getContext().getName();
+							ActivityNode initial = activity.getNode("InitialNode1");
+							Stereotype initialStereo = initial.getAppliedStereotype(Constants.GAWORKLOADEVENT);
+							GaWorkloadEvent workload = (GaWorkloadEvent) initial.getStereotypeApplication(initialStereo);
+							resultData.arrival = workload.getPattern();
+							if(saEndtoEndFlow.getEnd2EndD() != null && !saEndtoEndFlow.getEnd2EndD().isEmpty()){
+								resultData.rldl = saEndtoEndFlow.getEnd2EndD().get(0);
+							}
+							if(saStep.getConcurRes() != null){
+								EList<String> schedParams = saStep.getConcurRes().getSchedParams();
+								if(schedParams != null && !schedParams.isEmpty()){
+									String schedParam = schedParams.get(0);
+									resultData.priority = schedParam;
+								}
+							}
+							if(saStep.getSubUsage() != null && !saStep.getSubUsage().isEmpty()){
+								Operation operation = (Operation) saStep.getSubUsage().get(0).getBase_NamedElement();
+								SaStep opSaStep = (SaStep) operation.getStereotypeApplication(operation.getAppliedStereotype(Constants.MARTE_SaStep));
+								if(opSaStep.getExecTime() != null && !opSaStep.getExecTime().isEmpty()){
+									resultData.localWCET = opSaStep.getExecTime().get(0);
+								}
+								resultData.respT = getResponseTimeString(chrt, opSaStep);
+								resultData.blockT = getBlockingTimeString(chrt, opSaStep);
+							}
+
+
+							String rldl = chrt.getRlDl();
+							String rldlValue = getValue(rldl, "value");
+							String respT = "";
+							String respValue ="";
+
+							if (saEndtoEndFlow.getEnd2EndT().size()>0){
+								respT = saEndtoEndFlow.getEnd2EndT().get(0);
+								respValue = getValue(respT, "worst");
+							}
+							if (!respValue.isEmpty() && !rldlValue.isEmpty() ){
+								if(Float.parseFloat(respValue) <= Float.parseFloat(rldlValue)){
+									resultData.isSched= "YES";
+								}else{
+									resultData.isSched= "NO";
+								}
+							}
+
+
+							listData.add(resultData);
+						}
+
+					}
+				}
+			}
+		}
+		return listData;
+
+	}
+	
+	/**
+	 * Returns the HW results for Schedulability analysis
+	 * @param contextClass
+	 * @return
+	 */
+	public static List<HWAnalysisResultData> getHWAnalysisResults(Class contextClass){
+		
+		List<HWAnalysisResultData> listData = new ArrayList<HWAnalysisResultData>();
+		Model model = contextClass.getModel();
+		Package psm = ViewUtils.getCHESSPSMPackage(model);
+				
+		if(contextClass.getAppliedStereotype(Constants.MARTE_SaAnalysisContext) == null
+				){
+			return listData;
+		}
+		
+		String saAnalysisName = contextClass.getQualifiedName();
+		Package psmPackage;
+		
+		SaExecHost host = null;
+		
+		for (Package pkg: psm.getNestedPackages()){
+			Stereotype stereo = pkg.getAppliedStereotype(Constants.CH_PsmPackage);
+			if(stereo != null){
+				PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
+				System.out.println("Pkg QN="+psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName());
+				if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
+					psmPackage = pkg;
+					//ASSUMPTION psmPackage owns a AnalysisContext Package
+					Package psmHostPack = (Package) psmPackage.getOwnedMember("Host");
+					for (Element elem: psmHostPack.getOwnedElements()){
+						if (elem.getAppliedStereotype(Constants.MARTE_SaExecHost) == null)
+							continue;
+						host = (SaExecHost) elem.getStereotypeApplication(elem.getAppliedStereotype(Constants.MARTE_SaExecHost));
+						HWAnalysisResultData data = new HWAnalysisResultData();
+						data.hw_instance = ((Class) elem).getName();
+						if (host.getUtilization().size()>0){
+							data.hw_utilization = host.getUtilization().get(0);
+						}
+						listData.add(data);
+					}
+						
+				}
+			}
+		}
+		return listData;
+	}
+
+
+	/**
+	 * <pre>
+	 * Get the selected element, the first selected element if several are selected or null
+	 * if no selection or the selection is not an {@link EObject}.
+	 *
+	 * @return selected {@link EObject} or null
+	 * </pre>
+	 *
+	 */
+	public static EObject getSelectedElement() {
+		EObject eObject = null;
+		Object selection = null;
+
+
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if (activeWorkbenchWindow != null) {
+			// Get current selection
+			selection = activeWorkbenchWindow.getSelectionService().getSelection();
+
+			// Get first element if the selection is an IStructuredSelection
+			if (selection instanceof IStructuredSelection) {
+				IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+				selection = structuredSelection.getFirstElement();
+			}
+
+			// Treat non-null selected object (try to adapt and return EObject)
+			if (selection != null) {
+				if (selection instanceof IAdaptable) {
+					selection = EMFHelper.getEObject(selection);
+				}
+
+				Object businessObject = BusinessModelResolver.getInstance().getBusinessModel(selection);
+				if (businessObject instanceof EObject) {
+					eObject = (EObject) businessObject;
+				}
+			}
+		}
+		return eObject;
+	}
+
+	/**
+	 * <pre>
+	 * Get the selected element, the first selected element if several are selected or null
+	 * if no selection or the selection is not an {@link EObject}.
+	 *
+	 * @return selected {@link EObject} or null
+	 * </pre>
+	 *
+	 */
+	public static EList<EObject> getTwoSelectedElements() {
+		EObject eObject1 = null;
+		EObject eObject2 = null;
+		Object selection = null;
+		Object selection1 = null;
+		Object selection2 = null;
+		EList<EObject> result = new BasicEList<EObject>();
+
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if (activeWorkbenchWindow != null) {
+			// Get current selection
+			selection = activeWorkbenchWindow.getSelectionService().getSelection();
+
+			// Get first element if the selection is an IStructuredSelection
+			if (selection instanceof IStructuredSelection) {
+				IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+				Iterator iterator = structuredSelection.iterator();				
+				if (iterator.hasNext()) {
+					selection1 = iterator.next();
+				}
+				if (iterator.hasNext()) {
+					selection2 = iterator.next();
+				}
+			}
+
+			// Treat non-null selected object (try to adapt and return EObject)
+			if (selection1 != null) {
+				if (selection1 instanceof IAdaptable) {
+					selection1 = EMFHelper.getEObject(selection1);
+				}
+
+				Object businessObject1 = BusinessModelResolver.getInstance().getBusinessModel(selection1);
+				if (businessObject1 instanceof EObject) {
+					eObject1 = (EObject) businessObject1;					
+				}
+			}
+			result.add(eObject1);
+
+			if (selection2 != null) {
+				if (selection2 instanceof IAdaptable) {
+					selection2 = EMFHelper.getEObject(selection2);
+				}
+
+				Object businessObject2 = BusinessModelResolver.getInstance().getBusinessModel(selection2);
+				if (businessObject2 instanceof EObject) {
+					eObject2 = (EObject) businessObject2;					
+				}
+			}
+			result.add(eObject2);
+			
+		}
+		return result;
 	}
 
 }
