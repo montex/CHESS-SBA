@@ -1680,16 +1680,36 @@ public class UMLUtils {
 								resultData.blockT = getBlockingTimeString(chrt, opSaStep);
 							}
 
-
 							String rldl = chrt.getRlDl();
 							String rldlValue = getValue(rldl, "value");
+							String rldlUnit = getValue (rldl, "unit");
 							String respT = "";
 							String respValue ="";
+							String respUnit ="";
 
 							if (saEndtoEndFlow.getEnd2EndT().size()>0){
 								respT = saEndtoEndFlow.getEnd2EndT().get(0);
 								respValue = getValue(respT, "worst");
 							}
+							
+							//if rldl is expressed in ms by the user convert respT in ms too
+							if(respValue != null && !respValue.isEmpty() && rldlUnit.equals("ms")){
+								double conv = Float.parseFloat(respValue)*1000;
+								conv = Math.round(conv*100)/100.0d;
+								respValue = Double.toString(conv);
+								respUnit = "ms";
+							}
+
+							//if rldl is expressed in us by the user convert respT in us too
+							if(respValue != null && !respValue.isEmpty() && rldlUnit.equals("us")){
+								double conv = Float.parseFloat(respValue)*1000000;
+								conv = Math.round(conv*100)/100.0d;
+								respValue = Double.toString(conv);
+								respUnit = "us";
+							}
+
+							String responseTime = respValue + respUnit;
+							
 							if (!respValue.isEmpty() && !rldlValue.isEmpty() ){
 								if(Float.parseFloat(respValue) <= Float.parseFloat(rldlValue)){
 									resultData.isSched= "YES";
@@ -1697,7 +1717,6 @@ public class UMLUtils {
 									resultData.isSched= "NO";
 								}
 							}
-
 
 							listData.add(resultData);
 						}
