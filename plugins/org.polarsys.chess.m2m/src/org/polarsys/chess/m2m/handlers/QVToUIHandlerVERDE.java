@@ -60,6 +60,7 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
+import org.polarsys.chess.core.util.AnalysisResultData;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.HWAnalysisResultData;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
@@ -327,15 +328,16 @@ public void openSchedAnalysisReport(Model model, final String result,
 	}
 		
 	final List<HWAnalysisResultData> hwResults = UMLUtils.getHWAnalysisResults(saAnalysisContextClass);
+	final List<AnalysisResultData> analysisResData = UMLUtils.getAnalysisResults(saAnalysisContextClass);
 	//and open a simple, user-friendly report
-	final List<CHRtPortSlot> specifications = new ArrayList<CHRtPortSlot>();
-	for (Element elem : model.allOwnedElements()) {
-		CHRtPortSlot chrtSlot = UMLUtils.getStereotypeApplication(elem, CHRtPortSlot.class);
-		//if(chrtSlot != null && UMLUtils.getStereotypeApplication(chrtSlot.getBase_Slot().getOwner(), IdentifInstance.class) != null){
-		if(chrtSlot != null){	
-			specifications.add(chrtSlot);
-		}
-	};
+//	final List<CHRtPortSlot> specifications = new ArrayList<CHRtPortSlot>();
+//	for (Element elem : model.allOwnedElements()) {
+//		CHRtPortSlot chrtSlot = UMLUtils.getStereotypeApplication(elem, CHRtPortSlot.class);
+//		//if(chrtSlot != null && UMLUtils.getStereotypeApplication(chrtSlot.getBase_Slot().getOwner(), IdentifInstance.class) != null){
+//		if(chrtSlot != null){	
+//			specifications.add(chrtSlot);
+//		}
+//	};
 
 	final Display display = PlatformUI.getWorkbench().getDisplay();
 	display.asyncExec(new Runnable() {
@@ -344,7 +346,7 @@ public void openSchedAnalysisReport(Model model, final String result,
 			Shell shell = new Shell(display);
 
 			//SchedResultDialog dialog = new SchedResultDialog(shell, result, specifications, cpus, hwResults);
-			SchedResultDialog dialog = new SchedResultDialog(shell, result, specifications, hwResults);
+			SchedResultDialog dialog = new SchedResultDialog(shell, result, analysisResData, hwResults);
 			if (dialog.open() == Window.OK) {
 				System.out.println("OK");
 			}

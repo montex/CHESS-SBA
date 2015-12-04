@@ -23,10 +23,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.uml2.uml.Operation;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.core.Activator;
+import org.polarsys.chess.core.util.AnalysisResultData;
 import org.polarsys.chess.core.util.HWAnalysisResultData;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
@@ -34,19 +36,17 @@ public class SchedResultDialog extends Dialog {
 
 	private Shell shell;
 	private String result;
-	private List<CHRtPortSlot> specifications;
-	//private List<CH_HwProcessor> cpus;
 	private List<HWAnalysisResultData> hwResults;
+	private List<AnalysisResultData> analysisResData;
 
-	public SchedResultDialog(Shell parentShell, String result, List<CHRtPortSlot> specifications, 
-			//List<CH_HwProcessor> cpus,
+	public SchedResultDialog(Shell parentShell, String result, 
+			List<AnalysisResultData> analysisResData,
 			List<HWAnalysisResultData> hwResults) {
 		super(parentShell);
 		this.shell = parentShell;
 		this.result = result;
-		this.specifications = specifications;
-		//this.cpus = cpus;
 		this.hwResults = hwResults;
+		this.analysisResData = analysisResData;
 
 		Image image = null;
 		URL url = FileLocator.find(Activator.getDefault().getBundle(), new Path("/resources/CHESSicon.gif"), null);
@@ -110,15 +110,15 @@ public class SchedResultDialog extends Dialog {
 				String utilValue = UMLUtils.getValue(utilization, "value");
 				if (utilValue!=null && utilValue.length()>0) {
 					TableItem item = new TableItem(cpuTable, SWT.NONE);
-					item.setText(0, hwRes.hw_instance);
-					//String utilValue = getValue(utilization, "value");
+					item.setText(0, hwRes.hw_instance); 
+					
 					if(utilValue != null && !utilValue.isEmpty()){
 						item.setText(1, utilValue  + "%");
 						if(Float.parseFloat(utilValue) <= 100){
 							item.setText(2, "OK");
 							item.setForeground(2, green);
 						}else{
-							item.setText(2, "NOT OK: utiliaztion over 100%");
+							item.setText(2, "NOT OK: utilization over 100%");
 							item.setForeground(2, red);
 						}
 					}
@@ -142,64 +142,40 @@ public class SchedResultDialog extends Dialog {
 			TableColumn column = new TableColumn(slotTable, SWT.NONE);
 			column.setText(slotTitles[i]);
 		}
-
-		for (CHRtPortSlot slot : specifications) {
-			EList<CHRtSpecification> specifications = slot.getCH_RtSpecification();
-			for (CHRtSpecification spec : specifications) {
-
-				if (spec.getRlDl() == null || spec.getRlDl().isEmpty())
-					continue;
-
-				TableItem item = new TableItem (slotTable, SWT.NONE);
-				item.setText(0, slot.getBase_Slot().getOwningInstance().getName());
-				item.setText(1, spec.getContext().getName());
-
-				String rldl = spec.getRlDl();
-				String rldlUnit = UMLUtils.getValue(rldl, "unit");
-				String rldlValue = UMLUtils.getValue(rldl, "value");
-				String deadline = rldlValue + rldlUnit;
-				item.setText(3, deadline);
-
-				String respT = "";
-				String respUnit = "";
-				String respValue ="";
-
-				if (spec.getRespT().size()>0){
-					respT = spec.getRespT().get(0);
-					respUnit = UMLUtils.getValue(respT, "unit");
-					respValue = UMLUtils.getValue(respT, "worst");
-				}
-
-				//if rldl is expressed in ms by the user convert respT in ms too
-				if(respValue != null && !respValue.isEmpty() && rldlUnit.equals("ms")){
-					double conv = Float.parseFloat(respValue)*1000;
-					conv = Math.round(conv*100)/100.0d;
-					respValue = Double.toString(conv);
-					respUnit = "ms";
-				}
-
-				//if rldl is expressed in us by the user convert respT in us too
-				if(respValue != null && !respValue.isEmpty() && rldlUnit.equals("us")){
-					double conv = Float.parseFloat(respValue)*1000000;
-					conv = Math.round(conv*100)/100.0d;
-					respValue = Double.toString(conv);
-					respUnit = "us";
-				}
-
-				String responseTime = respValue + respUnit;
-				item.setText(2, responseTime);
-				if (!respValue.isEmpty() && !rldlValue.isEmpty() ){
-					if(Float.parseFloat(respValue) <= Float.parseFloat(rldlValue)){
-						item.setText(4, "OK");
-						item.setForeground(4, green);
-					}else{
-						item.setText(4, "NOT OK: Response Time > Deadline");
-						item.setForeground(4, red);
-					}
-				}
+		
+		// read the analysis results and display them in the table
+		for (AnalysisResultData resDataElem : analysisResData) {
+			int i = 0;
+			String theSwInstance = resDataElem.instance;
+			TableItem item = new TableItem(slotTable, SWT.NONE);			
+			item.setText(i, theSwInstance);
+			i++;	
+			
+			Operation theOperation = resDataElem.ctxOP;
+			String theOperationName = theOperation.getName();
+			item.setText(i, theOperationName);
+			i++;
+			
+			String theRespTime = resDataElem.respT;
+			item.setText(i, theRespTime);
+			i++;
+			
+			String theDeadline = resDataElem.rldl;
+			item.setText(i, theDeadline);
+			i++;
+			
+			String theResult = convertToOkNok(resDataElem.isSched);			
+			if (theResult.equalsIgnoreCase("OK")) {
+				item.setForeground(i, green);
 			}
+			else {
+				item.setForeground(i, red);
+			}
+			item.setText(i, theResult);
+			i++;
+			
 		}
-
+		
 		for (int i = 0; i < slotTitles.length; i++) {
 			slotTable.getColumn(i).pack();
 		}
@@ -207,7 +183,23 @@ public class SchedResultDialog extends Dialog {
 		return super.createDialogArea(parent);
 	}
 
-
+	
+	/**
+	 * Convert schedulability results:
+	 * "YES" -> "OK" 
+	 * "NO"  -> "NOT OK"
+	 * @param isSched
+	 * @return
+	 */
+	private String convertToOkNok(String isSched) {
+		String result ="NOT OK";
+		if(isSched.equalsIgnoreCase("YES")) {
+			result = "OK";
+		}
+		return result;
+	}
+	
+	
 	/**
 	 * Configure shell for displaying schedulability results
 	 */
