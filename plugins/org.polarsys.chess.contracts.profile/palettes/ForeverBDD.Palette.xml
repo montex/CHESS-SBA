@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+   
+    Copyright (c) 2013, 2015 Intecs SpA 
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+    Nicholas Pacini nicholas.pacini@intecs.it 
+    Stefano Puri stefano.puri@intecs.it
+    Laura Baracchi  laura.baracchi@intecs.it  
+    Initial API and implementation and/or initial documentation
+ -->
+
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="ForeverBDDAssociationsDrawerID" name="Associations">
+			<aspectTool description="Create a new DirectedComposition" iconpath="platform:/plugin/org.eclipse.papyrus.uml.service.types/icons/Association_composite_directed.gif" id="blockdefinition.tool.association_composite_directed_1346854862405" name="DirectedComposition" refToolId="blockdefinition.tool.association_composite_directed"/>
+		    <aspectTool description="Create a new Dependency" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Dependency.gif" id="internalblock.tool.dependency_1355828649356" name="Dependency" refToolId="blockdefinition.tool.dependency"/>
+		</drawer>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="ForeverBDDModelElementsDrawerID" name="ModelElements">
+			<aspectTool description="Create a new Package" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Package.gif" id="blockdefinition.tool.package_1346854841276" name="Package" refToolId="blockdefinition.tool.package"/>
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.papyrus.sysml/icons/blocks/Block.gif" id="blockdefinition_modelelements.tool.block_1346854888709" name="System (Block)" refToolId="blockdefinition_modelelements.tool.block">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESSContract::System"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			
+			<!--aspectTool description="Create a new SubSystem" iconpath="platform:/plugin/org.eclipse.papyrus.sysml/icons/blocks/Block.gif" id="blockdefinition.tool.block_1372930036648" name="SubSystem" refToolId="blockdefinition.tool.block"><postAction id="org.eclipse.papyrus.applystereotypeactionprovider"><stereotypesToApply><stereotype stereotypeName="CHESSContract::SubSystem"/></stereotypesToApply></postAction></aspectTool-->
+			
+			<aspectTool description="Create a new Block" iconpath="platform:/plugin/org.eclipse.papyrus.sysml/icons/blocks/Block.gif" id="blockdefinition.tool.block_1372929726641" name="Block" refToolId="blockdefinition.tool.block"/>
+		
+			<aspectTool description="Create a new Signal" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Signal.gif" id="blockdefinition.tool.signal_1346855032172" name="Signal" refToolId="blockdefinition.tool.signal"/>
+			<aspectTool description="Create a new Part" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Property.gif" id="blockdefinition.tool.part_1346855315588" name="Part" refToolId="blockdefinition.tool.part"/>
+			<aspectTool description="Create a new Property" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Property.gif" id="blockdefinition.tool.property_1346856238909" name="Property" refToolId="blockdefinition.tool.property"/>
+		
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="blockdefinition_constraints.tool.constraint_1426786943140" name="CriticalityLevel (Constraint)" refToolId="blockdefinition_constraints.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Safety::CriticalityLevel"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="blockdefinition_constraints.tool.constraint_1426786945467" name="CriticalitySpecification (Constraint)" refToolId="blockdefinition_constraints.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Safety::CriticalitySpecification"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+		
+		</drawer>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="ForeverBDDPortAndFlowsDrawerID" name="PortAndFlows">
+			<aspectTool description="Create a new FlowPort" id="blockdefinition_portandflows.tool.flowport"
+				name="FlowPort" refToolId="blockdefinition.tool.flowport">
+			</aspectTool>
+		</drawer>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="ForeverBDDDataTypesDrawerID" name="DataTypes">
+			<aspectTool description="Create a new DataType" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/DataType.gif" id="blockdefinition.tool.datatype_1346855571237" name="DataType" refToolId="blockdefinition.tool.datatype"/>
+			<aspectTool description="Create a new PrimitiveType" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/PrimitiveType.gif" id="blockdefinition.tool.primitivetype_1346855577884" name="PrimitiveType" refToolId="blockdefinition.tool.primitivetype"/>
+			<aspectTool description="Create a new Enumeration" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Enumeration.gif" id="blockdefinition.tool.enumeration_1346855583101" name="Enumeration" refToolId="blockdefinition.tool.enumeration"/>
+			<aspectTool description="Create a new EnumerationLiteral" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/EnumerationLiteral.gif" id="blockdefinition.tool.enumerationliteral_1346855585901" name="EnumerationLiteral" refToolId="blockdefinition.tool.enumerationliteral"/>
+		</drawer>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="ForeverBDDContractsDrawerID" name="Contracts">
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.papyrus.sysml/icons/constraints/ConstraintBlock.gif" id="blockdefinition_constraints.tool.constraintblock_1346855628900" name="Contract (ConstraintBlock)" refToolId="blockdefinition_constraints.tool.constraintblock">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESSContract::Contract"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create a new ContractProperty" id="blockdefinition_constraints.tool.constraintproperty"
+				name="ContractProperty" refToolId="blockdefinition.tool.constraintproperty">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESSContract::ContractProperty"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+		
+			
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="blockdefinition_constraints.tool.constraint_1346855697284" name="FormalProperty (Constraint)" refToolId="blockdefinition_constraints.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESSContract::FormalProperty"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<!--aspectTool description="Create a new Constraint" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="internalblock.tool.constraint_1355828683551" name="Constraint" refToolId="blockdefinition.tool.constraint"/-->
+		</drawer>
+	</content>
+</paletteDefinition>

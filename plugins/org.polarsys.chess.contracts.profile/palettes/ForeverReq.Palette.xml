@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+   
+    Copyright (c) 2013, 2015 Intecs SpA 
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+    Nicholas Pacini nicholas.pacini@intecs.it 
+    Stefano Puri stefano.puri@intecs.it
+    Laura Baracchi  laura.baracchi@intecs.it  
+    Initial API and implementation and/or initial documentation
+ -->
+
+<paletteDefinition>
+	<content>
+		<drawer iconpath="/icons/drawer.gif" id="Drawer__1346858995830" name="FoReVer/Nodes">
+			<aspectTool description="Create a new Package" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Package.gif" id="clazz.tool.package_1346859060238" name="Package" refToolId="clazz.tool.package"/>
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.papyrus.sysml/icons/requirements/Requirement.gif" id="requirement.tool.class_1346859067277" name="ForeverRequirement (Requirement)" refToolId="requirement.tool.class">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESSContract::ForeverRequirement"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+		</drawer>
+		<drawer iconpath="/icons/drawer.gif" id="drawer_1346859073951" name="FoReVer/Edges">
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.papyrus.sysml/icons/requirements/DeriveReqt.gif" id="requirement.tool.derive_1346859127117" name="DeriveReqt (Derive)" refToolId="requirement.tool.copy">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="SysML::Requirements::DeriveReqt"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.papyrus.sysml/icons/requirements/Satisfy.gif" id="requirement.tool.satisfy_1346859134309" name="Satisfy (Satisfy)" refToolId="requirement.tool.satisfy">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="SysML::Requirements::Satisfy"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+		</drawer>
+	</content>
+</paletteDefinition>

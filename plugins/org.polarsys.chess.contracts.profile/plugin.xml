@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+   
+    Copyright (c) 2013, 2015 Intecs SpA 
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+    Nicholas Pacini nicholas.pacini@intecs.it 
+    Stefano Puri stefano.puri@intecs.it
+    Laura Baracchi  laura.baracchi@intecs.it  
+    Initial API and implementation and/or initial documentation
+ -->
+
+<plugin>
+
+    <extension point="org.eclipse.emf.ecore.uri_mapping">
+      <mapping
+            source="pathmap://CHESSContract/"
+            target="platform:/plugin/org.polarsys.chess.contracts.profile/model/"/>
+   </extension>
+
+    <extension point="org.eclipse.papyrus.uml.extensionpoints.UMLProfile">
+      <profile
+            description="UML, MARTE and SysML profile for Contract Modelling"
+            name="CHESSContract"
+            path="pathmap://CHESSContract/CHESSContract.profile.uml"
+            provider="Intecs">
+      </profile>
+   </extension>
+    
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///chesscontracts.ecore"
+            class="org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage"
+            genModel="model/CHESSContract.profile.genmodel"/>
+   </extension>
+   
+   <extension point="org.eclipse.uml2.uml.generated_package">
+      <profile
+         location="pathmap://CHESSContract/CHESSContract.profile.uml#_Hmdm0NDVEeG5E52m3d5H1g"
+      	 uri="http:///CHESSContract.ecore">		
+      </profile>
+   </extension>
+
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESSContractProfile.profile -->
+      <package
+            uri="http:///CHESSContract.ecore"
+            class="org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage"
+            genModel="model/CHESSContract.profile.genmodel"/>
+   </extension>
+
+  
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESSContractProfile.profile -->
+      <package
+            uri="http:///CHESSContract/DataTypes.ecore"
+            class="org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesPackage"
+            genModel="model/CHESSContract.profile.genmodel"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="org.polarsys.chess.contracts.profile.BDDpaletteDefinition"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            name="org.polarsys.chess.contracts.profile.BDDpaletteDefinition"
+            path="/palettes/ForeverBDD.Palette.xml"
+            provider="Intecs">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.sysml.diagram.blockdefinition">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <!--extension
+         point="org.eclipse.papyrus.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="org.polarsys.chess.contracts.profile.systemView.CDpaletteDefinition"
+            class="org.eclipse.papyrus.diagram.common.service.PluginPaletteProvider"
+            name="org.polarsys.chess.contracts.profile.CDpaletteDefinition"
+            path="/palettes/ForeverSystemViewCD.Palette.xml"
+            provider="Intecs">
+         <Priority
+               name="Highest">
+         </Priority>
+          <editor
+               id="org.eclipse.papyrus.diagram.clazz">
+         </editor>
+      </paletteDefinition>
+   </extension-->
+   
+  
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="org.polarsys.chess.contracts.profile.IBDpaletteDefinition"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            name="org.polarsys.chess.contracts.profile.IBDpaletteDefinition"
+            path="/palettes/ForeverIBD.Palette.xml"
+            provider="Intecs">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.sysml.diagram.internalblock">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="org.polarsys.chess.contracts.profile.ReqpaletteDefinition"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            name="org.polarsys.chess.contracts.profile.ReqpaletteDefinition"
+            path="/palettes/ForeverReq.Palette.xml"
+            provider="Intecs">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="it.unipd.chess.diagram.requirement">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="ClassDiagram-Forever-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            name="ClassDiagram-Forever-Palette"
+            path="/palettes/ForeverCD.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.clazz">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="CompositeDiagram-Forever-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            name="CompositeDiagram-Forever-Palette"
+            path="/palettes/ForeverCSD.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+              id="org.eclipse.papyrus.uml.diagram.composite">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="ForeverDeploymentCD.Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            name="ForeverDeploymentCD.Palette"
+            path="/palettes/ForeverDeploymentCD.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+              id="org.eclipse.papyrus.uml.diagram.clazz">
+         </editor>
+      </paletteDefinition>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESSContract.profile -->
+      <package
+            uri="http:///CHESSContract.ecore"
+            class="org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage"
+            genModel="model/CHESSContract.profile.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESSContract.profile -->
+      <package
+            uri="http:///CHESSContract/DataTypes.ecore"
+            class="org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesPackage"
+            genModel="model/CHESSContract.profile.genmodel"/>
+   </extension>
+</plugin>

@@ -1,0 +1,25 @@
+<!-- ===================================================================== -->
+<!-- Custom targets.                                                       -->
+<!-- Set customBuildCallbacks = build.acceleo in your build.properties.    -->
+<!-- ===================================================================== -->
+<project name="Build Acceleo Module" default="noDefault">    
+    <!-- ================================================================= -->
+    <!-- Default target                                                    -->
+    <!-- ================================================================= -->
+    <target name="noDefault">
+        <echo message="This file must be called with explicit targets" />
+    </target>
+
+    <!-- ================================================================= -->
+    <!-- This will be called automatically after the compilation of each   -->
+    <!-- Bundle... in dependency order.                                    -->
+    <!-- ================================================================= -->
+    <target name="post.compile.@dot">
+        <acceleoCompiler 
+            sourceFolder="${target.folder}"
+            outputFolder="${target.folder}"
+            dependencies="${target.folder}/../../org.intecs.forever.profile;${target.folder}/../../it.unipd.chess;${target.folder}/../../it.unipd.chess.chessmlprofile;${target.folder}/../../org.intecs.forever.integration;${target.folder}/../../fr.irisa.triskell.chess.checkers.genericchecker;${target.folder}/../../org.intecs.forever.validation;${target.folder}/../../it.unipd.chess.editor;${target.folder}/../../it.unipd.chess.diagram.sequence;${target.folder}/../../it.unipd.chess.diagram.requirement;${target.folder}/../../org.intecs.chess.sysml.diagram.blockdefinition;"
+            binaryResource="false">
+        </acceleoCompiler>
+    </target>    
+</project>

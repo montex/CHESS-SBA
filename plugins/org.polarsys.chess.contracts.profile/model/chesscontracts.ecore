@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="chesscontracts" nsURI="http:///CHESSContract.ecore" nsPrefix="CHESSContract">
+  <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <details key="originalName" value="CHESSContract"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="System" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//blocks/Block"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Contract" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//constraints/ConstraintBlock">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Assume" ordered="false"
+        lowerBound="1" eType="#//FormalProperty"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Guarantee" ordered="false"
+        lowerBound="1" eType="#//FormalProperty"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Formalize" ordered="false"
+        lowerBound="1" eType="#//ForeverRequirement"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Language" ordered="false"
+        lowerBound="1" eType="#//DataTypes/Languages"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FormalProperty">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base_Constraint" ordered="false"
+        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Constraint"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ForeverRequirement" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//requirements/Requirement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Author" ordered="false"
+        lowerBound="1" eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Status" ordered="false"
+        lowerBound="1" eType="#//DataTypes/ReqStatuses"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Type" ordered="false" lowerBound="1"
+        eType="#//DataTypes/ReqTypes"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Priority" ordered="false"
+        lowerBound="1" eType="#//DataTypes/ReqPriorities"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Performance" ordered="false"
+        lowerBound="1" eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="Performance "/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Tolerance" ordered="false"
+        lowerBound="1" eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Severity" ordered="false"
+        lowerBound="1" eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Maturity" ordered="false"
+        lowerBound="1" eType="#//DataTypes/ReqMaturities"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Risk" ordered="false" lowerBound="1"
+        eType="#//DataTypes/ReqRisks"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Formalize">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base_Abstraction" ordered="false"
+        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Abstraction"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubSystem" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//blocks/Block"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ContractProperty" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//constraints/ConstraintProperty">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="RefinedBy" ordered="false"
+        upperBound="-1" eType="#//ContractRefinement"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ContractType" ordered="false"
+        lowerBound="1" eType="#//DataTypes/ContractTypes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ContractRefinement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base_DataType" ordered="false"
+        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//DataType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Instance" ordered="false"
+        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Contract" ordered="false"
+        lowerBound="1" eType="#//ContractProperty"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DelegationConstraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base_Constraint" ordered="false"
+        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Constraint"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Platform">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base_Component" ordered="false"
+        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SRAComponent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComponentInstance">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base_Property" ordered="false"
+        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="WeakGuarantees" ordered="false"
+        upperBound="-1" eType="#//ContractProperty"/>
+  </eClassifiers>
+  <eSubpackages name="DataTypes" nsURI="http:///CHESSContract/DataTypes.ecore" nsPrefix="CHESSContract.DataTypes">
+    <eClassifiers xsi:type="ecore:EClass" name="OthelloConstraint">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="Expression" ordered="false"
+          lowerBound="1" eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Continuous"/>
+    <eClassifiers xsi:type="ecore:EEnum" name="ReqStatuses">
+      <eLiterals name="Initial"/>
+      <eLiterals name="Derived" value="1"/>
+      <eLiterals name="Final" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="ReqTypes">
+      <eLiterals name="Functional">
+        <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+          <details key="originalName" value="Functional "/>
+        </eAnnotations>
+      </eLiterals>
+      <eLiterals name="Mission" value="1"/>
+      <eLiterals name="Interface" value="2"/>
+      <eLiterals name="Environmental" value="3"/>
+      <eLiterals name="Physical" value="4"/>
+      <eLiterals name="Operational" value="5"/>
+      <eLiterals name="HumanFactor" value="6"/>
+      <eLiterals name="LogisticsSupport" value="7"/>
+      <eLiterals name="Configuration" value="8"/>
+      <eLiterals name="Design" value="9"/>
+      <eLiterals name="Verification" value="10"/>
+      <eLiterals name="ProductAssurance" value="11"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="ReqPriorities">
+      <eLiterals name="High"/>
+      <eLiterals name="Medium" value="1"/>
+      <eLiterals name="Low" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="ReqMaturities">
+      <eLiterals name="TBC"/>
+      <eLiterals name="TBD" value="1"/>
+      <eLiterals name="InAnalysis" value="2"/>
+      <eLiterals name="Analyzed" value="3"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="ReqRisks">
+      <eLiterals name="High"/>
+      <eLiterals name="Medium" value="1"/>
+      <eLiterals name="Low" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="Languages">
+      <eLiterals name="OCRA"/>
+      <eLiterals name="FPTC" value="1"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="ContractTypes">
+      <eLiterals name="Strong"/>
+      <eLiterals name="Weak" value="1"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>

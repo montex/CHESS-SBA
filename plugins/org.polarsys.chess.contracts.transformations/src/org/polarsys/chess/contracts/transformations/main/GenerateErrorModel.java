@@ -1,14 +1,18 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2015 Obeo.
+ *
+ * Copyright (c) 2013, 2015 Intecs SpA 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
- *     Obeo - initial API and implementation
+ * Nicholas Pacini nicholas.pacini@intecs.it 
+ * Stefano Puri stefano.puri@intecs.it
+ * Laura Baracchi  laura.baracchi@intecs.it  
+ * Initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.polarsys.chess.codegen.ada.main;
+package org.polarsys.chess.contracts.transformations.main;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,24 +31,24 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 /**
- * Entry point of the 'GenerateInfrastructure' generation module.
+ * Entry point of the 'GenerateErrorModel' generation module.
  *
  * @generated
  */
-public class GenerateInfrastructure extends AbstractAcceleoGenerator {
+public class GenerateErrorModel extends AbstractAcceleoGenerator {
     /**
      * The name of the module.
      *
      * @generated
      */
-    public static final String MODULE_FILE_NAME = "/org/polarsys/chess/codegen/ada/main/generateInfrastructure";
+    public static final String MODULE_FILE_NAME = "/org/polarsys/chess/contracts/transformations/main/generateErrorModel";
     
     /**
      * The name of the templates that are to be generated.
      *
      * @generated
      */
-    public static final String[] TEMPLATE_NAMES = { "generateInfrastructure" };
+    public static final String[] TEMPLATE_NAMES = { "generateErrorModel" };
     
     /**
      * The list of properties files from the launch parameters (Launch configuration).
@@ -67,7 +71,7 @@ public class GenerateInfrastructure extends AbstractAcceleoGenerator {
      *
      * @generated
      */
-    public GenerateInfrastructure() {
+    public GenerateErrorModel() {
         // Empty implementation
     }
 
@@ -87,7 +91,7 @@ public class GenerateInfrastructure extends AbstractAcceleoGenerator {
      *             the model cannot be loaded.
      * @generated
      */
-    public GenerateInfrastructure(URI modelURI, File targetFolder,
+    public GenerateErrorModel(URI modelURI, File targetFolder,
             List<? extends Object> arguments) throws IOException {
         initialize(modelURI, targetFolder, arguments);
     }
@@ -108,7 +112,7 @@ public class GenerateInfrastructure extends AbstractAcceleoGenerator {
      *             This can be thrown in two scenarios : the module cannot be found, or it cannot be loaded.
      * @generated
      */
-    public GenerateInfrastructure(EObject model, File targetFolder,
+    public GenerateErrorModel(EObject model, File targetFolder,
             List<? extends Object> arguments) throws IOException {
         initialize(model, targetFolder, arguments);
     }
@@ -143,7 +147,7 @@ public class GenerateInfrastructure extends AbstractAcceleoGenerator {
                  * add in "arguments" this "String" attribute.
                  */
                 
-                GenerateInfrastructure generator = new GenerateInfrastructure(modelURI, folder, arguments);
+                GenerateErrorModel generator = new GenerateErrorModel(modelURI, folder, arguments);
                 
                 /*
                  * Add the properties from the launch arguments.
@@ -310,10 +314,11 @@ public class GenerateInfrastructure extends AbstractAcceleoGenerator {
     
     /**
      * Adds a properties file in the list of properties files.
-     *
-     * @param propertiesFile            The properties file to add.
+     * 
+     * @param propertiesFile
+     *            The properties file to add.
+     * @generated
      * @since 3.1
-     * @generated 
      */
     @Override
     public void addPropertiesFile(String propertiesFile) {
@@ -336,11 +341,14 @@ public class GenerateInfrastructure extends AbstractAcceleoGenerator {
      * 
      * @param resourceSet
      *            The resource set which registry has to be updated.
-     * @generated
+     * @generated NOT
      */
     @Override
     public void registerPackages(ResourceSet resourceSet) {
         super.registerPackages(resourceSet);
+        if (!isInWorkspace(org.eclipse.uml2.uml.UMLPackage.class)) {
+            resourceSet.getPackageRegistry().put(org.eclipse.uml2.uml.UMLPackage.eINSTANCE.getNsURI(), org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+        }
         
         /*
          * If you want to change the content of this method, do NOT forget to change the "@generated"
@@ -386,16 +394,21 @@ public class GenerateInfrastructure extends AbstractAcceleoGenerator {
     public void registerResourceFactories(ResourceSet resourceSet) {
         super.registerResourceFactories(resourceSet);
         /*
+         * If you want to change the content of this method, do NOT forget to change the "@generated"
+         * tag in the Javadoc of this method to "@generated NOT". Without this new tag, any compilation
+         * of the Acceleo module with the main template that has caused the creation of this class will
+         * revert your modifications.
+         */
+        
+        /*
          * TODO If you need additional resource factories registrations, you can register them here. the following line
-         * (in comment) is an example of the resource factory registration for UML. If you want to change the content
-         * of this method, do NOT forget to change the "@generated" tag in the Javadoc of this method to "@generated NOT".
-         * Without this new tag, any compilation of the Acceleo module with the main template that has caused the creation
-         * of this class will revert your modifications.
-         * 
-         * To learn more about the registration of Resource Factories, have a look at the Acceleo Launcher documentation (Help -> Help Contents). 
+         * (in comment) is an example of the resource factory registration for UML.
+         *
+         * If you want to use the generator in stand alone, the resource factory registration will be required.
+         *  
+         * To learn more about the registration of Resource Factories, have a look at the Acceleo documentation (Help -> Help Contents). 
          */ 
         
-        // resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(UMLResource.FILE_EXTENSION, UMLResource.Factory.INSTANCE);
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(UMLResource.FILE_EXTENSION, UMLResource.Factory.INSTANCE);
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emtl", new EMtlResourceFactoryImpl());
     }

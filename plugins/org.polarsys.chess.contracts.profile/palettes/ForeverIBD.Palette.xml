@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+   
+    Copyright (c) 2013, 2015 Intecs SpA 
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+    Nicholas Pacini nicholas.pacini@intecs.it 
+    Stefano Puri stefano.puri@intecs.it
+    Laura Baracchi  laura.baracchi@intecs.it  
+    Initial API and implementation and/or initial documentation
+ -->
+
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="ForeverIBDNodesDrawerID" name="Nodes">
+			
+			<aspectTool description="Create a new FlowPort (IN)" iconpath="platform:/plugin/org.eclipse.papyrus.sysml/icons/portandflows/FlowPort_IN.gif" id="internalblock.tool.flowport_in_1386261494628" name="FlowPort (IN)" refToolId="internalblock.tool.flowport_in"/>
+			<aspectTool description="Create a new FlowPort (INOUT)" iconpath="platform:/plugin/org.eclipse.papyrus.sysml/icons/portandflows/FlowPort_INOUT.gif" id="internalblock.tool.flowport_inout_1386261495772" name="FlowPort (INOUT)" refToolId="internalblock.tool.flowport_inout"/>
+			<aspectTool description="Create a new FlowPort (OUT)" iconpath="platform:/plugin/org.eclipse.papyrus.sysml/icons/portandflows/FlowPort_OUT.gif" id="internalblock.tool.flowport_out_1386261505899" name="FlowPort (OUT)" refToolId="internalblock.tool.flowport_out"/>
+			
+			
+			<aspectTool description="Create a new Part" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Property.gif" id="internalblock.tool.part_1346858391333" name="Part" refToolId="internalblock.tool.part"/>
+			<aspectTool description="Create a new Comment" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Comment.gif" id="internalblock.tool.comment_1346858395077" name="Comment" refToolId="internalblock.tool.comment"/>
+			
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="composite.tool.constraint_1355902848117" name="DelegationConstraint (Constraint)" refToolId="internalblock.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESSContract::DelegationConstraint"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			
+		    <aspectTool description="Create a new Constraint" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="internalblock.tool.constraint_1355828683551" name="Constraint" refToolId="internalblock.tool.constraint"/>
+		</drawer>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="ForeverIBDEdgesDrawerID" name="Edges">
+			<aspectTool description="Create a new Connector" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Connector.gif" id="internalblock.tool.connector_1346858410012" name="Connector" refToolId="internalblock.tool.connector"/>
+			<aspectTool description="Create a new Comment / Constraint link"  id="internalblock.tool.comment_constraint_link_1346858414629" name="Comment / Constraint link" refToolId="internalblock.tool.comment_constraint_link"/>
+		</drawer>
+	</content>
+</paletteDefinition>
