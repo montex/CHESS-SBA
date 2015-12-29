@@ -71,6 +71,7 @@ thisModule.umlInstancesStereo <- thisModule.umlInstancesBlocks;
 				p.getDelegationEnds()->collect(i|i.definingFeature.name).debug('getDelegationEnds');
 				p.getDelegationEndsDownwards()->collect(i|i.definingFeature.name).debug('getDelegationEndsDownwards');
 				p.getDelegationEndsUpwards()->collect(i|i.definingFeature.name).debug('getDelegationEndsUpwards');
+				p.getSBADelegation()->collect(i|i.definingFeature.name).debug('getSBADelegation');
 				thisModule.umlInstancesConnectors->select(c | not c.slot->select(s | s.definingFeature = p.definingFeature and s.value->first().instance = i)->isEmpty()).debug();
 				thisModule.umlInstancesConnectors->collect(c | c.slot->collect(s | s.value->first().instance)).debug('conns');
 				
@@ -269,11 +270,29 @@ helper context UML!Slot def: getDelegationEnds() : Set(UML!Slot) =
 	connectorsSlots->collect(s | s.value->first().instance.slot->
 									select(sl | sl.definingFeature = s.definingFeature))->flatten();
 
+--Get taget(s) of delegation in sub-instances
 helper context UML!Slot def: getDelegationEndsDownwards() : Set(UML!Slot) = 
-	self.getDelegationEnds()->select(s | s.refImmediateComposite().debug().isSubInstanceOf(self.refImmediateComposite().debug()));
+	self.getDelegationEnds()->select(s | s.refImmediateComposite().isSubInstanceOf(self.refImmediateComposite()));
 
+--Get source(s) of delegation in parent instance
 helper context UML!Slot def: getDelegationEndsUpwards() : Set(UML!Slot) = 
 	self.getDelegationEnds()->select(s | self.refImmediateComposite().isSubInstanceOf(s.refImmediateComposite()));
+
+--Get the target of delegation taking into account SBA stereotypes,
+--i.e., get the first slot whose owning instnace has SBA information.
+--(it can be even the slot under examination itself)
+helper context UML!Slot def: getSBADelegation() : Set(UML!Slot) =
+	let inst : UML!InstanceSpecification = self.refImmediateComposite() in
+	let deleg : Set(UML!Slot) = self.getDelegationEndsDownwards() in
+	if deleg.isEmpty() or 
+		inst.hasSBAInformation() or 
+		inst.getSubInstances().isEmpty() 
+	then
+		Set{self} 
+	else
+		deleg->collect(e | e.getSBADelegation())->flatten()
+	endif;
+
 --------------------------------------------------------------------
 -- For debugging purposes: pretty print SBA stereotypes
 --------------------------------------------------------------------
