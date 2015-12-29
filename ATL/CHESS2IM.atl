@@ -69,6 +69,8 @@ thisModule.umlInstancesStereo <- thisModule.umlInstancesBlocks;
 				p.getConnectors()->collect(c | c.isDelegation()).debug('isDelegation');
 				p.getConnectedImmediate()->collect(i|i.definingFeature.name).debug('getConnectedImmediate');
 				p.getDelegationEnds()->collect(i|i.definingFeature.name).debug('getDelegationEnds');
+				p.getDelegationEndsDownwards()->collect(i|i.definingFeature.name).debug('getDelegationEndsDownwards');
+				p.getDelegationEndsUpwards()->collect(i|i.definingFeature.name).debug('getDelegationEndsUpwards');
 				thisModule.umlInstancesConnectors->select(c | not c.slot->select(s | s.definingFeature = p.definingFeature and s.value->first().instance = i)->isEmpty()).debug();
 				thisModule.umlInstancesConnectors->collect(c | c.slot->collect(s | s.value->first().instance)).debug('conns');
 				
@@ -247,17 +249,31 @@ helper context UML!InstanceSpecification def: isDelegation() : Boolean =
 
 --Get port instances that are *directly* connected to a certain port instance
 helper context UML!Slot def: getConnectedImmediate() : Set(UML!Slot) =
+	let connectorsSlots : Set(UML!Slot) = 
 	self.getConnectors()->select(c | c.isConnection())->
 							collect(c | c.slot)->
 							flatten()->
-							select(s | s.definingFeature <> self.definingFeature);
+							select(s | s.definingFeature <> self.definingFeature)
+	in
+	connectorsSlots->collect(s | s.value->first().instance.slot->
+									select(sl | sl.definingFeature = s.definingFeature))->flatten();
 
---Get port instances that receive delegation from a certain port instance
+--Get port instances that receive/send delegation from/to a certain port instance
 helper context UML!Slot def: getDelegationEnds() : Set(UML!Slot) =
+	let connectorsSlots : Set(UML!Slot) =
 	self.getConnectors()->select(c | c.isDelegation())->
 							collect(c | c.slot)->
 							flatten()->
-							select(s | s.definingFeature <> self.definingFeature);
+							select(s | s.definingFeature <> self.definingFeature)
+	in
+	connectorsSlots->collect(s | s.value->first().instance.slot->
+									select(sl | sl.definingFeature = s.definingFeature))->flatten();
+
+helper context UML!Slot def: getDelegationEndsDownwards() : Set(UML!Slot) = 
+	self.getDelegationEnds()->select(s | s.refImmediateComposite().debug().isSubInstanceOf(self.refImmediateComposite().debug()));
+
+helper context UML!Slot def: getDelegationEndsUpwards() : Set(UML!Slot) = 
+	self.getDelegationEnds()->select(s | self.refImmediateComposite().isSubInstanceOf(s.refImmediateComposite()));
 --------------------------------------------------------------------
 -- For debugging purposes: pretty print SBA stereotypes
 --------------------------------------------------------------------
