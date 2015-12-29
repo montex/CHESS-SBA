@@ -30,6 +30,7 @@ rule System {
 		platform : UML!Package = sba.platform->first().base_Package;
 		instances : Sequence(UML!InstanceSpecification) = UML!InstanceSpecification.allInstances()->select(i | i.refImmediateComposite() = platform);
 		comments : Sequence(UML!Comment) = instances->collect(i | i.ownedComment)->flatten();
+		instSystem : UML!InstanceSpecification = instances->first();
 	} 
 	to
 		s : IM!Sistema (
@@ -43,55 +44,59 @@ rule System {
 		thisModule.umlAllocations <- MARTE!Assign.allInstances()->select(a | comments.includes(a.base_Comment));
 		
 		thisModule.umlInstancesBlocks <- thisModule.umlInstancesAll->select(i | thisModule.umlInstancesConnectors.excludes(i));
+		thisModule.umlInstancesStereo <- thisModule.umlInstancesBlocks->select(i | i.getSBAStereotype() <> OclUndefined);
 
---		thisModule.umlInstancesStereo <- thisModule.umlInstancesBlocks->select(i | i.getSBAStereotype() <> OclUndefined);
-thisModule.umlInstancesStereo <- thisModule.umlInstancesBlocks;
+		thisModule.umlInstancesRelevant <- instSystem.findSBAConstituents().debug();
+		
+		
+		--thisModule.umlInstancesStereo <- thisModule.umlInstancesBlocks;
 
-		for(i in thisModule.umlInstancesStereo) {
-			i.debug('i->');
-			i.getSBAStereotype().toString().debug('stereotype: ');
-			i.slot->collect(sl | sl.definingFeature.name).debug('slots: ');
-			i.getSubInstances().debug('sub instances');
-
-			i.slot->select(sl | sl.definingFeature.oclIsKindOf(UML!Port))->collect(s | s.hasInputFlow()).debug('is input: ');
-			i.slot->select(sl | sl.definingFeature.oclIsKindOf(UML!Port))->collect(s | s.hasOutputFlow()).debug('is output: ');	
-			
-			for(p in i.slot->select(sl | sl.definingFeature.oclIsKindOf(UML!Port))) {
-				p.definingFeature.name.debug('>>');
-				p.hasInputFlow().debug('input? ');
-				p.hasOutputFlow().debug('output? ');
-				
-				thisModule.umlInstancesConnectors.debug();
-				thisModule.umlInstancesConnectors->collect(c | c.slot).debug();
-				
-				p.getConnectors().debug('getConnectors');
-				p.getConnectors()->collect(c | c.isConnection()).debug('isConnection');
-				p.getConnectors()->collect(c | c.isDelegation()).debug('isDelegation');
-				p.getConnectedImmediate()->collect(i|i.definingFeature.name).debug('getConnectedImmediate');
-				p.getDelegationEnds()->collect(i|i.definingFeature.name).debug('getDelegationEnds');
-				p.getDelegationEndsDownwards()->collect(i|i.definingFeature.name).debug('getDelegationEndsDownwards');
-				p.getDelegationEndsUpwards()->collect(i|i.definingFeature.name).debug('getDelegationEndsUpwards');
-				p.getSBADelegation()->collect(i|i.definingFeature.name).debug('getSBADelegation');
-				thisModule.umlInstancesConnectors->select(c | not c.slot->select(s | s.definingFeature = p.definingFeature and s.value->first().instance = i)->isEmpty()).debug();
-				thisModule.umlInstancesConnectors->collect(c | c.slot->collect(s | s.value->first().instance)).debug('conns');
-				
-			}
-			thisModule.debug('------------------------');
-		}
-		thisModule.umlInstancesStereo.debug();
-		UML!InstanceSpecification.allInstances()->collect(i | i.getSimpleStochasticBehavior().debug('##'));
---		
---		
---		UML!InstanceSpecification.allInstances()->collect(i | CHESS!SimpleStochasticBehavior.allInstances()->exists(ssb | ssb.base_Class = i.getBaseItem()).debug());
---	
---		thisModule.sbaStereotypes->collect(s | s.allInstances())->flatten();
-
---helper context UML!Port def: isInputPort : Boolean =
---MARTE!ClientServerPort.allInstances()->select(c | c.base_Port = self)->first().kind 
-
-		MARTE!ClientServerPort.allInstances()->collect(p | p.kind).debug();
-		SYSML!FlowPort.allInstances()->collect(p | p.hasInputFlow()).debug();
-		UML!Port.allInstances()->collect(p | p.hasInputFlow()).debug();
+--		for(i in thisModule.umlInstancesStereo) {
+--			i.debug('i->');
+--			i.getSBAStereotype().toString().debug('stereotype: ');
+--			i.slot->collect(sl | sl.definingFeature.name).debug('slots: ');
+--			i.getSubInstances().debug('sub instances');
+--
+--			i.slot->select(sl | sl.definingFeature.oclIsKindOf(UML!Port))->collect(s | s.hasInputFlow()).debug('is input: ');
+--			i.slot->select(sl | sl.definingFeature.oclIsKindOf(UML!Port))->collect(s | s.hasOutputFlow()).debug('is output: ');	
+--			
+--			for(p in i.slot->select(sl | sl.definingFeature.oclIsKindOf(UML!Port))) {
+--				p.definingFeature.name.debug('>>');
+--				p.hasInputFlow().debug('input? ');
+--				p.hasOutputFlow().debug('output? ');
+--				
+--				thisModule.umlInstancesConnectors.debug();
+--				thisModule.umlInstancesConnectors->collect(c | c.slot).debug();
+--				
+--				p.getConnectors().debug('getConnectors');
+--				p.getConnectors()->collect(c | c.isConnection()).debug('isConnection');
+--				p.getConnectors()->collect(c | c.isDelegation()).debug('isDelegation');
+--				p.getConnectedImmediate()->collect(i|i.definingFeature.name).debug('getConnectedImmediate');
+--				p.getDelegationEnds()->collect(i|i.definingFeature.name).debug('getDelegationEnds');
+--				p.getDelegationEndsDownwards()->collect(i|i.definingFeature.name).debug('getDelegationEndsDownwards');
+--				p.getDelegationEndsUpwards()->collect(i|i.definingFeature.name).debug('getDelegationEndsUpwards');
+--				p.getSBADelegations()->collect(i|i.definingFeature.name).debug('getSBADelegations');
+--				p.getSBAConnections()->collect(i|i.definingFeature.name).debug('getSBAConnections');
+--				thisModule.umlInstancesConnectors->select(c | not c.slot->select(s | s.definingFeature = p.definingFeature and s.value->first().instance = i)->isEmpty()).debug();
+--				thisModule.umlInstancesConnectors->collect(c | c.slot->collect(s | s.value->first().instance)).debug('conns');
+--				
+--			}
+--			thisModule.debug('------------------------');
+--		}
+--		thisModule.umlInstancesStereo.debug();
+--		UML!InstanceSpecification.allInstances()->collect(i | i.getSimpleStochasticBehavior().debug('##'));
+----		
+----		
+----		UML!InstanceSpecification.allInstances()->collect(i | CHESS!SimpleStochasticBehavior.allInstances()->exists(ssb | ssb.base_Class = i.getBaseItem()).debug());
+----	
+----		thisModule.sbaStereotypes->collect(s | s.allInstances())->flatten();
+--
+----helper context UML!Port def: isInputPort : Boolean =
+----MARTE!ClientServerPort.allInstances()->select(c | c.base_Port = self)->first().kind 
+--
+--		MARTE!ClientServerPort.allInstances()->collect(p | p.kind).debug();
+--		SYSML!FlowPort.allInstances()->collect(p | p.hasInputFlow()).debug();
+--		UML!Port.allInstances()->collect(p | p.hasInputFlow()).debug();
 	
 
 
@@ -174,6 +179,16 @@ helper context UML!InstanceSpecification def: getSBAStereotypeInstance() : OclAn
 --Find the CHESS stereotype that is used on a given instance specification, or on its classifier
 helper context UML!Class def: getSBAStereotypeClassifier() : OclAny =
 	thisModule.sbaStereotypes->collect(s | s.allInstances())->flatten()->select(st | st.base_Class = self)->first();
+
+--Recursive helper to identify which instances need to be taken into account,
+--i.e., to identify those that have dependability information attached, or no
+--subinstances
+helper context UML!InstanceSpecification  def: findSBAConstituents() : Set(UML!InstanceSpecification) =
+	if self.hasSBAInformation() or self.getSubInstances().isEmpty() then
+		Set{self}
+	else
+		self.getSubInstances()->collect(i | i.findSBAConstituents())->flatten()
+	endif;
 
 --------------------------------------------------------------------
 -- Helpers to get, start from a given InstanceSpecification,
@@ -281,7 +296,7 @@ helper context UML!Slot def: getDelegationEndsUpwards() : Set(UML!Slot) =
 --Get the target of delegation taking into account SBA stereotypes,
 --i.e., get the first slot whose owning instnace has SBA information.
 --(it can be even the slot under examination itself)
-helper context UML!Slot def: getSBADelegation() : Set(UML!Slot) =
+helper context UML!Slot def: getSBADelegations() : Set(UML!Slot) =
 	let inst : UML!InstanceSpecification = self.refImmediateComposite() in
 	let deleg : Set(UML!Slot) = self.getDelegationEndsDownwards() in
 	if deleg.isEmpty() or 
@@ -290,8 +305,14 @@ helper context UML!Slot def: getSBADelegation() : Set(UML!Slot) =
 	then
 		Set{self} 
 	else
-		deleg->collect(e | e.getSBADelegation())->flatten()
+		deleg->collect(e | e.getSBADelegations())->flatten()
 	endif;
+
+--Get the target of connection taking into account SBA stereotypes,
+--i.e., get the first slot whose owning instnace has SBA information.
+--(it can be even the slot directly connected to the one under examination)
+helper context UML!Slot def: getSBAConnections() : Set(UML!Slot) =
+	self.getConnectedImmediate()->collect(sl | sl.getSBADelegations())->flatten();	
 
 --------------------------------------------------------------------
 -- For debugging purposes: pretty print SBA stereotypes
