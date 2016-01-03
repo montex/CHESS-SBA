@@ -13,7 +13,6 @@ helper def: umlInstancesConnectors : Set(UML!InstanceSpecification) = Set{};		--
 helper def: umlInstancesBlocks : Set(UML!InstanceSpecification) = Set{}; 			--Instances of components/blocks
 helper def: umlInstancesStereo : Set(UML!InstanceSpecification) = Set{}; 			--Instances that have dependability information
 helper def: umlInstancesRelevant : Set(UML!InstanceSpecification) = Set{}; 			--Instances that are relevant for the analysis
-helper def: umlInstancesPorts : Set(UML!InstanceSpecification) = Set{};				--Instances of ports only
 helper def: umlAllocations : Set(MARTE!Assign) = Set{};
 
 --Stereotypes that can be used on Blocks/Components for state based analysis
@@ -106,22 +105,45 @@ rule System {
 		thisModule.umlInstancesBlocks.debug('Blocks ['+ thisModule.umlInstancesBlocks.size() +']');	
 		thisModule.umlInstancesStereo.debug('Stereotypes [' + thisModule.umlInstancesStereo.size() + ']');
 		thisModule.umlInstancesRelevant.debug('Relevant [' + thisModule.umlInstancesRelevant.size() + ']');
-		thisModule.umlInstancesPorts.debug('Ports [' + thisModule.umlInstancesPorts.size() + ']');
 		thisModule.umlAllocations.debug('Allocations ['+ thisModule.umlAllocations.size() +']');
 		--/DEBUG
+		
+		for(i in thisModule.umlInstancesRelevant) {
+			thisModule.InstanceToComponent(i);
+			
+			if(i.getSBAStereotype().oclType() = CHESS!SimpleStochasticBehavior) {
+				thisModule.SimpleStochasticBehaviorToComponent(i);
+			}
+		}
 	}
 }
 
-unique lazy rule SimpleStochasticToComponent {
+unique lazy rule InstanceToComponent {
 	from
 		inst : UML!InstanceSpecification
-	using {
-		params : CHESS!SimpleStochasticBehavior = inst.getSimpleStochasticBehavior();
-	}
 	to 
 		c : IM!Component (
 			Name <- inst.name
 		)
+}
+
+unique lazy rule SimpleStochasticBehaviorToComponent {
+	from
+		inst : UML!InstanceSpecification
+	using {
+		c : IM!Component = thisModule.InstanceToComponent(inst);
+		st : CHESS!SimpleStochasticBehavior = inst.getSBAStereotype();
+	}
+	to
+		fault : IM!InternalFault (
+			Component <- c,
+			Name <- inst.name + '_ift',
+			PermanentProbability <- 1,
+			Occurrence <- st.failureOccurrence.parseDistribution()
+		)
+	do {
+		c.Faults = c.Faults.including(fault);
+	}
 }
 
 rule AddFailureMode(name : String, c : IM!Component) {
@@ -133,6 +155,122 @@ rule AddFailureMode(name : String, c : IM!Component) {
 		c.FailureModes <- c.FailureModes->append(fm);
 	}
 }
+
+--------------------------------------------------------------------
+-- Rules to create IM!Distribution elements
+--------------------------------------------------------------------
+lazy rule Exponential {
+	from
+		lambda : Real
+	to
+		e : IM!Exponential ( Rate <- lambda )
+}
+
+lazy rule Deterministic {
+	from
+		value : Real
+	to
+		d : IM!Deterministic ( Value <- value )
+}
+
+lazy rule Uniform {
+	from
+		lower : Real,
+		upper : Real
+	to
+		d : IM!Uniform ( 
+			Lower <- lower,
+			Upper <- upper
+		)
+}
+
+lazy rule Gaussian {
+	from
+		mean : Real,
+		variance : Real
+	to 
+		g : IM!Gaussian (
+			Mean <- mean,
+			Variance <- variance
+		)
+}
+
+lazy rule Gamma {
+	from
+		a : Real,
+		b : Real
+	to 
+		g : IM!Gamma (
+			Alpha <- a,
+			Beta <- b
+		)
+}
+
+lazy rule Weibull {
+	from
+		a : Real,
+		b : Real
+	to 
+		g : IM!Weibull (
+			Alpha <- a,
+			Beta <- b
+		)
+}
+
+--------------------------------------------------------------------
+-- Parse strings in VSL notation into IM!Distribution elements
+--------------------------------------------------------------------
+helper context String def: parseDistribution() : IM!Distribution = 
+	let dist : String = self.trim().toLower() in
+	if dist.startsWith('exp') then
+		dist.parseExponential()
+	else if dist.startsWith('det') then
+		dist.parseDeterministic()
+	else if dist.startsWith('uni') then
+		dist.parseUniform()
+	else if dist.startsWith('norm') or dist.startsWith('gauss') then
+		dist.parseGaussian()
+	else if dist.startsWith('gam') then
+		dist.parseGamma()
+	else if dist.startsWith('wei') then
+		dist.parseWeibull()
+	else
+		thisModule.Exponential(0)
+	endif endif endif endif endif endif;
+
+helper context String def: parseExponential() : IM!Exponential =
+	thisModule.Exponential(self.substring(self.indexOf('(')+2, self.indexOf(')')).toReal());
+
+helper context String def: parseDeterministic() : IM!Deterministic =
+	thisModule.Deterministic(self.substring(self.indexOf('(')+2, self.indexOf(')')).toReal());
+
+helper context String def: parseUniform() : IM!Uniform =
+	let iComma : Integer = self.indexOf(',') in
+	thisModule.Uniform(
+		self.substring(self.indexOf('(')+2, iComma).toReal(),
+		self.substring(iComma+2, self.indexOf(')')).toReal()
+	);
+
+helper context String def: parseGaussian() : IM!Gaussian =
+	let iComma : Integer = self.indexOf(',') in
+	thisModule.Gaussian(
+		self.substring(self.indexOf('(')+2, iComma).toReal(),
+		self.substring(iComma+2, self.indexOf(')')).toReal()
+	);
+
+helper context String def: parseGamma() : IM!Gamma =
+	let iComma : Integer = self.indexOf(',') in
+	thisModule.Gamma(
+		self.substring(self.indexOf('(')+2, iComma).toReal(),
+		self.substring(iComma+2, self.indexOf(')')).toReal()
+	);
+
+helper context String def: parseWeibull() : IM!Gamma =
+	let iComma : Integer = self.indexOf(',') in
+	thisModule.Weibull(
+		self.substring(self.indexOf('(')+2, iComma).toReal(),
+		self.substring(iComma+2, self.indexOf(')')).toReal()
+	);
 
 --------------------------------------------------------------------
 -- Collections that are used to filter and categorize model elements
@@ -205,7 +343,7 @@ helper context UML!InstanceSpecification def: getSubInstances() : Set(UML!Instan
 
 helper context UML!InstanceSpecification def: isSubInstanceOf(parent : UML!InstanceSpecification) : Boolean =
 	parent.getSubInstances()->includes(self);
-
+ 
 --helper context UML!Slot def: getConnectedSlotsInput() : Set(UML!Slot) =
 --	self;
 --helper context UML!Slot def: getConnectedSlotsOutput() : Set(UML!Slot) = 
@@ -309,7 +447,7 @@ helper context UML!Slot def: getSBADelegations() : Set(UML!Slot) =
 	endif;
 
 --Get the target of connection taking into account SBA stereotypes,
---i.e., get the first slot whose owning instnace has SBA information.
+--i.e., get the first slot whose owning instance has SBA information.
 --(it can be even the slot directly connected to the one under examination)
 helper context UML!Slot def: getSBAConnections() : Set(UML!Slot) =
 	self.getConnectedImmediate()->collect(sl | sl.getSBADelegations())->flatten();	
