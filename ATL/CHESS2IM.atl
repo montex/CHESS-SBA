@@ -45,7 +45,7 @@ rule System {
 		thisModule.umlInstancesBlocks <- thisModule.umlInstancesAll->select(i | thisModule.umlInstancesConnectors.excludes(i));
 		thisModule.umlInstancesStereo <- thisModule.umlInstancesBlocks->select(i | i.getSBAStereotype() <> OclUndefined);
 
-		thisModule.umlInstancesRelevant <- instSystem.findSBAConstituents().debug();
+		thisModule.umlInstancesRelevant <- instSystem.findSBAConstituents();
 		
 		
 		--thisModule.umlInstancesStereo <- thisModule.umlInstancesBlocks;
@@ -96,8 +96,6 @@ rule System {
 --		MARTE!ClientServerPort.allInstances()->collect(p | p.kind).debug();
 --		SYSML!FlowPort.allInstances()->collect(p | p.hasInputFlow()).debug();
 --		UML!Port.allInstances()->collect(p | p.hasInputFlow()).debug();
-	
-
 
 		--DEBUG: Print the obtained sets
 		thisModule.umlInstancesAll.debug('Instances ['+ thisModule.umlInstancesAll.size() +']');
@@ -133,27 +131,67 @@ unique lazy rule SimpleStochasticBehaviorToComponent {
 	using {
 		c : IM!Component = thisModule.InstanceToComponent(inst);
 		st : CHESS!SimpleStochasticBehavior = inst.getSBAStereotype();
+		tmpFailures : Set(TupleType(fm : String, p : Real)) = OclUndefined;
 	}
 	to
 		fault : IM!InternalFault (
 			Component <- c,
 			Name <- inst.name + '_ift',
 			PermanentProbability <- 1,
-			Occurrence <- st.failureOccurrence.parseDistribution()
+			Occurrence <- st.failureOccurrence.parseDistribution(),
+			TransientDuration <- thisModule.Deterministic(0)
 		)
 	do {
 		c.Faults = c.Faults.including(fault);
+		
+		for(slot in inst.getPortSlots()->select(p | p.hasOutputFlow())) {
+			slot.name.debug();	
+			tmpFailures <- st.failureModesDistribution.parseFailureModesForPort(slot.name);
+			
+	
+			---------------------WORKING HERE
+			tmpFailures.debug();
+			
+			for(fmSpec in tmpFailures) {
+				thisModule.AddFailureMode(slot.name + '.' + fmSpec.fm, c);
+			}
+		}
+		
+--		thisModule.AddSourceError(
+--			thisModule.AddFailureMode('f', c)
+--		);
 	}
 }
 
 rule AddFailureMode(name : String, c : IM!Component) {
 	to 
 		fm : IM!FailureMode (
-			Name <- name	
+			Name <- name
 		)
 	do {
 		c.FailureModes <- c.FailureModes->append(fm);
+--		thisModule.AddSourceError(fm);
+--		
+		fm;
 	}
+}
+
+unique lazy rule AddSourceError {
+	from 
+		fm : IM!FailureMode
+	using {
+		c : IM!Component = fm.Component;
+	}
+	to 
+		e : IM!Error (
+			Name <- 'e_' + fm.Name,
+			Component <- c
+		),
+		epf : IM!ErrorsProducesFailures (
+			Source <- Set{e},
+			Destination <- Set{fm},
+			Component <- c
+		)
 }
 
 --------------------------------------------------------------------
@@ -343,6 +381,9 @@ helper context UML!InstanceSpecification def: getSubInstances() : Set(UML!Instan
 
 helper context UML!InstanceSpecification def: isSubInstanceOf(parent : UML!InstanceSpecification) : Boolean =
 	parent.getSubInstances()->includes(self);
+
+--Get the name of a port slot, as the name of the originating port
+helper context UML!Slot def: name : String = self.definingFeature.name;
  
 --helper context UML!Slot def: getConnectedSlotsInput() : Set(UML!Slot) =
 --	self;
@@ -451,6 +492,44 @@ helper context UML!Slot def: getSBADelegations() : Set(UML!Slot) =
 --(it can be even the slot directly connected to the one under examination)
 helper context UML!Slot def: getSBAConnections() : Set(UML!Slot) =
 	self.getConnectedImmediate()->collect(sl | sl.getSBADelegations())->flatten();	
+
+--------------------------------------------------------------------
+-- Parse failure modes for SimpleStochasticBehavior elements
+--------------------------------------------------------------------
+
+--Split the specification into different parts, one for each port, and find the
+--failure modes for the port name passed as input. Calls parseFailureModes() below
+helper context String def: parseFailureModesForPort(port : String) : Set(TupleType(fm: String, p: Real)) =
+	let strSeq : Sequence(String) = self.trim()->split(';') in
+	let strSelected : String = strSeq->select(s | s.trim().startsWith(port))->first() in
+	if strSelected = OclUndefined then
+		strSeq->first().parseFailureModes()
+	else 
+		strSelected.parseFailureModes()
+	endif;
+
+--From the specification in string format get the failure modes and proabilities for a single port
+helper context String def: parseFailureModes() : Set(TupleType(fm: String, p: Real)) =
+	let str : String = 
+		if self.indexOf('{') < 0 then
+			self.trim()
+		else
+			self.substring(self.indexOf('{')+2, self.size()).replaceAll('}', ' ').trim()
+		endif	
+	in
+	let default : Set(TupleType(fm: String, p: Real)) = Set{Tuple{fm = 'failure', p = 1.0}} in
+	if str.size() = 0 then
+		default
+	else
+		let ret : Set(TupleType(fm: String, p: Real)) = 
+		str.split(',')->collect(s | s.split(':'))->
+			collect(seq | Tuple{fm = seq->first().trim(), p = seq.last().toReal()})
+		in
+		if ret->isEmpty() then
+			default
+		else
+			ret
+	endif endif;
 
 --------------------------------------------------------------------
 -- For debugging purposes: pretty print SBA stereotypes
