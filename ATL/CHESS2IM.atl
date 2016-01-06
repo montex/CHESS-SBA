@@ -18,6 +18,10 @@ helper def: umlAllocations : Set(MARTE!Assign) = Set{};
 --Stereotypes that can be used on Blocks/Components for state based analysis
 helper def: sbaStereotypes : Sequence(OclAny) = Sequence{CHESS!SimpleStochasticBehavior, CHESS!FLABehavior, CHESS!ErrorModelBehavior, CHESS!DependableComponent,
 														 CHESS!StatelessSoftware, CHESS!StatefulSoftware, CHESS!StatelessHardware, CHESS!StatefulHardware};
+helper def: flaNoFailure : String = 'noFailure';
+helper def: flaWildcard : String = 'wildcard';
+													 
+helper def: flaRules : Map(IM!Component, Map(String, IM!Error)) = Map{};			--Map to obtain the list of flarules for a component, and the corresponding IM!Error elements
 
 --rule to transform the CHESS!StateBasedAnalysis into an IM!Sistema
 rule System {
@@ -111,6 +115,8 @@ rule System {
 			
 			if(i.getSBAStereotype().oclType() = CHESS!SimpleStochasticBehavior) {
 				thisModule.SimpleStochasticBehaviorToComponent(i);
+			}else if(i.getSBAStereotype().oclType() = CHESS!FLABehavior){
+				thisModule.FLASpecificationToComponent(i);
 			}
 		}
 	}
@@ -125,13 +131,13 @@ unique lazy rule InstanceToComponent {
 		)
 }
 
-unique lazy rule SimpleStochasticBehaviorToComponent {
-	from
-		inst : UML!InstanceSpecification
+rule SimpleStochasticBehaviorToComponent(inst : UML!InstanceSpecification) {
 	using {
 		c : IM!Component = thisModule.InstanceToComponent(inst);
 		st : CHESS!SimpleStochasticBehavior = inst.getSBAStereotype();
 		tmpFailures : Set(TupleType(fm : String, p : Real)) = OclUndefined;
+		tmpError : IM!Error = OclUndefined;
+		tmpFailureMode : IM!FailureMode = OclUndefined;
 	}
 	to
 		fault : IM!InternalFault (
@@ -152,15 +158,58 @@ unique lazy rule SimpleStochasticBehaviorToComponent {
 			---------------------WORKING HERE
 			tmpFailures.debug();
 			
+			tmpError <- thisModule.AddError('e_' + slot.name, c);
 			for(fmSpec in tmpFailures) {
-				thisModule.AddFailureMode(slot.name + '.' + fmSpec.fm, c);
+				thisModule.AddEPF(
+					tmpError,
+					thisModule.AddFailureMode(slot.name + '.' + fmSpec.fm, c),
+					thisModule.Deterministic(0),
+					1,
+					fmSpec.p
+				);
 			}
 		}
-		
---		thisModule.AddSourceError(
---			thisModule.AddFailureMode('f', c)
---		);
 	}
+}
+
+rule FLASpecificationToComponent(inst : UML!InstanceSpecification) {
+	using {
+		c : IM!Component = thisModule.InstanceToComponent(inst);
+		st : CHESS!FLABehavior = inst.getSBAStereotype();
+		flaRules : Sequence(String) = st.fptc.regexReplaceAll('FLA:', ' ').trim().split(';');
+		tmpLeft : String = OclUndefined;
+		tmpRight : String = OclUndefined;
+		tmpFailures : Sequence(String) = OclUndefined;
+		errorMap : Map(String,IM!Error) = Map{};
+		tmpError : IM!Error = OclUndefined;
+		tmpEPF : IM!ErrorsProducesFailures = OclUndefined;
+		j : Integer = 0;
+	}
+	
+	do {
+		--For every line of the FLA specification
+		for(spec in flaRules) {
+			j <- j+1;
+			tmpError <- thisModule.AddError('e_'+j,c);
+			tmpEPF <- thisModule.AddFLARuleEPF(tmpError);
+			
+			tmpRight <- spec.trim().split('->')->last().trim();			--Get right hand side
+			tmpFailures <- tmpRight.split(',');							--Get the different failures in the right hand side
+			
+			--For every failure in the right side of the rule
+			for(failure in tmpFailures) {
+				--If it is not the 'noFailure' element
+				if(failure.indexOf('.' + thisModule.flaNoFailure) = -1) {
+					--If the failure mode does not exist already
+					if(not c.hasFailureMode(failure)) {
+						thisModule.AddFailureMode(failure, c);
+					}
+					
+					tmpEPF.Destination <- tmpEPF.Destination->including(c.FailureModes->select(f | f.Name = failure)->first());
+				}
+			}
+		}
+	}		
 }
 
 rule AddFailureMode(name : String, c : IM!Component) {
@@ -170,15 +219,52 @@ rule AddFailureMode(name : String, c : IM!Component) {
 		)
 	do {
 		c.FailureModes <- c.FailureModes->append(fm);
---		thisModule.AddSourceError(fm);
---		
+	
 		fm;
 	}
 }
 
-unique lazy rule AddSourceError {
-	from 
-		fm : IM!FailureMode
+rule AddError(name : String, c : IM!Component) {
+	to
+		e : IM!Error (
+			Name <- name,
+			Component <- c
+		)
+	do {
+		e;
+	}
+}
+
+rule AddFLARuleEPF(e : IM!Error) {
+	to
+		epf : IM!ErrorsProducesFailures (
+			Name <- e.Name + '_epf',
+			Source <- Sequence{e},
+			Destination <- Sequence{},
+			Component <- e.Component,
+			PropagationDelay <- thisModule.Deterministic(0),
+			PropagationProbability <- 1,
+			Weight <- 1
+		)
+	do{
+		epf;
+	}
+}
+
+rule AddEPF(e : IM!Error, fm : IM!FailureMode, delay : IM!Distribution, p : Real, weight : Real) {
+	to 
+		epf : IM!ErrorsProducesFailures (
+			Name <- e.Name + '_to_' + fm.Name,
+			Component <-fm.Component,
+			Source <- Set{e},
+			Destination <- Set{fm},
+			PropagationDelay <- delay,
+			PropagationProbability <- p,
+			Weight <- weight
+		)
+}
+
+rule AddSourceError(fm : IM!FailureMode) {
 	using {
 		c : IM!Component = fm.Component;
 	}
@@ -254,6 +340,10 @@ lazy rule Weibull {
 			Beta <- b
 		)
 }
+
+--Check if a IM!Component already contains a specific failure mode
+helper context IM!Component def: hasFailureMode(fm : String) : Boolean =
+	not self.FailureModes->select(f | f.Name.trim() = fm.trim())->isEmpty();
 
 --------------------------------------------------------------------
 -- Parse strings in VSL notation into IM!Distribution elements
