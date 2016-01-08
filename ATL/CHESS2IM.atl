@@ -162,6 +162,7 @@ rule SimpleStochasticBehaviorToComponent(inst : UML!InstanceSpecification) {
 		tmpFailures : Set(TupleType(fm : String, p : Real)) = OclUndefined;
 		tmpError : IM!Error = OclUndefined;
 		tmpFailureMode : IM!FailureMode = OclUndefined;
+		myFailureModes : String = if st.failureModesDistribution.oclIsUndefined() then '' else st.failureModesDistribution endif;
 	}
 	to
 		fault : IM!InternalFault (
@@ -175,7 +176,7 @@ rule SimpleStochasticBehaviorToComponent(inst : UML!InstanceSpecification) {
 		c.Faults = c.Faults.including(fault);
 		
 		for(slot in inst.getPortSlots()->select(p | p.hasOutputFlow())) {
-			tmpFailures <- st.failureModesDistribution.parseFailureModesForPort(slot.name);
+			tmpFailures <- myFailureModes.parseFailureModesForPort(slot.name);
 				
 			tmpError <- thisModule.AddError('e_' + slot.name, c);
 			for(fmSpec in tmpFailures) {
@@ -329,16 +330,11 @@ rule SimpleStochasticBehavior_XFT(inst : UML!InstanceSpecification) {
 --						faultName <- fault.split('\\.')->last();
 					
 			--Find connected port
-			connPort <-
-				inst.getPortSlots()->
-					select(p | p.hasInputFlow() and p.name = portName)->first()
-					.getSBAConnections()->first();
+			connPort <- p.getSBAConnections()->first();
 			--Find connected component (slot owner)
 			connComp <- thisModule.InstanceToComponent(connPort.refImmediateComposite());
 			
-			for(f in connComp.FailureModes->select(fm | fm.Name.startsWith(connPort.name + '.'))) {
-				f.debug('p');
-				
+			for(f in connComp.FailureModes->select(fm | fm.Name.startsWith(connPort.name + '.'))) {		
 				faultName <- f.Name.split('\\.')->last();
 				tmpExternalFault <- thisModule.AddExternalFault(p.name + '.' + faultName, inst);
 				tmpExternalFault.Source <- f;
@@ -393,9 +389,11 @@ rule FLASpecification_XFT(inst : UML!InstanceSpecification) {
 								.getSBAConnections()->first();
 						--Find connected component (slot owner)
 						connComp <- thisModule.InstanceToComponent(connPort.refImmediateComposite());
+						
+						tmpExternalFault.Name.debug();
 						--Assign failure as source of the external fault
 						tmpExternalFault.Source <- connComp.FailureModes->
-							select(f | f.Name = connPort.name + '.' + faultName)->first();
+							select(f | f.Name.debug() = connComp.Name + '_' + connPort.name + '.' + faultName)->first();
 					}
 				}
 			}
@@ -418,7 +416,7 @@ unique lazy rule AddExternalFault {
 	to 
 		xft : IM!ExternalFault (
 			Component <- thisModule.InstanceToComponent(inst),
-			Name <- fault
+			Name <- inst.name + '_' + fault
 		)
 }
 
@@ -428,7 +426,7 @@ unique lazy rule ErrorModelStateToError {
 		inst : UML!InstanceSpecification
 	to
 		err : IM!Error (
-			Name <- state.name,
+			Name <- inst.name + '_' + state.name,
 			Component <- thisModule.InstanceToComponent(inst)
 		)
 }
@@ -472,7 +470,7 @@ unique lazy rule InternalPropagation {
 rule AddFailureMode(name : String, c : IM!Component) {
 	to 
 		fm : IM!FailureMode (
-			Name <- name
+			Name <- c.Name + '_' + name
 		)
 	do {
 		c.FailureModes <- c.FailureModes->append(fm);
@@ -484,7 +482,7 @@ rule AddFailureMode(name : String, c : IM!Component) {
 rule AddError(name : String, c : IM!Component) {
 	to
 		e : IM!Error (
-			Name <- name,
+			Name <- c.Name + '_' + name,
 			Component <- c
 		)
 	do {
@@ -550,7 +548,7 @@ rule AddSourceError(fm : IM!FailureMode) {
 	}
 	to 
 		e : IM!Error (
-			Name <- 'e_' + fm.Name,
+			Name <- c.Name + '_e_' + fm.Name,
 			Component <- c
 		),
 		epf : IM!ErrorsProducesFailures (
@@ -623,11 +621,11 @@ lazy rule Weibull {
 
 --Check if a IM!Component already contains a specific failure mode
 helper context IM!Component def: hasFailureMode(fm : String) : Boolean =
-	not self.FailureModes->select(f | f.Name.trim() = fm.trim())->isEmpty();
+	not self.FailureModes->select(f | f.Name.noNamespace(self.Name).trim() = fm.trim())->isEmpty();
 
 --Check if a IM!Component already contains a specific fault
 helper context IM!Component def: hasFault(fm : String) : Boolean =
-	not self.Faults->select(f | f.Name.trim() = fm.trim())->isEmpty();
+	not self.Faults->select(f | f.Name.noNamespace(self.Name).trim() = fm.trim())->isEmpty();
 
 --Get <<Failure>> stereotype from a Transition
 helper context UML!Transition def: getFailureStereotype() : CHESS!Failure =
@@ -644,6 +642,11 @@ helper context UML!Vertex def: isInitialState() : Boolean =
 	else
 		false
 	endif;
+
+--Remove the component name
+helper context String def: noNamespace(n : String) : String =
+	self.regexReplaceAll(n + '_', '');
+	
 
 --------------------------------------------------------------------
 -- Parse strings in VSL notation into IM!Distribution elements
