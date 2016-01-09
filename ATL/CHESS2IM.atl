@@ -332,6 +332,15 @@ rule PopulateExternalFaults(inst : UML!InstanceSpecification) {
 	}
 }
 
+--------------------------------------------------------------------
+-- Rule to generate FGE elements
+--------------------------------------------------------------------
+rule SimpleStochasticBehavior_FGE(inst : UML!InstanceSpecification) {
+	do {
+		
+	}
+}
+
 unique lazy rule AddExternalFault {
 	from
 		fault : String,
@@ -541,6 +550,42 @@ lazy rule Weibull {
 			Beta <- b
 		)
 }
+
+--------------------------------------------------------------------
+-- Rules to build Faults/Errors expressions
+--------------------------------------------------------------------
+rule FEXP_Fault(f: IM!Fault) {
+	to
+		fefn : IM!FaultsExpressionFaultNode (
+			Fault <- f
+		)
+	do{
+		fefn;
+	}
+}
+
+rule FEXP_Or(e1 : IM!FaultsExpressionNode, e2: IM!FaultsExpressionNode) {
+	to
+		feon : IM!FaultsExpressionOrNode (
+			FaultsExpression1 <- e1,
+			FaultsExpression2 <- e2
+		)
+	do{
+		feon;
+	}
+}
+
+rule FEXP_And(e1 : IM!FaultsExpressionNode, e2: IM!FaultsExpressionNode) {
+	to
+		fean : IM!FaultsExpressionAndNode (
+			FaultsExpression1 <- e1,
+			FaultsExpression2 <- e2
+		)
+	do{
+		fean;
+	}
+}
+
 
 --Check if a IM!Component already contains a specific failure mode
 helper context IM!Component def: hasFailureMode(fm : String) : Boolean =
@@ -857,6 +902,16 @@ helper context String def: parseFailureModes() : Set(TupleType(fm: String, p: Re
 	endif endif;
 
 --------------------------------------------------------------------
+-- Helpers to translate Faults/Errors expressions to strings
+--------------------------------------------------------------------
+helper context IM!FaultsExpressionFaultNode def: toString(): String = self.Fault.Name;
+helper context IM!FaultsExpressionOrNode def: toString(): String = '(' + self.FaultsExpression1.toString() + ' OR ' + self.FaultsExpression2.toString() + ')';
+helper context IM!FaultsExpressionAndNode def: toString() : String = '(' + self.FaultsExpression1.toString() + ' AND ' + self.FaultsExpression2.toString() + ')';
+
+helper context IM!ErrorsExpressionErrorNode def: toString(): String = self.Error.Name;
+helper context IM!ErrorsExpressionOrNode def: toString(): String = '(' + self.ErrorsExpression1.toString() + ' OR ' + self.ErrorsExpression2.toString() + ')';
+	
+--------------------------------------------------------------------
 -- For debugging purposes: pretty print SBA stereotypes
 --------------------------------------------------------------------
 helper context CHESS!SimpleStochasticBehavior def: toString() : String = 
@@ -864,7 +919,6 @@ helper context CHESS!SimpleStochasticBehavior def: toString() : String =
 helper context CHESS!FLABehavior def: toString() : String = '<<FLABehavior>>(' + self.fptc + ')';
 helper context CHESS!ErrorModelBehavior def: toString() : String = '<<ErrorModelBehavior>>(' + self.errorModel + ')';
 helper context CHESS!ErrorModel def: toString() : String = '<<ErrorModel>>(' + self.base_StateMachine + ')';
-
 
 
 
