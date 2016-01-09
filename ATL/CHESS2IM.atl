@@ -132,6 +132,13 @@ rule System {
 		
 		--Generate FGE, i.e., connect external faults
 		for(i in thisModule.umlInstancesRelevant) {
+			if(i.getSBAStereotype().oclType() = CHESS!SimpleStochasticBehavior) {
+				thisModule.SimpleStochasticBehavior_FGE(i);
+			}else if(i.getSBAStereotype().oclType() = CHESS!FLABehavior){
+				thisModule.FLASpecification_FGE(i);
+			}else if(i.getSBAStereotype().oclType() = CHESS!ErrorModelBehavior) {
+--				thisModule.ErrorModelToComponent(i);
+			}
 		}
 	}
 }
@@ -336,10 +343,89 @@ rule PopulateExternalFaults(inst : UML!InstanceSpecification) {
 -- Rule to generate FGE elements
 --------------------------------------------------------------------
 rule SimpleStochasticBehavior_FGE(inst : UML!InstanceSpecification) {
+	using {
+		c : IM!Component = thisModule.InstanceToComponent(inst);
+		fge : IM!FaultsGenerateErrors = OclUndefined;
+		externals : Sequence(IM!Fault) = c.Faults->select(ft | ft.oclIsTypeOf(IM!ExternalFault));
+	}
 	do {
-		
+		if(externals->size() > 0) {
+			fge <- thisModule.AddFGE(externals, c.Errors, 'det(0)'.parseDistribution(), 1, 1);
+			fge.PropagationLogic <- thisModule.FEXP_MultiOr(
+				externals->collect(f | thisModule.FEXP_Fault(f))
+			);
+			fge.PropagationLogicStringFormat <- fge.PropagationLogic.toString();
+		}
 	}
 }
+
+rule FLASpecification_FGE(inst : UML!InstanceSpecification) {
+	using {
+		c : IM!Component = thisModule.InstanceToComponent(inst);
+		st : CHESS!FLABehavior = inst.getSBAStereotype();
+		flaRules : Sequence(String) = st.fptc.regexReplaceAll('FLA:', ' ').trim().split(';');
+		tmpLeft : String = OclUndefined;
+		tmpRight : String = OclUndefined;
+		tmpFaults : Sequence(String) = OclUndefined;
+		tmpError : IM!Error = OclUndefined;
+		fExpression : IM!FaultsExpressionNode = OclUndefined;
+		fSources : Set(IM!Fault) = Set{};
+		selFaults : Sequence(String) = OclUndefined;
+		tmpExpressions : Sequence(IM!FaultsExpressionNode) = Sequence{};
+		j : Integer = 0;
+		faultPort : String = OclUndefined;
+		faultMode : String = OclUndefined;
+		tmpFGE : IM!FaultsGenerateErrors = OclUndefined;
+	}
+	
+	do {
+		--For every line of the FLA specification
+		for(spec in flaRules) {
+			j <- j+1;
+			tmpError <- c.Errors->select(e | e.Name = 'e_'+j);
+			
+			tmpLeft <- spec.trim().split('->')->first().trim();			--Get right hand side
+			tmpFaults <- tmpLeft.split(',');							--Get the different failures in the right hand side
+			
+			--For every failure in the right side of the rule
+			tmpExpressions <- Sequence{};
+			for(fault in tmpFaults) {
+				faultPort <- fault.split('\\.')->first();
+				faultMode <- fault.split('\\.')->last();
+								
+				if(faultMode = thisModule.flaNoFailure) {
+					selFaults <- c.Faults->select(ft | ft.Name.noNamespace(c.Name).startsWith(faultPort + '.'));
+					fExpression <- thisModule.FEXP_MultiOr(
+						selFaults->collect(f | thisModule.FEXP_Fault(f))
+					);
+					fExpression <- thisModule.FEXP_Not(fExpression);
+				}else if(faultMode = thisModule.flaWildcard) {
+					selFaults <- c.Faults->select(ft | ft.Name.noNamespace(c.Name).startsWith(faultPort + '.')); 
+					fExpression <- thisModule.FEXP_MultiOr(
+						selFaults->collect(f | thisModule.FEXP_Fault(f))
+					);
+				}else{
+					selFaults <- c.Faults->select(ft | ft.Name.noNamespace(c.Name) = fault);
+					fExpression <- thisModule.FEXP_Fault(
+						selFaults->first()
+					);
+				}
+				tmpExpressions <- tmpExpressions->append(fExpression);
+			}
+			
+			tmpFGE <- thisModule.AddFGE(selFaults, Set{tmpError}, 'det(0)'.parseDistribution(), 1, 1);
+			tmpFGE.PropagationLogic <- fExpression;
+			tmpFGE.PropagationLogicStringFormat <- fExpression.toString();
+		}
+	}		
+}
+
+rule ErrorModel_FGE(inst : UML!InstanceSpecification) {
+	do {
+		---TODO
+	}
+}
+
 
 unique lazy rule AddExternalFault {
 	from
@@ -458,6 +544,25 @@ rule AddFLARuleEPF(e : IM!Error) {
 		)
 	do{
 		epf;
+	}
+}
+
+rule AddFGE(f : Sequence(IM!Fault), e : Sequence(IM!Error), delay : IM!Distribution, p : Real, weight : Real) {
+	using {
+		c : IM!Component = f->first().Component;
+	}
+	to
+		fge : IM!FaultsGenerateErrors (
+			Name <- c.Name + '_fge_' + c.FaultsGeneratesErrors->size()+1,
+			Component <- c,
+			Source <- f,
+			Destination <- e,
+			ActivationDelay <- delay,
+			PropagationProbability <- p,
+			Weight <- weight
+		)
+	do {
+		fge;	
 	}
 }
 
@@ -586,6 +691,73 @@ rule FEXP_And(e1 : IM!FaultsExpressionNode, e2: IM!FaultsExpressionNode) {
 	}
 }
 
+rule FEXP_Not(e : IM!FaultsExpressionNode) {
+	to 
+		fenn : IM!FaultsExpressionNotNode (
+			FaultsExpression <- e	
+		)
+	do {
+		fenn;
+	}
+}
+
+rule FEXP_MultiOr(fe : Sequence(IM!FaultsExpressionNode)) {
+	using {
+		tmpExpression1 : IM!FaultsExpressionNode = OclUndefined;
+		tmpExpression2 : IM!FaultsExpressionNode = OclUndefined;
+		tmpSequence : Sequence(IM!Fault) = fe;
+	}
+	do {
+		if(fe->size() = 1) {
+			tmpExpression1 <- fe->first();
+		}else{
+			tmpExpression1 <- tmpSequence->first();
+			tmpSequence <- tmpSequence.subSequence(2, tmpSequence.size());
+			tmpExpression2 <- tmpSequence->first();
+			tmpSequence <- tmpSequence.subSequence(2, tmpSequence.size());
+			
+			tmpExpression1 <- thisModule.FEXP_Or(tmpExpression1,tmpExpression2);
+			for(ft in tmpSequence) {
+				tmpExpression2 <- 	thisModule.FEXP_Or(
+										tmpExpression1,
+										ft
+								 	);
+				tmpExpression1 <- tmpExpression2;
+			}
+		}
+		
+		tmpExpression1;
+	}	
+}
+
+rule FEXP_MultiAnd(fe : Sequence(IM!FaultsExpressionNode)) {
+	using {
+		tmpExpression1 : IM!FaultsExpressionNode = OclUndefined;
+		tmpExpression2 : IM!FaultsExpressionNode = OclUndefined;
+		tmpSequence : Sequence(IM!Fault) = fe;
+	}
+	do {
+		if(fe->size() = 1) {
+			tmpExpression1 <- fe->first();
+		}else{
+			tmpExpression1 <- tmpSequence->first();
+			tmpSequence <- tmpSequence.subSequence(2, tmpSequence.size());
+			tmpExpression2 <- tmpSequence->first();
+			tmpSequence <- tmpSequence.subSequence(2, tmpSequence.size());
+			
+			tmpExpression1 <- thisModule.FEXP_And(tmpExpression1,tmpExpression2);
+			for(ft in tmpSequence) {
+				tmpExpression2 <- 	thisModule.FEXP_And(
+										tmpExpression1,
+										ft
+								 	);
+				tmpExpression1 <- tmpExpression2;
+			}
+		}
+		
+		tmpExpression1;
+	}	
+}
 
 --Check if a IM!Component already contains a specific failure mode
 helper context IM!Component def: hasFailureMode(fm : String) : Boolean =
@@ -907,6 +1079,7 @@ helper context String def: parseFailureModes() : Set(TupleType(fm: String, p: Re
 helper context IM!FaultsExpressionFaultNode def: toString(): String = self.Fault.Name;
 helper context IM!FaultsExpressionOrNode def: toString(): String = '(' + self.FaultsExpression1.toString() + ' OR ' + self.FaultsExpression2.toString() + ')';
 helper context IM!FaultsExpressionAndNode def: toString() : String = '(' + self.FaultsExpression1.toString() + ' AND ' + self.FaultsExpression2.toString() + ')';
+helper context IM!FaultsExpressionNotNode def: toString() : String = '(NOT ' + self.FaultsExpression.toString() + ')';
 
 helper context IM!ErrorsExpressionErrorNode def: toString(): String = self.Error.Name;
 helper context IM!ErrorsExpressionOrNode def: toString(): String = '(' + self.ErrorsExpression1.toString() + ' OR ' + self.ErrorsExpression2.toString() + ')';
