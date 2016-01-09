@@ -127,13 +127,7 @@ rule System {
 		
 		--Generate external faults
 		for(i in thisModule.umlInstancesRelevant) {
-			if(i.getSBAStereotype().oclType() = CHESS!SimpleStochasticBehavior) {
-				thisModule.SimpleStochasticBehavior_XFT(i);
-			}else if(i.getSBAStereotype().oclType() = CHESS!FLABehavior){
-				thisModule.FLASpecification_XFT(i);
-			}else if(i.getSBAStereotype().oclType() = CHESS!ErrorModelBehavior) {
-				thisModule.ErrorModel_XFT(i);
-			}			
+			thisModule.PopulateExternalFaults(i);	
 		}
 		
 		--Generate FGE, i.e., connect external faults
@@ -311,30 +305,25 @@ rule ErrorModelToComponent(inst : UML!InstanceSpecification) {
 }
 
 --------------------------------------------------------------------
--- Rules to generate external faults for component instances
--- having different SBA stereotypes
+-- Rule to generate external faults for component instances
 --------------------------------------------------------------------
 
-rule SimpleStochasticBehavior_XFT(inst : UML!InstanceSpecification) {
+rule PopulateExternalFaults(inst : UML!InstanceSpecification) {
 	using {
 		inPorts : Set(UML!Slot) = inst.getPortSlots()->select(p | p.hasInputFlow());
-		portName : String = OclUndefined;
 		faultName : String = OclUndefined;
 		connPort : UML!Slot = OclUndefined;
 		connComp : IM!Component = OclUndefined;
 		tmpExternalFault : IM!ExternalFault = OclUndefined;
-	}
+	}	
 	do {
 		for(p in inPorts) {
---						portName <- fault.split('\\.').debug()->first();
---						faultName <- fault.split('\\.')->last();
-					
 			--Find connected port
 			connPort <- p.getSBAConnections()->first();
 			--Find connected component (slot owner)
 			connComp <- thisModule.InstanceToComponent(connPort.refImmediateComposite());
 			
-			for(f in connComp.FailureModes->select(fm | fm.Name.startsWith(connPort.name + '.'))) {		
+			for(f in connComp.FailureModes->select(fm | fm.Name.noNamespace(connComp.Name).startsWith(connPort.name + '.'))) {
 				faultName <- f.Name.split('\\.')->last();
 				tmpExternalFault <- thisModule.AddExternalFault(p.name + '.' + faultName, inst);
 				tmpExternalFault.Source <- f;
@@ -342,72 +331,6 @@ rule SimpleStochasticBehavior_XFT(inst : UML!InstanceSpecification) {
 		}
 	}
 }
-
-rule FLASpecification_XFT(inst : UML!InstanceSpecification) {
-	using {
-		inPorts : Set(UML!Slot) = inst.getPortSlots()->select(p | p.hasInputFlow());
-		c : IM!Component = thisModule.InstanceToComponent(inst);
-		st : CHESS!FLABehavior = inst.getSBAStereotype();
-		flaRules : Sequence(String) = st.fptc.regexReplaceAll('FLA:', ' ').trim().split(';');
-		tmpLeft : String = OclUndefined;
-		tmpFaults : Sequence(String) = OclUndefined;
-		errorMap : Map(String,IM!Error) = Map{};
-		tmpError : IM!Error = OclUndefined;
-		tmpExternalFault : IM!ExternalFault = OclUndefined;
-		j : Integer = 0;
-		portName : String = OclUndefined;
-		faultName : String = OclUndefined;
-		
-		connPort : UML!Slot = OclUndefined;
-		connComp : IM!Component = OclUndefined;
-	}
-	do {
-		--For every line of the FLA specification
-		for(spec in flaRules) {
-			j <- j+1;
-			tmpError <- c.Errors->select(e | e.Name = 'e_'+j);
-			
-			tmpLeft <- spec.trim().split('->')->first().trim();			--Get right hand side
-			tmpFaults <- tmpLeft.split(',');							--Get the different failures in the right hand side
-			
-			--For every fault in the left side of the rule
-			for(fault in tmpFaults) {
-				--If it is not the 'noFailure' or 'wildcard' elements
-				if(fault.indexOf('.' + thisModule.flaNoFailure) = -1
-						and fault.indexOf('.' + thisModule.flaWildcard) = -1) {
-					--If the fault does not exist already
-					if(not c.hasFault(fault)) {
-						tmpExternalFault <- thisModule.AddExternalFault(fault,inst);
-						
-						portName <- fault.split('\\.')->first();
-						faultName <- fault.split('\\.')->last();
-						
-						--Find connected port
-						connPort <-
-							inst.getPortSlots()->
-								select(p | p.hasInputFlow() and p.name = portName)->first()
-								.getSBAConnections()->first();
-						--Find connected component (slot owner)
-						connComp <- thisModule.InstanceToComponent(connPort.refImmediateComposite());
-						
-						tmpExternalFault.Name.debug();
-						--Assign failure as source of the external fault
-						tmpExternalFault.Source <- connComp.FailureModes->
-							select(f | f.Name.debug() = connComp.Name + '_' + connPort.name + '.' + faultName)->first();
-					}
-				}
-			}
-		}
-	}		
-}
-
-rule ErrorModel_XFT(inst : UML!InstanceSpecification) {
-	
-	do {
-		
-	}
-}
-
 
 unique lazy rule AddExternalFault {
 	from
