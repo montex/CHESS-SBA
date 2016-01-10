@@ -140,6 +140,15 @@ rule System {
 				thisModule.ErrorModel_FGE(i);
 			}
 		}
+		
+		--Handle metrics
+		if (sba.WhichMeasure = 'Reliability'){
+			thisModule.Reliability(sba, sba.measure.getTime);
+		}else if (sba.WhichMeasure = 'Availability'){
+			thisModule.Availability(sba, sba.measure.getTime);
+		}else{
+			---TODO: others?
+		}
 	}
 }
 
@@ -643,6 +652,145 @@ rule AddSourceError(fm : IM!FailureMode) {
 			Destination <- Set{fm},
 			Component <- c
 		)
+}
+
+--------------------------------------------------------------------
+-- Rules related to the definition of the metric
+--------------------------------------------------------------------
+
+lazy rule newEvalIntervalOfTime {
+	from
+		t : Real
+	to
+		iot : IM!IntervalOfTimeAveraged
+		(
+			begin <- 0,
+			end <- t
+		)
+}
+lazy rule newEvalInstantOfTime {
+	from
+		t : Real
+	to
+		instant : IM!InstantOfTime ( timePoint <- t )
+}
+
+rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
+
+	using {
+		strClean : String = sba.measure.regexReplaceAll('[={}]', ' ').trim();
+		iInstant : Integer = strClean.indexOf('instantOfTime');
+
+		--Select all the failure modes of component instance specified as 'targetDepComponent'
+		allFailuresOfSelectedInstances : Set(IM!FailureMode) =
+			sba.targetDepComponent->
+				collect(i | thisModule.InstanceToComponent(i).FailureModes)->flatten()->asSet();
+
+		---TODO: the facility to select the failure mode must be reimplemented
+		--Select all the failure modes (of all the instances) specified as 'targetFailureModes'
+		fmSelected : Set(IM!FailureMode) = Set{};
+			--thisModule.FailuresMap->getKeys()->select(k | sba.targetFailureMode->collect(fm | fm.base_State)->includes(k.st))->collect(selK | thisModule.FailuresMap->get(selK))->asSet();
+			
+		imsistema : IM!Sistema = IM!Sistema.allInstances()->first();
+	}
+	to
+		re : IM!Reliability (
+			Name <-	'Reliability'
+		)
+
+	do{
+		imsistema.measures.add(re);
+		if (iInstant > 0) {
+			re.evaluations.add(
+				thisModule.newEvalInstantOfTime(
+					strClean.substring(iInstant + 1 + 'instantOfTime'.size(), strClean.size()).toReal()
+				)
+			);
+		}
+		else{
+			--Should not happen!
+		}
+
+		--[allFailuresOfSelectedInstances]: all the failure modes of selected component instances
+		--[fmSelected]: all the selected failure modes
+		--Idea: select only SELECTED failure modes, of SELECTED component instances
+		--(i.e., perform an intersection between the two)
+		--If one of the two is not specified, then select all the failure modes specified by the other
+		if(fmSelected.isEmpty()) {
+			re.target <- allFailuresOfSelectedInstances;
+			re.Name <- re.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
+		}else{
+			if(allFailuresOfSelectedInstances.isEmpty()) {
+				re.target <- fmSelected;
+			}else{
+				re.target <- allFailuresOfSelectedInstances->intersection(fmSelected);
+			}
+			re.Name <- re.Name + re.target->collect(fm | '_' + fm.Name)->sum();
+		}
+	}
+}
+
+rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
+
+	using {
+		strClean : String = sba.measure.regexReplaceAll('[={}]', ' ').trim();
+		iInterval : Integer = strClean.indexOf('intervalEnd');
+		iInstant : Integer = strClean.indexOf('instantOfTime');
+
+		--Select all the failure modes of component instance specified as 'targetDepComponent'
+		allFailuresOfSelectedInstances : Set(IM!FailureMode) =
+			sba.targetDepComponent->collect(i | thisModule.InstanceToComponent(i).FailureModes)->flatten()->asSet();
+
+		---TODO: the facility to select the failure mode must be reimplemented
+		--Select all the failure modes (of all the instances) specified as 'targetFailureModes'
+		fmSelected : Set(IM!FailureMode) = Set{};
+			--thisModule.FailuresMap->getKeys()->select(k | sba.targetFailureMode->collect(fm | fm.base_State)->includes(k.st))->collect(selK | thisModule.FailuresMap->get(selK))->asSet();
+			
+		imsistema : IM!Sistema = IM!Sistema.allInstances()->first();
+	}
+	to
+		re : IM!Availability (
+			Name <-	'Availability_'
+		)
+	do{
+		imsistema.measures.add(re);
+
+		if (iInterval > 0)
+		{
+			re.evaluations.add(
+				thisModule.newEvalIntervalOfTime(
+					strClean.substring(iInterval + 1 + 'intervalEnd'.size(), strClean.size()).toReal()
+				)
+			);
+		}
+		else if (iInstant > 0) {
+			re.evaluations.add(
+				thisModule.newEvalInstantOfTime(
+					strClean.substring(iInstant + 1 + 'instantOfTime'.size(), strClean.size()).toReal()
+				)
+			);
+		}
+		else{
+			--Should not happen!
+		}
+
+		--[allFailuresOfSelectedInstances]: all the failure modes of selected component instances
+		--[fmSelected]: all the selected failure modes
+		--Idea: select only SELECTED failure modes, of SELECTED component instances
+		--(i.e., perform an intersection between the two)
+		--If one of the two is not specified, then select all the failure modes specified by the other
+		if(fmSelected.isEmpty()) {
+			re.target <- allFailuresOfSelectedInstances;
+			re.Name <- re.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
+		}else{
+			if(allFailuresOfSelectedInstances.isEmpty()) {
+				re.target <- fmSelected;
+			}else{
+				re.target <- allFailuresOfSelectedInstances->intersection(fmSelected);
+			}
+			re.Name <- re.Name + re.target->collect(fm | '_' + fm.Name)->sum();
+		}
+	}
 }
 
 --------------------------------------------------------------------
@@ -1163,7 +1311,22 @@ helper context String def: parseFailureModes() : Set(TupleType(fm: String, p: Re
 	endif endif;
 
 --------------------------------------------------------------------
--- Helpers to translate Faults/Errors expressions to strings
+-- Helpers to managethe metrics
+--------------------------------------------------------------------
+
+--temporary parser to retrieve which dependability measure a SBAnalysis refers to
+helper context CHESS!StateBasedAnalysis def: WhichMeasure : String =
+	if self.measure.startsWith('Reliability') then 'Reliability'
+	else if self.measure.startsWith('Availability') then 'Availability'
+	else 'error'
+	endif endif;
+
+--temporary parser to retrieve the time value from a dependability measure
+helper context String def: getTime : Real =
+	self.substring(self.indexOf('=')+2, self.size()-1).toReal();
+		
+--------------------------------------------------------------------
+-- Helpers to manage Faults/Errors expressions
 --------------------------------------------------------------------
 helper context IM!FaultsExpressionFaultNode def: toString(): String = self.Fault.Name;
 helper context IM!FaultsExpressionOrNode def: toString(): String = '(' + self.FaultsExpression1.toString() + ' OR ' + self.FaultsExpression2.toString() + ')';
@@ -1190,7 +1353,7 @@ helper context IM!FaultsExpressionNode def: faultsList() : Sequence(IM!Fault) =
 
 helper context IM!ErrorsExpressionErrorNode def: toString(): String = self.Error.Name;
 helper context IM!ErrorsExpressionOrNode def: toString(): String = '(' + self.ErrorsExpression1.toString() + ' OR ' + self.ErrorsExpression2.toString() + ')';
-	
+
 --------------------------------------------------------------------
 -- For debugging purposes: pretty print SBA stereotypes
 --------------------------------------------------------------------
