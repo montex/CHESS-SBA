@@ -114,7 +114,9 @@ rule System {
 		
 		--Generate IM!Component elements, failure modes, and what can be done immediately
 		for(i in thisModule.umlInstancesRelevant) {
-			thisModule.InstanceToComponent(i);	
+			s.components <- s.components.append(
+				thisModule.InstanceToComponent(i)
+			);
 			
 			if(i.getSBAStereotype().oclType() = CHESS!SimpleStochasticBehavior) {
 				thisModule.SimpleStochasticBehaviorToComponent(i);
