@@ -137,7 +137,7 @@ rule System {
 			}else if(i.getSBAStereotype().oclType() = CHESS!FLABehavior){
 				thisModule.FLASpecification_FGE(i);
 			}else if(i.getSBAStereotype().oclType() = CHESS!ErrorModelBehavior) {
---				thisModule.ErrorModelToComponent(i);
+				thisModule.ErrorModel_FGE(i);
 			}
 		}
 	}
@@ -290,6 +290,7 @@ rule ErrorModelToComponent(inst : UML!InstanceSpecification) {
 		
 		--Transform ErrorModel <<InternalPropagation>> Transitions,
 		--but only those for which the 'externalFaults' attribute is empty.
+		--(for the others all the external faults need to be in place)
 		for(tr in transitions) {
 			tmpStereotype <- tr.getSBAStereotype();
 			if(tmpStereotype.oclIsTypeOf(CHESS!InternalPropagation)) {
@@ -304,10 +305,6 @@ rule ErrorModelToComponent(inst : UML!InstanceSpecification) {
 				}
 			}
 		}
-		
-		--<<InternalPropagation>> that refer to external faults are processed later
-		--This includes also those that originate from the InitialState
-		
 	}
 }
 
@@ -317,6 +314,7 @@ rule ErrorModelToComponent(inst : UML!InstanceSpecification) {
 
 rule PopulateExternalFaults(inst : UML!InstanceSpecification) {
 	using {
+		c : IM!Component = thisModule.InstanceToComponent(inst);
 		inPorts : Set(UML!Slot) = inst.getPortSlots()->select(p | p.hasInputFlow());
 		faultName : String = OclUndefined;
 		connPort : UML!Slot = OclUndefined;
@@ -332,8 +330,11 @@ rule PopulateExternalFaults(inst : UML!InstanceSpecification) {
 			
 			for(f in connComp.FailureModes->select(fm | fm.Name.noNamespace(connComp.Name).startsWith(connPort.name + '.'))) {
 				faultName <- f.Name.split('\\.')->last();
-				tmpExternalFault <- thisModule.AddExternalFault(p.name + '.' + faultName, inst);
-				tmpExternalFault.Source <- f;
+				--If the external faults has not already been added then add it
+				if(c.Faults->select(ft | ft.Name = connComp.Name + '_' + f)->isEmpty()) {				
+					tmpExternalFault <- thisModule.AddExternalFault(p.name + '.' + faultName, inst);
+					tmpExternalFault.Source <- f;
+				}
 			}
 		}
 	}
@@ -421,13 +422,62 @@ rule FLASpecification_FGE(inst : UML!InstanceSpecification) {
 }
 
 rule ErrorModel_FGE(inst : UML!InstanceSpecification) {
+	using {
+		c : IM!Component = thisModule.InstanceToComponent(inst);
+		st : CHESS!ErrorModelBehavior = inst.getSBAStereotype();
+		errorModel : CHESS!ErrorModel = st.errorModel->first();
+		states : Sequence(UML!State) = errorModel.base_StateMachine.ownedElement->first().ownedElement->select(e | e.oclIsKindOf(UML!State));
+		pseudo : Sequence(CHESS!Pseudostate) = errorModel.base_StateMachine.ownedElement->first().ownedElement->select(e | e.oclIsKindOf(CHESS!Pseudostate));
+		transitions : Sequence(UML!Transition) = errorModel.base_StateMachine.ownedElement->first().ownedElement->select(e | e.oclIsKindOf(UML!Transition));
+		tmpStereotype : OclAny = OclUndefined;
+		tmpExternalFaults : String = OclUndefined;
+		tmpFGE : IM!FaultsGenerateErrors = OclUndefined;
+		tmpExpression : IM!FaultsExpressionNode = OclUndefined;
+	}
 	do {
-		---TODO
+		--Transform ErrorModel <<InternalPropagation>> Transitions,
+		--for which the 'externalFaults' attribute is *not* empty.
+		--(the others have been processed previously in rule ErrorModelToComponent)
+		for(tr in transitions) {
+			tmpStereotype <- tr.getSBAStereotype();
+			if(tmpStereotype.oclIsTypeOf(CHESS!InternalPropagation)) {
+				if(tmpStereotype.oclIsTypeOf(CHESS!InternalFault)) {
+					--Do nothing (processed elsewhere)				
+				}else{
+					--Match <<InternalPropagation>> stereotype only
+					
+					--Set a default for the delay and weight
+					if(tmpStereotype.delay.oclIsUndefined()) {
+						tmpStereotype.delay <- 'det(0)';	
+					}
+					if(tmpStereotype.weight.oclIsUndefined()) {
+						tmpStereotype.weight <- '1';	
+					}
+					
+					tmpExternalFaults <- tmpStereotype.externalFaults;
+					if(tr.source.isInitialState()) {
+						tmpExpression <- thisModule.FEXP_ParseString(tmpExternalFaults, inst);
+						tmpFGE <- thisModule.AddFGE(
+							tmpExpression.faultsList(),
+							Sequence{thisModule.ErrorModelStateToError(tr.target)},
+							tmpStereotype.delay.parseDistribution(),
+							1,
+							tmpStereotype.weight.toReal()
+						);
+						tmpFGE.PropagationLogic <- tmpExpression;
+						tmpFGE.PropagationLogicStringFormat <- tmpExpression.toString();
+					}else{
+						---TODO
+						--Not implemented: Requires modifications to IDM
+					}
+				}
+			}
+		}
 	}
 }
 
 
-unique lazy rule AddExternalFault {
+lazy rule AddExternalFault {
 	from
 		fault : String,
 		inst : UML!InstanceSpecification
@@ -759,6 +809,45 @@ rule FEXP_MultiAnd(fe : Sequence(IM!FaultsExpressionNode)) {
 	}	
 }
 
+--Parses a string into a FaultsExpression
+---TODO: Implement more advanced parsing
+rule FEXP_ParseString(exp : String, inst : UML!InstanceSpecification) {
+	using {
+		c : IM!Component = thisModule.InstanceToComponent(inst);
+		tmpSplit : Sequence(String) = OclUndefined;
+		expRet : IM!FaultsExpressionNode = OclUndefined;
+	}
+	do {
+		tmpSplit <- exp.toLower().split(' and | AND ');
+		if(tmpSplit.size() > 1) {
+			expRet <-
+			thisModule.FEXP_MultiAnd(
+				tmpSplit->collect(
+					ft | c.Faults->select(ff | ff.Name.noNamespace(c.Name) = ft.trim())->first()
+				)->
+				flatten()->
+				collect(ft | thisModule.FEXP_Fault(ft))
+			);
+		}else {
+			tmpSplit <- exp.toLower().split(' or | OR ');
+			if(tmpSplit.size() > 1) {
+				expRet <-
+				thisModule.FEXP_MultiOr(
+					tmpSplit->collect(
+						s | c.Faults->select(ft | ft.Name.noNamespace(c.Name) = s.trim())
+					)->
+					flatten()->
+					collect(ft | thisModule.FEXP_Fault(ft))
+				);
+			}else {
+				expRet <- thisModule.FEXP_Fault(tmpSplit->first());
+			}
+		}
+		
+		expRet;
+	}
+}
+
 --Check if a IM!Component already contains a specific failure mode
 helper context IM!Component def: hasFailureMode(fm : String) : Boolean =
 	not self.FailureModes->select(f | f.Name.noNamespace(self.Name).trim() = fm.trim())->isEmpty();
@@ -1080,6 +1169,24 @@ helper context IM!FaultsExpressionFaultNode def: toString(): String = self.Fault
 helper context IM!FaultsExpressionOrNode def: toString(): String = '(' + self.FaultsExpression1.toString() + ' OR ' + self.FaultsExpression2.toString() + ')';
 helper context IM!FaultsExpressionAndNode def: toString() : String = '(' + self.FaultsExpression1.toString() + ' AND ' + self.FaultsExpression2.toString() + ')';
 helper context IM!FaultsExpressionNotNode def: toString() : String = '(NOT ' + self.FaultsExpression.toString() + ')';
+
+--Get the list of Fault elements involved in a FaultsExpression
+helper context IM!FaultsExpressionNode def: faultsList() : Sequence(IM!Fault) = 
+	if self.oclIsTypeOf(IM!FaultsExpressionFaultNode) then
+		let fexp : IM!FaultsExpressionFaultNode = self in 
+		Sequence{fexp.Fault}
+	else if self.oclIsTypeOf(IM!FaultsExpressionNotNode) then
+		let fexp : IM!FaultsExpressionNotNode = self in 
+		fexp.FaultsExpression.faultsList()
+	else if self.oclIsTypeOf(IM!FaultsExpressionAndNode) then
+		let fexp : IM!FaultsExpressionAndNode = self in 
+		fexp.FaultsExpression1.faultsList()->union(fexp.FaultsExpression2.faultsList())
+	else if self.oclIsTypeOf(IM!FaultsExpressionOrNode) then
+		let fexp : IM!FaultsExpressionOrNode = self in 
+		fexp.FaultsExpression1.faultsList()->union(fexp.FaultsExpression2.faultsList())
+	else
+		Sequence{}	--it should never happen
+	endif endif endif endif;
 
 helper context IM!ErrorsExpressionErrorNode def: toString(): String = self.Error.Name;
 helper context IM!ErrorsExpressionOrNode def: toString(): String = '(' + self.ErrorsExpression1.toString() + ' OR ' + self.ErrorsExpression2.toString() + ')';
