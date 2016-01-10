@@ -531,11 +531,12 @@ unique lazy rule InternalPropagation {
 	using {
 		myDelay : String = if chIntProp.delay.oclIsUndefined() then 'det(0)' else chIntProp.delay endif;
 		myWeight : Real = if chIntProp.weight.oclIsUndefined() then 1 else chIntProp.weight.toReal() endif;
+		c : IM!Component = thisModule.InstanceToComponent(inst);
 	}
 	to
 		imIntProp : IM!InternalPropagation (
-			Component <- thisModule.InstanceToComponent(inst),
-			Name <- chIntProp.base_Transition.source.toString() + '_to_' + chIntProp.base_Transition.target.toString(),
+			Component <- c,
+			Name <- c.Name + '_intprop_' + c.InternalPropagation->size()+1,
 			Source <- thisModule.ErrorModelStateToError(chIntProp.base_Transition.source),
 			Destination <- thisModule.ErrorModelStateToError(chIntProp.base_Transition.target),
 			PropagationProbability <- 1,
@@ -574,13 +575,14 @@ unique lazy rule AddEPFFromErrorModelFailure {
 		eSource : IM!Error = thisModule.ErrorModelStateToError(f.base_Transition.source);
 		myDelay : String = if f.delay.oclIsUndefined() then 'det(0)' else f.delay endif;
 		myWeight : Real = if f.weight.oclIsUndefined() then 1 else f.weight.toReal() endif;
+		c : IM!Component = eSource.Component;
 	}
 	to
 		epf : IM!ErrorsProducesFailures (
-			Name <- eSource.Name + '_to_' + f.mode,
+			Name <- c.Name + '_epf_' + c.ErrorsGeneratesFailures->size()+1,
 			Source <- Sequence{eSource},
 			Destination <- eSource.Component.FailureModes->select(fm | f.mode->includes(fm.Name)),
-			Component <- eSource.Component,
+			Component <- c,
 			PropagationDelay <- myDelay.parseDistribution(),
 			PropagationProbability <- 1,
 			Weight <- myWeight
@@ -626,10 +628,13 @@ rule AddFGE(f : Sequence(IM!Fault), e : Sequence(IM!Error), delay : IM!Distribut
 }
 
 rule AddEPF(e : IM!Error, fm : IM!FailureMode, delay : IM!Distribution, p : Real, weight : Real) {
+	using {
+		c : IM!Component = fm.Component;			
+	}
 	to 
 		epf : IM!ErrorsProducesFailures (
-			Name <- e.Name + '_to_' + fm.Name,
-			Component <-fm.Component,
+			Name <- c.Name + '_epf_' + c.FaultsGeneratesErrors->size()+1,
+			Component <- c,
 			Source <- Set{e},
 			Destination <- Set{fm},
 			PropagationDelay <- delay,
