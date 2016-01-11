@@ -142,6 +142,10 @@ rule System {
 				thisModule.ErrorModel_FGE(i);
 			}
 		}
+		--Set FGE Backlinks
+		for(fge in IM!FaultsGenerateErrors.allInstances()) {
+			thisModule.setFGEBackLinks(fge.PropagationLogic, fge);	
+		}
 		
 		--Handle metrics
 		if (sba.WhichMeasure = 'Reliability'){
@@ -399,7 +403,7 @@ rule FLASpecification_FGE(inst : UML!InstanceSpecification) {
 			tmpLeft <- spec.trim().split('->')->first().trim();			--Get right hand side
 			tmpFaults <- tmpLeft.split(',');							--Get the different failures in the right hand side
 			
-			--For every failure in the right side of the rule
+			--For every fault in the left side of the rule
 			tmpExpressions <- Sequence{};
 			for(fault in tmpFaults) {
 				faultPort <- fault.split('\\.')->first();
@@ -424,8 +428,10 @@ rule FLASpecification_FGE(inst : UML!InstanceSpecification) {
 				}
 				tmpExpressions <- tmpExpressions->append(fExpression);
 			}
+			fExpression <- thisModule.FEXP_MultiAnd(tmpExpressions);
 			
 			tmpFGE <- thisModule.AddFGE(selFaults, Set{tmpError}, 'det(0)'.parseDistribution(), 1, 1);
+			fExpression.faultsGenerateErrors <- tmpFGE;
 			tmpFGE.PropagationLogic <- fExpression;
 			tmpFGE.PropagationLogicStringFormat <- fExpression.toString();
 		}
@@ -475,6 +481,7 @@ rule ErrorModel_FGE(inst : UML!InstanceSpecification) {
 							1,
 							tmpStereotype.weight.toReal()
 						);
+						tmpExpression.faultsGenerateErrors <- tmpFGE;
 						tmpFGE.PropagationLogic <- tmpExpression;
 						tmpFGE.PropagationLogicStringFormat <- tmpExpression.toString();
 					}else{
@@ -1000,6 +1007,34 @@ rule FEXP_ParseString(exp : String, inst : UML!InstanceSpecification) {
 		}
 		
 		expRet;
+	}
+}
+
+rule setFGEBackLinks(fen: IM!FaultsExpressionNode, fge: IM!FaultsGenerateErrors ) {
+	do {
+		fen.faultsGenerateErrors <- fge;
+		if (fen.oclIsTypeOf(IM!FaultsExpressionOrNode)) {
+			thisModule.setFGEBackLinks(fen.FaultsExpression1, fge);
+			thisModule.setFGEBackLinks(fen.FaultsExpression2, fge);
+		}else if (fen.oclIsTypeOf(IM!FaultsExpressionAndNode)){
+			thisModule.setFGEBackLinks(fen.FaultsExpression1, fge);
+			thisModule.setFGEBackLinks(fen.FaultsExpression2, fge);
+		}else if (fen.oclIsTypeOf(IM!FaultsExpressionNotNode)) {
+			thisModule.setFGEBackLinks(fen.FaultsExpression, fge);
+		}
+	}
+}
+
+rule setEPFBackLinks(een: IM!ErrorsExpressionNode, epf: IM!ErrorsProducesFailures ) {
+	do {
+		een.errorPropagation <- epf;
+		if (een.oclIsTypeOf(IM!FaultsExpressionOrNode)) {
+			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
+			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
+		} else if (een.oclIsTypeOf(IM!FaultsExpressionAndNode)) {
+			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
+			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
+		}
 	}
 }
 
