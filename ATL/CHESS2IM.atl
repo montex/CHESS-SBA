@@ -53,56 +53,6 @@ rule System {
 
 		thisModule.umlInstancesRelevant <- instSystem.findSBAConstituents();
 		
-		
-		--thisModule.umlInstancesStereo <- thisModule.umlInstancesBlocks;
-
---		for(i in thisModule.umlInstancesStereo) {
---			i.debug('i->');
---			i.getSBAStereotype().toString().debug('stereotype: ');
---			i.slot->collect(sl | sl.definingFeature.name).debug('slots: ');
---			i.getSubInstances().debug('sub instances');
---
---			i.slot->select(sl | sl.definingFeature.oclIsKindOf(UML!Port))->collect(s | s.hasInputFlow()).debug('is input: ');
---			i.slot->select(sl | sl.definingFeature.oclIsKindOf(UML!Port))->collect(s | s.hasOutputFlow()).debug('is output: ');	
---			
---			for(p in i.slot->select(sl | sl.definingFeature.oclIsKindOf(UML!Port))) {
---				p.definingFeature.name.debug('>>');
---				p.hasInputFlow().debug('input? ');
---				p.hasOutputFlow().debug('output? ');
---				
---				thisModule.umlInstancesConnectors.debug();
---				thisModule.umlInstancesConnectors->collect(c | c.slot).debug();
---				
---				p.getConnectors().debug('getConnectors');
---				p.getConnectors()->collect(c | c.isConnection()).debug('isConnection');
---				p.getConnectors()->collect(c | c.isDelegation()).debug('isDelegation');
---				p.getConnectedImmediate()->collect(i|i.definingFeature.name).debug('getConnectedImmediate');
---				p.getDelegationEnds()->collect(i|i.definingFeature.name).debug('getDelegationEnds');
---				p.getDelegationEndsDownwards()->collect(i|i.definingFeature.name).debug('getDelegationEndsDownwards');
---				p.getDelegationEndsUpwards()->collect(i|i.definingFeature.name).debug('getDelegationEndsUpwards');
---				p.getSBADelegations()->collect(i|i.definingFeature.name).debug('getSBADelegations');
---				p.getSBAConnections()->collect(i|i.definingFeature.name).debug('getSBAConnections');
---				thisModule.umlInstancesConnectors->select(c | not c.slot->select(s | s.definingFeature = p.definingFeature and s.value->first().instance = i)->isEmpty())();
---				thisModule.umlInstancesConnectors->collect(c | c.slot->collect(s | s.value->first().instance))('conns');
---				
---			}
---			thisModule('------------------------');
---		}
---		thisModule.umlInstancesStereo();
---		UML!InstanceSpecification.allInstances()->collect(i | i.getSimpleStochasticBehavior()('##'));
-----		
-----		
-----		UML!InstanceSpecification.allInstances()->collect(i | CHESS!SimpleStochasticBehavior.allInstances()->exists(ssb | ssb.base_Class = i.getBaseItem())());
-----	
-----		thisModule.sbaStereotypes->collect(s | s.allInstances())->flatten();
---
-----helper context UML!Port def: isInputPort : Boolean =
-----MARTE!ClientServerPort.allInstances()->select(c | c.base_Port = self)->first().kind 
---
---		MARTE!ClientServerPort.allInstances()->collect(p | p.kind)();
---		SYSML!FlowPort.allInstances()->collect(p | p.hasInputFlow())();
---		UML!Port.allInstances()->collect(p | p.hasInputFlow())();
-
 		--DEBUG: Print the obtained sets
 		thisModule.umlInstancesAll.debug('Instances ['+ thisModule.umlInstancesAll.size() +']');
 		thisModule.umlInstancesConnectors.debug('Connectors ['+ thisModule.umlInstancesConnectors.size() +']');
@@ -219,6 +169,7 @@ rule FLASpecificationToComponent(inst : UML!InstanceSpecification) {
 		errorMap : Map(String,IM!Error) = Map{};
 		tmpError : IM!Error = OclUndefined;
 		tmpEPF : IM!ErrorsProducesFailures = OclUndefined;
+		fToPropagate : Sequence(IM!FailureMode) = Sequence{};
 		j : Integer = 0;
 	}
 	
@@ -227,23 +178,31 @@ rule FLASpecificationToComponent(inst : UML!InstanceSpecification) {
 		for(spec in flaRules) {
 			j <- j+1;
 			tmpError <- thisModule.AddError('e_'+j,c);
-			tmpEPF <- thisModule.AddFLARuleEPF(tmpError);
 			
 			tmpRight <- spec.trim().split('->')->last().trim();			--Get right hand side
 			tmpFailures <- tmpRight.split(',');							--Get the different failures in the right hand side
 			
 			--For every failure in the right side of the rule
+			fToPropagate = Sequence{};
 			for(failure in tmpFailures) {
 				--If it is not the 'noFailure' element
 				if(failure.indexOf('.' + thisModule.flaNoFailure) = -1) {
 					--If the failure mode does not exist already
 					if(not c.hasFailureMode(failure)) {
-						thisModule.AddFailureMode(failure, c);
+						fToPropagate <- fToPropagate.including(
+							thisModule.AddFailureMode(failure, c)
+						);
 					}
-					
-					tmpEPF.Destination <- tmpEPF.Destination->including(c.FailureModes->select(f | f.Name = failure)->first());
 				}
 			}
+			
+			--If the set of failure modes to propagate for this rule
+			--is not empty, then create an EPF element
+			if(not fToPropagate.isEmpty()) {
+				tmpEPF <- thisModule.AddFLARuleEPF(tmpError);
+				tmpEPF.Destination <- fToPropagate;
+			}
+
 		}
 	}		
 }
@@ -398,7 +357,7 @@ rule FLASpecification_FGE(inst : UML!InstanceSpecification) {
 		--For every line of the FLA specification
 		for(spec in flaRules) {
 			j <- j+1;
-			tmpError <- c.Errors->select(e | e.Name = 'e_'+j);
+			tmpError <- c.Errors->select(e | e.Name.noNamespace(c.Name) = 'e_'+j);
 			
 			tmpLeft <- spec.trim().split('->')->first().trim();			--Get right hand side
 			tmpFaults <- tmpLeft.split(',');							--Get the different failures in the right hand side
@@ -430,7 +389,7 @@ rule FLASpecification_FGE(inst : UML!InstanceSpecification) {
 			}
 			fExpression <- thisModule.FEXP_MultiAnd(tmpExpressions);
 			
-			tmpFGE <- thisModule.AddFGE(selFaults, Set{tmpError}, 'det(0)'.parseDistribution(), 1, 1);
+			tmpFGE <- thisModule.AddFGE(selFaults, tmpError, 'det(0)'.parseDistribution(), 1, 1);
 			fExpression.faultsGenerateErrors <- tmpFGE;
 			tmpFGE.PropagationLogic <- fExpression;
 			tmpFGE.PropagationLogicStringFormat <- fExpression.toString();
@@ -526,10 +485,11 @@ unique lazy rule InternalFault {
 	}
 	to
 		ift : IM!InternalFault (
-			Name <- 'ift_' + c.Faults->select(f | f.oclIsKindOf(IM!InternalFault))->size()+1,
+			Name <- 'ift_' + (c.Faults->select(f | f.oclIsKindOf(IM!InternalFault))->size()+1),
 			Occurrence <- chIntFault.occurrence.parseDistribution(),
 			PermanentProbability <- 1,
-			Component <- c
+			Component <- c,
+			TransientDuration <- thisModule.Deterministic(0)
 		)
 }
 
@@ -545,7 +505,7 @@ unique lazy rule InternalPropagation {
 	to
 		imIntProp : IM!InternalPropagation (
 			Component <- c,
-			Name <- c.Name + '_intprop_' + c.InternalPropagation->size()+1,
+			Name <- c.Name + '_intprop_' + (c.InternalPropagation->size()+1),
 			Source <- thisModule.ErrorModelStateToError(chIntProp.base_Transition.source),
 			Destination <- thisModule.ErrorModelStateToError(chIntProp.base_Transition.target),
 			PropagationProbability <- 1,
@@ -588,9 +548,9 @@ unique lazy rule AddEPFFromErrorModelFailure {
 	}
 	to
 		epf : IM!ErrorsProducesFailures (
-			Name <- c.Name + '_epf_' + c.ErrorsGeneratesFailures->size()+1,
+			Name <- c.Name + '_epf_' + (c.ErrorsGeneratesFailures->size()+1),
 			Source <- Sequence{eSource},
-			Destination <- eSource.Component.FailureModes->select(fm | f.mode->includes(fm.Name)),
+			Destination <- c.FailureModes->select(fm | f.mode->includes(fm.Name.noNamespace(c.Name))),
 			Component <- c,
 			PropagationDelay <- myDelay.parseDistribution(),
 			PropagationProbability <- 1,
@@ -623,7 +583,7 @@ rule AddFGE(f : Sequence(IM!Fault), e : Sequence(IM!Error), delay : IM!Distribut
 	}
 	to
 		fge : IM!FaultsGenerateErrors (
-			Name <- c.Name + '_fge_' + c.FaultsGeneratesErrors->size()+1,
+			Name <- c.Name + '_fge_' + (c.FaultsGeneratesErrors->size()+1),
 			Component <- c,
 			Source <- f,
 			Destination <- e,
@@ -642,7 +602,7 @@ rule AddEPF(e : IM!Error, fm : IM!FailureMode, delay : IM!Distribution, p : Real
 	}
 	to 
 		epf : IM!ErrorsProducesFailures (
-			Name <- c.Name + '_epf_' + c.FaultsGeneratesErrors->size()+1,
+			Name <- c.Name + '_epf_' + (c.ErrorsGeneratesFailures->size()+1),
 			Component <- c,
 			Source <- Set{e},
 			Destination <- Set{fm},
