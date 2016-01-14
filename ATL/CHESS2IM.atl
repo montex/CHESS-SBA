@@ -129,6 +129,8 @@ rule SimpleStochasticBehaviorToComponent(inst : UML!InstanceSpecification) {
 		tmpError : IM!Error = OclUndefined;
 		tmpFailureMode : IM!FailureMode = OclUndefined;
 		myFailureModes : String = if st.failureModesDistribution.oclIsUndefined() then '' else st.failureModesDistribution endif;
+		eSeq : Sequence(IM!Error) = Sequence{};
+		tmpFGE : IM!FaultsGenerateErrors = OclUndefined;
 	}
 	to
 		fault : IM!InternalFault (
@@ -145,6 +147,7 @@ rule SimpleStochasticBehaviorToComponent(inst : UML!InstanceSpecification) {
 			tmpFailures <- myFailureModes.parseFailureModesForPort(slot.name);
 				
 			tmpError <- thisModule.AddError('e_' + slot.name, c);
+			eSeq <- eSeq.including(tmpError);
 			for(fmSpec in tmpFailures) {
 				thisModule.AddEPF(
 					tmpError,
@@ -155,6 +158,12 @@ rule SimpleStochasticBehaviorToComponent(inst : UML!InstanceSpecification) {
 				);
 			}
 		}
+		
+		tmpFGE <- thisModule.AddFGE(Sequence{fault}, eSeq, thisModule.Deterministic(0), 1, 1);
+		tmpFGE.PropagationLogic <- thisModule.FEXP_Fault(fault);
+		tmpFGE.PropagationLogicStringFormat <- tmpFGE.PropagationLogic.toString();
+
+		c.FaultsGeneratesErrors = c.FaultsGeneratesErrors.including(tmpFGE);
 	}
 }
 
