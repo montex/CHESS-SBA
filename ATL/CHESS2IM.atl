@@ -96,6 +96,10 @@ rule System {
 		for(fge in IM!FaultsGenerateErrors.allInstances()) {
 			thisModule.setFGEBackLinks(fge.PropagationLogic, fge);	
 		}
+		--Set EPF Backlinks
+		for(epf in IM!ErrorsProducesFailures.allInstances()) {
+			thisModule.setEPFBackLinks(epf.PropagationLogic, epf);	
+		}
 		
 		--Handle metrics
 		if (sba.WhichMeasure = 'Reliability'){
@@ -563,7 +567,9 @@ unique lazy rule AddEPFFromErrorModelFailure {
 			Component <- c,
 			PropagationDelay <- myDelay.parseDistribution(),
 			PropagationProbability <- 1,
-			Weight <- myWeight
+			Weight <- myWeight,
+			PropagationLogic <- thisModule.EEXP_Error(eSource),
+			PropagationLogicStringFormat <- epf.PropagationLogic.toString() 
 		)
 	do {
 		epf;
@@ -579,7 +585,9 @@ rule AddFLARuleEPF(e : IM!Error) {
 			Component <- e.Component,
 			PropagationDelay <- thisModule.Deterministic(0),
 			PropagationProbability <- 1,
-			Weight <- 1
+			Weight <- 1,
+			PropagationLogic <- thisModule.EEXP_Error(e),
+			PropagationLogicStringFormat <- epf.PropagationLogic.toString()
 		)
 	do{
 		epf;
@@ -617,7 +625,9 @@ rule AddEPF(e : IM!Error, fm : IM!FailureMode, delay : IM!Distribution, p : Real
 			Destination <- Set{fm},
 			PropagationDelay <- delay,
 			PropagationProbability <- p,
-			Weight <- weight
+			Weight <- weight,
+			PropagationLogic <- thisModule.EEXP_Error(e),
+			PropagationLogicStringFormat <- epf.PropagationLogic.toString()
 		)
 }
 
@@ -633,7 +643,9 @@ rule AddSourceError(fm : IM!FailureMode) {
 		epf : IM!ErrorsProducesFailures (
 			Source <- Set{e},
 			Destination <- Set{fm},
-			Component <- c
+			Component <- c,
+			PropagationLogic <- thisModule.EEXP_Error(e),
+			PropagationLogicStringFormat <- epf.PropagationLogic.toString()
 		)
 }
 
@@ -938,6 +950,16 @@ rule FEXP_MultiAnd(fe : Sequence(IM!FaultsExpressionNode)) {
 		
 		tmpExpression1;
 	}	
+}
+
+rule EEXP_Error(e: IM!Error) {
+	to
+		eeen : IM!ErrorsExpressionErrorNode (
+			Error <- e
+		)
+	do{
+		eeen;
+	}
 }
 
 --Parses a string into a FaultsExpression
