@@ -485,7 +485,7 @@ unique lazy rule InternalFault {
 	}
 	to
 		ift : IM!InternalFault (
-			Name <- 'ift_' + (c.Faults->select(f | f.oclIsKindOf(IM!InternalFault))->size()+1),
+			Name <- c.Name + '_ift_' + (c.Faults->select(f | f.oclIsKindOf(IM!InternalFault))->size()+1),
 			Occurrence <- chIntFault.occurrence.parseDistribution(),
 			PermanentProbability <- 1,
 			Component <- c,
