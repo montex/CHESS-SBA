@@ -69,8 +69,9 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 	
 	private static final String sysmlPath = "http://www.eclipse.org/papyrus/0.7.0/SysML";
 	private static final String martePath = "http://www.eclipse.org/papyrus/MARTE/1";
-	private static final String chessPath = "http://schemas/CHESS/_PfAJsMe6Ed-7etIj5eTw0Q/19";
-	private static final String umlPath	= "http://www.eclipse.org/uml2/3.0.0/UML";
+//	private static final String chessPath = "http://schemas/CHESS/_PfAJsMe6Ed-7etIj5eTw0Q/19";
+	private static final String chessPath = "ttp://CHESS";
+	private static final String umlPath	= "http://www.eclipse.org/uml2/4.0.0/UML";
 	private static final String imPath = PLUGIN_PATH + "/metamodels/IM2.ecore";
 	private static final String pnmlPath = PLUGIN_PATH + "/metamodels/placeTransition.ecore";
 	
@@ -242,7 +243,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			
 			//Add models to launch transformation
 			launcher.addInModel(chessModel, "IN1", "CHESS");
-			launcher.addInModel(chessModel, "IN2", "UML2");
+			launcher.addInModel(chessModel, "IN2", "UML");
 			launcher.addInModel(marteModel, "IN3", "MARTE");
 			launcher.addInModel(sysmlModel, "IN4", "SYSML");
 			launcher.addOutModel(imModel, "OUT", "IM");
