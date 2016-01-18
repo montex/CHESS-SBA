@@ -36,7 +36,6 @@ rule System {
 		instances : Sequence(UML!InstanceSpecification) = UML!InstanceSpecification.allInstances()->select(i | i.refImmediateComposite() = platform);
 		comments : Sequence(UML!Comment) = instances->collect(i | i.ownedComment)->flatten();
 		instSystem : UML!InstanceSpecification = instances->first();
-		tmpComponent : IM!Component = OclUndefined;
 	} 
 	to
 		s : IM!Sistema (
@@ -65,8 +64,9 @@ rule System {
 		
 		--Generate IM!Component elements, failure modes, and what can be done immediately
 		for(i in thisModule.umlInstancesRelevant) {
-			tmpComponent <- thisModule.InstanceToComponent(i);
-			s.components <- s.components->including(tmpComponent);
+			s.components <- s.components->including(
+				thisModule.InstanceToComponent(i)
+			);
 
 			
 			if(i.getSBAStereotype().oclType() = CHESS!SimpleStochasticBehavior) {
@@ -117,7 +117,7 @@ rule System {
 	}
 }
 
-lazy rule InstanceToComponent {
+unique lazy rule InstanceToComponent {
 	from
 		inst : UML!InstanceSpecification
 	to 
