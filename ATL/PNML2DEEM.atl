@@ -1,7 +1,9 @@
 -- @path PNML=/org.chess.statebased/metamodels/placeTransition.ecore
 
 query PNML2DEEM_query = PNML!PetriNet.allInstances()->
-	collect(x | x.toString()); 
+	collect(x | x.toString());
+--	collect(x | x.toString().writeTo('GasDetectionProject/model'));
+
 
 helper context PNML!PetriNet def: toString():String = 
 	'<NDFile-\'1.2\'>\n\n'+
@@ -12,12 +14,12 @@ helper context PNML!PetriNet def: toString():String =
 	+'\n'+
 	PNML!Study.allInstances()->iterate(i; acc:String=''| acc + i.toString())
 	+'\n'+
-	PNML!Place.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
-	'\n'+
-	PNML!GSPNTransition.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
-	'\n'+
-	PNML!GSPNArc.allInstances()->iterate(i; acc:String=''| acc + i.toString())+
-	'\n'+
+	PNML!Place.allInstances()->iterate(i; acc:String=''| acc + i.toString())
+	+'\n'+
+	PNML!GSPNTransition.allInstances()->iterate(i; acc:String=''| acc + i.toString())
+	+'\n'+
+	PNML!GSPNArc.allInstances()->iterate(i; acc:String=''| acc + i.toString())
+	+'\n'+
 	PNML!Measure.allInstances()->iterate(i; acc:String=''| acc + i.toString() + '\n')
 	+'\n'
 ;
@@ -142,8 +144,9 @@ helper context PNML!GSPNArc def: toString(): String =
 
 helper context PNML!ValueExpression def: toString(): String = self.value.toString();
 
-helper context PNML!OpAnd def: toString(): String = '('+self.expression1.toString() + ')AND(' + self.expression2.toString()+')';
-helper context PNML!OpOr def: toString(): String = '('+self.expression1.toString() + ')OR(' + self.expression2.toString()+')';
+helper context PNML!OpAnd def: toString(): String = '(' + self.expression1.toString() + ')AND(' + self.expression2.toString()+')';
+helper context PNML!OpOr def: toString(): String = '(' + self.expression1.toString() + ')OR(' + self.expression2.toString()+')';
+helper context PNML!OpNot def: toString(): String = 'NOT(' + self.expression.toString() + ')';
 helper context PNML!OpSum def: toString(): String = self.expression1.toString() + '+' + self.expression2.toString();
 helper context PNML!OpGreater def: toString(): String = self.expression1.toString() + '>' + self.expression2.toString();
 helper context PNML!OpEqual def: toString(): String = self.expression1.toString() + '=' + self.expression2.toString();

@@ -6,7 +6,7 @@
 -- @nsURI SYSML=http://www.eclipse.org/papyrus/0.7.0/SysML
 
 module CHESS2IM;
-create OUT : IM from IN1 : CHESS, IN2 : MARTE, IN3 : UML, IN4 : SYSML;
+create OUT : IM from IN1 : CHESS, IN2 : UML, IN3 : MARTE, IN4 : SYSML;
 
 helper def: umlInstancesAll : Sequence(UML!InstanceSpecification) = Sequence{}; 	--All the InstanceSpecification of the considered platform
 helper def: umlInstancesConnectors : Set(UML!InstanceSpecification) = Set{};		--Instances of connectors
@@ -36,6 +36,7 @@ rule System {
 		instances : Sequence(UML!InstanceSpecification) = UML!InstanceSpecification.allInstances()->select(i | i.refImmediateComposite() = platform);
 		comments : Sequence(UML!Comment) = instances->collect(i | i.ownedComment)->flatten();
 		instSystem : UML!InstanceSpecification = instances->first();
+		tmpComponent : IM!Component = OclUndefined;
 	} 
 	to
 		s : IM!Sistema (
@@ -53,20 +54,20 @@ rule System {
 
 		thisModule.umlInstancesRelevant <- instSystem.findSBAConstituents();
 		
-		--DEBUG: Print the obtained sets
-		thisModule.umlInstancesAll.debug('Instances ['+ thisModule.umlInstancesAll.size() +']');
-		thisModule.umlInstancesConnectors.debug('Connectors ['+ thisModule.umlInstancesConnectors.size() +']');
-		thisModule.umlInstancesBlocks.debug('Blocks ['+ thisModule.umlInstancesBlocks.size() +']');	
-		thisModule.umlInstancesStereo.debug('Stereotypes [' + thisModule.umlInstancesStereo.size() + ']');
-		thisModule.umlInstancesRelevant.debug('Relevant [' + thisModule.umlInstancesRelevant.size() + ']');
-		thisModule.umlAllocations.debug('Allocations ['+ thisModule.umlAllocations.size() +']');
-		--/DEBUG
+--		--DEBUG: Print the obtained sets
+--		thisModule.umlInstancesAll.debug('Instances ['+ thisModule.umlInstancesAll.size() +']');
+--		thisModule.umlInstancesConnectors.debug('Connectors ['+ thisModule.umlInstancesConnectors.size() +']');
+--		thisModule.umlInstancesBlocks.debug('Blocks ['+ thisModule.umlInstancesBlocks.size() +']');	
+--		thisModule.umlInstancesStereo.debug('Stereotypes [' + thisModule.umlInstancesStereo.size() + ']');
+--		thisModule.umlInstancesRelevant.debug('Relevant [' + thisModule.umlInstancesRelevant.size() + ']');
+--		thisModule.umlAllocations.debug('Allocations ['+ thisModule.umlAllocations.size() +']');
+--		--/DEBUG
 		
 		--Generate IM!Component elements, failure modes, and what can be done immediately
 		for(i in thisModule.umlInstancesRelevant) {
-			s.components <- s.components.append(
-				thisModule.InstanceToComponent(i)
-			);
+			tmpComponent <- thisModule.InstanceToComponent(i);
+			s.components <- s.components->including(tmpComponent);
+
 			
 			if(i.getSBAStereotype().oclType() = CHESS!SimpleStochasticBehavior) {
 				thisModule.SimpleStochasticBehaviorToComponent(i);
@@ -100,6 +101,10 @@ rule System {
 		for(epf in IM!ErrorsProducesFailures.allInstances()) {
 			thisModule.setEPFBackLinks(epf.PropagationLogic, epf);	
 		}
+		--Set IP Backlinks
+		for(ip in IM!InternalPropagation.allInstances()) {
+			thisModule.setIPBackLinks(ip.PropagationLogic, ip);	
+		}
 		
 		--Handle metrics
 		if (sba.WhichMeasure = 'Reliability'){
@@ -112,13 +117,13 @@ rule System {
 	}
 }
 
-unique lazy rule InstanceToComponent {
+lazy rule InstanceToComponent {
 	from
 		inst : UML!InstanceSpecification
 	to 
 		c : IM!Component (
 			Name <- inst.name
-		)
+		)		
 }
 
 --------------------------------------------------------------------
@@ -196,16 +201,17 @@ rule FLASpecificationToComponent(inst : UML!InstanceSpecification) {
 			tmpFailures <- tmpRight.split(',');							--Get the different failures in the right hand side
 			
 			--For every failure in the right side of the rule
-			fToPropagate = Sequence{};
+			fToPropagate <- Sequence{};
 			for(failure in tmpFailures) {
 				--If it is not the 'noFailure' element
 				if(failure.indexOf('.' + thisModule.flaNoFailure) = -1) {
 					--If the failure mode does not exist already
 					if(not c.hasFailureMode(failure)) {
-						fToPropagate <- fToPropagate.including(
-							thisModule.AddFailureMode(failure, c)
-						);
+						thisModule.AddFailureMode(failure, c);
 					}
+					fToPropagate <- fToPropagate.including(
+						c.FailureModes->select(f | f.Name.noNamespace(c.Name) = failure)->first()
+					);
 				}
 			}
 			
@@ -336,7 +342,8 @@ rule SimpleStochasticBehavior_FGE(inst : UML!InstanceSpecification) {
 		fge : IM!FaultsGenerateErrors = OclUndefined;
 		externals : Sequence(IM!Fault) = c.Faults->select(ft | ft.oclIsTypeOf(IM!ExternalFault));
 	}
-	do {
+	do {		
+		--FGE for external faults
 		if(externals->size() > 0) {
 			fge <- thisModule.AddFGE(externals, c.Errors, 'det(0)'.parseDistribution(), 1, 1);
 			fge.PropagationLogic <- thisModule.FEXP_MultiOr(
@@ -421,7 +428,9 @@ rule ErrorModel_FGE(inst : UML!InstanceSpecification) {
 		tmpStereotype : OclAny = OclUndefined;
 		tmpExternalFaults : String = OclUndefined;
 		tmpFGE : IM!FaultsGenerateErrors = OclUndefined;
-		tmpExpression : IM!FaultsExpressionNode = OclUndefined;
+		tmpIP : IM!InternalPropagation = OclUndefined;
+		tmpFEXP : IM!FaultsExpressionNode = OclUndefined;
+		tmpEEXP : IM!ErrorsExpressionNode = OclUndefined;
 	}
 	do {
 		--Transform ErrorModel <<InternalPropagation>> Transitions,
@@ -443,22 +452,34 @@ rule ErrorModel_FGE(inst : UML!InstanceSpecification) {
 						tmpStereotype.weight <- '1';	
 					}
 					
-					tmpExternalFaults <- tmpStereotype.externalFaults;
 					if(tr.source.isInitialState()) {
-						tmpExpression <- thisModule.FEXP_ParseString(tmpExternalFaults, inst);
+						tmpExternalFaults <- tmpStereotype.externalFaults;
+						tmpFEXP <- thisModule.FEXP_ParseString(tmpExternalFaults, inst);
 						tmpFGE <- thisModule.AddFGE(
-							tmpExpression.faultsList(),
+							tmpFEXP.faultsList(),
 							Sequence{thisModule.ErrorModelStateToError(tr.target)},
 							tmpStereotype.delay.parseDistribution(),
 							1,
 							tmpStereotype.weight.toReal()
 						);
-						tmpExpression.faultsGenerateErrors <- tmpFGE;
-						tmpFGE.PropagationLogic <- tmpExpression;
-						tmpFGE.PropagationLogicStringFormat <- tmpExpression.toString();
+						tmpFEXP.faultsGenerateErrors <- tmpFGE;
+						tmpFGE.PropagationLogic <- tmpFEXP;
+						tmpFGE.PropagationLogicStringFormat <- tmpFEXP.toString();
 					}else{
-						---TODO
-						--Not implemented: Requires modifications to IDM
+						--The case where externalFaults is not null AND the source state is not
+						--the initial state has not been implemented (requires changes to the IDM)
+						thisModule.InternalPropagation(tmpStereotype, inst);
+--						tmpIP <- thisModule.AddIP(
+--							thisModule.ErrorModelStateToError(tr.source),
+--							thisModule.ErrorModelStateToError(tr.target),
+--							tmpStereotype.delay.parseDistribution(),
+--							1,
+--							tmpStereotype.weight.toReal()
+--						);
+--						tmpEEXP <- thisModule.EEXP_Error(tmpEPF.Source);
+--						tmpEEXP.errorPropagation <- tmpEPF,
+--						tmpEPF.PropagationLogic <- 
+--						tmpEPF.PropagationLogicStringFormat <- tmpEPF.PropagationLogic.toString();
 					}
 				}
 			}
@@ -503,6 +524,17 @@ unique lazy rule InternalFault {
 			PermanentProbability <- 1,
 			Component <- c,
 			TransientDuration <- thisModule.Deterministic(0)
+		),
+		fge : IM!FaultsGenerateErrors (
+			Name <- c.Name + '_fge_' + (c.FaultsGeneratesErrors->size()+1),
+			Component <- c,
+			Source <- Sequence{ift},
+			Destination <- thisModule.ErrorModelStateToError(chIntFault.base_Transition.target),
+			Weight <- 1,
+			PropagationProbability <- 1,
+			ActivationDelay <- thisModule.Deterministic(0),
+			PropagationLogic <- thisModule.FEXP_Fault(ift),
+			PropagationLogicStringFormat <- fge.PropagationLogic.toString()
 		)
 }
 
@@ -519,11 +551,13 @@ unique lazy rule InternalPropagation {
 		imIntProp : IM!InternalPropagation (
 			Component <- c,
 			Name <- c.Name + '_intprop_' + (c.InternalPropagation->size()+1),
-			Source <- thisModule.ErrorModelStateToError(chIntProp.base_Transition.source),
-			Destination <- thisModule.ErrorModelStateToError(chIntProp.base_Transition.target),
+			Source <- Sequence{thisModule.ErrorModelStateToError(chIntProp.base_Transition.source)},
+			Destination <- Sequence{thisModule.ErrorModelStateToError(chIntProp.base_Transition.target)},
 			PropagationProbability <- 1,
 			PropagationDelay <- myDelay.parseDistribution(),
-			Weight <- myWeight
+			Weight <- myWeight * 100,
+			PropagationLogic <- thisModule.EEXP_Error(imIntProp.Source->first()),
+			PropagationLogicStringFormat <- imIntProp.PropagationLogic.toString()
 		)
 }
 
@@ -1019,15 +1053,29 @@ rule setFGEBackLinks(fen: IM!FaultsExpressionNode, fge: IM!FaultsGenerateErrors 
 rule setEPFBackLinks(een: IM!ErrorsExpressionNode, epf: IM!ErrorsProducesFailures ) {
 	do {
 		een.errorPropagation <- epf;
-		if (een.oclIsTypeOf(IM!FaultsExpressionOrNode)) {
-			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
-			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
-		} else if (een.oclIsTypeOf(IM!FaultsExpressionAndNode)) {
-			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
-			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
-		}
+--		if (een.oclIsTypeOf(IM!FaultsExpressionOrNode)) {
+--			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
+--			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
+--		} else if (een.oclIsTypeOf(IM!FaultsExpressionAndNode)) {
+--			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
+--			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
+--		}
 	}
 }
+
+rule setIPBackLinks(een: IM!ErrorsExpressionNode, ip: IM!InternalPropagation ) {
+	do {
+		een.errorPropagation <- ip;
+--		if (een.oclIsTypeOf(IM!FaultsExpressionOrNode)) {
+--			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
+--			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
+--		} else if (een.oclIsTypeOf(IM!FaultsExpressionAndNode)) {
+--			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
+--			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
+--		}
+	}
+}
+
 
 --Check if a IM!Component already contains a specific failure mode
 helper context IM!Component def: hasFailureMode(fm : String) : Boolean =
