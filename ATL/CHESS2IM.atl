@@ -16,7 +16,7 @@ helper def: umlInstancesRelevant : Set(UML!InstanceSpecification) = Set{}; 			--
 helper def: umlAllocations : Set(MARTE!Assign) = Set{};
 
 --Stereotypes that can be used on Blocks/Components for state based analysis
-helper def: sbaStereotypes : Sequence(OclAny) = Sequence{CHESS!SimpleStochasticBehavior, CHESS!FLABehavior, CHESS!ErrorModelBehavior, CHESS!DependableComponent,
+helper def: sbaStereotypes : Sequence(OclAny) = Sequence{CHESS!SimpleStochasticBehavior, CHESS!FLABehavior, CHESS!ErrorModelBehavior,
 														 CHESS!StatelessSoftware, CHESS!StatefulSoftware, CHESS!StatelessHardware, CHESS!StatefulHardware};
 --Stereotypes that can be used on Transitions of an Error Model
 helper def: sbaTransitions : Sequence(OclAny) = Sequence{CHESS!Failure, CHESS!InternalPropagation, CHESS!InternalFault};														 
@@ -319,14 +319,16 @@ rule PopulateExternalFaults(inst : UML!InstanceSpecification) {
 			--Find connected port
 			connPort <- p.getSBAConnections()->first();
 			--Find connected component (slot owner)
-			connComp <- thisModule.InstanceToComponent(connPort.refImmediateComposite());
-			
-			for(f in connComp.FailureModes->select(fm | fm.Name.noNamespace(connComp.Name).startsWith(connPort.name + '.'))) {
-				faultName <- f.Name.split('\\.')->last();
-				--If the external faults has not already been added then add it
-				if(c.Faults->select(ft | ft.Name = connComp.Name + '_' + f)->isEmpty()) {				
-					tmpExternalFault <- thisModule.AddExternalFault(p.name + '.' + faultName, inst);
-					tmpExternalFault.Source <- f;
+			if(not connPort.oclIsUndefined()) {
+				connComp <- thisModule.InstanceToComponent(connPort.refImmediateComposite());
+				
+				for(f in connComp.FailureModes->select(fm | fm.Name.noNamespace(connComp.Name).startsWith(connPort.name + '.'))) {
+					faultName <- f.Name.split('\\.')->last();
+					--If the external faults has not already been added then add it
+					if(c.Faults->select(ft | ft.Name = connComp.Name + '_' + f)->isEmpty()) {				
+						tmpExternalFault <- thisModule.AddExternalFault(p.name + '.' + faultName, inst);
+						tmpExternalFault.Source <- f;
+					}
 				}
 			}
 		}
@@ -1005,7 +1007,7 @@ rule FEXP_ParseString(exp : String, inst : UML!InstanceSpecification) {
 		expRet : IM!FaultsExpressionNode = OclUndefined;
 	}
 	do {
-		tmpSplit <- exp.toLower().split(' and | AND ');
+		tmpSplit <- exp.split(' and | AND ');
 		if(tmpSplit.size() > 1) {
 			expRet <-
 			thisModule.FEXP_MultiAnd(
@@ -1016,7 +1018,7 @@ rule FEXP_ParseString(exp : String, inst : UML!InstanceSpecification) {
 				collect(ft | thisModule.FEXP_Fault(ft))
 			);
 		}else {
-			tmpSplit <- exp.toLower().split(' or | OR ');
+			tmpSplit <- exp.split(' or | OR ');
 			if(tmpSplit.size() > 1) {
 				expRet <-
 				thisModule.FEXP_MultiOr(
@@ -1293,7 +1295,9 @@ helper context UML!InstanceSpecification def: isConnection() : Boolean =
 	let sl : OrderedSet(UML!Slot) = self.slot->asOrderedSet() in
 	let i1 : UML!InstanceSpecification = sl->first().value->first().instance in
 	let i2 : UML!InstanceSpecification = sl->last().value->first().instance in
-	not i1.isSubInstanceOf(i2) and not i2.isSubInstanceOf(i1);
+	if i1.oclIsUndefined() or i2.oclIsUndefined() then false else
+		not i1.isSubInstanceOf(i2) and not i2.isSubInstanceOf(i1)
+	endif;
 
 --Is the connector instance a delegation?
 helper context UML!InstanceSpecification def: isDelegation() : Boolean = 
