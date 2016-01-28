@@ -40,15 +40,6 @@ public interface DependableComponentFactory extends EFactory {
 	FailureModes createFailureModes();
 
 	/**
-	 * Returns a new object of class '<em>Propagation</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Propagation</em>'.
-	 * @generated
-	 */
-	Propagation createPropagation();
-
-	/**
 	 * Returns a new object of class '<em>Failure Mode</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

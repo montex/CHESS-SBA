@@ -104,13 +104,6 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass propagationEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass failureModeEClass = null;
 
 	/**
@@ -327,96 +320,6 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getPropagation() {
-		return propagationEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPropagation_Prob() {
-		return (EAttribute)propagationEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPropagation_Delay() {
-		return (EAttribute)propagationEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getPropagation_Base_Abstraction() {
-		return (EReference)propagationEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getPropagation_Base_Comment() {
-		return (EReference)propagationEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getPropagation_Base_Connector() {
-		return (EReference)propagationEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getPropagation_Base_InstanceSpecification() {
-		return (EReference)propagationEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPropagation_TransfFunct() {
-		return (EAttribute)propagationEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getPropagation_Base_Transition() {
-		return (EReference)propagationEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPropagation_Weight() {
-		return (EAttribute)propagationEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getFailureMode() {
 		return failureModeEClass;
 	}
@@ -608,17 +511,6 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		createEReference(failureModesEClass, FAILURE_MODES__FAILURE_MODE);
 		createEReference(failureModesEClass, FAILURE_MODES__FPTC_SPECIFICATION);
 
-		propagationEClass = createEClass(PROPAGATION);
-		createEAttribute(propagationEClass, PROPAGATION__PROB);
-		createEAttribute(propagationEClass, PROPAGATION__DELAY);
-		createEReference(propagationEClass, PROPAGATION__BASE_ABSTRACTION);
-		createEReference(propagationEClass, PROPAGATION__BASE_COMMENT);
-		createEReference(propagationEClass, PROPAGATION__BASE_CONNECTOR);
-		createEReference(propagationEClass, PROPAGATION__BASE_INSTANCE_SPECIFICATION);
-		createEAttribute(propagationEClass, PROPAGATION__TRANSF_FUNCT);
-		createEReference(propagationEClass, PROPAGATION__BASE_TRANSITION);
-		createEAttribute(propagationEClass, PROPAGATION__WEIGHT);
-
 		dependableComponentEClass = createEClass(DEPENDABLE_COMPONENT);
 		createEReference(dependableComponentEClass, DEPENDABLE_COMPONENT__BASE_COMPONENT);
 		createEReference(dependableComponentEClass, DEPENDABLE_COMPONENT__ERROR_MODEL);
@@ -667,9 +559,8 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		// Obtain other dependent packages
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		FailurePropagationPackage theFailurePropagationPackage = (FailurePropagationPackage)EPackage.Registry.INSTANCE.getEPackage(FailurePropagationPackage.eNS_URI);
-		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
-		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		ThreatsPropagationPackage theThreatsPropagationPackage = (ThreatsPropagationPackage)EPackage.Registry.INSTANCE.getEPackage(ThreatsPropagationPackage.eNS_URI);
+		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -683,17 +574,6 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		initEReference(getFailureModes_Base_Port(), theUMLPackage.getPort(), null, "base_Port", null, 1, 1, FailureModes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getFailureModes_FailureMode(), this.getFailureMode(), null, "failureMode", null, 1, -1, FailureModes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getFailureModes_FPTCSpecification(), theFailurePropagationPackage.getFPTCSpecification(), null, "FPTCSpecification", null, 0, 1, FailureModes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(propagationEClass, Propagation.class, "Propagation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPropagation_Prob(), theBasicNFP_TypesPackage.getNFP_Real(), "prob", null, 0, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getPropagation_Delay(), theBasicNFP_TypesPackage.getNFP_Duration(), "delay", null, 0, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getPropagation_Base_Abstraction(), theUMLPackage.getAbstraction(), null, "base_Abstraction", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getPropagation_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getPropagation_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getPropagation_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getPropagation_TransfFunct(), theTypesPackage.getString(), "transfFunct", null, 0, -1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getPropagation_Base_Transition(), theUMLPackage.getTransition(), null, "base_Transition", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getPropagation_Weight(), theBasicNFP_TypesPackage.getNFP_Real(), "weight", null, 0, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(dependableComponentEClass, DependableComponent.class, "DependableComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDependableComponent_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, DependableComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);

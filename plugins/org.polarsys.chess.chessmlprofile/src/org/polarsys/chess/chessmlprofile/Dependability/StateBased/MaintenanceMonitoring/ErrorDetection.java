@@ -24,7 +24,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failur
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.ErrorDetection#getTargets <em>Targets</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.ErrorDetection#getCorrectionProbability <em>Correction Probability</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.ErrorDetection#getControlledFailure <em>Controlled Failure</em>}</li>
  * </ul>
  * </p>
  *
@@ -84,31 +83,5 @@ public interface ErrorDetection extends MMActivities {
 	 * @generated
 	 */
 	void setCorrectionProbability(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Controlled Failure</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Controlled Failure</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Controlled Failure</em>' reference.
-	 * @see #setControlledFailure(FailureMode)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.MaintenanceMonitoringPackage#getErrorDetection_ControlledFailure()
-	 * @model required="true" ordered="false"
-	 * @generated
-	 */
-	FailureMode getControlledFailure();
-
-	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.ErrorDetection#getControlledFailure <em>Controlled Failure</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Controlled Failure</em>' reference.
-	 * @see #getControlledFailure()
-	 * @generated
-	 */
-	void setControlledFailure(FailureMode value);
 
 } // ErrorDetection

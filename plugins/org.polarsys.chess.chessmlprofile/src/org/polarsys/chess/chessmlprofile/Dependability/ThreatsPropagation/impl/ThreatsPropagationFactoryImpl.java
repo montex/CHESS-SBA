@@ -92,22 +92,10 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case ThreatsPropagationPackage.UNCLASSIFIED_FAILURE: return createUnclassifiedFailure();
-			case ThreatsPropagationPackage.THREAT_STATE: return createThreatState();
-			case ThreatsPropagationPackage.FAILURE_MODE: return createFailureMode();
-			case ThreatsPropagationPackage.ERROR_FREE: return createErrorFree();
 			case ThreatsPropagationPackage.DEGRADED_STATE: return createDegradedState();
+			case ThreatsPropagationPackage.THREAT_STATE: return createThreatState();
 			case ThreatsPropagationPackage.NORMAL_STATE: return createNormalState();
-			case ThreatsPropagationPackage.UNCLASSIFIED_ERROR: return createUnclassifiedError();
-			case ThreatsPropagationPackage.FAILURE_FREE: return createFailureFree();
-			case ThreatsPropagationPackage.CH_INTERNAL_FAULT: return createCHInternalFault();
-			case ThreatsPropagationPackage.CH_EXTERNAL_FAULT: return createCHExternalFault();
 			case ThreatsPropagationPackage.ERROR_STATE: return createErrorState();
-			case ThreatsPropagationPackage.EXTERNAL_FAULT: return createExternalFault();
-			case ThreatsPropagationPackage.INTERNAL_EVENT: return createInternalEvent();
-			case ThreatsPropagationPackage.NORMAL_EVENT: return createNormalEvent();
-			case ThreatsPropagationPackage.RECOVERY_EVENT: return createRecoveryEvent();
-			case ThreatsPropagationPackage.INTERNAL_THREAT: return createInternalThreat();
 			case ThreatsPropagationPackage.STUCK_AT: return createStuckAt();
 			case ThreatsPropagationPackage.STUCK_AT_FIXED: return createStuckAtFixed();
 			case ThreatsPropagationPackage.INVERTED: return createInverted();
@@ -134,8 +122,6 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case ThreatsPropagationPackage.DURATION_TYPE:
-				return createDurationTypeFromString(eDataType, initialValue);
 			case ThreatsPropagationPackage.RECOVERY_KIND:
 				return createRecoveryKindFromString(eDataType, initialValue);
 			default:
@@ -151,8 +137,6 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case ThreatsPropagationPackage.DURATION_TYPE:
-				return convertDurationTypeToString(eDataType, instanceValue);
 			case ThreatsPropagationPackage.RECOVERY_KIND:
 				return convertRecoveryKindToString(eDataType, instanceValue);
 			default:
@@ -225,29 +209,9 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ExternalFault createExternalFault() {
-		ExternalFaultImpl externalFault = new ExternalFaultImpl();
-		return externalFault;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public NormalInput createNormalInput() {
 		NormalInputImpl normalInput = new NormalInputImpl();
 		return normalInput;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public RecoveryEvent createRecoveryEvent() {
-		RecoveryEventImpl recoveryEvent = new RecoveryEventImpl();
-		return recoveryEvent;
 	}
 
 	/**
@@ -275,59 +239,9 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NormalEvent createNormalEvent() {
-		NormalEventImpl normalEvent = new NormalEventImpl();
-		return normalEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public InternalThreat createInternalThreat() {
-		InternalThreatImpl internalThreat = new InternalThreatImpl();
-		return internalThreat;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ThreatState createThreatState() {
 		ThreatStateImpl threatState = new ThreatStateImpl();
 		return threatState;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorFree createErrorFree() {
-		ErrorFreeImpl errorFree = new ErrorFreeImpl();
-		return errorFree;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public UnclassifiedError createUnclassifiedError() {
-		UnclassifiedErrorImpl unclassifiedError = new UnclassifiedErrorImpl();
-		return unclassifiedError;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public FailureMode createFailureMode() {
-		FailureModeImpl failureMode = new FailureModeImpl();
-		return failureMode;
 	}
 
 	/**
@@ -355,49 +269,9 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public FailureFree createFailureFree() {
-		FailureFreeImpl failureFree = new FailureFreeImpl();
-		return failureFree;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public CHInternalFault createCHInternalFault() {
-		CHInternalFaultImpl chInternalFault = new CHInternalFaultImpl();
-		return chInternalFault;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public CHExternalFault createCHExternalFault() {
-		CHExternalFaultImpl chExternalFault = new CHExternalFaultImpl();
-		return chExternalFault;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ErrorState createErrorState() {
 		ErrorStateImpl errorState = new ErrorStateImpl();
 		return errorState;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public UnclassifiedFailure createUnclassifiedFailure() {
-		UnclassifiedFailureImpl unclassifiedFailure = new UnclassifiedFailureImpl();
-		return unclassifiedFailure;
 	}
 
 	/**
@@ -438,36 +312,6 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	public RampDown createRampDown() {
 		RampDownImpl rampDown = new RampDownImpl();
 		return rampDown;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public InternalEvent createInternalEvent() {
-		InternalEventImpl internalEvent = new InternalEventImpl();
-		return internalEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DurationType createDurationTypeFromString(EDataType eDataType, String initialValue) {
-		DurationType result = DurationType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertDurationTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

@@ -123,7 +123,7 @@
         nsPrefix="FailurePropagation">
       <eClassifiers xsi:type="ecore:EClass" name="FPTCSpecification">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="this allows to work with FPTC at instance level by using composite diagrams. It allows to decorate ports of the parts.&#xA;attribute 'failure' is deprecated, use 'failureModes'"/>
+          <details key="documentation" value="this allows to work with FPTC at instance level by using composite diagrams. It allows to decorate ports of the parts.&#xD;&#xA;attribute 'failure' is deprecated, use 'failureModes'"/>
         </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
@@ -286,29 +286,6 @@
         <eStructuralFeatures xsi:type="ecore:EReference" name="FPTCSpecification"
             ordered="false" eType="#//Dependability/FailurePropagation/FPTCSpecification"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="Propagation">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="obsolete&#xA;To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile&#xA;transfFunct and weight are obsolete"/>
-        </eAnnotations>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="prob" ordered="false"
-            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" ordered="false"
-            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Abstraction" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Abstraction"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
-            ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="transfFunct" ordered="false"
-            upperBound="-1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
-            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-      </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="DependableComponent">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="obsolete, use ErrorModelBehavior"/>
@@ -364,9 +341,9 @@
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ThreatsPopagation"/>
       </eAnnotations>
-      <eClassifiers xsi:type="ecore:EClass" name="UnclassifiedFailure" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
+      <eClassifiers xsi:type="ecore:EClass" name="DegradedState" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be removed?"/>
+          <details key="documentation" value="New Dep profile"/>
         </eAnnotations>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="ThreatState">
@@ -377,32 +354,6 @@
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" ordered="false"
             eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="FailureMode" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be removed?"/>
-        </eAnnotations>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="affectedPorts" ordered="false"
-            upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false"
-            lowerBound="1" eType="#//Dependability/ThreatsPropagation/DurationType"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EEnum" name="DurationType">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile"/>
-        </eAnnotations>
-        <eLiterals name="transient"/>
-        <eLiterals name="permanent" value="1"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="ErrorFree" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be removed?"/>
-        </eAnnotations>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="DegradedState" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="New Dep profile"/>
-        </eAnnotations>
-      </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="NormalState">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="New Dep profile"/>
@@ -410,110 +361,7 @@
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_State" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="UnclassifiedError" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be removed?"/>
-        </eAnnotations>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="FailureFree" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be removed?"/>
-        </eAnnotations>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="CHInternalFault">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile"/>
-        </eAnnotations>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="permanentProb" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="transfFunct" ordered="false"
-            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="property" ordered="false"
-            eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="childFailure" ordered="false"
-            eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="occurrence" ordered="false"
-            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="transientDuration"
-            ordered="false" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="CHExternalFault">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile"/>
-        </eAnnotations>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="fromPort" ordered="false"
-            lowerBound="1" upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="propagationCondition"
-            ordered="false" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="probability" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" ordered="false"
-            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false"
-            lowerBound="1" eType="#//Dependability/ThreatsPropagation/DurationType"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="transfFunct" ordered="false"
-            upperBound="-1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="ErrorState" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="type and vanishing attributes are deprecated"/>
-        </eAnnotations>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false"
-            lowerBound="1" eType="#//Dependability/ThreatsPropagation/DurationType"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="vanishingTime" ordered="false"
-            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="ExternalFault" eSuperTypes="#//Dependability/ThreatsPropagation/DepEvent">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be deleted?"/>
-        </eAnnotations>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="failure" ordered="false"
-            lowerBound="1" eType="#//Dependability/DependableComponent/FailureMode"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="DepEvent" abstract="true">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="port" ordered="false"
-            eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
-            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="InternalEvent" eSuperTypes="#//Dependability/ThreatsPropagation/DepEvent">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be deleted?"/>
-        </eAnnotations>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="probability" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="NormalEvent" eSuperTypes="#//Dependability/ThreatsPropagation/InternalEvent">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be deleted?"/>
-        </eAnnotations>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="RecoveryEvent" eSuperTypes="#//Dependability/ThreatsPropagation/InternalEvent">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be deleted?"/>
-        </eAnnotations>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" ordered="false"
-            eType="#//Dependability/ThreatsPropagation/RecoveryKind"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EEnum" name="RecoveryKind">
-        <eLiterals name="Repair"/>
-        <eLiterals name="Compensation" value="1"/>
-        <eLiterals name="ErrorDetection" value="2"/>
-        <eLiterals name="Reconfiguration" value="3"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="InternalThreat" eSuperTypes="#//Dependability/ThreatsPropagation/InternalEvent">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be deleted?"/>
-        </eAnnotations>
-      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ErrorState" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState"/>
       <eClassifiers xsi:type="ecore:EClass" name="StuckAt">
         <eStructuralFeatures xsi:type="ecore:EReference" name="property" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
@@ -544,14 +392,16 @@
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="endValue" ordered="false"
             lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="NormalInput" eSuperTypes="#//Dependability/ThreatsPropagation/DepEvent">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="recovery" ordered="false"
-            eType="#//Dependability/ThreatsPropagation/RecoveryEvent"/>
+      <eClassifiers xsi:type="ecore:EClass" name="NormalInput" eSuperTypes="#//Dependability/ThreatsPropagation/DepEvent"/>
+      <eClassifiers xsi:type="ecore:EClass" name="DepEvent" abstract="true">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="port" ordered="false"
+            eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="NormalOutput" eSuperTypes="#//Dependability/ThreatsPropagation/DepEvent">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="recovery" ordered="false"
-            eType="#//Dependability/ThreatsPropagation/RecoveryEvent"/>
-      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="NormalOutput" eSuperTypes="#//Dependability/ThreatsPropagation/DepEvent"/>
       <eClassifiers xsi:type="ecore:EClass" name="Failure">
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
@@ -579,6 +429,12 @@
             eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
             eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EEnum" name="RecoveryKind">
+        <eLiterals name="Repair"/>
+        <eLiterals name="Compensation" value="1"/>
+        <eLiterals name="ErrorDetection" value="2"/>
+        <eLiterals name="Reconfiguration" value="3"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="ErrorDetection">
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
@@ -782,8 +638,6 @@
               lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="correctionProbability"
               ordered="false" lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="controlledFailure"
-              ordered="false" lowerBound="1" eType="#//Dependability/ThreatsPropagation/FailureMode"/>
         </eClassifiers>
         <eClassifiers xsi:type="ecore:EClass" name="FailureDetection" eSuperTypes="#//Dependability/StateBased/MaintenanceMonitoring/MMActivities">
           <eStructuralFeatures xsi:type="ecore:EReference" name="onDetection" ordered="false"
@@ -799,8 +653,8 @@
               ordered="false" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="evalMethod" ordered="false"
               eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="targetFailureMode"
-              ordered="false" upperBound="-1" eType="#//Dependability/ThreatsPropagation/FailureMode"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetFailureMode"
+              ordered="false" upperBound="-1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
           <eStructuralFeatures xsi:type="ecore:EReference" name="targetDepComponent"
               ordered="false" upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
           <eStructuralFeatures xsi:type="ecore:EReference" name="targetPort" ordered="false"
@@ -1093,7 +947,7 @@
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="CHRtSpecification">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="The following attributes are deprecated:&#xD;&#xA;-respT&#xD;&#xA;-blockT&#xA;operationReqForSporadicOcc: the list of operations that need to be invoked to allow the sporadic occurrence of the &quot;context&quot; operation.&#xD;&#xA;&#xD;&#xA;Constraints:&#xD;&#xA;Only for sporadic occurrence kind.&#xD;&#xA;The operations in the list must be owned by the Component which owns the 'context' operation.&#xD;&#xA;If the list is not empty the &quot;context&quot; operation must have private visibility and it cannot be invoked directly by other operations.&#xD;&#xA;If the list is empty the &quot;context&quot; operation must be invoked directly by other operations.&#xD;&#xA;"/>
+          <details key="documentation" value="The following attributes are deprecated:&#xD;&#xA;-respT&#xD;&#xA;-blockT&#xD;&#xA;operationReqForSporadicOcc: the list of operations that need to be invoked to allow the sporadic occurrence of the &quot;context&quot; operation.&#xD;&#xA;&#xD;&#xA;Constraints:&#xD;&#xA;Only for sporadic occurrence kind.&#xD;&#xA;The operations in the list must be owned by the Component which owns the 'context' operation.&#xD;&#xA;If the list is not empty the &quot;context&quot; operation must have private visibility and it cannot be invoked directly by other operations.&#xD;&#xA;If the list is empty the &quot;context&quot; operation must be invoked directly by other operations.&#xD;&#xA;"/>
         </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="partWithPort" ordered="false"
             unique="false" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>

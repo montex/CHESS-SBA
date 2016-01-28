@@ -120,20 +120,20 @@ public interface StateBasedAnalysis extends GaAnalysisContext {
 	void setEvalMethod(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Target Failure Mode</b></em>' reference list.
-	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode}.
+	 * Returns the value of the '<em><b>Target Failure Mode</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Target Failure Mode</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Target Failure Mode</em>' reference list.
+	 * @return the value of the '<em>Target Failure Mode</em>' attribute list.
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage#getStateBasedAnalysis_TargetFailureMode()
-	 * @model ordered="false"
+	 * @model dataType="org.eclipse.uml2.types.String" ordered="false"
 	 * @generated
 	 */
-	EList<FailureMode> getTargetFailureMode();
+	EList<String> getTargetFailureMode();
 
 	/**
 	 * Returns the value of the '<em><b>Target Dep Component</b></em>' reference list.

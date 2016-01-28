@@ -100,72 +100,20 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	protected ThreatsPropagationSwitch<Adapter> modelSwitch =
 		new ThreatsPropagationSwitch<Adapter>() {
 			@Override
-			public Adapter caseUnclassifiedFailure(UnclassifiedFailure object) {
-				return createUnclassifiedFailureAdapter();
+			public Adapter caseDegradedState(DegradedState object) {
+				return createDegradedStateAdapter();
 			}
 			@Override
 			public Adapter caseThreatState(ThreatState object) {
 				return createThreatStateAdapter();
 			}
 			@Override
-			public Adapter caseFailureMode(FailureMode object) {
-				return createFailureModeAdapter();
-			}
-			@Override
-			public Adapter caseErrorFree(ErrorFree object) {
-				return createErrorFreeAdapter();
-			}
-			@Override
-			public Adapter caseDegradedState(DegradedState object) {
-				return createDegradedStateAdapter();
-			}
-			@Override
 			public Adapter caseNormalState(NormalState object) {
 				return createNormalStateAdapter();
 			}
 			@Override
-			public Adapter caseUnclassifiedError(UnclassifiedError object) {
-				return createUnclassifiedErrorAdapter();
-			}
-			@Override
-			public Adapter caseFailureFree(FailureFree object) {
-				return createFailureFreeAdapter();
-			}
-			@Override
-			public Adapter caseCHInternalFault(CHInternalFault object) {
-				return createCHInternalFaultAdapter();
-			}
-			@Override
-			public Adapter caseCHExternalFault(CHExternalFault object) {
-				return createCHExternalFaultAdapter();
-			}
-			@Override
 			public Adapter caseErrorState(ErrorState object) {
 				return createErrorStateAdapter();
-			}
-			@Override
-			public Adapter caseExternalFault(ExternalFault object) {
-				return createExternalFaultAdapter();
-			}
-			@Override
-			public Adapter caseDepEvent(DepEvent object) {
-				return createDepEventAdapter();
-			}
-			@Override
-			public Adapter caseInternalEvent(InternalEvent object) {
-				return createInternalEventAdapter();
-			}
-			@Override
-			public Adapter caseNormalEvent(NormalEvent object) {
-				return createNormalEventAdapter();
-			}
-			@Override
-			public Adapter caseRecoveryEvent(RecoveryEvent object) {
-				return createRecoveryEventAdapter();
-			}
-			@Override
-			public Adapter caseInternalThreat(InternalThreat object) {
-				return createInternalThreatAdapter();
 			}
 			@Override
 			public Adapter caseStuckAt(StuckAt object) {
@@ -186,6 +134,10 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseNormalInput(NormalInput object) {
 				return createNormalInputAdapter();
+			}
+			@Override
+			public Adapter caseDepEvent(DepEvent object) {
+				return createDepEventAdapter();
 			}
 			@Override
 			public Adapter caseNormalOutput(NormalOutput object) {
@@ -324,20 +276,6 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ExternalFault <em>External Fault</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ExternalFault
-	 * @generated
-	 */
-	public Adapter createExternalFaultAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalInput <em>Normal Input</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -348,20 +286,6 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNormalInputAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent <em>Recovery Event</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent
-	 * @generated
-	 */
-	public Adapter createRecoveryEventAdapter() {
 		return null;
 	}
 
@@ -394,34 +318,6 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalEvent <em>Normal Event</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalEvent
-	 * @generated
-	 */
-	public Adapter createNormalEventAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalThreat <em>Internal Threat</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalThreat
-	 * @generated
-	 */
-	public Adapter createInternalThreatAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatState <em>Threat State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -432,48 +328,6 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createThreatStateAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorFree <em>Error Free</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorFree
-	 * @generated
-	 */
-	public Adapter createErrorFreeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedError <em>Unclassified Error</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedError
-	 * @generated
-	 */
-	public Adapter createUnclassifiedErrorAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode <em>Failure Mode</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode
-	 * @generated
-	 */
-	public Adapter createFailureModeAdapter() {
 		return null;
 	}
 
@@ -506,48 +360,6 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureFree <em>Failure Free</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureFree
-	 * @generated
-	 */
-	public Adapter createFailureFreeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault <em>CH Internal Fault</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault
-	 * @generated
-	 */
-	public Adapter createCHInternalFaultAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault <em>CH External Fault</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault
-	 * @generated
-	 */
-	public Adapter createCHExternalFaultAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorState <em>Error State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -558,20 +370,6 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createErrorStateAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedFailure <em>Unclassified Failure</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedFailure
-	 * @generated
-	 */
-	public Adapter createUnclassifiedFailureAdapter() {
 		return null;
 	}
 
@@ -642,20 +440,6 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDepEventAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent <em>Internal Event</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent
-	 * @generated
-	 */
-	public Adapter createInternalEventAdapter() {
 		return null;
 	}
 

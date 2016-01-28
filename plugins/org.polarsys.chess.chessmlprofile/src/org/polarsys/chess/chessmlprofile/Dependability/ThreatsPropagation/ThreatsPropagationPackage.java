@@ -75,7 +75,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getInternalFault()
 	 * @generated
 	 */
-	int INTERNAL_FAULT = 24;
+	int INTERNAL_FAULT = 12;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalPropagationImpl <em>Internal Propagation</em>}' class.
@@ -85,17 +85,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getInternalPropagation()
 	 * @generated
 	 */
-	int INTERNAL_PROPAGATION = 25;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ExternalFaultImpl <em>External Fault</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ExternalFaultImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getExternalFault()
-	 * @generated
-	 */
-	int EXTERNAL_FAULT = 11;
+	int INTERNAL_PROPAGATION = 13;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.NormalInputImpl <em>Normal Input</em>}' class.
@@ -105,17 +95,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getNormalInput()
 	 * @generated
 	 */
-	int NORMAL_INPUT = 21;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.RecoveryEventImpl <em>Recovery Event</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.RecoveryEventImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getRecoveryEvent()
-	 * @generated
-	 */
-	int RECOVERY_EVENT = 15;
+	int NORMAL_INPUT = 8;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.NormalOutputImpl <em>Normal Output</em>}' class.
@@ -125,7 +105,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getNormalOutput()
 	 * @generated
 	 */
-	int NORMAL_OUTPUT = 22;
+	int NORMAL_OUTPUT = 10;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureImpl <em>Failure</em>}' class.
@@ -135,27 +115,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getFailure()
 	 * @generated
 	 */
-	int FAILURE = 23;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.NormalEventImpl <em>Normal Event</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.NormalEventImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getNormalEvent()
-	 * @generated
-	 */
-	int NORMAL_EVENT = 14;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalThreatImpl <em>Internal Threat</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalThreatImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getInternalThreat()
-	 * @generated
-	 */
-	int INTERNAL_THREAT = 16;
+	int FAILURE = 11;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatStateImpl <em>Threat State</em>}' class.
@@ -204,36 +164,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 	int THREAT_STATE_FEATURE_COUNT = 3;
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorFreeImpl <em>Error Free</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorFreeImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getErrorFree()
-	 * @generated
-	 */
-	int ERROR_FREE = 3;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.UnclassifiedErrorImpl <em>Unclassified Error</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.UnclassifiedErrorImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getUnclassifiedError()
-	 * @generated
-	 */
-	int UNCLASSIFIED_ERROR = 6;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureModeImpl <em>Failure Mode</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureModeImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getFailureMode()
-	 * @generated
-	 */
-	int FAILURE_MODE = 2;
-
-	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.DegradedStateImpl <em>Degraded State</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -241,137 +171,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getDegradedState()
 	 * @generated
 	 */
-	int DEGRADED_STATE = 4;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureFreeImpl <em>Failure Free</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureFreeImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getFailureFree()
-	 * @generated
-	 */
-	int FAILURE_FREE = 7;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.CHInternalFaultImpl <em>CH Internal Fault</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.CHInternalFaultImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getCHInternalFault()
-	 * @generated
-	 */
-	int CH_INTERNAL_FAULT = 8;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.CHExternalFaultImpl <em>CH External Fault</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.CHExternalFaultImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getCHExternalFault()
-	 * @generated
-	 */
-	int CH_EXTERNAL_FAULT = 9;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.UnclassifiedFailureImpl <em>Unclassified Failure</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.UnclassifiedFailureImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getUnclassifiedFailure()
-	 * @generated
-	 */
-	int UNCLASSIFIED_FAILURE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Base State</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNCLASSIFIED_FAILURE__BASE_STATE = THREAT_STATE__BASE_STATE;
-
-	/**
-	 * The feature id for the '<em><b>Probability</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNCLASSIFIED_FAILURE__PROBABILITY = THREAT_STATE__PROBABILITY;
-
-	/**
-	 * The feature id for the '<em><b>Unit</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNCLASSIFIED_FAILURE__UNIT = THREAT_STATE__UNIT;
-
-	/**
-	 * The number of structural features of the '<em>Unclassified Failure</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNCLASSIFIED_FAILURE_FEATURE_COUNT = THREAT_STATE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Base State</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE__BASE_STATE = THREAT_STATE__BASE_STATE;
-
-	/**
-	 * The feature id for the '<em><b>Probability</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE__PROBABILITY = THREAT_STATE__PROBABILITY;
-
-	/**
-	 * The feature id for the '<em><b>Unit</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE__UNIT = THREAT_STATE__UNIT;
-
-	/**
-	 * The feature id for the '<em><b>Affected Ports</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE__AFFECTED_PORTS = THREAT_STATE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE__TYPE = THREAT_STATE_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Failure Mode</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_MODE_FEATURE_COUNT = THREAT_STATE_FEATURE_COUNT + 2;
+	int DEGRADED_STATE = 0;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.NormalStateImpl <em>Normal State</em>}' class.
@@ -381,7 +181,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getNormalState()
 	 * @generated
 	 */
-	int NORMAL_STATE = 5;
+	int NORMAL_STATE = 2;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorStateImpl <em>Error State</em>}' class.
@@ -391,43 +191,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getErrorState()
 	 * @generated
 	 */
-	int ERROR_STATE = 10;
-
-	/**
-	 * The feature id for the '<em><b>Base State</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_FREE__BASE_STATE = THREAT_STATE__BASE_STATE;
-
-	/**
-	 * The feature id for the '<em><b>Probability</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_FREE__PROBABILITY = THREAT_STATE__PROBABILITY;
-
-	/**
-	 * The feature id for the '<em><b>Unit</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_FREE__UNIT = THREAT_STATE__UNIT;
-
-	/**
-	 * The number of structural features of the '<em>Error Free</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_FREE_FEATURE_COUNT = THREAT_STATE_FEATURE_COUNT + 0;
+	int ERROR_STATE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Base State</b></em>' reference.
@@ -490,222 +254,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNCLASSIFIED_ERROR__BASE_STATE = THREAT_STATE__BASE_STATE;
-
-	/**
-	 * The feature id for the '<em><b>Probability</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNCLASSIFIED_ERROR__PROBABILITY = THREAT_STATE__PROBABILITY;
-
-	/**
-	 * The feature id for the '<em><b>Unit</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNCLASSIFIED_ERROR__UNIT = THREAT_STATE__UNIT;
-
-	/**
-	 * The number of structural features of the '<em>Unclassified Error</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UNCLASSIFIED_ERROR_FEATURE_COUNT = THREAT_STATE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Base State</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_FREE__BASE_STATE = THREAT_STATE__BASE_STATE;
-
-	/**
-	 * The feature id for the '<em><b>Probability</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_FREE__PROBABILITY = THREAT_STATE__PROBABILITY;
-
-	/**
-	 * The feature id for the '<em><b>Unit</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_FREE__UNIT = THREAT_STATE__UNIT;
-
-	/**
-	 * The number of structural features of the '<em>Failure Free</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FAILURE_FREE_FEATURE_COUNT = THREAT_STATE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_INTERNAL_FAULT__BASE_TRANSITION = 0;
-
-	/**
-	 * The feature id for the '<em><b>Permanent Prob</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_INTERNAL_FAULT__PERMANENT_PROB = 1;
-
-	/**
-	 * The feature id for the '<em><b>Transf Funct</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_INTERNAL_FAULT__TRANSF_FUNCT = 2;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_INTERNAL_FAULT__PROPERTY = 3;
-
-	/**
-	 * The feature id for the '<em><b>Child Failure</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_INTERNAL_FAULT__CHILD_FAILURE = 4;
-
-	/**
-	 * The feature id for the '<em><b>Occurrence</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_INTERNAL_FAULT__OCCURRENCE = 5;
-
-	/**
-	 * The feature id for the '<em><b>Transient Duration</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_INTERNAL_FAULT__TRANSIENT_DURATION = 6;
-
-	/**
-	 * The number of structural features of the '<em>CH Internal Fault</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_INTERNAL_FAULT_FEATURE_COUNT = 7;
-
-	/**
-	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_EXTERNAL_FAULT__BASE_TRANSITION = 0;
-
-	/**
-	 * The feature id for the '<em><b>From Port</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_EXTERNAL_FAULT__FROM_PORT = 1;
-
-	/**
-	 * The feature id for the '<em><b>Propagation Condition</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_EXTERNAL_FAULT__PROPAGATION_CONDITION = 2;
-
-	/**
-	 * The feature id for the '<em><b>Probability</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_EXTERNAL_FAULT__PROBABILITY = 3;
-
-	/**
-	 * The feature id for the '<em><b>Unit</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_EXTERNAL_FAULT__UNIT = 4;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_EXTERNAL_FAULT__TYPE = 5;
-
-	/**
-	 * The feature id for the '<em><b>Transf Funct</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_EXTERNAL_FAULT__TRANSF_FUNCT = 6;
-
-	/**
-	 * The number of structural features of the '<em>CH External Fault</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_EXTERNAL_FAULT_FEATURE_COUNT = 7;
-
-	/**
-	 * The feature id for the '<em><b>Base State</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
 	int ERROR_STATE__BASE_STATE = THREAT_STATE__BASE_STATE;
 
 	/**
@@ -727,31 +275,13 @@ public interface ThreatsPropagationPackage extends EPackage {
 	int ERROR_STATE__UNIT = THREAT_STATE__UNIT;
 
 	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_STATE__TYPE = THREAT_STATE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Vanishing Time</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_STATE__VANISHING_TIME = THREAT_STATE_FEATURE_COUNT + 1;
-
-	/**
 	 * The number of structural features of the '<em>Error State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_STATE_FEATURE_COUNT = THREAT_STATE_FEATURE_COUNT + 2;
+	int ERROR_STATE_FEATURE_COUNT = THREAT_STATE_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.StuckAtImpl <em>Stuck At</em>}' class.
@@ -761,7 +291,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getStuckAt()
 	 * @generated
 	 */
-	int STUCK_AT = 17;
+	int STUCK_AT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.StuckAtFixedImpl <em>Stuck At Fixed</em>}' class.
@@ -771,7 +301,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getStuckAtFixed()
 	 * @generated
 	 */
-	int STUCK_AT_FIXED = 18;
+	int STUCK_AT_FIXED = 5;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InvertedImpl <em>Inverted</em>}' class.
@@ -781,7 +311,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getInverted()
 	 * @generated
 	 */
-	int INVERTED = 19;
+	int INVERTED = 6;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.RampDownImpl <em>Ramp Down</em>}' class.
@@ -791,7 +321,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getRampDown()
 	 * @generated
 	 */
-	int RAMP_DOWN = 20;
+	int RAMP_DOWN = 7;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.DepEventImpl <em>Dep Event</em>}' class.
@@ -801,323 +331,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getDepEvent()
 	 * @generated
 	 */
-	int DEP_EVENT = 12;
-
-	/**
-	 * The feature id for the '<em><b>Port</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEP_EVENT__PORT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEP_EVENT__BASE_TRANSITION = 1;
-
-	/**
-	 * The feature id for the '<em><b>Weight</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEP_EVENT__WEIGHT = 2;
-
-	/**
-	 * The number of structural features of the '<em>Dep Event</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEP_EVENT_FEATURE_COUNT = 3;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalEventImpl <em>Internal Event</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalEventImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getInternalEvent()
-	 * @generated
-	 */
-	int INTERNAL_EVENT = 13;
-
-	/**
-	 * The feature id for the '<em><b>Port</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXTERNAL_FAULT__PORT = DEP_EVENT__PORT;
-
-	/**
-	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXTERNAL_FAULT__BASE_TRANSITION = DEP_EVENT__BASE_TRANSITION;
-
-	/**
-	 * The feature id for the '<em><b>Weight</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXTERNAL_FAULT__WEIGHT = DEP_EVENT__WEIGHT;
-
-	/**
-	 * The feature id for the '<em><b>Failure</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXTERNAL_FAULT__FAILURE = DEP_EVENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>External Fault</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXTERNAL_FAULT_FEATURE_COUNT = DEP_EVENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Port</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_EVENT__PORT = DEP_EVENT__PORT;
-
-	/**
-	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_EVENT__BASE_TRANSITION = DEP_EVENT__BASE_TRANSITION;
-
-	/**
-	 * The feature id for the '<em><b>Weight</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_EVENT__WEIGHT = DEP_EVENT__WEIGHT;
-
-	/**
-	 * The feature id for the '<em><b>Delay</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_EVENT__DELAY = DEP_EVENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Probability</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_EVENT__PROBABILITY = DEP_EVENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Internal Event</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_EVENT_FEATURE_COUNT = DEP_EVENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Port</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NORMAL_EVENT__PORT = INTERNAL_EVENT__PORT;
-
-	/**
-	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NORMAL_EVENT__BASE_TRANSITION = INTERNAL_EVENT__BASE_TRANSITION;
-
-	/**
-	 * The feature id for the '<em><b>Weight</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NORMAL_EVENT__WEIGHT = INTERNAL_EVENT__WEIGHT;
-
-	/**
-	 * The feature id for the '<em><b>Delay</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NORMAL_EVENT__DELAY = INTERNAL_EVENT__DELAY;
-
-	/**
-	 * The feature id for the '<em><b>Probability</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NORMAL_EVENT__PROBABILITY = INTERNAL_EVENT__PROBABILITY;
-
-	/**
-	 * The number of structural features of the '<em>Normal Event</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NORMAL_EVENT_FEATURE_COUNT = INTERNAL_EVENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Port</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECOVERY_EVENT__PORT = INTERNAL_EVENT__PORT;
-
-	/**
-	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECOVERY_EVENT__BASE_TRANSITION = INTERNAL_EVENT__BASE_TRANSITION;
-
-	/**
-	 * The feature id for the '<em><b>Weight</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECOVERY_EVENT__WEIGHT = INTERNAL_EVENT__WEIGHT;
-
-	/**
-	 * The feature id for the '<em><b>Delay</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECOVERY_EVENT__DELAY = INTERNAL_EVENT__DELAY;
-
-	/**
-	 * The feature id for the '<em><b>Probability</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECOVERY_EVENT__PROBABILITY = INTERNAL_EVENT__PROBABILITY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECOVERY_EVENT__KIND = INTERNAL_EVENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Recovery Event</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECOVERY_EVENT_FEATURE_COUNT = INTERNAL_EVENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Port</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_THREAT__PORT = INTERNAL_EVENT__PORT;
-
-	/**
-	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_THREAT__BASE_TRANSITION = INTERNAL_EVENT__BASE_TRANSITION;
-
-	/**
-	 * The feature id for the '<em><b>Weight</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_THREAT__WEIGHT = INTERNAL_EVENT__WEIGHT;
-
-	/**
-	 * The feature id for the '<em><b>Delay</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_THREAT__DELAY = INTERNAL_EVENT__DELAY;
-
-	/**
-	 * The feature id for the '<em><b>Probability</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_THREAT__PROBABILITY = INTERNAL_EVENT__PROBABILITY;
-
-	/**
-	 * The number of structural features of the '<em>Internal Threat</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTERNAL_THREAT_FEATURE_COUNT = INTERNAL_EVENT_FEATURE_COUNT + 0;
+	int DEP_EVENT = 9;
 
 	/**
 	 * The feature id for the '<em><b>Property</b></em>' reference.
@@ -1261,6 +475,42 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
+	int DEP_EVENT__PORT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEP_EVENT__BASE_TRANSITION = 1;
+
+	/**
+	 * The feature id for the '<em><b>Weight</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEP_EVENT__WEIGHT = 2;
+
+	/**
+	 * The number of structural features of the '<em>Dep Event</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEP_EVENT_FEATURE_COUNT = 3;
+
+	/**
+	 * The feature id for the '<em><b>Port</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
 	int NORMAL_INPUT__PORT = DEP_EVENT__PORT;
 
 	/**
@@ -1282,22 +532,13 @@ public interface ThreatsPropagationPackage extends EPackage {
 	int NORMAL_INPUT__WEIGHT = DEP_EVENT__WEIGHT;
 
 	/**
-	 * The feature id for the '<em><b>Recovery</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NORMAL_INPUT__RECOVERY = DEP_EVENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The number of structural features of the '<em>Normal Input</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NORMAL_INPUT_FEATURE_COUNT = DEP_EVENT_FEATURE_COUNT + 1;
+	int NORMAL_INPUT_FEATURE_COUNT = DEP_EVENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Port</b></em>' reference.
@@ -1327,22 +568,13 @@ public interface ThreatsPropagationPackage extends EPackage {
 	int NORMAL_OUTPUT__WEIGHT = DEP_EVENT__WEIGHT;
 
 	/**
-	 * The feature id for the '<em><b>Recovery</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NORMAL_OUTPUT__RECOVERY = DEP_EVENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The number of structural features of the '<em>Normal Output</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NORMAL_OUTPUT_FEATURE_COUNT = DEP_EVENT_FEATURE_COUNT + 1;
+	int NORMAL_OUTPUT_FEATURE_COUNT = DEP_EVENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
@@ -1478,7 +710,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getErrorDetection()
 	 * @generated
 	 */
-	int ERROR_DETECTION = 26;
+	int ERROR_DETECTION = 14;
 
 	/**
 	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
@@ -1533,7 +765,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getErrorHandling()
 	 * @generated
 	 */
-	int ERROR_HANDLING = 27;
+	int ERROR_HANDLING = 15;
 
 	/**
 	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
@@ -1588,7 +820,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getFaultHandling()
 	 * @generated
 	 */
-	int FAULT_HANDLING = 28;
+	int FAULT_HANDLING = 16;
 
 	/**
 	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
@@ -1643,7 +875,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getErrorModel()
 	 * @generated
 	 */
-	int ERROR_MODEL = 29;
+	int ERROR_MODEL = 17;
 
 	/**
 	 * The feature id for the '<em><b>Base State Machine</b></em>' reference.
@@ -1664,17 +896,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 	int ERROR_MODEL_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DurationType <em>Duration Type</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DurationType
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getDurationType()
-	 * @generated
-	 */
-	int DURATION_TYPE = 30;
-
-
-	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryKind <em>Recovery Kind</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1682,7 +903,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getRecoveryKind()
 	 * @generated
 	 */
-	int RECOVERY_KIND = 31;
+	int RECOVERY_KIND = 18;
 
 
 	/**
@@ -1966,27 +1187,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 	EReference getErrorModel_Base_StateMachine();
 
 	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ExternalFault <em>External Fault</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>External Fault</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ExternalFault
-	 * @generated
-	 */
-	EClass getExternalFault();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ExternalFault#getFailure <em>Failure</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Failure</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ExternalFault#getFailure()
-	 * @see #getExternalFault()
-	 * @generated
-	 */
-	EReference getExternalFault_Failure();
-
-	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalInput <em>Normal Input</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1997,38 +1197,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 	EClass getNormalInput();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalInput#getRecovery <em>Recovery</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Recovery</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalInput#getRecovery()
-	 * @see #getNormalInput()
-	 * @generated
-	 */
-	EReference getNormalInput_Recovery();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent <em>Recovery Event</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Recovery Event</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent
-	 * @generated
-	 */
-	EClass getRecoveryEvent();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent#getKind <em>Kind</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Kind</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent#getKind()
-	 * @see #getRecoveryEvent()
-	 * @generated
-	 */
-	EAttribute getRecoveryEvent_Kind();
-
-	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalOutput <em>Normal Output</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2037,17 +1205,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getNormalOutput();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalOutput#getRecovery <em>Recovery</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Recovery</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalOutput#getRecovery()
-	 * @see #getNormalOutput()
-	 * @generated
-	 */
-	EReference getNormalOutput_Recovery();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failure <em>Failure</em>}'.
@@ -2104,26 +1261,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 	EAttribute getFailure_Weight();
 
 	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalEvent <em>Normal Event</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Normal Event</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalEvent
-	 * @generated
-	 */
-	EClass getNormalEvent();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalThreat <em>Internal Threat</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Internal Threat</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalThreat
-	 * @generated
-	 */
-	EClass getInternalThreat();
-
-	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatState <em>Threat State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2167,58 +1304,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 	EAttribute getThreatState_Unit();
 
 	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorFree <em>Error Free</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Error Free</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorFree
-	 * @generated
-	 */
-	EClass getErrorFree();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedError <em>Unclassified Error</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Unclassified Error</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedError
-	 * @generated
-	 */
-	EClass getUnclassifiedError();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode <em>Failure Mode</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Failure Mode</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode
-	 * @generated
-	 */
-	EClass getFailureMode();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode#getAffectedPorts <em>Affected Ports</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Affected Ports</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode#getAffectedPorts()
-	 * @see #getFailureMode()
-	 * @generated
-	 */
-	EReference getFailureMode_AffectedPorts();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode#getType()
-	 * @see #getFailureMode()
-	 * @generated
-	 */
-	EAttribute getFailureMode_Type();
-
-	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DegradedState <em>Degraded State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2250,190 +1335,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 	EReference getNormalState_Base_State();
 
 	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureFree <em>Failure Free</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Failure Free</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureFree
-	 * @generated
-	 */
-	EClass getFailureFree();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault <em>CH Internal Fault</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>CH Internal Fault</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault
-	 * @generated
-	 */
-	EClass getCHInternalFault();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getBase_Transition <em>Base Transition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Transition</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getBase_Transition()
-	 * @see #getCHInternalFault()
-	 * @generated
-	 */
-	EReference getCHInternalFault_Base_Transition();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getPermanentProb <em>Permanent Prob</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Permanent Prob</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getPermanentProb()
-	 * @see #getCHInternalFault()
-	 * @generated
-	 */
-	EAttribute getCHInternalFault_PermanentProb();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getTransfFunct <em>Transf Funct</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Transf Funct</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getTransfFunct()
-	 * @see #getCHInternalFault()
-	 * @generated
-	 */
-	EAttribute getCHInternalFault_TransfFunct();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getProperty <em>Property</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Property</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getProperty()
-	 * @see #getCHInternalFault()
-	 * @generated
-	 */
-	EReference getCHInternalFault_Property();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getChildFailure <em>Child Failure</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Child Failure</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getChildFailure()
-	 * @see #getCHInternalFault()
-	 * @generated
-	 */
-	EReference getCHInternalFault_ChildFailure();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getOccurrence <em>Occurrence</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Occurrence</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getOccurrence()
-	 * @see #getCHInternalFault()
-	 * @generated
-	 */
-	EAttribute getCHInternalFault_Occurrence();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getTransientDuration <em>Transient Duration</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Transient Duration</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault#getTransientDuration()
-	 * @see #getCHInternalFault()
-	 * @generated
-	 */
-	EAttribute getCHInternalFault_TransientDuration();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault <em>CH External Fault</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>CH External Fault</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault
-	 * @generated
-	 */
-	EClass getCHExternalFault();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getBase_Transition <em>Base Transition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Transition</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getBase_Transition()
-	 * @see #getCHExternalFault()
-	 * @generated
-	 */
-	EReference getCHExternalFault_Base_Transition();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getFromPort <em>From Port</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>From Port</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getFromPort()
-	 * @see #getCHExternalFault()
-	 * @generated
-	 */
-	EReference getCHExternalFault_FromPort();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getPropagationCondition <em>Propagation Condition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Propagation Condition</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getPropagationCondition()
-	 * @see #getCHExternalFault()
-	 * @generated
-	 */
-	EAttribute getCHExternalFault_PropagationCondition();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getProbability <em>Probability</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Probability</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getProbability()
-	 * @see #getCHExternalFault()
-	 * @generated
-	 */
-	EAttribute getCHExternalFault_Probability();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getUnit <em>Unit</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Unit</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getUnit()
-	 * @see #getCHExternalFault()
-	 * @generated
-	 */
-	EAttribute getCHExternalFault_Unit();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getType()
-	 * @see #getCHExternalFault()
-	 * @generated
-	 */
-	EAttribute getCHExternalFault_Type();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getTransfFunct <em>Transf Funct</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Transf Funct</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault#getTransfFunct()
-	 * @see #getCHExternalFault()
-	 * @generated
-	 */
-	EAttribute getCHExternalFault_TransfFunct();
-
-	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorState <em>Error State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2442,38 +1343,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getErrorState();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorState#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorState#getType()
-	 * @see #getErrorState()
-	 * @generated
-	 */
-	EAttribute getErrorState_Type();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorState#getVanishingTime <em>Vanishing Time</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Vanishing Time</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorState#getVanishingTime()
-	 * @see #getErrorState()
-	 * @generated
-	 */
-	EAttribute getErrorState_VanishingTime();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedFailure <em>Unclassified Failure</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Unclassified Failure</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedFailure
-	 * @generated
-	 */
-	EClass getUnclassifiedFailure();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.StuckAt <em>Stuck At</em>}'.
@@ -2678,48 +1547,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDepEvent_Weight();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent <em>Internal Event</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Internal Event</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent
-	 * @generated
-	 */
-	EClass getInternalEvent();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent#getDelay <em>Delay</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Delay</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent#getDelay()
-	 * @see #getInternalEvent()
-	 * @generated
-	 */
-	EAttribute getInternalEvent_Delay();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent#getProbability <em>Probability</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Probability</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent#getProbability()
-	 * @see #getInternalEvent()
-	 * @generated
-	 */
-	EAttribute getInternalEvent_Probability();
-
-	/**
-	 * Returns the meta object for enum '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DurationType <em>Duration Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>Duration Type</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DurationType
-	 * @generated
-	 */
-	EEnum getDurationType();
 
 	/**
 	 * Returns the meta object for enum '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryKind <em>Recovery Kind</em>}'.
@@ -2974,24 +1801,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 		EReference ERROR_MODEL__BASE_STATE_MACHINE = eINSTANCE.getErrorModel_Base_StateMachine();
 
 		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ExternalFaultImpl <em>External Fault</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ExternalFaultImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getExternalFault()
-		 * @generated
-		 */
-		EClass EXTERNAL_FAULT = eINSTANCE.getExternalFault();
-
-		/**
-		 * The meta object literal for the '<em><b>Failure</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference EXTERNAL_FAULT__FAILURE = eINSTANCE.getExternalFault_Failure();
-
-		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.NormalInputImpl <em>Normal Input</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3002,32 +1811,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 		EClass NORMAL_INPUT = eINSTANCE.getNormalInput();
 
 		/**
-		 * The meta object literal for the '<em><b>Recovery</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference NORMAL_INPUT__RECOVERY = eINSTANCE.getNormalInput_Recovery();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.RecoveryEventImpl <em>Recovery Event</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.RecoveryEventImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getRecoveryEvent()
-		 * @generated
-		 */
-		EClass RECOVERY_EVENT = eINSTANCE.getRecoveryEvent();
-
-		/**
-		 * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute RECOVERY_EVENT__KIND = eINSTANCE.getRecoveryEvent_Kind();
-
-		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.NormalOutputImpl <em>Normal Output</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3036,14 +1819,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 		 * @generated
 		 */
 		EClass NORMAL_OUTPUT = eINSTANCE.getNormalOutput();
-
-		/**
-		 * The meta object literal for the '<em><b>Recovery</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference NORMAL_OUTPUT__RECOVERY = eINSTANCE.getNormalOutput_Recovery();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureImpl <em>Failure</em>}' class.
@@ -3088,26 +1863,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 		EAttribute FAILURE__WEIGHT = eINSTANCE.getFailure_Weight();
 
 		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.NormalEventImpl <em>Normal Event</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.NormalEventImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getNormalEvent()
-		 * @generated
-		 */
-		EClass NORMAL_EVENT = eINSTANCE.getNormalEvent();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalThreatImpl <em>Internal Threat</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalThreatImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getInternalThreat()
-		 * @generated
-		 */
-		EClass INTERNAL_THREAT = eINSTANCE.getInternalThreat();
-
-		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatStateImpl <em>Threat State</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3142,52 +1897,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 		EAttribute THREAT_STATE__UNIT = eINSTANCE.getThreatState_Unit();
 
 		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorFreeImpl <em>Error Free</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorFreeImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getErrorFree()
-		 * @generated
-		 */
-		EClass ERROR_FREE = eINSTANCE.getErrorFree();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.UnclassifiedErrorImpl <em>Unclassified Error</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.UnclassifiedErrorImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getUnclassifiedError()
-		 * @generated
-		 */
-		EClass UNCLASSIFIED_ERROR = eINSTANCE.getUnclassifiedError();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureModeImpl <em>Failure Mode</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureModeImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getFailureMode()
-		 * @generated
-		 */
-		EClass FAILURE_MODE = eINSTANCE.getFailureMode();
-
-		/**
-		 * The meta object literal for the '<em><b>Affected Ports</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FAILURE_MODE__AFFECTED_PORTS = eINSTANCE.getFailureMode_AffectedPorts();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FAILURE_MODE__TYPE = eINSTANCE.getFailureMode_Type();
-
-		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.DegradedStateImpl <em>Degraded State</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3216,148 +1925,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 		EReference NORMAL_STATE__BASE_STATE = eINSTANCE.getNormalState_Base_State();
 
 		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureFreeImpl <em>Failure Free</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureFreeImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getFailureFree()
-		 * @generated
-		 */
-		EClass FAILURE_FREE = eINSTANCE.getFailureFree();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.CHInternalFaultImpl <em>CH Internal Fault</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.CHInternalFaultImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getCHInternalFault()
-		 * @generated
-		 */
-		EClass CH_INTERNAL_FAULT = eINSTANCE.getCHInternalFault();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Transition</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CH_INTERNAL_FAULT__BASE_TRANSITION = eINSTANCE.getCHInternalFault_Base_Transition();
-
-		/**
-		 * The meta object literal for the '<em><b>Permanent Prob</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CH_INTERNAL_FAULT__PERMANENT_PROB = eINSTANCE.getCHInternalFault_PermanentProb();
-
-		/**
-		 * The meta object literal for the '<em><b>Transf Funct</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CH_INTERNAL_FAULT__TRANSF_FUNCT = eINSTANCE.getCHInternalFault_TransfFunct();
-
-		/**
-		 * The meta object literal for the '<em><b>Property</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CH_INTERNAL_FAULT__PROPERTY = eINSTANCE.getCHInternalFault_Property();
-
-		/**
-		 * The meta object literal for the '<em><b>Child Failure</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CH_INTERNAL_FAULT__CHILD_FAILURE = eINSTANCE.getCHInternalFault_ChildFailure();
-
-		/**
-		 * The meta object literal for the '<em><b>Occurrence</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CH_INTERNAL_FAULT__OCCURRENCE = eINSTANCE.getCHInternalFault_Occurrence();
-
-		/**
-		 * The meta object literal for the '<em><b>Transient Duration</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CH_INTERNAL_FAULT__TRANSIENT_DURATION = eINSTANCE.getCHInternalFault_TransientDuration();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.CHExternalFaultImpl <em>CH External Fault</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.CHExternalFaultImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getCHExternalFault()
-		 * @generated
-		 */
-		EClass CH_EXTERNAL_FAULT = eINSTANCE.getCHExternalFault();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Transition</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CH_EXTERNAL_FAULT__BASE_TRANSITION = eINSTANCE.getCHExternalFault_Base_Transition();
-
-		/**
-		 * The meta object literal for the '<em><b>From Port</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CH_EXTERNAL_FAULT__FROM_PORT = eINSTANCE.getCHExternalFault_FromPort();
-
-		/**
-		 * The meta object literal for the '<em><b>Propagation Condition</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CH_EXTERNAL_FAULT__PROPAGATION_CONDITION = eINSTANCE.getCHExternalFault_PropagationCondition();
-
-		/**
-		 * The meta object literal for the '<em><b>Probability</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CH_EXTERNAL_FAULT__PROBABILITY = eINSTANCE.getCHExternalFault_Probability();
-
-		/**
-		 * The meta object literal for the '<em><b>Unit</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CH_EXTERNAL_FAULT__UNIT = eINSTANCE.getCHExternalFault_Unit();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CH_EXTERNAL_FAULT__TYPE = eINSTANCE.getCHExternalFault_Type();
-
-		/**
-		 * The meta object literal for the '<em><b>Transf Funct</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CH_EXTERNAL_FAULT__TRANSF_FUNCT = eINSTANCE.getCHExternalFault_TransfFunct();
-
-		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorStateImpl <em>Error State</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3366,32 +1933,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ERROR_STATE = eINSTANCE.getErrorState();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ERROR_STATE__TYPE = eINSTANCE.getErrorState_Type();
-
-		/**
-		 * The meta object literal for the '<em><b>Vanishing Time</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ERROR_STATE__VANISHING_TIME = eINSTANCE.getErrorState_VanishingTime();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.UnclassifiedFailureImpl <em>Unclassified Failure</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.UnclassifiedFailureImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getUnclassifiedFailure()
-		 * @generated
-		 */
-		EClass UNCLASSIFIED_FAILURE = eINSTANCE.getUnclassifiedFailure();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.StuckAtImpl <em>Stuck At</em>}' class.
@@ -3554,42 +2095,6 @@ public interface ThreatsPropagationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DEP_EVENT__WEIGHT = eINSTANCE.getDepEvent_Weight();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalEventImpl <em>Internal Event</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalEventImpl
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getInternalEvent()
-		 * @generated
-		 */
-		EClass INTERNAL_EVENT = eINSTANCE.getInternalEvent();
-
-		/**
-		 * The meta object literal for the '<em><b>Delay</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute INTERNAL_EVENT__DELAY = eINSTANCE.getInternalEvent_Delay();
-
-		/**
-		 * The meta object literal for the '<em><b>Probability</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute INTERNAL_EVENT__PROBABILITY = eINSTANCE.getInternalEvent_Probability();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DurationType <em>Duration Type</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DurationType
-		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getDurationType()
-		 * @generated
-		 */
-		EEnum DURATION_TYPE = eINSTANCE.getDurationType();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryKind <em>Recovery Kind</em>}' enum.

@@ -63,7 +63,6 @@ public class DependableComponentFactoryImpl extends EFactoryImpl implements Depe
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case DependableComponentPackage.FAILURE_MODES: return createFailureModes();
-			case DependableComponentPackage.PROPAGATION: return createPropagation();
 			case DependableComponentPackage.DEPENDABLE_COMPONENT: return createDependableComponent();
 			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR: return createErrorModelBehavior();
 			case DependableComponentPackage.FAILURE_MODE: return createFailureMode();
@@ -80,16 +79,6 @@ public class DependableComponentFactoryImpl extends EFactoryImpl implements Depe
 	public FailureModes createFailureModes() {
 		FailureModesImpl failureModes = new FailureModesImpl();
 		return failureModes;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Propagation createPropagation() {
-		PropagationImpl propagation = new PropagationImpl();
-		return propagation;
 	}
 
 	/**

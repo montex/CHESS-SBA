@@ -435,15 +435,6 @@ public class MaintenanceMonitoringPackageImpl extends EPackageImpl implements Ma
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getErrorDetection_ControlledFailure() {
-		return (EReference)errorDetectionEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getFailureDetection() {
 		return failureDetectionEClass;
 	}
@@ -505,7 +496,6 @@ public class MaintenanceMonitoringPackageImpl extends EPackageImpl implements Ma
 		errorDetectionEClass = createEClass(ERROR_DETECTION);
 		createEReference(errorDetectionEClass, ERROR_DETECTION__TARGETS);
 		createEAttribute(errorDetectionEClass, ERROR_DETECTION__CORRECTION_PROBABILITY);
-		createEReference(errorDetectionEClass, ERROR_DETECTION__CONTROLLED_FAILURE);
 
 		failureDetectionEClass = createEClass(FAILURE_DETECTION);
 		createEReference(failureDetectionEClass, FAILURE_DETECTION__ON_DETECTION);
@@ -538,7 +528,6 @@ public class MaintenanceMonitoringPackageImpl extends EPackageImpl implements Ma
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
-		ThreatsPropagationPackage theThreatsPropagationPackage = (ThreatsPropagationPackage)EPackage.Registry.INSTANCE.getEPackage(ThreatsPropagationPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -571,7 +560,6 @@ public class MaintenanceMonitoringPackageImpl extends EPackageImpl implements Ma
 		initEClass(errorDetectionEClass, ErrorDetection.class, "ErrorDetection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getErrorDetection_Targets(), theUMLPackage.getProperty(), null, "targets", null, 1, 1, ErrorDetection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getErrorDetection_CorrectionProbability(), theBasicNFP_TypesPackage.getNFP_Real(), "correctionProbability", null, 1, 1, ErrorDetection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getErrorDetection_ControlledFailure(), theThreatsPropagationPackage.getFailureMode(), null, "controlledFailure", null, 1, 1, ErrorDetection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(failureDetectionEClass, FailureDetection.class, "FailureDetection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFailureDetection_OnDetection(), theUMLPackage.getActivity(), null, "onDetection", null, 1, -1, FailureDetection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);

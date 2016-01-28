@@ -167,7 +167,7 @@ public interface StateBasedAnalysisPackage extends EPackage {
 	int STATE_BASED_ANALYSIS__EVAL_METHOD = GQAMPackage.GA_ANALYSIS_CONTEXT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Target Failure Mode</b></em>' reference list.
+	 * The feature id for the '<em><b>Target Failure Mode</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -303,15 +303,15 @@ public interface StateBasedAnalysisPackage extends EPackage {
 	EAttribute getStateBasedAnalysis_EvalMethod();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetFailureMode <em>Target Failure Mode</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetFailureMode <em>Target Failure Mode</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Target Failure Mode</em>'.
+	 * @return the meta object for the attribute list '<em>Target Failure Mode</em>'.
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetFailureMode()
 	 * @see #getStateBasedAnalysis()
 	 * @generated
 	 */
-	EReference getStateBasedAnalysis_TargetFailureMode();
+	EAttribute getStateBasedAnalysis_TargetFailureMode();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetDepComponent <em>Target Dep Component</em>}'.
@@ -446,12 +446,12 @@ public interface StateBasedAnalysisPackage extends EPackage {
 		EAttribute STATE_BASED_ANALYSIS__EVAL_METHOD = eINSTANCE.getStateBasedAnalysis_EvalMethod();
 
 		/**
-		 * The meta object literal for the '<em><b>Target Failure Mode</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Target Failure Mode</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference STATE_BASED_ANALYSIS__TARGET_FAILURE_MODE = eINSTANCE.getStateBasedAnalysis_TargetFailureMode();
+		EAttribute STATE_BASED_ANALYSIS__TARGET_FAILURE_MODE = eINSTANCE.getStateBasedAnalysis_TargetFailureMode();
 
 		/**
 		 * The meta object literal for the '<em><b>Target Dep Component</b></em>' reference list feature.

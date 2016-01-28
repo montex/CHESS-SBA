@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.impl.GaAnalysisContextImpl;
 import org.eclipse.uml2.uml.InstanceSpecification;
@@ -107,14 +108,14 @@ public class StateBasedAnalysisImpl extends GaAnalysisContextImpl implements Sta
 	protected String evalMethod = EVAL_METHOD_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getTargetFailureMode() <em>Target Failure Mode</em>}' reference list.
+	 * The cached value of the '{@link #getTargetFailureMode() <em>Target Failure Mode</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getTargetFailureMode()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<FailureMode> targetFailureMode;
+	protected EList<String> targetFailureMode;
 
 	/**
 	 * The cached value of the '{@link #getTargetDepComponent() <em>Target Dep Component</em>}' reference list.
@@ -233,9 +234,9 @@ public class StateBasedAnalysisImpl extends GaAnalysisContextImpl implements Sta
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<FailureMode> getTargetFailureMode() {
+	public EList<String> getTargetFailureMode() {
 		if (targetFailureMode == null) {
-			targetFailureMode = new EObjectResolvingEList<FailureMode>(FailureMode.class, this, StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_FAILURE_MODE);
+			targetFailureMode = new EDataTypeUniqueEList<String>(String.class, this, StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_FAILURE_MODE);
 		}
 		return targetFailureMode;
 	}
@@ -347,7 +348,7 @@ public class StateBasedAnalysisImpl extends GaAnalysisContextImpl implements Sta
 				return;
 			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_FAILURE_MODE:
 				getTargetFailureMode().clear();
-				getTargetFailureMode().addAll((Collection<? extends FailureMode>)newValue);
+				getTargetFailureMode().addAll((Collection<? extends String>)newValue);
 				return;
 			case StateBasedAnalysisPackage.STATE_BASED_ANALYSIS__TARGET_DEP_COMPONENT:
 				getTargetDepComponent().clear();
@@ -440,6 +441,8 @@ public class StateBasedAnalysisImpl extends GaAnalysisContextImpl implements Sta
 		result.append(measureEvaluationResult);
 		result.append(", evalMethod: ");
 		result.append(evalMethod);
+		result.append(", targetFailureMode: ");
+		result.append(targetFailureMode);
 		result.append(')');
 		return result.toString();
 	}

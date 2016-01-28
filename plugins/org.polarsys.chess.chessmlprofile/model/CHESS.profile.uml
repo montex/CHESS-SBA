@@ -2319,7 +2319,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
                 <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_Q0rj0Me6Ed-7etIj5eTw0Q" name="rpm" value="4"/>
               </eClassifiers>
               <eClassifiers xmi:type="ecore:EClass" xmi:id="_Q0rj0ce6Ed-7etIj5eTw0Q" name="Propagation">
-                <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Q0rj0se6Ed-7etIj5eTw0Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_uoIV0LzuEd-yoLyJo0JlOg"/>
+                <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Q0rj0se6Ed-7etIj5eTw0Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
                 <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Q0rj08e6Ed-7etIj5eTw0Q" source="duplicates">
                   <contents xmi:type="ecore:EReference" xmi:id="_Q0rj1Me6Ed-7etIj5eTw0Q" name="base_Connector" ordered="false" lowerBound="1">
                     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Q0rj1ce6Ed-7etIj5eTw0Q" source="redefines" references="_Q0rj18e6Ed-7etIj5eTw0Q"/>
@@ -3003,7 +3003,6 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
             <ownedAttribute xmi:type="uml:Property" xmi:id="_jIO5oLwLEeCkE-pvjHe3zw" name="correctionProbability">
               <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
             </ownedAttribute>
-            <ownedAttribute xmi:type="uml:Property" xmi:id="_3hvJYLwLEeCkE-pvjHe3zw" name="controlledFailure" type="_gtsGwDQ4EeC0ueejuetpgA"/>
           </packagedElement>
           <packagedElement xmi:type="uml:Stereotype" xmi:id="_pJ2yQL8-Ed-TL8tpOyViyA" name="FailureDetection">
             <generalization xmi:type="uml:Generalization" xmi:id="_qpFJUL8-Ed-TL8tpOyViyA" general="_u9LtsL88Ed-TL8tpOyViyA"/>
@@ -3424,7 +3423,8 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
                 <value xsi:nil="true"/>
               </defaultValue>
             </ownedAttribute>
-            <ownedAttribute xmi:type="uml:Property" xmi:id="_goeK4FocEeCE4ZeNjhtnzg" name="targetFailureMode" visibility="public" type="_gtsGwDQ4EeC0ueejuetpgA">
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_goeK4FocEeCE4ZeNjhtnzg" name="targetFailureMode" visibility="public">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
               <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lK6bUFocEeCE4ZeNjhtnzg"/>
               <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lLNWQFocEeCE4ZeNjhtnzg" value="*"/>
               <defaultValue xmi:type="uml:LiteralString" xmi:id="_lLWgMFocEeCE4ZeNjhtnzg">
@@ -3558,7 +3558,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EEnum" xmi:id="_RR4ECKe8EeCfNM3HjUZ3Ag" name="CHESS_Dependability_ThreatsPropagation_DurationType">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_RR4ECae8EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_hh4TEKcTEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_RR4ECae8EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_RR4ECqe8EeCfNM3HjUZ3Ag" name="transient"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_RR4EC6e8EeCfNM3HjUZ3Ag" name="permanent" value="1"/>
             </eClassifiers>
@@ -3640,7 +3640,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EEnum" xmi:id="_YFsGuKenEeCXsNuM83eyAA" name="CHESS_Dependability_ThreatsPropagation_Type">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_YFsGuaenEeCXsNuM83eyAA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_hh4TEKcTEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_YFsGuaenEeCXsNuM83eyAA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_YFsGuqenEeCXsNuM83eyAA" name="transient"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_YFsGu6enEeCXsNuM83eyAA" name="permanent" value="1"/>
             </eClassifiers>
@@ -3757,7 +3757,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_3BtJZVquEeCgwNmo13tekQ" key="Author" value=""/>
             </eAnnotations>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_291WAlquEeCgwNmo13tekQ" name="Propagation">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_291WA1quEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_uoIV0LzuEd-yoLyJo0JlOg"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_291WA1quEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_291WCFquEeCgwNmo13tekQ" name="base_Abstraction" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Abstraction"/>
               </eStructuralFeatures>
@@ -3871,7 +3871,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Lj4fdU7nEeCiWfCHUearZQ" key="Author" value=""/>
             </eAnnotations>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_LgJ2AU7nEeCiWfCHUearZQ" name="Propagation">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_LgJ2Ak7nEeCiWfCHUearZQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_uoIV0LzuEd-yoLyJo0JlOg"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_LgJ2Ak7nEeCiWfCHUearZQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_LgJ2B07nEeCiWfCHUearZQ" name="base_Abstraction" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Abstraction"/>
               </eStructuralFeatures>
@@ -3979,7 +3979,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_i7TkVUMfEeCCw-qiU6Z1sQ" key="Author" value=""/>
             </eAnnotations>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_i4UhwkMfEeCCw-qiU6Z1sQ" name="Propagation">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_i4Uhw0MfEeCCw-qiU6Z1sQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_uoIV0LzuEd-yoLyJo0JlOg"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_i4Uhw0MfEeCCw-qiU6Z1sQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_i4UhyEMfEeCCw-qiU6Z1sQ" name="base_Abstraction" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Abstraction"/>
               </eStructuralFeatures>
@@ -4084,7 +4084,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_CXYYZUMaEeCCw-qiU6Z1sQ" key="Author" value=""/>
             </eAnnotations>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_CUjG0kMaEeCCw-qiU6Z1sQ" name="Propagation">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CUjG00MaEeCCw-qiU6Z1sQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_uoIV0LzuEd-yoLyJo0JlOg"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CUjG00MaEeCCw-qiU6Z1sQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CUjG1EMaEeCCw-qiU6Z1sQ" source="duplicates">
                 <contents xmi:type="ecore:EReference" xmi:id="_CUjG1UMaEeCCw-qiU6Z1sQ" name="base_Connector" ordered="false" lowerBound="1">
                   <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CUjG1kMaEeCCw-qiU6Z1sQ" source="redefines" references="_CUjG3EMaEeCCw-qiU6Z1sQ"/>
@@ -4195,7 +4195,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_JlidpUMZEeCCw-qiU6Z1sQ" key="Author" value=""/>
             </eAnnotations>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_JikCIUMZEeCCw-qiU6Z1sQ" name="Propagation">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_JikCIkMZEeCCw-qiU6Z1sQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_uoIV0LzuEd-yoLyJo0JlOg"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_JikCIkMZEeCCw-qiU6Z1sQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_JikCI0MZEeCCw-qiU6Z1sQ" source="duplicates">
                 <contents xmi:type="ecore:EReference" xmi:id="_JikCJEMZEeCCw-qiU6Z1sQ" name="base_Abstraction" ordered="false" unique="false" lowerBound="1">
                   <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_JikCJUMZEeCCw-qiU6Z1sQ" source="redefines">
@@ -4310,7 +4310,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_yk4YFUDsEeC5SOtkEXPa-w" key="Author" value=""/>
             </eAnnotations>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_yiDGgUDsEeC5SOtkEXPa-w" name="Propagation">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_yiDGgkDsEeC5SOtkEXPa-w" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_uoIV0LzuEd-yoLyJo0JlOg"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_yiDGgkDsEeC5SOtkEXPa-w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_yiDGg0DsEeC5SOtkEXPa-w" source="duplicates">
                 <contents xmi:type="ecore:EReference" xmi:id="_yiDGhEDsEeC5SOtkEXPa-w" name="base_Abstraction" ordered="false" unique="false" lowerBound="1">
                   <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_yiDGhUDsEeC5SOtkEXPa-w" source="redefines">
@@ -4425,7 +4425,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_vVIvpTgaEeCE2sZUGxu35w" key="Author" value=""/>
             </eAnnotations>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_vTM18TgaEeCE2sZUGxu35w" name="Propagation">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_vTM18jgaEeCE2sZUGxu35w" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_uoIV0LzuEd-yoLyJo0JlOg"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_vTM18jgaEeCE2sZUGxu35w" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_vTM18zgaEeCE2sZUGxu35w" source="duplicates">
                 <contents xmi:type="ecore:EReference" xmi:id="_vTM19DgaEeCE2sZUGxu35w" name="base_Abstraction" ordered="false" unique="false" lowerBound="1">
                   <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_vTM19TgaEeCE2sZUGxu35w" source="redefines">
@@ -4537,7 +4537,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
               <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="__DFgdTRPEeCPrptoDUJcNQ" key="Author" value=""/>
             </eAnnotations>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="__BchsjRPEeCPrptoDUJcNQ" name="Propagation">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__BchszRPEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_uoIV0LzuEd-yoLyJo0JlOg"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__BchszRPEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__BchtDRPEeCPrptoDUJcNQ" source="duplicates">
                 <contents xmi:type="ecore:EReference" xmi:id="__BchtTRPEeCPrptoDUJcNQ" name="base_Abstraction" ordered="false" unique="false" lowerBound="1">
                   <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__BchtjRPEeCPrptoDUJcNQ" source="redefines">
@@ -4641,7 +4641,7 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
         <ownedComment xmi:type="uml:Comment" xmi:id="_VJJIoDa9EeW314N4GP8y1Q" annotatedElement="_DBxD0DHsEeWt8Ovv2G_EJg">
           <body>allows to decorate a port\instance with information regarding the failureModes possibly affecting the port\instance itself</body>
         </ownedComment>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_k15jIDbCEeW314N4GP8y1Q" annotatedElement="_uoIV0LzuEd-yoLyJo0JlOg">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_k15jIDbCEeW314N4GP8y1Q">
           <body>obsolete</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_64fbIDbDEeW314N4GP8y1Q" annotatedElement="_y0zvEDQ2EeC0ueejuetpgA">
@@ -4705,55 +4705,6 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
         <elementImport xmi:type="uml:ElementImport" xmi:id="_GZBTgDHsEeWt8Ovv2G_EJg" alias="Slot">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Slot"/>
         </elementImport>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_uoIV0LzuEd-yoLyJo0JlOg" name="Propagation">
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_2sU1wLzuEd-yoLyJo0JlOg" name="prob" visibility="public">
-            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_4EZb8LzuEd-yoLyJo0JlOg"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_4EZb8bzuEd-yoLyJo0JlOg" value="1"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_4EjM8LzuEd-yoLyJo0JlOg">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_4d4S8LzuEd-yoLyJo0JlOg" name="delay" visibility="public">
-            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_kMwX8BFREdyUJeMeN__D-A"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6WI1ELzuEd-yoLyJo0JlOg"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6WI1EbzuEd-yoLyJo0JlOg" value="1"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_6WSmELzuEd-yoLyJo0JlOg">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_wK1msDQ3EeC0ueejuetpgA" name="base_Abstraction" association="_wK1msTQ3EeC0ueejuetpgA">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Abstraction"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_IykvoEMZEeCCw-qiU6Z1sQ" name="base_Comment" association="_IykvoUMZEeCCw-qiU6Z1sQ">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Comment"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_iFqVwEMfEeCCw-qiU6Z1sQ" name="base_Connector" association="_iFqVwUMfEeCCw-qiU6Z1sQ">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Connector"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_CsbWkE7nEeCiWfCHUearZQ" name="base_InstanceSpecification" association="_CsbWkU7nEeCiWfCHUearZQ">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_fiHokFqlEeCgwNmo13tekQ" name="transfFunct" visibility="public">
-            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_iJBZYFqlEeCgwNmo13tekQ"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_iJKjUFqlEeCgwNmo13tekQ" value="*"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_iJeFUFqlEeCgwNmo13tekQ">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_mPJhQFqlEeCgwNmo13tekQ" name="base_Transition" association="_mPJhQVqlEeCgwNmo13tekQ">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Transition"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_l_L0UKehEeCXsNuM83eyAA" name="weight" visibility="public">
-            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_o-TQ0KehEeCXsNuM83eyAA"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_o-dB0KehEeCXsNuM83eyAA" value="1"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_o-mLwKehEeCXsNuM83eyAA">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-        </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_y0zvEDQ2EeC0ueejuetpgA" name="DependableComponent">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_1n7W8DQ2EeC0ueejuetpgA" name="base_Component" association="_1n7W8TQ2EeC0ueejuetpgA">
             <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
@@ -4775,23 +4726,8 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
         <packagedElement xmi:type="uml:Extension" xmi:id="_1n7W8TQ2EeC0ueejuetpgA" name="E_DependableComponent_Component0" memberEnd="_1n7W8jQ2EeC0ueejuetpgA _1n7W8DQ2EeC0ueejuetpgA">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_1n7W8jQ2EeC0ueejuetpgA" name="extension_DependableComponent" type="_y0zvEDQ2EeC0ueejuetpgA" aggregation="composite" association="_1n7W8TQ2EeC0ueejuetpgA"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_wK1msTQ3EeC0ueejuetpgA" name="E_Propagation_Abstraction0" memberEnd="_wK1msjQ3EeC0ueejuetpgA _wK1msDQ3EeC0ueejuetpgA">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_wK1msjQ3EeC0ueejuetpgA" name="extension_Propagation" type="_uoIV0LzuEd-yoLyJo0JlOg" aggregation="composite" association="_wK1msTQ3EeC0ueejuetpgA"/>
-        </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_mJZY0TgaEeCE2sZUGxu35w" name="E_DependableComponent_Property0" memberEnd="_mJZY0jgaEeCE2sZUGxu35w _mJZY0DgaEeCE2sZUGxu35w">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_mJZY0jgaEeCE2sZUGxu35w" name="extension_DependableComponent" type="_y0zvEDQ2EeC0ueejuetpgA" aggregation="composite" association="_mJZY0TgaEeCE2sZUGxu35w"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_IykvoUMZEeCCw-qiU6Z1sQ" name="E_Propagation_Comment0" memberEnd="_IykvokMZEeCCw-qiU6Z1sQ _IykvoEMZEeCCw-qiU6Z1sQ">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_IykvokMZEeCCw-qiU6Z1sQ" name="extension_Propagation" type="_uoIV0LzuEd-yoLyJo0JlOg" aggregation="composite" association="_IykvoUMZEeCCw-qiU6Z1sQ"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_iFqVwUMfEeCCw-qiU6Z1sQ" name="E_Propagation_Connector0" memberEnd="_iFqVwkMfEeCCw-qiU6Z1sQ _iFqVwEMfEeCCw-qiU6Z1sQ">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_iFqVwkMfEeCCw-qiU6Z1sQ" name="extension_Propagation" type="_uoIV0LzuEd-yoLyJo0JlOg" aggregation="composite" association="_iFqVwUMfEeCCw-qiU6Z1sQ"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_CsbWkU7nEeCiWfCHUearZQ" name="E_Propagation_InstanceSpecification0" memberEnd="_CsbWkk7nEeCiWfCHUearZQ _CsbWkE7nEeCiWfCHUearZQ">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_CsbWkk7nEeCiWfCHUearZQ" name="extension_Propagation" type="_uoIV0LzuEd-yoLyJo0JlOg" aggregation="composite" association="_CsbWkU7nEeCiWfCHUearZQ"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_mPJhQVqlEeCgwNmo13tekQ" name="E_Propagation_Transition0" memberEnd="_mPJhQlqlEeCgwNmo13tekQ _mPJhQFqlEeCgwNmo13tekQ">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_mPJhQlqlEeCgwNmo13tekQ" name="extension_Propagation" type="_uoIV0LzuEd-yoLyJo0JlOg" aggregation="composite" association="_mPJhQVqlEeCgwNmo13tekQ"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="__heX4M1ZEeSrt5YehnIlig" name="E_DependableComponent_InstanceSpecification1" memberEnd="__heX4c1ZEeSrt5YehnIlig __hdJwM1ZEeSrt5YehnIlig">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="__heX4c1ZEeSrt5YehnIlig" name="extension_DependableComponent" type="_y0zvEDQ2EeC0ueejuetpgA" aggregation="composite" association="__heX4M1ZEeSrt5YehnIlig"/>
@@ -4926,7 +4862,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_aeBTdY5vEeOjpOW2pJw89Q" name="InternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBTdo5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_C7ZisDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBTdo5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_aeBTd45vEeOjpOW2pJw89Q" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -4993,7 +4929,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_aeBT845vEeOjpOW2pJw89Q" name="ExternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBT9I5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_OKTEEDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBT9I5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_aeBT9Y5vEeOjpOW2pJw89Q" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5013,7 +4949,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_afXXQI5vEeOjpOW2pJw89Q" name="probability" ordered="false" lowerBound="1" eType="_aeXRso5vEeOjpOW2pJw89Q"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EEnum" xmi:id="_aeBUA45vEeOjpOW2pJw89Q" name="DurationType">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUBI5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_hh4TEKcTEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUBI5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_aeBUBY5vEeOjpOW2pJw89Q" name="transient"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_aeBUBo5vEeOjpOW2pJw89Q" name="permanent" value="1"/>
             </eClassifiers>
@@ -5035,23 +4971,23 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_agCFoI5vEeOjpOW2pJw89Q" name="probability" ordered="false" lowerBound="1" eType="_aeXRso5vEeOjpOW2pJw89Q"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_aeBUFo5vEeOjpOW2pJw89Q" name="ErrorFree" eSuperTypes="_aeBUDo5vEeOjpOW2pJw89Q">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUF45vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_cUpC4DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUF45vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_aeBUGY5vEeOjpOW2pJw89Q" name="UnclassifiedError" eSuperTypes="_aeBUDo5vEeOjpOW2pJw89Q">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUGo5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eg3C0DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUGo5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_aeBUHI5vEeOjpOW2pJw89Q" name="FailureMode" eSuperTypes="_aeBUDo5vEeOjpOW2pJw89Q">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUHY5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_gtsGwDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUHY5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_aeBUHo5vEeOjpOW2pJw89Q" name="affectedPorts" ordered="false" upperBound="-1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_aeBUII5vEeOjpOW2pJw89Q" name="type" ordered="false" lowerBound="1" eType="_aeBUA45vEeOjpOW2pJw89Q"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_aeBUI45vEeOjpOW2pJw89Q" name="FailureFree" eSuperTypes="_aeBUDo5vEeOjpOW2pJw89Q">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUJI5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_-BcuMKcXEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUJI5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_aeBUJo5vEeOjpOW2pJw89Q" name="UnclassifiedFailure" eSuperTypes="_aeBUDo5vEeOjpOW2pJw89Q">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUJ45vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_WsXTUKcZEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUJ45vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_aeBUKY5vEeOjpOW2pJw89Q" name="StuckAt">
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aeBUKo5vEeOjpOW2pJw89Q" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_yQjfEImOEeODrcgAiMzRCg"/>
@@ -5119,7 +5055,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_CEv31Y2FEeOAr5SJygOCbw" name="InternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEv31o2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_C7ZisDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEv31o2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_CEv3142FEeOAr5SJygOCbw" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5186,7 +5122,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_CEv4U42FEeOAr5SJygOCbw" name="ExternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEv4VI2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_OKTEEDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEv4VI2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_CEv4VY2FEeOAr5SJygOCbw" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5206,7 +5142,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CH3dQI2FEeOAr5SJygOCbw" name="probability" ordered="false" lowerBound="1" eType="_CFeQko2FEeOAr5SJygOCbw"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EEnum" xmi:id="_CEwe5o2FEeOAr5SJygOCbw" name="DurationType">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwe542FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_hh4TEKcTEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwe542FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_CEwe6I2FEeOAr5SJygOCbw" name="transient"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_CEwe6Y2FEeOAr5SJygOCbw" name="permanent" value="1"/>
             </eClassifiers>
@@ -5228,23 +5164,23 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CJt3YI2FEeOAr5SJygOCbw" name="probability" ordered="false" lowerBound="1" eType="_CFeQko2FEeOAr5SJygOCbw"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_CEwe-Y2FEeOAr5SJygOCbw" name="ErrorFree" eSuperTypes="_CEwe8Y2FEeOAr5SJygOCbw">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwe-o2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_cUpC4DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwe-o2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_CEwe_I2FEeOAr5SJygOCbw" name="UnclassifiedError" eSuperTypes="_CEwe8Y2FEeOAr5SJygOCbw">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwe_Y2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eg3C0DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwe_Y2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_CEwe_42FEeOAr5SJygOCbw" name="FailureMode" eSuperTypes="_CEwe8Y2FEeOAr5SJygOCbw">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwfAI2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_gtsGwDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwfAI2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_CEwfAY2FEeOAr5SJygOCbw" name="affectedPorts" ordered="false" upperBound="-1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_CEwfA42FEeOAr5SJygOCbw" name="type" ordered="false" lowerBound="1" eType="_CEwe5o2FEeOAr5SJygOCbw"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_CEwfBo2FEeOAr5SJygOCbw" name="FailureFree" eSuperTypes="_CEwe8Y2FEeOAr5SJygOCbw">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwfB42FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_-BcuMKcXEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwfB42FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_CEwfCY2FEeOAr5SJygOCbw" name="UnclassifiedFailure" eSuperTypes="_CEwe8Y2FEeOAr5SJygOCbw">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwfCo2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_WsXTUKcZEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwfCo2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_CEwfDI2FEeOAr5SJygOCbw" name="EffectMode">
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CEwfDY2FEeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_yQjfEImOEeODrcgAiMzRCg"/>
@@ -5287,7 +5223,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6dRRY1_EeOAr5SJygOCbw" name="InternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6dRRo1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_C7ZisDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6dRRo1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_G6dRR41_EeOAr5SJygOCbw" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5354,7 +5290,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6dRw41_EeOAr5SJygOCbw" name="ExternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6dRxI1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_OKTEEDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6dRxI1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_G6dRxY1_EeOAr5SJygOCbw" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5374,7 +5310,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G7o9AI1_EeOAr5SJygOCbw" name="probability" ordered="false" lowerBound="1" eType="_G6xaUo1_EeOAr5SJygOCbw"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EEnum" xmi:id="_G6dR041_EeOAr5SJygOCbw" name="DurationType">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6dR1I1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_hh4TEKcTEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6dR1I1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_G6dR1Y1_EeOAr5SJygOCbw" name="transient"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_G6dR1o1_EeOAr5SJygOCbw" name="permanent" value="1"/>
             </eClassifiers>
@@ -5417,23 +5353,23 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_G6d4ZI1_EeOAr5SJygOCbw" name="RampDown" value="3"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6d4ZY1_EeOAr5SJygOCbw" name="ErrorFree" eSuperTypes="_G6dR3o1_EeOAr5SJygOCbw">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6d4Zo1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_cUpC4DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6d4Zo1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6d4aI1_EeOAr5SJygOCbw" name="UnclassifiedError" eSuperTypes="_G6dR3o1_EeOAr5SJygOCbw">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6d4aY1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eg3C0DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6d4aY1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6d4a41_EeOAr5SJygOCbw" name="FailureMode" eSuperTypes="_G6dR3o1_EeOAr5SJygOCbw">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6d4bI1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_gtsGwDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6d4bI1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_G6d4bY1_EeOAr5SJygOCbw" name="affectedPorts" ordered="false" upperBound="-1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G6d4b41_EeOAr5SJygOCbw" name="type" ordered="false" lowerBound="1" eType="_G6dR041_EeOAr5SJygOCbw"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6d4co1_EeOAr5SJygOCbw" name="FailureFree" eSuperTypes="_G6dR3o1_EeOAr5SJygOCbw">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6d4c41_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_-BcuMKcXEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6d4c41_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6d4dY1_EeOAr5SJygOCbw" name="UnclassifiedFailure" eSuperTypes="_G6dR3o1_EeOAr5SJygOCbw">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6d4do1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_WsXTUKcZEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6d4do1_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EDataType" xmi:id="_G6xaUo1_EeOAr5SJygOCbw" name="NFP_Real" instanceClassName="java.lang.String">
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6xaU41_EeOAr5SJygOCbw" source="http://www.eclipse.org/uml2/2.0.0/UML">
@@ -5456,7 +5392,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_PJWkdYmREeOqf4JlfFwBNg" name="InternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWkdomREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_C7ZisDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWkdomREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_PJWkd4mREeOqf4JlfFwBNg" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5523,7 +5459,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_PJWk84mREeOqf4JlfFwBNg" name="ExternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWk9ImREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_OKTEEDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWk9ImREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_PJWk9YmREeOqf4JlfFwBNg" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5543,7 +5479,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PKaUYImREeOqf4JlfFwBNg" name="probability" ordered="false" lowerBound="1" eType="_PJoRQomREeOqf4JlfFwBNg"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EEnum" xmi:id="_PJWlA4mREeOqf4JlfFwBNg" name="DurationType">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlBImREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_hh4TEKcTEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlBImREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_PJWlBYmREeOqf4JlfFwBNg" name="transient"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_PJWlBomREeOqf4JlfFwBNg" name="permanent" value="1"/>
             </eClassifiers>
@@ -5584,23 +5520,23 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_PJWlJomREeOqf4JlfFwBNg" name="RampDown" value="3"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_PJWlJ4mREeOqf4JlfFwBNg" name="ErrorFree" eSuperTypes="_PJWlDomREeOqf4JlfFwBNg">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlKImREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_cUpC4DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlKImREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_PJWlKomREeOqf4JlfFwBNg" name="UnclassifiedError" eSuperTypes="_PJWlDomREeOqf4JlfFwBNg">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlK4mREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eg3C0DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlK4mREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_PJWlLYmREeOqf4JlfFwBNg" name="FailureMode" eSuperTypes="_PJWlDomREeOqf4JlfFwBNg">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlLomREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_gtsGwDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlLomREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_PJWlL4mREeOqf4JlfFwBNg" name="affectedPorts" ordered="false" upperBound="-1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PJWlMYmREeOqf4JlfFwBNg" name="type" ordered="false" lowerBound="1" eType="_PJWlA4mREeOqf4JlfFwBNg"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_PJWlNImREeOqf4JlfFwBNg" name="FailureFree" eSuperTypes="_PJWlDomREeOqf4JlfFwBNg">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlNYmREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_-BcuMKcXEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlNYmREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_PJWlN4mREeOqf4JlfFwBNg" name="UnclassifiedFailure" eSuperTypes="_PJWlDomREeOqf4JlfFwBNg">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlOImREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_WsXTUKcZEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJWlOImREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EDataType" xmi:id="_PJoRQomREeOqf4JlfFwBNg" name="NFP_Real" instanceClassName="java.lang.String">
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PJoRQ4mREeOqf4JlfFwBNg" source="http://www.eclipse.org/uml2/2.0.0/UML">
@@ -5623,7 +5559,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_SWZ05ae3EeCfNM3HjUZ3Ag" name="InternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ05qe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_C7ZisDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ05qe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_SWZ056e3EeCfNM3HjUZ3Ag" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5684,7 +5620,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_SWZ1X6e3EeCfNM3HjUZ3Ag" name="ExternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1YKe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_OKTEEDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1YKe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_SWZ1Yae3EeCfNM3HjUZ3Ag" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5707,12 +5643,12 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SYL9kKe3EeCfNM3HjUZ3Ag" name="probability" ordered="false" lowerBound="1" eType="_SW2g0qe3EeCfNM3HjUZ3Ag"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EEnum" xmi:id="_SWZ1cae3EeCfNM3HjUZ3Ag" name="DurationType">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1cqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_hh4TEKcTEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1cqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_SWZ1c6e3EeCfNM3HjUZ3Ag" name="transient"/>
               <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_SWZ1dKe3EeCfNM3HjUZ3Ag" name="permanent" value="1"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_SWZ1dae3EeCfNM3HjUZ3Ag" name="ErrorFree">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1dqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_cUpC4DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1dqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_SWZ1d6e3EeCfNM3HjUZ3Ag" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
@@ -5722,7 +5658,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SY7kcKe3EeCfNM3HjUZ3Ag" name="probability" ordered="false" lowerBound="1" eType="_SW2g0qe3EeCfNM3HjUZ3Ag"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_SWZ1fae3EeCfNM3HjUZ3Ag" name="UnclassifiedError">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1fqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eg3C0DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1fqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_SWZ1f6e3EeCfNM3HjUZ3Ag" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
@@ -5732,7 +5668,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SZ-tUKe3EeCfNM3HjUZ3Ag" name="probability" ordered="false" lowerBound="1" eType="_SW2g0qe3EeCfNM3HjUZ3Ag"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_SWZ1hae3EeCfNM3HjUZ3Ag" name="FailureMode">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1hqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_gtsGwDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1hqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_SWZ1h6e3EeCfNM3HjUZ3Ag" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
@@ -5746,7 +5682,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_Sa3eIKe3EeCfNM3HjUZ3Ag" name="probability" ordered="false" lowerBound="1" eType="_SW2g0qe3EeCfNM3HjUZ3Ag"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_SWZ1kae3EeCfNM3HjUZ3Ag" name="FailureFree">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1kqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_-BcuMKcXEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1kqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_SWZ1k6e3EeCfNM3HjUZ3Ag" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
@@ -5756,7 +5692,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SbnFAae3EeCfNM3HjUZ3Ag" name="probability" ordered="false" lowerBound="1" eType="_SW2g0qe3EeCfNM3HjUZ3Ag"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_SWZ1mae3EeCfNM3HjUZ3Ag" name="UnclassifiedFailure">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1mqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_WsXTUKcZEeCLJKy7uMU5GA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SWZ1mqe3EeCfNM3HjUZ3Ag" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_SWZ1m6e3EeCfNM3HjUZ3Ag" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
@@ -5786,7 +5722,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6-kpVquEeCgwNmo13tekQ" name="InternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6-kplquEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_C7ZisDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6-kplquEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_G6-kp1quEeCgwNmo13tekQ" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5838,7 +5774,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6-lGVquEeCgwNmo13tekQ" name="ExternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6-lGlquEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_OKTEEDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6-lGlquEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_G6-lG1quEeCgwNmo13tekQ" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5856,21 +5792,21 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6-lJVquEeCgwNmo13tekQ" name="ErrorFree">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6-lJlquEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_cUpC4DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6-lJlquEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_G6-lJ1quEeCgwNmo13tekQ" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G9qsQFquEeCgwNmo13tekQ" name="probability" ordered="false" lowerBound="1" eType="_G7uLglquEeCgwNmo13tekQ"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6-lK1quEeCgwNmo13tekQ" name="Unclassified">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6-lLFquEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eg3C0DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6-lLFquEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_G6-lLVquEeCgwNmo13tekQ" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_G-2_EFquEeCgwNmo13tekQ" name="probability" ordered="false" lowerBound="1" eType="_G7uLglquEeCgwNmo13tekQ"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_G6-lMVquEeCgwNmo13tekQ" name="FailureMode">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6-lMlquEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_gtsGwDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_G6-lMlquEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_G6-lM1quEeCgwNmo13tekQ" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
@@ -5900,7 +5836,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_-YopxVqlEeCgwNmo13tekQ" name="InternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-YopxlqlEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_C7ZisDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-YopxlqlEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_-Yopx1qlEeCgwNmo13tekQ" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5952,7 +5888,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_-YoqOVqlEeCgwNmo13tekQ" name="ExternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-YoqOlqlEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_OKTEEDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-YoqOlqlEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_-YoqO1qlEeCgwNmo13tekQ" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -5970,21 +5906,21 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_-YoqRVqlEeCgwNmo13tekQ" name="ErrorFree">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-YoqRlqlEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_cUpC4DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-YoqRlqlEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_-YoqR1qlEeCgwNmo13tekQ" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_-bKZUFqlEeCgwNmo13tekQ" name="probability" ordered="false" lowerBound="1" eType="_-ZYQolqlEeCgwNmo13tekQ"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_-YoqS1qlEeCgwNmo13tekQ" name="Unclassified">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-YoqTFqlEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eg3C0DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-YoqTFqlEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_-YoqTVqlEeCgwNmo13tekQ" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_-cgdIFqlEeCgwNmo13tekQ" name="probability" ordered="false" lowerBound="1" eType="_-ZYQolqlEeCgwNmo13tekQ"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_-YoqUVqlEeCgwNmo13tekQ" name="FailureMode">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-YoqUlqlEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_gtsGwDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-YoqUlqlEeCgwNmo13tekQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_-YoqU1qlEeCgwNmo13tekQ" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
@@ -6014,7 +5950,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_2F5QZUQQEeCQRfAVtSc0sw" name="InternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2F5QZkQQEeCQRfAVtSc0sw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_C7ZisDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2F5QZkQQEeCQRfAVtSc0sw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_2F5QZ0QQEeCQRfAVtSc0sw" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -6066,7 +6002,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_2F5Q2UQQEeCQRfAVtSc0sw" name="ExternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2F5Q2kQQEeCQRfAVtSc0sw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_OKTEEDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2F5Q2kQQEeCQRfAVtSc0sw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_2F5Q20QQEeCQRfAVtSc0sw" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -6084,21 +6020,21 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_2F5Q5UQQEeCQRfAVtSc0sw" name="ErrorFree">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2F5Q5kQQEeCQRfAVtSc0sw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_cUpC4DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2F5Q5kQQEeCQRfAVtSc0sw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_2F5Q50QQEeCQRfAVtSc0sw" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_2bqFAEQQEeCQRfAVtSc0sw" name="probability" ordered="false" lowerBound="1" eType="_2aBGQkQQEeCQRfAVtSc0sw"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_2F5Q60QQEeCQRfAVtSc0sw" name="Unclassified">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2F5Q7EQQEeCQRfAVtSc0sw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eg3C0DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2F5Q7EQQEeCQRfAVtSc0sw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_2F5Q7UQQEeCQRfAVtSc0sw" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_2csm0EQQEeCQRfAVtSc0sw" name="probability" ordered="false" lowerBound="1" eType="_2aBGQkQQEeCQRfAVtSc0sw"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_2F5Q8UQQEeCQRfAVtSc0sw" name="FailureMode">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2F5Q8kQQEeCQRfAVtSc0sw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_gtsGwDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2F5Q8kQQEeCQRfAVtSc0sw" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_2F5Q80QQEeCQRfAVtSc0sw" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
@@ -6138,7 +6074,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_U0lJ9TRoEeCPrptoDUJcNQ" name="InternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_U0lJ9jRoEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_C7ZisDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_U0lJ9jRoEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_U0lJ9zRoEeCPrptoDUJcNQ" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -6190,7 +6126,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_U0lKaTRoEeCPrptoDUJcNQ" name="ExternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_U0lKajRoEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_OKTEEDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_U0lKajRoEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_U0lKazRoEeCPrptoDUJcNQ" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -6208,21 +6144,21 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_U0lKdTRoEeCPrptoDUJcNQ" name="ErrorFree">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_U0lKdjRoEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_cUpC4DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_U0lKdjRoEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_U0lKdzRoEeCPrptoDUJcNQ" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_U16msDRoEeCPrptoDUJcNQ" name="probability" ordered="false" lowerBound="1" eType="_U04E4jRoEeCPrptoDUJcNQ"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_U0lKezRoEeCPrptoDUJcNQ" name="Unclassified">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_U0lKfDRoEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eg3C0DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_U0lKfDRoEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_U0lKfTRoEeCPrptoDUJcNQ" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_U2qNkDRoEeCPrptoDUJcNQ" name="probability" ordered="false" lowerBound="1" eType="_U04E4jRoEeCPrptoDUJcNQ"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_U0lKgTRoEeCPrptoDUJcNQ" name="FailureMode">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_U0lKgjRoEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_gtsGwDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_U0lKgjRoEeCPrptoDUJcNQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_U0lKgzRoEeCPrptoDUJcNQ" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
@@ -6262,7 +6198,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_ljRY1TQ8EeC0ueejuetpgA" name="InternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ljRY1jQ8EeC0ueejuetpgA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_C7ZisDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ljRY1jQ8EeC0ueejuetpgA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_ljRY1zQ8EeC0ueejuetpgA" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -6314,7 +6250,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eAnnotations>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_ljRZSTQ8EeC0ueejuetpgA" name="ExternalFault">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ljRZSjQ8EeC0ueejuetpgA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_OKTEEDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ljRZSjQ8EeC0ueejuetpgA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_ljRZSzQ8EeC0ueejuetpgA" name="base_Transition" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
               </eStructuralFeatures>
@@ -6332,21 +6268,21 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
               </eStructuralFeatures>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_ljRZVTQ8EeC0ueejuetpgA" name="ErrorFree">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ljRZVjQ8EeC0ueejuetpgA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_cUpC4DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ljRZVjQ8EeC0ueejuetpgA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_ljRZVzQ8EeC0ueejuetpgA" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_lk6XkDQ8EeC0ueejuetpgA" name="probability" ordered="false" lowerBound="1" eType="_lj3OsjQ8EeC0ueejuetpgA"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_ljRZWzQ8EeC0ueejuetpgA" name="Unclassified">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ljRZXDQ8EeC0ueejuetpgA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eg3C0DQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ljRZXDQ8EeC0ueejuetpgA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_ljRZXTQ8EeC0ueejuetpgA" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
               <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_llgNcDQ8EeC0ueejuetpgA" name="probability" ordered="false" lowerBound="1" eType="_lj3OsjQ8EeC0ueejuetpgA"/>
             </eClassifiers>
             <eClassifiers xmi:type="ecore:EClass" xmi:id="_ljRZYTQ8EeC0ueejuetpgA" name="FailureMode">
-              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ljRZYjQ8EeC0ueejuetpgA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_gtsGwDQ4EeC0ueejuetpgA"/>
+              <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ljRZYjQ8EeC0ueejuetpgA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
               <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_ljRZYzQ8EeC0ueejuetpgA" name="base_State" ordered="false" lowerBound="1">
                 <eType xmi:type="ecore:EClass" href="platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
               </eStructuralFeatures>
@@ -6369,30 +6305,8 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
             </eClassifiers>
           </contents>
         </eAnnotations>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_os37gM1VEeSrt5YehnIlig" annotatedElement="_WsXTUKcZEeCLJKy7uMU5GA _gtsGwDQ4EeC0ueejuetpgA _cUpC4DQ4EeC0ueejuetpgA">
-          <body>to be removed?</body>
-        </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_0B-ykM1VEeSrt5YehnIlig" annotatedElement="_tdSWgM1VEeSrt5YehnIlig _ksxYIDbJEeW314N4GP8y1Q">
           <body>New Dep profile</body>
-        </ownedComment>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_osVNUM1zEeSrt5YehnIlig" annotatedElement="_eg3C0DQ4EeC0ueejuetpgA _-BcuMKcXEeCLJKy7uMU5GA">
-          <body>to be removed?</body>
-        </ownedComment>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_kA5A0M2SEeSrt5YehnIlig" annotatedElement="_C7ZisDQ4EeC0ueejuetpgA _OKTEEDQ4EeC0ueejuetpgA _uoIV0LzuEd-yoLyJo0JlOg _hh4TEKcTEeCLJKy7uMU5GA">
-          <body>To be deleted???&#xD;
-ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflict with the anonymous concepts introduced in the new dependability profile</body>
-        </ownedComment>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_KTl2MDbPEeW5DJdhCjCHFw" annotatedElement="_uoIV0LzuEd-yoLyJo0JlOg">
-          <body>transfFunct and weight are obsolete</body>
-        </ownedComment>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_k448wDdyEeWLe94ijz2amA" annotatedElement="_W3CKsDQ4EeC0ueejuetpgA">
-          <body>type and vanishing attributes are deprecated</body>
-        </ownedComment>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_XbMlwHJQEeWA88Dv12-yjw" annotatedElement="_1ZFN8M2NEeSrt5YehnIlig">
-          <body>to be deleted?</body>
-        </ownedComment>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_aGo4UHJQEeWA88Dv12-yjw" annotatedElement="_yV5w0M2NEeSrt5YehnIlig _eNlFwM2PEeSrt5YehnIlig _hrmr0M2PEeSrt5YehnIlig _nPqxUM2PEeSrt5YehnIlig">
-          <body>to be deleted?</body>
         </ownedComment>
         <elementImport xmi:type="uml:ElementImport" xmi:id="_AGLpEDQ4EeC0ueejuetpgA" alias="StateMachine">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#StateMachine"/>
@@ -6417,139 +6331,8 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
         <packagedElement xmi:type="uml:Extension" xmi:id="_Ag2y4TQ4EeC0ueejuetpgA" name="E_ErrorModel_StateMachine1" memberEnd="_Ag2y4jQ4EeC0ueejuetpgA _Ag2y4DQ4EeC0ueejuetpgA">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Ag2y4jQ4EeC0ueejuetpgA" name="extension_ErrorModel" type="_90It8DQ3EeC0ueejuetpgA" aggregation="composite" association="_Ag2y4TQ4EeC0ueejuetpgA"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_C7ZisDQ4EeC0ueejuetpgA" name="CHInternalFault">
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_FDw9YDQ4EeC0ueejuetpgA" name="base_Transition" association="_FDw9YTQ4EeC0ueejuetpgA">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Transition"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_lWF1QDQ4EeC0ueejuetpgA" name="permanentProb" visibility="public">
-            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_o3QO4DQ4EeC0ueejuetpgA" value="1"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_o3Z_4DQ4EeC0ueejuetpgA" value="1"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_o3jJ0DQ4EeC0ueejuetpgA">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_pa1bEKcNEeCLJKy7uMU5GA" name="transfFunct">
-            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BGlesKcOEeCLJKy7uMU5GA"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_GrVgsKcOEeCLJKy7uMU5GA" name="property">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_JZ5YsKcOEeCLJKy7uMU5GA"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_qvPMwKcOEeCLJKy7uMU5GA" name="childFailure">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#State"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_vhVCwKcOEeCLJKy7uMU5GA"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_by45QNiSEeCzEZgzjRUzHw" name="occurrence">
-            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eFX5QNiSEeCzEZgzjRUzHw"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eFhDMNiSEeCzEZgzjRUzHw" value="1"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_iOecoNiSEeCzEZgzjRUzHw" name="transientDuration">
-            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_jsf50NiSEeCzEZgzjRUzHw"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_jspq0NiSEeCzEZgzjRUzHw" value="1"/>
-          </ownedAttribute>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_FDw9YTQ4EeC0ueejuetpgA" name="E_CHInternalFault_Transition1" memberEnd="_FDw9YjQ4EeC0ueejuetpgA _FDw9YDQ4EeC0ueejuetpgA">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_FDw9YjQ4EeC0ueejuetpgA" name="extension_CHInternalFault" type="_C7ZisDQ4EeC0ueejuetpgA" aggregation="composite" association="_FDw9YTQ4EeC0ueejuetpgA"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_OKTEEDQ4EeC0ueejuetpgA" name="CHExternalFault">
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_PTxNkDQ4EeC0ueejuetpgA" name="base_Transition" association="_PTxNkTQ4EeC0ueejuetpgA">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Transition"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_QsSfsDQ4EeC0ueejuetpgA" name="fromPort" visibility="public">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Port"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RumRQDQ4EeC0ueejuetpgA" value="1"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RumRQTQ4EeC0ueejuetpgA" value="*"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_RuwCQDQ4EeC0ueejuetpgA">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_AWlvsKcPEeCLJKy7uMU5GA" name="propagationCondition">
-            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BuFHEKcPEeCLJKy7uMU5GA"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_Lmr1oL9SEeCOtecSzivGvQ" name="probability" visibility="public">
-            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Lmr1or9SEeCOtecSzivGvQ" value="1"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Lmr1ob9SEeCOtecSzivGvQ" value="1"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_Lmr1o79SEeCOtecSzivGvQ">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_W5kfIL9SEeCOtecSzivGvQ" name="unit">
-            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_W5kfIb9SEeCOtecSzivGvQ"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_Y-fkQL9SEeCOtecSzivGvQ" name="type" visibility="public" type="_hh4TEKcTEeCLJKy7uMU5GA">
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Y-fkQr9SEeCOtecSzivGvQ" value="1"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Y-fkQb9SEeCOtecSzivGvQ" value="1"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_Y-fkQ79SEeCOtecSzivGvQ">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_gsoUoL9SEeCOtecSzivGvQ" name="transfFunct" visibility="public">
-            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_gsoUor9SEeCOtecSzivGvQ"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_gsoUob9SEeCOtecSzivGvQ" value="*"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_gsoUo79SEeCOtecSzivGvQ">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Extension" xmi:id="_PTxNkTQ4EeC0ueejuetpgA" name="E_CHExternalFault_Transition1" memberEnd="_PTxNkjQ4EeC0ueejuetpgA _PTxNkDQ4EeC0ueejuetpgA">
-          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_PTxNkjQ4EeC0ueejuetpgA" name="extension_CHExternalFault" type="_OKTEEDQ4EeC0ueejuetpgA" aggregation="composite" association="_PTxNkTQ4EeC0ueejuetpgA"/>
-        </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_W3CKsDQ4EeC0ueejuetpgA" name="ErrorState">
           <generalization xmi:type="uml:Generalization" xmi:id="_Me6MML9UEeCOtecSzivGvQ" general="_C-dwsL9UEeCOtecSzivGvQ"/>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_Ea0LYKcVEeCLJKy7uMU5GA" name="type" visibility="public" type="_hh4TEKcTEeCLJKy7uMU5GA">
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_I2_bwKcVEeCLJKy7uMU5GA" value="1"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_I3IlsKcVEeCLJKy7uMU5GA" value="1"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_I3RIkKcVEeCLJKy7uMU5GA">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_DT-TUNiSEeCzEZgzjRUzHw" name="vanishingTime">
-            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XswxYNiSEeCzEZgzjRUzHw"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Xs6iYNiSEeCzEZgzjRUzHw" value="1"/>
-          </ownedAttribute>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_cUpC4DQ4EeC0ueejuetpgA" name="ErrorFree">
-          <generalization xmi:type="uml:Generalization" xmi:id="_XA6yYL9UEeCOtecSzivGvQ" general="_C-dwsL9UEeCOtecSzivGvQ"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_eg3C0DQ4EeC0ueejuetpgA" name="UnclassifiedError">
-          <generalization xmi:type="uml:Generalization" xmi:id="_ZRUHsL9UEeCOtecSzivGvQ" general="_C-dwsL9UEeCOtecSzivGvQ"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_gtsGwDQ4EeC0ueejuetpgA" name="FailureMode">
-          <generalization xmi:type="uml:Generalization" xmi:id="_as9mUL9UEeCOtecSzivGvQ" general="_C-dwsL9UEeCOtecSzivGvQ"/>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_PrP4oDRoEeCPrptoDUJcNQ" name="affectedPorts" visibility="public">
-            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Port"/>
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RJR84DRoEeCPrptoDUJcNQ"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RJbt4DRoEeCPrptoDUJcNQ" value="*"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_RJk30DRoEeCPrptoDUJcNQ">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_tsLI4KcXEeCLJKy7uMU5GA" name="type" visibility="public" type="_hh4TEKcTEeCLJKy7uMU5GA">
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_veqaMKcXEeCLJKy7uMU5GA" value="1"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_vey9EKcXEeCLJKy7uMU5GA" value="1"/>
-            <defaultValue xmi:type="uml:LiteralString" xmi:id="_ve7f8KcXEeCLJKy7uMU5GA">
-              <value xsi:nil="true"/>
-            </defaultValue>
-          </ownedAttribute>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_-BcuMKcXEeCLJKy7uMU5GA" name="FailureFree">
-          <generalization xmi:type="uml:Generalization" xmi:id="_cK15kL9UEeCOtecSzivGvQ" general="_C-dwsL9UEeCOtecSzivGvQ"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_WsXTUKcZEeCLJKy7uMU5GA" name="UnclassifiedFailure">
-          <generalization xmi:type="uml:Generalization" xmi:id="_decPcL9UEeCOtecSzivGvQ" general="_C-dwsL9UEeCOtecSzivGvQ"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Enumeration" xmi:id="_hh4TEKcTEeCLJKy7uMU5GA" name="DurationType">
-          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_jBoOkKcTEeCLJKy7uMU5GA" name="transient"/>
-          <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_jP5UEKcTEeCLJKy7uMU5GA" name="permanent"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_C-dwsL9UEeCOtecSzivGvQ" name="ThreatState">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_FwZFwL9UEeCOtecSzivGvQ" name="base_State" association="_FwZFwb9UEeCOtecSzivGvQ">
@@ -6622,32 +6405,11 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_tdSWgM1VEeSrt5YehnIlig" name="DegradedState">
           <generalization xmi:type="uml:Generalization" xmi:id="_yV7gcM1VEeSrt5YehnIlig" general="_C-dwsL9UEeCOtecSzivGvQ"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_yV5w0M2NEeSrt5YehnIlig" name="InternalEvent">
-          <generalization xmi:type="uml:Generalization" xmi:id="_YYkaMM2PEeSrt5YehnIlig" general="_SHHqQM2PEeSrt5YehnIlig"/>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_MmtgQM2QEeSrt5YehnIlig" name="delay">
-            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
-          </ownedAttribute>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_PMHcQM2QEeSrt5YehnIlig" name="probability">
-            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
-          </ownedAttribute>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_1ZFN8M2NEeSrt5YehnIlig" name="ExternalFault">
-          <generalization xmi:type="uml:Generalization" xmi:id="_49KYsM2NEeSrt5YehnIlig" general="_SHHqQM2PEeSrt5YehnIlig"/>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_fFG4wM2REeSrt5YehnIlig" name="failure" type="_VJH8IM1iEeSrt5YehnIlig"/>
-        </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_3p_goM2NEeSrt5YehnIlig" name="NormalInput">
           <generalization xmi:type="uml:Generalization" xmi:id="_5pRQwM2NEeSrt5YehnIlig" general="_SHHqQM2PEeSrt5YehnIlig"/>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_Wc8wIM2REeSrt5YehnIlig" name="recovery" type="_hrmr0M2PEeSrt5YehnIlig">
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_aG22EM2REeSrt5YehnIlig"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_aG22Ec2REeSrt5YehnIlig" value="1"/>
-          </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_WHUlwM2OEeSrt5YehnIlig" name="NormalOutput">
           <generalization xmi:type="uml:Generalization" xmi:id="_X18qwM2OEeSrt5YehnIlig" general="_SHHqQM2PEeSrt5YehnIlig"/>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_wgpikM2REeSrt5YehnIlig" name="recovery" type="_hrmr0M2PEeSrt5YehnIlig">
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_zSILsM2REeSrt5YehnIlig"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zSILsc2REeSrt5YehnIlig" value="1"/>
-          </ownedAttribute>
         </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_YSCJ0M2OEeSrt5YehnIlig" name="Failure">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_Q1MJsDbJEeW314N4GP8y1Q" name="base_Transition" association="_Q1MwwDbJEeW314N4GP8y1Q">
@@ -6686,19 +6448,6 @@ ExternalFault and InternalFault has been renamed (CH as prefix) to avoid conflic
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_SAIEMXJQEeWA88Dv12-yjw"/>
             <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_SAIEMnJQEeWA88Dv12-yjw" value="1"/>
           </ownedAttribute>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_eNlFwM2PEeSrt5YehnIlig" name="NormalEvent">
-          <generalization xmi:type="uml:Generalization" xmi:id="_f6vyMM2PEeSrt5YehnIlig" general="_yV5w0M2NEeSrt5YehnIlig"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_hrmr0M2PEeSrt5YehnIlig" name="RecoveryEvent">
-          <generalization xmi:type="uml:Generalization" xmi:id="_jKTecM2PEeSrt5YehnIlig" general="_yV5w0M2NEeSrt5YehnIlig"/>
-          <ownedAttribute xmi:type="uml:Property" xmi:id="_8E-MQM2PEeSrt5YehnIlig" name="kind" type="_wYnS0M2PEeSrt5YehnIlig">
-            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_C1KGoM2QEeSrt5YehnIlig"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_C1KGoc2QEeSrt5YehnIlig" value="1"/>
-          </ownedAttribute>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Stereotype" xmi:id="_nPqxUM2PEeSrt5YehnIlig" name="InternalThreat">
-          <generalization xmi:type="uml:Generalization" xmi:id="_oxty4M2PEeSrt5YehnIlig" general="_yV5w0M2NEeSrt5YehnIlig"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Stereotype" xmi:id="_p7yZUM2PEeSrt5YehnIlig" name="InternalFault">
           <ownedAttribute xmi:type="uml:Property" xmi:id="_W6WBUM2SEeSrt5YehnIlig" name="occurrence">

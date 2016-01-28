@@ -295,8 +295,8 @@ public class StateBasedAnalysisPackageImpl extends EPackageImpl implements State
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getStateBasedAnalysis_TargetFailureMode() {
-		return (EReference)stateBasedAnalysisEClass.getEStructuralFeatures().get(3);
+	public EAttribute getStateBasedAnalysis_TargetFailureMode() {
+		return (EAttribute)stateBasedAnalysisEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -394,7 +394,7 @@ public class StateBasedAnalysisPackageImpl extends EPackageImpl implements State
 		createEAttribute(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__MEASURE);
 		createEAttribute(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__MEASURE_EVALUATION_RESULT);
 		createEAttribute(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__EVAL_METHOD);
-		createEReference(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__TARGET_FAILURE_MODE);
+		createEAttribute(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__TARGET_FAILURE_MODE);
 		createEReference(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__TARGET_DEP_COMPONENT);
 		createEReference(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__TARGET_PORT);
 		createEReference(stateBasedAnalysisEClass, STATE_BASED_ANALYSIS__INITIAL_CONDITIONS);
@@ -431,7 +431,6 @@ public class StateBasedAnalysisPackageImpl extends EPackageImpl implements State
 		// Obtain other dependent packages
 		GQAMPackage theGQAMPackage = (GQAMPackage)EPackage.Registry.INSTANCE.getEPackage(GQAMPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
-		ThreatsPropagationPackage theThreatsPropagationPackage = (ThreatsPropagationPackage)EPackage.Registry.INSTANCE.getEPackage(ThreatsPropagationPackage.eNS_URI);
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 
 		// Create type parameters
@@ -446,7 +445,7 @@ public class StateBasedAnalysisPackageImpl extends EPackageImpl implements State
 		initEAttribute(getStateBasedAnalysis_Measure(), theTypesPackage.getString(), "measure", null, 1, 1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getStateBasedAnalysis_MeasureEvaluationResult(), theTypesPackage.getString(), "measureEvaluationResult", null, 0, 1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getStateBasedAnalysis_EvalMethod(), theTypesPackage.getString(), "evalMethod", null, 0, 1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getStateBasedAnalysis_TargetFailureMode(), theThreatsPropagationPackage.getFailureMode(), null, "targetFailureMode", null, 0, -1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getStateBasedAnalysis_TargetFailureMode(), theTypesPackage.getString(), "targetFailureMode", null, 0, -1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getStateBasedAnalysis_TargetDepComponent(), theUMLPackage.getInstanceSpecification(), null, "targetDepComponent", null, 0, -1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getStateBasedAnalysis_TargetPort(), theUMLPackage.getSlot(), null, "targetPort", null, 0, -1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getStateBasedAnalysis_InitialConditions(), this.getSBAInitialConditions(), null, "initialConditions", null, 0, -1, StateBasedAnalysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
