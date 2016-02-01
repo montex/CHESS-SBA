@@ -67,9 +67,6 @@ import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.impl.DeploymentConfAnalysisPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.impl.HardwareBaselinePackageImpl;
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.ARINCComponentImpl;
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.ARINCFunction;
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.ARINCProcess;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelFactory;
