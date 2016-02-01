@@ -1682,7 +1682,9 @@ public class UMLUtils {
 
 							String rldl = chrt.getRlDl();
 							String rldlValue = getValue(rldl, "value");
-							String rldlUnit = getValue (rldl, "unit");
+							String rldlUnit = getValue (rldl, "unit");							
+							resultData.rldl = rldlValue + rldlUnit;
+							
 							String respT = "";
 							String respValue ="";
 							String respUnit ="";
@@ -1881,4 +1883,127 @@ public class UMLUtils {
 		return result;
 	}
 
+	
+	
+	
+	/**
+	 * Returns the NFPValue (value and unit) of the toSearch field, 
+	 * or [value=-1.0, unit=] if the field is not present in the string that is parsed.
+	 * @param str The string to be parsed. 
+	 * @param toSearch Name of the field whose value and unit are to be returned
+	 * @return
+	 */
+	public ValueNFP getNfpValue(String str, String toSearch) {
+		
+		ValueNFP res = new ValueNFP();
+		String[] array = str.split("[()=, ]");
+		for(int i=0; i<array.length-1; i++) {
+			for(int j=i+1; j<array.length; j++) {
+				if(array[i].equalsIgnoreCase(toSearch) && array[j].equalsIgnoreCase("value")) {
+					String d = array[j+1];
+					res.value = Double.valueOf(d.trim());	
+					
+					for(int k=i+1; k<array.length; k++) {
+						if(array[k].equalsIgnoreCase("unit")) {
+							res.unit = array[k+1].trim();	
+							break;
+						}
+					}
+					return res;
+				}
+			}			
+		} 
+		res.value = -1.0;
+		res.unit = "";
+		return res;
+	}
+	
+	/**
+	 * Adds the field named in toSearch with its value and unit to the input NFPValue string
+	 * if it was not there. Otherwise it updates its value and unit.
+	 * @param str The NFPValue string to be updated
+	 * @param toSearch The name of the field
+	 * @param value The value to be set 
+	 * @param units The unit to be set
+	 * @return
+	 */
+	public String setNfpValue(String str, String toSearch, Double value, String units) {
+		
+		String res = new String();
+		String toBeAdded = toSearch + "=(value=" + value.toString() + ", unit=" + units + ")";
+		
+		// empty NFP
+		if(str == null || str.isEmpty() || str.trim().matches("\\(( *)\\)") )
+		{
+			res = "(" + toBeAdded + ")";
+			return res;
+		}
+		
+		// property has already another value specified
+		if( str.contains(toSearch) )
+		{
+			res = str.replaceFirst(toSearch + "( *)=( *)\\((.[^\\)]*)\\)", toBeAdded);
+		}
+		else //otherwise
+		{
+			int index = str.lastIndexOf(')');
+			res = str.substring(0, index) + ", " + toBeAdded + str.substring(index);
+		}
+		return res;
+	}
+	
+	/**
+	 * Returns the first NFPValue (value, unit) found in the input string  
+	 * @param value The string to be parsed
+	 * @return
+	 */
+	public ValueNFP getValueNFP(String value) {
+		ValueNFP res = new ValueNFP();
+		res.value = -1.0;
+		res.unit = "";
+		
+		String[] array = value.split("[()=,]");
+		for(int i=0; i<array.length-1; i++) {
+			if(array[i].trim().equalsIgnoreCase("value")) {
+				String d = array[i+1].trim();
+				res.value = Double.valueOf(d);			
+			}
+		}
+		
+		for(int i=0; i<array.length-1; i++) {
+			if(array[i].trim().equalsIgnoreCase("unit")) {
+				res.unit = array[i+1].trim();		
+			}
+		}
+		
+		return res;
+	}
+	
+	/**
+	 * Converts into seconds 
+	 * @param value The value to be converted 
+	 * @param units The unit in which the value to be converted is originally expressed
+	 * @return The Double value in seconds
+	 */
+	public Double toSeconds(Double value, String units)
+	{
+		Double res = value;
+		
+		if(units == null|| units.trim().equalsIgnoreCase("s"))
+			res *= 1.0;
+		else if(units.trim().equalsIgnoreCase("ms"))
+			res *= 1e-3;
+		else if(units.trim().equalsIgnoreCase("us"))
+			res *= 1e-6;
+		else if(units.trim().equalsIgnoreCase("ns"))
+			res *= 1e-9;
+		else if(units.trim().equalsIgnoreCase("min"))
+			res *= 60;
+		else if(units.trim().equalsIgnoreCase("hrs"))
+			res *= 360;
+		else if(units.trim().equalsIgnoreCase("dys"))
+			res *= 360 * 24;
+		
+		return res;
+	}
 }
