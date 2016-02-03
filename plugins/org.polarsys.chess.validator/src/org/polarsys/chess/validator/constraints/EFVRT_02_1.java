@@ -29,10 +29,10 @@ import org.polarsys.chess.chessmlprofile.util.Constants;
 /**
  * The Class EFVRT_02.
  * This class implements the following constraint (invoked by the EMF validation framework):
- * Checks that the attribute 'occKind' of CHRtSpecification must be set or protection must be 'guarded' or 'concurrent'.
- * If the CHRtSpecification refers to an ARINCFunction, its occKind must be like (phase=(value=0.0, unit=s))
+ * Checks that the attribute 'occKind' of a CHRtSpecification that is related to an ARINCFunction must not be empty. 
+ * if it is Empty, then IMA Generate Partition Schedule must be called! 
  */
-public class EFVRT_02 extends AbstractModelConstraint {
+public class EFVRT_02_1 extends AbstractModelConstraint {
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.emf.validation.AbstractModelConstraint#validate(org.eclipse.emf.validation.IValidationContext)
@@ -41,11 +41,15 @@ public class EFVRT_02 extends AbstractModelConstraint {
 	public IStatus validate(IValidationContext ctx) {
 		EObject eObject = ctx.getTarget();
 		Comment c = (Comment)eObject;
+
 		IStatus success = ctx.createSuccessStatus();
-		IStatus failure = ctx.createFailureStatus(
-				c.getAnnotatedElements(),  			// name of element annotated by this comment {0}
-				c.getNearestPackage().getName()   	// package owning this {1}
-				);
+		String errorMsg = null;
+
+
+		//		IStatus failure = ctx.createFailureStatus(
+		//				c.getAnnotatedElements(),  			// name of element annotated by this comment {0}
+		//				c.getNearestPackage().getName()   	// package owning this {1}
+		//				);
 
 		Stereotype chrtSpecStereo = c.getAppliedStereotype(Constants.CHRT_SPECIFICATION);	
 		if(chrtSpecStereo == null) {
@@ -56,38 +60,31 @@ public class EFVRT_02 extends AbstractModelConstraint {
 		String occValue = chRtSpec.getOccKind();
 		CallConcurrencyKind protection = chRtSpec.getProtection();
 
-		String arincFunctionOccKindPattern ="\\s*\\(\\s*phase\\s*=\\s*\\(\\s*value\\s*=\\w+\\.?\\w*\\s*,\\s*unit\\s*=\\s*\\w+\\s*\\)\\s*\\)\\s*";
-
 		if (protection.equals(CallConcurrencyKind.SEQUENTIAL)) {
-			if(occValue == null)
-				return failure;
-			else {
-				if(occValue.toLowerCase().startsWith(Constants.CHRTSPEC_OCCKIND_PERIODIC)  || 
+			if (occValue!=null) {
+				if(!(occValue.toLowerCase().startsWith(Constants.CHRTSPEC_OCCKIND_PERIODIC)  || 
 						occValue.toLowerCase().startsWith(Constants.CHRTSPEC_OCCKIND_SPORADIC) 
-						|| occValue.toLowerCase().startsWith(Constants.CHRTSPEC_OCCKIND_BURST))
-					return success;
-				else {
+						|| occValue.toLowerCase().startsWith(Constants.CHRTSPEC_OCCKIND_BURST))) {
 					// if it is an ARINC function then the occurrency kind can be like:
 					// (phase=(value=0.0, unit=s))
 					BehavioralFeature behavFeat = chRtSpec.getContext(); 
 					if (behavFeat.getAppliedStereotype(Constants.CH_ARINCFunction)!=null)  {
-						if(occValue.matches(arincFunctionOccKindPattern)) {
-							return success;
-						}
 						if (occValue.isEmpty()) {
-							// Warning: IMA generate partition schedule must be launched 
-							// This check is done in EFVRT_02_1
-							return success;
+							// Empty occKind for ARINCFunction. Warning: IMA generate partition schedule has not been launched to							
+							errorMsg = "Empty occKind for ARINCFunction. IMA Generate Partition Schedule must be called!";
+
+							if (errorMsg != null){
+								IStatus failure = ctx.createFailureStatus(
+										c.getAnnotatedElements(),  
+										errorMsg
+										);
+								return failure;
+							}																				
 						}
-						else 
-							return failure;
 					}
-					else {
-						return failure;
-					}
-				}
+				}				
 			}
 		}
 		return success;
-	}
-}			
+	}			
+}
