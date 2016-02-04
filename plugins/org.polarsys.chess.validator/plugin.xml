@@ -128,6 +128,30 @@
                      class="Comment">
                </target>
             </constraint>
+            
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.EFVRT_02_1"
+                  id="EFVRT_02_1"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="EFVRT_02_1"
+                  severity="WARNING"
+                  statusCode="ev02">
+               <message>
+                  <!--In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}] the attribute &quot;occKind&quot; must be Periodic, Sporadic or Burst, otherwise Protection must be Guarded or Concurrent.-->
+                  {1}
+               </message>
+               <description>
+                 The attribute 'occKind' of CHRtSpecification is empty. As it is related to an ARINC Function, &quot;IMA Generate Schedule&quot; should be called!
+               </description>
+               <target
+                     class="Comment">
+               </target>
+            </constraint>
+            
+            
             <constraint
                   class="org.polarsys.chess.validator.constraints.EFVRT_03"
                   id="EFVRT_03"

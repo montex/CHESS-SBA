@@ -74,13 +74,15 @@ public class EFVRT_03 extends AbstractModelConstraint {
 					return failure;
 				else {
 					double wcetValue = parser.getValueNFP(wcet);
-					if(!(wcetValue >= 0))
-						return failure;
-					else {
+					// Commenting the check on WCET >=0 
+					// there is EFVRT_40 that checks LocalWCET
+//					if(!(wcetValue >= 0))
+//						return failure;
+//					else {
 						double relDlValue = parser.getValueNFP(relDl);
 						if(!(relDlValue >= 0))
 							return failure;
-					}
+//					}
 				}
 			}
 		}
