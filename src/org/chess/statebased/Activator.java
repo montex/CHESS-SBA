@@ -61,6 +61,10 @@ public class Activator extends AbstractUIPlugin {
 		store.setDefault("DISPUPDATE", defParams.getDisplayUpdateInterval());
 		store.setDefault("MEASUPDATE", defParams.getMeasureUpdateInterval());
 		store.setDefault("SEED", defParams.getSeed());
+		
+		store.setDefault("PARAMFILE", "/tmp/parameters.txt");
+		store.setDefault("EXECPERIOD", 60);
+		store.setDefault("RUNONCE", true);
 	}
 
 }

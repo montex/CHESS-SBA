@@ -1,7 +1,9 @@
 package org.chess.statebased.preferences;
 
 import org.chess.statebased.Activator;
+import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
@@ -23,11 +25,11 @@ public class StateBasedPreferencePage extends FieldEditorPreferencePage
 	@Override
 	protected void createFieldEditors() {
 
-		addField(new StringFieldEditor("HOST", "DEEM Server Host (hostname or IP address):",
+		addField(new StringFieldEditor("HOST", "DEEM Server Host (hostname or IP address)",
 				getFieldEditorParent()));
-		addField(new StringFieldEditor("PORT", "DEEM Server Port:",
+		addField(new StringFieldEditor("PORT", "DEEM Server Port",
 				getFieldEditorParent()));
-		addField(new StringFieldEditor("TIMEOUT", "Connection timeout (seconds):",
+		addField(new StringFieldEditor("TIMEOUT", "Connection timeout (seconds)",
 				getFieldEditorParent()));
 		addField(new IntegerFieldEditor("MINBATCHES", "Minimum Batches",
 				getFieldEditorParent()));
@@ -43,6 +45,18 @@ public class StateBasedPreferencePage extends FieldEditorPreferencePage
 				getFieldEditorParent()));
 		addField(new IntegerFieldEditor("SEED", "Simulation Seed", 
 				getFieldEditorParent()));
+		
+		addField(new FileFieldEditor("PARAMFILE", "[Parametric] Parameters File",
+				getFieldEditorParent()));
+			
+		IntegerFieldEditor ife = new IntegerFieldEditor("EXECPERIOD", "[Parametric] Interval (seconds)", getFieldEditorParent());
+		ife.setValidRange(0, Integer.MAX_VALUE);
+		addField(ife);
+		
+		BooleanFieldEditor bfe = new BooleanFieldEditor("RUNONCE", "[Parametric] Single Run", 
+				getFieldEditorParent());
+		bfe.fillIntoGrid(getFieldEditorParent(), 2);
+		addField(bfe);
 	}
 
 }

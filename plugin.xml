@@ -11,6 +11,12 @@
          id="org.chess.stateBasedTransformationCommandID"
          name="stateBasedTransformationCommand">
       </command>
+   <command
+         category="it.unipd.chess.category"
+         categoryId="it.unipd.chess.commands.category"
+         id="org.chess.stateBasedWithParametersCommandID"
+         name="stateBasedWithParametersCommand">
+   </command>
    </extension>
          
 	<extension
@@ -31,6 +37,32 @@
                   <command
                         commandId="org.chess.stateBasedTransformationCommandID"
                         label="State-Based"
+                        style="push">
+                     <visibleWhen
+                           checkEnabled="false">
+                        <or>
+                           <with
+                                 variable="activeEditorId">
+                              <equals
+                                    value="org.eclipse.uml2.uml.editor.presentation.UMLEditorID">
+                              </equals>
+                           </with>
+                           <with
+                                 variable="activeEditorInput">
+                              <adapt
+                                    type="org.eclipse.core.resources.IResource">
+                                 <test
+                                       property="org.eclipse.core.resources.projectNature"
+                                       value="org.polarsys.chess.CHESSNature">
+                                 </test>
+                              </adapt>
+                           </with>
+                        </or>
+                     </visibleWhen>
+                  </command>
+                  <command
+                        commandId="org.chess.stateBasedWithParametersCommandID"
+                        label="State-Based (With External Parameters)"
                         style="push">
                      <visibleWhen
                            checkEnabled="false">
@@ -77,6 +109,18 @@
 				</equals>
 			</with>
 		</enabledWhen>
+      </handler>
+      <handler
+            class="org.chess.statebased.StateBasedWithParametersCommand"
+            commandId="org.chess.stateBasedWithParametersCommandID">
+         <enabledWhen>
+            <with
+                  variable="org.chess.statebased.stateBased">
+               <equals
+                     value="enabled">
+               </equals>
+            </with>
+         </enabledWhen>
       </handler>    
    </extension> 
    
