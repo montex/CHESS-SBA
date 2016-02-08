@@ -27,6 +27,7 @@ import java.util.Map;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -40,10 +41,12 @@ import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerPort;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
 import org.eclipse.papyrus.infra.emf.utils.BusinessModelResolver;
 import org.eclipse.papyrus.infra.emf.utils.EMFHelper;
+import org.eclipse.papyrus.uml.tools.model.UmlModel;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.ActivityNode;
+import org.eclipse.uml2.uml.BehavioralFeature;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
@@ -70,11 +73,15 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
 import org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 import org.polarsys.chess.chessmlprofile.Core.PSMPackage;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCFunction;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCProcess;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
+import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.AnalysisResultData;
+import org.polarsys.chess.core.util.EndToEndResultData;
 import org.polarsys.chess.core.util.HWAnalysisResultData;
 import org.polarsys.chess.core.views.ViewUtils;
 
@@ -1444,15 +1451,15 @@ public class UMLUtils {
 		}
 		return null;
 	}
-	
-/**
- * Returns the value of the field identified by the match parameter within the s string 
- * The s string is expected to be in the form: name1=value1,name2=value2,name3=value3
- * with or without surrounding parenthesis
- * @param s
- * @param match
- * @return
- */
+
+	/**
+	 * Returns the value of the field identified by the match parameter within the s string 
+	 * The s string is expected to be in the form: name1=value1,name2=value2,name3=value3
+	 * with or without surrounding parenthesis
+	 * @param s
+	 * @param match
+	 * @return
+	 */
 	public static String getValue(String s, String match) {
 
 		if (s== null)
@@ -1482,21 +1489,21 @@ public class UMLUtils {
 		return found;
 	}
 
-/**
- * Returns the response time and unit
- * if rldl is expressed in ms by the user convert blockT in ms too
- * if rldl is expressed in us by the user convert blockT in us too
- * @param spec
- * @param opSaStep
- * @return
- */
-	private static String getResponseTimeString(CHRtSpecification spec, SaStep opSaStep) {
+	/**
+	 * Returns the response time and unit
+	 * if rldl is expressed in ms by the user convert blockT in ms too
+	 * if rldl is expressed in us by the user convert blockT in us too
+	 * @param spec
+	 * @param opSaStep
+	 * @return
+	 */
+	private static String getResponseTimeString(String rldlUnit, SaStep opSaStep) {
 		String respT = "";
 		String respUnit = "";
 		String respValue ="";
 
-		String rldl = spec.getRlDl();
-		String rldlUnit = getValue(rldl, "unit");
+//		String rldl = spec.getRlDl();
+//		String rldlUnit = getValue(rldl, "unit");
 
 		if(!opSaStep.getRespT().isEmpty()){
 			respT = opSaStep.getRespT().get(0);
@@ -1532,13 +1539,13 @@ public class UMLUtils {
 	 * @param opSaStep
 	 * @return
 	 */
-	public static String getBlockingTimeString(CHRtSpecification spec, SaStep opSaStep){
+	public static String getBlockingTimeString(String rldlUnit, SaStep opSaStep){
 		String blockT = "";
 		String blockUnit = "";
 		String blockValue ="";
 
-		String rldl = spec.getRlDl();
-		String rldlUnit = getValue(rldl, "unit");
+//		String rldl = spec.getRlDl();
+//		String rldlUnit = getValue(rldl, "unit");
 
 		blockT = opSaStep.getBlockT();
 		blockUnit = getValue(blockT, "unit");
@@ -1660,8 +1667,18 @@ public class UMLUtils {
 							Stereotype initialStereo = initial.getAppliedStereotype(Constants.GAWORKLOADEVENT);
 							GaWorkloadEvent workload = (GaWorkloadEvent) initial.getStereotypeApplication(initialStereo);
 							resultData.arrival = workload.getPattern();
+							String rldlValue = "";
+							String rldlUnit = "";
 							if(saEndtoEndFlow.getEnd2EndD() != null && !saEndtoEndFlow.getEnd2EndD().isEmpty()){
-								resultData.rldl = saEndtoEndFlow.getEnd2EndD().get(0);
+								resultData.rldl = saEndtoEndFlow.getEnd2EndD().get(0);										
+								////
+								if (resultData.rldl != null) {
+									rldlValue = getValue(resultData.rldl, "value");
+									rldlUnit = getValue (resultData.rldl, "unit");						
+									resultData.rldl = rldlValue + rldlUnit;		
+								}
+								////								
+								
 							}
 							if(saStep.getConcurRes() != null){
 								EList<String> schedParams = saStep.getConcurRes().getSchedParams();
@@ -1676,15 +1693,15 @@ public class UMLUtils {
 								if(opSaStep.getExecTime() != null && !opSaStep.getExecTime().isEmpty()){
 									resultData.localWCET = opSaStep.getExecTime().get(0);
 								}
-								resultData.respT = getResponseTimeString(chrt, opSaStep);
-								resultData.blockT = getBlockingTimeString(chrt, opSaStep);
+								resultData.respT = getResponseTimeString(rldlUnit, opSaStep);
+								resultData.blockT = getBlockingTimeString(rldlUnit, opSaStep);
 							}
 
-							String rldl = chrt.getRlDl();
-							String rldlValue = getValue(rldl, "value");
-							String rldlUnit = getValue (rldl, "unit");							
-							resultData.rldl = rldlValue + rldlUnit;
-							
+//							String rldl = chrt.getRlDl();
+//							String rldlValue = getValue(rldl, "value");
+//							String rldlUnit = getValue (rldl, "unit");
+//							resultData.rldl = rldlValue + rldlUnit;	
+
 							String respT = "";
 							String respValue ="";
 							String respUnit ="";
@@ -1693,7 +1710,7 @@ public class UMLUtils {
 								respT = saEndtoEndFlow.getEnd2EndT().get(0);
 								respValue = getValue(respT, "worst");
 							}
-							
+
 							//if rldl is expressed in ms by the user convert respT in ms too
 							if(respValue != null && !respValue.isEmpty() && rldlUnit.equals("ms")){
 								double conv = Float.parseFloat(respValue)*1000;
@@ -1711,7 +1728,7 @@ public class UMLUtils {
 							}
 
 							String responseTime = respValue + respUnit;
-							
+
 							if (!respValue.isEmpty() && !rldlValue.isEmpty() ){
 								if(Float.parseFloat(respValue) <= Float.parseFloat(rldlValue)){
 									resultData.isSched= "YES";
@@ -1730,28 +1747,28 @@ public class UMLUtils {
 		return listData;
 
 	}
-	
+
 	/**
 	 * Returns the HW results for Schedulability analysis
 	 * @param contextClass
 	 * @return
 	 */
 	public static List<HWAnalysisResultData> getHWAnalysisResults(Class contextClass){
-		
+
 		List<HWAnalysisResultData> listData = new ArrayList<HWAnalysisResultData>();
 		Model model = contextClass.getModel();
 		Package psm = ViewUtils.getCHESSPSMPackage(model);
-				
+
 		if(contextClass.getAppliedStereotype(Constants.MARTE_SaAnalysisContext) == null
 				){
 			return listData;
 		}
-		
+
 		String saAnalysisName = contextClass.getQualifiedName();
 		Package psmPackage;
-		
+
 		SaExecHost host = null;
-		
+
 		for (Package pkg: psm.getNestedPackages()){
 			Stereotype stereo = pkg.getAppliedStereotype(Constants.CH_PsmPackage);
 			if(stereo != null){
@@ -1772,13 +1789,91 @@ public class UMLUtils {
 						}
 						listData.add(data);
 					}
-						
+
 				}
 			}
 		}
 		return listData;
 	}
 
+	
+	/**
+	 * 
+	 * @param contextClass <<SaAnalysisContext>> entity used to perform the end to end response time analysis
+	 * @return get analysis results data for end to end sequence scenarios attached to the given contextClass
+	 */
+	public static List<EndToEndResultData> getEndtoEndAnalysisResults(Class contextClass){
+			
+			List<EndToEndResultData> listData = new ArrayList<EndToEndResultData>();
+			Model model = contextClass.getModel();
+			Package psm = ViewUtils.getCHESSPSMPackage(model);
+					
+			if(contextClass.getAppliedStereotype(Constants.MARTE_SaAnalysisContext) == null
+					){
+				return listData;
+			}
+			
+			String saAnalysisName = contextClass.getQualifiedName();
+			Package psmPackage;
+						
+			for (Package pkg: psm.getNestedPackages()){
+				Stereotype stereo = pkg.getAppliedStereotype(Constants.CH_PsmPackage);
+				if(stereo != null){
+					PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
+					if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
+						psmPackage = pkg;
+						
+						//ASSUMPTION psmPackage owns a AnalysisContext Package
+						Package psmAnalysisContextPack = (Package) psmPackage.getOwnedMember("AnalysisContext");
+						Class psmAnalysisContextClass = null;
+						for (Element temp : psmAnalysisContextPack.getOwnedElements()){
+							if (!(temp instanceof Class))
+								continue;
+							psmAnalysisContextClass = (Class) temp;
+												
+							for (Element elem: psmAnalysisContextClass.allOwnedElements()){
+								if (! (elem instanceof Activity))
+									continue;
+								Activity activity = (Activity) elem;
+								if (elem.getAppliedStereotype(Constants.MARTE_EndtoEndFlow) == null)
+									continue;						
+								//check if the the current PSM endToEndFlow activity refers to a PIM endToEndFlow
+								SaEndtoEndFlow pimEndtoEndFlow = null;
+								//check for the constraint that binds the current endToEndFlow activity to the PIM entities
+								for (Constraint constr : psmAnalysisContextClass.getOwnedRules()){
+									if (!constr.getConstrainedElements().contains(activity))
+										continue;				
+									for (Element constrained : constr.getConstrainedElements()){
+										if (constrained instanceof Activity){				
+											if (constrained != activity){
+												if (constrained.getAppliedStereotype(Constants.MARTE_EndtoEndFlow) != null &&
+														constrained.getAppliedStereotype(Constants.GAWORKLOADBEHAVIOR) != null){
+													pimEndtoEndFlow = (SaEndtoEndFlow) constrained.getStereotypeApplication(constrained.getAppliedStereotype(Constants.MARTE_EndtoEndFlow));
+													break;
+												}
+											}
+										}
+									}
+									if (pimEndtoEndFlow!= null)
+										break;
+								}
+								if (pimEndtoEndFlow!= null){
+									SaEndtoEndFlow psmEndtoEndFlow = (SaEndtoEndFlow) activity.getStereotypeApplication(activity.getAppliedStereotype(Constants.MARTE_EndtoEndFlow));
+									
+									EndToEndResultData data = new EndToEndResultData();
+									data.scenarioName = activity.getName();
+									data.deadline = pimEndtoEndFlow.getEnd2EndD().get(0);
+									data.respTime = psmEndtoEndFlow.getEnd2EndT().get(0);
+									listData.add(data);
+								}
+							}
+						}
+					}
+				}
+			}
+			return listData;
+		}	
+		
 
 	/**
 	 * <pre>
@@ -1878,14 +1973,51 @@ public class UMLUtils {
 				}
 			}
 			result.add(eObject2);
-			
+
 		}
 		return result;
 	}
 
-	
-	
-	
+
+	/**
+	 * Returns a list of the NFPValues (value and unit) of the toSearch field, 
+	 * or [value=-1.0, unit=] if the field is not present in the string that is parsed.
+	 * @param str The string to be parsed. 
+	 * @param toSearch Name of the field whose value and unit are to be returned
+	 * @return
+	 */
+	public static List<ValueNFP> getAllNfpValues(String str, String toSearch) {
+
+		List<ValueNFP> result = new ArrayList<ValueNFP>();
+
+		String[] array = str.split("[()=, ]");
+		for(int i=0; i<array.length-1; i++) {
+			if (array[i].equalsIgnoreCase(toSearch)) {
+				for(int j=i+1; j<array.length; j++) {
+					if(array[j].equalsIgnoreCase("value")) {
+						String d = array[j+1];
+						ValueNFP res = new ValueNFP();
+						res.value = Double.valueOf(d.trim());	
+
+						for(int k=j+1; k<array.length; k++) {
+							if(array[k].equalsIgnoreCase("unit")) {
+								res.unit = array[k+1].trim();	
+								result.add(res);
+								break;
+							}							
+						}
+						break;
+					}
+				}
+
+			}
+		} 
+		return result;
+	}
+
+
+
+
 	/**
 	 * Returns the NFPValue (value and unit) of the toSearch field, 
 	 * or [value=-1.0, unit=] if the field is not present in the string that is parsed.
@@ -1893,8 +2025,8 @@ public class UMLUtils {
 	 * @param toSearch Name of the field whose value and unit are to be returned
 	 * @return
 	 */
-	public ValueNFP getNfpValue(String str, String toSearch) {
-		
+	public static ValueNFP getNfpValue(String str, String toSearch) {
+
 		ValueNFP res = new ValueNFP();
 		String[] array = str.split("[()=, ]");
 		for(int i=0; i<array.length-1; i++) {
@@ -1902,7 +2034,7 @@ public class UMLUtils {
 				if(array[i].equalsIgnoreCase(toSearch) && array[j].equalsIgnoreCase("value")) {
 					String d = array[j+1];
 					res.value = Double.valueOf(d.trim());	
-					
+
 					for(int k=i+1; k<array.length; k++) {
 						if(array[k].equalsIgnoreCase("unit")) {
 							res.unit = array[k+1].trim();	
@@ -1917,7 +2049,7 @@ public class UMLUtils {
 		res.unit = "";
 		return res;
 	}
-	
+
 	/**
 	 * Adds the field named in toSearch with its value and unit to the input NFPValue string
 	 * if it was not there. Otherwise it updates its value and unit.
@@ -1928,17 +2060,17 @@ public class UMLUtils {
 	 * @return
 	 */
 	public String setNfpValue(String str, String toSearch, Double value, String units) {
-		
+
 		String res = new String();
 		String toBeAdded = toSearch + "=(value=" + value.toString() + ", unit=" + units + ")";
-		
+
 		// empty NFP
 		if(str == null || str.isEmpty() || str.trim().matches("\\(( *)\\)") )
 		{
 			res = "(" + toBeAdded + ")";
 			return res;
 		}
-		
+
 		// property has already another value specified
 		if( str.contains(toSearch) )
 		{
@@ -1951,17 +2083,17 @@ public class UMLUtils {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Returns the first NFPValue (value, unit) found in the input string  
 	 * @param value The string to be parsed
 	 * @return
 	 */
-	public ValueNFP getValueNFP(String value) {
+	public static ValueNFP getValueNFP(String value) {
 		ValueNFP res = new ValueNFP();
 		res.value = -1.0;
 		res.unit = "";
-		
+
 		String[] array = value.split("[()=,]");
 		for(int i=0; i<array.length-1; i++) {
 			if(array[i].trim().equalsIgnoreCase("value")) {
@@ -1969,26 +2101,26 @@ public class UMLUtils {
 				res.value = Double.valueOf(d);			
 			}
 		}
-		
+
 		for(int i=0; i<array.length-1; i++) {
 			if(array[i].trim().equalsIgnoreCase("unit")) {
 				res.unit = array[i+1].trim();		
 			}
 		}
-		
+
 		return res;
 	}
-	
+
 	/**
 	 * Converts into seconds 
 	 * @param value The value to be converted 
 	 * @param units The unit in which the value to be converted is originally expressed
 	 * @return The Double value in seconds
 	 */
-	public Double toSeconds(Double value, String units)
+	public static Double toSeconds(Double value, String units)
 	{
 		Double res = value;
-		
+
 		if(units == null|| units.trim().equalsIgnoreCase("s"))
 			res *= 1.0;
 		else if(units.trim().equalsIgnoreCase("ms"))
@@ -2003,7 +2135,123 @@ public class UMLUtils {
 			res *= 360;
 		else if(units.trim().equalsIgnoreCase("dys"))
 			res *= 360 * 24;
-		
+
 		return res;
 	}
+
+
+	/**
+	 * Returns the CHRTSpecification of the ARINCProcess owning the ARINCFunction referred by the given CHRtSpecification (context field) 
+	 * @param instance : the instanceSpecification owning the ARINCFunction operation referred by the given CHRtSpecification
+	 * @param arincFunctionSpec the CHRtSpecification referring the ARINCFunction
+	 * @throws ModelError 
+	 */
+	public static CHRtSpecification getArincProcessSpecification(CHRtPortSlot instance, CHRtSpecification arincFunctionSpec) 
+			throws ModelError {
+		
+		String theArincFunctName = "";
+		BehavioralFeature behavFeatFromArincFunctSpec = arincFunctionSpec.getContext();
+		if (behavFeatFromArincFunctSpec.getAppliedStereotype(Constants.CH_ARINCFunction)!=null) {
+			Stereotype arincFunctionStereo = behavFeatFromArincFunctSpec.getAppliedStereotype(Constants.CH_ARINCFunction);
+			ARINCFunction arincFunction = (ARINCFunction) behavFeatFromArincFunctSpec.getStereotypeApplication(arincFunctionStereo);
+			theArincFunctName = ((NamedElement) arincFunction.getBase_Operation()).getName();
+		}
+		else {
+			throw new ModelError("Error: the input arincFunctionSpec has a context that is not an ARINCFunction");
+		}
+			
+		//instance.getPOrtSlots
+		InstanceSpecification instSpec = instance.getBase_InstanceSpecification();
+		EList<Slot> slotList = instSpec.getSlots();
+		for (Slot slot : slotList) {
+			//look at all the chrtspecifications of the port slot   
+			if (slot.getAppliedStereotype(Constants.CH_CHRtPortSlot)!=null) {
+				Stereotype chrtPortSlotStereo = slot.getAppliedStereotype(Constants.CH_CHRtPortSlot);
+				CHRtPortSlot chrtPortSlot = (CHRtPortSlot) slot.getStereotypeApplication(chrtPortSlotStereo);
+				EList<CHRtSpecification> chrtspecs = chrtPortSlot.getCH_RtSpecification();
+				for (CHRtSpecification chrtspec : chrtspecs) {
+					BehavioralFeature behavFeat = chrtspec.getContext();
+					if (behavFeat.getAppliedStereotype(Constants.CH_ARINCProcess)!=null ) {
+						Stereotype arincProcessStereo = behavFeat.getAppliedStereotype(Constants.CH_ARINCProcess);
+						ARINCProcess arincProcess = (ARINCProcess) behavFeat.getStereotypeApplication(arincProcessStereo);
+						String opGroupsString = arincProcess.getOperationsGroups();
+						// if in its OperationGroups it contains the (name of the) ARUNCFunction referred to by arincFunctionSpec
+						if (opGroupsString.contains(theArincFunctName)) {
+							return chrtspec;											 
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the CHRtSpecification for an ARINCFunction, 
+	 * deriving it from the CHRtSpecification of the related CHRtProcess
+	 * and the occurrencyKind of the ARINCFunction itself
+	 * @param arincFunctChrtspec
+	 * @param arincProcessChrtspec
+	 * @return
+	 * @throws ModelError 
+	 */
+	public static CHRtSpecification getUpdatedArincFunChrtSpec (CHRtPortSlot instance, 
+			CHRtSpecification arincFunctChrtspec) throws ModelError {
+		
+		CHRtSpecification arincProcessChrtspec = getArincProcessSpecification(instance, arincFunctChrtspec);
+		
+		CHRtSpecification chrtspec = arincFunctChrtspec;
+		String occurrencyKindArincProc = arincProcessChrtspec.getOccKind();
+		String occurrencyKindArincFunct = arincFunctChrtspec.getOccKind();
+		
+		//clean the ArincFunction occKind if necessary
+		if (occurrencyKindArincFunct.contains(Constants.CHRTSPEC_OCCKIND_PERIODIC) || occurrencyKindArincFunct.contains(Constants.CHRTSPEC_OCCKIND_SPORADIC)){
+			occurrencyKindArincFunct = "("+occurrencyKindArincFunct.substring(occurrencyKindArincFunct.indexOf("phase"));
+		}
+	
+		if (!occurrencyKindArincProc.matches("\\s*periodic\\s*(\\(\\s*period\\s*=\\s*\\(\\s*value\\s*=\\s*(\\w*\\.?\\w*)\\s*,\\s*unit\\s*=\\s*(\\w*\\.?\\w*)\\s*\\)\\s*\\))")) {
+			// The ARINCProcess must have a CHRtSpecification with occurrencyKind that looks like the following:
+			// periodic(period=(value=100,unit=ms))
+			throw new ModelError("Unexpected Occurrency Kind for ARINCProcess: "+occurrencyKindArincProc);
+			
+		}
+		String newOccurrencyKind = occurrencyKindArincProc.substring(0, occurrencyKindArincProc.lastIndexOf(")"));
+		newOccurrencyKind += ","+occurrencyKindArincFunct.substring(1);
+		//newOccurrencyKind += ")";
+		chrtspec.setOccKind(newOccurrencyKind);
+		return chrtspec;
+	}
+
+
+	/**
+	 * This function returns the list of all the CHrtSpecifications in the given View of the model
+	 * @param umlModel
+	 * @param viewName
+	 * @return
+	 * @throws ModelError
+	 */
+	public static EList<CHRtSpecification> getAllChrtSpecs(Model umlModel,
+			String viewName) throws ModelError {
+
+		Package parent = CHESSProfileManager.getViewByStereotype(umlModel,
+				viewName);
+		EList<Element> all = parent.allOwnedElements();
+		EList<CHRtSpecification> chrtSpecs = new BasicEList<CHRtSpecification>();
+		Stereotype stereo = null;
+		for (Element element : all) {
+			if((element.getAppliedStereotype(Constants.CHRT_SPECIFICATION)!=null)) {
+				stereo = element.getAppliedStereotype(Constants.CHRT_SPECIFICATION);
+				EObject eobj = element.getStereotypeApplication(stereo);
+				CHRtSpecification chrtSpecification = (CHRtSpecification)eobj;
+				chrtSpecs.add (chrtSpecification);
+			}	
+		}
+		return chrtSpecs;
+	}	
+
+
+
+
+
+
 }
