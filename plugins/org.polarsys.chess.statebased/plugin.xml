@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+            
+   <extension
+  		id="Build Instance Command"
+        point="org.eclipse.ui.commands">
+	  <command
+	     category="it.unipd.chess.category"
+         categoryId="it.unipd.chess.commands.category"
+         id="org.polarsys.chess.stateBasedTransformationCommandID"
+         name="stateBasedTransformationCommand">
+      </command>
+   <command
+         category="it.unipd.chess.category"
+         categoryId="it.unipd.chess.commands.category"
+         id="org.polarsys.chess.stateBasedWithParametersCommandID"
+         name="stateBasedWithParametersCommand">
+   </command>
+   </extension>
+         
+	<extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="org.polarsys.chess.mainMenu"
+               label="CHESS"
+               mnemonic="E">
+            <menu
+                  id="chess.menu.analysis.id"
+                  label="Analysis">
+               <menu
+                     id="chess.menu.analysis.dependability.id"
+                     label="Dependability">
+                  <command
+                        commandId="org.polarsys.chess.stateBasedTransformationCommandID"
+                        label="State-Based"
+                        style="push">
+                     <visibleWhen
+                           checkEnabled="false">
+                        <or>
+                           <with
+                                 variable="activeEditorId">
+                              <equals
+                                    value="org.eclipse.uml2.uml.editor.presentation.UMLEditorID">
+                              </equals>
+                           </with>
+                           <with
+                                 variable="activeEditorInput">
+                              <adapt
+                                    type="org.eclipse.core.resources.IResource">
+                                 <test
+                                       property="org.eclipse.core.resources.projectNature"
+                                       value="org.polarsys.chess.CHESSNature">
+                                 </test>
+                              </adapt>
+                           </with>
+                        </or>
+                     </visibleWhen>
+                  </command>
+                  <command
+                        commandId="org.polarsys.chess.stateBasedWithParametersCommandID"
+                        label="State-Based (With External Parameters)"
+                        style="push">
+                     <visibleWhen
+                           checkEnabled="false">
+                        <or>
+                           <with
+                                 variable="activeEditorId">
+                              <equals
+                                    value="org.eclipse.uml2.uml.editor.presentation.UMLEditorID">
+                              </equals>
+                           </with>
+                           <with
+                                 variable="activeEditorInput">
+                              <adapt
+                                    type="org.eclipse.core.resources.IResource">
+                                 <test
+                                       property="org.eclipse.core.resources.projectNature"
+                                       value="org.polarsys.chess.CHESSNature">
+                                 </test>
+                              </adapt>
+                           </with>
+                        </or>
+                     </visibleWhen>
+                  </command>
+               </menu>
+            </menu>
+         </menu>
+      </menuContribution>
+</extension>   
+	   
+	   
+	
+	   
+
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+     		class="org.polarsys.chess.statebased.StateBasedTransformationCommand"
+            commandId="org.polarsys.chess.stateBasedTransformationCommandID">
+      	<enabledWhen>
+      		<with
+				variable="org.polarsys.chess.statebased.stateBased">
+				<equals
+					value="enabled">
+				</equals>
+			</with>
+		</enabledWhen>
+      </handler>
+      <handler
+            class="org.polarsys.chess.statebased.StateBasedWithParametersCommand"
+            commandId="org.polarsys.chess.stateBasedWithParametersCommandID">
+         <enabledWhen>
+            <with
+                  variable="org.polarsys.chess.statebased.stateBased">
+               <equals
+                     value="enabled">
+               </equals>
+            </with>
+         </enabledWhen>
+      </handler>    
+   </extension> 
+   
+      <extension
+         point="org.eclipse.ui.services">
+      <sourceProvider
+            provider="org.polarsys.chess.statebased.StateBasedSourceProvider">
+         <variable
+               name="org.polarsys.chess.statebased.stateBased"
+               priorityLevel="workbench">
+         </variable>
+      </sourceProvider>
+   </extension>
+   
+   <extension
+       point="org.polarsys.chess.selectionListener">
+    <listener
+          name="selection listener statebased"
+          realization="org.polarsys.chess.statebased.SelectionListenerForStateBased">
+    </listener>    
+    
+ </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.polarsys.chess.preferences"
+            class="org.polarsys.chess.statebased.preferences.StateBasedPreferencePage"
+            id="org.polarsys.chess.statebased.page"
+            name="StateBased Preferences">
+      </page>
+   </extension>
+
+    
+</plugin>
