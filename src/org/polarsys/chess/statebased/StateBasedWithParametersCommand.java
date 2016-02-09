@@ -1,9 +1,28 @@
-package org.chess.statebased;
+/*
+-----------------------------------------------------------------------
+-- Copyright (C) 2011-2016                                           --
+-- University of Firenze, Italy	                                     --
+-- Intecs S.p.A., Italy                                              --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+--                                                                   --
+-- Contributors:                                                     --
+-- Leonardo Montecchi 	lmontecchi@unifi.it                          --
+-----------------------------------------------------------------------
+*/
+
+package org.polarsys.chess.statebased;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,12 +32,15 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESS;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.statebased.daemon.ParameterList;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -62,11 +84,11 @@ import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.Stereotype;
 
-public class StateBasedTransformationCommand extends AbstractHandler {
+public class StateBasedWithParametersCommand extends AbstractHandler {
 	
 //	private static final String RESURCEPLATFORM = "CHESS::Core::CHGaResourcePlatform";
 
-	private static final String PLUGIN_PATH = "platform:/plugin/org.chess.statebased";
+	private static final String PLUGIN_PATH = "platform:/plugin/org.polarsys.chess.statebased";
 	
 	private static final String sysmlPath = "http://www.eclipse.org/papyrus/0.7.0/SysML";
 	private static final String martePath = "http://www.eclipse.org/papyrus/MARTE/1";
@@ -186,6 +208,60 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			IFile inputCopy = CHESSProjectSupport.copyFile(inputFile, SBANALYSIS_DIR, UML);
 			
 			chessModelPath = inputCopy.getFullPath().toString();
+			// Begin: Read parameters
+			String sParamsPath = Activator.getDefault().getPreferenceStore().getString("PARAMFILE");
+			File fParams = new File(sParamsPath);
+			
+			HashMap<String, String> mapParameters = new HashMap<String, String>();
+			FileReader fr = new FileReader(fParams);
+            String s;
+            String[] sSplit;
+            try {
+            	BufferedReader br = new BufferedReader(fr);
+            	
+                while ((s = br.readLine()) != null) {
+                    sSplit = s.split("\\s+");
+                    mapParameters.put(sSplit[0], sSplit[1]);
+                }
+            }catch(Exception e) {
+            	e.printStackTrace();
+            	System.out.println(e.getMessage());
+            }finally{
+            	fr.close();
+            }
+			// End: Read parameters
+            // Begin: Replace parameters in .uml file
+            File fCHESSModel = new File(inputCopy.getLocationURI());
+            FileReader frModel = new FileReader(fCHESSModel);
+            String sModelContent = "";
+            try {
+            	BufferedReader brModel = new BufferedReader(frModel);
+            	while ((s = brModel.readLine()) != null) {
+            		sModelContent += s + "\r\n";
+            	}
+            }catch(Exception e) {
+            	e.printStackTrace();
+            	System.out.println(e.getMessage());
+			}finally{
+				frModel.close();
+			}
+            Iterator<String> itParams = mapParameters.keySet().iterator();
+            String sCurrentKey = null;
+            while(itParams.hasNext()) {
+            	sCurrentKey = itParams.next();
+            	sModelContent = sModelContent.replaceAll("\\" + sCurrentKey, mapParameters.get(sCurrentKey));
+            }
+            FileWriter fwModel = new FileWriter(fCHESSModel);
+            try {
+            	fwModel.write(sModelContent);
+            }catch(Exception e) {
+            	e.printStackTrace();
+            	System.out.println(e.getMessage());
+            }finally{
+            	fwModel.close();
+            }
+            
+            // End: Replace parameters in .uml file
 			
 			CoreService.registerLauncher("EMF-specific VM", EMFVMLauncher.class);
 			CoreService.registerFactory("EMF", EMFModelFactory.class); 

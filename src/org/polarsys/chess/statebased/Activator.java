@@ -1,8 +1,26 @@
-package org.chess.statebased;
+/*
+-----------------------------------------------------------------------
+-- Copyright (C) 2011-2016                                           --
+-- University of Firenze, Italy	                                     --
+-- Intecs S.p.A., Italy                                              --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+--                                                                   --
+-- Contributors:                                                     --
+-- Leonardo Montecchi 	lmontecchi@unifi.it                          --
+-- Nicholas Pacini		nicholas.pacini@intecs.it                    --
+-----------------------------------------------------------------------
+*/
+
+package org.polarsys.chess.statebased;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.polarsys.chess.statebased.daemon.ParameterList;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -10,7 +28,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.chess.statebased"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.polarsys.chess.statebased"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;

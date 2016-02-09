@@ -1,4 +1,19 @@
-package org.chess.statebased;
+/*
+-----------------------------------------------------------------------
+-- Copyright (C) 2011-2016                                           --
+-- University of Firenze, Italy	                                     --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+--                                                                   --
+-- Contributors:                                                     --
+-- Leonardo Montecchi 	lmontecchi@unifi.it                          --
+-----------------------------------------------------------------------
+*/
+
+package org.polarsys.chess.statebased.daemon;
 
 import java.io.Serializable;
 

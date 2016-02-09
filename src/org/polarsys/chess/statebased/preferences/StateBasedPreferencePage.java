@@ -1,6 +1,22 @@
-package org.chess.statebased.preferences;
+/*
+-----------------------------------------------------------------------
+-- Copyright (C) 2011-2016                                           --
+-- University of Firenze, Italy	                                     --
+-- Intecs S.p.A., Italy                                              --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+--                                                                   --
+-- Contributors:                                                     --
+-- Leonardo Montecchi 	lmontecchi@unifi.it                          --
+-- Nicholas Pacini		nicholas.pacini@intecs.it                    --
+-----------------------------------------------------------------------
+*/
 
-import org.chess.statebased.Activator;
+package org.polarsys.chess.statebased.preferences;
+
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
@@ -8,6 +24,7 @@ import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.polarsys.chess.statebased.Activator;
 
 public class StateBasedPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
@@ -46,8 +63,9 @@ public class StateBasedPreferencePage extends FieldEditorPreferencePage
 		addField(new IntegerFieldEditor("SEED", "Simulation Seed", 
 				getFieldEditorParent()));
 		
-		addField(new FileFieldEditor("PARAMFILE", "[Parametric] Parameters File",
-				getFieldEditorParent()));
+		FileFieldEditor ffe = new FileFieldEditor("PARAMFILE", "[Parametric] Parameters File", getFieldEditorParent());
+		ffe.setEmptyStringAllowed(true);
+		addField(ffe);
 			
 		IntegerFieldEditor ife = new IntegerFieldEditor("EXECPERIOD", "[Parametric] Interval (seconds)", getFieldEditorParent());
 		ife.setValidRange(0, Integer.MAX_VALUE);
