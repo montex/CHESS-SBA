@@ -228,7 +228,14 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 					if (oldInstancePackage != null)
 						oldInstancePackage.destroy();
 					
-					ResourceNotification.showOk("Instances have been successfully generated under the  "+instPkg.getName()+" Package.");
+					boolean compView = ViewUtils.isDesignView(view, CHESSProfileManager.COMPONENT_VIEW);
+					
+					String msg = "Instances have been successfully generated under the  "+instPkg.getName()+" Package.";
+					
+					if (compView)
+						msg = msg+ "\n Check the CHESS Instance View to navigate and edit extra functional properties for SW instances.";
+					
+					ResourceNotification.showOk(msg);
 				}
 					
 			});
@@ -452,12 +459,18 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		sourceSlot.setDefiningFeature(sourcePort);
 		InstanceValue value = (InstanceValue) sourceSlot.createValue("partWithPort", null, UMLPackage.Literals.INSTANCE_VALUE);
 		Property sourceProperty = conn.getEnds().get(0).getPartWithPort();
-		InstanceSpecification sourceInstance = property2InstMap.get(sourceProperty);
+		
+		/**
+		 * from UML spec about ConnectorEnd: If a ConnectorEnd is attached to a Port of the containing Classifier, partWithPort will be empty.
+		 * here, to keep the things simple, the instance field of the InstanceValue 'partWithPort' is set to the parent instance target\source of the delegation
+		 */
+		 
+		InstanceSpecification sourceInstance = (sourceProperty == null ? parentInstance: property2InstMap.get(sourceProperty));
 		value.setInstance(sourceInstance);
 		targetSlot.setDefiningFeature((StructuralFeature) conn.getEnds().get(1).getRole());
 		value = (InstanceValue) targetSlot.createValue("partWithPort", null, UMLPackage.Literals.INSTANCE_VALUE);
 		Property targetProperty = conn.getEnds().get(1).getPartWithPort();
-		InstanceSpecification targetInstance = property2InstMap.get(targetProperty);
+		InstanceSpecification targetInstance = (targetProperty == null ? parentInstance : property2InstMap.get(targetProperty));
 		value.setInstance(targetInstance);
 		
 		//if the connector is <<propagation>> then attach <<propagation>> to instance specification as well
