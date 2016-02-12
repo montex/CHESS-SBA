@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.m2m.qvt.oml.runtime.qvtTransformation">
       <transformation
-            file="transformations/CHESS_PIM2PSM.qvto"
+            file="transformations/CHESS_PIM2PSM_Inst_full_VERDE.qvto"
             id="transformations/CHESS_PIM2PSM">
       </transformation>
    </extension>

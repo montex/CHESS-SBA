@@ -113,6 +113,7 @@ mapping inout Model::psmModel() {
 	instSpecPackage.map CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx);
 }
 
+//maps the Package of the SW instances to an AnalysisContext
 mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::SAM::SaAnalysisContext) : Class {
 	init{
 		log("Generating <<SaAnalysisContext>> and necessary packages.");
@@ -184,6 +185,7 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 		with log("<<CHGaResourcesPlatform>> System is not present: there should be a CHGaResourcePlatform Package in the AnalysisContext.platform pointing to the System instances");
 	assigns := systemComp.allOwnedElements()[Comment]->select(isStereotyped(AssignQN))->asSet();
 	
+	//retrieve Partitions Assign from the ComponentView
 	partitionAssigns := compView.allOwnedElements()[Comment]->select(isStereotyped(AssignQN))->asSet();
 	
 	assert fatal (assigns <> null)
@@ -222,6 +224,10 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 	
 	taskPackage.applyProfile(getMARTEProfile("GRM"));
 	
+	/*in case of allocation of components to cores, the source of the Assign are slots, i.e. instances of ports
+	in case of avionics, functional components appears as source of Assign
+	*/
+	
 	assigns->forEach(ass){
 		var asg := ass.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
 
@@ -258,7 +264,7 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 	
 	log("");
 	log("*** Proceeds to create SwSchedulableResources and SaSteps ***");
-	/*If there are no functional partitions go here*/
+	/*If there are no functional partitions go here; in fact in case of partitions the 'from' field of the Assing has partition instance instead of slot*/
 	if(slotInstances->size()<>0){
 		slotInstances->forEach(s){
 			var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
@@ -268,31 +274,46 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 			    //maps only if the operation is deferred
 				s.map CHRtSlot2SwSchedulableResource(spec.base_Comment);  
 				//now creates the <<SaStep>> operations
-			    s.CHRTComment2SaStep(spec.base_Comment);
+			    spec.base_Comment.CHRTComment2SaStep(s, s.owningInstance);
 			}; 
 		};
 		/*else process functional partitions*/
 	} else if (partitions->size()<>0) {
 		partitions->forEach(p){
 			
-			var pInst := p.getPartitionInstance();
-			var pPSM := pInst.map Partition2Package();
+			var partitionInst := p.getPartitionInstance();
+			var pPSM := partitionInst.map Partition2Package();
 			
-			currentProcessor := pInst.getAssignedProcessor();
-			currentCore := pInst.getAssignedCore();
-			var partition := pInst.map Partition2PSM();
+			currentProcessor := partitionInst.getAssignedProcessor();
+			currentCore := partitionInst.getAssignedCore();
+			var partition := partitionInst.map Partition2PSM();
 			currentHost := partition.getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
 			
-			pInst.getComponentsOfPartition()->forEach(c){
-				log(c.classifier![Classifier].name);
-				var instances := c.slot->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
-				instances->forEach(s){
-					var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
-					specs->forEach(spec){
-					    log("***Processing Slot" +s.getStringId()+ " defining feature " +s.getStringId()+ s.definingFeature.name+ " for " + s.owningInstance.name + s.owningInstance.getStringId() + " and operation "+ spec.context.name +".");
+			partitionInst.getComponentsOfPartition()->forEach(componentInst){
+				log("Analysing classifier" + componentInst.classifier![Classifier].name +" mapped on partition " +p.name);
+				
+				/*
+				Assumption:
+					1)ARINCFunction operation cannot appear as provided operations
+				    2)CHRtSPecification for ARINCFFunctions are associated to the Component Instance through the CHRtPortSlot (where the latter extends InstanceSpecification)
+				*/
+				
+				//checking chrtSpec associated to the componentInstance
+				var chrtportslot := componentInst.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot);
+				var privateChrtSpecs := chrtportslot.cH_RtSpecification;
+				
+				
+				privateChrtSpecs->forEach(privatechrtspec){
+					var arincFuncStereo = privatechrtspec.context.getMetaclass(ARINCFunctionQN).oclAsType(chessmlprofile::ARINCComponentModel::ARINCFunction);
+					if (arincFuncStereo <> null) {
+						
+					    log("Mapping ARINCFunction " + privatechrtspec.context.name);
 					    
-					    //maps only if the operation is deferred
-						var schedRes : Class := s.map CHRtSlot2SwSchedulableResource(spec.base_Comment);
+						//fix any missing information for chrtspec, like period; derive it from the ARINCProcess
+						componentInst.getUpdatedArincFunChrtSpec(privatechrtspec.base_Comment.oclAsType(Comment));
+						
+						//maps only if the operation is deferred
+						var schedRes : Class := componentInst.map Instance2SwSchedulableResource(privatechrtspec.base_Comment);
 						var temp : Class;
 						/*create a class that refere to the schedulabe resource in the right partition package*/
 						object temp : Class {
@@ -301,7 +322,43 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 						};
 						pPSM.packagedElement+=temp;  
 						//now creates the <<SaStep>> operations
-					    s.CHRTComment2SaStep(spec.base_Comment);
+					    
+					    //componentInst.map InstanceUnprotected2SaStep(privatechrtspec.base_Comment, componentInst);
+					    privatechrtspec.base_Comment.CHRTComment2SaStep(null, componentInst);
+						
+			
+					};
+				};
+
+				//checking chrtSpec associated to the componentInstance slots, i.e. provided chrtSpec
+				var componentInstSlots := componentInst.slot->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
+				componentInstSlots->forEach(componentInstSlot){
+					var specs := componentInstSlot.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;	
+					specs->forEach(spec){
+					    log("***Processing Slot" +componentInstSlot.getStringId()+ " defining feature " +componentInstSlot.getStringId()+ componentInstSlot.definingFeature.name+ " for " + componentInstSlot.owningInstance.name + componentInstSlot.owningInstance.getStringId() + " and operation "+ spec.context.name +".");
+					    
+					    //ARINC Process must not be mapped
+					   var arincFuncStereo = spec.context.getMetaclass(ARINCFunctionQN).oclAsType(chessmlprofile::ARINCComponentModel::ARINCFunction);
+					   if (arincFuncStereo <> null){
+					    	
+					    	//TODO it is allowed to have ARINCFunctions here, i.e. as provided operations?
+					    
+					    	//TODO fix any missing information for chrtspec, like period; derive it from the ARINCProcess
+					    	 log("*********Processing provided ARINC FUNCTION...... !!!!!!!!!!!!!************** ");
+					    	componentInst.getUpdatedArincFunChrtSpec(spec.base_Comment.oclAsType(Comment)); 
+										  						    
+						    //maps only if the operation is deferred
+							var schedRes : Class := componentInstSlot.map CHRtSlot2SwSchedulableResource(spec.base_Comment);
+							var temp : Class;
+							/*create a class that refere to the schedulabe resource in the right partition package*/
+							object temp : Class {
+								name := schedRes.name;
+								redefinedClassifier+=schedRes;
+							};
+							pPSM.packagedElement+=temp;  
+							//now creates the <<SaStep>> operations
+						    spec.base_Comment.CHRTComment2SaStep(componentInstSlot, componentInst);
+						 }
 					}; 
 				};
 			};		
@@ -330,13 +387,45 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 				currentProcessor := pInst.getAssignedProcessor();
 				currentCore := pInst.getAssignedCore();
 				
-				pInst.getComponentsOfPartition()->forEach(c){
-					log(c.classifier![Classifier].name);
-					var instances := c.slot->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
+				pInst.getComponentsOfPartition()->forEach(componentInst){
+					
+					log("Analysing instance " + componentInst.classifier![Classifier].name +" mapped on partition " +p.name);
+				
+					/*
+					Assumption:
+						1)ARINCFunction operation cannot appear as provided operations
+					    2)CHRtSPecification for ARINCFFunctions are associated to the Component Instance through the CHRtPortSlot (where the latter extends InstanceSpecification)
+					*/
+					
+					//checking chrtSpec associated to the componentInstance
+					var chrtportslot := componentInst.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot);
+					var privateChrtSpecs := chrtportslot.cH_RtSpecification;
+					
+					
+					privateChrtSpecs->forEach(privatechrtspec){
+						var arincFuncStereo = privatechrtspec.context.getMetaclass(ARINCFunctionQN).oclAsType(chessmlprofile::ARINCComponentModel::ARINCFunction);
+						if (arincFuncStereo <> null) {
+							
+						    log("Mapping ARINCFunction " + privatechrtspec.context.name);
+						    
+							privatechrtspec.base_Comment.map Instance2EndToEndWorkFlow(null, componentInst);
+							
+						};
+					};
+					//end 
+					
+
+					var instances := componentInst.slot->select(owningInstance.classifier <> null and isCHRtPortSlotCorrect())->asSet();
 					instances->forEach(s){
 						var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
 						specs->forEach(spec){
-						    s.map slot2EndToEndWorkFlow(spec.base_Comment);
+							
+							 //ARINC Process must not be mapped
+					   		var arincFuncStereo = spec.context.getMetaclass(ARINCFunctionQN).oclAsType(chessmlprofile::ARINCComponentModel::ARINCFunction);	
+							if (arincFuncStereo <> null){
+								log("*********Processing provided ARINC FUNCTION...... TO BE DONE!!!!!!!!!!!!!************** "); 
+						    	s.map slot2EndToEndWorkFlow(spec.base_Comment);
+						    }
 						}; 
 					};
 				};		
@@ -467,7 +556,7 @@ helper createE2EOpaqueActionsChain(in messageSequence : Sequence(Message), inout
 		nextNode := createSporadicRelatedNodes(currentChrts, currentSlot, endToEndWorkFlow, nextNode);
 		
 		//Creates the subsequent OpaqueAction and ControlFlow
-		nextNode := createSaStepNode(currentChrts, currentSlot, endToEndWorkFlow, nextNode);
+		nextNode := createSaStepNode(currentChrts, currentSlot, endToEndWorkFlow, nextNode, currentSlot.owningInstance);
 		
 		e2eOperations += currentChrts.context->oclAsType(Operation);		
 	};
@@ -475,18 +564,77 @@ helper createE2EOpaqueActionsChain(in messageSequence : Sequence(Message), inout
 	return nextNode;
 }
 
-helper createSaStepNode(in currentCHRts: chessmlprofile::RTComponentModel::CHRtSpecification, in sourceSlot : Slot, inout EndToEndWorkFlow : Activity, inout currentNode : ActivityNode) : ActivityNode {
-	var opNode := createOpaqueAction(opaqueActionName(sourceSlot, currentCHRts), EndToEndWorkFlow, currentNode);
+
+/*
+sourceSlot can be null, e.g. in case of ARINCFunction private operation
+* IT SEEMS THAT THIS IS DUPLICATED, se helper below
+helper createSaStepNode(in sourceCHRtComment: Comment, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode,
+	ownerInstance : InstanceSpecification ) : ActivityNode {
+		
+	
+	var chrts := sourceCHRtComment.CHRtSpec();
+	var opNode := createOpaqueAction(opaqueActionName(sourceSlot, chrts), e2eActivity, prevE2ENode);
+	var opSaStep := opNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	
+	// Set the <<SwSchedulableResource>> that executes the <<saStep>>
+	
+	var concurRes := currentConcurRes;
+	if chrts.isDeferred() then
+		concurRes := sourceCHRtComment.getConcurRes(sourceSlot)//classResource.getMetaclass(SchedulableResourceQN).oclAsType(MARTE::GRM::SchedulableResource);
+	endif;
+	
+	zzz
+	
+	opSaStep.concurRes := concurRes;
+    // Retrieve the <<SaStep>> to use for the subusage
+	var saStep := sourceCHRtComment.resolve2SaStep().getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	//Add the newly created operation as subUsage of the OpaqueAction(<<saStep>>)
+	opSaStep.subUsage += saStep;
+	
+	//opSaStep.sharedRes += currentSharedRes;
+	return opNode;
+}*/
+
+
+
+
+/*sourceSlot can be null, in case of chrt referring private operation 
+*/
+helper createSaStepNode(in currentCHRts: chessmlprofile::RTComponentModel::CHRtSpecification, in sourceSlot : Slot, 
+		inout EndToEndWorkFlow : Activity, inout currentNode : ActivityNode, in ownerInstance:InstanceSpecification) : ActivityNode {
+			
+	var actionname : String;
+	
+	if (sourceSlot<> null) {
+		actionname := opaqueActionName(sourceSlot, currentCHRts);
+	}else{
+		actionname := opaqueActionName(ownerInstance, currentCHRts);
+	};
+	
+	var opNode := createOpaqueAction(actionname, EndToEndWorkFlow, currentNode);
+	
+
 	var opSaStep := opNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
 	//log("Slot [createSaStepNode]: " + currentSlot.definingFeature.name);
 	// Set the <<SwSchedulableResource>> that executes the <<saStep>>
 	var concurRes := currentConcurRes;
-	if currentCHRts.isDeferred() then
-		concurRes := currentCHRts.base_Comment.getConcurRes(sourceSlot)
+	if currentCHRts.isDeferred() then {
+		if (sourceSlot<> null) {
+			concurRes := currentCHRts.base_Comment.getConcurRes(sourceSlot);
+		}else{
+			concurRes := currentCHRts.base_Comment.getConcurRes(ownerInstance);
+		}
+	}
 	endif;
+	
+	log("********createSaStepNode in endToEnd Activity:  concuRes is " + concurRes.toString());
+	
 	opSaStep.concurRes := concurRes;
     // Retrieve the <<SaStep>> to use for the subusage
-	var saStep := sourceSlot.resolve2SaStep(currentCHRts.base_Comment).getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	var saStep := currentCHRts.base_Comment.resolve2SaStep().getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	
+	log("********createSaStepNode in endToEnd Activity:  subUsage is " + saStep.toString());
+	
 	//Add the newly created operation as subUsage of the OpaqueAction(<<saStep>>)
 	opSaStep.subUsage += saStep;
 	
@@ -521,7 +669,7 @@ helper InstanceSpecification::processBus(){
 
 mapping Slot::CHRtSlot2SwSchedulableResource(chrt : Comment) : Class when {chrt.CHRtSpec().isDeferred()} {
 	init{
-		var res := self.owningInstance.map Instance2SwSchedulableResource(chrt, self);
+		var res := self.owningInstance.map Slot2SwSchedulableResource(chrt, self);
 		result := res;
 	}
 }
@@ -547,11 +695,12 @@ mapping InstanceSpecification::Partition2PSM() : Class {
 	sr.schedParams := "("+schedParamMAF+","+schedParamSchedTable+")";
 }
 
-mapping InstanceSpecification::Instance2SwSchedulableResource(chrt : Comment, slot : Slot) : Class when {chrt.CHRtSpec().isDeferred()} {
+mapping InstanceSpecification::Slot2SwSchedulableResource(chrtComment : Comment, slot : Slot) : Class when {chrtComment.CHRtSpec().isDeferred()} {
 	init{
-		var chrts := chrt.CHRtSpec();
-		var resourceName := chrts.schedulableResource(slot);
-		log("  Operation '" + chrt.CHRtSpec().context.name + "' is deferred. Generating <<SwSchedulableResource>> '" + resourceName + "'.");
+		var chrts := chrtComment.CHRtSpec();
+		var chrtportslot := slot.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot);
+		var resourceName := chrts.schedulableResourceName(chrtportslot);
+		log("  Operation '" + chrts.context.name + "' is deferred. Generating <<SwSchedulableResource>> '" + resourceName + "'.");
     }
 	 
 	result.name := resourceName;
@@ -571,8 +720,8 @@ mapping InstanceSpecification::Instance2SwSchedulableResource(chrt : Comment, sl
 		
 		
 	   if(slotinAssigns){
-	   	  var hostClassifier := getAssignToFrom_MemoryPartition(slot, chrt);
-		  sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot, chrt));
+	   	  var hostClassifier := getAssignToFrom_MemoryPartition(slot, chrtComment);
+		  sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot, chrtComment));
 	   } else {
 		  var hostClassifier := getAssignToFrom_MemoryPartition(slot.owningInstance);
 		  sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot.owningInstance));
@@ -582,6 +731,47 @@ mapping InstanceSpecification::Instance2SwSchedulableResource(chrt : Comment, sl
 		with log("Null Host for SwSchedulableResource '" +result.name+ "'.");
 	sr.schedParams := schedParams;
 }
+
+
+//to be used when the CHRTSpecification is attached to a component instance and not to a port slot, e.g. in case of ARINCFUnctions decorating private operations
+mapping InstanceSpecification::Instance2SwSchedulableResource(chrtComment : Comment) : Class when {chrtComment.CHRtSpec().isDeferred()} {
+	init{
+		var chrts := chrtComment.CHRtSpec();
+		var chrtportslot := self.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot);
+		var resourceName := chrts.schedulableResourceName(chrtportslot);
+		log("  Operation '" + chrts.context.name + "' is deferred. Generating <<SwSchedulableResource>> '" + resourceName + "'.");
+    }
+	 
+	result.name := resourceName;
+	
+	taskPackage.packagedElement += result;
+	
+	var sr := result.applyStereotype(getMARTEStereotype("SwSchedulableResource")).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);		
+	sr.isProtected := false;
+	var schedParams := "fp(priority=(value=" + chrts.relativePriority.normalizeNFPInteger() +", source=meas))";
+	
+	//TODO assume <<Assign>> 'from' and 'to' typed as InstanceSpecification	
+	// Find the deployment node (InstanceSpecification), based on <<Assign>> directives
+	
+	if(currentHost <> null){
+		sr.host := currentHost;//currentProcessor.getHost(currentCore);
+	} else {
+		
+		 if(slotinAssigns){
+		 	log("**************WARNING: Instance2SwSchedulableResource, this flow has not been implemented yet!!!!!");
+		 }
+		
+		else {
+		  var hostClassifier := getAssignToFrom_MemoryPartition(self);
+		  sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(self));
+	   }
+	};
+	assert fatal (sr.host <> null)
+		with log("Null Host for SwSchedulableResource '" +result.name+ "'.");
+	sr.schedParams := schedParams;
+}
+
+
 
 
 
@@ -616,50 +806,34 @@ query InstanceSpecification::getHost(core: String) : MARTE::SAM::SaExecHost {
 	return res;	
 }
 
-helper createSaStepNode(in sourceCHRtComment: Comment, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
-	var chrts := sourceCHRtComment.CHRtSpec();
-	var opNode := createOpaqueAction(opaqueActionName(sourceSlot, chrts), e2eActivity, prevE2ENode);
-	var opSaStep := opNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
-	
-	// Set the <<SwSchedulableResource>> that executes the <<saStep>>
-	
-	var concurRes := currentConcurRes;
-	if chrts.isDeferred() then
-		concurRes := sourceCHRtComment.getConcurRes(sourceSlot)//classResource.getMetaclass(SchedulableResourceQN).oclAsType(MARTE::GRM::SchedulableResource);
-	endif;
-	opSaStep.concurRes := concurRes;
-    // Retrieve the <<SaStep>> to use for the subusage
-	var saStep := sourceSlot.resolve2SaStep(chrts.base_Comment).getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
-	//Add the newly created operation as subUsage of the OpaqueAction(<<saStep>>)
-	opSaStep.subUsage += saStep;
-	
-	//opSaStep.sharedRes += currentSharedRes;
-	return opNode;
-}
-
 //Stefano: not clear what this method is intended to implement!!!
-helper createSubUsage(in sourceCHRtComment: Comment, in sourceSlot : Slot)  {
+helper createSubUsage(in sourceCHRtComment: Comment, in sourceSlot : Slot, ownerInstance : InstanceSpecification)  {
 	var chrts := sourceCHRtComment.CHRtSpec();
 	
-	//log("createSubUsage, chrt = " + chrts.toString() + " sourceSlot = "+sourceSlot.owningInstance.toString());
-	var owningSaStep := sourceSlot.resolveoneIn(Slot::CHRTCommentProtected2SaStep, Operation).getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	//log(" ***********WARNING 3 : createSubUsage, chrt = " + chrts.toString() + " sourceSlot = "+sourceSlot.owningInstance.toString());
+	var owningSaStep := sourceSlot.resolveoneIn(Comment::CHRTCommentProtected2SaStep, Operation).getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
 	//log("createSubUsage, owningSaStep = " + owningSaStep.toString());
-	owningSaStep.subUsage += sourceSlot.resolve2SaStep(chrts.base_Comment).getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep); 
+	owningSaStep.subUsage += sourceCHRtComment.resolve2SaStep().getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep); 
 	
 }
 
 /*
 Author: Stefano Puri
-Given a Slot with an associated CHRtSpecification representing a port-operation using another port-operation, 
+Given a CHRtSpecification representing an operation using another operation, 
 it sets the dependencies through the subusage field of the SaStep mapped to the requiring operation  
+
 */
 
-helper createSubUsage(requiringSlot : Slot, in reqCHRtSpec: chessmlprofile::RTComponentModel::CHRtSpecification, in providingSlot : Slot,  in provCHRtSpec: chessmlprofile::RTComponentModel::CHRtSpecification)  {
+helper createSubUsage(in reqCHRtSpec: chessmlprofile::RTComponentModel::CHRtSpecification, in provCHRtSpec: chessmlprofile::RTComponentModel::CHRtSpecification)  {
 	
-	var requiringPSMOperation = requiringSlot.resolve2SaStep(reqCHRtSpec.base_Comment);
+	//var requiringPSMOperation = requiringSlot.resolve2SaStep(reqCHRtSpec.base_Comment);
+	var requiringPSMOperation = reqCHRtSpec.base_Comment.resolve2SaStep();
+	
 	log("requiringPSMOperation = " + requiringPSMOperation.toString());
 	
-	var piPSMOperation = providingSlot.resolve2SaStep(provCHRtSpec.base_Comment);
+	//var piPSMOperation = providingSlot.resolve2SaStep();
+	var piPSMOperation = provCHRtSpec.base_Comment.resolve2SaStep();
+	
 	log("usedPSMOperation = " + piPSMOperation.toString());	        			
 	var reqSaStep = requiringPSMOperation.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep); 		
 	var provSaStep = piPSMOperation.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);  			
@@ -672,31 +846,57 @@ helper createSubUsage(requiringSlot : Slot, in reqCHRtSpec: chessmlprofile::RTCo
   Given a comment related to a CHRtSlot return  the corresponding schedulable resource  
 */
 query Comment::getConcurRes(slot : Slot) : MARTE::SRM::SW_Concurrency::SwSchedulableResource {
+	
+	var chrtportslot := slot.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot);
 	var classResource := slot.resolveIn(Slot::CHRtSlot2SwSchedulableResource, Class)->selectOne(
-	    name=self.CHRtSpec().schedulableResource(slot));
+	    name=self.CHRtSpec().schedulableResourceName(chrtportslot));
+	return classResource.getMetaclass(SwSchedulableResourceQN).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);
+}
+
+
+/*
+  Given an instance decorated with a CHRTSPecification returns  the corresponding schedulable resource  
+*/
+query Comment::getConcurRes(instance : InstanceSpecification) : MARTE::SRM::SW_Concurrency::SwSchedulableResource {
+	
+	var chrtportslot := instance.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot);
+	
+	log("");
+	log("+++++++++++++++++");
+	log("SEARCHING CONCURRES with NAME "+self.CHRtSpec().schedulableResourceName(chrtportslot));
+	log("");
+	
+	var classResource := instance.resolveIn(InstanceSpecification::Instance2SwSchedulableResource, Class)->selectOne(
+	    name=self.CHRtSpec().schedulableResourceName(chrtportslot));
+	log("FOUND "+classResource.toString());
+	log("");    
+	    
 	return classResource.getMetaclass(SwSchedulableResourceQN).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);
 }
 
 /*
-Given a Slot and a Comment stereotyped with CHRtSpecification return the SaStep Operation previously created
+Given a Comment stereotyped with CHRtSpecification returns the SaStep Operation previously created
 */
-query Slot::resolve2SaStep(chrt : Comment) : Operation {
-	var chrts := chrt.CHRtSpec();
+query Comment::resolve2SaStep() : Operation {
+	var chrts := self.CHRtSpec();
 	var ops : Sequence(Operation);
-	log("resolve2SaStep, chrtSpecification = "+chrts.toString() +", context = "+chrts.context.toString());
+	log("Comment::resolve2SaStep, chrtSpecification = "+chrts.toString() +", context = "+chrts.context.toString());
 	
 	if (chrts.isSporadic()) then {
-		ops := self.resolveIn(Slot::CHRTCommentSporadic2SaStep, Operation);
+		ops := self.resolveIn(Comment::CHRTCommentSporadic2SaStep, Operation);
 	}
 	else {
 		
 		if (chrts.isProtected()) then {
-			ops := self.resolveIn(Slot::CHRTCommentProtected2SaStep, Operation);
+			ops := self.resolveIn(Comment::CHRTCommentProtected2SaStep, Operation);
 		} else {
-			ops := self.resolveIn(Slot::CHRTCommentUnprotected2SaStep, Operation);
+			
+			log("Comment::resolve2SaStep: resolve in Comment::CHRTCommentUnprotected2SaStep");
+			ops := self.resolveIn(Comment::CHRTCommentUnprotected2SaStep, Operation);
 		} endif;
 	}
 	endif;
+	
 	
 	ops->forEach(op) {
 		if op.name = chrts.context.name() then
@@ -705,6 +905,8 @@ query Slot::resolve2SaStep(chrt : Comment) : Operation {
 	};
 	return null;
 }
+
+
 //"receive" node and "get" node
 helper createSporadicRelatedNodes(in currentOp : chessmlprofile::RTComponentModel::CHRtSpecification, in currentSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
 	if currentOp.isSporadic() then {
@@ -726,36 +928,45 @@ helper createSporadicRelatedNodes(in currentOp : chessmlprofile::RTComponentMode
 	return null;
 }
 
+/*
 //Return the nextE2ENode 
-helper createOpaqueActionsChainFull(in currentIsGuarded : Boolean, in currentCHRtComment : Comment, in currentSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode/*, currentOp : chessmlprofile::RTComponentModel::CHRtSpecification*/) : ActivityNode {
-	var currentOp := currentCHRtComment.CHRtSpec();
+currentSlot can be null, in case of private operation
+*/
+helper createOpaqueActionsChainFull(in currentIsGuarded : Boolean, in currentCHRtComment : Comment, in currentSlot : Slot, 
+	inout e2eActivity : Activity, inout prevE2ENode : ActivityNode, in owningInstance : InstanceSpecification) : ActivityNode {
+	var currentCHRTSpec := currentCHRtComment.CHRtSpec();
 	var nextE2ENode := prevE2ENode;
 	
 	log("CreateOpaqueActionChain: currentIsGuarded = "+currentIsGuarded.toString());
 	
+	//TODO Assumption: if currentSlot is null, i.e. the current operation is private, then the current chrtspec cannot be sporadic
 	//if operation is sporadic then create receive + get nodes before the operation node
-	nextE2ENode := createSporadicRelatedNodes(currentOp, currentSlot, e2eActivity, nextE2ENode);
+	nextE2ENode := createSporadicRelatedNodes(currentCHRTSpec, currentSlot, e2eActivity, nextE2ENode);
 	
 	//Creates the subsequent OpaqueAction and ControlFlow
-	nextE2ENode := createSaStepNode(currentCHRtComment, currentSlot,e2eActivity, nextE2ENode);
+	nextE2ENode := createSaStepNode(currentCHRTSpec, currentSlot, e2eActivity, nextE2ENode, owningInstance);
 	
 	//this does not create sporadic related nodes=>nextE2ENode := createSaStepNode(currentCHRtComment, currentSlot,e2eActivity, prevE2ENode);
 	
 	//if the operation has a ICB-Activity then parse its CallOperationNodes
-	currentOp.context.method![Activity].collectCallOperationNodes()->forEach(calledOpNode){
+	currentCHRTSpec.context.method![Activity].collectCallOperationNodes()->forEach(calledOpNode){
 		
 		//var riSlot := calledOpNode.onPort.portToSlot(currentSlot.owningInstance);
-		var riSlots := calledOpNode.portToSlotFull(currentSlot.owningInstance);
+		var riSlots := calledOpNode.portToSlotFull(owningInstance);
 		riSlots->forEach(riSlot){
 			log("  Search for piSlot from riSlot '" + riSlot.owningInstance.name + riSlot.owningInstance.getStringId() + riSlot.definingFeature.name + riSlot.getStringId() + "'.");
 			var usedPiSlot := riSlot.getCorrespondingSlot();
 			log("  Found piSlot '" + usedPiSlot.owningInstance.name+usedPiSlot.owningInstance.getStringId() + usedPiSlot.definingFeature.name + usedPiSlot.getStringId() + "'.");
 	        var usedPiCHRtSpec := usedPiSlot.CHRtSpecForOperation(calledOpNode.operation);
-	        var bus := getConnectingBus(currentSlot.owningInstance, usedPiSlot.owningInstance);
+	        var bus := getConnectingBus(owningInstance, usedPiSlot.owningInstance);
 	        
 	        //if it is a remote call, attach a send operation 
 	        if bus <> null then{
 	        	log("it is a remote call...");
+	        	
+	        	if (currentSlot = null)
+	        		log("*****************WARNING  createOpaqueActionsChainFull: the current slot is null, the operation is private; this path is not currently supported ...");
+	        	
 	        	if usedPiCHRtSpec.isDeferred() then
 	        		return createSendOp(bus, currentSlot, e2eActivity, nextE2ENode)
 	        	else 
@@ -778,12 +989,13 @@ helper createOpaqueActionsChainFull(in currentIsGuarded : Boolean, in currentCHR
 	        			//Stefano: why should a create a subUsagesChain here?  Just a subusage is enough.
 	        			//nextE2ENode := createSubUsagesChain(currentOp.base_Comment, usedPiCHRtSpec.base_Comment, usedPiSlot, e2eActivity, nextE2ENode)
 						log("... and protected: create sub usage");
-	        			createSubUsage(currentSlot, currentCHRtComment.CHRtSpec(), usedPiSlot, usedPiCHRtSpec);
+	        			createSubUsage(currentCHRtComment.CHRtSpec(),usedPiCHRtSpec);
 
 	        		}
 	        		else{
 	        			//TODO Stefano: is this correct?
-	        			nextE2ENode := createOpaqueActionsChainFull(usedPiCHRtSpec.isProtected(),usedPiCHRtSpec.base_Comment, usedPiSlot, e2eActivity, nextE2ENode)
+	        			log("... WARNING 234325: check this oncreateOpaqueActionsChainFull mapping");
+	        			nextE2ENode := createOpaqueActionsChainFull(usedPiCHRtSpec.isProtected(),usedPiCHRtSpec.base_Comment, usedPiSlot, e2eActivity, nextE2ENode, usedPiSlot.owningInstance)
 	        		}endif
 	        						
 				endif	
@@ -794,8 +1006,13 @@ helper createOpaqueActionsChainFull(in currentIsGuarded : Boolean, in currentCHR
     return nextE2ENode;
 }
 
+
 //NOT USED
-helper createSubUsagesChain(in enclosingCHRTComment : Comment, in currentCHRtComment : Comment, in currentSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode/*, currentOp : chessmlprofile::RTComponentModel::CHRtSpecification*/) : ActivityNode {
+/*
+helper createSubUsagesChain(in enclosingCHRTComment : Comment, in currentCHRtComment : Comment, in currentSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode, 
+	ownerInstance:InstanceSpecification) : ActivityNode {
+		
+	
 	var currentOp := currentCHRtComment.CHRtSpec();
 	var nextE2ENode := prevE2ENode;
 	log("createSubUsagesChain... currentSlot="+currentSlot.owningInstance.toString());
@@ -804,7 +1021,7 @@ helper createSubUsagesChain(in enclosingCHRTComment : Comment, in currentCHRtCom
 	if not currentOp.isDeferred() then
 		createSubUsage(currentCHRtComment, currentSlot)
 	else
-		nextE2ENode := createSaStepNode(currentCHRtComment, currentSlot, e2eActivity, nextE2ENode)
+		nextE2ENode := createSaStepNode(currentCHRtComment, currentSlot, e2eActivity, nextE2ENode, ownerInstance)
 	endif;	
 	//if the operation has a ICB-Activity then parse its CallOperationNodes
 	currentOp.context.method![Activity].collectCallOperationNodes()->forEach(calledOpNode){
@@ -827,7 +1044,7 @@ helper createSubUsagesChain(in enclosingCHRTComment : Comment, in currentCHRtCom
 		        //otherwise it is a local call
 		        //if it is a simple operation, simply add it to the endtoendworkflow and proceeds with the subsequent call
 				if not piOp.isDeferred() then        
-	        		nextE2ENode := createSubUsagesChain(currentOp.base_Comment, piOp.base_Comment, piSlot, e2eActivity, nextE2ENode)
+	        		nextE2ENode := createSubUsagesChain(currentOp.base_Comment, piOp.base_Comment, piSlot, e2eActivity, nextE2ENode, ownerInstance)
 	        	else
 	        		//Calls put operation
 					return createPutOp(piOp.base_Comment, piSlot, e2eActivity, nextE2ENode)
@@ -837,6 +1054,7 @@ helper createSubUsagesChain(in enclosingCHRTComment : Comment, in currentCHRtCom
 	};
     return nextE2ENode;
 }
+*/
 
 helper createPutOp(in sourceCHRtComment : Comment, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
     var putSpec := sourceCHRtComment.CHRtSpec();
@@ -916,41 +1134,54 @@ mapping Slot::Slot2Class4SaStep() : Class {
 	operationPackage.packagedElement += result;
 }
 
-helper Slot::CHRTComment2SaStep(chrt : Comment) : Operation {
-	if chrt.CHRtSpec().isSporadic() then 
-		return self.map CHRTCommentSporadic2SaStep(chrt) 
+
+mapping InstanceSpecification::InstanceSpecification2Class4SaStep() : Class {
+	var name := operationClassName(self, "operations");
+	log("  <<SaStep>> operation class not found. Generating '" + name + "'.");
+	result.name := name;
+	operationPackage.packagedElement += result;
+}
+
+/*SLot can be null, e.g. in case of private ARINCFunction
+*/
+helper Comment::CHRTComment2SaStep(slot : Slot, owningInstance : InstanceSpecification) : Operation {
+	if self.CHRtSpec().isSporadic() then 
+		return self.map CHRTCommentSporadic2SaStep(slot, owningInstance) 
 	endif;
-	if chrt.CHRtSpec().isProtected() then
-		return self.map CHRTCommentProtected2SaStep(chrt)
+	if self.CHRtSpec().isProtected() then
+		return self.map CHRTCommentProtected2SaStep(slot, owningInstance)
 	else
-		return self.map CHRTCommentUnprotected2SaStep(chrt)
+		return self.map CHRTCommentUnprotected2SaStep(slot, owningInstance)
 	endif;	
 	return null;
 }
 
+/*
 //NOT USED
 mapping Slot::CHRTCommentUnprotected2SaStepStrict(chrt : Comment) : Operation when {not chrt.CHRtSpec().isProtected()} {
 	init{
-		var res := self.owningInstance.resolveoneIn(InstanceSpecification::InstanceUnprotected2SaStep, Operation);
+		var res := self.owningInstance.resolveoneIn(InstanceSpecification::UnprotectedOperation2SaStep, Operation);
 		if res = null then {
 			log("  Generating <<SaStep>> for operation '" + chrt.CHRtSpec().context.name + "'.");
-			res := self.owningInstance.map InstanceUnprotected2SaStep(chrt, self);
+			res := self.owningInstance.map UnprotectedOperation2SaStep(chrt, self);
 		} else 
 			log("  Nothing to do")
 		endif;
 		result := res;
 	}
-}
+}*/
 
-mapping Slot::CHRTCommentUnprotected2SaStep(chrt : Comment) : Operation when {not chrt.CHRtSpec().isProtected()} {
+/*slot can be null, e.g. private ARINCFunction case
+*/
+mapping Comment::CHRTCommentUnprotected2SaStep(slot : Slot, owningInstance : InstanceSpecification) : Operation when {not self.CHRtSpec().isProtected()} {
 	init{
-		log("  Generating <<SaStep>> for operation '" + chrt.CHRtSpec().context.name + "'.");
-		var res := self.owningInstance.map InstanceUnprotected2SaStep(chrt, self);
+		log("  Generating <<SaStep>> for operation '" + self.CHRtSpec().context.name + "'.");
+		var res := owningInstance.map UnprotectedOperation2SaStep(self, slot, owningInstance);
 		result := res;
 	}
 }
 
-mapping InstanceSpecification::InstanceUnprotected2SaStep(chrt : Comment, slot : Slot) : Operation when {not chrt.CHRtSpec().isProtected()} {
+mapping InstanceSpecification::UnprotectedOperation2SaStep(chrt : Comment, slot : Slot, owningInstance : InstanceSpecification) : Operation when {not chrt.CHRtSpec().isProtected()} {
 	init{	
 	
 		if chrt.CHRtSpec().isDeferred() then
@@ -962,7 +1193,14 @@ mapping InstanceSpecification::InstanceUnprotected2SaStep(chrt : Comment, slot :
 		var chrts := chrt.CHRtSpec();
 		var selfOperation := chrts.context.oclAsType(Operation);
 		//Create a new Class containing this operation of the PI if it does not exist yet
-		var owner := slot.Slot2Class4SaStepProxy();
+		var owner : Class;
+		
+		if(slot<>null){
+			owner := slot.Slot2Class4SaStepProxy();
+		}else{
+			owner := owningInstance.Instance2Class4SaStepProxy();
+		};
+		
 		result := new Operation(selfOperation);
 	}
 
@@ -974,15 +1212,43 @@ mapping InstanceSpecification::InstanceUnprotected2SaStep(chrt : Comment, slot :
 	//createSubUsageForPSMOperation(selfOperation, result, slot.owningInstance)
 }
 
-mapping Slot::CHRTCommentProtected2SaStepStrict(chrt : Comment) : Operation when {chrt.CHRtSpec().isProtected()} {
+/*to be used for ARINCFunction mapping
+
+mapping InstanceSpecification::InstanceUnprotected2SaStep(chrt : Comment, instance : InstanceSpecification) : Operation when {not chrt.CHRtSpec().isProtected()} {
+	init{	
+	
+		if chrt.CHRtSpec().isDeferred() then
+	    	log("Mapping InstanceUnprotected2SaStep: Operation is cyclic.")
+	    else
+	    	log("Mapping InstanceUnprotected2SaStep:  Operation is unprotected.")
+    	endif;
+    	
+		var chrts := chrt.CHRtSpec();
+		var selfOperation := chrts.context.oclAsType(Operation);
+		//Create a new Class containing this operation of the PI if it does not exist yet
+		var owner := instance.Instance2Class4SaStepProxy();
+		result := new Operation(selfOperation);
+	}
+
+	owner.ownedOperation += result;
+	// Convert the newly created operation to a <<saStep>>
+	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	saStep.execTime += chrt.getWCET();//chrts.localWCET;
+	
+	//createSubUsageForPSMOperation(selfOperation, result, slot.owningInstance)
+}*/
+
+
+mapping Comment::CHRTCommentProtected2SaStepStrict(slot : Slot, ownerInstance:InstanceSpecification) : Operation 
+	when {self.CHRtSpec().isProtected()} {
 	init{
 		//one Slot can have different chrtSpecification associated and so it can be mapped to multiple SaStep...
 		//TODO Operation's name can be a problem when used as identifier...
-		var res := self.owningInstance.resolveIn(InstanceSpecification::InstanceProtected2SaStep, Operation)-> selectOne
-				(name=chrt.CHRtSpec().context.name);
+		var res := ownerInstance.resolveIn(InstanceSpecification::InstanceProtected2SaStep, Operation)-> selectOne
+				(name=self.CHRtSpec().context.name);
 		if res = null then {
-			log("  Generating <<SaStep>> for operation '" + chrt.CHRtSpec().context.name + "'.");
-			res := self.owningInstance.map InstanceProtected2SaStep(chrt, self);
+			log("  Generating <<SaStep>> for operation '" + self.CHRtSpec().context.name + "'.");
+			res := ownerInstance.map InstanceProtected2SaStep(self, slot);
 		} else 
 			log("  Nothing to do")
 		endif;
@@ -991,14 +1257,18 @@ mapping Slot::CHRTCommentProtected2SaStepStrict(chrt : Comment) : Operation when
 	
 }
 
-mapping Slot::CHRTCommentProtected2SaStep(chrt : Comment) : Operation when {chrt.CHRtSpec().isProtected()} {
+/*
+@param slot: can be null, e.g. in case of private ARINCFUnction
+*/
+mapping Comment::CHRTCommentProtected2SaStep(slot : Slot, ownerInstance:InstanceSpecification) : Operation when {self.CHRtSpec().isProtected()} {
 	init{
-		log("  Generating <<SaStep>> for operation '" + chrt.CHRtSpec().context.name + "'.");
-		var res := self.owningInstance.map InstanceProtected2SaStep(chrt, self);
+		log("  Generating <<SaStep>> for operation '" + self.CHRtSpec().context.name + "'.");
+		var res := ownerInstance.map InstanceProtected2SaStep(self, slot);
 		result := res;
 	}
 }
 
+/*
 //NOT USED
 mapping InstanceSpecification::InstanceProtected2SaStepStrict(chrt : Comment, slot : Slot) : Operation when {chrt.CHRtSpec().isProtected()} {
     //TODO Assumes 1 state (SwMutualExclusionResource) for each PI with guarded operations
@@ -1025,8 +1295,11 @@ mapping InstanceSpecification::InstanceProtected2SaStepStrict(chrt : Comment, sl
 	saStep.execTime += chrt.getWCET();//chrts.localWCET;	
 	// The sharedRes will be set on the SaStep of the end to end workflow
 	saStep.sharedRes += saSharedRes;
-}
+}*/
 
+/*
+slot can be null, e.g. in case of private ARINCFunction
+*/
 mapping InstanceSpecification::InstanceProtected2SaStep(chrt : Comment, slot : Slot) : Operation when {chrt.CHRtSpec().isProtected()} {
     //Assumes 1 state (SwMutualExclusionResource) for each InstanceSpecification with PI with guarded operations
 	init{
@@ -1038,7 +1311,7 @@ mapping InstanceSpecification::InstanceProtected2SaStep(chrt : Comment, slot : S
 		var owner := self.resolveoneIn(InstanceSpecification::ProtectedOperation2SwMutualExclusionResource, Class);
 		if owner = null then
 			//Create a new SwMutualExclusionResource containing this operation for each PI port
-			owner := self.map ProtectedOperation2SwMutualExclusionResource(chrt, slot)
+			owner := self.map ProtectedOperation2SwMutualExclusionResource(chrt)
 		else 
 			log("<<SwMutualExclusionResource>> found, nothing to do")
 		endif;
@@ -1058,11 +1331,11 @@ mapping InstanceSpecification::InstanceProtected2SaStep(chrt : Comment, slot : S
 	saStep.sharedRes += saSharedRes;
 }
 
-mapping InstanceSpecification::ProtectedOperation2SwMutualExclusionResource(annotation : Comment, slot : Slot) : Class {
+
+mapping InstanceSpecification::ProtectedOperation2SwMutualExclusionResource(annotation : Comment) : Class {
 	var name := self.name + "_state";
 	log("  <<SwMutualExclusionResource>> class not found. Generating '"+name+"' ");
 	
-	var port := slot.definingFeature![Port];
 	result.name := name;
 	operationPackage.packagedElement += result;
 	var mutualExRes := result.applyStereotype(getMARTEStereotype("SwMutualExclusionResource")).oclAsType(MARTE::SRM::SW_Interaction::SwMutualExclusionResource);
@@ -1074,6 +1347,7 @@ mapping InstanceSpecification::ProtectedOperation2SwMutualExclusionResource(anno
 	result.setProtectKind2("PriorityCeiling");
 }
 
+/*
 //NOT USED
 mapping Slot::CHRTCommentSporadic2SaStepStrict(chrt : Comment) : Operation when {chrt.CHRtSpec().isSporadic()} {
     //TODO Assumes 1 state (SwMutualExclusionResource) for each sporadic operation
@@ -1087,12 +1361,13 @@ mapping Slot::CHRTCommentSporadic2SaStepStrict(chrt : Comment) : Operation when 
 		endif;
 		result := res;
 	}
-}
+}*/
 
-mapping Slot::CHRTCommentSporadic2SaStep(chrt : Comment) : Operation when {chrt.CHRtSpec().isSporadic()} {
+mapping Comment::CHRTCommentSporadic2SaStep(slot : Slot, ownerInstance:InstanceSpecification) : Operation 
+	when {self.CHRtSpec().isSporadic()} {
 	init{	
-		log("  Generating <<SaStep>> for operation '" + chrt.CHRtSpec().context.name + "'.");
-		var res := self.owningInstance.map InstanceSporadic2SaStep(chrt, self);
+		log("  Generating <<SaStep>> for operation '" + self.CHRtSpec().context.name + "'.");
+		var res := self.map InstanceSporadic2SaStep(slot, ownerInstance);
 		result := res;
 	}
 }
@@ -1105,31 +1380,62 @@ helper Slot::Slot2Class4SaStepProxy() : Class {
 	return owner;
 }
 
-mapping InstanceSpecification::InstanceSporadic2SaStep(chrt : Comment, slot : Slot) : Operation when {chrt.CHRtSpec().isSporadic()} {
+
+
+helper InstanceSpecification::Instance2Class4SaStepProxy() : Class {
+	var owner := self.resolveoneIn(Slot::Slot2Class4SaStep, Class);
+	if owner = null then {
+		owner := self.map InstanceSpecification2Class4SaStep();
+	} endif;
+	return owner;
+}
+
+/*
+slot can be null, e.g. in case of private ARINCFunction
+*/
+mapping Comment::InstanceSporadic2SaStep(slot : Slot, ownerInstance:InstanceSpecification): Operation 
+	when{self.CHRtSpec().isSporadic()} {
     //TODO Assumes 1 state (SwMutualExclusionResource) for each sporadic operation		
 	init{	
 		log("  Operation is sporadic.");
-		var chrts := chrt.CHRtSpec();
+		var chrts := self.CHRtSpec();
 		var selfOperation := chrts.context.oclAsType(Operation);
-		var owner := slot.Slot2Class4SaStepProxy();
+		
+		var owner : Class;
+		
+		if (slot <> null){
+			owner := slot.Slot2Class4SaStepProxy();
+		}else{
+			owner := ownerInstance.Instance2Class4SaStepProxy();
+		};
+		
 		//Create a new SwMutualExclusionResource containing the put/get operation associated to this sporadic operation
-	    var protectedState := self.map SporadicOperation2SwMutualExclusionResource(chrt, slot);
+	    var protectedState := ownerInstance.map SporadicOperation2SwMutualExclusionResource(self, slot);
 		result := new Operation(selfOperation);
 	}
 
 	owner.ownedOperation += result;
 	// Convert the newly created operation to a <<saStep>>
 	var localSaStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
-	localSaStep.execTime += chrt.getWCET();//chrts.localWCET;
+	localSaStep.execTime += self.getWCET();//chrts.localWCET;
 	
 	//createSubUsageForPSMOperation(selfOperation, result, slot.owningInstance)
 	
 }
 
-
+/*
+slot can be null, e.g. in case of private ARINCFunction
+*/
 mapping InstanceSpecification::SporadicOperation2SwMutualExclusionResource(chrt : Comment, slot : Slot) : Class {
 	init{
-		var name := operationClassName(slot, chrt.CHRtSpec().context.name() + "_state");
+		var name : String;
+		
+		if (slot <> null){
+			name := operationClassName(slot, chrt.CHRtSpec().context.name() + "_state");
+		}else{
+			name := operationClassName(self, chrt.CHRtSpec().context.name() + "_state");
+		};
+		
 		log("    Generating <<SwMutualExclusionResource>> '" + name + "'.");
 		log("    NOTE 'put' and 'get' operations execution times are hardcoded: (worst=0.0,value=0.0,best=0.0,unit=ms)");
 		var putOp : Operation := new Operation("put");
@@ -1299,6 +1605,7 @@ mapping InstanceSpecification::HwProcessor2SaExecHost(core : String) : Class {
 	stHost.host := saHost;
 }
 
+/*
 //NOT USED
 //Create a new Activity as <<SaEndToEndFlow>>
 mapping Slot::slot2EndToEndWorkFlowStrict(chrt : Comment) : Activity when {chrt.CHRtSpec().isDeferred()} {
@@ -1311,21 +1618,32 @@ mapping Slot::slot2EndToEndWorkFlowStrict(chrt : Comment) : Activity when {chrt.
 		endif;
     	result := res;
     }
-}
+}*/
 
 //Create a new Activity as <<SaEndToEndFlow>>
 mapping Slot::slot2EndToEndWorkFlow(chrt : Comment) : Activity when {chrt.CHRtSpec().isDeferred()} {
     init {
-    	var res := self.owningInstance.map Instance2EndToEndWorkFlow(chrt, self);
+    	var res := chrt.map Instance2EndToEndWorkFlow(self, self.owningInstance);
     	result := res;
     }
 }
 
-mapping InstanceSpecification::Instance2EndToEndWorkFlow(chrt : Comment, slot : Slot) : Activity when {chrt.CHRtSpec().isDeferred()} {
+/*
+@param slot: can be null, in case chrt refers a private operation, i.e. ARINCFunction operation
+*/
+mapping Comment::Instance2EndToEndWorkFlow(slot : Slot, inst : InstanceSpecification) : Activity when {self.CHRtSpec().isDeferred()} {
     init {
-    	log("Generating <<EndToEndWorkFlow>> from the Instance"+ " for '" + slot.owningInstance.name + slot.owningInstance.getStringId() + "' and operation "+ chrt.CHRtSpec().context.name +".");
-    	var chrts := chrt.CHRtSpec();
-    	var actionName := opaqueActionName(slot, chrts);//slot.owningInstance.name + "_" + chrts.context.name;
+    	
+    	log("Generating <<EndToEndWorkFlow>> from the Instance"+ " for '" + inst.name + inst.getStringId() + "' and operation "+ self.CHRtSpec().context.name +".");
+    	
+    	var chrts := self.CHRtSpec();
+    	var actionName : String;
+    	if (slot<>null){
+    		actionName := opaqueActionName(slot, chrts);
+    		}
+    	else{
+    		actionName := opaqueActionName(inst, chrts);
+    	};
 	    // entities for single and distributed communication
 	    //var actInitialNode := new InitialNode("InitialNode1");
 	   
@@ -1337,12 +1655,13 @@ mapping InstanceSpecification::Instance2EndToEndWorkFlow(chrt : Comment, slot : 
     
     /*Stefano
    	//add entity to store traceability information in the model. This infomation can then be used later in the editor to show analysis results related to the PIM entites.
-   	//I would like to use a Dependency here between the Activity and the originating slot and chrt Comment, but in UML Comment cannot be referenced by dependecies.
+   	//I would like to use a Dependency here between the Activity and the originating slot and chrt Comment, but in UML Comment cannot be referenced by dependency.
    	//so here I use Constraint...*/
     var constr := new Constraint();
     constr.constrainedElement += result;
     constr.constrainedElement += slot;
-    constr.constrainedElement += chrt;
+    constr.constrainedElement += self;
+    constr.constrainedElement += inst;
     instSpecPackage.resolveoneIn(Package::CHGaResourcePlatform2SaAnalysisContext, Class).ownedRule += constr;
     //end modification for traceability
     
@@ -1368,14 +1687,19 @@ mapping InstanceSpecification::Instance2EndToEndWorkFlow(chrt : Comment, slot : 
 	gaLatencyObs.latency += chrts.rlDl;
 	
 	//if the current operation is deferred, it will be the first on the ICB
-	currentConcurRes := chrt.getConcurRes(slot);
+	if (slot <> null) {
+		currentConcurRes := self.getConcurRes(slot);
+	}
+	else {
+		currentConcurRes := self.getConcurRes(inst);
+	};
 	
 	//Apply stereotype <<gaWorkloadEvent>> and specify the release pattern
 	//of the end-to-end flow
 	var gaWorkloadEvent := actInitialNode.applyStereotype(getMARTEStereotype("GaWorkloadEvent")).oclAsType(MARTE::GQAM::GaWorkloadEvent);
 	gaWorkloadEvent.pattern := chrts.occKind;
 	
-	var resultNode := createOpaqueActionsChainFull(chrts.isProtected(), chrt, slot, result, actInitialNode);
+	var resultNode := createOpaqueActionsChainFull(chrts.isProtected(), self, slot, result, actInitialNode, inst);
 
 	//create final node
 	//var finalNode := new ActivityFinalNode("ActivityFinalNode1");
@@ -1385,7 +1709,6 @@ mapping InstanceSpecification::Instance2EndToEndWorkFlow(chrt : Comment, slot : 
 	
     //TODO assumption only one activity edge per node
     resultNode.outgoing![ControlFlow].target := finalNode;
-    
     
 }
 
@@ -1494,6 +1817,8 @@ query Slot::listAll() : Slot {
 	return null;	
 }
 
+/*Returns the slot connnected to the given slot, if any
+*/
 query Slot::getCorrespondingSlot() : Slot {
 	var riPiLinks := self.owner.owner.ownedElement[InstanceSpecification]->select(classifier -> size() = 0);
 	riPiLinks->forEach(l){

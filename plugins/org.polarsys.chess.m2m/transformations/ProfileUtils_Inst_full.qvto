@@ -221,18 +221,52 @@ query operationClassName(slot : Slot, name : String) : String {
 		+ "_" + name
 }
 
+query operationClassName(instance : InstanceSpecification, name : String) : String {
+	return instance.name + instance.getStringId() + "_" + name
+}
+
+
 query opaqueActionName(slot : Slot, chrtSpec : chessmlprofile::RTComponentModel::CHRtSpecification) : String {
 	return slot.owningInstance.name + slot.owningInstance.getStringId() + "_" 
 		+ slot.definingFeature![Port].name // + slot.getStringId() 
 		+ "_" + chrtSpec.context.name();
 }
 
-query chessmlprofile::RTComponentModel::CHRtSpecification::schedulableResource(slot : Slot) : String {
+query opaqueActionName(instance : InstanceSpecification, chrtSpec : chessmlprofile::RTComponentModel::CHRtSpecification) : String {
+	return instance.name + instance.getStringId() + "_" + chrtSpec.context.name();
+}
+
+
+query chessmlprofile::RTComponentModel::CHRtSpecification::schedulableResourceName(chrtportslot : chessmlprofile::RTComponentModel::CHRtPortSlot) : String {
+    //TODO what happens if the operation (i.e. the 'context') is overloaded? (same name?): resolved with name() query
+    var slot = chrtportslot.base_Slot;
+    if (slot <> null) {
+		return slot.owningInstance.name + slot.owningInstance.getStringId() + "_" 
+			+ slot.definingFeature![Port].name // + slot.getStringId() 
+			+ "_" + self.context.name() + "_task";
+	}else{
+		var instance = chrtportslot.base_InstanceSpecification;
+		return instance.name + instance.getStringId() + "_" 
+			+ "_" + self.context.name() + "_task";
+	};
+	return "";
+}
+
+/*replaced by the query above
+query chessmlprofile::RTComponentModel::CHRtSpecification::schedulableResourceName(slot : Slot) : String {
     //TODO what happens if the operation (i.e. the 'context') is overloaded? (same name?): resolved with name() query
 	return slot.owningInstance.name + slot.owningInstance.getStringId() + "_" 
 		+ slot.definingFeature![Port].name // + slot.getStringId() 
 		+ "_" + self.context.name() + "_task";
 }
+
+
+query chessmlprofile::RTComponentModel::CHRtSpecification::schedulableResourceName(instance : InstanceSpecification) : String {
+    //TODO what happens if the operation (i.e. the 'context') is overloaded? (same name?): resolved with name() query
+	return instance.name + instance.getStringId() + "_" 
+		+ "_" + self.context.name() + "_task";
+}*/
+
 
 -- CHESS Stereotype Qualified Names
 
@@ -249,6 +283,10 @@ property ComponentViewQN ="CHESS::Core::CHESSViews::ComponentView";
 
 property IdentifInstanceQN = "CHESS::Core::IdentifInstance";
 property IdentifSlotQN = "CHESS::Core::IdentifSlot";	
+
+property ARINCFunctionQN = "CHESS::Predictability::ARINCComponentModel::ARINCFunction";
+property ARINCProcessQN = "CHESS::Predictability::ARINCComponentModel::ARINCProcess";
+property ARINCComponentQN = "CHESS::Predictability::ARINCComponentModel::ARINCComponentImpl";
 
 -- MARTE Stereotype Qualified Names
 property ClientServerPortQN = "MARTE::MARTE_DesignModel::GCM::ClientServerPort";

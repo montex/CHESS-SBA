@@ -144,6 +144,8 @@ public class TransUtil {
 			Stereotype stereo = pkg.getAppliedStereotype("CHESS::Core::PSMPackage");
 			if(stereo != null){
 				PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
+				if(psmPkg.getAnalysisContext() == null)
+					continue;
 				if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisQN)){
 					psmPackage = pkg;
 					platform = ((CHGaResourcePlatform) psmPkg.getAnalysisContext().getPlatform().get(0)).getBase_Package();

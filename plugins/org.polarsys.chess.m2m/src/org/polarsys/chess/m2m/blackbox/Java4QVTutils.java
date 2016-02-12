@@ -15,11 +15,16 @@ import org.eclipse.m2m.qvt.oml.blackbox.java.Operation.Kind;
 import org.eclipse.m2m.qvt.oml.util.IContext;
 import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.ActivityFinalNode;
+import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.InitialNode;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.OpaqueAction;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.UMLFactory;
+import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
+import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
+import org.polarsys.chess.chessmlprofile.util.Constants;
+import org.polarsys.chess.core.util.uml.ModelError;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
 
@@ -90,6 +95,33 @@ public class Java4QVTutils {
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public  static InstanceSpecification getRootInstanceInPackage(IContext context, Package self) {
 		return UMLUtils.getRootInstanceInPackage(self);
+	}
+	
+	/**
+	 * Updates the occKind property for the CHRtSpecification decorating an ARINCFunction.
+	 * An ARINFFunction derives its period from the owning ARINCProcess.
+	 *
+	 * @param context the context
+	 * @param self the InstanceSpecification instance of ARINCComponentImpl
+	 * @param comment The Comment with the CHRTSpecification decorating the ARINCFunction
+	 * @return 
+	 * @throws ModelError 
+	 */
+	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
+	public static void getUpdatedArincFunChrtSpec(IContext context, 
+			InstanceSpecification self,	Comment comment)  {
+		
+		CHRtSpecification chrtspec = (CHRtSpecification) comment.getStereotypeApplication(
+				comment.getAppliedStereotype(Constants.CHRT_SPECIFICATION)
+				);
+		
+		try {
+			UMLUtils.getUpdatedArincFunChrtSpec(self, chrtspec);
+		} catch (ModelError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 	}
 	
 }
