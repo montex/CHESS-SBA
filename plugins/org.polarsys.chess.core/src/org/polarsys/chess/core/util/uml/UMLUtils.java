@@ -79,8 +79,10 @@ import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.chessmlprofile.util.Constants;
+import org.polarsys.chess.core.notifications.ResourceNotification;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.AnalysisResultData;
+import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.EndToEndResultData;
 import org.polarsys.chess.core.util.HWAnalysisResultData;
 import org.polarsys.chess.core.views.ViewUtils;
@@ -1604,6 +1606,7 @@ public class UMLUtils {
 					psmPackage = pkg;
 					//					platform = ((CHGaResourcePlatform) psmPkg.getAnalysisContext().getPlatform().get(0)).getBase_Package();
 					Slot slot = null;
+					InstanceSpecification componentInstance = null;
 					Comment chrtComm = null;
 					//					Activity pimsaEndtoEndFlow = null;
 					//ASSUMPTION psmPackage owns a AnalysisContext Package
@@ -1632,7 +1635,7 @@ public class UMLUtils {
 							saStep = (SaStep) node.getStereotypeApplication(node.getAppliedStereotype(Constants.MARTE_SaStep));
 							//now obtain the link to the originating PIM
 							//ASSUMPTION: constraints are generated under the contextClass to store information about traceability to PIM
-							//ASSUMPTION: constrained elements are: SaEndtoEndFlow Activity, ChRtPortSlot Slot, CHRtSpecification Comment.
+							//ASSUMPTION: constrained elements are: SaEndtoEndFlow Activity, ChRtPortSlot Slot or InstanceSpecification, CHRtSpecification Comment.
 							for (Constraint constr : psmAnalysisContextClass.getOwnedRules()){
 								if (!constr.getConstrainedElements().contains(activity))
 									continue;
@@ -1641,27 +1644,24 @@ public class UMLUtils {
 										slot = (Slot) constrained;
 									if (constrained instanceof Comment)
 										chrtComm = (Comment) constrained;
+									if (constrained instanceof InstanceSpecification)
+										componentInstance = (InstanceSpecification) constrained;
 								}
 							}
 
-							if (chrtComm == null || slot == null){
+							if (chrtComm == null || (slot == null && componentInstance==null)){
 								break;
 							}
 
-							//ASSUMPTION slot, chrtComm not empty
+							//ASSUMPTION chrtComm not null; slot or componentInstance not null
 							CHRtSpecification chrt = (CHRtSpecification) chrtComm.getStereotypeApplication(chrtComm.getApplicableStereotype(Constants.CHRT_SPECIFICATION));
 
 							AnalysisResultData resultData = new AnalysisResultData();
-							InstanceSpecification inst =  slot.getOwningInstance();
-							/*
-								Stereotype idInstStereo = inst.getAppliedStereotype(TabbedPropertiesUtils.IDENTIFINST);
-								if(idInstStereo != null){
-									IdentifInstance idInst = (IdentifInstance) inst.getStereotypeApplication(idInstStereo);
-									resultData.instSpec = idInst.getSourceInstanceSpec();
-								}*/
+							InstanceSpecification inst =  (slot!=null ? slot.getOwningInstance() : componentInstance);
+						
 							resultData.instSpec = inst;
 							resultData.ctxOP = (Operation) chrt.getContext();
-							resultData.instance = slot.getOwningInstance().getName();
+							resultData.instance = inst.getName();
 							resultData.context = chrt.getContext().getName();
 							ActivityNode initial = activity.getNode("InitialNode1");
 							Stereotype initialStereo = initial.getAppliedStereotype(Constants.GAWORKLOADEVENT);
@@ -2146,7 +2146,7 @@ public class UMLUtils {
 	 * @param arincFunctionSpec the CHRtSpecification referring the ARINCFunction
 	 * @throws ModelError 
 	 */
-	public static CHRtSpecification getArincProcessSpecification(CHRtPortSlot instance, CHRtSpecification arincFunctionSpec) 
+	public static CHRtSpecification getArincProcessSpecification(InstanceSpecification instSpec, CHRtSpecification arincFunctionSpec) 
 			throws ModelError {
 		
 		String theArincFunctName = "";
@@ -2161,7 +2161,6 @@ public class UMLUtils {
 		}
 			
 		//instance.getPOrtSlots
-		InstanceSpecification instSpec = instance.getBase_InstanceSpecification();
 		EList<Slot> slotList = instSpec.getSlots();
 		for (Slot slot : slotList) {
 			//look at all the chrtspecifications of the port slot   
@@ -2176,7 +2175,7 @@ public class UMLUtils {
 						ARINCProcess arincProcess = (ARINCProcess) behavFeat.getStereotypeApplication(arincProcessStereo);
 						String opGroupsString = arincProcess.getOperationsGroups();
 						// if in its OperationGroups it contains the (name of the) ARUNCFunction referred to by arincFunctionSpec
-						if (opGroupsString.contains(theArincFunctName)) {
+						if (opGroupsString!=null && opGroupsString.contains(theArincFunctName)) {
 							return chrtspec;											 
 						}
 					}
@@ -2190,15 +2189,20 @@ public class UMLUtils {
 	 * Returns the CHRtSpecification for an ARINCFunction, 
 	 * deriving it from the CHRtSpecification of the related CHRtProcess
 	 * and the occurrencyKind of the ARINCFunction itself
-	 * @param arincFunctChrtspec
-	 * @param arincProcessChrtspec
+	 * @param instance  The InstanceSpecification instance of ARINCComponentImpl owning the given ARINCFunction
+	 * @param arincProcessChrtspec The CHRtSpecification decorating the ARINCFunction
 	 * @return
 	 * @throws ModelError 
 	 */
-	public static CHRtSpecification getUpdatedArincFunChrtSpec (CHRtPortSlot instance, 
+	public static CHRtSpecification getUpdatedArincFunChrtSpec (InstanceSpecification instance, 
 			CHRtSpecification arincFunctChrtspec) throws ModelError {
 		
 		CHRtSpecification arincProcessChrtspec = getArincProcessSpecification(instance, arincFunctChrtspec);
+		
+		if (arincProcessChrtspec == null){
+			CHESSProjectSupport.printlnToCHESSConsole("ERROR: Unable to retrieve the ARICProcess from the ARINCFunction "+arincFunctChrtspec);
+			return null;
+		}
 		
 		CHRtSpecification chrtspec = arincFunctChrtspec;
 		String occurrencyKindArincProc = arincProcessChrtspec.getOccKind();
