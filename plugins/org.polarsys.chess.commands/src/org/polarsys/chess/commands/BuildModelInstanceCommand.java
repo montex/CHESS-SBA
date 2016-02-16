@@ -177,8 +177,8 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		final DiagramStatus ds = CHESSEditorUtils.getDiagramStatus(editor);
 		final Package view = ViewUtils.getView(umlClass);
 		final Model umlModel = view.getModel();
-		
-		try{;
+		oldInstancePackage = null;
+		try{
 
 			TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(umlClass);
 			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
