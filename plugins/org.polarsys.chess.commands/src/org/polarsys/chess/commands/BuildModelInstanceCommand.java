@@ -45,6 +45,7 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.InstanceValue;
 import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.Port;
@@ -162,9 +163,17 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 	}
 	
 	/**
-	 * Prepares the package which will own the instances and create the instances for the given UML::Class and its internals, i.e. the owned properties and connectors.
-	 * Extra functional information specified at class\property level is applied also to the instance level, where required by the CHESS methodology
-	 * (e.g. the CHRtSpecification specified for the ports are applied to the instances of the ports).
+	 * Prepares the package which will own the instances and create the instances for the given UML::Class and its internal structure, i.e. the owned properties (parts and ports) and connectors.
+	 * 
+	 * Extra functional information specified at class\property level is propagated to the instance level, where foreseen by the CHESS methodology
+	 * (e.g. the CHRtSpecification specified for the ports are applied to the instances of the ports); 
+	 * Note that in case of multiple instances of the same class instantiated at different levels of the SW hierarchy,
+	 * the assignment of the proper extra functional information for the derived instances cannot work while considering the information available at class-property level.
+	 * 
+	 * This method tries to preserve the current SW to HW allocation, i.e. the Assign having the instances in 'from' and 'to' attributes.
+	 * Moreover this method check if an instance model is already available for the given class; in case it tries to synchronize
+	 * the new model with the information about extra functional properties specified in the old instance model.
+	 * 
 	 * The model is updated by using a transactional command.
 	 * 
 	 * @param umlClass the Class for which the instance-level representation has to be created
@@ -178,6 +187,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		final Package view = ViewUtils.getView(umlClass);
 		final Model umlModel = view.getModel();
 		oldInstancePackage = null;
+		oldRootInstance = null;
 		try{
 
 			TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(umlClass);
@@ -265,9 +275,9 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 	 */
 	private InstanceSpecification buildComponentInstance(Package pkg, Class umlClass, InstanceSpecification parentInstance, Property theProp, InstanceSpecification oldInst) {
 		
-		//the list of CHRtSPecification from which the instance-level representation has to be created
-		//assumption: when a CHRtSpecification is created for a given port instance, it is placed in the namespace of the Class owning the Port.
-		List<Comment> commList = umlClass.getOwnedComments();
+		
+		//CHESS supports annotation of ports with CHRTSpecification through the composite diagram: in this case the instances of the ports derive the chrtSpecification from the decorated ports
+		List<Comment> commList = getAllCHRTSpec(umlClass, theProp);
 		
 		InstanceSpecification inst = UMLFactory.eINSTANCE.createInstanceSpecification();
 		if(theProp != null){
@@ -290,6 +300,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		if(theProp != null){
 			mapStereotypesFromPropertyToInstance(theProp, inst, oldInst);
 		}
+		
 		for (Property subProp : umlClass.getAttributes()) {
 			//properties
 			if(subProp.getType() instanceof Class){
@@ -305,9 +316,10 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 				inst.getSlots().add(slot);
 				InstanceValue instValue = (InstanceValue) slot.createValue(subProp.getName(), null, UMLPackage.Literals.INSTANCE_VALUE);
 				instValue.setInstance(subInst);
+
 			}
 			//ports
-			if(subProp.getAppliedStereotype(MARTE_CSP) != null || (UMLUtils.getStereotypeApplication(subProp, FlowPort.class)!=null)){
+			else if(subProp.getAppliedStereotype(MARTE_CSP) != null || (UMLUtils.getStereotypeApplication(subProp, FlowPort.class)!=null)){
 				Slot slot = UMLFactory.eINSTANCE.createSlot();
 				slot.setDefiningFeature(subProp);
 				inst.getSlots().add(slot);
@@ -357,6 +369,31 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		if(theProp != null){
 			property2InstMap.put(theProp, inst);
 		}
+		
+		//set <<chrtportslot>> attribute for the instance
+		//TODO this should be extended in case of multiple instances of the same class!!!
+		List<CHRtSpecification> tmpList = new ArrayList<CHRtSpecification>();
+		for (Comment comm : commList) {
+			if(comm.getAppliedStereotype(Constants.CHRT_SPECIFICATION) != null && comm.getAnnotatedElements().contains(umlClass)){
+				Stereotype chrtStereo = comm.getAppliedStereotype(Constants.CHRT_SPECIFICATION);
+				CHRtSpecification chrt = (CHRtSpecification) comm.getStereotypeApplication(chrtStereo);
+				tmpList.add(chrt);
+			}
+		}
+		CHRtPortSlot chrtportSlot = null;
+		if(tmpList.size() > 0){
+			Stereotype portSlotStereo = null;
+			if (inst.getAppliedStereotype(Constants.CH_CHRtPortSlot) != null)
+				portSlotStereo = inst.getAppliedStereotype(Constants.CH_CHRtPortSlot);
+			else
+				portSlotStereo = CHESSProfileManager.applyChRTPortSlotStereotype(inst);
+			chrtportSlot = (CHRtPortSlot) inst.getStereotypeApplication(portSlotStereo);
+			chrtportSlot.getCH_RtSpecification().addAll(tmpList);
+		}
+		//TODO asynchronize with the old instance....
+		
+		//end set <<chrtportslot>>
+		
 		return inst;
 	}
 	
@@ -608,6 +645,29 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * returns the CHRTspecification Comments that have been already created for the operations of given class and/or property
+	 * @param umlClass the class owning the operations possibly annotated with chrtspecification
+	 * @param theProp can be null, the property (instance of component) which can have ports-operations annotated with CHRTspecification
+	 * @return
+	 */
+	private List<Comment> getAllCHRTSpec(Class umlClass, Property theProp){
+		
+		//take all the comment owner by the Class
+		List<Comment> commList = umlClass.getOwnedComments();
+		
+		//when working with composite diagram the comments annotating ports of a given property are placed under the context classifier
+		if (theProp != null)
+			commList.addAll(theProp.getFeaturingClassifiers().get(0).getOwnedComments());
+		
+		//check for chrt owned by operations
+		for (Operation op : umlClass.getOperations()){
+			commList.addAll(op.getOwnedComments());
+		}
+		return commList;
+		
 	}
 	
 }
