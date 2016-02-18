@@ -169,7 +169,15 @@ public class Constants {
 	public static final String GAWORKLOADEVENT = "MARTE::MARTE_AnalysisModel::GQAM::GaWorkloadEvent";
 	public static final String GAWORKLOADBEHAVIOR = "MARTE::MARTE_AnalysisModel::GQAM::GaWorkloadBehavior";
 	
-	
 	public static final String CH_PsmPackage = "CHESS::Core::PSMPackage";
+	
+	// from TabbedPropertiesUtils
+	public static final String GALATENCYOBS = "MARTE::MARTE_AnalysisModel::GQAM::GaLatencyObs";
+	
+	// For IMA Avionics
+	public static final String CH_ARINCFunction = "CHESS::Predictability::ARINCComponentModel::ARINCFunction";
+	public static final String CH_ARINCProcess = "CHESS::Predictability::ARINCComponentModel::ARINCProcess";
+	public static final String CH_ARINCComponentImpl = "CHESS::Predictability::ARINCComponentModel::ARINCComponentImpl";
+
 	
 }
