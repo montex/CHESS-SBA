@@ -153,6 +153,10 @@
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_G4dxMPWcEeG6etnsQZngdA" name="systemView" type="_-q1ocPWbEeG6etnsQZngdA" aggregation="composite"/>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_30_8UFOzEeS4RO3Q2Jk6sA" name="psmView" type="_eCaeYElHEeSHXILU_Im6sA"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_4a5ZkNcwEeWr_eoZOyce5Q" name="domain" type="_qrbY4NcwEeWr_eoZOyce5Q">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_APwdANcxEeWr_eoZOyce5Q" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_APwdAdcxEeWr_eoZOyce5Q" value="1"/>
+        </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Extension" xmi:id="_1Baf4DgXEd-68Z_bhNRGsA" name="Extension_CHESS" memberEnd="_1Baf4TgXEd-68Z_bhNRGsA _1Baf4jgXEd-68Z_bhNRGsA">
         <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_1Baf4TgXEd-68Z_bhNRGsA" name="extension_CHESS" type="_opjLUDgXEd-68Z_bhNRGsA" aggregation="composite" association="_1Baf4DgXEd-68Z_bhNRGsA"/>
@@ -1132,6 +1136,15 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Extension" xmi:id="_a4h48KrGEeSm_c79BO815Q" name="E_FunctionalPartitions_Component1" memberEnd="_a4h48arGEeSm_c79BO815Q _a4hR4KrGEeSm_c79BO815Q">
         <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_a4h48arGEeSm_c79BO815Q" name="extension_FunctionalPartitions" type="_V2ydYKrGEeSm_c79BO815Q" aggregation="composite" association="_a4h48KrGEeSm_c79BO815Q"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_qrbY4NcwEeWr_eoZOyce5Q" name="Domain">
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_-SxEgNczEeWVgfhRtuetJg" name="cross_domain"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_uJyWINcwEeWr_eoZOyce5Q" name="avionics"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_wC1icNcwEeWr_eoZOyce5Q" name="automotive"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_ylcCENcwEeWr_eoZOyce5Q" name="telecom"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_zgpGENcwEeWr_eoZOyce5Q" name="space"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_1UXtgNcwEeWr_eoZOyce5Q" name="medical"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_2k2d8NcwEeWr_eoZOyce5Q" name="petroleum"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_WSNEsMGMEd--atLXXafOiQ" name="Dependability">

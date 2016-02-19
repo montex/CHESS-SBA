@@ -35,6 +35,7 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.SystemView;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getComponentView <em>Component View</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getSystemView <em>System View</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getPsmView <em>Psm View</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getDomain <em>Domain</em>}</li>
  * </ul>
  * </p>
  *
@@ -224,5 +225,34 @@ public interface CHESS extends EObject {
 	 * @generated
 	 */
 	void setPsmView(PSMView value);
+
+	/**
+	 * Returns the value of the '<em><b>Domain</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.polarsys.chess.chessmlprofile.Core.Domain}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Domain</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Domain</em>' attribute.
+	 * @see org.polarsys.chess.chessmlprofile.Core.Domain
+	 * @see #setDomain(Domain)
+	 * @see org.polarsys.chess.chessmlprofile.Core.CorePackage#getCHESS_Domain()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	Domain getDomain();
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getDomain <em>Domain</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Domain</em>' attribute.
+	 * @see org.polarsys.chess.chessmlprofile.Core.Domain
+	 * @see #getDomain()
+	 * @generated
+	 */
+	void setDomain(Domain value);
 
 } // CHESS

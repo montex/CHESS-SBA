@@ -13,6 +13,7 @@ package org.polarsys.chess.chessmlprofile.Core.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -35,6 +36,7 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentModelPacka
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 import org.polarsys.chess.chessmlprofile.Core.CoreFactory;
 import org.polarsys.chess.chessmlprofile.Core.CorePackage;
+import org.polarsys.chess.chessmlprofile.Core.Domain;
 import org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions;
 import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Core.IdentifSlot;
@@ -151,6 +153,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	private EClass functionalPartitionsEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum domainEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -379,6 +388,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getCHESS_Domain() {
+		return (EAttribute)chessEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCHGaResourcePlatform() {
 		return chGaResourcePlatformEClass;
 	}
@@ -577,6 +595,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getDomain() {
+		return domainEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CoreFactory getCoreFactory() {
 		return (CoreFactory)getEFactoryInstance();
 	}
@@ -608,6 +635,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(chessEClass, CHESS__COMPONENT_VIEW);
 		createEReference(chessEClass, CHESS__SYSTEM_VIEW);
 		createEReference(chessEClass, CHESS__PSM_VIEW);
+		createEAttribute(chessEClass, CHESS__DOMAIN);
 
 		chGaResourcePlatformEClass = createEClass(CH_GA_RESOURCE_PLATFORM);
 		createEReference(chGaResourcePlatformEClass, CH_GA_RESOURCE_PLATFORM__BASE_INSTANCE_SPECIFICATION);
@@ -637,6 +665,9 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		functionalPartitionsEClass = createEClass(FUNCTIONAL_PARTITIONS);
 		createEReference(functionalPartitionsEClass, FUNCTIONAL_PARTITIONS__BASE_PACKAGE);
 		createEReference(functionalPartitionsEClass, FUNCTIONAL_PARTITIONS__BASE_COMPONENT);
+
+		// Create enums
+		domainEEnum = createEEnum(DOMAIN);
 	}
 
 	/**
@@ -688,6 +719,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getCHESS_ComponentView(), theCHESSViewsPackage.getComponentView(), null, "componentView", null, 1, 1, org.polarsys.chess.chessmlprofile.Core.CHESS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCHESS_SystemView(), theCHESSViewsPackage.getSystemView(), null, "systemView", null, 1, 1, org.polarsys.chess.chessmlprofile.Core.CHESS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCHESS_PsmView(), theCHESSViewsPackage.getPSMView(), null, "psmView", null, 1, 1, org.polarsys.chess.chessmlprofile.Core.CHESS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHESS_Domain(), this.getDomain(), "domain", null, 1, 1, org.polarsys.chess.chessmlprofile.Core.CHESS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(chGaResourcePlatformEClass, CHGaResourcePlatform.class, "CHGaResourcePlatform", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCHGaResourcePlatform_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, CHGaResourcePlatform.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -717,6 +749,16 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEClass(functionalPartitionsEClass, FunctionalPartitions.class, "FunctionalPartitions", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFunctionalPartitions_Base_Package(), theUMLPackage.getPackage(), null, "base_Package", null, 1, 1, FunctionalPartitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getFunctionalPartitions_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, FunctionalPartitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(domainEEnum, Domain.class, "Domain");
+		addEEnumLiteral(domainEEnum, Domain.CROSS_DOMAIN);
+		addEEnumLiteral(domainEEnum, Domain.AVIONICS);
+		addEEnumLiteral(domainEEnum, Domain.AUTOMOTIVE);
+		addEEnumLiteral(domainEEnum, Domain.TELECOM);
+		addEEnumLiteral(domainEEnum, Domain.SPACE);
+		addEEnumLiteral(domainEEnum, Domain.MEDICAL);
+		addEEnumLiteral(domainEEnum, Domain.PETROLEUM);
 	}
 
 } //CorePackageImpl

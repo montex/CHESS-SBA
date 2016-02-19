@@ -13,6 +13,7 @@ package org.polarsys.chess.chessmlprofile.Core;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -140,13 +141,22 @@ public interface CorePackage extends EPackage {
 	int CHESS__PSM_VIEW = 6;
 
 	/**
+	 * The feature id for the '<em><b>Domain</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS__DOMAIN = 7;
+
+	/**
 	 * The number of structural features of the '<em>CHESS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CHESS_FEATURE_COUNT = 7;
+	int CHESS_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.CHGaResourcePlatformImpl <em>CH Ga Resource Platform</em>}' class.
@@ -439,6 +449,17 @@ public interface CorePackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.Domain <em>Domain</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Core.Domain
+	 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getDomain()
+	 * @generated
+	 */
+	int DOMAIN = 8;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.CHESS <em>CHESS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -524,6 +545,17 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCHESS_PsmView();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getDomain <em>Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Domain</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.CHESS#getDomain()
+	 * @see #getCHESS()
+	 * @generated
+	 */
+	EAttribute getCHESS_Domain();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform <em>CH Ga Resource Platform</em>}'.
@@ -761,6 +793,16 @@ public interface CorePackage extends EPackage {
 	EReference getFunctionalPartitions_Base_Component();
 
 	/**
+	 * Returns the meta object for enum '{@link org.polarsys.chess.chessmlprofile.Core.Domain <em>Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Domain</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.Domain
+	 * @generated
+	 */
+	EEnum getDomain();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -847,6 +889,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference CHESS__PSM_VIEW = eINSTANCE.getCHESS_PsmView();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHESS__DOMAIN = eINSTANCE.getCHESS_Domain();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.CHGaResourcePlatformImpl <em>CH Ga Resource Platform</em>}' class.
@@ -1037,6 +1087,16 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference FUNCTIONAL_PARTITIONS__BASE_COMPONENT = eINSTANCE.getFunctionalPartitions_Base_Component();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.Domain <em>Domain</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Core.Domain
+		 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getDomain()
+		 * @generated
+		 */
+		EEnum DOMAIN = eINSTANCE.getDomain();
 
 	}
 

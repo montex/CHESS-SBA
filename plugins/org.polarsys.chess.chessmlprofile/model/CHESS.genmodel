@@ -38,6 +38,15 @@
     <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//dummy"/>
     <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="Core" basePackage="org.polarsys.chess.chessmlprofile"
         resource="XML" disposableProviderFactory="true" ecorePackage="chessmlprofile.ecore#//Core">
+      <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chessmlprofile.ecore#//Core/Domain">
+        <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Core/Domain/cross_domain"/>
+        <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Core/Domain/avionics"/>
+        <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Core/Domain/automotive"/>
+        <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Core/Domain/telecom"/>
+        <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Core/Domain/space"/>
+        <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Core/Domain/medical"/>
+        <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chessmlprofile.ecore#//Core/Domain/petroleum"/>
+      </genEnums>
       <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHESS">
         <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
             propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/base_Model"/>
@@ -53,6 +62,7 @@
             createChild="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/systemView"/>
         <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
             propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Core/CHESS/psmView"/>
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Core/CHESS/domain"/>
       </genClasses>
       <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Core/CHGaResourcePlatform">
         <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
