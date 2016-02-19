@@ -11,6 +11,7 @@
 package org.polarsys.chess.commands;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -657,16 +658,27 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 		
 		//take all the comment owner by the Class
 		List<Comment> commList = umlClass.getOwnedComments();
-		
+		List<Comment> mycommlist = new ArrayList<Comment>();
+		for (Comment comm:commList){
+			mycommlist.add(comm);
+		}
+
 		//when working with composite diagram the comments annotating ports of a given property are placed under the context classifier
-		if (theProp != null)
-			commList.addAll(theProp.getFeaturingClassifiers().get(0).getOwnedComments());
+		if (theProp != null){
+			commList = theProp.getFeaturingClassifiers().get(0).getOwnedComments();
+			for (Comment comm:commList){
+				mycommlist.add(comm);
+			}
+		}
 		
 		//check for chrt owned by operations
 		for (Operation op : umlClass.getOperations()){
-			commList.addAll(op.getOwnedComments());
+			commList = op.getOwnedComments();
+			for (Comment comm:commList){
+				mycommlist.add(comm);
+			}
 		}
-		return commList;
+		return mycommlist;
 		
 	}
 	
