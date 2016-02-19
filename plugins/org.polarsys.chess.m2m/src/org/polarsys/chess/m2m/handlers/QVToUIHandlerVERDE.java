@@ -63,6 +63,7 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPor
 import org.polarsys.chess.core.util.AnalysisResultData;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.HWAnalysisResultData;
+import org.polarsys.chess.core.util.uml.ModelError;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.ViewUtils;
@@ -179,6 +180,24 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 				SaAnalysisContext saAnalysisContext = (SaAnalysisContext) elem.getStereotypeApplication(saAnalysisContextStereo);
 				List<CH_HwProcessor> tmpList = getPlatformChHwProcessors(saAnalysisContext, model);
 				chHwProcList.addAll(tmpList);
+				
+				// Check that the Context Platform contains two CHGaResourcePlatform instances, one in ComponentView, one in DeploymentView
+				// and that at least on CH_HwPlatform is specified in the Context
+				if (chHwProcList.isEmpty() || !UMLUtils.checkPlatformsInContext(saAnalysisContext, model)) {
+					MessageDialog.openWarning(activeShell, "CHESS", "Context must specify a SW and a HW instance platform!");
+					return null;
+				}
+
+				try {
+					// Check that at least one Partition or Task is allocated on a Core of a ChHwProcessor specified in the Context
+					if(!UMLUtils.checkAllocationToCores(chHwProcList, model)) {
+						MessageDialog.openWarning(activeShell, "CHESS", "No partition or task allocated to Core!");
+						return null;
+					}
+				} catch (ModelError e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		}

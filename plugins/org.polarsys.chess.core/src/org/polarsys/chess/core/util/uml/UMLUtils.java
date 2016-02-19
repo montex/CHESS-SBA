@@ -31,6 +31,7 @@ import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaResourcesPlatform;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaWorkloadEvent;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaEndtoEndFlow;
@@ -2254,7 +2255,72 @@ public class UMLUtils {
 	}	
 
 
+	/**
+	 * Checks that the Context has two CHGaResourcePlatforms specified in the Platform field,
+	 * one must be in the ComponentView and one in the DeploymentView,
+	 * the one in the DeploymentView must contain a CH_HWProcessor
+	 * @param saAnalysisContext
+	 * @return true if the Context points to a SW and a HW instance in the Platform field 
+	 */
+	public static boolean checkPlatformsInContext(SaAnalysisContext saAnalysisContext, Model umlModel) {
+		boolean result = false;
 
+		EList<GaResourcesPlatform> thePlatforms = saAnalysisContext.getPlatform();
+		int count = 0;
+		int countInDeploymentView = 0;
+		int countInComponentView = 0;		
+
+		for (GaResourcesPlatform thePlatform : thePlatforms) {
+			if (thePlatform instanceof CHGaResourcePlatform) {
+				count++;
+			}
+			Package instancePkg = ((CHGaResourcePlatform) thePlatform).getBase_Package();
+			EList<Package> owningPkgs = instancePkg.allOwningPackages();
+			for (Package pack : owningPkgs) {
+				if (pack.equals(CHESSProfileManager.getViewByStereotype(umlModel, Constants.DEPLOYMENT_VIEW_NAME))) {
+					countInDeploymentView++;
+				}
+				else {
+					if (pack.equals(CHESSProfileManager.getViewByStereotype(umlModel, Constants.COMPONENT_VIEW_NAME))) {
+						countInComponentView++;
+					}
+				}
+			}
+		}
+		if (count==2 && countInDeploymentView==1 && countInComponentView==1) {
+			result = true;
+		}
+
+		return result;		
+	}	
+
+	/**
+	 * Checks that at least one Partition or Task is allocated on a Core that is owned by one of the HW instances in input
+	 * @param chHwProcList
+	 * @return true if Checks that at least one Partition or Task is allocated on a Core that is owned by one of the HW instances in input
+	 * @throws ModelError 
+	 */
+	public static boolean checkAllocationToCores(List<CH_HwProcessor> chHwProcList, Model umlModel) throws ModelError {
+		boolean result = false;
+
+		// Look for assignments that involve one of the HW system instances in input
+		for (CH_HwProcessor chHwProc : chHwProcList) {
+			EList<Assign> all2CoresAssignments = getAll2CoreAssignments(umlModel, Constants.DEPLOYMENT_VIEW_NAME);
+			for (Assign assignment : all2CoresAssignments) {
+				EList<Element> destinations = assignment.getTo();
+				for (Element assignmentTarget : destinations) {
+					if (elementIsProcessorInstance(assignmentTarget)) {
+						Stereotype chHwProcStereo = assignmentTarget.getAppliedStereotype(Constants.CH_HWPROCESSOR);
+						CH_HwProcessor theAssignmentChHwProc = (CH_HwProcessor) assignmentTarget.getStereotypeApplication(chHwProcStereo);
+						if (chHwProc.equals(theAssignmentChHwProc)) {
+							return true;
+						}
+					}
+				}						
+			}
+		}
+		return result;
+	}
 
 
 
