@@ -66,7 +66,7 @@ public class EFVRT_03 extends AbstractModelConstraint {
 		if(occValue == null || !(occValue.contains(Constants.CHRTSPEC_OCCKIND_PERIODIC)))
 			return success;
 		else {
-			if(wcet == null || relDl == null)
+			if(relDl == null)
 				return failure;
 			else {
 				double period = parser.getValuePattern(occValue, "period");
