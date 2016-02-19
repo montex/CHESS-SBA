@@ -29,7 +29,8 @@ Require-Bundle: org.eclipse.ui,
  org.polarsys.chess.service,
  org.polarsys.chess.m2m,
  org.eclipse.emf.common,
- org.eclipse.jface
+ org.eclipse.jface,
+ org.eclipse.papyrus.infra.services.validation;bundle-version="1.0.2"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Polarsys CHESS Project
@@ -53,3 +54,4 @@ Export-Package: org.polarsys.chess.m2m;
    org.eclipse.jface.dialogs",
  org.polarsys.chess.m2m.transformations,
  org.polarsys.chess.m2m.ui
+Import-Package: org.eclipse.emf.workspace

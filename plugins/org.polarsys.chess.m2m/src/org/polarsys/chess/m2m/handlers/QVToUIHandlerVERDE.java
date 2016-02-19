@@ -74,6 +74,7 @@ import org.polarsys.chess.m2m.transformations.TransformationResultsData;
 import org.polarsys.chess.m2m.ui.AnalysisContextSelectionDialog;
 import org.polarsys.chess.m2m.ui.SchedResultDialog;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.validator.command.ChessGenericValidateCommand;
 
 
 // TODO: Auto-generated Javadoc
@@ -134,11 +135,37 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		}
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		activeShell = window.getShell();
+		
+		// run CHESS Validate Core Constraints to validate the model before running analysis
+		String label = "Validate model for CHESS Core Constraints";
+		final Model model = (Model) inResource.getContents().get(0);		
+
+		ChessGenericValidateCommand chessValidateCommand = new ChessGenericValidateCommand(label, 
+				org.polarsys.chess.validator.Activator.PLUGIN_ID, model);	
+
+		boolean go = false;
+		if(chessValidateCommand != null) {
+			try {
+				chessValidateCommand.executeCommand(null, null);
+			}
+			catch (ExecutionException exception) {
+				return null;
+			}
+			if (chessValidateCommand.getMarkers()) {
+				go = MessageDialog.openQuestion(activeShell, "Validation Problems", "Errors found while validating the Model. Schedulability Analysis won't be performed correctly. Do you still want to continue?");
+				if (!go) {
+					return null;
+				}
+			}
+		} 
+		else {
+			MessageDialog.openError(activeShell, "Schedulability Analysis", "Problems while perfoming model validation before analysis");						
+		}
+		// end of model validation
 
 		//open a dialog to select the schedulability analysis context to be analyzed
 		//first get all the classes stereotyped as SaAnalysisContext
-		final List<Class> selection = new ArrayList<Class>();
-		final Model model = (Model) inResource.getContents().get(0);
+		final List<Class> selection = new ArrayList<Class>();		
 		EList<Element> elemList = model.allOwnedElements();
 		for (Element elem : elemList) {
 			//we're looking for a class stereotyped <<saAnalysisContext>> and NOT in PSM
