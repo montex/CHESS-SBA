@@ -178,6 +178,9 @@ public class Constants {
 	public static final String CH_ARINCFunction = "CHESS::Predictability::ARINCComponentModel::ARINCFunction";
 	public static final String CH_ARINCProcess = "CHESS::Predictability::ARINCComponentModel::ARINCProcess";
 	public static final String CH_ARINCComponentImpl = "CHESS::Predictability::ARINCComponentModel::ARINCComponentImpl";
+	
+	public static final String CHESS_MODEL_STEREOTYPE = "CHESS::Core::CHESS";
+
 
 	
 }
