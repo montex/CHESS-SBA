@@ -63,15 +63,19 @@ public class StateBasedPreferencePage extends FieldEditorPreferencePage
 		addField(new IntegerFieldEditor("SEED", "Simulation Seed", 
 				getFieldEditorParent()));
 		
-		FileFieldEditor ffe = new FileFieldEditor("PARAMFILE", "[Parametric] Parameters File", getFieldEditorParent());
+		FileFieldEditor ffe = new FileFieldEditor("PARAMFILE", "Parametric: Parameters File", getFieldEditorParent());
+		ffe.setEmptyStringAllowed(true);
+		addField(ffe);
+		
+		ffe = new FileFieldEditor("RESULTFILE", "Parametric: Results File", getFieldEditorParent());
 		ffe.setEmptyStringAllowed(true);
 		addField(ffe);
 			
-		IntegerFieldEditor ife = new IntegerFieldEditor("EXECPERIOD", "[Parametric] Interval (seconds)", getFieldEditorParent());
+		IntegerFieldEditor ife = new IntegerFieldEditor("EXECPERIOD", "Parametric: Interval (seconds)", getFieldEditorParent());
 		ife.setValidRange(0, Integer.MAX_VALUE);
 		addField(ife);
 		
-		BooleanFieldEditor bfe = new BooleanFieldEditor("RUNONCE", "[Parametric] Single Run", 
+		BooleanFieldEditor bfe = new BooleanFieldEditor("RUNPERIODIC", "Parametric: Periodic Runs", 
 				getFieldEditorParent());
 		bfe.fillIntoGrid(getFieldEditorParent(), 2);
 		addField(bfe);
