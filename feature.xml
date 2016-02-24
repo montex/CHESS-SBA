@@ -24,6 +24,10 @@ v1.0 which accompanies this distribution, and is available at
 http://www.eclipse.org/legal/epl-v10.html
    </license>
 
+   <url>
+      <discovery label="RCL StateBased Update Site" url="http://rcl.dsi.unifi.it/software/concerto/"/>
+   </url>
+
    <plugin
          id="org.polarsys.chess.statebased"
          download-size="0"
