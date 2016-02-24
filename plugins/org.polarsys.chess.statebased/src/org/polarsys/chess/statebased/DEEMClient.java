@@ -29,6 +29,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.polarsys.chess.statebased.daemon.DEEMProgressInformation;
 import org.polarsys.chess.statebased.daemon.ParameterList;
 
 public class DEEMClient {
@@ -42,7 +43,7 @@ public class DEEMClient {
 	private final String RESULTS_SAVEAS = "analysis-results";
 	private IProgressMonitor mon;
 
-	public String sendAndReceiveFile(String model, String folder, IProgressMonitor monitor) throws UnknownHostException, SocketTimeoutException, IOException, ClassNotFoundException {
+	public String sendAndReceiveFile(String model, String folder) throws UnknownHostException, SocketTimeoutException, IOException, ClassNotFoundException {
 
 		String host = Activator.getDefault().getPreferenceStore().getString("HOST");
 		int port = Activator.getDefault().getPreferenceStore().getInt("PORT");
@@ -62,7 +63,7 @@ public class DEEMClient {
 			oout.write(buf, 0, read);
 		}
 		System.out.println("file sent");
-		monitor.worked(1);
+		progress(1);
 
 		oout.writeObject(getParameters());
 		System.out.println("parameters sent");
@@ -103,7 +104,7 @@ public class DEEMClient {
 			fos.write(buf, 0, read);
 		}
 		System.out.println("file received");
-		monitor.worked(1);
+		progress(1);
 
 		fis.close();
 		oout.close();
@@ -132,4 +133,12 @@ public class DEEMClient {
 		mon = monitor;
 	}
 
+	protected IProgressMonitor getProgressMonitor() {
+		return mon;
+	}
+	
+	private void progress(int work) {
+		if(mon != null)
+			mon.worked(work);
+	}
 }

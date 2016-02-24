@@ -13,8 +13,8 @@
 
 -- @atlcompiler atl2010
 
--- @path IDM=/org.chess.statebased/metamodels/IM2.ecore
--- @path PNML=/org.chess.statebased/metamodels/placeTransition.ecore
+-- @path IDM=/org.polarsys.chess.statebased/metamodels/IM2.ecore
+-- @path PNML=/org.polarsys.chess.statebased/metamodels/placeTransition.ecore
 
 module IDM2PNML;
 create OUT : PNML from IN : IDM;
@@ -1880,6 +1880,70 @@ rule Availability extends MeasureOfInterest {
 			);
 		}
 		ite.condition <- thisModule.tmpLogicExp;
+	}
+}
+rule PFD extends MeasureOfInterest {
+	from 
+		idm_measure : IDM!FailureProbability
+	to
+		measure : PNML!Measure,
+		ite : PNML!IfThenElse
+		(
+			condition <- cond	
+		),
+		cond : PNML!OpGreater
+		(
+			expression1 <- thisModule.newMarkingExpression(relplace),
+			expression2 <- thisModule.newValueExpression(0)
+		),
+		relplace : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- measure.name + '_memory_pl',
+			initialMarking <- thisModule.newPTMarking(0)
+		),
+		reltrans : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- measure.name + '_memory_tr',
+			Weight <- 1.0,
+			Priority <- thisModule.priReliability
+		),
+		relarc : PNML!GSPNArc 
+		(
+			containerPage <- thisModule.getPage,
+			id <- measure.name + '_memory_arc',
+			source <- reltrans,
+			target <- relplace
+		),
+		g_and : PNML!OpAnd
+		(
+--			expression1 <- g_first,
+			expression2 <- g_rel
+		),
+		g_first : PNML!OpGreater
+		(
+			expression1 <- thisModule.newMarkingExpression(idm_measure.target.first()),
+			expression2 <- thisModule.newValueExpression(0)				
+		),
+		g_rel : PNML!OpEqual
+		(
+			expression1 <- thisModule.newMarkingExpression(relplace),
+			expression2 <- thisModule.newValueExpression(0)
+		)
+	do {
+		thisModule.tmpLogicExp <- g_first;
+		for(fm in idm_measure.target.excluding(idm_measure.target.first())) {
+			thisModule.tmpLogicExp <- thisModule.newOpOr(
+				thisModule.newOpGreater(
+					thisModule.newMarkingExpression(fm),
+					thisModule.newValueExpression(0)
+				),
+				thisModule.tmpLogicExp
+			);
+		}
+		g_and.expression1 <- thisModule.tmpLogicExp;
+		reltrans.Guard <- g_and;
 	}
 }
 

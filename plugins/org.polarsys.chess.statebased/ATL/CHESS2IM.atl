@@ -11,7 +11,7 @@
 -- Leonardo Montecchi 	lmontecchi@unifi.it                          --
 -----------------------------------------------------------------------
 
--- @path IM=/org.chess.statebased/metamodels/IM2.ecore
+-- @path IM=/org.polarsys.chess.statebased/metamodels/IM2.ecore
 -- @path CHESS=/org.polarsys.chess.chessmlprofile/model/chessmlprofile.ecore
 -- @nsURI MARTE=http://www.eclipse.org/papyrus/MARTE/1
 -- @nsURI UML=http://www.eclipse.org/uml2/4.0.0/UML
@@ -39,20 +39,40 @@ helper def: flaWildcard : String = 'wildcard';
 helper def: flaRules : Map(IM!Component, Map(String, IM!Error)) = Map{};			--Map to obtain the list of flarules for a component, and the corresponding IM!Error elements
 
 --rule to transform the CHESS!StateBasedAnalysis into an IM!Sistema
-rule System {
-
-	from
+rule SBA {
+	from 
 		sba : CHESS!StateBasedAnalysis
+	do {
+		thisModule.System(sba.platform->first().base_Package);
+		
+		--Handle metrics
+		if (sba.WhichMeasure = 'Reliability') {
+			thisModule.Reliability(sba);
+		}else if (sba.WhichMeasure = 'Availability') {
+			thisModule.Availability(sba);
+		}else if (sba.WhichMeasure = 'PFD') {
+			thisModule.PFD(sba);
+		}else{
+			---TODO: others?
+		}
+	}
+}
+
+unique lazy rule System {
+	from
+		platform : UML!Package	
+	--sba : CHESS!StateBasedAnalysis
 		--at the moment is it implied that there is only a StateBasedAnalysis in the model
 	using {
-		platform : UML!Package = sba.platform->first().base_Package;
+		--platform : UML!Package = sba.platform->first().base_Package;
 		instances : Sequence(UML!InstanceSpecification) = UML!InstanceSpecification.allInstances()->select(i | i.refImmediateComposite() = platform);
 		comments : Sequence(UML!Comment) = instances->collect(i | i.ownedComment)->flatten();
 		instSystem : UML!InstanceSpecification = instances->first();
 	} 
 	to
 		s : IM!Sistema (
-			Name <- sba.base_StructuredClassifier.name
+--			Name <- sba.base_StructuredClassifier.name
+			Name <- platform.name
 		)
 	do {
 		--Filter out and categorize relevant CHESS elements
@@ -117,15 +137,6 @@ rule System {
 		--Set IP Backlinks
 		for(ip in IM!InternalPropagation.allInstances()) {
 			thisModule.setIPBackLinks(ip.PropagationLogic, ip);	
-		}
-		
-		--Handle metrics
-		if (sba.WhichMeasure = 'Reliability'){
-			thisModule.Reliability(sba, sba.measure.getTime);
-		}else if (sba.WhichMeasure = 'Availability'){
-			thisModule.Availability(sba, sba.measure.getTime);
-		}else{
-			---TODO: others?
 		}
 	}
 }
@@ -722,7 +733,7 @@ lazy rule newEvalInstantOfTime {
 rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 
 	using {
-		strClean : String = sba.measure.regexReplaceAll('[={}]', ' ').trim();
+		strClean : String = sba.measure.regexReplaceAll('[={}()]', ' ').trim();
 		iInstant : Integer = strClean.indexOf('instantOfTime');
 
 		--Select all the failure modes of component instance specified as 'targetDepComponent'
@@ -739,7 +750,7 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 	}
 	to
 		re : IM!Reliability (
-			Name <-	'Reliability'
+			Name <-	sba.base_NamedElement.name
 		)
 
 	do{
@@ -762,22 +773,21 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 		--If one of the two is not specified, then select all the failure modes specified by the other
 		if(fmSelected.isEmpty()) {
 			re.target <- allFailuresOfSelectedInstances;
-			re.Name <- re.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
+--			re.Name <- re.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
 		}else{
 			if(allFailuresOfSelectedInstances.isEmpty()) {
 				re.target <- fmSelected;
 			}else{
 				re.target <- allFailuresOfSelectedInstances->intersection(fmSelected);
 			}
-			re.Name <- re.Name + re.target->collect(fm | '_' + fm.Name)->sum();
+--			re.Name <- re.Name + re.target->collect(fm | '_' + fm.Name)->sum();
 		}
 	}
 }
 
-rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
-
+rule Availability(sba : CHESS!StateBasedAnalysis) {
 	using {
-		strClean : String = sba.measure.regexReplaceAll('[={}]', ' ').trim();
+		strClean : String = sba.measure.regexReplaceAll('[={}()]', ' ').trim();
 		iInterval : Integer = strClean.indexOf('intervalEnd');
 		iInstant : Integer = strClean.indexOf('instantOfTime');
 
@@ -794,13 +804,12 @@ rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 	}
 	to
 		re : IM!Availability (
-			Name <-	'Availability_'
+			Name <-	sba.base_NamedElement.name
 		)
 	do{
 		imsistema.measures.add(re);
 
-		if (iInterval > 0)
-		{
+		if (iInterval > 0) {
 			re.evaluations.add(
 				thisModule.newEvalIntervalOfTime(
 					strClean.substring(iInterval + 1 + 'intervalEnd'.size(), strClean.size()).toReal()
@@ -825,14 +834,63 @@ rule Availability(sba : CHESS!StateBasedAnalysis, time : Real){
 		--If one of the two is not specified, then select all the failure modes specified by the other
 		if(fmSelected.isEmpty()) {
 			re.target <- allFailuresOfSelectedInstances;
-			re.Name <- re.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
+--			re.Name <- re.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
 		}else{
 			if(allFailuresOfSelectedInstances.isEmpty()) {
 				re.target <- fmSelected;
 			}else{
 				re.target <- allFailuresOfSelectedInstances->intersection(fmSelected);
 			}
-			re.Name <- re.Name + re.target->collect(fm | '_' + fm.Name)->sum();
+--			re.Name <- re.Name + re.target->collect(fm | '_' + fm.Name)->sum();
+		}
+	}
+}
+
+rule PFD(sba : CHESS!StateBasedAnalysis) {
+	using {
+		strClean : String = sba.measure.regexReplaceAll('[={}()]', ' ').trim();
+
+		--Select all the failure modes of component instance specified as 'targetDepComponent'
+		allFailuresOfSelectedInstances : Set(IM!FailureMode) =
+			sba.targetDepComponent->
+				collect(i | thisModule.InstanceToComponent(i).FailureModes)->flatten()->asSet();
+
+		---TODO: the facility to select the failure mode must be reimplemented
+		--Select all the failure modes (of all the instances) specified as 'targetFailureModes'
+		fmSelected : Set(IM!FailureMode) = Set{};
+			--thisModule.FailuresMap->getKeys()->select(k | sba.targetFailureMode->collect(fm | fm.base_State)->includes(k.st))->collect(selK | thisModule.FailuresMap->get(selK))->asSet();
+			
+		imsistema : IM!Sistema = IM!Sistema.allInstances()->first();
+	}
+	to
+		pfd : IM!FailureProbability (
+			Name <-	sba.base_NamedElement.name
+		)
+
+	do{
+		imsistema.measures.add(pfd);
+		
+		pfd.evaluations.add(
+			thisModule.newEvalInstantOfTime(
+				strClean.regexReplaceAll('PFD', ' ').trim().toReal()
+			)
+		);
+
+		--[allFailuresOfSelectedInstances]: all the failure modes of selected component instances
+		--[fmSelected]: all the selected failure modes
+		--Idea: select only SELECTED failure modes, of SELECTED component instances
+		--(i.e., perform an intersection between the two)
+		--If one of the two is not specified, then select all the failure modes specified by the other
+		if(fmSelected.isEmpty()) {
+			pfd.target <- allFailuresOfSelectedInstances;
+--			pfd.Name <- pfd.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
+		}else{
+			if(allFailuresOfSelectedInstances.isEmpty()) {
+				pfd.target <- fmSelected;
+			}else{
+				pfd.target <- allFailuresOfSelectedInstances->intersection(fmSelected);
+			}
+--			pfd.Name <- pfd.Name + pfd.target->collect(fm | '_' + fm.Name)->sum();
 		}
 	}
 }
@@ -1416,13 +1474,10 @@ helper context String def: parseFailureModes() : Set(TupleType(fm: String, p: Re
 helper context CHESS!StateBasedAnalysis def: WhichMeasure : String =
 	if self.measure.startsWith('Reliability') then 'Reliability'
 	else if self.measure.startsWith('Availability') then 'Availability'
+	else if self.measure.toUpper().startsWith('PFD') then 'PFD' 
 	else 'error'
-	endif endif;
-
---temporary parser to retrieve the time value from a dependability measure
-helper context String def: getTime : Real =
-	self.substring(self.indexOf('=')+2, self.size()-1).toReal();
-		
+	endif endif endif;
+	
 --------------------------------------------------------------------
 -- Helpers to manage Faults/Errors expressions
 --------------------------------------------------------------------
