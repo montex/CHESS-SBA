@@ -748,18 +748,23 @@ public class UMLUtils {
 				stereo = element.getAppliedStereotype(Constants.ASSIGN);
 				EObject eobj = element.getStereotypeApplication(stereo);
 				Assign a = (Assign)eobj;
-				Element assignmentSource = a.getFrom().get(0);
-				Element assignmentTarget = a.getTo().get(0);
-				// SOURCE must be a Component
-				// TARGET must be a Processor
-				if (elementIsProcessorInstance(assignmentTarget)) {
-					if(elementIsComponentInstance(assignmentSource)) {
-						InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
-						if (isComponentInstance(componentInst)) {
-							assignments.add(a);
+				try {
+					Element assignmentSource = a.getFrom().get(0);
+					Element assignmentTarget = a.getTo().get(0);
+					// SOURCE must be a Component
+					// TARGET must be a Processor
+					if (elementIsProcessorInstance(assignmentTarget)) {
+						if(elementIsComponentInstance(assignmentSource)) {
+							InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
+							if (isComponentInstance(componentInst)) {
+								assignments.add(a);
+							}
 						}
-					}
-				}				
+					}	
+				}
+				catch (Exception e) {
+					continue;
+				}
 			}
 		}
 		return assignments;
@@ -788,23 +793,28 @@ public class UMLUtils {
 				stereo = element.getAppliedStereotype(Constants.ASSIGN);
 				EObject eobj = element.getStereotypeApplication(stereo);
 				Assign a = (Assign)eobj;
-				Element assignmentSource = a.getFrom().get(0);
-				Element assignmentTarget = a.getTo().get(0);
-				// SOURCE must be a Partition
-				// TARGET must be a Processor
-				if (elementIsPartitionInstance(assignmentSource) && 
-						elementIsProcessorInstance(assignmentTarget)) {		
-					assignments.add(a);
-				}
-				// SOURCE must be a Component
-				// TARGET must be a Partition
-				if (elementIsPartitionInstance(assignmentTarget)) {
-					if(elementIsComponentInstance(assignmentSource)) {
-						InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
-						if (isComponentInstance(componentInst)) {
-							assignments.add(a);
+				try {
+					Element assignmentSource = a.getFrom().get(0);
+					Element assignmentTarget = a.getTo().get(0);
+					// SOURCE must be a Partition
+					// TARGET must be a Processor
+					if (elementIsPartitionInstance(assignmentSource) && 
+							elementIsProcessorInstance(assignmentTarget)) {		
+						assignments.add(a);
+					}
+					// SOURCE must be a Component
+					// TARGET must be a Partition
+					if (elementIsPartitionInstance(assignmentTarget)) {
+						if(elementIsComponentInstance(assignmentSource)) {
+							InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
+							if (isComponentInstance(componentInst)) {
+								assignments.add(a);
+							}
 						}
 					}
+				}
+				catch (Exception e) {
+					continue;
 				}
 			}	
 		}
@@ -836,19 +846,24 @@ public class UMLUtils {
 				stereo = element.getAppliedStereotype(Constants.ASSIGN);
 				EObject eobj = element.getStereotypeApplication(stereo);
 				Assign a = (Assign)eobj;
-				Element assignmentSource = a.getFrom().get(0);
-				Element assignmentTarget = a.getTo().get(0);
-				// SOURCE must be a Partition
-				// TARGET must be a Processor
-				if (elementIsPartitionInstance(assignmentSource)) { 
-					if(elementIsProcessorInstance(assignmentTarget)) {	
-						// Check if the involved partition is functPart
-						InstanceSpecification instSpecSource = (InstanceSpecification)assignmentSource;
+				try {
+					Element assignmentSource = a.getFrom().get(0);
+					Element assignmentTarget = a.getTo().get(0);
+					// SOURCE must be a Partition
+					// TARGET must be a Processor
+					if (elementIsPartitionInstance(assignmentSource)) { 
+						if(elementIsProcessorInstance(assignmentTarget)) {	
+							// Check if the involved partition is functPart
+							InstanceSpecification instSpecSource = (InstanceSpecification)assignmentSource;
 
-						if (instSpecSource.getClassifiers().get(0).equals(functPart.getBase_Component())) {						
-							assignments.add(a);
+							if (instSpecSource.getClassifiers().get(0).equals(functPart.getBase_Component())) {						
+								assignments.add(a);
+							}
 						}
 					}
+				}
+				catch (Exception e) {
+					continue;
 				}
 			}
 		}
@@ -863,24 +878,29 @@ public class UMLUtils {
 				stereo = element.getAppliedStereotype(Constants.ASSIGN);
 				EObject eobj = element.getStereotypeApplication(stereo);
 				Assign a = (Assign)eobj;
-				Element assignmentSource = a.getFrom().get(0);
-				Element assignmentTarget = a.getTo().get(0);
+				try {
+					Element assignmentSource = a.getFrom().get(0);
+					Element assignmentTarget = a.getTo().get(0);
 
-				// SOURCE must be a Component
-				// TARGET must be a Partition
-				if (elementIsPartitionInstance(assignmentTarget)) {
-					if(elementIsComponentInstance(assignmentSource)) {
-						InstanceSpecification instSpecSource = (InstanceSpecification) assignmentSource;
-						if (isComponentInstance(instSpecSource)) {
-							InstanceSpecification instSpecTarget = (InstanceSpecification)assignmentTarget;
+					// SOURCE must be a Component
+					// TARGET must be a Partition
+					if (elementIsPartitionInstance(assignmentTarget)) {
+						if(elementIsComponentInstance(assignmentSource)) {
+							InstanceSpecification instSpecSource = (InstanceSpecification) assignmentSource;
+							if (isComponentInstance(instSpecSource)) {
+								InstanceSpecification instSpecTarget = (InstanceSpecification)assignmentTarget;
 
-							// its type should be the same as the input functional Partition							
-							if (instSpecTarget.getClassifiers().get(0).equals(functPart.getBase_Component())) {								
-								assignments.add(a);
+								// its type should be the same as the input functional Partition							
+								if (instSpecTarget.getClassifiers().get(0).equals(functPart.getBase_Component())) {								
+									assignments.add(a);
+								}
 							}
 						}
-					}
-				}	
+					}	
+				}
+				catch (Exception e) {
+					continue;
+				}
 			}
 		}
 		return assignments;
@@ -908,13 +928,18 @@ public class UMLUtils {
 				stereo = element.getAppliedStereotype(Constants.ASSIGN);
 				EObject eobj = element.getStereotypeApplication(stereo);
 				Assign a = (Assign)eobj;
-				Element assignmentSource = a.getFrom().get(0);
-				Element assignmentTarget = a.getTo().get(0);
-				// SOURCE must be a Partition
-				// TARGET must be a Processor
-				if (elementIsPartitionInstance(assignmentSource) && 
-						elementIsProcessorInstance(assignmentTarget)) {		
-					assignments.add(a);
+				try {
+					Element assignmentSource = a.getFrom().get(0);
+					Element assignmentTarget = a.getTo().get(0);
+					// SOURCE must be a Partition
+					// TARGET must be a Processor
+					if (elementIsPartitionInstance(assignmentSource) && 
+							elementIsProcessorInstance(assignmentTarget)) {		
+						assignments.add(a);
+					}
+				}
+				catch (Exception e) {
+					continue;
 				}
 			}	
 		}
@@ -942,13 +967,18 @@ public class UMLUtils {
 				stereo = element.getAppliedStereotype(Constants.ASSIGN);
 				EObject eobj = element.getStereotypeApplication(stereo);
 				Assign a = (Assign)eobj;
-				Element assignmentSource = a.getFrom().get(0);
-				Element assignmentTarget = a.getTo().get(0);
-				// SOURCE must be a Task
-				// TARGET must be a Processor
-				if (elementIsSlotInstance(assignmentSource) && 
-						elementIsProcessorInstance(assignmentTarget)) {		
-					assignments.add(a);
+				try {
+					Element assignmentSource = a.getFrom().get(0);
+					Element assignmentTarget = a.getTo().get(0);
+					// SOURCE must be a Task
+					// TARGET must be a Processor
+					if (elementIsSlotInstance(assignmentSource) && 
+							elementIsProcessorInstance(assignmentTarget)) {		
+						assignments.add(a);
+					}
+				}
+				catch (Exception e) {
+					continue;
 				}
 			}	
 		}
@@ -975,17 +1005,21 @@ public class UMLUtils {
 				stereo = element.getAppliedStereotype(Constants.ASSIGN);
 				EObject eobj = element.getStereotypeApplication(stereo);
 				Assign a = (Assign)eobj;
-				Element assignmentSource = a.getFrom().get(0);				
-				// SOURCE must be a Component
-				// TARGET can be anything
+				try {
+					Element assignmentSource = a.getFrom().get(0);				
+					// SOURCE must be a Component
+					// TARGET can be anything
 
-				if(elementIsComponentInstance(assignmentSource)) {
-					InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
-					if (isComponentInstance(componentInst)) {
-						assignments.add(a);
+					if(elementIsComponentInstance(assignmentSource)) {
+						InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
+						if (isComponentInstance(componentInst)) {
+							assignments.add(a);
+						}
 					}
 				}
-
+				catch (Exception e) {
+					continue;
+				}
 			}
 		}
 		return assignments;
@@ -1133,9 +1167,14 @@ public class UMLUtils {
 		int count = 0;
 		for (Assign theAssignment : assignments) {			
 			if (theAssignment != null) {
-				if (theAssignment.getFrom().contains((Object)i) &&
-						elementIsProcessorInstance(theAssignment.getTo().get(0))) {	
-					count++;
+				try {
+					if (theAssignment.getFrom().contains((Object)i) &&
+							elementIsProcessorInstance(theAssignment.getTo().get(0))) {	
+						count++;
+					}
+				}
+				catch (Exception e) {
+					continue;
 				}
 			}
 		}
@@ -1154,11 +1193,16 @@ public class UMLUtils {
 		int count = 0;
 		for (Assign theAssignment : assignments) {			
 			if (theAssignment != null) {
-				Element toElem = theAssignment.getTo().get(0);
-				if (theAssignment.getFrom().contains((Object)i) &&
-						(elementIsProcessorInstance(toElem) ||
-								elementIsPartitionInstance(toElem))) {	
-					count++;
+				try {
+					Element toElem = theAssignment.getTo().get(0);
+					if (theAssignment.getFrom().contains((Object)i) &&
+							(elementIsProcessorInstance(toElem) ||
+									elementIsPartitionInstance(toElem))) {	
+						count++;
+					}
+				}
+				catch (Exception e) {
+					continue;
 				}
 			}
 		}
@@ -1271,9 +1315,14 @@ public class UMLUtils {
 			EList<Assign> assignments) {
 		for (Assign theAssignment : assignments) {			
 			if (theAssignment != null) {
-				if (theAssignment.getFrom().contains((Object)i) &&
-						elementIsProcessorInstance(theAssignment.getTo().get(0))) {	
-					return true;
+				try {
+					if (theAssignment.getFrom().contains((Object)i) &&
+							elementIsProcessorInstance(theAssignment.getTo().get(0))) {	
+						return true;
+					}
+				}
+				catch (Exception e) {
+					continue;
 				}
 			}
 		}
@@ -1290,9 +1339,14 @@ public class UMLUtils {
 			EList<Assign> assignments) {
 		for (Assign theAssignment : assignments) {			
 			if (theAssignment != null) {
-				if (theAssignment.getTo().contains((Object)i) &&
-						elementIsPartitionInstance(theAssignment.getTo().get(0))) {	
-					return true;
+				try {
+					if (theAssignment.getTo().contains((Object)i) &&
+							elementIsPartitionInstance(theAssignment.getTo().get(0))) {	
+						return true;
+					}
+				} 
+				catch (Exception e) {
+					continue;
 				}
 			}
 		}
@@ -1413,18 +1467,23 @@ public class UMLUtils {
 				stereo = element.getAppliedStereotype(Constants.ASSIGN);
 				EObject eobj = element.getStereotypeApplication(stereo);
 				Assign a = (Assign)eobj;
-				Element assignmentSource = a.getFrom().get(0);
-				Element assignmentTarget = a.getTo().get(0);
-				// SOURCE must be a Component
-				// TARGET must be a Partition
-				if (elementIsPartitionInstance(assignmentTarget)) {
-					if(elementIsComponentInstance(assignmentSource)) {
-						InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
-						if (isComponentInstance(componentInst)) {
-							assignments.add(a);
+				try {
+					Element assignmentSource = a.getFrom().get(0);
+					Element assignmentTarget = a.getTo().get(0);
+					// SOURCE must be a Component
+					// TARGET must be a Partition
+					if (elementIsPartitionInstance(assignmentTarget)) {
+						if(elementIsComponentInstance(assignmentSource)) {
+							InstanceSpecification componentInst = (InstanceSpecification) assignmentSource;
+							if (isComponentInstance(componentInst)) {
+								assignments.add(a);
+							}
 						}
-					}
-				}				
+					}		
+				}
+				catch (Exception e) {
+					continue;
+				}
 			}
 		}
 		return assignments;
@@ -1505,8 +1564,8 @@ public class UMLUtils {
 		String respUnit = "";
 		String respValue ="";
 
-//		String rldl = spec.getRlDl();
-//		String rldlUnit = getValue(rldl, "unit");
+		//		String rldl = spec.getRlDl();
+		//		String rldlUnit = getValue(rldl, "unit");
 
 		if(!opSaStep.getRespT().isEmpty()){
 			respT = opSaStep.getRespT().get(0);
@@ -1547,8 +1606,8 @@ public class UMLUtils {
 		String blockUnit = "";
 		String blockValue ="";
 
-//		String rldl = spec.getRlDl();
-//		String rldlUnit = getValue(rldl, "unit");
+		//		String rldl = spec.getRlDl();
+		//		String rldlUnit = getValue(rldl, "unit");
 
 		blockT = opSaStep.getBlockT();
 		blockUnit = getValue(blockT, "unit");
@@ -1659,7 +1718,7 @@ public class UMLUtils {
 
 							AnalysisResultData resultData = new AnalysisResultData();
 							InstanceSpecification inst =  (slot!=null ? slot.getOwningInstance() : componentInstance);
-						
+
 							resultData.instSpec = inst;
 							resultData.ctxOP = (Operation) chrt.getContext();
 							resultData.instance = inst.getName();
@@ -1679,7 +1738,7 @@ public class UMLUtils {
 									resultData.rldl = rldlValue + rldlUnit;		
 								}
 								////								
-								
+
 							}
 							if(saStep.getConcurRes() != null){
 								EList<String> schedParams = saStep.getConcurRes().getSchedParams();
@@ -1698,10 +1757,10 @@ public class UMLUtils {
 								resultData.blockT = getBlockingTimeString(rldlUnit, opSaStep);
 							}
 
-//							String rldl = chrt.getRlDl();
-//							String rldlValue = getValue(rldl, "value");
-//							String rldlUnit = getValue (rldl, "unit");
-//							resultData.rldl = rldlValue + rldlUnit;	
+							//							String rldl = chrt.getRlDl();
+							//							String rldlValue = getValue(rldl, "value");
+							//							String rldlUnit = getValue (rldl, "unit");
+							//							resultData.rldl = rldlValue + rldlUnit;	
 
 							String respT = "";
 							String respValue ="";
@@ -1797,84 +1856,88 @@ public class UMLUtils {
 		return listData;
 	}
 
-	
+
 	/**
 	 * 
 	 * @param contextClass <<SaAnalysisContext>> entity used to perform the end to end response time analysis
 	 * @return get analysis results data for end to end sequence scenarios attached to the given contextClass
 	 */
 	public static List<EndToEndResultData> getEndtoEndAnalysisResults(Class contextClass){
-			
-			List<EndToEndResultData> listData = new ArrayList<EndToEndResultData>();
-			Model model = contextClass.getModel();
-			Package psm = ViewUtils.getCHESSPSMPackage(model);
-					
-			if(contextClass.getAppliedStereotype(Constants.MARTE_SaAnalysisContext) == null
-					){
-				return listData;
-			}
-			
-			String saAnalysisName = contextClass.getQualifiedName();
-			Package psmPackage;
-						
-			for (Package pkg: psm.getNestedPackages()){
-				Stereotype stereo = pkg.getAppliedStereotype(Constants.CH_PsmPackage);
-				if(stereo != null){
-					PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
-					if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
-						psmPackage = pkg;
-						
-						//ASSUMPTION psmPackage owns a AnalysisContext Package
-						Package psmAnalysisContextPack = (Package) psmPackage.getOwnedMember("AnalysisContext");
-						Class psmAnalysisContextClass = null;
-						for (Element temp : psmAnalysisContextPack.getOwnedElements()){
-							if (!(temp instanceof Class))
+
+		List<EndToEndResultData> listData = new ArrayList<EndToEndResultData>();
+		Model model = contextClass.getModel();
+		Package psm = ViewUtils.getCHESSPSMPackage(model);
+
+		if(contextClass.getAppliedStereotype(Constants.MARTE_SaAnalysisContext) == null
+				){
+			return listData;
+		}
+
+		String saAnalysisName = contextClass.getQualifiedName();
+		Package psmPackage;
+
+		for (Package pkg: psm.getNestedPackages()){
+			Stereotype stereo = pkg.getAppliedStereotype(Constants.CH_PsmPackage);
+			if(stereo != null){
+				PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
+				if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
+					psmPackage = pkg;
+
+					//ASSUMPTION psmPackage owns a AnalysisContext Package
+					Package psmAnalysisContextPack = (Package) psmPackage.getOwnedMember("AnalysisContext");
+					Class psmAnalysisContextClass = null;
+					for (Element temp : psmAnalysisContextPack.getOwnedElements()){
+						if (!(temp instanceof Class))
+							continue;
+						psmAnalysisContextClass = (Class) temp;
+
+						for (Element elem: psmAnalysisContextClass.allOwnedElements()){
+							if (! (elem instanceof Activity))
 								continue;
-							psmAnalysisContextClass = (Class) temp;
-												
-							for (Element elem: psmAnalysisContextClass.allOwnedElements()){
-								if (! (elem instanceof Activity))
-									continue;
-								Activity activity = (Activity) elem;
-								if (elem.getAppliedStereotype(Constants.MARTE_EndtoEndFlow) == null)
-									continue;						
-								//check if the the current PSM endToEndFlow activity refers to a PIM endToEndFlow
-								SaEndtoEndFlow pimEndtoEndFlow = null;
-								//check for the constraint that binds the current endToEndFlow activity to the PIM entities
-								for (Constraint constr : psmAnalysisContextClass.getOwnedRules()){
-									if (!constr.getConstrainedElements().contains(activity))
-										continue;				
-									for (Element constrained : constr.getConstrainedElements()){
-										if (constrained instanceof Activity){				
-											if (constrained != activity){
-												if (constrained.getAppliedStereotype(Constants.MARTE_EndtoEndFlow) != null &&
-														constrained.getAppliedStereotype(Constants.GAWORKLOADBEHAVIOR) != null){
-													pimEndtoEndFlow = (SaEndtoEndFlow) constrained.getStereotypeApplication(constrained.getAppliedStereotype(Constants.MARTE_EndtoEndFlow));
-													break;
-												}
+							Activity activity = (Activity) elem;
+							if (elem.getAppliedStereotype(Constants.MARTE_EndtoEndFlow) == null)
+								continue;						
+							//check if the the current PSM endToEndFlow activity refers to a PIM endToEndFlow
+							SaEndtoEndFlow pimEndtoEndFlow = null;
+							//check for the constraint that binds the current endToEndFlow activity to the PIM entities
+							for (Constraint constr : psmAnalysisContextClass.getOwnedRules()){
+								if (!constr.getConstrainedElements().contains(activity))
+									continue;				
+								for (Element constrained : constr.getConstrainedElements()){
+									if (constrained instanceof Activity){				
+										if (constrained != activity){
+											if (constrained.getAppliedStereotype(Constants.MARTE_EndtoEndFlow) != null &&
+													constrained.getAppliedStereotype(Constants.GAWORKLOADBEHAVIOR) != null){
+												pimEndtoEndFlow = (SaEndtoEndFlow) constrained.getStereotypeApplication(constrained.getAppliedStereotype(Constants.MARTE_EndtoEndFlow));
+												break;
 											}
 										}
 									}
-									if (pimEndtoEndFlow!= null)
-										break;
 								}
-								if (pimEndtoEndFlow!= null){
-									SaEndtoEndFlow psmEndtoEndFlow = (SaEndtoEndFlow) activity.getStereotypeApplication(activity.getAppliedStereotype(Constants.MARTE_EndtoEndFlow));
-									
-									EndToEndResultData data = new EndToEndResultData();
-									data.scenarioName = activity.getName();
+								if (pimEndtoEndFlow!= null)
+									break;
+							}
+							if (pimEndtoEndFlow!= null){
+								SaEndtoEndFlow psmEndtoEndFlow = (SaEndtoEndFlow) activity.getStereotypeApplication(activity.getAppliedStereotype(Constants.MARTE_EndtoEndFlow));
+
+								EndToEndResultData data = new EndToEndResultData();
+								data.scenarioName = activity.getName();
+								if (pimEndtoEndFlow.getEnd2EndD().size()>0) {
 									data.deadline = pimEndtoEndFlow.getEnd2EndD().get(0);
-									data.respTime = psmEndtoEndFlow.getEnd2EndT().get(0);
-									listData.add(data);
 								}
+								if (psmEndtoEndFlow.getEnd2EndT().size()>0) {
+									data.respTime = psmEndtoEndFlow.getEnd2EndT().get(0);
+								}
+								listData.add(data);							
 							}
 						}
 					}
 				}
 			}
-			return listData;
-		}	
-		
+		}
+		return listData;
+	}	
+
 
 	/**
 	 * <pre>
@@ -2149,7 +2212,7 @@ public class UMLUtils {
 	 */
 	public static CHRtSpecification getArincProcessSpecification(InstanceSpecification instSpec, CHRtSpecification arincFunctionSpec) 
 			throws ModelError {
-		
+
 		String theArincFunctName = "";
 		BehavioralFeature behavFeatFromArincFunctSpec = arincFunctionSpec.getContext();
 		if (behavFeatFromArincFunctSpec.getAppliedStereotype(Constants.CH_ARINCFunction)!=null) {
@@ -2160,7 +2223,7 @@ public class UMLUtils {
 		else {
 			throw new ModelError("Error: the input arincFunctionSpec has a context that is not an ARINCFunction");
 		}
-			
+
 		//instance.getPOrtSlots
 		EList<Slot> slotList = instSpec.getSlots();
 		for (Slot slot : slotList) {
@@ -2197,28 +2260,28 @@ public class UMLUtils {
 	 */
 	public static CHRtSpecification getUpdatedArincFunChrtSpec (InstanceSpecification instance, 
 			CHRtSpecification arincFunctChrtspec) throws ModelError {
-		
+
 		CHRtSpecification arincProcessChrtspec = getArincProcessSpecification(instance, arincFunctChrtspec);
-		
+
 		if (arincProcessChrtspec == null){
 			CHESSProjectSupport.printlnToCHESSConsole("ERROR: Unable to retrieve the ARICProcess from the ARINCFunction "+arincFunctChrtspec);
 			return null;
 		}
-		
+
 		CHRtSpecification chrtspec = arincFunctChrtspec;
 		String occurrencyKindArincProc = arincProcessChrtspec.getOccKind();
 		String occurrencyKindArincFunct = arincFunctChrtspec.getOccKind();
-		
+
 		//clean the ArincFunction occKind if necessary
 		if (occurrencyKindArincFunct.contains(Constants.CHRTSPEC_OCCKIND_PERIODIC) || occurrencyKindArincFunct.contains(Constants.CHRTSPEC_OCCKIND_SPORADIC)){
 			occurrencyKindArincFunct = "("+occurrencyKindArincFunct.substring(occurrencyKindArincFunct.indexOf("phase"));
 		}
-	
+
 		if (!occurrencyKindArincProc.matches("\\s*periodic\\s*(\\(\\s*period\\s*=\\s*\\(\\s*value\\s*=\\s*(\\w*\\.?\\w*)\\s*,\\s*unit\\s*=\\s*(\\w*\\.?\\w*)\\s*\\)\\s*\\))")) {
 			// The ARINCProcess must have a CHRtSpecification with occurrencyKind that looks like the following:
 			// periodic(period=(value=100,unit=ms))
 			throw new ModelError("Unexpected Occurrency Kind for ARINCProcess: "+occurrencyKindArincProc);
-			
+
 		}
 		String newOccurrencyKind = occurrencyKindArincProc.substring(0, occurrencyKindArincProc.lastIndexOf(")"));
 		newOccurrencyKind += ","+occurrencyKindArincFunct.substring(1);
