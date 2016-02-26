@@ -30,6 +30,9 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESS;
@@ -46,13 +49,17 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -165,6 +172,8 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 						monitor.subTask("Propagating analysis results to the model...");
 						backPropagation(res, editor);
 						monitor.worked(smallStep/10);
+					}else{
+						System.out.println("Error: Unable to retrieve results from DEEM server.");
 					}
 					
 					//Thread.sleep(2000);
@@ -194,7 +203,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			
 			IFileEditorInput input = (IFileEditorInput) editor.getEditorInput();
 			IFile file = input.getFile();
-			IProject project= file.getProject();
+			IProject project = file.getProject();
 			
 			IFolder folder = project.getFolder(SBANALYSIS_DIR);
 			CHESSProjectSupport.createFolder(folder);
@@ -399,7 +408,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 		try{
 			DEEMClient c = new DEEMClient();
 			c.setProgressMonitor(monitor);
-			String res = c.sendAndReceiveFile(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString(), monitor);
+			String res = c.sendAndReceiveFile(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString());
 			return res;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -434,43 +443,57 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String line;
+			String[] lineSplit;
+			Map<String, String> results = new HashMap<String, String>();
 			while ((line = br.readLine()) != null){
-				if(line.startsWith(NETNAME)){
-					name = line.substring(line.indexOf(" ")+1, line.length());
-				}
 				if(line.startsWith(MEASURE)){
-					value = line.substring(line.indexOf("  ")+2, line.indexOf('[')-2);
+					lineSplit = line.split("\\s+");
+					name = lineSplit[2];
+					value = lineSplit[3];
+					
+					results.put(name, value);
 				}
 			}
 			in.close();
 			
-			//get model file
-			Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
-			Model umlModel = ResourceUtils.getModel(res);
-			
-			//get the CHESS stereotype
-			CHESS chess = (CHESS) umlModel.getStereotypeApplication(umlModel.getAppliedStereotype(CHESS_QN));
-			//navigate and update the model with the analysis result
-			Package depView = chess.getAnalysisView().getDepanalysisview().getBase_Package();
-
-			EList<PackageableElement> packList = depView.getPackagedElements();
-			Component comp = null;
-			for (int i = 0 ; i < packList.size(); i++){
-				if(packList.get(i).getName().equals(name)){
-					comp = (Component) packList.get(i);
-				}
-			}
-			
-			final String finalValue = value;
-			final Component com = comp;
-			final Stereotype stereotype = comp.getAppliedStereotype(STATEBASED_ANALYSIS_QN);
-			TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) editor.getEditingDomain();
-			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+			if(results.size() > 0) {
+				//get model file
+				Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
+				Model umlModel = ResourceUtils.getModel(res);
 				
-				protected void doExecute() {
-					com.setValue(stereotype, RESULT, finalValue);
+				//get the CHESS stereotype
+				CHESS chess = (CHESS) umlModel.getStereotypeApplication(umlModel.getAppliedStereotype(CHESS_QN));
+				//navigate and update the model with the analysis result
+				Package depView = chess.getAnalysisView().getDepanalysisview().getBase_Package();
+	
+				EList<PackageableElement> packList = depView.getPackagedElements();
+				Component comp = null;
+				
+				Iterator<String> it = results.keySet().iterator();
+				String key = null;
+				while(it.hasNext()) {
+					key = it.next();
+	
+					for (int i = 0 ; i < packList.size(); i++){
+						if(packList.get(i).getName().equals(key)){
+							comp = (Component) packList.get(i);
+						}
+					}
+					
+					final String finalValue = results.get(key);
+					final Component com = comp;
+					final Stereotype stereotype = comp.getAppliedStereotype(STATEBASED_ANALYSIS_QN);
+					TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) editor.getEditingDomain();
+					editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+						
+						protected void doExecute() {
+							com.setValue(stereotype, RESULT, finalValue);
+						}
+					});
 				}
-			});
+			}else{
+				System.out.println("Error: Unable to retrieve results from DEEM server.");
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
