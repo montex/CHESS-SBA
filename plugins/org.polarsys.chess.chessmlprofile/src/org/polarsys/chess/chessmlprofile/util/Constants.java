@@ -180,6 +180,8 @@ public class Constants {
 	public static final String CH_ARINCComponentImpl = "CHESS::Predictability::ARINCComponentModel::ARINCComponentImpl";
 	
 	public static final String CHESS_MODEL_STEREOTYPE = "CHESS::Core::CHESS";
+	public static final String MARTE_HwDevice ="MARTE::MARTE_DesignModel::HRM::HwLogical::HwDevice";	
+	public static final String MARTE_DeviceBroker ="MARTE::MARTE_DesignModel::SRM::SW_Brokering";
 
 
 	
