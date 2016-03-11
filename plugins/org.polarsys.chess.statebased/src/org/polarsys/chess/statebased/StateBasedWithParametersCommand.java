@@ -21,14 +21,17 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
+import java.net.URI;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Collections;
@@ -146,6 +149,9 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	static IFolder folder;
 	
 	@Override
+	/**
+	 * Execute the command from the Eclipse menu
+	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		acquireModel();
 		
@@ -156,6 +162,32 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 		return null;
 	}
 	
+	
+	/**
+	 * Runs the state based analysis
+	 * @param modelPath the absolute path of the CHESS model file
+	 * @param resultAnalysisPathFile the absolute path of the analysis result file
+	 * @return the textual result from the analysis
+	 * @throws IOException 
+	 */
+	public String runStateBased (String modelPath, String resultAnalysisPathFile) throws IOException{
+		
+		InputStream is = RunTransformations(modelPath);
+		
+		byte[] buffer = new byte[is.available()];
+	    is.read(buffer);
+	 
+	    File targetFile = new File(resultAnalysisPathFile);
+	    OutputStream outStream = new FileOutputStream(targetFile);
+	    outStream.write(buffer);
+	    outStream.close();
+		
+		System.out.println("Connecting to DEEM server...");
+		String res = connectToDeem(targetFile.getAbsolutePath(), targetFile.getParent());
+		return res;
+	}
+	
+	
 	protected void setEditor(PapyrusMultiDiagramEditor ed) {
 		editor = ed;
 	}
@@ -165,8 +197,38 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	}
 	
 	protected static void runStateBased() {
-		IFile tr = RunTransformations();
-		String res = connectToDeem(tr);
+		//make a copy of the chess model
+		IFile inputCopy;
+		try {
+			inputCopy = CHESSProjectSupport.copyFile(inputFile, SBANALYSIS_DIR, inputFile.getName());
+		} catch (Exception e) {
+			e.printStackTrace();
+			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+			return;
+		}
+				
+		//run model transformations
+		InputStream is = RunTransformations(inputCopy.getLocation().toString());
+		
+		//Save (write to file) the result
+		resultName = changeSuffix(inputFile.getName(), UML, DEEM);			
+		
+		IFile resultFile = folder.getFile(resultName);
+		//if (!resultFile.exists()){   //overwrite previous results (otherwise they are not updated when the model changes)
+			try {
+				resultFile.delete(true, null);
+				resultFile.create(is, IResource.FORCE, null);
+			} catch (CoreException e) {
+				e.printStackTrace();
+				CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+				displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+				return;
+			}
+			
+		//}
+		
+		String res = connectToDeem(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString());
 		if(res != null && !res.isEmpty()){
 			backPropagation(res, editor);
 		}
@@ -193,11 +255,40 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 					monitor.worked(smallStep/10);
 
 					monitor.subTask("Performing model transformations...");
-					IFile tr = RunTransformations();
+					IFile inputCopy;
+					try {
+						inputCopy = CHESSProjectSupport.copyFile(inputFile, SBANALYSIS_DIR, UML);
+					} catch (Exception e) {
+						e.printStackTrace();
+						CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+						displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+						return;
+					}
+							
+					//run model transformations
+					InputStream is = RunTransformations(inputCopy.getLocation().toString());
+					
+					//Save (write to file) the result
+					resultName = changeSuffix(inputFile.getName(), UML, DEEM);			
+					
+					IFile resultFile = folder.getFile(resultName);
+					//if (!resultFile.exists()){   //overwrite previous results (otherwise they are not updated when the model changes)
+						try {
+							resultFile.delete(true, null);
+							resultFile.create(is, IResource.FORCE, null);
+						} catch (CoreException e) {
+							e.printStackTrace();
+							CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+							displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+							return;
+						}
+						
+					//}
+					
 					monitor.worked(smallStep/10);
 					
 					monitor.subTask("Connecting to DEEM server...");
-					String res = connectToDeem(tr);
+					String res = connectToDeem(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString());
 
 					if(res != null && !res.isEmpty()){
 						monitor.subTask("Propagating analysis results to the model...");
@@ -255,12 +346,16 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 		}
 	}
 	
-	private static IFile RunTransformations(){
+	/**
+	 * 
+	 * @param chessModelFullPath the absolute path in the local file system to the chess model
+	 * @return the inputStream of the resulting transformed deem model file
+	 */
+	private static InputStream RunTransformations(String chessModelFullPath){
 		
 		try {
-			IFile inputCopy = CHESSProjectSupport.copyFile(inputFile, SBANALYSIS_DIR, UML);
-			
-			chessModelPath = inputCopy.getFullPath().toString();
+					
+			chessModelPath = chessModelFullPath;
 			// Begin: Read parameters
 			String sParamsPath = Activator.getDefault().getPreferenceStore().getString("PARAMFILE");
 			File fParams = new File(sParamsPath);
@@ -284,7 +379,8 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
             }
 			// End: Read parameters
             // Begin: Replace parameters in .uml file
-            File fCHESSModel = new File(inputCopy.getLocationURI());
+            //URI uri = new URI("file:///"+chessModelFullPath);
+            File fCHESSModel = new File(chessModelFullPath);
             FileReader frModel = new FileReader(fCHESSModel);
             String sModelContent = "";
             try {
@@ -361,6 +457,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 			IModel imModel = factory.newModel(imMetamodel);
 			
 			// Load the chess model
+			chessModelPath = "file:///"+chessModelPath;
 			injector.inject(sysmlModel, chessModelPath);
 			injector.inject(marteModel, chessModelPath);
 			injector.inject(chessModel, chessModelPath);
@@ -455,29 +552,16 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 			Object result = launcher.launch(ILauncher.RUN_MODE, new NullProgressMonitor(), Collections
 					.<String, Object> emptyMap(), loadedModule);
 
-			//Save (write to file) the result
-			resultName = changeSuffix(inputFile.getName(), UML, DEEM);			
-			
+		
 			String stResult = result.toString();
 			stResult = stResult.substring(1, stResult.lastIndexOf(']'));
 			InputStream is = new ByteArrayInputStream(stResult.getBytes("UTF-8"));
 			
-			IFile resultFile = folder.getFile(resultName);
-			//if (!resultFile.exists()){   //overwrite previous results (otherwise they are not updated when the model changes)
-				resultFile.delete(true, null);
-				resultFile.create(is, IResource.FORCE, null);
-			//}
-			
 			System.out.println("PNML -> DEEM ... DONE!");
 //			monitor.worked(1);
-			return resultFile;
+			return is;
 			
 		//exception handling?
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
-			return null;
 		} catch (ATLCoreException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
@@ -493,11 +577,6 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
 			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 			return null;
-		} catch (CoreException e) {
-			e.printStackTrace();
-			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
-			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
@@ -506,11 +585,17 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 		} 
 	}
 	
-	private static String connectToDeem(IFile resultFile){
+	/**
+	 * 
+	 * @param model the full path of the deem model
+	 * @param folder the folder where the deem model is located
+	 * @return
+	 */
+	private static String connectToDeem(String modelPath, String modelFolderPath){
 		try{
 			DEEMClient c = new DEEMClient();
 //			c.setProgressMonitor(monitor);
-			String res = c.sendAndReceiveFile(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString());
+			String res = c.sendAndReceiveFile(modelPath, modelFolderPath);
 			return res;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
