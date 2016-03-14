@@ -41,6 +41,7 @@ import org.eclipse.uml2.uml.Type;
  * If the list is not empty the "context" operation must have private visibility and it cannot be invoked directly by other operations.
  * If the list is empty the "context" operation must be invoked directly by other operations.
  * 
+ * CHRtSpecification extends MARTE RtSpecification
  * <!-- end-model-doc -->
  *
  * <p>

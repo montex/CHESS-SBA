@@ -24,7 +24,8 @@ import org.eclipse.uml2.uml.Slot;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * To be renamed with CHRtFeature
+ * To be renamed with CHRtFeature, as extension of the MARTE RtFeature
+ * 
  * <!-- end-model-doc -->
  *
  * <p>

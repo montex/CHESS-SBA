@@ -4,9 +4,7 @@
     <availablePage>
       <emfPageIdentifier href="CHESS.profile.notation#_mwzqMG2PEd-OHNNfvuYr9g"/>
     </availablePage>
-    <availablePage>
-      <emfPageIdentifier href="CHESS.profile.notation#_TvxXUG2REd-OHNNfvuYr9g"/>
-    </availablePage>
+    <availablePage/>
     <availablePage>
       <emfPageIdentifier href="CHESS.profile.notation#_iv4ggG2REd-OHNNfvuYr9g"/>
     </availablePage>
@@ -106,9 +104,6 @@
           <emfPageIdentifier href="CHESS.profile.notation#_wtNJYDQ2EeC0ueejuetpgA"/>
         </children>
         <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_TvxXUG2REd-OHNNfvuYr9g"/>
-        </children>
-        <children>
           <emfPageIdentifier href="CHESS.profile.notation#_7EqPsG8VEd-8i8zc_Ad2sQ"/>
         </children>
         <children>
@@ -152,6 +147,9 @@
         </children>
         <children>
           <emfPageIdentifier href="CHESS.profile.notation#_JFlCUDxeEeWGMtwulVMCiA"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="CHESS.profile.notation#_TDLlAOnjEeWA_dLIUfgPeA"/>
         </children>
       </children>
     </windows>

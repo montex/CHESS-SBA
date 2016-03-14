@@ -79,6 +79,10 @@ public class RTComponentModelAdapterFactory extends AdapterFactoryImpl {
 				return createCHRtPortSlotAdapter();
 			}
 			@Override
+			public Adapter caseRunTimeSupport(RunTimeSupport object) {
+				return createRunTimeSupportAdapter();
+			}
+			@Override
 			public Adapter caseCHRtSpecification(CHRtSpecification object) {
 				return createCHRtSpecificationAdapter();
 			}
@@ -113,6 +117,20 @@ public class RTComponentModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCHRtPortSlotAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport <em>Run Time Support</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport
+	 * @generated
+	 */
+	public Adapter createRunTimeSupportAdapter() {
 		return null;
 	}
 

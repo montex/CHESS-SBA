@@ -40,6 +40,15 @@ public interface RTComponentModelFactory extends EFactory {
 	CHRtPortSlot createCHRtPortSlot();
 
 	/**
+	 * Returns a new object of class '<em>Run Time Support</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Run Time Support</em>'.
+	 * @generated
+	 */
+	RunTimeSupport createRunTimeSupport();
+
+	/**
 	 * Returns a new object of class '<em>CH Rt Specification</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

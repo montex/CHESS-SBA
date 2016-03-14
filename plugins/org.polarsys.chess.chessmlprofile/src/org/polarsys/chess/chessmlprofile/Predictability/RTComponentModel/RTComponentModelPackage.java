@@ -112,6 +112,52 @@ public interface RTComponentModelPackage extends EPackage {
 	int CH_RT_PORT_SLOT_FEATURE_COUNT = 3;
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RunTimeSupportImpl <em>Run Time Support</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RunTimeSupportImpl
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RTComponentModelPackageImpl#getRunTimeSupport()
+	 * @generated
+	 */
+	int RUN_TIME_SUPPORT = 1;
+
+	/**
+	 * The feature id for the '<em><b>Monitoring</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RUN_TIME_SUPPORT__MONITORING = 0;
+
+	/**
+	 * The feature id for the '<em><b>Verification</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RUN_TIME_SUPPORT__VERIFICATION = 1;
+
+	/**
+	 * The feature id for the '<em><b>Base Comment</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RUN_TIME_SUPPORT__BASE_COMMENT = 2;
+
+	/**
+	 * The number of structural features of the '<em>Run Time Support</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RUN_TIME_SUPPORT_FEATURE_COUNT = 3;
+
+	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl <em>CH Rt Specification</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -119,7 +165,7 @@ public interface RTComponentModelPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RTComponentModelPackageImpl#getCHRtSpecification()
 	 * @generated
 	 */
-	int CH_RT_SPECIFICATION = 1;
+	int CH_RT_SPECIFICATION = 2;
 
 	/**
 	 * The feature id for the '<em><b>Part With Port</b></em>' reference.
@@ -326,6 +372,49 @@ public interface RTComponentModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCHRtPortSlot_Base_InstanceSpecification();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport <em>Run Time Support</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Run Time Support</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport
+	 * @generated
+	 */
+	EClass getRunTimeSupport();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#isMonitoring <em>Monitoring</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Monitoring</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#isMonitoring()
+	 * @see #getRunTimeSupport()
+	 * @generated
+	 */
+	EAttribute getRunTimeSupport_Monitoring();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#isVerification <em>Verification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Verification</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#isVerification()
+	 * @see #getRunTimeSupport()
+	 * @generated
+	 */
+	EAttribute getRunTimeSupport_Verification();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#getBase_Comment <em>Base Comment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Comment</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#getBase_Comment()
+	 * @see #getRunTimeSupport()
+	 * @generated
+	 */
+	EReference getRunTimeSupport_Base_Comment();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification <em>CH Rt Specification</em>}'.
@@ -579,6 +668,40 @@ public interface RTComponentModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getCHRtPortSlot_Base_InstanceSpecification();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RunTimeSupportImpl <em>Run Time Support</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RunTimeSupportImpl
+		 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RTComponentModelPackageImpl#getRunTimeSupport()
+		 * @generated
+		 */
+		EClass RUN_TIME_SUPPORT = eINSTANCE.getRunTimeSupport();
+
+		/**
+		 * The meta object literal for the '<em><b>Monitoring</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RUN_TIME_SUPPORT__MONITORING = eINSTANCE.getRunTimeSupport_Monitoring();
+
+		/**
+		 * The meta object literal for the '<em><b>Verification</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RUN_TIME_SUPPORT__VERIFICATION = eINSTANCE.getRunTimeSupport_Verification();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Comment</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RUN_TIME_SUPPORT__BASE_COMMENT = eINSTANCE.getRunTimeSupport_Base_Comment();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl <em>CH Rt Specification</em>}' class.

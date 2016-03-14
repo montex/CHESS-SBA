@@ -10525,7 +10525,7 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
 -blockT</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_gAqz0HD9EeWsMJjT42u20Q" annotatedElement="_hMroYzg0EeCE2sZUGxu35w">
-          <body>to be removed</body>
+          <body>deprecated</body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_UbCWwHGoEeWnWZfsnDCUoA" annotatedElement="_Y4GZwDcwEd-mWLzcI61s7Q">
           <body>operationReqForSporadicOcc: the list of operations that need to be invoked to allow the sporadic occurrence of the &quot;context&quot; operation.&#xD;
@@ -10538,7 +10538,27 @@ If the list is empty the &quot;context&quot; operation must be invoked directly 
 </body>
         </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_AuLR4HJpEeWA88Dv12-yjw" annotatedElement="__uhSsDg3EeCE2sZUGxu35w">
-          <body>To be renamed with CHRtFeature</body>
+          <body>To be renamed with CHRtFeature, as extension of the MARTE RtFeature&#xD;
+</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_nCtD8OniEeWA_dLIUfgPeA" annotatedElement="_gmfo0DcwEd-mWLzcI61s7Q">
+          <body>allows to use CHRTSpecification in composite diagrams, where Properties are instances</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_rXQCUOniEeWA_dLIUfgPeA" annotatedElement="_AWhm4XJpEeWA88Dv12-yjw">
+          <body>allows to decorate private operations for component istances, i.e. operations which are not provided by any port instance (i.e. slot)</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_yuANcOniEeWA_dLIUfgPeA" annotatedElement="_BXSAQTg4EeCE2sZUGxu35w">
+          <body>allows to decorate public operations for component instances, i.e. operations which are provided by port instances (i.e. slot)</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_9XR5QOniEeWA_dLIUfgPeA" annotatedElement="_Y4GZwDcwEd-mWLzcI61s7Q">
+          <body>CHRtSpecification extends MARTE RtSpecification</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_5GHwoOnjEeWA_dLIUfgPeA" annotatedElement="_gDlVseniEeWA_dLIUfgPeA">
+          <body>To extend CHRtSpecification Comments&#xD;
+</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_RysYEOnkEeWA_dLIUfgPeA" annotatedElement="_kN5PAEApEeCgBsnPy5jVRQ">
+          <body>The operation to be decorated</body>
         </ownedComment>
         <elementImport xmi:type="uml:ElementImport" xmi:id="_WP3MMDcwEd-mWLzcI61s7Q" alias="RtSpecification">
           <importedElement xmi:type="uml:Stereotype" href="pathmap://Papyrus_PROFILES/MARTE.profile.uml#_AZ8eMEFeEd6UW4qJC-Vahw"/>
@@ -10853,6 +10873,20 @@ If the list is empty the &quot;context&quot; operation must be invoked directly 
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_AWhm4XJpEeWA88Dv12-yjw" name="E_CHRtPortSlot_InstanceSpecification1" memberEnd="_AWhm4nJpEeWA88Dv12-yjw _AWhm4HJpEeWA88Dv12-yjw">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_AWhm4nJpEeWA88Dv12-yjw" name="extension_CHRtPortSlot" type="__uhSsDg3EeCE2sZUGxu35w" aggregation="composite" association="_AWhm4XJpEeWA88Dv12-yjw"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_PfAJEOniEeWA_dLIUfgPeA" name="RunTimeSupport">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_U2KbAOniEeWA_dLIUfgPeA" name="monitoring">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_cspPEOniEeWA_dLIUfgPeA" name="verification">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_gDlVsOniEeWA_dLIUfgPeA" name="base_Comment" association="_gDlVseniEeWA_dLIUfgPeA">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Comment"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_gDlVseniEeWA_dLIUfgPeA" name="E_RunTimeSupport_Comment1" memberEnd="_gDlVsuniEeWA_dLIUfgPeA _gDlVsOniEeWA_dLIUfgPeA">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_gDlVsuniEeWA_dLIUfgPeA" name="extension_RunTimeSupport" type="_PfAJEOniEeWA_dLIUfgPeA" aggregation="composite" association="_gDlVseniEeWA_dLIUfgPeA"/>
         </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Profile" xmi:id="_GMlQEGwuEeWvYIaEJT1qow" name="ARINCComponentModel">

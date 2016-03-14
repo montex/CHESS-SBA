@@ -73,6 +73,7 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTCompo
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTDataTypes.RTDataTypesPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTDataTypes.impl.RTDataTypesPackageImpl;
+import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAnalysisPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
@@ -96,6 +97,13 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 	 * @generated
 	 */
 	private EClass chRtPortSlotEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass runTimeSupportEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -295,6 +303,42 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getRunTimeSupport() {
+		return runTimeSupportEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRunTimeSupport_Monitoring() {
+		return (EAttribute)runTimeSupportEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRunTimeSupport_Verification() {
+		return (EAttribute)runTimeSupportEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRunTimeSupport_Base_Comment() {
+		return (EReference)runTimeSupportEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCHRtSpecification() {
 		return chRtSpecificationEClass;
 	}
@@ -485,6 +529,11 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__CH_RT_SPECIFICATION);
 		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION);
 
+		runTimeSupportEClass = createEClass(RUN_TIME_SUPPORT);
+		createEAttribute(runTimeSupportEClass, RUN_TIME_SUPPORT__MONITORING);
+		createEAttribute(runTimeSupportEClass, RUN_TIME_SUPPORT__VERIFICATION);
+		createEReference(runTimeSupportEClass, RUN_TIME_SUPPORT__BASE_COMMENT);
+
 		chRtSpecificationEClass = createEClass(CH_RT_SPECIFICATION);
 		createEReference(chRtSpecificationEClass, CH_RT_SPECIFICATION__PART_WITH_PORT);
 		createEAttribute(chRtSpecificationEClass, CH_RT_SPECIFICATION__WCET);
@@ -531,6 +580,7 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		// Obtain other dependent packages
 		RTDataTypesPackage theRTDataTypesPackage = (RTDataTypesPackage)EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI);
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
+		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 		HLAMPackage theHLAMPackage = (HLAMPackage)EPackage.Registry.INSTANCE.getEPackage(HLAMPackage.eNS_URI);
 
@@ -548,6 +598,11 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		initEReference(getCHRtPortSlot_Base_Slot(), theUMLPackage.getSlot(), null, "base_Slot", null, 1, 1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCHRtPortSlot_CH_RtSpecification(), this.getCHRtSpecification(), null, "cH_RtSpecification", null, 0, -1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCHRtPortSlot_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(runTimeSupportEClass, RunTimeSupport.class, "RunTimeSupport", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getRunTimeSupport_Monitoring(), theTypesPackage.getBoolean(), "monitoring", null, 1, 1, RunTimeSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getRunTimeSupport_Verification(), theTypesPackage.getBoolean(), "verification", null, 1, 1, RunTimeSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getRunTimeSupport_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, RunTimeSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(chRtSpecificationEClass, CHRtSpecification.class, "CHRtSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCHRtSpecification_PartWithPort(), theUMLPackage.getProperty(), null, "partWithPort", null, 0, 1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
