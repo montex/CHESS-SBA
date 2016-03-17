@@ -183,6 +183,7 @@ public class Constants {
 	public static final String MARTE_HwDevice ="MARTE::MARTE_DesignModel::HRM::HwLogical::HwDevice";	
 	public static final String MARTE_DeviceBroker ="MARTE::MARTE_DesignModel::SRM::SW_Brokering";
 
+	public static final String CHESS_VALIDATOR_PLUGIN ="org.polarsys.chess.validator";
 
 	
 }

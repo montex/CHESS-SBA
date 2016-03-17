@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
@@ -60,6 +61,7 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
+import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.util.AnalysisResultData;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.HWAnalysisResultData;
@@ -90,7 +92,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 	private Resource inResource = null;
 
 	/** The context class. */
-//	private Class contextClass;
+	//	private Class contextClass;
 
 	/** The sa analysis name. */
 	private String saAnalysisName;
@@ -122,7 +124,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 	 */
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final IEditorPart editor = HandlerUtil.getActiveEditor(event);
-		
+
 
 		if (!(CHESSEditorUtils.isCHESSProject(editor)))
 			return null;
@@ -135,7 +137,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		}
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		activeShell = window.getShell();
-		
+
 		// run CHESS Validate Core Constraints to validate the model before running analysis
 		String label = "Validate model for CHESS Core Constraints";
 		final Model model = (Model) inResource.getContents().get(0);		
@@ -152,9 +154,21 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 				return null;
 			}
 			if (chessValidateCommand.getMarkers()) {
-				go = MessageDialog.openQuestion(activeShell, "Validation Problems", "Errors found while validating the Model. Schedulability Analysis won't be performed correctly. Do you still want to continue?");
-				if (!go) {
-					return null;
+				org.eclipse.emf.common.util.Diagnostic diagnostic = chessValidateCommand.getDiagnostic();
+				List<org.eclipse.emf.common.util.Diagnostic> diagList = diagnostic.getChildren();
+				Boolean validationErrors = false;
+				for (org.eclipse.emf.common.util.Diagnostic theDiag : diagList) {
+					if (theDiag.getSource().equals(Constants.CHESS_VALIDATOR_PLUGIN) &&
+							theDiag.getSeverity()>org.eclipse.emf.common.util.Diagnostic.WARNING) {
+						validationErrors = true;
+						break;						
+					}
+				}
+				if (validationErrors) {
+					go = MessageDialog.openQuestion(activeShell, "Validation Problems", "Errors found while validating the Model. Schedulability Analysis won't be performed correctly. Do you still want to continue?");
+					if (!go) {
+						return null;
+					}
 				}
 			}
 		} 
@@ -188,7 +202,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		String contextQN = null;
 		AnalysisContextSelectionDialog dialog = new AnalysisContextSelectionDialog(activeShell, selection, "Select Schedulability Context to analyze");
 		if (dialog.open() == Window.OK) {
-		
+
 		}else{
 			return null;
 		}
@@ -196,18 +210,18 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		if(contextQN == null || contextQN.isEmpty()){
 			return null;
 		}
-		
+
 		Class contextClassTmp = null;
 		for (Element elem : model.allOwnedElements()) {
 			Stereotype saAnalysisContextStereo = elem.getAppliedStereotype(TransUtil.SA_ANALYSIS_CTX);
 			if(saAnalysisContextStereo != null &&
 					((NamedElement) elem).getQualifiedName().equals(contextQN)){
 				contextClassTmp = (Class) elem;
-					
+
 				SaAnalysisContext saAnalysisContext = (SaAnalysisContext) elem.getStereotypeApplication(saAnalysisContextStereo);
 				List<CH_HwProcessor> tmpList = getPlatformChHwProcessors(saAnalysisContext, model);
 				chHwProcList.addAll(tmpList);
-				
+
 				// Check that the Context Platform contains two CHGaResourcePlatform instances, one in ComponentView, one in DeploymentView
 				// and that at least on CH_HwPlatform is specified in the Context
 				if (chHwProcList.isEmpty() || !UMLUtils.checkPlatformsInContext(saAnalysisContext, model)) {
@@ -307,7 +321,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 			if (theGaResPlatform instanceof CHGaResourcePlatform) {
 				CHGaResourcePlatform chGaResPlat = (CHGaResourcePlatform)theGaResPlatform;
 				org.eclipse.uml2.uml.Package thePackage = ViewUtils.getView(chGaResPlat.getBase_Package());
-				
+
 				if (ViewUtils.getCHESSDeploymentPackage(model)	== thePackage) {
 					EList<Element> allElems = (chGaResPlat.getBase_Package().allOwnedElements());
 					for (Element theElement : allElems) {
@@ -326,90 +340,90 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 		return chHwProcessorList;
 	}
 
-/**
- * Collects all the needed information and invokes the PIMPSMTransformationVERDE.performTimingAnalysisWithMAST method
- *
- * @param editor the editor
- * @param monitor the monitor
- * @return the string resulting from the MAST execution (i.e. the system is/not schedulable) and the modified model
- * @throws Exception the exception
- * @see org.polarsys.chess.m2m.transformations.PIMPSMTransformationVERDE#performTimingAnalysisWithMAST(PapyrusMultiDiagramEditor, IFile, IProgressMonitor)
- */
-public TransformationResultsData executeTimingAnalysis(IEditorPart editor, IProgressMonitor monitor) throws Exception {
-	monitor.beginTask("Transforming", 4);
+	/**
+	 * Collects all the needed information and invokes the PIMPSMTransformationVERDE.performTimingAnalysisWithMAST method
+	 *
+	 * @param editor the editor
+	 * @param monitor the monitor
+	 * @return the string resulting from the MAST execution (i.e. the system is/not schedulable) and the modified model
+	 * @throws Exception the exception
+	 * @see org.polarsys.chess.m2m.transformations.PIMPSMTransformationVERDE#performTimingAnalysisWithMAST(PapyrusMultiDiagramEditor, IFile, IProgressMonitor)
+	 */
+	public TransformationResultsData executeTimingAnalysis(IEditorPart editor, IProgressMonitor monitor) throws Exception {
+		monitor.beginTask("Transforming", 4);
 
-	IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
-	PIMPSMTransformationVERDE t = new PIMPSMTransformationVERDE();
-	Map<String, String> configProps = new HashMap<String, String>();
-	configProps.put("saAnalysis", saAnalysisName);
-	configProps.put("analysisType", "Schedulability");
-	t.setConfigProperty(configProps);
-	t.setPsmPackageName(psmPackageName);
-	final TransformationResultsData result = t.performTimingAnalysisWithMAST((PapyrusMultiDiagramEditor) editor, inputFile, monitor);
+		IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
+		PIMPSMTransformationVERDE t = new PIMPSMTransformationVERDE();
+		Map<String, String> configProps = new HashMap<String, String>();
+		configProps.put("saAnalysis", saAnalysisName);
+		configProps.put("analysisType", "Schedulability");
+		t.setConfigProperty(configProps);
+		t.setPsmPackageName(psmPackageName);
+		final TransformationResultsData result = t.performTimingAnalysisWithMAST((PapyrusMultiDiagramEditor) editor, inputFile, monitor);
 
-	//CHESSProjectSupport.fileReplace(newFile, inputFile);
-	return result;
-}
-
-
-/**
- * Open a simple, user-friendly report to display the analysis results
- *
- * @param model the model
- * @param result the result
- */
-public void openSchedAnalysisReport(Model model, final String result, 
-		final List<CH_HwProcessor> cpus, 
-		Class saAnalysisContextClass){
- 			
-	if (result == null)
-		return;
-	
-	if (saAnalysisContextClass == null) {
-		return;
+		//CHESSProjectSupport.fileReplace(newFile, inputFile);
+		return result;
 	}
-	
-	if(saAnalysisContextClass.eIsProxy()){
-		saAnalysisContextClass = (Class) EcoreUtil.resolve(saAnalysisContextClass, model);
-	}
-		
-	final List<HWAnalysisResultData> hwResults = UMLUtils.getHWAnalysisResults(saAnalysisContextClass);
-	final List<AnalysisResultData> analysisResData = UMLUtils.getAnalysisResults(saAnalysisContextClass);
-	//and open a simple, user-friendly report
-//	final List<CHRtPortSlot> specifications = new ArrayList<CHRtPortSlot>();
-//	for (Element elem : model.allOwnedElements()) {
-//		CHRtPortSlot chrtSlot = UMLUtils.getStereotypeApplication(elem, CHRtPortSlot.class);
-//		//if(chrtSlot != null && UMLUtils.getStereotypeApplication(chrtSlot.getBase_Slot().getOwner(), IdentifInstance.class) != null){
-//		if(chrtSlot != null){	
-//			specifications.add(chrtSlot);
-//		}
-//	};
 
-	final Display display = PlatformUI.getWorkbench().getDisplay();
-	display.asyncExec(new Runnable() {
-		@Override
-		public void run() {
-			Shell shell = new Shell(display);
 
-			//SchedResultDialog dialog = new SchedResultDialog(shell, result, specifications, cpus, hwResults);
-			SchedResultDialog dialog = new SchedResultDialog(shell, result, analysisResData, hwResults);
-			if (dialog.open() == Window.OK) {
-				System.out.println("OK");
-			}
+	/**
+	 * Open a simple, user-friendly report to display the analysis results
+	 *
+	 * @param model the model
+	 * @param result the result
+	 */
+	public void openSchedAnalysisReport(Model model, final String result, 
+			final List<CH_HwProcessor> cpus, 
+			Class saAnalysisContextClass){
+
+		if (result == null)
+			return;
+
+		if (saAnalysisContextClass == null) {
+			return;
 		}
-	});
-}
 
-//	@SuppressWarnings("unused")
-//	private ModelSet getEditorResourceSet(IEditorPart editor)
-//			throws Exception {
-//		ModelSet resourceSet = null;
-//		try {
-//			resourceSet = (ModelSet)((ServicesRegistry)editor.getAdapter(ServicesRegistry.class)).getService(ModelSet.class);
-//		} catch (ServiceException e) {
-//			e.printStackTrace();
-//			throw new Exception("Unable to get the service registry");
-//		}
-//		return resourceSet;
-//	}
+		if(saAnalysisContextClass.eIsProxy()){
+			saAnalysisContextClass = (Class) EcoreUtil.resolve(saAnalysisContextClass, model);
+		}
+
+		final List<HWAnalysisResultData> hwResults = UMLUtils.getHWAnalysisResults(saAnalysisContextClass);
+		final List<AnalysisResultData> analysisResData = UMLUtils.getAnalysisResults(saAnalysisContextClass);
+		//and open a simple, user-friendly report
+		//	final List<CHRtPortSlot> specifications = new ArrayList<CHRtPortSlot>();
+		//	for (Element elem : model.allOwnedElements()) {
+		//		CHRtPortSlot chrtSlot = UMLUtils.getStereotypeApplication(elem, CHRtPortSlot.class);
+		//		//if(chrtSlot != null && UMLUtils.getStereotypeApplication(chrtSlot.getBase_Slot().getOwner(), IdentifInstance.class) != null){
+		//		if(chrtSlot != null){	
+		//			specifications.add(chrtSlot);
+		//		}
+		//	};
+
+		final Display display = PlatformUI.getWorkbench().getDisplay();
+		display.asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				Shell shell = new Shell(display);
+
+				//SchedResultDialog dialog = new SchedResultDialog(shell, result, specifications, cpus, hwResults);
+				SchedResultDialog dialog = new SchedResultDialog(shell, result, analysisResData, hwResults);
+				if (dialog.open() == Window.OK) {
+					System.out.println("OK");
+				}
+			}
+		});
+	}
+
+	//	@SuppressWarnings("unused")
+	//	private ModelSet getEditorResourceSet(IEditorPart editor)
+	//			throws Exception {
+	//		ModelSet resourceSet = null;
+	//		try {
+	//			resourceSet = (ModelSet)((ServicesRegistry)editor.getAdapter(ServicesRegistry.class)).getService(ModelSet.class);
+	//		} catch (ServiceException e) {
+	//			e.printStackTrace();
+	//			throw new Exception("Unable to get the service registry");
+	//		}
+	//		return resourceSet;
+	//	}
 }
