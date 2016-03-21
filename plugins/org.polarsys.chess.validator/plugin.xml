@@ -269,7 +269,7 @@
                      class="Comment">
                </target> 
                <message>
-                  In the&lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] the attribute &quot;localWCET&quot; must be &gt;= 0 (or null). {1} 
+                  In the&lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] the attribute &quot;localWCET&quot; must be &gt;= 0. {1} 
                </message>
                <description>
                 In CH_RtSpecification attribute localWCET must be >= 0
