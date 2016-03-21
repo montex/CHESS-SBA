@@ -2076,6 +2076,10 @@ public class UMLUtils {
 			// Get first element if the selection is an IStructuredSelection
 			if (selection instanceof IStructuredSelection) {
 				IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+				if (structuredSelection.size()!=2) {
+					// it will return null because two elements must be selected
+					return result;
+				}
 				Iterator iterator = structuredSelection.iterator();				
 				if (iterator.hasNext()) {
 					selection1 = iterator.next();
