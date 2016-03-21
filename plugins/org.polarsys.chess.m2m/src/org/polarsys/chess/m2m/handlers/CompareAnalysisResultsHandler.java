@@ -33,6 +33,7 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.util.AnalysisResultData;
+import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.HWAnalysisResultData;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.m2m.Activator;
@@ -46,8 +47,8 @@ public class CompareAnalysisResultsHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		EList<EObject> selectedObjects = UMLUtils.getTwoSelectedElements();
 		if (selectedObjects.size()!=2) {
-			ExecutionException execException = new ExecutionException("User must select two elements for analysis results comparison");
-			throw execException;
+			CHESSProjectSupport.printlnToCHESSConsole("User must select two <<SaAnalysisContext>> elements for analysis results comparison!");
+			return null;
 		}
 		
 		EObject selection1 = selectedObjects.get(0);
@@ -69,6 +70,10 @@ public class CompareAnalysisResultsHandler extends AbstractHandler {
 			listData1 = UMLUtils.getAnalysisResults((Class) element1);	
 			listHWData1 = UMLUtils.getHWAnalysisResults((Class)element1);
 		}
+		else {
+			CHESSProjectSupport.printlnToCHESSConsole("User must select two <<SaAnalysisContext>> elements for analysis results comparison!");
+			return null;
+		}
 		
 		Element element2 = (Element)selection2;
 		if (element2.getAppliedStereotype(Constants.MARTE_SaAnalysisContext)!=null) {
@@ -78,18 +83,10 @@ public class CompareAnalysisResultsHandler extends AbstractHandler {
 			listData2 = UMLUtils.getAnalysisResults((Class) element2);
 			listHWData2 = UMLUtils.getHWAnalysisResults((Class)element2);
 		}
-
-//		///
-//		try {
-//			Model model = element1.getModel();
-//			//openSchedAnalysisReport(model, result.res, chHwProcList, contextClass);
-//			openComparedAnalysisReport(model, analysisContextName1, analysisContextName2, listData1, listData2, listHWData1, listHWData2);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			//throw new Exception("Unable to load the model and so open the compareAnalysisReport");
-//		}
-
-		///
+		else {
+			CHESSProjectSupport.printlnToCHESSConsole("User must select two <<SaAnalysisContext>> elements for analysis results comparison!");
+			return null;
+		}
 		
 		openComparedAnalysisReport(analysisContextName1, analysisContextName2, listData1, listData2, listHWData1, listHWData2);
 				
@@ -113,8 +110,10 @@ public class CompareAnalysisResultsHandler extends AbstractHandler {
 			final List<HWAnalysisResultData> listHWData1,
 			final List<HWAnalysisResultData> listHWData2) {		
 
-		if (listAnalysisResult1.size() == 0 && listAnalysisResult2.size()==0)
+		if (listAnalysisResult1.size() == 0 && listAnalysisResult2.size()==0) {
+			CHESSProjectSupport.printlnToCHESSConsole("User must select two <<SaAnalysisContext>> elements for analysis results comparison!");
 			return;
+		}
 		//and open a simple, user-friendly report
 		
 		
@@ -125,5 +124,7 @@ public class CompareAnalysisResultsHandler extends AbstractHandler {
 		if (compareResultsDialog.open() == Window.OK) {
 			
 		}
-	}		
+	}
+	
+		
 }

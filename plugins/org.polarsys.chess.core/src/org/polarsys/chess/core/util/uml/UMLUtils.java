@@ -79,6 +79,7 @@ import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARIN
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
+import org.polarsys.chess.chessmlprofile.Safety.CriticalityLevel;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.notifications.ResourceNotification;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
@@ -1156,21 +1157,28 @@ public class UMLUtils {
 		return false;
 	}
 
+
 	/**
 	 * Returns the number of CPUs to which the InstanceSpecification is assigned 
-	 * @param i
+	 * @param i the instance specification
 	 * @param assignments
-	 * @return
+	 * @param theDeploymentElem the deployment for which the count is performed
+	 * @return the number of CPUs to which the InstanceSpecification is assigned for the given deployment
 	 */
-	public static int isAssigned2HowManyProcessingUnits(InstanceSpecification i,
-			EList<Assign> assignments) {
+	public static int isAssigned2HowManyProcessingUnits(InstanceSpecification i, 
+			Element theDeploymentElem, EList<Assign> assignments) {		
+
 		int count = 0;
 		for (Assign theAssignment : assignments) {			
 			if (theAssignment != null) {
 				try {
+					Element toElem = theAssignment.getTo().get(0);
 					if (theAssignment.getFrom().contains((Object)i) &&
-							elementIsProcessorInstance(theAssignment.getTo().get(0))) {	
-						count++;
+							elementIsProcessorInstance(theAssignment.getTo().get(0))) {
+						Element chgaResPlat = toElem.getOwner();
+						if (theDeploymentElem.equals(chgaResPlat)) {
+							count++;
+						}
 					}
 				}
 				catch (Exception e) {
@@ -1183,13 +1191,15 @@ public class UMLUtils {
 
 
 	/**
-	 * Returns the number of CPUs to which the InstanceSpecification is assigned 
-	 * @param i
+	 * Returns the number of CPUs or FunctionalPartitions to which the InstanceSpecification is assigned 
+	 * @param i the instance specification
+	 * @param theDeploymentElem the deployment for which the count is performed
 	 * @param assignments
-	 * @return
+	 * @return the number of CPUs or FunctionalPartitions to which the InstanceSpecification is assigned for the given deployment
 	 */
-	public static int isAssigned2HowManyProcessingUnitsOrPartitions(InstanceSpecification i,
-			EList<Assign> assignments) {
+	public static int isAssigned2HowManyProcessingUnitsOrPartitions(InstanceSpecification i, 
+			Element theDeploymentElem, EList<Assign> assignments) {	
+
 		int count = 0;
 		for (Assign theAssignment : assignments) {			
 			if (theAssignment != null) {
@@ -1197,7 +1207,37 @@ public class UMLUtils {
 					Element toElem = theAssignment.getTo().get(0);
 					if (theAssignment.getFrom().contains((Object)i) &&
 							(elementIsProcessorInstance(toElem) ||
-									elementIsPartitionInstance(toElem))) {	
+									elementIsPartitionInstance(toElem))) {
+						Element chgaResPlat = toElem.getOwner();
+						if(chgaResPlat.equals(theDeploymentElem)) {
+							count++;
+						}
+					}
+				}
+				catch (Exception e) {
+					continue;
+				}
+			}
+		}
+		return count;
+	}
+
+
+	/**
+	 * Returns the number of FunctionalPartitions to which the InstanceSpecification is assigned 
+	 * @param i
+	 * @param assignments
+	 * @return
+	 */
+	public static int isAssigned2HowManyPartitions(InstanceSpecification i, EList<Assign> assignments) {	
+		int count = 0;
+		for (Assign theAssignment : assignments) {			
+			if (theAssignment != null) {
+				try {
+					Element toElem = theAssignment.getTo().get(0);
+					if (theAssignment.getFrom().contains((Object)i) &&
+							(elementIsProcessorInstance(toElem) ||
+									elementIsPartitionInstance(toElem))) {
 						count++;
 					}
 				}
@@ -1271,6 +1311,38 @@ public class UMLUtils {
 		}
 		return null;
 	}
+
+
+	/**
+	 * 
+	 * @param cmpv
+	 * @return
+	 */
+	public static EList<Package> getAllResourcePlatformPackage(Package cmpv) {
+		/* breath-first search */
+
+		EList<Package> result = new BasicEList<Package>();
+
+		final LinkedList<Package> breadthFirstList = new LinkedList<Package>();
+		breadthFirstList.addFirst(cmpv);
+		while (!breadthFirstList.isEmpty()) {
+			final Package candidate = breadthFirstList.poll();
+			CHGaResourcePlatform a = UMLUtils.getStereotypeApplication(
+					candidate, CHGaResourcePlatform.class);
+
+			if (a != null) {
+				result.add(candidate);
+				//return candidate;
+			}
+
+			for (final Package p : candidate.getNestedPackages()) {
+				breadthFirstList.addLast(p);
+			}
+		}
+		//return null;
+		return result;
+	}
+
 
 	/**
 	 * Returns TRUE if the instance specification is a partition instance
