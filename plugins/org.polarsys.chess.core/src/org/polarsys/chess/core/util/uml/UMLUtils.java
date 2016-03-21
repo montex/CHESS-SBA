@@ -2123,7 +2123,7 @@ public class UMLUtils {
 	 * @param units The unit to be set
 	 * @return
 	 */
-	public String setNfpValue(String str, String toSearch, Double value, String units) {
+	public static String setNfpValue(String str, String toSearch, Double value, String units) {
 
 		String res = new String();
 		String toBeAdded = toSearch + "=(value=" + value.toString() + ", unit=" + units + ")";
@@ -2286,7 +2286,23 @@ public class UMLUtils {
 		String newOccurrencyKind = occurrencyKindArincProc.substring(0, occurrencyKindArincProc.lastIndexOf(")"));
 		newOccurrencyKind += ","+occurrencyKindArincFunct.substring(1);
 		//newOccurrencyKind += ")";
+		
+		
+		//get the rate divider of the ARINCFunction and apply it to derive the actual period of he arinc function
+		int ratediv = 1;
+		BehavioralFeature behavFeat = arincFunctChrtspec.getContext();
+		if (behavFeat.getAppliedStereotype(Constants.CH_ARINCFunction)!=null ) {
+			Stereotype arincFunctionStereo = behavFeat.getAppliedStereotype(Constants.CH_ARINCFunction);
+			ARINCFunction arincFunction = (ARINCFunction) behavFeat.getStereotypeApplication(arincFunctionStereo);
+			ratediv= arincFunction.getRateDivider();
+		}else{
+			throw new ModelError("ARINCProcess not found for "+behavFeat);
+		}
+		ValueNFP nfp = UMLUtils.getNfpValue(occurrencyKindArincProc, "period");
+		newOccurrencyKind = UMLUtils.setNfpValue(newOccurrencyKind, "period", nfp.value*ratediv, nfp.unit);
+		
 		chrtspec.setOccKind(newOccurrencyKind);
+		
 		return chrtspec;
 	}
 
