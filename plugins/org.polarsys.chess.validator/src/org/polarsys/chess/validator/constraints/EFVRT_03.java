@@ -17,6 +17,7 @@ package org.polarsys.chess.validator.constraints;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.uml2.uml.BehavioralFeature;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
@@ -28,7 +29,9 @@ import org.polarsys.chess.chessmlprofile.util.Constants;
 /**
  * The Class EFVRT_03.
  * This class implements the following constraint (invoked by the EMF validation framework):
- * Checks that in CHRtSpecification, if occKind is Periodic, then the attributes 'period' and 'relDl' must all be >= 0
+ * Checks that in CHRtSpecification, if occKind is Periodic, then the attributes 'period' and 'relDl' must all be >= 0, 
+ * unless the CHRtSpecification is related to an ARINCFunction, in which case the attribute 'period' may be empty, as it will be
+ * filled in by the PIM to PSM transformation. 
  */
 public class EFVRT_03 extends AbstractModelConstraint {	
 
@@ -70,10 +73,16 @@ public class EFVRT_03 extends AbstractModelConstraint {
 			return failure;
 
 		try {
-			double period = parser.getValuePattern(occValue, "period");
-
-			if(!(period >= 0))
+			double period = parser.getValuePattern(occValue, "period");			
+			if(!(period >= 0)) {
+				// Check if the Context is an ARINCFunction, in which case return success anyhow
+				BehavioralFeature behavFeat = chRtSpec.getContext(); 
+				if (behavFeat.getAppliedStereotype(Constants.CH_ARINCFunction)!=null) {
+					// period will be filled in by the PIM to PSM transformation, so we return success
+					return success;
+				}
 				return failure;
+			}
 		}
 		catch (Exception except) {
 			return failure;
