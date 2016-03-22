@@ -28,7 +28,7 @@ import org.polarsys.chess.chessmlprofile.util.Constants;
 /**
  * The Class EFVRT_03.
  * This class implements the following constraint (invoked by the EMF validation framework):
- * Checks that in CHRtSpecification, if occKind is Priodic, then the attributes 'period' and 'WCET' and 'relDl' must all be >= 0
+ * Checks that in CHRtSpecification, if occKind is Periodic, then the attributes 'period' and 'relDl' must all be >= 0
  */
 public class EFVRT_03 extends AbstractModelConstraint {	
 
@@ -58,33 +58,47 @@ public class EFVRT_03 extends AbstractModelConstraint {
 		if (partWithPort==null) {
 			return success;
 		}
-		
+
 		String occValue = chRtSpec.getOccKind();
-		String wcet = chRtSpec.getWCET();
+		//String wcet = chRtSpec.getWCET();
 		String relDl = chRtSpec.getRlDl();
 
 		if(occValue == null || !(occValue.contains(Constants.CHRTSPEC_OCCKIND_PERIODIC)))
 			return success;
-		else {
-			if(relDl == null)
+
+		if(relDl == null)
+			return failure;
+
+		try {
+			double period = parser.getValuePattern(occValue, "period");
+
+			if(!(period >= 0))
 				return failure;
-			else {
-				double period = parser.getValuePattern(occValue, "period");
-				if(!(period >= 0))
-					return failure;
-				else {
-					double wcetValue = parser.getValueNFP(wcet);
-					// Commenting the check on WCET >=0 
-					// there is EFVRT_40 that checks LocalWCET
-//					if(!(wcetValue >= 0))
-//						return failure;
-//					else {
-						double relDlValue = parser.getValueNFP(relDl);
-						if(!(relDlValue >= 0))
-							return failure;
-//					}
-				}
-			}
+		}
+		catch (Exception except) {
+			return failure;
+		}
+
+		// We do NOT check WCET here because this is done in EFVRT_40, that checks LocalWCET
+//		try {
+//			double wcetValue = parser.getValueNFP(wcet);
+
+		// Commenting the check on WCET >=0 
+		// there is EFVRT_40 that checks LocalWCET
+		//					if(!(wcetValue >= 0))
+		//						return failure;
+//		}
+//		catch (Exception exception) {
+//			return failure;
+//		}
+
+		try {
+			double relDlValue = parser.getValueNFP(relDl);
+			if(!(relDlValue >= 0))
+				return failure;
+		}
+		catch (Exception except) {
+			return failure;
 		}
 		return success;
 	}

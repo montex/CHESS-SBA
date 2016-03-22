@@ -61,10 +61,23 @@ public class EFVRT_40 extends AbstractModelConstraint {
 
 		String localWCET = chRtSpec.getLocalWCET();
 
-		if (localWCET != null) { 
-			double localWCETVal = parser.getValueNFP(localWCET);			
-			if(localWCETVal < 0) {
+		if ((localWCET != null)&&(!localWCET.isEmpty())) {
+			try {
+				double localWCETVal = parser.getValueNFP(localWCET);
+				if (localWCETVal >= 0) {
+					return success;
+				}
+
 				String errorMsg = "Current value is "+localWCETVal;
+				failure = ctx.createFailureStatus(
+						c.getAnnotatedElements(),  			// name of element annotated by this comment {0}
+						errorMsg 	// package owning this {1}
+						);  
+				return failure;
+
+			}
+			catch (Exception except) {
+				String errorMsg = "Invalid localWCET";
 				failure = ctx.createFailureStatus(
 						c.getAnnotatedElements(),  			// name of element annotated by this comment {0}
 						errorMsg 	// package owning this {1}
@@ -72,6 +85,11 @@ public class EFVRT_40 extends AbstractModelConstraint {
 				return failure;
 			}
 		}
-		return success;
+		String errorMsg = "Invalid localWCET";
+		failure = ctx.createFailureStatus(
+				c.getAnnotatedElements(),  			// name of element annotated by this comment {0}
+				errorMsg 	// package owning this {1}
+				);  
+		return failure;
 	}
 }			
