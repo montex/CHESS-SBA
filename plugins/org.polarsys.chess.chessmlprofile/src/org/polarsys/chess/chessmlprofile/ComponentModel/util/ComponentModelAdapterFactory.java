@@ -74,20 +74,20 @@ public class ComponentModelAdapterFactory extends AdapterFactoryImpl {
 	protected ComponentModelSwitch<Adapter> modelSwitch =
 		new ComponentModelSwitch<Adapter>() {
 			@Override
-			public Adapter caseComponentType(ComponentType object) {
-				return createComponentTypeAdapter();
-			}
-			@Override
-			public Adapter caseComponentImplementation(ComponentImplementation object) {
-				return createComponentImplementationAdapter();
-			}
-			@Override
 			public Adapter caseFunctionalPartition(FunctionalPartition object) {
 				return createFunctionalPartitionAdapter();
 			}
 			@Override
 			public Adapter caseHwAbstractionComponentImpl(HwAbstractionComponentImpl object) {
 				return createHwAbstractionComponentImplAdapter();
+			}
+			@Override
+			public Adapter caseComponentType(ComponentType object) {
+				return createComponentTypeAdapter();
+			}
+			@Override
+			public Adapter caseComponentImplementation(ComponentImplementation object) {
+				return createComponentImplementationAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {

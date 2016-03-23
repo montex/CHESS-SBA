@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.ErrorDetection;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.MaintenanceMonitoringPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
 
 /**
  * <!-- begin-user-doc -->

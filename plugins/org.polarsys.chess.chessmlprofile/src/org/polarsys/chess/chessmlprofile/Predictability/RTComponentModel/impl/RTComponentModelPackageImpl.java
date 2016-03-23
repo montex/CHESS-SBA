@@ -35,14 +35,8 @@ import org.polarsys.chess.chessmlprofile.Core.CorePackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.CHESSViewsPackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.CHESSViewsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl;
-import org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.DataFlowCallGraphPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.impl.DataFlowCallGraphPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl;
-import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEAPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEADataTypes.FMEADataTypesPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEADataTypes.impl.FMEADataTypesPackageImpl;
-import org.polarsys.chess.chessmlprofile.Dependability.FMEA.impl.FMEAPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.FailurePropagationDataTypesPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.impl.FailurePropagationDataTypesPackageImpl;
@@ -63,8 +57,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
-import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.DeploymentConfAnalysisPackage;
-import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.impl.DeploymentConfAnalysisPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.impl.HardwareBaselinePackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
@@ -74,10 +66,6 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTCompo
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTDataTypes.RTDataTypesPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTDataTypes.impl.RTDataTypesPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport;
-import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAnalysisPackage;
-import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
-import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
-import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
 import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
 import org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
@@ -178,20 +166,13 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		FailurePropagationDataTypesPackageImpl theFailurePropagationDataTypesPackage = (FailurePropagationDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(FailurePropagationDataTypesPackage.eNS_URI) instanceof FailurePropagationDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(FailurePropagationDataTypesPackage.eNS_URI) : FailurePropagationDataTypesPackage.eINSTANCE);
 		DependableComponentPackageImpl theDependableComponentPackage = (DependableComponentPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DependableComponentPackage.eNS_URI) instanceof DependableComponentPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DependableComponentPackage.eNS_URI) : DependableComponentPackage.eINSTANCE);
 		ThreatsPropagationPackageImpl theThreatsPropagationPackage = (ThreatsPropagationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ThreatsPropagationPackage.eNS_URI) instanceof ThreatsPropagationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ThreatsPropagationPackage.eNS_URI) : ThreatsPropagationPackage.eINSTANCE);
-		DataFlowCallGraphPackageImpl theDataFlowCallGraphPackage = (DataFlowCallGraphPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataFlowCallGraphPackage.eNS_URI) instanceof DataFlowCallGraphPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataFlowCallGraphPackage.eNS_URI) : DataFlowCallGraphPackage.eINSTANCE);
 		StateBasedDataTypesPackageImpl theStateBasedDataTypesPackage = (StateBasedDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(StateBasedDataTypesPackage.eNS_URI) instanceof StateBasedDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(StateBasedDataTypesPackage.eNS_URI) : StateBasedDataTypesPackage.eINSTANCE);
 		StateBasedComponentsPackageImpl theStateBasedComponentsPackage = (StateBasedComponentsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(StateBasedComponentsPackage.eNS_URI) instanceof StateBasedComponentsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(StateBasedComponentsPackage.eNS_URI) : StateBasedComponentsPackage.eINSTANCE);
 		FaultTolerancePackageImpl theFaultTolerancePackage = (FaultTolerancePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(FaultTolerancePackage.eNS_URI) instanceof FaultTolerancePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(FaultTolerancePackage.eNS_URI) : FaultTolerancePackage.eINSTANCE);
 		MaintenanceMonitoringPackageImpl theMaintenanceMonitoringPackage = (MaintenanceMonitoringPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MaintenanceMonitoringPackage.eNS_URI) instanceof MaintenanceMonitoringPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MaintenanceMonitoringPackage.eNS_URI) : MaintenanceMonitoringPackage.eINSTANCE);
 		StateBasedAnalysisPackageImpl theStateBasedAnalysisPackage = (StateBasedAnalysisPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(StateBasedAnalysisPackage.eNS_URI) instanceof StateBasedAnalysisPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(StateBasedAnalysisPackage.eNS_URI) : StateBasedAnalysisPackage.eINSTANCE);
-		FMEAPackageImpl theFMEAPackage = (FMEAPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(FMEAPackage.eNS_URI) instanceof FMEAPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(FMEAPackage.eNS_URI) : FMEAPackage.eINSTANCE);
-		FMEADataTypesPackageImpl theFMEADataTypesPackage = (FMEADataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(FMEADataTypesPackage.eNS_URI) instanceof FMEADataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(FMEADataTypesPackage.eNS_URI) : FMEADataTypesPackage.eINSTANCE);
 		MitigationMeansPackageImpl theMitigationMeansPackage = (MitigationMeansPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MitigationMeansPackage.eNS_URI) instanceof MitigationMeansPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MitigationMeansPackage.eNS_URI) : MitigationMeansPackage.eINSTANCE);
-		TimingAnalysisPackageImpl theTimingAnalysisPackage = (TimingAnalysisPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TimingAnalysisPackage.eNS_URI) instanceof TimingAnalysisPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TimingAnalysisPackage.eNS_URI) : TimingAnalysisPackage.eINSTANCE);
-		TimingConstraintsPackageImpl theTimingConstraintsPackage = (TimingConstraintsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TimingConstraintsPackage.eNS_URI) instanceof TimingConstraintsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TimingConstraintsPackage.eNS_URI) : TimingConstraintsPackage.eINSTANCE);
 		HardwareBaselinePackageImpl theHardwareBaselinePackage = (HardwareBaselinePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(HardwareBaselinePackage.eNS_URI) instanceof HardwareBaselinePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(HardwareBaselinePackage.eNS_URI) : HardwareBaselinePackage.eINSTANCE);
-		DeploymentConfAnalysisPackageImpl theDeploymentConfAnalysisPackage = (DeploymentConfAnalysisPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) instanceof DeploymentConfAnalysisPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) : DeploymentConfAnalysisPackage.eINSTANCE);
-		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
 		ARINCComponentModelPackageImpl theARINCComponentModelPackage = (ARINCComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) instanceof ARINCComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) : ARINCComponentModelPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
@@ -206,20 +187,13 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		theFailurePropagationDataTypesPackage.createPackageContents();
 		theDependableComponentPackage.createPackageContents();
 		theThreatsPropagationPackage.createPackageContents();
-		theDataFlowCallGraphPackage.createPackageContents();
 		theStateBasedDataTypesPackage.createPackageContents();
 		theStateBasedComponentsPackage.createPackageContents();
 		theFaultTolerancePackage.createPackageContents();
 		theMaintenanceMonitoringPackage.createPackageContents();
 		theStateBasedAnalysisPackage.createPackageContents();
-		theFMEAPackage.createPackageContents();
-		theFMEADataTypesPackage.createPackageContents();
 		theMitigationMeansPackage.createPackageContents();
-		theTimingAnalysisPackage.createPackageContents();
-		theTimingConstraintsPackage.createPackageContents();
 		theHardwareBaselinePackage.createPackageContents();
-		theDeploymentConfAnalysisPackage.createPackageContents();
-		theRTDataTypesPackage.createPackageContents();
 		theARINCComponentModelPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
@@ -234,20 +208,13 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		theFailurePropagationDataTypesPackage.initializePackageContents();
 		theDependableComponentPackage.initializePackageContents();
 		theThreatsPropagationPackage.initializePackageContents();
-		theDataFlowCallGraphPackage.initializePackageContents();
 		theStateBasedDataTypesPackage.initializePackageContents();
 		theStateBasedComponentsPackage.initializePackageContents();
 		theFaultTolerancePackage.initializePackageContents();
 		theMaintenanceMonitoringPackage.initializePackageContents();
 		theStateBasedAnalysisPackage.initializePackageContents();
-		theFMEAPackage.initializePackageContents();
-		theFMEADataTypesPackage.initializePackageContents();
 		theMitigationMeansPackage.initializePackageContents();
-		theTimingAnalysisPackage.initializePackageContents();
-		theTimingConstraintsPackage.initializePackageContents();
 		theHardwareBaselinePackage.initializePackageContents();
-		theDeploymentConfAnalysisPackage.initializePackageContents();
-		theRTDataTypesPackage.initializePackageContents();
 		theARINCComponentModelPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
@@ -524,16 +491,6 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		isCreated = true;
 
 		// Create classes and their features
-		chRtPortSlotEClass = createEClass(CH_RT_PORT_SLOT);
-		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__BASE_SLOT);
-		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__CH_RT_SPECIFICATION);
-		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION);
-
-		runTimeSupportEClass = createEClass(RUN_TIME_SUPPORT);
-		createEAttribute(runTimeSupportEClass, RUN_TIME_SUPPORT__MONITORING);
-		createEAttribute(runTimeSupportEClass, RUN_TIME_SUPPORT__VERIFICATION);
-		createEReference(runTimeSupportEClass, RUN_TIME_SUPPORT__BASE_COMMENT);
-
 		chRtSpecificationEClass = createEClass(CH_RT_SPECIFICATION);
 		createEReference(chRtSpecificationEClass, CH_RT_SPECIFICATION__PART_WITH_PORT);
 		createEAttribute(chRtSpecificationEClass, CH_RT_SPECIFICATION__WCET);
@@ -552,6 +509,16 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		createEAttribute(chRtSpecificationEClass, CH_RT_SPECIFICATION__RESP_T);
 		createEAttribute(chRtSpecificationEClass, CH_RT_SPECIFICATION__BLOCK_T);
 		createEReference(chRtSpecificationEClass, CH_RT_SPECIFICATION__OPERATION_REQ_FOR_SPORADIC_OCC);
+
+		chRtPortSlotEClass = createEClass(CH_RT_PORT_SLOT);
+		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__BASE_SLOT);
+		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__CH_RT_SPECIFICATION);
+		createEReference(chRtPortSlotEClass, CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION);
+
+		runTimeSupportEClass = createEClass(RUN_TIME_SUPPORT);
+		createEAttribute(runTimeSupportEClass, RUN_TIME_SUPPORT__MONITORING);
+		createEAttribute(runTimeSupportEClass, RUN_TIME_SUPPORT__VERIFICATION);
+		createEReference(runTimeSupportEClass, RUN_TIME_SUPPORT__BASE_COMMENT);
 	}
 
 	/**
@@ -578,14 +545,10 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		RTDataTypesPackage theRTDataTypesPackage = (RTDataTypesPackage)EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI);
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
-		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 		HLAMPackage theHLAMPackage = (HLAMPackage)EPackage.Registry.INSTANCE.getEPackage(HLAMPackage.eNS_URI);
-
-		// Add subpackages
-		getESubpackages().add(theRTDataTypesPackage);
+		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -594,16 +557,6 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		// Add supertypes to classes
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(chRtPortSlotEClass, CHRtPortSlot.class, "CHRtPortSlot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCHRtPortSlot_Base_Slot(), theUMLPackage.getSlot(), null, "base_Slot", null, 1, 1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getCHRtPortSlot_CH_RtSpecification(), this.getCHRtSpecification(), null, "cH_RtSpecification", null, 0, -1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getCHRtPortSlot_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(runTimeSupportEClass, RunTimeSupport.class, "RunTimeSupport", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getRunTimeSupport_Monitoring(), theTypesPackage.getBoolean(), "monitoring", null, 1, 1, RunTimeSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getRunTimeSupport_Verification(), theTypesPackage.getBoolean(), "verification", null, 1, 1, RunTimeSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getRunTimeSupport_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, RunTimeSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
 		initEClass(chRtSpecificationEClass, CHRtSpecification.class, "CHRtSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCHRtSpecification_PartWithPort(), theUMLPackage.getProperty(), null, "partWithPort", null, 0, 1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getCHRtSpecification_WCET(), theBasicNFP_TypesPackage.getNFP_Duration(), "WCET", null, 1, 1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -622,6 +575,16 @@ public class RTComponentModelPackageImpl extends EPackageImpl implements RTCompo
 		initEAttribute(getCHRtSpecification_RespT(), theBasicNFP_TypesPackage.getNFP_Duration(), "respT", null, 0, -1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getCHRtSpecification_BlockT(), theBasicNFP_TypesPackage.getNFP_Duration(), "blockT", null, 0, -1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCHRtSpecification_OperationReqForSporadicOcc(), theUMLPackage.getOperation(), null, "operationReqForSporadicOcc", null, 0, -1, CHRtSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(chRtPortSlotEClass, CHRtPortSlot.class, "CHRtPortSlot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCHRtPortSlot_Base_Slot(), theUMLPackage.getSlot(), null, "base_Slot", null, 1, 1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getCHRtPortSlot_CH_RtSpecification(), this.getCHRtSpecification(), null, "cH_RtSpecification", null, 0, -1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getCHRtPortSlot_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, CHRtPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(runTimeSupportEClass, RunTimeSupport.class, "RunTimeSupport", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getRunTimeSupport_Monitoring(), theTypesPackage.getBoolean(), "monitoring", null, 1, 1, RunTimeSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getRunTimeSupport_Verification(), theTypesPackage.getBoolean(), "verification", null, 1, 1, RunTimeSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getRunTimeSupport_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, RunTimeSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //RTComponentModelPackageImpl

@@ -40,7 +40,6 @@ import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEAPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.MitigationMeansPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.FaultTolerancePackage;
@@ -48,10 +47,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMon
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StateBasedComponentsPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
-import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.DeploymentConfAnalysisPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage;
-import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAnalysisPackage;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
 import org.polarsys.chess.core.internal.extensionpoint.AddProfileHandler;
 import org.polarsys.chess.core.util.uml.UMLUtils;
@@ -488,7 +485,7 @@ public class CHESSProfileManager {
 		Package newpkg = null;
 		String view = "";
 		try {
-			Profile deploymentConfiguration_AnalysisProfile = UMLResourcesUtil.getProfile(DeploymentConfAnalysisPackage.eINSTANCE, model);
+			
 			Profile stateBasedComponentProfile =  UMLResourcesUtil.getProfile(StateBasedComponentsPackage.eINSTANCE, model);
 			Profile stateBased_FaultToleranceProfile =  UMLResourcesUtil.getProfile(FaultTolerancePackage.eINSTANCE, model);
 			Profile stateBased_MaintainanceMonitoringProfile =  UMLResourcesUtil.getProfile(MaintenanceMonitoringPackage.eINSTANCE, model);
@@ -500,10 +497,10 @@ public class CHESSProfileManager {
 			Profile componentModelProfile =  UMLResourcesUtil.getProfile(ComponentModelPackage.eINSTANCE, model);
 			Profile RTComponentModelProfile =  UMLResourcesUtil.getProfile(RTComponentModelPackage.eINSTANCE, model);
 			Profile deploymentConfiguration_HardwareBaselineProfile =  UMLResourcesUtil.getProfile(HardwareBaselinePackage.eINSTANCE, model);
-			Profile FMEAProfile =  UMLResourcesUtil.getProfile(FMEAPackage.eINSTANCE, model);
+			
 			
 			Profile stateBased_AnalysisProfile =  UMLResourcesUtil.getProfile(StateBasedAnalysisPackage.eINSTANCE, model);
-			Profile timingProfile =  UMLResourcesUtil.getProfile(TimingAnalysisPackage.eINSTANCE, model);
+		
 			
 			Profile STSProfile =  UMLResourcesUtil.getProfile(STSPackage.eINSTANCE, model);
 						
@@ -557,7 +554,7 @@ public class CHESSProfileManager {
 			newpkg.applyProfile(failurePropProfile);
 			newpkg.applyProfile(threatsPropagationProfile);
 			newpkg.applyProfile(dependableComponentProfile);
-			newpkg.applyProfile(FMEAProfile);
+			
 
 			view = ANALYSIS_VIEW;
 			newpkg = model.createNestedPackage(viewName(model, view));
@@ -572,7 +569,7 @@ public class CHESSProfileManager {
 			// apply profile
 			innerpkg.applyProfile(stateBased_AnalysisProfile);
 			innerpkg.applyProfile(failurePropProfile);
-			innerpkg.applyProfile(FMEAProfile);
+			
 			applyViewStereotype(DEPENDABILITY_ANALYSIS_VIEW, innerpkg);
 			newpkg.setValue(viewStrt, "depanalysisview",
 					innerpkg.getStereotypeApplication(innerView));
@@ -589,9 +586,7 @@ public class CHESSProfileManager {
 			viewStrt = applyViewStereotype(view, newpkg);
 			model.setValue(chessStereotype, "psmView",
 					newpkg.getStereotypeApplication(viewStrt));
-			// apply profile
-			newpkg.applyProfile(deploymentConfiguration_AnalysisProfile);
-			newpkg.applyProfile(timingProfile);
+		
 
 		} catch (Exception e) {
 			System.out.println("stereotype application error: " + view

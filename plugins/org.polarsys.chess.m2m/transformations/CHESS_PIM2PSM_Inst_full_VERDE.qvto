@@ -269,7 +269,7 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 		slotInstances->forEach(s){
 			var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
 			specs->forEach(spec){
-			    log("***Processing Slot" +s.getStringId()+ " defining feature " +s.getStringId()+ s.definingFeature.name+ " for " + s.owningInstance.name + s.owningInstance.getStringId() + " and operation "+ spec.context.name +".");
+			    log("***Processing Slot" +" defining feature " + s.definingFeature.name+ " for " + s.owningInstance.name  + " and operation "+ spec.context.name +".");
 			    
 			    //maps only if the operation is deferred
 				s.map CHRtSlot2SwSchedulableResource(spec.base_Comment);  
@@ -335,7 +335,7 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 				componentInstSlots->forEach(componentInstSlot){
 					var specs := componentInstSlot.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;	
 					specs->forEach(spec){
-					    log("***Processing Slot" +componentInstSlot.getStringId()+ " defining feature " +componentInstSlot.getStringId()+ componentInstSlot.definingFeature.name+ " for " + componentInstSlot.owningInstance.name + componentInstSlot.owningInstance.getStringId() + " and operation "+ spec.context.name +".");
+					    log("***Processing Slot" + " defining feature " + componentInstSlot.definingFeature.name+ " for " + componentInstSlot.owningInstance.name  + " and operation "+ spec.context.name +".");
 					    
 					    //ARINC Process must not be mapped
 					   var arincFuncStereo = spec.context.getMetaclass(ARINCFunctionQN).oclAsType(chessmlprofile::ARINCComponentModel::ARINCFunction);
@@ -954,9 +954,9 @@ helper createOpaqueActionsChainFull(in currentIsGuarded : Boolean, in currentCHR
 		//var riSlot := calledOpNode.onPort.portToSlot(currentSlot.owningInstance);
 		var riSlots := calledOpNode.portToSlotFull(owningInstance);
 		riSlots->forEach(riSlot){
-			log("  Search for piSlot from riSlot '" + riSlot.owningInstance.name + riSlot.owningInstance.getStringId() + riSlot.definingFeature.name + riSlot.getStringId() + "'.");
+			log("  Search for piSlot from riSlot '" + riSlot.owningInstance.name + riSlot.definingFeature.name +  "'.");
 			var usedPiSlot := riSlot.getCorrespondingSlot();
-			log("  Found piSlot '" + usedPiSlot.owningInstance.name+usedPiSlot.owningInstance.getStringId() + usedPiSlot.definingFeature.name + usedPiSlot.getStringId() + "'.");
+			log("  Found piSlot '" + usedPiSlot.owningInstance.name + usedPiSlot.definingFeature.name  + "'.");
 	        var usedPiCHRtSpec := usedPiSlot.CHRtSpecForOperation(calledOpNode.operation);
 	        var bus := getConnectingBus(owningInstance, usedPiSlot.owningInstance);
 	        
@@ -1634,7 +1634,7 @@ mapping Slot::slot2EndToEndWorkFlow(chrt : Comment) : Activity when {chrt.CHRtSp
 mapping Comment::Instance2EndToEndWorkFlow(slot : Slot, inst : InstanceSpecification) : Activity when {self.CHRtSpec().isDeferred()} {
     init {
     	
-    	log("Generating <<EndToEndWorkFlow>> from the Instance"+ " for '" + inst.name + inst.getStringId() + "' and operation "+ self.CHRtSpec().context.name +".");
+    	log("Generating <<EndToEndWorkFlow>> from the Instance"+ " for '" + inst.name + "' and operation "+ self.CHRtSpec().context.name +".");
     	
     	var chrts := self.CHRtSpec();
     	var actionName : String;
@@ -1807,12 +1807,12 @@ query Slot::listAll() : Slot {
 		var ends := l.allOwnedElements()[InstanceValue]->asOrderedSet();
 		
 		log("FIRST");
-		log("Instance", ends->first().instance![InstanceSpecification].name + ends->first().instance![InstanceSpecification].getStringId());
-		log("Slot", ends->first().owner![Slot].definingFeature![Port].name + ends->first().owner![Slot].getStringId());
+		log("Instance", ends->first().instance![InstanceSpecification].name );
+		log("Slot", ends->first().owner![Slot].definingFeature![Port].name );
 	
 		log("LAST");
-		log("Instance", ends->last().instance![InstanceSpecification].name + ends->last().instance![InstanceSpecification].getStringId());
-		log("Slot", ends->last().owner![Slot].definingFeature![Port].name + ends->last().owner![Slot].getStringId());
+		log("Instance", ends->last().instance![InstanceSpecification].name );
+		log("Slot", ends->last().owner![Slot].definingFeature![Port].name );
 	};
 	return null;	
 }

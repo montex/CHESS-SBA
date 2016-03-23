@@ -18,35 +18,22 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.*;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault;
+
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DegradedState;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DurationType;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorFree;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ExternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failure;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureFree;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalPropagation;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalThreat;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Inverted;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalInput;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalOutput;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RampDown;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryKind;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.StuckAt;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.StuckAtFixed;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatState;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationFactory;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedError;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedFailure;
 
 /**
  * <!-- begin-user-doc -->

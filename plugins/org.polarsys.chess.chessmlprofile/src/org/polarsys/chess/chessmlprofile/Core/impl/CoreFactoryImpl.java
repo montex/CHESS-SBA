@@ -65,12 +65,7 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 		switch (eClass.getClassifierID()) {
 			case CorePackage.CHESS: return createCHESS();
 			case CorePackage.CH_GA_RESOURCE_PLATFORM: return createCHGaResourcePlatform();
-			case CorePackage.IDENTIF_INSTANCE: return createIdentifInstance();
-			case CorePackage.IDENTIF_SLOT: return createIdentifSlot();
-			case CorePackage.MULTI_INSTANCE: return createMultiInstance();
-			case CorePackage.MULTI_SLOT: return createMultiSlot();
 			case CorePackage.PSM_PACKAGE: return createPSMPackage();
-			case CorePackage.FUNCTIONAL_PARTITIONS: return createFunctionalPartitions();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -131,59 +126,9 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public IdentifInstance createIdentifInstance() {
-		IdentifInstanceImpl identifInstance = new IdentifInstanceImpl();
-		return identifInstance;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public IdentifSlot createIdentifSlot() {
-		IdentifSlotImpl identifSlot = new IdentifSlotImpl();
-		return identifSlot;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public MultiInstance createMultiInstance() {
-		MultiInstanceImpl multiInstance = new MultiInstanceImpl();
-		return multiInstance;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public MultiSlot createMultiSlot() {
-		MultiSlotImpl multiSlot = new MultiSlotImpl();
-		return multiSlot;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public PSMPackage createPSMPackage() {
 		PSMPackageImpl psmPackage = new PSMPackageImpl();
 		return psmPackage;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public FunctionalPartitions createFunctionalPartitions() {
-		FunctionalPartitionsImpl functionalPartitions = new FunctionalPartitionsImpl();
-		return functionalPartitions;
 	}
 
 	/**

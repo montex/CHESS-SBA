@@ -131,6 +131,15 @@
                   
                   <perm st="Resource" owner="true" write="true" visible="true"/>
                   <perm st="HwAbstractionComponentImpl" owner="true" write="true" visible="true"/>
+                  
+                  <!--IMA-->
+                  <perm st="FunctionalPartition" owner="true" write="true" visible="true"/>
+                  <perm st="ARINCComponentImpl" owner="true" write="true" visible="true"/>
+                  <perm st="ARINCProcess" owner="true" write="true" visible="true"/>
+                  <perm st="ARINCFunction" owner="true" write="true" visible="true"/>
+                  
+                  
+                  <perm st="DeviceBroker" owner="true" write="true" visible="true"/>
             
             </diagram>
             <diagram name="Composite">

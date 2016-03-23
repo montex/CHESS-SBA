@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalOutput;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
 
 /**

@@ -158,31 +158,6 @@ query Slot::CHRtSpecForOperation(op : Operation) : chessmlprofile::RTComponentMo
 }
 
 
-query Slot::getStringId() : String {
-	var ids := self.getMetaclass(IdentifSlotQN).oclAsType(CHESS::Core::IdentifSlot);
-	if not (ids.oclIsInvalid() or ids.oclIsUndefined()) then
-		return "_"+ids.id.toString()
-	endif;
-	return "";
-}
-
-query Slot::getId() : Integer {
-	var ids := self.getMetaclass(IdentifSlotQN).oclAsType(CHESS::Core::IdentifSlot);
-	if not (ids.oclIsInvalid() or ids.oclIsUndefined()) then
-		return ids.id
-	endif;
-	return 0;
-}
-
-
-query InstanceSpecification::getStringId() : String {
-	var ids := self.getMetaclass(IdentifInstanceQN).oclAsType(CHESS::Core::IdentifInstance);
-	if not (ids.oclIsInvalid() or ids.oclIsUndefined()) then
-		return "_" + ids.id.toString()
-	endif;
-	return "";
-}
-
 /*
 query InstanceSpecification::getId() : Integer {
 	var ids := self.getMetaclass(IdentifInstanceQN).oclAsType(CHESS::Core::IdentifInstance);
@@ -216,24 +191,24 @@ query operationClassName(slot : Slot, name : String) : String {
 //	endif;	
 //	return slot.owningInstance.name + owningInstance + "_" + slot.definingFeature![Port].name + "_"+ slotInstance + "_" + name
 
-	return slot.owningInstance.name + slot.owningInstance.getStringId() + "_" 
+	return slot.owningInstance.name  + "_" 
 		+ slot.definingFeature![Port].name // + slot.getStringId() 
 		+ "_" + name
 }
 
 query operationClassName(instance : InstanceSpecification, name : String) : String {
-	return instance.name + instance.getStringId() + "_" + name
+	return instance.name + "_" + name
 }
 
 
 query opaqueActionName(slot : Slot, chrtSpec : chessmlprofile::RTComponentModel::CHRtSpecification) : String {
-	return slot.owningInstance.name + slot.owningInstance.getStringId() + "_" 
+	return slot.owningInstance.name  + "_" 
 		+ slot.definingFeature![Port].name // + slot.getStringId() 
 		+ "_" + chrtSpec.context.name();
 }
 
 query opaqueActionName(instance : InstanceSpecification, chrtSpec : chessmlprofile::RTComponentModel::CHRtSpecification) : String {
-	return instance.name + instance.getStringId() + "_" + chrtSpec.context.name();
+	return instance.name  + "_" + chrtSpec.context.name();
 }
 
 
@@ -241,12 +216,12 @@ query chessmlprofile::RTComponentModel::CHRtSpecification::schedulableResourceNa
     //TODO what happens if the operation (i.e. the 'context') is overloaded? (same name?): resolved with name() query
     var slot = chrtportslot.base_Slot;
     if (slot <> null) {
-		return slot.owningInstance.name + slot.owningInstance.getStringId() + "_" 
+		return slot.owningInstance.name  + "_" 
 			+ slot.definingFeature![Port].name // + slot.getStringId() 
 			+ "_" + self.context.name() + "_task";
 	}else{
 		var instance = chrtportslot.base_InstanceSpecification;
-		return instance.name + instance.getStringId() + "_" 
+		return instance.name  + "_" 
 			+ "_" + self.context.name() + "_task";
 	};
 	return "";

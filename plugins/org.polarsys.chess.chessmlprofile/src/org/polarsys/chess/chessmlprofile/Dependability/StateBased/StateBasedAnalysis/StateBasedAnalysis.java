@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaAnalysisContext;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Slot;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
 
 /**
  * <!-- begin-user-doc -->

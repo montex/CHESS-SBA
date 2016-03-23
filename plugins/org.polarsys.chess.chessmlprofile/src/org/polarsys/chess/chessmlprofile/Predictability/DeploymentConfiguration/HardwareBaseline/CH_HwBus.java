@@ -18,6 +18,10 @@ import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HwLogical.HwCommunication
  * A representation of the model object '<em><b>CH Hw Bus</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * to be reviewed
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

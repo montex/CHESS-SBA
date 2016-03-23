@@ -83,28 +83,8 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 				return createCHGaResourcePlatformAdapter();
 			}
 			@Override
-			public Adapter caseIdentifInstance(IdentifInstance object) {
-				return createIdentifInstanceAdapter();
-			}
-			@Override
-			public Adapter caseIdentifSlot(IdentifSlot object) {
-				return createIdentifSlotAdapter();
-			}
-			@Override
-			public Adapter caseMultiInstance(MultiInstance object) {
-				return createMultiInstanceAdapter();
-			}
-			@Override
-			public Adapter caseMultiSlot(MultiSlot object) {
-				return createMultiSlotAdapter();
-			}
-			@Override
 			public Adapter casePSMPackage(PSMPackage object) {
 				return createPSMPackageAdapter();
-			}
-			@Override
-			public Adapter caseFunctionalPartitions(FunctionalPartitions object) {
-				return createFunctionalPartitionsAdapter();
 			}
 			@Override
 			public Adapter caseGaResourcesPlatform(GaResourcesPlatform object) {
@@ -159,62 +139,6 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Core.IdentifInstance <em>Identif Instance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Core.IdentifInstance
-	 * @generated
-	 */
-	public Adapter createIdentifInstanceAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Core.IdentifSlot <em>Identif Slot</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Core.IdentifSlot
-	 * @generated
-	 */
-	public Adapter createIdentifSlotAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Core.MultiInstance <em>Multi Instance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Core.MultiInstance
-	 * @generated
-	 */
-	public Adapter createMultiInstanceAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Core.MultiSlot <em>Multi Slot</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Core.MultiSlot
-	 * @generated
-	 */
-	public Adapter createMultiSlotAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Core.PSMPackage <em>PSM Package</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -225,20 +149,6 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPSMPackageAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions <em>Functional Partitions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions
-	 * @generated
-	 */
-	public Adapter createFunctionalPartitionsAdapter() {
 		return null;
 	}
 

@@ -12,15 +12,10 @@
  */
 package org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl;
 
-import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalInput;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
 
 /**

@@ -74,6 +74,12 @@ public class RTComponentModelSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case RTComponentModelPackage.CH_RT_SPECIFICATION: {
+				CHRtSpecification chRtSpecification = (CHRtSpecification)theEObject;
+				T result = caseCHRtSpecification(chRtSpecification);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case RTComponentModelPackage.CH_RT_PORT_SLOT: {
 				CHRtPortSlot chRtPortSlot = (CHRtPortSlot)theEObject;
 				T result = caseCHRtPortSlot(chRtPortSlot);
@@ -83,12 +89,6 @@ public class RTComponentModelSwitch<T> extends Switch<T> {
 			case RTComponentModelPackage.RUN_TIME_SUPPORT: {
 				RunTimeSupport runTimeSupport = (RunTimeSupport)theEObject;
 				T result = caseRunTimeSupport(runTimeSupport);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case RTComponentModelPackage.CH_RT_SPECIFICATION: {
-				CHRtSpecification chRtSpecification = (CHRtSpecification)theEObject;
-				T result = caseCHRtSpecification(chRtSpecification);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

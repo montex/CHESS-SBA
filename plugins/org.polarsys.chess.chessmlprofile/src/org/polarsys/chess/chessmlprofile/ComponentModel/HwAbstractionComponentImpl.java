@@ -11,6 +11,10 @@ import org.eclipse.uml2.uml.Component;
  * A representation of the model object '<em><b>Hw Abstraction Component Impl</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * represents a SW interface for a given HW component; to hide hardware properties from higher software layers
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

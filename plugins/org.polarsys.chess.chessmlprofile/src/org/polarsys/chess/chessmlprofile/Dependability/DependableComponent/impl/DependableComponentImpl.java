@@ -25,7 +25,6 @@ import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModelBehavior;
 
 /**
  * <!-- begin-user-doc -->

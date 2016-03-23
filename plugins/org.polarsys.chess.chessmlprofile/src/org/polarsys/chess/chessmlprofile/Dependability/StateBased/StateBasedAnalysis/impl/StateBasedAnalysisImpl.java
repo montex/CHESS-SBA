@@ -25,7 +25,6 @@ import org.eclipse.uml2.uml.Slot;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
 
 /**
  * <!-- begin-user-doc -->

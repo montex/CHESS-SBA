@@ -75,16 +75,16 @@ public class RTComponentModelAdapterFactory extends AdapterFactoryImpl {
 	protected RTComponentModelSwitch<Adapter> modelSwitch =
 		new RTComponentModelSwitch<Adapter>() {
 			@Override
+			public Adapter caseCHRtSpecification(CHRtSpecification object) {
+				return createCHRtSpecificationAdapter();
+			}
+			@Override
 			public Adapter caseCHRtPortSlot(CHRtPortSlot object) {
 				return createCHRtPortSlotAdapter();
 			}
 			@Override
 			public Adapter caseRunTimeSupport(RunTimeSupport object) {
 				return createRunTimeSupportAdapter();
-			}
-			@Override
-			public Adapter caseCHRtSpecification(CHRtSpecification object) {
-				return createCHRtSpecificationAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {

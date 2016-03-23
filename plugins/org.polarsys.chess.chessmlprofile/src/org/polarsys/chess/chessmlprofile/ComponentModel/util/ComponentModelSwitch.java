@@ -73,18 +73,6 @@ public class ComponentModelSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case ComponentModelPackage.COMPONENT_TYPE: {
-				ComponentType componentType = (ComponentType)theEObject;
-				T result = caseComponentType(componentType);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ComponentModelPackage.COMPONENT_IMPLEMENTATION: {
-				ComponentImplementation componentImplementation = (ComponentImplementation)theEObject;
-				T result = caseComponentImplementation(componentImplementation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ComponentModelPackage.FUNCTIONAL_PARTITION: {
 				FunctionalPartition functionalPartition = (FunctionalPartition)theEObject;
 				T result = caseFunctionalPartition(functionalPartition);
@@ -94,6 +82,18 @@ public class ComponentModelSwitch<T> extends Switch<T> {
 			case ComponentModelPackage.HW_ABSTRACTION_COMPONENT_IMPL: {
 				HwAbstractionComponentImpl hwAbstractionComponentImpl = (HwAbstractionComponentImpl)theEObject;
 				T result = caseHwAbstractionComponentImpl(hwAbstractionComponentImpl);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ComponentModelPackage.COMPONENT_TYPE: {
+				ComponentType componentType = (ComponentType)theEObject;
+				T result = caseComponentType(componentType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ComponentModelPackage.COMPONENT_IMPLEMENTATION: {
+				ComponentImplementation componentImplementation = (ComponentImplementation)theEObject;
+				T result = caseComponentImplementation(componentImplementation);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

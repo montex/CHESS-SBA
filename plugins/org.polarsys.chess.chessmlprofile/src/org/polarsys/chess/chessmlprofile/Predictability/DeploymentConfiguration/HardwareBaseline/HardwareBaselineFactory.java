@@ -40,96 +40,6 @@ public interface HardwareBaselineFactory extends EFactory {
 	CH_HwProcessor createCH_HwProcessor();
 
 	/**
-	 * Returns a new object of class '<em>HW Data Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>HW Data Type</em>'.
-	 * @generated
-	 */
-	HWDataType createHWDataType();
-
-	/**
-	 * Returns a new object of class '<em>Data Type Execution</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Data Type Execution</em>'.
-	 * @generated
-	 */
-	DataTypeExecution createDataTypeExecution();
-
-	/**
-	 * Returns a new object of class '<em>Compute Complexity</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Compute Complexity</em>'.
-	 * @generated
-	 */
-	ComputeComplexity createComputeComplexity();
-
-	/**
-	 * Returns a new object of class '<em>Operation Count</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Operation Count</em>'.
-	 * @generated
-	 */
-	OperationCount createOperationCount();
-
-	/**
-	 * Returns a new object of class '<em>CH Control Flow</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CH Control Flow</em>'.
-	 * @generated
-	 */
-	CHControlFlow createCHControlFlow();
-
-	/**
-	 * Returns a new object of class '<em>Float SW Data Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Float SW Data Type</em>'.
-	 * @generated
-	 */
-	FloatSWDataType createFloatSWDataType();
-
-	/**
-	 * Returns a new object of class '<em>Fixed SW Data Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Fixed SW Data Type</em>'.
-	 * @generated
-	 */
-	FixedSWDataType createFixedSWDataType();
-
-	/**
-	 * Returns a new object of class '<em>Integer SW Data Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Integer SW Data Type</em>'.
-	 * @generated
-	 */
-	IntegerSWDataType createIntegerSWDataType();
-
-	/**
-	 * Returns a new object of class '<em>Char SW Data Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Char SW Data Type</em>'.
-	 * @generated
-	 */
-	CharSWDataType createCharSWDataType();
-
-	/**
-	 * Returns a new object of class '<em>Boolean SW Data Type</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Boolean SW Data Type</em>'.
-	 * @generated
-	 */
-	BooleanSWDataType createBooleanSWDataType();
-
-	/**
 	 * Returns a new object of class '<em>CH Hw Bus</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -146,15 +56,6 @@ public interface HardwareBaselineFactory extends EFactory {
 	 * @generated
 	 */
 	CH_HwComputingResource createCH_HwComputingResource();
-
-	/**
-	 * Returns a new object of class '<em>Data Type Assign</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Data Type Assign</em>'.
-	 * @generated
-	 */
-	DataTypeAssign createDataTypeAssign();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -87,39 +87,9 @@ public class CoreSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CorePackage.IDENTIF_INSTANCE: {
-				IdentifInstance identifInstance = (IdentifInstance)theEObject;
-				T result = caseIdentifInstance(identifInstance);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CorePackage.IDENTIF_SLOT: {
-				IdentifSlot identifSlot = (IdentifSlot)theEObject;
-				T result = caseIdentifSlot(identifSlot);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CorePackage.MULTI_INSTANCE: {
-				MultiInstance multiInstance = (MultiInstance)theEObject;
-				T result = caseMultiInstance(multiInstance);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CorePackage.MULTI_SLOT: {
-				MultiSlot multiSlot = (MultiSlot)theEObject;
-				T result = caseMultiSlot(multiSlot);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case CorePackage.PSM_PACKAGE: {
 				PSMPackage psmPackage = (PSMPackage)theEObject;
 				T result = casePSMPackage(psmPackage);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CorePackage.FUNCTIONAL_PARTITIONS: {
-				FunctionalPartitions functionalPartitions = (FunctionalPartitions)theEObject;
-				T result = caseFunctionalPartitions(functionalPartitions);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -158,66 +128,6 @@ public class CoreSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Identif Instance</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Identif Instance</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseIdentifInstance(IdentifInstance object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Identif Slot</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Identif Slot</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseIdentifSlot(IdentifSlot object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Multi Instance</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Multi Instance</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseMultiInstance(MultiInstance object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Multi Slot</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Multi Slot</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseMultiSlot(MultiSlot object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>PSM Package</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -229,21 +139,6 @@ public class CoreSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T casePSMPackage(PSMPackage object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Functional Partitions</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Functional Partitions</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseFunctionalPartitions(FunctionalPartitions object) {
 		return null;
 	}
 

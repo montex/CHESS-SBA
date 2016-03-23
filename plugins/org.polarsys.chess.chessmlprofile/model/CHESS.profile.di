@@ -30,27 +30,17 @@
       <emfPageIdentifier href="CHESS.profile.notation#_Z-N5EL8_Ed-TL8tpOyViyA"/>
     </availablePage>
     <availablePage/>
-    <availablePage>
-      <emfPageIdentifier href="CHESS.profile.notation#_ETk7EMAPEd-Dn5_MBIs5Vw"/>
-    </availablePage>
-    <availablePage>
-      <emfPageIdentifier href="CHESS.profile.notation#_ESCl0MAWEd-Dn5_MBIs5Vw"/>
-    </availablePage>
+    <availablePage/>
+    <availablePage/>
     <availablePage>
       <emfPageIdentifier href="CHESS.profile.notation#_5kiiEMCpEd-RT45s8cwWMg"/>
     </availablePage>
     <availablePage>
       <emfPageIdentifier href="CHESS.profile.notation#_f3-n0MCqEd-RT45s8cwWMg"/>
     </availablePage>
-    <availablePage>
-      <emfPageIdentifier href="CHESS.profile.notation#_5dOcUMCtEd-RT45s8cwWMg"/>
-    </availablePage>
-    <availablePage>
-      <emfPageIdentifier href="CHESS.profile.notation#_cqie0MDTEd-RT45s8cwWMg"/>
-    </availablePage>
-    <availablePage>
-      <emfPageIdentifier href="CHESS.profile.notation#_v37EAMFzEd--atLXXafOiQ"/>
-    </availablePage>
+    <availablePage/>
+    <availablePage/>
+    <availablePage/>
     <availablePage>
       <emfPageIdentifier href="CHESS.profile.notation#_3OelYMF0Ed--atLXXafOiQ"/>
     </availablePage>
@@ -69,9 +59,7 @@
     <availablePage>
       <emfPageIdentifier href="CHESS.profile.notation#_9U2J4DQ3EeC0ueejuetpgA"/>
     </availablePage>
-    <availablePage>
-      <emfPageIdentifier href="CHESS.profile.notation#_Fx_DYDQ6EeC0ueejuetpgA"/>
-    </availablePage>
+    <availablePage/>
     <availablePage>
       <emfPageIdentifier href="CHESS.profile.notation#_T56zMFiJEeG7ipvuc3Lqcg"/>
     </availablePage>
@@ -116,19 +104,10 @@
           <emfPageIdentifier href="CHESS.profile.notation#_7EqPsG8VEd-8i8zc_Ad2sQ"/>
         </children>
         <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_Fx_DYDQ6EeC0ueejuetpgA"/>
-        </children>
-        <children>
           <emfPageIdentifier href="CHESS.profile.notation#_Q1L50MF1Ed--atLXXafOiQ"/>
         </children>
         <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_5dOcUMCtEd-RT45s8cwWMg"/>
-        </children>
-        <children>
           <emfPageIdentifier href="CHESS.profile.notation#_5kiiEMCpEd-RT45s8cwWMg"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_cqie0MDTEd-RT45s8cwWMg"/>
         </children>
         <children>
           <emfPageIdentifier href="CHESS.profile.notation#_T56zMFiJEeG7ipvuc3Lqcg"/>

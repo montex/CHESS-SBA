@@ -12,7 +12,6 @@
 package org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring;
 
 import org.eclipse.uml2.uml.Property;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
 
 /**
  * <!-- begin-user-doc -->

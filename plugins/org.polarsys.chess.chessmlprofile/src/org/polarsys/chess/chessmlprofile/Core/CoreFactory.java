@@ -49,42 +49,6 @@ public interface CoreFactory extends EFactory {
 	CHGaResourcePlatform createCHGaResourcePlatform();
 
 	/**
-	 * Returns a new object of class '<em>Identif Instance</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Identif Instance</em>'.
-	 * @generated
-	 */
-	IdentifInstance createIdentifInstance();
-
-	/**
-	 * Returns a new object of class '<em>Identif Slot</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Identif Slot</em>'.
-	 * @generated
-	 */
-	IdentifSlot createIdentifSlot();
-
-	/**
-	 * Returns a new object of class '<em>Multi Instance</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Multi Instance</em>'.
-	 * @generated
-	 */
-	MultiInstance createMultiInstance();
-
-	/**
-	 * Returns a new object of class '<em>Multi Slot</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Multi Slot</em>'.
-	 * @generated
-	 */
-	MultiSlot createMultiSlot();
-
-	/**
 	 * Returns a new object of class '<em>PSM Package</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,15 +56,6 @@ public interface CoreFactory extends EFactory {
 	 * @generated
 	 */
 	PSMPackage createPSMPackage();
-
-	/**
-	 * Returns a new object of class '<em>Functional Partitions</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Functional Partitions</em>'.
-	 * @generated
-	 */
-	FunctionalPartitions createFunctionalPartitions();
 
 	/**
 	 * Returns the package supported by this factory.

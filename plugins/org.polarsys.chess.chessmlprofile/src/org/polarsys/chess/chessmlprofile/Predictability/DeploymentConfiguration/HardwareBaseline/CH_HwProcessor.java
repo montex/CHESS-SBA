@@ -20,10 +20,13 @@ import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HwLogical.HwComputing.HwP
  * A representation of the model object '<em><b>CH Hw Processor</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * deprecated, to be replaced with MARTE HWProcessor
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor#getDataType <em>Data Type</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor#getUtilization <em>Utilization</em>}</li>
  * </ul>
  * </p>
@@ -33,22 +36,6 @@ import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HwLogical.HwComputing.HwP
  * @generated
  */
 public interface CH_HwProcessor extends HwProcessor {
-	/**
-	 * Returns the value of the '<em><b>Data Type</b></em>' reference list.
-	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HWDataType}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Data Type</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Data Type</em>' reference list.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage#getCH_HwProcessor_DataType()
-	 * @model ordered="false"
-	 * @generated
-	 */
-	EList<HWDataType> getDataType();
-
 	/**
 	 * Returns the value of the '<em><b>Utilization</b></em>' attribute.
 	 * <!-- begin-user-doc -->

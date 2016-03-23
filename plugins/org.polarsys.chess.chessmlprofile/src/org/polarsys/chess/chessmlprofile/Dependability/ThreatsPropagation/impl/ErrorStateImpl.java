@@ -8,7 +8,6 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DurationType;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorState;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
 
