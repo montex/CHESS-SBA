@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Composite
+	xmlns:ppel="clr-namespace:org.eclipse.papyrus.views.properties.widgets.layout"
+	xmlns:ppe="clr-namespace:org.eclipse.papyrus.views.properties.widgets"
+	xmlns:x="http://www.eclipse.org/xwt" xmlns:j="clr-namespace:java.lang"
+	xmlns="http://www.eclipse.org/xwt/presentation">
+	<Composite.layout>
+		<ppel:PropertiesLayout></ppel:PropertiesLayout>
+	</Composite.layout>
+	<Composite>
+		<Composite.layout>
+			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
+		</Composite.layout>
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Dependability:StateBased:StateBasedComponents:StatelessHardware:probPermFault"></ppe:ReferenceDialog>
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Dependability:StateBased:StateBasedComponents:StatelessHardware:repairDelay"></ppe:ReferenceDialog>
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Dependability:StateBased:StateBasedComponents:StatelessHardware:faultOcc"></ppe:ReferenceDialog>
+	</Composite>
+	<Composite>
+		<Composite.layout>
+			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
+		</Composite.layout>
+		<ppe:MultiReference input="{Binding}"
+			property="CHESS:Dependability:DependableComponent:DependableComponent:errorModel"></ppe:MultiReference>
+	</Composite>
+</Composite>

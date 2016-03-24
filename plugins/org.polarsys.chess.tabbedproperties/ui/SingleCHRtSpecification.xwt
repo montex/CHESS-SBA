@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Composite
+	xmlns:ppel="clr-namespace:org.eclipse.papyrus.views.properties.widgets.layout"
+	xmlns="http://www.eclipse.org/xwt/presentation" xmlns:j="clr-namespace:java.lang"
+	xmlns:x="http://www.eclipse.org/xwt" xmlns:ppe="clr-namespace:org.eclipse.papyrus.views.properties.widgets"
+	xmlns:custom="clr-namespace:org.polarsys.chess.tabbedproperties.widgets">
+	<Composite.layout>
+		<ppel:PropertiesLayout></ppel:PropertiesLayout>
+	</Composite.layout>
+	
+	<Composite>
+		<Composite.layout>
+			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
+		</Composite.layout>
+		
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:context"></ppe:ReferenceDialog>
+		
+		<ppe:EnumCombo input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:protection"></ppe:EnumCombo>
+	</Composite>
+	<Composite>
+		<Composite.layout>
+			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
+		</Composite.layout>
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:partWithPort"></ppe:ReferenceDialog>
+		<!--ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:WCET"></ppe:ReferenceDialog-->
+				
+		<custom:StringEditorWidget input="{Binding}"
+		property="CHESS:Predictability:RTComponentModel:CHRtSpecification:localWCET"></custom:StringEditorWidget>
+		
+		
+		<!--ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:memorySizeFootprint"></ppe:ReferenceDialog-->
+		<!--ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:stackSize"></ppe:ReferenceDialog-->
+		<!--ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:heapSize"></ppe:ReferenceDialog-->
+		<!--ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:slot"></ppe:ReferenceDialog-->
+			
+		<custom:StringEditorWidget input="{Binding}"
+		property="CHESS:Predictability:RTComponentModel:CHRtSpecification:occKind"></custom:StringEditorWidget>
+		
+		<custom:StringEditorWidget input="{Binding}"
+		property="CHESS:Predictability:RTComponentModel:CHRtSpecification:rlDl"></custom:StringEditorWidget>
+		
+		<custom:StringEditorWidget input="{Binding}"
+		property="CHESS:Predictability:RTComponentModel:CHRtSpecification:relativePriority"></custom:StringEditorWidget>
+			
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:ceiling"></ppe:ReferenceDialog>
+			
+		
+	</Composite>
+	<!--Composite>
+		<Composite.layout>
+			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
+		</Composite.layout>
+		<ppe:MultiReference input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:respT"></ppe:MultiReference>
+		<ppe:MultiReference input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:blockT"></ppe:MultiReference>
+	</Composite-->
+	
+	<Composite>
+		<Composite.layout>
+			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
+		</Composite.layout>
+		<ppe:MultiReference input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:CHRtSpecification:operationReqForSporadicOcc"></ppe:MultiReference>
+	</Composite>
+</Composite>

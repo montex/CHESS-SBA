@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.polarsys.chess.xtext.fladsl/src-gen" editDirectory="/org.polarsys.chess.xtext.fladsl.edit/src"
+    editorDirectory="/org.polarsys.chess.xtext.fladsl.editor/src" modelPluginID="org.polarsys.chess.xtext.fladsl"
+    forceOverwrite="true" modelName="FlaDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="org.polarsys.chess.xtext.fladsl.edit"
+    editorPluginID="org.polarsys.chess.xtext.fladsl.editor" runtimeVersion="2.11"
+    usedGenPackages="platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/resource/org.eclipse.uml2.uml/model/UML.genmodel#//uml">
+  <genPackages prefix="FlaDsl" basePackage="org.polarsys.chess.xtext" disposableProviderFactory="true"
+      fileExtensions="fladsl" ecorePackage="FlaDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="FlaDsl.ecore#//FailureType">
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//FailureType/NO_FAILURE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//FailureType/EARLY"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//FailureType/LATE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//FailureType/COMMISSION"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//FailureType/OMISSION"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//FailureType/VALUE_SUBTLE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//FailureType/VALUE_COARSE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//FailureType/WILDCARD"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//FailureType/VARIABLE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="FlaDsl.ecore#//Aavoidable">
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Aavoidable/INCOMPLETION"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Aavoidable/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Aavoidable/UNSPECIFIED"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="FlaDsl.ecore#//Cavoidable">
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Cavoidable/INCONSISTENCY"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Cavoidable/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Cavoidable/UNSPECIFIED"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="FlaDsl.ecore#//Iavoidable">
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Iavoidable/INTERFERENCE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Iavoidable/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Iavoidable/UNSPECIFIED"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="FlaDsl.ecore#//Davoidable">
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Davoidable/IMPERMANENCE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Davoidable/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Davoidable/UNSPECIFIED"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="FlaDsl.ecore#//Amitigation">
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Amitigation/ALL_OR_NOTHING"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Amitigation/ALL_OR_COMPENSATION"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Amitigation/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Amitigation/UNSPECIFIED"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="FlaDsl.ecore#//Cmitigation">
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Cmitigation/FULL_CONSISTENCY"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Cmitigation/RANGE_VIOLATION_ALLOWED"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Cmitigation/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Cmitigation/UNSPECIFIED"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="FlaDsl.ecore#//Imitigation">
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Imitigation/SERIALIZABLE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Imitigation/PORTABLE_LEVEL"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Imitigation/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Imitigation/UNSPECIFIED"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="FlaDsl.ecore#//Dmitigation">
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Dmitigation/NO_LOSS"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Dmitigation/PARTIAL_LOSS_ALLOWED"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Dmitigation/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="FlaDsl.ecore#//Dmitigation/UNSPECIFIED"/>
+    </genEnums>
+    <genClasses ecoreClass="FlaDsl.ecore#//Behaviour">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//Behaviour/rules"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//Expression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//Expression/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//Expression/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//Lhs">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//Lhs/failures"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//Rhs">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//Rhs/failures"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//InputExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//InputExpression/ref"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//InputExpression/failureExpr"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//OutputExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//OutputExpression/ref"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//OutputExpression/failureExpr"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//InFailureExpr">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//InFailureExpr/failures"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//OutFailureExpr">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//OutFailureExpr/failures"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//Definitions"/>
+    <genClasses ecoreClass="FlaDsl.ecore#//FailureDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlaDsl.ecore#//FailureDefinition/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//FailureDefinition/acidAvoidable"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//NoFailureDefinition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference FlaDsl.ecore#//NoFailureDefinition/acidMitigation"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//ComplexNofailureDefinition"/>
+    <genClasses ecoreClass="FlaDsl.ecore#//WildcardDefinition"/>
+    <genClasses ecoreClass="FlaDsl.ecore#//VariableDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlaDsl.ecore#//VariableDefinition/variableName"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//ACIDavoidable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlaDsl.ecore#//ACIDavoidable/a"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlaDsl.ecore#//ACIDavoidable/c"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlaDsl.ecore#//ACIDavoidable/i"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlaDsl.ecore#//ACIDavoidable/d"/>
+    </genClasses>
+    <genClasses ecoreClass="FlaDsl.ecore#//ACIDMitigation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlaDsl.ecore#//ACIDMitigation/a"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlaDsl.ecore#//ACIDMitigation/c"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlaDsl.ecore#//ACIDMitigation/i"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute FlaDsl.ecore#//ACIDMitigation/d"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
