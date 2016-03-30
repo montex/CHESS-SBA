@@ -64,14 +64,24 @@ unique lazy rule System {
 	--sba : CHESS!StateBasedAnalysis
 		--at the moment is it implied that there is only a StateBasedAnalysis in the model
 	using {
-		--platform : UML!Package = sba.platform->first().base_Package;
-		instances : Sequence(UML!InstanceSpecification) = UML!InstanceSpecification.allInstances()->select(i | i.refImmediateComposite() = platform);
+		--instances of interest are:
+		--> SET1: all the instances included in the target resource platform, plus
+		--> SET2: all the instances involved in allocations mentioned in the target resource platform, plus
+		--> SET3: all the instances in the same resource platform as those involved in allocations
+		instances : Set(UML!InstanceSpecification) = 
+			UML!InstanceSpecification.allInstances()->select(i | i.refImmediateComposite() = platform)		--SET1
+			->union(platform.getAllocationsInstances())														--SET2
+			->union(UML!InstanceSpecification.allInstances()
+				->select(i | platform.getAllocationsInstances()
+								->collect(ai | ai.refImmediateComposite())
+								->includes(i.refImmediateComposite()))										--SET3
+			)->asSet();																						--Removes duplicates
+			
 		comments : Sequence(UML!Comment) = instances->collect(i | i.ownedComment)->flatten();
-		instSystem : UML!InstanceSpecification = instances->first();
+		instSystem : UML!InstanceSpecification = platform.ownedElement->first();
 	} 
 	to
 		s : IM!Sistema (
---			Name <- sba.base_StructuredClassifier.name
 			Name <- platform.name
 		)
 	do {
@@ -84,17 +94,14 @@ unique lazy rule System {
 		thisModule.umlInstancesBlocks <- thisModule.umlInstancesAll->select(i | thisModule.umlInstancesConnectors.excludes(i));
 		thisModule.umlInstancesStereo <- thisModule.umlInstancesBlocks->select(i | i.getSBAStereotype() <> OclUndefined);
 
-		thisModule.umlInstancesRelevant <- instSystem.findSBAConstituents();
-		
---		--DEBUG: Print the obtained sets
---		thisModule.umlInstancesAll.debug('Instances ['+ thisModule.umlInstancesAll.size() +']');
---		thisModule.umlInstancesConnectors.debug('Connectors ['+ thisModule.umlInstancesConnectors.size() +']');
---		thisModule.umlInstancesBlocks.debug('Blocks ['+ thisModule.umlInstancesBlocks.size() +']');	
---		thisModule.umlInstancesStereo.debug('Stereotypes [' + thisModule.umlInstancesStereo.size() + ']');
---		thisModule.umlInstancesRelevant.debug('Relevant [' + thisModule.umlInstancesRelevant.size() + ']');
---		thisModule.umlAllocations.debug('Allocations ['+ thisModule.umlAllocations.size() +']');
---		--/DEBUG
-		
+		--Instances that are relevant for the analysis are:
+		--> Those that are constituents of the instance representing the target platform, plus
+		--> Those that are constituents of the instances representing the platforms that own the instances involved in allocations
+		thisModule.umlInstancesRelevant <- instSystem.findSBAConstituents()
+												->union(platform.getAllocationsInstances()
+															->collect(ai | ai.refImmediateComposite())
+															->collect(im | im.ownedElement->first().findSBAConstituents()))->flatten();
+			
 		--Generate IM!Component elements, failure modes, and what can be done immediately
 		for(i in thisModule.umlInstancesRelevant) {
 			s.components <- s.components->including(
@@ -110,12 +117,12 @@ unique lazy rule System {
 				thisModule.ErrorModelToComponent(i);
 			}
 		}
-		
+
 		--Generate external faults
 		for(i in thisModule.umlInstancesRelevant) {
 			thisModule.PopulateExternalFaults(i);	
 		}
-		
+	
 		--Generate FGE, i.e., connect external faults
 		for(i in thisModule.umlInstancesRelevant) {
 			if(i.getSBAStereotype().oclType() = CHESS!SimpleStochasticBehavior) {
@@ -126,6 +133,12 @@ unique lazy rule System {
 				thisModule.ErrorModel_FGE(i);
 			}
 		}
+		
+		--Process allocations
+		for(a in platform.getAllocations()) {
+			thisModule.Allocation(a);
+		}
+		
 		--Set FGE Backlinks
 		for(fge in IM!FaultsGenerateErrors.allInstances()) {
 			thisModule.setFGEBackLinks(fge.PropagationLogic, fge);	
@@ -137,6 +150,11 @@ unique lazy rule System {
 		--Set IP Backlinks
 		for(ip in IM!InternalPropagation.allInstances()) {
 			thisModule.setIPBackLinks(ip.PropagationLogic, ip);	
+		}
+
+		--Process repair activities
+		for(r in CHESS!Repair.allInstances()) {
+			thisModule.RepairActivity(r);
 		}
 	}
 }
@@ -197,6 +215,34 @@ rule SimpleStochasticBehaviorToComponent(inst : UML!InstanceSpecification) {
 		tmpFGE.PropagationLogicStringFormat <- tmpFGE.PropagationLogic.toString();
 
 		c.FaultsGeneratesErrors = c.FaultsGeneratesErrors.including(tmpFGE);
+		
+		if(not st.repairDelay.oclIsUndefined()) {
+			thisModule.SimpleStochasticBehaviorRepair(inst);	
+		}
+	}
+}
+--This is called only if repairDelay is not empty
+lazy rule SimpleStochasticBehaviorRepair {
+	from  
+		inst : UML!InstanceSpecification
+	using {
+		c : IM!Component = thisModule.InstanceToComponent(inst); 		
+	}
+	to 
+		repair : IM!RepairActivity (
+			Target <- c,
+			Name <- inst.name + '_repair',
+			Duration <- inst.getSBAStereotype().repairDelay.parseDistribution(),
+			SuccessProbability <- 1.0,
+			When <- se
+		),
+		se : IM!ScheduleExpression
+		(
+			T <- si
+		),
+		si : IM!ScheduleExpressionImmediately
+	do {
+		se.EX <- thisModule.SCHEXP_FailureModesCollection(c.FailureModes);	
 	}
 }
 
@@ -234,7 +280,7 @@ rule FLASpecificationToComponent(inst : UML!InstanceSpecification) {
 						thisModule.AddFailureMode(failure, c);
 					}
 					fToPropagate <- fToPropagate.including(
-						c.FailureModes->select(f | f.Name.noNamespace(c.Name) = failure)->first()
+						c.FailureModes->select(f | f.localName = failure)->first()
 					);
 				}
 			}
@@ -345,8 +391,7 @@ rule PopulateExternalFaults(inst : UML!InstanceSpecification) {
 			--Find connected component (slot owner)
 			if(not connPort.oclIsUndefined()) {
 				connComp <- thisModule.InstanceToComponent(connPort.refImmediateComposite());
-				
-				for(f in connComp.FailureModes->select(fm | fm.Name.noNamespace(connComp.Name).startsWith(connPort.name + '.'))) {
+				for(f in connComp.FailureModes->select(fm | fm.getPortName() = connPort.name)) {
 					faultName <- f.Name.split('\\.')->last();
 					--If the external faults has not already been added then add it
 					if(c.Faults->select(ft | ft.Name = connComp.Name + '_' + f)->isEmpty()) {				
@@ -403,7 +448,7 @@ rule FLASpecification_FGE(inst : UML!InstanceSpecification) {
 		--For every line of the FLA specification
 		for(spec in flaRules) {
 			j <- j+1;
-			tmpError <- c.Errors->select(e | e.Name.noNamespace(c.Name) = 'e_'+j);
+			tmpError <- c.Errors->select(e | e.localName = 'e_'+j);
 			
 			tmpLeft <- spec.trim().split('->')->first().trim();			--Get right hand side
 			tmpFaults <- tmpLeft.split(',');							--Get the different failures in the right hand side
@@ -415,18 +460,18 @@ rule FLASpecification_FGE(inst : UML!InstanceSpecification) {
 				faultMode <- fault.split('\\.')->last();
 								
 				if(faultMode = thisModule.flaNoFailure) {
-					selFaults <- c.Faults->select(ft | ft.Name.noNamespace(c.Name).startsWith(faultPort + '.'));
+					selFaults <- c.Faults->select(ft | ft.getPortName() = faultPort);
 					fExpression <- thisModule.FEXP_MultiOr(
 						selFaults->collect(f | thisModule.FEXP_Fault(f))
 					);
 					fExpression <- thisModule.FEXP_Not(fExpression);
 				}else if(faultMode = thisModule.flaWildcard) {
-					selFaults <- c.Faults->select(ft | ft.Name.noNamespace(c.Name).startsWith(faultPort + '.')); 
+					selFaults <- c.Faults->select(ft | ft.getPortName() = faultPort); 
 					fExpression <- thisModule.FEXP_MultiOr(
 						selFaults->collect(f | thisModule.FEXP_Fault(f))
 					);
 				}else{
-					selFaults <- c.Faults->select(ft | ft.Name.noNamespace(c.Name) = fault);
+					selFaults <- c.Faults->select(ft | ft.localName = fault);
 					fExpression <- thisModule.FEXP_Fault(
 						selFaults->first()
 					);
@@ -521,7 +566,7 @@ lazy rule AddExternalFault {
 	to 
 		xft : IM!ExternalFault (
 			Component <- thisModule.InstanceToComponent(inst),
-			Name <- inst.name + '_' + fault
+			Name <- inst.name + '_xft_' + fault
 		)
 }
 
@@ -577,11 +622,11 @@ unique lazy rule InternalPropagation {
 		imIntProp : IM!InternalPropagation (
 			Component <- c,
 			Name <- c.Name + '_intprop_' + (c.InternalPropagation->size()+1),
-			Source <- Sequence{thisModule.ErrorModelStateToError(chIntProp.base_Transition.source)},
-			Destination <- Sequence{thisModule.ErrorModelStateToError(chIntProp.base_Transition.target)},
+			Source <- Sequence{thisModule.ErrorModelStateToError(chIntProp.base_Transition.source,inst)},
+			Destination <- Sequence{thisModule.ErrorModelStateToError(chIntProp.base_Transition.target,inst)},
 			PropagationProbability <- 1,
 			PropagationDelay <- myDelay.parseDistribution(),
-			Weight <- myWeight * 100,
+			Weight <- myWeight,
 			PropagationLogic <- thisModule.EEXP_Error(imIntProp.Source->first()),
 			PropagationLogicStringFormat <- imIntProp.PropagationLogic.toString()
 		)
@@ -623,7 +668,7 @@ unique lazy rule AddEPFFromErrorModelFailure {
 		epf : IM!ErrorsProducesFailures (
 			Name <- c.Name + '_epf_' + (c.ErrorsGeneratesFailures->size()+1),
 			Source <- Sequence{eSource},
-			Destination <- c.FailureModes->select(fm | f.mode->includes(fm.Name.noNamespace(c.Name))),
+			Destination <- c.FailureModes->select(fm | f.mode->includes(fm.localName)),
 			Component <- c,
 			PropagationDelay <- myDelay.parseDistribution(),
 			PropagationProbability <- 1,
@@ -730,27 +775,65 @@ lazy rule newEvalInstantOfTime {
 		instant : IM!InstantOfTime ( timePoint <- t )
 }
 
+--Find target failure modes to be considered based on the attributes
+--of the StateBasedAnalysis stereotype.
+rule FindTargetFailureModes(sba : CHESS!StateBasedAnalysis) {
+	using {
+		targets : Set(UML!InstanceSpecification) = Set{};
+		targetSlots : Set(UML!Slot) = Set{};
+		fmSelected : Set(IM!FailureMode) = Set{};
+	}
+	do {
+		--Find target components based on two attributes
+		-->platform
+		-->targetDepComponent
+		if(sba.targetDepComponent.isEmpty()) {
+			targets <- 	sba.platform->collect(p | p.base_Package.ownedMember->first())->flatten();
+		}else{
+			targets <- sba.targetDepComponent;
+		}
+		
+		--Find ports of target components having an output dataflow
+		targetSlots <- targets->collect(i | i.getPortSlots())
+								->flatten()
+								->select(sl | sl.hasOutputFlow());
+	
+		--Filter ports based on 'targetPort', if set
+		if(not sba.targetPort.isEmpty()) {
+			targetSlots <- sba.targetPort.asSet()->intersection(targetSlots);
+		}
+		
+		--Process possibly existing downward delegations
+		targetSlots <- targetSlots->collect(sl | sl.getSBADelegationsDownwards())->flatten();
+		
+		--Find failure all failure modes related to the selected ports
+		fmSelected <-
+			 targetSlots->collect(sl | thisModule.InstanceToComponent(sl.refImmediateComposite()).FailureModes->select(fm | fm.getPortName() = sl.name))
+						->flatten()->asSet();
+		
+		--Filter failure modes based on 'targetFailureMode', if set
+		if(not sba.targetFailureMode->isEmpty()) {
+			fmSelected <-
+				fmSelected->select(fm | sba.targetFailureMode->contains(fm.getModeName()));
+		}
+		
+		fmSelected;	
+	}
+}
+
 rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 
 	using {
 		strClean : String = sba.measure.regexReplaceAll('[={}()]', ' ').trim();
 		iInstant : Integer = strClean.indexOf('instantOfTime');
 
-		--Select all the failure modes of component instance specified as 'targetDepComponent'
-		allFailuresOfSelectedInstances : Set(IM!FailureMode) =
-			sba.targetDepComponent->
-				collect(i | thisModule.InstanceToComponent(i).FailureModes)->flatten()->asSet();
-
-		---TODO: the facility to select the failure mode must be reimplemented
-		--Select all the failure modes (of all the instances) specified as 'targetFailureModes'
-		fmSelected : Set(IM!FailureMode) = Set{};
-			--thisModule.FailuresMap->getKeys()->select(k | sba.targetFailureMode->collect(fm | fm.base_State)->includes(k.st))->collect(selK | thisModule.FailuresMap->get(selK))->asSet();
-			
+					
 		imsistema : IM!Sistema = IM!Sistema.allInstances()->first();
 	}
 	to
 		re : IM!Reliability (
-			Name <-	sba.base_NamedElement.name
+			Name <-	sba.base_NamedElement.name,
+			target <- thisModule.FindTargetFailureModes(sba)
 		)
 
 	do{
@@ -765,23 +848,6 @@ rule Reliability(sba : CHESS!StateBasedAnalysis, time : Real){
 		else{
 			--Should not happen!
 		}
-
-		--[allFailuresOfSelectedInstances]: all the failure modes of selected component instances
-		--[fmSelected]: all the selected failure modes
-		--Idea: select only SELECTED failure modes, of SELECTED component instances
-		--(i.e., perform an intersection between the two)
-		--If one of the two is not specified, then select all the failure modes specified by the other
-		if(fmSelected.isEmpty()) {
-			re.target <- allFailuresOfSelectedInstances;
---			re.Name <- re.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
-		}else{
-			if(allFailuresOfSelectedInstances.isEmpty()) {
-				re.target <- fmSelected;
-			}else{
-				re.target <- allFailuresOfSelectedInstances->intersection(fmSelected);
-			}
---			re.Name <- re.Name + re.target->collect(fm | '_' + fm.Name)->sum();
-		}
 	}
 }
 
@@ -791,20 +857,12 @@ rule Availability(sba : CHESS!StateBasedAnalysis) {
 		iInterval : Integer = strClean.indexOf('intervalEnd');
 		iInstant : Integer = strClean.indexOf('instantOfTime');
 
-		--Select all the failure modes of component instance specified as 'targetDepComponent'
-		allFailuresOfSelectedInstances : Set(IM!FailureMode) =
-			sba.targetDepComponent->collect(i | thisModule.InstanceToComponent(i).FailureModes)->flatten()->asSet();
-
-		---TODO: the facility to select the failure mode must be reimplemented
-		--Select all the failure modes (of all the instances) specified as 'targetFailureModes'
-		fmSelected : Set(IM!FailureMode) = Set{};
-			--thisModule.FailuresMap->getKeys()->select(k | sba.targetFailureMode->collect(fm | fm.base_State)->includes(k.st))->collect(selK | thisModule.FailuresMap->get(selK))->asSet();
-			
 		imsistema : IM!Sistema = IM!Sistema.allInstances()->first();
 	}
 	to
 		re : IM!Availability (
-			Name <-	sba.base_NamedElement.name
+			Name <-	sba.base_NamedElement.name,
+			target <- thisModule.FindTargetFailureModes(sba)
 		)
 	do{
 		imsistema.measures.add(re);
@@ -826,23 +884,6 @@ rule Availability(sba : CHESS!StateBasedAnalysis) {
 		else{
 			--Should not happen!
 		}
-
-		--[allFailuresOfSelectedInstances]: all the failure modes of selected component instances
-		--[fmSelected]: all the selected failure modes
-		--Idea: select only SELECTED failure modes, of SELECTED component instances
-		--(i.e., perform an intersection between the two)
-		--If one of the two is not specified, then select all the failure modes specified by the other
-		if(fmSelected.isEmpty()) {
-			re.target <- allFailuresOfSelectedInstances;
---			re.Name <- re.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
-		}else{
-			if(allFailuresOfSelectedInstances.isEmpty()) {
-				re.target <- fmSelected;
-			}else{
-				re.target <- allFailuresOfSelectedInstances->intersection(fmSelected);
-			}
---			re.Name <- re.Name + re.target->collect(fm | '_' + fm.Name)->sum();
-		}
 	}
 }
 
@@ -850,21 +891,12 @@ rule PFD(sba : CHESS!StateBasedAnalysis) {
 	using {
 		strClean : String = sba.measure.regexReplaceAll('[={}()]', ' ').trim();
 
-		--Select all the failure modes of component instance specified as 'targetDepComponent'
-		allFailuresOfSelectedInstances : Set(IM!FailureMode) =
-			sba.targetDepComponent->
-				collect(i | thisModule.InstanceToComponent(i).FailureModes)->flatten()->asSet();
-
-		---TODO: the facility to select the failure mode must be reimplemented
-		--Select all the failure modes (of all the instances) specified as 'targetFailureModes'
-		fmSelected : Set(IM!FailureMode) = Set{};
-			--thisModule.FailuresMap->getKeys()->select(k | sba.targetFailureMode->collect(fm | fm.base_State)->includes(k.st))->collect(selK | thisModule.FailuresMap->get(selK))->asSet();
-			
 		imsistema : IM!Sistema = IM!Sistema.allInstances()->first();
 	}
 	to
 		pfd : IM!FailureProbability (
-			Name <-	sba.base_NamedElement.name
+			Name <-	sba.base_NamedElement.name,
+			target <- thisModule.FindTargetFailureModes(sba)
 		)
 
 	do{
@@ -875,23 +907,6 @@ rule PFD(sba : CHESS!StateBasedAnalysis) {
 				strClean.regexReplaceAll('PFD', ' ').trim().toReal()
 			)
 		);
-
-		--[allFailuresOfSelectedInstances]: all the failure modes of selected component instances
-		--[fmSelected]: all the selected failure modes
-		--Idea: select only SELECTED failure modes, of SELECTED component instances
-		--(i.e., perform an intersection between the two)
-		--If one of the two is not specified, then select all the failure modes specified by the other
-		if(fmSelected.isEmpty()) {
-			pfd.target <- allFailuresOfSelectedInstances;
---			pfd.Name <- pfd.Name + sba.targetDepComponent->collect(i | '_' + i.name)->sum();
-		}else{
-			if(allFailuresOfSelectedInstances.isEmpty()) {
-				pfd.target <- fmSelected;
-			}else{
-				pfd.target <- allFailuresOfSelectedInstances->intersection(fmSelected);
-			}
---			pfd.Name <- pfd.Name + pfd.target->collect(fm | '_' + fm.Name)->sum();
-		}
 	}
 }
 
@@ -1083,7 +1098,7 @@ rule FEXP_ParseString(exp : String, inst : UML!InstanceSpecification) {
 			expRet <-
 			thisModule.FEXP_MultiAnd(
 				tmpSplit->collect(
-					ft | c.Faults->select(ff | ff.Name.noNamespace(c.Name) = ft.trim())->first()
+					ft | c.Faults->select(ff | ff.localName = ft.trim())->first()
 				)->
 				flatten()->
 				collect(ft | thisModule.FEXP_Fault(ft))
@@ -1094,7 +1109,7 @@ rule FEXP_ParseString(exp : String, inst : UML!InstanceSpecification) {
 				expRet <-
 				thisModule.FEXP_MultiOr(
 					tmpSplit->collect(
-						s | c.Faults->select(ft | ft.Name.noNamespace(c.Name) = s.trim())
+						s | c.Faults->select(ft | ft.localName = s.trim())
 					)->
 					flatten()->
 					collect(ft | thisModule.FEXP_Fault(ft))
@@ -1126,37 +1141,327 @@ rule setFGEBackLinks(fen: IM!FaultsExpressionNode, fge: IM!FaultsGenerateErrors 
 rule setEPFBackLinks(een: IM!ErrorsExpressionNode, epf: IM!ErrorsProducesFailures ) {
 	do {
 		een.errorPropagation <- epf;
---		if (een.oclIsTypeOf(IM!FaultsExpressionOrNode)) {
---			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
---			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
---		} else if (een.oclIsTypeOf(IM!FaultsExpressionAndNode)) {
---			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
---			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
---		}
 	}
 }
 
 rule setIPBackLinks(een: IM!ErrorsExpressionNode, ip: IM!InternalPropagation ) {
 	do {
 		een.errorPropagation <- ip;
---		if (een.oclIsTypeOf(IM!FaultsExpressionOrNode)) {
---			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
---			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
---		} else if (een.oclIsTypeOf(IM!FaultsExpressionAndNode)) {
---			thisModule.setEPFBackLinks(een.FaultsExpression1, epf);
---			thisModule.setEPFBackLinks(een.FaultsExpression2, epf);
---		}
 	}
 }
 
 
+--Rule for Repair activities
+unique lazy rule RepairActivity {
+	from
+		r : CHESS!Repair
+	to
+		act : IM!RepairActivity
+		(
+			Name <- r.base_Activity.name,
+			SuccessProbability <- r.probSuccess.toReal(),
+			Duration <- r.duration.parseDistribution(),
+			When <- timeexp
+		),
+		timeexp : IM!ScheduleExpression
+		(
+				T <-
+				if r.when.trim().startsWith('Periodic') then
+					thisModule.SCHEXP_Periodic(r.when)
+				else
+					if r.when.trim().startsWith('AtTime') then
+						thisModule.SCHEXP_AtTime(r.when)
+					else
+						OclUndefined
+					endif
+				endif,
+				EX <- timeexp_ex
+		),
+		timeexp_ex : IM!ScheduleExpressionTrue
+	do {
+		act.Target <- UML!Slot.allInstances()
+						->select(sl | r.targets->includes(sl.definingFeature))
+						->collect(sl | sl.value->first().instance)
+						->select(i | thisModule.umlInstancesRelevant->includes(i))
+						->collect(i | thisModule.InstanceToComponent(i));
+	}
+}
+
+--Rule for ErrorDetection activities
+unique lazy rule ErrorDetectionActivity {
+	from
+		r : CHESS!ErrorDetection
+	to
+		act : IM!DetectionActivity
+		(
+			Name <- r.base_Activity.name,
+			Coverage <- r.probSuccess.toReal(),
+			Duration <- r.duration.parseDistribution(),
+			When <- timeexp
+		),
+		timeexp : IM!ScheduleExpression
+		(
+				T <-
+				if r.when.trim().startsWith('Periodic') then
+					thisModule.SCHEXP_Periodic(r.when)
+				else
+					if r.when.trim().startsWith('AtTime') then
+						thisModule.SCHEXP_AtTime(r.when)
+					else
+						OclUndefined
+					endif
+				endif,
+				EX <- timeexp_ex
+		),
+		timeexp_ex : IM!ScheduleExpressionTrue
+	do {
+		act.Target <- UML!Slot.allInstances()
+						->select(sl | r.targets->includes(sl.definingFeature))
+						->collect(sl | sl.value->first().instance)
+						->collect(i | thisModule.InstanceToComponent(i));
+	}
+}
+
+--rule RepairActivity(r : IM!RepairActivity){
+--
+--	to
+--		se : IM!ScheduleExpression
+--		(
+--			T <- si
+--		),
+--		si : IM!ScheduleExpressionImmediately
+--	do{
+--		r.When <- se;
+--		for (c in r.Target){
+--			for(fm in c.FailureModes) {
+--				thisModule.SchedCond(fm);
+--			}
+--		}
+--		if (thisModule.TempScen->size() = 1){
+--			se.EX <- thisModule.TempScen->first();
+--		}else{
+--			for(scen in thisModule.TempScen){
+--				if (scen <> thisModule.TempScen->last()){
+--					thisModule.CreateScenOrExpr();
+--				}
+--			}
+--			thisModule.TempScen->addAll(thisModule.TempScenSeq);
+--
+--			for(scen in thisModule.TempScen){
+--				if (scen.oclIsTypeOf(IM!ScheduleExpressionOr)){
+--					scen.e1 <- thisModule.TempScen.at(thisModule.Counter);
+--					thisModule.Counter <- thisModule.Counter+1;
+--					scen.e2 <- thisModule.TempScen.at(thisModule.Counter);
+--					thisModule.Counter <- thisModule.Counter+1;
+--				}
+--			}
+--			se.EX <- thisModule.TempScen->last();
+--		}
+--
+--		thisModule.TempScen.clear();
+--		thisModule.TempScenSeq.clear();
+--		thisModule.Counter <- 1;
+--	}
+--}
+
+rule SchedCond(fm : IM!FailureMode){
+
+	to
+		scefn : IM!ScheduleExpressionFailed (
+			failureMode <- fm
+		)
+
+	do{
+		thisModule.TempScen.add(scefn);
+	}
+}
+
+rule CreateScenOrExpr(){
+
+	to
+		sceon : IM!ScheduleExpressionOr
+
+	do{
+		thisModule.TempScenSeq.add(sceon);
+	}
+
+}
+
+--------------------------------------------------------------------
+-- Rules to generate ScheduleExpression elements
+--------------------------------------------------------------------
+
+lazy rule SCHEXP_Periodic {
+	from
+		s : String
+	using {
+		sClean : String = s.regexReplaceAll('[={}()]', ' ').trim();
+	}
+	to
+		p : IM!ScheduleExpressionPeriodic
+		(
+			PeriodDuration <- d
+		),
+		d : IM!Deterministic
+		(
+			Value <- sClean.substring('Periodic'.size()+1, sClean.size()).toReal()
+		)
+}
+lazy rule SCHEXP_AtTime {
+	from
+		s : String
+	using {
+		sClean : String = s.regexReplaceAll('[={}()]', ' ').trim();
+	}
+	to
+		p : IM!ScheduleExpressionAtTime
+		(
+			t <- sClean.substring('AtTime'.size()+1, sClean.size()).toReal()
+		)
+}
+
+rule SCHEXP_Or(exp1 : IM!ScheduleExpressionCond, exp2 : IM!ScheduleExpressionCond) {
+	to 
+		e : IM!ScheduleExpressionOr
+		(
+			e1 <- exp1,
+			e2 <- exp2			
+		)
+	do {
+		e;
+	}
+}
+
+rule SCHEXP_And(exp1 : IM!ScheduleExpressionCond, exp2 : IM!ScheduleExpressionCond) {
+	to 
+		e : IM!ScheduleExpressionAnd
+		(
+			e1 <- exp1,
+			e2 <- exp2			
+		)
+	do {
+		e;
+	}
+}
+
+rule SCHEXP_FailureMode(fm : IM!FailureMode) {
+	to
+		e : IM!ScheduleExpressionFailed
+		(
+			failureMode <- fm			
+		)
+	do {
+		e;
+	}
+}
+
+rule SCHEXP_MultiOr(schSeq : Set(IM!ScheduleExpressionCond)) {
+	using {
+		tmpExpression1 : IM!ScheduleExpressionCond = OclUndefined;
+		tmpExpression2 : IM!ScheduleExpressionCond = OclUndefined;
+		tmpSequence : Sequence(IM!ScheduleExpressionCond) = schSeq;
+	}
+	do {
+		if(schSeq->size() = 1) {
+			tmpExpression1 <- schSeq->first();
+		}else{
+			tmpExpression1 <- tmpSequence->first();
+			tmpSequence <- tmpSequence.subSequence(2, tmpSequence.size());
+--			tmpExpression2 <- tmpSequence->first();
+--			tmpSequence <- tmpSequence.subSequence(2, tmpSequence.size());
+--			
+--			tmpExpression1 <- thisModule.SCHEXP_Or(tmpExpression1,tmpExpression2);
+			
+			for(ee in tmpSequence) {
+				tmpExpression2 <- 	thisModule.SCHEXP_Or(
+										tmpExpression1,
+										ee
+								 	);
+				tmpExpression1 <- tmpExpression2;
+			}
+		}
+		
+		tmpExpression1;
+	}	
+}
+
+rule SCHEXP_FailureModesCollection(fms : Set(IM!FailureMode)) {
+	using {
+		tmp : IM!ScheduleExpressionCondition = OclUndefined;
+	}
+	do {
+		tmp <-
+			thisModule.SCHEXP_MultiOr(
+				fms->collect(fm | thisModule.SCHEXP_FailureMode(fm))
+			);
+
+		tmp;
+	}
+}
+
+--------------------------------------------------------------------
+-- Rules for allocation
+--------------------------------------------------------------------
+rule Allocation(a : MARTE!Assign) {
+	using {
+		tmpXFT : IM!ExternalFault = OclUndefined;
+	}
+	do {
+		for(instFrom in a.from) {
+			for(instTo in a.to) {
+				for(fm in thisModule.InstanceToComponent(instTo).FailureModes) {			
+					tmpXFT <- thisModule.AddExternalFault(fm.getModeName(), instFrom);
+					tmpXFT.Source <- fm;
+					tmpXFT.Name <- instFrom.name + '_allocation_' + fm.Name;
+				}				
+			}
+		}
+	}
+}
+--rule Assign (a : MARTE!Assign){
+--
+--	do{
+--		--"from" and "to" are keywords in ATL... (works anyway, only issue: they are highlighted)
+--		thisModule.Instances.addAll(a.from);
+----		thisModule.Components.addAll(a.to->collect(f | f.classifier->first()));
+--
+--		--get also connectors from the allocated HW/SW
+--		for (f in a.from){
+--			thisModule.Connectors.addAll(f.owner.getConnectors);
+--		}
+--		for (t in a.to){
+--			thisModule.Connectors.addAll(t.owner.getConnectors);
+--		}
+--
+--		--finally get ports from the allocated HW/SW
+--		for (f in a.from){
+--			for (i in f.owner.getInstances){
+--				thisModule.Ports.addAll(i.slot->collect(d | d.definingFeature));
+--			}
+--		}
+--		for (t in a.to){
+--			for (i in t.owner.getInstances){
+--				thisModule.Ports.addAll(i.slot->collect(d | d.definingFeature));
+--			}
+--		}
+--	}
+--}
+
+--Find allocation specifications related to a given platform
+helper context UML!Package def : getAllocations() : Set(MARTE!Assign) =
+	MARTE!Assign.allInstances()->select(a | a.base_Comment.owner = self.ownedElement->first().classifier->first());
+
+--Find instances involved in allocations related to a given platform
+helper context UML!Package def: getAllocationsInstances() : Set(UML!InstanceSpecification) =
+	self.getAllocations()->collect(a | a.from->union(a.to))->flatten();	
+
 --Check if a IM!Component already contains a specific failure mode
 helper context IM!Component def: hasFailureMode(fm : String) : Boolean =
-	not self.FailureModes->select(f | f.Name.noNamespace(self.Name).trim() = fm.trim())->isEmpty();
+	not self.FailureModes->select(f | f.localName.trim() = fm.trim())->isEmpty();
 
 --Check if a IM!Component already contains a specific fault
 helper context IM!Component def: hasFault(fm : String) : Boolean =
-	not self.Faults->select(f | f.Name.noNamespace(self.Name).trim() = fm.trim())->isEmpty();
+	not self.Faults->select(f | f.localName.trim() = fm.trim())->isEmpty();
 
 --Get <<Failure>> stereotype from a Transition
 helper context UML!Transition def: getFailureStereotype() : CHESS!Failure =
@@ -1177,7 +1482,25 @@ helper context UML!Vertex def: isInitialState() : Boolean =
 --Remove the component name
 helper context String def: noNamespace(n : String) : String =
 	self.regexReplaceAll(n + '_', '');
-	
+helper context IM!Fault def: localName : String =
+	let fClean : String = self.Name.noNamespace(self.Component.Name)
+	in fClean.substring(5, fClean.size());	--Removes the initial xft_ or ift_ prefix
+helper context IM!Error def: localName : String =
+	self.Name.noNamespace(self.Component.Name);
+helper context IM!FailureMode def: localName : String =
+	self.Name.noNamespace(self.Component.Name);
+helper context IM!Threat def: fullName : String = self.Name;
+
+--Get info on a IM!Fault and IM!FailureMode
+helper context IM!Fault def: getPortName() : String =
+	self.localName.split('\\.').at(1);
+helper context IM!Fault def: getModeName() : String =
+	self.localName.split('\\.').at(2);
+helper context IM!FailureMode def: getPortName() : String =
+	self.localName->split('\\.')->at(1);
+helper context IM!FailureMode def: getModeName() : String =
+	self.localName.split('\\.').at(2);
+
 
 --------------------------------------------------------------------
 -- Parse strings in VSL notation into IM!Distribution elements
@@ -1408,25 +1731,35 @@ helper context UML!Slot def: getDelegationEndsUpwards() : Set(UML!Slot) =
 	self.getDelegationEnds()->select(s | self.refImmediateComposite().isSubInstanceOf(s.refImmediateComposite()));
 
 --Get the target of delegation taking into account SBA stereotypes,
---i.e., get the first slot whose owning instnace has SBA information.
+--i.e., get the first slot whose owning instance has SBA information.
 --(it can be even the slot under examination itself)
-helper context UML!Slot def: getSBADelegations() : Set(UML!Slot) =
+helper context UML!Slot def: getSBADelegationsDownwards() : Set(UML!Slot) =
 	let inst : UML!InstanceSpecification = self.refImmediateComposite() in
 	let deleg : Set(UML!Slot) = self.getDelegationEndsDownwards() in
 	if deleg.isEmpty() or 
 		inst.hasSBAInformation() or 
 		inst.getSubInstances().isEmpty() 
 	then
-		Set{self} 
+		Set{self}
 	else
-		deleg->collect(e | e.getSBADelegations())->flatten()
+		deleg->collect(e | e.getSBADelegationsDownwards())->flatten()
+	endif;
+helper context UML!Slot def: getSBADelegationsUpwards() : Set(UML!Slot) =
+	let inst : UML!InstanceSpecification = self.refImmediateComposite() in
+	let deleg : Set(UML!Slot) = self.getDelegationEndsUpwards() in
+	if deleg.isEmpty() then
+		Set{self}
+	else
+		deleg->collect(e | e.getSBADelegationsUpwards())->flatten()
 	endif;
 
 --Get the target of connection taking into account SBA stereotypes,
 --i.e., get the first slot whose owning instance has SBA information.
 --(it can be even the slot directly connected to the one under examination)
 helper context UML!Slot def: getSBAConnections() : Set(UML!Slot) =
-	self.getConnectedImmediate()->collect(sl | sl.getSBADelegations())->flatten();	
+	self.getSBADelegationsUpwards()->
+		collect(d | d.getConnectedImmediate())->flatten()->
+		collect(sl | sl.getSBADelegationsDownwards())->flatten();	
 
 --------------------------------------------------------------------
 -- Parse failure modes for SimpleStochasticBehavior elements
@@ -1467,7 +1800,7 @@ helper context String def: parseFailureModes() : Set(TupleType(fm: String, p: Re
 	endif endif;
 
 --------------------------------------------------------------------
--- Helpers to managethe metrics
+-- Helpers to manage the metrics
 --------------------------------------------------------------------
 
 --temporary parser to retrieve which dependability measure a SBAnalysis refers to
@@ -1515,7 +1848,3 @@ helper context CHESS!SimpleStochasticBehavior def: toString() : String =
 helper context CHESS!FLABehavior def: toString() : String = '<<FLABehavior>>(' + self.fptc + ')';
 helper context CHESS!ErrorModelBehavior def: toString() : String = '<<ErrorModelBehavior>>(' + self.errorModel + ')';
 helper context CHESS!ErrorModel def: toString() : String = '<<ErrorModel>>(' + self.base_StateMachine + ')';
-
-
-
-

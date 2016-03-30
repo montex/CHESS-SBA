@@ -331,12 +331,12 @@ rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 		removetrans_faulty : PNML!GSPNArc ( target <- td )
 }
 rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
-	from 
+	from
 		ft : IDM!InternalFault
 		(
 			if ft.Occurrence.oclIsTypeOf(IDM!Deterministic) then
 				if ft.TransientDuration.oclIsTypeOf(IDM!Deterministic) then
-					ft.Occcurence.Value > 0 and ft.TransientDuration.Value = 0
+					ft.Occurrence.Value > 0 and ft.TransientDuration.Value = 0
 				else
 					false
 				endif
@@ -620,14 +620,14 @@ abstract rule FGE {
 		casepropagate : PNML!GSPNImmediateTransition
 		(
 			id <- basename + '_caseprop',
-			Weight <- fge.PropagationProbability,
+			Weight <- fge.PropagationProbability * fge.Weight,	--This is a workaround!
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
 		caseskip : PNML!GSPNImmediateTransition
 		(
 			id <- basename + '_caseskip',
-			Weight <- ( 1 - fge.PropagationProbability ),
+			Weight <- ( 1 - casepropagate.Weight ),
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
@@ -1007,14 +1007,14 @@ abstract rule InternalPropagation {
 		casepropagate : PNML!GSPNImmediateTransition
 		(
 			id <- basename + '_caseprop',
-			Weight <- iprop.PropagationProbability,
+			Weight <- iprop.PropagationProbability * iprop.Weight,	--This is a workaround!
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
 		caseskip : PNML!GSPNImmediateTransition
 		(
 			id <- basename + '_caseskip',
-			Weight <- ( 1 - iprop.PropagationProbability ),
+			Weight <- ( 1 - casepropagate.Weight ),
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
