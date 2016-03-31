@@ -116,7 +116,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 	 * Executes the schedulability analysis and shows the results.
 	 * The analysis context to be analyzed is asked to the user through a dedicated dialog.
 	 *
-	 * @param event the event resulting fro the invocation of the command
+	 * @param event the event resulting from the invocation of the command
 	 * @return null 
 	 * @throws ExecutionException the execution exception
 	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
@@ -310,7 +310,7 @@ public class QVToUIHandlerVERDE extends AbstractHandler {
 	 * @param model
 	 * @return
 	 */
-	private List<CH_HwProcessor> getPlatformChHwProcessors(
+	public static List<CH_HwProcessor> getPlatformChHwProcessors(
 			SaAnalysisContext saAnalysisContext,
 			Model model) {
 		CH_HwProcessor chHwProcessor = null;

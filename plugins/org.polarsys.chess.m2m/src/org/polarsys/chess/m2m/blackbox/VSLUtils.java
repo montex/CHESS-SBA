@@ -1011,6 +1011,32 @@ private static Slot extractFirstSlot(EList<Element> from) {
 	}
 	
 	/**
+	 * Gets the supertask (as String) constraining the given <<Assign>> Comment.
+	 *
+	 * @param context the QVT context
+	 * @param self the <<Assign>> Comment
+	 * @return the supertask (as String)
+	 */
+	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
+	public  static String getSupertaskFromContraint(IContext context, Comment self) {
+		try {
+			Assign assign = getStereotypeApplication(self, Assign.class);
+			for (NfpConstraint nfpc : assign.getImpliedConstraint()) {
+				Constraint cc = nfpc.getBase_Constraint();
+				ValueSpecification spec = cc.getSpecification();
+				if(spec.getName().equalsIgnoreCase("supertask")){
+					LiteralString value = (LiteralString) spec;
+					return value.getValue();
+				}
+			}
+		} catch (Exception e) {
+			//TODO ugly piece of code I know....
+		}
+		return null;
+	}
+	
+	
+	/**
 	 * Gets the context from constraint.
 	 *
 	 * @param context the context

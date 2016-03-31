@@ -298,7 +298,8 @@ public class BackpropagationFullVERDE{
 			} catch (Exception e) {
 				return;
 			}
-			
+			if(chrt == null)
+				return;
 			
 			CHRtSpecification in = UMLUtils.getStereotypeApplication(chrt, CHRtSpecification.class);
 			SwMutualExclusionResource out = UMLUtils.getStereotypeApplication(outEl, SwMutualExclusionResource.class);

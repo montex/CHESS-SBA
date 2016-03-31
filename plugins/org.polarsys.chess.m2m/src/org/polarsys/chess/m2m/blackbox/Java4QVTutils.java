@@ -10,11 +10,18 @@
  *******************************************************************************/
 package org.polarsys.chess.m2m.blackbox;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation;
 import org.eclipse.m2m.qvt.oml.blackbox.java.Operation.Kind;
 import org.eclipse.m2m.qvt.oml.util.IContext;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaExecHost;
 import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.ActivityFinalNode;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.InitialNode;
 import org.eclipse.uml2.uml.InstanceSpecification;
@@ -96,8 +103,8 @@ public class Java4QVTutils {
 	public  static InstanceSpecification getRootInstanceInPackage(IContext context, Package self) {
 		return UMLUtils.getRootInstanceInPackage(self);
 	}
-	
-	/**
+
+		/**
 	 * Updates the occKind property for the CHRtSpecification decorating an ARINCFunction.
 	 * An ARINFFunction derives its period from the owning ARINCProcess.
 	 *
@@ -122,6 +129,77 @@ public class Java4QVTutils {
 			e.printStackTrace();
 		}
 	
+	}
+	
+	/**
+
+	 * Checks if CPU otherSchedPPolicy contains a RUN string
+	 *
+	 * @param context the QVT context
+	 * @param cpu the classifier representing the CPU (NOT the instance of the CPU)
+	 * @return true or false
+	 */
+	@Operation(kind = Kind.QUERY, contextual = true, withExecutionContext = true)
+	public  static boolean isRUN(IContext context, Classifier cpu) {
+	
+		GaExecHost proc = UMLUtils.getStereotypeApplication(cpu,
+				GaExecHost.class);
+		if(proc!=null){
+		  String policy = proc.getOtherSchedPolicy();
+		  if(policy != null)
+		  	return isRUN(policy);
+		}
+		
+		return false;
+	}// end createInitialNode
+
+	private static boolean isRUN(String policy) {
+		return policy.trim().startsWith("RUN");
+	}
+	
+	@Operation(kind = Kind.QUERY, contextual = true, withExecutionContext = true)
+	public static List<List<String>> getRUNSupertasks(IContext context, Classifier cpu) {
+		List<List<String>> st = new ArrayList<List<String>>();
+		GaExecHost proc = UMLUtils.getStereotypeApplication(cpu,
+				GaExecHost.class);
+		if(proc!=null){
+		  String policy = proc.getOtherSchedPolicy();
+		  if (isRUN(policy)){
+		  	return processRUNString(policy);
+		  }
+		}
+		return st;
+	}// end createInitialNode
+
+	public static List<List<String>> processRUNString(String policy) {
+		List<List<String>> ret = new ArrayList<List<String>>();
+		String regex = "\\s*\\((.+)\\)\\.*";// \\((\\s*)\\)\\s*
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(policy);
+
+		if (matcher.find() && matcher.groupCount() == 1) {
+			String s = matcher.group(1);
+			String[] split = s.split(",");
+			for (String string : split) {
+				List<String> superTaskInfo = extractSuperTaskInfo(string);
+				ret.add(superTaskInfo);
+			}
+		}
+		return ret;
+	}
+
+	public static List<String> extractSuperTaskInfo(String info) {
+		String regex = "\\[(.+)=(.+)\\]";// \\((\\s*)\\)\\s*
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(info);
+		List<String> tuple = new ArrayList<String>();
+		if (matcher.find() && matcher.groupCount() == 2) {
+			String name = matcher.group(1);
+			String capacity = matcher.group(2);
+			tuple.add(name);
+			tuple.add(capacity);
+		}
+		return tuple;
 	}
 	
 }

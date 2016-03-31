@@ -27,6 +27,7 @@ modeltype UML uses "http://www.eclipse.org/uml2/5.0.0/UML";
 modeltype MARTEP uses "http://www.eclipse.org/papyrus/MARTE/1";
 modeltype CHESS uses "http://CHESS";	
 modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
+modeltype MARTEGRM uses "http:///MARTE_Library/GRM_BasicTypes.ecore";
 	
 
 transformation CHESS_PIM2PSM(inout source:UML);
@@ -71,18 +72,20 @@ property currentCore : String = null;
 property currentHost : MARTE::SAM::SaExecHost = null;
 
 property slotinAssigns = false;
+
+property isRUN = false;
 //property currentSharedRes : MARTE::SAM::SaSharedResource = null;
 	
 main() {
+	//analysisType:= "Schedulability";
+	//saAnalysis := "model::modelAnalysisView::modelRTAnalysisView::SaAnalysisContext1";
 	
-	//analysisType := "Schedulability";
-	//saAnalysis := "model::modelAnalysisView::modelRTAnalysisView::SaAnalysisContext7"
     log("*** CHESS PIM->PSM transformation   ***");
     log("Performing " + analysisType + " Analysis");
     log("Analysis Context is " + saAnalysis);
 	log("End2End Scenario is " + saE2EFlow);
-	model := source.rootObjects()![Model];
 	
+	model := source.rootObjects()![Model];
 	MARTEProfile := model.getView("ComponentView").getAppliedProfiles()->selectOne(name="GCM").owner.owner.oclAsType(Profile);
 	CHESSProfile := model.getAppliedProfiles()->selectOne(name="CHESS").oclAsType(Profile);
 	
@@ -272,7 +275,7 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 		slotInstances->forEach(s){
 			var specs := s.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;
 			specs->forEach(spec){
-			    log("***Processing Slot" +" defining feature " + s.definingFeature.name+ " for " + s.owningInstance.name  + " and operation "+ spec.context.name +".");
+			    log("***Processing Slot" +s.getStringId()+ " defining feature " +s.getStringId()+ s.definingFeature.name+ " for " + s.owningInstance.name + s.owningInstance.getStringId() + " and operation "+ spec.context.name +".");
 			    
 			    //maps only if the operation is deferred
 				s.map CHRtSlot2SwSchedulableResource(spec.base_Comment);  
@@ -338,7 +341,7 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 				componentInstSlots->forEach(componentInstSlot){
 					var specs := componentInstSlot.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot).cH_RtSpecification;	
 					specs->forEach(spec){
-					    log("***Processing Slot" + " defining feature " + componentInstSlot.definingFeature.name+ " for " + componentInstSlot.owningInstance.name  + " and operation "+ spec.context.name +".");
+					    log("***Processing Slot" +componentInstSlot.getStringId()+ " defining feature " +componentInstSlot.getStringId()+ componentInstSlot.definingFeature.name+ " for " + componentInstSlot.owningInstance.name + componentInstSlot.owningInstance.getStringId() + " and operation "+ spec.context.name +".");
 					    
 					    //ARINC Process must not be mapped
 					   var arincFuncStereo = spec.context.getMetaclass(ARINCFunctionQN).oclAsType(chessmlprofile::ARINCComponentModel::ARINCFunction);
@@ -712,7 +715,7 @@ mapping InstanceSpecification::Slot2SwSchedulableResource(chrtComment : Comment,
 	
 	var sr := result.applyStereotype(getMARTEStereotype("SwSchedulableResource")).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);		
 	sr.isProtected := false;
-	var schedParams := "fp(priority=(value=" + chrts.relativePriority.normalizeNFPInteger() +", source=meas))";
+	var schedParams := "fp(priority=(" + chrts.relativePriority.normalizeNFPInteger() +", source=meas))";
 	
 	//TODO assume <<Assign>> 'from' and 'to' typed as InstanceSpecification	
 	// Find the deployment node (InstanceSpecification), based on <<Assign>> directives
@@ -723,8 +726,18 @@ mapping InstanceSpecification::Slot2SwSchedulableResource(chrtComment : Comment,
 		
 		
 	   if(slotinAssigns){
+<<<<<<< HEAD
+	   	  var hostClassifier := getAssignToFrom_MemoryPartition(slot, chrt);
+	   	  if (isRUN){
+	   	  	sr.host := hostClassifier.getSupertaskHost(getAssignedSupertaskFrom_MemoryPartition(slot, chrt));
+	   	  	schedParams := "edf(deadline=(" + chrts.rlDl +", source=meas))";
+	   	  } else {
+		  	sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot, chrt));
+		  };
+=======
 	   	  var hostClassifier := getAssignToFrom_MemoryPartition(slot, chrtComment);
 		  sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot, chrtComment));
+>>>>>>> origin/develop
 	   } else {
 		  var hostClassifier := getAssignToFrom_MemoryPartition(slot.owningInstance);
 		  sr.host := hostClassifier.getHost(getAssignedCoreFrom_MemoryPartition(slot.owningInstance));
@@ -809,6 +822,54 @@ query InstanceSpecification::getHost(core: String) : MARTE::SAM::SaExecHost {
 	return res;	
 }
 
+<<<<<<< HEAD
+/*
+  Given a InstanceSpecification representing a Processor/ComputingResource,
+  return the already generated SaExecHost
+*/
+query InstanceSpecification::getSupertaskHost(supertask: String) : MARTE::SAM::SaExecHost {
+	
+			var ress := self.resolveIn(InstanceSpecification::HwProcessor2SaExecHostSupertask, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
+
+			if(ress->size() = 1){
+				var cpu := ress->selectOne(base_Classifier.name=self.name);
+				assert fatal (cpu <> null)
+					with log("Host "+self.name+" not found.");
+				return cpu;
+			};
+			var res := ress->selectOne(base_Classifier.name=self.name+supertask);
+			if(res <> null){
+				return res;
+			};
+	assert fatal (res <> null)
+		with log("Unable to find the assigned supertask");
+	return null;
+}
+
+
+helper createSaStepNode(in sourceCHRtComment: Comment, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
+	var chrts := sourceCHRtComment.CHRtSpec();
+	var opNode := createOpaqueAction(opaqueActionName(sourceSlot, chrts), e2eActivity, prevE2ENode);
+	var opSaStep := opNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	
+	// Set the <<SwSchedulableResource>> that executes the <<saStep>>
+	
+	var concurRes := currentConcurRes;
+	if chrts.isDeferred() then
+		concurRes := sourceCHRtComment.getConcurRes(sourceSlot)//classResource.getMetaclass(SchedulableResourceQN).oclAsType(MARTE::GRM::SchedulableResource);
+	endif;
+	opSaStep.concurRes := concurRes;
+    // Retrieve the <<SaStep>> to use for the subusage
+	var saStep := sourceSlot.resolve2SaStep(chrts.base_Comment).getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	//Add the newly created operation as subUsage of the OpaqueAction(<<saStep>>)
+	opSaStep.subUsage += saStep;
+	
+	//opSaStep.sharedRes += currentSharedRes;
+	return opNode;
+}
+
+=======
+>>>>>>> origin/develop
 //Stefano: not clear what this method is intended to implement!!!
 helper createSubUsage(in sourceCHRtComment: Comment, in sourceSlot : Slot, ownerInstance : InstanceSpecification)  {
 	var chrts := sourceCHRtComment.CHRtSpec();
@@ -957,9 +1018,9 @@ helper createOpaqueActionsChainFull(in currentIsGuarded : Boolean, in currentCHR
 		//var riSlot := calledOpNode.onPort.portToSlot(currentSlot.owningInstance);
 		var riSlots := calledOpNode.portToSlotFull(owningInstance);
 		riSlots->forEach(riSlot){
-			log("  Search for piSlot from riSlot '" + riSlot.owningInstance.name + riSlot.definingFeature.name +  "'.");
+			log("  Search for piSlot from riSlot '" + riSlot.owningInstance.name + riSlot.owningInstance.getStringId() + riSlot.definingFeature.name + riSlot.getStringId() + "'.");
 			var usedPiSlot := riSlot.getCorrespondingSlot();
-			log("  Found piSlot '" + usedPiSlot.owningInstance.name + usedPiSlot.definingFeature.name  + "'.");
+			log("  Found piSlot '" + usedPiSlot.owningInstance.name+usedPiSlot.owningInstance.getStringId() + usedPiSlot.definingFeature.name + usedPiSlot.getStringId() + "'.");
 	        var usedPiCHRtSpec := usedPiSlot.CHRtSpecForOperation(calledOpNode.operation);
 	        var bus := getConnectingBus(owningInstance, usedPiSlot.owningInstance);
 	        
@@ -1572,9 +1633,17 @@ helper InstanceSpecification::HwProcessor2SaExecHostHelper() : OclVoid {
 	
 	log("number of cores "+n.toString());
 	
+	//check if it is RUN
+	isRUN := self.classifier().isRUN();
+	
+	var schedPolicy := "partitioned";
+	if(isRUN){
+		schedPolicy := "global(RUN)";
+	};
+	
 	var p := self.map HwProcessor2SaExecHost(null);
 	var pHost := p.getMetaclass("SaExecHost").oclAsType(MARTE::SAM::SaExecHost);
-	pHost.otherSchedPolicy := "partitioned";//or global
+	pHost.otherSchedPolicy := schedPolicy;
 	//Generate cores and assign the processor as the host for each core
 	while(n>1 and i < n) {
 		var c := self.map HwProcessor2SaExecHost("_core"+i.toString());
@@ -1586,7 +1655,42 @@ helper InstanceSpecification::HwProcessor2SaExecHostHelper() : OclVoid {
 		p.nestedClassifier +=cc;
 		c.getMetaclass("SaExecHost").oclAsType(MARTE::SAM::SaExecHost).host := pHost;
 		i := i + 1;
-	}
+	};
+	
+	//Generates the supertasks
+	if(isRUN){
+		var supertasks := self.classifier().getRUNSupertasks();
+		
+		supertasks->forEach(supertaskInfo){
+			var stname := supertaskInfo->asSequence()->first();
+			var stcapacity := supertaskInfo->last();
+			self.map HwProcessor2SaExecHostSupertask(stname, stcapacity);
+		};
+	};
+}
+
+mapping InstanceSpecification::HwProcessor2SaExecHostSupertask(supertask : String, capacity : String) : Class {
+	var message := "";
+	var name := self.name;
+	if(supertask<>null){
+		message := "'and supertask " + supertask;
+		name := name + supertask;
+	};
+	var host := self.resolveoneIn(InstanceSpecification::HwProcessor2SaExecHost, Class);
+	var saHost := host.getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
+	log("Generating <<SaExecHost>> from instanceSpecification '"+self.name+"' corresponding to <<CH_HwProcessor>> '" + self.classifier().name + message);
+    var hcr := self.getMetaclass(CHHwProcessorQN).oclAsType(chessmlprofile::HardwareBaseline::CH_HwProcessor);
+	result.name := name;
+	hostPackage.packagedElement += result;
+	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::SAM::SaExecHost);
+	stHost.schedPriRange := "[1..256]";
+	stHost.speedFactor := hcr.speedFactor;
+	stHost.host := saHost;
+	stHost.schedPolicy := GRM_BasicTypes::SchedPolicyKind::EarliestDeadlineFirst;
+	stHost.otherSchedPolicy := "RUN";
+	var sr := result.applyStereotype(getMARTEStereotype("SwSchedulableResource")).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);	
+	var schedParam := "capacity=(value=" + capacity +")";	
+	sr.schedParams := "("+schedParam+")";
 }
 
 mapping InstanceSpecification::HwProcessor2SaExecHost(core : String) : Class {
@@ -1637,7 +1741,7 @@ mapping Slot::slot2EndToEndWorkFlow(chrt : Comment) : Activity when {chrt.CHRtSp
 mapping Comment::Instance2EndToEndWorkFlow(slot : Slot, inst : InstanceSpecification) : Activity when {self.CHRtSpec().isDeferred()} {
     init {
     	
-    	log("Generating <<EndToEndWorkFlow>> from the Instance"+ " for '" + inst.name + "' and operation "+ self.CHRtSpec().context.name +".");
+    	log("Generating <<EndToEndWorkFlow>> from the Instance"+ " for '" + inst.name + inst.getStringId() + "' and operation "+ self.CHRtSpec().context.name +".");
     	
     	var chrts := self.CHRtSpec();
     	var actionName : String;
@@ -1810,12 +1914,12 @@ query Slot::listAll() : Slot {
 		var ends := l.allOwnedElements()[InstanceValue]->asOrderedSet();
 		
 		log("FIRST");
-		log("Instance", ends->first().instance![InstanceSpecification].name );
-		log("Slot", ends->first().owner![Slot].definingFeature![Port].name );
+		log("Instance", ends->first().instance![InstanceSpecification].name + ends->first().instance![InstanceSpecification].getStringId());
+		log("Slot", ends->first().owner![Slot].definingFeature![Port].name + ends->first().owner![Slot].getStringId());
 	
 		log("LAST");
-		log("Instance", ends->last().instance![InstanceSpecification].name );
-		log("Slot", ends->last().owner![Slot].definingFeature![Port].name );
+		log("Instance", ends->last().instance![InstanceSpecification].name + ends->last().instance![InstanceSpecification].getStringId());
+		log("Slot", ends->last().owner![Slot].definingFeature![Port].name + ends->last().owner![Slot].getStringId());
 	};
 	return null;	
 }
@@ -1971,6 +2075,22 @@ query getAssignToFrom_MemoryPartition(p : Slot, c : Comment) : InstanceSpecifica
 		return 	asg.to![InstanceSpecification];
 	} else //it is an hardware component
 		return 	ass.to![InstanceSpecification]
+	endif;
+	
+	return null;
+}
+
+query getAssignedSupertaskFrom_MemoryPartition(p : Slot, c : Comment) : String {
+	
+	var ass := getAssignForInstance(p, c);
+	var toInstance := ass.to![InstanceSpecification];
+	var toClass := toInstance.classifier![Classifier];
+	if toClass.isStereotyped(MemoryPartitionQN) then {
+		var a := assigns -> selectOne(isAssignedFrom(toInstance));
+		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+		return 	asg.base_Comment.getSupertaskFromContraint();
+	} else //it is an hardware component
+		return 	ass.base_Comment.getSupertaskFromContraint()
 	endif;
 	
 	return null;
@@ -2149,7 +2269,6 @@ query MARTE::SAM::SaAnalysisContext::getSystem() : Component {
 
 //assumption: the SaAnalysisContext.platform owns the reference to the package of the SW instances (to be considered for the analysis) available in the ComponentView.
 //returns the packages of the SW instances referred by SaAnalysisContext.platform 
-	
 query MARTE::SAM::SaAnalysisContext::getSwSystemInstPackage() : Package {
 	
 	var platforms : Set(MARTE::GQAM::GaResourcesPlatform) := self.platform->asSet();

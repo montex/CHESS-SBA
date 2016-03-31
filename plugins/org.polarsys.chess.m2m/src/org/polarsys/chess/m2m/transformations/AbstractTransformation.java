@@ -156,9 +156,9 @@ public abstract class AbstractTransformation {
 		
 		// Remove the package with the multi-instances, if any
 		//TO COMMENT FOR DEBUG
-//		if(!DEBUG){
-//			QVToTransformation.launchRemoveMultiInstance(modelCopy, monitor);
-//		}
+		if(!DEBUG){
+			QVToTransformation.launchRemoveMultiInstance(modelCopy, monitor);
+		}
 		
 		QVToTransformation.launchCeilingAssignment(modelCopy, monitor);
 		
@@ -174,6 +174,28 @@ public abstract class AbstractTransformation {
 		
 		// Finally delete the working dir
 		// CHESSProjectSupport.deleteFolder((IFolder) transDir);
+	}
+	
+	public void performPIM2PSMtransformation(
+			final PapyrusMultiDiagramEditor editor, IFile modelFile, IProgressMonitor monitor)
+			throws Exception {
+		
+		saAnalysisName = configProperty.get("saAnalysis");
+		// Tidy up directories
+		IFile modelCopy = prepareModel(modelFile);
+		//Execute the various steps of the transformations
+		
+		// Remove the package with the multi-instances, if any
+		//TO COMMENT FOR DEBUG
+		if(!DEBUG){
+			QVToTransformation.launchRemoveMultiInstance(modelCopy, monitor);
+		}
+		
+		QVToTransformation.launchCeilingAssignment(modelCopy, monitor);
+		
+//		QVToTransformation.launchBuildMultiInstance(modelCopy, monitor);
+
+		launchPIM2PSMtransformation(monitor, modelCopy);
 	}
 
 	/**
@@ -227,7 +249,7 @@ public abstract class AbstractTransformation {
 			backpropagation(editor, modelCopy);
 			return result;
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		return null;
 	}

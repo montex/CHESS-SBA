@@ -53,6 +53,10 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.ui.ide_3.10.2.v20141118-1227.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.sysml_1.0.2.v201502181349.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.uml2.uml.profile.standard_1.0.0.v20150202-0947.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.transaction_1.8.0.201405281451.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.edit_2.10.1.v20150123-0452.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.ecore.change_2.10.0.v20150123-0348.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.validation_1.8.0.201405281429.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.ui.views_3.7.0.v20140408-0703.jar"/>
     </path>
 

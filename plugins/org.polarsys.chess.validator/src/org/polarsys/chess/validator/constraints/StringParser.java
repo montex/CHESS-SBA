@@ -48,6 +48,27 @@ public class StringParser {
 	}
 	
 	/**
+	 * Gets the unit pattern.
+	 *
+	 * @param value the value
+	 * @param toSearch the to search
+	 * @return the value pattern
+	 */
+	public String getUnitPattern(String value, String toSearch) {
+		
+		String[] array = value.split("[()=, ]");
+		for(int i=0; i<array.length-1; i++) {
+			for(int j=i+1; j<array.length; j++) {
+				if(array[i].equalsIgnoreCase(toSearch) && array[j].equalsIgnoreCase("unit")) {
+					String d = array[j+1];
+					return d.trim();			
+				}
+			}
+		}
+		return "INVALID"; 
+	}
+	
+	/**
 	 * Gets the complex value pattern.
 	 *
 	 * @param value the value
@@ -82,6 +103,23 @@ public class StringParser {
 			}
 		}
 		return -1; 
+	}
+	
+	/**
+	 * Gets the unit nfp.
+	 *
+	 * @param value the value
+	 * @return the value nfp
+	 */
+	public String getUnitNFP(String value) {
+		String[] array = value.split("[()=,]");
+		for(int i=0; i<array.length-1; i++) {
+			if(array[i].trim().equalsIgnoreCase("unit")) {
+				String d = array[i+1].trim();
+				return d;			
+			}
+		}
+		return "INVALID"; 
 	}
 	
 	

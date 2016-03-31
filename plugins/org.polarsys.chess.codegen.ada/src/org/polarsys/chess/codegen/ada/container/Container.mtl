@@ -131,9 +131,15 @@ private
 
    My_CPA_[i-1/] : aliased Release_Control_OBCS([getCeiling(slotSeq, op, CHRtPortStName)/]);
 
+   [if (isMonitored(slotSeq, op, CHRtPortStName))]
+   Name : constant access String := new String'("[getMonitoredTaskName(slotSeq, op, CHRtPortStName)/]");
+
+   My_Thread_[i-1/] : aliased Cyclic_Task_Monitored.Thread_T(Data_Structure.Generate_Task_ID, [getPriority(slotSeq, op, CHRtPortStName)/], 0, [getPeriodOrMIAT(slotSeq, op, CHRtPortStName)/],
+                                  Enqueueing_Procedure_My_Thread_[i-1/]'access, [op.name/]'access, Name);
+   [else]
    My_Thread_[i-1/] : aliased Cyclic_Task.Thread_T(Data_Structure.Generate_Task_ID, [getPriority(slotSeq, op, CHRtPortStName)/], 0, [getPeriodOrMIAT(slotSeq, op, CHRtPortStName)/],
-                                  Enqueueing_Procedure_My_Thread_[i-1/]'access,
-                                  [op.name/]'access);
+                                  Enqueueing_Procedure_My_Thread_[i-1/]'access, [op.name/]'access);
+   [/if]
    [/for]
    [comment end Cyclic operations /]
    [comment Sporadic operations /]
@@ -241,7 +247,8 @@ end [pkgName/];
 [comment Package "Sporadic_Task" is to be with'ed if there is at 
          least one sporadic operation to be supported /]
 [if (sporadicOpList->notEmpty())]
-with Sporadic_Task;
+-- with Sporadic_Task;
+with Sporadic_Task_Monitored;
 
 -- With of data types and Default Values. 
 -- Remove it if it is already included in the spec.
@@ -397,9 +404,16 @@ package body [pkgName/] is
    end Enqueue_in_Entry_[op.name/];
 
    -- Sporadic Task
+
+   [if (isMonitored(slotSeq, op, CHRtPortStName))]
+   Name : constant access String := new String'("[getMonitoredTaskName(slotSeq, op, CHRtPortStName)/]");
+   My_Thread_[i-1/] : aliased Sporadic_Task_Monitored.Thread_T(Data_Structure.Generate_Task_ID, [getPriority(slotSeq, op, CHRtPortStName)/], [getPeriodOrMIAT(slotSeq, op, CHRtPortStName)/],
+                                                Enqueue_In_Entry_[op.name/]'access, Name);  
+   [else]
+
    My_Thread_[i-1/] : aliased Sporadic_Task.Thread_T(Data_Structure.Generate_Task_ID, [getPriority(slotSeq, op, CHRtPortStName)/], [getPeriodOrMIAT(slotSeq, op, CHRtPortStName)/],
                                                 Enqueue_In_Entry_[op.name/]'access);
-
+   [/if]
          [if (op.ownedParameter->size() = 0)]
    procedure [op.name/] (Self : in out ['CT_'.concat(instSpec.name.replaceAll('\\.','_'))/]_T) is
          [else]
@@ -586,6 +600,12 @@ end [pkgName/];
 
 [query public getPriority(arg0 : Sequence(OclAny), arg1 : Operation, arg2 : String) : String
 	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getPriority(java.util.List, org.eclipse.uml2.uml.Operation, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
+
+[query public isMonitored(arg0 : Sequence(OclAny), arg1 : Operation, arg2 : String) : Boolean
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'isMonitored(java.util.List, org.eclipse.uml2.uml.Operation, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
+
+[query public getMonitoredTaskName(arg0 : Sequence(OclAny), arg1 : Operation, arg2 : String) : String
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getMonitoredTaskName(java.util.List, org.eclipse.uml2.uml.Operation, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
 
 [query public getPeriodOrMIAT(arg0 : Sequence(OclAny), arg1 : Operation, arg2 : String) : String
 	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'getPeriodOrMIAT(java.util.List, org.eclipse.uml2.uml.Operation, java.lang.String)', Sequence{arg0, arg1, arg2}) /]
