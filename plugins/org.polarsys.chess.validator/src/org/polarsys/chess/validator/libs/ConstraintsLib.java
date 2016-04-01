@@ -436,44 +436,13 @@ public static FilterableDynamicConstraint P_T_1 =
 		}
 	};*/
 
-
-	/*
-	 * @FilterableDynamicConstraint E_S_1 Assure the element is edited only in the
-	 * view it belongs to
-	 */
-	//TODO relax constraint: allow deployment view to perform modifications
-	/*
-	 * Azione con modifica cross-views da permettere:
-	 *   -in un class diagram della deployment view 
-	 *   devo poter creare delle Abstraction (con stereotipo MARTE Allocate) 
-	 *   tra Property contenute nella extra-functional view (cioè istanze di componenti RT) e 
-	 *   Property contenute nella Deployment View (cioè istanze di componenti HW).
-	 */
-//	@Deprecated
-//	public static FilterableDynamicConstraint E_S_1 = 
-//		new FilterableDynamicConstraint("E_S_1", IConstraint.ERROR, 
-//		"This element does not belong to the current view and cannot be therefore modified.") {
-//		@Override
-//		public boolean checkConstraint(Notification notification, DesignView currentView) {
-//			if (notifier instanceof Element && (notification.getEventType() == Notification.SET
-//					|| notification.getEventType() == PapyrusStereotypeListener.APPLIED_STEREOTYPE)){
-//				if (!ViewUtils.isElementWritable((Element)notifier, currentView) 
-//						&& !CrossViewActionLib.crossViewDeploymentAction(notifier, notification, currentView)
-//				) {
-//					return false;
-//				}
-//			}
-//			return true;
-//		}
-//	};
-
 	/** The E_ s_1_ new. */
 	public static DynamicConstraint E_S_1_NEW = 
 		new DynamicConstraint("E_S_1", IConstraint.ERROR, 
 		"The view \"{0}\" has no write access on the {1} \"{2}\", therefore it cannot be modified.") {
 		@Override
 		public boolean checkConstraint(Notification notification, DesignView currentView) {
-
+			
 			CHESSProjectSupport.printlnToCHESSConsole(NotificationManager.printNotification(notification));
 
 			notifier = notification.getNotifier();

@@ -226,6 +226,30 @@ public class DiagramStatus {
 			return null;
 		}
 		
+		
+		/**
+		 * Returns all the enabled permissions based on the given views.
+		 * 
+		 * @return the {@link PermissionList} with all the enabled permissions
+		 */
+		public PermissionList getEnabledPermissions(String viewName) {
+			
+			if (concurNum > 1) {
+				PermissionList union = new PermissionList();
+				for (String v : CHESSProfileManager.CONCURRENT_VIEWS) {
+					if (v.equals(viewName))
+						union.addAll(getViewPermissions(v, currentDiagram));
+				}
+				return union;
+			}
+			for (String v : CHESSProfileManager.CHESS_VIEWS_LIST) {
+				if (v.equals(viewName)) {
+					return getViewPermissions(v, currentDiagram);
+				}
+			}
+			return null;
+		}
+		
 		/**
 		 * Checks if the diagram passed as a parameter is allowed in the enabled views.
 		 * 
