@@ -71,20 +71,29 @@ public class EFVRT_01 extends AbstractModelConstraint {
 						// I have found that the CHRtSpecification I am examining is associated to a CHRT Port Slot
 						isAssociatedToChrtPortSlot = true;
 						BehavioralFeature theContext = chRtSpec.getContext();
-						Element operationOwner = theContext.getOwner();
-						String operationName = theContext.getName();
-						if (operationOwner.getAppliedStereotype(Constants.COMPONENT_IMPLEMENTATION)==null) {
-							//errorMsg=c.getBody()+" is not defined on the component implementation!";									
+						String operationName ="";
+						try {
+							Element operationOwner = theContext.getOwner();
+							operationName = theContext.getName();
+							if (operationOwner.getAppliedStereotype(Constants.COMPONENT_IMPLEMENTATION)==null) {
+								//errorMsg=c.getBody()+" is not defined on the component implementation!";									
+								IStatus failure = ctx.createFailureStatus(											
+										c.getAnnotatedElements(),									
+										operationName									
+										);
+								return failure;
+							}
+							else {
+								return success;		
+							}
+						}
+						catch (Exception except) {
 							IStatus failure = ctx.createFailureStatus(											
 									c.getAnnotatedElements(),									
 									operationName									
 									);
 							return failure;
 						}
-						else {
-							return success;		
-						}
-
 					}
 				}
 			}

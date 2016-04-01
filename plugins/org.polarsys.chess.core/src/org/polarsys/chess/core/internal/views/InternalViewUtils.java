@@ -124,5 +124,18 @@ public class InternalViewUtils {
 			return false;
 		return true;
 	}
+	
+	
+	public static boolean checkPermission(String viewName, EntryId entryId, byte permission, DesignView currentView) {
+		//TODO code must be refactored to avoid continuous generation of permissions!
+		if (entryId.isANY())
+			return true;
+		PermissionList l = currentView.getEnabledPermissions(viewName);
+		if (l != null && !l.checkPermission(entryId, permission))
+			return false;
+		return true;
+	}
+	
+	
 
 }

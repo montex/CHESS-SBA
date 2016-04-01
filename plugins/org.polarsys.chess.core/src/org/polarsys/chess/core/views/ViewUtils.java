@@ -173,6 +173,25 @@ public class ViewUtils {
 		return false;
 	}
 	
+	
+	/**
+	 * Checks if the given view has write access to (i.e can edit) the element/feature passed.
+	 * 
+	 * @param element  the model element
+	 * @param feature  the feature
+	 * @param viewName  the view's name
+	 * @return true if the view can write on the element
+	 */
+	public static boolean isElementWritable_(EObject element, Object feature,
+			String viewName, DesignView currentView) {
+		if (viewName != null) {
+			ArrayList<EntryId> ids = EntryId.computeEntryIds_(element, feature);
+			return checkIdPermission(ids, viewName, PermissionEntry.WRITABLE, currentView);
+		}
+		return false;
+	}
+	
+	
 	/**
 	 * Checks if the current view owns (i.e. can create) the element/feature passed.
 	 * 
@@ -237,6 +256,29 @@ public class ViewUtils {
 		for (EntryId entryId : ids) {
 			CHESSProjectSupport.printlnToCHESSConsole(entryId.toString());
 			boolean perm = InternalViewUtils.checkPermission(currentView, entryId, permission);
+			if (entryId.getStereotype().equals(EntryId.NONE)){
+				if (!perm)
+					return false;
+			} 
+			
+			res4Stereo = res4Stereo || perm;
+			
+		}
+		return res4Stereo;
+	}
+	
+	
+	private static boolean checkIdPermission(ArrayList<EntryId> ids,
+			String viewName, byte permission, DesignView currentView) {
+		//an element is writable iff all of the permission entry it matches have write rights
+		//unless it matches multiple permission with id2<>* (stereotype), in that case it is writable
+		//if at least one entry have write rights
+		if (ids.isEmpty())
+			return true;
+		boolean res4Stereo = false;
+		for (EntryId entryId : ids) {
+			CHESSProjectSupport.printlnToCHESSConsole(entryId.toString());
+			boolean perm = InternalViewUtils.checkPermission(viewName, entryId, permission, currentView);
 			if (entryId.getStereotype().equals(EntryId.NONE)){
 				if (!perm)
 					return false;
