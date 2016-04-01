@@ -146,6 +146,8 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	static ParameterList params;
 	
 	static IFile inputFile;
+	static String paramFilePath;
+	static String resultsFilePath;
 	static IFolder folder;
 	
 	@Override
@@ -170,9 +172,9 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	 * @return the textual result from the analysis
 	 * @throws IOException 
 	 */
-	public String runStateBased (String modelPath, String resultAnalysisPathFile) throws IOException{
+	public String runStateBased (String modelPath, String parametersFilePath, String resultAnalysisPathFile) throws IOException{
 		
-		InputStream is = RunTransformations(modelPath);
+		InputStream is = RunTransformations(modelPath,parametersFilePath);
 		
 		byte[] buffer = new byte[is.available()];
 	    is.read(buffer);
@@ -209,7 +211,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 		}
 				
 		//run model transformations
-		InputStream is = RunTransformations(inputCopy.getLocation().toString());
+		InputStream is = RunTransformations(inputCopy.getLocation().toString(), paramFilePath);
 		
 		//Save (write to file) the result
 		resultName = changeSuffix(inputFile.getName(), UML, DEEM);			
@@ -234,93 +236,6 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 		}
 	}
 
-	protected static void runStateBasedOLD() {		
-//		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
-//		final ParameterList params = DEEMClient.getParameters();
-		
-		ProgressMonitorDialog pmDialog = new ProgressMonitorDialog(null);
-		try{
-			pmDialog.run(true, true, new IRunnableWithProgress(){
-				@Override
-				public void run(IProgressMonitor monitor) /*throws InterruptedException*/ {		
-					//int largeStep = params.getMaximumBatches();
-					int smallStep = params.getMinimumBatches();
-					int numSubTasks = 3*smallStep/10 + smallStep;
-					
-					monitor.beginTask("Running State-Based Analysis...", numSubTasks);
-					if (monitor.isCanceled())
-						return;
-					monitor.subTask("Rebuilding instances...");
-					//TODO: CallBuildInstances(editor); //skipped at the moment
-					monitor.worked(smallStep/10);
-
-					monitor.subTask("Performing model transformations...");
-					IFile inputCopy;
-					try {
-						inputCopy = CHESSProjectSupport.copyFile(inputFile, SBANALYSIS_DIR, UML);
-					} catch (Exception e) {
-						e.printStackTrace();
-						CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-						displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
-						return;
-					}
-							
-					//run model transformations
-					InputStream is = RunTransformations(inputCopy.getLocation().toString());
-					
-					//Save (write to file) the result
-					resultName = changeSuffix(inputFile.getName(), UML, DEEM);			
-					
-					IFile resultFile = folder.getFile(resultName);
-					//if (!resultFile.exists()){   //overwrite previous results (otherwise they are not updated when the model changes)
-						try {
-							resultFile.delete(true, null);
-							resultFile.create(is, IResource.FORCE, null);
-						} catch (CoreException e) {
-							e.printStackTrace();
-							CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-							displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
-							return;
-						}
-						
-					//}
-					
-					monitor.worked(smallStep/10);
-					
-					monitor.subTask("Connecting to DEEM server...");
-					String res = connectToDeem(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString());
-
-					if(res != null && !res.isEmpty()){
-						monitor.subTask("Propagating analysis results to the model...");
-						backPropagation(res, editor);
-						monitor.worked(smallStep/10);
-					}else{
-						System.out.println("Error: Unable to retrieve results from DEEM server.");
-					}
-					
-					//Thread.sleep(2000);
-
-					monitor.worked(1);
-					monitor.done();
-				}
-			});
-			
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
-			System.out.println(e.getMessage());
-			
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
-			System.out.println(e.getMessage());
-		} finally {
-			pmDialog.close();
-		}
-	}
-	
 	protected static void acquireModel() {
 		try {
 			editor = CHESSEditorUtils.getCHESSEditor();
@@ -346,19 +261,28 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 		}
 	}
 	
+	protected static void setParamsFilePath(String path) {
+		paramFilePath = path;
+	}
+	
+	protected static void setResultsFilePath(String path) {
+		resultsFilePath = path;
+	}
+	
 	/**
 	 * 
 	 * @param chessModelFullPath the absolute path in the local file system to the chess model
+	 * @param parametersFilePath the absolute path in the local file system to the parameters file
 	 * @return the inputStream of the resulting transformed deem model file
 	 */
-	private static InputStream RunTransformations(String chessModelFullPath){
+	private static InputStream RunTransformations(String chessModelFullPath, String parametersFilePath){
 		
 		try {
 					
 			chessModelPath = chessModelFullPath;
 			// Begin: Read parameters
-			String sParamsPath = Activator.getDefault().getPreferenceStore().getString("PARAMFILE");
-			File fParams = new File(sParamsPath);
+		
+			File fParams = new File(parametersFilePath);
 			
 			HashMap<String, String> mapParameters = new HashMap<String, String>();
 			FileReader fr = new FileReader(fParams);
@@ -659,8 +583,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 				Iterator<String> it = results.keySet().iterator();
 				String key = null;
 	
-				String sResultsPath = Activator.getDefault().getPreferenceStore().getString("RESULTFILE");
-				File fResults = new File(sResultsPath);
+				File fResults = new File(resultsFilePath);
 	            FileWriter fwModel = new FileWriter(fResults);
 				
 				while(it.hasNext()) {
@@ -766,5 +689,10 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	public void run() {
 		// TODO Auto-generated method stub
 		runStateBased();
+	}
+
+
+	public static String getModelPath() {
+		return inputFile.getFullPath().toString();
 	}
 }

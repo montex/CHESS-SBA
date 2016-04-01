@@ -285,6 +285,8 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 				bIsPeriodic = btnPeriodic.getSelection();
 				
 				StateBasedWithParametersCommand.acquireModel();
+				StateBasedWithParametersCommand.setParamsFilePath(txtParams.getText());
+				StateBasedWithParametersCommand.setResultsFilePath(txtResults.getText());
 				if(bIsPeriodic) {
 					btnCancel.setText(IDialogConstants.STOP_LABEL);
 					btnCancel.setEnabled(true);
@@ -356,7 +358,7 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 		Date nextRun = new Date(new Date().getTime() + iInterval*1000);
 		
 		setMessage("Running...");
-		StateBasedWithParametersCommand.runStateBased();	
+		StateBasedWithParametersCommand.runStateBased();
 		
 		if(bIsPeriodic) {
 			setMessage("Waiting until... " + nextRun + " (estimated)");
