@@ -21,8 +21,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.wizard.ProgressMonitorPart;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.GRM.Scheduler;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.swt.SWT;
@@ -45,6 +47,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.internal.misc.ProgramImageDescriptor;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 import org.polarsys.chess.statebased.daemon.ParameterList;
 
@@ -71,6 +74,8 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 	
 	private int iInterval = 0;
 	private boolean bIsPeriodic = false;
+	
+	private ProgressMonitorPart monitor;
 	
 	static ScheduledExecutorService executorService;
 	
@@ -107,6 +112,23 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 			lblMessage.setEnabled(true);
 		}
 	}
+	/* Inner class used to correctly begin a new task in the
+	 * bar (avoids InvalidThreadAccess exceptions) */	
+	private class ProgressTaskBegin implements Runnable {
+		private String taskName;
+		private int totalWork;
+		public ProgressTaskBegin(String name, int work) {
+			super();
+			taskName = name;
+			totalWork = work;
+		}
+		@Override
+		public void run() {
+			monitor.setVisible(true);
+			monitor.beginTask(taskName, totalWork);
+		}
+	}
+	
 	
 	public PeriodicExecutionDialog(Shell parentShell) {
 		super(parentShell);
@@ -249,6 +271,9 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 		lblMessage = new Label(container, SWT.NONE);
 		lblMessage.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
 		
+		monitor = new ProgressMonitorPart(container, new GridLayout());
+		monitor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
+		
 		setControlsEnabledState(true);
 		
 		return container;
@@ -263,6 +288,11 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 		// Avoids InvalidThreadAccess exceptions when called from another thread
 		Display.getDefault().asyncExec(new EnabledStateUpdater(enabled));
 	}
+	
+	private void beginTask(String name, int totalWork) {
+		// Avoids InvalidThreadAccess exceptions when called from another thread
+		Display.getDefault().asyncExec(new ProgressTaskBegin(name, totalWork));
+	}	
 	
 	private void resetControls() {
 		setMessage("");
@@ -287,6 +317,7 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 				StateBasedWithParametersCommand.acquireModel();
 				StateBasedWithParametersCommand.setParamsFilePath(txtParams.getText());
 				StateBasedWithParametersCommand.setResultsFilePath(txtResults.getText());
+				
 				if(bIsPeriodic) {
 					btnCancel.setText(IDialogConstants.STOP_LABEL);
 					btnCancel.setEnabled(true);
@@ -326,10 +357,14 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 			}
 		});
 	}
+	
+	protected IProgressMonitor getMonitor() {
+		return monitor;
+	}
 
 	@Override
 	protected Point getInitialSize() {
-		return new Point(450, 300);
+		return new Point(600, 350);
 	}
 
 	@Override
@@ -358,6 +393,7 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 		Date nextRun = new Date(new Date().getTime() + iInterval*1000);
 		
 		setMessage("Running...");
+		beginTask("Analysis", 100);
 		StateBasedWithParametersCommand.runStateBased();
 		
 		if(bIsPeriodic) {
@@ -367,5 +403,47 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 			setControlsEnabledState(true);
 		}
 	}
+	
+	@Override
+	protected boolean isResizable() {
+	    return true;
+	}
+	
+	protected void progress(final int work) {
+		if(monitor != null) {
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					monitor.worked(work);
+				}
+			});
+		}
+	}
+	
+	protected void subTask(final String name) {
+		if(monitor != null) {
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					monitor.subTask(name);
+				}
+			});
+		}
+			
+	}
+	
+	protected void stopMonitor() {
+		if(monitor != null) {
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					monitor.setVisible(false);
+				}
+			});
+		}
+			
+	}
+	
+	
 
 }

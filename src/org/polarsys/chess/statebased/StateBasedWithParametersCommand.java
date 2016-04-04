@@ -67,6 +67,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.wizard.ProgressMonitorPart;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 import org.eclipse.m2m.atl.core.IExtractor;
 import org.eclipse.m2m.atl.core.IInjector;
@@ -83,6 +84,7 @@ import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.uml2.uml.Component;
@@ -144,6 +146,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	
 	static PapyrusMultiDiagramEditor editor;
 	static ParameterList params;
+	static PeriodicExecutionDialog periodicDialog;
 	
 	static IFile inputFile;
 	static String paramFilePath;
@@ -157,9 +160,9 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		acquireModel();
 		
-		PeriodicExecutionDialog setupDialog = new PeriodicExecutionDialog(shell);
+		periodicDialog = new PeriodicExecutionDialog(shell);
 		
-		setupDialog.open();
+		periodicDialog.open();
 		
 		return null;
 	}
@@ -174,7 +177,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	 */
 	public String runStateBased (String modelPath, String parametersFilePath, String resultAnalysisPathFile) throws IOException{
 		
-		InputStream is = RunTransformations(modelPath,parametersFilePath);
+		InputStream is = RunTransformations(modelPath, parametersFilePath, periodicDialog.getMonitor());
 		
 		byte[] buffer = new byte[is.available()];
 	    is.read(buffer);
@@ -185,7 +188,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	    outStream.close();
 		
 		System.out.println("Connecting to DEEM server...");
-		String res = connectToDeem(targetFile.getAbsolutePath(), targetFile.getParent());
+		String res = connectToDeem(targetFile.getAbsolutePath(), targetFile.getParent(), periodicDialog.getMonitor());
 		return res;
 	}
 	
@@ -211,7 +214,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 		}
 				
 		//run model transformations
-		InputStream is = RunTransformations(inputCopy.getLocation().toString(), paramFilePath);
+		InputStream is = RunTransformations(inputCopy.getLocation().toString(), paramFilePath, periodicDialog.getMonitor());
 		
 		//Save (write to file) the result
 		resultName = changeSuffix(inputFile.getName(), UML, DEEM);			
@@ -230,10 +233,12 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 			
 		//}
 		
-		String res = connectToDeem(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString());
+		String res = connectToDeem(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString(), periodicDialog.getMonitor());
 		if(res != null && !res.isEmpty()){
 			backPropagation(res, editor);
 		}
+		
+		periodicDialog.stopMonitor();
 	}
 
 	protected static void acquireModel() {
@@ -275,7 +280,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	 * @param parametersFilePath the absolute path in the local file system to the parameters file
 	 * @return the inputStream of the resulting transformed deem model file
 	 */
-	private static InputStream RunTransformations(String chessModelFullPath, String parametersFilePath){
+	private static InputStream RunTransformations(String chessModelFullPath, String parametersFilePath, IProgressMonitor monitor){
 		
 		try {
 					
@@ -412,7 +417,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 			extractor.extract(imModel, imModelPath);
 			
 			System.out.println("CHESS -> IM ... DONE!");
-//			monitor.worked(1);
+			periodicDialog.progress(1);
 			
 			/** 
 			 * run IM -> PNML transformation:
@@ -452,7 +457,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 			extractor.extract(pnmlModel, pnmlModelPath);
 			
 			System.out.println("IM -> PNML ... DONE!");
-//			monitor.worked(1);
+			periodicDialog.progress(1);
 			
 			/** 
 			 * run PNML -> DEEM transformation:
@@ -482,7 +487,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 			InputStream is = new ByteArrayInputStream(stResult.getBytes("UTF-8"));
 			
 			System.out.println("PNML -> DEEM ... DONE!");
-//			monitor.worked(1);
+			periodicDialog.progress(1);
 			return is;
 			
 		//exception handling?
@@ -515,10 +520,10 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	 * @param folder the folder where the deem model is located
 	 * @return
 	 */
-	private static String connectToDeem(String modelPath, String modelFolderPath){
+	private static String connectToDeem(String modelPath, String modelFolderPath, IProgressMonitor monitor){
 		try{
 			DEEMClient c = new DEEMClient();
-//			c.setProgressMonitor(monitor);
+			c.setProgressMonitor(monitor);
 			String res = c.sendAndReceiveFile(modelPath, modelFolderPath);
 			return res;
 		} catch (UnknownHostException e) {
