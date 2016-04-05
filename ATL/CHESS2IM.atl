@@ -607,6 +607,15 @@ unique lazy rule InternalFault {
 			PropagationLogic <- thisModule.FEXP_Fault(ift),
 			PropagationLogicStringFormat <- fge.PropagationLogic.toString()
 		)
+	do {
+		--Workaround for the DEEM simulator crashing when InternalFaults
+		--with zero delay are present in the model
+		if(ift.Occurrence.oclIsTypeOf(IM!Deterministic)) {
+			if(ift.Occurrence.Value = 0) {
+				ift.Occurrence.Value <- '1e-100'.toReal();
+			}
+		}
+	}
 }
 
 unique lazy rule InternalPropagation {
