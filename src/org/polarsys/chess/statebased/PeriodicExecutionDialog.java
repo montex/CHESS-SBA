@@ -89,7 +89,8 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 		}
 		@Override
 		public void run() {
-			lblMessage.setText(m);
+			if(!lblMessage.isDisposed())
+				lblMessage.setText(m);
 		}
 	}
 	/* Inner class used to correctly update the enabled state of controls
@@ -102,14 +103,16 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 		}
 		@Override
 		public void run() {
-			Control[] children = container.getChildren();
-			for(int i = 0; i < children.length; i++) {
-				children[i].setEnabled(s);
+			if(!container.isDisposed()) {
+				Control[] children = container.getChildren();
+				for(int i = 0; i < children.length; i++) {
+					children[i].setEnabled(s);
+				}
+				if(s) {
+					txtPeriod.setEnabled(btnPeriodic.getSelection());
+				}
+				lblMessage.setEnabled(true);
 			}
-			if(s) {
-				txtPeriod.setEnabled(btnPeriodic.getSelection());
-			}
-			lblMessage.setEnabled(true);
 		}
 	}
 	/* Inner class used to correctly begin a new task in the
@@ -124,8 +127,10 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 		}
 		@Override
 		public void run() {
-			monitor.setVisible(true);
-			monitor.beginTask(taskName, totalWork);
+			if(!monitor.isDisposed()) {
+				monitor.setVisible(true);
+				monitor.beginTask(taskName, totalWork);
+			}
 		}
 	}
 	
@@ -414,7 +419,8 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					monitor.worked(work);
+					if(!monitor.isDisposed())
+						monitor.worked(work);
 				}
 			});
 		}
@@ -425,7 +431,8 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					monitor.subTask(name);
+					if(!monitor.isDisposed())
+						monitor.subTask(name);
 				}
 			});
 		}
@@ -437,7 +444,8 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					monitor.setVisible(false);
+					if(!monitor.isDisposed())
+						monitor.setVisible(false);
 				}
 			});
 		}
