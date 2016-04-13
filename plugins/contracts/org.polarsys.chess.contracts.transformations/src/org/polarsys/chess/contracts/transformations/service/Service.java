@@ -396,7 +396,9 @@ public class Service {
 			//only range of integers are supported by Ocra 
 			BoundedSubtype subtype = (BoundedSubtype) type.getStereotypeApplication(boundedste);
 			if (subtype.getBaseType().getName().compareToIgnoreCase("integer")==0){
-				return "{"+subtype.getMinValue()+", " + subtype.getMaxValue()+"}";
+				//return "{"+subtype.getMinValue()+", " + subtype.getMaxValue()+"}";
+				// 20160413 Bug fix bounded subtype transformation corrected
+				return subtype.getMinValue()+" .." + subtype.getMaxValue();
 			}
 		}
 		Stereotype collectiontypeStereo = type.getAppliedStereotype(COLLECTIONTYPE);
