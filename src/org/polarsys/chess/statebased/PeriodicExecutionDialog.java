@@ -69,6 +69,9 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 	private Label lblPeriod;
 	private Label lblMessage;
 	private Label lblSeconds;
+	
+	private Button chkSaveParamsPath;
+	private Button chkSaveResultsPath;
 
 	private Composite container;
 	
@@ -175,6 +178,10 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 				// TODO Auto-generated method stub				
 			}
 		});
+		
+		chkSaveParamsPath = new Button(container, SWT.CHECK);
+		chkSaveParamsPath.setText("Save as default");
+		chkSaveParamsPath.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 3, 1));
 
 		lblResults = new Label(container, SWT.NONE);
 		GridData gd_lblPassword = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -205,6 +212,10 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 			}
 		});
 		
+		chkSaveResultsPath = new Button(container, SWT.CHECK);
+		chkSaveResultsPath.setText("Save as default");
+		chkSaveResultsPath.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 3, 1));
+
 		Label lblPeriodic = new Label(container, SWT.NONE);
 		GridData gd_lblPeriodic = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_lblPeriodic.horizontalIndent = 1;
@@ -317,6 +328,15 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 				
 				setMessage("Waiting...");
 		
+				if(chkSaveParamsPath.getSelection()) {
+					Activator.getDefault().getPreferenceStore().setDefault("PARAMFILE", txtParams.getText());
+					Activator.getDefault().getPreferenceStore().setValue("PARAMFILE", txtParams.getText());
+				}
+				if(chkSaveResultsPath.getSelection()) {
+					Activator.getDefault().getPreferenceStore().setDefault("RESULTFILE", txtResults.getText());					
+					Activator.getDefault().getPreferenceStore().setValue("RESULTFILE", txtResults.getText());					
+				}
+				
 				bIsPeriodic = btnPeriodic.getSelection();
 				
 				StateBasedWithParametersCommand.acquireModel();
