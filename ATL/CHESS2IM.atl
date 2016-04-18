@@ -637,7 +637,8 @@ unique lazy rule InternalPropagation {
 			PropagationDelay <- myDelay.parseDistribution(),
 			Weight <- myWeight,
 			PropagationLogic <- thisModule.EEXP_Error(imIntProp.Source->first()),
-			PropagationLogicStringFormat <- imIntProp.PropagationLogic.toString()
+			PropagationLogicStringFormat <- imIntProp.PropagationLogic.toString(),
+			FaultGuard <- thisModule.FEXP_ParseString(chIntProp.externalFaults, inst)
 		)
 }
 
@@ -1102,29 +1103,31 @@ rule FEXP_ParseString(exp : String, inst : UML!InstanceSpecification) {
 		expRet : IM!FaultsExpressionNode = OclUndefined;
 	}
 	do {
-		tmpSplit <- exp.split(' and | AND ');
-		if(tmpSplit.size() > 1) {
-			expRet <-
-			thisModule.FEXP_MultiAnd(
-				tmpSplit->collect(
-					ft | c.Faults->select(ff | ff.localName = ft.trim())->first()
-				)->
-				flatten()->
-				collect(ft | thisModule.FEXP_Fault(ft))
-			);
-		}else {
-			tmpSplit <- exp.split(' or | OR ');
+		if(not exp.oclIsUndefined()) {
+			tmpSplit <- exp.split(' and | AND ');
 			if(tmpSplit.size() > 1) {
 				expRet <-
-				thisModule.FEXP_MultiOr(
+				thisModule.FEXP_MultiAnd(
 					tmpSplit->collect(
-						s | c.Faults->select(ft | ft.localName = s.trim())
+						ft | c.Faults->select(ff | ff.localName = ft.trim())->first()
 					)->
 					flatten()->
 					collect(ft | thisModule.FEXP_Fault(ft))
 				);
 			}else {
-				expRet <- thisModule.FEXP_Fault(tmpSplit->first());
+				tmpSplit <- exp.split(' or | OR ');
+				if(tmpSplit.size() > 1) {
+					expRet <-
+					thisModule.FEXP_MultiOr(
+						tmpSplit->collect(
+							s | c.Faults->select(ft | ft.localName = s.trim())
+						)->
+						flatten()->
+						collect(ft | thisModule.FEXP_Fault(ft))
+					);
+				}else {
+					expRet <- thisModule.FEXP_Fault(tmpSplit->first());
+				}
 			}
 		}
 		
