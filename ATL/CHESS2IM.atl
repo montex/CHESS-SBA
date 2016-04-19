@@ -798,10 +798,11 @@ rule FindTargetFailureModes(sba : CHESS!StateBasedAnalysis) {
 		-->platform
 		-->targetDepComponent
 		if(sba.targetDepComponent.isEmpty()) {
-			targets <- 	sba.platform->collect(p | p.base_Package.ownedMember->first())->flatten();
+			targets <- sba.platform->collect(p | p.base_Package.ownedMember->first())->flatten();
 		}else{
 			targets <- sba.targetDepComponent;
 		}
+		
 		
 		--Find ports of target components having an output dataflow
 		targetSlots <- targets->collect(i | i.getPortSlots())
@@ -812,7 +813,7 @@ rule FindTargetFailureModes(sba : CHESS!StateBasedAnalysis) {
 		if(not sba.targetPort.isEmpty()) {
 			targetSlots <- sba.targetPort.asSet()->intersection(targetSlots);
 		}
-		
+	
 		--Process possibly existing downward delegations
 		targetSlots <- targetSlots->collect(sl | sl.getSBADelegationsDownwards())->flatten();
 		
@@ -820,13 +821,13 @@ rule FindTargetFailureModes(sba : CHESS!StateBasedAnalysis) {
 		fmSelected <-
 			 targetSlots->collect(sl | thisModule.InstanceToComponent(sl.refImmediateComposite()).FailureModes->select(fm | fm.getPortName() = sl.name))
 						->flatten()->asSet();
-		
+
 		--Filter failure modes based on 'targetFailureMode', if set
 		if(not sba.targetFailureMode->isEmpty()) {
 			fmSelected <-
 				fmSelected->select(fm | sba.targetFailureMode->contains(fm.getModeName()));
 		}
-		
+
 		fmSelected;	
 	}
 }

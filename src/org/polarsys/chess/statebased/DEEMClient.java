@@ -79,7 +79,7 @@ public class DEEMClient {
 		bRunning = ois.readBoolean();
 		int lastCurrent = 0;
 		String taskName;
-		while(bRunning) {
+		while(bRunning && !Thread.currentThread().isInterrupted()) {
 			progress = (DEEMProgressInformation)ois.readObject();
 			System.out.println(progress.getCurrent());
 

@@ -17,6 +17,7 @@ package org.polarsys.chess.statebased;
 
 import java.util.Date;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -80,7 +81,8 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 	
 	private ProgressMonitorPart monitor;
 	
-	static ScheduledExecutorService executorService;
+	private ScheduledExecutorService executorService;
+	private Future<?> currentJob;
 	
 	/* Inner class used to correctly update the lblMessage label in the
 	 * dialog from other threads (avoids InvalidThreadAccess exceptions) */
@@ -115,6 +117,9 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 					txtPeriod.setEnabled(btnPeriodic.getSelection());
 				}
 				lblMessage.setEnabled(true);
+				btnCancel.setText(IDialogConstants.CANCEL_LABEL);
+				btnCancel.setEnabled(s);
+				btnProceed.setEnabled(s);
 			}
 		}
 	}
@@ -329,11 +334,9 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 				setMessage("Waiting...");
 		
 				if(chkSaveParamsPath.getSelection()) {
-					Activator.getDefault().getPreferenceStore().setDefault("PARAMFILE", txtParams.getText());
 					Activator.getDefault().getPreferenceStore().setValue("PARAMFILE", txtParams.getText());
 				}
 				if(chkSaveResultsPath.getSelection()) {
-					Activator.getDefault().getPreferenceStore().setDefault("RESULTFILE", txtResults.getText());					
 					Activator.getDefault().getPreferenceStore().setValue("RESULTFILE", txtResults.getText());					
 				}
 				
@@ -343,14 +346,13 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 				StateBasedWithParametersCommand.setParamsFilePath(txtParams.getText());
 				StateBasedWithParametersCommand.setResultsFilePath(txtResults.getText());
 				
-				if(bIsPeriodic) {
-					btnCancel.setText(IDialogConstants.STOP_LABEL);
-					btnCancel.setEnabled(true);
-					btnProceed.setEnabled(false);
-					
-					executorService.scheduleAtFixedRate(PeriodicExecutionDialog.this, 0, iInterval, TimeUnit.SECONDS);
+				btnCancel.setText(IDialogConstants.STOP_LABEL);
+				btnCancel.setEnabled(true);
+				btnProceed.setEnabled(false);
+				if(bIsPeriodic) {				
+					currentJob = executorService.scheduleAtFixedRate(PeriodicExecutionDialog.this, 0, iInterval, TimeUnit.SECONDS);
 				}else{
-					executorService.execute(PeriodicExecutionDialog.this);
+					currentJob = executorService.submit(PeriodicExecutionDialog.this);
 				}
 			}
 			
@@ -364,15 +366,7 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 		btnCancel.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				executorService.shutdownNow();
-				resetControls();
-				if(btnCancel.getText() == IDialogConstants.STOP_LABEL) {
-					btnCancel.setText(IDialogConstants.CANCEL_LABEL);
-					btnProceed.setEnabled(true);
-					setControlsEnabledState(true);
-				}else{
-					cancelPressed();
-				}
+				cancelPressed();
 			}
 			
 			@Override
@@ -389,7 +383,7 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 
 	@Override
 	protected Point getInitialSize() {
-		return new Point(600, 350);
+		return new Point(650, 390);
 	}
 
 	@Override
@@ -416,9 +410,10 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 	@Override
 	public void run() {
 		Date nextRun = new Date(new Date().getTime() + iInterval*1000);
-		
+			
 		setMessage("Running...");
 		beginTask("Analysis", 100);
+	
 		StateBasedWithParametersCommand.runStateBased();
 		
 		if(bIsPeriodic) {
@@ -428,6 +423,22 @@ public class PeriodicExecutionDialog extends Dialog implements Runnable {
 			setControlsEnabledState(true);
 		}
 	}
+	
+	@Override
+	protected void cancelPressed() {
+		if(currentJob != null)
+			currentJob.cancel(true);
+					
+		resetControls();
+		if(btnCancel.getText() == IDialogConstants.STOP_LABEL) {		
+			btnCancel.setText(IDialogConstants.CANCEL_LABEL);
+			btnProceed.setEnabled(true);
+			setControlsEnabledState(true);
+		}else{
+			executorService.shutdownNow();
+			super.cancelPressed();
+		}
+	};
 	
 	@Override
 	protected boolean isResizable() {
