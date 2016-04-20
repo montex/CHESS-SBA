@@ -607,6 +607,15 @@ unique lazy rule InternalFault {
 			PropagationLogic <- thisModule.FEXP_Fault(ift),
 			PropagationLogicStringFormat <- fge.PropagationLogic.toString()
 		)
+	do {
+		--Workaround for the DEEM simulator crashing when InternalFaults
+		--with zero delay are present in the model
+		if(ift.Occurrence.oclIsTypeOf(IM!Deterministic)) {
+			if(ift.Occurrence.Value = 0) {
+				ift.Occurrence.Value <- '1e-100'.toReal();
+			}
+		}
+	}
 }
 
 unique lazy rule InternalPropagation {
@@ -628,7 +637,8 @@ unique lazy rule InternalPropagation {
 			PropagationDelay <- myDelay.parseDistribution(),
 			Weight <- myWeight,
 			PropagationLogic <- thisModule.EEXP_Error(imIntProp.Source->first()),
-			PropagationLogicStringFormat <- imIntProp.PropagationLogic.toString()
+			PropagationLogicStringFormat <- imIntProp.PropagationLogic.toString(),
+			FaultGuard <- thisModule.FEXP_ParseString(chIntProp.externalFaults, inst)
 		)
 }
 
@@ -788,10 +798,11 @@ rule FindTargetFailureModes(sba : CHESS!StateBasedAnalysis) {
 		-->platform
 		-->targetDepComponent
 		if(sba.targetDepComponent.isEmpty()) {
-			targets <- 	sba.platform->collect(p | p.base_Package.ownedMember->first())->flatten();
+			targets <- sba.platform->collect(p | p.base_Package.ownedMember->first())->flatten();
 		}else{
 			targets <- sba.targetDepComponent;
 		}
+		
 		
 		--Find ports of target components having an output dataflow
 		targetSlots <- targets->collect(i | i.getPortSlots())
@@ -802,7 +813,7 @@ rule FindTargetFailureModes(sba : CHESS!StateBasedAnalysis) {
 		if(not sba.targetPort.isEmpty()) {
 			targetSlots <- sba.targetPort.asSet()->intersection(targetSlots);
 		}
-		
+	
 		--Process possibly existing downward delegations
 		targetSlots <- targetSlots->collect(sl | sl.getSBADelegationsDownwards())->flatten();
 		
@@ -810,13 +821,13 @@ rule FindTargetFailureModes(sba : CHESS!StateBasedAnalysis) {
 		fmSelected <-
 			 targetSlots->collect(sl | thisModule.InstanceToComponent(sl.refImmediateComposite()).FailureModes->select(fm | fm.getPortName() = sl.name))
 						->flatten()->asSet();
-		
+
 		--Filter failure modes based on 'targetFailureMode', if set
 		if(not sba.targetFailureMode->isEmpty()) {
 			fmSelected <-
 				fmSelected->select(fm | sba.targetFailureMode->contains(fm.getModeName()));
 		}
-		
+
 		fmSelected;	
 	}
 }
@@ -1093,29 +1104,31 @@ rule FEXP_ParseString(exp : String, inst : UML!InstanceSpecification) {
 		expRet : IM!FaultsExpressionNode = OclUndefined;
 	}
 	do {
-		tmpSplit <- exp.split(' and | AND ');
-		if(tmpSplit.size() > 1) {
-			expRet <-
-			thisModule.FEXP_MultiAnd(
-				tmpSplit->collect(
-					ft | c.Faults->select(ff | ff.localName = ft.trim())->first()
-				)->
-				flatten()->
-				collect(ft | thisModule.FEXP_Fault(ft))
-			);
-		}else {
-			tmpSplit <- exp.split(' or | OR ');
+		if(not exp.oclIsUndefined()) {
+			tmpSplit <- exp.split(' and | AND ');
 			if(tmpSplit.size() > 1) {
 				expRet <-
-				thisModule.FEXP_MultiOr(
+				thisModule.FEXP_MultiAnd(
 					tmpSplit->collect(
-						s | c.Faults->select(ft | ft.localName = s.trim())
+						ft | c.Faults->select(ff | ff.localName = ft.trim())->first()
 					)->
 					flatten()->
 					collect(ft | thisModule.FEXP_Fault(ft))
 				);
 			}else {
-				expRet <- thisModule.FEXP_Fault(tmpSplit->first());
+				tmpSplit <- exp.split(' or | OR ');
+				if(tmpSplit.size() > 1) {
+					expRet <-
+					thisModule.FEXP_MultiOr(
+						tmpSplit->collect(
+							s | c.Faults->select(ft | ft.localName = s.trim())
+						)->
+						flatten()->
+						collect(ft | thisModule.FEXP_Fault(ft))
+					);
+				}else {
+					expRet <- thisModule.FEXP_Fault(tmpSplit->first());
+				}
 			}
 		}
 		

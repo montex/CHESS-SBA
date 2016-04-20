@@ -193,6 +193,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="PropagationLogicStringFormat"
         lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="FaultGuard" eType="#//FaultsExpressionNode"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ErrorsProducesFailures" eSuperTypes="#//ErrorPropagation">
     <eStructuralFeatures xsi:type="ecore:EReference" name="Source" lowerBound="1"

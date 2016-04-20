@@ -989,14 +989,29 @@ abstract rule InternalPropagation {
 	to
 		andop : PNML!OpAnd
 		(
-			expression1 <- thisModule.newOpAnd(iprop.PropagationLogic,
-											   thisModule.newOpAnd(
-											       thisModule.newOpEqual(
-											           thisModule.newMarkingExpression(tmp),
-													   thisModule.newValueExpression(0)
-												   ),
-											       thisModule.buildConditionComponentIsNotFailed(iprop.Component)
-											   ))
+			expression1 <- 
+			if(not iprop.FaultGuard.oclIsUndefined()) then
+				thisModule.newOpAnd(
+					iprop.FaultGuard,
+					thisModule.newOpAnd(iprop.PropagationLogic,
+													   thisModule.newOpAnd(
+													       thisModule.newOpEqual(
+													           thisModule.newMarkingExpression(tmp),
+															   thisModule.newValueExpression(0)
+														   ),
+													       thisModule.buildConditionComponentIsNotFailed(iprop.Component)
+													   ))
+				)
+			else			
+				thisModule.newOpAnd(iprop.PropagationLogic,
+												   thisModule.newOpAnd(
+												       thisModule.newOpEqual(
+												           thisModule.newMarkingExpression(tmp),
+														   thisModule.newValueExpression(0)
+													   ),
+												       thisModule.buildConditionComponentIsNotFailed(iprop.Component)
+												   ))
+			endif
 		),		
 		tmp : PNML!Place
 		(
