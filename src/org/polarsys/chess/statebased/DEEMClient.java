@@ -29,6 +29,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.widgets.Display;
 import org.polarsys.chess.statebased.daemon.DEEMProgressInformation;
 import org.polarsys.chess.statebased.daemon.ParameterList;
 
@@ -78,7 +79,7 @@ public class DEEMClient {
 		bRunning = ois.readBoolean();
 		int lastCurrent = 0;
 		String taskName;
-		while(bRunning) {
+		while(bRunning && !Thread.currentThread().isInterrupted()) {
 			progress = (DEEMProgressInformation)ois.readObject();
 			System.out.println(progress.getCurrent());
 
@@ -88,9 +89,9 @@ public class DEEMClient {
 			}else{
 				taskName += progress.getPercentToMin("%.2f") + "% of minimum batches)";
 			}
-			mon.subTask(taskName);
-			mon.worked(progress.getCurrent()-lastCurrent);
-
+			subTask(taskName);
+			progress(progress.getCurrent()-lastCurrent);
+			
 			lastCurrent = progress.getCurrent();
 			bRunning = ois.readBoolean();
 		}			
@@ -133,12 +134,26 @@ public class DEEMClient {
 		mon = monitor;
 	}
 
-	protected IProgressMonitor getProgressMonitor() {
-		return mon;
+	private void progress(final int work) {
+		if(mon != null) {
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					mon.worked(work);
+				}
+			});
+		}
 	}
 	
-	private void progress(int work) {
-		if(mon != null)
-			mon.worked(work);
+	private void subTask(final String name) {
+		if(mon != null) {
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					mon.subTask(name);
+				}
+			});
+		}
+			
 	}
 }
