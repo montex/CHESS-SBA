@@ -2,10 +2,12 @@
 -----------------------------------------------------------------------
 --          			CHESS validator plugin					     --
 --                                                                   --
---                    Copyright (C) 2011-2012                        --
+--                    Copyright (C) 2016                             --
 --                 University of Padova, ITALY                       --
 --                                                                   --
--- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
+-- Authors: Alessandro Zovi          azovi@math.unipd.it             --
+--          Laura Baracchi           laura.baracchi@intecs.it        --
+--          Stefano Puri             stefano.puri@intecs.it          --
 --                                                                   --
 -- All rights reserved. This program and the accompanying materials  --
 -- are made available under the terms of the Eclipse Public License  --
@@ -42,6 +44,7 @@ import org.eclipse.uml2.uml.Relationship;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.internal.impl.DependencyImpl;
 import org.eclipse.uml2.uml.util.UMLUtil;
+import org.polarsys.chess.chessmlprofile.Core.Domain;
 import org.polarsys.chess.core.constraint.DynamicConstraint;
 import org.polarsys.chess.core.constraint.FilterableDynamicConstraint;
 import org.polarsys.chess.core.constraint.IConstraint;
@@ -108,7 +111,7 @@ public class ConstraintsLib {
 	public static FilterableDynamicConstraint R_S_1 = 
 		new FilterableDynamicConstraint("R_S_1", IConstraint.ERROR, "A predefined profile cannot be removed") {
 		@Override
-		public boolean checkConstraint(Notification notification, DesignView currentView) {	
+		public boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain) {	
 
 			if ((notification.getEventType() == Notification.SET ||
 					notification.getEventType() == Notification.REMOVE) 
@@ -128,7 +131,7 @@ public class ConstraintsLib {
 	public static FilterableDynamicConstraint V_SR_1 = 
 		new FilterableDynamicConstraint("V_SR_1", IConstraint.ERROR, "A view cannot be modified or removed") {
 		@Override
-		public boolean checkConstraint(Notification notification, DesignView currentView) {
+		public boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain) {
 			if (ViewUtils.isViewModifiedOrRemoved((ENotificationImpl) notification)){
 				if (!viewmgr.checkViewStereotype(notification)) 
 					return false;
@@ -147,7 +150,7 @@ public class ConstraintsLib {
 	public static FilterableDynamicConstraint S_S_1 = new FilterableDynamicConstraint("S_S_1",
 			IConstraint.ERROR, "a predefined stereotype cannot be removed") {
 		@Override
-		public boolean checkConstraint(Notification notification, DesignView currentView) {
+		public boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain) {
 			Object notifier = notification.getNotifier();
 			// Check for modifications of the stereotype
 			if (notifier instanceof DynamicEObjectImpl) {
@@ -175,7 +178,7 @@ public class ConstraintsLib {
 	public static FilterableDynamicConstraint M_A_1 = new FilterableDynamicConstraint("M_A_1",
 			IConstraint.ERROR, "Cannot apply further profiles in the model") {
 		@Override
-		public boolean checkConstraint(Notification notification, DesignView currentView) {
+		public boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain) {
 			Object notifier = notification.getNotifier();
 			if (notifier instanceof Model) {
 
@@ -196,7 +199,7 @@ public class ConstraintsLib {
 	public static FilterableDynamicConstraint C_A_1 = 
 		new FilterableDynamicConstraint("C_A_1", IConstraint.ERROR, "Interface realization is not allowed because owned operations does not match.") {
 		@Override
-		public boolean checkConstraint(Notification notification, DesignView currentView) {
+		public boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain) {
 			notifier = notification.getNotifier();
 			if (notifier instanceof Component && notification.getEventType() == Notification.REMOVE) 
 			{
@@ -274,7 +277,7 @@ public class ConstraintsLib {
 	public static FilterableDynamicConstraint O_S_1 = 
 		new FilterableDynamicConstraint("O_S_1", IConstraint.ERROR, "Interface operations in the Functional View must have public visibility.") {
 		@Override
-		public boolean checkConstraint(Notification notification, DesignView currentView) {
+		public boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain) {
 			if (notifier instanceof Operation && notification.getEventType() == Notification.SET) {
 				notifier = notification.getNotifier();
 				Operation op = (Operation) notifier;
@@ -301,7 +304,7 @@ public class ConstraintsLib {
 	public static FilterableDynamicConstraint AddRemoveDependency = 
 		new FilterableDynamicConstraint("ADD_REMOVEDependency", IConstraint.ERROR, "Cannot modify dependency for ComponentType") {
 		@Override
-		public boolean checkConstraint(Notification notification, DesignView currentView) {
+		public boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain) {
 			Object value = null;
 			boolean add = false;
 			if (notification.getEventType() == Notification.ADD){
@@ -349,7 +352,7 @@ public class ConstraintsLib {
 public static FilterableDynamicConstraint P_T_1 = 
 		new FilterableDynamicConstraint("P_T_1", IConstraint.ERROR, "Appling a view stereotype is forbidden.") {
 		@Override
-		public boolean checkConstraint(Notification notification, DesignView currentView) {
+		public boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain) {
 			if (notifier instanceof Package && notification.getEventType() == PapyrusStereotypeListener.APPLIED_STEREOTYPE) {
 				if (notification.getNewValue() instanceof DynamicEObjectImpl) {
 					DynamicEObjectImpl d = (DynamicEObjectImpl) notification.getNewValue();
@@ -372,7 +375,7 @@ public static FilterableDynamicConstraint P_T_1 =
 		new FilterableDynamicConstraint("P_A_1", IConstraint.ERROR, 
 				"Creation of interfaces is only allowed in the Functional View and Deployment View.") {
 		@Override
-		public boolean checkConstraint(Notification notification, DesignView currentView) {
+		public boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain) {
 			notifier = notification.getNotifier();
 			if (notifier instanceof Package && notification.getEventType() == Notification.ADD && notification.getNewValue() instanceof Interface) {
 				Package view = ViewUtils.getView((Package) notifier);
@@ -441,7 +444,7 @@ public static FilterableDynamicConstraint P_T_1 =
 		new DynamicConstraint("E_S_1", IConstraint.ERROR, 
 		"The view \"{0}\" has no write access on the {1} \"{2}\", therefore it cannot be modified.") {
 		@Override
-		public boolean checkConstraint(Notification notification, DesignView currentView) {
+		public boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain) {
 			
 			CHESSProjectSupport.printlnToCHESSConsole(NotificationManager.printNotification(notification));
 
@@ -453,20 +456,20 @@ public static FilterableDynamicConstraint P_T_1 =
 						|| notification.getEventType() == Notification.REMOVE_MANY
 						|| (notification.getEventType() == Notification.SET && notification.getOldValue() != null && notification.getNewValue() == null)
 						|| isBaseElementModification(notification)){
-					if (!ViewUtils.isElementInstantiable((EObject)notifier, notification.getFeature(),currentView)) {
+					if (!ViewUtils.isElementInstantiable((EObject)notifier, notification.getFeature(),currentView, currentDomain)) {
 						getStatus().setMessage(currentView.getName(), "element", ((EObject)notifier).eClass().getName());
 						return false;
 					}
 				} else
 				if (notification.getEventType() == Notification.SET) {
-					if (!ViewUtils.isElementWritable_((EObject)notifier, notification.getFeature(),currentView)) {
+					if (!ViewUtils.isElementWritable_((EObject)notifier, notification.getFeature(),currentView, currentDomain)) {
 						getStatus().setMessage(currentView.getName(), "element", ((EObject)notifier).eClass().getName());
 						return false;
 					}
 				} else
 				if (notification.getEventType() == PapyrusStereotypeListener.APPLIED_STEREOTYPE 
 						|| notification.getEventType() == PapyrusStereotypeListener.UNAPPLIED_STEREOTYPE){
-					if (!ViewUtils.isStereotypeInstantiable((EObject)notifier, notification.getFeature(), notification.getNewValue(), currentView)) {
+					if (!ViewUtils.isStereotypeInstantiable((EObject)notifier, notification.getFeature(), notification.getNewValue(), currentView, currentDomain)) {
 						getStatus().setMessage(currentView.getName(), "stereotype", ((EObject)notification.getNewValue()).eClass().getName());
 						return false;
 					}
@@ -499,7 +502,7 @@ public static FilterableDynamicConstraint P_T_1 =
 			"Cannot modify inherited operations.") {
 			
 		@Override
-			public boolean checkConstraint(Notification notification, DesignView currentView) {
+			public boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain) {
 			
 			if (notifier instanceof Operation) {
 				// in case of addition
