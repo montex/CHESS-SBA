@@ -2,10 +2,12 @@
 -----------------------------------------------------------------------
 --          			CHESS core plugin							 --
 --                                                                   --
---                    Copyright (C) 2011-2012                        --
+--                    Copyright (C) 2016                             --
 --                 University of Padova, ITALY                       --
 --                                                                   --
--- Author: Alessandro Zovi         azovi@math.unipd.it               --
+-- Authors: Alessandro Zovi          azovi@math.unipd.it             --
+--          Laura Baracchi           laura.baracchi@intecs.it        --
+--          Stefano Puri             stefano.puri@intecs.it          --
 --                                                                   --
 -- All rights reserved. This program and the accompanying materials  --
 -- are made available under the terms of the Eclipse Public License  --
@@ -18,6 +20,7 @@ package org.polarsys.chess.core.constraint;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
+import org.polarsys.chess.chessmlprofile.Core.Domain;
 import org.polarsys.chess.core.Activator;
 import org.polarsys.chess.core.notifications.ResourceNotification;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
@@ -163,16 +166,25 @@ public abstract class DynamicConstraint implements IConstraint {
 	 * @param currentView
 	 * @return
 	 */
-	public IStatus check(Notification notification, DesignView currentView){
-		status.setSuccess(checkConstraint(notification, currentView));
+	public IStatus check(Notification notification, DesignView currentView, Domain theDomain){
+		status.setSuccess(checkConstraint(notification, currentView, theDomain));
 		return status;
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.polarsys.chess.core.constraint.IConstraint#check(org.eclipse.emf.common.notify.Notification)
 	 */
+	public IStatus check(Notification notification, Domain theDomain){
+		status.setSuccess(checkConstraint(notification, null, theDomain));
+		return status;
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see org.polarsys.chess.core.constraint.IConstraint#check(org.eclipse.emf.common.notify.Notification)
+	 */
 	public IStatus check(Notification notification){
-		status.setSuccess(checkConstraint(notification, null));
+		status.setSuccess(checkConstraint(notification, null, null));
 		return status;
 	}
 	
@@ -183,6 +195,6 @@ public abstract class DynamicConstraint implements IConstraint {
 	 * @param currentView  the current {@link DesignView}
 	 * @return true if the constraint passes / false otherwise
 	 */
-	public abstract boolean checkConstraint(Notification notification, DesignView currentView);
+	public abstract boolean checkConstraint(Notification notification, DesignView currentView, Domain currentDomain);
 
 }

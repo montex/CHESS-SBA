@@ -1,3 +1,21 @@
+/*
+-----------------------------------------------------------------------
+--          			CHESS core plugin							 --
+--                                                                   --
+--                    Copyright (C) 2016                             --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Authors: Alessandro Zovi          azovi@math.unipd.it             --
+--          Laura Baracchi           laura.baracchi@intecs.it        --
+--          Stefano Puri             stefano.puri@intecs.it          --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+*/
+
 package org.polarsys.chess.core.internal.views;
 
 import org.eclipse.emf.common.util.EList;
@@ -6,6 +24,7 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Stereotype;
+import org.polarsys.chess.chessmlprofile.Core.Domain;
 import org.polarsys.chess.core.internal.views.permissions.EntryId;
 import org.polarsys.chess.core.internal.views.permissions.PermissionEntry;
 import org.polarsys.chess.core.internal.views.permissions.PermissionList;
@@ -115,22 +134,22 @@ public class InternalViewUtils {
 	 * @param permission  the permission type, i.e  {@link PermissionEntry#OWNER}
 	 * @return
 	 */
-	public static boolean checkPermission(DesignView designView, EntryId entryId, byte permission) {
+	public static boolean checkPermission(DesignView designView, EntryId entryId, byte permission, Domain theDomain) {
 		//TODO code must be refactored to avoid continuous generation of permissions!
 		if (entryId.isANY())
 			return true;
-		PermissionList l = designView.getEnabledPermissions();
+		PermissionList l = designView.getEnabledPermissions(theDomain);
 		if (l != null && !l.checkPermission(entryId, permission))
 			return false;
 		return true;
 	}
 	
 	
-	public static boolean checkPermission(String viewName, EntryId entryId, byte permission, DesignView currentView) {
+	public static boolean checkPermission(String viewName, EntryId entryId, byte permission, DesignView currentView, Domain theDomain) {
 		//TODO code must be refactored to avoid continuous generation of permissions!
 		if (entryId.isANY())
 			return true;
-		PermissionList l = currentView.getEnabledPermissions(viewName);
+		PermissionList l = currentView.getEnabledPermissions(viewName, theDomain);
 		if (l != null && !l.checkPermission(entryId, permission))
 			return false;
 		return true;
