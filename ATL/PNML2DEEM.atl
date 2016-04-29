@@ -164,6 +164,7 @@ helper context PNML!OpSum def: toString(): String = self.expression1.toString() 
 helper context PNML!OpGreater def: toString(): String = self.expression1.toString() + '>' + self.expression2.toString();
 helper context PNML!OpEqual def: toString(): String = self.expression1.toString() + '=' + self.expression2.toString();
 helper context PNML!OpTrue def: toString(): String = 'TRUE';
+helper context PNML!OpFalse def: toString(): String = 'FALSE';
 
 helper context PNML!IfThenElse def: toString(): String =
 	'IF('+self.condition.toString()+')THEN('+self.ifTrue.toString()+')ELSE('+self.ifFalse.toString()+')';

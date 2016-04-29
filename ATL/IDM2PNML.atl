@@ -36,7 +36,7 @@ helper def: priReliability : Integer = 8;
 
 helper def: getPage : PNML!Page = IDM!Sistema.allInstances()->first();
 
-helper def: tmpLogicExp : PNML!LogicalExpression = OclUndefined;
+--helper def: tmpLogicExp : PNML!LogicalExpression = OclUndefined;
 
 helper context IDM!NamedElement def: toString() : String = self.Name;
 helper context IDM!Error def: toString() : String = self.Name;
@@ -504,6 +504,41 @@ rule ErrorVanishTimed extends Error {
 			target <- vanish
 		)
 }
+rule ErrorEPFChoice(e : IDM!Error, epf : IDM!ErrorsProducesFailures) {
+	to
+		epfSelected : PNML!Place
+		(
+			id <- e.Name + '_sel_' + epf.Name,
+			containerPage <- thisModule.getPage,
+			initialMarking <- thisModule.newPTMarking(0)
+		),
+		trSelection : PNML!GSPNImmediateTransition
+		(
+			id <- e.Name + '_choice_' + epf.Name,
+			containerPage <- thisModule.getPage,
+			Weight <- epf.Weight,
+			Priority <- thisModule.priPropagationChoice,
+			Guard <- thisModule.CreateEPFGuard(epf)
+		),
+		tr_to_selected : PNML!GSPNArc 
+		(
+			containerPage <- thisModule.getPage,
+			source <- trSelection,
+			target <- epfSelected,
+			id <- trSelection.id + '_to_sel'
+		),
+		tr_to_selected_inh : PNML!GSPNArc 
+		(
+			containerPage <- thisModule.getPage,
+			source <- epfSelected,
+			target <- trSelection,
+			type <- #inhibitor,
+			id <- trSelection.id + '_to_sel_inh'
+		)
+	do {
+		epfSelected;
+	}
+}
 
 rule FailureMode {
 	from
@@ -562,9 +597,26 @@ rule FaultsExpressionOrNode {
 }
 
 --ErrorsExpression elements
-rule ErrorsExpressionFaultNode {
-	from
-		n : IDM!ErrorsExpressionErrorNode
+rule ErrorsExpressionNode(n : IDM!ErrorsExpressionNode) {
+	using {
+		out : PNML!LogicalExpression = OclUndefined;
+	}
+	do {
+		if(n.oclIsTypeOf(IDM!ErrorsExpressionErrorNode)) {
+			out <- thisModule.ErrorsExpressionErrorNode(n);
+		}else if(n.oclIsTypeOf(IDM!ErrorsExpressionAndNode)) {
+			out <- thisModule.ErrorsExpressionAndNode(n);
+		}else if(n.oclIsTypeOf(IDM!ErrorsExpressionOrNode)) {
+			out <- thisModule.ErrorsExpressionOrNode(n);
+		}else if(n.oclIsTypeOf(IDM!ErrorsExpressionNotNode)) {
+			out <- thisModule.ErrorsExpressionNotNode(n);
+		}
+
+		out;
+	}
+}
+
+rule ErrorsExpressionErrorNode(n : IDM!ErrorsExpressionErrorNode) {
 	to
 		nn : PNML!OpGreater ( expression1 <- e1, expression2 <- e2 ),
 		e1 : PNML!MarkingExpression
@@ -572,24 +624,30 @@ rule ErrorsExpressionFaultNode {
 			place <- n.Error
 		),
 		e2 : PNML!ValueExpression ( value <- 0 )
+	do {
+		nn;
+	}
 }
-rule ErrorsExpressionNotNode {
-	from
-		n : IDM!ErrorsExpressionNotNode
+rule ErrorsExpressionNotNode(n : IDM!ErrorsExpressionNotNode) {
 	to
 		nn : PNML!OpNot ( expression <- n.ErrorsExpression )
+	do {
+		nn;
+	}
 }
-rule ErrorsExpressionAndNode {
-	from
-		n : IDM!ErrorsExpressionAndNode
+rule ErrorsExpressionAndNode(n : IDM!ErrorsExpressionAndNode) {
 	to
 		nn : PNML!OpAnd ( e1 <- n.ErrorsExpression1, e2 <- n.ErrorsExpression2 )
+	do {
+		nn;
+	}
 }
-rule ErrorsExpressionOrNode {
-	from
-		n : IDM!ErrorsExpressionOrNode
+rule ErrorsExpressionOrNode(n : IDM!ErrorsExpressionOrNode) {
 	to
 		nn : PNML!OpOr ( e1 <- n.ErrorsExpression1, e2 <- n.ErrorsExpression2 )
+	do {
+		nn;
+	}
 }
 
 --FaultsGenerateErrors
@@ -620,7 +678,8 @@ abstract rule FGE {
 		casepropagate : PNML!GSPNImmediateTransition
 		(
 			id <- basename + '_caseprop',
-			Weight <- fge.PropagationProbability * fge.Weight,	--This is a workaround!
+--			Weight <- fge.PropagationProbability * fge.Weight,	--This is a workaround!
+			Weight <- fge.Weight,
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
@@ -629,7 +688,8 @@ abstract rule FGE {
 			id <- basename + '_caseskip',
 			Weight <- ( 1 - casepropagate.Weight ),
 			Priority <- thisModule.priPropagationChoice,
-			containerPage <- thisModule.getPage
+			containerPage <- thisModule.getPage,
+			Guard <- PNML!OpFalse.newInstance()		--This is a workaround!
 		),
 		blocker : PNML!Place
 		(
@@ -782,8 +842,6 @@ rule FGEImmediate extends FGE {
 		);
 		thisModule.newOutputArc(casepropagate, fge.Destination.first());
 		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
-		
-		
 	}
 }
 
@@ -795,17 +853,6 @@ abstract rule EPF {
 		basename : String = epf.refImmediateComposite().Name + '_' + epf.Name;
 	}
 	to
-		andop : PNML!OpAnd
-		(
-			expression1 <- thisModule.newOpAnd(epf.PropagationLogic,
-											   thisModule.newOpAnd(
-											       thisModule.newOpEqual(
-											           thisModule.newMarkingExpression(tmp),
-													   thisModule.newValueExpression(0)
-												   ),
-											       thisModule.buildConditionComponentIsNotFailed(epf.Component)
-											   ))
-		),		
 		tmp : PNML!Place
 		(
 			id <- basename + '_tmp',
@@ -902,34 +949,18 @@ rule EPFTimed extends EPF {
 		(
 			id <- basename,
 			Distribution <- epf.PropagationDelay,
-			containerPage <- thisModule.getPage,
-			Guard <- andop
+			containerPage <- thisModule.getPage
 		),
-		andop : PNML!OpAnd,
 		totmp : PNML!GSPNArc ( source <- trepf ),
 		toblocker : PNML!GSPNArc ( source <- trepf ),
 		toblocker_inhibit : PNML!GSPNArc ( target <- trepf )
 	do {
-		thisModule.tmpLogicExp <- andop;
-
-		for(fm in epf.Destination.subSequence(2, epf.Destination.size())) {
-			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
-				thisModule.newOpEqual(
-					thisModule.newMarkingExpression(fm),
-					thisModule.newValueExpression(0)
-				),
-				OclUndefined
-			);
+		for(fm in epf.Destination) {
 			thisModule.newOutputArc(casepropagate, fm);
-			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
 		}
 		
-		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
-			thisModule.newMarkingExpression(epf.Destination.first()),
-			thisModule.newValueExpression(0)
-		);
-		thisModule.newOutputArc(casepropagate, epf.Destination.first());
-		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+		trepf.Guard <- thisModule.CreateEPFGuard(epf);
+		thisModule.EPFFinalizeChoice(epf);
 	}
 }
 rule EPFImmediate extends EPF {
@@ -948,34 +979,81 @@ rule EPFImmediate extends EPF {
 			id <- basename,
 			containerPage <- thisModule.getPage,
 			Weight <- epf.Weight,
-			Priority <- thisModule.priPropagation,
-			Guard <- andop
+			Priority <- thisModule.priPropagation
 		),
-		andop : PNML!OpAnd,
 		totmp : PNML!GSPNArc ( source <- trepf ),
 		toblocker : PNML!GSPNArc ( source <- trepf ),
 		toblocker_inhibit : PNML!GSPNArc ( target <- trepf )
 	do {
-		thisModule.tmpLogicExp <- andop;
+		for(fm in epf.Destination) {
+			thisModule.newOutputArc(casepropagate, fm);
+		}
+		
+		trepf.Guard <- thisModule.CreateEPFGuard(epf);
+		thisModule.EPFFinalizeChoice(epf);
+	}
+}
+rule CreateEPFGuard(epf : IDM!ErrorsProducesFailures) {
+	using {
+		tmpLogicExp : PNML!LogicalExpression = OclUndefined;
+		andop : PNML!OpAnd = OclUndefined;
+	}
+	do {
+		andop <- thisModule.newOpAnd (
+					thisModule.newOpAnd(
+							thisModule.ErrorsExpressionNode(epf.PropagationLogic),
+							thisModule.newOpAnd(
+								thisModule.newOpEqual(
+						            thisModule.newMarkingExpression(
+						           		thisModule.resolveTemp(epf, 'tmp')
+								    ),
+									thisModule.newValueExpression(0)
+								),
+								thisModule.buildConditionComponentIsNotFailed(epf.Component)
+							)
+					),			   
+					OclUndefined
+				);		
+		
+		tmpLogicExp <- andop;
 
 		for(fm in epf.Destination.subSequence(2, epf.Destination.size())) {
-			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
+			tmpLogicExp.expression2 <- thisModule.newOpOr( 
 				thisModule.newOpEqual(
 					thisModule.newMarkingExpression(fm),
 					thisModule.newValueExpression(0)
 				),
 				OclUndefined
 			);
-			thisModule.newOutputArc(casepropagate, fm);
-			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+--			thisModule.newOutputArc(
+--				thisModule.resolveTemp(epf, 'casepropagate'),
+--				fm
+--			);
+			tmpLogicExp <- tmpLogicExp.expression2;
 		}
 		
-		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
+		tmpLogicExp.expression2 <- thisModule.newOpEqual(
 			thisModule.newMarkingExpression(epf.Destination.first()),
 			thisModule.newValueExpression(0)
 		);
-		thisModule.newOutputArc(casepropagate, epf.Destination.first());
-		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+--		thisModule.newOutputArc(
+--			thisModule.resolveTemp(epf, 'casepropagate'),
+--			epf.Destination.first()
+--		);
+--		tmpLogicExp <- tmpLogicExp.expression2;
+		
+		andop;
+	}
+}
+rule EPFFinalizeChoice(epf : IDM!ErrorsProducesFailures) {
+	using {
+		tmpArc : PNML!GSPNArc = OclUndefined;
+		selPlace : PNML!Place = OclUndefined;
+	}
+	do {
+		for(e in epf.Source) {
+			selPlace <- thisModule.ErrorEPFChoice(e, epf);
+		}
 	}
 }
 
@@ -993,7 +1071,7 @@ abstract rule InternalPropagation {
 			if(not iprop.FaultGuard.oclIsUndefined()) then
 				thisModule.newOpAnd(
 					iprop.FaultGuard,
-					thisModule.newOpAnd(iprop.PropagationLogic,
+					thisModule.newOpAnd(thisModule.ErrorsExpressionNode(iprop.PropagationLogic),
 													   thisModule.newOpAnd(
 													       thisModule.newOpEqual(
 													           thisModule.newMarkingExpression(tmp),
@@ -1003,7 +1081,7 @@ abstract rule InternalPropagation {
 													   ))
 				)
 			else			
-				thisModule.newOpAnd(iprop.PropagationLogic,
+				thisModule.newOpAnd(thisModule.ErrorsExpressionNode(iprop.PropagationLogic),
 												   thisModule.newOpAnd(
 												       thisModule.newOpEqual(
 												           thisModule.newMarkingExpression(tmp),
@@ -1022,16 +1100,19 @@ abstract rule InternalPropagation {
 		casepropagate : PNML!GSPNImmediateTransition
 		(
 			id <- basename + '_caseprop',
-			Weight <- iprop.PropagationProbability * iprop.Weight,	--This is a workaround!
+--			Weight <- iprop.PropagationProbability * iprop.Weight,	--This is a workaround!
+			Weight <- iprop.Weight,
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
 		caseskip : PNML!GSPNImmediateTransition
 		(
 			id <- basename + '_caseskip',
-			Weight <- ( 1 - casepropagate.Weight ),
+--			Weight <- ( 1 - casepropagate.Weight ),
+			Weight <- '1.0E-6'.toReal(),
 			Priority <- thisModule.priPropagationChoice,
-			containerPage <- thisModule.getPage
+			containerPage <- thisModule.getPage,
+			Guard <- PNML!OpFalse.newInstance()		--This is a workaround!
 		),
 		blocker : PNML!Place
 		(
@@ -2061,11 +2142,12 @@ rule buildConditionComponentIsNotFailed(c : IDM!Component) {
 			exp <- thisModule.newOpAnd(
 				       exp,
 					   thisModule.newOpEqual(
-                           thisModule.newMarkingExpression(failures.first()),
+                           thisModule.newMarkingExpression(fm),
 				           thisModule.newValueExpression(0)
 			           )
 				   );
 		}
+		
 		exp;
 	}
 }
