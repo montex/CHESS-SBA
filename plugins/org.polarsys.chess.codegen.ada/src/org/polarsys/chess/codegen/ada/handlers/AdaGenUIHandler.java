@@ -40,7 +40,7 @@ import org.polarsys.chess.m2m.transformations.TransUtil;
 import org.polarsys.chess.m2m.transformations.TransformationResultsData;
 import org.polarsys.chess.m2m.ui.AnalysisContextSelectionDialog;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
-import org.concerto.multicore.model.AbstractCommand;
+import org.polarsys.chess.multicore.model.AbstractCommand;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;

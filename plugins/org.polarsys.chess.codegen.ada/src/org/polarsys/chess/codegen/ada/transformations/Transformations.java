@@ -23,8 +23,8 @@ import monitoringxml.MonitoringFactory;
 import monitoringxml.MonitoringPackage;
 import monitoringxml.Thread;
 
-import org.concerto.multicore.model.CHTask;
-import org.concerto.multicore.utils.QueryUtils;
+import org.polarsys.chess.multicore.model.CHTask;
+import org.polarsys.chess.multicore.utils.QueryUtils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.IProgressMonitor;
