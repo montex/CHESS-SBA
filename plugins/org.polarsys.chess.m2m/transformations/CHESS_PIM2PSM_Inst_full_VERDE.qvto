@@ -540,66 +540,6 @@ mapping Interaction::Interaction2EndToEndWorkFlow(context : Class, pimContext : 
     //end modification for traceability
 }
 
-//Return the nextE2ENode TODO - work in progress!!!
-helper createE2EOpaqueActionsChain(in messageSequence : Sequence(Message), inout endToEndWorkFlow : Activity, inout currentNode : ActivityNode) : ActivityNode {
-	
-	var nextNode := currentNode;	
-	messageSequence->forEach(msg){
-		//log("operation is: " + msg.signature.name);
-		
-		var currentChrts := msg.getMsgChrts();
-		//log("its context is: " +currentChrts.context.name);
-		//log("its partWithPort is: " +currentChrts.partWithPort.name);
-		//log("its occKind is: " +currentChrts.occKind.toString());
-		//log("its protection is: " +currentChrts.protection.toString());
-		//log("its WCET is: " +currentChrts.WCET.toString());
-		//log("Slot [createOpaqueActionsChain]: " + currentSlot.definingFeature.name);
-
-		//if operation is sporadic then create a get node before the operation node
-		nextNode := createSporadicRelatedNodes(currentChrts, currentSlot, endToEndWorkFlow, nextNode);
-		
-		//Creates the subsequent OpaqueAction and ControlFlow
-		nextNode := createSaStepNode(currentChrts, currentSlot, endToEndWorkFlow, nextNode, currentSlot.owningInstance);
-		
-		e2eOperations += currentChrts.context->oclAsType(Operation);		
-	};
-	
-	return nextNode;
-}
-
-
-/*
-sourceSlot can be null, e.g. in case of ARINCFunction private operation
-* IT SEEMS THAT THIS IS DUPLICATED, se helper below
-helper createSaStepNode(in sourceCHRtComment: Comment, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode,
-	ownerInstance : InstanceSpecification ) : ActivityNode {
-		
-	
-	var chrts := sourceCHRtComment.CHRtSpec();
-	var opNode := createOpaqueAction(opaqueActionName(sourceSlot, chrts), e2eActivity, prevE2ENode);
-	var opSaStep := opNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
-	
-	// Set the <<SwSchedulableResource>> that executes the <<saStep>>
-	
-	var concurRes := currentConcurRes;
-	if chrts.isDeferred() then
-		concurRes := sourceCHRtComment.getConcurRes(sourceSlot)//classResource.getMetaclass(SchedulableResourceQN).oclAsType(MARTE::GRM::SchedulableResource);
-	endif;
-	
-	zzz
-	
-	opSaStep.concurRes := concurRes;
-    // Retrieve the <<SaStep>> to use for the subusage
-	var saStep := sourceCHRtComment.resolve2SaStep().getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
-	//Add the newly created operation as subUsage of the OpaqueAction(<<saStep>>)
-	opSaStep.subUsage += saStep;
-	
-	//opSaStep.sharedRes += currentSharedRes;
-	return opNode;
-}*/
-
-
-
 
 /*sourceSlot can be null, in case of chrt referring private operation 
 */
@@ -954,7 +894,6 @@ helper createOpaqueActionsChainFull(in currentIsGuarded : Boolean, in currentCHR
 	//if the operation has a ICB-Activity then parse its CallOperationNodes
 	currentCHRTSpec.context.method![Activity].collectCallOperationNodes()->forEach(calledOpNode){
 		
-		//var riSlot := calledOpNode.onPort.portToSlot(currentSlot.owningInstance);
 		var riSlots := calledOpNode.portToSlotFull(owningInstance);
 		riSlots->forEach(riSlot){
 			log("  Search for piSlot from riSlot '" + riSlot.owningInstance.name + riSlot.definingFeature.name +  "'.");
@@ -1010,54 +949,57 @@ helper createOpaqueActionsChainFull(in currentIsGuarded : Boolean, in currentCHR
 }
 
 
-//NOT USED
-/*
-helper createSubUsagesChain(in enclosingCHRTComment : Comment, in currentCHRtComment : Comment, in currentSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode, 
-	ownerInstance:InstanceSpecification) : ActivityNode {
-		
+//Return the nextE2ENode TODO - work in progress!!!
+//support for sub-usages derived from the information available in the sequence diagram is in a very draft status
+helper createE2EOpaqueActionsChain(in messageSequence : Sequence(Message), inout endToEndWorkFlow : Activity, inout currentNode : ActivityNode) : ActivityNode {
 	
-	var currentOp := currentCHRtComment.CHRtSpec();
-	var nextE2ENode := prevE2ENode;
-	log("createSubUsagesChain... currentSlot="+currentSlot.owningInstance.toString());
-	nextE2ENode := createSporadicRelatedNodes(currentOp, currentSlot, e2eActivity, nextE2ENode);
-	//Creates the subsequent OpaqueAction and ControlFlow
-	if not currentOp.isDeferred() then
-		createSubUsage(currentCHRtComment, currentSlot)
-	else
-		nextE2ENode := createSaStepNode(currentCHRtComment, currentSlot, e2eActivity, nextE2ENode, ownerInstance)
-	endif;	
-	//if the operation has a ICB-Activity then parse its CallOperationNodes
-	currentOp.context.method![Activity].collectCallOperationNodes()->forEach(calledOpNode){
+	var nextNode := currentNode;	
+	var latestChRtSpec : chessmlprofile::RTComponentModel::CHRtSpecification;
+	messageSequence->forEach(msg){
+		//log("operation is: " + msg.signature.name);
 		
-		var riSlots := calledOpNode.portToSlotFull(currentSlot.owningInstance);
-		riSlots->forEach(riSlot){
-			var piSlot := riSlot.getCorrespondingSlot();
-	        var piOp := piSlot.CHRtSpecForOperation(calledOpNode.operation);
-	        var bus := getConnectingBus(currentSlot.owningInstance, piSlot.owningInstance);
-	        
-	        //if it is a remote call, attaches a send operation 
-	        if bus <> null then
-	        	if piOp.isDeferred() then
-	        		return createSendOp(bus, currentSlot, e2eActivity, nextE2ENode)
-	        	else 
-	        	    //if it is a simple operation, proceeds with the subsequent call
-	        		nextE2ENode := createSendOp(bus, currentSlot, e2eActivity, nextE2ENode)
-	        	endif
-	        else
-		        //otherwise it is a local call
-		        //if it is a simple operation, simply add it to the endtoendworkflow and proceeds with the subsequent call
-				if not piOp.isDeferred() then        
-	        		nextE2ENode := createSubUsagesChain(currentOp.base_Comment, piOp.base_Comment, piSlot, e2eActivity, nextE2ENode, ownerInstance)
-	        	else
-	        		//Calls put operation
-					return createPutOp(piOp.base_Comment, piSlot, e2eActivity, nextE2ENode)
-				endif		
-	        endif;
-        }
+		var currentChrts := msg.getMsgChrts();
+		//log("its context is: " +currentChrts.context.name);
+		//log("its partWithPort is: " +currentChrts.partWithPort.name);
+		//log("its occKind is: " +currentChrts.occKind.toString());
+		//log("its protection is: " +currentChrts.protection.toString());
+		//log("its WCET is: " +currentChrts.WCET.toString());
+		//log("Slot [createOpaqueActionsChain]: " + currentSlot.definingFeature.name);
+		
+		if (currentChrts.isProtected()=false){
+
+			//if operation is sporadic then create a get node before the operation node
+			nextNode := createSporadicRelatedNodes(currentChrts, currentSlot, endToEndWorkFlow, nextNode);
+			
+			//Creates the subsequent OpaqueAction and ControlFlow
+			nextNode := createSaStepNode(currentChrts, currentSlot, endToEndWorkFlow, nextNode, currentSlot.owningInstance);
+			
+			latestChRtSpec := currentChrts;
+		}else{
+			//adds subusages
+			//TODO check about remote msg call
+			var sender = msg.getMsgSender();
+			var receiver = msg.getMsgReceiver();
+			var bus := getConnectingBus(sender, receiver);
+			
+			//if it is a remote call, attach a send operation 
+	        if bus <> null then{
+	        	log("it is a remote call...");
+	        	log("*****************WARNING Remote operation calls in sequence diagram; this path is not currently supported ...");
+	        }
+			else{
+	        	log("it is a local call to a protected resource...");
+	        	createSubUsage(latestChRtSpec,currentChrts);
+	        }endif;
+			
+		};
+		
+		e2eOperations += currentChrts.context->oclAsType(Operation);		
 	};
-    return nextE2ENode;
+	
+	return nextNode;
 }
-*/
+
 
 helper createPutOp(in sourceCHRtComment : Comment, in sourceSlot : Slot, inout e2eActivity : Activity, inout prevE2ENode : ActivityNode) : ActivityNode {
     var putSpec := sourceCHRtComment.CHRtSpec();
@@ -1608,21 +1550,6 @@ mapping InstanceSpecification::HwProcessor2SaExecHost(core : String) : Class {
 	stHost.host := saHost;
 }
 
-/*
-//NOT USED
-//Create a new Activity as <<SaEndToEndFlow>>
-mapping Slot::slot2EndToEndWorkFlowStrict(chrt : Comment) : Activity when {chrt.CHRtSpec().isDeferred()} {
-    init {
-    	var res := self.owningInstance.resolveoneIn(InstanceSpecification::Instance2EndToEndWorkFlow, Activity);
-    	if res = null then
-    		res := self.owningInstance.map Instance2EndToEndWorkFlow(chrt, self)
-    	else 
-			log("  Nothing to do")
-		endif;
-    	result := res;
-    }
-}*/
-
 //Create a new Activity as <<SaEndToEndFlow>>
 mapping Slot::slot2EndToEndWorkFlow(chrt : Comment) : Activity when {chrt.CHRtSpec().isDeferred()} {
     init {
@@ -2110,6 +2037,28 @@ helper Message::getMsgChrts() : chessmlprofile::RTComponentModel::CHRtSpecificat
    	};
    	//log("+++++++++++++ context: " + startChrts.context.name);
 	return chrts;
+}
+
+helper Message::getMsgSender() : InstanceSpecification {
+   	//assume that Message's receiveEvent is of type MessageOccurrenceSpecification
+   	var sendEvent : MessageOccurrenceSpecification := self.sendEvent.oclAsType(MessageOccurrenceSpecification);
+   	//assume that Message's receiveEvent covers only one lifeline
+   	var lifeline : Lifeline := sendEvent.covered->asSequence()->first();
+   	//get the instance related to Lifeline's' "represents" feature
+	//search for instance in the CHGaResourcePlatform
+	var instance := lifeline.represents.getLifeLineInstance(instSpecPackage.allOwnedElements()[InstanceSpecification]);
+	return instance;
+}
+
+helper Message::getMsgReceiver() : InstanceSpecification {
+   	//assume that Message's receiveEvent is of type MessageOccurrenceSpecification
+   	var receiveEvent : MessageOccurrenceSpecification := self.receiveEvent.oclAsType(MessageOccurrenceSpecification);
+   	//assume that Message's receiveEvent covers only one lifeline
+   	var lifeline : Lifeline := receiveEvent.covered->asSequence()->first();
+   	//get the instance related to Lifeline's' "represents" feature
+	//search for instance in the CHGaResourcePlatform
+	var instance := lifeline.represents.getLifeLineInstance(instSpecPackage.allOwnedElements()[InstanceSpecification]);
+	return instance;
 }
 
 //assumption: the SaAnalysisContext.platform owns the reference to the package of the HW instances (to be considered for the analysis) available in the DeploymentView.
