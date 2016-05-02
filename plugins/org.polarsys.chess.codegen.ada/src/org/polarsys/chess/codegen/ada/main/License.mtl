@@ -83,4 +83,4 @@ This Agreement is governed by the laws of the State of New York and the intellec
 [/template]
 
 [query public isSingleNodeSystem(arg0 : Sequence(OclAny), arg1 : String) : Boolean
-	= invoke('org.polarsys.chess.codegen.ada.singlenode.service.UML2Service', 'isSingleNodeSystem(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]
+	= invoke('org.polarsys.chess.codegen.ada.service.UML2Service', 'isSingleNodeSystem(java.util.List, java.lang.String)', Sequence{arg0, arg1}) /]

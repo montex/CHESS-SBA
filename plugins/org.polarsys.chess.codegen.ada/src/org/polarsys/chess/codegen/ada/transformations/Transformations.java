@@ -98,9 +98,20 @@ public class Transformations {
 		
 		EList<InstanceSpecification> instances = UMLUtils.getAllComponentInstances(model);
 		EList<CHTask> tasks = QueryUtils.getCHTasksList(instances);
+		String taskName ="";
 		for (CHTask chTask : tasks) {
 			Thread thread = factory.createThread();
-			thread.setName(chTask.getName());
+			
+			//TODO in CHESS tasks names are generated with "_task" at the end
+			//the current monitoring facilities does not have this assumption
+			//so here the "_task" sub string is removed from the task name, the latter as assumed by CHESS
+			//
+			taskName = chTask.getName();
+			if (taskName.endsWith("_task")){
+				int ind = taskName.lastIndexOf("_task");
+				taskName=taskName.substring(0, ind);
+			}
+			thread.setName(taskName);
 			mon.getThreadNames().add(thread);
 		}
 		    
