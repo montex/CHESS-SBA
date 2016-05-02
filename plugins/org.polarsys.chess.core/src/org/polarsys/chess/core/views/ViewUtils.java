@@ -1,9 +1,12 @@
 /*
 -----------------------------------------------------------------------
 --          			CHESS core plugin							 --
---                                                                   --
---                    Copyright (C) 2011-2012                        --
+--                    Copyright (C) 2016                             --
 --                 University of Padova, ITALY                       --
+--                                                                   --
+-- Authors: Alessandro Zovi          azovi@math.unipd.it             --
+--          Laura Baracchi           laura.baracchi@intecs.it        --
+--          Stefano Puri             stefano.puri@intecs.it          --
 --                                                                   --
 -- All rights reserved. This program and the accompanying materials  --
 -- are made available under the terms of the Eclipse Public License  --
@@ -26,6 +29,7 @@ import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.util.UMLUtil;
+import org.polarsys.chess.chessmlprofile.Core.Domain;
 import org.polarsys.chess.core.internal.views.InternalViewUtils;
 import org.polarsys.chess.core.internal.views.permissions.EntryId;
 import org.polarsys.chess.core.internal.views.permissions.PermissionEntry;
@@ -165,10 +169,10 @@ public class ViewUtils {
 	 * @return true if the design view can write on the element
 	 */
 	public static boolean isElementWritable_(EObject element, Object feature,
-			DesignView currentView) {
+			DesignView currentView, Domain theDomain) {
 		if (currentView != null) {
 			ArrayList<EntryId> ids = EntryId.computeEntryIds_(element, feature);
-			return checkIdPermission(ids, currentView, PermissionEntry.WRITABLE);
+			return checkIdPermission(ids, currentView, PermissionEntry.WRITABLE, theDomain);
 		}
 		return false;
 	}
@@ -183,10 +187,10 @@ public class ViewUtils {
 	 * @return true if the view can write on the element
 	 */
 	public static boolean isElementWritable_(EObject element, Object feature,
-			String viewName, DesignView currentView) {
+			String viewName, DesignView currentView, Domain theDomain) {
 		if (viewName != null) {
 			ArrayList<EntryId> ids = EntryId.computeEntryIds_(element, feature);
-			return checkIdPermission(ids, viewName, PermissionEntry.WRITABLE, currentView);
+			return checkIdPermission(ids, viewName, PermissionEntry.WRITABLE, currentView, theDomain);
 		}
 		return false;
 	}
@@ -201,10 +205,10 @@ public class ViewUtils {
 	 * @return true if the design view owns the element
 	 */
 	public static boolean isElementInstantiable(EObject element, Object feature,
-			DesignView currentView) {
+			DesignView currentView, Domain theDomain) {
 		if (currentView != null) {
 			ArrayList<EntryId> ids = EntryId.computeEntryIds_(element, feature);
-			return checkIdPermission(ids, currentView, PermissionEntry.OWNER);
+			return checkIdPermission(ids, currentView, PermissionEntry.OWNER, theDomain);
 		}
 		return false;
 	}
@@ -219,11 +223,12 @@ public class ViewUtils {
 	 * @param currentView  the DesignView service
 	 * @return true if the view can edit the stereotype
 	 */
-	public static boolean isStereotypeWritable(EObject element, Object feature, Object stereotype, DesignView currentView) {
+	public static boolean isStereotypeWritable(EObject element, Object feature, 
+			Object stereotype, DesignView currentView, Domain theDomain) {
 		if (currentView != null) {
 			ArrayList<EntryId> ids = EntryId.computeStereotypeEntryIds(element, feature, stereotype);
 			//an element is writable iff all of the permission entry it matches have write rights
-			return checkIdPermission(ids, currentView, PermissionEntry.WRITABLE);
+			return checkIdPermission(ids, currentView, PermissionEntry.WRITABLE, theDomain);
 		}
 		return false;
 	}
@@ -237,16 +242,16 @@ public class ViewUtils {
 	 * @param currentView  the DesignView service
 	 * @return true if the view can create the stereotype
 	 */
-	public static boolean isStereotypeInstantiable(EObject element, Object feature, Object stereotype, DesignView currentView) {
+	public static boolean isStereotypeInstantiable(EObject element, Object feature, Object stereotype, DesignView currentView, Domain theDomain) {
 		if (currentView != null) {
 			ArrayList<EntryId> ids = EntryId.computeStereotypeEntryIds(element, feature, stereotype);
-			return checkIdPermission(ids, currentView, PermissionEntry.OWNER);
+			return checkIdPermission(ids, currentView, PermissionEntry.OWNER, theDomain);
 		}
 		return false;
 	}
 	
 	private static boolean checkIdPermission(ArrayList<EntryId> ids,
-			DesignView currentView, byte permission) {
+			DesignView currentView, byte permission, Domain theDomain) {
 		//an element is writable iff all of the permission entry it matches have write rights
 		//unless it matches multiple permission with id2<>* (stereotype), in that case it is writable
 		//if at least one entry have write rights
@@ -255,7 +260,7 @@ public class ViewUtils {
 		boolean res4Stereo = false;
 		for (EntryId entryId : ids) {
 			CHESSProjectSupport.printlnToCHESSConsole(entryId.toString());
-			boolean perm = InternalViewUtils.checkPermission(currentView, entryId, permission);
+			boolean perm = InternalViewUtils.checkPermission(currentView, entryId, permission, theDomain);
 			if (entryId.getStereotype().equals(EntryId.NONE)){
 				if (!perm)
 					return false;
@@ -269,7 +274,7 @@ public class ViewUtils {
 	
 	
 	private static boolean checkIdPermission(ArrayList<EntryId> ids,
-			String viewName, byte permission, DesignView currentView) {
+			String viewName, byte permission, DesignView currentView, Domain theDomain) {
 		//an element is writable iff all of the permission entry it matches have write rights
 		//unless it matches multiple permission with id2<>* (stereotype), in that case it is writable
 		//if at least one entry have write rights
@@ -278,7 +283,7 @@ public class ViewUtils {
 		boolean res4Stereo = false;
 		for (EntryId entryId : ids) {
 			CHESSProjectSupport.printlnToCHESSConsole(entryId.toString());
-			boolean perm = InternalViewUtils.checkPermission(viewName, entryId, permission, currentView);
+			boolean perm = InternalViewUtils.checkPermission(viewName, entryId, permission, currentView, theDomain);
 			if (entryId.getStereotype().equals(EntryId.NONE)){
 				if (!perm)
 					return false;

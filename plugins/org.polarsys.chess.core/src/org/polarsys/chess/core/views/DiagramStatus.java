@@ -2,17 +2,19 @@
 -----------------------------------------------------------------------
 --          			CHESS core plugin							 --
 --                                                                   --
---                    Copyright (C) 2011-2012                        --
+--                    Copyright (C) 2016                             --
 --                 University of Padova, ITALY                       --
 --                                                                   --
--- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
+-- Authors: Alessandro Zovi          azovi@math.unipd.it             --
+--          Laura Baracchi           laura.baracchi@intecs.it        --
+--          Stefano Puri             stefano.puri@intecs.it          --
 --                                                                   --
 -- All rights reserved. This program and the accompanying materials  --
 -- are made available under the terms of the Eclipse Public License  --
 -- v1.0 which accompanies this distribution, and is available at     --
 -- http://www.eclipse.org/legal/epl-v10.html                         --
 -----------------------------------------------------------------------
-*/
+ */
 
 package org.polarsys.chess.core.views;
 
@@ -23,16 +25,27 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Stack;
 
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.emf.facet.custom.metamodel.v0_2_0.internal.treeproxy.EObjectTreeElement;
 import org.eclipse.papyrus.infra.core.sasheditor.editor.IPage;
 import org.eclipse.papyrus.infra.core.sashwindows.di.PageRef;
+import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Stereotype;
+import org.polarsys.chess.chessmlprofile.Core.CHESS;
+import org.polarsys.chess.chessmlprofile.Core.Domain;
+import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.internal.views.InternalViewUtils;
 import org.polarsys.chess.core.internal.views.ViewPermissions;
+import org.polarsys.chess.core.internal.views.permissions.PermissionEntry;
 import org.polarsys.chess.core.internal.views.permissions.PermissionList;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
+import org.polarsys.chess.core.util.CHESSProjectSupport;
+import org.polarsys.chess.core.util.uml.ResourceUtils;
+
 
 
 /**
@@ -45,8 +58,8 @@ import org.polarsys.chess.core.profiles.CHESSProfileManager;
  * 
  */
 public class DiagramStatus {
-	
-	
+
+
 	/**
 	 * The DesignView must be treated as a singleton service class. It is an integral part of DiagramStatus service.
 	 *
@@ -54,16 +67,16 @@ public class DiagramStatus {
 	public static class DesignView {
 
 		Hashtable<String, Boolean> views;
-//		Hashtable<String, PermissionList> permissions = ViewPermissions.permissions;
-//		Hashtable<String, PermissionList> permissions = new Hashtable<String, PermissionList>(
-//				CHESSProfileManager.CHESS_VIEWS_LIST.size());
+		//		Hashtable<String, PermissionList> permissions = ViewPermissions.permissions;
+		//		Hashtable<String, PermissionList> permissions = new Hashtable<String, PermissionList>(
+		//				CHESSProfileManager.CHESS_VIEWS_LIST.size());
 
 		short enabledNum = 0, concurNum = 0;
-		
+
 		String currentDiagram = null;
 
 		private DesignView() {
-			
+
 			views = new Hashtable<String, Boolean>(
 					CHESSProfileManager.CHESS_VIEWS_LIST.size());
 			//Force loading of permissions
@@ -98,7 +111,7 @@ public class DiagramStatus {
 					}
 				}
 			}
-			
+
 			enabledNum = 0;
 		}
 
@@ -116,12 +129,12 @@ public class DiagramStatus {
 				assert (enabledNum == 1);
 			}
 		}
-		
+
 		void disableView(String view){
 			views.put(view, false);
 			--concurNum;
 		}
-		
+
 
 		/**
 		 * Gets the names of the active design views.
@@ -132,28 +145,28 @@ public class DiagramStatus {
 		 */
 		public String getName() {
 			ArrayList<String> names = new ArrayList<String>();
-			
+
 			for (String v : CHESSProfileManager.CHESS_VIEWS_LIST) {
 				if (views.get(v)) {
 					names.add(v);
 				}
 			}
-			
+
 			if (names.size()==0)
 				return CHESSProfileManager.NULL_VIEW;
 			if (names.size()==1)
 				return names.get(0);
-			
-			
+
+
 			Collections.sort(names);
-			
+
 			StringBuffer name = new StringBuffer();
-			
+
 			for (int i = 0; i < names.size() - 1; i++) {
 				name.append(names.get(i)).append('-');
 			}
 			name.append(names.get(names.size()-1));
-			
+
 			return name.toString();
 		}
 
@@ -166,7 +179,7 @@ public class DiagramStatus {
 		public boolean isEnabled(String view) {
 			return views.get(view);
 		}
-		
+
 		/**
 		 * Returns the current active diagram name
 		 * 
@@ -184,7 +197,7 @@ public class DiagramStatus {
 		 * @return the {@link PermissionList} associated with the view and the diagram
 		 */
 		private PermissionList getViewPermissions(String view, String diagram) {
-			
+
 			if (diagram.equals(ViewDiagramAssociations.ANYDIAGRAM)){
 				return ViewPermissions.permissions.get(view).get(diagram);
 			}else{
@@ -200,56 +213,98 @@ public class DiagramStatus {
 				return list;
 			}
 		}
-		
+
+
+		/**
+		 * Returns the permissions associated with the view and the diagram provided by name.
+		 * 
+		 * @param view  the name of the view
+		 * @param diagram  the name of the diagram
+		 * @param domain the domain
+		 * @return the {@link PermissionList} associated with the view and the diagram
+		 */
+		private PermissionList getViewPermissionsPerDomain(String view, String diagram, Domain domain) {
+
+			PermissionList list = new PermissionList();			
+
+			PermissionList d = ViewPermissions.permissions.get(view).get(ViewDiagramAssociations.ANYDIAGRAM);
+			if (d != null) {
+				for (PermissionEntry pe: d) {
+					if (pe.getDomain().equals(Domain.CROSS_DOMAIN) || 
+							pe.getDomain().equals(domain)) {
+						list.add(pe);
+					}
+				}
+			}
+
+			String actualDiagram = ViewDiagramAssociations.papyrusNames2Standard.get(diagram);
+			HashMap<String, PermissionList> viewPermissions = ViewPermissions.permissions.get(view);
+			d = viewPermissions.get(actualDiagram);
+			if (d != null) {
+				for (PermissionEntry pe: d) {
+					if (pe.getDomain().equals(Domain.CROSS_DOMAIN) || 
+							pe.getDomain().equals(domain)) {
+						list.add(pe);
+					}
+				}
+			}
+			
+			return list;
+		}
+
 		/**
 		 * Returns all the enabled permissions based on the enabled views.
 		 * 
 		 * @return the {@link PermissionList} with all the enabled permissions
 		 */
-		public PermissionList getEnabledPermissions() {
+		public PermissionList getEnabledPermissions(Domain theDomain) {
 			//TODO code must be refactored to avoid continuous generation of permissions!
 
 			if (concurNum > 1) {
 				PermissionList union = new PermissionList();
 				for (String v : CHESSProfileManager.CONCURRENT_VIEWS) {
 					if (views.get(v)) {
-						union.addAll(getViewPermissions(v, currentDiagram));
+						//union.addAll(getViewPermissions(v, currentDiagram));
+						union.addAll(getViewPermissionsPerDomain(v, currentDiagram, theDomain));
 					}
 				}
 				return union;
 			}
 			for (String v : CHESSProfileManager.CHESS_VIEWS_LIST) {
 				if (views.get(v)) {
-					return getViewPermissions(v, currentDiagram);
+					//return getViewPermissions(v, currentDiagram);
+					return getViewPermissionsPerDomain(v, currentDiagram, theDomain);
 				}
 			}
 			return null;
 		}
-		
-		
+
+
 		/**
-		 * Returns all the enabled permissions based on the given views.
+		 * Returns all the enabled permissions based on the given view.
 		 * 
 		 * @return the {@link PermissionList} with all the enabled permissions
 		 */
-		public PermissionList getEnabledPermissions(String viewName) {
-			
+		public PermissionList getEnabledPermissions(String viewName, Domain theDomain) {
+
 			if (concurNum > 1) {
 				PermissionList union = new PermissionList();
 				for (String v : CHESSProfileManager.CONCURRENT_VIEWS) {
 					if (v.equals(viewName))
-						union.addAll(getViewPermissions(v, currentDiagram));
+						//union.addAll(getViewPermissions(v, currentDiagram));
+						union.addAll(getViewPermissionsPerDomain(v, currentDiagram, theDomain));
 				}
 				return union;
 			}
 			for (String v : CHESSProfileManager.CHESS_VIEWS_LIST) {
 				if (v.equals(viewName)) {
-					return getViewPermissions(v, currentDiagram);
+					//return getViewPermissions(v, currentDiagram);
+					return getViewPermissionsPerDomain(v, currentDiagram, theDomain);
 				}
 			}
 			return null;
 		}
-		
+
 		/**
 		 * Checks if the diagram passed as a parameter is allowed in the enabled views.
 		 * 
@@ -263,7 +318,7 @@ public class DiagramStatus {
 				for (String v : CHESSProfileManager.CONCURRENT_VIEWS) {
 					HashSet<String> h;
 					if (views.get(v) &&
-					    null != (h = ViewDiagramAssociations.viewDiagramsAssociation.get(v))) {
+							null != (h = ViewDiagramAssociations.viewDiagramsAssociation.get(v))) {
 						if (h.contains(diagram.getType())) {
 							return true;
 						}
@@ -274,7 +329,7 @@ public class DiagramStatus {
 				for (String v : CHESSProfileManager.CHESS_VIEWS_LIST) {
 					HashSet<String> h;
 					if (views.get(v) &&
-						null != (h = ViewDiagramAssociations.viewDiagramsAssociation.get(v))) {
+							null != (h = ViewDiagramAssociations.viewDiagramsAssociation.get(v))) {
 						return (h.contains(diagram.getType()));
 					}
 				}
@@ -282,7 +337,7 @@ public class DiagramStatus {
 			}
 		}
 
-	
+
 	}
 
 	// private IPage currentDiagram;
@@ -315,7 +370,7 @@ public class DiagramStatus {
 	public DiagramStatus(IPage initialDiagram) {
 		disableAllToggles();
 		setActualView(initialDiagram);
-		
+
 	}
 
 	private void disableAllToggles() {
@@ -352,7 +407,7 @@ public class DiagramStatus {
 		setCurrentView();
 		return concurrentToggles.get(view);
 	}
-	
+
 	/**
 	 * Returns the name of the active view.
 	 * 
@@ -382,7 +437,7 @@ public class DiagramStatus {
 	 * @param currentDiagram  the diagram
 	 */
 	public synchronized void setActualView(IPage currentDiagram) {
-  		if (currentDiagram != null) {
+		if (currentDiagram != null) {
 			if (((PageRef) currentDiagram.getRawModel()).getEmfPageIdentifier() instanceof Diagram) {
 				Diagram dg = ((Diagram) ((PageRef) currentDiagram.getRawModel())
 						.getEmfPageIdentifier());
@@ -391,21 +446,21 @@ public class DiagramStatus {
 				// System.out.println(actualView == null ? "null view" :
 				// actualView.getName());
 				currentDesignView.currentDiagram = dg.getType();
-				
+
 				if (actualView != null && 
 						newActualView != null){
-					
+
 					String av = InternalViewUtils.getViewName(actualView);
 					String nv = InternalViewUtils.getViewName(newActualView);
-					
+
 					if (av!= null && nv!=null && !av.equals(nv)){
 						disableAllToggles();
 					}
 				}
-					
-				
+
+
 				actualView = newActualView;
-				
+
 				setCurrentView();
 			}
 		}
@@ -420,17 +475,17 @@ public class DiagramStatus {
 			TreeSelection currentTreeViewSelection) {
 		TreeSelection tSelection = currentTreeViewSelection;
 		EObjectTreeElement elem = (EObjectTreeElement) tSelection.getFirstElement();
-		
+
 		Package newActualView = currentTreeViewSelection == null ? null : ViewUtils
 				.getView(elem.getEObject());
-		
+
 		currentDesignView.currentDiagram = ViewDiagramAssociations.ANYDIAGRAM;
-		
+
 		if (actualView != null && !InternalViewUtils.getViewName(actualView).equals(InternalViewUtils.getViewName(newActualView)))
 			disableAllToggles();
-		
+
 		actualView = newActualView;
-		
+
 		setCurrentView();
 	}
 
@@ -445,14 +500,14 @@ public class DiagramStatus {
 			for (String concurrentView : CHESSProfileManager.CONCURRENT_VIEWS_ASSOCIATION.get(InternalViewUtils.getViewName(actualView))) {
 				if (concurrentToggles.get(concurrentView)){
 					currentDesignView.enableView(concurrentView);
-//					if (concurrentView.equals(lastToggledView))
-						toggled = true;
+					//					if (concurrentView.equals(lastToggledView))
+					toggled = true;
 				} else {
 					currentDesignView.disableView(concurrentView);
 				}
 			}
 			if (!toggled) {
-				
+
 				//lastToggledView = ViewUtils.getViewName(actualView);
 				lastToggledView.removeAllElements();
 				lastToggledView.push(InternalViewUtils.getViewName(actualView));
@@ -480,7 +535,7 @@ public class DiagramStatus {
 	public synchronized void setUserAction(boolean b) {
 		isUser = b;
 	}
-	
+
 	/**
 	 * Checks if the action is done by the user or not.
 	 */
@@ -498,7 +553,7 @@ public class DiagramStatus {
 	public boolean isSuperuser() {
 		return superuser;
 	}
-	
+
 	/**
 	 * Sets the superuser mode.
 	 * 
@@ -507,6 +562,6 @@ public class DiagramStatus {
 	public void setSuperuser(boolean b){
 		superuser = b;
 	}
-	
+
 
 }

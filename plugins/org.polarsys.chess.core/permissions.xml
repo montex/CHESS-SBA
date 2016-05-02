@@ -23,7 +23,9 @@
                   <perm el="Lifeline" owner="true" write="true" visible="true"/>
                   <perm el="Message" owner="true" write="true" visible="true"/>
                   <perm el="BehaviorExecutionSpecification" owner="true" write="true" visible="true"/>
-                  <perm el="MessageOccurrenceSpecification" owner="true" write="true" visible="true"/>                                
+                  <perm el="MessageOccurrenceSpecification" owner="true" write="true" visible="true"/> 
+                  
+                  <perm st="CHRtSpecification" owner="true" write="true" visible="true"/>                               
                                     
                    <!--      To use the automated creation of assignments     -->
                    <perm st="DeploymentView" owner="true" write="true" visible="true"/> 
@@ -53,8 +55,8 @@
                   <!--      To delete component implementations END     -->  
                   
                   <perm st="Assign" owner="true" write="true" visible="true"/>
-                  <perm st="FunctionalPartition" owner="true" write="true" visible="true"/>
-                  <perm st="FunctionalPartitions" owner="true" write="true" visible="true"/>
+                  <perm st="FunctionalPartition" owner="true" write="true" visible="true" domain="AVIONICS"/>
+                  <perm st="FunctionalPartitions" owner="true" write="true" visible="true" domain="AVIONICS"/>
 
                   <!--      To delete component types BEGIN     -->
                   <perm st="ComponentType" owner="true" visible="true"/>
@@ -126,11 +128,11 @@
                   <perm st="HwAbstractionComponentImpl" owner="true" write="true" visible="true"/>
                   
                   <!--IMA-->
-                  <perm st="FunctionalPartition" owner="true" write="true" visible="true"/>
-                  <perm st="ARINCComponentImpl" owner="true" write="true" visible="true"/>
-                  <perm st="ARINCProcess" owner="true" write="true" visible="true"/>
-                  <perm st="ARINCFunction" owner="true" write="true" visible="true"/>
-                                    
+                  <perm st="FunctionalPartition" owner="true" write="true" visible="true" domain="AVIONICS"/>
+                  <perm st="ARINCComponentImpl" owner="true" write="true" visible="true" domain="AVIONICS"/>
+                  <perm st="ARINCProcess" owner="true" write="true" visible="true" domain="AVIONICS"/>
+                  <perm st="ARINCFunction" owner="true" write="true" visible="true" domain="AVIONICS"/>  
+                                                    
                   <perm st="DeviceBroker" owner="true" write="true" visible="true"/>            
             </diagram>
             <diagram name="Composite">
@@ -282,7 +284,7 @@
       <view name="ExtraFunctionalView">
             <!--perm owner="true" write="true" visible="true"/-->
             <diagram name="*">
-            	<perm st="CHRtSpecification" owner="true" write="true" visible="true"/>
+            	
             	<perm el="Model" owner="true" write="true" visible="true"/> 
                   <perm st="Documentation" owner="true" write="true" visible="true"/>
             	  <perm ft="packagedElement" owner="true" write="true" visible="true"/>
@@ -337,8 +339,7 @@
                  <perm st="RunTimeSupport" owner="true" write="true" visible="true"/>                           
             </diagram>
             
-            <diagram name="Composite">
-                  
+            <diagram name="Composite">                      		      
                   <perm st="Propagation" owner="true" write="true" visible="true"/>
                   <perm st="FPTCSpecification" owner="true" write="true" visible="true"/>
                   <perm st="FI4FASpecification" owner="true" write="true" visible="true"/>
