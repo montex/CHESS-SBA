@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Composite
 	xmlns:ppel="clr-namespace:org.eclipse.papyrus.views.properties.widgets.layout"
+	xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt"
 	xmlns:ppe="clr-namespace:org.eclipse.papyrus.views.properties.widgets"
-	xmlns:x="http://www.eclipse.org/xwt" xmlns:j="clr-namespace:java.lang"
-	xmlns="http://www.eclipse.org/xwt/presentation">
+	xmlns:j="clr-namespace:java.lang">
 	<Composite.layout>
 		<ppel:PropertiesLayout></ppel:PropertiesLayout>
 	</Composite.layout>
@@ -22,8 +22,13 @@
 		<Composite.layout>
 			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
 		</Composite.layout>
-		<ppe:MultiReference input="{Binding}"
-			property="CHESS:Dependability:StateBased:StateBasedAnalysis:StateBasedAnalysis:targetFailureMode"></ppe:MultiReference>
+		<ppe:MultiString input="{Binding}"
+			property="CHESS:Dependability:StateBased:StateBasedAnalysis:StateBasedAnalysis:targetFailureMode"></ppe:MultiString>
+	</Composite>
+	<Composite>
+		<Composite.layout>
+			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
+		</Composite.layout>
 		<ppe:MultiReference input="{Binding}"
 			property="CHESS:Dependability:StateBased:StateBasedAnalysis:StateBasedAnalysis:targetDepComponent"></ppe:MultiReference>
 		<ppe:MultiReference input="{Binding}"
