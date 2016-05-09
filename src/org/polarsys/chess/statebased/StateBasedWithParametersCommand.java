@@ -177,7 +177,11 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	 */
 	public String runStateBased (String modelPath, String parametersFilePath, String resultAnalysisPathFile) throws IOException{
 		
-		InputStream is = RunTransformations(modelPath, parametersFilePath, periodicDialog.getMonitor());
+		IProgressMonitor monitor = null;
+		if(periodicDialog != null)
+			monitor = periodicDialog.getMonitor();
+		
+		InputStream is = RunTransformations(modelPath, parametersFilePath, monitor);
 		
 		byte[] buffer = new byte[is.available()];
 	    is.read(buffer);
@@ -188,7 +192,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	    outStream.close();
 		
 		System.out.println("Connecting to DEEM server...");
-		String res = connectToDeem(targetFile.getAbsolutePath(), targetFile.getParent(), periodicDialog.getMonitor());
+		String res = connectToDeem(targetFile.getAbsolutePath(), targetFile.getParent(), monitor);
 		return res;
 	}
 	
@@ -417,7 +421,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 			extractor.extract(imModel, imModelPath);
 			
 			System.out.println("CHESS -> IM ... DONE!");
-			periodicDialog.progress(1);
+			progress(1);
 			
 			/** 
 			 * run IM -> PNML transformation:
@@ -457,7 +461,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 			extractor.extract(pnmlModel, pnmlModelPath);
 			
 			System.out.println("IM -> PNML ... DONE!");
-			periodicDialog.progress(1);
+			progress(1);
 			
 			/** 
 			 * run PNML -> DEEM transformation:
@@ -487,7 +491,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 			InputStream is = new ByteArrayInputStream(stResult.getBytes("UTF-8"));
 			
 			System.out.println("PNML -> DEEM ... DONE!");
-			periodicDialog.progress(1);
+			progress(1);
 			return is;
 			
 		//exception handling?
@@ -699,5 +703,10 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 
 	public static String getModelPath() {
 		return inputFile.getFullPath().toString();
+	}
+	
+	private static void progress(int work) {
+		if(periodicDialog != null)
+			periodicDialog.progress(work);
 	}
 }
