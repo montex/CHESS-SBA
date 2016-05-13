@@ -1734,7 +1734,7 @@ public class UMLUtils {
 			if(stereo != null){
 				PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
 				//the following condition could be done directly comparing the objects and not their names
-				if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
+				if(psmPkg.getAnalysisContext()!= null && psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
 					psmPackage = pkg;
 					//					platform = ((CHGaResourcePlatform) psmPkg.getAnalysisContext().getPlatform().get(0)).getBase_Package();
 					Slot slot = null;
@@ -1905,8 +1905,8 @@ public class UMLUtils {
 			Stereotype stereo = pkg.getAppliedStereotype(Constants.CH_PsmPackage);
 			if(stereo != null){
 				PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
-				System.out.println("Pkg QN="+psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName());
-				if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
+				//System.out.println("Pkg QN="+psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName());
+				if(psmPkg.getAnalysisContext()!= null && psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
 					psmPackage = pkg;
 					//ASSUMPTION psmPackage owns a AnalysisContext Package
 					Package psmHostPack = (Package) psmPackage.getOwnedMember("Host");
@@ -1952,7 +1952,7 @@ public class UMLUtils {
 			Stereotype stereo = pkg.getAppliedStereotype(Constants.CH_PsmPackage);
 			if(stereo != null){
 				PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
-				if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
+				if(psmPkg.getAnalysisContext()!= null && psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
 					psmPackage = pkg;
 
 					//ASSUMPTION psmPackage owns a AnalysisContext Package

@@ -14,16 +14,14 @@
 
 package org.polarsys.chess.codegen.ada.handlers;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.codegen.ada.transformations.Transformations;
 import org.polarsys.chess.codegen.ada.util.AdaGenUtil;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
@@ -32,35 +30,25 @@ import org.polarsys.chess.core.util.uml.ModelError;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
-import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.m2m.Activator;
-import org.polarsys.chess.m2m.handlers.QVToUIHandlerVERDE;
 import org.polarsys.chess.m2m.transformations.PIMPSMTransformationVERDE;
-import org.polarsys.chess.m2m.transformations.TransUtil;
-import org.polarsys.chess.m2m.transformations.TransformationResultsData;
-import org.polarsys.chess.m2m.ui.AnalysisContextSelectionDialog;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
-import org.polarsys.chess.multicore.model.AbstractCommand;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.window.Window;
-import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaResourcesPlatform;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
@@ -68,14 +56,10 @@ import org.eclipse.papyrus.infra.core.resource.ModelSet;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Stereotype;
 
@@ -101,10 +85,17 @@ public class AdaGenUIHandler extends AbstractHandler {
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final IEditorPart editor = HandlerUtil.getActiveEditor(event);
 		final IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-    final Shell shell = window.getShell();
+		final Shell shell = window.getShell();
 		
 		if (!(CHESSEditorUtils.isCHESSProject(editor)))
 			return null;
+		
+		
+		if (editor.isDirty()){
+			if (!MessageDialog.openQuestion(shell, "CHESS code generation", "Model must be saved first, do you want to continue?"))
+				return null;
+			
+		}
 
 		try {
 			inResource = ResourceUtils.getUMLResource(((PapyrusMultiDiagramEditor) editor).getServicesRegistry());
@@ -124,17 +115,22 @@ public class AdaGenUIHandler extends AbstractHandler {
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					
+					SubMonitor subMonitor = SubMonitor.convert(monitor);
+					subMonitor.beginTask("Transforming", 100);
+					
 					if (diagramStatus == null)
 						return null;
 
 					boolean oldSuperUserStatus = diagramStatus.isSuperuser();
 					diagramStatus.setSuperuser(true);
 					
+					subMonitor.subTask("Generating AnalysisContext");
+					
 					contextClass = null;
 					try {
 						contextClass = createAnalysisContext(shell, model);
-						//((ModelSet)inResource.getResourceSet()).save(monitor);
-						((PapyrusMultiDiagramEditor) editor).doSave(monitor);
+						
+						((PapyrusMultiDiagramEditor) editor).doSave(subMonitor.newChild(5));
 					} catch (ModelError e1) {
 						MessageDialog.openError(shell, "CHESS", "Unable to create analysis context: " + e1.getMessage());
 					} finally {
@@ -143,27 +139,34 @@ public class AdaGenUIHandler extends AbstractHandler {
 					
 					if (contextClass==null)
 						return null;
-					
-					
-					try {
-						AdaGenUIHandler.this.performPIM2PSMtransformation(inResource, contextClass, editor, monitor);
-						//Reopen the editor
-						//CHESSEditorUtils.reopenEditor(editor, false);
-					} catch (Exception e) {
-						throw e;
-					} finally {
-						//AdaGenUtil.getActiveProject(editor).refreshLocal(IResource.DEPTH_INFINITE, monitor);
+					IFile filecopy = null;
 
+					subMonitor.subTask("Generating PSM");
+					
+					//generate the PSM
+					try {
+						filecopy = AdaGenUIHandler.this.performPIM2PSMtransformation(inResource, contextClass, editor, subMonitor.newChild(55));
+						//Reopen the editor
+						CHESSEditorUtils.reopenEditor(editor, false);
+					
+					} catch (Exception e) {
+						e.printStackTrace();
+						throw e;
+						
+					} finally {
+											
 					}
 					
+					subMonitor.subTask("Generating code");
+					//now generate the code
 					try {
-						AdaGenUIHandler.this.execute_(editor, monitor, contextClass);
-						//Reopen the editor
-            //CHESSEditorUtils.reopenEditor(editor);
+						AdaGenUIHandler.this.execute_(editor, subMonitor.newChild(40), contextClass,filecopy);
+						
+						
 					} catch (Exception e) {
 						throw e;
 					} finally {
-						AdaGenUtil.getActiveProject(editor).refreshLocal(IResource.DEPTH_INFINITE, monitor);
+						AdaGenUtil.getActiveProject(editor).refreshLocal(IResource.DEPTH_INFINITE, subMonitor.newChild(5));
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -184,20 +187,25 @@ public class AdaGenUIHandler extends AbstractHandler {
 		};
 		job.addJobChangeListener(new JobChangeAdapter() {
 			public void done(IJobChangeEvent event) {
-				if (event.getResult().isOK())
+				if (event.getResult().isOK()){
 					CHESSProjectSupport.printlnToCHESSConsole("Job completed successfully");
-				else
+					
+				}
+				else{
 					CHESSProjectSupport.printlnToCHESSConsole("Job did not complete successfully");
+					
+				}
 			}
 		});
 
 		job.setUser(true);
 		job.setPriority(Job.SHORT);
 		job.schedule();
+		
 		return null;
 	}
 	
-	protected void performPIM2PSMtransformation(Resource inResource, Class contextClass, IEditorPart editor, IProgressMonitor monitor) throws Exception {
+	protected IFile performPIM2PSMtransformation(Resource inResource, Class contextClass, IEditorPart editor, IProgressMonitor monitor) throws Exception {
 		IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
 		PIMPSMTransformationVERDE t = new PIMPSMTransformationVERDE();
 		Map<String, String> configProps = new HashMap<String, String>();
@@ -205,7 +213,7 @@ public class AdaGenUIHandler extends AbstractHandler {
 		configProps.put("analysisType", "Schedulability");
 		t.setConfigProperty(configProps);
 		t.setPsmPackageName(contextClass.getName() +"_PSM");
-		t.performPIM2PSMtransformation((PapyrusMultiDiagramEditor) editor, inputFile, monitor);
+		return t.performPIM2PSMtransformation((PapyrusMultiDiagramEditor) editor, inputFile, monitor, true);
 	}
 
 	/**
@@ -216,25 +224,13 @@ public class AdaGenUIHandler extends AbstractHandler {
 	 * @param monitor the progress monitor
 	 * @throws Exception if unable to load the UML model
 	 */
-	private void execute_(IEditorPart editor, IProgressMonitor monitor, Class contextClass) throws Exception {
-		monitor.beginTask("Transforming", 4);
+	private void execute_(IEditorPart editor, IProgressMonitor monitor, Class contextClass, IFile inputFile) throws Exception {
+		//monitor.beginTask("Transforming", 4);
 		if (!(editor instanceof PapyrusMultiDiagramEditor))
 			return;
-		PapyrusMultiDiagramEditor cEditor = (PapyrusMultiDiagramEditor) editor;
-		Resource inResource = null;
-		try {
-			inResource = ResourceUtils.getUMLResource(cEditor.getServicesRegistry());
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			throw new Exception("Unable to load the model");
-		}
 			
-		IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
+		//inputFile = CHESSProjectSupport.resourceToFile(inResource);
 		final String saAnalysisName = contextClass.getQualifiedName();
-		final String psmPackageName = contextClass.getName() +"_PSM";
-		ModelContent mc = TransUtil.loadModel(inputFile);
-		final Model mi = (Model) mc.getContent().get(0);
-		
 		
 		Transformations.performXMLGeneration(inputFile, saAnalysisName, monitor);
 		
@@ -259,8 +255,12 @@ public class AdaGenUIHandler extends AbstractHandler {
 			@Override
 			public void doExecute() {
 				try {
-					int elements = aView.getOwnedElements().size()+1;
-					analysisContextClass = aView.createOwnedClass("SaAnalysisContext"+elements, false);
+					
+					DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+					   
+					Date date = new Date(System.currentTimeMillis());
+
+					analysisContextClass = aView.createOwnedClass("CodeGen"+dateFormat.format(date), false);
 					UMLUtils.applyStereotype(analysisContextClass, "MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext");
 					SaAnalysisContext saAnalysisContext = UMLUtils.getStereotypeApplication(analysisContextClass, SaAnalysisContext.class);
 					
