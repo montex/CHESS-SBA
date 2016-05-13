@@ -257,20 +257,20 @@ abstract rule InternalFault {
 			target <- component_reset,
 			MultiplicityFunction <- thisModule.newMarkingExpression(tmpfaulty),
 			id <- tmpfaulty_to_reset.defaultID()
-		),
-		
-		--Elements for firing only once
-		fireonce : PNML!Place (
-			containerPage <- thisModule.getPage,
-			initialMarking <- thisModule.newPTMarking(1),
-			id <- basename + '_fireonce'
-		),
-		fireonce_to_fo : PNML!GSPNArc (
-			containerPage <- thisModule.getPage,
-			source <- fireonce,
---			target <- ,
-			id <- basename + '_fireoncetofo'
 		)
+		
+--		--Elements for firing only once
+--		fireonce : PNML!Place (
+--			containerPage <- thisModule.getPage,
+--			initialMarking <- thisModule.newPTMarking(1),
+--			id <- basename + '_fireonce'
+--		),
+--		fireonce_to_fo : PNML!GSPNArc (
+--			containerPage <- thisModule.getPage,
+--			source <- fireonce,
+----			target <- ,
+--			id <- basename + '_fireoncetofo'
+--		)
 }
 rule InternalFaultTT extends InternalFault { --FO timed, TD timed
 	from 
@@ -309,8 +309,8 @@ rule InternalFaultTT extends InternalFault { --FO timed, TD timed
 		),
 		totmp : PNML!GSPNArc ( source <- fo ),
 		removetrans_trans : PNML!GSPNArc ( target <- td ),
-		removetrans_faulty : PNML!GSPNArc ( target <- td ),
-		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
+		removetrans_faulty : PNML!GSPNArc ( target <- td )
+--		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
 }
 rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 	from 
@@ -342,8 +342,8 @@ rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 		),
 		totmp : PNML!GSPNArc ( source <- fo ),
 		removetrans_trans : PNML!GSPNArc ( target <- td ),
-		removetrans_faulty : PNML!GSPNArc ( target <- td ),
-		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
+		removetrans_faulty : PNML!GSPNArc ( target <- td )
+--		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
 }
 rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
 	from
@@ -383,8 +383,8 @@ rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
 		),
 		totmp : PNML!GSPNArc ( source <- fo ),
 		removetrans_trans : PNML!GSPNArc ( target <- td ),
-		removetrans_faulty : PNML!GSPNArc ( target <- td ),
-		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
+		removetrans_faulty : PNML!GSPNArc ( target <- td )
+--		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
 }
 rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
 	from 
@@ -420,8 +420,8 @@ rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
 		),
 		totmp : PNML!GSPNArc ( source <- fo ),
 		removetrans_trans : PNML!GSPNArc ( target <- td ),
-		removetrans_faulty : PNML!GSPNArc ( target <- td ),
-		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
+		removetrans_faulty : PNML!GSPNArc ( target <- td )
+--		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
 }
 
 rule Error { --manca l'implementazione di VanishingTime 
@@ -842,6 +842,18 @@ abstract rule FGE {
 			MultiplicityFunction <- thisModule.newMarkingExpression(blocker),
 			id <- blocker_to_reset.defaultID()
 		)
+--		--Elements for firing only once
+--		fireonce : PNML!Place (
+--			containerPage <- thisModule.getPage,
+--			initialMarking <- thisModule.newPTMarking(1),
+--			id <- basename + '_fireonce'
+--		),
+--		fireonce_to_trfge : PNML!GSPNArc (
+--			containerPage <- thisModule.getPage,
+--			source <- fireonce,
+----			target <- ,
+--			id <- basename + '_fireoncetofo'
+--		)
 }
 rule FGETimed extends FGE {
 	from
@@ -865,6 +877,7 @@ rule FGETimed extends FGE {
 		totmp : PNML!GSPNArc ( source <- trfge ),
 		toblocker : PNML!GSPNArc ( source <- trfge ),
 		toblocker_inhibit : PNML!GSPNArc ( target <- trfge )
+--		fireonce_to_trfge : PNML!GSPNArc ( target <- trfge )
 	do {
 		thisModule.tmpLogicExp <- andop;
 
@@ -911,6 +924,7 @@ rule FGEImmediate extends FGE {
 		totmp : PNML!GSPNArc ( source <- trfge ),
 		toblocker : PNML!GSPNArc ( source <- trfge ),
 		toblocker_inhibit : PNML!GSPNArc ( target <- trfge )
+--		fireonce_to_trfge : PNML!GSPNArc ( target <- trfge )
 	do {
 	
 		thisModule.tmpLogicExp <- andop;
