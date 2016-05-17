@@ -41,6 +41,9 @@ import org.eclipse.gmf.runtime.common.core.command.ICommand;
 import org.eclipse.gmf.runtime.emf.type.core.commands.DestroyElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.DestroyElementRequest;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaAnalysisContext;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.impl.SaAnalysisContextImpl;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.ClientServerPort;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.FlowPort;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
@@ -72,10 +75,13 @@ import org.eclipse.uml2.uml.Realization;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Type;
 import org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition;
+import org.polarsys.chess.chessmlprofile.Core.PSMPackage;
+import org.polarsys.chess.chessmlprofile.Core.CHESSViews.RTAnalysisView;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.validator.automatedActions.IAutomatedAction;
+import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ModelError;
 import org.polarsys.chess.core.util.uml.UMLUtils;
@@ -844,7 +850,7 @@ public class ActionsLib {
 
 			if (notifier instanceof CH_HwProcessor) {
 				CH_HwProcessor chHwProcessor = (CH_HwProcessor) notifier;
-				
+
 				if (chHwProcessor.getBase_Classifier() == null){
 					return null;
 				}
@@ -854,16 +860,16 @@ public class ActionsLib {
 				if (notification.getEventType() == Notification.SET) {
 					if (notification.getFeature() instanceof EAttribute && 
 							((EAttribute)notification.getFeature()).getName().equals(Constants.CHHWPROCESSOR_NB_CORES)) {
-												
+
 						Object oldValue = notification.getOldValue();
 						Object newValue = notification.getNewValue();
-						
+
 						if (oldValue!=null && newValue!=null &&
 								Integer.parseInt(oldValue.toString()) <= Integer.parseInt(newValue.toString())) {
 							// if we are increasing the number of cores or not changing it, do nothing
 							return null;
 						}
-						
+
 						// Ask user if he is sure he wants to modify this attribute, 
 						// warning that the associations to the processor will be deleted
 						PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();																		
@@ -981,7 +987,7 @@ public class ActionsLib {
 		return null;
 	};
 
-	
+
 	/** The partitions modification action. */
 	public static IAutomatedAction partitionsModificationAction = new IAutomatedAction() {
 		private IStatus operationAborted = new Status(IStatus.ERROR,
@@ -1135,6 +1141,133 @@ public class ActionsLib {
 	};
 
 
+	// LB 20160517 for deleting automatically the PSM Package related to an saAnalysisContext that is being deleted
+	/** The deletion of a saAnalysisContext action. */
+	public static IAutomatedAction saAnalysisContextDeletionAction = new IAutomatedAction() {
+		private IStatus operationAborted = new Status(IStatus.ERROR,
+				Activator.PLUGIN_ID, Messages.operationAborted);
+		private Package psm = null;
+		private PSMPackage psmPackage = null;
+
+		@Override
+		public Command compile(Notification notification,
+				List<Notification> notificationList,
+				TransactionalEditingDomain domain) throws RollbackException {
+			Object notifier = notification.getNotifier();
+			
+			if (notifier instanceof Package && 
+					notification.getEventType() == 22 && 		// MODIFIED_STEREOTYPE
+					notification.getNewValue() instanceof PSMPackage) {
+				psm = (Package)notifier;
+				Stereotype psmPackageStereo = psm.getAppliedStereotype(Constants.CH_PsmPackage);				
+				if (psmPackageStereo != null) {
+					psmPackage = (PSMPackage)psm.getStereotypeApplication(psmPackageStereo);
+				}				
+				return null;
+			}
+
+			if ((notifier instanceof Package 
+					&& notification.getEventType() == Notification.REMOVE) &&
+					notification.getFeature() instanceof EReference	&&
+					((EReference) notification.getFeature()).getName().equals("packagedElement")) {
+				
+				// check the package is stereotyped as RTAnalysisView
+				if (((Package)notifier).getAppliedStereotype(Constants.RT_ANALYSIS_VIEW) == null) {
+					return null;
+				}
+				
+				// If the PSM Package related to this SaAnalysisContext does not exist (e.g. has been purged)
+				if (psmPackage == null) {
+					return null;
+				}
+				
+				org.eclipse.uml2.uml.Class cl= (org.eclipse.uml2.uml.Class) notification.getOldValue();
+				String saAnalysisContextName = "";
+				if(cl.getName() != null) {
+					saAnalysisContextName = cl.getName();
+				}
+				String psmPackageName = "";
+				if (psm!= null && psm.getName() != null) {
+					psmPackageName = psm.getName();
+				}
+		
+				// Ask user if he is sure he wants to delete this saAnalysisContext
+				// warning that the related PSM Package will be deleted
+				PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();																		
+
+				if (editor == null) {							
+					return null;
+				}
+
+				MessageDialog md = CHESSEditorUtils.showConfirmDialog(editor, "Confirm", 
+						"Do you want to remove also the PSM Package: "+psmPackageName+" related to the SaAnalysisContext: "+saAnalysisContextName+" ?");
+
+				int result = md.open();
+				
+				// OK
+				if (result == 0) {
+					Model umlModel = cl.getModel();
+					if (psmPackage != null) {
+						Command cmd = deletePackage(umlModel, psm);
+						psm = null;
+						return cmd;
+					}
+					return null;
+				}
+				// CANCEL
+				if (result == 2) {
+					CHESSProjectSupport.CHESS_CONSOLE.println(operationAborted.getMessage());
+					psm = null;
+					throw new RollbackException(operationAborted);
+				}
+				// NO
+				if (result == 1) {
+					psm = null;
+					return null;		
+				}
+				
+				return null;					
+			}
+			return null;
+		}
+
+
+
+		/**
+		 * Delete the given Package 
+		 * (used to delete the PSM package related to a saAnalysisContext that was deleted)
+		 * @param umlModel
+		 * @param thePackage
+		 * @return
+		 */
+		private Command deletePackage(Model umlModel, Package thePackage) {
+			CompositeCommand cmd = new CompositeCommand("delPackageCommand");
+
+			IElementEditService provider = ElementEditServiceUtils
+					.getCommandProvider(thePackage);
+			if (provider == null) {
+				return null;					
+			}
+			// Retrieve delete command from the Element Edit
+			// service
+			DestroyElementRequest request = new DestroyElementRequest(
+					thePackage, false);
+			ICommand deleteCommand = provider
+					.getEditCommand(request);
+
+			cmd.add(deleteCommand);				
+
+			if (!cmd.isEmpty())
+				return new GMFtoEMFCommandWrapper(cmd);
+			return null;
+
+		}
+	};
+
+
+
+
+
 	//	public static IAutomatedAction[] actionList = {portModificationAction,
 	//			portRemovalAction, componentInterfaceRealizationAction,
 	//			componentRealizationAction, removeRealizationOperationsAction,
@@ -1145,7 +1278,7 @@ public class ActionsLib {
 	/** The static list of the actions that will be checked at run-time. */
 	public static IAutomatedAction[] actionList = {portModificationAction,
 		componentInterfaceRealizationAction, componentRealizationAction,
-		commentAction, coreModificationAction, partitionsModificationAction};
+		commentAction, coreModificationAction, saAnalysisContextDeletionAction, partitionsModificationAction};
 
 }
 
