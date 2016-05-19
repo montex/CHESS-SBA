@@ -617,28 +617,26 @@ rule FailureMode {
 }
 
 --FaultsExpression elements
---rule FaultsExpressionNode(n : IDM!FaultsExpressionFaultNode) {
---	using {
---		out : PNML!LogicalExpression = OclUndefined;
---	}
---	do {
---		if(n.oclIsTypeOf(IDM!FaultsExpressionFaultNode)) {
---			out <- thisModule.FaultsExpressionFaultNode(n);
---		}else if(n.oclIsTypeOf(IDM!FaultsExpressionAndNode)) {
---			out <- thisModule.FaultsExpressionAndNode(n);
---		}else if(n.oclIsTypeOf(IDM!FaultsExpressionOrNode)) {
---			out <- thisModule.FaultsExpressionOrNode(n);
---		}else if(n.oclIsTypeOf(IDM!FaultsExpressionNotNode)) {
---			out <- thisModule.FaultsExpressionNotNode(n);
---		}
---
---		out;
---	}
---}
+rule FaultsExpressionNode(n : IDM!FaultsExpressionFaultNode) {
+	using {
+		out : PNML!LogicalExpression = OclUndefined;
+	}
+	do {
+		if(n.oclIsTypeOf(IDM!FaultsExpressionFaultNode)) {
+			out <- thisModule.FaultsExpressionFaultNode(n);
+		}else if(n.oclIsTypeOf(IDM!FaultsExpressionAndNode)) {
+			out <- thisModule.FaultsExpressionAndNode(n);
+		}else if(n.oclIsTypeOf(IDM!FaultsExpressionOrNode)) {
+			out <- thisModule.FaultsExpressionOrNode(n);
+		}else if(n.oclIsTypeOf(IDM!FaultsExpressionNotNode)) {
+			out <- thisModule.FaultsExpressionNotNode(n);
+		}
 
-rule FaultsExpressionFaultNode {
-	from 
-		n : IDM!FaultsExpressionFaultNode
+		out;
+	}
+}
+
+rule FaultsExpressionFaultNode(n : IDM!FaultsExpressionFaultNode) {
 	to
 		nn : PNML!OpGreater ( expression1 <- e1, expression2 <- e2 ),
 		e1 : PNML!MarkingExpression (
@@ -650,32 +648,38 @@ rule FaultsExpressionFaultNode {
 			endif
 		),
 		e2 : PNML!ValueExpression ( value <- 0 )
+	do {
+		nn;	
+	}
 }
-rule FaultsExpressionNotNode {
-	from
-		n : IDM!FaultsExpressionNotNode
+rule FaultsExpressionNotNode(n : IDM!FaultsExpressionNotNode) {
 	to
 		nn : PNML!OpNot (
-			expression <- n.FaultsExpression
+			expression <- thisModule.FaultsExpressionNode(n.FaultsExpression)
 		)
+	do {
+		nn;	
+	}
 }
-rule FaultsExpressionAndNode {
-	from
-		n : IDM!FaultsExpressionAndNode
+rule FaultsExpressionAndNode(n : IDM!FaultsExpressionAndNode) {
 	to
 		nn : PNML!OpAnd (
-			expression1 <- n.FaultsExpression1,
-			expression2 <- n.FaultsExpression2
+			expression1 <- thisModule.FaultsExpressionNode(n.FaultsExpression1),
+			expression2 <- thisModule.FaultsExpressionNode(n.FaultsExpression2)
 		)
+	do {
+		nn;	
+	}
 }
-rule FaultsExpressionOrNode {
-	from
-		n : IDM!FaultsExpressionOrNode
+rule FaultsExpressionOrNode(n : IDM!FaultsExpressionOrNode) {
 	to
 		nn : PNML!OpOr ( 
-			expression1 <- n.FaultsExpression1, 
-			expression2 <- n.FaultsExpression2
+			expression1 <- thisModule.FaultsExpressionNode(n.FaultsExpression1), 
+			expression2 <- thisModule.FaultsExpressionNode(n.FaultsExpression2)
 		)
+	do {
+		nn;
+	}
 }
 
 --ErrorsExpression elements
@@ -751,7 +755,7 @@ abstract rule FGE {
 	to
 		andop : PNML!OpAnd
 		(
-			expression1 <- thisModule.newOpAnd(fge.PropagationLogic,
+			expression1 <- thisModule.newOpAnd(thisModule.FaultsExpressionNode(fge.PropagationLogic),
 											   thisModule.newOpAnd(
 											       thisModule.newOpEqual(
 											           thisModule.newMarkingExpression(tmp),
@@ -1316,7 +1320,7 @@ rule CreateIPGuard(iprop : IDM!InternalPropagation) {
 		andop <- thisModule.newOpAnd( 
 			if(not iprop.FaultGuard.oclIsUndefined()) then
 				thisModule.newOpAnd(
-					iprop.FaultGuard,
+					thisModule.FaultsExpressionNode(iprop.FaultGuard),
 					thisModule.newOpAnd(thisModule.ErrorsExpressionNode(iprop.PropagationLogic),
 													   thisModule.newOpAnd(
 													       thisModule.newOpEqual(
