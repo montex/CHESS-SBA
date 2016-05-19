@@ -68,6 +68,7 @@ public class Constants {
 	
 	// CHESS views
 	public static final String DEPENDABILITY_ANALYSIS_VIEW = "CHESS::Core::CHESSViews::DependabilityAnalysisView";
+	public static final String RT_ANALYSIS_VIEW = "CHESS::Core::CHESSViews::RTAnalysisView";
 	public static final String COMPONENT_VIEW = "CHESS::Core::CHESSViews::ComponentView";
 	// Added REQUIREMENT_VIEW, SYSTEM_VIEW (20140207)
 	public static final String REQUIREMENT_VIEW = "CHESS::Core::CHESSViews::RequirementView";
@@ -143,6 +144,7 @@ public class Constants {
 	public static final String DEPLOYMENT_VIEW_NAME = "DeploymentView";
 	public static final String COMPONENT_VIEW_NAME = "ComponentView";
 	public static final String ANALYSIS_VIEW_NAME = "AnalysisView";
+	public static final String PSM_VIEW_NAME = "PSMView";
 	
 	// CHESS CHRtPortSlot stereotype
 	public static final String CH_CHRtPortSlot = "CHESS::Predictability::RTComponentModel::CHRtPortSlot";
