@@ -570,6 +570,9 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 					lineSplit = line.split("\\s+");
 					name = lineSplit[2];
 					value = lineSplit[3];
+					if(lineSplit[4].equals("(*)")) {
+						value = value + " " + lineSplit[4];
+					}
 					
 					results.put(name, value);
 				}

@@ -38,6 +38,8 @@ helper def: flaWildcard : String = 'wildcard';
 													 
 helper def: flaRules : Map(IM!Component, Map(String, IM!Error)) = Map{};			--Map to obtain the list of flarules for a component, and the corresponding IM!Error elements
 
+helper def: errmodErrorMap : Map(TupleType(e: UML!Vertex, cc: IM!Component), IM!Error) = Map{};
+
 --rule to transform the CHESS!StateBasedAnalysis into an IM!Sistema
 rule SBA {
 	from 
@@ -339,7 +341,7 @@ rule ErrorModelToComponent(inst : UML!InstanceSpecification) {
 		for(tr in transitions) {
 			tmpStereotype <- tr.getSBAStereotype();
 			if(tmpStereotype.oclIsTypeOf(CHESS!Failure)) {		
-				thisModule.AddEPFFromErrorModelFailure(tmpStereotype);
+				thisModule.AddEPFFromErrorModelFailure(tmpStereotype,inst);
 			}
 		}
 				
@@ -514,43 +516,36 @@ rule ErrorModel_FGE(inst : UML!InstanceSpecification) {
 					--Do nothing (processed elsewhere)				
 				}else{
 					--Match <<InternalPropagation>> stereotype only
-					
-					--Set a default for the delay and weight
-					if(tmpStereotype.delay.oclIsUndefined()) {
-						tmpStereotype.delay <- 'det(0)';	
-					}
-					if(tmpStereotype.weight.oclIsUndefined()) {
-						tmpStereotype.weight <- '1';	
-					}
-					
-					if(tr.source.isInitialState()) {
-						tmpExternalFaults <- tmpStereotype.externalFaults;
-						tmpFEXP <- thisModule.FEXP_ParseString(tmpExternalFaults, inst);
-						tmpFGE <- thisModule.AddFGE(
-							tmpFEXP.faultsList(),
-							Sequence{thisModule.ErrorModelStateToError(tr.target)},
-							tmpStereotype.delay.parseDistribution(),
-							1,
-							tmpStereotype.weight.toReal()
-						);
-						tmpFEXP.faultsGenerateErrors <- tmpFGE;
-						tmpFGE.PropagationLogic <- tmpFEXP;
-						tmpFGE.PropagationLogicStringFormat <- tmpFEXP.toString();
+					if(tmpStereotype.externalFaults.oclIsUndefined()) {
+						--Do nothing (processed elsewhere)
 					}else{
-						--The case where externalFaults is not null AND the source state is not
-						--the initial state has not been implemented (requires changes to the IDM)
-						thisModule.InternalPropagation(tmpStereotype, inst);
---						tmpIP <- thisModule.AddIP(
---							thisModule.ErrorModelStateToError(tr.source),
---							thisModule.ErrorModelStateToError(tr.target),
---							tmpStereotype.delay.parseDistribution(),
---							1,
---							tmpStereotype.weight.toReal()
---						);
---						tmpEEXP <- thisModule.EEXP_Error(tmpEPF.Source);
---						tmpEEXP.errorPropagation <- tmpEPF,
---						tmpEPF.PropagationLogic <- 
---						tmpEPF.PropagationLogicStringFormat <- tmpEPF.PropagationLogic.toString();
+						--Process InternalPropagation that have a value
+						--in the externalFaults attribute
+						--Set a default for the delay and weight
+						if(tmpStereotype.delay.oclIsUndefined()) {
+							tmpStereotype.delay <- 'det(0)';	
+						}
+						if(tmpStereotype.weight.oclIsUndefined()) {
+							tmpStereotype.weight <- '1';	
+						}
+						
+						if(tr.source.isInitialState()) {
+							tmpExternalFaults <- tmpStereotype.externalFaults;
+							tmpFEXP <- thisModule.FEXP_ParseString(tmpExternalFaults, inst);
+							tmpFGE <- thisModule.AddFGE(
+								tmpFEXP.faultsList(),
+								thisModule.errmodErrorMap->get(Tuple{e=tr.target, cc=c}),
+								tmpStereotype.delay.parseDistribution(),
+								1,
+								tmpStereotype.weight.toReal()
+							);
+							tmpFEXP.faultsGenerateErrors <- tmpFGE;
+							tmpFGE.PropagationLogic <- tmpFEXP;
+							tmpFGE.PropagationLogicStringFormat <- tmpFEXP.toString();
+						}
+						else{
+							thisModule.InternalPropagation(tmpStereotype,inst);
+						}
 					}
 				}
 			}
@@ -570,23 +565,29 @@ lazy rule AddExternalFault {
 		)
 }
 
-unique lazy rule ErrorModelStateToError {
+lazy rule ErrorModelStateToError {
 	from 
 		state : UML!Vertex,
 		inst : UML!InstanceSpecification
+	using {
+		c : IM!Component = thisModule.InstanceToComponent(inst);
+	}
 	to
 		err : IM!Error (
 			Name <- inst.name + '_' + state.name,
-			Component <- thisModule.InstanceToComponent(inst)
+			Component <- c
 		)
+	do {
+		thisModule.errmodErrorMap <- thisModule.errmodErrorMap->including(Tuple{e=state, cc=c}, err);
+	}
 }
 
-unique lazy rule InternalFault {
+lazy rule InternalFault {
 	from
 		chIntFault : CHESS!InternalFault,
 		inst : UML!InstanceSpecification
 	using {
-		c : IM!Component = thisModule.InstanceToComponent(inst);
+		c : IM!Component = thisModule.InstanceToComponent(inst);		
 	}
 	to
 		ift : IM!InternalFault (
@@ -600,7 +601,7 @@ unique lazy rule InternalFault {
 			Name <- c.Name + '_fge_' + (c.FaultsGeneratesErrors->size()+1),
 			Component <- c,
 			Source <- Sequence{ift},
-			Destination <- thisModule.ErrorModelStateToError(chIntFault.base_Transition.target),
+			Destination <- thisModule.errmodErrorMap->get(Tuple{e=chIntFault.base_Transition.target, cc=c}),
 			Weight <- 1,
 			PropagationProbability <- 1,
 			ActivationDelay <- thisModule.Deterministic(0),
@@ -618,21 +619,21 @@ unique lazy rule InternalFault {
 	}
 }
 
-unique lazy rule InternalPropagation {
+lazy rule InternalPropagation {
 	from 
 		chIntProp : CHESS!InternalPropagation,
 		inst : UML!InstanceSpecification
 	using {
+		c : IM!Component = thisModule.InstanceToComponent(inst);
 		myDelay : String = if chIntProp.delay.oclIsUndefined() then 'det(0)' else chIntProp.delay endif;
 		myWeight : Real = if chIntProp.weight.oclIsUndefined() then 1 else chIntProp.weight.toReal() endif;
-		c : IM!Component = thisModule.InstanceToComponent(inst);
 	}
 	to
 		imIntProp : IM!InternalPropagation (
 			Component <- c,
 			Name <- c.Name + '_intprop_' + (c.InternalPropagation->size()+1),
-			Source <- Sequence{thisModule.ErrorModelStateToError(chIntProp.base_Transition.source,inst)},
-			Destination <- Sequence{thisModule.ErrorModelStateToError(chIntProp.base_Transition.target,inst)},
+			Source <- Sequence{thisModule.errmodErrorMap->get(Tuple{e=chIntProp.base_Transition.source, cc=c})},
+			Destination <- Sequence{thisModule.errmodErrorMap->get(Tuple{e=chIntProp.base_Transition.target, cc=c})},
 			PropagationProbability <- 1,
 			PropagationDelay <- myDelay.parseDistribution(),
 			Weight <- myWeight,
@@ -665,14 +666,15 @@ rule AddError(name : String, c : IM!Component) {
 	}
 }
 
-unique lazy rule AddEPFFromErrorModelFailure {
+lazy rule AddEPFFromErrorModelFailure {
 	from
-		f : CHESS!Failure
+		f : CHESS!Failure,
+		inst : UML!InstanceSpecification
 	using {
-		eSource : IM!Error = thisModule.ErrorModelStateToError(f.base_Transition.source);
+		c : IM!Component = thisModule.InstanceToComponent(inst);
+		eSource : IM!Error = thisModule.errmodErrorMap->get(Tuple{e=f.base_Transition.source, cc=c});
 		myDelay : String = if f.delay.oclIsUndefined() then 'det(0)' else f.delay endif;
 		myWeight : Real = if f.weight.oclIsUndefined() then 1 else f.weight.toReal() endif;
-		c : IM!Component = eSource.Component;
 	}
 	to
 		epf : IM!ErrorsProducesFailures (
