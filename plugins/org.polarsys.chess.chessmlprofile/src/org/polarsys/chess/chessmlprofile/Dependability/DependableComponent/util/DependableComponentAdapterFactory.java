@@ -86,6 +86,10 @@ public class DependableComponentAdapterFactory extends AdapterFactoryImpl {
 				return createErrorModelBehaviorAdapter();
 			}
 			@Override
+			public Adapter casePropagation(Propagation object) {
+				return createPropagationAdapter();
+			}
+			@Override
 			public Adapter caseFailureMode(FailureMode object) {
 				return createFailureModeAdapter();
 			}
@@ -162,6 +166,20 @@ public class DependableComponentAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createErrorModelBehaviorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation <em>Propagation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation
+	 * @generated
+	 */
+	public Adapter createPropagationAdapter() {
 		return null;
 	}
 

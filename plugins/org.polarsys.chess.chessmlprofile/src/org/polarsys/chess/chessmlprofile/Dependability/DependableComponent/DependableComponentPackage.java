@@ -127,7 +127,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getFailureMode()
 	 * @generated
 	 */
-	int FAILURE_MODE = 3;
+	int FAILURE_MODE = 4;
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes <em>Failure Modes</em>}'.
@@ -302,6 +302,70 @@ public interface DependableComponentPackage extends EPackage {
 	 * @ordered
 	 */
 	int ERROR_MODEL_BEHAVIOR_FEATURE_COUNT = 5;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl <em>Propagation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getPropagation()
+	 * @generated
+	 */
+	int PROPAGATION = 3;
+
+	/**
+	 * The feature id for the '<em><b>Prob</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPAGATION__PROB = 0;
+
+	/**
+	 * The feature id for the '<em><b>Delay</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPAGATION__DELAY = 1;
+
+	/**
+	 * The feature id for the '<em><b>Base Connector</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPAGATION__BASE_CONNECTOR = 2;
+
+	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPAGATION__BASE_INSTANCE_SPECIFICATION = 3;
+
+	/**
+	 * The feature id for the '<em><b>Base Comment</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPAGATION__BASE_COMMENT = 4;
+
+	/**
+	 * The number of structural features of the '<em>Propagation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPAGATION_FEATURE_COUNT = 5;
 
 	/**
 	 * The feature id for the '<em><b>Base Class</b></em>' reference.
@@ -563,6 +627,71 @@ public interface DependableComponentPackage extends EPackage {
 	EReference getErrorModelBehavior_Base_Connector();
 
 	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation <em>Propagation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Propagation</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation
+	 * @generated
+	 */
+	EClass getPropagation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getProb <em>Prob</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Prob</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getProb()
+	 * @see #getPropagation()
+	 * @generated
+	 */
+	EAttribute getPropagation_Prob();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getDelay <em>Delay</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Delay</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getDelay()
+	 * @see #getPropagation()
+	 * @generated
+	 */
+	EAttribute getPropagation_Delay();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Connector <em>Base Connector</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Connector</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Connector()
+	 * @see #getPropagation()
+	 * @generated
+	 */
+	EReference getPropagation_Base_Connector();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_InstanceSpecification <em>Base Instance Specification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Instance Specification</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_InstanceSpecification()
+	 * @see #getPropagation()
+	 * @generated
+	 */
+	EReference getPropagation_Base_InstanceSpecification();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Comment <em>Base Comment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Comment</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Comment()
+	 * @see #getPropagation()
+	 * @generated
+	 */
+	EReference getPropagation_Base_Comment();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -775,6 +904,56 @@ public interface DependableComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR = eINSTANCE.getErrorModelBehavior_Base_Connector();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl <em>Propagation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getPropagation()
+		 * @generated
+		 */
+		EClass PROPAGATION = eINSTANCE.getPropagation();
+
+		/**
+		 * The meta object literal for the '<em><b>Prob</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PROPAGATION__PROB = eINSTANCE.getPropagation_Prob();
+
+		/**
+		 * The meta object literal for the '<em><b>Delay</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PROPAGATION__DELAY = eINSTANCE.getPropagation_Delay();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Connector</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROPAGATION__BASE_CONNECTOR = eINSTANCE.getPropagation_Base_Connector();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Instance Specification</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROPAGATION__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getPropagation_Base_InstanceSpecification();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Comment</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROPAGATION__BASE_COMMENT = eINSTANCE.getPropagation_Base_Comment();
 
 	}
 

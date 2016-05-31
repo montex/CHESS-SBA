@@ -293,6 +293,18 @@
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
       </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Propagation">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="prob" ordered="false"
+            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
+            ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
+      </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="FailureMode">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="UMLConstraints can be attached to FailureMode to specify compliance between them (to be confirmed). FailureModes can appear in generalization relationships; in this case the compatibility between FailureMmodes follows the UML generalization semantics."/>

@@ -4102,9 +4102,6 @@ So a FailureModes applied to Slot (in place of the FPTCPortSlot) can refer the &
         <ownedComment xmi:type="uml:Comment" xmi:id="_VJJIoDa9EeW314N4GP8y1Q" annotatedElement="_DBxD0DHsEeWt8Ovv2G_EJg">
           <body>allows to decorate a port\instance with information regarding the failureModes possibly affecting the port\instance itself</body>
         </ownedComment>
-        <ownedComment xmi:type="uml:Comment" xmi:id="_k15jIDbCEeW314N4GP8y1Q">
-          <body>obsolete</body>
-        </ownedComment>
         <ownedComment xmi:type="uml:Comment" xmi:id="_64fbIDbDEeW314N4GP8y1Q" annotatedElement="_y0zvEDQ2EeC0ueejuetpgA">
           <body>obsolete, use ErrorModelBehavior</body>
         </ownedComment>
@@ -4304,6 +4301,37 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_aZR90DbDEeW314N4GP8y1Q" name="E_ErrorModelBehavior_Connector1" memberEnd="_aZR90TbDEeW314N4GP8y1Q _aZRWwDbDEeW314N4GP8y1Q">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_aZR90TbDEeW314N4GP8y1Q" name="extension_ErrorModelBehavior" type="_H5GnMDbDEeW314N4GP8y1Q" aggregation="composite" association="_aZR90DbDEeW314N4GP8y1Q"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_F310MCcwEeaP8Pto8-KNAg" name="Propagation">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_NyBcgCcwEeaP8Pto8-KNAg" name="prob">
+            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_Yq-MQBFQEdyUJeMeN__D-A"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_T2jKwCcwEeaP8Pto8-KNAg" name="delay" visibility="public">
+            <type xmi:type="uml:DataType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_kMwX8BFREdyUJeMeN__D-A"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_T2jKwScwEeaP8Pto8-KNAg"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_T2jKwicwEeaP8Pto8-KNAg" value="1"/>
+            <defaultValue xmi:type="uml:LiteralString" xmi:id="_T2jKwycwEeaP8Pto8-KNAg">
+              <value xsi:nil="true"/>
+            </defaultValue>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_Z7vnYCcwEeaP8Pto8-KNAg" name="base_Connector" association="_Z7w1gCcwEeaP8Pto8-KNAg">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Connector"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_aiW7cCcwEeaP8Pto8-KNAg" name="base_InstanceSpecification" association="_aiXigCcwEeaP8Pto8-KNAg">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_a7yIECcwEeaP8Pto8-KNAg" name="base_Comment" association="_a7zWMCcwEeaP8Pto8-KNAg">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Comment"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_Z7w1gCcwEeaP8Pto8-KNAg" name="E_Propagation_Connector1" memberEnd="_Z7w1gScwEeaP8Pto8-KNAg _Z7vnYCcwEeaP8Pto8-KNAg">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Z7w1gScwEeaP8Pto8-KNAg" name="extension_Propagation" type="_F310MCcwEeaP8Pto8-KNAg" aggregation="composite" association="_Z7w1gCcwEeaP8Pto8-KNAg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_aiXigCcwEeaP8Pto8-KNAg" name="E_Propagation_InstanceSpecification1" memberEnd="_aiXigScwEeaP8Pto8-KNAg _aiW7cCcwEeaP8Pto8-KNAg">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_aiXigScwEeaP8Pto8-KNAg" name="extension_Propagation" type="_F310MCcwEeaP8Pto8-KNAg" aggregation="composite" association="_aiXigCcwEeaP8Pto8-KNAg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_a7zWMCcwEeaP8Pto8-KNAg" name="E_Propagation_Comment1" memberEnd="_a7zWMScwEeaP8Pto8-KNAg _a7yIECcwEeaP8Pto8-KNAg">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_a7zWMScwEeaP8Pto8-KNAg" name="extension_Propagation" type="_F310MCcwEeaP8Pto8-KNAg" aggregation="composite" association="_a7zWMCcwEeaP8Pto8-KNAg"/>
         </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Profile" xmi:id="_5g4wEDQ3EeC0ueejuetpgA" name="ThreatsPopagation" URI="http://CHESS/Dependability/ThreatsPropagation" metaclassReference="_AGLpEDQ4EeC0ueejuetpgA _EsXKADQ4EeC0ueejuetpgA _YOEPEDQ4EeC0ueejuetpgA _T6fIcMvmEeSajLw6mg2A8Q _-JLxoM2NEeSrt5YehnIlig">

@@ -109,6 +109,13 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	private EClass errorModelBehaviorEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass propagationEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -449,6 +456,60 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getPropagation() {
+		return propagationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPropagation_Prob() {
+		return (EAttribute)propagationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPropagation_Delay() {
+		return (EAttribute)propagationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPropagation_Base_Connector() {
+		return (EReference)propagationEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPropagation_Base_InstanceSpecification() {
+		return (EReference)propagationEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPropagation_Base_Comment() {
+		return (EReference)propagationEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DependableComponentFactory getDependableComponentFactory() {
 		return (DependableComponentFactory)getEFactoryInstance();
 	}
@@ -491,6 +552,13 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		createEReference(errorModelBehaviorEClass, ERROR_MODEL_BEHAVIOR__BASE_PROPERTY);
 		createEReference(errorModelBehaviorEClass, ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR);
 
+		propagationEClass = createEClass(PROPAGATION);
+		createEAttribute(propagationEClass, PROPAGATION__PROB);
+		createEAttribute(propagationEClass, PROPAGATION__DELAY);
+		createEReference(propagationEClass, PROPAGATION__BASE_CONNECTOR);
+		createEReference(propagationEClass, PROPAGATION__BASE_INSTANCE_SPECIFICATION);
+		createEReference(propagationEClass, PROPAGATION__BASE_COMMENT);
+
 		failureModeEClass = createEClass(FAILURE_MODE);
 		createEReference(failureModeEClass, FAILURE_MODE__BASE_CLASS);
 		createEAttribute(failureModeEClass, FAILURE_MODE__DESCRIPTION);
@@ -527,6 +595,7 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		FailurePropagationPackage theFailurePropagationPackage = (FailurePropagationPackage)EPackage.Registry.INSTANCE.getEPackage(FailurePropagationPackage.eNS_URI);
 		ThreatsPropagationPackage theThreatsPropagationPackage = (ThreatsPropagationPackage)EPackage.Registry.INSTANCE.getEPackage(ThreatsPropagationPackage.eNS_URI);
+		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
 		// Create type parameters
@@ -554,6 +623,13 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		initEReference(getErrorModelBehavior_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, ErrorModelBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getErrorModelBehavior_Base_Property(), theUMLPackage.getProperty(), null, "base_Property", null, 1, 1, ErrorModelBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getErrorModelBehavior_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, ErrorModelBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(propagationEClass, Propagation.class, "Propagation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getPropagation_Prob(), theBasicNFP_TypesPackage.getNFP_Real(), "prob", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getPropagation_Delay(), theBasicNFP_TypesPackage.getNFP_Duration(), "delay", null, 0, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getPropagation_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getPropagation_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getPropagation_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(failureModeEClass, FailureMode.class, "FailureMode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFailureMode_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
