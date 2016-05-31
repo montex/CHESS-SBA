@@ -65,6 +65,7 @@ public class DependableComponentFactoryImpl extends EFactoryImpl implements Depe
 			case DependableComponentPackage.FAILURE_MODES: return createFailureModes();
 			case DependableComponentPackage.DEPENDABLE_COMPONENT: return createDependableComponent();
 			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR: return createErrorModelBehavior();
+			case DependableComponentPackage.PROPAGATION: return createPropagation();
 			case DependableComponentPackage.FAILURE_MODE: return createFailureMode();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -109,6 +110,16 @@ public class DependableComponentFactoryImpl extends EFactoryImpl implements Depe
 	public ErrorModelBehavior createErrorModelBehavior() {
 		ErrorModelBehaviorImpl errorModelBehavior = new ErrorModelBehaviorImpl();
 		return errorModelBehavior;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Propagation createPropagation() {
+		PropagationImpl propagation = new PropagationImpl();
+		return propagation;
 	}
 
 	/**
