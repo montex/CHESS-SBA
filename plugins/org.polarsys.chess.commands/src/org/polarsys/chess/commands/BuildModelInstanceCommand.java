@@ -518,8 +518,6 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 			Propagation newPropagation = UMLUtils.getStereotypeApplication(connInst, Propagation.class);
 			newPropagation.setProb(origPropagation.getProb());
 			newPropagation.setDelay(origPropagation.getDelay());
-			newPropagation.getTransfFunct().addAll(origPropagation.getTransfFunct());
-			newPropagation.setWeight(origPropagation.getWeight());
 		}	
 	}
 	
