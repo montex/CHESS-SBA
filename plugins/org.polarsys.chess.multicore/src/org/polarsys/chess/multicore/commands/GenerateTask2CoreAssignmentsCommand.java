@@ -437,7 +437,7 @@ public class GenerateTask2CoreAssignmentsCommand extends AbstractCommand {
 			throw me;
 		}
 
-		EList<InstanceSpecification> instances = UMLUtils.getAllComponentInstances(umlModel);
+		EList<InstanceSpecification> instances = UMLUtils.getAllComponentInstances(umlModel, true);
 		EList<CHTask> chtasks = QueryUtils.getCHTasksList(instances);
 
 		operationList = QueryUtils.getOperationChain(umlModel, chtasks);

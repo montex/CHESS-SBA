@@ -29,12 +29,17 @@ import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
+import org.eclipse.uml2.uml.InstanceValue;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.Stereotype;
+import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
+import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
 import org.polarsys.chess.chessmlprofile.Core.CHESS;
 import org.polarsys.chess.chessmlprofile.Core.Domain;
 import org.polarsys.chess.chessmlprofile.util.Constants;
@@ -82,8 +87,13 @@ public class DV_01 extends AbstractModelConstraint {
 				// Is the component a ComponentImplementation?
 				Stereotype compImpl = comp.getAppliedStereotype(Constants.COMPONENT_IMPLEMENTATION);
 				if (compImpl!=null) {
+					//System.out.println("Looking at "+instSpec.getName());
+					// only continue in this verification if we are looking at a leaf component.
+					if (!UMLUtils.isLeafComponentInstance(instSpec)) {
+						return success;
+					}
+					
 					// There should be exactly one Assign.from referencing the component						
-
 					// to manage multi-core and partitioning issues					 
 					EList<Assign> assignments = new BasicEList<Assign>();
 					EList<Assign> compViewAssignments = new BasicEList<Assign>();

@@ -284,7 +284,7 @@ AbstractCommand {
 			throw me;
  		}
 
-		EList<InstanceSpecification> instances = UMLUtils.getAllComponentInstances(umlModel);
+		EList<InstanceSpecification> instances = UMLUtils.getAllComponentInstances(umlModel, true);
 		tasks = QueryUtils.getCHTasksList(instances);
 
 		operationList = QueryUtils.getOperationChain(umlModel, tasks);

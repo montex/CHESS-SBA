@@ -56,6 +56,7 @@ import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
+import org.eclipse.uml2.uml.InstanceValue;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.uml2.uml.Model;
@@ -68,6 +69,7 @@ import org.eclipse.uml2.uml.Realization;
 import org.eclipse.uml2.uml.Relationship;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.Stereotype;
+import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.VisibilityKind;
 import org.eclipse.uml2.uml.internal.impl.DependencyImpl;
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
@@ -1474,13 +1476,15 @@ public class UMLUtils {
 
 
 	/**
-	 * Returns a list of all Component Instances found in the Component View
+	 * Returns the list of all Component Instances found in the Component View if onlyTerminal is FALSE, 
+	 * Returns the list of all terminal Component Instances found in the Component View if onlyTerminal is TRUE. 
 	 * @param umlModel
-	 * @return 
+	 * @param onlyTerminal
+	 * @return
 	 * @throws ModelError
 	 */
 	public static EList<InstanceSpecification> getAllComponentInstances(
-			Model umlModel) throws ModelError {
+			Model umlModel, boolean onlyTerminal) throws ModelError {
 
 		Package cmpv = CHESSProfileManager.getViewByStereotype(umlModel,
 				CHESSProfileManager.COMPONENT_VIEW);
@@ -1503,6 +1507,12 @@ public class UMLUtils {
 
 			if (!(is.getQualifiedName() != null
 					&& UMLUtils.isComponentInstance(is))) continue;
+			if (onlyTerminal) {
+				// 20160601 Only consider leaf elements
+				if (!UMLUtils.isLeafComponentInstance(is)) {
+					continue;
+				}
+			}
 			components.add(is);
 
 		}
@@ -1512,6 +1522,43 @@ public class UMLUtils {
 		return components;
 	}
 
+
+	/**
+	 * 
+	 * @param instSpec
+	 * @return true if the Instance Specification does not contain any ComponentImplementations (i.e. it is a leaf)
+	 * false otherwise
+	 */
+	public static boolean isLeafComponentInstance(InstanceSpecification instSpec) {
+		if (instSpec.getOwnedElements().size()  > 0) {	
+			//System.out.println("Looking at instSpec="+instSpec.getName());
+			EList<Element> theOwnedElems = instSpec.getOwnedElements();
+			for (Element theOwnedElem : theOwnedElems) {												
+				if (theOwnedElem instanceof Slot) {								
+					Slot theSlot = (Slot)theOwnedElem;								
+					EList<ValueSpecification> valSpecs = theSlot.getValues();								
+
+					for (ValueSpecification valSpec: valSpecs) {																		
+						if (valSpec instanceof InstanceValue){
+							InstanceSpecification theInstance = ((InstanceValue) valSpec).getInstance();										
+							for (Classifier instClassifier : theInstance.getClassifiers()) {
+								if (instClassifier instanceof Component) {
+									Component instComp = (Component) instClassifier;
+									// Is the component a ComponentImplementation?
+									Stereotype compImplStereo = instComp.getAppliedStereotype(Constants.COMPONENT_IMPLEMENTATION);
+									if (compImplStereo != null) {
+										// This is not a leaf component, as it is parent of some ComponentImplementation
+										return false;
+									}
+								}
+							}
+						}
+					}
+				}					
+			}
+		}
+		return true;
+	}
 
 	/**
 	 * Looks for all the Component to Functional Partition Assignments in the specified View
@@ -1734,7 +1781,7 @@ public class UMLUtils {
 			if(stereo != null){
 				PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
 				//the following condition could be done directly comparing the objects and not their names
-				if(psmPkg.getAnalysisContext()!= null && psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
+				if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
 					psmPackage = pkg;
 					//					platform = ((CHGaResourcePlatform) psmPkg.getAnalysisContext().getPlatform().get(0)).getBase_Package();
 					Slot slot = null;
@@ -1905,8 +1952,8 @@ public class UMLUtils {
 			Stereotype stereo = pkg.getAppliedStereotype(Constants.CH_PsmPackage);
 			if(stereo != null){
 				PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
-				//System.out.println("Pkg QN="+psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName());
-				if(psmPkg.getAnalysisContext()!= null && psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
+				System.out.println("Pkg QN="+psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName());
+				if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
 					psmPackage = pkg;
 					//ASSUMPTION psmPackage owns a AnalysisContext Package
 					Package psmHostPack = (Package) psmPackage.getOwnedMember("Host");
@@ -1952,7 +1999,7 @@ public class UMLUtils {
 			Stereotype stereo = pkg.getAppliedStereotype(Constants.CH_PsmPackage);
 			if(stereo != null){
 				PSMPackage psmPkg = (PSMPackage) pkg.getStereotypeApplication(stereo);
-				if(psmPkg.getAnalysisContext()!= null && psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
+				if(psmPkg.getAnalysisContext().getBase_NamedElement().getQualifiedName().equals(saAnalysisName)){
 					psmPackage = pkg;
 
 					//ASSUMPTION psmPackage owns a AnalysisContext Package
@@ -2362,8 +2409,8 @@ public class UMLUtils {
 		String newOccurrencyKind = occurrencyKindArincProc.substring(0, occurrencyKindArincProc.lastIndexOf(")"));
 		newOccurrencyKind += ","+occurrencyKindArincFunct.substring(1);
 		//newOccurrencyKind += ")";
-		
-		
+
+
 		//get the rate divider of the ARINCFunction and apply it to derive the actual period of he arinc function
 		int ratediv = 1;
 		BehavioralFeature behavFeat = arincFunctChrtspec.getContext();
@@ -2376,9 +2423,9 @@ public class UMLUtils {
 		}
 		ValueNFP nfp = UMLUtils.getNfpValue(occurrencyKindArincProc, "period");
 		newOccurrencyKind = UMLUtils.setNfpValue(newOccurrencyKind, "period", nfp.value*ratediv, nfp.unit);
-		
+
 		chrtspec.setOccKind(newOccurrencyKind);
-		
+
 		return chrtspec;
 	}
 

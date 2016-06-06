@@ -278,7 +278,7 @@ AbstractCommand {
 //			processors.add(ch_processor.getBase_InstanceSpecification());
 //			cores.addAll(QueryUtils.getCores(ch_processor));
 //		}
-		components = UMLUtils.getAllComponentInstances(umlModel);
+		components = UMLUtils.getAllComponentInstances(umlModel, true);
 		assignments = UMLUtils.getComponent2CoreAssignments(umlModel, CHESSProfileManager.DEPLOYMENT_VIEW);
 	}
 
