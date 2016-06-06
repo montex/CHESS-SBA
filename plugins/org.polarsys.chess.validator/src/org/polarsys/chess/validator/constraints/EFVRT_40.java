@@ -54,10 +54,11 @@ public class EFVRT_40 extends AbstractModelConstraint {
 		}
 
 		CHRtSpecification chRtSpec = (CHRtSpecification)c.getStereotypeApplication(chrtSpecStereo);
-		Property partWithPort = chRtSpec.getPartWithPort();
-		if (partWithPort==null) {
-			return success;
-		}
+		// 20160531 if partWithPort is null, the validation must still be performed 
+//		Property partWithPort = chRtSpec.getPartWithPort();
+//		if (partWithPort==null) {
+//			return success;
+//		}
 
 		String localWCET = chRtSpec.getLocalWCET();
 

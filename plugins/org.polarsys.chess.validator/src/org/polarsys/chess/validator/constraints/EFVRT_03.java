@@ -57,10 +57,11 @@ public class EFVRT_03 extends AbstractModelConstraint {
 
 		StringParser parser = new StringParser();
 
-		Property partWithPort = chRtSpec.getPartWithPort();
-		if (partWithPort==null) {
-			return success;
-		}
+		// 20160531 if partWithPort is null, the validation must still be performed 
+//		Property partWithPort = chRtSpec.getPartWithPort();
+//		if (partWithPort==null) {
+//			return success;
+//		}
 
 		String occValue = chRtSpec.getOccKind();
 		//String wcet = chRtSpec.getWCET();
