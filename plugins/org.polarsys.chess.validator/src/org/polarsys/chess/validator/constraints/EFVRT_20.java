@@ -53,36 +53,39 @@ public class EFVRT_20 extends AbstractModelConstraint {
 		}
 
 		CHRtSpecification chRtSpec = (CHRtSpecification)c.getStereotypeApplication(chrtSpecStereo);
-		Property partWithPort = chRtSpec.getPartWithPort();
-		if (partWithPort == null) {
-			return success;
-		}
+		// 20160531 if partWithPort is null, the validation must still be performed 
+//		Property partWithPort = chRtSpec.getPartWithPort();
+//		if (partWithPort == null) {
+//			return success;
+//		}
 
 		StringParser parser = new StringParser();
 
 		String occValue = chRtSpec.getOccKind();
-		String wcet = chRtSpec.getWCET();
+		//String wcet = chRtSpec.getLocalWCET();
+		// We do NOT check WCET here because this is done in EFVRT_40, that checks LocalWCET
 		String relDl = chRtSpec.getRlDl();
 
 		if(occValue == null || !(occValue.contains(Constants.CHRTSPEC_OCCKIND_SPORADIC))) {
 			return success;
 		}
 
-		if(wcet == null || relDl == null)
+		//if(wcet == null || relDl == null)
+		if(relDl == null)
 			return failure;
 		else {
 			double minIntarr = parser.getValuePattern(occValue, Constants.CHRTSPEC_OCCKIND_SPORADIC_MININTERARRIVAL);
 			if(!(minIntarr >= 0)) 
 				return failure;	
 			else {
-				double wcetVal = parser.getValueNFP(wcet);
-				if(!(wcetVal >= 0))
-					return failure;
-				else {
+//				double wcetVal = parser.getValueNFP(wcet);
+//				if(!(wcetVal >= 0))
+//					return failure;
+//				else {
 					double relDlVal = parser.getValueNFP(relDl);
 					if(!(relDlVal >= 0))
 						return failure;
-				}
+//				}
 			}
 		}
 
