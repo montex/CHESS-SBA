@@ -31,6 +31,7 @@ import org.polarsys.chess.chessmlprofile.util.Constants;
  * This class implements the following constraint (invoked by the EMF validation framework):
  * Checks that the attribute 'occKind' of a CHRtSpecification that is related to an ARINCFunction must not be empty. 
  * if it is Empty, then IMA Generate Partition Schedule must be called! 
+ * @since 0.10
  */
 public class EFVRT_02_1 extends AbstractModelConstraint {
 

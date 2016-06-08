@@ -53,6 +53,7 @@ public class StringParser {
 	 * @param value the value
 	 * @param toSearch the to search
 	 * @return the value pattern
+	 * @since 0.10
 	 */
 	public String getUnitPattern(String value, String toSearch) {
 		
@@ -110,6 +111,7 @@ public class StringParser {
 	 *
 	 * @param value the value
 	 * @return the value nfp
+	 * @since 0.10
 	 */
 	public String getUnitNFP(String value) {
 		String[] array = value.split("[()=,]");

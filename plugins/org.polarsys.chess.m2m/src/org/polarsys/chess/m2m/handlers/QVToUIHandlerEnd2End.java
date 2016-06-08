@@ -83,6 +83,7 @@ import org.eclipse.uml2.uml.Stereotype;
 
 /**
  * The Class QVToUIHandlerEnd2End realizes the handler for the end-to-end analysis command.
+ * @since 0.9
  */
 public class QVToUIHandlerEnd2End extends AbstractHandler {
 

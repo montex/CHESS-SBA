@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.polarsys.chess.xtext.feature"
-      label="Polarsys CHESS XText Feature"
+      label="CHESS Polarsys XText Feature"
       version="0.9.0.qualifier"
-      provider-name="Polarsys CHESS Project">
+      provider-name="CHESS Polarsys Project">
 
    <description url="http://www.example.com/description">
       Add XText support to CHESS

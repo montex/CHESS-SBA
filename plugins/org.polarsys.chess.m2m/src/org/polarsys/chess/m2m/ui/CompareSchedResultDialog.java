@@ -41,6 +41,7 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 /**
  * Used to display a window that shows the results of two different schedulability analyses
  * @author laura
+ * @since 0.9
  *
  */
 public class CompareSchedResultDialog extends Dialog {

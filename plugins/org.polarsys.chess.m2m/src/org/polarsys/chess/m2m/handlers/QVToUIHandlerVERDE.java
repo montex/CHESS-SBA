@@ -82,6 +82,7 @@ import org.polarsys.chess.validator.command.ChessGenericValidateCommand;
 // TODO: Auto-generated Javadoc
 /**
  * The Class QVToUIHandlerVERDErealizes the handler for the scehdulability analysis command.
+ * @since 0.9
  */
 public class QVToUIHandlerVERDE extends AbstractHandler {
 

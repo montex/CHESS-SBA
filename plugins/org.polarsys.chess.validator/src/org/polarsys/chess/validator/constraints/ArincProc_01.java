@@ -30,6 +30,7 @@ import org.polarsys.chess.chessmlprofile.util.Constants;
  * The Class ArincProc_01.
  * This class implements the following constraint (invoked by the EMF validation framework):
  * The ARINCProcess must have its OperationsGroups not null and not empty
+ * @since 0.10
  */
 public class ArincProc_01 extends AbstractModelConstraint {
 

@@ -252,6 +252,7 @@ public class ChessGenericValidateCommand extends AbstractValidateCommand {
 	 * Returns true if the model validation highlighted at least one problem, false otherwise.
 	 * 
 	 * @return markers
+	 * @since 0.10
 	 */
 	public boolean getMarkers() {
 		return this.markers;
@@ -265,6 +266,7 @@ public class ChessGenericValidateCommand extends AbstractValidateCommand {
      * @param monitor
      * @param info
      * @throws ExecutionException 
+     * @since 0.10
      */
 	public final void executeCommand(IProgressMonitor monitor, IAdaptable info) throws ExecutionException{
 		super.execute(monitor, info);		

@@ -40,6 +40,9 @@ import org.polarsys.chess.service.internal.utils.CHESSInternalEditorUtils;
 import org.polarsys.chess.service.internal.visibility.HidePortCommand;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
+/**
+ * @since 0.10
+ */
 public class SwitchToView {
 
 	public String commandId;

@@ -25,6 +25,9 @@ import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 
+/**
+ * @since 0.10
+ */
 public class SwitchToRailwayCommand extends AbstractHandler implements
 		IElementUpdater {
 

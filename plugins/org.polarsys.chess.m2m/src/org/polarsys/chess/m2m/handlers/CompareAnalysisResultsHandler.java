@@ -41,6 +41,9 @@ import org.polarsys.chess.m2m.transformations.TransUtil;
 import org.polarsys.chess.m2m.ui.CompareSchedResultDialog;
 
 
+/**
+ * @since 0.9
+ */
 public class CompareAnalysisResultsHandler extends AbstractHandler {
 
 	@Override

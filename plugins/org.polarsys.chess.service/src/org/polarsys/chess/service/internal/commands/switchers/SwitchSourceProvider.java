@@ -39,6 +39,9 @@ import org.polarsys.chess.chessmlprofile.Core.CHESS;
 import org.polarsys.chess.chessmlprofile.Core.Domain;
 import org.polarsys.chess.chessmlprofile.util.Constants;
 
+/**
+ * @since 0.10
+ */
 public class SwitchSourceProvider extends AbstractSourceProvider {
 
 	public final static String SWITCH = "org.polarsys.chess.service.commands.switchState";

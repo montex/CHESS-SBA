@@ -174,6 +174,7 @@ public abstract class AbstractTransformation {
 	 * @param replaceFile if true, then the given modelFile is replaced with the content of the transformed modelFile
 	 * @return the transformed model file
 	 * @throws Exception
+	 * @since 0.9
 	 */
 	public IFile performPIM2PSMtransformation(
 			final PapyrusMultiDiagramEditor editor, IFile modelFile, IProgressMonitor monitor, boolean replaceFile)
