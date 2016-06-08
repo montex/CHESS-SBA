@@ -626,7 +626,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 			return null;
 		EList<Slot> slots = inst.getSlots();
 		for (Slot s: slots){
-			if (s.getDefiningFeature().equals(prop)){
+			if (s.getDefiningFeature() != null && s.getDefiningFeature().equals(prop)){
 				InstanceValue instvalue = (InstanceValue) s.getValues().get(0);
 				return instvalue.getInstance();
 			}
