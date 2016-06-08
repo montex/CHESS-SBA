@@ -96,7 +96,7 @@ public class Transformations {
 		mon.setAnalysisContext(analysisContext);
 		
 		
-		EList<InstanceSpecification> instances = UMLUtils.getAllComponentInstances(model);
+		EList<InstanceSpecification> instances = UMLUtils.getAllComponentInstances(model, false);
 		EList<CHTask> tasks = QueryUtils.getCHTasksList(instances);
 		String taskName ="";
 		for (CHTask chTask : tasks) {
