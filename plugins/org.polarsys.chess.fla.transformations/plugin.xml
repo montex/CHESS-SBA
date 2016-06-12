@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.m2m.qvt.oml.runtime.qvtTransformation">
+      <transformation
+            file="transforms/Chess2FlaMM.qvto"
+            id="org.polarsys.chess.fla.transformations/transforms/Chess2FlaMM">
+      </transformation>
+      <transformation
+            file="transforms/FlaMM2Chess_BackPropagation.qvto"
+            id="org.polarsys.chess.fla.transformations/transforms/FlaMM2Chess_BackPropagation">
+      </transformation>
+      <transformation
+            file="transforms/FlaMM2FlaXML.qvto"
+            id="org.polarsys.chess.fla.transformations/transforms/FlaMM2FlaXML">
+      </transformation>
+      <transformation
+            file="transforms/FlaXML2FlaMM.qvto"
+            id="org.polarsys.chess.fla.transformations/transforms/FlaXML2FlaMM">
+      </transformation>
+      <transformation
+            file="transforms/Chess2FlaXML.qvto"
+            id="org.polarsys.chess.fla.transformations/transforms/Chess2FlaXML">
+      </transformation>
+   </extension>
+   <extension
+         point="org.eclipse.m2m.qvt.oml.javaBlackboxUnits">
+      <unit
+            name="blackboxlibrary"
+            namespace="org.polarsys.chess.fla.transformations.utilities">
+         <library
+               class="org.polarsys.chess.fla.transformations.utilities.UtilitiesLibrary"
+               name="UtilitiesLibrary">
+            <metamodel
+                  nsURI="http://www.eclipse.org/emf/2002/Ecore">
+            </metamodel>
+            <metamodel
+                  nsURI="http://www.eclipse.org/uml2/5.0.0/UML">
+            </metamodel>
+            <metamodel
+                  nsURI="http://www.polarsys.org/chess/fla/flamm">
+            </metamodel>
+         </library>
+      </unit>
+   </extension>
+
+</plugin>

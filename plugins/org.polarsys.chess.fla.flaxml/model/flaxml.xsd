@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:flaxml="http://www.polarsys.org/chess/fla/flaxml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ecore:nsPrefix="flaxml" ecore:package="org.polarsys.chess.fla.flaxml" targetNamespace="http://www.polarsys.org/chess/fla/flaxml">
+  <xsd:element name="system" type="flaxml:system"/>
+  <xsd:complexType abstract="true" ecore:name="Component" name="component">
+    <xsd:complexContent>
+      <xsd:extension base="flaxml:namedElement">
+        <xsd:sequence>
+          <xsd:element form="qualified" name="inputPorts" type="flaxml:inputPorts"/>
+          <xsd:element form="qualified" name="outputPorts" type="flaxml:outputPorts"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="Components" name="components">
+    <xsd:sequence>
+      <xsd:element form="qualified" maxOccurs="unbounded" name="component" type="flaxml:component"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="CompositeComponent" name="compositeComponent">
+    <xsd:complexContent>
+      <xsd:extension base="flaxml:component">
+        <xsd:sequence>
+          <xsd:element form="qualified" name="connections" type="flaxml:connections"/>
+          <xsd:element form="qualified" name="components" type="flaxml:components"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="Connection" name="connection">
+    <xsd:sequence>
+      <xsd:element ecore:resolveProxies="true" minOccurs="0" name="rules" type="flaxml:fptcRules"/>
+    </xsd:sequence>
+    <xsd:attribute name="sourceComponent" type="xsd:string"/>
+    <xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+    <xsd:attribute name="targetComponent" type="xsd:string"/>
+    <xsd:attribute name="targetId" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="Connections" name="connections">
+    <xsd:sequence>
+      <xsd:element form="qualified" maxOccurs="unbounded" name="connection" type="flaxml:connection"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="Failure" name="failure">
+    <xsd:attribute name="type" type="flaxml:failureType" use="required"/>
+  </xsd:complexType>
+  <xsd:simpleType ecore:name="FailureType" name="failureType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="noFailure"/>
+      <xsd:enumeration value="late"/>
+      <xsd:enumeration value="early"/>
+      <xsd:enumeration value="valueSubtle"/>
+      <xsd:enumeration value="valueCoarse"/>
+      <xsd:enumeration value="omission"/>
+      <xsd:enumeration value="commission"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType ecore:name="FptcRules" name="fptcRules">
+    <xsd:sequence>
+      <xsd:element form="qualified" maxOccurs="unbounded" name="rule" type="flaxml:ruleString"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="InputPort" name="inputPort">
+    <xsd:complexContent>
+      <xsd:extension base="flaxml:namedElement">
+        <xsd:sequence>
+          <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="inputFailure" type="flaxml:failure"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="InputPorts" name="inputPorts">
+    <xsd:sequence>
+      <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="inputPort" type="flaxml:inputPort"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="NamedElement" name="namedElement">
+    <xsd:attribute name="id" type="xsd:string" use="required"/>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="OutputPort" name="outputPort">
+    <xsd:complexContent>
+      <xsd:extension base="flaxml:namedElement">
+        <xsd:sequence>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="outputFailure" type="flaxml:failure"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="OutputPorts" name="outputPorts">
+    <xsd:sequence>
+      <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="outputPort" type="flaxml:outputPort"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType ecore:name="PatternType" name="pattern_._type">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[^&gt;]+\.[^&gt;]+-&gt;[^&gt;]+\.[^&gt;]+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType ecore:name="RuleString" name="ruleString">
+    <xsd:attribute name="pattern" type="flaxml:pattern_._type" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="SimpleComponent" name="simpleComponent">
+    <xsd:complexContent>
+      <xsd:extension base="flaxml:component">
+        <xsd:sequence>
+          <xsd:element form="qualified" name="rules" type="flaxml:fptcRules"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="System" name="system">
+    <xsd:sequence>
+      <xsd:element form="qualified" minOccurs="0" name="component" type="flaxml:component"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

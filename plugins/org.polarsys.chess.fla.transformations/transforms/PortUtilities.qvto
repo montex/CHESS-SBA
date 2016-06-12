@@ -1,0 +1,101 @@
+/*******************************************************************************
+ *                  CHESS core plugin
+ *
+ *               Copyright (C) 2011-2015
+ *            Mälardalen University, Sweden
+ *
+ *
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License
+ *  v1.0 which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+import CommonUtilities;
+
+modeltype UML uses 'http://www.eclipse.org/uml2/5.0.0/UML';
+modeltype MARTE uses "http://www.eclipse.org/papyrus/GCM/1";
+modeltype SysML uses "http://www.eclipse.org/papyrus/0.7.0/SysML/PortAndFlows";
+
+
+library PortUtilities;
+
+property CLIENT_SERVER_PORT_STEREOTYPE = "MARTE::MARTE_DesignModel::GCM::ClientServerPort";
+property SYSML_FLOWPORT_STEREOTYPE = "SysML::PortAndFlows::FlowPort";
+property MARTE_FLOWPORT_STEREOTYPE = "MARTE::MARTE_DesignModel::GCM::FlowPort";
+
+query Port::isInputPort() : Boolean {
+	var st := self.getAppliedStereotypes();
+	if (self.isStereotyped(CLIENT_SERVER_PORT_STEREOTYPE)) {
+		var clientServerPort := self.getStereotypeApplication(self.getAppliedStereotype(CLIENT_SERVER_PORT_STEREOTYPE)).oclAsType(ClientServerPort);
+		return clientServerPort.isInputPort();
+	} else if (self.isStereotyped(MARTE_FLOWPORT_STEREOTYPE)) {
+		var flowPort := self.getStereotypeApplication(MARTE_FLOWPORT_STEREOTYPE).oclAsType(MARTE::FlowPort);
+		return flowPort.isInputPort();
+	} else if (self.isStereotyped(SYSML_FLOWPORT_STEREOTYPE)) {
+		var flowPort := self.getStereotypeApplication(SYSML_FLOWPORT_STEREOTYPE).oclAsType(SysML::FlowPort);
+		return flowPort.isInputPort();
+	};
+	return false;
+}
+
+query Port::isOutputPort() : Boolean {
+	if (self.isStereotyped(CLIENT_SERVER_PORT_STEREOTYPE)) {
+		var clientServerPort := self.getStereotypeApplication(CLIENT_SERVER_PORT_STEREOTYPE).oclAsType(ClientServerPort);
+		return clientServerPort.isOutputPort();
+	} else if (self.isStereotyped(MARTE_FLOWPORT_STEREOTYPE)) {
+		var flowPort := self.getStereotypeApplication(MARTE_FLOWPORT_STEREOTYPE).oclAsType(MARTE::FlowPort);
+		return flowPort.isOutputPort();
+	} else if (self.isStereotyped(SYSML_FLOWPORT_STEREOTYPE)) {
+		var flowPort := self.getStereotypeApplication(SYSML_FLOWPORT_STEREOTYPE).oclAsType(SysML::FlowPort);
+		return flowPort.isOutputPort();
+	};
+	return false;
+}
+
+query ClientServerPort::isInputPort() : Boolean {
+	var interfaces : Bag(Interface);
+	switch {
+		case (self.kind = ClientServerKind::required) {
+			interfaces := self.reqInterface;
+		}
+		case (self.kind = ClientServerKind::provided) {
+			interfaces := self.provInterface;
+		}
+	};
+	
+	return interfaces->getAllOperations()->flatten()->ownedParameter->flatten()->forAll((direction = ParameterDirectionKind::_in and self.kind = ClientServerKind::provided) or 
+		(direction = ParameterDirectionKind::_out and self.kind = ClientServerKind::required));
+}
+
+query ClientServerPort::isOutputPort() : Boolean {
+	var interfaces : Bag(Interface);
+	switch {
+		case (self.kind = ClientServerKind::required) {
+			interfaces := self.reqInterface;
+		}
+		case (self.kind = ClientServerKind::provided) {
+			interfaces := self.provInterface;
+		}
+	};
+	
+	return interfaces->getAllOperations()->flatten()->ownedParameter->flatten()->exists((direction = ParameterDirectionKind::_in and self.kind = ClientServerKind::required) or 
+		(direction = ParameterDirectionKind::_out and self.kind = ClientServerKind::provided));
+}
+
+query MARTE::FlowPort::isInputPort() : Boolean {
+	return self.direction = MARTE::FlowDirectionKind::_in;
+}
+
+query MARTE::FlowPort::isOutputPort() : Boolean {
+	return self.direction = MARTE::FlowDirectionKind::_out;
+}
+
+query SysML::FlowPort::isInputPort() : Boolean {
+	return self.direction = SysML::FlowDirection::_in;
+}
+
+query SysML::FlowPort::isOutputPort() : Boolean {
+	return self.direction = SysML::FlowDirection::_out;
+}
+

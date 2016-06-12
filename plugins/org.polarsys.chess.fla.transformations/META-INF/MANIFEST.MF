@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Concerto-FLA Transformations Plug-in
+Bundle-SymbolicName: org.polarsys.chess.fla.transformations;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: 
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.m2m.qvt.oml,
+ org.eclipse.m2m.qvt.oml.project,
+ org.eclipse.emf.ecore,
+ org.eclipse.uml2.uml;bundle-version="5.0.0",
+ org.polarsys.chess.chessmlprofile,
+ org.eclipse.m2m.qvt.oml.runtime,
+ org.polarsys.chess.fla.flamm
+Export-Package: org.polarsys.chess.fla.transformations.utilities

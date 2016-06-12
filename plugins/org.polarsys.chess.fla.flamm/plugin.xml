@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated flamm -->
+      <package
+            uri="http://www.polarsys.org/chess/fla/flamm"
+            class="org.polarsys.chess.fla.flamm.FlammPackage"
+            genModel="model/flamm.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated flamm -->
+      <parser
+            type="flamm"
+            class="org.polarsys.chess.fla.flamm.util.FlammResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated flamm -->
+      <package
+            uri="http://www.polarsys.org/chess/fla/flamm/FailureTypes"
+            class="org.polarsys.chess.fla.flamm.FailureTypes.FailureTypesPackage"
+            genModel="model/flamm.genmodel"/>
+   </extension>
+</plugin>
