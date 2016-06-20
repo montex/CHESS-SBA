@@ -124,7 +124,7 @@ unique lazy rule System {
 		for(i in thisModule.umlInstancesRelevant) {
 			thisModule.PopulateExternalFaults(i);	
 		}
-	
+
 		--Generate FGE, i.e., connect external faults
 		for(i in thisModule.umlInstancesRelevant) {
 			if(i.getSBAStereotype().oclType() = CHESS!SimpleStochasticBehavior) {

@@ -34,11 +34,14 @@ import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESS;
@@ -153,6 +156,8 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	static String resultsFilePath;
 	static IFolder folder;
 	
+	static DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+	
 	@Override
 	/**
 	 * Execute the command from the Eclipse menu
@@ -176,11 +181,11 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 	 * @throws IOException 
 	 */
 	public String runStateBased (String modelPath, String parametersFilePath, String resultAnalysisPathFile) throws IOException{
-		
+
 		IProgressMonitor monitor = null;
 		if(periodicDialog != null)
 			monitor = periodicDialog.getMonitor();
-		
+
 		InputStream is = RunTransformations(modelPath, parametersFilePath, monitor);
 		
 		byte[] buffer = new byte[is.available()];
@@ -598,6 +603,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 				File fResults = new File(resultsFilePath);
 	            FileWriter fwModel = new FileWriter(fResults);
 				
+	            dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
 				while(it.hasNext()) {
 					key = it.next();
 	
@@ -623,7 +629,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler implements 
 		            fwModel.write("\t");
 		            fwModel.write(key);
 		            fwModel.write("\t");
-		            fwModel.write(new Date().toString());
+		            fwModel.write(dateFormatter.format(new Date()));
 		            fwModel.write("\r\n");
 				}
 	            fwModel.close();
