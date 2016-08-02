@@ -15,14 +15,10 @@
 package org.polarsys.chess.codegen.ada.transformations;
 
 import java.io.IOException;
-import java.util.HashMap;
 
-import monitoringxml.AnalysisContext;
-import monitoringxml.Monitoring;
-import monitoringxml.MonitoringFactory;
-import monitoringxml.MonitoringPackage;
-import monitoringxml.Thread;
-
+import org.polarsys.chess.monitoring.monitoringxml.AnalysisContext;
+import org.polarsys.chess.monitoring.monitoringxml.Monitoring;
+import org.polarsys.chess.monitoring.monitoringxml.MonitoringxmlFactory;
 import org.polarsys.chess.multicore.model.CHTask;
 import org.polarsys.chess.multicore.utils.QueryUtils;
 import org.eclipse.core.resources.IFile;
@@ -38,10 +34,8 @@ import org.eclipse.m2m.internal.qvt.oml.emf.util.ModelContent;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Model;
-import org.polarsys.chess.codegen.ada.Activator;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.UMLUtils;
-import org.polarsys.chess.m2m.transformations.QVToTransformation;
 import org.polarsys.chess.m2m.transformations.TransUtil;
 
 /**
@@ -88,7 +82,7 @@ public class Transformations {
 		}
 		
 		// Retrieve the default factory singleton
-		MonitoringFactory factory = MonitoringFactory.eINSTANCE;
+		MonitoringxmlFactory factory = MonitoringxmlFactory.eINSTANCE;
 		// create an instance of myWeb
 		Monitoring mon = factory.createMonitoring();
 		AnalysisContext analysisContext = factory.createAnalysisContext();
@@ -100,7 +94,7 @@ public class Transformations {
 		EList<CHTask> tasks = QueryUtils.getCHTasksList(instances);
 		String taskName ="";
 		for (CHTask chTask : tasks) {
-			Thread thread = factory.createThread();
+			org.polarsys.chess.monitoring.monitoringxml.Thread thread = factory.createThread();
 			
 			//TODO in CHESS tasks names are generated with "_task" at the end
 			//the current monitoring facilities does not have this assumption
