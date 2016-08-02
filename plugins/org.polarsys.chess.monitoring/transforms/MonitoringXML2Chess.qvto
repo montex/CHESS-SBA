@@ -1,0 +1,122 @@
+/*******************************************************************************
+ *
+ *               Copyright (C) 2011-2016
+ *            Mälardalen University, Sweden
+ *
+ *
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License
+ *  v1.0 which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+import CommonUtilities;
+
+modeltype Chess uses 'http://CHESS';
+
+modeltype MXML uses 'http://www.mdh.se/concerto/monitoring/xml/monitoringxml';
+
+modeltype UML uses 'http://www.eclipse.org/uml2/5.0.0/UML';
+modeltype GQAM uses "http://www.eclipse.org/papyrus/GQAM/1";
+modeltype SAM uses "http://www.eclipse.org/papyrus/SAM/1";
+
+modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
+
+transformation MonitoringXML2Chess(in source : MXML, inout target : Chess);
+
+property selectedAnalysisContext : Class;
+property model : Model;
+property chessRootPSM : Package;
+property mxmlRoot : MXML::Monitoring;
+
+main() {
+	this.mxmlRoot := source.rootObjects()![MXML::Monitoring];
+	var rtAnalysisContext : String := mxmlRoot.analysisContext.name;
+	this.model := target.rootObjects()![Model];
+	this.selectedAnalysisContext := model.findElementByQualifiedName(rtAnalysisContext).oclAsType(Class);
+
+	var psmView : Package = model.getView("PSMView").oclAsType(Package);
+	this.chessRootPSM := psmView.getCodeGenerationSA(selectedAnalysisContext.name);
+	
+	log("Backpropagating monitored values to " + chessRootPSM.name);
+	mxmlRoot.ThreadNames.propagateMonitoredThread2Chess();
+	mxmlRoot.SharedResources.propagateMonitoredResources2Chess();
+	log("Backpropagation completed.");
+}
+
+query MXML::Thread::propagateMonitoredThread2Chess() {
+	var schedRes : Class := self.getSchedulableResource(chessRootPSM);
+	var e2eFlow : UML::Activity := chessRootPSM.getSaEndtoEndFlow(schedRes);
+	log("Backpropagating "+self.name+" task data...");
+	self.period.propagatePeriod2ArrivalPattern(e2eFlow);
+	self.executiontime.propagateExecutionTime2ExecTime(e2eFlow);
+	self.responsetime.propagateResponseTime2Latency(e2eFlow);
+	self.blockingtime.propagateBlockingTime2BlockT(e2eFlow);
+}
+
+query MXML::Resource::propagateMonitoredResources2Chess() {
+	// TO BE IMPLEMENTED ACCORDINGLY
+}
+
+//NOTE: The ArrivalPattern is written into the model as a plain string
+query MXML::Period::propagatePeriod2ArrivalPattern(e2eFlow : UML::Activity) {
+	var iNode := e2eFlow.ownedElement -> selectOne(initial | initial.oclIsTypeOf(InitialNode));
+	var gaWorkload := iNode.getStereotypeApplications() -> selectByType(GQAM::GaWorkloadEvent) -> asOrderedSet() -> first().oclAsType(GQAM::GaWorkloadEvent);
+	gaWorkload.pattern := "SporadicPattern(minInterarrival=(value="+self.minimum.value.toString()+", unit="+self.minimum.unit+"), "+ 
+						  "maxInterarrival=(value="+self.maximum.value.toString()+", unit="+self.maximum.unit+"), "+ 
+						  "avgInterarrival=(value="+self.average.value.toString()+", unit="+self.average.unit+"), "+
+						  "jitter=(value="+self.jitter.value.toString()+", unit="+self.jitter.unit+"))";
+}
+
+//NOTE: The ExecutionTime is written into the model as a plain string
+query MXML::ExecutionTime::propagateExecutionTime2ExecTime(e2eFlow : UML::Activity) {
+	var sStep := e2eFlow.ownedElement -> selectOne(saStepNode | saStepNode.oclIsTypeOf(UML::OpaqueAction) and saStepNode.isStereotyped("MARTE::MARTE_AnalysisModel::SAM::SaStep"));
+	var saStep := sStep.getStereotypeApplications() -> selectByType(SAM::SaStep) -> asOrderedSet() -> first().oclAsType(SAM::SaStep);
+	saStep.execTime := "(best="+self.minimum.value.toString()+", unit="+self.minimum.unit+", "+
+					   "worst="+self.maximum.value.toString()+", unit="+self.maximum.unit+", "+
+					   "average="+self.average.value.toString()+", unit="+self.average.unit+")";
+}
+
+//NOTE: The ResponseTime is written into the model as a plain string
+query MXML::ResponseTime::propagateResponseTime2Latency(e2eFlow : UML::Activity) {
+	var latEl := e2eFlow.ownedElement -> selectOne(gaL | gaL.isStereotyped("MARTE::MARTE_AnalysisModel::GQAM::GaLatencyObs"));
+	var latencyEl := latEl.getStereotypeApplications() -> selectByType(GQAM::GaLatencyObs) -> asOrderedSet() -> first().oclAsType(GQAM::GaLatencyObs);
+	
+	log("propagateResponseTime2Latency  max="+self.maximum.value.toString());
+	
+	latencyEl.latency := "(best="+self.minimum.value.toString()+", unit="+self.minimum.unit+", "+
+						 "worst="+self.maximum.value.toString()+", unit="+self.maximum.unit+", "+
+						 "average="+self.average.value.toString()+", unit="+self.average.unit+")";  
+	latencyEl.maxJitter := "(value="+self.jitter.value.toString()+", unit="+self.jitter.unit+")";
+}
+
+//NOTE: The BlockingTime is written into the model as a plain string
+query MXML::BlockingTime::propagateBlockingTime2BlockT(e2eFlow : UML::Activity) {
+	var sStep := e2eFlow.ownedElement -> selectOne(saStepNode | saStepNode.oclIsTypeOf(UML::OpaqueAction) and saStepNode.isStereotyped("MARTE::MARTE_AnalysisModel::SAM::SaStep"));
+	var saStep := sStep.getStereotypeApplications() -> selectByType(SAM::SaStep) -> asOrderedSet() -> first().oclAsType(SAM::SaStep);
+	saStep.blockT := "(best="+self.minimum.value.toString()+",  unit="+self.minimum.unit+", "+
+					 "worst="+self.maximum.value.toString()+",  unit="+self.maximum.unit+", "+
+					 "average="+self.average.value.toString()+",  unit="+self.average.unit+")";  
+}
+
+query Package::getCodeGenerationSA(saContextName : String) : Package {
+	var seq := self.packagedElement[Package]-> union(self.packagedElement[Package].packagedElement[Package]);
+	return seq -> selectOne(p | p.isStereotyped("CHESS::Core::PSMPackage") and p.name = saContextName + "_PSM");
+}
+
+//NOTE: Search for a match in the collection of Schedulable Resources in the Task subpackage and return the classifier
+query MXML::Thread::getSchedulableResource(acPSM : Package) : UML::Class {
+	var ac := acPSM.packagedElement[Class]-> union(acPSM.packagedElement[Package].packagedElement[Class]);
+	return ac -> selectOne(sr | sr.name = self.name+"_task").oclAsType(Class);
+}
+
+query Package::getSaEndtoEndFlow(schedRes : Class) : UML::Activity {
+	var ac := self.packagedElement[Package]-> union(self.packagedElement[Package].packagedElement[Package]);
+	var actx := ac -> selectOne(p | p.name = "AnalysisContext").oclAsType(Package);
+	var saClass : Class := actx.packagedElement[Class] -> selectOne(saCl | saCl.isStereotyped("MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext")).oclAsType(Class);
+	saClass.ownedElement[OpaqueAction]-> union(saClass.ownedElement[Activity].ownedElement[OpaqueAction]) -> forEach(a | a.isStereotyped("MARTE::MARTE_AnalysisModel::SAM::SaStep")) {
+		var saStep := a.getStereotypeApplications() -> selectByType(SAM::SaStep) -> asOrderedSet() -> first().oclAsType(SAM::SaStep);
+		if saStep.concurRes.base_Classifier = schedRes then return a.owner.oclAsType(UML::Activity) endif;
+	};
+	return null;
+}
