@@ -31,6 +31,7 @@ import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaLatencyObs;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaResourcesPlatform;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaWorkloadEvent;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
@@ -1873,8 +1874,43 @@ public class UMLUtils {
 									resultData.localWCET = opSaStep.getExecTime().get(0);
 								}
 								resultData.respT = getResponseTimeString(rldlUnit, opSaStep);
+								
+								
 								resultData.blockT = getBlockingTimeString(rldlUnit, opSaStep);
 							}
+							
+							//back propagation run time monitoring
+							//TODO
+							if (resultData.respT.isEmpty()){
+								
+								//TODO assumption: we are in the runtime monitoring case... :(
+								
+								//try with this...
+								Stereotype latencyObs = null;
+								GaLatencyObs obs = null;
+								for (Constraint constr : activity.getOwnedRules()){
+									latencyObs = constr.getAppliedStereotype(Constants.GALATENCYOBS);
+									if (latencyObs != null){
+										obs = (GaLatencyObs) constr.getStereotypeApplication(latencyObs);
+										String s = obs.getLatency().get(0);
+										resultData.respT = s;
+									}
+								
+								}
+								
+								//override exec time
+								if(saStep.getExecTime() != null && !saStep.getExecTime().isEmpty()){
+									resultData.localWCET = saStep.getExecTime().get(0);
+								}
+								//override blocking time
+								if(saStep.getBlockT() != null && !saStep.getBlockT().isEmpty()){
+									resultData.blockT = saStep.getBlockT();
+								}
+							}
+							
+							
+							//end back
+							
 
 							//							String rldl = chrt.getRlDl();
 							//							String rldlValue = getValue(rldl, "value");
