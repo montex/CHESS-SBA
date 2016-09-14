@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated flaxml -->
+      <package
+            uri="http://www.polarsys.org/chess/fla/flaxml"
+            class="org.polarsys.chess.fla.flaxml.FlaxmlPackage"
+            genModel="model/flaxml.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated flaxml -->
+      <parser
+            type="flaxml"
+            class="org.polarsys.chess.fla.flaxml.util.FlaxmlResourceFactoryImpl"/>
+   </extension>
+
+</plugin>

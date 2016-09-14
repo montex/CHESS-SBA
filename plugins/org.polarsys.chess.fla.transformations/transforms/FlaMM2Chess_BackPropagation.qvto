@@ -1,0 +1,129 @@
+/*******************************************************************************
+ *                  CHESS core plugin
+ *
+ *               Copyright (C) 2011-2015
+ *            Mälardalen University, Sweden
+ *
+ *
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License
+ *  v1.0 which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+import org.polarsys.chess.fla.transformations.utilities.blackboxlibrary;
+import PortUtilities;
+import CommonUtilities;
+
+modeltype Chess uses chessmlprofile('http://CHESS');
+modeltype ChessFailurePropagation uses 'http://CHESS/Dependability/FailurePropagation';
+modeltype ChessFailureTypes uses 'http:///CHESS/Dependability/FailurePropagation/FailurePropagationDataTypes.ecore';
+modeltype ChessCore uses 'http://CHESS/Core';
+
+modeltype FLA uses flamm('http://www.polarsys.org/chess/fla/flamm');
+
+modeltype UML uses 'http://www.eclipse.org/uml2/5.0.0/UML';
+
+
+transformation FlaMM2Chess(in source : FLA, inout target : Chess);
+
+// Qualified names of stereotypes
+property FPTC_SPECIFICATION_STEREOTYPE = "CHESS::Dependability::FailurePropagation::FPTCSpecification";
+
+// Platform selected by user
+configuration property selectedPlatformQName : String;
+
+property chessRootComponent : Class;
+property flaRootComponent : FLA::Component;
+
+main() {
+	this.flaRootComponent := source.rootObjects()![FLA::Component];
+	
+	var selectedInstSpec : Package = target.rootObjects()![Model].findElementByQualifiedName(selectedPlatformQName).oclAsType(Package);
+	this.chessRootComponent := selectedInstSpec.ownedElement[InstanceSpecification]->
+		selectOne(name = selectedInstSpec.name.substringBefore("_instSpec")).classifier![Class];
+
+	this.flaRootComponent.propagateResultsToChessRootComponent();
+}
+
+query FLA::Component::propagateResultsToChessRootComponent() {
+	self.outputPorts.propagateRootFailures();
+	if (self.oclIsTypeOf(CompositeComponent)) {
+		self.oclAsType(CompositeComponent).components.outputPorts.propagateSubFailures();
+	}
+}
+
+query FLA::Port::propagateRootFailures() {
+	var umlPort : UML::Port = chessRootComponent.getPort(self.id);
+	var fptcSpec := getFailureStereotype(umlPort, umlPort);
+	fptcSpec.failure := self.failures.toChessFailure();
+}
+
+query FLA::Port::propagateSubFailures() {
+	var umlComponentProperty := chessRootComponent.getProperty(self.owner.id);
+	var umlPort : UML::Port = umlComponentProperty.type.getPort(self.id);
+	var fptcSpec := getFailureStereotype(umlPort, umlComponentProperty);
+	fptcSpec.failure := self.failures.toChessFailure();
+}
+
+query getFailureStereotype(port : UML::Port, partWithPort : Property) : FPTCSpecification{
+	var comment := this.chessRootComponent.getComment(port, partWithPort);
+	return comment.getStereotypeApplication(FPTC_SPECIFICATION_STEREOTYPE).oclAsType(FPTCSpecification);
+}
+
+query UML::Element::getComment(annotated : UML::Port, partWithPortElement : Property) : Comment{
+	var comment := self.ownedComment->selectOne(hasAnnotatedElement(annotated) and 
+		getStereotypeValue(FPTC_SPECIFICATION_STEREOTYPE, "partWithPort") = partWithPortElement);
+		//TODO: Apply stereotype not working. Stereotype gets applied but is not present in the model after execution
+	if (comment = null) {
+		comment := chessRootComponent.blackboxCreateFptcComment(annotated, partWithPortElement);
+		//comment := object Comment {annotatedElement := annotated;};
+		//comment.body := target.objectsOfType(FPTCSpecification)->size().toString() + " ";
+		//chessRootComponent.ownedComment += comment;
+		//var stereo := comment.applyStereotype(FPTC_SPECIFICATION_STEREOTYPE);
+		//comment.blackboxApplyStereotype(FPTC_SPECIFICATION_STEREOTYPE);
+		//if (comment.isStereotyped(FPTC_SPECIFICATION_STEREOTYPE)) {
+			//comment.body := comment.body + "true " + stereo.toString()
+			//+ "\n" + chessRootComponent.allInstances(FPTCSpecification)->size().toString(); //.objectsOfType(FPTCSpecification)->size().toString();
+		//} else {
+		//	comment.body := "false";
+		//}
+	};
+	return comment;
+}
+
+query FLA::Failure::toChessFailure() : ChessFailureTypes::FailureType {
+	// would be nice to get this to work..
+//	var failures := ChessFailureTypes::FailureType.allInstances();
+//	var f1 := FLA::FailureTypes::FailureType::omission.toString();
+//	var f2 := self.type.toString();
+//	var f3 := failures->selectOne(type : ChessFailureTypes::FailureType | type.toString() = self.type.toString());
+	
+	var failure : ChessFailureTypes::FailureType;
+	switch {
+		case (self.type = FLA::FailureTypes::FailureType::noFailure) {
+			failure := ChessFailureTypes::FailureType::noFailure;
+		}
+		case (self.id = "late") {
+			failure := ChessFailureTypes::FailureType::_late;
+		}
+		case (self.id = "early") {
+			failure := ChessFailureTypes::FailureType::early;
+		}
+		case (self.id = "valueSubtle") {
+			failure := ChessFailureTypes::FailureType::valueSubtle;
+		}
+		case (self.id = "valueCoarse") {
+			failure := ChessFailureTypes::FailureType::valueCoarse;
+		}
+		case (self.id = "omission") {
+			failure := ChessFailureTypes::FailureType::omission;
+		}
+		case (self.id = "commission") {
+			failure := ChessFailureTypes::FailureType::commission;
+		}
+	};
+	return failure;
+}
+
+

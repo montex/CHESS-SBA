@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.polarsys.chess.fla.flaxml/src" modelPluginID="org.polarsys.chess.fla.flaxml"
+    modelName="Flaxml" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>flaxml.ecore</foreignModel>
+  <genPackages prefix="Flaxml" basePackage="org.polarsys.chess.fla" resource="XML"
+      disposableProviderFactory="true" ecorePackage="flaxml.ecore#/" publicationLocation="">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="flaxml.ecore#//FailureType">
+      <genEnumLiterals ecoreEnumLiteral="flaxml.ecore#//FailureType/noFailure"/>
+      <genEnumLiterals ecoreEnumLiteral="flaxml.ecore#//FailureType/late"/>
+      <genEnumLiterals ecoreEnumLiteral="flaxml.ecore#//FailureType/early"/>
+      <genEnumLiterals ecoreEnumLiteral="flaxml.ecore#//FailureType/valueSubtle"/>
+      <genEnumLiterals ecoreEnumLiteral="flaxml.ecore#//FailureType/valueCoarse"/>
+      <genEnumLiterals ecoreEnumLiteral="flaxml.ecore#//FailureType/omission"/>
+      <genEnumLiterals ecoreEnumLiteral="flaxml.ecore#//FailureType/commission"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="flaxml.ecore#//FailureTypeObject"/>
+    <genDataTypes ecoreDataType="flaxml.ecore#//PatternType"/>
+    <genClasses image="false" ecoreClass="flaxml.ecore#//Component">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//Component/inputPorts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//Component/outputPorts"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//Components">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//Components/component"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//CompositeComponent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//CompositeComponent/connections"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//CompositeComponent/components"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//Connection">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute flaxml.ecore#//Connection/sourceComponent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute flaxml.ecore#//Connection/sourceId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute flaxml.ecore#//Connection/targetComponent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute flaxml.ecore#//Connection/targetId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//Connection/rules"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//Connections">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//Connections/connection"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute flaxml.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference flaxml.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference flaxml.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//DocumentRoot/system"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//Failure">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute flaxml.ecore#//Failure/type"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//FptcRules">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//FptcRules/rule"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//InputPort">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//InputPort/inputFailure"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//InputPorts">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//InputPorts/inputPort"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute flaxml.ecore#//NamedElement/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute flaxml.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//OutputPort">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//OutputPort/outputFailure"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//OutputPorts">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//OutputPorts/outputPort"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//RuleString">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute flaxml.ecore#//RuleString/pattern"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//SimpleComponent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//SimpleComponent/rules"/>
+    </genClasses>
+    <genClasses ecoreClass="flaxml.ecore#//System">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flaxml.ecore#//System/component"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
