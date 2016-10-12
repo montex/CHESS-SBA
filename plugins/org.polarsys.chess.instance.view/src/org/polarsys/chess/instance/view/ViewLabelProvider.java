@@ -26,6 +26,12 @@ import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.Stereotype;
 
+
+/**
+ * @author BME, Intecs
+ * This class provides images and text rendering for the queried entities
+ *
+ */
 public class ViewLabelProvider extends QueryLabelProvider {
 	
 	public ViewLabelProvider(ViewerState state) {

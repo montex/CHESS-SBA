@@ -79,6 +79,11 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSet.Builder;
 
 
+/**
+ * @author BME, Intecs
+ * This class implemnents the InstanceView as Eclipse View
+ *
+ */
 public class InstanceViewPart extends ViewPart implements IPartListener2, ISelectionProvider, ITabbedPropertySheetPageContributor {
 
 	TreeViewer viewer;

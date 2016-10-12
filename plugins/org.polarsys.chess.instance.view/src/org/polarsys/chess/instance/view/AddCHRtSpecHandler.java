@@ -37,8 +37,15 @@ import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
 
+/**
+ * @author stefano
+ *	This class implement a specific handler to allow creation of CHRrSpecification through the InstanceView
+ */
 public class AddCHRtSpecHandler extends AbstractHandler {
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 				
@@ -171,6 +178,11 @@ public class AddCHRtSpecHandler extends AbstractHandler {
 
 	}*/
 	
+	
+	/**
+	 * this method is supposed to be overridden
+	 * @return value for CHRtSpecification occKind property
+	 */
 	protected  String getOccKind(){
 		return "";
 	}

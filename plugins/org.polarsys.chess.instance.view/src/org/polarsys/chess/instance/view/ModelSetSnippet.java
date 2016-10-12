@@ -15,8 +15,6 @@ import org.eclipse.papyrus.infra.core.resource.IModelSetSnippet;
 import org.eclipse.papyrus.infra.core.resource.ModelSet;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 public class ModelSetSnippet implements IModelSetSnippet {
@@ -25,6 +23,10 @@ public class ModelSetSnippet implements IModelSetSnippet {
 		
 	}
 
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.papyrus.infra.core.resource.IModelSetSnippet#dispose(org.eclipse.papyrus.infra.core.resource.ModelSet)
+	 */
 	@Override
 	public void dispose(ModelSet arg0) {
 		System.out.println("model disposed");
@@ -41,6 +43,9 @@ public class ModelSetSnippet implements IModelSetSnippet {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.papyrus.infra.core.resource.IModelSetSnippet#start(org.eclipse.papyrus.infra.core.resource.ModelSet)
+	 */
 	@Override
 	public void start(ModelSet arg0) {
 		System.out.println("New model created");
