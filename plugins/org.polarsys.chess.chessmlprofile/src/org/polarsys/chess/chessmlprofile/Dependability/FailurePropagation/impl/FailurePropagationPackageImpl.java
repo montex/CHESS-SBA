@@ -35,19 +35,13 @@ import org.polarsys.chess.chessmlprofile.Core.CorePackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.CHESSViewsPackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.CHESSViewsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl;
-import org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.DataFlowCallGraphPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.impl.DataFlowCallGraphPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl;
-import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEAPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEADataTypes.FMEADataTypesPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.FMEA.FMEADataTypes.impl.FMEADataTypesPackageImpl;
-import org.polarsys.chess.chessmlprofile.Dependability.FMEA.impl.FMEAPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDAvoidable;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDMitigation;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FAAnalysis;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FASpecification;
-import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLASpecification;
+import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationAnalysis;
@@ -69,18 +63,14 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedData
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.impl.StateBasedDataTypesPackageImpl;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl;
-import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.DeploymentConfAnalysisPackage;
-import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.impl.DeploymentConfAnalysisPackageImpl;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
+import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.impl.HardwareBaselinePackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTDataTypes.RTDataTypesPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTDataTypes.impl.RTDataTypesPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RTComponentModelPackageImpl;
-import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingAnalysisPackage;
-import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.TimingConstraintsPackage;
-import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.impl.TimingConstraintsPackageImpl;
-import org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.impl.TimingAnalysisPackageImpl;
 import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
 import org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl;
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
@@ -100,6 +90,13 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 * @generated
 	 */
 	private EClass fptcEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass flaBehaviorEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -156,13 +153,6 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 * @generated
 	 */
 	private EClass fi4FAAnalysisEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass flaSpecificationEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -229,21 +219,15 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		FailurePropagationDataTypesPackageImpl theFailurePropagationDataTypesPackage = (FailurePropagationDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(FailurePropagationDataTypesPackage.eNS_URI) instanceof FailurePropagationDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(FailurePropagationDataTypesPackage.eNS_URI) : FailurePropagationDataTypesPackage.eINSTANCE);
 		DependableComponentPackageImpl theDependableComponentPackage = (DependableComponentPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DependableComponentPackage.eNS_URI) instanceof DependableComponentPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DependableComponentPackage.eNS_URI) : DependableComponentPackage.eINSTANCE);
 		ThreatsPropagationPackageImpl theThreatsPropagationPackage = (ThreatsPropagationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ThreatsPropagationPackage.eNS_URI) instanceof ThreatsPropagationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ThreatsPropagationPackage.eNS_URI) : ThreatsPropagationPackage.eINSTANCE);
-		DataFlowCallGraphPackageImpl theDataFlowCallGraphPackage = (DataFlowCallGraphPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataFlowCallGraphPackage.eNS_URI) instanceof DataFlowCallGraphPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataFlowCallGraphPackage.eNS_URI) : DataFlowCallGraphPackage.eINSTANCE);
 		StateBasedDataTypesPackageImpl theStateBasedDataTypesPackage = (StateBasedDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(StateBasedDataTypesPackage.eNS_URI) instanceof StateBasedDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(StateBasedDataTypesPackage.eNS_URI) : StateBasedDataTypesPackage.eINSTANCE);
 		StateBasedComponentsPackageImpl theStateBasedComponentsPackage = (StateBasedComponentsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(StateBasedComponentsPackage.eNS_URI) instanceof StateBasedComponentsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(StateBasedComponentsPackage.eNS_URI) : StateBasedComponentsPackage.eINSTANCE);
 		FaultTolerancePackageImpl theFaultTolerancePackage = (FaultTolerancePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(FaultTolerancePackage.eNS_URI) instanceof FaultTolerancePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(FaultTolerancePackage.eNS_URI) : FaultTolerancePackage.eINSTANCE);
 		MaintenanceMonitoringPackageImpl theMaintenanceMonitoringPackage = (MaintenanceMonitoringPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MaintenanceMonitoringPackage.eNS_URI) instanceof MaintenanceMonitoringPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MaintenanceMonitoringPackage.eNS_URI) : MaintenanceMonitoringPackage.eINSTANCE);
 		StateBasedAnalysisPackageImpl theStateBasedAnalysisPackage = (StateBasedAnalysisPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(StateBasedAnalysisPackage.eNS_URI) instanceof StateBasedAnalysisPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(StateBasedAnalysisPackage.eNS_URI) : StateBasedAnalysisPackage.eINSTANCE);
-		FMEAPackageImpl theFMEAPackage = (FMEAPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(FMEAPackage.eNS_URI) instanceof FMEAPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(FMEAPackage.eNS_URI) : FMEAPackage.eINSTANCE);
-		FMEADataTypesPackageImpl theFMEADataTypesPackage = (FMEADataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(FMEADataTypesPackage.eNS_URI) instanceof FMEADataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(FMEADataTypesPackage.eNS_URI) : FMEADataTypesPackage.eINSTANCE);
 		MitigationMeansPackageImpl theMitigationMeansPackage = (MitigationMeansPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MitigationMeansPackage.eNS_URI) instanceof MitigationMeansPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MitigationMeansPackage.eNS_URI) : MitigationMeansPackage.eINSTANCE);
-		TimingAnalysisPackageImpl theTimingAnalysisPackage = (TimingAnalysisPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TimingAnalysisPackage.eNS_URI) instanceof TimingAnalysisPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TimingAnalysisPackage.eNS_URI) : TimingAnalysisPackage.eINSTANCE);
-		TimingConstraintsPackageImpl theTimingConstraintsPackage = (TimingConstraintsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TimingConstraintsPackage.eNS_URI) instanceof TimingConstraintsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TimingConstraintsPackage.eNS_URI) : TimingConstraintsPackage.eINSTANCE);
 		HardwareBaselinePackageImpl theHardwareBaselinePackage = (HardwareBaselinePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(HardwareBaselinePackage.eNS_URI) instanceof HardwareBaselinePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(HardwareBaselinePackage.eNS_URI) : HardwareBaselinePackage.eINSTANCE);
-		DeploymentConfAnalysisPackageImpl theDeploymentConfAnalysisPackage = (DeploymentConfAnalysisPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) instanceof DeploymentConfAnalysisPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DeploymentConfAnalysisPackage.eNS_URI) : DeploymentConfAnalysisPackage.eINSTANCE);
 		RTComponentModelPackageImpl theRTComponentModelPackage = (RTComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) instanceof RTComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTComponentModelPackage.eNS_URI) : RTComponentModelPackage.eINSTANCE);
-		RTDataTypesPackageImpl theRTDataTypesPackage = (RTDataTypesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) instanceof RTDataTypesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RTDataTypesPackage.eNS_URI) : RTDataTypesPackage.eINSTANCE);
+		ARINCComponentModelPackageImpl theARINCComponentModelPackage = (ARINCComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) instanceof ARINCComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) : ARINCComponentModelPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
@@ -256,21 +240,15 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		theFailurePropagationDataTypesPackage.createPackageContents();
 		theDependableComponentPackage.createPackageContents();
 		theThreatsPropagationPackage.createPackageContents();
-		theDataFlowCallGraphPackage.createPackageContents();
 		theStateBasedDataTypesPackage.createPackageContents();
 		theStateBasedComponentsPackage.createPackageContents();
 		theFaultTolerancePackage.createPackageContents();
 		theMaintenanceMonitoringPackage.createPackageContents();
 		theStateBasedAnalysisPackage.createPackageContents();
-		theFMEAPackage.createPackageContents();
-		theFMEADataTypesPackage.createPackageContents();
 		theMitigationMeansPackage.createPackageContents();
-		theTimingAnalysisPackage.createPackageContents();
-		theTimingConstraintsPackage.createPackageContents();
 		theHardwareBaselinePackage.createPackageContents();
-		theDeploymentConfAnalysisPackage.createPackageContents();
 		theRTComponentModelPackage.createPackageContents();
-		theRTDataTypesPackage.createPackageContents();
+		theARINCComponentModelPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
 		theSafetyPackage.createPackageContents();
@@ -283,21 +261,15 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		theFailurePropagationDataTypesPackage.initializePackageContents();
 		theDependableComponentPackage.initializePackageContents();
 		theThreatsPropagationPackage.initializePackageContents();
-		theDataFlowCallGraphPackage.initializePackageContents();
 		theStateBasedDataTypesPackage.initializePackageContents();
 		theStateBasedComponentsPackage.initializePackageContents();
 		theFaultTolerancePackage.initializePackageContents();
 		theMaintenanceMonitoringPackage.initializePackageContents();
 		theStateBasedAnalysisPackage.initializePackageContents();
-		theFMEAPackage.initializePackageContents();
-		theFMEADataTypesPackage.initializePackageContents();
 		theMitigationMeansPackage.initializePackageContents();
-		theTimingAnalysisPackage.initializePackageContents();
-		theTimingConstraintsPackage.initializePackageContents();
 		theHardwareBaselinePackage.initializePackageContents();
-		theDeploymentConfAnalysisPackage.initializePackageContents();
 		theRTComponentModelPackage.initializePackageContents();
-		theRTDataTypesPackage.initializePackageContents();
+		theARINCComponentModelPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
 		theSafetyPackage.initializePackageContents();
@@ -352,6 +324,69 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getFLABehavior() {
+		return flaBehaviorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLABehavior_Base_Constraint() {
+		return (EReference)flaBehaviorEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLABehavior_Base_Class() {
+		return (EReference)flaBehaviorEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getFLABehavior_Fptc() {
+		return (EAttribute)flaBehaviorEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLABehavior_Base_InstanceSpecification() {
+		return (EReference)flaBehaviorEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLABehavior_Base_Property() {
+		return (EReference)flaBehaviorEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFLABehavior_Base_Connector() {
+		return (EReference)flaBehaviorEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getFailurePropagationAnalysis() {
 		return failurePropagationAnalysisEClass;
 	}
@@ -390,6 +425,15 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 */
 	public EReference getFPTCSpecification_PartWithPort() {
 		return (EReference)fptcSpecificationEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFPTCSpecification_FailureMode() {
+		return (EReference)fptcSpecificationEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -586,42 +630,6 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getFLASpecification() {
-		return flaSpecificationEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getFLASpecification_Base_Constraint() {
-		return (EReference)flaSpecificationEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getFLASpecification_Base_Class() {
-		return (EReference)flaSpecificationEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getFLASpecification_Expressions() {
-		return (EAttribute)flaSpecificationEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public FailurePropagationFactory getFailurePropagationFactory() {
 		return (FailurePropagationFactory)getEFactoryInstance();
 	}
@@ -645,22 +653,31 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		isCreated = true;
 
 		// Create classes and their features
-		fptcEClass = createEClass(FPTC);
-		createEAttribute(fptcEClass, FPTC__FPTC);
-		createEReference(fptcEClass, FPTC__BASE_COMMENT);
-		createEReference(fptcEClass, FPTC__BASE_CONNECTOR);
-
-		failurePropagationAnalysisEClass = createEClass(FAILURE_PROPAGATION_ANALYSIS);
-
 		fptcSpecificationEClass = createEClass(FPTC_SPECIFICATION);
 		createEReference(fptcSpecificationEClass, FPTC_SPECIFICATION__BASE_COMMENT);
 		createEAttribute(fptcSpecificationEClass, FPTC_SPECIFICATION__FAILURE);
 		createEReference(fptcSpecificationEClass, FPTC_SPECIFICATION__PART_WITH_PORT);
+		createEReference(fptcSpecificationEClass, FPTC_SPECIFICATION__FAILURE_MODE);
 
 		fptcPortSlotEClass = createEClass(FPTC_PORT_SLOT);
 		createEReference(fptcPortSlotEClass, FPTC_PORT_SLOT__FPTC_SPECIFICATION);
 		createEReference(fptcPortSlotEClass, FPTC_PORT_SLOT__BASE_SLOT);
 		createEAttribute(fptcPortSlotEClass, FPTC_PORT_SLOT__FAILURE);
+
+		fptcEClass = createEClass(FPTC);
+		createEAttribute(fptcEClass, FPTC__FPTC);
+		createEReference(fptcEClass, FPTC__BASE_COMMENT);
+		createEReference(fptcEClass, FPTC__BASE_CONNECTOR);
+
+		flaBehaviorEClass = createEClass(FLA_BEHAVIOR);
+		createEReference(flaBehaviorEClass, FLA_BEHAVIOR__BASE_CONSTRAINT);
+		createEReference(flaBehaviorEClass, FLA_BEHAVIOR__BASE_CLASS);
+		createEAttribute(flaBehaviorEClass, FLA_BEHAVIOR__FPTC);
+		createEReference(flaBehaviorEClass, FLA_BEHAVIOR__BASE_INSTANCE_SPECIFICATION);
+		createEReference(flaBehaviorEClass, FLA_BEHAVIOR__BASE_PROPERTY);
+		createEReference(flaBehaviorEClass, FLA_BEHAVIOR__BASE_CONNECTOR);
+
+		failurePropagationAnalysisEClass = createEClass(FAILURE_PROPAGATION_ANALYSIS);
 
 		fi4FAEClass = createEClass(FI4FA);
 		createEAttribute(fi4FAEClass, FI4FA__FI4FA);
@@ -683,11 +700,6 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		createEAttribute(acidMitigationEClass, ACID_MITIGATION__D);
 
 		fi4FAAnalysisEClass = createEClass(FI4FA_ANALYSIS);
-
-		flaSpecificationEClass = createEClass(FLA_SPECIFICATION);
-		createEReference(flaSpecificationEClass, FLA_SPECIFICATION__BASE_CONSTRAINT);
-		createEReference(flaSpecificationEClass, FLA_SPECIFICATION__BASE_CLASS);
-		createEAttribute(flaSpecificationEClass, FLA_SPECIFICATION__EXPRESSIONS);
 	}
 
 	/**
@@ -715,11 +727,11 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 
 		// Obtain other dependent packages
 		FailurePropagationDataTypesPackage theFailurePropagationDataTypesPackage = (FailurePropagationDataTypesPackage)EPackage.Registry.INSTANCE.getEPackage(FailurePropagationDataTypesPackage.eNS_URI);
+		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		DependableComponentPackage theDependableComponentPackage = (DependableComponentPackage)EPackage.Registry.INSTANCE.getEPackage(DependableComponentPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
-		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
-		GQAMPackage theGQAMPackage = (GQAMPackage)EPackage.Registry.INSTANCE.getEPackage(GQAMPackage.eNS_URI);
 		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
+		GQAMPackage theGQAMPackage = (GQAMPackage)EPackage.Registry.INSTANCE.getEPackage(GQAMPackage.eNS_URI);
 
 		// Add subpackages
 		getESubpackages().add(theFailurePropagationDataTypesPackage);
@@ -736,22 +748,31 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		fi4FAAnalysisEClass.getESuperTypes().add(theGQAMPackage.getGaAnalysisContext());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(fptcEClass, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, "FPTC", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getFPTC_Fptc(), theTypesPackage.getString(), "fptc", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getFPTC_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getFPTC_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(failurePropagationAnalysisEClass, FailurePropagationAnalysis.class, "FailurePropagationAnalysis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
 		initEClass(fptcSpecificationEClass, FPTCSpecification.class, "FPTCSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFPTCSpecification_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, FPTCSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getFPTCSpecification_Failure(), theFailurePropagationDataTypesPackage.getFailureType(), "failure", null, 0, -1, FPTCSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getFPTCSpecification_PartWithPort(), theUMLPackage.getProperty(), null, "partWithPort", null, 1, 1, FPTCSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFPTCSpecification_FailureMode(), theDependableComponentPackage.getFailureMode(), null, "failureMode", null, 0, -1, FPTCSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(fptcPortSlotEClass, FPTCPortSlot.class, "FPTCPortSlot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFPTCPortSlot_FPTCSpecification(), this.getFPTCSpecification(), null, "FPTCSpecification", null, 1, 1, FPTCPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getFPTCPortSlot_Base_Slot(), theUMLPackage.getSlot(), null, "base_Slot", null, 1, 1, FPTCPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getFPTCPortSlot_Failure(), theFailurePropagationDataTypesPackage.getFailureType(), "failure", null, 0, -1, FPTCPortSlot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(fptcEClass, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, "FPTC", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getFPTC_Fptc(), theTypesPackage.getString(), "fptc", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFPTC_Base_Comment(), theUMLPackage.getComment(), null, "base_Comment", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFPTC_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(flaBehaviorEClass, FLABehavior.class, "FLABehavior", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getFLABehavior_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFLABehavior_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getFLABehavior_Fptc(), theBasicNFP_TypesPackage.getNFP_String(), "fptc", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFLABehavior_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFLABehavior_Base_Property(), theUMLPackage.getProperty(), null, "base_Property", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFLABehavior_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, FLABehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(failurePropagationAnalysisEClass, FailurePropagationAnalysis.class, "FailurePropagationAnalysis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(fi4FAEClass, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FA.class, "FI4FA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFI4FA_Fi4fa(), theTypesPackage.getString(), "fi4fa", null, 1, 1, org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -774,11 +795,6 @@ public class FailurePropagationPackageImpl extends EPackageImpl implements Failu
 		initEAttribute(getACIDMitigation_D(), theFailurePropagationDataTypesPackage.getD_mitigation(), "d", null, 0, 1, ACIDMitigation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(fi4FAAnalysisEClass, FI4FAAnalysis.class, "FI4FAAnalysis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(flaSpecificationEClass, FLASpecification.class, "FLASpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getFLASpecification_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getFLASpecification_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getFLASpecification_Expressions(), theBasicNFP_TypesPackage.getNFP_String(), "expressions", null, 1, 1, FLASpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		// Create annotations
 		// http://www.eclipse.org/uml2/2.0.0/UML

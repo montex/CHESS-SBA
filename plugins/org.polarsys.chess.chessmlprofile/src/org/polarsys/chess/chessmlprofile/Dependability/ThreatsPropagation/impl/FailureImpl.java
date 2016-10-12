@@ -12,13 +12,18 @@
  */
 package org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.uml2.uml.Transition;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode;
 
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failure;
@@ -31,23 +36,70 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureImpl#getFailure <em>Failure</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureImpl#getBase_Transition <em>Base Transition</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureImpl#getMode <em>Mode</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureImpl#getDelay <em>Delay</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FailureImpl#getWeight <em>Weight</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class FailureImpl extends OutputEventImpl implements Failure {
+public class FailureImpl extends EObjectImpl implements Failure {
 	/**
-	 * The cached value of the '{@link #getFailure() <em>Failure</em>}' reference.
+	 * The cached value of the '{@link #getBase_Transition() <em>Base Transition</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFailure()
+	 * @see #getBase_Transition()
 	 * @generated
 	 * @ordered
 	 */
-	protected FailureMode failure;
-
+	protected Transition base_Transition;
+	/**
+	 * The cached value of the '{@link #getMode() <em>Mode</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMode()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> mode;
+	/**
+	 * The default value of the '{@link #getDelay() <em>Delay</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDelay()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DELAY_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getDelay() <em>Delay</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDelay()
+	 * @generated
+	 * @ordered
+	 */
+	protected String delay = DELAY_EDEFAULT;
+	/**
+	 * The default value of the '{@link #getWeight() <em>Weight</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWeight()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String WEIGHT_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getWeight() <em>Weight</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWeight()
+	 * @generated
+	 * @ordered
+	 */
+	protected String weight = WEIGHT_EDEFAULT;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -72,16 +124,16 @@ public class FailureImpl extends OutputEventImpl implements Failure {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public FailureMode getFailure() {
-		if (failure != null && failure.eIsProxy()) {
-			InternalEObject oldFailure = (InternalEObject)failure;
-			failure = (FailureMode)eResolveProxy(oldFailure);
-			if (failure != oldFailure) {
+	public Transition getBase_Transition() {
+		if (base_Transition != null && base_Transition.eIsProxy()) {
+			InternalEObject oldBase_Transition = (InternalEObject)base_Transition;
+			base_Transition = (Transition)eResolveProxy(oldBase_Transition);
+			if (base_Transition != oldBase_Transition) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ThreatsPropagationPackage.FAILURE__FAILURE, oldFailure, failure));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ThreatsPropagationPackage.FAILURE__BASE_TRANSITION, oldBase_Transition, base_Transition));
 			}
 		}
-		return failure;
+		return base_Transition;
 	}
 
 	/**
@@ -89,8 +141,8 @@ public class FailureImpl extends OutputEventImpl implements Failure {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public FailureMode basicGetFailure() {
-		return failure;
+	public Transition basicGetBase_Transition() {
+		return base_Transition;
 	}
 
 	/**
@@ -98,11 +150,65 @@ public class FailureImpl extends OutputEventImpl implements Failure {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFailure(FailureMode newFailure) {
-		FailureMode oldFailure = failure;
-		failure = newFailure;
+	public void setBase_Transition(Transition newBase_Transition) {
+		Transition oldBase_Transition = base_Transition;
+		base_Transition = newBase_Transition;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.FAILURE__FAILURE, oldFailure, failure));
+			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.FAILURE__BASE_TRANSITION, oldBase_Transition, base_Transition));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getMode() {
+		if (mode == null) {
+			mode = new EDataTypeUniqueEList<String>(String.class, this, ThreatsPropagationPackage.FAILURE__MODE);
+		}
+		return mode;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getDelay() {
+		return delay;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDelay(String newDelay) {
+		String oldDelay = delay;
+		delay = newDelay;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.FAILURE__DELAY, oldDelay, delay));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getWeight() {
+		return weight;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWeight(String newWeight) {
+		String oldWeight = weight;
+		weight = newWeight;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ThreatsPropagationPackage.FAILURE__WEIGHT, oldWeight, weight));
 	}
 
 	/**
@@ -113,9 +219,15 @@ public class FailureImpl extends OutputEventImpl implements Failure {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.FAILURE__FAILURE:
-				if (resolve) return getFailure();
-				return basicGetFailure();
+			case ThreatsPropagationPackage.FAILURE__BASE_TRANSITION:
+				if (resolve) return getBase_Transition();
+				return basicGetBase_Transition();
+			case ThreatsPropagationPackage.FAILURE__MODE:
+				return getMode();
+			case ThreatsPropagationPackage.FAILURE__DELAY:
+				return getDelay();
+			case ThreatsPropagationPackage.FAILURE__WEIGHT:
+				return getWeight();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -125,11 +237,22 @@ public class FailureImpl extends OutputEventImpl implements Failure {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.FAILURE__FAILURE:
-				setFailure((FailureMode)newValue);
+			case ThreatsPropagationPackage.FAILURE__BASE_TRANSITION:
+				setBase_Transition((Transition)newValue);
+				return;
+			case ThreatsPropagationPackage.FAILURE__MODE:
+				getMode().clear();
+				getMode().addAll((Collection<? extends String>)newValue);
+				return;
+			case ThreatsPropagationPackage.FAILURE__DELAY:
+				setDelay((String)newValue);
+				return;
+			case ThreatsPropagationPackage.FAILURE__WEIGHT:
+				setWeight((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -143,8 +266,17 @@ public class FailureImpl extends OutputEventImpl implements Failure {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.FAILURE__FAILURE:
-				setFailure((FailureMode)null);
+			case ThreatsPropagationPackage.FAILURE__BASE_TRANSITION:
+				setBase_Transition((Transition)null);
+				return;
+			case ThreatsPropagationPackage.FAILURE__MODE:
+				getMode().clear();
+				return;
+			case ThreatsPropagationPackage.FAILURE__DELAY:
+				setDelay(DELAY_EDEFAULT);
+				return;
+			case ThreatsPropagationPackage.FAILURE__WEIGHT:
+				setWeight(WEIGHT_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -158,10 +290,36 @@ public class FailureImpl extends OutputEventImpl implements Failure {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ThreatsPropagationPackage.FAILURE__FAILURE:
-				return failure != null;
+			case ThreatsPropagationPackage.FAILURE__BASE_TRANSITION:
+				return base_Transition != null;
+			case ThreatsPropagationPackage.FAILURE__MODE:
+				return mode != null && !mode.isEmpty();
+			case ThreatsPropagationPackage.FAILURE__DELAY:
+				return DELAY_EDEFAULT == null ? delay != null : !DELAY_EDEFAULT.equals(delay);
+			case ThreatsPropagationPackage.FAILURE__WEIGHT:
+				return WEIGHT_EDEFAULT == null ? weight != null : !WEIGHT_EDEFAULT.equals(weight);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (mode: ");
+		result.append(mode);
+		result.append(", delay: ");
+		result.append(delay);
+		result.append(", weight: ");
+		result.append(weight);
+		result.append(')');
+		return result.toString();
 	}
 
 } //FailureImpl

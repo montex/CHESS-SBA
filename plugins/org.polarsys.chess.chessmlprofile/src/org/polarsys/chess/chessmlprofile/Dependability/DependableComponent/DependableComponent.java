@@ -23,6 +23,10 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorM
  * A representation of the model object '<em><b>Dependable Component</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * obsolete, use ErrorModelBehavior
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

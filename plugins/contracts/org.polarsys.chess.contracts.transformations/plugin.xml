@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+   
+    Copyright (c) 2013, 2015 Intecs SpA 
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+    Nicholas Pacini nicholas.pacini@intecs.it 
+    Stefano Puri stefano.puri@intecs.it
+    Laura Baracchi  laura.baracchi@intecs.it  
+    Initial API and implementation and/or initial documentation
+ -->
+
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category 
+      		id="org.polarsys.chess.contracts.category"
+      		name="Formal Verification Category">
+      </category>
+      <command
+            categoryId="org.polarsys.chess.contracts.category"
+            defaultHandler="org.polarsys.chess.contracts.transformations.commands.CheckRefHandler"
+            id="org.polarsys.chess.contracts.transformations.ref.id"
+            name="Check Refinement">
+      </command>
+      <command
+            categoryId="org.polarsys.chess.contracts.category"
+            defaultHandler="org.polarsys.chess.contracts.transformations.commands.CheckImplHandler"
+            id="org.polarsys.chess.contracts.transformations.impl.id"
+            name="Check Implementation">
+      </command>
+      <command
+            categoryId="org.polarsys.chess.contracts.category"
+            defaultHandler="org.polarsys.chess.contracts.transformations.commands.FTANuSMV3Handler"
+            id="org.polarsys.chess.contracts.transformations.fta3.id"
+            name="FTA NuSMV3">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+     		locationURI="menu:org.polarsys.chess.mainMenu">
+          <menu
+                id="chess.menu.analysis.id"
+                label="Analysis">
+             <menu
+                   id="chess.menu.analysis.contract.id"
+                   label="Formal Verification">
+                <command
+                      commandId="org.polarsys.chess.contracts.transformations.ref.id"
+                      label="Contracts Refinement Analysis (OCRA)"
+                      style="push">
+                      <visibleWhen
+                           checkEnabled="false">
+                        <or>
+                           <with
+                                 variable="activeEditorId">
+                              <equals
+                                    value="org.eclipse.uml2.uml.editor.presentation.UMLEditorID">
+                              </equals>
+                           </with>
+                           <with
+                                 variable="activeEditorInput">
+                              <adapt
+                                    type="org.eclipse.core.resources.IResource">
+                                 <test
+                                       property="org.eclipse.core.resources.projectNature"
+                                       value="org.polarsys.chess.CHESSNature">
+                                 </test>
+                              </adapt>
+                           </with>
+                        </or>
+                     </visibleWhen>
+                </command>
+                <!--command
+                      commandId="org.polarsys.chess.contracts.transformations.impl.id"
+                      label="Check Implementation Analysis"
+                      style="push">
+                </command-->
+             </menu>
+             <menu
+                   id="chess.menu.analysis.dependability.id"
+                   label="Dependability">
+                <command
+                      commandId="org.polarsys.chess.contracts.transformations.fta3.id"
+                      label="FTA with NuSMV3 (xSAP)"
+                      style="push">
+                      <visibleWhen
+                           checkEnabled="false">
+                        <or>
+                           <with
+                                 variable="activeEditorId">
+                              <equals
+                                    value="org.eclipse.uml2.uml.editor.presentation.UMLEditorID">
+                              </equals>
+                           </with>
+                           <with
+                                 variable="activeEditorInput">
+                              <adapt
+                                    type="org.eclipse.core.resources.IResource">
+                                 <test
+                                       property="org.eclipse.core.resources.projectNature"
+                                       value="org.polarsys.chess.CHESSNature">
+                                 </test>
+                              </adapt>
+                           </with>
+                        </or>
+                     </visibleWhen>
+                </command>
+          	 </menu>
+          </menu>
+	</menuContribution>
+   </extension>
+</plugin>

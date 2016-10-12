@@ -49,13 +49,40 @@ public interface ThreatsPropagationFactory extends EFactory {
 	InternalPropagation createInternalPropagation();
 
 	/**
-	 * Returns a new object of class '<em>External Fault</em>'.
+	 * Returns a new object of class '<em>Error Detection</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>External Fault</em>'.
+	 * @return a new object of class '<em>Error Detection</em>'.
 	 * @generated
 	 */
-	ExternalFault createExternalFault();
+	ErrorDetection createErrorDetection();
+
+	/**
+	 * Returns a new object of class '<em>Error Handling</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Error Handling</em>'.
+	 * @generated
+	 */
+	ErrorHandling createErrorHandling();
+
+	/**
+	 * Returns a new object of class '<em>Fault Handling</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Fault Handling</em>'.
+	 * @generated
+	 */
+	FaultHandling createFaultHandling();
+
+	/**
+	 * Returns a new object of class '<em>Error Model</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Error Model</em>'.
+	 * @generated
+	 */
+	ErrorModel createErrorModel();
 
 	/**
 	 * Returns a new object of class '<em>Normal Input</em>'.
@@ -65,15 +92,6 @@ public interface ThreatsPropagationFactory extends EFactory {
 	 * @generated
 	 */
 	NormalInput createNormalInput();
-
-	/**
-	 * Returns a new object of class '<em>Recovery Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Recovery Event</em>'.
-	 * @generated
-	 */
-	RecoveryEvent createRecoveryEvent();
 
 	/**
 	 * Returns a new object of class '<em>Normal Output</em>'.
@@ -94,33 +112,6 @@ public interface ThreatsPropagationFactory extends EFactory {
 	Failure createFailure();
 
 	/**
-	 * Returns a new object of class '<em>Normal Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Normal Event</em>'.
-	 * @generated
-	 */
-	NormalEvent createNormalEvent();
-
-	/**
-	 * Returns a new object of class '<em>Internal Threat</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Internal Threat</em>'.
-	 * @generated
-	 */
-	InternalThreat createInternalThreat();
-
-	/**
-	 * Returns a new object of class '<em>Error</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Error</em>'.
-	 * @generated
-	 */
-	Error createError();
-
-	/**
 	 * Returns a new object of class '<em>Threat State</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -128,33 +119,6 @@ public interface ThreatsPropagationFactory extends EFactory {
 	 * @generated
 	 */
 	ThreatState createThreatState();
-
-	/**
-	 * Returns a new object of class '<em>Error Free</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Error Free</em>'.
-	 * @generated
-	 */
-	ErrorFree createErrorFree();
-
-	/**
-	 * Returns a new object of class '<em>Unclassified Error</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Unclassified Error</em>'.
-	 * @generated
-	 */
-	UnclassifiedError createUnclassifiedError();
-
-	/**
-	 * Returns a new object of class '<em>Failure Mode</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Failure Mode</em>'.
-	 * @generated
-	 */
-	FailureMode createFailureMode();
 
 	/**
 	 * Returns a new object of class '<em>Degraded State</em>'.
@@ -166,40 +130,22 @@ public interface ThreatsPropagationFactory extends EFactory {
 	DegradedState createDegradedState();
 
 	/**
-	 * Returns a new object of class '<em>Failure Free</em>'.
+	 * Returns a new object of class '<em>Normal State</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Failure Free</em>'.
+	 * @return a new object of class '<em>Normal State</em>'.
 	 * @generated
 	 */
-	FailureFree createFailureFree();
+	NormalState createNormalState();
 
 	/**
-	 * Returns a new object of class '<em>CH Internal Fault</em>'.
+	 * Returns a new object of class '<em>Error State</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CH Internal Fault</em>'.
+	 * @return a new object of class '<em>Error State</em>'.
 	 * @generated
 	 */
-	CHInternalFault createCHInternalFault();
-
-	/**
-	 * Returns a new object of class '<em>CH External Fault</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CH External Fault</em>'.
-	 * @generated
-	 */
-	CHExternalFault createCHExternalFault();
-
-	/**
-	 * Returns a new object of class '<em>Unclassified Failure</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Unclassified Failure</em>'.
-	 * @generated
-	 */
-	UnclassifiedFailure createUnclassifiedFailure();
+	ErrorState createErrorState();
 
 	/**
 	 * Returns a new object of class '<em>Stuck At</em>'.
@@ -236,51 +182,6 @@ public interface ThreatsPropagationFactory extends EFactory {
 	 * @generated
 	 */
 	RampDown createRampDown();
-
-	/**
-	 * Returns a new object of class '<em>Input Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Input Event</em>'.
-	 * @generated
-	 */
-	InputEvent createInputEvent();
-
-	/**
-	 * Returns a new object of class '<em>Dep Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Dep Event</em>'.
-	 * @generated
-	 */
-	DepEvent createDepEvent();
-
-	/**
-	 * Returns a new object of class '<em>Output Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Output Event</em>'.
-	 * @generated
-	 */
-	OutputEvent createOutputEvent();
-
-	/**
-	 * Returns a new object of class '<em>Internal Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Internal Event</em>'.
-	 * @generated
-	 */
-	InternalEvent createInternalEvent();
-
-	/**
-	 * Returns a new object of class '<em>Error Model</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Error Model</em>'.
-	 * @generated
-	 */
-	ErrorModel createErrorModel();
 
 	/**
 	 * Returns the package supported by this factory.

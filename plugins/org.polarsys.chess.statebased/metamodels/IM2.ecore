@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="DependabilityintermediateModel" nsURI="http://if.dsi.unifi.it/Modeling/DIM"
+    nsPrefix="">
+  <eClassifiers xsi:type="ecore:EClass" name="Sistema" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
+        eType="#//Component" containment="true" eOpposite="#//Component/intermediateModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Activities" upperBound="-1"
+        eType="#//Activity" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measures" upperBound="-1"
+        eType="#//DependabilityMeasure" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Component" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="intermediateModel" lowerBound="1"
+        eType="#//Sistema" eOpposite="#//Sistema/components"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="FailureModes" lowerBound="1"
+        upperBound="-1" eType="#//FailureMode" containment="true" eOpposite="#//FailureMode/Component"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Errors" upperBound="-1"
+        eType="#//Error" containment="true" eOpposite="#//Error/Component"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Faults" lowerBound="1"
+        upperBound="-1" eType="#//Fault" containment="true" eOpposite="#//Fault/Component"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="FaultsGeneratesErrors"
+        lowerBound="1" upperBound="-1" eType="#//FaultsGenerateErrors" containment="true"
+        eOpposite="#//FaultsGenerateErrors/Component"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="InternalPropagation" upperBound="-1"
+        eType="#//InternalPropagation" containment="true" eOpposite="#//InternalPropagation/Component"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ErrorsGeneratesFailures"
+        lowerBound="1" upperBound="-1" eType="#//ErrorsProducesFailures" containment="true"
+        eOpposite="#//ErrorsProducesFailures/Component"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Threat" abstract="true" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Fault" abstract="true" eSuperTypes="#//Threat">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Component" lowerBound="1"
+        eType="#//Component" eOpposite="#//Component/Faults"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InternalFault" eSuperTypes="#//Fault">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Occurrence" lowerBound="1"
+        eType="#//Distribution" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="PermanentProbability" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="TransientDuration" lowerBound="1"
+        eType="#//Distribution" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExternalFault" eSuperTypes="#//Fault">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Source" lowerBound="1"
+        eType="#//FailureMode"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Error" eSuperTypes="#//Threat">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="VanishingTime" eType="#//Distribution"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Component" lowerBound="1"
+        eType="#//Component" eOpposite="#//Component/Errors"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Uniform" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Lower" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Upper" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Distribution" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Exponential" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Rate" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Gaussian" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Mean" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Variance" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Deterministic" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Gamma" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Alpha" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Beta" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Weibull" eSuperTypes="#//Distribution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Alpha" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Beta" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FailureMode" eSuperTypes="#//Threat">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Domain" eType="#//FailureDomain"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Detectability" eType="#//FailureDetectability"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Consistency" eType="#//FailureConsistency"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Consequences" eType="#//FailureConsequences"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Component" lowerBound="1"
+        eType="#//Component" eOpposite="#//Component/FailureModes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FailureDomain">
+    <eLiterals name="Content"/>
+    <eLiterals name="EarlyTiming" value="1"/>
+    <eLiterals name="LateTiming" value="2"/>
+    <eLiterals name="Halt" value="3"/>
+    <eLiterals name="Erratic" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FailureDetectability">
+    <eLiterals name="Signaled"/>
+    <eLiterals name="Unsignaled" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FailureConsequences">
+    <eLiterals name="Insignificant"/>
+    <eLiterals name="Marginal" value="1"/>
+    <eLiterals name="Critical" value="2"/>
+    <eLiterals name="Catastrophic" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FailureConsistency">
+    <eLiterals name="Consistent"/>
+    <eLiterals name="Inconsistent" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FaultsExpressionNode" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="faultsGenerateErrors" lowerBound="1"
+        eType="#//FaultsGenerateErrors"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FaultsExpressionAndNode" eSuperTypes="#//FaultsExpressionNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="FaultsExpression1" lowerBound="1"
+        eType="#//FaultsExpressionNode" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="FaultsExpression2" lowerBound="1"
+        eType="#//FaultsExpressionNode" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FaultsExpressionOrNode" eSuperTypes="#//FaultsExpressionNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="FaultsExpression1" lowerBound="1"
+        eType="#//FaultsExpressionNode" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="FaultsExpression2" lowerBound="1"
+        eType="#//FaultsExpressionNode" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FaultsExpressionFaultNode" eSuperTypes="#//FaultsExpressionNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Fault" lowerBound="1" eType="#//Fault"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FaultsExpressionNotNode" eSuperTypes="#//FaultsExpressionNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="FaultsExpression" lowerBound="1"
+        eType="#//FaultsExpressionNode" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ErrorsExpressionNode" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="errorPropagation" lowerBound="1"
+        eType="#//ErrorPropagation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ErrorsExpressionErrorNode" eSuperTypes="#//ErrorsExpressionNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Error" lowerBound="1" eType="#//Error"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ErrorsExpressionNotNode" eSuperTypes="#//ErrorsExpressionNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ErrorsExpression" lowerBound="1"
+        eType="#//ErrorsExpressionNode" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ErrorsExpressionAndNode" eSuperTypes="#//ErrorsExpressionNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ErrorsExpression1" lowerBound="1"
+        eType="#//ErrorsExpressionNode" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ErrorsExpression2" lowerBound="1"
+        eType="#//ErrorsExpressionNode" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ErrorsExpressionOrNode" eSuperTypes="#//ErrorsExpressionNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ErrorsExpression1" lowerBound="1"
+        eType="#//ErrorsExpressionNode" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ErrorsExpression2" lowerBound="1"
+        eType="#//ErrorsExpressionNode" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FaultsGenerateErrors">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Source" lowerBound="1"
+        upperBound="-1" eType="#//Fault"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Destination" lowerBound="1"
+        upperBound="-1" eType="#//Error"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ActivationDelay" lowerBound="1"
+        eType="#//Distribution" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="PropagationProbability"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="PropagationLogic" lowerBound="1"
+        eType="#//FaultsExpressionNode" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Weight" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble" defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="PropagationLogicStringFormat"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Component" lowerBound="1"
+        eType="#//Component" eOpposite="#//Component/FaultsGeneratesErrors"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InternalPropagation" eSuperTypes="#//ErrorPropagation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Source" lowerBound="1"
+        upperBound="-1" eType="#//Error"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Destination" lowerBound="1"
+        upperBound="-1" eType="#//Error"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="PropagationDelay" lowerBound="1"
+        eType="#//Distribution" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="PropagationProbability"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Weight" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble" defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Component" lowerBound="1"
+        eType="#//Component" eOpposite="#//Component/InternalPropagation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ErrorPropagation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="PropagationLogic" lowerBound="1"
+        eType="#//ErrorsExpressionNode" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="PropagationLogicStringFormat"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="FaultGuard" eType="#//FaultsExpressionNode"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ErrorsProducesFailures" eSuperTypes="#//ErrorPropagation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Source" lowerBound="1"
+        upperBound="-1" eType="#//Error"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Destination" lowerBound="1"
+        upperBound="-1" eType="#//FailureMode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="PropagationDelay" lowerBound="1"
+        eType="#//Distribution" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Weight" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble" defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="PropagationProbability"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble" defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Component" lowerBound="1"
+        eType="#//Component" eOpposite="#//Component/ErrorsGeneratesFailures"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Activity" abstract="true" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Duration" lowerBound="1"
+        eType="#//Distribution" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="When" lowerBound="1" eType="#//ScheduleExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MaintenanceActivity" eSuperTypes="#//Activity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="SuccessProbability" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RepairActivity" eSuperTypes="#//MaintenanceActivity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Target" lowerBound="1"
+        upperBound="-1" eType="#//Component"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReplaceActivity" eSuperTypes="#//MaintenanceActivity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Target" lowerBound="1"
+        eType="#//Component"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Replacement" eType="#//Component"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DetectionActivity" eSuperTypes="#//Activity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Coverage" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="FalsePositiveRatio" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="DetectableErrors" upperBound="-1"
+        eType="#//Error"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DependabilityMeasure" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        upperBound="-1" eType="#//FailureMode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="evaluations" lowerBound="1"
+        upperBound="-1" eType="#//EvaluationType" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiredMax" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiredMin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EvaluationType" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SteadyState" eSuperTypes="#//EvaluationType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InstantOfTime" eSuperTypes="#//EvaluationType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timePoint" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntervalOfTime" eSuperTypes="#//EvaluationType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="begin" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="end" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Reliability" eSuperTypes="#//DependabilityMeasure"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FailureProbability" eSuperTypes="#//DependabilityMeasure"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Availability" eSuperTypes="#//DependabilityMeasure"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Safety" eSuperTypes="#//DependabilityMeasure">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hazardousLevel" lowerBound="1"
+        eType="#//FailureConsequences"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="T" lowerBound="1" eType="#//ScheduleExpressionTime"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EX" lowerBound="1" eType="#//ScheduleExpressionCondition"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="L" eType="#//ScheduleExpressionLimit"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionTime" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionImmediately" eSuperTypes="#//ScheduleExpressionTime"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionAtTime" eSuperTypes="#//ScheduleExpressionTime">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="t" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionPeriodic" eSuperTypes="#//ScheduleExpressionTime">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="PeriodDuration" eType="#//Distribution"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionCondition" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionTrue" eSuperTypes="#//ScheduleExpressionCondition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionAnd" eSuperTypes="#//ScheduleExpressionCondition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e1" lowerBound="1" eType="#//ScheduleExpressionCondition"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" lowerBound="1" eType="#//ScheduleExpressionCondition"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionOr" eSuperTypes="#//ScheduleExpressionCondition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e1" lowerBound="1" eType="#//ScheduleExpressionCondition"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" lowerBound="1" eType="#//ScheduleExpressionCondition"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionNot" eSuperTypes="#//ScheduleExpressionCondition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e" lowerBound="1" eType="#//ScheduleExpressionCondition"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionFailed" eSuperTypes="#//ScheduleExpressionCondition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failureMode" lowerBound="1"
+        eType="#//FailureMode"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionErrorDetected" eSuperTypes="#//ScheduleExpressionCondition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="error" lowerBound="1" eType="#//Error"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionLimit" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionBefore" eSuperTypes="#//ScheduleExpressionLimit">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="t" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionAfter" eSuperTypes="#//ScheduleExpressionLimit">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="t" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleExpressionInterval" eSuperTypes="#//ScheduleExpressionLimit">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="t1" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="t2" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntervalOfTimeAveraged" eSuperTypes="#//EvaluationType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="begin" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="end" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+</ecore:EPackage>

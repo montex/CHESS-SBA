@@ -32,6 +32,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.menus.UIElement;
 import org.eclipse.ui.services.ISourceProviderService;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
+import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
 import org.polarsys.chess.service.internal.palette.PaletteManager;
@@ -39,6 +40,9 @@ import org.polarsys.chess.service.internal.utils.CHESSInternalEditorUtils;
 import org.polarsys.chess.service.internal.visibility.HidePortCommand;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
+/**
+ * @since 0.10
+ */
 public class SwitchToView {
 
 	public String commandId;
@@ -48,6 +52,25 @@ public class SwitchToView {
 	String checkedText;
 	String uncheckedText;
 	
+	public SwitchToView(String theView, boolean changeToConcurrentView, String commandId) {
+		this.theView = theView;
+		this.commandId = commandId;
+		
+		checkedText = "Deactivate " + theView;
+		uncheckedText = "Activate " + theView;
+		
+		SwitchSourceProvider.commandsToRefresh.add(commandId);
+		
+		setSelected(changeToConcurrentView);
+	}
+	
+	
+	private void setSelected(boolean changeToConcurrentView) {
+		// TODO Auto-generated method stub
+		selected = changeToConcurrentView;
+	}
+
+
 	public SwitchToView(String theView, String commandId) {
 		this.theView = theView;
 		this.commandId = commandId;
@@ -90,6 +113,33 @@ public class SwitchToView {
 
 		return null;
 	}
+	
+	
+	public Object execute() throws ExecutionException {
+		IEditorPart editorPart = CHESSEditorUtils.getCHESSEditor();
+		
+		if (CHESSEditorUtils.isCHESSProject(editorPart) && CHESSProfileManager.ARE_VIEWS_LOADED) {
+			
+			DiagramStatus diagramStatus = CHESSEditorUtils.getDiagramStatus((PapyrusMultiDiagramEditor) editorPart);
+
+			if (diagramStatus == null)
+				return null;
+
+			IWorkbenchWindow window = editorPart.getSite().getWorkbenchWindow();
+			ISourceProviderService spService = (ISourceProviderService) window
+					.getService(ISourceProviderService.class);
+			SwitchSourceProvider sp = (SwitchSourceProvider) spService
+					.getSourceProvider(SwitchSourceProvider.SWITCH);
+
+			selected = diagramStatus.requestView(theView, !selected);
+			hideShowElements((PapyrusMultiDiagramEditor) editorPart);
+			PaletteManager.setPaletteVisibility((PapyrusMultiDiagramEditor) editorPart, diagramStatus);
+			sp.updateStatus(editorPart);
+		}
+
+		return null;
+	}
+	
 
 	//TODO currently this method does not work. Do no use it.
 	private void hideShowElements(PapyrusMultiDiagramEditor editor) {

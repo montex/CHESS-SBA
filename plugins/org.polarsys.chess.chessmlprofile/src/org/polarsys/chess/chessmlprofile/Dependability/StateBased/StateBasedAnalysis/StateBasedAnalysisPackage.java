@@ -167,7 +167,7 @@ public interface StateBasedAnalysisPackage extends EPackage {
 	int STATE_BASED_ANALYSIS__EVAL_METHOD = GQAMPackage.GA_ANALYSIS_CONTEXT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Target Failure Mode</b></em>' reference list.
+	 * The feature id for the '<em><b>Target Failure Mode</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -185,13 +185,78 @@ public interface StateBasedAnalysisPackage extends EPackage {
 	int STATE_BASED_ANALYSIS__TARGET_DEP_COMPONENT = GQAMPackage.GA_ANALYSIS_CONTEXT_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Target Port</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE_BASED_ANALYSIS__TARGET_PORT = GQAMPackage.GA_ANALYSIS_CONTEXT_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Initial Conditions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE_BASED_ANALYSIS__INITIAL_CONDITIONS = GQAMPackage.GA_ANALYSIS_CONTEXT_FEATURE_COUNT + 6;
+
+	/**
 	 * The number of structural features of the '<em>State Based Analysis</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATE_BASED_ANALYSIS_FEATURE_COUNT = GQAMPackage.GA_ANALYSIS_CONTEXT_FEATURE_COUNT + 5;
+	int STATE_BASED_ANALYSIS_FEATURE_COUNT = GQAMPackage.GA_ANALYSIS_CONTEXT_FEATURE_COUNT + 7;
+
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.SBAInitialConditionsImpl <em>SBA Initial Conditions</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.SBAInitialConditionsImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisPackageImpl#getSBAInitialConditions()
+	 * @generated
+	 */
+	int SBA_INITIAL_CONDITIONS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SBA_INITIAL_CONDITIONS__BASE_CLASS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Target Instance</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SBA_INITIAL_CONDITIONS__TARGET_INSTANCE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Setup</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SBA_INITIAL_CONDITIONS__SETUP = 2;
+
+	/**
+	 * The number of structural features of the '<em>SBA Initial Conditions</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SBA_INITIAL_CONDITIONS_FEATURE_COUNT = 3;
 
 
 	/**
@@ -238,15 +303,15 @@ public interface StateBasedAnalysisPackage extends EPackage {
 	EAttribute getStateBasedAnalysis_EvalMethod();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetFailureMode <em>Target Failure Mode</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetFailureMode <em>Target Failure Mode</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Target Failure Mode</em>'.
+	 * @return the meta object for the attribute list '<em>Target Failure Mode</em>'.
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetFailureMode()
 	 * @see #getStateBasedAnalysis()
 	 * @generated
 	 */
-	EReference getStateBasedAnalysis_TargetFailureMode();
+	EAttribute getStateBasedAnalysis_TargetFailureMode();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetDepComponent <em>Target Dep Component</em>}'.
@@ -258,6 +323,71 @@ public interface StateBasedAnalysisPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getStateBasedAnalysis_TargetDepComponent();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetPort <em>Target Port</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Target Port</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetPort()
+	 * @see #getStateBasedAnalysis()
+	 * @generated
+	 */
+	EReference getStateBasedAnalysis_TargetPort();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getInitialConditions <em>Initial Conditions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Initial Conditions</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getInitialConditions()
+	 * @see #getStateBasedAnalysis()
+	 * @generated
+	 */
+	EReference getStateBasedAnalysis_InitialConditions();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions <em>SBA Initial Conditions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>SBA Initial Conditions</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions
+	 * @generated
+	 */
+	EClass getSBAInitialConditions();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions#getBase_Class <em>Base Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Class</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions#getBase_Class()
+	 * @see #getSBAInitialConditions()
+	 * @generated
+	 */
+	EReference getSBAInitialConditions_Base_Class();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions#getTargetInstance <em>Target Instance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Target Instance</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions#getTargetInstance()
+	 * @see #getSBAInitialConditions()
+	 * @generated
+	 */
+	EReference getSBAInitialConditions_TargetInstance();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions#getSetup <em>Setup</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Setup</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions#getSetup()
+	 * @see #getSBAInitialConditions()
+	 * @generated
+	 */
+	EAttribute getSBAInitialConditions_Setup();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -316,12 +446,12 @@ public interface StateBasedAnalysisPackage extends EPackage {
 		EAttribute STATE_BASED_ANALYSIS__EVAL_METHOD = eINSTANCE.getStateBasedAnalysis_EvalMethod();
 
 		/**
-		 * The meta object literal for the '<em><b>Target Failure Mode</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Target Failure Mode</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference STATE_BASED_ANALYSIS__TARGET_FAILURE_MODE = eINSTANCE.getStateBasedAnalysis_TargetFailureMode();
+		EAttribute STATE_BASED_ANALYSIS__TARGET_FAILURE_MODE = eINSTANCE.getStateBasedAnalysis_TargetFailureMode();
 
 		/**
 		 * The meta object literal for the '<em><b>Target Dep Component</b></em>' reference list feature.
@@ -330,6 +460,56 @@ public interface StateBasedAnalysisPackage extends EPackage {
 		 * @generated
 		 */
 		EReference STATE_BASED_ANALYSIS__TARGET_DEP_COMPONENT = eINSTANCE.getStateBasedAnalysis_TargetDepComponent();
+
+		/**
+		 * The meta object literal for the '<em><b>Target Port</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STATE_BASED_ANALYSIS__TARGET_PORT = eINSTANCE.getStateBasedAnalysis_TargetPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Initial Conditions</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STATE_BASED_ANALYSIS__INITIAL_CONDITIONS = eINSTANCE.getStateBasedAnalysis_InitialConditions();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.SBAInitialConditionsImpl <em>SBA Initial Conditions</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.SBAInitialConditionsImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisPackageImpl#getSBAInitialConditions()
+		 * @generated
+		 */
+		EClass SBA_INITIAL_CONDITIONS = eINSTANCE.getSBAInitialConditions();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Class</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SBA_INITIAL_CONDITIONS__BASE_CLASS = eINSTANCE.getSBAInitialConditions_Base_Class();
+
+		/**
+		 * The meta object literal for the '<em><b>Target Instance</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SBA_INITIAL_CONDITIONS__TARGET_INSTANCE = eINSTANCE.getSBAInitialConditions_TargetInstance();
+
+		/**
+		 * The meta object literal for the '<em><b>Setup</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SBA_INITIAL_CONDITIONS__SETUP = eINSTANCE.getSBAInitialConditions_Setup();
 
 	}
 

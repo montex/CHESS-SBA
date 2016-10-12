@@ -149,22 +149,7 @@ public abstract class AbstractTransformation {
 			final PapyrusMultiDiagramEditor editor, IFile modelFile, IProgressMonitor monitor)
 			throws Exception {
 		
-		saAnalysisName = configProperty.get("saAnalysis");
-		// Tidy up directories
-		IFile modelCopy = prepareModel(modelFile);
-		//Execute the various steps of the transformations
-		
-		// Remove the package with the multi-instances, if any
-		//TO COMMENT FOR DEBUG
-		if(!DEBUG){
-			QVToTransformation.launchRemoveMultiInstance(modelCopy, monitor);
-		}
-		
-		QVToTransformation.launchCeilingAssignment(modelCopy, monitor);
-		
-		QVToTransformation.launchBuildMultiInstance(modelCopy, monitor);
-
-		launchPIM2PSMtransformation(monitor, modelCopy);
+		IFile modelCopy = performPIM2PSMtransformation(editor, modelFile, monitor, false);
 
 		String result = launchMarte2MastTrasformation(monitor, modelCopy, editor);
 
@@ -174,6 +159,42 @@ public abstract class AbstractTransformation {
 		
 		// Finally delete the working dir
 		// CHESSProjectSupport.deleteFolder((IFolder) transDir);
+	}
+	
+	
+	/**
+	 * Executes the PIM to PSM transformation, calculating ceiling priorities for shared resources.
+	 * A new PSM Package is generated in the PSM view.
+	 * The analysis context to consider is retrieved from the configProperty 'saAnalysis'.
+	 * The transformation is executed on a copy of the given modelFile.
+	 * 
+	 * @param editor
+	 * @param modelFile the input model file for a new PSM package inthe PSM view has to be generated
+	 * @param monitor
+	 * @param replaceFile if true, then the given modelFile is replaced with the content of the transformed modelFile
+	 * @return the transformed model file
+	 * @throws Exception
+	 * @since 0.9
+	 */
+	public IFile performPIM2PSMtransformation(
+			final PapyrusMultiDiagramEditor editor, IFile modelFile, IProgressMonitor monitor, boolean replaceFile)
+			throws Exception {
+		
+		saAnalysisName = configProperty.get("saAnalysis");
+
+		IFile modelCopy = prepareModel(modelFile);
+
+		
+		QVToTransformation.launchCeilingAssignment(modelCopy, monitor);
+	
+		launchPIM2PSMtransformation(monitor, modelCopy);
+		
+		if (replaceFile){
+			// Replace the input model file with the transformed model
+			CHESSProjectSupport.fileReplace(modelCopy, modelFile);
+		}
+		//CHESSEditorUtils.reopenEditor(editor, false);
+		return modelCopy;
 	}
 
 	/**
@@ -215,6 +236,17 @@ public abstract class AbstractTransformation {
 		try {
 			//pass the correct psmPackage to the Marte2Mast transformation
 			//i.e a package whose name contains saAnalysisName (unqualified) in the PSMView
+			
+			//TODO the following way to retrieve the resource raise an exception, still don't know why, so currently ModelContent is used
+			//Resource inResource = null;
+//			try {
+//				inResource = ResourceUtils.getUMLResource(cEditor.getServicesRegistry());
+//			} catch (ServiceException e) {
+//				e.printStackTrace();
+//				throw new Exception("Unable to load the model");
+//			}
+			
+			
 			ModelContent inModel = TransUtil.loadModel(modelCopy);
 			Model model = (Model) inModel.getContent().get(0);
 			Package psmView = ViewUtils.getCHESSPSMPackage(model);
@@ -227,7 +259,7 @@ public abstract class AbstractTransformation {
 			backpropagation(editor, modelCopy);
 			return result;
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		return null;
 	}

@@ -74,16 +74,20 @@ public class ComponentModelAdapterFactory extends AdapterFactoryImpl {
 	protected ComponentModelSwitch<Adapter> modelSwitch =
 		new ComponentModelSwitch<Adapter>() {
 			@Override
+			public Adapter caseFunctionalPartition(FunctionalPartition object) {
+				return createFunctionalPartitionAdapter();
+			}
+			@Override
+			public Adapter caseHwAbstractionComponentImpl(HwAbstractionComponentImpl object) {
+				return createHwAbstractionComponentImplAdapter();
+			}
+			@Override
 			public Adapter caseComponentType(ComponentType object) {
 				return createComponentTypeAdapter();
 			}
 			@Override
 			public Adapter caseComponentImplementation(ComponentImplementation object) {
 				return createComponentImplementationAdapter();
-			}
-			@Override
-			public Adapter caseFunctionalPartition(FunctionalPartition object) {
-				return createFunctionalPartitionAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -144,6 +148,20 @@ public class ComponentModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createFunctionalPartitionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl <em>Hw Abstraction Component Impl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentImpl
+	 * @generated
+	 */
+	public Adapter createHwAbstractionComponentImplAdapter() {
 		return null;
 	}
 

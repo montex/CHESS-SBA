@@ -94,4 +94,11 @@
             class="org.polarsys.chess.core.internal.preferences.ConstraintPreferenceInitializer">
       </initializer>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.polarsys.chess.core.view"
+            name="CHESS">
+      </category>
+   </extension>
 </plugin>

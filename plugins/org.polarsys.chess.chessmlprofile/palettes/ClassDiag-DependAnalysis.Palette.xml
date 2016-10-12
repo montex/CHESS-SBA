@@ -26,16 +26,6 @@
 					</stereotypesToApply>
 				</postAction>
 			</aspectTool>
-			<aspectTool description="Create an element with a stereotype"
-				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif"
-				id="clazz.tool.component_1317300388677" name="FMEAAnalysis (Component)"
-				refToolId="clazz.tool.component">
-				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
-					<stereotypesToApply>
-						<stereotype stereotypeName="CHESS::Dependability::FMEA::FMEAAnalysis" />
-					</stereotypesToApply>
-				</postAction>
-			</aspectTool>
 		</drawer>
 
 	</content>

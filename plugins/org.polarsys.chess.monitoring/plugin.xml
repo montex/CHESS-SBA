@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="org.polarsys.chess.monitoring.contribution1"
+            objectClass="org.eclipse.core.resources.IFile">
+         <menu
+               id="org.polarsys.chess.monitoring.menu1"
+               label="CHESS"
+               path="additions">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               class="org.polarsys.chess.monitoring.monitoringxml.popup.actions.LaunchTraceAnalysis"
+               enablesFor="1"
+               id="org.polarsys.chess.monitoring.action01"
+               label="Monitoring Trace Analysis"
+               menubarPath="org.polarsys.chess.monitoring.menu1/group1">
+         </action>
+         <action
+               class="org.polarsys.chess.monitoring.monitoringxml.popup.actions.LaunchBackpropagation"
+               enablesFor="1"
+               id="org.polarsys.chess.monitoring.action02"
+               label="Monitoring Backpropagation"
+               menubarPath="org.polarsys.chess.monitoring.menu1/group1">
+         </action>
+      </objectContribution>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated monitoring -->
+      <package
+            uri="http://www.mdh.se/concerto/monitoring/xml/monitoringxml"
+            class="org.polarsys.chess.monitoring.monitoringxml.MonitoringxmlPackage"
+            genModel="model/monitoring.genmodel"/>
+   </extension>
+
+</plugin>

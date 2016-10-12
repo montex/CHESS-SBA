@@ -1,0 +1,216 @@
+[comment encoding = UTF-8 /]
+[comment
+/*****************************************************************************
+ * Copyright (c) 2013 Intecs SpA 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Nicholas Pacini nicholas.pacini@intecs.it 
+ * Stefano Puri stefano.puri@intecs.it
+ * Laura Baracchi  laura.baracchi@intecs.it  
+ * Initial API and implementation and/or initial documentation
+ *
+ *****************************************************************************/
+/]
+
+[module generateErrorModel('http://www.eclipse.org/uml2/5.0.0/UML')]
+[import org::polarsys::chess::contracts::transformations::main::generate /]
+
+[template public generateErrorModel(model : Model, sysQN : String , sysName : String, filename : String){
+	SystemQN : String = 'CHESSContract::System';
+	SubSystemQN : String = 'CHESSContract::SubSystem';	
+	SystemViewQN : String = 'CHESS::Core::CHESSViews::SystemView';
+	CompViewQN : String = 'CHESS::Core::CHESSViews::ComponentView';
+	DeplViewQN : String = 'CHESS::Core::CHESSViews::DeploymentView';
+	CompImplQN : String = 'CHESS::ComponentModel::ComponentImplementation';
+	BlockQN : String = 'SysML::Blocks::Block';
+	SRACompQN : String = 'CHESSContract::SRAComponent';
+}]
+[comment @main/]
+[file (filename.concat('_').concat(sysName).concat('.smv'), false, 'UTF-8')]
+	[let componentView : Package = model.nestedPackage->any(p : Package | p.getAppliedStereotype(CompViewQN)->notEmpty())]
+	[let systemView : Package = model.nestedPackage->any(p : Package | p.getAppliedStereotype(SystemViewQN)->notEmpty())]
+	[let deploymentView : Package =  model.nestedPackage->any(p : Package | p.getAppliedStereotype(DeplViewQN)->notEmpty())]
+	[let allBlocks : Set(Class) = getAllBlocks(componentView.allOwnedElements()->filter(Class)->union(systemView.allOwnedElements()->filter(Class)), BlockQN, SubSystemQN, SystemQN)]
+	[let allComps : Set(Component) = getAllComponents(deploymentView.allOwnedElements()->filter(Component), componentView.allOwnedElements()->filter(Component), CompImplQN, SRACompQN)]
+	[let generated : Set(String) = getEmptyStringSet()]
+	[let system : Class = getSystem(allBlocks, sysQN)]
+[generateModule(system, allBlocks->union(allComps), generated)/]
+	[/let]
+	[/let]
+	[/let]
+	[/let]
+	[/let]
+	[/let]
+	[/let]
+[/file]
+[/template]
+[template public generateModule(block : Class, allBlocks : Set(Class), generated : Set(String)){
+	SystemQN : String = 'CHESSContract::System';
+	ContractPropQN : String = 'CHESSContract::ContractProperty';
+	FlowPortQN : String = 'SysML::PortAndFlows::FlowPort';
+	ErrorModelQN : String = 'CHESS::Dependability::ThreatsPropagation::ErrorModel';
+	ExternalFaultQN : String = 'CHESS::Dependability::ThreatsPropagation::ExternalFault';
+	InternalFaultQN : String = 'CHESS::Dependability::ThreatsPropagation::InternalFault';
+	ClientServerPortQN : String = 'MARTE::MARTE_DesignModel::GCM::ClientServerPort';
+	MARTEFlowPortQN : String = 'MARTE::MARTE_DesignModel::GCM::FlowPort';
+}]
+	[addToGenerated(block.name, generated)/]
+[if (block.getAppliedStereotype(SystemQN)->notEmpty())]
+MODULE main
+[else]
+MODULE [block.name/]([getModuleFormalParameter(block)/])
+[/if]
+	VAR
+	[let vars : OrderedSet(Property) = block.attribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->isEmpty() and 
+		p.getAppliedStereotype(FlowPortQN)->isEmpty() and p.getAppliedStereotype(ClientServerPortQN)->isEmpty() 
+		and p.getAppliedStereotype(MARTEFlowPortQN)->isEmpty())]
+	[for (prop : Property | vars)]
+	[if (not prop.type.name.oclIsInvalid() and not (getType(prop.type).equalsIgnoreCase('event')))]
+	[comment]	[prop.name/] : [getType(prop.type).toUpperFirst()/][getModuleInstanceActualParameter(block, prop)/];[/comment]
+		[prop.name/] : [getTypeNameForProperty(prop)/][getModuleInstanceActualParameter(block, prop)/];
+	[/if]
+	[/for]
+	[let ports : OrderedSet(Property) = block.attribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->isEmpty() and 
+		p.getAppliedStereotype(FlowPortQN)->isEmpty() and p.getAppliedStereotype(ClientServerPortQN)->isEmpty() 
+		and p.getAppliedStereotype(MARTEFlowPortQN)->notEmpty())]
+	[for (prop : Property | ports)]
+	[if (not prop.type.name.oclIsInvalid() and not (getType(prop.type).equalsIgnoreCase('event')))]
+	[comment]	check for out flowports [/comment]
+		[let flowPortStereo : Stereotype = prop.getAppliedStereotype(MARTEFlowPortQN)]	
+		[if (prop.getValue(flowPortStereo, 'direction').toString().equalsIgnoreCase('out'))]	
+		[prop.name/] : [getTypeNameForProperty(prop)/][getModuleInstanceActualParameter(block, prop)/];
+		[/if]
+		[/let]
+	[/if]
+	[/for]
+	[/let]
+	[let rules : Set(Constraint) = block.ownedRule]
+	[for (rule : Constraint | rules)]
+	[let spec : String = rule.specification.stringValue()]
+	DEFINE [rule.getLabel()/] := [spec/][if not(spec.endsWith(';'))];[/if]
+	[/let]
+	[/for]
+	[/let]
+	[let vars : OrderedSet(Property) = block.attribute->select(p : Property | p.isReadOnly and 
+		p.getAppliedStereotype(FlowPortQN)->isEmpty() and p.getAppliedStereotype(ClientServerPortQN)->isEmpty() 
+		and p.getAppliedStereotype(MARTEFlowPortQN)->isEmpty())]
+	[for (prop : Property | vars)]
+	CONSTANTS [prop.getDefault()/]
+	[/for]
+	[/let]
+	IVAR	
+	[for (prop : Property | vars)]
+	[if (not prop.type.name.oclIsInvalid() and getType(prop.type).equalsIgnoreCase('event'))]
+		[prop.name/] : boolean;
+	[/if]
+	[/for]
+	[/let]	
+	[let vars : OrderedSet(Property) = block.attribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->isEmpty() and 
+		(p.getAppliedStereotype(FlowPortQN)->notEmpty() or p.getAppliedStereotype(MARTEFlowPortQN)->notEmpty()) )]
+
+	[for (prop : Property | vars)]
+	[if (not prop.type.name.oclIsInvalid() and not (getType(prop.type).equalsIgnoreCase('event')))]
+		[comment] [prop.name/] : [getType(prop.type)/];[/comment]
+	[/if]
+	[/for]
+	[comment get events from errorModel/]
+	[let errorModel : Behavior = block.ownedBehavior->any(em : Behavior | em.getAppliedStereotype(ErrorModelQN)->notEmpty())]
+	[let transitions : Sequence(Transition) = errorModel.oclAsType(StateMachine).region.transition->select(tr : Transition | not(tr.source.oclIsTypeOf(Pseudostate)) and not(tr.target.oclIsTypeOf(Pseudostate)))->asSequence()]
+	[for (tr : Transition | transitions)]
+	[if (tr.getAppliedStereotype(InternalFaultQN)->notEmpty() or tr.getAppliedStereotype(ExternalFaultQN)->notEmpty())]
+		[tr.getLabel()/] : boolean;
+	[/if]
+	[/for]
+	[/let]
+		nominal_event : boolean;
+	[comment check if the error are self-repairing... I assumen that there is a state named NominalState, I should use a stereotype for it.../]
+	[let toNominal : Sequence(Transition) = errorModel.oclAsType(StateMachine).region.transition->select(tr : Transition | not(tr.source.oclIsTypeOf(Pseudostate)) and tr.target.getLabel()='NominalState')->asSequence()]
+	[if (toNominal->isEmpty())]
+	TRANS
+    	nominal_event = FALSE;
+	[else]
+	TRANS
+		nominal_event = TRUE;
+	[/if]
+	[/let]
+	[/let]
+	[/let]
+[comment /]
+[comment let constraints : Sequence(Constraint) = block.ownedRule->asSequence()/]
+[comment for (constr : Constraint | constraints)/]
+	[comment ASSIGN/]
+	[comment[constr.specification.oclAsType(LiteralString).value//]
+[comment /for/]
+[comment /let/]
+[comment consider the nominal state machine and read the states and transactions (guards and effects)/]
+	
+[let nominalModel : StateMachine = block.ownedBehavior->filter(StateMachine)->any(sm : StateMachine | sm.getAppliedStereotype(ErrorModelQN)->isEmpty())]
+[let trSet : Set(Transition) = nominalModel.region.transition->asSet()]
+[let vars : OrderedSet(Property) = block.attribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->isEmpty() and 
+		p.getAppliedStereotype(FlowPortQN)->isEmpty() and p.getAppliedStereotype(ClientServerPortQN)->isEmpty()
+		)]
+[for (prop : Property | vars)]
+	[if (not (getType(prop.type).equalsIgnoreCase('event')))]
+		[if getEffectOnProperty(nominalModel, prop.name) <> '']
+	ASSIGN
+	next([prop.name/]) :=
+		case
+			[getEffectOnProperty(nominalModel, prop.name)/]
+		esac;	
+		[/if]
+	[/if]
+	[if ( (getType(prop.type) <> 'event')) ]
+		[if not (prop.defaultValue.oclIsUndefined()) and not prop.isReadOnly]
+			[if prop.defaultValue.oclIsTypeOf(OpaqueExpression)]
+	ASSIGN
+		init([prop.name/]) := [prop.defaultValue.oclAsType(OpaqueExpression)._body->first()/];
+			[/if]
+		[/if]
+	[/if]
+[/for]
+[/let]
+[/let]
+[/let]
+-- END MODULE [block.name/] --
+	[let parts : OrderedSet(Property) = block.ownedAttribute->filter(Property)]
+	[for (part : Property | parts)]
+	[if (not part.type.name.oclIsInvalid())]
+	[if (isPart(part) and not isAlreadyGenerated(part.type.name, generated))]
+		[let newblock : Class = allBlocks->any(c : Class | part.type = c)]
+[generateModule(newblock, allBlocks, generated)/]
+		[/let]
+	[/if]
+	[/if]
+	[/for]
+	[/let]
+[/template]
+
+[query public getTransitionTarget(name : String, str : String) : OclAny = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getTransitionTarget(java.lang.String, java.lang.String)', Sequence{name, str}) /]
+
+[query public getType(type : Type) : String =
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getType4FTA(org.eclipse.uml2.uml.Type)', Sequence{type})/]
+
+[query public getInitCondition(sm : StateMachine) : String = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service','getInitCondition(org.eclipse.uml2.uml.StateMachine)', Sequence{sm}) /]
+
+
+
+[query public getPropertyAffectedByTransition(t: Transition) : String =
+invoke('org.polarsys.chess.contracts.transformations.service.Service','getPropertyAffectedByTransition(org.eclipse.uml2.uml.Transition)', Sequence{t}) /]
+
+[query public getEffectOnProperty(sm:StateMachine, propertyName:String) : String =
+invoke('org.polarsys.chess.contracts.transformations.service.Service','getEffectOnProperty(org.eclipse.uml2.uml.StateMachine, java.lang.String)', Sequence{sm, propertyName}) /]
+
+[query public getModuleFormalParameter(block : Class) : String =
+invoke('org.polarsys.chess.contracts.transformations.service.Service','getModuleFormalParameter(org.eclipse.uml2.uml.Class)', Sequence{block}) /]
+
+[query public getModuleInstanceActualParameter(block : Class, prop : Property) : String =
+invoke('org.polarsys.chess.contracts.transformations.service.Service','getModuleInstanceActualParameter(org.eclipse.uml2.uml.Class, org.eclipse.uml2.uml.Property)', Sequence{block, prop}) /]
+
+[query public getTypeNameForProperty(prop : Property) : String =
+invoke('org.polarsys.chess.contracts.transformations.service.Service','getTypeNameForProperty(org.eclipse.uml2.uml.Property)', Sequence{prop}) /]

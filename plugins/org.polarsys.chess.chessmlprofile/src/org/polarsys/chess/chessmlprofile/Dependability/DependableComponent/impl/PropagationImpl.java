@@ -1,31 +1,19 @@
-/*****************************************************************************
- * Copyright (c) 2011 - 2014 University of Padova, Intecs
- *
- *    
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- *
- *****************************************************************************/
+/**
+ */
 package org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.uml2.uml.Abstraction;
+
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.InstanceSpecification;
-import org.eclipse.uml2.uml.Transition;
+
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation;
 
@@ -37,14 +25,10 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propa
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getProb <em>Prob</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getPropDelay <em>Prop Delay</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getBase_Abstraction <em>Base Abstraction</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getBase_Comment <em>Base Comment</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getDelay <em>Delay</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getBase_Connector <em>Base Connector</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getTransfFunct <em>Transf Funct</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getBase_Transition <em>Base Transition</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getWeight <em>Weight</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getBase_Comment <em>Base Comment</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,44 +56,24 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 	protected String prob = PROB_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getPropDelay() <em>Prop Delay</em>}' attribute.
+	 * The default value of the '{@link #getDelay() <em>Delay</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPropDelay()
+	 * @see #getDelay()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PROP_DELAY_EDEFAULT = null;
+	protected static final String DELAY_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getPropDelay() <em>Prop Delay</em>}' attribute.
+	 * The cached value of the '{@link #getDelay() <em>Delay</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPropDelay()
+	 * @see #getDelay()
 	 * @generated
 	 * @ordered
 	 */
-	protected String propDelay = PROP_DELAY_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getBase_Abstraction() <em>Base Abstraction</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBase_Abstraction()
-	 * @generated
-	 * @ordered
-	 */
-	protected Abstraction base_Abstraction;
-
-	/**
-	 * The cached value of the '{@link #getBase_Comment() <em>Base Comment</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBase_Comment()
-	 * @generated
-	 * @ordered
-	 */
-	protected Comment base_Comment;
+	protected String delay = DELAY_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getBase_Connector() <em>Base Connector</em>}' reference.
@@ -132,44 +96,14 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 	protected InstanceSpecification base_InstanceSpecification;
 
 	/**
-	 * The cached value of the '{@link #getTransfFunct() <em>Transf Funct</em>}' attribute list.
+	 * The cached value of the '{@link #getBase_Comment() <em>Base Comment</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTransfFunct()
+	 * @see #getBase_Comment()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<String> transfFunct;
-
-	/**
-	 * The cached value of the '{@link #getBase_Transition() <em>Base Transition</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBase_Transition()
-	 * @generated
-	 * @ordered
-	 */
-	protected Transition base_Transition;
-
-	/**
-	 * The default value of the '{@link #getWeight() <em>Weight</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getWeight()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String WEIGHT_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getWeight() <em>Weight</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getWeight()
-	 * @generated
-	 * @ordered
-	 */
-	protected String weight = WEIGHT_EDEFAULT;
+	protected Comment base_Comment;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -216,8 +150,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getPropDelay() {
-		return propDelay;
+	public String getDelay() {
+		return delay;
 	}
 
 	/**
@@ -225,87 +159,11 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPropDelay(String newPropDelay) {
-		String oldPropDelay = propDelay;
-		propDelay = newPropDelay;
+	public void setDelay(String newDelay) {
+		String oldDelay = delay;
+		delay = newDelay;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.PROPAGATION__PROP_DELAY, oldPropDelay, propDelay));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Abstraction getBase_Abstraction() {
-		if (base_Abstraction != null && base_Abstraction.eIsProxy()) {
-			InternalEObject oldBase_Abstraction = (InternalEObject)base_Abstraction;
-			base_Abstraction = (Abstraction)eResolveProxy(oldBase_Abstraction);
-			if (base_Abstraction != oldBase_Abstraction) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.PROPAGATION__BASE_ABSTRACTION, oldBase_Abstraction, base_Abstraction));
-			}
-		}
-		return base_Abstraction;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Abstraction basicGetBase_Abstraction() {
-		return base_Abstraction;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setBase_Abstraction(Abstraction newBase_Abstraction) {
-		Abstraction oldBase_Abstraction = base_Abstraction;
-		base_Abstraction = newBase_Abstraction;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.PROPAGATION__BASE_ABSTRACTION, oldBase_Abstraction, base_Abstraction));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Comment getBase_Comment() {
-		if (base_Comment != null && base_Comment.eIsProxy()) {
-			InternalEObject oldBase_Comment = (InternalEObject)base_Comment;
-			base_Comment = (Comment)eResolveProxy(oldBase_Comment);
-			if (base_Comment != oldBase_Comment) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.PROPAGATION__BASE_COMMENT, oldBase_Comment, base_Comment));
-			}
-		}
-		return base_Comment;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Comment basicGetBase_Comment() {
-		return base_Comment;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setBase_Comment(Comment newBase_Comment) {
-		Comment oldBase_Comment = base_Comment;
-		base_Comment = newBase_Comment;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.PROPAGATION__BASE_COMMENT, oldBase_Comment, base_Comment));
+			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.PROPAGATION__DELAY, oldDelay, delay));
 	}
 
 	/**
@@ -389,28 +247,16 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getTransfFunct() {
-		if (transfFunct == null) {
-			transfFunct = new EDataTypeUniqueEList<String>(String.class, this, DependableComponentPackage.PROPAGATION__TRANSF_FUNCT);
-		}
-		return transfFunct;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Transition getBase_Transition() {
-		if (base_Transition != null && base_Transition.eIsProxy()) {
-			InternalEObject oldBase_Transition = (InternalEObject)base_Transition;
-			base_Transition = (Transition)eResolveProxy(oldBase_Transition);
-			if (base_Transition != oldBase_Transition) {
+	public Comment getBase_Comment() {
+		if (base_Comment != null && base_Comment.eIsProxy()) {
+			InternalEObject oldBase_Comment = (InternalEObject)base_Comment;
+			base_Comment = (Comment)eResolveProxy(oldBase_Comment);
+			if (base_Comment != oldBase_Comment) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.PROPAGATION__BASE_TRANSITION, oldBase_Transition, base_Transition));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DependableComponentPackage.PROPAGATION__BASE_COMMENT, oldBase_Comment, base_Comment));
 			}
 		}
-		return base_Transition;
+		return base_Comment;
 	}
 
 	/**
@@ -418,8 +264,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Transition basicGetBase_Transition() {
-		return base_Transition;
+	public Comment basicGetBase_Comment() {
+		return base_Comment;
 	}
 
 	/**
@@ -427,32 +273,11 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setBase_Transition(Transition newBase_Transition) {
-		Transition oldBase_Transition = base_Transition;
-		base_Transition = newBase_Transition;
+	public void setBase_Comment(Comment newBase_Comment) {
+		Comment oldBase_Comment = base_Comment;
+		base_Comment = newBase_Comment;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.PROPAGATION__BASE_TRANSITION, oldBase_Transition, base_Transition));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getWeight() {
-		return weight;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setWeight(String newWeight) {
-		String oldWeight = weight;
-		weight = newWeight;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.PROPAGATION__WEIGHT, oldWeight, weight));
+			eNotify(new ENotificationImpl(this, Notification.SET, DependableComponentPackage.PROPAGATION__BASE_COMMENT, oldBase_Comment, base_Comment));
 	}
 
 	/**
@@ -465,27 +290,17 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 		switch (featureID) {
 			case DependableComponentPackage.PROPAGATION__PROB:
 				return getProb();
-			case DependableComponentPackage.PROPAGATION__PROP_DELAY:
-				return getPropDelay();
-			case DependableComponentPackage.PROPAGATION__BASE_ABSTRACTION:
-				if (resolve) return getBase_Abstraction();
-				return basicGetBase_Abstraction();
-			case DependableComponentPackage.PROPAGATION__BASE_COMMENT:
-				if (resolve) return getBase_Comment();
-				return basicGetBase_Comment();
+			case DependableComponentPackage.PROPAGATION__DELAY:
+				return getDelay();
 			case DependableComponentPackage.PROPAGATION__BASE_CONNECTOR:
 				if (resolve) return getBase_Connector();
 				return basicGetBase_Connector();
 			case DependableComponentPackage.PROPAGATION__BASE_INSTANCE_SPECIFICATION:
 				if (resolve) return getBase_InstanceSpecification();
 				return basicGetBase_InstanceSpecification();
-			case DependableComponentPackage.PROPAGATION__TRANSF_FUNCT:
-				return getTransfFunct();
-			case DependableComponentPackage.PROPAGATION__BASE_TRANSITION:
-				if (resolve) return getBase_Transition();
-				return basicGetBase_Transition();
-			case DependableComponentPackage.PROPAGATION__WEIGHT:
-				return getWeight();
+			case DependableComponentPackage.PROPAGATION__BASE_COMMENT:
+				if (resolve) return getBase_Comment();
+				return basicGetBase_Comment();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -495,21 +310,14 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case DependableComponentPackage.PROPAGATION__PROB:
 				setProb((String)newValue);
 				return;
-			case DependableComponentPackage.PROPAGATION__PROP_DELAY:
-				setPropDelay((String)newValue);
-				return;
-			case DependableComponentPackage.PROPAGATION__BASE_ABSTRACTION:
-				setBase_Abstraction((Abstraction)newValue);
-				return;
-			case DependableComponentPackage.PROPAGATION__BASE_COMMENT:
-				setBase_Comment((Comment)newValue);
+			case DependableComponentPackage.PROPAGATION__DELAY:
+				setDelay((String)newValue);
 				return;
 			case DependableComponentPackage.PROPAGATION__BASE_CONNECTOR:
 				setBase_Connector((Connector)newValue);
@@ -517,15 +325,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 			case DependableComponentPackage.PROPAGATION__BASE_INSTANCE_SPECIFICATION:
 				setBase_InstanceSpecification((InstanceSpecification)newValue);
 				return;
-			case DependableComponentPackage.PROPAGATION__TRANSF_FUNCT:
-				getTransfFunct().clear();
-				getTransfFunct().addAll((Collection<? extends String>)newValue);
-				return;
-			case DependableComponentPackage.PROPAGATION__BASE_TRANSITION:
-				setBase_Transition((Transition)newValue);
-				return;
-			case DependableComponentPackage.PROPAGATION__WEIGHT:
-				setWeight((String)newValue);
+			case DependableComponentPackage.PROPAGATION__BASE_COMMENT:
+				setBase_Comment((Comment)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -542,14 +343,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 			case DependableComponentPackage.PROPAGATION__PROB:
 				setProb(PROB_EDEFAULT);
 				return;
-			case DependableComponentPackage.PROPAGATION__PROP_DELAY:
-				setPropDelay(PROP_DELAY_EDEFAULT);
-				return;
-			case DependableComponentPackage.PROPAGATION__BASE_ABSTRACTION:
-				setBase_Abstraction((Abstraction)null);
-				return;
-			case DependableComponentPackage.PROPAGATION__BASE_COMMENT:
-				setBase_Comment((Comment)null);
+			case DependableComponentPackage.PROPAGATION__DELAY:
+				setDelay(DELAY_EDEFAULT);
 				return;
 			case DependableComponentPackage.PROPAGATION__BASE_CONNECTOR:
 				setBase_Connector((Connector)null);
@@ -557,14 +352,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 			case DependableComponentPackage.PROPAGATION__BASE_INSTANCE_SPECIFICATION:
 				setBase_InstanceSpecification((InstanceSpecification)null);
 				return;
-			case DependableComponentPackage.PROPAGATION__TRANSF_FUNCT:
-				getTransfFunct().clear();
-				return;
-			case DependableComponentPackage.PROPAGATION__BASE_TRANSITION:
-				setBase_Transition((Transition)null);
-				return;
-			case DependableComponentPackage.PROPAGATION__WEIGHT:
-				setWeight(WEIGHT_EDEFAULT);
+			case DependableComponentPackage.PROPAGATION__BASE_COMMENT:
+				setBase_Comment((Comment)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -580,22 +369,14 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 		switch (featureID) {
 			case DependableComponentPackage.PROPAGATION__PROB:
 				return PROB_EDEFAULT == null ? prob != null : !PROB_EDEFAULT.equals(prob);
-			case DependableComponentPackage.PROPAGATION__PROP_DELAY:
-				return PROP_DELAY_EDEFAULT == null ? propDelay != null : !PROP_DELAY_EDEFAULT.equals(propDelay);
-			case DependableComponentPackage.PROPAGATION__BASE_ABSTRACTION:
-				return base_Abstraction != null;
-			case DependableComponentPackage.PROPAGATION__BASE_COMMENT:
-				return base_Comment != null;
+			case DependableComponentPackage.PROPAGATION__DELAY:
+				return DELAY_EDEFAULT == null ? delay != null : !DELAY_EDEFAULT.equals(delay);
 			case DependableComponentPackage.PROPAGATION__BASE_CONNECTOR:
 				return base_Connector != null;
 			case DependableComponentPackage.PROPAGATION__BASE_INSTANCE_SPECIFICATION:
 				return base_InstanceSpecification != null;
-			case DependableComponentPackage.PROPAGATION__TRANSF_FUNCT:
-				return transfFunct != null && !transfFunct.isEmpty();
-			case DependableComponentPackage.PROPAGATION__BASE_TRANSITION:
-				return base_Transition != null;
-			case DependableComponentPackage.PROPAGATION__WEIGHT:
-				return WEIGHT_EDEFAULT == null ? weight != null : !WEIGHT_EDEFAULT.equals(weight);
+			case DependableComponentPackage.PROPAGATION__BASE_COMMENT:
+				return base_Comment != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -612,12 +393,8 @@ public class PropagationImpl extends EObjectImpl implements Propagation {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (prob: ");
 		result.append(prob);
-		result.append(", propDelay: ");
-		result.append(propDelay);
-		result.append(", transfFunct: ");
-		result.append(transfFunct);
-		result.append(", weight: ");
-		result.append(weight);
+		result.append(", delay: ");
+		result.append(delay);
 		result.append(')');
 		return result.toString();
 	}

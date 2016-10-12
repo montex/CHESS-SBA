@@ -1,0 +1,73 @@
+[comment encoding = UTF-8 /]
+[comment
+/*****************************************************************************
+ * Copyright (c) 2013 Intecs SpA 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Nicholas Pacini nicholas.pacini@intecs.it 
+ * Stefano Puri stefano.puri@intecs.it
+ * Laura Baracchi  laura.baracchi@intecs.it  
+ * Initial API and implementation and/or initial documentation
+ *
+ *****************************************************************************/
+/]
+
+[module generateImplementation('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+
+[template public generateImplementation(sm : StateMachine, owner : Class){
+	ContractPropQN : String = 'CHESSContract::ContractProperty';
+}]
+
+
+[file (sm.owner.oclAsType(NamedElement).name.concat('.smv'), false, 'UTF-8')]
+	MODULE main
+
+[let states : Sequence(State) = sm.region.subvertex->filter(State)->asSequence()]	
+	VAR
+	states	:  {
+[for (vertex : Vertex | states)]
+				[vertex.name/][if (i < states->size())],[/if]
+[/for]
+				};
+[/let]
+[let vars : OrderedSet(Property) = owner.attribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->isEmpty())]
+	[for (prop : Property | vars)]
+	[if (not (getType(prop.type) = 'event'))]
+		[prop.name/] : [getType(prop.type)/];
+	[/if]
+	[/for]
+
+	IVAR
+	[for (prop : Property | vars)]
+	[if (getType(prop.type) = 'event')]
+		[prop.name/] : boolean;
+	[/if]
+	[/for]
+[/let]		  
+	
+	INIT
+	states = [getInitCondition(sm)/]
+
+[let transitions : Sequence(Transition) = sm.region.transition->select(tr : Transition | not(tr.source.oclIsTypeOf(Pseudostate)) and not(tr.target.oclIsTypeOf(Pseudostate)))->asSequence()]	
+	TRANS
+[for (tr : Transition | transitions)]
+	(states = [tr.source.name/] & next(states) = [tr.target.name/]
+	
+	) [if (i < transitions->size())]|[/if]
+[/for]
+[/let]
+
+[/file]
+[/template]
+
+[query public getType(type : Type) : String =
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getType(org.eclipse.uml2.uml.Type)', Sequence{type})/]
+
+[query public getInitCondition(sm : StateMachine) : String = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service','getInitCondition(org.eclipse.uml2.uml.StateMachine)', Sequence{sm}) /]
+

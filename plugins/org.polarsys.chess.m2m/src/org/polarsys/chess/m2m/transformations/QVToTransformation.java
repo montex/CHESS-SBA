@@ -25,6 +25,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
@@ -109,7 +110,9 @@ public class QVToTransformation {
 			boolean generateTrace, IFile model, IProgressMonitor monitor, Map<String, String> configProps)
 			throws Exception {
 		
-		System.out.println("executing "+transName);
+		SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
+		
+		CHESSProjectSupport.CHESS_CONSOLE.println("executing "+transName);
 		String modelURIString = URI.createPlatformResourceURI(
 				model.getFullPath().toString(), false).toString();
 		String traceURIString = generateTrace ? modelURIString.substring(0,
@@ -163,8 +166,11 @@ public class QVToTransformation {
 		context.setLog(new WriterLog(s));
 		context.setProgressMonitor(monitor);
 		
+		subMonitor.newChild(30);
+		
 		QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation,
 				instance, context);
+		subMonitor.newChild(60);
 		qvtTransformation.cleanup();
 	}
 }

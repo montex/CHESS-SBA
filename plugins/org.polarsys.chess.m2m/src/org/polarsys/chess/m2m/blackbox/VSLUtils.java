@@ -33,6 +33,7 @@ import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.GRM.MutualExclusionResource;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.NFPs.NfpConstraint;
 import org.eclipse.papyrus.MARTE_Library.GRM_BasicTypes.ProtectProtocolKind;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
@@ -40,8 +41,6 @@ import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.ValueSpecification;
-import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
-import org.polarsys.chess.chessmlprofile.Core.IdentifSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.validator.constraints.StringParser;
@@ -561,11 +560,12 @@ public class VSLUtils {
 	 * @param rule the rule
 	 * @return the e list
 	 */
+	@Deprecated	
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static EList<Slot> portToSlotsByRule(IContext context,
 			org.eclipse.uml2.uml.InstanceSpecification self, org.eclipse.uml2.uml.Port onPort, org.eclipse.uml2.uml.Constraint rule) {
 		EList<Slot> list = new BasicEList<Slot>();
-		
+		/*
 		String values[] = rule.getSpecification().stringValue().trim().split(" ");
 		ArrayList<int[]> boundsList = new ArrayList<int[]>();
 		for (String value : values) {
@@ -581,7 +581,7 @@ public class VSLUtils {
 			else if (slot.getDefiningFeature() == onPort) {
 				list.add(slot);
 			}
-		}
+		}*/
 		
 		return list;
 	}
@@ -598,8 +598,7 @@ public class VSLUtils {
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static EList<Slot> getSlotInstances(IContext context,
 			org.eclipse.uml2.uml.Comment self,
-			org.eclipse.uml2.uml.Package inst,
-			org.eclipse.uml2.uml.Package instFull) {
+			org.eclipse.uml2.uml.Package inst) {
 		EList<Slot> list = new BasicEList<Slot>();
 
 		Assign ass = getStereotypeApplication(self, Assign.class);
@@ -613,6 +612,14 @@ public class VSLUtils {
 		if (!inst.allOwnedElements().contains(slotInst))
 			return list;
 
+		EList<Element> asslist = ass.getFrom();
+		for (Element elem : asslist){
+			list.add((Slot) elem);
+		}
+		
+		return list;
+		
+		/*
 		int[] bounds = getBounds(self);
 
 		if (bounds != null) {
@@ -650,6 +657,7 @@ public class VSLUtils {
 			}
 		}
 		return list;
+		*/
 	}
 
 	/**
@@ -683,8 +691,7 @@ public class VSLUtils {
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public static EList<InstanceSpecification> getInstances(IContext context,
 			org.eclipse.uml2.uml.Comment self,
-			org.eclipse.uml2.uml.Package inst,
-			org.eclipse.uml2.uml.Package instFull) {
+			org.eclipse.uml2.uml.Package inst) {
 		EList<InstanceSpecification> list = new BasicEList<InstanceSpecification>();
 
 		Assign ass = getStereotypeApplication(self, Assign.class);
@@ -693,11 +700,18 @@ public class VSLUtils {
 		if (originatingInst == null)
 			return list;
 		
-		if (!inst.allOwnedElements().contains(originatingInst))
-			return list;
+//		if (!inst.allOwnedElements().contains(originatingInst))
+//			return list;
+		
+		EList<Element> asslist = ass.getFrom();
+		for (Element elem : asslist){
+			list.add((InstanceSpecification) elem);
+		}
 		
 		
+		return list;
 		
+		/*
 		int[] bounds = getBounds(self);
 		
 		if (bounds != null)
@@ -707,8 +721,8 @@ public class VSLUtils {
 						IdentifInstance.class);
 				
 				if (el instanceof InstanceSpecification && id != null) {
-					if (isInBounds(id.getId(), bounds)
-							&& id.getSourceInstanceSpec() == originatingInst)
+					if (isInBounds(id.getId(), bounds))
+//							&& id.getSourceInstanceSpec() == originatingInst)
 						list.add((InstanceSpecification) el);
 				}
 			}
@@ -716,13 +730,13 @@ public class VSLUtils {
 			for (Element el : instFull.allOwnedElements()) {
 				IdentifInstance id = getStereotypeApplication(el,
 						IdentifInstance.class);
-				if (el instanceof InstanceSpecification && id != null
-						&& id.getSourceInstanceSpec() == originatingInst) {
+				if (el instanceof InstanceSpecification && id != null){
+//						&& id.getSourceInstanceSpec() == originatingInst) {
 					list.add((InstanceSpecification) el);
 				}
 			}
 
-		return list;
+		return list;*/
 	}
 
 //	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
@@ -948,7 +962,7 @@ private static Slot extractFirstSlot(EList<Element> from) {
 	}
 	
 	/**
-	 * Gets the number of cores for a given CPU instance
+	 * Gets the number of cores for a given CPU instance. The number of cores is derived from the associated classifier.
 	 *
 	 * @param context the QVT context
 	 * @param cpu the cpu instance
@@ -957,7 +971,8 @@ private static Slot extractFirstSlot(EList<Element> from) {
 	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
 	public  static Integer getNumberOfCores(IContext context, InstanceSpecification cpu) {
 		Integer i = 1;
-		CH_HwProcessor x = getStereotypeApplication(cpu, CH_HwProcessor.class);
+		Classifier classifier = cpu.getClassifiers().get(0);
+		CH_HwProcessor x = getStereotypeApplication(classifier, CH_HwProcessor.class);
 		if(x == null || x.getNbCores() == null)
 			return i;
 
@@ -994,6 +1009,32 @@ private static Slot extractFirstSlot(EList<Element> from) {
 		}
 		return null;
 	}
+	
+	/**
+	 * Gets the supertask (as String) constraining the given <<Assign>> Comment.
+	 *
+	 * @param context the QVT context
+	 * @param self the <<Assign>> Comment
+	 * @return the supertask (as String)
+	 */
+	@Operation(kind = Kind.HELPER, contextual = true, withExecutionContext = true)
+	public  static String getSupertaskFromContraint(IContext context, Comment self) {
+		try {
+			Assign assign = getStereotypeApplication(self, Assign.class);
+			for (NfpConstraint nfpc : assign.getImpliedConstraint()) {
+				Constraint cc = nfpc.getBase_Constraint();
+				ValueSpecification spec = cc.getSpecification();
+				if(spec.getName().equalsIgnoreCase("supertask")){
+					LiteralString value = (LiteralString) spec;
+					return value.getValue();
+				}
+			}
+		} catch (Exception e) {
+			//TODO ugly piece of code I know....
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * Gets the context from constraint.

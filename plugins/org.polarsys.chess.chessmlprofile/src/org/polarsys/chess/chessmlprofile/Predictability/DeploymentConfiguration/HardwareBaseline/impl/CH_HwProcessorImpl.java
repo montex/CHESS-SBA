@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.HRM.HwLogical.HwComputing.impl.HwProcessorImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
-import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HWDataType;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
 
 /**
@@ -30,7 +29,6 @@ import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.impl.CH_HwProcessorImpl#getDataType <em>Data Type</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.impl.CH_HwProcessorImpl#getUtilization <em>Utilization</em>}</li>
  * </ul>
  * </p>
@@ -38,16 +36,6 @@ import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.
  * @generated
  */
 public class CH_HwProcessorImpl extends HwProcessorImpl implements CH_HwProcessor {
-	/**
-	 * The cached value of the '{@link #getDataType() <em>Data Type</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDataType()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<HWDataType> dataType;
-
 	/**
 	 * The default value of the '{@link #getUtilization() <em>Utilization</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -92,18 +80,6 @@ public class CH_HwProcessorImpl extends HwProcessorImpl implements CH_HwProcesso
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<HWDataType> getDataType() {
-		if (dataType == null) {
-			dataType = new EObjectResolvingEList<HWDataType>(HWDataType.class, this, HardwareBaselinePackage.CH_HW_PROCESSOR__DATA_TYPE);
-		}
-		return dataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getUtilization() {
 		return utilization;
 	}
@@ -128,8 +104,6 @@ public class CH_HwProcessorImpl extends HwProcessorImpl implements CH_HwProcesso
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case HardwareBaselinePackage.CH_HW_PROCESSOR__DATA_TYPE:
-				return getDataType();
 			case HardwareBaselinePackage.CH_HW_PROCESSOR__UTILIZATION:
 				return getUtilization();
 		}
@@ -145,10 +119,6 @@ public class CH_HwProcessorImpl extends HwProcessorImpl implements CH_HwProcesso
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case HardwareBaselinePackage.CH_HW_PROCESSOR__DATA_TYPE:
-				getDataType().clear();
-				getDataType().addAll((Collection<? extends HWDataType>)newValue);
-				return;
 			case HardwareBaselinePackage.CH_HW_PROCESSOR__UTILIZATION:
 				setUtilization((String)newValue);
 				return;
@@ -164,9 +134,6 @@ public class CH_HwProcessorImpl extends HwProcessorImpl implements CH_HwProcesso
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case HardwareBaselinePackage.CH_HW_PROCESSOR__DATA_TYPE:
-				getDataType().clear();
-				return;
 			case HardwareBaselinePackage.CH_HW_PROCESSOR__UTILIZATION:
 				setUtilization(UTILIZATION_EDEFAULT);
 				return;
@@ -182,8 +149,6 @@ public class CH_HwProcessorImpl extends HwProcessorImpl implements CH_HwProcesso
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case HardwareBaselinePackage.CH_HW_PROCESSOR__DATA_TYPE:
-				return dataType != null && !dataType.isEmpty();
 			case HardwareBaselinePackage.CH_HW_PROCESSOR__UTILIZATION:
 				return UTILIZATION_EDEFAULT == null ? utilization != null : !UTILIZATION_EDEFAULT.equals(utilization);
 		}

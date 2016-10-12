@@ -22,6 +22,10 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  * A representation of the model object '<em><b>FPTC Port Slot</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * deprecated, use FailureModes
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

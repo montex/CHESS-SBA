@@ -88,60 +88,12 @@ public class HardwareBaselineAdapterFactory extends AdapterFactoryImpl {
 				return createCH_HwProcessorAdapter();
 			}
 			@Override
-			public Adapter caseHWDataType(HWDataType object) {
-				return createHWDataTypeAdapter();
-			}
-			@Override
-			public Adapter caseDataTypeExecution(DataTypeExecution object) {
-				return createDataTypeExecutionAdapter();
-			}
-			@Override
-			public Adapter caseComputeComplexity(ComputeComplexity object) {
-				return createComputeComplexityAdapter();
-			}
-			@Override
-			public Adapter caseSWDataType(SWDataType object) {
-				return createSWDataTypeAdapter();
-			}
-			@Override
-			public Adapter caseOperationCount(OperationCount object) {
-				return createOperationCountAdapter();
-			}
-			@Override
-			public Adapter caseCHControlFlow(CHControlFlow object) {
-				return createCHControlFlowAdapter();
-			}
-			@Override
-			public Adapter caseFloatSWDataType(FloatSWDataType object) {
-				return createFloatSWDataTypeAdapter();
-			}
-			@Override
-			public Adapter caseFixedSWDataType(FixedSWDataType object) {
-				return createFixedSWDataTypeAdapter();
-			}
-			@Override
-			public Adapter caseIntegerSWDataType(IntegerSWDataType object) {
-				return createIntegerSWDataTypeAdapter();
-			}
-			@Override
-			public Adapter caseCharSWDataType(CharSWDataType object) {
-				return createCharSWDataTypeAdapter();
-			}
-			@Override
-			public Adapter caseBooleanSWDataType(BooleanSWDataType object) {
-				return createBooleanSWDataTypeAdapter();
-			}
-			@Override
 			public Adapter caseCH_HwBus(CH_HwBus object) {
 				return createCH_HwBusAdapter();
 			}
 			@Override
 			public Adapter caseCH_HwComputingResource(CH_HwComputingResource object) {
 				return createCH_HwComputingResourceAdapter();
-			}
-			@Override
-			public Adapter caseDataTypeAssign(DataTypeAssign object) {
-				return createDataTypeAssignAdapter();
 			}
 			@Override
 			public Adapter caseResource(Resource object) {
@@ -218,160 +170,6 @@ public class HardwareBaselineAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HWDataType <em>HW Data Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HWDataType
-	 * @generated
-	 */
-	public Adapter createHWDataTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.DataTypeExecution <em>Data Type Execution</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.DataTypeExecution
-	 * @generated
-	 */
-	public Adapter createDataTypeExecutionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.ComputeComplexity <em>Compute Complexity</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.ComputeComplexity
-	 * @generated
-	 */
-	public Adapter createComputeComplexityAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.SWDataType <em>SW Data Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.SWDataType
-	 * @generated
-	 */
-	public Adapter createSWDataTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.OperationCount <em>Operation Count</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.OperationCount
-	 * @generated
-	 */
-	public Adapter createOperationCountAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CHControlFlow <em>CH Control Flow</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CHControlFlow
-	 * @generated
-	 */
-	public Adapter createCHControlFlowAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.FloatSWDataType <em>Float SW Data Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.FloatSWDataType
-	 * @generated
-	 */
-	public Adapter createFloatSWDataTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.FixedSWDataType <em>Fixed SW Data Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.FixedSWDataType
-	 * @generated
-	 */
-	public Adapter createFixedSWDataTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.IntegerSWDataType <em>Integer SW Data Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.IntegerSWDataType
-	 * @generated
-	 */
-	public Adapter createIntegerSWDataTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CharSWDataType <em>Char SW Data Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CharSWDataType
-	 * @generated
-	 */
-	public Adapter createCharSWDataTypeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.BooleanSWDataType <em>Boolean SW Data Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.BooleanSWDataType
-	 * @generated
-	 */
-	public Adapter createBooleanSWDataTypeAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwBus <em>CH Hw Bus</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -396,20 +194,6 @@ public class HardwareBaselineAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCH_HwComputingResourceAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.DataTypeAssign <em>Data Type Assign</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.DataTypeAssign
-	 * @generated
-	 */
-	public Adapter createDataTypeAssignAdapter() {
 		return null;
 	}
 

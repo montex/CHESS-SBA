@@ -100,7 +100,7 @@ public interface FailurePropagationDataTypesPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.impl.FailurePropagationDataTypesPackageImpl#getFailureType()
 	 * @generated
 	 */
-	int FAILURE_TYPE = 3;
+	int FAILURE_TYPE = 8;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.A_avoidable <em>Aavoidable</em>}' enum.
@@ -110,7 +110,7 @@ public interface FailurePropagationDataTypesPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.impl.FailurePropagationDataTypesPackageImpl#getA_avoidable()
 	 * @generated
 	 */
-	int AAVOIDABLE = 4;
+	int AAVOIDABLE = 3;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.A_mitigation <em>Amitigation</em>}' enum.
@@ -120,7 +120,7 @@ public interface FailurePropagationDataTypesPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.impl.FailurePropagationDataTypesPackageImpl#getA_mitigation()
 	 * @generated
 	 */
-	int AMITIGATION = 5;
+	int AMITIGATION = 4;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.C_mitigation <em>Cmitigation</em>}' enum.
@@ -130,7 +130,7 @@ public interface FailurePropagationDataTypesPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.impl.FailurePropagationDataTypesPackageImpl#getC_mitigation()
 	 * @generated
 	 */
-	int CMITIGATION = 6;
+	int CMITIGATION = 5;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.I_mitigation <em>Imitigation</em>}' enum.
@@ -140,7 +140,7 @@ public interface FailurePropagationDataTypesPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.impl.FailurePropagationDataTypesPackageImpl#getI_mitigation()
 	 * @generated
 	 */
-	int IMITIGATION = 7;
+	int IMITIGATION = 6;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.D_mitigation <em>Dmitigation</em>}' enum.
@@ -150,7 +150,7 @@ public interface FailurePropagationDataTypesPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.impl.FailurePropagationDataTypesPackageImpl#getD_mitigation()
 	 * @generated
 	 */
-	int DMITIGATION = 8;
+	int DMITIGATION = 7;
 
 
 	/**

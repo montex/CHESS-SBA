@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="flaDsl" nsURI="http://www.intecs.org/chess/xtext/FlaDsl" nsPrefix="flaDsl">
+  <eClassifiers xsi:type="ecore:EClass" name="Behaviour">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
+        eType="#//Expression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lhs" eType="#//Lhs" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rhs" eType="#//Rhs" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Lhs">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+        eType="#//InputExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rhs">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+        eType="#//OutputExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InputExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="ecore:EClass platform:/resource/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failureExpr" eType="#//InFailureExpr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OutputExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="ecore:EClass platform:/resource/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failureExpr" eType="#//OutFailureExpr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InFailureExpr">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+        eType="#//Definitions" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OutFailureExpr">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="failures" upperBound="-1"
+        eType="#//Definitions" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Definitions"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FailureDefinition" eSuperTypes="#//Definitions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//FailureType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="acidAvoidable" eType="#//ACIDavoidable"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NoFailureDefinition" eSuperTypes="#//Definitions #//ComplexNofailureDefinition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="acidMitigation" eType="#//ACIDMitigation"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComplexNofailureDefinition" eSuperTypes="#//Definitions"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WildcardDefinition" eSuperTypes="#//Definitions"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableDefinition" eSuperTypes="#//Definitions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variableName" eType="ecore:EDataType platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FailureType">
+    <eLiterals name="NO_FAILURE" literal="noFailure"/>
+    <eLiterals name="EARLY" value="1" literal="early"/>
+    <eLiterals name="LATE" value="2" literal="late"/>
+    <eLiterals name="COMMISSION" value="3" literal="commission"/>
+    <eLiterals name="OMISSION" value="4" literal="omission"/>
+    <eLiterals name="VALUE_SUBTLE" value="5" literal="valueSubtle"/>
+    <eLiterals name="VALUE_COARSE" value="6" literal="valueCoarse"/>
+    <eLiterals name="WILDCARD" value="7" literal="wildcard"/>
+    <eLiterals name="VARIABLE" value="8" literal="variable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ACIDavoidable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="a" eType="#//Aavoidable"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="c" eType="#//Cavoidable"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="i" eType="#//Iavoidable"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="d" eType="#//Davoidable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Aavoidable">
+    <eLiterals name="INCOMPLETION" literal="incompletion"/>
+    <eLiterals name="NONE" value="1" literal="none"/>
+    <eLiterals name="UNSPECIFIED" value="2" literal="unspecified"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Cavoidable">
+    <eLiterals name="INCONSISTENCY" literal="inconsistency"/>
+    <eLiterals name="NONE" value="1" literal="none"/>
+    <eLiterals name="UNSPECIFIED" value="2" literal="unspecified"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Iavoidable">
+    <eLiterals name="INTERFERENCE" literal="interference"/>
+    <eLiterals name="NONE" value="1" literal="none"/>
+    <eLiterals name="UNSPECIFIED" value="2" literal="unspecified"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Davoidable">
+    <eLiterals name="IMPERMANENCE" literal="impermanence"/>
+    <eLiterals name="NONE" value="1" literal="none"/>
+    <eLiterals name="UNSPECIFIED" value="2" literal="unspecified"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ACIDMitigation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="a" eType="#//Amitigation"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="c" eType="#//Cmitigation"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="i" eType="#//Imitigation"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="d" eType="#//Dmitigation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Amitigation">
+    <eLiterals name="ALL_OR_NOTHING" literal="all_or_nothing"/>
+    <eLiterals name="ALL_OR_COMPENSATION" value="1" literal="all_or_compensation"/>
+    <eLiterals name="NONE" value="2" literal="none"/>
+    <eLiterals name="UNSPECIFIED" value="3" literal="unspecified"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Cmitigation">
+    <eLiterals name="FULL_CONSISTENCY" literal="full_consistency"/>
+    <eLiterals name="RANGE_VIOLATION_ALLOWED" value="1" literal="range_violation_allowed"/>
+    <eLiterals name="NONE" value="2" literal="none"/>
+    <eLiterals name="UNSPECIFIED" value="3" literal="unspecified"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Imitigation">
+    <eLiterals name="SERIALIZABLE" literal="serializable"/>
+    <eLiterals name="PORTABLE_LEVEL" value="1" literal="portable_level"/>
+    <eLiterals name="NONE" value="2" literal="none"/>
+    <eLiterals name="UNSPECIFIED" value="3" literal="unspecified"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Dmitigation">
+    <eLiterals name="NO_LOSS" literal="no_loss"/>
+    <eLiterals name="PARTIAL_LOSS_ALLOWED" value="1" literal="partial_loss_allowed"/>
+    <eLiterals name="NONE" value="2" literal="none"/>
+    <eLiterals name="UNSPECIFIED" value="3" literal="unspecified"/>
+  </eClassifiers>
+</ecore:EPackage>

@@ -26,7 +26,7 @@ import org.polarsys.chess.chessmlprofile.SystemModel.STS.TimePressure;
  *
  * @generated
  */
-public class TimePressureImpl extends OrganizationalImpl implements TimePressure {
+public class TimePressureImpl extends OrganizationUnitImpl implements TimePressure {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

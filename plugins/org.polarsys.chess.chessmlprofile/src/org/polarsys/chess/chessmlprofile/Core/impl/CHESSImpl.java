@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.uml2.uml.Model;
 import org.polarsys.chess.chessmlprofile.Core.CHESS;
 import org.polarsys.chess.chessmlprofile.Core.CorePackage;
+import org.polarsys.chess.chessmlprofile.Core.Domain;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.ComponentView;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.DeploymentView;
@@ -41,6 +42,7 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.SystemView;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getComponentView <em>Component View</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getSystemView <em>System View</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getPsmView <em>Psm View</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getDomain <em>Domain</em>}</li>
  * </ul>
  * </p>
  *
@@ -116,6 +118,26 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 	 * @ordered
 	 */
 	protected PSMView psmView;
+
+	/**
+	 * The default value of the '{@link #getDomain() <em>Domain</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDomain()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Domain DOMAIN_EDEFAULT = Domain.CROSS_DOMAIN;
+
+	/**
+	 * The cached value of the '{@link #getDomain() <em>Domain</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDomain()
+	 * @generated
+	 * @ordered
+	 */
+	protected Domain domain = DOMAIN_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -432,6 +454,27 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Domain getDomain() {
+		return domain;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDomain(Domain newDomain) {
+		Domain oldDomain = domain;
+		domain = newDomain == null ? DOMAIN_EDEFAULT : newDomain;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.CHESS__DOMAIN, oldDomain, domain));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -473,6 +516,8 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 			case CorePackage.CHESS__PSM_VIEW:
 				if (resolve) return getPsmView();
 				return basicGetPsmView();
+			case CorePackage.CHESS__DOMAIN:
+				return getDomain();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -505,6 +550,9 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 				return;
 			case CorePackage.CHESS__PSM_VIEW:
 				setPsmView((PSMView)newValue);
+				return;
+			case CorePackage.CHESS__DOMAIN:
+				setDomain((Domain)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -539,6 +587,9 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 			case CorePackage.CHESS__PSM_VIEW:
 				setPsmView((PSMView)null);
 				return;
+			case CorePackage.CHESS__DOMAIN:
+				setDomain(DOMAIN_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -565,8 +616,26 @@ public class CHESSImpl extends EObjectImpl implements CHESS {
 				return systemView != null;
 			case CorePackage.CHESS__PSM_VIEW:
 				return psmView != null;
+			case CorePackage.CHESS__DOMAIN:
+				return domain != DOMAIN_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (domain: ");
+		result.append(domain);
+		result.append(')');
+		return result.toString();
 	}
 
 } //CHESSImpl

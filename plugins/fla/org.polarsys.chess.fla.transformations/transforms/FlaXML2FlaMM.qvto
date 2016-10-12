@@ -1,0 +1,149 @@
+/*******************************************************************************
+ *                  CHESS core plugin
+ *
+ *               Copyright (C) 2011-2015
+ *            Mälardalen University, Sweden
+ *
+ *
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License
+ *  v1.0 which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+import org.polarsys.chess.fla.transformations.utilities.blackboxlibrary;
+
+modeltype FLAMM uses 'http://www.polarsys.org/chess/fla/flamm';
+modeltype FLAXML uses 'http://www.polarsys.org/chess/fla/flaxml';
+
+
+transformation FlaXML2FlaMM(in source : FLAXML, out target : FLAMM);
+
+property xmlRootComponent : FLAXML::Component;
+
+main() {
+	xmlRootComponent := source.rootObjects()![FLAXML::DocumentRoot].system![System].component;
+	if (xmlRootComponent.oclIsInvalid()) {
+		xmlRootComponent := source.rootObjects()![System].component;
+	};
+	xmlRootComponent.map MMComp2XmlComp();
+}
+
+mapping FLAXML::Component::MMComp2XmlComp() : FLAMM::Component {
+	init {
+	}
+}
+
+mapping FLAXML::CompositeComponent::MMComp2XmlComp() : FLAMM::Component {
+	init {
+		result := object FLAMM::CompositeComponent{};
+	}
+	copyNameAndId(self, result);
+	setPorts(self, result);
+	var compositeResult := result.oclAsType(FLAMM::CompositeComponent);
+	compositeResult.components := self.components.component.map MMComp2XmlComp();
+	compositeResult.connectPorts(self.connections.connection);
+}
+
+mapping FLAXML::SimpleComponent::MMComp2XmlComp() : FLAMM::Component {
+	init {
+		result := object FLAMM::SimpleComponent{};
+	}
+	copyNameAndId(self, result);
+	setPorts(self, result);
+	var simpleResult := result.oclAsType(FLAMM::SimpleComponent);
+	simpleResult.rules := self.rules.rule->map XMLRule2MMRule(simpleResult);
+}
+
+mapping FLAXML::RuleString::XMLRule2MMRule(owningComponent : FLAMM::SimpleComponent) : FLAMM::Rule {
+	init {
+		result := self.pattern.getRuleFromRulestring(owningComponent);
+	}
+}
+
+query FLAMM::CompositeComponent::connectPorts(connections : Set(FLAXML::Connection)) {
+	var ports = self.getPorts()->union(self.components.getPorts()->asSet());
+	connections.connectFlaPorts(ports, self);
+}
+
+query FLAMM::Component::getPorts() : Set(FLAMM::Port) {
+	return self.inputPorts->union(self.outputPorts);
+}
+
+query FLAXML::Connection::connectFlaPorts(ports : Set(FLAMM::Port), component : CompositeComponent) {
+	var connectedPorts = ports->select(port : FLAMM::Port | port.isConnectedBy(self))->asOrderedSet();
+	connectedPorts->at(1).connectedPorts += connectedPorts->at(2);
+	connectedPorts->at(2).connectedPorts += connectedPorts->at(1);
+}
+
+query FLAMM::Port::isConnectedBy(connection : FLAXML::Connection) : Boolean {
+	var isSource = ((connection.sourceId = self.id) and (connection.sourceComponent = self.owner.id));
+	var isTarget = ((connection.targetId = self.id) and (connection.targetComponent = self.owner.id));
+	return isSource or isTarget;
+}
+
+query FLAMM::Port::port2connection(component : FLAMM::CompositeComponent) : Set(FLAXML::Connection) {
+	var res :=  self.connectedPorts->select(port : FLAMM::Port | port.owner = component or port.owner.parent = component)->collect(object FLAXML::Connection{
+		sourceId := self.id; sourceComponent := self.owner.id;
+		targetId := id; targetComponent := owner.id;});
+	return res->asSet();
+}
+
+query copyNameAndId(sourceElement : FLAXML::NamedElement, inout targetElement : FLAMM::NamedElement) {
+	targetElement.name := sourceElement.name;
+	targetElement.id := sourceElement.id;
+}
+
+query setPorts(sourceElement : FLAXML::Component, inout targetElement : FLAMM::Component) {
+	targetElement.inputPorts := sourceElement.inputPorts.inputPort->map XMLport2MMinputport();
+	targetElement.outputPorts := sourceElement.outputPorts.outputPort->map XMLport2MMoutputport();
+	targetElement.inputPorts->forEach(element) { element.owner := targetElement };
+	targetElement.outputPorts->forEach(element) { element.owner := targetElement };
+}
+
+mapping FLAXML::InputPort::XMLport2MMinputport() : FLAMM::Port {
+	copyNameAndId(self, result);
+	if (this.xmlRootComponent.inputPorts.inputPort->includes(self)) {
+		failures := self.inputFailure->XMLfailure2MMfailure();
+	}
+}
+
+mapping FLAXML::OutputPort::XMLport2MMoutputport() : FLAMM::Port {
+	copyNameAndId(self, result);
+}
+
+query FLAXML::Failure::XMLfailure2MMfailure() : FLAMM::Failure {
+	var resultFailure = object FLAMM::Failure {};
+	switch {
+		case (self.type = FLAXML::FailureType::noFailure) {
+			resultFailure.type := FLAMM::FailureTypes::FailureType::noFailure;
+			resultFailure.id := "noFailure";
+		}
+		case (self.type = FLAXML::FailureType::_late) {
+			resultFailure.type := FLAMM::FailureTypes::FailureType::failure;
+			resultFailure.id := "late";
+		}
+		case (self.type = FLAXML::FailureType::early) {
+			resultFailure.type := FLAMM::FailureTypes::FailureType::failure;
+			resultFailure.id := "early";
+		}
+		case (self.type = FLAXML::FailureType::valueSubtle) {
+			resultFailure.type := FLAMM::FailureTypes::FailureType::failure;
+			resultFailure.id := "valueSubtle";
+		}
+		case (self.type = FLAXML::FailureType::valueCoarse) {
+			resultFailure.type := FLAMM::FailureTypes::FailureType::failure;
+			resultFailure.id := "valueCoarse";
+		}
+		case (self.type = FLAXML::FailureType::omission) {
+			resultFailure.type := FLAMM::FailureTypes::FailureType::failure;
+			resultFailure.id := "omission";
+		}
+		case (self.type = FLAXML::FailureType::commission) {
+			resultFailure.type := FLAMM::FailureTypes::FailureType::failure;
+			resultFailure.id := "commission";
+		}
+	};
+	return resultFailure;
+}
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Composite
+	xmlns:ppel="clr-namespace:org.eclipse.papyrus.views.properties.widgets.layout"
+	xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt"
+	xmlns:ppe="clr-namespace:org.eclipse.papyrus.views.properties.widgets"
+	xmlns:j="clr-namespace:java.lang">
+	<Composite.layout>
+		<ppel:PropertiesLayout></ppel:PropertiesLayout>
+	</Composite.layout>
+	<Composite>
+		<Composite.layout>
+			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
+		</Composite.layout>
+		<ppe:EnumCombo input="{Binding}" property="CHESS:Core:CHESS:domain"></ppe:EnumCombo>
+	</Composite>
+	<Composite>
+		<Composite.layout>
+			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
+		</Composite.layout>
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Core:CHESS:analysisView"></ppe:ReferenceDialog>
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Core:CHESS:deploymentView"></ppe:ReferenceDialog>
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Core:CHESS:requirementView"></ppe:ReferenceDialog>
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Core:CHESS:componentView"></ppe:ReferenceDialog>
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Core:CHESS:systemView"></ppe:ReferenceDialog>
+		<ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Core:CHESS:psmView"></ppe:ReferenceDialog>
+	</Composite>
+</Composite>

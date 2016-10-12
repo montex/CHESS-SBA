@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.polarsys.chess.monitoring/src" modelPluginID="org.polarsys.chess.monitoring"
+    modelName="Monitoring" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>monitoring.ecore</foreignModel>
+  <genPackages prefix="Monitoringxml" disposableProviderFactory="true" ecorePackage="monitoring.ecore#/">
+    <genClasses ecoreClass="monitoring.ecore#//Monitoring">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//Monitoring/ThreadNames"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//Monitoring/SharedResources"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//Monitoring/analysisContext"/>
+    </genClasses>
+    <genClasses ecoreClass="monitoring.ecore#//Thread"/>
+    <genClasses ecoreClass="monitoring.ecore#//Resource"/>
+    <genClasses ecoreClass="monitoring.ecore#//Period">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference monitoring.ecore#//Period/monitoredresource"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//Period/minimum"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//Period/maximum"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//Period/average"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//Period/jitter"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="monitoring.ecore#//MonitoredResource">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute monitoring.ecore#//MonitoredResource/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//MonitoredResource/period"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//MonitoredResource/executiontime"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//MonitoredResource/blockingtime"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//MonitoredResource/responsetime"/>
+    </genClasses>
+    <genClasses ecoreClass="monitoring.ecore#//ExecutionTime">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference monitoring.ecore#//ExecutionTime/monitoredresource"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//ExecutionTime/minimum"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//ExecutionTime/maximum"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//ExecutionTime/average"/>
+    </genClasses>
+    <genClasses ecoreClass="monitoring.ecore#//BlockingTime">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference monitoring.ecore#//BlockingTime/monitoredresource"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//BlockingTime/minimum"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//BlockingTime/maximum"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//BlockingTime/average"/>
+    </genClasses>
+    <genClasses ecoreClass="monitoring.ecore#//ResponseTime">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference monitoring.ecore#//ResponseTime/monitoredresource"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//ResponseTime/minimum"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//ResponseTime/maximum"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//ResponseTime/average"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference monitoring.ecore#//ResponseTime/jitter"/>
+    </genClasses>
+    <genClasses ecoreClass="monitoring.ecore#//AnalysisContext">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute monitoring.ecore#//AnalysisContext/name"/>
+    </genClasses>
+    <genClasses ecoreClass="monitoring.ecore#//MeasuredValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute monitoring.ecore#//MeasuredValue/unit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute monitoring.ecore#//MeasuredValue/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

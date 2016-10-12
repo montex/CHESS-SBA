@@ -13,6 +13,7 @@ package org.polarsys.chess.chessmlprofile.Core;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -140,13 +141,22 @@ public interface CorePackage extends EPackage {
 	int CHESS__PSM_VIEW = 6;
 
 	/**
+	 * The feature id for the '<em><b>Domain</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS__DOMAIN = 7;
+
+	/**
 	 * The number of structural features of the '<em>CHESS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CHESS_FEATURE_COUNT = 7;
+	int CHESS_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.CHGaResourcePlatformImpl <em>CH Ga Resource Platform</em>}' class.
@@ -204,165 +214,6 @@ public interface CorePackage extends EPackage {
 	int CH_GA_RESOURCE_PLATFORM_FEATURE_COUNT = GQAMPackage.GA_RESOURCES_PLATFORM_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.IdentifInstanceImpl <em>Identif Instance</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Core.impl.IdentifInstanceImpl
-	 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getIdentifInstance()
-	 * @generated
-	 */
-	int IDENTIF_INSTANCE = 2;
-
-	/**
-	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IDENTIF_INSTANCE__BASE_INSTANCE_SPECIFICATION = 0;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IDENTIF_INSTANCE__ID = 1;
-
-	/**
-	 * The feature id for the '<em><b>Source Instance Spec</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IDENTIF_INSTANCE__SOURCE_INSTANCE_SPEC = 2;
-
-	/**
-	 * The number of structural features of the '<em>Identif Instance</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IDENTIF_INSTANCE_FEATURE_COUNT = 3;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.IdentifSlotImpl <em>Identif Slot</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Core.impl.IdentifSlotImpl
-	 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getIdentifSlot()
-	 * @generated
-	 */
-	int IDENTIF_SLOT = 3;
-
-	/**
-	 * The feature id for the '<em><b>Base Slot</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IDENTIF_SLOT__BASE_SLOT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IDENTIF_SLOT__ID = 1;
-
-	/**
-	 * The number of structural features of the '<em>Identif Slot</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IDENTIF_SLOT_FEATURE_COUNT = 2;
-
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.MultiInstanceImpl <em>Multi Instance</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Core.impl.MultiInstanceImpl
-	 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getMultiInstance()
-	 * @generated
-	 */
-	int MULTI_INSTANCE = 4;
-
-	/**
-	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MULTI_INSTANCE__BASE_INSTANCE_SPECIFICATION = 0;
-
-	/**
-	 * The feature id for the '<em><b>Upper Bound</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MULTI_INSTANCE__UPPER_BOUND = 1;
-
-	/**
-	 * The number of structural features of the '<em>Multi Instance</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MULTI_INSTANCE_FEATURE_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.MultiSlotImpl <em>Multi Slot</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Core.impl.MultiSlotImpl
-	 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getMultiSlot()
-	 * @generated
-	 */
-	int MULTI_SLOT = 5;
-
-	/**
-	 * The feature id for the '<em><b>Base Slot</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MULTI_SLOT__BASE_SLOT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Upper Bound</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MULTI_SLOT__UPPER_BOUND = 1;
-
-	/**
-	 * The number of structural features of the '<em>Multi Slot</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MULTI_SLOT_FEATURE_COUNT = 2;
-
-
-	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.PSMPackageImpl <em>PSM Package</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -370,7 +221,7 @@ public interface CorePackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getPSMPackage()
 	 * @generated
 	 */
-	int PSM_PACKAGE = 6;
+	int PSM_PACKAGE = 2;
 
 	/**
 	 * The feature id for the '<em><b>Base Package</b></em>' reference.
@@ -401,41 +252,14 @@ public interface CorePackage extends EPackage {
 
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.FunctionalPartitionsImpl <em>Functional Partitions</em>}' class.
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Core.Domain <em>Domain</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Core.impl.FunctionalPartitionsImpl
-	 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getFunctionalPartitions()
+	 * @see org.polarsys.chess.chessmlprofile.Core.Domain
+	 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getDomain()
 	 * @generated
 	 */
-	int FUNCTIONAL_PARTITIONS = 7;
-
-	/**
-	 * The feature id for the '<em><b>Base Package</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUNCTIONAL_PARTITIONS__BASE_PACKAGE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Base Component</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUNCTIONAL_PARTITIONS__BASE_COMPONENT = 1;
-
-	/**
-	 * The number of structural features of the '<em>Functional Partitions</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FUNCTIONAL_PARTITIONS_FEATURE_COUNT = 2;
+	int DOMAIN = 3;
 
 
 	/**
@@ -526,6 +350,17 @@ public interface CorePackage extends EPackage {
 	EReference getCHESS_PsmView();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getDomain <em>Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Domain</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.CHESS#getDomain()
+	 * @see #getCHESS()
+	 * @generated
+	 */
+	EAttribute getCHESS_Domain();
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform <em>CH Ga Resource Platform</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -556,145 +391,6 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCHGaResourcePlatform_Base_Package();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.IdentifInstance <em>Identif Instance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Identif Instance</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.IdentifInstance
-	 * @generated
-	 */
-	EClass getIdentifInstance();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.IdentifInstance#getBase_InstanceSpecification <em>Base Instance Specification</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Instance Specification</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.IdentifInstance#getBase_InstanceSpecification()
-	 * @see #getIdentifInstance()
-	 * @generated
-	 */
-	EReference getIdentifInstance_Base_InstanceSpecification();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Core.IdentifInstance#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.IdentifInstance#getId()
-	 * @see #getIdentifInstance()
-	 * @generated
-	 */
-	EAttribute getIdentifInstance_Id();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.IdentifInstance#getSourceInstanceSpec <em>Source Instance Spec</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Source Instance Spec</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.IdentifInstance#getSourceInstanceSpec()
-	 * @see #getIdentifInstance()
-	 * @generated
-	 */
-	EReference getIdentifInstance_SourceInstanceSpec();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.IdentifSlot <em>Identif Slot</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Identif Slot</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.IdentifSlot
-	 * @generated
-	 */
-	EClass getIdentifSlot();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.IdentifSlot#getBase_Slot <em>Base Slot</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Slot</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.IdentifSlot#getBase_Slot()
-	 * @see #getIdentifSlot()
-	 * @generated
-	 */
-	EReference getIdentifSlot_Base_Slot();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Core.IdentifSlot#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.IdentifSlot#getId()
-	 * @see #getIdentifSlot()
-	 * @generated
-	 */
-	EAttribute getIdentifSlot_Id();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.MultiInstance <em>Multi Instance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Multi Instance</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.MultiInstance
-	 * @generated
-	 */
-	EClass getMultiInstance();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.MultiInstance#getBase_InstanceSpecification <em>Base Instance Specification</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Instance Specification</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.MultiInstance#getBase_InstanceSpecification()
-	 * @see #getMultiInstance()
-	 * @generated
-	 */
-	EReference getMultiInstance_Base_InstanceSpecification();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Core.MultiInstance#getUpperBound <em>Upper Bound</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Upper Bound</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.MultiInstance#getUpperBound()
-	 * @see #getMultiInstance()
-	 * @generated
-	 */
-	EAttribute getMultiInstance_UpperBound();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.MultiSlot <em>Multi Slot</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Multi Slot</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.MultiSlot
-	 * @generated
-	 */
-	EClass getMultiSlot();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.MultiSlot#getBase_Slot <em>Base Slot</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Slot</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.MultiSlot#getBase_Slot()
-	 * @see #getMultiSlot()
-	 * @generated
-	 */
-	EReference getMultiSlot_Base_Slot();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Core.MultiSlot#getUpperBound <em>Upper Bound</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Upper Bound</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.MultiSlot#getUpperBound()
-	 * @see #getMultiSlot()
-	 * @generated
-	 */
-	EAttribute getMultiSlot_UpperBound();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.PSMPackage <em>PSM Package</em>}'.
@@ -729,36 +425,14 @@ public interface CorePackage extends EPackage {
 	EReference getPSMPackage_AnalysisContext();
 
 	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions <em>Functional Partitions</em>}'.
+	 * Returns the meta object for enum '{@link org.polarsys.chess.chessmlprofile.Core.Domain <em>Domain</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Functional Partitions</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions
+	 * @return the meta object for enum '<em>Domain</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Core.Domain
 	 * @generated
 	 */
-	EClass getFunctionalPartitions();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions#getBase_Package <em>Base Package</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Package</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions#getBase_Package()
-	 * @see #getFunctionalPartitions()
-	 * @generated
-	 */
-	EReference getFunctionalPartitions_Base_Package();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions#getBase_Component <em>Base Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Component</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Core.FunctionalPartitions#getBase_Component()
-	 * @see #getFunctionalPartitions()
-	 * @generated
-	 */
-	EReference getFunctionalPartitions_Base_Component();
+	EEnum getDomain();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -849,6 +523,14 @@ public interface CorePackage extends EPackage {
 		EReference CHESS__PSM_VIEW = eINSTANCE.getCHESS_PsmView();
 
 		/**
+		 * The meta object literal for the '<em><b>Domain</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHESS__DOMAIN = eINSTANCE.getCHESS_Domain();
+
+		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.CHGaResourcePlatformImpl <em>CH Ga Resource Platform</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -873,118 +555,6 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference CH_GA_RESOURCE_PLATFORM__BASE_PACKAGE = eINSTANCE.getCHGaResourcePlatform_Base_Package();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.IdentifInstanceImpl <em>Identif Instance</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Core.impl.IdentifInstanceImpl
-		 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getIdentifInstance()
-		 * @generated
-		 */
-		EClass IDENTIF_INSTANCE = eINSTANCE.getIdentifInstance();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Instance Specification</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference IDENTIF_INSTANCE__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getIdentifInstance_Base_InstanceSpecification();
-
-		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute IDENTIF_INSTANCE__ID = eINSTANCE.getIdentifInstance_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Source Instance Spec</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference IDENTIF_INSTANCE__SOURCE_INSTANCE_SPEC = eINSTANCE.getIdentifInstance_SourceInstanceSpec();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.IdentifSlotImpl <em>Identif Slot</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Core.impl.IdentifSlotImpl
-		 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getIdentifSlot()
-		 * @generated
-		 */
-		EClass IDENTIF_SLOT = eINSTANCE.getIdentifSlot();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Slot</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference IDENTIF_SLOT__BASE_SLOT = eINSTANCE.getIdentifSlot_Base_Slot();
-
-		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute IDENTIF_SLOT__ID = eINSTANCE.getIdentifSlot_Id();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.MultiInstanceImpl <em>Multi Instance</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Core.impl.MultiInstanceImpl
-		 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getMultiInstance()
-		 * @generated
-		 */
-		EClass MULTI_INSTANCE = eINSTANCE.getMultiInstance();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Instance Specification</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MULTI_INSTANCE__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getMultiInstance_Base_InstanceSpecification();
-
-		/**
-		 * The meta object literal for the '<em><b>Upper Bound</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute MULTI_INSTANCE__UPPER_BOUND = eINSTANCE.getMultiInstance_UpperBound();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.MultiSlotImpl <em>Multi Slot</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Core.impl.MultiSlotImpl
-		 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getMultiSlot()
-		 * @generated
-		 */
-		EClass MULTI_SLOT = eINSTANCE.getMultiSlot();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Slot</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MULTI_SLOT__BASE_SLOT = eINSTANCE.getMultiSlot_Base_Slot();
-
-		/**
-		 * The meta object literal for the '<em><b>Upper Bound</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute MULTI_SLOT__UPPER_BOUND = eINSTANCE.getMultiSlot_UpperBound();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.PSMPackageImpl <em>PSM Package</em>}' class.
@@ -1013,30 +583,14 @@ public interface CorePackage extends EPackage {
 		EReference PSM_PACKAGE__ANALYSIS_CONTEXT = eINSTANCE.getPSMPackage_AnalysisContext();
 
 		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.impl.FunctionalPartitionsImpl <em>Functional Partitions</em>}' class.
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Core.Domain <em>Domain</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.Core.impl.FunctionalPartitionsImpl
-		 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getFunctionalPartitions()
+		 * @see org.polarsys.chess.chessmlprofile.Core.Domain
+		 * @see org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl#getDomain()
 		 * @generated
 		 */
-		EClass FUNCTIONAL_PARTITIONS = eINSTANCE.getFunctionalPartitions();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Package</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FUNCTIONAL_PARTITIONS__BASE_PACKAGE = eINSTANCE.getFunctionalPartitions_Base_Package();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Component</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FUNCTIONAL_PARTITIONS__BASE_COMPONENT = eINSTANCE.getFunctionalPartitions_Base_Component();
+		EEnum DOMAIN = eINSTANCE.getDomain();
 
 	}
 

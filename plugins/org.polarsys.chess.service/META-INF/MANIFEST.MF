@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.polarsys.chess.service;singleton:=true
-Bundle-Version: 0.9.0.qualifier
+Bundle-Version: 0.10.0.qualifier
 Bundle-Activator: org.polarsys.chess.service.internal.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.papyrus.infra.core,
@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.uml2.uml,
  org.eclipse.emf.cdo.ui.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: org.polarsys.chess.service.internal.utils;x-internal:=true,
+Export-Package: org.polarsys.chess.service.internal.commands.switchers,
+ org.polarsys.chess.service.internal.utils;x-internal:=true,
  org.polarsys.chess.service.utils;
   uses:="org.eclipse.ui,
    org.eclipse.papyrus.infra.core.services,
@@ -27,3 +28,6 @@ Export-Package: org.polarsys.chess.service.internal.utils;x-internal:=true,
    org.eclipse.ui.part"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
+Import-Package: org.eclipse.gmf.runtime.notation,
+ org.polarsys.chess.chessmlprofile.Core,
+ org.polarsys.chess.chessmlprofile.util

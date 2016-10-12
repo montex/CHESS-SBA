@@ -14,6 +14,7 @@ package org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.*;
 
 /**
@@ -73,15 +74,21 @@ public class RTComponentModelSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case RTComponentModelPackage.CH_RT_SPECIFICATION: {
+				CHRtSpecification chRtSpecification = (CHRtSpecification)theEObject;
+				T result = caseCHRtSpecification(chRtSpecification);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case RTComponentModelPackage.CH_RT_PORT_SLOT: {
 				CHRtPortSlot chRtPortSlot = (CHRtPortSlot)theEObject;
 				T result = caseCHRtPortSlot(chRtPortSlot);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case RTComponentModelPackage.CH_RT_SPECIFICATION: {
-				CHRtSpecification chRtSpecification = (CHRtSpecification)theEObject;
-				T result = caseCHRtSpecification(chRtSpecification);
+			case RTComponentModelPackage.RUN_TIME_SUPPORT: {
+				RunTimeSupport runTimeSupport = (RunTimeSupport)theEObject;
+				T result = caseRunTimeSupport(runTimeSupport);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -101,6 +108,21 @@ public class RTComponentModelSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCHRtPortSlot(CHRtPortSlot object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Run Time Support</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Run Time Support</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRunTimeSupport(RunTimeSupport object) {
 		return null;
 	}
 

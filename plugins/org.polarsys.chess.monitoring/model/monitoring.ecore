@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="monitoringxml" nsURI="http://www.mdh.se/concerto/monitoring/xml/monitoringxml"
+    nsPrefix="monitoringxml">
+  <eClassifiers xsi:type="ecore:EClass" name="Monitoring">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ThreadNames" upperBound="-1"
+        eType="#//Thread" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="SharedResources" upperBound="-1"
+        eType="#//Resource" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="analysisContext" lowerBound="1"
+        eType="#//AnalysisContext" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Thread" eSuperTypes="#//MonitoredResource"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Resource" eSuperTypes="#//MonitoredResource"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Period">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="monitoredresource" eType="#//MonitoredResource"
+        eOpposite="#//MonitoredResource/period"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="minimum" eType="#//MeasuredValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maximum" eType="#//MeasuredValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="average" eType="#//MeasuredValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="jitter" eType="#//MeasuredValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MonitoredResource" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="period" eType="#//Period"
+        containment="true" eOpposite="#//Period/monitoredresource"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="executiontime" eType="#//ExecutionTime"
+        containment="true" eOpposite="#//ExecutionTime/monitoredresource"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="blockingtime" eType="#//BlockingTime"
+        containment="true" eOpposite="#//BlockingTime/monitoredresource"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsetime" eType="#//ResponseTime"
+        containment="true" eOpposite="#//ResponseTime/monitoredresource"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecutionTime">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="monitoredresource" eType="#//MonitoredResource"
+        eOpposite="#//MonitoredResource/executiontime"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="minimum" eType="#//MeasuredValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maximum" eType="#//MeasuredValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="average" eType="#//MeasuredValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BlockingTime">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="monitoredresource" eType="#//MonitoredResource"
+        eOpposite="#//MonitoredResource/blockingtime"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="minimum" eType="#//MeasuredValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maximum" eType="#//MeasuredValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="average" eType="#//MeasuredValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResponseTime">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="monitoredresource" eType="#//MonitoredResource"
+        eOpposite="#//MonitoredResource/responsetime"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="minimum" eType="#//MeasuredValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maximum" eType="#//MeasuredValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="average" eType="#//MeasuredValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="jitter" eType="#//MeasuredValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AnalysisContext">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeasuredValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"/>
+  </eClassifiers>
+</ecore:EPackage>

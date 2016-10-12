@@ -2,10 +2,12 @@
 -----------------------------------------------------------------------
 --          			CHESS core plugin							 --
 --                                                                   --
---                    Copyright (C) 2011-2012                        --
+--                    Copyright (C) 2016                             --
 --                 University of Padova, ITALY                       --
 --                                                                   --
--- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
+-- Authors: Alessandro Zovi          azovi@math.unipd.it             --
+--          Laura Baracchi           laura.baracchi@intecs.it        --
+--          Stefano Puri             stefano.puri@intecs.it          --
 --                                                                   --
 -- All rights reserved. This program and the accompanying materials  --
 -- are made available under the terms of the Eclipse Public License  --
@@ -30,6 +32,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
+import org.polarsys.chess.chessmlprofile.Core.Domain;
 import org.polarsys.chess.core.Activator;
 import org.polarsys.chess.core.internal.views.permissions.EntryId;
 import org.polarsys.chess.core.internal.views.permissions.PermissionEntry;
@@ -61,7 +64,7 @@ public class ViewPermissions {
 	static PermissionList SystemViewPL;
 	static PermissionList PSMView;
 	
-	static PermissionEntry allowAll = new PermissionEntry(anyEntry, false, true, true);
+	static PermissionEntry allowAll = new PermissionEntry(anyEntry, false, true, true, Domain.CROSS_DOMAIN);
 	public static void initializeLists(){
 		/*componentViewPL = new PermissionList();
 		extraFunctionalViewPL = new PermissionList();
@@ -231,7 +234,9 @@ public class ViewPermissions {
 		boolean w = parsePermissionRight(perm.getAttribute(PermissionEntry.WRITE_ATR));
 		boolean v = parsePermissionRight(perm.getAttribute(PermissionEntry.VISIBLE_ATR));
 		
-		return new PermissionEntry(id, o, w, v);
+		Domain d = parseDomain(perm.getAttribute(PermissionEntry.DOMAIN_ATR));		
+		
+		return new PermissionEntry(id, o, w, v, d);
 	}
 
 	private static boolean parsePermissionRight(String attr) {
@@ -241,6 +246,26 @@ public class ViewPermissions {
 		return false;
 	}
 
+	private static Domain parseDomain(String attr) {	
+		
+		if (attr.equalsIgnoreCase(Domain.AUTOMOTIVE.getName()))
+			return Domain.AUTOMOTIVE;
+		if (attr.equalsIgnoreCase(Domain.AVIONICS.getName()))
+			return Domain.AVIONICS;
+		if (attr.equalsIgnoreCase(Domain.CROSS_DOMAIN.getName()))
+			return Domain.CROSS_DOMAIN;
+		if (attr.equalsIgnoreCase(Domain.MEDICAL.getName()))
+			return Domain.MEDICAL;
+		if (attr.equalsIgnoreCase(Domain.PETROLEUM.getName()))
+			return Domain.PETROLEUM;
+		if (attr.equalsIgnoreCase(Domain.SPACE.getName()))
+			return Domain.SPACE;
+		if (attr.equalsIgnoreCase(Domain.TELECOM.getName()))
+			return Domain.TELECOM;
+		// Default domain is CROSS_DOMAIN
+		return Domain.CROSS_DOMAIN;
+	}
+	
 	private static String parseIdValue(String attr) {
 		if (attr.equals("-"))
 			return NONE;

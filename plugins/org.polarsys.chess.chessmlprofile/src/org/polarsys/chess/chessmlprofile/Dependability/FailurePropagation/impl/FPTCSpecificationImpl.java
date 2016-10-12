@@ -20,8 +20,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Property;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.FailureType;
@@ -36,6 +38,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FPTCSpecificationImpl#getBase_Comment <em>Base Comment</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FPTCSpecificationImpl#getFailure <em>Failure</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FPTCSpecificationImpl#getPartWithPort <em>Part With Port</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FPTCSpecificationImpl#getFailureMode <em>Failure Mode</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,6 +74,16 @@ public class FPTCSpecificationImpl extends EObjectImpl implements FPTCSpecificat
 	 * @ordered
 	 */
 	protected Property partWithPort;
+
+	/**
+	 * The cached value of the '{@link #getFailureMode() <em>Failure Mode</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFailureMode()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<FailureMode> failureMode;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -184,6 +197,18 @@ public class FPTCSpecificationImpl extends EObjectImpl implements FPTCSpecificat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<FailureMode> getFailureMode() {
+		if (failureMode == null) {
+			failureMode = new EObjectResolvingEList<FailureMode>(FailureMode.class, this, FailurePropagationPackage.FPTC_SPECIFICATION__FAILURE_MODE);
+		}
+		return failureMode;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -195,6 +220,8 @@ public class FPTCSpecificationImpl extends EObjectImpl implements FPTCSpecificat
 			case FailurePropagationPackage.FPTC_SPECIFICATION__PART_WITH_PORT:
 				if (resolve) return getPartWithPort();
 				return basicGetPartWithPort();
+			case FailurePropagationPackage.FPTC_SPECIFICATION__FAILURE_MODE:
+				return getFailureMode();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -218,6 +245,10 @@ public class FPTCSpecificationImpl extends EObjectImpl implements FPTCSpecificat
 			case FailurePropagationPackage.FPTC_SPECIFICATION__PART_WITH_PORT:
 				setPartWithPort((Property)newValue);
 				return;
+			case FailurePropagationPackage.FPTC_SPECIFICATION__FAILURE_MODE:
+				getFailureMode().clear();
+				getFailureMode().addAll((Collection<? extends FailureMode>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -239,6 +270,9 @@ public class FPTCSpecificationImpl extends EObjectImpl implements FPTCSpecificat
 			case FailurePropagationPackage.FPTC_SPECIFICATION__PART_WITH_PORT:
 				setPartWithPort((Property)null);
 				return;
+			case FailurePropagationPackage.FPTC_SPECIFICATION__FAILURE_MODE:
+				getFailureMode().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -257,6 +291,8 @@ public class FPTCSpecificationImpl extends EObjectImpl implements FPTCSpecificat
 				return failure != null && !failure.isEmpty();
 			case FailurePropagationPackage.FPTC_SPECIFICATION__PART_WITH_PORT:
 				return partWithPort != null;
+			case FailurePropagationPackage.FPTC_SPECIFICATION__FAILURE_MODE:
+				return failureMode != null && !failureMode.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

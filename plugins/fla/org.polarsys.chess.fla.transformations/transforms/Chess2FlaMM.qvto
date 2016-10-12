@@ -1,0 +1,208 @@
+/*******************************************************************************
+ *                  CHESS core plugin
+ *
+ *               Copyright (C) 2011-2015
+ *            Mälardalen University, Sweden
+ *
+ *
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License
+ *  v1.0 which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+import org.polarsys.chess.fla.transformations.utilities.blackboxlibrary;
+
+import PortUtilities;
+import CommonUtilities;
+
+modeltype Chess uses chessmlprofile('http://CHESS');
+modeltype ChessFailurePropagation uses 'http://CHESS/Dependability/FailurePropagation';
+modeltype ChessFailureTypes uses 'http:///CHESS/Dependability/FailurePropagation/FailurePropagationDataTypes.ecore';
+modeltype ChessCore uses 'http://CHESS/Core';
+
+modeltype FLA uses flamm('http://www.polarsys.org/chess/fla/flamm');
+
+modeltype UML uses 'http://www.eclipse.org/uml2/5.0.0/UML';
+modeltype MARTE uses "http://www.eclipse.org/papyrus/GCM/1";
+modeltype SySML uses "http://www.eclipse.org/papyrus/0.7.0/SysML/PortAndFlows";
+
+
+transformation Chess2FlaMM(in source : Chess, out target : FLA);
+
+// Qualified names of stereotypes
+property FAILURE_PROPAGATION_STEREOTYPE = "CHESS::Dependability::FailurePropagation::FailurePropagationAnalysis";
+property FPTC_SPECIFICATION_STEREOTYPE = "CHESS::Dependability::FailurePropagation::FPTCSpecification";
+property FPTC_RULE_STEREOTYPE = "CHESS::Dependability::FailurePropagation::FPTC";
+property FLA_BEHAVIOUR_SPECIFICATION = "CHESS::Dependability::FailurePropagation::FLABehavior";
+
+// Platform selected by user
+configuration property selectedPlatformQName : String;
+
+property model : Model;
+property rootComponent : Class;
+
+main() {
+	this.model := source.rootObjects()![Model];
+	var selectedInstSpec : Package = model.findElementByQualifiedName(selectedPlatformQName).oclAsType(Package);
+	this.rootComponent := selectedInstSpec.ownedElement[InstanceSpecification]->
+		selectOne(name = selectedInstSpec.name.substringBefore("_instSpec")).classifier![Class];
+	//this.rootComponent.ownedComment += object Comment {body := "hello chess"; annotatedElement += rootComponent;};
+	this.rootComponent.UmlComponent2FlaComponent();
+}
+
+query UML::Class::UmlComponent2FlaComponent() : FLA::Component {
+	var flaComponent : FLA::Component;
+	if (self.isComposite()) {
+		flaComponent := self.UmlComponent2CompositeComponent();
+	} else {
+		flaComponent := self.UmlComponent2SimpleComponent();
+	};
+	
+	flaComponent.name := self.name;
+	flaComponent.id := self.getTransformationId();
+	flaComponent.inputPorts := self.ownedPort->select(port : UML::Port | port.isInputPort()).umlInputPort2flaPort(flaComponent);
+	flaComponent.outputPorts := self.ownedPort->select(port : UML::Port | port.isOutputPort()).umlOutputPort2flaPort(flaComponent);
+	
+	if (flaComponent.oclIsTypeOf(SimpleComponent)) {
+		setRulesInComponent(flaComponent.oclAsType(SimpleComponent), self.getRuleStrings());
+	} else if (flaComponent.oclIsTypeOf(CompositeComponent)) {
+		flaComponent.oclAsType(CompositeComponent).connectPorts(self.ownedMember[Connector]);
+	};
+	return flaComponent;
+}
+
+// Return a Fla component based on a property
+// Component data wil be overridden by property data where available
+query Property::asFlaComponent() : FLA::Component {
+	if (not self.hasPorts()) {
+		return null;
+	};
+	var component := self.type.oclAsType(Class).UmlComponent2FlaComponent();
+	// Override component name and id with property identity
+	component.name := self.name;
+	component.id := self.getTransformationId();
+	// Override rules in component with property rules, if present
+	if (component.oclIsTypeOf(SimpleComponent)) {
+		setRulesInComponent(component.oclAsType(SimpleComponent), self.getRuleStrings());
+	};
+	return component;
+}
+
+query UML::Class::UmlComponent2CompositeComponent() : FLA::CompositeComponent {
+	var flaComponent = object FLA::CompositeComponent {};
+	flaComponent.components += self.ownedMember->select(oclIsTypeOf(Property)).oclAsType(Property).asFlaComponent();
+	//connections += self.ownedMember[Connector]->reject(_end->exists(role = null))->map umlConnector2flaConnection();
+	return flaComponent;
+}
+
+query UML::Class::UmlComponent2SimpleComponent() : FLA::SimpleComponent {
+	var flaComponent = object FLA::SimpleComponent {};
+	return flaComponent;
+}
+
+query FLA::Component::getPorts() : Set(FLA::Port) {
+	return self.inputPorts->union(self.outputPorts);
+}
+
+query UML::Port::umlOutputPort2flaPort(owner : FLA::Component) : FLA::Port {
+	var resultPort = object FLA::Port {id := self.getTransformationId(); name := self.name};
+	resultPort.owner := owner;
+	return resultPort;
+}
+
+query UML::Port::umlInputPort2flaPort(owner : FLA::Component) : FLA::Port {
+	var resultPort = object FLA::Port {id := self.getTransformationId(); name := self.name};
+	resultPort.owner := owner;
+	
+	if (self.owner = this.rootComponent) {
+		resultPort.failures := self.getInputFailures();
+	};
+	return resultPort;
+}
+
+query UML::Port::getInputFailures() : Bag(FLA::Failure) {
+	if (self.owner <> this.rootComponent) {
+		return null;
+	};
+	
+	var comment := this.rootComponent.ownedComment->selectOne(hasAnnotatedElement(self) and isStereotyped(FPTC_SPECIFICATION_STEREOTYPE));
+	var failures = comment.getStereotypeValue(FPTC_SPECIFICATION_STEREOTYPE, "failure");
+	var resultVar := failures.oclAsType(Collection(FailureType))->ChessFailureType2FlaFailure();
+	return resultVar;
+}
+
+query CompositeComponent::connectPorts(connections : Set(UML::Connector)) {
+	var ports = self.getPorts()->union(self.components.getPorts()->asSet());
+	connections.connectFlaPorts(ports, self);
+}
+
+query UML::Connector::connectFlaPorts(ports : Set(FLA::Port), component : CompositeComponent) {
+	var connectorEnds = self._end;
+	var connectedPorts = ports->select(port : FLA::Port | port.matches(connectorEnds->at(1), component) or port.matches(connectorEnds->at(2), component) )->asOrderedSet();
+	connectedPorts->at(1).connectedPorts += connectedPorts->at(2);
+	connectedPorts->at(2).connectedPorts += connectedPorts->at(1);
+}
+
+query FLA::Port::matches(connectorEnd : UML::ConnectorEnd, component : CompositeComponent) : Boolean {
+	return ((connectorEnd.role.getTransformationId() = self.id) and 
+		(((connectorEnd.partWithPort <> null) and (connectorEnd.partWithPort.getTransformationId() = self.owner.id))
+			or (connectorEnd.partWithPort = null and self.owner = component))) ;
+}
+
+query setRulesInComponent(inout component : FLA::SimpleComponent, ruleStrings : Collection(String)) {
+	if ((ruleStrings <> null) and (not ruleStrings->oclIsInvalid())) {
+		component.rules := ruleStrings.getRuleFromRulestring(component);
+	}
+}
+
+query UML::Element::getRuleStrings() : Collection(String) {
+	// Use FLABehavior if present
+	if (self.isStereotyped(FLA_BEHAVIOUR_SPECIFICATION)) {
+		var flaStereotype := self.getStereotypeApplication(FLA_BEHAVIOUR_SPECIFICATION).oclAsType(FLABehavior);
+		return flaStereotype.fptc.trim().tokenize(";").trim();
+	} else {
+		return null;
+	};
+}
+
+query UML::Component::getSelectedPlatform() : CHGaResourcePlatform {
+	var stereotype = self.getAppliedStereotype(FAILURE_PROPAGATION_STEREOTYPE);
+	if (stereotype = null) {
+		return null;
+	};
+	
+	var selectedPackage = self.getValue(stereotype, "platform").oclAsType(CHGaResourcePlatform);
+	return selectedPackage;
+}
+
+query UML::NamedElement::getTransformationId() : String {
+	//return self.getXmiId();
+	return self.getQualifiedName();
+}
+
+query ChessFailureTypes::FailureType::ChessFailureType2FlaFailure() : FLA::Failure {
+	var failure = object Failure {};
+	switch {
+		case (self = FailureType::noFailure) {
+			failure.type := FLA::FailureTypes::FailureType::noFailure;
+			failure.id := "noFailure";
+		}
+		case (self = FailureType::wildcard) {
+			failure.type := FLA::FailureTypes::FailureType::wildcard;
+			failure.id := "wildcard";
+		}
+		case (self = FailureType::variable) {
+			failure.type := FLA::FailureTypes::FailureType::variable;
+			failure.id := "notSet";
+			//TODO: not supported
+		}
+		else {
+			failure.type := FLA::FailureTypes::FailureType::failure;
+			failure.id := self.toString();
+		}
+	};
+	return failure;
+}
+
+

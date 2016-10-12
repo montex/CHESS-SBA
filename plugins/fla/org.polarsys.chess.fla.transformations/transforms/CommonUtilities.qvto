@@ -1,0 +1,98 @@
+/*******************************************************************************
+ *                  CHESS core plugin
+ *
+ *               Copyright (C) 2011-2015
+ *            Mälardalen University, Sweden
+ *
+ *
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License
+ *  v1.0 which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+modeltype chess uses chessmlprofile('http://CHESS');
+modeltype uml uses 'http://www.eclipse.org/uml2/5.0.0/UML';
+
+
+library CommonUtilities;
+
+query Model::getView(viewName : String) : Package {
+	var seq := self.packagedElement[Package]-> union(self.packagedElement[Package].packagedElement[Package]);
+	return seq -> selectOne(isStereotyped("CHESS::Core::CHESSViews::" + viewName));
+}
+
+query NamedElement::getTransformationId() : String {
+	//return self.getXmiId();
+	return self.getQualifiedName();
+}
+
+query uml::Class::isComposite() : Boolean {
+	return self.ownedMember->exists(oclIsTypeOf(Property));
+}
+
+query InstanceSpecification::isComposite() : Boolean {
+	return self.ownedElement[Slot]->exists(slot : Slot | slot.definingFeature.oclIsKindOf(Port) = false); 
+}
+
+query uml::Property::hasPorts() : Boolean{
+	return not self.type.ownedElement[Port]->isEmpty();
+}
+
+query uml::Element::getPort(id : String) : uml::Port {
+	return self.ownedElement[uml::Port]->selectOne(getTransformationId() = id);
+}
+
+query uml::Component::getSubcomponent(id : String) : Class{
+	return self.ownedElement[Class]->selectOne(getTransformationId() = id);
+}
+
+query uml::Class::getProperty(id : String) : Property{
+	return self.ownedElement[Property]->selectOne(getTransformationId() = id);
+}
+
+query Comment::hasAnnotatedElement(element : Element) : Boolean {
+	return self.annotatedElement->exists(annotatedElement : Element | annotatedElement = element);
+}
+
+query Element::isStereotyped(stereoName : String) : Boolean {
+	return self.getAppliedStereotype(stereoName) <> null;
+}
+
+query Element::getStereotypeApplication(qualifiedName : String) : OclAny {
+	return self.getStereotypeApplication(self.getApplicableStereotype(qualifiedName));
+}
+
+query Element::applyStereotype(qualifiedName : String) : Stereotype{
+	var stereotype := self.getApplicableStereotype(qualifiedName);
+	if (stereotype <> null) {
+		self.applyStereotype(stereotype);
+	};
+	return stereotype;
+}
+
+query Element::getStereotypeValue(qualifiedName : String, propertyName : String) : OclAny {
+	var stereotype = self.getAppliedStereotype(qualifiedName);
+	if (stereotype = null) {
+		return null;
+	};
+	return self.getValue(self.getAppliedStereotype(qualifiedName), propertyName);
+}
+
+query Model::findElementByQualifiedName(in qName : String) : NamedElement {
+	var pathParts = qName.tokenize("::")->asOrderedSet();
+	assert fatal (pathParts->first() = "model");
+	if (pathParts->size() = 1) {
+		return self;
+	};
+	var i : Integer = 2;
+	var p : Package := self;
+	while (i < pathParts->size()) {
+		var packageName = pathParts->at(i); 
+		p := p.ownedElement[Package]->selectOne(name = pathParts->at(i));
+		i := i + 1;
+	};
+	return p.ownedMember[NamedElement]->selectOne(name = pathParts->last());
+}
+
+

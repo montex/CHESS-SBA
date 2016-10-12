@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+   
+    Copyright (c) 2013, 2015 Intecs SpA 
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+    Nicholas Pacini nicholas.pacini@intecs.it 
+    Stefano Puri stefano.puri@intecs.it
+    Laura Baracchi  laura.baracchi@intecs.it  
+    Initial API and implementation and/or initial documentation
+ -->
+
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif" id="ContractsClassDiagramDrawer" name="Contracts">
+			<aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Class.gif" id="clazz.tool.class_1301932910315_1355874669598" name="Contract (Class)" refToolId="clazz.tool.class">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESSContract::Contract"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create a ContractProperty" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Property.gif" id="clazz.tool.property_1355874680081" name="ContractProperty (Property)" refToolId="clazz.tool.property">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESSContract::ContractProperty"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create a FormalProperty" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="clazz.tool.constraint_1355874696383" name="FormalProperty (Constraint)" refToolId="clazz.tool.constraint">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESSContract::FormalProperty"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create System" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1301932910315_1355874714027" name="System (ComponentImplementation)" refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESSContract::System"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+			<aspectTool description="Create SRAComponent" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif" id="clazz.tool.component_1301932822500_1355874736163" name="SRAComponent (ComponentImplementation (Component))" refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESSContract::SRAComponent"/>
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+		</drawer>
+	</content>
+</paletteDefinition>

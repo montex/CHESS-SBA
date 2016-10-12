@@ -1,0 +1,77 @@
+/*
+ * TODO: License and author (Petter Isberg - MDH) 
+ */
+
+grammar org.polarsys.chess.xtext.FlaDsl with org.eclipse.xtext.common.Terminals
+
+import "http://www.eclipse.org/uml2/5.0.0/UML" as uml
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+generate flaDsl "http://www.intecs.org/chess/xtext/FlaDsl"
+
+/*
+ * FLA Grammar
+ */
+ 
+Behaviour:
+	rules+=Expression+;
+	
+Expression:
+	'FLA:' lhs=Lhs '->' rhs=Rhs ';';
+
+Lhs: failures+=InputExpression (',' failures+=InputExpression)*;
+Rhs: failures+=OutputExpression (',' failures+=OutputExpression)*;
+
+InputExpression: (ref=[uml::Port]| "undefined") '.' failureExpr=InFailureExpr;
+OutputExpression: (ref=[uml::Port]| "undefined") '.' failureExpr=OutFailureExpr;
+
+InFailureExpr: 
+	failures+=WildcardDefinition | 
+	failures+=NoFailureDefinition | 
+	failures+=FailureDefinition |
+	'{' failures+=FailureDefinition (',' failures+=FailureDefinition)+ '}' | 
+	failures+=VariableDefinition
+; 
+
+OutFailureExpr: 
+	failures+=NoFailureDefinition | 
+	failures+=ComplexNofailureDefinition | 
+	failures+=FailureDefinition | 
+	'{' failures+=FailureDefinition (',' failures+=FailureDefinition)+ '}' |
+	failures+=VariableDefinition
+;
+
+Definitions: FailureDefinition | NoFailureDefinition | ComplexNofailureDefinition | WildcardDefinition | VariableDefinition;
+
+FailureDefinition: {FailureDefinition} type = ActualFailureType ('.' acidAvoidable = ACIDavoidable)?;
+NoFailureDefinition: {NoFailureDefinition} 'noFailure';
+ComplexNofailureDefinition: {NoFailureDefinition} 'noFailure' '.' acidMitigation = ACIDMitigation;
+WildcardDefinition: {WildcardDefinition} 'wildcard';
+VariableDefinition: {VariableDefinition} variableName=ID;
+
+enum FailureType: NO_FAILURE='noFailure' | EARLY='early'| LATE='late' | COMMISSION='commission' | OMISSION='omission' | VALUE_SUBTLE='valueSubtle' | VALUE_COARSE='valueCoarse' | WILDCARD="wildcard" | VARIABLE='variable';
+enum ActualFailureType returns FailureType: EARLY | LATE | COMMISSION | OMISSION | VALUE_SUBTLE | VALUE_COARSE;
+enum NoFailureType returns FailureType: NO_FAILURE;
+enum Wildcard returns FailureType: WILDCARD;
+
+ACIDavoidable: a = Aavoidable '.' c = Cavoidable '.' i = Iavoidable '.' d = Davoidable;
+
+enum Aavoidable: INCOMPLETION='incompletion' | NONE='none' | UNSPECIFIED='unspecified';
+enum Cavoidable: INCONSISTENCY='inconsistency' | NONE='none' | UNSPECIFIED='unspecified';
+enum Iavoidable: INTERFERENCE='interference' | NONE='none' | UNSPECIFIED='unspecified';
+enum Davoidable: IMPERMANENCE='impermanence' | NONE='none' | UNSPECIFIED='unspecified';
+
+ACIDMitigation: a = Amitigation '.' c = Cmitigation '.' i = Imitigation '.' d = Dmitigation;
+
+enum Amitigation: ALL_OR_NOTHING='all_or_nothing' | ALL_OR_COMPENSATION='all_or_compensation' | NONE='none' | UNSPECIFIED='unspecified';
+enum Cmitigation: FULL_CONSISTENCY='full_consistency' | RANGE_VIOLATION_ALLOWED='range_violation_allowed' | NONE='none' | UNSPECIFIED='unspecified';
+enum Imitigation: SERIALIZABLE='serializable' | PORTABLE_LEVEL='portable_level' | NONE='none' | UNSPECIFIED='unspecified';
+enum Dmitigation: NO_LOSS='no_loss' | PARTIAL_LOSS_ALLOWED='partial_loss_allowed' | NONE='none' | UNSPECIFIED='unspecified';
+	
+/*
+ * Additional rule to refer UML elements in a Model
+ */
+
+FQN returns ecore::EString :
+	ID('::'ID)*
+;

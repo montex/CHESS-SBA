@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+   
+    Copyright (c) 2013, 2015 Intecs SpA 
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+    Nicholas Pacini nicholas.pacini@intecs.it 
+    Stefano Puri stefano.puri@intecs.it
+    Laura Baracchi  laura.baracchi@intecs.it  
+    Initial API and implementation and/or initial documentation
+ -->
+
+<plugin>
+ 
+ <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.papyrus.views.modelexplorer.popup.validation">
+         <menu
+               icon="icons/CHESSval.gif"
+               id="org.polarsys.chess.validator.mainmenuId"
+               label="CHESS">
+            <command
+                  commandId="org.polarsys.chess.contracts.validation.commandID"
+                  id="org.polarsys.chess.contracts.validation.ID"
+                  label="Validate model for NuSMV3 analysis tool"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.polarsys.chess.contracts.validation.CHESSContractValidationHandler"
+            id="org.polarsys.chess.contracts.validation.commandID"
+            name="Check CHESS model for NuSMV3 analysis tool">
+      </command>
+   </extension>
+   
+   
+   <extension
+         point="org.eclipse.emf.validation.constraintProviders">
+      <category
+            id="org.polarsys.chess.contracts.validation"
+            name="NuSMV3 Analysis">
+      </category>
+      <constraintProvider
+            cache="true"
+            mode="Batch">
+         <package
+               namespaceUri="http://www.eclipse.org/uml2/5.0.0/UML">
+         </package>
+         <constraints
+               categories="org.polarsys.chess.contracts.validation">
+            <constraint
+                  class="org.polarsys.chess.contracts.validation.constraints.OCRAConstraints"
+                  id="org.polarsys.chess.contracts.validation.constraints.ForeverConstraints.ID"
+                  isEnabledByDefault="true"
+                  lang="Java"
+                  mode="Batch"
+                  name="For01"
+                  severity="ERROR"
+                  statusCode="1">
+               <message>
+                  SystemView not Found
+               </message>
+               <target
+                     class="Model">
+               </target>
+            </constraint>
+         </constraints>
+      </constraintProvider>
+   </extension>
+   <extension
+         point="org.eclipse.emf.validation.constraintBindings">
+      <clientContext
+            default="false"
+            id="org.polarsys.chess.contracts.validation.clientContext">
+         <selector
+               class="org.polarsys.chess.contracts.validation.ValidationDelegateClientSelector">
+         </selector>
+      </clientContext>
+      <binding
+            category="org.polarsys.chess.contracts.validation"
+            context="org.polarsys.chess.contracts.validation.clientContext">
+      </binding>
+   </extension>
+       
+</plugin>

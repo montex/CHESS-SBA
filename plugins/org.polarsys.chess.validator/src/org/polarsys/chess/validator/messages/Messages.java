@@ -25,7 +25,7 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
 	
 	/** The Constant BUNDLE_NAME. */
-	private static final String BUNDLE_NAME = "org.polarsys.chess.validator.managers.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.polarsys.chess.validator.messages.messages"; //$NON-NLS-1$
 	
 	/** The error_diagram in view. */
 	public static String error_diagramInView;

@@ -27,6 +27,7 @@ import org.eclipse.papyrus.infra.widgets.toolbox.notification.builders.Notificat
 public class ResourceNotification {
 
 	private static NotificationBuilder errorPopup = NotificationBuilder.createErrorPopup(null);
+	private static NotificationBuilder warningPopup = NotificationBuilder.createWarningPopup(null);
 	private static NotificationBuilder infoPopup = new NotificationBuilder();//NotificationBuilder.createAsyncPopup(null);
 	
 	/**
@@ -39,6 +40,18 @@ public class ResourceNotification {
 		errorPopup.setMessage(message);
 		return errorPopup.run();	
 	}
+	
+	/**
+	 * Shows a warning popup with the specified message.
+	 * 
+	 * @param message the warning message to show
+	 * @return the INotification object
+	 */
+	public static INotification showWarning(String message){		
+		warningPopup.setMessage(message);
+		return warningPopup.run();	
+	}
+	
 	
 	/**
 	 * Shows an information popup with the specified message.

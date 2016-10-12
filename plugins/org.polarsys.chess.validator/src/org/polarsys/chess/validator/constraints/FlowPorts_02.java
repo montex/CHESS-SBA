@@ -1,3 +1,19 @@
+/*
+-----------------------------------------------------------------------
+--                CHESS Live/Batch Validator plugin                  --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- 							                 --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+ */
+
 package org.polarsys.chess.validator.constraints;
 
 import org.eclipse.core.runtime.IStatus;
@@ -11,11 +27,13 @@ import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Type;
+import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FlowPorts_02.
+ * This class implements the following constraint (invoked by the EMF validation framework):
+ * The FlowPort should be mapped to parameters of the same type
  */
 public class FlowPorts_02 extends AbstractModelConstraint {
 
@@ -28,7 +46,7 @@ public class FlowPorts_02 extends AbstractModelConstraint {
 		IStatus failure = ctx.createFailureStatus();
 
 		Port port = (Port) ctx.getTarget();
-		if(port.getAppliedStereotype(FlowPorts_01.FLOWPORT) == null){
+		if(port.getAppliedStereotype(Constants.FLOW_PORT) == null){
 			return success;
 		}
 		
@@ -45,7 +63,7 @@ public class FlowPorts_02 extends AbstractModelConstraint {
 		Type portType = port.getType();
 		EList<Dependency> dependencies = port.getClientDependencies();
 		for (Dependency dep : dependencies) {
-			if (dep instanceof Abstraction && dep.getAppliedStereotype(FlowPorts_01.ALLOCATE) != null){
+			if (dep instanceof Abstraction && dep.getAppliedStereotype(Constants.MARTE_ALLOCATE) != null){
 				EList<NamedElement> suppList = dep.getSuppliers();
 				for (NamedElement nElem : suppList) {
 					if(nElem instanceof Parameter){
@@ -57,7 +75,6 @@ public class FlowPorts_02 extends AbstractModelConstraint {
 				}
 			}
 		}
-
 		return success;
 	}
 

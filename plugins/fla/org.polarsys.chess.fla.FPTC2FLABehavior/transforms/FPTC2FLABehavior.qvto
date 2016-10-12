@@ -1,0 +1,41 @@
+/*******************************************************************************
+ *                  CHESS core plugin
+ *
+ *               Copyright (C) 2011-2015
+ *            Mälardalen University, Sweden
+ *
+ *
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License
+ *  v1.0 which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+modeltype UML uses 'http://www.eclipse.org/uml2/5.0.0/UML';
+modeltype Chess uses chessmlprofile('http://CHESS');
+modeltype ChessFailurePropagation uses 'http://CHESS/Dependability/FailurePropagation';
+
+transformation FPTC2FLABehavior(inout model : Chess);
+
+property FLA_BEHAVIOUR_SPECIFICATION = "CHESS::Dependability::FailurePropagation::FLABehavior";
+
+main() {
+	model.objectsOfType(FailurePropagation::FPTC).map fptc2flabehavior();
+}
+
+mapping FailurePropagation::FPTC::fptc2flabehavior() {
+	var element : Element;
+	if (self.base_Component <> null) {
+		element := self.base_Component;
+	} else if (self.base_Property <> null) {
+		element := self.base_Property;
+	} else if (self.base_Connector <> null) {
+		element := self.base_Connector;
+	} else if (self.base_Comment <> null) {
+		element := self.base_Comment.owner;
+	};
+	var stereotype := element.getApplicableStereotype(FLA_BEHAVIOUR_SPECIFICATION);
+	var flabehavior := element.applyStereotype(stereotype).oclAsType(FLABehavior);
+	flabehavior.fptc := self.fptc;
+	model.removeElement(self);
+}

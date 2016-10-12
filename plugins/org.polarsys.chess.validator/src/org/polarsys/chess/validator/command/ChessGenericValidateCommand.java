@@ -55,6 +55,9 @@ public class ChessGenericValidateCommand extends AbstractValidateCommand {
 	/** The plugin ids. */
 	public Collection<String> pluginIds;
 	
+	/** Markers is set if the validation identified some problems */
+	private boolean markers = false;
+	
 	/**
 	 * Instantiates a new ChessGenericValidateCommand.
 	 *
@@ -239,9 +242,35 @@ public class ChessGenericValidateCommand extends AbstractValidateCommand {
 				if (pluginIds.contains(childDiagnostic.getSource())) {
 					MarkerListenerUtils.eclipseResourcesUtil.createMarkers(resource, childDiagnostic);
 					//if we create at least one marker report it
+					this.markers = true;	
 				}
 			}
 		}
 	}
+	
+	/**
+	 * Returns true if the model validation highlighted at least one problem, false otherwise.
+	 * 
+	 * @return markers
+	 * @since 0.10
+	 */
+	public boolean getMarkers() {
+		return this.markers;
+	}
+	
+    /**
+     * Executes this command invoking the execute(IProgressMonitor, IAdaptable) from the parent-class
+     * 
+     * @see execute(IProgressMonitor, IAdaptable)
+     * 
+     * @param monitor
+     * @param info
+     * @throws ExecutionException 
+     * @since 0.10
+     */
+	public final void executeCommand(IProgressMonitor monitor, IAdaptable info) throws ExecutionException{
+		super.execute(monitor, info);		
+	}
+	
 	
 }

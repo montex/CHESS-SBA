@@ -62,8 +62,9 @@ public class RTComponentModelFactoryImpl extends EFactoryImpl implements RTCompo
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case RTComponentModelPackage.CH_RT_PORT_SLOT: return createCHRtPortSlot();
 			case RTComponentModelPackage.CH_RT_SPECIFICATION: return createCHRtSpecification();
+			case RTComponentModelPackage.CH_RT_PORT_SLOT: return createCHRtPortSlot();
+			case RTComponentModelPackage.RUN_TIME_SUPPORT: return createRunTimeSupport();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -77,6 +78,16 @@ public class RTComponentModelFactoryImpl extends EFactoryImpl implements RTCompo
 	public CHRtPortSlot createCHRtPortSlot() {
 		CHRtPortSlotImpl chRtPortSlot = new CHRtPortSlotImpl();
 		return chRtPortSlot;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RunTimeSupport createRunTimeSupport() {
+		RunTimeSupportImpl runTimeSupport = new RunTimeSupportImpl();
+		return runTimeSupport;
 	}
 
 	/**

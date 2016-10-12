@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -72,34 +73,17 @@ public interface RTComponentModelPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RTComponentModelPackageImpl#getCHRtPortSlot()
 	 * @generated
 	 */
-	int CH_RT_PORT_SLOT = 0;
+	int CH_RT_PORT_SLOT = 1;
 
 	/**
-	 * The feature id for the '<em><b>Base Slot</b></em>' reference.
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RunTimeSupportImpl <em>Run Time Support</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RunTimeSupportImpl
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RTComponentModelPackageImpl#getRunTimeSupport()
 	 * @generated
-	 * @ordered
 	 */
-	int CH_RT_PORT_SLOT__BASE_SLOT = 0;
-
-	/**
-	 * The feature id for the '<em><b>CH Rt Specification</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_RT_PORT_SLOT__CH_RT_SPECIFICATION = 1;
-
-	/**
-	 * The number of structural features of the '<em>CH Rt Port Slot</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CH_RT_PORT_SLOT_FEATURE_COUNT = 2;
+	int RUN_TIME_SUPPORT = 2;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl <em>CH Rt Specification</em>}' class.
@@ -109,7 +93,7 @@ public interface RTComponentModelPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RTComponentModelPackageImpl#getCHRtSpecification()
 	 * @generated
 	 */
-	int CH_RT_SPECIFICATION = 1;
+	int CH_RT_SPECIFICATION = 0;
 
 	/**
 	 * The feature id for the '<em><b>Part With Port</b></em>' reference.
@@ -256,13 +240,94 @@ public interface RTComponentModelPackage extends EPackage {
 	int CH_RT_SPECIFICATION__BLOCK_T = 15;
 
 	/**
+	 * The feature id for the '<em><b>Operation Req For Sporadic Occ</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CH_RT_SPECIFICATION__OPERATION_REQ_FOR_SPORADIC_OCC = 16;
+
+	/**
 	 * The number of structural features of the '<em>CH Rt Specification</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CH_RT_SPECIFICATION_FEATURE_COUNT = 16;
+	int CH_RT_SPECIFICATION_FEATURE_COUNT = 17;
+
+	/**
+	 * The feature id for the '<em><b>Base Slot</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CH_RT_PORT_SLOT__BASE_SLOT = 0;
+
+	/**
+	 * The feature id for the '<em><b>CH Rt Specification</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CH_RT_PORT_SLOT__CH_RT_SPECIFICATION = 1;
+
+	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION = 2;
+
+	/**
+	 * The number of structural features of the '<em>CH Rt Port Slot</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CH_RT_PORT_SLOT_FEATURE_COUNT = 3;
+
+	/**
+	 * The feature id for the '<em><b>Monitoring</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RUN_TIME_SUPPORT__MONITORING = 0;
+
+	/**
+	 * The feature id for the '<em><b>Verification</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RUN_TIME_SUPPORT__VERIFICATION = 1;
+
+	/**
+	 * The feature id for the '<em><b>Base Comment</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RUN_TIME_SUPPORT__BASE_COMMENT = 2;
+
+	/**
+	 * The number of structural features of the '<em>Run Time Support</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RUN_TIME_SUPPORT_FEATURE_COUNT = 3;
 
 
 	/**
@@ -296,6 +361,60 @@ public interface RTComponentModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCHRtPortSlot_CH_RtSpecification();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot#getBase_InstanceSpecification <em>Base Instance Specification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Instance Specification</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot#getBase_InstanceSpecification()
+	 * @see #getCHRtPortSlot()
+	 * @generated
+	 */
+	EReference getCHRtPortSlot_Base_InstanceSpecification();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport <em>Run Time Support</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Run Time Support</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport
+	 * @generated
+	 */
+	EClass getRunTimeSupport();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#isMonitoring <em>Monitoring</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Monitoring</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#isMonitoring()
+	 * @see #getRunTimeSupport()
+	 * @generated
+	 */
+	EAttribute getRunTimeSupport_Monitoring();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#isVerification <em>Verification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Verification</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#isVerification()
+	 * @see #getRunTimeSupport()
+	 * @generated
+	 */
+	EAttribute getRunTimeSupport_Verification();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#getBase_Comment <em>Base Comment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Comment</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#getBase_Comment()
+	 * @see #getRunTimeSupport()
+	 * @generated
+	 */
+	EReference getRunTimeSupport_Base_Comment();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification <em>CH Rt Specification</em>}'.
@@ -484,6 +603,17 @@ public interface RTComponentModelPackage extends EPackage {
 	EAttribute getCHRtSpecification_BlockT();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getOperationReqForSporadicOcc <em>Operation Req For Sporadic Occ</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Operation Req For Sporadic Occ</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getOperationReqForSporadicOcc()
+	 * @see #getCHRtSpecification()
+	 * @generated
+	 */
+	EReference getCHRtSpecification_OperationReqForSporadicOcc();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -530,6 +660,48 @@ public interface RTComponentModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CH_RT_PORT_SLOT__CH_RT_SPECIFICATION = eINSTANCE.getCHRtPortSlot_CH_RtSpecification();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Instance Specification</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getCHRtPortSlot_Base_InstanceSpecification();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RunTimeSupportImpl <em>Run Time Support</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RunTimeSupportImpl
+		 * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RTComponentModelPackageImpl#getRunTimeSupport()
+		 * @generated
+		 */
+		EClass RUN_TIME_SUPPORT = eINSTANCE.getRunTimeSupport();
+
+		/**
+		 * The meta object literal for the '<em><b>Monitoring</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RUN_TIME_SUPPORT__MONITORING = eINSTANCE.getRunTimeSupport_Monitoring();
+
+		/**
+		 * The meta object literal for the '<em><b>Verification</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RUN_TIME_SUPPORT__VERIFICATION = eINSTANCE.getRunTimeSupport_Verification();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Comment</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RUN_TIME_SUPPORT__BASE_COMMENT = eINSTANCE.getRunTimeSupport_Base_Comment();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl <em>CH Rt Specification</em>}' class.
@@ -668,6 +840,14 @@ public interface RTComponentModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CH_RT_SPECIFICATION__BLOCK_T = eINSTANCE.getCHRtSpecification_BlockT();
+
+		/**
+		 * The meta object literal for the '<em><b>Operation Req For Sporadic Occ</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CH_RT_SPECIFICATION__OPERATION_REQ_FOR_SPORADIC_OCC = eINSTANCE.getCHRtSpecification_OperationReqForSporadicOcc();
 
 	}
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><plugin>
+  <extension point="org.eclipse.ui.views">
+    <view category="org.polarsys.chess.core.view" class="org.polarsys.chess.instance.view.InstanceViewPart" id="concerto.instance.view.iq" name="Instance View" restorable="true"/>
+  </extension>
+  <extension point="org.eclipse.papyrus.infra.core.model">
+    <modelSetSnippet classname="org.polarsys.chess.instance.view.ModelSetSnippet"/>
+  </extension>
+  <extension point="org.eclipse.ui.commands">
+    <command id="org.polarsys.chess.chess.instance.view.command.addchrtspec" name="AddCHRTSpec"/>
+    <command id="org.polarsys.chess.chess.instance.view.command.addperiodicchrtspec" name="AddPeriodicCHRTSpec"/>
+    <command id="org.polarsys.chess.chess.instance.view.command.addsporadicchrtspec" name="AddSporadicCHRTSpec"/>
+  </extension>
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution allPopups="false" locationURI="popup:concerto.instance.view.iq">
+      <menu label="CHESS">
+        <command commandId="org.polarsys.chess.chess.instance.view.command.addchrtspec" label="Create CHRTSpecification" style="push"/>
+        <command commandId="org.polarsys.chess.chess.instance.view.command.addperiodicchrtspec" label="Create Periodic CHRTSpecification" style="push"/>
+        <command commandId="org.polarsys.chess.chess.instance.view.command.addsporadicchrtspec" label="Create Sporadic CHRTSpecification" style="push"/>
+      </menu>
+    </menuContribution>
+  </extension>
+  <extension point="org.eclipse.ui.handlers">
+    <handler class="org.polarsys.chess.instance.view.AddCHRtSpecHandler" commandId="org.polarsys.chess.chess.instance.view.command.addchrtspec"/>
+    <handler class="org.polarsys.chess.instance.view.AddPeriodicCHRtSpecHandler" commandId="org.polarsys.chess.chess.instance.view.command.addperiodicchrtspec"/>
+    <handler class="org.polarsys.chess.instance.view.AddSporadicCHRtSpecHandler" commandId="org.polarsys.chess.chess.instance.view.command.addsporadicchrtspec"/>
+  </extension>
+  <extension id="org.polarsys.chess.instance.view.View" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.polarsys.chess.instance.view.View" id="org.polarsys.chess.instance.view.View"/>
+  </extension>
+</plugin>

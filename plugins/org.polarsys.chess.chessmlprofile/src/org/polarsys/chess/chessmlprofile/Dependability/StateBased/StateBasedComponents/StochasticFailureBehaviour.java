@@ -19,6 +19,10 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Depen
  * A representation of the model object '<em><b>Stochastic Failure Behaviour</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * to be removed???
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

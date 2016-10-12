@@ -21,21 +21,36 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
+import org.eclipse.papyrus.infra.core.editor.CoreMultiDiagramEditor;
 import org.eclipse.ui.AbstractSourceProvider;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISources;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.part.WorkbenchPart;
+import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.Stereotype;
+import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
 import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.chessmlprofile.Core.CHESS;
+import org.polarsys.chess.chessmlprofile.Core.Domain;
+import org.polarsys.chess.chessmlprofile.util.Constants;
 
+/**
+ * @since 0.10
+ */
 public class SwitchSourceProvider extends AbstractSourceProvider {
 
 	public final static String SWITCH = "org.polarsys.chess.service.commands.switchState";
+	
+	// for Domain dependent management of Menu contributions 
+	public final static String DOMAIN = "org.polarsys.chess.service.commands.domain";	
+	private final static String defaultDomain = Domain.CROSS_DOMAIN.name();
+	private String currentDomain = defaultDomain;
+		
 	
 	private final static String DISABLED = "disabled";
 	
@@ -51,6 +66,7 @@ public class SwitchSourceProvider extends AbstractSourceProvider {
 	public Map getCurrentState() {
 		Map currentSt = new HashMap(2);
 		currentSt.put(SWITCH, currentState);
+		currentSt.put(DOMAIN, currentDomain);
 		return currentSt;
 	}
 
@@ -62,25 +78,55 @@ public class SwitchSourceProvider extends AbstractSourceProvider {
 		currentState = v;
 		fireSourceChanged(ISources.WORKBENCH, SWITCH, v);
 	}
+	
+	private void setEnabledValueDomain(String d) {
+		currentDomain = d;		
+		fireSourceChanged(ISources.WORKBENCH, DOMAIN, d);
+	}
 
+	/**
+	 * Updates the variables used to guide the menu/toolbar population:
+	 * - Variable SWITCH (org.polarsys.chess.service.commands.switchState) is used for the change View toggle buttons
+	 * - Variable DOMAIN (org.polarsys.chess.service.commands.domain) is used for identifying AVIONICS models to visualize IMA commands
+	 * @param activeEditor
+	 */
 	public void updateStatus(IEditorPart activeEditor) {
 		try {
 			if (!CHESSEditorUtils.isCHESSProject(activeEditor)) {
 				setEnabledValue(DISABLED);
+				setEnabledValueDomain(defaultDomain);
 			} else {
 				
 				DiagramStatus ds = CHESSEditorUtils.getDiagramStatus((PapyrusMultiDiagramEditor) activeEditor);
 				if (ds == null) {
 					setEnabledValue(DISABLED);
+					setEnabledValueDomain(defaultDomain);
 				}else {
 				DesignView currentView = ds.getCurrentView();
+								
+				// Read the model's domain and assign it to the variable DOMAIN (org.polarsys.chess.service.commands.domain)				
+				Resource res = ResourceUtils.getUMLResource(((CoreMultiDiagramEditor) activeEditor).getServicesRegistry());
+				Model umlModel = ResourceUtils.getModel(res);
+				if (umlModel == null) {
+					setEnabledValueDomain(defaultDomain);					
+				}
+				else {
+					if (umlModel.getAppliedStereotype(Constants.CHESS_MODEL_STEREOTYPE) != null) {
+						Stereotype chessModelStereo = umlModel.getAppliedStereotype(Constants.CHESS_MODEL_STEREOTYPE);
+						CHESS chessModel = (CHESS) umlModel.getStereotypeApplication(chessModelStereo);
+						Domain theDomain = chessModel.getDomain();
+						setEnabledValueDomain(theDomain.name());
+					}
+					else {
+						setEnabledValueDomain(defaultDomain);		
+					}
+				}							
 
 				if (currentView != null && (ViewUtils.hasConcurrentViews(currentView) || ViewUtils.isConcurrentView(currentView))){
 					String name = ViewUtils.getBaseViewName(currentView);
 					setEnabledValue(name);
 				}
-				
-				
+								
 				else 
 					setEnabledValue(DISABLED);
 				}

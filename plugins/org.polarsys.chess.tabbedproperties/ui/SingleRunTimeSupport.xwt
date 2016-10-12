@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Composite
+	xmlns:ppel="clr-namespace:org.eclipse.papyrus.views.properties.widgets.layout"
+	xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt"
+	xmlns:ppe="clr-namespace:org.eclipse.papyrus.views.properties.widgets"
+	xmlns:j="clr-namespace:java.lang">
+	<Composite.layout>
+		<ppel:PropertiesLayout></ppel:PropertiesLayout>
+	</Composite.layout>
+	<Composite>
+		<Composite.layout>
+			<ppel:PropertiesLayout numColumns="2"></ppel:PropertiesLayout>
+		</Composite.layout>
+		<ppe:BooleanRadio input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:RunTimeSupport:monitoring"></ppe:BooleanRadio>
+		<ppe:BooleanRadio input="{Binding}"
+			property="CHESS:Predictability:RTComponentModel:RunTimeSupport:verification"></ppe:BooleanRadio>
+	</Composite>
+</Composite>

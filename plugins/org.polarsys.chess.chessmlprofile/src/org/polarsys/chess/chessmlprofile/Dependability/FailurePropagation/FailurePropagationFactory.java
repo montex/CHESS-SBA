@@ -40,6 +40,15 @@ public interface FailurePropagationFactory extends EFactory {
 	FPTC createFPTC();
 
 	/**
+	 * Returns a new object of class '<em>FLA Behavior</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>FLA Behavior</em>'.
+	 * @generated
+	 */
+	FLABehavior createFLABehavior();
+
+	/**
 	 * Returns a new object of class '<em>Analysis</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -110,15 +119,6 @@ public interface FailurePropagationFactory extends EFactory {
 	 * @generated
 	 */
 	FI4FAAnalysis createFI4FAAnalysis();
-
-	/**
-	 * Returns a new object of class '<em>FLA Specification</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>FLA Specification</em>'.
-	 * @generated
-	 */
-	FLASpecification createFLASpecification();
 
 	/**
 	 * Returns the package supported by this factory.

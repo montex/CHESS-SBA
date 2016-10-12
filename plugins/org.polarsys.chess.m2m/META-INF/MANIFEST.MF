@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.polarsys.chess.m2m;singleton:=true
-Bundle-Version: 0.8.0.qualifier
+Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.polarsys.chess.m2m.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -29,7 +29,8 @@ Require-Bundle: org.eclipse.ui,
  org.polarsys.chess.service,
  org.polarsys.chess.m2m,
  org.eclipse.emf.common,
- org.eclipse.jface
+ org.eclipse.jface,
+ org.eclipse.papyrus.infra.services.validation
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Polarsys CHESS Project
@@ -51,5 +52,7 @@ Export-Package: org.polarsys.chess.m2m;
    org.eclipse.uml2.uml,
    org.eclipse.swt.widgets,
    org.eclipse.jface.dialogs",
+ org.polarsys.chess.m2m.handlers,
  org.polarsys.chess.m2m.transformations,
  org.polarsys.chess.m2m.ui
+Import-Package: org.eclipse.emf.workspace

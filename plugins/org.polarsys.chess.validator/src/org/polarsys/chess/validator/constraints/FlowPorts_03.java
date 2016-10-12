@@ -1,3 +1,19 @@
+/*
+-----------------------------------------------------------------------
+--                CHESS Live/Batch Validator plugin                  --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- 							                 --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+ */
+
 package org.polarsys.chess.validator.constraints;
 
 import org.eclipse.core.runtime.IStatus;
@@ -12,11 +28,18 @@ import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Port;
+import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FlowPorts_03.
+ * This class implements the following constraint (invoked by the EMF validation framework):
+ * The FlowPort  should be mapped to parameters according to their directions, ie:
+ 	* port direction IN -&gt; param direction IN or INOUT (param of PROVIDED operation)
+	* port direction OUT -&gt; param direction OUT or INOUT (param of PROVIDED operation)
+	* port direction IN -&gt; param direction OUT or INOUT (param of REQUIRED operation)
+	* port direction OUT -&gt; param direction IN or INOUT (param of REQUIRED operation)
+	* port direction INOUT -&gt; param direction IN or OUT or INOUT (param of REQUIRED or PROVIDED operation) 
  */
 public class FlowPorts_03 extends AbstractModelConstraint {
 
@@ -29,7 +52,7 @@ public class FlowPorts_03 extends AbstractModelConstraint {
 		IStatus failure = ctx.createFailureStatus();
 
 		Port port = (Port) ctx.getTarget();
-		if(port.getAppliedStereotype(FlowPorts_01.FLOWPORT) == null){
+		if(port.getAppliedStereotype(Constants.FLOW_PORT) == null){
 			return success;
 		}
 		
@@ -48,10 +71,11 @@ public class FlowPorts_03 extends AbstractModelConstraint {
 		 * or of another parameter at a different time is possible and may result in an erratic situation
 		 */	
 		Component comp = (Component) owner;
-		String portDirection = port.getValue(port.getAppliedStereotype(FlowPorts_01.FLOWPORT), "direction").toString();
+		String portDirection = port.getValue(port.getAppliedStereotype(Constants.FLOW_PORT), 
+				Constants.FLOW_PORT_DIRECTION).toString();
 		EList<Dependency> dependencies = port.getClientDependencies();
 		for (Dependency dep : dependencies) {
-			if (dep instanceof Abstraction && dep.getAppliedStereotype(FlowPorts_01.ALLOCATE) != null){
+			if (dep instanceof Abstraction && dep.getAppliedStereotype(Constants.MARTE_ALLOCATE) != null){
 				EList<NamedElement> suppList = dep.getSuppliers();
 				for (NamedElement nElem : suppList) {
 					if(nElem instanceof Parameter){
@@ -59,13 +83,17 @@ public class FlowPorts_03 extends AbstractModelConstraint {
 						String paramDirection =	param.getDirection().toString();
 						Operation op = param.getOperation();
 						if(provided(op, comp)){
-							if((portDirection.equals("in") && paramDirection.equals("out")) ||
-							   (portDirection.equals("out") && paramDirection.equals("in"))){
+							if((portDirection.equals(Constants.FLOW_PORT_DIRECTION_IN) && 
+									paramDirection.equals(Constants.FLOW_PORT_DIRECTION_OUT)) ||
+							   (portDirection.equals(Constants.FLOW_PORT_DIRECTION_OUT) && 
+									   paramDirection.equals(Constants.FLOW_PORT_DIRECTION_IN))){
 								return failure;
 							}
 						}else{
-							if((portDirection.equals("in") && paramDirection.equals("in")) ||
-							   (portDirection.equals("out") && paramDirection.equals("out"))){
+							if((portDirection.equals(Constants.FLOW_PORT_DIRECTION_IN) && 
+									paramDirection.equals(Constants.FLOW_PORT_DIRECTION_IN)) ||
+							   (portDirection.equals(Constants.FLOW_PORT_DIRECTION_OUT) && 
+									   paramDirection.equals(Constants.FLOW_PORT_DIRECTION_OUT))){
 								return failure;	
 							}
 						}

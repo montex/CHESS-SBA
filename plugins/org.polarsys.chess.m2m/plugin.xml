@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.m2m.qvt.oml.runtime.qvtTransformation">
       <transformation
-            file="transformations/CHESS_PIM2PSM.qvto"
+            file="transformations/CHESS_PIM2PSM_Inst_full_VERDE.qvto"
             id="transformations/CHESS_PIM2PSM">
       </transformation>
    </extension>
@@ -37,9 +37,36 @@
         </library>
      </unit>
 	</extension>
-   
+	
    <extension
          point="org.eclipse.ui.menus">
+         
+         <menuContribution locationURI="popup:org.eclipse.papyrus.views.modelexplorer.modelexplorer.popup">
+    <menu
+          id="org.polarsys.chess.modelexplorerpopupmenu.id"
+          label="CHESS">
+       <command
+             commandId="org.polarsys.chess.m2m.commands.CompareAnalysisResultsCommandID"
+             id="org.polarsys.chess.m2m.commands.CompareAnalysisResultsMenuID"
+             label="Compare Analysis Results"
+             style="push">
+          <visibleWhen
+                checkEnabled="false">
+             <iterate
+                   ifEmpty="false"
+                   operator="and">
+                <adapt
+                      type="org.eclipse.emf.ecore.EObject">
+                   <instanceof
+                         value="org.eclipse.uml2.uml.Class">
+                   </instanceof>
+                </adapt>
+             </iterate>
+          </visibleWhen>
+       </command>
+    </menu>
+  		 </menuContribution>
+  
       <menuContribution
             allPopups="false"
             locationURI="menu:org.eclipse.ui.main.menu">
@@ -121,6 +148,13 @@
    <extension
          id="Build Instance Command"
          point="org.eclipse.ui.commands">
+        
+      <command
+            defaultHandler="org.polarsys.chess.m2m.handlers.CompareAnalysisResultsHandler"
+            id="org.polarsys.chess.m2m.commands.CompareAnalysisResultsCommandID"
+            name="Compare Analysis Results">
+      </command>
+      
       <!--command
             categoryId="it.unipd.chess.commands.category"
             defaultHandler="org.polarsys.chess.m2m.QVToUIHandlerFull"
@@ -155,5 +189,8 @@
       </command>
       -->
    </extension>
+   
+
+   
    
 </plugin>

@@ -1,0 +1,264 @@
+[comment encoding = UTF-8 /]
+[comment
+/*****************************************************************************
+ * Copyright (c) 2013 Intecs SpA 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Nicholas Pacini nicholas.pacini@intecs.it 
+ * Stefano Puri stefano.puri@intecs.it
+ * Laura Baracchi  laura.baracchi@intecs.it  
+ * Initial API and implementation and/or initial documentation
+ *
+ *****************************************************************************/
+/]
+
+[module generate('http://www.eclipse.org/uml2/5.0.0/UML')]
+[import org::polarsys::chess::contracts::transformations::main::generateImplementation /]
+
+[template public mainTemplate(model : Model, sysQN : String , sysName : String, filename : String){
+	SystemQN : String = 'CHESSContract::System';
+	SubSystemQN : String = 'CHESSContract::SubSystem';
+	SystemViewQN : String = 'CHESS::Core::CHESSViews::SystemView';
+	CompViewQN : String = 'CHESS::Core::CHESSViews::ComponentView';
+	DeplViewQN : String = 'CHESS::Core::CHESSViews::DeploymentView';
+	CompImplQN : String = 'CHESS::ComponentModel::ComponentImplementation';
+	PlatformQN : String = 'CHESSContract::Platform';
+	BlockQN : String = 'SysML::Blocks::Block';
+	SRACompQN : String = 'CHESSContract::SRAComponent';
+
+}]
+	[comment @main/]
+[file (filename.concat('_').concat(sysName).concat('.oss'), false, 'UTF-8')]
+	[let componentView : Package = model.nestedPackage->any(p : Package | p.getAppliedStereotype(CompViewQN)->notEmpty())]
+	[let systemView : Package = model.nestedPackage->any(p : Package | p.getAppliedStereotype(SystemViewQN)->notEmpty())]
+	[let deploymentView : Package =  model.nestedPackage->any(p : Package | p.getAppliedStereotype(DeplViewQN)->notEmpty())]
+	[let allBlocks : Set(Class) = getAllBlocks(componentView.allOwnedElements()->filter(Class)->union(systemView.allOwnedElements()->filter(Class)), BlockQN, SubSystemQN, SystemQN)]
+	[let allComps : Set(Component) = getAllComponents(deploymentView.allOwnedElements()->filter(Component), componentView.allOwnedElements()->filter(Component), CompImplQN, SRACompQN)]
+	[let generated : Set(String) = getEmptyStringSet()]
+	[let system : Class = getSystem(allBlocks, sysQN)]
+[generateComponent(system, true, allBlocks->union(allComps), generated)/]
+	[/let]
+	[/let]
+	[/let]
+	[/let]
+	[/let]
+	[/let]
+	[/let]
+[/file]
+
+[for (sm : StateMachine | model.allOwnedElements()->filter(StateMachine))]
+	[if (sm.owner.getAppliedStereotype(BlockQN)->notEmpty() or sm.owner.getAppliedStereotype(CompImplQN)->notEmpty())]
+	[if(sm.owner.oclIsTypeOf(Class) or sm.owner.oclIsTypeOf(Component))]
+[generateImplementation(sm.owner.oclAsType(Class))/]
+	[/if]
+	[/if]
+[/for]
+
+
+[/template]
+
+[template public generateComponent(block : Class, isSystem : Boolean, allBlocks : Set(Class), generated : Set(String)){
+	SystemQN : String = 'CHESSContract::System';
+	FlowPortQN : String = 'SysML::PortAndFlows::FlowPort';
+	FlowPortMarteQN : String = 'MARTE::MARTE_DesignModel::GCM::FlowPort';
+	ContractPropQN : String = 'CHESSContract::ContractProperty';
+	DelegConstrQN : String = 'CHESSContract::DelegationConstraint';
+	CSPortQN : String = 'MARTE::MARTE_DesignModel::GCM::ClientServerPort';
+}]
+	[addToGenerated(block.name, generated)/]
+	[if (isSystem)]
+	COMPONENT system
+	[else]
+	COMPONENT [block.name/]
+	[/if]
+
+	INTERFACE
+
+	[let props : OrderedSet(Property) = block.ownedAttribute->filter(Property)]
+	[for (prop : Property | props)]
+	[if (prop.oclIsTypeOf(Port))]
+	[let port : Port = prop.oclAsType(Port)]
+		[if (port.getAppliedStereotype(FlowPortQN)->notEmpty())]
+		[let direction : OclAny = port.getValue(port.getAppliedStereotype(FlowPortQN), 'direction')]
+	[getDirection(direction.toString())/]PORT [port.name/] : [if (not port.type.oclIsUndefined())][getType(port.type)/];[/if]
+		[/let]
+		[elseif (port.getAppliedStereotype(FlowPortMarteQN)->notEmpty())]
+		[let direction : OclAny = port.getValue(port.getAppliedStereotype(FlowPortMarteQN), 'direction')]
+	[getDirection(direction.toString())/]PORT [port.name/] : [if (not port.type.oclIsUndefined())][getType(port.type)/];[/if]
+		[/let]
+		[/if]	
+	[comment operations /]
+		[if (port.getAppliedStereotype(CSPortQN)->notEmpty())]
+		[let proreq : OclAny = port.getValue(port.getAppliedStereotype(CSPortQN), 'kind')] 
+		[let interface : Interface = getInterface(port)]
+		[if (interface <> oclIsUndefined())]
+		[for (op : Operation | interface.getOperations())]
+	[proreq.toString().toUpper()/] OPERATION PORT [getOperationName(op, port)/] ([getParamList(op)/]) : [getReturn(op)/];
+		[/for]
+		[/if]
+		[/let]
+		[/let]
+		[/if]
+	[/let]
+	[elseif (not prop.type.oclIsUndefined() and not prop.type.oclIsTypeOf(Class) and not prop.type.oclIsTypeOf(Component))]
+	PARAMETER [prop.name/] : [if (not prop.type.oclIsUndefined())][getType(prop.type)/];[/if]
+	[/if]
+	[/for]
+	[let contrProps : OrderedSet(Property) = block.ownedAttribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->notEmpty())]
+	[for (contrProp : Property | contrProps)]
+	[let contract : Class = contrProp.type.oclAsType(Class)]
+
+	CONTRACT [contrProp.name/]
+	assume:
+		[getAssume(contract)/];
+	guarantee:
+		[getGuarantee(contract)/];
+	[/let]
+	[/for]
+	[/let]
+
+	REFINEMENT
+
+	[let parts : OrderedSet(Property) = block.ownedAttribute->filter(Property)]
+	[for (part : Property | parts)]
+		[if (isPart(part))]
+	SUB	[part.name/] : [part.type.name/];
+		[/if]
+	[/for]
+
+	[let connections : Set(Connector) = block.ownedConnector]
+	[for (conn : Connector | connections)]
+	[if (checkConnectedPorts(conn))]
+	[comment data ports /]
+	[if (checkRules(conn))]
+	[if (conn.end->first().partWithPort.oclIsUndefined())]
+	CONNECTION [conn.end->first().role.name/] := [conn.end->last().partWithPort.name/].[conn.end->last().role.name/];
+	[elseif (conn.end->last().partWithPort.oclIsUndefined())]
+	CONNECTION [conn.end->first().partWithPort.name/].[conn.end->first().role.name/] := [conn.end->last().role.name/];
+	[else]
+	CONNECTION [conn.end->first().partWithPort.name/].[conn.end->first().role.name/] := [conn.end->last().partWithPort.name/].[conn.end->last().role.name/];
+	[/if]
+	[else]
+	[if (conn.end->last().partWithPort.oclIsUndefined())]
+	CONNECTION [conn.end->last().role.name/] := [conn.end->first().partWithPort.name/].[conn.end->first().role.name/];
+	[elseif (conn.end->first().partWithPort.oclIsUndefined())]
+	CONNECTION [conn.end->last().partWithPort.name/].[conn.end->last().role.name/] := [conn.end->first().role.name/];
+	[else]
+	CONNECTION [conn.end->last().partWithPort.name/].[conn.end->last().role.name/] := [conn.end->first().partWithPort.name/].[conn.end->first().role.name/];
+	[/if]
+	[/if]
+	[else]
+	[comment operation ports /]
+	[if (checkOperationPorts(conn))]
+	[getOperationConnections(conn)/]
+	[/if]
+	[/if]
+	[/for]	
+	[/let]
+
+	[let rules : Set(Constraint) = block.ownedRule->select(c : Constraint | c.getAppliedStereotype(DelegConstrQN)->notEmpty())]
+	[for (rule : Constraint | rules)]
+	[let spec : String = rule.specification.stringValue()]
+	CONNECTION [spec/][if not(spec.endsWith(';'))];[/if]
+	[/let]
+	[/for]
+	[/let]
+
+	[let contrProps : OrderedSet(Property) = block.ownedAttribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->notEmpty())]
+	[for (contrProp : Property | contrProps)]
+	[if (isRefined(contrProp))]
+	[let contract : Class = contrProp.type.oclAsType(Class)]
+	CONTRACT [contrProp.name/] REFINEDBY [getRefinedBy(contrProp)/]
+	[/let]
+	[/if]
+	[/for]
+	[/let]
+
+	[for (part : Property | parts)]
+	[if (isPart(part) and not isAlreadyGenerated(part.type.name, generated))]
+		[let newblock : Class = allBlocks->any(c : Class | part.type = c)]
+	[generateComponent(newblock, false, allBlocks, generated)/]
+		[/let]
+	[/if]
+	[/for]
+	[/let]
+	[/let]
+
+[/template]
+
+[query public getInterface(port : Port) : Interface = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getInterface(org.eclipse.uml2.uml.Port)', Sequence{port}) /]
+
+[query public getReturn(op : Operation) : String =
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getReturn(org.eclipse.uml2.uml.Operation)', Sequence{op}) /]
+
+[query public getParamList(op : Operation) : String = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getParamList(org.eclipse.uml2.uml.Operation)', Sequence{op}) /]
+
+[query public getOperationName(op : Operation, port : Port) : String = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getOperationName(org.eclipse.uml2.uml.Operation, org.eclipse.uml2.uml.Port)', Sequence{op, port}) /]
+
+[query public getSystem(classes : Set(Class), qname : String) : Class = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getSystem(java.util.Set, java.lang.String)', Sequence{classes, qname}) /]
+
+[query public getAllBlocks(classes : Set(Class), blockQN : String, SubSystemQN : String, SystemQN : String) : Set(Class) = 
+classes->select(c : Class | c.getAppliedStereotype(blockQN)->notEmpty() or c.getAppliedStereotype(SubSystemQN)->notEmpty() or c.getAppliedStereotype(SystemQN)->notEmpty()) /]
+
+[query public getAllComponents(hwcomps : Set(Component), comps : Set(Component), CompImplQN : String, PlatformQN : String) : Set(Component) = 
+comps->select(c : Component | c.getAppliedStereotype(CompImplQN)->notEmpty() or c.getAppliedStereotype(PlatformQN)->notEmpty())->union(hwcomps) /]
+
+[query public getDirection(dir : String) : String = 
+if self='in' then 'INPUT ' else if self = 'out' then 'OUTPUT ' else '' endif endif /]
+
+[query public isPart(prop : Property) : Boolean = 
+if self.type.oclIsTypeOf(Component) or self.type.getAppliedStereotype('CHESS::ComponentModel::ComponentImplementation')->notEmpty() or self.type.getAppliedStereotype('SysML::Blocks::Block')->notEmpty() or self.type.getAppliedStereotype('CHESSContract::SubSystem')->notEmpty() then true else false endif /]
+
+[query public isDelegation(conn : Connector) : Boolean = 
+if (conn.end->first().partWithPort.oclIsUndefined()) xor (conn.end->last().partWithPort.oclIsUndefined())
+then true else false endif /]
+
+[query public firstIsSub(conn : Connector) : Boolean =  
+if (conn.end->first().partWithPort.oclIsUndefined()) then false else true endif/]
+
+[query public getNewBlocks(parts : Set(Property)) : Set(String) = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getNewBlocks(java.util.Set)', Sequence{parts}) /]
+
+[query public getEmptyStringSet(traceCtx : OclAny) : Set(String) = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getEmptyStringSet()', Sequence{}) /]
+
+[query public addToGenerated(name : String, generated : Set(String)) : OclAny = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'addToGenerated(java.lang.String, java.util.Set)', Sequence{name, generated}) /]
+
+[query public isAlreadyGenerated(name : String, generated : Set(String)) : Boolean = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'isAlreadyGenerated(java.lang.String, java.util.Set)', Sequence{name, generated}) /]
+
+[query public getAssume(contract: Class) : String =
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getAssume(org.eclipse.uml2.uml.Class)', Sequence{contract}) /]
+
+[query public getGuarantee(contract: Class) : String =
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getGuarantee(org.eclipse.uml2.uml.Class)', Sequence{contract}) /]
+
+[query public isRefined(prop : Property) : Boolean = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'isRefined(org.eclipse.uml2.uml.Property)', Sequence{prop}) /]
+
+[query public getRefinedBy(prop : Property) : String = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getRefinedBy(org.eclipse.uml2.uml.Property)', Sequence{prop}) /]
+
+[query public checkRules(conn : Connector) : Boolean = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'checkRules(org.eclipse.uml2.uml.Connector)', Sequence{conn}) /]
+
+[query public checkConnectedPorts(conn : Connector) : Boolean = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'checkConnectedPorts(org.eclipse.uml2.uml.Connector)', Sequence{conn}) /]
+
+[query public checkOperationPorts(conn : Connector) : Boolean = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'checkOperationPorts(org.eclipse.uml2.uml.Connector)', Sequence{conn}) /]
+
+[query public getOperationConnections(conn : Connector) : String = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getOperationConnections(org.eclipse.uml2.uml.Connector)', Sequence{conn}) /]
+
+[query public getType(type : Type) : String = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getType(org.eclipse.uml2.uml.Type)', Sequence{type}) /]

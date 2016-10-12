@@ -465,22 +465,13 @@ public interface MaintenanceMonitoringPackage extends EPackage {
 	int ERROR_DETECTION__CORRECTION_PROBABILITY = MM_ACTIVITIES_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Controlled Failure</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_DETECTION__CONTROLLED_FAILURE = MM_ACTIVITIES_FEATURE_COUNT + 2;
-
-	/**
 	 * The number of structural features of the '<em>Error Detection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_DETECTION_FEATURE_COUNT = MM_ACTIVITIES_FEATURE_COUNT + 3;
+	int ERROR_DETECTION_FEATURE_COUNT = MM_ACTIVITIES_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.FailureDetectionImpl <em>Failure Detection</em>}' class.
@@ -767,17 +758,6 @@ public interface MaintenanceMonitoringPackage extends EPackage {
 	EAttribute getErrorDetection_CorrectionProbability();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.ErrorDetection#getControlledFailure <em>Controlled Failure</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Controlled Failure</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.ErrorDetection#getControlledFailure()
-	 * @see #getErrorDetection()
-	 * @generated
-	 */
-	EReference getErrorDetection_ControlledFailure();
-
-	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.FailureDetection <em>Failure Detection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -963,14 +943,6 @@ public interface MaintenanceMonitoringPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ERROR_DETECTION__CORRECTION_PROBABILITY = eINSTANCE.getErrorDetection_CorrectionProbability();
-
-		/**
-		 * The meta object literal for the '<em><b>Controlled Failure</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ERROR_DETECTION__CONTROLLED_FAILURE = eINSTANCE.getErrorDetection_ControlledFailure();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.FailureDetectionImpl <em>Failure Detection</em>}' class.

@@ -73,7 +73,129 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl#getStatefulHardware()
 	 * @generated
 	 */
-	int STATEFUL_HARDWARE = 0;
+	int STATEFUL_HARDWARE = 1;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatefulSoftwareImpl <em>Stateful Software</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatefulSoftwareImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl#getStatefulSoftware()
+	 * @generated
+	 */
+	int STATEFUL_SOFTWARE = 4;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.SimpleStochasticBehaviorImpl <em>Simple Stochastic Behavior</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.SimpleStochasticBehaviorImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl#getSimpleStochasticBehavior()
+	 * @generated
+	 */
+	int SIMPLE_STOCHASTIC_BEHAVIOR = 5;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessHardwareImpl <em>Stateless Hardware</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessHardwareImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl#getStatelessHardware()
+	 * @generated
+	 */
+	int STATELESS_HARDWARE = 3;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessSoftwareImpl <em>Stateless Software</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessSoftwareImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl#getStatelessSoftware()
+	 * @generated
+	 */
+	int STATELESS_SOFTWARE = 2;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StochasticFailureBehaviourImpl <em>Stochastic Failure Behaviour</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StochasticFailureBehaviourImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl#getStochasticFailureBehaviour()
+	 * @generated
+	 */
+	int STOCHASTIC_FAILURE_BEHAVIOUR = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Component</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STOCHASTIC_FAILURE_BEHAVIOUR__BASE_COMPONENT = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_COMPONENT;
+
+	/**
+	 * The feature id for the '<em><b>Error Model</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STOCHASTIC_FAILURE_BEHAVIOUR__ERROR_MODEL = DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL;
+
+	/**
+	 * The feature id for the '<em><b>Base Property</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STOCHASTIC_FAILURE_BEHAVIOUR__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STOCHASTIC_FAILURE_BEHAVIOUR__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
+
+	/**
+	 * The feature id for the '<em><b>Failure Distribution</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STOCHASTIC_FAILURE_BEHAVIOUR__FAILURE_DISTRIBUTION = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Repair Distribution</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STOCHASTIC_FAILURE_BEHAVIOUR__REPAIR_DISTRIBUTION = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Modes</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STOCHASTIC_FAILURE_BEHAVIOUR__MODES = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Stochastic Failure Behaviour</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STOCHASTIC_FAILURE_BEHAVIOUR_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Base Component</b></em>' reference.
@@ -157,23 +279,13 @@ public interface StateBasedComponentsPackage extends EPackage {
 	int STATEFUL_HARDWARE_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 4;
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatefulSoftwareImpl <em>Stateful Software</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatefulSoftwareImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl#getStatefulSoftware()
-	 * @generated
-	 */
-	int STATEFUL_SOFTWARE = 1;
-
-	/**
 	 * The feature id for the '<em><b>Base Component</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATEFUL_SOFTWARE__BASE_COMPONENT = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_COMPONENT;
+	int STATELESS_SOFTWARE__BASE_COMPONENT = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_COMPONENT;
 
 	/**
 	 * The feature id for the '<em><b>Error Model</b></em>' reference list.
@@ -182,7 +294,7 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATEFUL_SOFTWARE__ERROR_MODEL = DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL;
+	int STATELESS_SOFTWARE__ERROR_MODEL = DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL;
 
 	/**
 	 * The feature id for the '<em><b>Base Property</b></em>' reference.
@@ -191,7 +303,7 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATEFUL_SOFTWARE__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
+	int STATELESS_SOFTWARE__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
 
 	/**
 	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
@@ -200,25 +312,7 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATEFUL_SOFTWARE__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
-
-	/**
-	 * The feature id for the '<em><b>Error Latency</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATEFUL_SOFTWARE__ERROR_LATENCY = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Repair Delay</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATEFUL_SOFTWARE__REPAIR_DELAY = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 1;
+	int STATELESS_SOFTWARE__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
 
 	/**
 	 * The feature id for the '<em><b>Fault Occ</b></em>' attribute.
@@ -227,26 +321,16 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATEFUL_SOFTWARE__FAULT_OCC = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 2;
+	int STATELESS_SOFTWARE__FAULT_OCC = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Stateful Software</em>' class.
+	 * The number of structural features of the '<em>Stateless Software</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATEFUL_SOFTWARE_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessHardwareImpl <em>Stateless Hardware</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessHardwareImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl#getStatelessHardware()
-	 * @generated
-	 */
-	int STATELESS_HARDWARE = 2;
+	int STATELESS_SOFTWARE_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Base Component</b></em>' reference.
@@ -321,23 +405,13 @@ public interface StateBasedComponentsPackage extends EPackage {
 	int STATELESS_HARDWARE_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessSoftwareImpl <em>Stateless Software</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessSoftwareImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl#getStatelessSoftware()
-	 * @generated
-	 */
-	int STATELESS_SOFTWARE = 3;
-
-	/**
 	 * The feature id for the '<em><b>Base Component</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATELESS_SOFTWARE__BASE_COMPONENT = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_COMPONENT;
+	int STATEFUL_SOFTWARE__BASE_COMPONENT = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_COMPONENT;
 
 	/**
 	 * The feature id for the '<em><b>Error Model</b></em>' reference list.
@@ -346,7 +420,7 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATELESS_SOFTWARE__ERROR_MODEL = DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL;
+	int STATEFUL_SOFTWARE__ERROR_MODEL = DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL;
 
 	/**
 	 * The feature id for the '<em><b>Base Property</b></em>' reference.
@@ -355,7 +429,7 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATELESS_SOFTWARE__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
+	int STATEFUL_SOFTWARE__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
 
 	/**
 	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
@@ -364,7 +438,25 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATELESS_SOFTWARE__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
+	int STATEFUL_SOFTWARE__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
+
+	/**
+	 * The feature id for the '<em><b>Error Latency</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATEFUL_SOFTWARE__ERROR_LATENCY = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Repair Delay</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATEFUL_SOFTWARE__REPAIR_DELAY = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Fault Occ</b></em>' attribute.
@@ -373,54 +465,34 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATELESS_SOFTWARE__FAULT_OCC = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 0;
+	int STATEFUL_SOFTWARE__FAULT_OCC = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The number of structural features of the '<em>Stateless Software</em>' class.
+	 * The number of structural features of the '<em>Stateful Software</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATELESS_SOFTWARE_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 1;
-
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StochasticFailureBehaviourImpl <em>Stochastic Failure Behaviour</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StochasticFailureBehaviourImpl
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl#getStochasticFailureBehaviour()
-	 * @generated
-	 */
-	int STOCHASTIC_FAILURE_BEHAVIOUR = 4;
+	int STATEFUL_SOFTWARE_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Base Component</b></em>' reference.
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STOCHASTIC_FAILURE_BEHAVIOUR__BASE_COMPONENT = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_COMPONENT;
+	int SIMPLE_STOCHASTIC_BEHAVIOR__BASE_CLASS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Error Model</b></em>' reference list.
+	 * The feature id for the '<em><b>Base Connector</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STOCHASTIC_FAILURE_BEHAVIOUR__ERROR_MODEL = DependableComponentPackage.DEPENDABLE_COMPONENT__ERROR_MODEL;
-
-	/**
-	 * The feature id for the '<em><b>Base Property</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STOCHASTIC_FAILURE_BEHAVIOUR__BASE_PROPERTY = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_PROPERTY;
+	int SIMPLE_STOCHASTIC_BEHAVIOR__BASE_CONNECTOR = 1;
 
 	/**
 	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
@@ -429,43 +501,52 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STOCHASTIC_FAILURE_BEHAVIOUR__BASE_INSTANCE_SPECIFICATION = DependableComponentPackage.DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION;
+	int SIMPLE_STOCHASTIC_BEHAVIOR__BASE_INSTANCE_SPECIFICATION = 2;
 
 	/**
-	 * The feature id for the '<em><b>Failure Distribution</b></em>' attribute.
+	 * The feature id for the '<em><b>Failure Occurrence</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STOCHASTIC_FAILURE_BEHAVIOUR__FAILURE_DISTRIBUTION = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 0;
+	int SIMPLE_STOCHASTIC_BEHAVIOR__FAILURE_OCCURRENCE = 3;
 
 	/**
-	 * The feature id for the '<em><b>Repair Distribution</b></em>' attribute.
+	 * The feature id for the '<em><b>Repair Delay</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STOCHASTIC_FAILURE_BEHAVIOUR__REPAIR_DISTRIBUTION = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 1;
+	int SIMPLE_STOCHASTIC_BEHAVIOR__REPAIR_DELAY = 4;
 
 	/**
-	 * The feature id for the '<em><b>Modes</b></em>' attribute.
+	 * The feature id for the '<em><b>Failure Modes Distribution</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STOCHASTIC_FAILURE_BEHAVIOUR__MODES = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 2;
+	int SIMPLE_STOCHASTIC_BEHAVIOR__FAILURE_MODES_DISTRIBUTION = 5;
 
 	/**
-	 * The number of structural features of the '<em>Stochastic Failure Behaviour</em>' class.
+	 * The feature id for the '<em><b>Base Property</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STOCHASTIC_FAILURE_BEHAVIOUR_FEATURE_COUNT = DependableComponentPackage.DEPENDABLE_COMPONENT_FEATURE_COUNT + 3;
+	int SIMPLE_STOCHASTIC_BEHAVIOR__BASE_PROPERTY = 6;
+
+	/**
+	 * The number of structural features of the '<em>Simple Stochastic Behavior</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_STOCHASTIC_BEHAVIOR_FEATURE_COUNT = 7;
 
 
 	/**
@@ -564,6 +645,93 @@ public interface StateBasedComponentsPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getStatefulSoftware_FaultOcc();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior <em>Simple Stochastic Behavior</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Simple Stochastic Behavior</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior
+	 * @generated
+	 */
+	EClass getSimpleStochasticBehavior();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getBase_Class <em>Base Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Class</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getBase_Class()
+	 * @see #getSimpleStochasticBehavior()
+	 * @generated
+	 */
+	EReference getSimpleStochasticBehavior_Base_Class();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getBase_Connector <em>Base Connector</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Connector</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getBase_Connector()
+	 * @see #getSimpleStochasticBehavior()
+	 * @generated
+	 */
+	EReference getSimpleStochasticBehavior_Base_Connector();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getBase_InstanceSpecification <em>Base Instance Specification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Instance Specification</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getBase_InstanceSpecification()
+	 * @see #getSimpleStochasticBehavior()
+	 * @generated
+	 */
+	EReference getSimpleStochasticBehavior_Base_InstanceSpecification();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getFailureOccurrence <em>Failure Occurrence</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Failure Occurrence</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getFailureOccurrence()
+	 * @see #getSimpleStochasticBehavior()
+	 * @generated
+	 */
+	EAttribute getSimpleStochasticBehavior_FailureOccurrence();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getRepairDelay <em>Repair Delay</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Repair Delay</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getRepairDelay()
+	 * @see #getSimpleStochasticBehavior()
+	 * @generated
+	 */
+	EAttribute getSimpleStochasticBehavior_RepairDelay();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getFailureModesDistribution <em>Failure Modes Distribution</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Failure Modes Distribution</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getFailureModesDistribution()
+	 * @see #getSimpleStochasticBehavior()
+	 * @generated
+	 */
+	EAttribute getSimpleStochasticBehavior_FailureModesDistribution();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getBase_Property <em>Base Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Property</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior#getBase_Property()
+	 * @see #getSimpleStochasticBehavior()
+	 * @generated
+	 */
+	EReference getSimpleStochasticBehavior_Base_Property();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StatelessHardware <em>Stateless Hardware</em>}'.
@@ -769,6 +937,72 @@ public interface StateBasedComponentsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute STATEFUL_SOFTWARE__FAULT_OCC = eINSTANCE.getStatefulSoftware_FaultOcc();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.SimpleStochasticBehaviorImpl <em>Simple Stochastic Behavior</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.SimpleStochasticBehaviorImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StateBasedComponentsPackageImpl#getSimpleStochasticBehavior()
+		 * @generated
+		 */
+		EClass SIMPLE_STOCHASTIC_BEHAVIOR = eINSTANCE.getSimpleStochasticBehavior();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Class</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SIMPLE_STOCHASTIC_BEHAVIOR__BASE_CLASS = eINSTANCE.getSimpleStochasticBehavior_Base_Class();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Connector</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SIMPLE_STOCHASTIC_BEHAVIOR__BASE_CONNECTOR = eINSTANCE.getSimpleStochasticBehavior_Base_Connector();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Instance Specification</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SIMPLE_STOCHASTIC_BEHAVIOR__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getSimpleStochasticBehavior_Base_InstanceSpecification();
+
+		/**
+		 * The meta object literal for the '<em><b>Failure Occurrence</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SIMPLE_STOCHASTIC_BEHAVIOR__FAILURE_OCCURRENCE = eINSTANCE.getSimpleStochasticBehavior_FailureOccurrence();
+
+		/**
+		 * The meta object literal for the '<em><b>Repair Delay</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SIMPLE_STOCHASTIC_BEHAVIOR__REPAIR_DELAY = eINSTANCE.getSimpleStochasticBehavior_RepairDelay();
+
+		/**
+		 * The meta object literal for the '<em><b>Failure Modes Distribution</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SIMPLE_STOCHASTIC_BEHAVIOR__FAILURE_MODES_DISTRIBUTION = eINSTANCE.getSimpleStochasticBehavior_FailureModesDistribution();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Property</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SIMPLE_STOCHASTIC_BEHAVIOR__BASE_PROPERTY = eINSTANCE.getSimpleStochasticBehavior_Base_Property();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessHardwareImpl <em>Stateless Hardware</em>}' class.

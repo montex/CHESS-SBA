@@ -22,6 +22,10 @@ import org.eclipse.uml2.uml.Component;
  * A representation of the model object '<em><b>Functional Partition</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * Avioncs IMA concept
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

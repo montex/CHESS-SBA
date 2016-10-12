@@ -68,6 +68,7 @@ import org.polarsys.chess.service.utils.CHESSEditorUtils;
 /**
  * This class allows to purge the model, in particular by removing the information attached to a given analysisContext, 
  * in particular the generated PSM package.
+ * @since 0.9
  */
 public class PurgePSMHandler extends AbstractHandler {
 	

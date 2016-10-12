@@ -1,0 +1,296 @@
+/*
+-----------------------------------------------------------------------
+--            CHESS ceiling assignment transformation                --
+--                                                                   --
+--                    Copyright (C) 2011-2012                        --
+--                 University of Padova, ITALY                       --
+--                                                                   --
+-- Authors: Marco Panunzio         panunzio@math.unipd.it            --
+--          Alessandro Zovi        azovi@math.unipd.it               --
+--                                                                   --
+-- All rights reserved. This program and the accompanying materials  --
+-- are made available under the terms of the Eclipse Public License  --
+-- v1.0 which accompanies this distribution, and is available at     --
+-- http://www.eclipse.org/legal/epl-v10.html                         --
+-----------------------------------------------------------------------
+*/
+
+import ProfileUtils_Inst_full;
+import UMLUtils_Inst_full;
+import chess.lib;
+	
+modeltype UML uses "http://www.eclipse.org/uml2/2.0.0/UML";
+modeltype MARTEP uses "http://www.eclipse.org/papyrus/MARTE/1";
+modeltype CHESS uses "http://CHESS";	
+modeltype ECORE uses "http://www.eclipse.org/emf/2002/Ecore";
+modeltype MONITORING uses "http://www.mdh.se/concerto/monitoring/xml/monitoringxml"
+	
+transformation CHESS_Assignment(in source:UML, out dest:MONITORING);
+
+property model : Model = null;
+property MARTEProfile : Profile = null;
+property CHESSProfile : Profile = null;
+
+property assigns : Set(Comment) = null;
+
+property compView : Package = null;
+property deplView : Package = null;
+
+property instSpecPackage : Package = null;
+property instSpecPackageDepl : Package = null;
+
+	
+main() {
+    log("*** CHESS Ceiling assignment transformation   ***");	
+	model := source.rootObjects()![Model];
+	
+	MARTEProfile := model.getView("ComponentView").getAppliedProfiles()->selectOne(name="GCM").owner.owner.oclAsType(Profile);
+	CHESSProfile := model.getAppliedProfiles()->selectOne(name="CHESS").oclAsType(Profile);
+	
+	initUtils(MARTEProfile, CHESSProfile);
+	
+	compView := model.getView("ComponentView");
+	instSpecPackage := compView.allOwnedElements()[Package]->selectOne(not getMetaclass("CHESS::Core::CHGaResourcePlatform").oclIsUndefined());
+	
+	
+	deplView := model.getView("DeploymentView");
+	instSpecPackageDepl := deplView.allOwnedElements()[Package]->selectOne(not getMetaclass("CHESS::Core::CHGaResourcePlatform").oclIsUndefined());
+	assigns := deplView.allOwnedElements()[Comment]->select(isStereotyped(AssignQN));
+		
+	model.map ModelWithCeiling();
+	log("*** End of CHESS Ceiling assignment transformation   ***");
+}
+
+helper Set(Slot)::printCeilings(){
+	self->forEach(ps) {
+		var specs : Sequence(chessmlprofile::RTComponentModel::CHRtSpecification) := (ps.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot)).cH_RtSpecification->asSequence();
+	    specs->forEach(spec) {
+	    	var x := ps.definingFeature.qualifiedName + " " + spec.context.qualifiedName;
+	    	x := x + " "+ spec.ceiling;
+	    	log(x);
+	    }
+	};
+}
+
+mapping inout Model::ModelWithCeiling() {
+	init{	
+		var chrtPortSlotList : Set(Slot) :=instSpecPackage.allOwnedElements()[Slot]->select(ps | ps.isStereotyped(CHRtPortSlotQN))->asSet();
+	}
+
+	// Initialization of own ceilings of cyclic and sporadic operations
+	// Initialization of ceiling of protected operation
+	// Initialization of ceiling of unprotected operation
+	chrtPortSlotList->forEach(ps) {
+		var specs : Sequence(chessmlprofile::RTComponentModel::CHRtSpecification) := (ps.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot)).cH_RtSpecification->asSequence();
+	    specs->forEach(spec) {
+	    	if (spec.isDeferred()) then {
+	    	   spec.ceiling := spec.relativePriority
+	    	} else {
+	   			spec.ceiling := "-127";
+	    	} endif;
+	    }
+	};
+	
+	log("Before:");
+	chrtPortSlotList->printCeilings();
+	
+	// Ceiling propagation
+	chrtPortSlotList->forEach(ps) {
+		var specs : Sequence(chessmlprofile::RTComponentModel::CHRtSpecification) := (ps.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot)).cH_RtSpecification->asSequence();
+	    specs->forEach(spec) {
+	    	if (spec.isDeferred()) then {
+				ps.map propagateCeiling(spec);
+	    	} endif
+	    }
+	};
+	
+	log("After:");
+	chrtPortSlotList->printCeilings();
+	
+	
+	//After ceiling propagation, remove ceilings of unprotected operations
+	chrtPortSlotList->forEach(ps) {
+		var specs : Sequence(chessmlprofile::RTComponentModel::CHRtSpecification) := (ps.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot)).cH_RtSpecification->asSequence();
+	    specs->forEach(spec) {
+	    	if ((not spec.isDeferred()) and (not spec.isProtected())) then {
+				spec.ceiling := null;
+	    	} endif
+	    }
+	}
+
+}
+
+mapping inout Slot::propagateCeiling(spec : chessmlprofile::RTComponentModel::CHRtSpecification) {
+   init {
+   		var ceilingToPropagate := spec.ceiling;
+   		var sourceOp : Operation := spec.context.oclAsType(Operation);
+   		var currInstance : InstanceSpecification := self.owningInstance; 
+   }
+      
+   if (sourceOp.method->notEmpty()) then {
+   		var act := (sourceOp.method->asSequence()->first().oclAsType(Activity));
+   		var coaList := act.collectCallOperationNodes();   		
+   		
+   		coaList->forEach(coa) {
+			var calledOp := coa.operation;
+			var riPort := coa.onPort;
+			var riSlot : Slot := currInstance.slot[definingFeature = riPort]->any(true);
+			var connectedSlot : Slot := riSlot.getConnectedSlot(currInstance);
+			var CHRtSpec := connectedSlot.CHRtSpecForOperation(calledOp);
+			
+			/* If the component instances are deployed on different nodes
+			*  we need to set the ceiling priority to the priority of the
+			*  server task of the middleware.
+			*  Currently it is hardcoded to 27.
+			*/
+			
+			if (not riSlot.owningInstance.isDeployedOnSameProcesor(connectedSlot.owningInstance)) then
+			   ceilingToPropagate := "27"
+			endif;
+			
+			
+			if (ceilingToPropagate.asInteger() > CHRtSpec.ceiling.asInteger()) then {
+				if (CHRtSpec.isDeferred()) then {
+				   //Raise the ceiling of the OBCS and terminate
+				   CHRtSpec.ceiling := ceilingToPropagate;
+				   		
+				} else { 
+					if (CHRtSpec.isProtected()) then {
+				   		//Raise the ceiling of the protected object 
+				   		// (i.e. all protected operations of the slot) 
+				   		// and recursively continue
+				   		CHRtSpec.ceiling := ceilingToPropagate;
+				   		connectedSlot.map propagateCeiling(CHRtSpec);
+				   		
+				   		var specs : Sequence(chessmlprofile::RTComponentModel::CHRtSpecification) := 
+				   		   (connectedSlot.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot)).cH_RtSpecification->asSequence();
+	   						specs ->forEach(mySpec) {
+
+				   			if (mySpec.isProtected()) then {							
+								if (ceilingToPropagate.asInteger() > mySpec.ceiling.asInteger()) then {
+								    mySpec.ceiling := ceilingToPropagate;
+									connectedSlot.map propagateCeiling(mySpec);
+								} endif;								
+				   			} endif;
+				   		}
+				   	} else {//Unprotected
+				   		CHRtSpec.ceiling := ceilingToPropagate;
+				   		connectedSlot.map propagateCeiling(CHRtSpec);
+				   	} endif;
+				} endif;
+			} endif;					
+   		};
+   } endif;
+   
+}
+
+query InstanceSpecification::isConnectorInstance() : Boolean {
+	if (self.classifier->isEmpty()) then
+		if (self.slot->any(true).isStereotyped(ClientServerPortQN)) then
+			return true
+		endif
+	endif;
+	return false;
+}
+
+query Element::isNullOrInvalid() : Boolean {
+	if(self.oclIsInvalid() or self.oclIsUndefined())then
+		return true
+	endif;
+	return self.isNull();
+}
+
+query Slot::getConnectedSlot(compInst : InstanceSpecification) : Slot {
+	var riPort := self.definingFeature.oclAsType(Port);
+	var myInstanceValue : InstanceValue := null;
+	var connectorPIslot : Slot := null;
+	var targetInstance : InstanceSpecification := null;
+
+	var connectorInstList := InstanceSpecification.allInstances()->select(classifier->size() = 0);
+	connectorInstList->forEach(connInst) {
+	    var candidateSlot : Slot := connInst.slot->selectOne(definingFeature = riPort);
+	    if (candidateSlot.oclIsInvalid()) continue endif;
+	    if (not candidateSlot.isNullOrInvalid()) then {
+	       myInstanceValue := (candidateSlot.allOwnedElements()[InstanceValue])->selectOne(instance = compInst);
+	       if (myInstanceValue.oclIsInvalid()) continue endif;
+	       if (not myInstanceValue.isNullOrInvalid()) then {
+	          connectorPIslot := connInst.slot->selectOne(definingFeature <> riPort);
+	          targetInstance := connectorPIslot.value->selectOne(true).oclAsType(InstanceValue).instance;
+	          return targetInstance.slot->selectOne(definingFeature = connectorPIslot.definingFeature);
+	       } endif;
+	    } endif;
+		
+	};
+	return null;
+}
+
+query InstanceSpecification::isDeployedOnSameProcesor(is : InstanceSpecification) : Boolean {
+	var proc1 : InstanceSpecification := getDeploymentProcessor(self);
+	return proc1 = getDeploymentProcessor(is);
+}
+
+
+query getDeploymentProcessor(p : InstanceSpecification) : InstanceSpecification {
+	var a := assigns -> selectOne(isAssignedFrom(p));
+	var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	return 	asg.to![InstanceSpecification];
+}
+
+/**
+ * Start of reused code by azovi
+ */
+
+/*
+  Given an ICB-Activity return the list of all its CallOperationAction nodes,
+  assuming that their are all connected in a single chain: no loops and branches.
+  
+  older version. current one has been moved in UMLUtils_Inst_full.qvto
+*/
+query Activity::collectCallOperationNodesOLD() : Sequence(CallOperationAction) {
+	var nodes : Sequence(CallOperationAction) := Sequence{};
+	var prevNode : ActivityNode := self.node![InitialNode];
+	var nextNode : ActivityNode;
+	while(true){
+		nextNode := prevNode.outgoing->any(true).target.oclAsType(CallOperationAction);
+		if (nextNode.oclIsInvalid()) break endif;
+		if (not nextNode.isNullOrInvalid()) then {
+			nodes += nextNode.oclAsType(CallOperationAction);
+			prevNode := nextNode;
+		}
+		else{
+			break;
+		}
+		endif;
+	};
+	return nodes;
+}
+
+query chessmlprofile::RTComponentModel::CHRtSpecification::isDeferred() : Boolean {
+	var arrivalPattern := self.occKind.getArrivalPatternType();
+	//the operation is deferred if the arrival pattern is: periodic, sporadic, bursty
+	if  arrivalPattern.oclIsInvalid() then
+		return false
+	endif;
+	return (arrivalPattern <> null and arrivalPattern.length() <> 0);
+}
+
+query chessmlprofile::RTComponentModel::CHRtSpecification::isSporadic() : Boolean {
+	var arrivalPattern := self.occKind.getArrivalPatternType();
+	return (arrivalPattern.equalsIgnoreCase("sporadic"));// and self.isGuarded());
+}
+
+query chessmlprofile::RTComponentModel::CHRtSpecification::isProtected() : Boolean { 
+	return (not self.isDeferred()) and self.protection = MARTE::HLAM::CallConcurrencyKind::guarded;
+}
+
+query Port::getConnectedPort() : Port {
+	var bindingConnector := self.getConnector();
+	var myConnectorEnd := (bindingConnector.allOwnedElements()[ConnectorEnd])->	selectOne(role <> self);
+    return myConnectorEnd.role.oclAsType(Port);
+}
+
+
+query Comment::isAssignedFrom(p : InstanceSpecification) : Boolean {
+    var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+    return asg._from![InstanceSpecification] = p;
+}

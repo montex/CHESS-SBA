@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Slot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
@@ -34,6 +35,7 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTCompo
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtPortSlotImpl#getBase_Slot <em>Base Slot</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtPortSlotImpl#getCH_RtSpecification <em>CH Rt Specification</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtPortSlotImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
  * </ul>
  * </p>
  *
@@ -59,6 +61,16 @@ public class CHRtPortSlotImpl extends EObjectImpl implements CHRtPortSlot {
 	 * @ordered
 	 */
 	protected EList<CHRtSpecification> cH_RtSpecification;
+
+	/**
+	 * The cached value of the '{@link #getBase_InstanceSpecification() <em>Base Instance Specification</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBase_InstanceSpecification()
+	 * @generated
+	 * @ordered
+	 */
+	protected InstanceSpecification base_InstanceSpecification;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -134,6 +146,44 @@ public class CHRtPortSlotImpl extends EObjectImpl implements CHRtPortSlot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public InstanceSpecification getBase_InstanceSpecification() {
+		if (base_InstanceSpecification != null && base_InstanceSpecification.eIsProxy()) {
+			InternalEObject oldBase_InstanceSpecification = (InternalEObject)base_InstanceSpecification;
+			base_InstanceSpecification = (InstanceSpecification)eResolveProxy(oldBase_InstanceSpecification);
+			if (base_InstanceSpecification != oldBase_InstanceSpecification) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RTComponentModelPackage.CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
+			}
+		}
+		return base_InstanceSpecification;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public InstanceSpecification basicGetBase_InstanceSpecification() {
+		return base_InstanceSpecification;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBase_InstanceSpecification(InstanceSpecification newBase_InstanceSpecification) {
+		InstanceSpecification oldBase_InstanceSpecification = base_InstanceSpecification;
+		base_InstanceSpecification = newBase_InstanceSpecification;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RTComponentModelPackage.CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -142,6 +192,9 @@ public class CHRtPortSlotImpl extends EObjectImpl implements CHRtPortSlot {
 				return basicGetBase_Slot();
 			case RTComponentModelPackage.CH_RT_PORT_SLOT__CH_RT_SPECIFICATION:
 				return getCH_RtSpecification();
+			case RTComponentModelPackage.CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION:
+				if (resolve) return getBase_InstanceSpecification();
+				return basicGetBase_InstanceSpecification();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -162,6 +215,9 @@ public class CHRtPortSlotImpl extends EObjectImpl implements CHRtPortSlot {
 				getCH_RtSpecification().clear();
 				getCH_RtSpecification().addAll((Collection<? extends CHRtSpecification>)newValue);
 				return;
+			case RTComponentModelPackage.CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION:
+				setBase_InstanceSpecification((InstanceSpecification)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -180,6 +236,9 @@ public class CHRtPortSlotImpl extends EObjectImpl implements CHRtPortSlot {
 			case RTComponentModelPackage.CH_RT_PORT_SLOT__CH_RT_SPECIFICATION:
 				getCH_RtSpecification().clear();
 				return;
+			case RTComponentModelPackage.CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION:
+				setBase_InstanceSpecification((InstanceSpecification)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -196,6 +255,8 @@ public class CHRtPortSlotImpl extends EObjectImpl implements CHRtPortSlot {
 				return base_Slot != null;
 			case RTComponentModelPackage.CH_RT_PORT_SLOT__CH_RT_SPECIFICATION:
 				return cH_RtSpecification != null && !cH_RtSpecification.isEmpty();
+			case RTComponentModelPackage.CH_RT_PORT_SLOT__BASE_INSTANCE_SPECIFICATION:
+				return base_InstanceSpecification != null;
 		}
 		return super.eIsSet(featureID);
 	}

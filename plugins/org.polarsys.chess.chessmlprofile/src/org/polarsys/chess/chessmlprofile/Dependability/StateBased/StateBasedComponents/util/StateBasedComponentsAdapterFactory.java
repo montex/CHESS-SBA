@@ -75,24 +75,28 @@ public class StateBasedComponentsAdapterFactory extends AdapterFactoryImpl {
 	protected StateBasedComponentsSwitch<Adapter> modelSwitch =
 		new StateBasedComponentsSwitch<Adapter>() {
 			@Override
+			public Adapter caseStochasticFailureBehaviour(StochasticFailureBehaviour object) {
+				return createStochasticFailureBehaviourAdapter();
+			}
+			@Override
 			public Adapter caseStatefulHardware(StatefulHardware object) {
 				return createStatefulHardwareAdapter();
-			}
-			@Override
-			public Adapter caseStatefulSoftware(StatefulSoftware object) {
-				return createStatefulSoftwareAdapter();
-			}
-			@Override
-			public Adapter caseStatelessHardware(StatelessHardware object) {
-				return createStatelessHardwareAdapter();
 			}
 			@Override
 			public Adapter caseStatelessSoftware(StatelessSoftware object) {
 				return createStatelessSoftwareAdapter();
 			}
 			@Override
-			public Adapter caseStochasticFailureBehaviour(StochasticFailureBehaviour object) {
-				return createStochasticFailureBehaviourAdapter();
+			public Adapter caseStatelessHardware(StatelessHardware object) {
+				return createStatelessHardwareAdapter();
+			}
+			@Override
+			public Adapter caseStatefulSoftware(StatefulSoftware object) {
+				return createStatefulSoftwareAdapter();
+			}
+			@Override
+			public Adapter caseSimpleStochasticBehavior(SimpleStochasticBehavior object) {
+				return createSimpleStochasticBehaviorAdapter();
 			}
 			@Override
 			public Adapter caseDependableComponent(DependableComponent object) {
@@ -143,6 +147,20 @@ public class StateBasedComponentsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStatefulSoftwareAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior <em>Simple Stochastic Behavior</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.SimpleStochasticBehavior
+	 * @generated
+	 */
+	public Adapter createSimpleStochasticBehaviorAdapter() {
 		return null;
 	}
 

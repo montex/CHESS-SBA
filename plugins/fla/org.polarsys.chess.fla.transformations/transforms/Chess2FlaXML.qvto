@@ -1,0 +1,190 @@
+/*******************************************************************************
+ *                  CHESS core plugin
+ *
+ *               Copyright (C) 2011-2015
+ *            Mälardalen University, Sweden
+ *
+ *
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License
+ *  v1.0 which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+import PortUtilities;
+import CommonUtilities;
+
+modeltype Chess uses chessmlprofile('http://CHESS');
+modeltype ChessFailurePropagation uses 'http://CHESS/Dependability/FailurePropagation';
+modeltype ChessFailureTypes uses 'http:///CHESS/Dependability/FailurePropagation/FailurePropagationDataTypes.ecore';
+modeltype ChessCore uses 'http://CHESS/Core';
+
+modeltype FLA uses 'http://www.polarsys.org/chess/fla/flaxml';
+
+modeltype UML uses 'http://www.eclipse.org/uml2/5.0.0/UML';
+modeltype MARTE uses "http://www.eclipse.org/papyrus/GCM/1";
+modeltype SySML uses "http://www.eclipse.org/papyrus/0.7.0/SysML/PortAndFlows";
+
+
+transformation Chess2FlaXML(in source : Chess, out target : FLA);
+
+// Qualified names of stereotypes
+property FAILURE_PROPAGATION_STEREOTYPE = "CHESS::Dependability::FailurePropagation::FailurePropagationAnalysis";
+property FPTC_SPECIFICATION_STEREOTYPE = "CHESS::Dependability::FailurePropagation::FPTCSpecification";
+property FPTC_RULE_STEREOTYPE = "CHESS::Dependability::FailurePropagation::FPTC";
+
+// Platform selected by user
+configuration property selectedPlatformQName : String;
+
+property model : Model;
+property rootComponent : Class;
+
+main() {
+	model := source.rootObjects()![Model];
+	var selectedInstSpec : Package = model.findElementByQualifiedName(selectedPlatformQName).oclAsType(Package);
+	
+	selectedInstSpec.map selectedPlatform2System();
+}
+
+mapping Package::selectedPlatform2System() : System {
+	this.rootComponent := self.ownedElement[InstanceSpecification]->
+		selectOne(name = self.name.substringBefore("_instSpec")).classifier![Class];
+	component := rootComponent.UmlComponent2FlaComponent();
+}
+
+query UML::Class::UmlComponent2FlaComponent() : FLA::Component {
+	var flaComponent : FLA::Component;
+	if (self.isComposite()) {
+		flaComponent := self.UmlComponent2CompositeComponent();
+	} else {
+		flaComponent := self.UmlComponent2SimpleComponent();
+	};
+	
+	flaComponent.name := self.name;
+	flaComponent.id := self.getTransformationId();
+	flaComponent.inputPorts := object InputPorts {};
+	flaComponent.inputPorts.inputPort += self.ownedPort->select(port : Port | port.isInputPort())->port2InputPort();
+	flaComponent.outputPorts := object OutputPorts {};
+	flaComponent.outputPorts.outputPort := self.ownedPort->select(port : Port | port.isOutputPort())->port2OutputPort();
+	
+	return flaComponent;
+}
+
+query Property::getFlaComponent() : FLA::Component {
+	if (not self.hasPorts()) {
+		return null;
+	};
+	var component := self.type.oclAsType(Class).UmlComponent2FlaComponent();
+	component.name := self.name;
+	component.id := self.getTransformationId();
+	if (self.isStereotyped(FPTC_RULE_STEREOTYPE) and component.oclIsTypeOf(SimpleComponent)) {
+		var simpleComponent := component.oclAsType(SimpleComponent);
+		simpleComponent.rules.rule := self.getRules();
+	};
+	return component;
+}
+
+query UML::Class::UmlComponent2CompositeComponent() : FLA::CompositeComponent {
+	var flaComponent = object FLA::CompositeComponent {};
+	flaComponent.components := object Components {};
+	flaComponent.components.component += self.ownedMember->select(oclIsTypeOf(Property)).oclAsType(Property)->getFlaComponent();
+	flaComponent.connections := object Connections {};
+	flaComponent.connections.connection += self.ownedMember[Connector]->reject(_end->exists(role = null))->map umlConnector2flaConnection();
+	return flaComponent;
+}
+
+query UML::Class::UmlComponent2SimpleComponent() : FLA::SimpleComponent {
+	var flaComponent = object FLA::SimpleComponent {};
+	flaComponent.rules := object FptcRules {};
+	flaComponent.rules.rule := self.getRules();
+	return flaComponent;
+}
+
+query UML::Port::port2InputPort() : FLA::InputPort {
+	var resultPort = object FLA::InputPort {id := self.getTransformationId(); name := self.name};
+	
+	resultPort.inputFailure += self.getInputFailures();
+	return resultPort;
+}
+
+query UML::Port::port2OutputPort() : FLA::OutputPort {
+	var resultPort = object FLA::OutputPort {id := self.getTransformationId(); name := self.name};
+	return resultPort;
+}
+
+query UML::Port::getInputFailures() : Bag(FLA::Failure) {
+	if (self.owner <> rootComponent) {
+		return null;
+	};
+	
+	var comment := rootComponent.ownedComment->selectOne(hasAnnotatedElement(self) and isStereotyped(FPTC_SPECIFICATION_STEREOTYPE));
+	var failures = comment.getValue(comment.getAppliedStereotype(FPTC_SPECIFICATION_STEREOTYPE), "failure");
+	var resultVar := failures.oclAsType(Collection(FailureType))->ChessFailureType2FlaFailure();
+	return resultVar;
+}
+
+query UML::Element::getRules() : Collection(FLA::RuleString) {
+	var rules : Collection(RuleString);
+	var fptcStereotype : FPTC;
+	if (self.isStereotyped(FPTC_RULE_STEREOTYPE)) {
+		fptcStereotype := self.getStereotypeApplication(FPTC_RULE_STEREOTYPE).oclAsType(FPTC);
+	} else {
+		var fptccomment = self.ownedComment->selectOne(comment : Comment | comment.isStereotyped(FPTC_RULE_STEREOTYPE) and comment.hasAnnotatedElement(self));
+		fptcStereotype := fptccomment.getStereotypeApplication(fptccomment.getApplicableStereotype(FPTC_RULE_STEREOTYPE)).oclAsType(FPTC);
+	};
+	var ruleStrings := fptcStereotype.fptc.trim().tokenize(";").trim();
+	return ruleStrings->collect(s : String | object RuleString {pattern := s});
+}
+
+mapping UML::Connector::umlConnector2flaConnection() : FLA::Connection {
+	sourceId := self._end->at(1).role.getTransformationId();
+	targetId := self._end->at(2).role.getTransformationId();
+	sourceComponent := self._end->at(1).partWithPort.getTransformationId();
+	targetComponent := self._end->at(2).partWithPort.getTransformationId();
+}
+
+query UML::Component::getSelectedPlatform() : CHGaResourcePlatform {
+	var stereotype = self.getAppliedStereotype(FAILURE_PROPAGATION_STEREOTYPE);
+	if (stereotype = null) {
+		return null;
+	};
+	
+	var selectedPackage = self.getValue(stereotype, "platform").oclAsType(CHGaResourcePlatform);
+	return selectedPackage;
+}
+
+query Model::findDependabilityAnalysisPackage() : Package {
+	//var analysisPackage := self.nestedPackage->select(name = "modelAnalysisView")![Package];
+	//var dependabilityAnalysisPackage = analysisPackage.nestedPackage->select(name = "modelDependabilityAnalysisView")![Package];
+	return model.getView("DependabilityAnalysisView");
+}
+
+query FailureType::ChessFailureType2FlaFailure() : FLA::Failure {
+	var resultFailure = object FLA::Failure {};
+	switch {
+		case (self = FailureType::_late) {
+			resultFailure.type := FLA::FailureType::_late;
+		}
+		case (self = FailureType::early) {
+			resultFailure.type := FLA::FailureType::early;
+		}
+		case (self = FailureType::valueSubtle) {
+			resultFailure.type := FLA::FailureType::valueSubtle;
+		}
+		case (self = FailureType::valueCoarse) {
+			resultFailure.type := FLA::FailureType::valueCoarse;
+		}
+		case (self = FailureType::omission) {
+			resultFailure.type := FLA::FailureType::omission;
+		}
+		case (self = FailureType::commission) {
+			resultFailure.type := FLA::FailureType::commission;
+		}
+		case (self = FailureType::noFailure) {
+			resultFailure.type := FLA::FailureType::noFailure;
+		}
+	};
+	return resultFailure;
+}
+
+

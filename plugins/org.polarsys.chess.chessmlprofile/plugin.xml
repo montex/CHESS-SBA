@@ -144,13 +144,6 @@
             genModel="model/CHESS.genmodel"/>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <!-- @generated CHESS -->
-      <parser
-            type="dataflowcallgraph"
-            class="org.polarsys.chess.chessmlprofile.Dependability.DataFlowCallGraph.util.DataFlowCallGraphResourceFactoryImpl"/>
-   </extension>
-
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated CHESS -->
       <package
@@ -349,13 +342,6 @@
             genModel="model/CHESS.genmodel"/>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <!-- @generated CHESS -->
-      <parser
-            type="fmea"
-            class="org.polarsys.chess.chessmlprofile.Dependability.FMEA.util.FMEAResourceFactoryImpl"/>
-   </extension>
-   
    <extension
          point="org.eclipse.uml2.uml.generated_package">
       <profile
@@ -392,13 +378,6 @@
             genModel="model/CHESS.genmodel"/>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <!-- @generated CHESS -->
-      <parser
-            type="timinganalysis"
-            class="org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.util.TimingAnalysisResourceFactoryImpl"/>
-   </extension>
-   
    <extension
          point="org.eclipse.uml2.uml.generated_package">
       <profile
@@ -421,13 +400,6 @@
             genModel="model/CHESS.genmodel"/>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <!-- @generated CHESS -->
-      <parser
-            type="timingconstraints"
-            class="org.polarsys.chess.chessmlprofile.Predictability.TimingAnalysis.TimingConstraints.util.TimingConstraintsResourceFactoryImpl"/>
-   </extension>
-   
    <extension
          point="org.eclipse.uml2.uml.generated_package">
       <profile
@@ -484,13 +456,6 @@
             genModel="model/CHESS.genmodel"/>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <!-- @generated CHESS -->
-      <parser
-            type="deploymentconfanalysis"
-            class="org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.DeploymentConfAnalysis.util.DeploymentConfAnalysisResourceFactoryImpl"/>
-   </extension>
-   
    <extension
          point="org.eclipse.uml2.uml.generated_package">
       <profile
@@ -541,12 +506,30 @@
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESS -->
+      <package
+            uri="http://CHESS/Predictability/ARINCComponentModel"
+            class="org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage"
+            genModel="model/CHESS.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CHESS -->
       <package
             uri="http://CHESS/ComponentModel"
             class="org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage"
             genModel="model/CHESS.genmodel"/>
    </extension>
 
+	<extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSML_PROFILE/CHESS.profile.uml#_GMlQEGwuEeWvYIaEJT1qow"
+            uri="http://CHESS/Predictability/ARINCComponentModel">
+      </profile>
+   </extension> 
+
+  
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <!-- @generated CHESS -->
       <parser

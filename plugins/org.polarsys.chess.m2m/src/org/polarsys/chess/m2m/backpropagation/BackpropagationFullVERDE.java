@@ -37,7 +37,6 @@ import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaCommHost;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaEndtoEndFlow;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaExecHost;
-import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaStep;
 import org.eclipse.papyrus.MARTE.MARTE_DesignModel.SRM.SW_Interaction.SwMutualExclusionResource;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.uml2.uml.Activity;
@@ -47,10 +46,8 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Slot;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
-import org.polarsys.chess.chessmlprofile.Core.IdentifInstance;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwBus;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwComputingResource;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
@@ -193,6 +190,7 @@ public class BackpropagationFullVERDE{
 	
 		
 	/** The CHRT comment2 sa step. */
+	/* analysis results are no more propagated to CHRtSpecification
 	static BackpropagationRule<InstanceSpecification, Operation> CHRTComment2SaStep = new BackpropagationRule<InstanceSpecification, Operation>(InstanceSpecification.class, Operation.class) {
 		@Override
 		void rule(InstanceSpecification inEl, Operation outEl, TraceRecord rec) {
@@ -225,7 +223,7 @@ public class BackpropagationFullVERDE{
 			printStatus("'blockT'", in.getContext(), blockT);
 			printStatus("'respT'", in.getContext(), respT);
 		}
-	};
+	};*/
 	
 	/** The Hw computing resource2 sa exec host. */
 	static BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Class> HwComputingResource2SaExecHost = new BackpropagationRule<InstanceSpecification, org.eclipse.uml2.uml.Class>(InstanceSpecification.class, org.eclipse.uml2.uml.Class.class) {
@@ -300,7 +298,8 @@ public class BackpropagationFullVERDE{
 			} catch (Exception e) {
 				return;
 			}
-			
+			if(chrt == null)
+				return;
 			
 			CHRtSpecification in = UMLUtils.getStereotypeApplication(chrt, CHRtSpecification.class);
 			SwMutualExclusionResource out = UMLUtils.getStereotypeApplication(outEl, SwMutualExclusionResource.class);

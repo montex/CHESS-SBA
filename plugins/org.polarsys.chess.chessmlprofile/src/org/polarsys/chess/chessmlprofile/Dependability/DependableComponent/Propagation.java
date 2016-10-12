@@ -26,23 +26,14 @@ import org.eclipse.uml2.uml.Transition;
  * A representation of the model object '<em><b>Propagation</b></em>'.
  * <!-- end-user-doc -->
  *
- * <!-- begin-model-doc -->
- * To be deleted???
- * ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile
- * <!-- end-model-doc -->
- *
  * <p>
  * The following features are supported:
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getProb <em>Prob</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getPropDelay <em>Prop Delay</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Abstraction <em>Base Abstraction</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Comment <em>Base Comment</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getDelay <em>Delay</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Connector <em>Base Connector</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getTransfFunct <em>Transf Funct</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Transition <em>Base Transition</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getWeight <em>Weight</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Comment <em>Base Comment</em>}</li>
  * </ul>
  * </p>
  *
@@ -78,56 +69,30 @@ public interface Propagation extends EObject {
 	void setProb(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Prop Delay</b></em>' attribute.
+	 * Returns the value of the '<em><b>Delay</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Prop Delay</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Delay</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Prop Delay</em>' attribute.
-	 * @see #setPropDelay(String)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getPropagation_PropDelay()
-	 * @model dataType="org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.NFP_Duration" required="true" ordered="false"
+	 * @return the value of the '<em>Delay</em>' attribute.
+	 * @see #setDelay(String)
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getPropagation_Delay()
+	 * @model dataType="org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.NFP_Duration" ordered="false"
 	 * @generated
 	 */
-	String getPropDelay();
+	String getDelay();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getPropDelay <em>Prop Delay</em>}' attribute.
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getDelay <em>Delay</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Prop Delay</em>' attribute.
-	 * @see #getPropDelay()
+	 * @param value the new value of the '<em>Delay</em>' attribute.
+	 * @see #getDelay()
 	 * @generated
 	 */
-	void setPropDelay(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Base Abstraction</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Base Abstraction</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Base Abstraction</em>' reference.
-	 * @see #setBase_Abstraction(Abstraction)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getPropagation_Base_Abstraction()
-	 * @model required="true" ordered="false"
-	 * @generated
-	 */
-	Abstraction getBase_Abstraction();
-
-	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Abstraction <em>Base Abstraction</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Base Abstraction</em>' reference.
-	 * @see #getBase_Abstraction()
-	 * @generated
-	 */
-	void setBase_Abstraction(Abstraction value);
+	void setDelay(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Base Comment</b></em>' reference.
@@ -206,73 +171,5 @@ public interface Propagation extends EObject {
 	 * @generated
 	 */
 	void setBase_InstanceSpecification(InstanceSpecification value);
-
-	/**
-	 * Returns the value of the '<em><b>Transf Funct</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Transf Funct</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Transf Funct</em>' attribute list.
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getPropagation_TransfFunct()
-	 * @model dataType="org.eclipse.uml2.types.String" ordered="false"
-	 * @generated
-	 */
-	EList<String> getTransfFunct();
-
-	/**
-	 * Returns the value of the '<em><b>Base Transition</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Base Transition</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Base Transition</em>' reference.
-	 * @see #setBase_Transition(Transition)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getPropagation_Base_Transition()
-	 * @model required="true" ordered="false"
-	 * @generated
-	 */
-	Transition getBase_Transition();
-
-	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getBase_Transition <em>Base Transition</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Base Transition</em>' reference.
-	 * @see #getBase_Transition()
-	 * @generated
-	 */
-	void setBase_Transition(Transition value);
-
-	/**
-	 * Returns the value of the '<em><b>Weight</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Weight</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Weight</em>' attribute.
-	 * @see #setWeight(String)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getPropagation_Weight()
-	 * @model dataType="org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.NFP_Real" ordered="false"
-	 * @generated
-	 */
-	String getWeight();
-
-	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation#getWeight <em>Weight</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Weight</em>' attribute.
-	 * @see #getWeight()
-	 * @generated
-	 */
-	void setWeight(String value);
 
 } // Propagation

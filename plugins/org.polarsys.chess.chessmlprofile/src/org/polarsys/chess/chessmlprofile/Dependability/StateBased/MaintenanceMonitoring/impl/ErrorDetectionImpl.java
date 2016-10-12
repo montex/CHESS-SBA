@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.ErrorDetection;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.MaintenanceMonitoringPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +28,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failur
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.ErrorDetectionImpl#getTargets <em>Targets</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.ErrorDetectionImpl#getCorrectionProbability <em>Correction Probability</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.ErrorDetectionImpl#getControlledFailure <em>Controlled Failure</em>}</li>
  * </ul>
  * </p>
  *
@@ -65,16 +63,6 @@ public class ErrorDetectionImpl extends MMActivitiesImpl implements ErrorDetecti
 	 * @ordered
 	 */
 	protected String correctionProbability = CORRECTION_PROBABILITY_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getControlledFailure() <em>Controlled Failure</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getControlledFailure()
-	 * @generated
-	 * @ordered
-	 */
-	protected FailureMode controlledFailure;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -159,44 +147,6 @@ public class ErrorDetectionImpl extends MMActivitiesImpl implements ErrorDetecti
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public FailureMode getControlledFailure() {
-		if (controlledFailure != null && controlledFailure.eIsProxy()) {
-			InternalEObject oldControlledFailure = (InternalEObject)controlledFailure;
-			controlledFailure = (FailureMode)eResolveProxy(oldControlledFailure);
-			if (controlledFailure != oldControlledFailure) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MaintenanceMonitoringPackage.ERROR_DETECTION__CONTROLLED_FAILURE, oldControlledFailure, controlledFailure));
-			}
-		}
-		return controlledFailure;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public FailureMode basicGetControlledFailure() {
-		return controlledFailure;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setControlledFailure(FailureMode newControlledFailure) {
-		FailureMode oldControlledFailure = controlledFailure;
-		controlledFailure = newControlledFailure;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MaintenanceMonitoringPackage.ERROR_DETECTION__CONTROLLED_FAILURE, oldControlledFailure, controlledFailure));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -205,9 +155,6 @@ public class ErrorDetectionImpl extends MMActivitiesImpl implements ErrorDetecti
 				return basicGetTargets();
 			case MaintenanceMonitoringPackage.ERROR_DETECTION__CORRECTION_PROBABILITY:
 				return getCorrectionProbability();
-			case MaintenanceMonitoringPackage.ERROR_DETECTION__CONTROLLED_FAILURE:
-				if (resolve) return getControlledFailure();
-				return basicGetControlledFailure();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -225,9 +172,6 @@ public class ErrorDetectionImpl extends MMActivitiesImpl implements ErrorDetecti
 				return;
 			case MaintenanceMonitoringPackage.ERROR_DETECTION__CORRECTION_PROBABILITY:
 				setCorrectionProbability((String)newValue);
-				return;
-			case MaintenanceMonitoringPackage.ERROR_DETECTION__CONTROLLED_FAILURE:
-				setControlledFailure((FailureMode)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -247,9 +191,6 @@ public class ErrorDetectionImpl extends MMActivitiesImpl implements ErrorDetecti
 			case MaintenanceMonitoringPackage.ERROR_DETECTION__CORRECTION_PROBABILITY:
 				setCorrectionProbability(CORRECTION_PROBABILITY_EDEFAULT);
 				return;
-			case MaintenanceMonitoringPackage.ERROR_DETECTION__CONTROLLED_FAILURE:
-				setControlledFailure((FailureMode)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -266,8 +207,6 @@ public class ErrorDetectionImpl extends MMActivitiesImpl implements ErrorDetecti
 				return targets != null;
 			case MaintenanceMonitoringPackage.ERROR_DETECTION__CORRECTION_PROBABILITY:
 				return CORRECTION_PROBABILITY_EDEFAULT == null ? correctionProbability != null : !CORRECTION_PROBABILITY_EDEFAULT.equals(correctionProbability);
-			case MaintenanceMonitoringPackage.ERROR_DETECTION__CONTROLLED_FAILURE:
-				return controlledFailure != null;
 		}
 		return super.eIsSet(featureID);
 	}

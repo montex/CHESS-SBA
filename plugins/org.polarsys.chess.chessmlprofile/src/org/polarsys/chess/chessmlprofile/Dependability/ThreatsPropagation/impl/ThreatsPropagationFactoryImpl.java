@@ -17,37 +17,23 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHExternalFault;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.CHInternalFault;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.*;
+
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DegradedState;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DurationType;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorFree;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ExternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failure;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureFree;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InputEvent;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalPropagation;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalThreat;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Inverted;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalInput;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.NormalOutput;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.OutputEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RampDown;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryEvent;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RecoveryKind;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.StuckAt;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.StuckAtFixed;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatState;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationFactory;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedError;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.UnclassifiedFailure;
 
 /**
  * <!-- begin-user-doc -->
@@ -93,33 +79,22 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case ThreatsPropagationPackage.UNCLASSIFIED_FAILURE: return createUnclassifiedFailure();
-			case ThreatsPropagationPackage.THREAT_STATE: return createThreatState();
-			case ThreatsPropagationPackage.FAILURE_MODE: return createFailureMode();
 			case ThreatsPropagationPackage.DEGRADED_STATE: return createDegradedState();
-			case ThreatsPropagationPackage.UNCLASSIFIED_ERROR: return createUnclassifiedError();
-			case ThreatsPropagationPackage.FAILURE_FREE: return createFailureFree();
-			case ThreatsPropagationPackage.CH_INTERNAL_FAULT: return createCHInternalFault();
-			case ThreatsPropagationPackage.CH_EXTERNAL_FAULT: return createCHExternalFault();
-			case ThreatsPropagationPackage.ERROR: return createError();
-			case ThreatsPropagationPackage.ERROR_FREE: return createErrorFree();
+			case ThreatsPropagationPackage.THREAT_STATE: return createThreatState();
+			case ThreatsPropagationPackage.NORMAL_STATE: return createNormalState();
+			case ThreatsPropagationPackage.ERROR_STATE: return createErrorState();
 			case ThreatsPropagationPackage.STUCK_AT: return createStuckAt();
 			case ThreatsPropagationPackage.STUCK_AT_FIXED: return createStuckAtFixed();
 			case ThreatsPropagationPackage.INVERTED: return createInverted();
 			case ThreatsPropagationPackage.RAMP_DOWN: return createRampDown();
-			case ThreatsPropagationPackage.INPUT_EVENT: return createInputEvent();
-			case ThreatsPropagationPackage.DEP_EVENT: return createDepEvent();
-			case ThreatsPropagationPackage.OUTPUT_EVENT: return createOutputEvent();
-			case ThreatsPropagationPackage.INTERNAL_EVENT: return createInternalEvent();
-			case ThreatsPropagationPackage.EXTERNAL_FAULT: return createExternalFault();
 			case ThreatsPropagationPackage.NORMAL_INPUT: return createNormalInput();
-			case ThreatsPropagationPackage.RECOVERY_EVENT: return createRecoveryEvent();
 			case ThreatsPropagationPackage.NORMAL_OUTPUT: return createNormalOutput();
 			case ThreatsPropagationPackage.FAILURE: return createFailure();
-			case ThreatsPropagationPackage.NORMAL_EVENT: return createNormalEvent();
-			case ThreatsPropagationPackage.INTERNAL_THREAT: return createInternalThreat();
 			case ThreatsPropagationPackage.INTERNAL_FAULT: return createInternalFault();
 			case ThreatsPropagationPackage.INTERNAL_PROPAGATION: return createInternalPropagation();
+			case ThreatsPropagationPackage.ERROR_DETECTION: return createErrorDetection();
+			case ThreatsPropagationPackage.ERROR_HANDLING: return createErrorHandling();
+			case ThreatsPropagationPackage.FAULT_HANDLING: return createFaultHandling();
 			case ThreatsPropagationPackage.ERROR_MODEL: return createErrorModel();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -134,8 +109,6 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case ThreatsPropagationPackage.DURATION_TYPE:
-				return createDurationTypeFromString(eDataType, initialValue);
 			case ThreatsPropagationPackage.RECOVERY_KIND:
 				return createRecoveryKindFromString(eDataType, initialValue);
 			default:
@@ -151,8 +124,6 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case ThreatsPropagationPackage.DURATION_TYPE:
-				return convertDurationTypeToString(eDataType, instanceValue);
 			case ThreatsPropagationPackage.RECOVERY_KIND:
 				return convertRecoveryKindToString(eDataType, instanceValue);
 			default:
@@ -185,9 +156,39 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ExternalFault createExternalFault() {
-		ExternalFaultImpl externalFault = new ExternalFaultImpl();
-		return externalFault;
+	public ErrorDetection createErrorDetection() {
+		ErrorDetectionImpl errorDetection = new ErrorDetectionImpl();
+		return errorDetection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorHandling createErrorHandling() {
+		ErrorHandlingImpl errorHandling = new ErrorHandlingImpl();
+		return errorHandling;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FaultHandling createFaultHandling() {
+		FaultHandlingImpl faultHandling = new FaultHandlingImpl();
+		return faultHandling;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorModel createErrorModel() {
+		ErrorModelImpl errorModel = new ErrorModelImpl();
+		return errorModel;
 	}
 
 	/**
@@ -198,16 +199,6 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	public NormalInput createNormalInput() {
 		NormalInputImpl normalInput = new NormalInputImpl();
 		return normalInput;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public RecoveryEvent createRecoveryEvent() {
-		RecoveryEventImpl recoveryEvent = new RecoveryEventImpl();
-		return recoveryEvent;
 	}
 
 	/**
@@ -235,69 +226,9 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NormalEvent createNormalEvent() {
-		NormalEventImpl normalEvent = new NormalEventImpl();
-		return normalEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public InternalThreat createInternalThreat() {
-		InternalThreatImpl internalThreat = new InternalThreatImpl();
-		return internalThreat;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Error createError() {
-		ErrorImpl error = new ErrorImpl();
-		return error;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ThreatState createThreatState() {
 		ThreatStateImpl threatState = new ThreatStateImpl();
 		return threatState;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorFree createErrorFree() {
-		ErrorFreeImpl errorFree = new ErrorFreeImpl();
-		return errorFree;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public UnclassifiedError createUnclassifiedError() {
-		UnclassifiedErrorImpl unclassifiedError = new UnclassifiedErrorImpl();
-		return unclassifiedError;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public FailureMode createFailureMode() {
-		FailureModeImpl failureMode = new FailureModeImpl();
-		return failureMode;
 	}
 
 	/**
@@ -315,9 +246,9 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public FailureFree createFailureFree() {
-		FailureFreeImpl failureFree = new FailureFreeImpl();
-		return failureFree;
+	public NormalState createNormalState() {
+		NormalStateImpl normalState = new NormalStateImpl();
+		return normalState;
 	}
 
 	/**
@@ -325,29 +256,9 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CHInternalFault createCHInternalFault() {
-		CHInternalFaultImpl chInternalFault = new CHInternalFaultImpl();
-		return chInternalFault;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public CHExternalFault createCHExternalFault() {
-		CHExternalFaultImpl chExternalFault = new CHExternalFaultImpl();
-		return chExternalFault;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public UnclassifiedFailure createUnclassifiedFailure() {
-		UnclassifiedFailureImpl unclassifiedFailure = new UnclassifiedFailureImpl();
-		return unclassifiedFailure;
+	public ErrorState createErrorState() {
+		ErrorStateImpl errorState = new ErrorStateImpl();
+		return errorState;
 	}
 
 	/**
@@ -388,76 +299,6 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	public RampDown createRampDown() {
 		RampDownImpl rampDown = new RampDownImpl();
 		return rampDown;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public InputEvent createInputEvent() {
-		InputEventImpl inputEvent = new InputEventImpl();
-		return inputEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DepEvent createDepEvent() {
-		DepEventImpl depEvent = new DepEventImpl();
-		return depEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public OutputEvent createOutputEvent() {
-		OutputEventImpl outputEvent = new OutputEventImpl();
-		return outputEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public InternalEvent createInternalEvent() {
-		InternalEventImpl internalEvent = new InternalEventImpl();
-		return internalEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorModel createErrorModel() {
-		ErrorModelImpl errorModel = new ErrorModelImpl();
-		return errorModel;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DurationType createDurationTypeFromString(EDataType eDataType, String initialValue) {
-		DurationType result = DurationType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertDurationTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

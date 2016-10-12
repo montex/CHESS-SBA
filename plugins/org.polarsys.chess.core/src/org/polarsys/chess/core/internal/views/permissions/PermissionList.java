@@ -2,10 +2,12 @@
 -----------------------------------------------------------------------
 --          			CHESS core plugin							 --
 --                                                                   --
---                    Copyright (C) 2011-2012                        --
+--                    Copyright (C) 2016                             --
 --                 University of Padova, ITALY                       --
 --                                                                   --
--- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
+-- Authors: Alessandro Zovi          azovi@math.unipd.it             --
+--          Laura Baracchi           laura.baracchi@intecs.it        --
+--          Stefano Puri             stefano.puri@intecs.it          --
 --                                                                   --
 -- All rights reserved. This program and the accompanying materials  --
 -- are made available under the terms of the Eclipse Public License  --
@@ -83,13 +85,15 @@ public class PermissionList extends ArrayList<PermissionEntry> {
 			PermissionEntry pei = list.get(i);
 			for (int j = i+1; j < list.size(); j++) {
 				PermissionEntry pej = list.get(j);
-				if (pei.getId().equals(pej.getId())){
+				if (pei.getId().equals(pej.getId())&&
+						pei.getDomain().equals(pej.getDomain())){
 					CHESSProjectSupport.printlnToCHESSConsole(pei.getId() + "||"+ pej.getId());
 					list.remove(j--);
 					PermissionEntry pe = new PermissionEntry(pei.getId(), 
 							pei.isOwner() || pej.isOwner(), 
 							pei.isWriteable() || pej.isWriteable(), 
-							pei.isVisible() || pej.isVisible());
+							pei.isVisible() || pej.isVisible(),
+							pei.getDomain());
 					pei = pe;
 					list.set(i, pe);
 				}

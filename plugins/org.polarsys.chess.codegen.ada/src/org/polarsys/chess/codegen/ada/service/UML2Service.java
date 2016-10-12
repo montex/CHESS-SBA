@@ -335,8 +335,11 @@ public class UML2Service {
 								pkgContainerProtectionAdded = true;
 							}
 
-							if (! pkgCyclicTaskAdded) {
-								withPackageList.add("with Cyclic_Task;");
+							if (!pkgCyclicTaskAdded) {
+								String withCyclicTask = "with Cyclic_Task;";
+								if (isMonitored(slot))
+									withCyclicTask = "with Cyclic_Task_Monitored;";
+								withPackageList.add(withCyclicTask);
 								pkgCyclicTaskAdded = true;
 							}
 
@@ -537,6 +540,60 @@ public class UML2Service {
 			}
 		}
 		return cyclicOpList;
+	}
+	
+	
+	//TODO it has to be modified after INTECS adds the stereotype for monitoring
+	public boolean isMonitored(List<Object> slotList, Operation op, String stName) {
+		Slot slot = null;
+
+		for (int i=0; i < slotList.size(); i++) {
+			slot = (Slot) slotList.get(i);
+			CHRtPortSlot chrtPs = null;
+
+			List<Stereotype> stList = slot.getAppliedStereotypes();
+			if (! stList.isEmpty()) {
+				chrtPs = (CHRtPortSlot) slot.getStereotypeApplication(stList.get(0));
+				List<CHRtSpecification> CHRtSpecList = chrtPs.getCH_RtSpecification();
+				for (int j=0; j < CHRtSpecList.size(); j++) {
+					if (CHRtSpecList.get(j).getContext().equals(op)) {  
+
+						return isMonitored(slot);
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public String getMonitoredTaskName(List<Object> slotList, Operation op, String stName) {
+		Slot slot = null;
+
+		for (int i=0; i < slotList.size(); i++) {
+			slot = (Slot) slotList.get(i);
+			CHRtPortSlot chrtPs = null;
+
+			List<Stereotype> stList = slot.getAppliedStereotypes();
+			if (! stList.isEmpty()) {
+				chrtPs = (CHRtPortSlot) slot.getStereotypeApplication(stList.get(0));
+				List<CHRtSpecification> CHRtSpecList = chrtPs.getCH_RtSpecification();
+				for (int j=0; j < CHRtSpecList.size(); j++) {
+					CHRtSpecification chRtSpecification = CHRtSpecList.get(j);
+					if (chRtSpecification.getContext().equals(op)) {  
+						
+						return chrtPs.getBase_Slot().getOwningInstance().getName() + "_" 
+								+ chrtPs.getBase_Slot().getDefiningFeature().getName() 
+								+ "_" + chRtSpecification.getContext().getName();
+					}
+				}
+			}
+		}
+		return "INVALID";
+	}
+	
+	//TODO it has to be modified after INTECS adds the stereotype for monitoring
+	public boolean isMonitored(Slot op) {		
+		return true;
 	}
 
 	/**

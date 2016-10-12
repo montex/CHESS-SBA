@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaAnalysisContext;
 import org.eclipse.uml2.uml.InstanceSpecification;
-import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode;
+import org.eclipse.uml2.uml.Slot;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,6 +30,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Failur
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getEvalMethod <em>Eval Method</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetFailureMode <em>Target Failure Mode</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetDepComponent <em>Target Dep Component</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getTargetPort <em>Target Port</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysis#getInitialConditions <em>Initial Conditions</em>}</li>
  * </ul>
  * </p>
  *
@@ -75,7 +77,7 @@ public interface StateBasedAnalysis extends GaAnalysisContext {
 	 * @return the value of the '<em>Measure Evaluation Result</em>' attribute.
 	 * @see #setMeasureEvaluationResult(String)
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage#getStateBasedAnalysis_MeasureEvaluationResult()
-	 * @model dataType="org.eclipse.uml2.types.String" required="true" ordered="false"
+	 * @model dataType="org.eclipse.uml2.types.String" ordered="false"
 	 * @generated
 	 */
 	String getMeasureEvaluationResult();
@@ -101,7 +103,7 @@ public interface StateBasedAnalysis extends GaAnalysisContext {
 	 * @return the value of the '<em>Eval Method</em>' attribute.
 	 * @see #setEvalMethod(String)
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage#getStateBasedAnalysis_EvalMethod()
-	 * @model dataType="org.eclipse.uml2.types.String" required="true" ordered="false"
+	 * @model dataType="org.eclipse.uml2.types.String" ordered="false"
 	 * @generated
 	 */
 	String getEvalMethod();
@@ -117,20 +119,20 @@ public interface StateBasedAnalysis extends GaAnalysisContext {
 	void setEvalMethod(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Target Failure Mode</b></em>' reference list.
-	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.FailureMode}.
+	 * Returns the value of the '<em><b>Target Failure Mode</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Target Failure Mode</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Target Failure Mode</em>' reference list.
+	 * @return the value of the '<em>Target Failure Mode</em>' attribute list.
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage#getStateBasedAnalysis_TargetFailureMode()
-	 * @model ordered="false"
+	 * @model dataType="org.eclipse.uml2.types.String" ordered="false"
 	 * @generated
 	 */
-	EList<FailureMode> getTargetFailureMode();
+	EList<String> getTargetFailureMode();
 
 	/**
 	 * Returns the value of the '<em><b>Target Dep Component</b></em>' reference list.
@@ -171,5 +173,37 @@ public interface StateBasedAnalysis extends GaAnalysisContext {
 	 * @generated
 	 */
 	InstanceSpecification getTargetDepComponent(String name, boolean ignoreCase, EClass eClass);
+
+	/**
+	 * Returns the value of the '<em><b>Target Port</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.uml2.uml.Slot}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Target Port</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Target Port</em>' reference list.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage#getStateBasedAnalysis_TargetPort()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	EList<Slot> getTargetPort();
+
+	/**
+	 * Returns the value of the '<em><b>Initial Conditions</b></em>' reference list.
+	 * The list contents are of type {@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.SBAInitialConditions}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Initial Conditions</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Initial Conditions</em>' reference list.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.StateBasedAnalysisPackage#getStateBasedAnalysis_InitialConditions()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	EList<SBAInitialConditions> getInitialConditions();
 
 } // StateBasedAnalysis

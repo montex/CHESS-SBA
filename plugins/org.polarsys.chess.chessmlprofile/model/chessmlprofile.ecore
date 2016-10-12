@@ -21,6 +21,17 @@
           lowerBound="1" eType="#//Core/CHESSViews/SystemView" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="psmView" ordered="false"
           lowerBound="1" eType="#//Core/CHESSViews/PSMView"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="domain" ordered="false"
+          lowerBound="1" eType="#//Core/Domain"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="Domain">
+      <eLiterals name="cross_domain"/>
+      <eLiterals name="avionics" value="1"/>
+      <eLiterals name="automotive" value="2"/>
+      <eLiterals name="telecom" value="3"/>
+      <eLiterals name="space" value="4"/>
+      <eLiterals name="medical" value="5"/>
+      <eLiterals name="petroleum" value="6"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="CHGaResourcePlatform" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaResourcesPlatform">
       <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
@@ -28,43 +39,11 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="base_Package" ordered="false"
           lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Package"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="IdentifInstance">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
-          ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false" lowerBound="1"
-          eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Integer"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="sourceInstanceSpec" ordered="false"
-          eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="IdentifSlot">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="base_Slot" ordered="false"
-          lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Slot"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false" lowerBound="1"
-          eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Integer"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="MultiInstance">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
-          ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" ordered="false"
-          lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Integer"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="MultiSlot">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="base_Slot" ordered="false"
-          lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Slot"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" ordered="false"
-          lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Integer"/>
-    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PSMPackage">
       <eStructuralFeatures xsi:type="ecore:EReference" name="base_Package" ordered="false"
           lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Package"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="AnalysisContext" ordered="false"
           lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/SAM/SaAnalysisContext"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="FunctionalPartitions">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="base_Package" ordered="false"
-          lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Package"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="base_Component" ordered="false"
-          lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
     </eClassifiers>
     <eSubpackages name="CHESSViews" nsURI="http://CHESS/Core/Views" nsPrefix="CHESSViews">
       <eClassifiers xsi:type="ecore:EClass" name="ExtraFunctionalView">
@@ -121,24 +100,23 @@
   <eSubpackages name="Dependability" nsURI="http:///CHESS/Dependability.ecore" nsPrefix="CHESS.Dependability">
     <eSubpackages name="FailurePropagation" nsURI="http://CHESS/Dependability/FailurePropagation"
         nsPrefix="FailurePropagation">
-      <eClassifiers xsi:type="ecore:EClass" name="FPTC" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="fptc" ordered="false"
-            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="FailurePropagationAnalysis" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaAnalysisContext"/>
       <eClassifiers xsi:type="ecore:EClass" name="FPTCSpecification">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="this allows to work with FPTC at instance level by using composite diagrams. It allows to decorate ports of the parts.&#xD;&#xA;attribute 'failure' is deprecated, use 'failureModes'"/>
+        </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="failure" ordered="false"
             upperBound="-1" eType="#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="partWithPort" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="failureMode" ordered="false"
+            upperBound="-1" eType="#//Dependability/DependableComponent/FailureMode"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="FPTCPortSlot">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="deprecated, use FailureModes"/>
+        </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="FPTCSpecification"
             ordered="false" lowerBound="1" eType="#//Dependability/FailurePropagation/FPTCSpecification"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Slot" ordered="false"
@@ -146,6 +124,35 @@
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="failure" ordered="false"
             upperBound="-1" eType="#//Dependability/FailurePropagation/FailurePropagationDataTypes/FailureType"/>
       </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="FPTC" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="deprecated, use FLABehavior instead&#xD;&#xA;"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="fptc" ordered="false"
+            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="FLABehavior">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="replace the old FPTC stereotype"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Constraint" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Constraint"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="fptc" ordered="false"
+            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_String"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
+            ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Property" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="FailurePropagationAnalysis" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaAnalysisContext"/>
       <eClassifiers xsi:type="ecore:EClass" name="FI4FA" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="fi4fa" ordered="false"
             lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
@@ -181,14 +188,6 @@
             eType="#//Dependability/FailurePropagation/FailurePropagationDataTypes/D_mitigation"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="FI4FAAnalysis" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaAnalysisContext"/>
-      <eClassifiers xsi:type="ecore:EClass" name="FLASpecification">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Constraint" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Constraint"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="expressions" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_String"/>
-      </eClassifiers>
       <eSubpackages name="FailurePropagationDataTypes" nsURI="http:///CHESS/Dependability/FailurePropagation/FailurePropagationDataTypes.ecore"
           nsPrefix="CHESS.Dependability.FailurePropagation.FailurePropagationDataTypes">
         <eClassifiers xsi:type="ecore:EEnum" name="D_avoidable">
@@ -205,17 +204,6 @@
           <eLiterals name="unspecified"/>
           <eLiterals name="inconsistency" value="1"/>
           <eLiterals name="none" value="2"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EEnum" name="FailureType">
-          <eLiterals name="late"/>
-          <eLiterals name="early" value="1"/>
-          <eLiterals name="valueSubtle" value="2"/>
-          <eLiterals name="valueCoarse" value="3"/>
-          <eLiterals name="omission" value="4"/>
-          <eLiterals name="commission" value="5"/>
-          <eLiterals name="noFailure" value="6"/>
-          <eLiterals name="variable" value="7"/>
-          <eLiterals name="wildcard" value="8"/>
         </eClassifiers>
         <eClassifiers xsi:type="ecore:EEnum" name="A_avoidable">
           <eLiterals name="unspecified"/>
@@ -246,40 +234,81 @@
           <eLiterals name="partial_loss_allowed" value="2"/>
           <eLiterals name="none" value="3"/>
         </eClassifiers>
+        <eClassifiers xsi:type="ecore:EEnum" name="FailureType">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="deprecated, use FailureMode"/>
+          </eAnnotations>
+          <eLiterals name="late"/>
+          <eLiterals name="early" value="1"/>
+          <eLiterals name="valueSubtle" value="2"/>
+          <eLiterals name="valueCoarse" value="3"/>
+          <eLiterals name="omission" value="4"/>
+          <eLiterals name="commission" value="5"/>
+          <eLiterals name="noFailure" value="6"/>
+          <eLiterals name="variable" value="7"/>
+          <eLiterals name="wildcard" value="8"/>
+        </eClassifiers>
       </eSubpackages>
     </eSubpackages>
     <eSubpackages name="DependableComponent" nsURI="http://CHESS/Dependability/DependableComponent"
         nsPrefix="DependableComponent">
-      <eClassifiers xsi:type="ecore:EClass" name="Propagation">
+      <eClassifiers xsi:type="ecore:EClass" name="FailureModes">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile"/>
+          <details key="documentation" value="allows to decorate a port\instance with information regarding the failureModes possibly affecting the port\instance itself"/>
         </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Slot" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Slot"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Port" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="failureMode" ordered="false"
+            lowerBound="1" upperBound="-1" eType="#//Dependability/DependableComponent/FailureMode"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="FPTCSpecification"
+            ordered="false" eType="#//Dependability/FailurePropagation/FPTCSpecification"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="DependableComponent">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="obsolete, use ErrorModelBehavior"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Component" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="errorModel" ordered="false"
+            upperBound="-1" eType="#//Dependability/ThreatsPropagation/ErrorModel"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Property" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
+            ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ErrorModelBehavior">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="This stereotype is used to attach a user defined error model to an architectural element. It replaces the DependableComponent.&#xD;&#xA;See also FLABehavior and SimpleStochasticBehavior."/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="errorModel" ordered="false"
+            upperBound="-1" eType="#//Dependability/ThreatsPropagation/ErrorModel"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
+            ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Property" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Propagation">
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="prob" ordered="false"
             lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="propDelay" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Abstraction" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Abstraction"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
             ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="transfFunct" ordered="false"
-            upperBound="-1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
-            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="FailureModeGroup">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="failureMode" ordered="false"
-            lowerBound="1" upperBound="-1" eType="#//Dependability/DependableComponent/FailureMode"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="FailureMode">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="UMLConstraints can be attached to FailureMode to specify compliance between them (to be confirmed). FailureModes can appear in generalization relationships; in this case the compatibility between FailureMmodes follows the UML generalization semantics."/>
+        </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" ordered="false"
@@ -290,33 +319,22 @@
             eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="controllability" ordered="false"
             eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="permanent" ordered="false"
-            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="FailureModeSpecification">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Constraint" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Constraint"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Port" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="failureModeGroup" ordered="false"
-            lowerBound="1" upperBound="-1" eType="#//Dependability/DependableComponent/FailureModeGroup"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="DependableComponent">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Component" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="errorModel" ordered="false"
-            upperBound="-1" eType="#//Dependability/ThreatsPropagation/ErrorModel"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Property" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
-            ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="likelihood" ordered="false"
+            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String">
+          <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+            <details key="originalName" value="likelihood "/>
+          </eAnnotations>
+        </eStructuralFeatures>
       </eClassifiers>
     </eSubpackages>
     <eSubpackages name="ThreatsPropagation" nsURI="http://CHESS/Dependability/ThreatsPropagation"
         nsPrefix="ThreatsPropagation">
-      <eClassifiers xsi:type="ecore:EClass" name="UnclassifiedFailure" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="ThreatsPopagation"/>
+      </eAnnotations>
+      <eClassifiers xsi:type="ecore:EClass" name="DegradedState" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be removed?"/>
+          <details key="documentation" value="New Dep profile"/>
         </eAnnotations>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="ThreatState">
@@ -327,82 +345,14 @@
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" ordered="false"
             eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="FailureMode" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be removed?"/>
-        </eAnnotations>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="affectedPorts" ordered="false"
-            upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false"
-            lowerBound="1" eType="#//Dependability/ThreatsPropagation/DurationType"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EEnum" name="DurationType">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile"/>
-        </eAnnotations>
-        <eLiterals name="transient"/>
-        <eLiterals name="permanent" value="1"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="DegradedState" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
+      <eClassifiers xsi:type="ecore:EClass" name="NormalState">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="New Dep profile"/>
         </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_State" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="UnclassifiedError" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be removed?"/>
-        </eAnnotations>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="FailureFree" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="to be removed?"/>
-        </eAnnotations>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="CHInternalFault">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile"/>
-        </eAnnotations>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="permanentProb" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="transfFunct" ordered="false"
-            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="property" ordered="false"
-            eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="childFailure" ordered="false"
-            eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="occurrence" ordered="false"
-            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="transientDuration"
-            ordered="false" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="CHExternalFault">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="To be deleted???&#xD;&#xA;ExternalFault and InternalFault has been renamed (CH prefix) to aviod conflict with the new anonymous concepts introduced in the new dependability profile"/>
-        </eAnnotations>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="fromPort" ordered="false"
-            lowerBound="1" upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="propagationCondition"
-            ordered="false" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="probability" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" ordered="false"
-            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false"
-            lowerBound="1" eType="#//Dependability/ThreatsPropagation/DurationType"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="transfFunct" ordered="false"
-            upperBound="-1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="Error" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false"
-            lowerBound="1" eType="#//Dependability/ThreatsPropagation/DurationType"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="vanishingTime" ordered="false"
-            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="ErrorFree" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState"/>
+      <eClassifiers xsi:type="ecore:EClass" name="ErrorState" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState"/>
       <eClassifiers xsi:type="ecore:EClass" name="StuckAt">
         <eStructuralFeatures xsi:type="ecore:EReference" name="property" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
@@ -433,37 +383,43 @@
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="endValue" ordered="false"
             lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="InputEvent" eSuperTypes="#//Dependability/ThreatsPropagation/DepEvent">
+      <eClassifiers xsi:type="ecore:EClass" name="NormalInput" eSuperTypes="#//Dependability/ThreatsPropagation/DepEvent"/>
+      <eClassifiers xsi:type="ecore:EClass" name="DepEvent" abstract="true">
         <eStructuralFeatures xsi:type="ecore:EReference" name="port" ordered="false"
             eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="DepEvent">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Event" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Event"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_State" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//State"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="OutputEvent" eSuperTypes="#//Dependability/ThreatsPropagation/DepEvent">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="port" ordered="false"
-            eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="InternalEvent" eSuperTypes="#//Dependability/ThreatsPropagation/DepEvent">
+      <eClassifiers xsi:type="ecore:EClass" name="NormalOutput" eSuperTypes="#//Dependability/ThreatsPropagation/DepEvent"/>
+      <eClassifiers xsi:type="ecore:EClass" name="Failure">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="mode" ordered="false"
+            lowerBound="1" upperBound="-1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="probability" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="ExternalFault" eSuperTypes="#//Dependability/ThreatsPropagation/InputEvent">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="failure" ordered="false"
-            lowerBound="1" eType="#//Dependability/DependableComponent/FailureMode"/>
+      <eClassifiers xsi:type="ecore:EClass" name="InternalFault">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="occurrence" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="NormalInput" eSuperTypes="#//Dependability/ThreatsPropagation/InputEvent">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="recovery" ordered="false"
-            eType="#//Dependability/ThreatsPropagation/RecoveryEvent"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="RecoveryEvent" eSuperTypes="#//Dependability/ThreatsPropagation/InternalEvent">
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" ordered="false"
-            eType="#//Dependability/ThreatsPropagation/RecoveryKind"/>
+      <eClassifiers xsi:type="ecore:EClass" name="InternalPropagation">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalFaults" ordered="false"
+            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EEnum" name="RecoveryKind">
         <eLiterals name="Repair"/>
@@ -471,31 +427,39 @@
         <eLiterals name="ErrorDetection" value="2"/>
         <eLiterals name="Reconfiguration" value="3"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="NormalOutput" eSuperTypes="#//Dependability/ThreatsPropagation/OutputEvent">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="recovery" ordered="false"
-            eType="#//Dependability/ThreatsPropagation/RecoveryEvent"/>
+      <eClassifiers xsi:type="ecore:EClass" name="ErrorDetection">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="successProbability"
+            ordered="false" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="Failure" eSuperTypes="#//Dependability/ThreatsPropagation/OutputEvent">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="failure" ordered="false"
-            eType="#//Dependability/DependableComponent/FailureMode"/>
+      <eClassifiers xsi:type="ecore:EClass" name="ErrorHandling">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="successProbability"
+            ordered="false" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="NormalEvent" eSuperTypes="#//Dependability/ThreatsPropagation/InternalEvent"/>
-      <eClassifiers xsi:type="ecore:EClass" name="InternalThreat" eSuperTypes="#//Dependability/ThreatsPropagation/InternalEvent"/>
-      <eClassifiers xsi:type="ecore:EClass" name="InternalFault" eSuperTypes="#//Dependability/ThreatsPropagation/InternalThreat">
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="Occurrence" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+      <eClassifiers xsi:type="ecore:EClass" name="FaultHandling">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Transition" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Transition"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="successProbability"
+            ordered="false" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
+            eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="InternalPropagation" eSuperTypes="#//Dependability/ThreatsPropagation/InternalThreat"/>
       <eClassifiers xsi:type="ecore:EClass" name="ErrorModel">
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_StateMachine"
             ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//StateMachine"/>
-      </eClassifiers>
-    </eSubpackages>
-    <eSubpackages name="DataFlowCallGraph" nsURI="http://CHESS.DependabilitySecurity/schemas/DataFlowCallGraph/_QB3mMMe6Ed-7etIj5eTw0Q/8"
-        nsPrefix="DataFlowCallGraph">
-      <eClassifiers xsi:type="ecore:EClass" name="DataFlowCallGraphAnalysis" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaAnalysisContext">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="result" ordered="false"
-            upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
       </eClassifiers>
     </eSubpackages>
     <eSubpackages name="StateBased" nsURI="http://CHESS/Dependability/StateBased"
@@ -522,43 +486,78 @@
       </eSubpackages>
       <eSubpackages name="StateBasedComponents" nsURI="http://CHESS/Dependability/StateBased/StateBasedComponents"
           nsPrefix="StateBasedComponents">
-        <eClassifiers xsi:type="ecore:EClass" name="StatefulHardware" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="probPermFault" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="errorLatency" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="repairDelay" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultOcc" ordered="false"
-              eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Frequency"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="StatefulSoftware" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="errorLatency" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="repairDelay" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultOcc" ordered="false"
-              eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Frequency"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="StatelessHardware" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="probPermFault" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="repairDelay" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultOcc" ordered="false"
-              eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Frequency"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="StatelessSoftware" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultOcc" ordered="false"
-              eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Frequency"/>
-        </eClassifiers>
         <eClassifiers xsi:type="ecore:EClass" name="StochasticFailureBehaviour" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="to be removed???"/>
+          </eAnnotations>
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureDistribution"
               ordered="false" lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="repairDistribution"
               ordered="false" lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="modes" ordered="false"
               lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="StatefulHardware" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="obsolete, see SimpleStochasticBehaviour"/>
+          </eAnnotations>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="probPermFault" ordered="false"
+              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="errorLatency" ordered="false"
+              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="repairDelay" ordered="false"
+              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultOcc" ordered="false"
+              eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Frequency"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="StatelessSoftware" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="obsolete, see SimpleStochasticBehaviour"/>
+          </eAnnotations>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultOcc" ordered="false"
+              eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Frequency"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="StatelessHardware" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="obsolete, see SimpleStochasticBehaviour"/>
+          </eAnnotations>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="probPermFault" ordered="false"
+              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="repairDelay" ordered="false"
+              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultOcc" ordered="false"
+              eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Frequency"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="StatefulSoftware" eSuperTypes="#//Dependability/DependableComponent/DependableComponent">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="obsolete, see SimpleStochasticBehaviour"/>
+          </eAnnotations>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="errorLatency" ordered="false"
+              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="repairDelay" ordered="false"
+              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultOcc" ordered="false"
+              eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Frequency"/>
+        </eClassifiers>
+        <eClassifiers xsi:type="ecore:EClass" name="SimpleStochasticBehavior">
+          <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+              lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
+              lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
+              ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureOccurrence"
+              ordered="false" lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real">
+            <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+              <details key="originalName" value="failureOccurrence "/>
+            </eAnnotations>
+          </eStructuralFeatures>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="repairDelay" ordered="false"
+              eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="failureModesDistribution"
+              ordered="false" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="base_Property" ordered="false"
+              lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
         </eClassifiers>
       </eSubpackages>
       <eSubpackages name="FaultTolerance" nsURI="http://CHESS/Dependability/StateBased/FaultTolerance"
@@ -623,8 +622,6 @@
               lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="correctionProbability"
               ordered="false" lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="controlledFailure"
-              ordered="false" lowerBound="1" eType="#//Dependability/ThreatsPropagation/FailureMode"/>
         </eClassifiers>
         <eClassifiers xsi:type="ecore:EClass" name="FailureDetection" eSuperTypes="#//Dependability/StateBased/MaintenanceMonitoring/MMActivities">
           <eStructuralFeatures xsi:type="ecore:EReference" name="onDetection" ordered="false"
@@ -637,49 +634,25 @@
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="measure" ordered="false"
               lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="measureEvaluationResult"
-              ordered="false" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+              ordered="false" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="evalMethod" ordered="false"
-              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="targetFailureMode"
-              ordered="false" upperBound="-1" eType="#//Dependability/ThreatsPropagation/FailureMode"/>
+              eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetFailureMode"
+              ordered="false" upperBound="-1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
           <eStructuralFeatures xsi:type="ecore:EReference" name="targetDepComponent"
               ordered="false" upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="targetPort" ordered="false"
+              upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Slot"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="initialConditions"
+              ordered="false" upperBound="-1" eType="#//Dependability/StateBased/StateBasedAnalysis/SBAInitialConditions"/>
         </eClassifiers>
-      </eSubpackages>
-    </eSubpackages>
-    <eSubpackages name="FMEA" nsURI="http://CHESS.Dependability/schemas/FMEA/_wfALMFrLEeCvGuvlF-wh1g/9"
-        nsPrefix="FMEA">
-      <eClassifiers xsi:type="ecore:EClass" name="FIBEX">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="config" ordered="false"
-            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="FMEAAnalysis" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaAnalysisContext">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="errorType" ordered="false"
-            eType="#//Dependability/ThreatsPropagation/ThreatState"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="simulationRuns" ordered="false"
-            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Integer"/>
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="analysisType" ordered="false"
-            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EEnum" name="FMEAAnalysisType">
-        <eLiterals name="frame"/>
-        <eLiterals name="system" value="1"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="ErrorModelAssign">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="from" ordered="false"
-            lowerBound="1" upperBound="-1" eType="#//Dependability/ThreatsPropagation/ErrorModel"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="to" ordered="false"
-            lowerBound="1" upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Slot"/>
-      </eClassifiers>
-      <eSubpackages name="FMEADataTypes" nsURI="http:///CHESS/Dependability/FMEA/FMEADataTypes.ecore"
-          nsPrefix="CHESS.Dependability.FMEA.FMEADataTypes">
-        <eClassifiers xsi:type="ecore:EEnum" name="Persistency">
-          <eLiterals name="transient"/>
-          <eLiterals name="permanent" value="1"/>
+        <eClassifiers xsi:type="ecore:EClass" name="SBAInitialConditions">
+          <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+              lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" name="targetInstance" ordered="false"
+              lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="setup" ordered="false"
+              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
         </eClassifiers>
       </eSubpackages>
     </eSubpackages>
@@ -696,226 +669,39 @@
     </eSubpackages>
   </eSubpackages>
   <eSubpackages name="Predictability" nsURI="http:///CHESS/Predictability.ecore" nsPrefix="CHESS.Predictability">
-    <eSubpackages name="TimingAnalysis" nsURI="http://CHESS.Predictability/schemas/TimingAnaylsis/_SGMOYMe6Ed-7etIj5eTw0Q/8"
-        nsPrefix="TimingAnalysis">
-      <eClassifiers xsi:type="ecore:EClass" name="SimulationBasedTimingAnalysis" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaAnalysisContext"/>
-      <eClassifiers xsi:type="ecore:EClass" name="AgeTimingConstraint" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaLatencyObs"/>
-      <eClassifiers xsi:type="ecore:EClass" name="ReactionConstraint" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaLatencyObs"/>
-      <eClassifiers xsi:type="ecore:EClass" name="OutputSynchronizationConstraint"
-          eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaLatencyObs">
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-      </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="InputSynchronizationConstraint"
-          eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaLatencyObs">
-        <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" ordered="false"
-            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-      </eClassifiers>
-      <eSubpackages name="TimingConstraints" nsURI="http://CHESS.Predictability.TimingAnaylsis/schemas/TimingConstraints/_ShUEIMe6Ed-7etIj5eTw0Q/8"
-          nsPrefix="TimingConstraints">
-        <eClassifiers xsi:type="ecore:EClass" name="ArbitraryEventConstraint" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_Foundations/NFPs/NfpConstraint">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="maximumInterarrivalTime"
-              ordered="false" upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="minimumInterarrivalTime"
-              ordered="false" upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="PatternEventConstraint" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_Foundations/NFPs/NfpConstraint">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="jitter" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="minimumInterarrivalTime"
-              ordered="false" lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="occurrence" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="period" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="PeriodicEventConstraint" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_Foundations/NFPs/NfpConstraint">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="jitter" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="minimumInterarrivalTime"
-              ordered="false" lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="period" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="SporadicEventConstraint" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_Foundations/NFPs/NfpConstraint">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" ordered="false"
-              lowerBound="1" eType="ecore:EDataType ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//MARTE_PrimitivesTypes/Real"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="jitter" ordered="false"
-              eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="maximumInterarrivalTime"
-              ordered="false" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="minimumInterarrivalTime"
-              ordered="false" lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="period" ordered="false"
-              lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
-        </eClassifiers>
-      </eSubpackages>
-    </eSubpackages>
     <eSubpackages name="DeploymentConfiguration" nsURI="http://CHESS/Predictability/DeploymentConfiguration"
         nsPrefix="DeploymentConfiguration">
       <eSubpackages name="HardwareBaseline" nsURI="http://CHESS/Predictability/DeploymentConfiguration/HardwareBaseline"
           nsPrefix="HardwareBaseline">
         <eClassifiers xsi:type="ecore:EClass" name="CH_HwProcessor" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_DesignModel/HRM/HwLogical/HwComputing/HwProcessor">
-          <eStructuralFeatures xsi:type="ecore:EReference" name="dataType" ordered="false"
-              upperBound="-1" eType="#//Predictability/DeploymentConfiguration/HardwareBaseline/HWDataType"/>
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="deprecated, to be replaced with MARTE HWProcessor"/>
+          </eAnnotations>
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="utilization" ordered="false"
               eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
         </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="HWDataType">
-          <eStructuralFeatures xsi:type="ecore:EReference" name="base_DataType" ordered="false"
-              lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//DataType"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="bitLength" ordered="false"
-              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Integer"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="signed" ordered="false"
-              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="fixedPoint" ordered="false"
-              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="float" ordered="false"
-              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="execution" ordered="false"
-              upperBound="-1" eType="#//Predictability/DeploymentConfiguration/HardwareBaseline/DataTypeExecution"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="DataTypeExecution">
-          <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
-              lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="operation" ordered="false"
-              lowerBound="1" eType="#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicOperation"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="executionCycles"
-              ordered="false" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Integer"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EEnum" name="BasicOperation">
-          <eLiterals name="add"/>
-          <eLiterals name="mul" value="1"/>
-          <eLiterals name="div" value="2"/>
-          <eLiterals name="mod" value="3"/>
-          <eLiterals name="shift" value="4"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="ComputeComplexity">
-          <eStructuralFeatures xsi:type="ecore:EReference" name="swDataType" ordered="false"
-              lowerBound="1" eType="#//Predictability/DeploymentConfiguration/HardwareBaseline/SWDataType"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="opCount" ordered="false"
-              lowerBound="1" upperBound="-1" eType="#//Predictability/DeploymentConfiguration/HardwareBaseline/OperationCount"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
-              lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="SWDataType" abstract="true">
-          <eStructuralFeatures xsi:type="ecore:EReference" name="base_DataType" ordered="false"
-              lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//DataType"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="bitSize" ordered="false"
-              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Integer"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="OperationCount">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="operation" ordered="false"
-              lowerBound="1" eType="#//Predictability/DeploymentConfiguration/HardwareBaseline/BasicOperation"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="count" ordered="false"
-              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Integer"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
-              lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="CHControlFlow">
-          <eStructuralFeatures xsi:type="ecore:EReference" name="base_ControlFlow"
-              ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//ControlFlow"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="rep" ordered="false"
-              eType="ecore:EDataType ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//MARTE_PrimitivesTypes/Real"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="prob" ordered="false"
-              eType="ecore:EDataType ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//MARTE_PrimitivesTypes/Real"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="order" ordered="false"
-              eType="ecore:EDataType ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//MARTE_PrimitivesTypes/Real"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="compComplex" ordered="false"
-              upperBound="-1" eType="#//Predictability/DeploymentConfiguration/HardwareBaseline/ComputeComplexity"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="FloatSWDataType" eSuperTypes="#//Predictability/DeploymentConfiguration/HardwareBaseline/SWDataType">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="signed" ordered="false"
-              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="FixedSWDataType" eSuperTypes="#//Predictability/DeploymentConfiguration/HardwareBaseline/SWDataType">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="signed" ordered="false"
-              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="IntegerSWDataType" eSuperTypes="#//Predictability/DeploymentConfiguration/HardwareBaseline/SWDataType">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="signed" ordered="false"
-              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="CharSWDataType" eSuperTypes="#//Predictability/DeploymentConfiguration/HardwareBaseline/SWDataType">
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="signed" ordered="false"
-              lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="BooleanSWDataType" eSuperTypes="#//Predictability/DeploymentConfiguration/HardwareBaseline/SWDataType"/>
-        <eClassifiers xsi:type="ecore:EEnum" name="BasicDataType">
-          <eLiterals name="Signed"/>
-          <eLiterals name="Integer" value="1"/>
-          <eLiterals name="Fixed_Point" value="2"/>
-          <eLiterals name="Float" value="3"/>
-        </eClassifiers>
         <eClassifiers xsi:type="ecore:EClass" name="CH_HwBus" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_DesignModel/HRM/HwLogical/HwCommunication/HwBus">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="to be reviewed"/>
+          </eAnnotations>
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="utilization" ordered="false"
               eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
         </eClassifiers>
         <eClassifiers xsi:type="ecore:EClass" name="CH_HwComputingResource" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_DesignModel/HRM/HwLogical/HwComputing/HwComputingResource">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+            <details key="documentation" value="to be reviewed"/>
+          </eAnnotations>
           <eStructuralFeatures xsi:type="ecore:EAttribute" name="utilization" ordered="false"
               eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="DataTypeAssign">
-          <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
-              lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="from" ordered="false"
-              upperBound="-1" eType="#//Predictability/DeploymentConfiguration/HardwareBaseline/SWDataType"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="to" ordered="false"
-              upperBound="-1" eType="#//Predictability/DeploymentConfiguration/HardwareBaseline/HWDataType"/>
-        </eClassifiers>
-      </eSubpackages>
-      <eSubpackages name="DeploymentConfAnalysis" nsURI="http://CHESS/Predictability/DeploymentConfiguration/DeploymentConfAnalysis"
-          nsPrefix="DeploymentConfAnalysis">
-        <eClassifiers xsi:type="ecore:EClass" name="MappingConfigurationAnalysis"
-            eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaAnalysisContext">
-          <eStructuralFeatures xsi:type="ecore:EReference" name="prohibitedAllocations"
-              ordered="false" upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_Foundations/Alloc/Assign"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="fixedAllocations"
-              ordered="false" upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_Foundations/Alloc/Assign"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="bottomUpAnalysis"
-              ordered="false" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="resultingMapping"
-              ordered="false" lowerBound="1" upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_Foundations/Alloc/Assign"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="SchedulingAnalysis" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaAnalysisContext">
-          <eStructuralFeatures xsi:type="ecore:EReference" name="mapping" ordered="false"
-              upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_Foundations/Alloc/Assign"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="resultingPriorities"
-              ordered="false" lowerBound="1" upperBound="-1" eType="#//Predictability/RTComponentModel/CHRtSpecification"/>
-          <eStructuralFeatures xsi:type="ecore:EAttribute" name="schedulingStrategy"
-              ordered="false" upperBound="-1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EEnum" name="OptimizationGoal">
-          <eLiterals name="average"/>
-          <eLiterals name="maxHighPerfUsage" value="1"/>
-        </eClassifiers>
-        <eClassifiers xsi:type="ecore:EClass" name="BusConfigurationAnalysis" eSuperTypes="../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaAnalysisContext">
-          <eStructuralFeatures xsi:type="ecore:EReference" name="resultingBusConfig"
-              ordered="false" lowerBound="1" eType="#//Dependability/FMEA/FIBEX"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="resultingCommLatencies"
-              ordered="false" upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/SAM/SaStep"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="inputFibex" ordered="false"
-              upperBound="-1" eType="#//Dependability/FMEA/FIBEX"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" name="hwBusPlatform" ordered="false"
-              upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_DesignModel/HRM/HwLogical/HwCommunication/HwBus"/>
         </eClassifiers>
       </eSubpackages>
     </eSubpackages>
     <eSubpackages name="RTComponentModel" nsURI="http://CHESS/Predictability/RTComponentModel"
         nsPrefix="RTComponentModel">
-      <eClassifiers xsi:type="ecore:EClass" name="CHRtPortSlot">
-        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Slot" ordered="false"
-            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Slot"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="cH_RtSpecification"
-            ordered="false" upperBound="-1" eType="#//Predictability/RTComponentModel/CHRtSpecification"/>
-      </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="CHRtSpecification">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The following attributes are deprecated:&#xD;&#xA;-respT&#xD;&#xA;-blockT&#xD;&#xA;operationReqForSporadicOcc: the list of operations that need to be invoked to allow the sporadic occurrence of the &quot;context&quot; operation.&#xD;&#xA;&#xD;&#xA;Constraints:&#xD;&#xA;Only for sporadic occurrence kind.&#xD;&#xA;The operations in the list must be owned by the Component which owns the 'context' operation.&#xD;&#xA;If the list is not empty the &quot;context&quot; operation must have private visibility and it cannot be invoked directly by other operations.&#xD;&#xA;If the list is empty the &quot;context&quot; operation must be invoked directly by other operations.&#xD;&#xA;&#xD;&#xA;CHRtSpecification extends MARTE RtSpecification"/>
+        </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="partWithPort" ordered="false"
             unique="false" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="WCET" ordered="false"
@@ -948,18 +734,81 @@
             upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockT" ordered="false"
             upperBound="-1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Duration"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="operationReqForSporadicOcc"
+            ordered="false" upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Operation"/>
       </eClassifiers>
-      <eSubpackages name="RTDataTypes" nsURI="http:///CHESS/Predictability/RTComponentModel/RTDataTypes.ecore"
-          nsPrefix="CHESS.Predictability.RTComponentModel.RTDataTypes">
-        <eClassifiers xsi:type="ecore:EClass" name="CH_SporadicPattern"/>
-        <eClassifiers xsi:type="ecore:EClass" name="CH_PeriodicPattern"/>
-        <eClassifiers xsi:type="ecore:EClass" name="CH_BurstPattern"/>
-        <eClassifiers xsi:type="ecore:EClass" name="TA_Pattern"/>
-        <eClassifiers xsi:type="ecore:EClass" name="TA_ArbitraryPattern"/>
-      </eSubpackages>
+      <eClassifiers xsi:type="ecore:EClass" name="CHRtPortSlot">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="To be renamed with CHRtFeature, as extension of the MARTE RtFeature&#xD;&#xA;"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Slot" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Slot"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="cH_RtSpecification"
+            ordered="false" upperBound="-1" eType="#//Predictability/RTComponentModel/CHRtSpecification"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
+            ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="RunTimeSupport">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="monitoring" ordered="false"
+            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="verification" ordered="false"
+            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
+      </eClassifiers>
+    </eSubpackages>
+    <eSubpackages name="ARINCComponentModel" nsURI="http://CHESS/Predictability/ARINCComponentModel"
+        nsPrefix="ARINCComponentModel">
+      <eClassifiers xsi:type="ecore:EClass" name="ARINCComponentImpl">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Component" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ARINCProcess">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Operation" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Operation"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="operationsGroups" ordered="false"
+            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ARINCFunction">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Operation" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Operation"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="followedBy" ordered="false"
+            upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Operation"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="rateDivider" ordered="false"
+            eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Integer"
+            defaultValueLiteral="1"/>
+      </eClassifiers>
     </eSubpackages>
   </eSubpackages>
   <eSubpackages name="ComponentModel" nsURI="http://CHESS/ComponentModel" nsPrefix="ComponentModel">
+    <eClassifiers xsi:type="ecore:EClass" name="FunctionalPartition">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Avioncs IMA concept"/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="utilization" ordered="false"
+          eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="base_Component" ordered="false"
+          lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="MAF" ordered="false"
+          lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Integer"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="MIF" ordered="false"
+          lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Integer"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="SchedulingTable" ordered="false"
+          lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_String"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="HwAbstractionComponentImpl">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="represents a SW interface for a given HW component; to hide hardware properties from higher software layers"/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="hwRes" ordered="false"
+          lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_DesignModel/HRM/HwGeneral/HwResource"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="base_Component" ordered="false"
+          lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ComponentType">
       <eStructuralFeatures xsi:type="ecore:EReference" name="base_Component" ordered="false"
           lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
@@ -973,26 +822,24 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceCodeLocation" ordered="false"
           upperBound="-1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="FunctionalPartition">
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="utilization" ordered="false"
-          eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="base_Component" ordered="false"
-          lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="MAF" ordered="false"
-          lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Integer"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="MIF" ordered="false"
-          lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Integer"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="SchedulingTable" ordered="false"
-          lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_String"/>
-    </eClassifiers>
   </eSubpackages>
   <eSubpackages name="SystemModel" nsURI="http:///CHESS/SystemModel.ecore" nsPrefix="CHESS.SystemModel">
     <eSubpackages name="STS" nsURI="http://CHESS/SystemModel/STS" nsPrefix="STS">
       <eClassifiers xsi:type="ecore:EClass" name="Human">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="Human structured classes can be decomposed in HumanActuatorUnits"/>
+        </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="Organizational">
+      <eClassifiers xsi:type="ecore:EClass" name="Organization">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="Organization structured classes can be decompsosed in OrganizationUnits"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="OrganizationUnit" abstract="true">
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
       </eClassifiers>
@@ -1000,9 +847,32 @@
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
       </eClassifiers>
-      <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="#//SystemModel/STS/Human"/>
-      <eClassifiers xsi:type="ecore:EClass" name="Attention" eSuperTypes="#//SystemModel/STS/Human"/>
-      <eClassifiers xsi:type="ecore:EClass" name="TimePressure" eSuperTypes="#//SystemModel/STS/Organizational"/>
+      <eClassifiers xsi:type="ecore:EClass" name="TimePressure" eSuperTypes="#//SystemModel/STS/OrganizationUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="OUMissionManagement" eSuperTypes="#//SystemModel/STS/OrganizationUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="OURulesRegulationManagement" eSuperTypes="#//SystemModel/STS/OrganizationUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="OUClimateManagement" eSuperTypes="#//SystemModel/STS/OrganizationUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="OUOversightManagement" eSuperTypes="#//SystemModel/STS/OrganizationUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="OUProcessManagement" eSuperTypes="#//SystemModel/STS/OrganizationUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="OUResourceManagement" eSuperTypes="#//SystemModel/STS/OrganizationUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="HSAttention" eSuperTypes="#//SystemModel/STS/HumanSensorUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="HumanSensorUnit">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="HSPerception" eSuperTypes="#//SystemModel/STS/HumanSensorUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="HSKnowledgePerception" eSuperTypes="#//SystemModel/STS/HumanSensorUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="HSSensory" eSuperTypes="#//SystemModel/STS/HumanSensorUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="HAFeedback" eSuperTypes="#//SystemModel/STS/HumanActuatorUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="HumanActuatorUnit" abstract="true">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="HAIntent" eSuperTypes="#//SystemModel/STS/HumanActuatorUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="HACommunication" eSuperTypes="#//SystemModel/STS/HumanActuatorUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="HATimeManagement" eSuperTypes="#//SystemModel/STS/HumanActuatorUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="HASelection" eSuperTypes="#//SystemModel/STS/HumanActuatorUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="HAResponse" eSuperTypes="#//SystemModel/STS/HumanActuatorUnit"/>
+      <eClassifiers xsi:type="ecore:EClass" name="HAKnowledgeDecision" eSuperTypes="#//SystemModel/STS/HumanActuatorUnit"/>
     </eSubpackages>
   </eSubpackages>
   <eSubpackages name="Safety" nsURI="http://CHESS/Safety" nsPrefix="Safety">

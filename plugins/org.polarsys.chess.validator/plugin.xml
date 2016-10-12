@@ -90,32 +90,24 @@
                categories="CHESSModelConstraints/ExtraFunctionalView">
                
                <constraint
+               	  class="org.polarsys.chess.validator.constraints.EFVRT_01"
                   id="EFVRT_01"
                   isEnabledByDefault="true"
-                  lang="OCL"
+                  lang="java"
                   mode="Batch"
                   name="EFVRT_01"
                   severity="ERROR"
                   statusCode="ev01">
-               <message>
-                  The attribute&quot;context&quot; of {0} must be set
+               <message>                  
+                  In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] the attribute&quot;context&quot; must be set to an operation of the component (e.g. not of the interface). Currently it is {1}. 
                </message>
                <description>
-                 The attribute 'context' of CHRtSpecification must be set.
+                 The attribute 'context' of CHRtSpecification must be set to an operation of the component (e.g. not of the interface).
                </description>
                <target
-                     class="Comment">
+                     class="Comment"> 
                </target>
-               <![CDATA[
-  
-               if(self.getAppliedStereotype('CHESS::Predictability::RTComponentModel::CHRtSpecification') <> null) then
-  
-           			 self.getValue(self.getAppliedStereotype('CHESS::Predictability::RTComponentModel::CHRtSpecification'), 'context') <> null
-           			
-           			else
-           				true
-           				endif               	
-               	]]>
+               
             </constraint>
             <constraint
                   class="org.polarsys.chess.validator.constraints.EFVRT_02"
@@ -127,7 +119,7 @@
                   severity="ERROR"
                   statusCode="ev02">
                <message>
-                  The attribute&quot;occKind&quot; of &lt;&lt;CHRtSpecification&gt;&gt; tmust be an instance of PeriodicPattern, SporadicPattern or BurstPattern, otherwise Protection must be 'guarded' or 'concurrent'
+                  In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}] the attribute &quot;occKind&quot; must be Periodic, Sporadic or Burst, otherwise Protection must be Guarded or Concurrent.
                </message>
                <description>
                  The attribute 'occKind' of CHRtSpecification must be set or protection must be 'guarded' or 'concurrent'.
@@ -136,6 +128,30 @@
                      class="Comment">
                </target>
             </constraint>
+            
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.EFVRT_02_1"
+                  id="EFVRT_02_1"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="EFVRT_02_1"
+                  severity="WARNING"
+                  statusCode="ev02">
+               <message>
+                  <!--In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}] the attribute &quot;occKind&quot; must be Periodic, Sporadic or Burst, otherwise Protection must be Guarded or Concurrent.-->
+                  {1}
+               </message>
+               <description>
+                 The attribute 'occKind' of CHRtSpecification is empty. As it is related to an ARINC Function, &quot;IMA Generate Schedule&quot; should be called!
+               </description>
+               <target
+                     class="Comment">
+               </target>
+            </constraint>
+            
+            
             <constraint
                   class="org.polarsys.chess.validator.constraints.EFVRT_03"
                   id="EFVRT_03"
@@ -146,10 +162,10 @@
                   severity="ERROR"
                   statusCode="ev03">
                <message>
-                  In the&lt;&lt;CH_RtSpecification&gt;&gt; note of the element: [{0}] in the package [{1}] having &quot;occKind&quot; member = &quot;PeriodicPattern&quot; : period must be &gt;=0 and WCET and relDl must be both &gt;=0
+					In the&lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}] having &quot;occKind&quot;=Periodic, &quot;period&quot;,  &quot;WCET&quot; and &quot;relDl&quot; must all be &gt;=0
                </message>
                <description>
-               PeriodicPattern period must > 0 and WCET and relDl must be > 0
+               		In CHRtSpecification, if occKind is Periodic, then the attributes 'period' and 'WCET' and 'relDl' must all be >= 0
                </description>
                <target
                      class="Comment">
@@ -166,13 +182,13 @@
                   severity="ERROR"
                   statusCode="ev04">
                <message>
-                  In the&lt;&lt;CH_RtSpecification&gt;&gt; note of the element: [{0}] in the package [{1}] having &quot;occKind&quot; member = &quot;PeriodicPattern&quot; : phase,priority and relativePriority attributes are not null and then must be all &gt; 0
+                  	In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}] having &quot;occKind&quot; = Periodic, the attributes &quot;phase&quot; (if present in occKind) and &quot;relativePriority&quot; must both be &gt;= 0
                </message>
                <target
                      class="Comment">
                </target>
                <description>
-               In CH_RtSpecificationhaving occKind= PeriodicPattern, phase,priority and relativePriority attributes must be >= 0
+               		In CH_RtSpecificationhaving occKind= Periodic, phase (if present in occKind) and relativePriority attributes must be >= 0
                </description>
             </constraint>
             
@@ -182,10 +198,10 @@
                   lang="OCL"
                   mode="Batch"
                   name="EFVRT_05"
-                  severity="ERROR"
+                  severity="WARNING"
                   statusCode="ev05">
                <message>
-                  In the {0} the attribute&quot;partWithPort&quot; must not be null
+                  In the {0} the attribute&quot;partWithPort&quot; is null
                </message>
                <target
                      class="Comment">
@@ -212,7 +228,7 @@
                   severity="ERROR"
                   statusCode="ev20">
                <message>
-                  In the&lt;&lt;CH_RtSpecification&gt;&gt; comment note of the element: [{0}] in the package [{1}] having &quot;occKind&quot; member = &quot;SporadicPattern&quot; : minInterarrival, WCET and relDl attributes must be all &gt;= 0
+                  In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}] having &quot;occKind&quot;=Sporadic, attributes &quot;minInterarrival&quot;, &quot;WCET&quot; and &quot;relDl&quot; must be all &gt;= 0
                </message>
                <description>
                 In CH_RtSpecification having occKind=SporadicPattern, minInterarrival, WCET and relDl attributes must be >= 0
@@ -231,11 +247,10 @@
                   severity="ERROR"
                   statusCode="ev30">
                <message>
-                  In the&lt;&lt;CH_RtSpecification&gt;&gt; comment note of the element: [{0}] in the package [{1}] attribute localWCET is not null and then must be &gt; 0
-                  
+                  In the &lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] in the package [{1}], having &quot;occKind&quot;=Sporadic, if attribute relativePriority is not null, it must be &gt;= 0                  
                </message>
                <description>
-                In CH_RtSpecification attribute priority and relativePriority must be >= 0
+                In CH_RtSpecification with occKind=Sporadic, if attribute relativePriority is not null, it must be >= 0
                </description>
                <target
                      class="Comment">
@@ -254,7 +269,7 @@
                      class="Comment">
                </target> 
                <message>
-                  In the&lt;&lt;CH_RtSpecification&gt;&gt; comment note of the element: [{0}] in the package [{1}] the attribute &quot;localWCET&quot; is not null then must be &gt; 0
+                  In the&lt;&lt;CH_RtSpecification&gt;&gt; of the element: [{0}] the attribute &quot;localWCET&quot; must be &gt;= 0. {1} 
                </message>
                <description>
                 In CH_RtSpecification attribute localWCET must be >= 0
@@ -293,7 +308,7 @@
                   severity="ERROR"
                   statusCode="DV_02">
                <message>
-                  {1}
+                  Not allowed Assignment {0}. {1}
                </message>
                <target class="Comment">
                </target>
@@ -319,7 +334,8 @@
                <target class="Component">
                </target>
                <description>
-                 The attribute HW_BUS_PACKETT of stereotype HwBus must be set
+                 The attributes &quot;packetT&quot;, &quot;speedFactor&quot;, &quot;blockT&quot; of stereotype &lt;&lt;CH_HwBus&gt;&gt; must be set
+ 				 The attribute &quot;speedFactor&quot; of stereotype &lt;&lt;CH_HwProcessor&gt;&gt; must be set
                </description>
             </constraint> 
             
@@ -343,6 +359,44 @@
                  The attribute 'speedFactor' of stereotype CH_HwProcessor is null, default (value=1.0) will be used
                </description>
             </constraint> 
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.DV_05"
+                  id="DV_05"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="DV_05"
+                  severity="ERROR"
+                  statusCode="DV_05">
+               <message>
+                  {1}
+               </message>
+               <target class="InstanceSpecification">
+               </target>
+               <description>
+                 The Partition must be deployed on exactly one processing unit.
+               </description>
+            </constraint>   
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.DV_06"
+                  id="DV_06"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="DV_06"
+                  severity="WARNING"
+                  statusCode="DV_06">
+               <message>
+                  {1}
+               </message>
+               <target class="InstanceSpecification">
+               </target>
+               <description>
+                 The Partition must be deployed on exactly one processing unit (but no component is allocated on it).
+               </description>
+            </constraint>               
                
             <!--constraint
                   id="DV_05"
@@ -460,7 +514,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   ComponentType {0} does not provide an Interface
                </message>
                <description>
-                  ComponentType does not provide an Interface
+                  ComponentTypes must provide an Interface
                </description>
                <target class="Component">
                </target>
@@ -480,7 +534,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                </message>
                <description>
                   The ComponentImplementation must realize exactly one ComponentType
-                  The ComponentImplementation must define the same operation as the ComponentType it realizes
+                  The ComponentImplementation must define the same operations as the ComponentType it realizes
                </description>
                <target class="Component">
                </target>
@@ -488,7 +542,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
             
             <constraint
                   class="org.polarsys.chess.validator.constraints.FV_04"
-                  id="FV_03"
+                  id="FV_04"
                   isEnabledByDefault="true"
                   lang="java"
                   mode="Batch"
@@ -499,7 +553,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   {1}
                </message>
                <description>
-               The ComponentType does not define the same operations from the interface it realizes
+               The ComponentType must define the same operations as the Interface it realizes
                </description>
                <target class="Component">
                </target>
@@ -518,9 +572,9 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   {1}
                </message>
                <description>
-               The Port  must be stereotyped by ClientServerPort FlowPort
+               The Port owned by a ComponentType or by a ComponentImplementation must be stereotyped by &lt;&lt;ClientServerPort&gt;&gt; or &lt;&lt;FlowPort&gt;&gt;
                </description>
-               <target class="Component">
+               <target class="Port">
                </target>
             </constraint>
             
@@ -539,7 +593,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                <description>
                The value of ClientServerPort stereotype's attribute SPEC_KIND  must be set to INTERFACEBASED
                </description>
-               <target class="Component">
+               <target class="Port">
                </target>
             </constraint>
             
@@ -558,7 +612,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                <description>
                ClientServerPorts with kind PROREQ are not allowed in ComponentTypes and ComponentImplementations
                </description>
-               <target class="Component">
+               <target class="Port">
                </target>
             </constraint>
             
@@ -610,7 +664,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   Operations should be created only in packages that are descendants of the root package with the stereotype CHESS::ComponentView
                </message>     	
                <description>
-               Operations shuold be created only in packages that are descendants of the root package with the stereotype CHESS::ComponentView
+               Operations should be created only in packages that are descendants of the root package with the stereotype CHESS::ComponentView
                </description>
                <target
                      class="Interface">
@@ -649,10 +703,10 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   severity="WARNING"
                   statusCode="FV_10">
                <message>
-                  Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
+               	Connector {0} not allowed. Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
                </message>
                <description>
-               Interfaces provided and/or required in Ports are not compatible, or components are not at the same level
+               	Interfaces provided and/or required in Ports must be compatible, and components must be at the same level
                </description>
                
                <target class="Connector">
@@ -666,15 +720,37 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   lang="java"
                   mode="Live"
                   name="Connector_02"
-                  severity="WARNING"
+                  severity="ERROR"
                   statusCode="FV_11">
                <message>
-                  TODO: work in progress
+               		Connector {0} not allowed. Flow ports on ends must have compatible directions. {1}
                </message>
+               <description>
+               		Flow ports on ends of connection must have compatible directions (either opposite, or both INOUT, or the same if delegation).
+               </description>
                <target class="Connector">
                </target>
             </constraint>
             
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.Connector_03"
+                  id="FV_12"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Live"
+                  name="Connector_03"
+                  severity="WARNING"
+                  statusCode="FV_12">
+               <message>
+                  Flow ports on the ends of connection do not have compatible types. 
+               </message>
+                <description>
+               		Flow ports on ends of connection must have compatible types
+               </description>
+               <target class="Connector">
+               </target>
+            </constraint>
+                        
             <constraint
                   class="org.polarsys.chess.validator.constraints.FlowPorts_01"
                   id="FlowPorts_01"
@@ -688,7 +764,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
                   The &lt;&lt;FlowPort&gt;&gt; is not mapped to a parameter of a required or provided operation
                </message>
                <description>
-               	The FlowPort is not mapped to a parameter of a required or provided operation
+               	The FlowPort should be mapped to a parameter of a required or provided operation
                </description>
                <target class="Port">
                </target>
@@ -739,6 +815,25 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
 				  * port direction INOUT -&gt; param direction IN or OUT or INOUT (param of REQUIRED or PROVIDED operation)
                </description>
                <target class="Port">
+               </target>
+            </constraint>
+            
+            <constraint
+                  class="org.polarsys.chess.validator.constraints.ArincProc_01"
+                  id="ArincProc_01"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="ArincProc_01"
+                  severity="ERROR"
+                  statusCode="ArincProc_01">
+               <message>
+                  {1}
+               </message>
+               <description>
+                  The ARINCProcess must have OperationsGroups not empty and not NULL.
+               </description>
+               <target class="Operation">
                </target>
             </constraint>
              
@@ -835,7 +930,7 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
             </constraints>
          
          <constraints
-               categories="AnalysisView">
+               categories="CHESSModelConstraints/AnalysisView">
                <constraint
                   id="AV_01"
                   isEnabledByDefault="true"
@@ -893,6 +988,27 @@ Package, Component, Property, Connector, &lt;&lt;CH_RtSpecificaiton&gt;&gt; Comm
 			   else true
 			   endif ]]>
             </constraint-->
+            
+            <constraint
+               	  class="org.polarsys.chess.validator.constraints.AV_03"
+                  id="AV_03"
+                  isEnabledByDefault="true"
+                  lang="java"
+                  mode="Batch"
+                  name="AV_03"
+                  severity="ERROR"
+                  statusCode="av03">
+               <message>                  
+                  The &lt;&lt;SaAnalysisContext&gt;&gt; {0} must have as its &quot;Platform&quot; a Package in the Component View stereotyped as &lt;&lt;CHGaResourcePlatform&gt;&gt;. {1}
+               </message>
+               <description>
+                 The &lt;&lt;SaAnalysisContext&gt;&gt; must have its &quot;Platform&quot; property that a Package in the Component View stereotyped as &lt;&lt;CHGaResourcePlatform&gt;&gt;
+               </description>
+               <target
+                     class="Classifier"> 
+               </target>
+               </constraint>
+            
          </constraints>
       </constraintProvider>
       

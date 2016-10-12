@@ -19,6 +19,10 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Failure Mode</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * UMLConstraints can be attached to FailureMode to specify compliance between them (to be confirmed). FailureModes can appear in generalization relationships; in this case the compatibility between FailureMmodes follows the UML generalization semantics.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -27,7 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#getSeverity <em>Severity</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#getExposure <em>Exposure</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#getControllability <em>Controllability</em>}</li>
- *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#isPermanent <em>Permanent</em>}</li>
+ *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#getLikelihood <em>Likelihood</em>}</li>
  * </ul>
  * </p>
  *
@@ -167,29 +171,30 @@ public interface FailureMode extends EObject {
 	void setControllability(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Permanent</b></em>' attribute.
+	 * Returns the value of the '<em><b>Likelihood</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Permanent</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Likelihood</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Permanent</em>' attribute.
-	 * @see #setPermanent(boolean)
-	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getFailureMode_Permanent()
-	 * @model dataType="org.eclipse.uml2.types.Boolean" ordered="false"
+	 * @return the value of the '<em>Likelihood</em>' attribute.
+	 * @see #setLikelihood(String)
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getFailureMode_Likelihood()
+	 * @model dataType="org.eclipse.uml2.types.String" ordered="false"
+	 *        annotation="http://www.eclipse.org/uml2/2.0.0/UML originalName='likelihood '"
 	 * @generated
 	 */
-	boolean isPermanent();
+	String getLikelihood();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#isPermanent <em>Permanent</em>}' attribute.
+	 * Sets the value of the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#getLikelihood <em>Likelihood</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Permanent</em>' attribute.
-	 * @see #isPermanent()
+	 * @param value the new value of the '<em>Likelihood</em>' attribute.
+	 * @see #getLikelihood()
 	 * @generated
 	 */
-	void setPermanent(boolean value);
+	void setLikelihood(String value);
 
 } // FailureMode
