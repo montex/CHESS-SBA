@@ -44,6 +44,7 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
  * A Functional Partition that has at least one ComponentImplementation instance deployed on it 
  * must be allocated on exactly one Core. (else ERROR)
  * 20160315 LB Modified for addressing multiple deployments and addressing different needs for Avionic Domain models
+ * @since 0.10
  */
 public class DV_05 extends AbstractModelConstraint {
 

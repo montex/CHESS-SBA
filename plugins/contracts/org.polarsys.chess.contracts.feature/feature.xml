@@ -16,7 +16,7 @@
 <feature
       id="org.polarsys.chess.contracts.feature"
       label="CHESS Contracts and Formal Verification feature"
-      version="0.9.0.qualifier"
+      version="0.10.0.qualifier"
       provider-name="Intecs">
 
    <description>
@@ -43,8 +43,7 @@ for formal verification of contracts refinement.
          id="org.polarsys.chess.contracts.integration"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.polarsys.chess.contracts.profile"

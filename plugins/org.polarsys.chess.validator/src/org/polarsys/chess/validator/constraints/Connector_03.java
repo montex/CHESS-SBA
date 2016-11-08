@@ -30,6 +30,7 @@ import org.polarsys.chess.chessmlprofile.util.Constants;
 /**
  * The Class Connector_03.
  * Check that flow ports on the ends of a connection are compatible in type
+ * @since 0.10
  */
 public class Connector_03 extends AbstractModelConstraint {
 

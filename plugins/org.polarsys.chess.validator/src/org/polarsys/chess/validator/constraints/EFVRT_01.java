@@ -35,6 +35,7 @@ import org.polarsys.chess.chessmlprofile.util.Constants;
  * The Class EFVRT_01.
  * This class implements the following constraint (invoked by the EMF validation framework):
  * the attribute 'context' of CHRtSpecification must be set to an operation of the component (e.g. not of the interface).
+ * @since 0.10
  */
 public class EFVRT_01 extends AbstractModelConstraint {
 

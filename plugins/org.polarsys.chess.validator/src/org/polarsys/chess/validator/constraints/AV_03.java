@@ -38,6 +38,7 @@ import org.polarsys.chess.core.profiles.CHESSProfileManager;
  * This class implements the following constraint (invoked by the EMF validation framework):
  * the SaAnalysisContext classifier in the Analysis View must have its “Platform” property 
  * valued with a CHGaResourcePlatform that is a Package in the Component View.
+ * @since 0.10
  */
 public class AV_03 extends AbstractModelConstraint {
 

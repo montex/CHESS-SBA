@@ -72,8 +72,6 @@ import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
-import static org.polarsys.chess.core.util.CHESSProjectSupport.printlnToCHESSConsole;
-
 /**
  * BuildModelInstanceCommand allows to create UML InstanceSpecifications starting from a Component definition
  */
@@ -404,6 +402,7 @@ public class BuildModelInstanceCommand extends AbstractHandler implements
 	 *
 	 * @param property the property
 	 * @param instance the instance
+	 * @since 0.10
 	 */
 	public static void mapStereotypesFromPropertyToInstance(Property property, InstanceSpecification instance, InstanceSpecification oldinstance){
 		Type type = property.getType();

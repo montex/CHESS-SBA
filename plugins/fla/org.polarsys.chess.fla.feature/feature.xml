@@ -2,7 +2,7 @@
 <feature
       id="org.polarsys.chess.fla.feature"
       label="CHESS FLA feature (Incubation)"
-      version="0.9.0.qualifier">
+      version="0.10.0.qualifier">
 
    <description>
       Failure Logic Analysis CHESS plugins.
