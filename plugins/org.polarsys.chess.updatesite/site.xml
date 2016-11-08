@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.polarsys.chess.feature_0.9.0.201507281729.jar" id="org.polarsys.chess.feature" version="0.9.0.201507281729">
+   <description name="CHESS Polarsys 0.10.0" url="https://www.polarsys.org/chess/updatesite/0.10.0/">
+      CHESS Polarsys 0.10.0 release
+   </description>
+   <feature url="features/org.polarsys.chess.contracts.feature_0.10.0.201610211519.jar" id="org.polarsys.chess.contracts.feature" version="0.10.0.201610211519">
+      <category name="org.polarsys.chess.category"/>
+   </feature>
+   <feature url="features/org.polarsys.chess.feature_0.10.0.201610211519.jar" id="org.polarsys.chess.feature" version="0.10.0.201610211519">
+      <category name="org.polarsys.chess.category"/>
+   </feature>
+   <feature url="features/org.polarsys.chess.fla.feature_0.10.0.201610211519.jar" id="org.polarsys.chess.fla.feature" version="0.10.0.201610211519">
+      <category name="org.polarsys.chess.category"/>
+   </feature>
+   <feature url="features/org.polarsys.chess.statebased.feature_0.10.0.201610211519.jar" id="org.polarsys.chess.statebased.feature" version="0.10.0.201610211519">
+      <category name="org.polarsys.chess.category"/>
+   </feature>
+   <feature url="features/org.polarsys.chess.xtext.feature_0.10.0.201610211519.jar" id="org.polarsys.chess.xtext.feature" version="0.10.0.201610211519">
       <category name="org.polarsys.chess.category"/>
    </feature>
    <category-def name="org.polarsys.chess.category" label="polarsys.chess"/>
