@@ -26,6 +26,7 @@ import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.sashwindows.di.PageRef;
 import org.eclipse.papyrus.uml.tools.listeners.PapyrusStereotypeListener;
 import org.eclipse.uml2.uml.Model;
+import org.polarsys.chess.core.constraint.PreferenceProperties;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.views.DiagramStatus;
@@ -110,13 +111,18 @@ public class ViewManager {
 	public void check(Diagram diagram, StringBuffer s, DesignView currentView, TransactionalEditingDomain domain)
 			throws RollbackException {
 		
+		Boolean checkDiagramInView =
+		org.polarsys.chess.core.Activator.getDefault().getPreferenceStore().getBoolean(PreferenceProperties.DIAGRAM_IN_VIEW);
+		
+		if (!checkDiagramInView)
+			return;
+		
 			/*
 			 * @dynamicConstraint D_1
 			 * if the diagram is created in the root of the model
 			 */
 			if (diagram.getElement() instanceof Model) {
 				s.append(Messages.error_diagramInView);
-//				ResourceNotification.showError(Messages.error_diagramInView);
 				throw new RollbackException(new Status(IStatus.ERROR,
 						Activator.PLUGIN_ID, Messages.error_diagramInView));
 			} else {

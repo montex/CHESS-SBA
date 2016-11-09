@@ -92,10 +92,9 @@ public class OCRAConstraints extends AbstractModelConstraint {
 				compView = pkg;
 			}
 		} 
-		if(sysView == null){
-			//a bad case that should not happen
-			return failure;
-		} 
+//		if(sysView == null){
+//			//return failure;
+//		} 
 		//else:
 		// Browse through the model and get all blocks, ports, properties and associations
 		List<Class> allBlocks = new ArrayList<Class>();
@@ -107,54 +106,90 @@ public class OCRAConstraints extends AbstractModelConstraint {
 		List<Property> allContractProperties = new ArrayList<Property>();
 		List<Parameter> allParameters = new ArrayList<Parameter>();
 		
-		for (Element elem : sysView.allOwnedElements()) {
-			if (elem.getAppliedStereotype(BLOCK) != null || elem.getAppliedStereotype(SUBSYSTEM) != null ||
-					elem.getAppliedStereotype(SYSTEM) != null) {
-				allBlocks.add((Class) elem);
-			}
-			if (elem instanceof Property){
-				if (elem.getAppliedStereotype(FLOWPORT) != null || elem.getAppliedStereotype(FLOWPORTMARTE) != null){
-					allFlowPorts.add((Port) elem);
-				}else if(elem.getAppliedStereotype(CONTRACTPROP) != null){
-					allContractProperties.add((Property) elem);
-				}else if(!(elem instanceof Port)){
-					allProperties.add((Property) elem);
+		if (sysView != null)
+		
+			for (Element elem : sysView.allOwnedElements()) {
+				if (elem.getAppliedStereotype(BLOCK) != null || elem.getAppliedStereotype(SUBSYSTEM) != null ||
+						elem.getAppliedStereotype(SYSTEM) != null) {
+					allBlocks.add((Class) elem);
+				}
+				if (elem instanceof Property){
+					if (elem.getAppliedStereotype(FLOWPORT) != null || elem.getAppliedStereotype(FLOWPORTMARTE) != null){
+						allFlowPorts.add((Port) elem);
+					}else if(elem.getAppliedStereotype(CONTRACTPROP) != null){
+						allContractProperties.add((Property) elem);
+					}else if(!(elem instanceof Port)){
+						allProperties.add((Property) elem);
+					}
+				}
+				if (elem instanceof Association){
+					allAssociations.add((Association) elem);
+				}
+				if (elem instanceof Connector){
+					allConnectors.add((Connector) elem);
+				}
+				if (elem instanceof Constraint && elem.getAppliedStereotype(FORMPROP) != null){
+					allFormalProps.add((Constraint)elem);
+				}
+				if (elem instanceof Parameter){
+					if (((Parameter) elem).getOperation()!= null)
+						allParameters.add((Parameter) elem);
 				}
 			}
-			if (elem instanceof Association){
-				allAssociations.add((Association) elem);
-			}
-			if (elem instanceof Connector){
-				allConnectors.add((Connector) elem);
-			}
-			if (elem instanceof Constraint && elem.getAppliedStereotype(FORMPROP) != null){
-				allFormalProps.add((Constraint)elem);
-			}
-			if (elem instanceof Parameter){
-				if (((Parameter) elem).getOperation()!= null)
+		
+		if (compView != null)
+			for (Element elem : compView.allOwnedElements()) {
+				if (elem instanceof Constraint && elem.getAppliedStereotype(FORMPROP) != null){
+					allFormalProps.add((Constraint)elem);
+				}
+				
+				if (elem instanceof Property){
+					if (elem.getAppliedStereotype(CONTRACTPROP) != null){
+						allContractProperties.add((Property) elem);
+					}else if(!(elem instanceof Port) && !(elem.getOwner() instanceof DataType)){
+						allProperties.add((Property) elem);
+					}
+				}
+				if (elem instanceof Parameter){
+					if (((Parameter) elem).getOperation()!= null)
 					allParameters.add((Parameter) elem);
-			}
-		}
-		
-		for (Element elem : compView.allOwnedElements()) {
-			if (elem instanceof Constraint && elem.getAppliedStereotype(FORMPROP) != null){
-				allFormalProps.add((Constraint)elem);
-			}
-			
-			if (elem instanceof Property){
-				if (elem.getAppliedStereotype(CONTRACTPROP) != null){
-					allContractProperties.add((Property) elem);
-				}else if(!(elem instanceof Port) && !(elem.getOwner() instanceof DataType)){
-					allProperties.add((Property) elem);
 				}
 			}
-			if (elem instanceof Parameter){
-				if (((Parameter) elem).getOperation()!= null)
-				allParameters.add((Parameter) elem);
+		
+		if (sysView == null){
+			//we are not in a CHESS model, se we have to consider the entire Model for checking
+			for (Element elem : model.allOwnedElements()) {
+				if (elem.getAppliedStereotype(BLOCK) != null || elem.getAppliedStereotype(SUBSYSTEM) != null ||
+						elem.getAppliedStereotype(SYSTEM) != null) {
+					allBlocks.add((Class) elem);
+				}
+				if (elem instanceof Property){
+					if (elem.getAppliedStereotype(FLOWPORT) != null || elem.getAppliedStereotype(FLOWPORTMARTE) != null){
+						allFlowPorts.add((Port) elem);
+					}else if(elem.getAppliedStereotype(CONTRACTPROP) != null){
+						allContractProperties.add((Property) elem);
+					}else if(!(elem instanceof Port) && !(elem.getOwner() instanceof DataType)){
+						allProperties.add((Property) elem);
+					}
+				}
+				if (elem instanceof Association){
+					allAssociations.add((Association) elem);
+				}
+				if (elem instanceof Connector){
+					allConnectors.add((Connector) elem);
+				}
+				if (elem instanceof Constraint && elem.getAppliedStereotype(FORMPROP) != null){
+					allFormalProps.add((Constraint)elem);
+				}
+				if (elem instanceof Parameter){
+					if (((Parameter) elem).getOperation()!= null)
+						allParameters.add((Parameter) elem);
+				}
+				
 			}
 		}
 		
-		allResults.addAll(checkConstraintForeverAnalysis(sysView, allBlocks, allFlowPorts, allProperties, allAssociations, allConnectors, allFormalProps, allContractProperties, allParameters,ctx));
+		allResults.addAll(checkConstraintForeverAnalysis(allBlocks, allFlowPorts, allProperties, allAssociations, allConnectors, allFormalProps, allContractProperties, allParameters,ctx));
 		
 		if (allResults.size()>0) {
 			//size of all results > 0, create multistatus
@@ -165,7 +200,7 @@ public class OCRAConstraints extends AbstractModelConstraint {
 		}
 	}
 
-	private Collection<? extends ConstraintStatus> checkConstraintForeverAnalysis(Package sysView, List<Class> allBlocks, List<Port> allFlowPorts, List<Property> allProperties, List<Association> allAssociations, List<Connector> allConnectors, List<Constraint> allFormalProps, List<Property> allContractProperties, List<Parameter> allParameters,IValidationContext ctx) {
+	private Collection<? extends ConstraintStatus> checkConstraintForeverAnalysis(List<Class> allBlocks, List<Port> allFlowPorts, List<Property> allProperties, List<Association> allAssociations, List<Connector> allConnectors, List<Constraint> allFormalProps, List<Property> allContractProperties, List<Parameter> allParameters,IValidationContext ctx) {
 		
 		Collection<ConstraintStatus> results = new ArrayList<ConstraintStatus>();
 		String errorMsg;

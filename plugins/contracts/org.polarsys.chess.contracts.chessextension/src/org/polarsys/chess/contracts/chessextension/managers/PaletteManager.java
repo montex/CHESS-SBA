@@ -30,6 +30,7 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.ui.IEditorPart;
 import org.polarsys.chess.contracts.chessextension.Activator;
+import org.polarsys.chess.core.constraint.PreferenceProperties;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.views.DiagramStatus;
 
@@ -48,6 +49,12 @@ public class PaletteManager {
 	
 	//TODO this class should be reengineered so to have a parent one common to all the chess plugins
 	public static void setPaletteVisibility(PapyrusMultiDiagramEditor editor, DiagramStatus ds) {
+		
+		Boolean checkPalette =
+				org.polarsys.chess.core.Activator.getDefault().getPreferenceStore().getBoolean(PreferenceProperties.PALETTES_IN_VIEW);
+		
+		if (!checkPalette)
+			return;
 		
 		try {
 					

@@ -19,10 +19,12 @@ import java.util.ArrayList;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.polarsys.chess.core.constraint.ConstraintList;
 import org.polarsys.chess.core.constraint.IConstraint;
+import org.polarsys.chess.core.constraint.PreferenceProperties;
 import org.polarsys.chess.core.preferences.FilterableConstraint;
 import org.polarsys.chess.core.Activator;
 
@@ -41,7 +43,7 @@ public class ConstraintPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
 
 	private static int i = 0;
-
+	
 	public ConstraintPreferencePage() {
 		super(GRID);
 		setPreferenceStore(Activator.getDefault().getPreferenceStore());
@@ -55,25 +57,24 @@ public class ConstraintPreferencePage extends FieldEditorPreferencePage
 	 * editor knows how to save and restore itself.
 	 */
 	public void createFieldEditors() {
-		refresh();
-	}
-
-	public void refresh() {
 		ArrayList<FilterableConstraint> list = ConstraintList.getList();
 		if (list.isEmpty()) {
 			addField(new LabelField("Open the CHESS editor to load the constraints!", getFieldEditorParent()));
 		} else {
 			for (FilterableConstraint c : ConstraintList.getList()) {
-//				if (!(c instanceof ParsableConstraint))
-//					continue;
+
 				IConstraint cc = c.getConstraint();
 				BooleanFieldEditor b = new BooleanFieldEditor(cc.getName(), cc.getMessage(), BooleanFieldEditor.SEPARATE_LABEL, getFieldEditorParent());
 				addField(b);
 			}
+			
+			BooleanFieldEditor b1 = new BooleanFieldEditor(PreferenceProperties.DIAGRAM_IN_VIEW, "Diagrams must be created inside the proper CHESS views", BooleanFieldEditor.SEPARATE_LABEL, getFieldEditorParent());
+			addField(b1);
+			BooleanFieldEditor b2 = new BooleanFieldEditor(PreferenceProperties.PALETTES_IN_VIEW, "Hide Diagram Palettes according to the current CHESS views", BooleanFieldEditor.SEPARATE_LABEL, getFieldEditorParent());
+			addField(b2);
 		}
 	}
-	
-	
+
 	//Actively set the filter values on the ConstraintList
 	@Override
 	public boolean performOk() {
@@ -88,13 +89,17 @@ public class ConstraintPreferencePage extends FieldEditorPreferencePage
 		}
 		return true;
 	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
-	 */
+	
+	@Override
 	public void init(IWorkbench workbench) {
+		setPreferenceStore(Activator.getDefault().getPreferenceStore());
+        setDescription("CHESS Core Constraints");
+        
+	}
+	
+	@Override
+	public IPreferenceStore doGetPreferenceStore() {
+		return Activator.getDefault().getPreferenceStore();
 	}
 
 }

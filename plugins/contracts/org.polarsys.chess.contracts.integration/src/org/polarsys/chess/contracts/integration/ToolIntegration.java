@@ -28,7 +28,6 @@ import org.eclipse.uml2.uml.Constraint;
 import org.osgi.framework.Bundle;
 import org.polarsys.chess.contracts.integration.Activator;
 import org.polarsys.chess.contracts.integration.preferences.NusmvAnalysisPreferencePage;
-import org.polarsys.chess.core.util.CHESSProjectSupport;
 
 public class ToolIntegration {
 	
@@ -183,7 +182,6 @@ public class ToolIntegration {
 			}			
 		}catch (Exception e) {
 			e.printStackTrace();
-			CHESSProjectSupport.CHESS_CONSOLE.println("Problem during the checkFormalProperty execution");
 			if (shell != null )
 				MessageDialog.openError(shell, "Problem during analysis", e.getMessage());
 			return false;
