@@ -4,6 +4,7 @@ package org.polarsys.chess.contracts.profile.chesscontract;
 
 import org.eclipse.papyrus.sysml.constraints.ConstraintBlock;
 
+import org.eclipse.papyrus.sysml.requirements.Requirement;
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Languages;
 
 /**
@@ -87,12 +88,12 @@ public interface Contract extends ConstraintBlock {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Formalize</em>' reference.
-	 * @see #setFormalize(ForeverRequirement)
+	 * @see #setFormalize(Requirement)
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContract_Formalize()
-	 * @model required="true" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	ForeverRequirement getFormalize();
+	Requirement getFormalize();
 
 	/**
 	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getFormalize <em>Formalize</em>}' reference.
@@ -102,7 +103,7 @@ public interface Contract extends ConstraintBlock {
 	 * @see #getFormalize()
 	 * @generated
 	 */
-	void setFormalize(ForeverRequirement value);
+	void setFormalize(Requirement value);
 
 	/**
 	 * Returns the value of the '<em><b>Language</b></em>' attribute.

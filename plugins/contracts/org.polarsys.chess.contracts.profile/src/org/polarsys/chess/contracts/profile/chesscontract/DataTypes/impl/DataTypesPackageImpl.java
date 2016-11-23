@@ -378,6 +378,7 @@ public class DataTypesPackageImpl extends EPackageImpl implements DataTypesPacka
 		initEEnum(languagesEEnum, Languages.class, "Languages");
 		addEEnumLiteral(languagesEEnum, Languages.OCRA);
 		addEEnumLiteral(languagesEEnum, Languages.FPTC);
+		addEEnumLiteral(languagesEEnum, Languages.OTHER);
 
 		initEEnum(contractTypesEEnum, ContractTypes.class, "ContractTypes");
 		addEEnumLiteral(contractTypesEEnum, ContractTypes.STRONG);

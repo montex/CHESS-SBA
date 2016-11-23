@@ -49,15 +49,6 @@ public interface CHESSContractFactory extends EFactory {
 	FormalProperty createFormalProperty();
 
 	/**
-	 * Returns a new object of class '<em>Forever Requirement</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Forever Requirement</em>'.
-	 * @generated
-	 */
-	ForeverRequirement createForeverRequirement();
-
-	/**
 	 * Returns a new object of class '<em>Formalize</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -74,6 +65,15 @@ public interface CHESSContractFactory extends EFactory {
 	 * @generated
 	 */
 	SubSystem createSubSystem();
+
+	/**
+	 * Returns a new object of class '<em>CHESS Requirement</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CHESS Requirement</em>'.
+	 * @generated
+	 */
+	CHESSRequirement createCHESSRequirement();
 
 	/**
 	 * Returns a new object of class '<em>Contract Property</em>'.

@@ -11,15 +11,23 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="Guarantee" ordered="false"
         lowerBound="1" eType="#//FormalProperty"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Formalize" ordered="false"
-        lowerBound="1" eType="#//ForeverRequirement"/>
+        eType="ecore:EClass ../../org.eclipse.papyrus.sysml/model/sysml.ecore#//requirements/Requirement"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Language" ordered="false"
         lowerBound="1" eType="#//DataTypes/Languages"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FormalProperty">
     <eStructuralFeatures xsi:type="ecore:EReference" name="base_Constraint" ordered="false"
         lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Constraint"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Formalize" ordered="false"
+        eType="ecore:EClass ../../org.eclipse.papyrus.sysml/model/sysml.ecore#//requirements/Requirement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="goto" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ForeverRequirement" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//requirements/Requirement">
+  <eClassifiers xsi:type="ecore:EClass" name="Formalize">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base_Abstraction" ordered="false"
+        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Abstraction"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubSystem" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//blocks/Block"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CHESSRequirement" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//requirements/Requirement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Author" ordered="false"
         lowerBound="1" eType="ecore:EDataType ../../org.eclipse.uml2.types/model/Types.ecore#//String"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Status" ordered="false"
@@ -43,11 +51,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Risk" ordered="false" lowerBound="1"
         eType="#//DataTypes/ReqRisks"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Formalize">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="base_Abstraction" ordered="false"
-        lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Abstraction"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SubSystem" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//blocks/Block"/>
   <eClassifiers xsi:type="ecore:EClass" name="ContractProperty" eSuperTypes="../../org.eclipse.papyrus.sysml/model/sysml.ecore#//constraints/ConstraintProperty">
     <eStructuralFeatures xsi:type="ecore:EReference" name="RefinedBy" ordered="false"
         upperBound="-1" eType="#//ContractRefinement"/>
@@ -79,6 +82,8 @@
         lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="WeakGuarantees" ordered="false"
         upperBound="-1" eType="#//ContractProperty"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
+        ordered="false" lowerBound="1" eType="ecore:EClass ../../org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
   </eClassifiers>
   <eSubpackages name="DataTypes" nsURI="http:///CHESSContract/DataTypes.ecore" nsPrefix="CHESSContract.DataTypes">
     <eClassifiers xsi:type="ecore:EClass" name="OthelloConstraint">
@@ -128,6 +133,7 @@
     <eClassifiers xsi:type="ecore:EEnum" name="Languages">
       <eLiterals name="OCRA"/>
       <eLiterals name="FPTC" value="1"/>
+      <eLiterals name="Other" value="2"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="ContractTypes">
       <eLiterals name="Strong"/>

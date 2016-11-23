@@ -7,8 +7,7 @@ Bundle-ClassPath: .
 Bundle-Vendor: Intecs
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: 
- org.polarsys.chess.contracts.profile.chesscontract,
+Export-Package: org.polarsys.chess.contracts.profile.chesscontract,
  org.polarsys.chess.contracts.profile.chesscontract.DataTypes,
  org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl,
  org.polarsys.chess.contracts.profile.chesscontract.DataTypes.util,

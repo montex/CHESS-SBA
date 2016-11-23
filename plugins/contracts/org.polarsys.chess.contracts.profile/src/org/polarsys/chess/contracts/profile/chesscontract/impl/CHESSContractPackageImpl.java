@@ -6,34 +6,24 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.papyrus.sysml.SysmlPackage;
-
 import org.eclipse.papyrus.sysml.blocks.BlocksPackage;
-
 import org.eclipse.papyrus.sysml.constraints.ConstraintsPackage;
-
 import org.eclipse.papyrus.sysml.requirements.RequirementsPackage;
-
 import org.eclipse.uml2.types.TypesPackage;
-
 import org.eclipse.uml2.uml.UMLPackage;
-
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractFactory;
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
+import org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement;
 import org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
-
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesPackage;
-
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl;
-
 import org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint;
-import org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.Formalize;
 import org.polarsys.chess.contracts.profile.chesscontract.Platform;
@@ -73,13 +63,6 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass foreverRequirementEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass formalizeEClass = null;
 
 	/**
@@ -88,6 +71,13 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 	 * @generated
 	 */
 	private EClass subSystemEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass chessRequirementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -277,8 +267,8 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getForeverRequirement() {
-		return foreverRequirementEClass;
+	public EReference getFormalProperty_Formalize() {
+		return (EReference)formalPropertyEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -286,80 +276,8 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getForeverRequirement_Author() {
-		return (EAttribute)foreverRequirementEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getForeverRequirement_Status() {
-		return (EAttribute)foreverRequirementEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getForeverRequirement_Type() {
-		return (EAttribute)foreverRequirementEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getForeverRequirement_Priority() {
-		return (EAttribute)foreverRequirementEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getForeverRequirement_Performance() {
-		return (EAttribute)foreverRequirementEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getForeverRequirement_Tolerance() {
-		return (EAttribute)foreverRequirementEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getForeverRequirement_Severity() {
-		return (EAttribute)foreverRequirementEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getForeverRequirement_Maturity() {
-		return (EAttribute)foreverRequirementEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getForeverRequirement_Risk() {
-		return (EAttribute)foreverRequirementEClass.getEStructuralFeatures().get(8);
+	public EReference getFormalProperty_Goto() {
+		return (EReference)formalPropertyEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -387,6 +305,96 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 	 */
 	public EClass getSubSystem() {
 		return subSystemEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCHESSRequirement() {
+		return chessRequirementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHESSRequirement_Author() {
+		return (EAttribute)chessRequirementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHESSRequirement_Status() {
+		return (EAttribute)chessRequirementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHESSRequirement_Type() {
+		return (EAttribute)chessRequirementEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHESSRequirement_Priority() {
+		return (EAttribute)chessRequirementEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHESSRequirement_Performance() {
+		return (EAttribute)chessRequirementEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHESSRequirement_Tolerance() {
+		return (EAttribute)chessRequirementEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHESSRequirement_Severity() {
+		return (EAttribute)chessRequirementEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHESSRequirement_Maturity() {
+		return (EAttribute)chessRequirementEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCHESSRequirement_Risk() {
+		return (EAttribute)chessRequirementEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -538,6 +546,15 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getComponentInstance_Base_InstanceSpecification() {
+		return (EReference)componentInstanceEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CHESSContractFactory getCHESSContractFactory() {
 		return (CHESSContractFactory)getEFactoryInstance();
 	}
@@ -571,22 +588,24 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 
 		formalPropertyEClass = createEClass(FORMAL_PROPERTY);
 		createEReference(formalPropertyEClass, FORMAL_PROPERTY__BASE_CONSTRAINT);
-
-		foreverRequirementEClass = createEClass(FOREVER_REQUIREMENT);
-		createEAttribute(foreverRequirementEClass, FOREVER_REQUIREMENT__AUTHOR);
-		createEAttribute(foreverRequirementEClass, FOREVER_REQUIREMENT__STATUS);
-		createEAttribute(foreverRequirementEClass, FOREVER_REQUIREMENT__TYPE);
-		createEAttribute(foreverRequirementEClass, FOREVER_REQUIREMENT__PRIORITY);
-		createEAttribute(foreverRequirementEClass, FOREVER_REQUIREMENT__PERFORMANCE);
-		createEAttribute(foreverRequirementEClass, FOREVER_REQUIREMENT__TOLERANCE);
-		createEAttribute(foreverRequirementEClass, FOREVER_REQUIREMENT__SEVERITY);
-		createEAttribute(foreverRequirementEClass, FOREVER_REQUIREMENT__MATURITY);
-		createEAttribute(foreverRequirementEClass, FOREVER_REQUIREMENT__RISK);
+		createEReference(formalPropertyEClass, FORMAL_PROPERTY__FORMALIZE);
+		createEReference(formalPropertyEClass, FORMAL_PROPERTY__GOTO);
 
 		formalizeEClass = createEClass(FORMALIZE);
 		createEReference(formalizeEClass, FORMALIZE__BASE_ABSTRACTION);
 
 		subSystemEClass = createEClass(SUB_SYSTEM);
+
+		chessRequirementEClass = createEClass(CHESS_REQUIREMENT);
+		createEAttribute(chessRequirementEClass, CHESS_REQUIREMENT__AUTHOR);
+		createEAttribute(chessRequirementEClass, CHESS_REQUIREMENT__STATUS);
+		createEAttribute(chessRequirementEClass, CHESS_REQUIREMENT__TYPE);
+		createEAttribute(chessRequirementEClass, CHESS_REQUIREMENT__PRIORITY);
+		createEAttribute(chessRequirementEClass, CHESS_REQUIREMENT__PERFORMANCE);
+		createEAttribute(chessRequirementEClass, CHESS_REQUIREMENT__TOLERANCE);
+		createEAttribute(chessRequirementEClass, CHESS_REQUIREMENT__SEVERITY);
+		createEAttribute(chessRequirementEClass, CHESS_REQUIREMENT__MATURITY);
+		createEAttribute(chessRequirementEClass, CHESS_REQUIREMENT__RISK);
 
 		contractPropertyEClass = createEClass(CONTRACT_PROPERTY);
 		createEReference(contractPropertyEClass, CONTRACT_PROPERTY__REFINED_BY);
@@ -609,6 +628,7 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 		componentInstanceEClass = createEClass(COMPONENT_INSTANCE);
 		createEReference(componentInstanceEClass, COMPONENT_INSTANCE__BASE_PROPERTY);
 		createEReference(componentInstanceEClass, COMPONENT_INSTANCE__WEAK_GUARANTEES);
+		createEReference(componentInstanceEClass, COMPONENT_INSTANCE__BASE_INSTANCE_SPECIFICATION);
 	}
 
 	/**
@@ -638,8 +658,9 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 		DataTypesPackage theDataTypesPackage = (DataTypesPackage)EPackage.Registry.INSTANCE.getEPackage(DataTypesPackage.eNS_URI);
 		BlocksPackage theBlocksPackage = (BlocksPackage)EPackage.Registry.INSTANCE.getEPackage(BlocksPackage.eNS_URI);
 		ConstraintsPackage theConstraintsPackage = (ConstraintsPackage)EPackage.Registry.INSTANCE.getEPackage(ConstraintsPackage.eNS_URI);
-		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		RequirementsPackage theRequirementsPackage = (RequirementsPackage)EPackage.Registry.INSTANCE.getEPackage(RequirementsPackage.eNS_URI);
+		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
 		// Add subpackages
@@ -652,8 +673,8 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 		// Add supertypes to classes
 		systemEClass.getESuperTypes().add(theBlocksPackage.getBlock());
 		contractEClass.getESuperTypes().add(theConstraintsPackage.getConstraintBlock());
-		foreverRequirementEClass.getESuperTypes().add(theRequirementsPackage.getRequirement());
 		subSystemEClass.getESuperTypes().add(theBlocksPackage.getBlock());
+		chessRequirementEClass.getESuperTypes().add(theRequirementsPackage.getRequirement());
 		contractPropertyEClass.getESuperTypes().add(theConstraintsPackage.getConstraintProperty());
 
 		// Initialize classes, features, and operations; add parameters
@@ -662,27 +683,29 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 		initEClass(contractEClass, Contract.class, "Contract", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getContract_Assume(), this.getFormalProperty(), null, "Assume", null, 1, 1, Contract.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getContract_Guarantee(), this.getFormalProperty(), null, "Guarantee", null, 1, 1, Contract.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getContract_Formalize(), this.getForeverRequirement(), null, "Formalize", null, 1, 1, Contract.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getContract_Formalize(), theRequirementsPackage.getRequirement(), null, "Formalize", null, 0, 1, Contract.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getContract_Language(), theDataTypesPackage.getLanguages(), "Language", null, 1, 1, Contract.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(formalPropertyEClass, FormalProperty.class, "FormalProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFormalProperty_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, FormalProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(foreverRequirementEClass, ForeverRequirement.class, "ForeverRequirement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getForeverRequirement_Author(), theTypesPackage.getString(), "Author", null, 1, 1, ForeverRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getForeverRequirement_Status(), theDataTypesPackage.getReqStatuses(), "Status", null, 1, 1, ForeverRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getForeverRequirement_Type(), theDataTypesPackage.getReqTypes(), "Type", null, 1, 1, ForeverRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getForeverRequirement_Priority(), theDataTypesPackage.getReqPriorities(), "Priority", null, 1, 1, ForeverRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getForeverRequirement_Performance(), theTypesPackage.getString(), "Performance", null, 1, 1, ForeverRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getForeverRequirement_Tolerance(), theTypesPackage.getString(), "Tolerance", null, 1, 1, ForeverRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getForeverRequirement_Severity(), theTypesPackage.getString(), "Severity", null, 1, 1, ForeverRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getForeverRequirement_Maturity(), theDataTypesPackage.getReqMaturities(), "Maturity", null, 1, 1, ForeverRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEAttribute(getForeverRequirement_Risk(), theDataTypesPackage.getReqRisks(), "Risk", null, 1, 1, ForeverRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFormalProperty_Formalize(), theRequirementsPackage.getRequirement(), null, "Formalize", null, 0, 1, FormalProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getFormalProperty_Goto(), theEcorePackage.getEObject(), null, "goto", null, 0, 1, FormalProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(formalizeEClass, Formalize.class, "Formalize", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFormalize_Base_Abstraction(), theUMLPackage.getAbstraction(), null, "base_Abstraction", null, 1, 1, Formalize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(subSystemEClass, SubSystem.class, "SubSystem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(chessRequirementEClass, CHESSRequirement.class, "CHESSRequirement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCHESSRequirement_Author(), theTypesPackage.getString(), "Author", null, 1, 1, CHESSRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHESSRequirement_Status(), theDataTypesPackage.getReqStatuses(), "Status", null, 1, 1, CHESSRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHESSRequirement_Type(), theDataTypesPackage.getReqTypes(), "Type", null, 1, 1, CHESSRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHESSRequirement_Priority(), theDataTypesPackage.getReqPriorities(), "Priority", null, 1, 1, CHESSRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHESSRequirement_Performance(), theTypesPackage.getString(), "Performance", null, 1, 1, CHESSRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHESSRequirement_Tolerance(), theTypesPackage.getString(), "Tolerance", null, 1, 1, CHESSRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHESSRequirement_Severity(), theTypesPackage.getString(), "Severity", null, 1, 1, CHESSRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHESSRequirement_Maturity(), theDataTypesPackage.getReqMaturities(), "Maturity", null, 1, 1, CHESSRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getCHESSRequirement_Risk(), theDataTypesPackage.getReqRisks(), "Risk", null, 1, 1, CHESSRequirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(contractPropertyEClass, ContractProperty.class, "ContractProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getContractProperty_RefinedBy(), this.getContractRefinement(), null, "RefinedBy", null, 0, -1, ContractProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -705,6 +728,7 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 		initEClass(componentInstanceEClass, ComponentInstance.class, "ComponentInstance", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComponentInstance_Base_Property(), theUMLPackage.getProperty(), null, "base_Property", null, 1, 1, ComponentInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getComponentInstance_WeakGuarantees(), this.getContractProperty(), null, "WeakGuarantees", null, 0, -1, ComponentInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getComponentInstance_Base_InstanceSpecification(), theUMLPackage.getInstanceSpecification(), null, "base_InstanceSpecification", null, 1, 1, ComponentInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -729,7 +753,7 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 			 "originalName", "CHESSContract"
 		   });	
 		addAnnotation
-		  (getForeverRequirement_Performance(), 
+		  (getCHESSRequirement_Performance(), 
 		   source, 
 		   new String[] {
 			 "originalName", "Performance "

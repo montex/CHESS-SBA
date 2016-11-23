@@ -3,20 +3,14 @@
 package org.polarsys.chess.contracts.profile.chesscontract.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.papyrus.sysml.constraints.internal.impl.ConstraintBlockImpl;
-
+import org.eclipse.papyrus.sysml.requirements.Requirement;
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
-
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Languages;
-
-import org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 
 /**
@@ -64,7 +58,7 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 	 * @generated
 	 * @ordered
 	 */
-	protected ForeverRequirement formalize;
+	protected Requirement formalize;
 
 	/**
 	 * The default value of the '{@link #getLanguage() <em>Language</em>}' attribute.
@@ -186,10 +180,10 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ForeverRequirement getFormalize() {
+	public Requirement getFormalize() {
 		if (formalize != null && formalize.eIsProxy()) {
 			InternalEObject oldFormalize = (InternalEObject)formalize;
-			formalize = (ForeverRequirement)eResolveProxy(oldFormalize);
+			formalize = (Requirement)eResolveProxy(oldFormalize);
 			if (formalize != oldFormalize) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CHESSContractPackage.CONTRACT__FORMALIZE, oldFormalize, formalize));
@@ -203,7 +197,7 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ForeverRequirement basicGetFormalize() {
+	public Requirement basicGetFormalize() {
 		return formalize;
 	}
 
@@ -212,8 +206,8 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFormalize(ForeverRequirement newFormalize) {
-		ForeverRequirement oldFormalize = formalize;
+	public void setFormalize(Requirement newFormalize) {
+		Requirement oldFormalize = formalize;
 		formalize = newFormalize;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CHESSContractPackage.CONTRACT__FORMALIZE, oldFormalize, formalize));
@@ -278,7 +272,7 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 				setGuarantee((FormalProperty)newValue);
 				return;
 			case CHESSContractPackage.CONTRACT__FORMALIZE:
-				setFormalize((ForeverRequirement)newValue);
+				setFormalize((Requirement)newValue);
 				return;
 			case CHESSContractPackage.CONTRACT__LANGUAGE:
 				setLanguage((Languages)newValue);
@@ -302,7 +296,7 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 				setGuarantee((FormalProperty)null);
 				return;
 			case CHESSContractPackage.CONTRACT__FORMALIZE:
-				setFormalize((ForeverRequirement)null);
+				setFormalize((Requirement)null);
 				return;
 			case CHESSContractPackage.CONTRACT__LANGUAGE:
 				setLanguage(LANGUAGE_EDEFAULT);

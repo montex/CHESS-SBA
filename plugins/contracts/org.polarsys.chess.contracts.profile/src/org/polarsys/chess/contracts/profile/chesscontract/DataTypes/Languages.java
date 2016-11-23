@@ -36,7 +36,15 @@ public enum Languages implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	FPTC(1, "FPTC", "FPTC");
+	FPTC(1, "FPTC", "FPTC"), /**
+	 * The '<em><b>Other</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #OTHER_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	OTHER(2, "Other", "Other");
 
 	/**
 	 * The '<em><b>OCRA</b></em>' literal value.
@@ -69,6 +77,21 @@ public enum Languages implements Enumerator {
 	public static final int FPTC_VALUE = 1;
 
 	/**
+	 * The '<em><b>Other</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Other</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #OTHER
+	 * @model name="Other"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OTHER_VALUE = 2;
+
+	/**
 	 * An array of all the '<em><b>Languages</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -78,6 +101,7 @@ public enum Languages implements Enumerator {
 		new Languages[] {
 			OCRA,
 			FPTC,
+			OTHER,
 		};
 
 	/**
@@ -130,6 +154,7 @@ public enum Languages implements Enumerator {
 		switch (value) {
 			case OCRA_VALUE: return OCRA;
 			case FPTC_VALUE: return FPTC;
+			case OTHER_VALUE: return OTHER;
 		}
 		return null;
 	}

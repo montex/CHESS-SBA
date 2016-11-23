@@ -4,23 +4,18 @@ package org.polarsys.chess.contracts.profile.chesscontract.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-
 import org.eclipse.papyrus.sysml.blocks.Block;
-
 import org.eclipse.papyrus.sysml.constraints.ConstraintBlock;
 import org.eclipse.papyrus.sysml.constraints.ConstraintProperty;
-
 import org.eclipse.papyrus.sysml.requirements.Requirement;
-
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
+import org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement;
 import org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint;
-import org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.Formalize;
 import org.polarsys.chess.contracts.profile.chesscontract.Platform;
@@ -105,13 +100,6 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CHESSContractPackage.FOREVER_REQUIREMENT: {
-				ForeverRequirement foreverRequirement = (ForeverRequirement)theEObject;
-				T result = caseForeverRequirement(foreverRequirement);
-				if (result == null) result = caseRequirement(foreverRequirement);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case CHESSContractPackage.FORMALIZE: {
 				Formalize formalize = (Formalize)theEObject;
 				T result = caseFormalize(formalize);
@@ -122,6 +110,13 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 				SubSystem subSystem = (SubSystem)theEObject;
 				T result = caseSubSystem(subSystem);
 				if (result == null) result = caseBlock(subSystem);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CHESSContractPackage.CHESS_REQUIREMENT: {
+				CHESSRequirement chessRequirement = (CHESSRequirement)theEObject;
+				T result = caseCHESSRequirement(chessRequirement);
+				if (result == null) result = caseRequirement(chessRequirement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -212,21 +207,6 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Forever Requirement</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Forever Requirement</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseForeverRequirement(ForeverRequirement object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Formalize</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -253,6 +233,21 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseSubSystem(SubSystem object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>CHESS Requirement</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>CHESS Requirement</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCHESSRequirement(CHESSRequirement object) {
 		return null;
 	}
 

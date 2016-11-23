@@ -33,12 +33,12 @@
       </profile>
    </extension>
     
-   <extension point="org.eclipse.emf.ecore.generated_package">
+   <!--extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http:///chesscontracts.ecore"
             class="org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage"
             genModel="model/CHESSContract.profile.genmodel"/>
-   </extension>
+   </extension-->
    
    <extension point="org.eclipse.uml2.uml.generated_package">
       <profile
@@ -46,8 +46,8 @@
       	 uri="http:///CHESSContract.ecore">		
       </profile>
    </extension>
-
-
+   
+ 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated CHESSContractProfile.profile -->
       <package
@@ -55,7 +55,6 @@
             class="org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage"
             genModel="model/CHESSContract.profile.genmodel"/>
    </extension>
-
   
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated CHESSContractProfile.profile -->
@@ -155,6 +154,22 @@
    <extension
          point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
       <paletteDefinition
+            ID="ClassDiagram-Forever-Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            name="ClassDiagram-Forever-Palette"
+            path="/palettes/ForeverCD.Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.uml.diagram.component">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
             ID="CompositeDiagram-Forever-Palette"
             class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
             name="CompositeDiagram-Forever-Palette"
@@ -184,19 +199,6 @@
       </paletteDefinition>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated CHESSContract.profile -->
-      <package
-            uri="http:///CHESSContract.ecore"
-            class="org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage"
-            genModel="model/CHESSContract.profile.genmodel"/>
-   </extension>
+ 
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated CHESSContract.profile -->
-      <package
-            uri="http:///CHESSContract/DataTypes.ecore"
-            class="org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesPackage"
-            genModel="model/CHESSContract.profile.genmodel"/>
-   </extension>
 </plugin>

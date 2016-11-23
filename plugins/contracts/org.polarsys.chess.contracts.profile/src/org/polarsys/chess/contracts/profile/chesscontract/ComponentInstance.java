@@ -6,6 +6,7 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Property;
 
 /**
@@ -18,6 +19,7 @@ import org.eclipse.uml2.uml.Property;
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance#getBase_Property <em>Base Property</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance#getWeakGuarantees <em>Weak Guarantees</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
  * </ul>
  * </p>
  *
@@ -67,5 +69,31 @@ public interface ComponentInstance extends EObject {
 	 * @generated
 	 */
 	EList<ContractProperty> getWeakGuarantees();
+
+	/**
+	 * Returns the value of the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Base Instance Specification</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Base Instance Specification</em>' reference.
+	 * @see #setBase_InstanceSpecification(InstanceSpecification)
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getComponentInstance_Base_InstanceSpecification()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	InstanceSpecification getBase_InstanceSpecification();
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance#getBase_InstanceSpecification <em>Base Instance Specification</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Base Instance Specification</em>' reference.
+	 * @see #getBase_InstanceSpecification()
+	 * @generated
+	 */
+	void setBase_InstanceSpecification(InstanceSpecification value);
 
 } // ComponentInstance

@@ -5,11 +5,13 @@ package org.polarsys.chess.contracts.profile.chesscontract.impl;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.papyrus.sysml.requirements.Requirement;
 import org.eclipse.uml2.uml.Constraint;
 
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
@@ -23,6 +25,8 @@ import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalPropertyImpl#getBase_Constraint <em>Base Constraint</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalPropertyImpl#getFormalize <em>Formalize</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalPropertyImpl#getGoto <em>Goto</em>}</li>
  * </ul>
  * </p>
  *
@@ -38,6 +42,26 @@ public class FormalPropertyImpl extends MinimalEObjectImpl.Container implements 
 	 * @ordered
 	 */
 	protected Constraint base_Constraint;
+
+	/**
+	 * The cached value of the '{@link #getFormalize() <em>Formalize</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFormalize()
+	 * @generated
+	 * @ordered
+	 */
+	protected Requirement formalize;
+
+	/**
+	 * The cached value of the '{@link #getGoto() <em>Goto</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGoto()
+	 * @generated
+	 * @ordered
+	 */
+	protected EObject goto_;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -101,12 +125,94 @@ public class FormalPropertyImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Requirement getFormalize() {
+		if (formalize != null && formalize.eIsProxy()) {
+			InternalEObject oldFormalize = (InternalEObject)formalize;
+			formalize = (Requirement)eResolveProxy(oldFormalize);
+			if (formalize != oldFormalize) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CHESSContractPackage.FORMAL_PROPERTY__FORMALIZE, oldFormalize, formalize));
+			}
+		}
+		return formalize;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Requirement basicGetFormalize() {
+		return formalize;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFormalize(Requirement newFormalize) {
+		Requirement oldFormalize = formalize;
+		formalize = newFormalize;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CHESSContractPackage.FORMAL_PROPERTY__FORMALIZE, oldFormalize, formalize));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EObject getGoto() {
+		if (goto_ != null && goto_.eIsProxy()) {
+			InternalEObject oldGoto = (InternalEObject)goto_;
+			goto_ = eResolveProxy(oldGoto);
+			if (goto_ != oldGoto) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CHESSContractPackage.FORMAL_PROPERTY__GOTO, oldGoto, goto_));
+			}
+		}
+		return goto_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EObject basicGetGoto() {
+		return goto_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGoto(EObject newGoto) {
+		EObject oldGoto = goto_;
+		goto_ = newGoto;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CHESSContractPackage.FORMAL_PROPERTY__GOTO, oldGoto, goto_));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CHESSContractPackage.FORMAL_PROPERTY__BASE_CONSTRAINT:
 				if (resolve) return getBase_Constraint();
 				return basicGetBase_Constraint();
+			case CHESSContractPackage.FORMAL_PROPERTY__FORMALIZE:
+				if (resolve) return getFormalize();
+				return basicGetFormalize();
+			case CHESSContractPackage.FORMAL_PROPERTY__GOTO:
+				if (resolve) return getGoto();
+				return basicGetGoto();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -121,6 +227,12 @@ public class FormalPropertyImpl extends MinimalEObjectImpl.Container implements 
 		switch (featureID) {
 			case CHESSContractPackage.FORMAL_PROPERTY__BASE_CONSTRAINT:
 				setBase_Constraint((Constraint)newValue);
+				return;
+			case CHESSContractPackage.FORMAL_PROPERTY__FORMALIZE:
+				setFormalize((Requirement)newValue);
+				return;
+			case CHESSContractPackage.FORMAL_PROPERTY__GOTO:
+				setGoto((EObject)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -137,6 +249,12 @@ public class FormalPropertyImpl extends MinimalEObjectImpl.Container implements 
 			case CHESSContractPackage.FORMAL_PROPERTY__BASE_CONSTRAINT:
 				setBase_Constraint((Constraint)null);
 				return;
+			case CHESSContractPackage.FORMAL_PROPERTY__FORMALIZE:
+				setFormalize((Requirement)null);
+				return;
+			case CHESSContractPackage.FORMAL_PROPERTY__GOTO:
+				setGoto((EObject)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -151,6 +269,10 @@ public class FormalPropertyImpl extends MinimalEObjectImpl.Container implements 
 		switch (featureID) {
 			case CHESSContractPackage.FORMAL_PROPERTY__BASE_CONSTRAINT:
 				return base_Constraint != null;
+			case CHESSContractPackage.FORMAL_PROPERTY__FORMALIZE:
+				return formalize != null;
+			case CHESSContractPackage.FORMAL_PROPERTY__GOTO:
+				return goto_ != null;
 		}
 		return super.eIsSet(featureID);
 	}

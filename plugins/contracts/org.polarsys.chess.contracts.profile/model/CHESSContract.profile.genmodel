@@ -3,7 +3,7 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/uml2/2.2.0/GenModel"
     modelDirectory="/org.polarsys.chess.contracts.profile/src" modelPluginID="org.polarsys.chess.contracts.profile"
     modelName="CHESSContract" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    importerID="org.eclipse.uml2.uml.ecore.importer" complianceLevel="6.0" copyrightFields="false"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
     usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.uml2.uml.profile.standard/model/Standard.genmodel#//standard ../../org.eclipse.papyrus.sysml/model/SysML.profile.genmodel#//sysml ../../org.eclipse.uml2.types/model/Types.genmodel#//types ../../org.eclipse.uml2.uml/model/UML.genmodel#//uml"
     operationReflection="true" importOrganizing="true">
   <genAnnotations source="http://www.eclipse.org/emf/2002/GenModel/importer/org.eclipse.uml2.uml.ecore.importer">
@@ -30,7 +30,7 @@
     <details key="CAMEL_CASE_NAMES" value="IGNORE"/>
     <details key="SUPER_CLASS_ORDER" value="PROCESS"/>
   </genAnnotations>
-  <foreignModel>CHESSContract.profile.uml</foreignModel>
+  <foreignModel>chesscontract.ecore</foreignModel>
   <genPackages xsi:type="genmodel:GenPackage" prefix="CHESSContract" basePackage="org.polarsys.chess.contracts.profile"
       disposableProviderFactory="true" ecorePackage="chesscontract.ecore#/">
     <genClasses xsi:type="genmodel:GenClass" ecoreClass="chesscontract.ecore#//System"/>
@@ -46,23 +46,27 @@
     <genClasses xsi:type="genmodel:GenClass" ecoreClass="chesscontract.ecore#//FormalProperty">
       <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
           propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//FormalProperty/base_Constraint"/>
-    </genClasses>
-    <genClasses xsi:type="genmodel:GenClass" ecoreClass="chesscontract.ecore#//ForeverRequirement">
-      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ForeverRequirement/Author"/>
-      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ForeverRequirement/Status"/>
-      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ForeverRequirement/Type"/>
-      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ForeverRequirement/Priority"/>
-      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ForeverRequirement/Performance"/>
-      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ForeverRequirement/Tolerance"/>
-      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ForeverRequirement/Severity"/>
-      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ForeverRequirement/Maturity"/>
-      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ForeverRequirement/Risk"/>
+      <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+          propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//FormalProperty/Formalize"/>
+      <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+          propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//FormalProperty/goto"/>
     </genClasses>
     <genClasses xsi:type="genmodel:GenClass" ecoreClass="chesscontract.ecore#//Formalize">
       <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
           propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//Formalize/base_Abstraction"/>
     </genClasses>
     <genClasses xsi:type="genmodel:GenClass" ecoreClass="chesscontract.ecore#//SubSystem"/>
+    <genClasses xsi:type="genmodel:GenClass" ecoreClass="chesscontract.ecore#//CHESSRequirement">
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//CHESSRequirement/Author"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//CHESSRequirement/Status"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//CHESSRequirement/Type"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//CHESSRequirement/Priority"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//CHESSRequirement/Performance"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//CHESSRequirement/Tolerance"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//CHESSRequirement/Severity"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//CHESSRequirement/Maturity"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//CHESSRequirement/Risk"/>
+    </genClasses>
     <genClasses xsi:type="genmodel:GenClass" ecoreClass="chesscontract.ecore#//ContractProperty">
       <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
           propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//ContractProperty/RefinedBy"/>
@@ -93,9 +97,11 @@
           propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//ComponentInstance/base_Property"/>
       <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
           propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//ComponentInstance/WeakGuarantees"/>
+      <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+          propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//ComponentInstance/base_InstanceSpecification"/>
     </genClasses>
-    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="DataTypes" disposableProviderFactory="true"
-        ecorePackage="chesscontract.ecore#//DataTypes">
+    <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="DataTypes" basePackage="org.polarsys.chess.contracts.profile.chesscontract"
+        disposableProviderFactory="true" ecorePackage="chesscontract.ecore#//DataTypes">
       <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chesscontract.ecore#//DataTypes/ReqStatuses">
         <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chesscontract.ecore#//DataTypes/ReqStatuses/Initial"/>
         <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chesscontract.ecore#//DataTypes/ReqStatuses/Derived"/>
@@ -134,6 +140,7 @@
       <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chesscontract.ecore#//DataTypes/Languages">
         <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chesscontract.ecore#//DataTypes/Languages/OCRA"/>
         <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chesscontract.ecore#//DataTypes/Languages/FPTC"/>
+        <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chesscontract.ecore#//DataTypes/Languages/Other"/>
       </genEnums>
       <genEnums xsi:type="genmodel:GenEnum" typeSafeEnumCompatible="false" ecoreEnum="chesscontract.ecore#//DataTypes/ContractTypes">
         <genEnumLiterals xsi:type="genmodel:GenEnumLiteral" ecoreEnumLiteral="chesscontract.ecore#//DataTypes/ContractTypes/Strong"/>

@@ -5,19 +5,16 @@ package org.polarsys.chess.contracts.profile.chesscontract.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractFactory;
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
+import org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement;
 import org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint;
-import org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.Formalize;
 import org.polarsys.chess.contracts.profile.chesscontract.Platform;
@@ -71,9 +68,9 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 			case CHESSContractPackage.SYSTEM: return createSystem();
 			case CHESSContractPackage.CONTRACT: return createContract();
 			case CHESSContractPackage.FORMAL_PROPERTY: return createFormalProperty();
-			case CHESSContractPackage.FOREVER_REQUIREMENT: return createForeverRequirement();
 			case CHESSContractPackage.FORMALIZE: return createFormalize();
 			case CHESSContractPackage.SUB_SYSTEM: return createSubSystem();
+			case CHESSContractPackage.CHESS_REQUIREMENT: return createCHESSRequirement();
 			case CHESSContractPackage.CONTRACT_PROPERTY: return createContractProperty();
 			case CHESSContractPackage.CONTRACT_REFINEMENT: return createContractRefinement();
 			case CHESSContractPackage.DELEGATION_CONSTRAINT: return createDelegationConstraint();
@@ -120,16 +117,6 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ForeverRequirement createForeverRequirement() {
-		ForeverRequirementImpl foreverRequirement = new ForeverRequirementImpl();
-		return foreverRequirement;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Formalize createFormalize() {
 		FormalizeImpl formalize = new FormalizeImpl();
 		return formalize;
@@ -143,6 +130,16 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	public SubSystem createSubSystem() {
 		SubSystemImpl subSystem = new SubSystemImpl();
 		return subSystem;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CHESSRequirement createCHESSRequirement() {
+		CHESSRequirementImpl chessRequirement = new CHESSRequirementImpl();
+		return chessRequirement;
 	}
 
 	/**

@@ -211,13 +211,31 @@ public interface CHESSContractPackage extends EPackage {
 	int FORMAL_PROPERTY__BASE_CONSTRAINT = 0;
 
 	/**
+	 * The feature id for the '<em><b>Formalize</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FORMAL_PROPERTY__FORMALIZE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Goto</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FORMAL_PROPERTY__GOTO = 2;
+
+	/**
 	 * The number of structural features of the '<em>Formal Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PROPERTY_FEATURE_COUNT = 1;
+	int FORMAL_PROPERTY_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Formal Property</em>' class.
@@ -229,205 +247,6 @@ public interface CHESSContractPackage extends EPackage {
 	int FORMAL_PROPERTY_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ForeverRequirementImpl <em>Forever Requirement</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ForeverRequirementImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getForeverRequirement()
-	 * @generated
-	 */
-	int FOREVER_REQUIREMENT = 3;
-
-	/**
-	 * The feature id for the '<em><b>Text</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__TEXT = RequirementsPackage.REQUIREMENT__TEXT;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__ID = RequirementsPackage.REQUIREMENT__ID;
-
-	/**
-	 * The feature id for the '<em><b>Derived</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__DERIVED = RequirementsPackage.REQUIREMENT__DERIVED;
-
-	/**
-	 * The feature id for the '<em><b>Derived From</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__DERIVED_FROM = RequirementsPackage.REQUIREMENT__DERIVED_FROM;
-
-	/**
-	 * The feature id for the '<em><b>Satisfied By</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__SATISFIED_BY = RequirementsPackage.REQUIREMENT__SATISFIED_BY;
-
-	/**
-	 * The feature id for the '<em><b>Refined By</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__REFINED_BY = RequirementsPackage.REQUIREMENT__REFINED_BY;
-
-	/**
-	 * The feature id for the '<em><b>Traced To</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__TRACED_TO = RequirementsPackage.REQUIREMENT__TRACED_TO;
-
-	/**
-	 * The feature id for the '<em><b>Verified By</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__VERIFIED_BY = RequirementsPackage.REQUIREMENT__VERIFIED_BY;
-
-	/**
-	 * The feature id for the '<em><b>Master</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__MASTER = RequirementsPackage.REQUIREMENT__MASTER;
-
-	/**
-	 * The feature id for the '<em><b>Base Class</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__BASE_CLASS = RequirementsPackage.REQUIREMENT__BASE_CLASS;
-
-	/**
-	 * The feature id for the '<em><b>Author</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__AUTHOR = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Status</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__STATUS = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__TYPE = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Priority</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__PRIORITY = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Performance</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__PERFORMANCE = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Tolerance</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__TOLERANCE = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 5;
-
-	/**
-	 * The feature id for the '<em><b>Severity</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__SEVERITY = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 6;
-
-	/**
-	 * The feature id for the '<em><b>Maturity</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__MATURITY = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 7;
-
-	/**
-	 * The feature id for the '<em><b>Risk</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT__RISK = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 8;
-
-	/**
-	 * The number of structural features of the '<em>Forever Requirement</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT_FEATURE_COUNT = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 9;
-
-	/**
-	 * The number of operations of the '<em>Forever Requirement</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FOREVER_REQUIREMENT_OPERATION_COUNT = RequirementsPackage.REQUIREMENT_OPERATION_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalizeImpl <em>Formalize</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -435,7 +254,7 @@ public interface CHESSContractPackage extends EPackage {
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getFormalize()
 	 * @generated
 	 */
-	int FORMALIZE = 4;
+	int FORMALIZE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Base Abstraction</b></em>' reference.
@@ -472,7 +291,7 @@ public interface CHESSContractPackage extends EPackage {
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getSubSystem()
 	 * @generated
 	 */
-	int SUB_SYSTEM = 5;
+	int SUB_SYSTEM = 4;
 
 	/**
 	 * The feature id for the '<em><b>Is Encapsulated</b></em>' attribute.
@@ -509,6 +328,205 @@ public interface CHESSContractPackage extends EPackage {
 	 * @ordered
 	 */
 	int SUB_SYSTEM_OPERATION_COUNT = BlocksPackage.BLOCK_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSRequirementImpl <em>CHESS Requirement</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSRequirementImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getCHESSRequirement()
+	 * @generated
+	 */
+	int CHESS_REQUIREMENT = 5;
+
+	/**
+	 * The feature id for the '<em><b>Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__TEXT = RequirementsPackage.REQUIREMENT__TEXT;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__ID = RequirementsPackage.REQUIREMENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Derived</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__DERIVED = RequirementsPackage.REQUIREMENT__DERIVED;
+
+	/**
+	 * The feature id for the '<em><b>Derived From</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__DERIVED_FROM = RequirementsPackage.REQUIREMENT__DERIVED_FROM;
+
+	/**
+	 * The feature id for the '<em><b>Satisfied By</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__SATISFIED_BY = RequirementsPackage.REQUIREMENT__SATISFIED_BY;
+
+	/**
+	 * The feature id for the '<em><b>Refined By</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__REFINED_BY = RequirementsPackage.REQUIREMENT__REFINED_BY;
+
+	/**
+	 * The feature id for the '<em><b>Traced To</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__TRACED_TO = RequirementsPackage.REQUIREMENT__TRACED_TO;
+
+	/**
+	 * The feature id for the '<em><b>Verified By</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__VERIFIED_BY = RequirementsPackage.REQUIREMENT__VERIFIED_BY;
+
+	/**
+	 * The feature id for the '<em><b>Master</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__MASTER = RequirementsPackage.REQUIREMENT__MASTER;
+
+	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__BASE_CLASS = RequirementsPackage.REQUIREMENT__BASE_CLASS;
+
+	/**
+	 * The feature id for the '<em><b>Author</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__AUTHOR = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Status</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__STATUS = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__TYPE = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Priority</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__PRIORITY = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Performance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__PERFORMANCE = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Tolerance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__TOLERANCE = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Severity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__SEVERITY = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Maturity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__MATURITY = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 7;
+
+	/**
+	 * The feature id for the '<em><b>Risk</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT__RISK = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 8;
+
+	/**
+	 * The number of structural features of the '<em>CHESS Requirement</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT_FEATURE_COUNT = RequirementsPackage.REQUIREMENT_FEATURE_COUNT + 9;
+
+	/**
+	 * The number of operations of the '<em>CHESS Requirement</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHESS_REQUIREMENT_OPERATION_COUNT = RequirementsPackage.REQUIREMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractPropertyImpl <em>Contract Property</em>}' class.
@@ -760,13 +778,22 @@ public interface CHESSContractPackage extends EPackage {
 	int COMPONENT_INSTANCE__WEAK_GUARANTEES = 1;
 
 	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_INSTANCE__BASE_INSTANCE_SPECIFICATION = 2;
+
+	/**
 	 * The number of structural features of the '<em>Component Instance</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_INSTANCE_FEATURE_COUNT = 2;
+	int COMPONENT_INSTANCE_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Component Instance</em>' class.
@@ -864,113 +891,26 @@ public interface CHESSContractPackage extends EPackage {
 	EReference getFormalProperty_Base_Constraint();
 
 	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement <em>Forever Requirement</em>}'.
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getFormalize <em>Formalize</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Forever Requirement</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement
+	 * @return the meta object for the reference '<em>Formalize</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getFormalize()
+	 * @see #getFormalProperty()
 	 * @generated
 	 */
-	EClass getForeverRequirement();
+	EReference getFormalProperty_Formalize();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getAuthor <em>Author</em>}'.
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getGoto <em>Goto</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Author</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getAuthor()
-	 * @see #getForeverRequirement()
+	 * @return the meta object for the reference '<em>Goto</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getGoto()
+	 * @see #getFormalProperty()
 	 * @generated
 	 */
-	EAttribute getForeverRequirement_Author();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getStatus <em>Status</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Status</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getStatus()
-	 * @see #getForeverRequirement()
-	 * @generated
-	 */
-	EAttribute getForeverRequirement_Status();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getType()
-	 * @see #getForeverRequirement()
-	 * @generated
-	 */
-	EAttribute getForeverRequirement_Type();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getPriority <em>Priority</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Priority</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getPriority()
-	 * @see #getForeverRequirement()
-	 * @generated
-	 */
-	EAttribute getForeverRequirement_Priority();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getPerformance <em>Performance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Performance</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getPerformance()
-	 * @see #getForeverRequirement()
-	 * @generated
-	 */
-	EAttribute getForeverRequirement_Performance();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getTolerance <em>Tolerance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Tolerance</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getTolerance()
-	 * @see #getForeverRequirement()
-	 * @generated
-	 */
-	EAttribute getForeverRequirement_Tolerance();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getSeverity <em>Severity</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Severity</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getSeverity()
-	 * @see #getForeverRequirement()
-	 * @generated
-	 */
-	EAttribute getForeverRequirement_Severity();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getMaturity <em>Maturity</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Maturity</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getMaturity()
-	 * @see #getForeverRequirement()
-	 * @generated
-	 */
-	EAttribute getForeverRequirement_Maturity();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getRisk <em>Risk</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Risk</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement#getRisk()
-	 * @see #getForeverRequirement()
-	 * @generated
-	 */
-	EAttribute getForeverRequirement_Risk();
+	EReference getFormalProperty_Goto();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.Formalize <em>Formalize</em>}'.
@@ -1002,6 +942,115 @@ public interface CHESSContractPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getSubSystem();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement <em>CHESS Requirement</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CHESS Requirement</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement
+	 * @generated
+	 */
+	EClass getCHESSRequirement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getAuthor <em>Author</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Author</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getAuthor()
+	 * @see #getCHESSRequirement()
+	 * @generated
+	 */
+	EAttribute getCHESSRequirement_Author();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getStatus <em>Status</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Status</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getStatus()
+	 * @see #getCHESSRequirement()
+	 * @generated
+	 */
+	EAttribute getCHESSRequirement_Status();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getType()
+	 * @see #getCHESSRequirement()
+	 * @generated
+	 */
+	EAttribute getCHESSRequirement_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getPriority <em>Priority</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Priority</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getPriority()
+	 * @see #getCHESSRequirement()
+	 * @generated
+	 */
+	EAttribute getCHESSRequirement_Priority();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getPerformance <em>Performance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Performance</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getPerformance()
+	 * @see #getCHESSRequirement()
+	 * @generated
+	 */
+	EAttribute getCHESSRequirement_Performance();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getTolerance <em>Tolerance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Tolerance</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getTolerance()
+	 * @see #getCHESSRequirement()
+	 * @generated
+	 */
+	EAttribute getCHESSRequirement_Tolerance();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getSeverity <em>Severity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Severity</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getSeverity()
+	 * @see #getCHESSRequirement()
+	 * @generated
+	 */
+	EAttribute getCHESSRequirement_Severity();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getMaturity <em>Maturity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Maturity</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getMaturity()
+	 * @see #getCHESSRequirement()
+	 * @generated
+	 */
+	EAttribute getCHESSRequirement_Maturity();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getRisk <em>Risk</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Risk</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement#getRisk()
+	 * @see #getCHESSRequirement()
+	 * @generated
+	 */
+	EAttribute getCHESSRequirement_Risk();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty <em>Contract Property</em>}'.
@@ -1174,6 +1223,17 @@ public interface CHESSContractPackage extends EPackage {
 	EReference getComponentInstance_WeakGuarantees();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance#getBase_InstanceSpecification <em>Base Instance Specification</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Instance Specification</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance#getBase_InstanceSpecification()
+	 * @see #getComponentInstance()
+	 * @generated
+	 */
+	EReference getComponentInstance_Base_InstanceSpecification();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1267,86 +1327,20 @@ public interface CHESSContractPackage extends EPackage {
 		EReference FORMAL_PROPERTY__BASE_CONSTRAINT = eINSTANCE.getFormalProperty_Base_Constraint();
 
 		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ForeverRequirementImpl <em>Forever Requirement</em>}' class.
+		 * The meta object literal for the '<em><b>Formalize</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ForeverRequirementImpl
-		 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getForeverRequirement()
 		 * @generated
 		 */
-		EClass FOREVER_REQUIREMENT = eINSTANCE.getForeverRequirement();
+		EReference FORMAL_PROPERTY__FORMALIZE = eINSTANCE.getFormalProperty_Formalize();
 
 		/**
-		 * The meta object literal for the '<em><b>Author</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Goto</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute FOREVER_REQUIREMENT__AUTHOR = eINSTANCE.getForeverRequirement_Author();
-
-		/**
-		 * The meta object literal for the '<em><b>Status</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FOREVER_REQUIREMENT__STATUS = eINSTANCE.getForeverRequirement_Status();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FOREVER_REQUIREMENT__TYPE = eINSTANCE.getForeverRequirement_Type();
-
-		/**
-		 * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FOREVER_REQUIREMENT__PRIORITY = eINSTANCE.getForeverRequirement_Priority();
-
-		/**
-		 * The meta object literal for the '<em><b>Performance</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FOREVER_REQUIREMENT__PERFORMANCE = eINSTANCE.getForeverRequirement_Performance();
-
-		/**
-		 * The meta object literal for the '<em><b>Tolerance</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FOREVER_REQUIREMENT__TOLERANCE = eINSTANCE.getForeverRequirement_Tolerance();
-
-		/**
-		 * The meta object literal for the '<em><b>Severity</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FOREVER_REQUIREMENT__SEVERITY = eINSTANCE.getForeverRequirement_Severity();
-
-		/**
-		 * The meta object literal for the '<em><b>Maturity</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FOREVER_REQUIREMENT__MATURITY = eINSTANCE.getForeverRequirement_Maturity();
-
-		/**
-		 * The meta object literal for the '<em><b>Risk</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FOREVER_REQUIREMENT__RISK = eINSTANCE.getForeverRequirement_Risk();
+		EReference FORMAL_PROPERTY__GOTO = eINSTANCE.getFormalProperty_Goto();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalizeImpl <em>Formalize</em>}' class.
@@ -1375,6 +1369,88 @@ public interface CHESSContractPackage extends EPackage {
 		 * @generated
 		 */
 		EClass SUB_SYSTEM = eINSTANCE.getSubSystem();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSRequirementImpl <em>CHESS Requirement</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSRequirementImpl
+		 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getCHESSRequirement()
+		 * @generated
+		 */
+		EClass CHESS_REQUIREMENT = eINSTANCE.getCHESSRequirement();
+
+		/**
+		 * The meta object literal for the '<em><b>Author</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHESS_REQUIREMENT__AUTHOR = eINSTANCE.getCHESSRequirement_Author();
+
+		/**
+		 * The meta object literal for the '<em><b>Status</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHESS_REQUIREMENT__STATUS = eINSTANCE.getCHESSRequirement_Status();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHESS_REQUIREMENT__TYPE = eINSTANCE.getCHESSRequirement_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHESS_REQUIREMENT__PRIORITY = eINSTANCE.getCHESSRequirement_Priority();
+
+		/**
+		 * The meta object literal for the '<em><b>Performance</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHESS_REQUIREMENT__PERFORMANCE = eINSTANCE.getCHESSRequirement_Performance();
+
+		/**
+		 * The meta object literal for the '<em><b>Tolerance</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHESS_REQUIREMENT__TOLERANCE = eINSTANCE.getCHESSRequirement_Tolerance();
+
+		/**
+		 * The meta object literal for the '<em><b>Severity</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHESS_REQUIREMENT__SEVERITY = eINSTANCE.getCHESSRequirement_Severity();
+
+		/**
+		 * The meta object literal for the '<em><b>Maturity</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHESS_REQUIREMENT__MATURITY = eINSTANCE.getCHESSRequirement_Maturity();
+
+		/**
+		 * The meta object literal for the '<em><b>Risk</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CHESS_REQUIREMENT__RISK = eINSTANCE.getCHESSRequirement_Risk();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractPropertyImpl <em>Contract Property</em>}' class.
@@ -1515,6 +1591,14 @@ public interface CHESSContractPackage extends EPackage {
 		 * @generated
 		 */
 		EReference COMPONENT_INSTANCE__WEAK_GUARANTEES = eINSTANCE.getComponentInstance_WeakGuarantees();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Instance Specification</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPONENT_INSTANCE__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getComponentInstance_Base_InstanceSpecification();
 
 	}
 

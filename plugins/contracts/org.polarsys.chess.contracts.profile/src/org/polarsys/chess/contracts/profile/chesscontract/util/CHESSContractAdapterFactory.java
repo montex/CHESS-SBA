@@ -4,25 +4,19 @@ package org.polarsys.chess.contracts.profile.chesscontract.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.papyrus.sysml.blocks.Block;
-
 import org.eclipse.papyrus.sysml.constraints.ConstraintBlock;
 import org.eclipse.papyrus.sysml.constraints.ConstraintProperty;
-
 import org.eclipse.papyrus.sysml.requirements.Requirement;
-
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
+import org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement;
 import org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint;
-import org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.Formalize;
 import org.polarsys.chess.contracts.profile.chesscontract.Platform;
@@ -98,16 +92,16 @@ public class CHESSContractAdapterFactory extends AdapterFactoryImpl {
 				return createFormalPropertyAdapter();
 			}
 			@Override
-			public Adapter caseForeverRequirement(ForeverRequirement object) {
-				return createForeverRequirementAdapter();
-			}
-			@Override
 			public Adapter caseFormalize(Formalize object) {
 				return createFormalizeAdapter();
 			}
 			@Override
 			public Adapter caseSubSystem(SubSystem object) {
 				return createSubSystemAdapter();
+			}
+			@Override
+			public Adapter caseCHESSRequirement(CHESSRequirement object) {
+				return createCHESSRequirementAdapter();
 			}
 			@Override
 			public Adapter caseContractProperty(ContractProperty object) {
@@ -212,20 +206,6 @@ public class CHESSContractAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement <em>Forever Requirement</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.ForeverRequirement
-	 * @generated
-	 */
-	public Adapter createForeverRequirementAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.contracts.profile.chesscontract.Formalize <em>Formalize</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -250,6 +230,20 @@ public class CHESSContractAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSubSystemAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement <em>CHESS Requirement</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSRequirement
+	 * @generated
+	 */
+	public Adapter createCHESSRequirementAdapter() {
 		return null;
 	}
 

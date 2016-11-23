@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
+import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Property;
 
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
@@ -31,6 +32,7 @@ import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ComponentInstanceImpl#getBase_Property <em>Base Property</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ComponentInstanceImpl#getWeakGuarantees <em>Weak Guarantees</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ComponentInstanceImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
  * </ul>
  * </p>
  *
@@ -56,6 +58,16 @@ public class ComponentInstanceImpl extends MinimalEObjectImpl.Container implemen
 	 * @ordered
 	 */
 	protected EList<ContractProperty> weakGuarantees;
+
+	/**
+	 * The cached value of the '{@link #getBase_InstanceSpecification() <em>Base Instance Specification</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBase_InstanceSpecification()
+	 * @generated
+	 * @ordered
+	 */
+	protected InstanceSpecification base_InstanceSpecification;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -131,6 +143,44 @@ public class ComponentInstanceImpl extends MinimalEObjectImpl.Container implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public InstanceSpecification getBase_InstanceSpecification() {
+		if (base_InstanceSpecification != null && base_InstanceSpecification.eIsProxy()) {
+			InternalEObject oldBase_InstanceSpecification = (InternalEObject)base_InstanceSpecification;
+			base_InstanceSpecification = (InstanceSpecification)eResolveProxy(oldBase_InstanceSpecification);
+			if (base_InstanceSpecification != oldBase_InstanceSpecification) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CHESSContractPackage.COMPONENT_INSTANCE__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
+			}
+		}
+		return base_InstanceSpecification;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public InstanceSpecification basicGetBase_InstanceSpecification() {
+		return base_InstanceSpecification;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBase_InstanceSpecification(InstanceSpecification newBase_InstanceSpecification) {
+		InstanceSpecification oldBase_InstanceSpecification = base_InstanceSpecification;
+		base_InstanceSpecification = newBase_InstanceSpecification;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CHESSContractPackage.COMPONENT_INSTANCE__BASE_INSTANCE_SPECIFICATION, oldBase_InstanceSpecification, base_InstanceSpecification));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -139,6 +189,9 @@ public class ComponentInstanceImpl extends MinimalEObjectImpl.Container implemen
 				return basicGetBase_Property();
 			case CHESSContractPackage.COMPONENT_INSTANCE__WEAK_GUARANTEES:
 				return getWeakGuarantees();
+			case CHESSContractPackage.COMPONENT_INSTANCE__BASE_INSTANCE_SPECIFICATION:
+				if (resolve) return getBase_InstanceSpecification();
+				return basicGetBase_InstanceSpecification();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -159,6 +212,9 @@ public class ComponentInstanceImpl extends MinimalEObjectImpl.Container implemen
 				getWeakGuarantees().clear();
 				getWeakGuarantees().addAll((Collection<? extends ContractProperty>)newValue);
 				return;
+			case CHESSContractPackage.COMPONENT_INSTANCE__BASE_INSTANCE_SPECIFICATION:
+				setBase_InstanceSpecification((InstanceSpecification)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -177,6 +233,9 @@ public class ComponentInstanceImpl extends MinimalEObjectImpl.Container implemen
 			case CHESSContractPackage.COMPONENT_INSTANCE__WEAK_GUARANTEES:
 				getWeakGuarantees().clear();
 				return;
+			case CHESSContractPackage.COMPONENT_INSTANCE__BASE_INSTANCE_SPECIFICATION:
+				setBase_InstanceSpecification((InstanceSpecification)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -193,6 +252,8 @@ public class ComponentInstanceImpl extends MinimalEObjectImpl.Container implemen
 				return base_Property != null;
 			case CHESSContractPackage.COMPONENT_INSTANCE__WEAK_GUARANTEES:
 				return weakGuarantees != null && !weakGuarantees.isEmpty();
+			case CHESSContractPackage.COMPONENT_INSTANCE__BASE_INSTANCE_SPECIFICATION:
+				return base_InstanceSpecification != null;
 		}
 		return super.eIsSet(featureID);
 	}
