@@ -62,7 +62,7 @@ public class FLAReferenceDialogEditor extends ReferenceDialog {
 
 	
 	@Override
-	protected void updateControls() {
+	public void updateControls() {
 		setExclusion(browseValuesButton, true);
 		setExclusion(editInstanceButton, false);
 		setExclusion(createInstanceButton, true);

@@ -21,6 +21,8 @@ import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.commands.CommandStack;
@@ -29,12 +31,13 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramCommandStack;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.papyrus.cdo.internal.core.CDOUtils;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
-import org.eclipse.papyrus.infra.core.editor.IMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.sashwindows.di.PageRef;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
-import org.eclipse.papyrus.infra.core.utils.EditorUtils;
+import org.eclipse.papyrus.infra.ui.editor.IMultiDiagramEditor;
+import org.eclipse.papyrus.infra.ui.util.EditorUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -198,6 +201,23 @@ public class CHESSEditorUtils {
 		IFile f = null;
 		if (x instanceof URIEditorInput) {
 			URIEditorInput input = (URIEditorInput) x;
+			
+			if (input.getURI().toPlatformString(true) == null){
+
+				if (CDOUtils.isCDOURI(input.getURI())){
+				
+					String path = CDOURIUtil.extractResourcePath(input.getURI());
+//					f = ResourcesPlugin.getWorkspace().getRoot()
+//							.getFile(new Path(path));
+					return true;
+				}
+				
+				Activator.getDefault().getLog().log(new Status
+						(Status.WARNING, Activator.PLUGIN_ID, Status.WARNING, "Unable to get platform string for resource URI, CHESSProject=false ", null));
+				return false;
+			}
+			
+			
 			f = ResourcesPlugin.getWorkspace().getRoot()
 					.getFile(new Path(input.getURI().toPlatformString(true)));
 		} else if (x instanceof IFileEditorInput) {

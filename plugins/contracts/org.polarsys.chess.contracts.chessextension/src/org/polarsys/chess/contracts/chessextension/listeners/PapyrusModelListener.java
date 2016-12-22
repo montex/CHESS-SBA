@@ -18,7 +18,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.papyrus.infra.core.listenerservice.IPapyrusListener;
-import org.eclipse.papyrus.uml.tools.listeners.PapyrusStereotypeListener;
+import org.eclipse.papyrus.uml.tools.listeners.StereotypeElementListener.StereotypeExtensionNotification;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.LiteralString;
@@ -40,32 +40,30 @@ public class PapyrusModelListener implements IPapyrusListener {
 
 	@Override
 	public void notifyChanged(Notification notification) {
-			
 		Object notifier = notification.getNotifier();
 		if(notifier instanceof Class){
 			Class cblock = (Class) notifier;
-			if(notification.getEventType() == PapyrusStereotypeListener.APPLIED_STEREOTYPE){
+			if(notification.getEventType() == StereotypeExtensionNotification.STEREOTYPE_APPLIED_TO_ELEMENT){
 				if(cblock.getAppliedStereotype(CONTRACT) != null){
-					System.out.println(cblock.getName());
 					
-					Constraint assumeConst = cblock.createOwnedRule(cblock.getName() + "_" + ASSUME);
-					Constraint guaranteeConst = cblock.createOwnedRule(cblock.getName() + "_" + GUARANTEE);
-					
-					LiteralString assumeValue = UMLFactory.eINSTANCE.createLiteralString();
-					assumeValue.setName(assumeConst.getName());
-					assumeConst.setSpecification(assumeValue);
-					
-					LiteralString guaranteeValue = UMLFactory.eINSTANCE.createLiteralString();
-					guaranteeValue.setName(guaranteeConst.getName());
-					guaranteeConst.setSpecification(guaranteeValue);
-					
-					Stereotype fpStereotype = CHESSContractProfileManager.getFormalProperty();
-					FormalProperty assume = (FormalProperty) assumeConst.applyStereotype(fpStereotype);
-					FormalProperty guarantee = (FormalProperty) guaranteeConst.applyStereotype(fpStereotype);
-					
-					Stereotype contrStereo = cblock.getAppliedStereotype(CONTRACT);
-					cblock.setValue(contrStereo, ASSUME, assume);
-					cblock.setValue(contrStereo, GUARANTEE, guarantee);
+//					Constraint assumeConst = cblock.createOwnedRule(cblock.getName() + "_" + ASSUME);
+//					Constraint guaranteeConst = cblock.createOwnedRule(cblock.getName() + "_" + GUARANTEE);
+//					
+//					LiteralString assumeValue = UMLFactory.eINSTANCE.createLiteralString();
+//					assumeValue.setName(assumeConst.getName());
+//					assumeConst.setSpecification(assumeValue);
+//					
+//					LiteralString guaranteeValue = UMLFactory.eINSTANCE.createLiteralString();
+//					guaranteeValue.setName(guaranteeConst.getName());
+//					guaranteeConst.setSpecification(guaranteeValue);
+//					
+//					Stereotype fpStereotype = CHESSContractProfileManager.getFormalProperty();
+//					FormalProperty assume = (FormalProperty) assumeConst.applyStereotype(fpStereotype);
+//					FormalProperty guarantee = (FormalProperty) guaranteeConst.applyStereotype(fpStereotype);
+//					
+//					Stereotype contrStereo = cblock.getAppliedStereotype(CONTRACT);
+//					cblock.setValue(contrStereo, ASSUME, assume);
+//					cblock.setValue(contrStereo, GUARANTEE, guarantee);
 				}
 			}
 			

@@ -14,7 +14,8 @@
  ------------------------------------------------------------------------------*/
 package org.polarsys.chess.tabbedproperties.widgets;
 
-import org.eclipse.papyrus.views.properties.widgets.ReferenceDialog;
+
+import org.eclipse.papyrus.infra.widgets.editors.ReferenceDialog;
 import org.eclipse.swt.widgets.Composite;
 
 public class FLAReferenceDialog extends ReferenceDialog {

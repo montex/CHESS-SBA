@@ -71,6 +71,7 @@ public class FlaDslScopeProvider extends AbstractDeclarativeScopeProvider {
    * return Scopes.scopeFor(ports)
    * }
    */
+  @Override
   public IScope getScope(final EObject context, final EReference reference) {
     final EList<Port> ports = this.contextComponent.getOwnedPorts();
     return Scopes.scopeFor(ports);

@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
-import org.eclipse.papyrus.infra.core.editor.CoreMultiDiagramEditor;
+import org.eclipse.papyrus.infra.ui.editor.CoreMultiDiagramEditor;
 import org.eclipse.ui.AbstractSourceProvider;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISources;
@@ -105,7 +105,7 @@ public class SwitchSourceProvider extends AbstractSourceProvider {
 				DesignView currentView = ds.getCurrentView();
 								
 				// Read the model's domain and assign it to the variable DOMAIN (org.polarsys.chess.service.commands.domain)				
-				Resource res = ResourceUtils.getUMLResource(((CoreMultiDiagramEditor) activeEditor).getServicesRegistry());
+				Resource res = ResourceUtils.getUMLResource(((org.eclipse.papyrus.infra.ui.editor.CoreMultiDiagramEditor) activeEditor).getServicesRegistry());
 				Model umlModel = ResourceUtils.getModel(res);
 				if (umlModel == null) {
 					setEnabledValueDomain(defaultDomain);					

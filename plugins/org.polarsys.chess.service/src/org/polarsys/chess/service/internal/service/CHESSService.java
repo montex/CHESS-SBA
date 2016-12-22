@@ -33,7 +33,6 @@ import org.eclipse.papyrus.infra.core.resource.ModelSet;
 import org.eclipse.papyrus.infra.core.sasheditor.editor.ISashWindowsContainer;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
-import org.eclipse.papyrus.infra.core.utils.ServiceUtils;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -98,10 +97,17 @@ public class CHESSService {
 		//ISashWindowsContainer container = null;
 		try {
 			modelSet = serviceRegistry.getService(ModelSet.class);
+			
+//			container = serviceRegistry.getService(ISashWindowsContainer.class);
 
-			container = ServiceUtils.getInstance().getISashWindowsContainer(
-					serviceRegistry);
-
+//			container = ServiceUtils.getInstance().getISashWindowsContainer(
+//					serviceRegistry);
+			
+			container = (ISashWindowsContainer)activeEditor.getAdapter(ISashWindowsContainer.class);
+			
+			if (container == null)
+				container = serviceRegistry.getService(ISashWindowsContainer.class);
+			
 			diagramStatus = new DiagramStatus(
 					container.getActiveSashWindowsPage());
 			editingDomain = modelSet

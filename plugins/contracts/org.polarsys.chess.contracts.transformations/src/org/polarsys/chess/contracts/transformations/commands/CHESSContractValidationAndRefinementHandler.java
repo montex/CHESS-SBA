@@ -16,16 +16,21 @@ package org.polarsys.chess.contracts.transformations.commands;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gmf.runtime.common.core.command.ICommand;
 import org.eclipse.papyrus.commands.wrappers.GMFtoEMFCommandWrapper;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.services.validation.handler.AbstractCommandHandler;
+import org.eclipse.papyrus.infra.services.validation.handler.ValidateModelHandler;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.uml2.uml.Model;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.command.AbstractCommand;
 
 public class CHESSContractValidationAndRefinementHandler extends
-		AbstractCommandHandler {
+		ValidateModelHandler {
 
 	private Shell activeShell;
 	private PapyrusMultiDiagramEditor editor;
@@ -41,17 +46,47 @@ public class CHESSContractValidationAndRefinementHandler extends
 	@Override
 	public Command getCommand(){
 		try{
+			
+			
 			Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
 			Model model =  ResourceUtils.getModel(res);
 			String label = "Validate model for NuSMV3-OCRA analysis tool";
 			foreverValidateAndRefineCommand = new CHESSContractValidateAndRefineCommand(label, org.polarsys.chess.contracts.validation.Activator.PLUGIN_ID, model);
 			foreverValidateAndRefineCommand.setEditor(editor);
 			foreverValidateAndRefineCommand.setActiveShell(activeShell);
-			return new GMFtoEMFCommandWrapper(foreverValidateAndRefineCommand);
+			return new EMFCommandWrapper(foreverValidateAndRefineCommand);
 		}catch(ServiceException e){
 			e.printStackTrace();
 			return null;
 		}
 	}
 
+	class EMFCommandWrapper extends AbstractCommand {
+		private final ICommand gmfCommand;
+		
+		public EMFCommandWrapper(ICommand gmfCommand) {
+			super(gmfCommand.getLabel());
+			this.gmfCommand = gmfCommand;
+		}
+
+		public void execute() {
+			try {
+				gmfCommand.execute(new NullProgressMonitor(), null);
+			} catch (ExecutionException e) {
+			}
+			
+		}
+
+		public void redo() {
+			try {
+				gmfCommand.redo(new NullProgressMonitor(), null);
+			} catch (ExecutionException e) {
+			}
+			
+		}
+		
+	}
+	
 }
+
+

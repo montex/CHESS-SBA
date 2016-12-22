@@ -31,9 +31,9 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
-import org.eclipse.papyrus.infra.core.editor.IMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
+import org.eclipse.papyrus.infra.emf.utils.ServiceUtilsForResource;
 import org.eclipse.papyrus.infra.services.labelprovider.service.LabelProviderService;
 import org.eclipse.papyrus.infra.widgets.providers.FilteredContentProvider;
 import org.eclipse.papyrus.infra.widgets.providers.IStaticContentProvider;
@@ -124,9 +124,15 @@ AbstractCommand {
 			EList<CHCore> cores,
 			EList<Assign> assignments) {
 
-		final ServicesRegistry servicesRegistry = ((IMultiDiagramEditor) (PlatformUI
-				.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-				.getActiveEditor())).getServicesRegistry();
+	
+		
+		ServicesRegistry servicesRegistry =null;
+		try {
+			servicesRegistry = ServiceUtilsForResource.getInstance().getServiceRegistry(pack.eResource());
+		} catch (ServiceException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		// LB 20150713 Show components in the left side 
 		// Only show the components that are not assigned to a Processor 

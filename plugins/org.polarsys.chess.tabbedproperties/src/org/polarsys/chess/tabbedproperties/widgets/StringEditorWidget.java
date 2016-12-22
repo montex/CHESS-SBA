@@ -14,8 +14,10 @@
  ------------------------------------------------------------------------------*/
 package org.polarsys.chess.tabbedproperties.widgets;
 
+import org.eclipse.papyrus.infra.properties.ui.modelelement.DataSource;
+import org.eclipse.papyrus.infra.properties.ui.widgets.AbstractPropertyEditor;
 import org.eclipse.papyrus.infra.widgets.editors.StringEditor;
-import org.eclipse.papyrus.views.properties.widgets.AbstractPropertyEditor;
+
 import org.eclipse.swt.widgets.Composite;
 
 public class StringEditorWidget extends AbstractPropertyEditor {
@@ -26,7 +28,7 @@ public class StringEditorWidget extends AbstractPropertyEditor {
 	}
 	
 	//@override 
-	public void setInput(org.eclipse.papyrus.views.properties.modelelement.DataSource input) {
+	public void setInput(DataSource input) {
 		super.setInput(input);
 	};
 	

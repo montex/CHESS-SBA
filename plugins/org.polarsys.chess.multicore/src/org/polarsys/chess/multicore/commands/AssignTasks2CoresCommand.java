@@ -32,9 +32,9 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
-import org.eclipse.papyrus.infra.core.editor.IMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
+import org.eclipse.papyrus.infra.emf.utils.ServiceUtilsForResource;
 import org.eclipse.papyrus.infra.services.labelprovider.service.LabelProviderService;
 import org.eclipse.papyrus.infra.widgets.providers.FilteredContentProvider;
 import org.eclipse.papyrus.infra.widgets.providers.IStaticContentProvider;
@@ -42,7 +42,6 @@ import org.eclipse.papyrus.infra.widgets.providers.StaticContentProvider;
 import org.eclipse.papyrus.infra.widgets.selectors.ReferenceSelector;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Element;
@@ -50,7 +49,6 @@ import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.CH_HwProcessor;
-import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.uml.ModelError;
 import org.polarsys.chess.core.util.uml.UMLUtils;
@@ -126,9 +124,18 @@ AbstractCommand {
 			EList<CHCore> cores,
 			EList<Assign> assignments) {
 
-		final ServicesRegistry servicesRegistry = ((IMultiDiagramEditor) (PlatformUI
-				.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-				.getActiveEditor())).getServicesRegistry();
+//		final ServicesRegistry servicesRegistry = ((IMultiDiagramEditor) (PlatformUI
+//				.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+//				.getActiveEditor())).getServicesRegistry();
+		
+		ServicesRegistry servicesRegistry = null;
+		try {
+			servicesRegistry = ServiceUtilsForResource.getInstance().getServiceRegistry(pack.eResource());
+		} catch (ServiceException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return null;
+		}
 
 		// Look for the tasks that are not assigned to a Processor in this package (deployment)
 		EList<CHTask> taskNotYetAssignedToCore = new BasicEList<CHTask>();

@@ -38,6 +38,10 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchConfigurationDel
 import org.eclipse.m2m.internal.qvt.oml.runtime.launch.QvtLaunchUtil;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransformation;
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
+import org.eclipse.m2m.qvt.oml.ExecutionContext;
+import org.eclipse.m2m.qvt.oml.ExecutionContextImpl;
+import org.eclipse.m2m.qvt.oml.ModelExtent;
+import org.eclipse.m2m.qvt.oml.TransformationExecutor;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 
@@ -158,9 +162,12 @@ public class QVToTransformation {
 			throw new CoreException(status);
 		}
 	
-		//EvaluationMonitor execMonitor = createMonitor();
-		Context context = QvtLaunchUtil.createContext(instance);
 	
+		
+		//EvaluationMonitor execMonitor = createMonitor();
+		
+		ExecutionContextImpl context = (ExecutionContextImpl) QvtLaunchUtil.createContext(instance);
+			
 		OutputStreamWriter s = new OutputStreamWriter(
 				CHESSProjectSupport.CHESS_CONSOLE);
 		context.setLog(new WriterLog(s));
@@ -168,8 +175,21 @@ public class QVToTransformation {
 		
 		subMonitor.newChild(30);
 		
-		QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation,
-				instance, context);
+	
+		
+		// Refer to an existing transformation via URI
+		URI transformationURI = URI.createURI(transURI);
+		// create executor for the given transformation
+		TransformationExecutor executor = new TransformationExecutor(transformationURI);
+		
+		// create the input extent with its initial contents
+		//ModelExtent input = new BasicModelExtent(inObjects);
+		
+		executor.execute(context);
+		
+		
+//		QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation,
+//				instance, context);
 		subMonitor.newChild(60);
 		qvtTransformation.cleanup();
 	}

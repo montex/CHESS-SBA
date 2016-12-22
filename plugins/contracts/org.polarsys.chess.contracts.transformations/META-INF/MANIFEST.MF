@@ -47,12 +47,10 @@ Import-Package: org.eclipse.m2m.internal.qvt.oml.emf.util,
  org.eclipse.papyrus.infra.services.markerlistener.util,
  org.eclipse.papyrus.infra.services.validation,
  org.eclipse.papyrus.infra.services.validation.handler,
- org.eclipse.papyrus.uml.service.types.handlers,
  org.eclipse.papyrus.views.modelexplorer.handler,
  org.polarsys.chess.core,
  org.polarsys.chess.core.util,
  org.polarsys.chess.core.util.uml,
- org.polarsys.chess.m2m,
  org.polarsys.chess.service.utils,
  org.polarsys.chess.validator.command
 
