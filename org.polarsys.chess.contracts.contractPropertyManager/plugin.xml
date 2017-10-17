@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.papyrus.infra.core.modelListener">
+      <listener
+            name="org.polarsys.chess.contracts.contractPropertyManager.profile.listener.PapyrusListener"
+            realization="org.polarsys.chess.contracts.contractPropertyManager.profile.listener.PapyrusListener">
+      </listener>
+   </extension>
+ <!--
+   <extension
+         point="org.eclipse.emf.ecore.uri_mapping">
+      <mapping
+            source="pathmap://CHESSComponentContract/"
+            target="platform:/plugin/org.polarsys.chess.contracts.contractPropertyManager/model/">
+      </mapping>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLProfile">
+      <profile
+            description="UML, MARTE and SysML profile for a specific type of Contract"
+            name="CHESSComponentContract"
+            path="pathmap://CHESSComponentContract/CHESSComponentContract.profile.uml"
+            provider="Fbk">
+      </profile>
+   </extension>
+   <extension
+         point="org.eclipse.uml2.uml.generated_package">
+      <profile
+            location="pathmap://CHESSComponentContract/CHESSComponentContract.profile.uml#_DrCBcAlYEeePFf7UlrrDrg"
+            uri="http:///CHESSComponentContract.ecore">
+      </profile>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="CHESSComponentContract.CHESSComponentContractPackage"
+            genModel="model/CHESSComponentContract.profile.genmodel"
+            uri="http:///CHESSComponentContract.ecore">
+      </package>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package"> -->
+      <!-- @generated CHESSComponentContract.profile -->
+     <!-- <package
+
+            uri="http:///CHESSComponentContract.ecore"
+            class="eu.fbk.contracts.profile.chesscomponentcontract.CHESSComponentContractPackage"
+            genModel="model/CHESSComponentContract.profile.genmodel"/>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.infra.core.modelListener">
+      <listener
+            name="eu.fbk.contracts.profile.modellistener"
+            realization="eu.fbk.contracts.profile.listener.PapyrusListener">
+      </listener>
+   </extension>-->
+   
+ <!--
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="eu.fbk.contracts.profile.FBK_BDDDefinition"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            name="eu.fbk.contracts.profile.FBK_BDDDefinition"
+            path="/palettes/FBK_BDD.Palette.xml"
+            provider="FBK">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+               id="org.eclipse.papyrus.sysml.diagram.blockdefinition">
+         </editor>
+      </paletteDefinition>
+   </extension>
+-->
+</plugin>
