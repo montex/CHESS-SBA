@@ -21,10 +21,10 @@ import org.polarsys.chess.contracts.profile.chesscontract.Formalize;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalizeImpl#getBase_Abstraction <em>Base Abstraction</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

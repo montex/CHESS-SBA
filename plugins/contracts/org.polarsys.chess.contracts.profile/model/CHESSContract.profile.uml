@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/5" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/uml2/schemas/Ecore/5 pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA">
-  <uml:Profile xmi:id="_Hmdm0NDVEeG5E52m3d5H1g" name="CHESSContract" URI="http:///ForeverProfile.ecore" metaclassReference="_bc7LMNDmEeG5E52m3d5H1g _BEnE0OFnEeGHGvj-SeegrA _tqlaAEYMEeKlXqCWXpGSyw _DR1vwKA1EeKdpNE52fDl9w _4X5-EEI5EeSWCts2w9ZXDw _iDEKkKcmEeaNpeTYMa4W5g">
+  <uml:Profile xmi:id="_Hmdm0NDVEeG5E52m3d5H1g" name="CHESSContract" URI="http:///ForeverProfile.ecore" metaclassReference="_bc7LMNDmEeG5E52m3d5H1g _BEnE0OFnEeGHGvj-SeegrA _tqlaAEYMEeKlXqCWXpGSyw _DR1vwKA1EeKdpNE52fDl9w _4X5-EEI5EeSWCts2w9ZXDw _iDEKkKcmEeaNpeTYMa4W5g _tw4eEG4PEeeSVLWy6DYUDQ">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_iDrnYCzpEeKQef6wX-6K3g" source="http://www.eclipse.org/uml2/2.0.0/UML">
       <contents xmi:type="ecore:EPackage" xmi:id="_AspHUE4JEeOylNwoj7CyKg" name="foreverprofile" nsURI="http:///ForeverProfile.ecore" nsPrefix="ForeverProfile">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_AtCI4E4JEeOylNwoj7CyKg" source="PapyrusVersion">
@@ -126,7 +126,7 @@
           </eStructuralFeatures>
         </eClassifiers>
         <eClassifiers xmi:type="ecore:EClass" xmi:id="_AspueU4JEeOylNwoj7CyKg" name="Platform">
-          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Aspuek4JEeOylNwoj7CyKg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_FtMw8DLyEeKOZqkjI6cRQg"/>
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Aspuek4JEeOylNwoj7CyKg" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
           <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Aspue04JEeOylNwoj7CyKg" source="duplicates">
             <contents xmi:type="ecore:EReference" xmi:id="_AspufE4JEeOylNwoj7CyKg" name="base_Component" ordered="false" lowerBound="1">
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_AspufU4JEeOylNwoj7CyKg" source="redefines" references="_AspuiE4JEeOylNwoj7CyKg"/>
@@ -264,7 +264,7 @@
           </eStructuralFeatures>
         </eClassifiers>
         <eClassifiers xmi:type="ecore:EClass" xmi:id="__OLpyT8CEeKsNZO5gyGxwQ" name="Platform">
-          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__OLpyj8CEeKsNZO5gyGxwQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_FtMw8DLyEeKOZqkjI6cRQg"/>
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__OLpyj8CEeKsNZO5gyGxwQ" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
           <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__OLpyz8CEeKsNZO5gyGxwQ" source="duplicates">
             <contents xmi:type="ecore:EReference" xmi:id="__OLpzD8CEeKsNZO5gyGxwQ" name="base_Component" ordered="false" lowerBound="1">
               <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__OLpzT8CEeKsNZO5gyGxwQ" source="redefines" references="__OLp2D8CEeKsNZO5gyGxwQ"/>
@@ -412,7 +412,7 @@
           </eStructuralFeatures>
         </eClassifiers>
         <eClassifiers xmi:type="ecore:EClass" xmi:id="_cITsdzLyEeKOZqkjI6cRQg" name="Platform">
-          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_cITseDLyEeKOZqkjI6cRQg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_FtMw8DLyEeKOZqkjI6cRQg"/>
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_cITseDLyEeKOZqkjI6cRQg" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
           <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_cITseTLyEeKOZqkjI6cRQg" name="base_Component" ordered="false" lowerBound="1">
             <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Component"/>
           </eStructuralFeatures>
@@ -897,6 +897,28 @@
         </eClassifiers>
       </contents>
     </eAnnotations>
+    <ownedComment xmi:type="uml:Comment" xmi:id="_Rt1m4G4LEeeSVLWy6DYUDQ" annotatedElement="_8cdYoEI5EeSWCts2w9ZXDw">
+      <body>allows to specify information for a component instance:&#xD;
+-the weak contracts which hold</body>
+    </ownedComment>
+    <ownedComment xmi:type="uml:Comment" xmi:id="_gZZKcG4NEeeSVLWy6DYUDQ" annotatedElement="_yFZM8CzoEeKQef6wX-6K3g">
+      <body>used to instantiate a contract in a given class/component.&#xD;
+Can extend a slot to represent contract instantiation for an InstanceSpecification</body>
+    </ownedComment>
+    <ownedComment xmi:type="uml:Comment" xmi:id="_N3wMgG4TEeeSVLWy6DYUDQ">
+      <body>these stereotypes should be removed from the contract profile&#xD;
+</body>
+    </ownedComment>
+    <ownedComment xmi:type="uml:Comment" xmi:id="_1-whoG4TEeeSVLWy6DYUDQ" annotatedElement="_EXS78KA1EeKdpNE52fDl9w">
+      <body>to specify contract refinement for a given contract instance. &#xD;
+Instance and instanceSpec attribute are mutually exclusive</body>
+    </ownedComment>
+    <ownedComment xmi:type="uml:Comment" xmi:id="__ktIMG4TEeeSVLWy6DYUDQ" annotatedElement="_Srt4oOIbEeGAI6rR7jLcjw">
+      <body>a property to be used as assumption or guarantee of a given contract</body>
+    </ownedComment>
+    <ownedComment xmi:type="uml:Comment" xmi:id="_NkyzQG4eEeeSVLWy6DYUDQ" annotatedElement="_B3ZfMG32EeeSVLWy6DYUDQ">
+      <body>I am not able to generate the static definition of the profile having this stereotype extending the MARTE GaANalysisContext, I obtaind some errors in the genmodel related to the MARTE URI... for the moment, as temporary solution, I define it as extension of Class.</body>
+    </ownedComment>
     <elementImport xmi:type="uml:ElementImport" xmi:id="_bc7LMNDmEeG5E52m3d5H1g" alias="Abstraction">
       <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Abstraction"/>
     </elementImport>
@@ -914,6 +936,9 @@
     </elementImport>
     <elementImport xmi:type="uml:ElementImport" xmi:id="_iDEKkKcmEeaNpeTYMa4W5g" alias="InstanceSpecification">
       <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_tw4eEG4PEeeSVLWy6DYUDQ" alias="Slot">
+      <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Slot"/>
     </elementImport>
     <packageImport xmi:type="uml:PackageImport" xmi:id="_bv9rsNDVEeG5E52m3d5H1g">
       <importedPackage xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_OOJC4LX8EduFmqQsrNB9lw"/>
@@ -993,6 +1018,17 @@
         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_hAUbUEIzEeSWCts2w9ZXDw" name="Strong"/>
         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_iFkMIEIzEeSWCts2w9ZXDw" name="Weak"/>
       </packagedElement>
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_YIbnkG4SEeeSVLWy6DYUDQ" name="ContractStatus">
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_auwJkG4SEeeSVLWy6DYUDQ" name="notValidated"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_cWeVUG4SEeeSVLWy6DYUDQ" name="validated"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_dX9AcG4SEeeSVLWy6DYUDQ" name="needsRuntimeSupport"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_I-_xAG4XEeeSVLWy6DYUDQ" name="Concerns">
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_K3LaoG4XEeeSVLWy6DYUDQ" name="unspecified"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_NJ1ZwG4XEeeSVLWy6DYUDQ" name="safety"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_OFMOwG4XEeeSVLWy6DYUDQ" name="security"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_O8j7oG4XEeeSVLWy6DYUDQ" name="performance"/>
+      </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Stereotype" xmi:id="_TkxOENDkEeG5E52m3d5H1g" name="Contract">
       <generalization xmi:type="uml:Generalization" xmi:id="_g_taIOIEEeGAI6rR7jLcjw">
@@ -1003,9 +1039,19 @@
       <ownedAttribute xmi:type="uml:Property" xmi:id="_CITfMPBJEeGs-bwMV1MRNg" name="Formalize">
         <type xmi:type="uml:Stereotype" href="pathmap://SysML_PROFILES/SysML.profile.uml#_xajygLXqEduHWpAaWjM62w"/>
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FGYjYKcnEeaNpeTYMa4W5g"/>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FGvvwKcnEeaNpeTYMa4W5g" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FGvvwKcnEeaNpeTYMa4W5g" value="*"/>
       </ownedAttribute>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_HW-t0E4IEeOylNwoj7CyKg" name="Language" type="_xwVVgE4HEeOylNwoj7CyKg"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="__JfQAG4MEeeSVLWy6DYUDQ" name="contextStatement" aggregation="shared">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FT1SYG4NEeeSVLWy6DYUDQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FT7ZAG4NEeeSVLWy6DYUDQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_IZpz0G4NEeeSVLWy6DYUDQ" name="artefactStatement" aggregation="shared">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_IZpz0W4NEeeSVLWy6DYUDQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_IZpz0m4NEeeSVLWy6DYUDQ" value="*"/>
+      </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Stereotype" xmi:id="_LR5HANDmEeG5E52m3d5H1g" name="Formalize">
       <ownedAttribute xmi:type="uml:Property" xmi:id="_cSKKENDmEeG5E52m3d5H1g" name="base_Abstraction" association="_cSKKEdDmEeG5E52m3d5H1g">
@@ -1049,8 +1095,9 @@
       <ownedAttribute xmi:type="uml:Property" xmi:id="_BtriMKcnEeaNpeTYMa4W5g" name="Formalize">
         <type xmi:type="uml:Stereotype" href="pathmap://SysML_PROFILES/SysML.profile.uml#_xajygLXqEduHWpAaWjM62w"/>
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_F5CvYKcnEeaNpeTYMa4W5g"/>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_F5DWcKcnEeaNpeTYMa4W5g" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_F5DWcKcnEeaNpeTYMa4W5g" value="*"/>
       </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_EFPMwG4XEeeSVLWy6DYUDQ" name="concern" type="_I-_xAG4XEeeSVLWy6DYUDQ"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Extension" xmi:id="_UzePUeIbEeGAI6rR7jLcjw" name="E_FormalProperty_Constraint1" memberEnd="_UzePUuIbEeGAI6rR7jLcjw _UzePUOIbEeGAI6rR7jLcjw">
       <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_UzePUuIbEeGAI6rR7jLcjw" name="extension_FormalProperty" type="_Srt4oOIbEeGAI6rR7jLcjw" aggregation="composite" association="_UzePUeIbEeGAI6rR7jLcjw"/>
@@ -1064,6 +1111,10 @@
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ctQVQCzpEeKQef6wX-6K3g" value="*"/>
       </ownedAttribute>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_ZnOjUEIyEeSWCts2w9ZXDw" name="ContractType" type="_oCqSIEIyEeSWCts2w9ZXDw"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_vR3IoW4PEeeSVLWy6DYUDQ" name="base_Slot" association="_vRtXoG4PEeeSVLWy6DYUDQ">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Slot"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_W0cFkG4REeeSVLWy6DYUDQ" name="status" type="_YIbnkG4SEeeSVLWy6DYUDQ"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Stereotype" xmi:id="_7BgzAC8PEeKMDoUhp0Nj3g" name="DelegationConstraint">
       <ownedAttribute xmi:type="uml:Property" xmi:id="_DS4MQC8QEeKMDoUhp0Nj3g" name="base_Constraint" association="_DS4zUC8QEeKMDoUhp0Nj3g">
@@ -1072,38 +1123,6 @@
     </packagedElement>
     <packagedElement xmi:type="uml:Extension" xmi:id="_DS4zUC8QEeKMDoUhp0Nj3g" name="E_DelegationConstraint_Constraint1" memberEnd="_DS4zUS8QEeKMDoUhp0Nj3g _DS4MQC8QEeKMDoUhp0Nj3g">
       <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_DS4zUS8QEeKMDoUhp0Nj3g" name="extension_DelegationConstraint" type="_7BgzAC8PEeKMDoUhp0Nj3g" aggregation="composite" association="_DS4zUC8QEeKMDoUhp0Nj3g"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Stereotype" xmi:id="_FtMw8DLyEeKOZqkjI6cRQg" name="Platform">
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_UjUQoDLyEeKOZqkjI6cRQg" name="base_Component" association="_UjU3sDLyEeKOZqkjI6cRQg">
-        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
-      </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_9v1q4D78EeKsNZO5gyGxwQ" name="base_Component" association="_9v2R8D78EeKsNZO5gyGxwQ">
-        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
-      </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_jwhzwD79EeKsNZO5gyGxwQ" name="base_Component" association="_jwhzwT79EeKsNZO5gyGxwQ">
-        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
-      </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_CZlnwD7-EeKsNZO5gyGxwQ" name="base_Component" association="_CZmO0D7-EeKsNZO5gyGxwQ">
-        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
-      </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_NGkH0D7-EeKsNZO5gyGxwQ" name="base_Component" association="_NGku4D7-EeKsNZO5gyGxwQ">
-        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
-      </ownedAttribute>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Extension" xmi:id="_UjU3sDLyEeKOZqkjI6cRQg" name="E_Platform_Component1" memberEnd="_UjU3sTLyEeKOZqkjI6cRQg _UjUQoDLyEeKOZqkjI6cRQg">
-      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_UjU3sTLyEeKOZqkjI6cRQg" name="extension_Platform" type="_FtMw8DLyEeKOZqkjI6cRQg" aggregation="composite" association="_UjU3sDLyEeKOZqkjI6cRQg"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Extension" xmi:id="_9v2R8D78EeKsNZO5gyGxwQ" name="E_Platform_Component2" memberEnd="_9v2R8T78EeKsNZO5gyGxwQ _9v1q4D78EeKsNZO5gyGxwQ">
-      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_9v2R8T78EeKsNZO5gyGxwQ" name="extension_Platform" type="_FtMw8DLyEeKOZqkjI6cRQg" aggregation="composite" association="_9v2R8D78EeKsNZO5gyGxwQ"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Extension" xmi:id="_jwhzwT79EeKsNZO5gyGxwQ" name="E_Platform_Component3" memberEnd="_jwhzwj79EeKsNZO5gyGxwQ _jwhzwD79EeKsNZO5gyGxwQ">
-      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_jwhzwj79EeKsNZO5gyGxwQ" name="extension_Platform" type="_FtMw8DLyEeKOZqkjI6cRQg" aggregation="composite" association="_jwhzwT79EeKsNZO5gyGxwQ"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Extension" xmi:id="_CZmO0D7-EeKsNZO5gyGxwQ" name="E_Platform_Component4" memberEnd="_CZmO0T7-EeKsNZO5gyGxwQ _CZlnwD7-EeKsNZO5gyGxwQ">
-      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_CZmO0T7-EeKsNZO5gyGxwQ" name="extension_Platform" type="_FtMw8DLyEeKOZqkjI6cRQg" aggregation="composite" association="_CZmO0D7-EeKsNZO5gyGxwQ"/>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Extension" xmi:id="_NGku4D7-EeKsNZO5gyGxwQ" name="E_Platform_Component5" memberEnd="_NGku4T7-EeKsNZO5gyGxwQ _NGkH0D7-EeKsNZO5gyGxwQ">
-      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_NGku4T7-EeKsNZO5gyGxwQ" name="extension_Platform" type="_FtMw8DLyEeKOZqkjI6cRQg" aggregation="composite" association="_NGku4D7-EeKsNZO5gyGxwQ"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Stereotype" xmi:id="_uF6rIEYMEeKlXqCWXpGSyw" name="SRAComponent">
       <ownedAttribute xmi:type="uml:Property" xmi:id="_zKafwEYMEeKlXqCWXpGSyw" name="base_Class" association="_zKbG0EYMEeKlXqCWXpGSyw">
@@ -1119,8 +1138,15 @@
       </ownedAttribute>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_I08L8KA1EeKdpNE52fDl9w" name="Instance">
         <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_LR6TAG4QEeeSVLWy6DYUDQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_LSapUG4QEeeSVLWy6DYUDQ" value="1"/>
       </ownedAttribute>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_JHBacKA1EeKdpNE52fDl9w" name="Contract" type="_yFZM8CzoEeKQef6wX-6K3g"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_00wwgG4PEeeSVLWy6DYUDQ" name="instanceSpec">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_J8hNYG4QEeeSVLWy6DYUDQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_J8q-YG4QEeeSVLWy6DYUDQ" value="1"/>
+      </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Extension" xmi:id="_HvPIIKA1EeKdpNE52fDl9w" name="E_ContractRefinement_DataType1" memberEnd="_HvPIIaA1EeKdpNE52fDl9w _HvOhEKA1EeKdpNE52fDl9w">
       <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_HvPIIaA1EeKdpNE52fDl9w" name="extension_ContractRefinement" type="_EXS78KA1EeKdpNE52fDl9w" aggregation="composite" association="_HvPIIKA1EeKdpNE52fDl9w"/>
@@ -1142,6 +1168,18 @@
     </packagedElement>
     <packagedElement xmi:type="uml:Extension" xmi:id="_jcmwYKcmEeaNpeTYMa4W5g" name="E_ComponentInstance_InstanceSpecification1" memberEnd="_jcmwYacmEeaNpeTYMa4W5g _jckUIKcmEeaNpeTYMa4W5g">
       <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_jcmwYacmEeaNpeTYMa4W5g" name="extension_ComponentInstance" type="_8cdYoEI5EeSWCts2w9ZXDw" aggregation="composite" association="_jcmwYKcmEeaNpeTYMa4W5g"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_B3ZfMG32EeeSVLWy6DYUDQ" name="ContractRefinementAnalysisContext">
+      <generalization xmi:type="uml:Generalization" xmi:id="_lztlQHBWEeenPt7H06ARrA">
+        <general xmi:type="uml:Stereotype" href="pathmap://Papyrus_PROFILES/MARTE.profile.uml#_9gc2ABKfEdyaWJN1BYon3A"/>
+      </generalization>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_ErE8MG4AEeeSVLWy6DYUDQ" name="checkAllWeakContracts">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+        <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_PjB8MG4LEeeSVLWy6DYUDQ"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Extension" xmi:id="_vRtXoG4PEeeSVLWy6DYUDQ" name="E_ContractProperty_Slot1" memberEnd="_vR3IoG4PEeeSVLWy6DYUDQ _vR3IoW4PEeeSVLWy6DYUDQ">
+      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_vR3IoG4PEeeSVLWy6DYUDQ" name="extension_ContractProperty" type="_yFZM8CzoEeKQef6wX-6K3g" aggregation="composite" association="_vRtXoG4PEeeSVLWy6DYUDQ"/>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_MTvtcAfMEeKtpaTOTuIwBw">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_MTvtcQfMEeKtpaTOTuIwBw" source="http://www.eclipse.org/uml2/2.0.0/UML">

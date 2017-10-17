@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GQAMPackage;
 import org.eclipse.papyrus.sysml.blocks.BlocksPackage;
 
 import org.eclipse.papyrus.sysml.constraints.ConstraintsPackage;
@@ -71,8 +72,416 @@ public interface CHESSContractPackage extends EPackage {
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getSystem()
 	 * @generated
 	 */
-	int SYSTEM = 0;
+	int SYSTEM = 5;
 
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl <em>Contract</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getContract()
+	 * @generated
+	 */
+	int CONTRACT = 6;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalPropertyImpl <em>Formal Property</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.FormalPropertyImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getFormalProperty()
+	 * @generated
+	 */
+	int FORMAL_PROPERTY = 3;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementAnalysisContextImpl <em>Contract Refinement Analysis Context</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementAnalysisContextImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getContractRefinementAnalysisContext()
+	 * @generated
+	 */
+	int CONTRACT_REFINEMENT_ANALYSIS_CONTEXT = 4;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalizeImpl <em>Formalize</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.FormalizeImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getFormalize()
+	 * @generated
+	 */
+	int FORMALIZE = 7;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.SubSystemImpl <em>Sub System</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.SubSystemImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getSubSystem()
+	 * @generated
+	 */
+	int SUB_SYSTEM = 8;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSRequirementImpl <em>CHESS Requirement</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSRequirementImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getCHESSRequirement()
+	 * @generated
+	 */
+	int CHESS_REQUIREMENT = 9;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractPropertyImpl <em>Contract Property</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ContractPropertyImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getContractProperty()
+	 * @generated
+	 */
+	int CONTRACT_PROPERTY = 1;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementImpl <em>Contract Refinement</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getContractRefinement()
+	 * @generated
+	 */
+	int CONTRACT_REFINEMENT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.DelegationConstraintImpl <em>Delegation Constraint</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.DelegationConstraintImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getDelegationConstraint()
+	 * @generated
+	 */
+	int DELEGATION_CONSTRAINT = 10;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.SRAComponentImpl <em>SRA Component</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.SRAComponentImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getSRAComponent()
+	 * @generated
+	 */
+	int SRA_COMPONENT = 11;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ComponentInstanceImpl <em>Component Instance</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ComponentInstanceImpl
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getComponentInstance()
+	 * @generated
+	 */
+	int COMPONENT_INSTANCE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Property</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_INSTANCE__BASE_PROPERTY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Weak Guarantees</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_INSTANCE__WEAK_GUARANTEES = 1;
+
+	/**
+	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_INSTANCE__BASE_INSTANCE_SPECIFICATION = 2;
+
+	/**
+	 * The number of structural features of the '<em>Component Instance</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_INSTANCE_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Component Instance</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT_INSTANCE_OPERATION_COUNT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Property</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_PROPERTY__BASE_PROPERTY = ConstraintsPackage.CONSTRAINT_PROPERTY__BASE_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Refined By</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_PROPERTY__REFINED_BY = ConstraintsPackage.CONSTRAINT_PROPERTY_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Contract Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_PROPERTY__CONTRACT_TYPE = ConstraintsPackage.CONSTRAINT_PROPERTY_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Base Slot</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_PROPERTY__BASE_SLOT = ConstraintsPackage.CONSTRAINT_PROPERTY_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Status</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_PROPERTY__STATUS = ConstraintsPackage.CONSTRAINT_PROPERTY_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Contract Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_PROPERTY_FEATURE_COUNT = ConstraintsPackage.CONSTRAINT_PROPERTY_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of operations of the '<em>Contract Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_PROPERTY_OPERATION_COUNT = ConstraintsPackage.CONSTRAINT_PROPERTY_OPERATION_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Data Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT__BASE_DATA_TYPE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Instance</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT__INSTANCE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Contract</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT__CONTRACT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Instance Spec</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT__INSTANCE_SPEC = 3;
+
+	/**
+	 * The number of structural features of the '<em>Contract Refinement</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT_FEATURE_COUNT = 4;
+
+	/**
+	 * The number of operations of the '<em>Contract Refinement</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT_OPERATION_COUNT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Constraint</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FORMAL_PROPERTY__BASE_CONSTRAINT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Formalize</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FORMAL_PROPERTY__FORMALIZE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Concern</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FORMAL_PROPERTY__CONCERN = 2;
+
+	/**
+	 * The feature id for the '<em><b>Claim</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FORMAL_PROPERTY__CLAIM = 3;
+
+	/**
+	 * The number of structural features of the '<em>Formal Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FORMAL_PROPERTY_FEATURE_COUNT = 4;
+
+	/**
+	 * The number of operations of the '<em>Formal Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FORMAL_PROPERTY_OPERATION_COUNT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Structured Classifier</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__BASE_STRUCTURED_CLASSIFIER = GQAMPackage.GA_ANALYSIS_CONTEXT__BASE_STRUCTURED_CLASSIFIER;
+
+	/**
+	 * The feature id for the '<em><b>Base Package</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__BASE_PACKAGE = GQAMPackage.GA_ANALYSIS_CONTEXT__BASE_PACKAGE;
+
+	/**
+	 * The feature id for the '<em><b>Mode</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__MODE = GQAMPackage.GA_ANALYSIS_CONTEXT__MODE;
+
+	/**
+	 * The feature id for the '<em><b>Base Named Element</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__BASE_NAMED_ELEMENT = GQAMPackage.GA_ANALYSIS_CONTEXT__BASE_NAMED_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Context</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CONTEXT = GQAMPackage.GA_ANALYSIS_CONTEXT__CONTEXT;
+
+	/**
+	 * The feature id for the '<em><b>Workload</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__WORKLOAD = GQAMPackage.GA_ANALYSIS_CONTEXT__WORKLOAD;
+
+	/**
+	 * The feature id for the '<em><b>Platform</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__PLATFORM = GQAMPackage.GA_ANALYSIS_CONTEXT__PLATFORM;
+
+	/**
+	 * The feature id for the '<em><b>Check All Weak Contracts</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS = GQAMPackage.GA_ANALYSIS_CONTEXT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Contract Refinement Analysis Context</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_REFINEMENT_ANALYSIS_CONTEXT_FEATURE_COUNT = GQAMPackage.GA_ANALYSIS_CONTEXT_FEATURE_COUNT + 1;
+
+	
 	/**
 	 * The feature id for the '<em><b>Is Encapsulated</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -108,16 +517,6 @@ public interface CHESSContractPackage extends EPackage {
 	 * @ordered
 	 */
 	int SYSTEM_OPERATION_COUNT = BlocksPackage.BLOCK_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl <em>Contract</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getContract()
-	 * @generated
-	 */
-	int CONTRACT = 1;
 
 	/**
 	 * The feature id for the '<em><b>Is Encapsulated</b></em>' attribute.
@@ -156,7 +555,7 @@ public interface CHESSContractPackage extends EPackage {
 	int CONTRACT__GUARANTEE = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Formalize</b></em>' reference.
+	 * The feature id for the '<em><b>Formalize</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -174,13 +573,49 @@ public interface CHESSContractPackage extends EPackage {
 	int CONTRACT__LANGUAGE = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Context Statement</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT__CONTEXT_STATEMENT = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Artefact Statement</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT__ARTEFACT_STATEMENT = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Claim</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT__CLAIM = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Supported By</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT__SUPPORTED_BY = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 7;
+
+	/**
 	 * The number of structural features of the '<em>Contract</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTRACT_FEATURE_COUNT = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 4;
+	int CONTRACT_FEATURE_COUNT = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of operations of the '<em>Contract</em>' class.
@@ -190,71 +625,6 @@ public interface CHESSContractPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTRACT_OPERATION_COUNT = ConstraintsPackage.CONSTRAINT_BLOCK_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalPropertyImpl <em>Formal Property</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.FormalPropertyImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getFormalProperty()
-	 * @generated
-	 */
-	int FORMAL_PROPERTY = 2;
-
-	/**
-	 * The feature id for the '<em><b>Base Constraint</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FORMAL_PROPERTY__BASE_CONSTRAINT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Formalize</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FORMAL_PROPERTY__FORMALIZE = 1;
-
-	/**
-	 * The feature id for the '<em><b>Goto</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FORMAL_PROPERTY__GOTO = 2;
-
-	/**
-	 * The number of structural features of the '<em>Formal Property</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FORMAL_PROPERTY_FEATURE_COUNT = 3;
-
-	/**
-	 * The number of operations of the '<em>Formal Property</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FORMAL_PROPERTY_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalizeImpl <em>Formalize</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.FormalizeImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getFormalize()
-	 * @generated
-	 */
-	int FORMALIZE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Base Abstraction</b></em>' reference.
@@ -282,16 +652,6 @@ public interface CHESSContractPackage extends EPackage {
 	 * @ordered
 	 */
 	int FORMALIZE_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.SubSystemImpl <em>Sub System</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.SubSystemImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getSubSystem()
-	 * @generated
-	 */
-	int SUB_SYSTEM = 4;
 
 	/**
 	 * The feature id for the '<em><b>Is Encapsulated</b></em>' attribute.
@@ -328,16 +688,6 @@ public interface CHESSContractPackage extends EPackage {
 	 * @ordered
 	 */
 	int SUB_SYSTEM_OPERATION_COUNT = BlocksPackage.BLOCK_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSRequirementImpl <em>CHESS Requirement</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSRequirementImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getCHESSRequirement()
-	 * @generated
-	 */
-	int CHESS_REQUIREMENT = 5;
 
 	/**
 	 * The feature id for the '<em><b>Text</b></em>' attribute.
@@ -529,126 +879,6 @@ public interface CHESSContractPackage extends EPackage {
 	int CHESS_REQUIREMENT_OPERATION_COUNT = RequirementsPackage.REQUIREMENT_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractPropertyImpl <em>Contract Property</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ContractPropertyImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getContractProperty()
-	 * @generated
-	 */
-	int CONTRACT_PROPERTY = 6;
-
-	/**
-	 * The feature id for the '<em><b>Base Property</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_PROPERTY__BASE_PROPERTY = ConstraintsPackage.CONSTRAINT_PROPERTY__BASE_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Refined By</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_PROPERTY__REFINED_BY = ConstraintsPackage.CONSTRAINT_PROPERTY_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Contract Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_PROPERTY__CONTRACT_TYPE = ConstraintsPackage.CONSTRAINT_PROPERTY_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Contract Property</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_PROPERTY_FEATURE_COUNT = ConstraintsPackage.CONSTRAINT_PROPERTY_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of operations of the '<em>Contract Property</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_PROPERTY_OPERATION_COUNT = ConstraintsPackage.CONSTRAINT_PROPERTY_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementImpl <em>Contract Refinement</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getContractRefinement()
-	 * @generated
-	 */
-	int CONTRACT_REFINEMENT = 7;
-
-	/**
-	 * The feature id for the '<em><b>Base Data Type</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_REFINEMENT__BASE_DATA_TYPE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Instance</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_REFINEMENT__INSTANCE = 1;
-
-	/**
-	 * The feature id for the '<em><b>Contract</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_REFINEMENT__CONTRACT = 2;
-
-	/**
-	 * The number of structural features of the '<em>Contract Refinement</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_REFINEMENT_FEATURE_COUNT = 3;
-
-	/**
-	 * The number of operations of the '<em>Contract Refinement</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_REFINEMENT_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.DelegationConstraintImpl <em>Delegation Constraint</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.DelegationConstraintImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getDelegationConstraint()
-	 * @generated
-	 */
-	int DELEGATION_CONSTRAINT = 8;
-
-	/**
 	 * The feature id for the '<em><b>Base Constraint</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -676,53 +906,6 @@ public interface CHESSContractPackage extends EPackage {
 	int DELEGATION_CONSTRAINT_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.PlatformImpl <em>Platform</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.PlatformImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getPlatform()
-	 * @generated
-	 */
-	int PLATFORM = 9;
-
-	/**
-	 * The feature id for the '<em><b>Base Component</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PLATFORM__BASE_COMPONENT = 0;
-
-	/**
-	 * The number of structural features of the '<em>Platform</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PLATFORM_FEATURE_COUNT = 1;
-
-	/**
-	 * The number of operations of the '<em>Platform</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PLATFORM_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.SRAComponentImpl <em>SRA Component</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.SRAComponentImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getSRAComponent()
-	 * @generated
-	 */
-	int SRA_COMPONENT = 10;
-
-	/**
 	 * The feature id for the '<em><b>Base Class</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -748,61 +931,6 @@ public interface CHESSContractPackage extends EPackage {
 	 * @ordered
 	 */
 	int SRA_COMPONENT_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ComponentInstanceImpl <em>Component Instance</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ComponentInstanceImpl
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getComponentInstance()
-	 * @generated
-	 */
-	int COMPONENT_INSTANCE = 11;
-
-	/**
-	 * The feature id for the '<em><b>Base Property</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_INSTANCE__BASE_PROPERTY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Weak Guarantees</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_INSTANCE__WEAK_GUARANTEES = 1;
-
-	/**
-	 * The feature id for the '<em><b>Base Instance Specification</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_INSTANCE__BASE_INSTANCE_SPECIFICATION = 2;
-
-	/**
-	 * The number of structural features of the '<em>Component Instance</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_INSTANCE_FEATURE_COUNT = 3;
-
-	/**
-	 * The number of operations of the '<em>Component Instance</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPONENT_INSTANCE_OPERATION_COUNT = 0;
 
 
 	/**
@@ -848,10 +976,10 @@ public interface CHESSContractPackage extends EPackage {
 	EReference getContract_Guarantee();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getFormalize <em>Formalize</em>}'.
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getFormalize <em>Formalize</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Formalize</em>'.
+	 * @return the meta object for the reference list '<em>Formalize</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.Contract#getFormalize()
 	 * @see #getContract()
 	 * @generated
@@ -868,6 +996,50 @@ public interface CHESSContractPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getContract_Language();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getContextStatement <em>Context Statement</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Context Statement</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.Contract#getContextStatement()
+	 * @see #getContract()
+	 * @generated
+	 */
+	EAttribute getContract_ContextStatement();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getArtefactStatement <em>Artefact Statement</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Artefact Statement</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.Contract#getArtefactStatement()
+	 * @see #getContract()
+	 * @generated
+	 */
+	EAttribute getContract_ArtefactStatement();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getClaim <em>Claim</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Claim</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.Contract#getClaim()
+	 * @see #getContract()
+	 * @generated
+	 */
+	EReference getContract_Claim();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getSupportedBy <em>Supported By</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Supported By</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.Contract#getSupportedBy()
+	 * @see #getContract()
+	 * @generated
+	 */
+	EReference getContract_SupportedBy();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty <em>Formal Property</em>}'.
@@ -891,10 +1063,10 @@ public interface CHESSContractPackage extends EPackage {
 	EReference getFormalProperty_Base_Constraint();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getFormalize <em>Formalize</em>}'.
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getFormalize <em>Formalize</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Formalize</em>'.
+	 * @return the meta object for the reference list '<em>Formalize</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getFormalize()
 	 * @see #getFormalProperty()
 	 * @generated
@@ -902,15 +1074,47 @@ public interface CHESSContractPackage extends EPackage {
 	EReference getFormalProperty_Formalize();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getGoto <em>Goto</em>}'.
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getConcern <em>Concern</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Goto</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getGoto()
+	 * @return the meta object for the attribute '<em>Concern</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getConcern()
 	 * @see #getFormalProperty()
 	 * @generated
 	 */
-	EReference getFormalProperty_Goto();
+	EAttribute getFormalProperty_Concern();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getClaim <em>Claim</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Claim</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getClaim()
+	 * @see #getFormalProperty()
+	 * @generated
+	 */
+	EReference getFormalProperty_Claim();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnalysisContext <em>Contract Refinement Analysis Context</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Contract Refinement Analysis Context</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnalysisContext
+	 * @generated
+	 */
+	EClass getContractRefinementAnalysisContext();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnalysisContext#isCheckAllWeakContracts <em>Check All Weak Contracts</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Check All Weak Contracts</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnalysisContext#isCheckAllWeakContracts()
+	 * @see #getContractRefinementAnalysisContext()
+	 * @generated
+	 */
+	EAttribute getContractRefinementAnalysisContext_CheckAllWeakContracts();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.Formalize <em>Formalize</em>}'.
@@ -1085,6 +1289,28 @@ public interface CHESSContractPackage extends EPackage {
 	EAttribute getContractProperty_ContractType();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getBase_Slot <em>Base Slot</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Slot</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getBase_Slot()
+	 * @see #getContractProperty()
+	 * @generated
+	 */
+	EReference getContractProperty_Base_Slot();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getStatus <em>Status</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Status</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getStatus()
+	 * @see #getContractProperty()
+	 * @generated
+	 */
+	EAttribute getContractProperty_Status();
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement <em>Contract Refinement</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1128,6 +1354,17 @@ public interface CHESSContractPackage extends EPackage {
 	EReference getContractRefinement_Contract();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getInstanceSpec <em>Instance Spec</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Instance Spec</em>'.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getInstanceSpec()
+	 * @see #getContractRefinement()
+	 * @generated
+	 */
+	EReference getContractRefinement_InstanceSpec();
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint <em>Delegation Constraint</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1147,27 +1384,6 @@ public interface CHESSContractPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDelegationConstraint_Base_Constraint();
-
-	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.Platform <em>Platform</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Platform</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.Platform
-	 * @generated
-	 */
-	EClass getPlatform();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.contracts.profile.chesscontract.Platform#getBase_Component <em>Base Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Component</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.Platform#getBase_Component()
-	 * @see #getPlatform()
-	 * @generated
-	 */
-	EReference getPlatform_Base_Component();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.SRAComponent <em>SRA Component</em>}'.
@@ -1293,7 +1509,7 @@ public interface CHESSContractPackage extends EPackage {
 		EReference CONTRACT__GUARANTEE = eINSTANCE.getContract_Guarantee();
 
 		/**
-		 * The meta object literal for the '<em><b>Formalize</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Formalize</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1307,6 +1523,38 @@ public interface CHESSContractPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CONTRACT__LANGUAGE = eINSTANCE.getContract_Language();
+
+		/**
+		 * The meta object literal for the '<em><b>Context Statement</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONTRACT__CONTEXT_STATEMENT = eINSTANCE.getContract_ContextStatement();
+
+		/**
+		 * The meta object literal for the '<em><b>Artefact Statement</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONTRACT__ARTEFACT_STATEMENT = eINSTANCE.getContract_ArtefactStatement();
+
+		/**
+		 * The meta object literal for the '<em><b>Claim</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONTRACT__CLAIM = eINSTANCE.getContract_Claim();
+
+		/**
+		 * The meta object literal for the '<em><b>Supported By</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONTRACT__SUPPORTED_BY = eINSTANCE.getContract_SupportedBy();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalPropertyImpl <em>Formal Property</em>}' class.
@@ -1327,7 +1575,7 @@ public interface CHESSContractPackage extends EPackage {
 		EReference FORMAL_PROPERTY__BASE_CONSTRAINT = eINSTANCE.getFormalProperty_Base_Constraint();
 
 		/**
-		 * The meta object literal for the '<em><b>Formalize</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Formalize</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1335,12 +1583,38 @@ public interface CHESSContractPackage extends EPackage {
 		EReference FORMAL_PROPERTY__FORMALIZE = eINSTANCE.getFormalProperty_Formalize();
 
 		/**
-		 * The meta object literal for the '<em><b>Goto</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Concern</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference FORMAL_PROPERTY__GOTO = eINSTANCE.getFormalProperty_Goto();
+		EAttribute FORMAL_PROPERTY__CONCERN = eINSTANCE.getFormalProperty_Concern();
+
+		/**
+		 * The meta object literal for the '<em><b>Claim</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FORMAL_PROPERTY__CLAIM = eINSTANCE.getFormalProperty_Claim();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementAnalysisContextImpl <em>Contract Refinement Analysis Context</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementAnalysisContextImpl
+		 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getContractRefinementAnalysisContext()
+		 * @generated
+		 */
+		EClass CONTRACT_REFINEMENT_ANALYSIS_CONTEXT = eINSTANCE.getContractRefinementAnalysisContext();
+
+		/**
+		 * The meta object literal for the '<em><b>Check All Weak Contracts</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS = eINSTANCE.getContractRefinementAnalysisContext_CheckAllWeakContracts();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalizeImpl <em>Formalize</em>}' class.
@@ -1479,6 +1753,22 @@ public interface CHESSContractPackage extends EPackage {
 		EAttribute CONTRACT_PROPERTY__CONTRACT_TYPE = eINSTANCE.getContractProperty_ContractType();
 
 		/**
+		 * The meta object literal for the '<em><b>Base Slot</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONTRACT_PROPERTY__BASE_SLOT = eINSTANCE.getContractProperty_Base_Slot();
+
+		/**
+		 * The meta object literal for the '<em><b>Status</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONTRACT_PROPERTY__STATUS = eINSTANCE.getContractProperty_Status();
+
+		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementImpl <em>Contract Refinement</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1513,6 +1803,14 @@ public interface CHESSContractPackage extends EPackage {
 		EReference CONTRACT_REFINEMENT__CONTRACT = eINSTANCE.getContractRefinement_Contract();
 
 		/**
+		 * The meta object literal for the '<em><b>Instance Spec</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONTRACT_REFINEMENT__INSTANCE_SPEC = eINSTANCE.getContractRefinement_InstanceSpec();
+
+		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.DelegationConstraintImpl <em>Delegation Constraint</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1529,24 +1827,6 @@ public interface CHESSContractPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DELEGATION_CONSTRAINT__BASE_CONSTRAINT = eINSTANCE.getDelegationConstraint_Base_Constraint();
-
-		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.PlatformImpl <em>Platform</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.PlatformImpl
-		 * @see org.polarsys.chess.contracts.profile.chesscontract.impl.CHESSContractPackageImpl#getPlatform()
-		 * @generated
-		 */
-		EClass PLATFORM = eINSTANCE.getPlatform();
-
-		/**
-		 * The meta object literal for the '<em><b>Base Component</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PLATFORM__BASE_COMPONENT = eINSTANCE.getPlatform_Base_Component();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.SRAComponentImpl <em>SRA Component</em>}' class.

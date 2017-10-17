@@ -19,10 +19,10 @@ import org.polarsys.chess.contracts.profile.chesscontract.SRAComponent;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.SRAComponentImpl#getBase_Class <em>Base Class</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

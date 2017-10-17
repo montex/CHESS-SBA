@@ -14,10 +14,10 @@ import org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
+import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnalysisContext;
 import org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.Formalize;
-import org.polarsys.chess.contracts.profile.chesscontract.Platform;
 import org.polarsys.chess.contracts.profile.chesscontract.SRAComponent;
 import org.polarsys.chess.contracts.profile.chesscontract.SubSystem;
 
@@ -65,18 +65,18 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case CHESSContractPackage.COMPONENT_INSTANCE: return createComponentInstance();
+			case CHESSContractPackage.CONTRACT_PROPERTY: return createContractProperty();
+			case CHESSContractPackage.CONTRACT_REFINEMENT: return createContractRefinement();
+			case CHESSContractPackage.FORMAL_PROPERTY: return createFormalProperty();
+			case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT: return createContractRefinementAnalysisContext();
 			case CHESSContractPackage.SYSTEM: return createSystem();
 			case CHESSContractPackage.CONTRACT: return createContract();
-			case CHESSContractPackage.FORMAL_PROPERTY: return createFormalProperty();
 			case CHESSContractPackage.FORMALIZE: return createFormalize();
 			case CHESSContractPackage.SUB_SYSTEM: return createSubSystem();
 			case CHESSContractPackage.CHESS_REQUIREMENT: return createCHESSRequirement();
-			case CHESSContractPackage.CONTRACT_PROPERTY: return createContractProperty();
-			case CHESSContractPackage.CONTRACT_REFINEMENT: return createContractRefinement();
 			case CHESSContractPackage.DELEGATION_CONSTRAINT: return createDelegationConstraint();
-			case CHESSContractPackage.PLATFORM: return createPlatform();
 			case CHESSContractPackage.SRA_COMPONENT: return createSRAComponent();
-			case CHESSContractPackage.COMPONENT_INSTANCE: return createComponentInstance();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -110,6 +110,16 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	public FormalProperty createFormalProperty() {
 		FormalPropertyImpl formalProperty = new FormalPropertyImpl();
 		return formalProperty;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ContractRefinementAnalysisContext createContractRefinementAnalysisContext() {
+		ContractRefinementAnalysisContextImpl contractRefinementAnalysisContext = new ContractRefinementAnalysisContextImpl();
+		return contractRefinementAnalysisContext;
 	}
 
 	/**
@@ -170,16 +180,6 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	public DelegationConstraint createDelegationConstraint() {
 		DelegationConstraintImpl delegationConstraint = new DelegationConstraintImpl();
 		return delegationConstraint;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Platform createPlatform() {
-		PlatformImpl platform = new PlatformImpl();
-		return platform;
 	}
 
 	/**

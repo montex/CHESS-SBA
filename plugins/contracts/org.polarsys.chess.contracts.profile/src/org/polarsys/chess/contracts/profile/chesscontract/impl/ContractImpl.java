@@ -2,10 +2,16 @@
  */
 package org.polarsys.chess.contracts.profile.chesscontract.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.opencert.evm.evidspec.evidence.Artefact;
+import org.eclipse.opencert.sam.arg.arg.Claim;
 import org.eclipse.papyrus.sysml.constraints.internal.impl.ConstraintBlockImpl;
 import org.eclipse.papyrus.sysml.requirements.Requirement;
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
@@ -19,13 +25,17 @@ import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getAssume <em>Assume</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getGuarantee <em>Guarantee</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getFormalize <em>Formalize</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getLanguage <em>Language</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getContextStatement <em>Context Statement</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getArtefactStatement <em>Artefact Statement</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getClaim <em>Claim</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getSupportedBy <em>Supported By</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -51,14 +61,14 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 	protected FormalProperty guarantee;
 
 	/**
-	 * The cached value of the '{@link #getFormalize() <em>Formalize</em>}' reference.
+	 * The cached value of the '{@link #getFormalize() <em>Formalize</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getFormalize()
 	 * @generated
 	 * @ordered
 	 */
-	protected Requirement formalize;
+	protected EList<Requirement> formalize;
 
 	/**
 	 * The default value of the '{@link #getLanguage() <em>Language</em>}' attribute.
@@ -79,6 +89,56 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 	 * @ordered
 	 */
 	protected Languages language = LANGUAGE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getContextStatement() <em>Context Statement</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getContextStatement()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CONTEXT_STATEMENT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getContextStatement() <em>Context Statement</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getContextStatement()
+	 * @generated
+	 * @ordered
+	 */
+	protected String contextStatement = CONTEXT_STATEMENT_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getArtefactStatement() <em>Artefact Statement</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getArtefactStatement()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> artefactStatement;
+
+	/**
+	 * The cached value of the '{@link #getClaim() <em>Claim</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getClaim()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Claim> claim;
+
+	/**
+	 * The cached value of the '{@link #getSupportedBy() <em>Supported By</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSupportedBy()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Artefact> supportedBy;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -180,37 +240,11 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Requirement getFormalize() {
-		if (formalize != null && formalize.eIsProxy()) {
-			InternalEObject oldFormalize = (InternalEObject)formalize;
-			formalize = (Requirement)eResolveProxy(oldFormalize);
-			if (formalize != oldFormalize) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CHESSContractPackage.CONTRACT__FORMALIZE, oldFormalize, formalize));
-			}
+	public EList<Requirement> getFormalize() {
+		if (formalize == null) {
+			formalize = new EObjectResolvingEList<Requirement>(Requirement.class, this, CHESSContractPackage.CONTRACT__FORMALIZE);
 		}
 		return formalize;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Requirement basicGetFormalize() {
-		return formalize;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setFormalize(Requirement newFormalize) {
-		Requirement oldFormalize = formalize;
-		formalize = newFormalize;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CHESSContractPackage.CONTRACT__FORMALIZE, oldFormalize, formalize));
 	}
 
 	/**
@@ -239,6 +273,63 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getContextStatement() {
+		return contextStatement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setContextStatement(String newContextStatement) {
+		String oldContextStatement = contextStatement;
+		contextStatement = newContextStatement;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CHESSContractPackage.CONTRACT__CONTEXT_STATEMENT, oldContextStatement, contextStatement));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getArtefactStatement() {
+		if (artefactStatement == null) {
+			artefactStatement = new EDataTypeUniqueEList<String>(String.class, this, CHESSContractPackage.CONTRACT__ARTEFACT_STATEMENT);
+		}
+		return artefactStatement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Claim> getClaim() {
+		if (claim == null) {
+			claim = new EObjectResolvingEList<Claim>(Claim.class, this, CHESSContractPackage.CONTRACT__CLAIM);
+		}
+		return claim;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Artefact> getSupportedBy() {
+		if (supportedBy == null) {
+			supportedBy = new EObjectResolvingEList<Artefact>(Artefact.class, this, CHESSContractPackage.CONTRACT__SUPPORTED_BY);
+		}
+		return supportedBy;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -249,10 +340,17 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 				if (resolve) return getGuarantee();
 				return basicGetGuarantee();
 			case CHESSContractPackage.CONTRACT__FORMALIZE:
-				if (resolve) return getFormalize();
-				return basicGetFormalize();
+				return getFormalize();
 			case CHESSContractPackage.CONTRACT__LANGUAGE:
 				return getLanguage();
+			case CHESSContractPackage.CONTRACT__CONTEXT_STATEMENT:
+				return getContextStatement();
+			case CHESSContractPackage.CONTRACT__ARTEFACT_STATEMENT:
+				return getArtefactStatement();
+			case CHESSContractPackage.CONTRACT__CLAIM:
+				return getClaim();
+			case CHESSContractPackage.CONTRACT__SUPPORTED_BY:
+				return getSupportedBy();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -262,6 +360,7 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -272,10 +371,26 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 				setGuarantee((FormalProperty)newValue);
 				return;
 			case CHESSContractPackage.CONTRACT__FORMALIZE:
-				setFormalize((Requirement)newValue);
+				getFormalize().clear();
+				getFormalize().addAll((Collection<? extends Requirement>)newValue);
 				return;
 			case CHESSContractPackage.CONTRACT__LANGUAGE:
 				setLanguage((Languages)newValue);
+				return;
+			case CHESSContractPackage.CONTRACT__CONTEXT_STATEMENT:
+				setContextStatement((String)newValue);
+				return;
+			case CHESSContractPackage.CONTRACT__ARTEFACT_STATEMENT:
+				getArtefactStatement().clear();
+				getArtefactStatement().addAll((Collection<? extends String>)newValue);
+				return;
+			case CHESSContractPackage.CONTRACT__CLAIM:
+				getClaim().clear();
+				getClaim().addAll((Collection<? extends Claim>)newValue);
+				return;
+			case CHESSContractPackage.CONTRACT__SUPPORTED_BY:
+				getSupportedBy().clear();
+				getSupportedBy().addAll((Collection<? extends Artefact>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -296,10 +411,22 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 				setGuarantee((FormalProperty)null);
 				return;
 			case CHESSContractPackage.CONTRACT__FORMALIZE:
-				setFormalize((Requirement)null);
+				getFormalize().clear();
 				return;
 			case CHESSContractPackage.CONTRACT__LANGUAGE:
 				setLanguage(LANGUAGE_EDEFAULT);
+				return;
+			case CHESSContractPackage.CONTRACT__CONTEXT_STATEMENT:
+				setContextStatement(CONTEXT_STATEMENT_EDEFAULT);
+				return;
+			case CHESSContractPackage.CONTRACT__ARTEFACT_STATEMENT:
+				getArtefactStatement().clear();
+				return;
+			case CHESSContractPackage.CONTRACT__CLAIM:
+				getClaim().clear();
+				return;
+			case CHESSContractPackage.CONTRACT__SUPPORTED_BY:
+				getSupportedBy().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -318,9 +445,17 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 			case CHESSContractPackage.CONTRACT__GUARANTEE:
 				return guarantee != null;
 			case CHESSContractPackage.CONTRACT__FORMALIZE:
-				return formalize != null;
+				return formalize != null && !formalize.isEmpty();
 			case CHESSContractPackage.CONTRACT__LANGUAGE:
 				return language != LANGUAGE_EDEFAULT;
+			case CHESSContractPackage.CONTRACT__CONTEXT_STATEMENT:
+				return CONTEXT_STATEMENT_EDEFAULT == null ? contextStatement != null : !CONTEXT_STATEMENT_EDEFAULT.equals(contextStatement);
+			case CHESSContractPackage.CONTRACT__ARTEFACT_STATEMENT:
+				return artefactStatement != null && !artefactStatement.isEmpty();
+			case CHESSContractPackage.CONTRACT__CLAIM:
+				return claim != null && !claim.isEmpty();
+			case CHESSContractPackage.CONTRACT__SUPPORTED_BY:
+				return supportedBy != null && !supportedBy.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -337,6 +472,10 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (Language: ");
 		result.append(language);
+		result.append(", contextStatement: ");
+		result.append(contextStatement);
+		result.append(", artefactStatement: ");
+		result.append(artefactStatement);
 		result.append(')');
 		return result.toString();
 	}

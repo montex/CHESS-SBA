@@ -49,6 +49,15 @@ public interface CHESSContractFactory extends EFactory {
 	FormalProperty createFormalProperty();
 
 	/**
+	 * Returns a new object of class '<em>Contract Refinement Analysis Context</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Contract Refinement Analysis Context</em>'.
+	 * @generated
+	 */
+	ContractRefinementAnalysisContext createContractRefinementAnalysisContext();
+
+	/**
 	 * Returns a new object of class '<em>Formalize</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -101,15 +110,6 @@ public interface CHESSContractFactory extends EFactory {
 	 * @generated
 	 */
 	DelegationConstraint createDelegationConstraint();
-
-	/**
-	 * Returns a new object of class '<em>Platform</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Platform</em>'.
-	 * @generated
-	 */
-	Platform createPlatform();
 
 	/**
 	 * Returns a new object of class '<em>SRA Component</em>'.

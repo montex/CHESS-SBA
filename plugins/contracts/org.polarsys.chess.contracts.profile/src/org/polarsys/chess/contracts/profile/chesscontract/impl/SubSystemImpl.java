@@ -13,8 +13,6 @@ import org.polarsys.chess.contracts.profile.chesscontract.SubSystem;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Sub System</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

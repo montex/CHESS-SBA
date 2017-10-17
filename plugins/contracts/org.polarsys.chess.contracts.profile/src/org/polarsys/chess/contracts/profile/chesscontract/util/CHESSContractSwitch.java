@@ -5,6 +5,9 @@ package org.polarsys.chess.contracts.profile.chesscontract.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaAnalysisContext;
+import org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.Variables.ExpressionContext;
+import org.eclipse.papyrus.MARTE.MARTE_Foundations.CoreElements.Configuration;
 import org.eclipse.papyrus.sysml.blocks.Block;
 import org.eclipse.papyrus.sysml.constraints.ConstraintBlock;
 import org.eclipse.papyrus.sysml.constraints.ConstraintProperty;
@@ -15,10 +18,10 @@ import org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
+import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnalysisContext;
 import org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.Formalize;
-import org.polarsys.chess.contracts.profile.chesscontract.Platform;
 import org.polarsys.chess.contracts.profile.chesscontract.SRAComponent;
 import org.polarsys.chess.contracts.profile.chesscontract.SubSystem;
 
@@ -60,7 +63,7 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
@@ -79,6 +82,40 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case CHESSContractPackage.COMPONENT_INSTANCE: {
+				ComponentInstance componentInstance = (ComponentInstance)theEObject;
+				T result = caseComponentInstance(componentInstance);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CHESSContractPackage.CONTRACT_PROPERTY: {
+				ContractProperty contractProperty = (ContractProperty)theEObject;
+				T result = caseContractProperty(contractProperty);
+				if (result == null) result = caseConstraintProperty(contractProperty);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CHESSContractPackage.CONTRACT_REFINEMENT: {
+				ContractRefinement contractRefinement = (ContractRefinement)theEObject;
+				T result = caseContractRefinement(contractRefinement);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CHESSContractPackage.FORMAL_PROPERTY: {
+				FormalProperty formalProperty = (FormalProperty)theEObject;
+				T result = caseFormalProperty(formalProperty);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT: {
+				ContractRefinementAnalysisContext contractRefinementAnalysisContext = (ContractRefinementAnalysisContext)theEObject;
+				T result = caseContractRefinementAnalysisContext(contractRefinementAnalysisContext);
+				if (result == null) result = caseGaAnalysisContext(contractRefinementAnalysisContext);
+				if (result == null) result = caseConfiguration(contractRefinementAnalysisContext);
+				if (result == null) result = caseExpressionContext(contractRefinementAnalysisContext);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case CHESSContractPackage.SYSTEM: {
 				org.polarsys.chess.contracts.profile.chesscontract.System system = (org.polarsys.chess.contracts.profile.chesscontract.System)theEObject;
 				T result = caseSystem(system);
@@ -91,12 +128,6 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 				T result = caseContract(contract);
 				if (result == null) result = caseConstraintBlock(contract);
 				if (result == null) result = caseBlock(contract);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.FORMAL_PROPERTY: {
-				FormalProperty formalProperty = (FormalProperty)theEObject;
-				T result = caseFormalProperty(formalProperty);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -120,40 +151,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CHESSContractPackage.CONTRACT_PROPERTY: {
-				ContractProperty contractProperty = (ContractProperty)theEObject;
-				T result = caseContractProperty(contractProperty);
-				if (result == null) result = caseConstraintProperty(contractProperty);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.CONTRACT_REFINEMENT: {
-				ContractRefinement contractRefinement = (ContractRefinement)theEObject;
-				T result = caseContractRefinement(contractRefinement);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case CHESSContractPackage.DELEGATION_CONSTRAINT: {
 				DelegationConstraint delegationConstraint = (DelegationConstraint)theEObject;
 				T result = caseDelegationConstraint(delegationConstraint);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CHESSContractPackage.PLATFORM: {
-				Platform platform = (Platform)theEObject;
-				T result = casePlatform(platform);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case CHESSContractPackage.SRA_COMPONENT: {
 				SRAComponent sraComponent = (SRAComponent)theEObject;
 				T result = caseSRAComponent(sraComponent);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.COMPONENT_INSTANCE: {
-				ComponentInstance componentInstance = (ComponentInstance)theEObject;
-				T result = caseComponentInstance(componentInstance);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -203,6 +209,21 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseFormalProperty(FormalProperty object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Contract Refinement Analysis Context</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Contract Refinement Analysis Context</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseContractRefinementAnalysisContext(ContractRefinementAnalysisContext object) {
 		return null;
 	}
 
@@ -297,21 +318,6 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Platform</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Platform</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T casePlatform(Platform object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>SRA Component</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -398,6 +404,51 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseConstraintProperty(ConstraintProperty object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Configuration</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Configuration</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConfiguration(Configuration object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Expression Context</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Expression Context</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseExpressionContext(ExpressionContext object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Ga Analysis Context</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Ga Analysis Context</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGaAnalysisContext(GaAnalysisContext object) {
 		return null;
 	}
 

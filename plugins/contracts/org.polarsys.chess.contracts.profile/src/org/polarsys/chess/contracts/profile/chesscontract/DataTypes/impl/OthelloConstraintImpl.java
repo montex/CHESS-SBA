@@ -18,10 +18,10 @@ import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.OthelloConst
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.OthelloConstraintImpl#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

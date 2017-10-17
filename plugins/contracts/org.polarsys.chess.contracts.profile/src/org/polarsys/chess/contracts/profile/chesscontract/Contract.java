@@ -2,6 +2,9 @@
  */
 package org.polarsys.chess.contracts.profile.chesscontract;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.opencert.evm.evidspec.evidence.Artefact;
+import org.eclipse.opencert.sam.arg.arg.Claim;
 import org.eclipse.papyrus.sysml.constraints.ConstraintBlock;
 
 import org.eclipse.papyrus.sysml.requirements.Requirement;
@@ -14,13 +17,17 @@ import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Languages;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getAssume <em>Assume</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getGuarantee <em>Guarantee</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getFormalize <em>Formalize</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getLanguage <em>Language</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getContextStatement <em>Context Statement</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getArtefactStatement <em>Artefact Statement</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getClaim <em>Claim</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getSupportedBy <em>Supported By</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContract()
  * @model
@@ -80,30 +87,20 @@ public interface Contract extends ConstraintBlock {
 	void setGuarantee(FormalProperty value);
 
 	/**
-	 * Returns the value of the '<em><b>Formalize</b></em>' reference.
+	 * Returns the value of the '<em><b>Formalize</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.papyrus.sysml.requirements.Requirement}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Formalize</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Formalize</em>' reference.
-	 * @see #setFormalize(Requirement)
+	 * @return the value of the '<em>Formalize</em>' reference list.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContract_Formalize()
 	 * @model ordered="false"
 	 * @generated
 	 */
-	Requirement getFormalize();
-
-	/**
-	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getFormalize <em>Formalize</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Formalize</em>' reference.
-	 * @see #getFormalize()
-	 * @generated
-	 */
-	void setFormalize(Requirement value);
+	EList<Requirement> getFormalize();
 
 	/**
 	 * Returns the value of the '<em><b>Language</b></em>' attribute.
@@ -133,5 +130,79 @@ public interface Contract extends ConstraintBlock {
 	 * @generated
 	 */
 	void setLanguage(Languages value);
+
+	/**
+	 * Returns the value of the '<em><b>Context Statement</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Context Statement</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Context Statement</em>' attribute.
+	 * @see #setContextStatement(String)
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContract_ContextStatement()
+	 * @model dataType="org.eclipse.uml2.types.String" ordered="false"
+	 * @generated
+	 */
+	String getContextStatement();
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getContextStatement <em>Context Statement</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Context Statement</em>' attribute.
+	 * @see #getContextStatement()
+	 * @generated
+	 */
+	void setContextStatement(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Artefact Statement</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Artefact Statement</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Artefact Statement</em>' attribute list.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContract_ArtefactStatement()
+	 * @model dataType="org.eclipse.uml2.types.String" ordered="false"
+	 * @generated
+	 */
+	EList<String> getArtefactStatement();
+
+	/**
+	 * Returns the value of the '<em><b>Claim</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.opencert.sam.arg.arg.Claim}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Claim</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Claim</em>' reference list.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContract_Claim()
+	 * @model
+	 * @generated
+	 */
+	EList<Claim> getClaim();
+
+	/**
+	 * Returns the value of the '<em><b>Supported By</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.opencert.evm.evidspec.evidence.Artefact}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Supported By</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Supported By</em>' reference list.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContract_SupportedBy()
+	 * @model
+	 * @generated
+	 */
+	EList<Artefact> getSupportedBy();
 
 } // Contract

@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Property;
 
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
@@ -23,12 +24,13 @@ import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementImpl#getBase_DataType <em>Base Data Type</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementImpl#getInstance <em>Instance</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementImpl#getContract <em>Contract</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementImpl#getInstanceSpec <em>Instance Spec</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -62,6 +64,16 @@ public class ContractRefinementImpl extends MinimalEObjectImpl.Container impleme
 	 * @ordered
 	 */
 	protected ContractProperty contract;
+
+	/**
+	 * The cached value of the '{@link #getInstanceSpec() <em>Instance Spec</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInstanceSpec()
+	 * @generated
+	 * @ordered
+	 */
+	protected InstanceSpecification instanceSpec;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -201,6 +213,44 @@ public class ContractRefinementImpl extends MinimalEObjectImpl.Container impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public InstanceSpecification getInstanceSpec() {
+		if (instanceSpec != null && instanceSpec.eIsProxy()) {
+			InternalEObject oldInstanceSpec = (InternalEObject)instanceSpec;
+			instanceSpec = (InstanceSpecification)eResolveProxy(oldInstanceSpec);
+			if (instanceSpec != oldInstanceSpec) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CHESSContractPackage.CONTRACT_REFINEMENT__INSTANCE_SPEC, oldInstanceSpec, instanceSpec));
+			}
+		}
+		return instanceSpec;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public InstanceSpecification basicGetInstanceSpec() {
+		return instanceSpec;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setInstanceSpec(InstanceSpecification newInstanceSpec) {
+		InstanceSpecification oldInstanceSpec = instanceSpec;
+		instanceSpec = newInstanceSpec;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CHESSContractPackage.CONTRACT_REFINEMENT__INSTANCE_SPEC, oldInstanceSpec, instanceSpec));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -213,6 +263,9 @@ public class ContractRefinementImpl extends MinimalEObjectImpl.Container impleme
 			case CHESSContractPackage.CONTRACT_REFINEMENT__CONTRACT:
 				if (resolve) return getContract();
 				return basicGetContract();
+			case CHESSContractPackage.CONTRACT_REFINEMENT__INSTANCE_SPEC:
+				if (resolve) return getInstanceSpec();
+				return basicGetInstanceSpec();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -233,6 +286,9 @@ public class ContractRefinementImpl extends MinimalEObjectImpl.Container impleme
 				return;
 			case CHESSContractPackage.CONTRACT_REFINEMENT__CONTRACT:
 				setContract((ContractProperty)newValue);
+				return;
+			case CHESSContractPackage.CONTRACT_REFINEMENT__INSTANCE_SPEC:
+				setInstanceSpec((InstanceSpecification)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -255,6 +311,9 @@ public class ContractRefinementImpl extends MinimalEObjectImpl.Container impleme
 			case CHESSContractPackage.CONTRACT_REFINEMENT__CONTRACT:
 				setContract((ContractProperty)null);
 				return;
+			case CHESSContractPackage.CONTRACT_REFINEMENT__INSTANCE_SPEC:
+				setInstanceSpec((InstanceSpecification)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -273,6 +332,8 @@ public class ContractRefinementImpl extends MinimalEObjectImpl.Container impleme
 				return instance != null;
 			case CHESSContractPackage.CONTRACT_REFINEMENT__CONTRACT:
 				return contract != null;
+			case CHESSContractPackage.CONTRACT_REFINEMENT__INSTANCE_SPEC:
+				return instanceSpec != null;
 		}
 		return super.eIsSet(featureID);
 	}

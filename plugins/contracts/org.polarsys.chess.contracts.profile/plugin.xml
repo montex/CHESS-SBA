@@ -198,7 +198,29 @@
          </editor>
       </paletteDefinition>
    </extension>
-
- 
+   
+    <extension
+         point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+      <paletteDefinition
+            ID="ContractBasedAnalysisCD.Palette"
+            class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+            name="ContractBasedAnalysisCD.Palette"
+            path="/palettes/ContracBasedtAnalysis.CD_Palette.xml">
+         <Priority
+               name="Highest">
+         </Priority>
+         <editor
+              id="org.eclipse.papyrus.uml.diagram.clazz">
+         </editor>
+      </paletteDefinition>
+   </extension>
+   
+  
+   <!--extension
+      name="UML Subset for Information Modeling"
+      point="org.eclipse.papyrus.infra.properties.contexts">
+   <context appliedByDefault="true" contextModel="properties/chesscontract.ctx" isCustomizable="true" />
+</extension-->
+   
 
 </plugin>

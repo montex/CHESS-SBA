@@ -29,12 +29,12 @@ import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ComponentInstanceImpl#getBase_Property <em>Base Property</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ComponentInstanceImpl#getWeakGuarantees <em>Weak Guarantees</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ComponentInstanceImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

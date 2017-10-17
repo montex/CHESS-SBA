@@ -14,14 +14,19 @@ import org.eclipse.uml2.uml.Property;
  * A representation of the model object '<em><b>Component Instance</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * allows to specify information for a component instance:
+ * -the weak contracts which hold
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance#getBase_Property <em>Base Property</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance#getWeakGuarantees <em>Weak Guarantees</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getComponentInstance()
  * @model

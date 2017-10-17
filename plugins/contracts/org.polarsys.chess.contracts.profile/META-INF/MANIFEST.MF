@@ -15,11 +15,19 @@ Export-Package: org.polarsys.chess.contracts.profile.chesscontract,
  org.polarsys.chess.contracts.profile.chesscontract.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.opencert.sam.arg;visibility:=reexport,
+ org.eclipse.opencert.apm.assuranceassets;visibility:=reexport,
+ org.eclipse.opencert.evm.evidspec;visibility:=reexport,
+ org.eclipse.opencert.infra.general;visibility:=reexport,
+ org.eclipse.papyrus.marte.static.profile;visibility:=reexport,
+ org.eclipse.opencert.infra.properties;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.eclipse.uml2.uml.profile.standard;visibility:=reexport,
  org.eclipse.papyrus.sysml;visibility:=reexport,
  org.eclipse.uml2.types;visibility:=reexport,
  org.eclipse.uml2.uml;visibility:=reexport,
  org.eclipse.ui;bundle-version="3.7.0",
- org.eclipse.papyrus.uml.diagram.common;bundle-version="1.0.0"
+ org.eclipse.papyrus.uml.diagram.common;bundle-version="1.0.0",
+ org.eclipse.papyrus.views.properties;bundle-version="2.0.0",
+ org.eclipse.papyrus.customization.properties;bundle-version="2.0.0"
 Bundle-ActivationPolicy: lazy

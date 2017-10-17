@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<di:SashWindowsMngr xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:di="http://www.eclipse.org/papyrus/0.7.0/sashdi" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation">
-  <pageList xmi:type="di:PageList">
-    <availablePage xmi:type="di:PageRef">
-      <emfPageIdentifier xmi:type="notation:Diagram" href="CHESSContract.profile.notation#_HnCOkNDVEeG5E52m3d5H1g"/>
+<di:SashWindowsMngr xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.eclipse.org/papyrus/0.7.0/sashdi">
+  <pageList>
+    <availablePage>
+      <emfPageIdentifier href="CHESSContract.profile.notation#_HnCOkNDVEeG5E52m3d5H1g"/>
     </availablePage>
-    <availablePage xmi:type="di:PageRef"/>
-    <availablePage xmi:type="di:PageRef">
-      <emfPageIdentifier xmi:type="notation:Diagram" href="CHESSContract.profile.notation#_Z93CoNDaEeG5E52m3d5H1g"/>
+    <availablePage/>
+    <availablePage>
+      <emfPageIdentifier href="CHESSContract.profile.notation#_Z93CoNDaEeG5E52m3d5H1g"/>
     </availablePage>
   </pageList>
-  <sashModel xmi:type="di:SashModel" currentSelection="//@sashModel/@windows.0/@children.0">
-    <windows xmi:type="di:Window">
-      <children xmi:type="di:TabFolder">
-        <children xmi:type="di:PageRef">
-          <emfPageIdentifier xmi:type="notation:Diagram" href="CHESSContract.profile.notation#_HnCOkNDVEeG5E52m3d5H1g"/>
+  <sashModel currentSelection="//@sashModel/@windows.0/@children.0">
+    <windows>
+      <children xsi:type="di:TabFolder">
+        <children>
+          <emfPageIdentifier href="CHESSContract.profile.notation#_HnCOkNDVEeG5E52m3d5H1g"/>
         </children>
-        <children xmi:type="di:PageRef">
-          <emfPageIdentifier xmi:type="notation:Diagram" href="CHESSContract.profile.notation#_Z93CoNDaEeG5E52m3d5H1g"/>
+        <children>
+          <emfPageIdentifier href="CHESSContract.profile.notation#_Z93CoNDaEeG5E52m3d5H1g"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="CHESSContract.profile.notation#_38J34G4SEeeSVLWy6DYUDQ"/>
         </children>
       </children>
     </windows>

@@ -21,10 +21,10 @@ import org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.DelegationConstraintImpl#getBase_Constraint <em>Base Constraint</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

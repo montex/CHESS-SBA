@@ -13,10 +13,10 @@ import org.eclipse.uml2.uml.Constraint;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint#getBase_Constraint <em>Base Constraint</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getDelegationConstraint()
  * @model

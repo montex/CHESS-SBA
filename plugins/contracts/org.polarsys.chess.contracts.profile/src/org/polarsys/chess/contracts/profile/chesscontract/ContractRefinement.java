@@ -5,6 +5,7 @@ package org.polarsys.chess.contracts.profile.chesscontract;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Property;
 
 /**
@@ -12,14 +13,20 @@ import org.eclipse.uml2.uml.Property;
  * A representation of the model object '<em><b>Contract Refinement</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * to specify contract refinement for a given contract instance. 
+ * Instance and instanceSpec attribute are mutually exclusive
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getBase_DataType <em>Base Data Type</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getInstance <em>Instance</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getContract <em>Contract</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getInstanceSpec <em>Instance Spec</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContractRefinement()
  * @model
@@ -63,7 +70,7 @@ public interface ContractRefinement extends EObject {
 	 * @return the value of the '<em>Instance</em>' reference.
 	 * @see #setInstance(Property)
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContractRefinement_Instance()
-	 * @model required="true" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
 	Property getInstance();
@@ -103,5 +110,31 @@ public interface ContractRefinement extends EObject {
 	 * @generated
 	 */
 	void setContract(ContractProperty value);
+
+	/**
+	 * Returns the value of the '<em><b>Instance Spec</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Instance Spec</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Instance Spec</em>' reference.
+	 * @see #setInstanceSpec(InstanceSpecification)
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContractRefinement_InstanceSpec()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	InstanceSpecification getInstanceSpec();
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getInstanceSpec <em>Instance Spec</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Instance Spec</em>' reference.
+	 * @see #getInstanceSpec()
+	 * @generated
+	 */
+	void setInstanceSpec(InstanceSpecification value);
 
 } // ContractRefinement

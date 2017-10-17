@@ -84,6 +84,10 @@ public class DataTypesFactoryImpl extends EFactoryImpl implements DataTypesFacto
 				return createReqRisksFromString(eDataType, initialValue);
 			case DataTypesPackage.LANGUAGES:
 				return createLanguagesFromString(eDataType, initialValue);
+			case DataTypesPackage.CONTRACT_STATUS:
+				return createContractStatusFromString(eDataType, initialValue);
+			case DataTypesPackage.CONCERNS:
+				return createConcernsFromString(eDataType, initialValue);
 			case DataTypesPackage.CONTRACT_TYPES:
 				return createContractTypesFromString(eDataType, initialValue);
 			default:
@@ -111,6 +115,10 @@ public class DataTypesFactoryImpl extends EFactoryImpl implements DataTypesFacto
 				return convertReqRisksToString(eDataType, instanceValue);
 			case DataTypesPackage.LANGUAGES:
 				return convertLanguagesToString(eDataType, instanceValue);
+			case DataTypesPackage.CONTRACT_STATUS:
+				return convertContractStatusToString(eDataType, instanceValue);
+			case DataTypesPackage.CONCERNS:
+				return convertConcernsToString(eDataType, instanceValue);
 			case DataTypesPackage.CONTRACT_TYPES:
 				return convertContractTypesToString(eDataType, instanceValue);
 			default:
@@ -255,6 +263,46 @@ public class DataTypesFactoryImpl extends EFactoryImpl implements DataTypesFacto
 	 * @generated
 	 */
 	public String convertLanguagesToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ContractStatus createContractStatusFromString(EDataType eDataType, String initialValue) {
+		ContractStatus result = ContractStatus.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertContractStatusToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Concerns createConcernsFromString(EDataType eDataType, String initialValue) {
+		Concerns result = Concerns.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertConcernsToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

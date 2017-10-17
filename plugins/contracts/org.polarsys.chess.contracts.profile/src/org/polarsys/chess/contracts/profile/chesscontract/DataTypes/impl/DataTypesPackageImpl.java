@@ -9,13 +9,25 @@ import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.eclipse.opencert.sam.arg.arg.ArgPackage;
+import org.eclipse.papyrus.MARTE.MARTEPackage;
+import org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.BasicNFP_TypesPackage;
+import org.eclipse.papyrus.MARTE_Library.GRM_BasicTypes.GRM_BasicTypesPackage;
+import org.eclipse.papyrus.MARTE_Library.MARTE_DataTypes.MARTE_DataTypesPackage;
+import org.eclipse.papyrus.MARTE_Library.MARTE_PrimitivesTypes.MARTE_PrimitivesTypesPackage;
+import org.eclipse.papyrus.MARTE_Library.MeasurementUnits.MeasurementUnitsPackage;
+import org.eclipse.papyrus.MARTE_Library.RS_Library.RS_LibraryPackage;
+import org.eclipse.papyrus.MARTE_Library.TimeLibrary.TimeLibraryPackage;
+import org.eclipse.papyrus.MARTE_Library.TimeTypesLibrary.TimeTypesLibraryPackage;
 import org.eclipse.papyrus.sysml.SysmlPackage;
 
 import org.eclipse.uml2.types.TypesPackage;
 
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
 
+import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Concerns;
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Continuous;
+import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus;
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes;
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesFactory;
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesPackage;
@@ -97,6 +109,20 @@ public class DataTypesPackageImpl extends EPackageImpl implements DataTypesPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EEnum contractStatusEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum concernsEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum contractTypesEEnum = null;
 
 	/**
@@ -146,6 +172,16 @@ public class DataTypesPackageImpl extends EPackageImpl implements DataTypesPacka
 		isInited = true;
 
 		// Initialize simple dependencies
+		ArgPackage.eINSTANCE.eClass();
+		MARTEPackage.eINSTANCE.eClass();
+		MeasurementUnitsPackage.eINSTANCE.eClass();
+		GRM_BasicTypesPackage.eINSTANCE.eClass();
+		MARTE_DataTypesPackage.eINSTANCE.eClass();
+		BasicNFP_TypesPackage.eINSTANCE.eClass();
+		TimeTypesLibraryPackage.eINSTANCE.eClass();
+		TimeLibraryPackage.eINSTANCE.eClass();
+		RS_LibraryPackage.eINSTANCE.eClass();
+		MARTE_PrimitivesTypesPackage.eINSTANCE.eClass();
 		SysmlPackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
@@ -254,6 +290,24 @@ public class DataTypesPackageImpl extends EPackageImpl implements DataTypesPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getContractStatus() {
+		return contractStatusEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getConcerns() {
+		return concernsEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getContractTypes() {
 		return contractTypesEEnum;
 	}
@@ -298,6 +352,8 @@ public class DataTypesPackageImpl extends EPackageImpl implements DataTypesPacka
 		reqMaturitiesEEnum = createEEnum(REQ_MATURITIES);
 		reqRisksEEnum = createEEnum(REQ_RISKS);
 		languagesEEnum = createEEnum(LANGUAGES);
+		contractStatusEEnum = createEEnum(CONTRACT_STATUS);
+		concernsEEnum = createEEnum(CONCERNS);
 		contractTypesEEnum = createEEnum(CONTRACT_TYPES);
 	}
 
@@ -379,6 +435,17 @@ public class DataTypesPackageImpl extends EPackageImpl implements DataTypesPacka
 		addEEnumLiteral(languagesEEnum, Languages.OCRA);
 		addEEnumLiteral(languagesEEnum, Languages.FPTC);
 		addEEnumLiteral(languagesEEnum, Languages.OTHER);
+
+		initEEnum(contractStatusEEnum, ContractStatus.class, "ContractStatus");
+		addEEnumLiteral(contractStatusEEnum, ContractStatus.NOT_VALIDATED);
+		addEEnumLiteral(contractStatusEEnum, ContractStatus.VALIDATED);
+		addEEnumLiteral(contractStatusEEnum, ContractStatus.NEEDS_RUNTIME_SUPPORT);
+
+		initEEnum(concernsEEnum, Concerns.class, "Concerns");
+		addEEnumLiteral(concernsEEnum, Concerns.UNSPECIFIED);
+		addEEnumLiteral(concernsEEnum, Concerns.SAFETY);
+		addEEnumLiteral(concernsEEnum, Concerns.SECURITY);
+		addEEnumLiteral(concernsEEnum, Concerns.PERFORMANCE);
 
 		initEEnum(contractTypesEEnum, ContractTypes.class, "ContractTypes");
 		addEEnumLiteral(contractTypesEEnum, ContractTypes.STRONG);

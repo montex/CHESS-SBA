@@ -6,6 +6,9 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaAnalysisContext;
+import org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.Variables.ExpressionContext;
+import org.eclipse.papyrus.MARTE.MARTE_Foundations.CoreElements.Configuration;
 import org.eclipse.papyrus.sysml.blocks.Block;
 import org.eclipse.papyrus.sysml.constraints.ConstraintBlock;
 import org.eclipse.papyrus.sysml.constraints.ConstraintProperty;
@@ -16,10 +19,10 @@ import org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
+import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnalysisContext;
 import org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.Formalize;
-import org.polarsys.chess.contracts.profile.chesscontract.Platform;
 import org.polarsys.chess.contracts.profile.chesscontract.SRAComponent;
 import org.polarsys.chess.contracts.profile.chesscontract.SubSystem;
 
@@ -80,16 +83,32 @@ public class CHESSContractAdapterFactory extends AdapterFactoryImpl {
 	protected CHESSContractSwitch<Adapter> modelSwitch =
 		new CHESSContractSwitch<Adapter>() {
 			@Override
+			public Adapter caseComponentInstance(ComponentInstance object) {
+				return createComponentInstanceAdapter();
+			}
+			@Override
+			public Adapter caseContractProperty(ContractProperty object) {
+				return createContractPropertyAdapter();
+			}
+			@Override
+			public Adapter caseContractRefinement(ContractRefinement object) {
+				return createContractRefinementAdapter();
+			}
+			@Override
+			public Adapter caseFormalProperty(FormalProperty object) {
+				return createFormalPropertyAdapter();
+			}
+			@Override
+			public Adapter caseContractRefinementAnalysisContext(ContractRefinementAnalysisContext object) {
+				return createContractRefinementAnalysisContextAdapter();
+			}
+			@Override
 			public Adapter caseSystem(org.polarsys.chess.contracts.profile.chesscontract.System object) {
 				return createSystemAdapter();
 			}
 			@Override
 			public Adapter caseContract(Contract object) {
 				return createContractAdapter();
-			}
-			@Override
-			public Adapter caseFormalProperty(FormalProperty object) {
-				return createFormalPropertyAdapter();
 			}
 			@Override
 			public Adapter caseFormalize(Formalize object) {
@@ -104,28 +123,28 @@ public class CHESSContractAdapterFactory extends AdapterFactoryImpl {
 				return createCHESSRequirementAdapter();
 			}
 			@Override
-			public Adapter caseContractProperty(ContractProperty object) {
-				return createContractPropertyAdapter();
-			}
-			@Override
-			public Adapter caseContractRefinement(ContractRefinement object) {
-				return createContractRefinementAdapter();
-			}
-			@Override
 			public Adapter caseDelegationConstraint(DelegationConstraint object) {
 				return createDelegationConstraintAdapter();
-			}
-			@Override
-			public Adapter casePlatform(Platform object) {
-				return createPlatformAdapter();
 			}
 			@Override
 			public Adapter caseSRAComponent(SRAComponent object) {
 				return createSRAComponentAdapter();
 			}
 			@Override
-			public Adapter caseComponentInstance(ComponentInstance object) {
-				return createComponentInstanceAdapter();
+			public Adapter caseConstraintProperty(ConstraintProperty object) {
+				return createConstraintPropertyAdapter();
+			}
+			@Override
+			public Adapter caseConfiguration(Configuration object) {
+				return createConfigurationAdapter();
+			}
+			@Override
+			public Adapter caseExpressionContext(ExpressionContext object) {
+				return createExpressionContextAdapter();
+			}
+			@Override
+			public Adapter caseGaAnalysisContext(GaAnalysisContext object) {
+				return createGaAnalysisContextAdapter();
 			}
 			@Override
 			public Adapter caseBlock(Block object) {
@@ -138,10 +157,6 @@ public class CHESSContractAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseRequirement(Requirement object) {
 				return createRequirementAdapter();
-			}
-			@Override
-			public Adapter caseConstraintProperty(ConstraintProperty object) {
-				return createConstraintPropertyAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -202,6 +217,20 @@ public class CHESSContractAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createFormalPropertyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnalysisContext <em>Contract Refinement Analysis Context</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnalysisContext
+	 * @generated
+	 */
+	public Adapter createContractRefinementAnalysisContextAdapter() {
 		return null;
 	}
 
@@ -290,20 +319,6 @@ public class CHESSContractAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.contracts.profile.chesscontract.Platform <em>Platform</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.Platform
-	 * @generated
-	 */
-	public Adapter createPlatformAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.contracts.profile.chesscontract.SRAComponent <em>SRA Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -384,6 +399,48 @@ public class CHESSContractAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createConstraintPropertyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.papyrus.MARTE.MARTE_Foundations.CoreElements.Configuration <em>Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.papyrus.MARTE.MARTE_Foundations.CoreElements.Configuration
+	 * @generated
+	 */
+	public Adapter createConfigurationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.Variables.ExpressionContext <em>Expression Context</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.Variables.ExpressionContext
+	 * @generated
+	 */
+	public Adapter createExpressionContextAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaAnalysisContext <em>Ga Analysis Context</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaAnalysisContext
+	 * @generated
+	 */
+	public Adapter createGaAnalysisContextAdapter() {
 		return null;
 	}
 

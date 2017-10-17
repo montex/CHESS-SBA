@@ -13,10 +13,10 @@ import org.eclipse.uml2.uml.Abstraction;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Formalize#getBase_Abstraction <em>Base Abstraction</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getFormalize()
  * @model
