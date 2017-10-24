@@ -27,7 +27,7 @@ import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
-import org.polarsys.chess.core.util.uml.EntityUtil;
+import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.exceptions.NoComponentException;
 
 

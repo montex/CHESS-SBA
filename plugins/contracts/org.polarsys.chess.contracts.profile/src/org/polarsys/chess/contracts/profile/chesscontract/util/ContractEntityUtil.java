@@ -30,7 +30,6 @@ import org.eclipse.uml2.uml.ValueSpecification;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
-import org.polarsys.chess.core.util.uml.EntityUtil;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 
 /**

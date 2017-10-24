@@ -24,7 +24,7 @@ import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
-import org.polarsys.chess.core.util.uml.EntityUtil;
+import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.eclipse.papyrus.uml.tools.listeners.StereotypeElementListener.StereotypeExtensionNotification;
 import org.eclipse.papyrus.uml.tools.providers.UMLContentProvider;
 import org.eclipse.papyrus.uml.tools.providers.UMLLabelProvider;
