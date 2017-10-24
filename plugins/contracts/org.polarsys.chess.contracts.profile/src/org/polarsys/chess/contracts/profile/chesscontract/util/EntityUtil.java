@@ -278,6 +278,14 @@ public class EntityUtil {
 		return false;
 	}
 
+	
+	public boolean isEnumerationAttribute(Property umlProperty) {
+		if (umlProperty.getType() != null) {
+			return (umlProperty.getType().getName().compareTo("Enumeration") == 0);
+		}
+		return false;
+	}
+	
 	public Class getUmlType(Property umlProperty) {
 		return ((Class) umlProperty.getType());
 	}
