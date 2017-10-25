@@ -16,6 +16,11 @@
 
 package org.polarsys.chess.service.utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -25,17 +30,24 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramCommandStack;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.papyrus.cdo.internal.core.CDOUtils;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.sashwindows.di.PageRef;
+import org.eclipse.papyrus.infra.core.sashwindows.di.service.IPageManager;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
+import org.eclipse.papyrus.infra.gmfdiag.css.CSSConnectorImpl;
+import org.eclipse.papyrus.infra.gmfdiag.css.CSSShapeImpl;
+import org.eclipse.papyrus.infra.gmfdiag.css.notation.CSSDiagramImpl;
 import org.eclipse.papyrus.infra.ui.editor.IMultiDiagramEditor;
 import org.eclipse.papyrus.infra.ui.util.EditorUtils;
 import org.eclipse.swt.widgets.Display;
@@ -283,4 +295,87 @@ public class CHESSEditorUtils {
 		md.setBlockOnOpen(true);
 		return md;
 	}
+	
+	/**
+	 * Utility function to remove orphan views from all the diagrams defined in the notation model
+	 * 
+	 */
+	public static void cleanAllDiagrams(){
+		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
+
+		try {
+			ServicesRegistry serviceRegistry = (ServicesRegistry)editor.getAdapter(ServicesRegistry.class);
+			final IPageManager pageMngr = serviceRegistry.getService(IPageManager.class);
+			TransactionalEditingDomain editingDom = (TransactionalEditingDomain) editor.getEditingDomain();
+			List<View> viewToDelete = new ArrayList<View>();
+		
+			final Map<CSSDiagramImpl, List<View>> mapDiagramViews= new HashMap<CSSDiagramImpl, List<View>>();
+			
+			CSSShapeImpl shape = null;
+			CSSConnectorImpl edge = null;
+			for( Object page : pageMngr.allPages()) {
+				if (page instanceof CSSDiagramImpl){
+					CSSDiagramImpl diag = (CSSDiagramImpl) page;
+					viewToDelete = new ArrayList<View>();
+					
+					//pageMngr also has a list of diagram coming from the applied profiles; we have to skip these diagrams
+					//TODO use a smart way to identify external diagram in place of the proxy reference
+					if (diag.getElement() != null && diag.getElement().eIsProxy())
+						continue;
+
+					for (Object view : diag.getChildren()){
+						if (view instanceof CSSShapeImpl){
+							shape = (CSSShapeImpl) view;
+							if (shape.getElement() != null && shape.getElement().eIsProxy()){
+								viewToDelete.add(shape);
+							}
+						}
+					}
+					
+					for (Object view : diag.getEdges()){
+						if (view instanceof CSSConnectorImpl){
+							edge = (CSSConnectorImpl) view;
+							if (edge.getElement() != null && edge.getElement().eIsProxy()){
+								viewToDelete.add(edge);
+							}
+						}
+						
+					}
+					
+					if (!viewToDelete.isEmpty())
+						mapDiagramViews.put(diag, viewToDelete);
+						
+				}
+			    
+			}
+			
+			if (!mapDiagramViews.isEmpty()) {
+			
+				editingDom.getCommandStack().execute(new RecordingCommand(editingDom) {
+					protected void doExecute() {
+						
+						for (CSSDiagramImpl diag : mapDiagramViews.keySet()){
+							for (View view : mapDiagramViews.get(diag)){
+								if (view instanceof CSSShapeImpl){
+									diag.removeChild(view);;
+								}
+								if (view instanceof CSSConnectorImpl){
+									view.setVisible(false);
+									diag.removeEdge((CSSConnectorImpl)view);
+								}
+							}
+						
+						}
+						
+					}
+				});
+			
+			}
+		}catch (Exception e) {
+			Activator.error("Exception while trying to remove orphan views", e);
+		}
+	}
+	
+
+	
 }

@@ -33,6 +33,9 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
 Import-Package: org.eclipse.emf.common.ui,
  org.eclipse.gmf.runtime.notation,
+ org.eclipse.papyrus.infra.gmfdiag.css,
+ org.eclipse.papyrus.infra.gmfdiag.css.notation,
+ org.eclipse.papyrus.infra.widgets.toolbox.notification,
  org.polarsys.chess.chessmlprofile.Core,
  org.polarsys.chess.chessmlprofile.util,
  org.polarsys.chess.contracts.profile.chesscontract.util

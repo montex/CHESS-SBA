@@ -135,6 +135,12 @@ public class CHESSService {
 
 			loadIcons();
 			//System.err.println("CHESS Service initialized...");
+			
+			//clean diagrams: useful when the .model is modified outside the CHESS editor
+			//TODO we should add a user-level preference to enable/disable this action
+			CHESSEditorUtils.cleanAllDiagrams();
+			
+			
 			Activator.info("CHESS Service has been initialized.");
 		} catch (ServiceException e) {
 			Activator.error("Errors during CHESS service initialization", e);
