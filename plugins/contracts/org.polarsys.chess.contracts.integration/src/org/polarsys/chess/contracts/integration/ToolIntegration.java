@@ -22,12 +22,14 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.URIUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.uml2.uml.Constraint;
 import org.osgi.framework.Bundle;
 import org.polarsys.chess.contracts.integration.Activator;
-import org.polarsys.chess.contracts.integration.preferences.NusmvAnalysisPreferencePage;
+import org.polarsys.chess.contracts.integration.preferences.OcraAnalysisPreferencePage;
+import org.polarsys.chess.contracts.integration.preferences.XsapAnalysisPreferencePage;
 
 public class ToolIntegration {
 	
@@ -42,15 +44,15 @@ public class ToolIntegration {
 	
 	
 	public ToolIntegration(Shell activeShell){
-		ocraPath = Activator.getDefault().getPreferenceStore().getString(NusmvAnalysisPreferencePage.OCRA_PATH);
-		xsapScriptPath = Activator.getDefault().getPreferenceStore().getString(NusmvAnalysisPreferencePage.XSAP_PATH);
+		ocraPath = Activator.getDefault().getPreferenceStore().getString(OcraAnalysisPreferencePage.OCRA_PATH);
+		xsapScriptPath = Activator.getDefault().getPreferenceStore().getString(XsapAnalysisPreferencePage.XSAP_PATH);
 		initCmdFile();
 		this.shell = activeShell;
 	}
 	
 	public ToolIntegration(Shell activeShell, String resultFold, String tempFold){
-		ocraPath = Activator.getDefault().getPreferenceStore().getString(NusmvAnalysisPreferencePage.OCRA_PATH);
-		xsapScriptPath = Activator.getDefault().getPreferenceStore().getString(NusmvAnalysisPreferencePage.XSAP_PATH);
+		ocraPath = Activator.getDefault().getPreferenceStore().getString(OcraAnalysisPreferencePage.OCRA_PATH);
+		xsapScriptPath = Activator.getDefault().getPreferenceStore().getString(XsapAnalysisPreferencePage.XSAP_PATH);
 		initCmdFile();
 		this.shell = activeShell;
 		this.resultFold = resultFold;
@@ -62,7 +64,8 @@ public class ToolIntegration {
 		Bundle bundle = Platform.getBundle(Activator.PLUGIN_ID);
 		URL fileURL = bundle.getEntry("resources/cmd_source");
 		try {
-			cmdFile = new File(FileLocator.resolve(fileURL).toURI());
+			fileURL = FileLocator.toFileURL(fileURL);
+			cmdFile = URIUtil.toFile(URIUtil.toURI(fileURL));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,20 +81,20 @@ public class ToolIntegration {
 			File computeScript = new File(xsapScriptPath + File.separator + "compute_ft.py");
 			File viewScript = new File(xsapScriptPath + File.separator + "view_ft.py");
 			if(extendScript.exists()){
-				String cmd = "python " + extendScript.getPath() 
-						+ " -v -x -d " + tempFold + " " + smvPath + " " + extensionsPath;
-				callOcraTool(cmd);
+				String[] extend_cmd = new String[] {"python", extendScript.getPath(), 
+						"-v", "-x", "-d", tempFold, smvPath, extensionsPath};
+				callOcraTool(extend_cmd);
 				if(computeScript.exists()){
 					error = resultFold + File.separator + resultName + "_log_ft.txt";
 					result = resultFold + File.separator + resultName + "_result_ft.txt";
-					cmd = "python " + computeScript.getPath() 
-							+ " -v " + "-d " + tempFold + " --prop-text=" + conditionFTA;
-					callOcraTool(cmd);
+					String[] compute_cmd = new String[] {"python", computeScript.getPath(),
+							"-v", "-d", tempFold, "--prop-text", conditionFTA};
+					callOcraTool(compute_cmd);
 					if(viewScript.exists()){
 						error = resultFold + File.separator + resultName + "_log_vt.txt";
 						result = resultFold + File.separator + resultName + "_result_vt.txt";
-						cmd = "python " + viewScript.getPath() + " -v " + "-d " + tempFold;
-						callOcraTool(cmd);
+						String[] view_cmd = new String[]{"python", viewScript.getPath(), "-v", "-d", tempFold};
+						callOcraTool(view_cmd);
 					}else{
 						displayErrorMessage("view_ft.py not found");
 					}	
@@ -122,7 +125,7 @@ public class ToolIntegration {
 			writer.flush();
 			writer.close();
 			
-			String cmd = ocraPath + " -source " + cmdFile;
+			String cmd[] = new String[] {ocraPath, "-source", cmdFile.getPath()};
 			callOcraTool(cmd);
 			
 		}catch (final Exception e) {
@@ -146,7 +149,7 @@ public class ToolIntegration {
 			writer.flush();
 			writer.close();
 			
-			String cmd = ocraPath + " -source " + cmdFile;
+			String cmd[] = new String[] {ocraPath, "-source", cmdFile.getPath()};
 			callOcraTool(cmd);
 			
 		}catch (final Exception e) {
@@ -171,7 +174,7 @@ public class ToolIntegration {
 			writer.flush();
 			writer.close();
 			
-			String cmd = ocraPath + " -source " + cmdFile;
+			String cmd[] = new String[] {ocraPath, "-source", cmdFile.getPath()};
 
 			int exitVal = callOcraTool(cmd);
 			
@@ -188,7 +191,7 @@ public class ToolIntegration {
 		}
 	}
 	
-	private int callOcraTool (String cmd) throws IOException, InterruptedException{
+	private int callOcraTool (String[] cmd) throws IOException, InterruptedException{
 		
 		Runtime rt = Runtime.getRuntime();
 		Process proc = rt.exec(cmd);

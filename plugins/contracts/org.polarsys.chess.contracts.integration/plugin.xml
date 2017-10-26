@@ -20,9 +20,15 @@
          point="org.eclipse.ui.preferencePages">
       <page
             category="org.polarsys.chess.preferences"
-            class="org.polarsys.chess.contracts.integration.preferences.NusmvAnalysisPreferencePage"
-            id="org.intecs.nusmvanalysis.page"
-            name="NuSMV3 Analysis Preferences">
+            class="org.polarsys.chess.contracts.integration.preferences.OcraAnalysisPreferencePage"
+            id="org.intecs.ocraanalysis.page"
+            name="OCRA Analysis Preferences">
+      </page>
+      <page
+            category="org.polarsys.chess.preferences"
+            class="org.polarsys.chess.contracts.integration.preferences.XsapAnalysisPreferencePage"
+            id="org.intecs.xsapvanalysis.page"
+            name="xSAP Analysis Preferences">
       </page>
    </extension>
 </plugin>

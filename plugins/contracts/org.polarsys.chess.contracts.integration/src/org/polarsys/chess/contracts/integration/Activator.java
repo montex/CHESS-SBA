@@ -62,10 +62,5 @@ public class Activator extends AbstractUIPlugin {
 	public static Activator getDefault() {
 		return plugin;
 	}
-	
-    @Override
-    protected void initializeDefaultPreferences(IPreferenceStore store) {
-    	store.setDefault("OCRA_PATH", "./NuSMV3-OCRA/bin/");
-    }
 
 }
