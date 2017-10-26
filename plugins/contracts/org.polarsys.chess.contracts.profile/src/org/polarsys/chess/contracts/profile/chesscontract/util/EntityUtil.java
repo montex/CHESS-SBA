@@ -10,6 +10,10 @@
  ******************************************************************************/
 package org.polarsys.chess.contracts.profile.chesscontract.util;
 
+
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 //import org.eclipse.emf.ecore.EObject;
@@ -24,6 +28,8 @@ import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
@@ -85,8 +91,8 @@ public class EntityUtil {
 		return null;
 	}
 
-	public EList<Property> getSubComponents(Class umlComponent) {
-		EList<Property> subComponents = new BasicEList<Property>();
+	public Set<Property> getSubComponents(Class umlComponent) {
+		Set<Property> subComponents = new HashSet<Property>();
 		for (Property umlProperty : ((Class) umlComponent).getAttributes()) {
 			if (isComponentInstance(umlProperty)) {
 				subComponents.add(umlProperty);
@@ -95,17 +101,37 @@ public class EntityUtil {
 		return subComponents;
 	}
 
-	public EList<String> getSubComponentsNames(Class umlComponent) {
+	public String[] getEnumValuesFromComponentPorts(Class umlComponent){
+		Set<String> enumValuesEList = new HashSet<String>();
+		
+		for(Port port :getUmlPortsFromClass(umlComponent)){
+			if(isEnumerationAttribute(port)){
+				Set<String> currValues = getListValuesForEnumeratorType(port);
+				enumValuesEList.addAll(currValues);
+			}
+		}
+		
+		System.out.println("getEnumValuesFromComponentPorts");
+		for(String s : enumValuesEList){
+			System.out.println(s);
+		}
+		
+			String[] enumValuesNamesStrArr = new String[enumValuesEList.size()];
+			return enumValuesEList.toArray(enumValuesNamesStrArr);
+		
+	}
+	
+	public Set<String> getSubComponentsNames(Class umlComponent) {
 
-		EList<String> subComponentsNames = new BasicEList<String>();
+		Set<String> subComponentsNames = new HashSet<String>();
 		for (Property umlProperty : getSubComponents(umlComponent)) {
 			subComponentsNames.add((umlProperty).getName());
 		}
 		return subComponentsNames;
 	}
 
-	public EList<Port> getUmlPorts(Element umlElement, int portDirection) {
-		EList<Port> portsArr = new BasicEList<Port>();
+	public Set<Port> getUmlPorts(Element umlElement, int portDirection) {
+		Set<Port> portsArr = new HashSet<Port>();
 		if (isBlock(umlElement)) {
 			portsArr.addAll(getUmlPortsFromClass((Class) umlElement, portDirection));
 		}
@@ -121,8 +147,8 @@ public class EntityUtil {
 
 	}
 
-	private EList<Port> getUmlPortsFromClass(Class umlComponent, int portDirection) {
-		EList<Port> ports = new BasicEList<Port>();
+	private Set<Port> getUmlPortsFromClass(Class umlComponent, int portDirection) {
+		Set<Port> ports = new HashSet<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
 			FlowPort fp = getFlowPort(umlPort);
 			if (fp.getDirection().getValue() == portDirection) {
@@ -132,6 +158,15 @@ public class EntityUtil {
 		return ports;
 	}
 
+	private Set<Port> getUmlPortsFromClass(Class umlComponent) {
+		Set<Port> ports = new HashSet<Port>();
+		for (Port umlPort : umlComponent.getOwnedPorts()) {
+			FlowPort fp = getFlowPort(umlPort);			
+				ports.add(umlPort);
+		}
+		return ports;
+	}
+	
 	public boolean isInputPort(Element umlPort) {
 		if (getPortDirection(umlPort) == FlowDirection.IN_VALUE) {
 			return true;
@@ -159,8 +194,8 @@ public class EntityUtil {
 		}
 	}
 
-	private EList<Port> getUmlPortsFromComponent(Component umlComponent, int portDirection) {
-		EList<Port> ports = new BasicEList<Port>();
+	private Set<Port> getUmlPortsFromComponent(Component umlComponent, int portDirection) {
+		Set<Port> ports = new HashSet<Port>();
 
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
 			org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.FlowPort fp = getFlowPortMarte(umlPort);
@@ -281,9 +316,36 @@ public class EntityUtil {
 	
 	public boolean isEnumerationAttribute(Property umlProperty) {
 		if (umlProperty.getType() != null) {
-			return (umlProperty.getType().getName().compareTo("Enumeration") == 0);
+			return(umlProperty.getType() instanceof Enumeration);
+			//return (umlProperty.getType().getName().compareTo("Enumeration") == 0);
 		}
 		return false;
+	}
+	
+	public Set<String> getListValuesForEnumeratorType(Property umlProperty) {
+		Set<String> enumValuesNames = new HashSet<String>();
+		System.out.println("getValuesForEnumeratorType");
+		if(umlProperty.getType() instanceof Enumeration){
+			System.out.println("is enumerator!!!");
+			for(EnumerationLiteral enumLit : ((Enumeration)umlProperty.getType()).getOwnedLiterals()){
+				enumValuesNames.add(enumLit.getName());
+			}			
+			return enumValuesNames;
+			
+		}
+		
+			// (umlProperty.getType().getName().compareTo("Enumeration") == 0);
+	return null;
+	}
+	
+	public String[] getValuesForEnumeratorType(Property umlProperty) {
+		Set<String> enumValuesNames = getListValuesForEnumeratorType(umlProperty);		
+		if(enumValuesNames!=null){
+			String[] enumValuesNamesStrArr = new String[enumValuesNames.size()];
+			return enumValuesNames.toArray(enumValuesNamesStrArr);
+		}
+		return null;
+		
 	}
 	
 	public Class getUmlType(Property umlProperty) {
@@ -347,25 +409,25 @@ public class EntityUtil {
 	public String[] getInputOutputPortsNames(Element umlElement) {		
 		return getPortsNames(umlElement, FlowDirection.INOUT_VALUE);
 	}
-	public EList<String> getBooleanAttributesNames(Element umlElement) {
+	public Set<String> getBooleanAttributesNames(Element umlElement) {
 
-		EList<String> booleanAttributesNames = new BasicEList<String>();
+		Set<String> booleanAttributesNames = new HashSet<String>();
 		for (Property umlProperty : getBooleanAttributes(umlElement)) {
 			booleanAttributesNames.add(umlProperty.getName());
 		}
 		return booleanAttributesNames;
 	}
 
-	public EList<String> getBooleanAttributesNamesExceptsPorts(Element umlElement) {
-		EList<String> booleanAttributesNames = new BasicEList<String>();
+	public Set<String> getBooleanAttributesNamesExceptsPorts(Element umlElement) {
+		Set<String> booleanAttributesNames = new HashSet<String>();
 		for (Property umlProperty : getBooleanAttributesExceptsPorts(umlElement)) {
 			booleanAttributesNames.add(umlProperty.getName());
 		}
 		return booleanAttributesNames;
 	}
 
-	public EList<Property> getBooleanAttributes(Element umlElement) {
-		EList<Property> booleanAttributes = new BasicEList<Property>();
+	public Set<Property> getBooleanAttributes(Element umlElement) {
+		Set<Property> booleanAttributes = new HashSet<Property>();
 
 		if (isBlock(umlElement) || (isCompType(umlElement) || (isComponentImplementation(umlElement)))) {
 			Class umlClass = (Class) umlElement;
@@ -383,8 +445,8 @@ public class EntityUtil {
 		return booleanAttributes;
 	}
 
-	public EList<Property> getBooleanAttributesExceptsPorts(Element umlElement) {
-		EList<Property> booleanAttributes = new BasicEList<Property>();
+	public Set<Property> getBooleanAttributesExceptsPorts(Element umlElement) {
+		Set<Property> booleanAttributes = new HashSet<Property>();
 		for (Property umlProperty : getBooleanAttributes(umlElement)) {
 			if (!isPort(umlProperty)) {
 				booleanAttributes.add(umlProperty);
