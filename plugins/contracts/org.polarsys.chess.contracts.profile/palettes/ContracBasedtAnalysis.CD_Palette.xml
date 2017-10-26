@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<paletteDefinition>
+	<content>
+		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif"
+			id="DepAnalysisViewDrawer__1317300165546"
+			name="DependabilityAnalysis">
+			
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif"
+				id="clazz.tool.component_1316779916487_1317300377613" name="ContractRefinementAnalysis"
+				refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype
+							stereotypeName="CHESSContract::ContractRefinementAnalysisContext" />
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+		</drawer>
+
+	</content>
+</paletteDefinition>
