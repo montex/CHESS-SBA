@@ -35,7 +35,7 @@ import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
 import org.polarsys.chess.contracts.transformations.commands.CommandsCommon.CommandEnum;
 import org.polarsys.chess.contracts.transformations.dialogs.SelectImplementationDialog;
-import org.polarsys.chess.contracts.transformations.dialogs.SelectSystemDialog;
+import org.polarsys.chess.contracts.transformations.dialogs.SelectOcraAnalysisCtxDialog;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
@@ -60,7 +60,7 @@ public class CheckImplHandler extends AbstractHandler{
 			Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
 			Model model = ResourceUtils.getModel(res);
 			
-			SelectSystemDialog sysDialog = new SelectSystemDialog(activeShell, model);
+			SelectOcraAnalysisCtxDialog sysDialog = new SelectOcraAnalysisCtxDialog(activeShell, model);
 			sysDialog.create();
 			if (sysDialog.open() == Window.OK) {
 				systemQN = sysDialog.getSystem();

@@ -34,8 +34,8 @@ public class CheckRefHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		
 		IEditorPart editorPart = HandlerUtil.getActiveEditor(event);
-		if (!(CHESSEditorUtils.isCHESSProject(editorPart)))
-			return null;
+//		if (!(CHESSEditorUtils.isCHESSProject(editorPart)))
+//			return null;
 		
 		PapyrusMultiDiagramEditor editor = (PapyrusMultiDiagramEditor)editorPart;
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);

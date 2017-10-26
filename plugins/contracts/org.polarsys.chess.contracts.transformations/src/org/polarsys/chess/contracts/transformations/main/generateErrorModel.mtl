@@ -30,7 +30,7 @@
 	SRACompQN : String = 'CHESSContract::SRAComponent';
 }]
 [comment @main/]
-[file (filename.concat('_').concat(sysName).concat('.smv'), false, 'UTF-8')]
+[file (filename.concat('.smv'), false, 'UTF-8')]
 	[let componentView : Package = model.nestedPackage->any(p : Package | p.getAppliedStereotype(CompViewQN)->notEmpty())]
 	[let systemView : Package = model.nestedPackage->any(p : Package | p.getAppliedStereotype(SystemViewQN)->notEmpty())]
 	[let deploymentView : Package =  model.nestedPackage->any(p : Package | p.getAppliedStereotype(DeplViewQN)->notEmpty())]
@@ -38,7 +38,7 @@
 	[let allComps : Set(Component) = getAllComponents(deploymentView.allOwnedElements()->filter(Component), componentView.allOwnedElements()->filter(Component), CompImplQN, SRACompQN)]
 	[let generated : Set(String) = getEmptyStringSet()]
 	[let system : Class = getSystem(allBlocks, sysQN)]
-[generateModule(system, allBlocks->union(allComps), generated)/]
+[generateModule(system, allBlocks->union(allComps), generated, true)/]
 	[/let]
 	[/let]
 	[/let]
@@ -48,18 +48,18 @@
 	[/let]
 [/file]
 [/template]
-[template public generateModule(block : Class, allBlocks : Set(Class), generated : Set(String)){
+[template public generateModule(block : Class, allBlocks : Set(Class), generated : Set(String), isSystem: Boolean){
 	SystemQN : String = 'CHESSContract::System';
 	ContractPropQN : String = 'CHESSContract::ContractProperty';
 	FlowPortQN : String = 'SysML::PortAndFlows::FlowPort';
 	ErrorModelQN : String = 'CHESS::Dependability::ThreatsPropagation::ErrorModel';
-	ExternalFaultQN : String = 'CHESS::Dependability::ThreatsPropagation::ExternalFault';
+	ExternalFaultQN : String = 'CHESS::Dependability::ThreatsPropagation::InternalPropagation';
 	InternalFaultQN : String = 'CHESS::Dependability::ThreatsPropagation::InternalFault';
 	ClientServerPortQN : String = 'MARTE::MARTE_DesignModel::GCM::ClientServerPort';
 	MARTEFlowPortQN : String = 'MARTE::MARTE_DesignModel::GCM::FlowPort';
 }]
 	[addToGenerated(block.name, generated)/]
-[if (block.getAppliedStereotype(SystemQN)->notEmpty())]
+[if (isSystem)]
 MODULE main
 [else]
 MODULE [block.name/]([getModuleFormalParameter(block)/])
@@ -90,9 +90,16 @@ MODULE [block.name/]([getModuleFormalParameter(block)/])
 	[/let]
 	[let rules : Set(Constraint) = block.ownedRule]
 	[for (rule : Constraint | rules)]
-	[let spec : String = rule.specification.stringValue()]
-	DEFINE [rule.getLabel()/] := [spec/][if not(spec.endsWith(';'))];[/if]
+	[if (rule.specification.oclIsKindOf(OpaqueExpression) and 
+		rule.specification.oclAsType(OpaqueExpression).language->select (l : String | l.contains('SMV'))->notEmpty())]
+	[let  index : Integer = rule.specification.oclAsType(OpaqueExpression).language->indexOf('SMV')]
+	[let spec : String = rule.specification.oclAsType(OpaqueExpression)._body->at(index)]
+
+	DEFINE [rule.getLabel()/] := [spec/][if not(spec.endsWith(';'))];
+	[/if]
 	[/let]
+	[/let]
+	[/if]
 	[/for]
 	[/let]
 	[let vars : OrderedSet(Property) = block.attribute->select(p : Property | p.isReadOnly and 
@@ -181,7 +188,7 @@ MODULE [block.name/]([getModuleFormalParameter(block)/])
 	[if (not part.type.name.oclIsInvalid())]
 	[if (isPart(part) and not isAlreadyGenerated(part.type.name, generated))]
 		[let newblock : Class = allBlocks->any(c : Class | part.type = c)]
-[generateModule(newblock, allBlocks, generated)/]
+[generateModule(newblock, allBlocks, generated, false)/]
 		[/let]
 	[/if]
 	[/if]

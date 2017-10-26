@@ -30,7 +30,7 @@ import org.eclipse.papyrus.infra.services.validation.ValidationTool;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.uml2.uml.Model;
 import org.polarsys.chess.contracts.transformations.commands.CommandsCommon.CommandEnum;
-import org.polarsys.chess.contracts.transformations.dialogs.SelectSystemDialog;
+import org.polarsys.chess.contracts.transformations.dialogs.SelectOcraAnalysisCtxDialog;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.validator.command.ChessGenericValidateCommand;
 
@@ -94,7 +94,7 @@ public class CHESSContractValidateAndRefineCommand extends ChessGenericValidateC
 			Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
 			Model model = ResourceUtils.getModel(res);
 			modelname = model.getName();
-			SelectSystemDialog dialog = new SelectSystemDialog(activeShell, model);
+			SelectOcraAnalysisCtxDialog dialog = new SelectOcraAnalysisCtxDialog(activeShell, model);
 			dialog.create();
 			if (dialog.open() == Window.OK) {
 				systemQN = dialog.getSystem();

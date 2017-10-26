@@ -162,9 +162,13 @@
 
 	[let rules : Set(Constraint) = block.ownedRule->select(c : Constraint | c.getAppliedStereotype(DelegConstrQN)->notEmpty())]
 	[for (rule : Constraint | rules)]
-	[let spec : String = rule.specification.stringValue()]
+	[if ((rule.specification.oclIsKindOf(OpaqueExpression) and rule.specification.oclAsType(OpaqueExpression).language.contains('OCRA')->notEmpty()))]
+	[let  index : Integer = rule.specification.oclAsType(OpaqueExpression).language->indexOf('OCRA')]
+	[let spec : String = rule.specification.oclAsType(OpaqueExpression)._body->at(index)]
 	CONNECTION [spec/][if not(spec.endsWith(';'))];[/if]
 	[/let]
+	[/let]
+	[/if]
 	[/for]
 	[/let]
 

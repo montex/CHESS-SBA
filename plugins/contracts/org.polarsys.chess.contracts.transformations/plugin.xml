@@ -36,6 +36,12 @@
       </command>
       <command
             categoryId="org.polarsys.chess.contracts.category"
+            defaultHandler="org.polarsys.chess.contracts.transformations.commands.ExportSmv"
+            id="org.polarsys.chess.contracts.transformations.smv.id"
+            name="Export SMV">
+      </command>
+      <command
+            categoryId="org.polarsys.chess.contracts.category"
             defaultHandler="org.polarsys.chess.contracts.transformations.commands.FTANuSMV3Handler"
             id="org.polarsys.chess.contracts.transformations.fta3.id"
             name="FTA NuSMV3">
@@ -68,10 +74,10 @@
                                  variable="activeEditorInput">
                               <adapt
                                     type="org.eclipse.core.resources.IResource">
-                                 <test
+                                 <!--test
                                        property="org.eclipse.core.resources.projectNature"
                                        value="org.polarsys.chess.CHESSNature">
-                                 </test>
+                                 </test-->
                               </adapt>
                            </with>
                         </or>
@@ -103,10 +109,10 @@
                                  variable="activeEditorInput">
                               <adapt
                                     type="org.eclipse.core.resources.IResource">
-                                 <test
+                                 <!--test
                                        property="org.eclipse.core.resources.projectNature"
                                        value="org.polarsys.chess.CHESSNature">
-                                 </test>
+                                 </test-->
                               </adapt>
                            </with>
                         </or>
@@ -115,5 +121,36 @@
           	 </menu>
           </menu>
 	</menuContribution>
+   </extension>
+    <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.papyrus.views.modelexplorer.modelexplorer.popup">
+         <menu
+               icon="icons/CHESSicon.gif"
+               id="org.polarsys.chess.modelexplorerpopupmenu.id"
+               label="CHESS">
+            <command
+                  commandId="org.polarsys.chess.contracts.transformations.smv.id"
+                  id="org.polarsys.chess.contracts.transformations.smv.commandId"
+                  label="Export as SMV"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.emf.ecore.EObject">
+                        <instanceof
+                              value="org.eclipse.uml2.uml.Class">
+                        </instanceof>
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
    </extension>
 </plugin>

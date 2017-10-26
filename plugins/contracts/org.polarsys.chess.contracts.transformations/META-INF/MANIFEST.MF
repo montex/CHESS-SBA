@@ -34,7 +34,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gmf.runtime.emf.commands.core;bundle-version="1.7.0",
  org.eclipse.emf.edit.ui;bundle-version="2.10.0",
  org.polarsys.chess.chessmlprofile,
- org.eclipse.swt
+ org.eclipse.swt,
+ org.polarsys.chess.core,
+ org.eclipse.papyrus.infra.widgets.toolbox,
+ org.eclipse.papyrus.emf.facet.custom.metamodel
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true

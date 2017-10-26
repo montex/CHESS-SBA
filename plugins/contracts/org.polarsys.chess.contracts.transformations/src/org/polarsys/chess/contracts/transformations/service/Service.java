@@ -431,7 +431,9 @@ public class Service {
 			}
 			return "{" + enumString + "}";
 		}
-		return type.getName();
+		if (type != null){
+			return type.getName();
+		}else return "";
 	}
 	
 	public String getTransitionTarget(String name, String str){

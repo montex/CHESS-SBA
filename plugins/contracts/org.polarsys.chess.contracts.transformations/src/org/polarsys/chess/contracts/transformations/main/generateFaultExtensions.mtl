@@ -21,13 +21,13 @@
 
 [template public generateFaultExtensions(model : Model, sysQN : String , sysName : String, filename : String){
 	ErrorModelQN : String = 'CHESS::Dependability::ThreatsPropagation::ErrorModel';
-	ErrorQN : String = 'CHESS::Dependability::ThreatsPropagation::Error';
+	ErrorQN : String = 'CHESS::Dependability::ThreatsPropagation::ErrorState';
 	StuckAtQN : String = 'CHESS::Dependability::ThreatsPropagation::StuckAt';
 	StuckAtFixedQN : String = 'CHESS::Dependability::ThreatsPropagation::StuckAtFixed';
 	InvertedQN : String = 'CHESS::Dependability::ThreatsPropagation::Inverted';
 	RampDownQN : String = 'CHESS::Dependability::ThreatsPropagation::RampDown';
 	InternalFaultQN : String = 'CHESS::Dependability::ThreatsPropagation::InternalFault';
-	ExternalFaultQN : String = 'CHESS::Dependability::ThreatsPropagation::ExternalFault';
+	ExternalFaultQN : String = 'CHESS::Dependability::ThreatsPropagation::InternalPropagation';
 }]
 [comment @main/]
 [file (model.name.concat('_').concat(sysName).concat('.fei'), false, 'UTF-8')]
@@ -97,7 +97,7 @@
 			  [/if]
 			  [let tr : Transition = errorState.incoming->any(fault : Transition | fault.getAppliedStereotype(InternalFaultQN)->notEmpty() 
 															  or fault.getAppliedStereotype(ExternalFaultQN)->notEmpty())] 
-              <local_dynamics_model name="[errorState.getValue(errorStereo, 'type').toString().toUpperFirst()/]" desc="">
+              <local_dynamics_model name="Permanent" desc="">
                 <events>
                   <event type="output" name="failure" connected="yes" binds="[tr.name/]"/>
                 </events>
@@ -126,7 +126,7 @@
 select(elem : NamedElement | elem.qualifiedName->notEmpty() and elem.qualifiedName.equalsIgnoreCase(sysQN))->asSequence()->first().oclAsType(Class)/]
 
 [query public getType(type : Type) : String =
-invoke('org.poalrsys.chess.contracts.transformations.service.Service', 'getType(org.eclipse.uml2.uml.Type)', Sequence{type})/]
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getType(org.eclipse.uml2.uml.Type)', Sequence{type})/]
 
 [query public getTypeNameForProperty(prop : Property) : String =
-invoke('org.poalrsys.chess.contracts.transformations.service.Service','getTypeNameForProperty(org.eclipse.uml2.uml.Property)', Sequence{prop}) /]
+invoke('org.polarsys.chess.contracts.transformations.service.Service','getTypeNameForProperty(org.eclipse.uml2.uml.Property)', Sequence{prop}) /]

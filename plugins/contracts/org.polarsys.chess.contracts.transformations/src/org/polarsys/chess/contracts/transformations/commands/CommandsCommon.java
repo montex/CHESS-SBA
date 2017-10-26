@@ -165,8 +165,8 @@ public class CommandsCommon {
 						genFex.doGenerate(null);
 						smvLocation = target + File.separator + args.get(2);
 						feiLocation = smvLocation;
-						smvLocation = smvLocation + "_" + systemName + SMV_EXT;
-						feiLocation = feiLocation + "_" + systemName + FEI_EXT;
+						smvLocation = smvLocation + SMV_EXT;
+						feiLocation = feiLocation + FEI_EXT;
 						monitor.subTask("calling xSAP");
 						checker.FTA(smvLocation, feiLocation, ftaCondition);
 						monitor.worked(1);

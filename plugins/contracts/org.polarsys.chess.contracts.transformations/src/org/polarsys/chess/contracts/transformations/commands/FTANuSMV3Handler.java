@@ -30,8 +30,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Model;
 import org.polarsys.chess.contracts.transformations.commands.CommandsCommon.CommandEnum;
-import org.polarsys.chess.contracts.transformations.dialogs.SelectAnalysisCtxDialog;
-import org.polarsys.chess.contracts.transformations.dialogs.SelectSystemDialog;
+import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAAnalysisCtxDialog;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
@@ -52,7 +51,7 @@ public class FTANuSMV3Handler extends AbstractHandler {
 			Resource res = ResourceUtils.getUMLResource(editorPapyrus.getServicesRegistry());
 			Model model = ResourceUtils.getModel(res);
 			filename = model.getName();
-			SelectAnalysisCtxDialog dialog = new SelectAnalysisCtxDialog(activeShell, model);
+			SelectFTAAnalysisCtxDialog dialog = new SelectFTAAnalysisCtxDialog(activeShell, model);
 			dialog.create();
 			if (dialog.open() == Window.OK) {
 				systemQN = dialog.getSystem();
@@ -72,7 +71,7 @@ public class FTANuSMV3Handler extends AbstractHandler {
 		args.add(systemQN);
 		String systemName = systemQN.substring(systemQN.lastIndexOf("::")+2);
 		args.add(systemName);
-		args.add(filename);
+		args.add(filename+"_"+systemName);//used by the transformation as file name
 		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FTA, null, ftaCond);
 
 		return null;
