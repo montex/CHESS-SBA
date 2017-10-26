@@ -73,6 +73,12 @@ public class CHESSContractProfileManager {
 		return str;
 	}
 	
+	public static Stereotype getFormalProperty(ResourceSet res) {
+		loadCHESSContractProfile(res);
+		Stereotype str = chessContractProfile.getOwnedStereotype("FormalProperty");
+		return str;
+	}
+	
 	public static Stereotype getFormalProperty() {
 		Stereotype str = chessContractProfile.getOwnedStereotype("FormalProperty");
 		return str;

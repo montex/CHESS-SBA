@@ -31,7 +31,13 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.transaction,
  org.eclipse.papyrus.uml.diagram.composite;bundle-version="1.0.0",
  org.eclipse.papyrus.emf.facet.query.java.core,
- org.eclipse.papyrus.emf.facet.efacet.metamodel;bundle-version="1.0.0"
+ org.eclipse.papyrus.emf.facet.efacet.metamodel;bundle-version="1.0.0",
+ org.eclipse.net4j.util.ui;bundle-version="3.6.0",
+ org.eclipse.jface
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Intecs
+Import-Package: org.eclipse.emf.cdo.internal.explorer.checkouts;version="4.5.0",
+ org.eclipse.emf.cdo.transfer,
+ org.eclipse.emf.cdo.transfer.ui;version="4.2.300",
+ org.eclipse.ui.navigator.resources

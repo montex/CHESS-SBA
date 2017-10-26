@@ -15,7 +15,13 @@
 
 package org.polarsys.chess.contracts.chessextension;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -25,6 +31,9 @@ public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.polarsys.chess.contracts.chessextension"; //$NON-NLS-1$
+	
+	public static final String CHESS_IMAGE_ID = "org.polarsys.chess.contracts.chessextension.CHESSicon"; //$NON-NLS-1$
+	
 
 	// The shared instance
 	private static Activator plugin;
@@ -62,4 +71,14 @@ public class Activator extends AbstractUIPlugin {
 		return plugin;
 	}
 
+	protected void initializeImageRegistry(ImageRegistry registry) {
+	    super.initializeImageRegistry(registry);
+	    Bundle bundle = Platform.getBundle(PLUGIN_ID);
+
+	    ImageDescriptor myImage = ImageDescriptor.createFromURL(
+	          FileLocator.find(bundle,
+	                           new Path("icons/CHESSicon.gif"),
+	                                    null));
+	    registry.put(CHESS_IMAGE_ID, myImage);
+	}
 }

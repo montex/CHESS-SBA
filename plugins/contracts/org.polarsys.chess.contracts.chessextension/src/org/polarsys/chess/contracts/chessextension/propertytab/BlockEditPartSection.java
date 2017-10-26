@@ -16,22 +16,41 @@ package org.polarsys.chess.contracts.chessextension.propertytab;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.Vector;
 
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.util.LocalSelectionTransfer;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.opencert.evm.evidspec.evidence.Artefact;
+import org.eclipse.opencert.sam.arg.arg.Claim;
+import org.eclipse.opencert.sam.arg.arg.impl.ClaimImpl;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.emf.utils.EMFHelper;
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockEditPart;
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.ConstraintBlockEditPart;
 import org.eclipse.papyrus.uml.diagram.clazz.edit.parts.ClassEditPart;
 import org.eclipse.papyrus.uml.diagram.clazz.edit.parts.ComponentEditPart;
+import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -40,8 +59,22 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPageLayout;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.uml2.uml.Class;
@@ -50,14 +83,15 @@ import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.contracts.chessextension.popup.actions.SetContractRefinement;
+import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 
 public class BlockEditPartSection extends AbstractPropertySection{
 	
-	private static final String CONTRACT = "CHESSContract::Contract";
-	private static final String CONTRACT_PROP = "CHESSContract::ContractProperty";
+	public static final String CONTRACT = "CHESSContract::Contract";
+	public static final String CONTRACT_PROP = "CHESSContract::ContractProperty";
 
 	private Text contractText;
 	private Text assumeText;
@@ -73,7 +107,6 @@ public class BlockEditPartSection extends AbstractPropertySection{
 	private Label contractLabel;
 	private CCombo contractList;
 	private Label contractListLabel;
-
 	
 	public BlockEditPartSection(){
 		
@@ -115,7 +148,8 @@ public class BlockEditPartSection extends AbstractPropertySection{
 
 							@Override
 							protected void doExecute() {
-								Stereotype stereo = contract.getAppliedStereotype(CONTRACT);
+								//Stereotype stereo = contract.getAppliedStereotype(CONTRACT);
+								Stereotype stereo = UMLUtil.getAppliedStereotype(contract, CONTRACT,false) ;
 								FormalProperty assumefp = (FormalProperty) contract.getValue(stereo, "Assume");
 								Constraint assumeConstr = assumefp.getBase_Constraint();
 								LiteralString assumeSpec = (LiteralString) assumeConstr.getSpecification();
@@ -153,7 +187,9 @@ public class BlockEditPartSection extends AbstractPropertySection{
 
 							@Override
 							protected void doExecute() {
-								Stereotype stereo = contract.getAppliedStereotype(CONTRACT);
+								//Stereotype stereo = contract.getAppliedStereotype(CONTRACT);
+								Stereotype stereo = UMLUtil.getAppliedStereotype(contract, CONTRACT,false) ;
+								
 								FormalProperty guaranteefp = (FormalProperty) contract.getValue(stereo, "Guarantee");
 								Constraint guaranteeConstr = guaranteefp.getBase_Constraint();
 								LiteralString guaranteeSpec = (LiteralString) guaranteeConstr.getSpecification();
@@ -251,6 +287,8 @@ public class BlockEditPartSection extends AbstractPropertySection{
 		gd.verticalSpan = 25;
 		guaranteeText.addFocusListener(guaranteeFocusListener);
 		guaranteeText.setLayoutData(gd);
+		
+				
 	}
 
 	@SuppressWarnings({ "rawtypes" })
@@ -272,7 +310,9 @@ public class BlockEditPartSection extends AbstractPropertySection{
 			if(selected instanceof ConstraintBlockEditPart){
 				Class clazz = (Class) (((ConstraintBlockEditPart)selected).resolveSemanticElement());
 				//check if it's a contract
-				if(clazz.getAppliedStereotype(CONTRACT) != null){
+				//if(clazz.getAppliedStereotype(CONTRACT) != null){
+					if(UMLUtil.getAppliedStereotype(clazz, CONTRACT,false)!=null){
+					
 					cleanPropertyTab();
 					setContractPropertyTab(clazz);
 				}
@@ -283,7 +323,8 @@ public class BlockEditPartSection extends AbstractPropertySection{
 			else if(selected instanceof ClassEditPart){
 				Class clazz = (Class) (((ClassEditPart)selected).resolveSemanticElement());
 				//check if it's a contract
-				if(clazz.getAppliedStereotype(CONTRACT) != null){
+				//if(clazz.getAppliedStereotype(CONTRACT) != null){
+				if(UMLUtil.getAppliedStereotype(clazz, CONTRACT,false)!=null){
 					cleanPropertyTab();
 					setContractPropertyTab(clazz);
 				}else{
@@ -297,7 +338,8 @@ public class BlockEditPartSection extends AbstractPropertySection{
 			else if(selectedEObject instanceof Class){
 				
 					Class clazz = (Class) selectedEObject;
-					if(clazz.getAppliedStereotype(CONTRACT) != null){
+					//if(clazz.getAppliedStereotype(CONTRACT) != null){
+					if(UMLUtil.getAppliedStereotype(clazz, CONTRACT,false)!=null){	
 						cleanPropertyTab();
 						setContractPropertyTab(clazz);
 					}else{
@@ -310,6 +352,25 @@ public class BlockEditPartSection extends AbstractPropertySection{
 			}
 		}else{
 			cleanPropertyTab();
+		}
+		
+		
+		//fill claims list
+		if(contract != null){
+			
+			//Stereotype stereo = contract.getAppliedStereotype(BlockEditPartSection.CONTRACT);
+			Stereotype stereo = UMLUtil.getAppliedStereotype(contract, BlockEditPartSection.CONTRACT,false);
+			Contract contractStereo = (Contract) contract.getStereotypeApplication(stereo);
+			
+		}
+		
+		//fill supportedBy artifact list
+		if(contract != null){
+			
+			//Stereotype stereo = contract.getAppliedStereotype(BlockEditPartSection.CONTRACT);
+			Stereotype stereo = UMLUtil.getAppliedStereotype(contract, BlockEditPartSection.CONTRACT,false);
+			Contract contractStereo = (Contract) contract.getStereotypeApplication(stereo);
+			
 		}
 	}
 	
@@ -335,7 +396,8 @@ public class BlockEditPartSection extends AbstractPropertySection{
 		contract = clazz;
 		contractLabel.setText("Selected Contract");
 		contractText.setText(clazz.getQualifiedName());
-		Stereotype contrStereo = clazz.getAppliedStereotype(CONTRACT);
+		//Stereotype contrStereo = clazz.getAppliedStereotype(CONTRACT);
+		Stereotype contrStereo = UMLUtil.getAppliedStereotype(clazz, CONTRACT,false);
 		FormalProperty assumefp = (FormalProperty) clazz.getValue(contrStereo, "Assume");
 		FormalProperty guaranteefp = (FormalProperty) clazz.getValue(contrStereo, "Guarantee");
 		String assume = "";
@@ -350,6 +412,9 @@ public class BlockEditPartSection extends AbstractPropertySection{
 		if(guarantee != null){
 			guaranteeText.setText(guarantee);
 		}
+		
+		Contract contractStereo = (Contract) contract.getStereotypeApplication(contrStereo);
+		
 	}
 
 	private void cleanPropertyTab() {
@@ -361,6 +426,12 @@ public class BlockEditPartSection extends AbstractPropertySection{
 		contractList.removeAll();
 		contractList.setVisible(false);
 		contractListLabel.setVisible(false);
+		
 	}
 
+
+   
+    
+
+    
 }
