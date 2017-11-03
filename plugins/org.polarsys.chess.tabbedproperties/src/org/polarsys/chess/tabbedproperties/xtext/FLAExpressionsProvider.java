@@ -14,27 +14,28 @@
  ------------------------------------------------------------------------------*/
 package org.polarsys.chess.tabbedproperties.xtext;
 
-import org.polarsys.chess.xtext.FlaDslRuntimeModule;
-import org.polarsys.chess.xtext.ui.FlaDslUiModule;
-import org.yakindu.sct.ui.editor.extensions.AbstractExpressionsProvider;
-import org.yakindu.sct.ui.editor.extensions.IExpressionLanguageProvider;
-import org.yakindu.sct.ui.integration.stext.ExtensionsActivator;
-
-import com.google.inject.Module;
 
 
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.xtext.resource.FileExtensionProvider;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.ui.editor.embedded.IEditedResourceProvider;
+import org.eclipse.xtext.ui.resource.IResourceSetProvider;
+import com.google.inject.Inject;
 
-public class FLAExpressionsProvider extends AbstractExpressionsProvider implements IExpressionLanguageProvider{
+public class FLAExpressionsProvider implements IEditedResourceProvider{
+	
+	@Inject private IResourceSetProvider resourceSetProvider;
+	@Inject private FileExtensionProvider ext;
 
-	@Override
-	protected Module getRuntimeModule() {
-		return new FlaDslRuntimeModule();
-	}
-
-	//NP 2015-03-24 - FIX: cast to com.google.inject.Module seems necessary and sufficient.
-	@Override
-	protected Module getUIModule() {
-		return (Module) new FlaDslUiModule(ExtensionsActivator.getDefault());
+	public XtextResource createResource() {
+		ResourceSet resourceSet = resourceSetProvider.get(null);
+		URI uri = URI.createURI("synthetic:/temp."+ext.getPrimaryFileExtension());
+		XtextResource result = (XtextResource) resourceSet.createResource(uri);
+		resourceSet.getResources().add(result);
+		return result;
+		
 	}
 
 }

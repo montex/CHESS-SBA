@@ -9,6 +9,7 @@
  - Contributors:
  - 
  - Nicholas Pacini nicholas.pacini@intecs.it
+ - Stefano Puri stefano.puri@intecs.it
  -  
  - A multi-line string editor that allow the use of an X-Text grammar.
  ------------------------------------------------------------------------------*/
@@ -20,8 +21,6 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -29,10 +28,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditor;
+import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorFactory;
+import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorModelAccess;
+import org.polarsys.chess.xtext.ui.internal.FlaDslActivator;
 
 import com.google.inject.Injector;
 
-import de.itemis.xtext.utils.jface.viewers.StyledTextXtextAdapter;
 
 /**
  * A simple input dialog for soliciting an input string from the user.
@@ -90,6 +92,10 @@ public class XtextInputDialog extends Dialog {
      * a boolean flag that tells whether or not the text widget is xtext-enabled
      */
     private final boolean xtextEnabled;
+    
+    
+    private EmbeddedEditorModelAccess embeddedEditorModel;
+    
 
     /**
      * Creates an input dialog with OK and Cancel buttons. Note that the dialog
@@ -166,7 +172,7 @@ public class XtextInputDialog extends Dialog {
     @Override
     protected void buttonPressed(int buttonId) {
         if (buttonId == IDialogConstants.OK_ID) {
-            value = text.getText();
+            value = embeddedEditorModel.getSerializedModel();
         } else {
             value = null;
         }
@@ -198,13 +204,7 @@ public class XtextInputDialog extends Dialog {
                 IDialogConstants.OK_LABEL, true);
         createButton(parent, IDialogConstants.CANCEL_ID,
                 IDialogConstants.CANCEL_LABEL, false);
-        //do this here because setting the text will set enablement on the OK
-        // button
-        text.setFocus();
-        if (value != null) {
-            text.setText(value);
-            text.selectAll();
-        }
+ 
     }
 
 
@@ -225,19 +225,18 @@ public class XtextInputDialog extends Dialog {
       }
 
       if( this.xtextEnabled ) {
-          //
-          // X-Text specific part
-          //
-    	  FLAExpressionsProvider tmp = new FLAExpressionsProvider();
-    	  Injector injector = tmp.getInjector();
+        
 
-    	  text = new StyledText(composite, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.WRAP);
-    	  StyledTextXtextAdapter xtextAdapter = new StyledTextXtextAdapter(injector);
-    	  xtextAdapter.adapt(text);
+    	Injector injector = FlaDslActivator.getInstance().getInjector(FlaDslActivator.ORG_POLARSYS_CHESS_XTEXT_FLADSL);
+    	  
+    	FLAExpressionsProvider provider =  injector.getInstance(FLAExpressionsProvider.class);
+  		
+  		EmbeddedEditorFactory factory = injector.getInstance(EmbeddedEditorFactory.class);
+  		
+  		EmbeddedEditor editor = factory.newEditor(provider).withParent(composite);
+  		
+  		embeddedEditorModel = editor.createPartialEditor("", value, "", false);
 
-          //
-          // End of X-Text specific part
-          //
       } else {
     	  //
     	  // shows a multi-line dialog that can wrap strings.
@@ -245,15 +244,17 @@ public class XtextInputDialog extends Dialog {
     	  text = new StyledText(composite, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.WRAP);
       }
 
-      GridData data = new GridData(GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL);
-      data.heightHint = 5 * text.getLineHeight();
-      data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.ENTRY_FIELD_WIDTH);
-      text.setLayoutData(data);
-      text.addModifyListener(new ModifyListener() {
-          public void modifyText(ModifyEvent e) {
-              validateInput();
-          }
-      });
+//      GridData data = new GridData(GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL);
+//      data.heightHint = 5 * text.getLineHeight();
+//      data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.ENTRY_FIELD_WIDTH);
+//      text.setLayoutData(data);
+//      text.addModifyListener(new ModifyListener() {
+//          public void modifyText(ModifyEvent e) {
+//              validateInput();
+//          }
+//      });
+      
+
       errorMessageText = new Text(composite, SWT.READ_ONLY);
       errorMessageText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL
               | GridData.HORIZONTAL_ALIGN_FILL));
