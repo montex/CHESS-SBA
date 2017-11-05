@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -33,13 +34,21 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.contracts.integration.ToolIntegration;
+import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
+import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus;
 import org.polarsys.chess.contracts.transformations.dialogs.RefinementResultDialog;
 import org.polarsys.chess.contracts.transformations.main.Generate;
 import org.polarsys.chess.contracts.transformations.main.GenerateErrorModel;
@@ -58,7 +67,7 @@ public class CommandsCommon {
 	public static final String TEMP_FOLD = "Temp";
 	public static final int NUM_SUB_TASKS = 4;
 	
-	public static enum CommandEnum {REFINEMENT, IMPLEMENTATION, FTA}
+	public static enum CommandEnum {REFINEMENT, IMPLEMENTATION, FTA, VALIDPROP}
 	
 	public static void TransformationJob(final Shell activeShell, final IEditorPart editor, final List<String> args, final CommandEnum commandType, final String blockName, final String ftaCondition){
 		
@@ -140,6 +149,17 @@ public class CommandsCommon {
 						monitor.subTask("performing refinement check analysis...");
 						resultLocation = checker.checkRefinement(location);
 						break;
+					case VALIDPROP:
+						monitor.subTask("transforming uml model...");
+						systemName = args.get(0).substring(args.get(0).lastIndexOf("::")+2);
+						gen = new Generate(modelURI, target, args);
+						gen.doGenerate(null);
+						monitor.worked(1);
+						location = target + File.separator + args.get(2);
+						location = location + "_" + systemName + OSS_EXT;
+						monitor.subTask("Checking all validation properties...");
+						resultLocation = checker.checkValidationProp(location);
+						break;	
 					case IMPLEMENTATION:
 						monitor.subTask("transforming uml model...");
 						systemName = args.get(0).substring(args.get(0).lastIndexOf("::")+2);
@@ -196,6 +216,9 @@ public class CommandsCommon {
 						br.close();
 						//show the dialog
 						openRefinementResult(text);
+						//update contract status after checking for weak contract assumptions
+						if(commandType.equals(CommandEnum.VALIDPROP))
+							updateContractStatus(gen.getModel(),args,text);
 					}
 					
 				} catch (IOException e) {
@@ -235,5 +258,63 @@ public class CommandsCommon {
 			}
 		});
 	}
-	
+	private static void updateContractStatus(EObject eobject,final List<String> args,final String text) {
+
+
+		Model model= (Model) eobject;
+		
+		Package sysView = null;
+		Package compView = null;
+		List<Property> allContractProperties = new ArrayList<Property>();
+		
+		for (Package pkg : model.getNestedPackages()) {
+			if(pkg.getAppliedStereotype("CHESS::Core::CHESSViews::SystemView") != null){
+				sysView = pkg;
+			}
+			if(pkg.getAppliedStereotype("CHESS::Core::CHESSViews::ComponentView") != null){
+				compView = pkg;
+			}
+		} 
+
+		// Browse through the model and get all blocks, ports, properties and associations
+		
+
+		if (sysView != null)
+		
+			for (Element elem : sysView.allOwnedElements()) {
+				if (elem instanceof Property){
+				 if(elem.getAppliedStereotype("CHESSContract::ContractProperty") != null){
+						allContractProperties.add((Property) elem);
+					}
+				}
+
+			}
+		
+		if (compView != null)
+			for (Element elem : compView.allOwnedElements()) {
+
+				if (elem instanceof Property){
+					if (elem.getAppliedStereotype("CHESSContract::ContractProperty") != null){
+						allContractProperties.add((Property) elem);
+					}
+				}
+			}
+		
+		//if checkAllWeakContracts true then go through the validprop results if they are not empty
+		if(args.get(3).equalsIgnoreCase("true") && !text.isEmpty())
+		{
+			for (Property prop:allContractProperties)
+			{
+				Stereotype contrPropStereo = prop.getAppliedStereotype("CHESSContract::ContractProperty");
+				ContractProperty contractProp = (ContractProperty) prop.getStereotypeApplication(contrPropStereo);
+				String match1 = "Consistency " +prop.getName()+ "_consistency: [OK]";
+				String match2 = "Consistency " +prop.getName()+ "_consistency: [NOT OK]";
+				
+				if(text.indexOf(match1)!= -1) 
+					contractProp.setStatus(ContractStatus.VALIDATED);
+				else if (text.indexOf(match2)!= -1)
+					contractProp.setStatus(ContractStatus.NOT_VALIDATED);
+			}
+		}
+	}
 }

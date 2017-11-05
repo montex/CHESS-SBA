@@ -34,6 +34,7 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
+import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnalysisContext;
 
 public class SelectOcraAnalysisCtxDialog extends Dialog {
 	
@@ -42,7 +43,8 @@ public class SelectOcraAnalysisCtxDialog extends Dialog {
 	private StyledText rootSystemText;
 	private Model model;
 	private String system;
-	private List<GaAnalysisContext> contextList;
+	private Boolean checkAllWeakContracts;
+	private List<ContractRefinementAnalysisContext> contextList;
 	private ModifyListener modAnalysisCtxListener;
 
 	public SelectOcraAnalysisCtxDialog(Shell shell, Model model) {
@@ -52,10 +54,11 @@ public class SelectOcraAnalysisCtxDialog extends Dialog {
 		this.modAnalysisCtxListener = new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
 				String selectedCtx = chooseAnalysisCtxField.getText();
-				for (GaAnalysisContext ctx : contextList) {
+				for (ContractRefinementAnalysisContext ctx : contextList) {
 					if (ctx.getBase_NamedElement().getQualifiedName().equals(selectedCtx)){
 						CHGaResourcePlatform plat = (CHGaResourcePlatform) ctx.getPlatform().get(0);
 						rootSystemText.setText(plat.getBase_Classifier().getQualifiedName());
+						checkAllWeakContracts= ctx.isCheckAllWeakContracts();
 					}
 				}			
 			}
@@ -115,18 +118,22 @@ public class SelectOcraAnalysisCtxDialog extends Dialog {
 	public String getSystem() {
 		return system;
 	}
+	
+	public Boolean getCheckWeakContracts() {
+		return checkAllWeakContracts;
+	}
 
 	private void setSystem(String system) {
 		this.system = system;
 	}
 	
 
-	private List<GaAnalysisContext> getAnalysisContexts(Model model) {
-		List<GaAnalysisContext> result = new ArrayList<GaAnalysisContext>();
+	private List<ContractRefinementAnalysisContext> getAnalysisContexts(Model model) {
+		List<ContractRefinementAnalysisContext> result = new ArrayList<ContractRefinementAnalysisContext>();
 		for (Element elem : model.allOwnedElements()){
 			Stereotype stereo = elem.getAppliedStereotype(REFANALYSIS);
 			if(stereo != null){
-				result.add((GaAnalysisContext) elem.getStereotypeApplication(stereo));			
+				result.add((ContractRefinementAnalysisContext) elem.getStereotypeApplication(stereo));			
 			}
 		}
 		return result;

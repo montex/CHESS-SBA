@@ -19,7 +19,7 @@
 [module generate('http://www.eclipse.org/uml2/5.0.0/UML')]
 [import org::polarsys::chess::contracts::transformations::main::generateImplementation /]
 
-[template public mainTemplate(model : Model, sysQN : String , sysName : String, filename : String){
+[template public mainTemplate(model : Model, sysQN : String , sysName : String, filename : String, checkWeakContracts: String){
 	SystemQN : String = 'CHESSContract::System';
 	SubSystemQN : String = 'CHESSContract::SubSystem';
 	SystemViewQN : String = 'CHESS::Core::CHESSViews::SystemView';
@@ -40,7 +40,7 @@
 	[let allComps : Set(Component) = getAllComponents(deploymentView.allOwnedElements()->filter(Component), componentView.allOwnedElements()->filter(Component), CompImplQN, SRACompQN)]
 	[let generated : Set(String) = getEmptyStringSet()]
 	[let system : Class = getSystem(allBlocks, sysQN)]
-[generateComponent(system, true, allBlocks->union(allComps), generated)/]
+[generateComponent(system, true, allBlocks->union(allComps), generated,checkWeakContracts.equalsIgnoreCase('true'))/]
 	[/let]
 	[/let]
 	[/let]
@@ -61,13 +61,14 @@
 
 [/template]
 
-[template public generateComponent(block : Class, isSystem : Boolean, allBlocks : Set(Class), generated : Set(String)){
+[template public generateComponent(block : Class, isSystem : Boolean, allBlocks : Set(Class), generated : Set(String), checkWeak : Boolean){
 	SystemQN : String = 'CHESSContract::System';
 	FlowPortQN : String = 'SysML::PortAndFlows::FlowPort';
 	FlowPortMarteQN : String = 'MARTE::MARTE_DesignModel::GCM::FlowPort';
 	ContractPropQN : String = 'CHESSContract::ContractProperty';
 	DelegConstrQN : String = 'CHESSContract::DelegationConstraint';
 	CSPortQN : String = 'MARTE::MARTE_DesignModel::GCM::ClientServerPort';
+
 }]
 	[addToGenerated(block.name, generated)/]
 	[if (isSystem)]
@@ -111,7 +112,7 @@
 	[let contrProps : OrderedSet(Property) = block.ownedAttribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->notEmpty())]
 	[for (contrProp : Property | contrProps)]
 	[let contract : Class = contrProp.type.oclAsType(Class)]
-
+	
 	CONTRACT [contrProp.name/]
 	assume:
 		[getAssume(contract)/];
@@ -120,6 +121,18 @@
 	[/let]
 	[/for]
 	[/let]
+	[if checkWeak]
+
+	[let contrProps : OrderedSet(Property) = block.ownedAttribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->notEmpty() and isWeakContract(p))]
+	[if (contrProps->size() > 0)]
+	CONTRACT [block.name/]_allWeak
+	assume:
+		TRUE;
+	guarantee:
+	[for (contrProp : Property | contrProps) separator (' and ')][let contract : Class = contrProp.type.oclAsType(Class)][if not isAssumptionTrue(contract)]([getAssume(contract)/]) implies [/if]([getGuarantee(contract)/])[/let][/for];
+	[/if]
+	[/let]
+	[/if]
 
 	REFINEMENT
 
@@ -160,18 +173,40 @@
 	[/for]	
 	[/let]
 
-	[let rules : Set(Constraint) = block.ownedRule->select(c : Constraint | c.getAppliedStereotype(DelegConstrQN)->notEmpty())]
-	[for (rule : Constraint | rules)]
-	[if ((rule.specification.oclIsKindOf(OpaqueExpression) and rule.specification.oclAsType(OpaqueExpression).language.contains('OCRA')->notEmpty()))]
-	[let  index : Integer = rule.specification.oclAsType(OpaqueExpression).language->indexOf('OCRA')]
-	[let spec : String = rule.specification.oclAsType(OpaqueExpression)._body->at(index)]
-	CONNECTION [spec/][if not(spec.endsWith(';'))];[/if]
-	[/let]
+	[let rules : Set(Constraint) = block.ownedRule->select(c : Constraint | c.getAppliedStereotype(DelegConstrQN)->notEmpty())] 
+  	[for (rule : Constraint | rules)] 
+  	[if ((rule.specification.oclIsKindOf(OpaqueExpression) and rule.specification.oclAsType(OpaqueExpression).language.contains('OCRA')->notEmpty()))] 
+  	[let  index : Integer = rule.specification.oclAsType(OpaqueExpression).language->indexOf('OCRA')] 
+  	[let spec : String = rule.specification.oclAsType(OpaqueExpression)._body->at(index)] 
+  	CONNECTION [spec/][if not(spec.endsWith(';'))];[/if] 
+  	[/let] 
+  	[/let] 
+  	[/if] 
+  	[/for] 
+  	[/let] 
+
+	[if checkWeak]
+	[comment if the checkAllWeakContracts is true, then generate refinedby for all strong, and if there are any weak, then generate only one refinedby for allweak contract /]
+	[let contrProps : OrderedSet(Property) = block.ownedAttribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->notEmpty() and not isWeakContract(p))]
+	[for (contrProp : Property | contrProps)]
+	[if (isRefined(contrProp))]
+	[let contract : Class = contrProp.type.oclAsType(Class)]
+	CONTRACT [contrProp.name/] REFINEDBY [getRefinedByStrongWeak(contrProp,parts)/]
 	[/let]
 	[/if]
 	[/for]
 	[/let]
 
+	[let contrProps : OrderedSet(Property) = block.ownedAttribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->notEmpty() and isWeakContract(p))]
+	[let refinedByAllWeak: String = getRefinedByAllWeak(contrProps,parts)]
+	[if (contrProps->size() > 0 and not refinedByAllWeak.startsWith(';'))]
+	CONTRACT [block.name/]_allWeak REFINEDBY [refinedByAllWeak/]
+
+	[/if]
+	[/let]
+	[/let]
+	[else]
+	[comment if checkAllWeakContracts is false, then generate refinedby for all selected contracts /]
 	[let contrProps : OrderedSet(Property) = block.ownedAttribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->notEmpty())]
 	[for (contrProp : Property | contrProps)]
 	[if (isRefined(contrProp))]
@@ -181,11 +216,30 @@
 	[/if]
 	[/for]
 	[/let]
+	[/if]
+
+	[if (checkWeak)]
+	[for (part : Property | parts)]
+		[if (isPart(part))]
+	[let nextblock : Class = allBlocks->any(c : Class | part.type = c)]
+	[let contrProps : OrderedSet(Property) = nextblock.ownedAttribute->select(p : Property | p.getAppliedStereotype(ContractPropQN)->notEmpty())]
+	[for (contrProp : Property | contrProps)]
+	[let contract : Class = contrProp.type.oclAsType(Class)]
+		[if (isWeakContract(contrProp) and not isAssumptionTrue(contract))]
+	CONSISTENCY NAME [contrProp.name/]_consistency := [part.name/].[contrProp.name/].ASSUMPTION;
+		[/if]
+	[/let]
+	[/for]
+	[/let]	
+	[/let]
+		[/if]
+	[/for]
+	[/if]
 
 	[for (part : Property | parts)]
 	[if (isPart(part) and not isAlreadyGenerated(part.type.name, generated))]
 		[let newblock : Class = allBlocks->any(c : Class | part.type = c)]
-	[generateComponent(newblock, false, allBlocks, generated)/]
+	[generateComponent(newblock, false, allBlocks, generated,checkWeak)/]
 		[/let]
 	[/if]
 	[/for]
@@ -251,6 +305,21 @@ invoke('org.polarsys.chess.contracts.transformations.service.Service', 'isRefine
 
 [query public getRefinedBy(prop : Property) : String = 
 invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getRefinedBy(org.eclipse.uml2.uml.Property)', Sequence{prop}) /]
+
+[query public getRefinedByStrongWeak(prop : Property, parts : Set (Property)) : String = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getRefinedByStrongWeak(org.eclipse.uml2.uml.Property,java.util.Set)', Sequence{prop,parts}) /]
+
+[query public getRefinedByAllWeak(props : Set (Property), parts : Set (Property)) : String = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getRefinedByAllWeak(java.util.Set,java.util.Set)', Sequence{props,parts}) /]
+
+[query public getContractType(prop : Property) : String = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'getContractType(org.eclipse.uml2.uml.Property)', Sequence{prop}) /]
+
+[query public isWeakContract(prop : Property) : Boolean = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'isWeakContract(org.eclipse.uml2.uml.Property)', Sequence{prop}) /]
+
+[query public isAssumptionTrue(contract: Class) : Boolean = 
+invoke('org.polarsys.chess.contracts.transformations.service.Service', 'isAssumptionTrue(org.eclipse.uml2.uml.Class)', Sequence{contract}) /]
 
 [query public checkRules(conn : Connector) : Boolean = 
 invoke('org.polarsys.chess.contracts.transformations.service.Service', 'checkRules(org.eclipse.uml2.uml.Connector)', Sequence{conn}) /]

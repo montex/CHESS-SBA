@@ -46,6 +46,12 @@
             id="org.polarsys.chess.contracts.transformations.fta3.id"
             name="FTA NuSMV3">
       </command>
+      <command
+            categoryId="org.polarsys.chess.contracts.category"
+            defaultHandler="org.polarsys.chess.contracts.transformations.commands.CheckValidPropHandler"
+            id="org.polarsys.chess.contracts.transformations.validProp.id"
+            name="Validate Properties">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -82,6 +88,28 @@
                            </with>
                         </or>
                      </visibleWhen>
+                </command>
+                <command
+                      commandId="org.polarsys.chess.contracts.transformations.validProp.id"
+                      label="Validate Properties (OCRA)"
+                      style="push">
+                   <visibleWhen
+                         checkEnabled="false">
+                      <or>
+                         <with
+                               variable="activeEditorId">
+                            <equals
+                                  value="org.eclipse.uml2.uml.editor.presentation.UMLEditorID">
+                            </equals>
+                         </with>
+                         <with
+                               variable="activeEditorInput">
+                            <adapt
+                                  type="org.eclipse.core.resources.IResource">
+                            </adapt>
+                         </with>
+                      </or>
+                   </visibleWhen>
                 </command>
                 <!--command
                       commandId="org.polarsys.chess.contracts.transformations.impl.id"

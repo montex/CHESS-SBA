@@ -11,6 +11,8 @@
  * Stefano Puri stefano.puri@intecs.it
  * Laura Baracchi  laura.baracchi@intecs.it  
  * Initial API and implementation and/or initial documentation
+ * Reused and adapted by:
+ * Irfan Sljivo irfan.sljivo@mdh.se
  *******************************************************************************/
 package org.polarsys.chess.contracts.transformations.commands;
 
@@ -34,14 +36,14 @@ import org.polarsys.chess.contracts.transformations.dialogs.SelectOcraAnalysisCt
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.validator.command.ChessGenericValidateCommand;
 
-public class CHESSContractValidateAndRefineCommand extends ChessGenericValidateCommand  {
+public class CHESSContractValidatePropertyCommand extends ChessGenericValidateCommand  {
 
 	private String systemQN;
 	private Shell activeShell;
 	private Boolean checkWeakContracts;
 	private PapyrusMultiDiagramEditor editor;
 
-	public CHESSContractValidateAndRefineCommand(String label, String pluginId,
+	public CHESSContractValidatePropertyCommand(String label, String pluginId,
 			EObject selectedElement) {
 		super(label, pluginId, selectedElement);
 	}
@@ -74,21 +76,21 @@ public class CHESSContractValidateAndRefineCommand extends ChessGenericValidateC
 			//set the result to report
 			boolean go = false;
 			if(marker){
-				go = MessageDialog.openQuestion(activeShell, "Validation Problems", "Errors found while validating the Model. Check Refinement Analysis won't be performed correctly. Do you still want to continue?");
+				go = MessageDialog.openQuestion(activeShell, "Validation Problems", "Errors found while validating the Model. Check Validation Properties won't be performed correctly. Do you still want to continue?");
 
 				if (go){
-					performRefinement();
+					performValidationProp();
 				}else{
 					//don't refine and exit
 					return;
 				}
 			}else{
-				performRefinement();
+				performValidationProp();
 			}
 		}
 	}
 
-	private void performRefinement(){
+	private void performValidationProp(){
 
 		String modelname;
 		try {			
@@ -116,10 +118,11 @@ public class CHESSContractValidateAndRefineCommand extends ChessGenericValidateC
 		String systemName = systemQN.substring(systemQN.lastIndexOf("::")+2);
 		args.add(systemName);
 		args.add(modelname);
-		args.add(checkWeakContracts.toString());
-		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.REFINEMENT, null, null);
+		args.add(checkWeakContracts.toString());	
+		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.VALIDPROP, null, null);
 
 		return;
 	}
 
 }
+

@@ -54,6 +54,7 @@ import org.eclipse.uml2.uml.Vertex;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
+import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes;
 
 
 public class Service {
@@ -118,7 +119,83 @@ public class Service {
 		strResult = strResult.concat(";");
 		return strResult ;
 	}
+
+	public String getRefinedByStrongWeak(Property prop, Set<Property> parts){
+		Set<String> result = new HashSet<String>();
+		
+		Stereotype contrPropStereo = prop.getAppliedStereotype(CONTRACT_PROPERTY);
+		ContractProperty contractProp = (ContractProperty) prop.getStereotypeApplication(contrPropStereo);
+		for (ContractRefinement refinedContr : contractProp.getRefinedBy()) {	
+			if (refinedContr.getContract().getContractType().getValue()== ContractTypes.STRONG_VALUE)
+			result.add(refinedContr.getBase_DataType().getName());
+			else {	
+				String fullName = refinedContr.getBase_DataType().getName();
+				String component=fullName.substring(0,fullName.indexOf('.'));
+				for(Property partProp: parts) { 
+					if (partProp.getName().equalsIgnoreCase(component) && !result.contains(component.concat(".".concat(partProp.getType().getName().concat("_allWeak"))))) {
+					result.add(component.concat(".".concat(partProp.getType().getName().concat("_allWeak"))));
+					break;
+					}
+				}
+		}
+		}
+		String strResult = result.toString();
+		strResult = strResult.substring(1, strResult.length()-1);
+		strResult = strResult.concat(";");
+		return strResult ;
+	}
 	
+	public String getRefinedByAllWeak(Set<Property> props, Set<Property> parts){
+		Set<String> result = new HashSet<String>();
+		
+		for(Property prop: props) { 
+		Stereotype contrPropStereo = prop.getAppliedStereotype(CONTRACT_PROPERTY);
+		ContractProperty contractProp = (ContractProperty) prop.getStereotypeApplication(contrPropStereo);
+		for (ContractRefinement refinedContr : contractProp.getRefinedBy()) {	
+			if (refinedContr.getContract().getContractType().getValue()== ContractTypes.STRONG_VALUE && !result.contains(refinedContr.getBase_DataType().getName()))
+			result.add(refinedContr.getBase_DataType().getName());
+			else if(refinedContr.getContract().getContractType().getValue()== ContractTypes.WEAK_VALUE){
+				String fullName = refinedContr.getBase_DataType().getName();
+				String component=fullName.substring(0,fullName.indexOf('.'));
+				for(Property partProp: parts) { 
+					if (partProp.getName().equalsIgnoreCase(component) && !result.contains(component.concat(".".concat(partProp.getType().getName().concat("_allWeak"))))) {
+					result.add(component.concat(".".concat(partProp.getType().getName().concat("_allWeak"))));
+					break;
+					}
+				}
+		}
+		}
+		}
+		String strResult = result.toString();
+		strResult = strResult.substring(1, strResult.length()-1);
+		strResult = strResult.concat(";");
+		return strResult ;
+	}
+	public String getContractType(Property prop){
+		Set<String> result = new HashSet<String>();
+		
+		Stereotype contrPropStereo = prop.getAppliedStereotype(CONTRACT_PROPERTY);
+		ContractProperty contractProp = (ContractProperty) prop.getStereotypeApplication(contrPropStereo);
+		ContractTypes typeContr = contractProp.getContractType();
+			result.add(typeContr.getName());	
+		
+		String strResult = result.toString();
+		strResult = strResult.concat(";");
+		return strResult ;
+	}
+	public boolean isWeakContract(Property prop){		
+		Stereotype contrPropStereo = prop.getAppliedStereotype(CONTRACT_PROPERTY);
+		ContractProperty contractProp = (ContractProperty) prop.getStereotypeApplication(contrPropStereo);
+		ContractTypes typeContr = contractProp.getContractType();
+
+		return typeContr.getValue()==1;
+	}
+	
+	public boolean isAssumptionTrue(Class contractClass){		
+		Stereotype contractStereo = contractClass.getAppliedStereotype(CONTRACT);
+		Contract contract = (Contract) contractClass.getStereotypeApplication(contractStereo);		
+		return contract.getAssume().getBase_Constraint().getSpecification().stringValue().equalsIgnoreCase("TRUE");		
+	}
 	public boolean isRefined(Property prop){
 		
 		boolean result = true;

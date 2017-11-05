@@ -135,6 +135,32 @@ public class ToolIntegration {
 		return result;
 	}
 	
+	public String checkValidationProp(String modelPath){
+		
+		try{
+			String resultName = modelPath.substring(modelPath.lastIndexOf(File.separator)+1, modelPath.length());
+			resultName = resultName.substring(0, resultName.lastIndexOf("."));
+			error = resultFold + File.separator + resultName + "_error.txt";
+			result = resultFold + File.separator + resultName + "_consistency_result.txt";
+			PrintWriter writer = new PrintWriter(cmdFile);
+			writer.println("set on_failure_script_quits 1");
+			writer.println("set ocra_discrete_time");
+			writer.println("ocra_check_syntax -i" + " \"" + modelPath + "\"");
+			writer.println("ocra_check_validation_prop -i " + " \"" + modelPath + "\"" + " -a ic3 -w -s");
+			writer.println("quit");
+			writer.flush();
+			writer.close();
+			
+			String cmd[] = new String[] {ocraPath, "-source", cmdFile.getPath()};
+			callOcraTool(cmd);
+			
+		}catch (final Exception e) {
+			e.printStackTrace();
+			displayErrorMessage(e.getMessage());
+		}
+		return result;
+	}
+	
 	public void checkImplementation(String modelPath, String smvPath, String name){
 				
 		String resultName = smvPath.substring(smvPath.lastIndexOf(File.separator)+1, smvPath.length());
