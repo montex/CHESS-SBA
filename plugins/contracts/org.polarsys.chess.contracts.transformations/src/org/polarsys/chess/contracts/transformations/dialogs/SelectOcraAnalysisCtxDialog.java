@@ -9,7 +9,8 @@
  * Contributors:
  * Nicholas Pacini nicholas.pacini@intecs.it 
  * Stefano Puri stefano.puri@intecs.it
- * Laura Baracchi  laura.baracchi@intecs.it  
+ * Laura Baracchi  laura.baracchi@intecs.it
+ * Irfan Sljivo irfan.sljivo@mdh.se   
  * Initial API and implementation and/or initial documentation
  *******************************************************************************/
 package org.polarsys.chess.contracts.transformations.dialogs;
