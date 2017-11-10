@@ -81,6 +81,9 @@ public class Constants {
 	public static final String STATEBASED_ANALYSIS_TARGETFAILUREMODE = "targetFailureMode";
 	public static final String STATEBASED_ANALYSIS_PLATFORM = "platform";
 	
+	//FLA
+	public static final String FLA_ANALYSIS = "CHESS::Dependability::FailurePropagation::FailurePropagationAnalysis";
+	
 	// Propagation
 	public static final String PROPAGATION = "CHESS::Dependability::DependableComponent::Propagation";
 	public static final String PROPAGATION_PROB = "prob";
