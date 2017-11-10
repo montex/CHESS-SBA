@@ -29,6 +29,8 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.swt.widgets.Display;
+import org.polarsys.chess.statebased.daemon.DEEMProgressInformation;
 import org.polarsys.chess.statebased.daemon.ParameterList;
 
 public class DEEMClient {
@@ -42,7 +44,7 @@ public class DEEMClient {
 	private final String RESULTS_SAVEAS = "analysis-results";
 	private IProgressMonitor mon;
 
-	public String sendAndReceiveFile(String model, String folder, IProgressMonitor monitor) throws UnknownHostException, SocketTimeoutException, IOException, ClassNotFoundException {
+	public String sendAndReceiveFile(String model, String folder) throws UnknownHostException, SocketTimeoutException, IOException, ClassNotFoundException {
 
 		String host = Activator.getDefault().getPreferenceStore().getString("HOST");
 		int port = Activator.getDefault().getPreferenceStore().getInt("PORT");
@@ -62,7 +64,7 @@ public class DEEMClient {
 			oout.write(buf, 0, read);
 		}
 		System.out.println("file sent");
-		monitor.worked(1);
+		progress(1);
 
 		oout.writeObject(getParameters());
 		System.out.println("parameters sent");
@@ -77,7 +79,7 @@ public class DEEMClient {
 		bRunning = ois.readBoolean();
 		int lastCurrent = 0;
 		String taskName;
-		while(bRunning) {
+		while(bRunning && !Thread.currentThread().isInterrupted()) {
 			progress = (DEEMProgressInformation)ois.readObject();
 			System.out.println(progress.getCurrent());
 
@@ -87,9 +89,9 @@ public class DEEMClient {
 			}else{
 				taskName += progress.getPercentToMin("%.2f") + "% of minimum batches)";
 			}
-			mon.subTask(taskName);
-			mon.worked(progress.getCurrent()-lastCurrent);
-
+			subTask(taskName);
+			progress(progress.getCurrent()-lastCurrent);
+			
 			lastCurrent = progress.getCurrent();
 			bRunning = ois.readBoolean();
 		}			
@@ -103,7 +105,7 @@ public class DEEMClient {
 			fos.write(buf, 0, read);
 		}
 		System.out.println("file received");
-		monitor.worked(1);
+		progress(1);
 
 		fis.close();
 		oout.close();
@@ -132,4 +134,26 @@ public class DEEMClient {
 		mon = monitor;
 	}
 
+	private void progress(final int work) {
+		if(mon != null) {
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					mon.worked(work);
+				}
+			});
+		}
+	}
+	
+	private void subTask(final String name) {
+		if(mon != null) {
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					mon.subTask(name);
+				}
+			});
+		}
+			
+	}
 }

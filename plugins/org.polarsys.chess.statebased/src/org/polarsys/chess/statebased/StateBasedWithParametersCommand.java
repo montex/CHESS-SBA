@@ -21,19 +21,27 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
+import java.net.URI;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.TimeZone;
 
 import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESS;
@@ -57,9 +65,12 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.wizard.ProgressMonitorPart;
 import org.eclipse.m2m.atl.core.ATLCoreException;
 import org.eclipse.m2m.atl.core.IExtractor;
 import org.eclipse.m2m.atl.core.IInjector;
@@ -75,16 +86,17 @@ import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.Stereotype;
 
-public class StateBasedWithParametersCommand extends AbstractHandler {
+public class StateBasedWithParametersCommand extends AbstractHandler implements Runnable {
 	
 //	private static final String RESURCEPLATFORM = "CHESS::Core::CHGaResourcePlatform";
 
@@ -134,83 +146,157 @@ public class StateBasedWithParametersCommand extends AbstractHandler {
 
 	private static Shell shell = new Shell();
 	private static final String ERROR_MSG = "Problems while perfoming State-Based Analysis: ";
-
+	
+	static PapyrusMultiDiagramEditor editor;
+	static ParameterList params;
+	static PeriodicExecutionDialog periodicDialog;
+	
+	static IFile inputFile;
+	static String paramFilePath;
+	static String resultsFilePath;
+	static IFolder folder;
+	
+	static DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	
 	@Override
+	/**
+	 * Execute the command from the Eclipse menu
+	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		acquireModel();
 		
-		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
-		final ParameterList params = DEEMClient.getParameters();
-		try{
-			
-			ProgressMonitorDialog pmDialog = new ProgressMonitorDialog(shell);
-			pmDialog.run(true, true, new IRunnableWithProgress(){
-				@Override
-				public void run(IProgressMonitor monitor) /*throws InterruptedException*/ {		
-					//int largeStep = params.getMaximumBatches();
-					int smallStep = params.getMinimumBatches();
-					int numSubTasks = 3*smallStep/10 + smallStep;
-					
-					monitor.beginTask("Running State-Based Analysis...", numSubTasks);
-					if (monitor.isCanceled())
-						return;
-					monitor.subTask("Rebuilding instances...");
-					//TODO: CallBuildInstances(editor); //skipped at the moment
-					monitor.worked(smallStep/10);
+		periodicDialog = new PeriodicExecutionDialog(shell);
+		
+		periodicDialog.open();
+		
+		return null;
+	}
+	
+	
+	/**
+	 * Runs the state based analysis
+	 * @param modelPath the absolute path of the CHESS model file
+	 * @param resultAnalysisPathFile the absolute path of the analysis result file
+	 * @return the textual result from the analysis
+	 * @throws IOException 
+	 */
+	public String runStateBased (String modelPath, String parametersFilePath, String resultAnalysisPathFile) throws IOException{
 
-					monitor.subTask("Performing model transformations...");
-					IFile tr = RunTransformations(editor, monitor);
-					monitor.worked(smallStep/10);
-					
-					monitor.subTask("Connecting to DEEM server...");
-					String res = connectToDeem(tr, monitor);
+		IProgressMonitor monitor = null;
+		if(periodicDialog != null)
+			monitor = periodicDialog.getMonitor();
 
-					if(res != null && !res.isEmpty()){
-						monitor.subTask("Propagating analysis results to the model...");
-						backPropagation(res, editor);
-						monitor.worked(smallStep/10);
-					}
-					
-					//Thread.sleep(2000);
-
-					monitor.worked(1);
-					monitor.done();
-				}
-			});
-		} catch (InvocationTargetException e) {
+		InputStream is = RunTransformations(modelPath, parametersFilePath, monitor);
+		
+		byte[] buffer = new byte[is.available()];
+	    is.read(buffer);
+	 
+	    File targetFile = new File(resultAnalysisPathFile);
+	    OutputStream outStream = new FileOutputStream(targetFile);
+	    outStream.write(buffer);
+	    outStream.close();
+		
+		System.out.println("Connecting to DEEM server...");
+		String res = connectToDeem(targetFile.getAbsolutePath(), targetFile.getParent(), monitor);
+		return res;
+	}
+	
+	
+	protected void setEditor(PapyrusMultiDiagramEditor ed) {
+		editor = ed;
+	}
+	
+	protected void setParameters(ParameterList p) {
+		params = p;
+	}
+	
+	protected static void runStateBased() {
+		//make a copy of the chess model
+		IFile inputCopy;
+		try {
+			inputCopy = CHESSProjectSupport.copyFile(inputFile, SBANALYSIS_DIR, inputFile.getName());
+		} catch (Exception e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
 			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+			return;
+		}
+				
+		//run model transformations
+		InputStream is = RunTransformations(inputCopy.getLocation().toString(), paramFilePath, periodicDialog.getMonitor());
+		
+		//Save (write to file) the result
+		resultName = changeSuffix(inputFile.getName(), UML, DEEM);			
+		
+		IFile resultFile = folder.getFile(resultName);
+		//if (!resultFile.exists()){   //overwrite previous results (otherwise they are not updated when the model changes)
+			try {
+				resultFile.delete(true, null);
+				resultFile.create(is, IResource.FORCE, null);
+			} catch (CoreException e) {
+				e.printStackTrace();
+				CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+				displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+				return;
+			}
 			
-		} catch (InterruptedException e) {
+		//}
+		
+		String res = connectToDeem(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString(), periodicDialog.getMonitor());
+		if(res != null && !res.isEmpty()){
+			backPropagation(res, editor);
+		}
+		
+		periodicDialog.stopMonitor();
+	}
+
+	protected static void acquireModel() {
+		try {
+			editor = CHESSEditorUtils.getCHESSEditor();
+			params = DEEMClient.getParameters();
+			
+			IFileEditorInput input = (IFileEditorInput) editor.getEditorInput();
+			IFile file = input.getFile();
+			IProject project = file.getProject();
+			
+			folder = project.getFolder(SBANALYSIS_DIR);
+			CHESSProjectSupport.createFolder(folder);
+			
+			Resource inResource = ResourceUtils.getUMLResource(editor.getServicesRegistry());
+			inputFile = CHESSProjectSupport.resourceToFile(inResource);
+		} catch (CoreException e) {
+			e.printStackTrace();
+			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
+			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
+		} catch (ServiceException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
 			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 		}
-		
-		return null;
 	}
-
-
-	private static IFile RunTransformations(PapyrusMultiDiagramEditor editor, IProgressMonitor monitor ){
+	
+	protected static void setParamsFilePath(String path) {
+		paramFilePath = path;
+	}
+	
+	protected static void setResultsFilePath(String path) {
+		resultsFilePath = path;
+	}
+	
+	/**
+	 * 
+	 * @param chessModelFullPath the absolute path in the local file system to the chess model
+	 * @param parametersFilePath the absolute path in the local file system to the parameters file
+	 * @return the inputStream of the resulting transformed deem model file
+	 */
+	private static InputStream RunTransformations(String chessModelFullPath, String parametersFilePath, IProgressMonitor monitor){
 		
 		try {
-			
-			IFileEditorInput input = (IFileEditorInput) editor.getEditorInput();
-			IFile file = input.getFile();
-			IProject project= file.getProject();
-			
-			IFolder folder = project.getFolder(SBANALYSIS_DIR);
-			CHESSProjectSupport.createFolder(folder);
-			
-			Resource inResource = ResourceUtils.getUMLResource(editor.getServicesRegistry());
-			IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
-			IFile inputCopy = CHESSProjectSupport.copyFile(inputFile, SBANALYSIS_DIR, UML);
-			
-			chessModelPath = inputCopy.getFullPath().toString();
+					
+			chessModelPath = chessModelFullPath;
 			// Begin: Read parameters
-			String sParamsPath = Activator.getDefault().getPreferenceStore().getString("PARAMFILE");
-			File fParams = new File(sParamsPath);
+		
+			File fParams = new File(parametersFilePath);
 			
 			HashMap<String, String> mapParameters = new HashMap<String, String>();
 			FileReader fr = new FileReader(fParams);
@@ -231,7 +317,8 @@ public class StateBasedWithParametersCommand extends AbstractHandler {
             }
 			// End: Read parameters
             // Begin: Replace parameters in .uml file
-            File fCHESSModel = new File(inputCopy.getLocationURI());
+            //URI uri = new URI("file:///"+chessModelFullPath);
+            File fCHESSModel = new File(chessModelFullPath);
             FileReader frModel = new FileReader(fCHESSModel);
             String sModelContent = "";
             try {
@@ -308,6 +395,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler {
 			IModel imModel = factory.newModel(imMetamodel);
 			
 			// Load the chess model
+			chessModelPath = "file:///"+chessModelPath;
 			injector.inject(sysmlModel, chessModelPath);
 			injector.inject(marteModel, chessModelPath);
 			injector.inject(chessModel, chessModelPath);
@@ -338,7 +426,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler {
 			extractor.extract(imModel, imModelPath);
 			
 			System.out.println("CHESS -> IM ... DONE!");
-			monitor.worked(1);
+			progress(1);
 			
 			/** 
 			 * run IM -> PNML transformation:
@@ -378,7 +466,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler {
 			extractor.extract(pnmlModel, pnmlModelPath);
 			
 			System.out.println("IM -> PNML ... DONE!");
-			monitor.worked(1);
+			progress(1);
 			
 			/** 
 			 * run PNML -> DEEM transformation:
@@ -402,29 +490,16 @@ public class StateBasedWithParametersCommand extends AbstractHandler {
 			Object result = launcher.launch(ILauncher.RUN_MODE, new NullProgressMonitor(), Collections
 					.<String, Object> emptyMap(), loadedModule);
 
-			//Save (write to file) the result
-			resultName = changeSuffix(inputFile.getName(), UML, DEEM);			
-			
+		
 			String stResult = result.toString();
 			stResult = stResult.substring(1, stResult.lastIndexOf(']'));
 			InputStream is = new ByteArrayInputStream(stResult.getBytes("UTF-8"));
 			
-			IFile resultFile = folder.getFile(resultName);
-			//if (!resultFile.exists()){   //overwrite previous results (otherwise they are not updated when the model changes)
-				resultFile.delete(true, null);
-				resultFile.create(is, IResource.FORCE, null);
-			//}
-			
 			System.out.println("PNML -> DEEM ... DONE!");
-			monitor.worked(1);
-			return resultFile;
+			progress(1);
+			return is;
 			
 		//exception handling?
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
-			return null;
 		} catch (ATLCoreException e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
@@ -440,11 +515,6 @@ public class StateBasedWithParametersCommand extends AbstractHandler {
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
 			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
 			return null;
-		} catch (CoreException e) {
-			e.printStackTrace();
-			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
-			displayMessage(shell, ERROR_MSG + e.toString(), MessageDialog.ERROR);
-			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			CHESSProjectSupport.printlnToCHESSConsole(e.toString());
@@ -453,11 +523,17 @@ public class StateBasedWithParametersCommand extends AbstractHandler {
 		} 
 	}
 	
-	private static String connectToDeem(IFile resultFile, IProgressMonitor monitor){
+	/**
+	 * 
+	 * @param model the full path of the deem model
+	 * @param folder the folder where the deem model is located
+	 * @return
+	 */
+	private static String connectToDeem(String modelPath, String modelFolderPath, IProgressMonitor monitor){
 		try{
 			DEEMClient c = new DEEMClient();
 			c.setProgressMonitor(monitor);
-			String res = c.sendAndReceiveFile(resultFile.getLocation().toString(), resultFile.getParent().getLocation().toString(), monitor);
+			String res = c.sendAndReceiveFile(modelPath, modelFolderPath);
 			return res;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -482,7 +558,7 @@ public class StateBasedWithParametersCommand extends AbstractHandler {
 		}
 	}
 	
-	private void backPropagation(String analysis, PapyrusMultiDiagramEditor editor) {
+	private static void backPropagation(String analysis, PapyrusMultiDiagramEditor editor) {
 		
 		try {
 			String name = null;
@@ -492,43 +568,74 @@ public class StateBasedWithParametersCommand extends AbstractHandler {
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String line;
+			String[] lineSplit;
+			Map<String, String> results = new HashMap<String, String>();
 			while ((line = br.readLine()) != null){
-				if(line.startsWith(NETNAME)){
-					name = line.substring(line.indexOf(" ")+1, line.length());
-				}
 				if(line.startsWith(MEASURE)){
-					value = line.substring(line.indexOf("  ")+2, line.indexOf('[')-2);
+					lineSplit = line.split("\\s+");
+					name = lineSplit[2];
+					value = lineSplit[3];
+					if(lineSplit[4].equals("(*)")) {
+						value = value + " " + lineSplit[4];
+					}
+					
+					results.put(name, value);
 				}
 			}
 			in.close();
 			
-			//get model file
-			Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
-			Model umlModel = ResourceUtils.getModel(res);
-			
-			//get the CHESS stereotype
-			CHESS chess = (CHESS) umlModel.getStereotypeApplication(umlModel.getAppliedStereotype(CHESS_QN));
-			//navigate and update the model with the analysis result
-			Package depView = chess.getAnalysisView().getDepanalysisview().getBase_Package();
-
-			EList<PackageableElement> packList = depView.getPackagedElements();
-			Component comp = null;
-			for (int i = 0 ; i < packList.size(); i++){
-				if(packList.get(i).getName().equals(name)){
-					comp = (Component) packList.get(i);
-				}
-			}
-			
-			final String finalValue = value;
-			final Component com = comp;
-			final Stereotype stereotype = comp.getAppliedStereotype(STATEBASED_ANALYSIS_QN);
-			TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) editor.getEditingDomain();
-			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+			if(results.size() > 0) {
+				//get model file
+				Resource res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
+				Model umlModel = ResourceUtils.getModel(res);
 				
-				protected void doExecute() {
-					com.setValue(stereotype, RESULT, finalValue);
+				//get the CHESS stereotype
+				CHESS chess = (CHESS) umlModel.getStereotypeApplication(umlModel.getAppliedStereotype(CHESS_QN));
+				//navigate and update the model with the analysis result
+				Package depView = chess.getAnalysisView().getDepanalysisview().getBase_Package();
+	
+				EList<PackageableElement> packList = depView.getPackagedElements();
+				Component comp = null;
+				
+				Iterator<String> it = results.keySet().iterator();
+				String key = null;
+	
+				File fResults = new File(resultsFilePath);
+	            FileWriter fwModel = new FileWriter(fResults);
+				
+	            dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+				while(it.hasNext()) {
+					key = it.next();
+	
+					for (int i = 0 ; i < packList.size(); i++){
+						if(packList.get(i).getName().equals(key)){
+							comp = (Component) packList.get(i);
+						}
+					}
+					
+					final String finalValue = results.get(key);
+					final Component com = comp;
+					final Stereotype stereotype = comp.getAppliedStereotype(STATEBASED_ANALYSIS_QN);
+					TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) editor.getEditingDomain();
+					editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+						
+						protected void doExecute() {
+							com.setValue(stereotype, RESULT, finalValue);
+						}
+					});
+					
+					//Write the result in the result file
+		            fwModel.write(finalValue);
+		            fwModel.write("\t");
+		            fwModel.write(key);
+		            fwModel.write("\t");
+		            fwModel.write(dateFormatter.format(new Date()));
+		            fwModel.write("\r\n");
 				}
-			});
+	            fwModel.close();
+			}else{
+				System.out.println("Error: Unable to retrieve results from DEEM server.");
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -594,5 +701,21 @@ public class StateBasedWithParametersCommand extends AbstractHandler {
 				MessageDialog.open(kind, parent, title, message, SWT.NONE);
 			}
 		});
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		runStateBased();
+	}
+
+
+	public static String getModelPath() {
+		return inputFile.getFullPath().toString();
+	}
+	
+	private static void progress(int work) {
+		if(periodicDialog != null)
+			periodicDialog.progress(work);
 	}
 }

@@ -13,8 +13,8 @@
 
 -- @atlcompiler atl2010
 
--- @path IDM=/org.chess.statebased/metamodels/IM2.ecore
--- @path PNML=/org.chess.statebased/metamodels/placeTransition.ecore
+-- @path IDM=/org.polarsys.chess.statebased/metamodels/IM2.ecore
+-- @path PNML=/org.polarsys.chess.statebased/metamodels/placeTransition.ecore
 
 module IDM2PNML;
 create OUT : PNML from IN : IDM;
@@ -258,6 +258,19 @@ abstract rule InternalFault {
 			MultiplicityFunction <- thisModule.newMarkingExpression(tmpfaulty),
 			id <- tmpfaulty_to_reset.defaultID()
 		)
+		
+--		--Elements for firing only once
+--		fireonce : PNML!Place (
+--			containerPage <- thisModule.getPage,
+--			initialMarking <- thisModule.newPTMarking(1),
+--			id <- basename + '_fireonce'
+--		),
+--		fireonce_to_fo : PNML!GSPNArc (
+--			containerPage <- thisModule.getPage,
+--			source <- fireonce,
+----			target <- ,
+--			id <- basename + '_fireoncetofo'
+--		)
 }
 rule InternalFaultTT extends InternalFault { --FO timed, TD timed
 	from 
@@ -297,6 +310,7 @@ rule InternalFaultTT extends InternalFault { --FO timed, TD timed
 		totmp : PNML!GSPNArc ( source <- fo ),
 		removetrans_trans : PNML!GSPNArc ( target <- td ),
 		removetrans_faulty : PNML!GSPNArc ( target <- td )
+--		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
 }
 rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 	from 
@@ -329,14 +343,15 @@ rule InternalFaultII extends InternalFault { --FO immediate, TD immediate
 		totmp : PNML!GSPNArc ( source <- fo ),
 		removetrans_trans : PNML!GSPNArc ( target <- td ),
 		removetrans_faulty : PNML!GSPNArc ( target <- td )
+--		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
 }
 rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
-	from 
+	from
 		ft : IDM!InternalFault
 		(
 			if ft.Occurrence.oclIsTypeOf(IDM!Deterministic) then
 				if ft.TransientDuration.oclIsTypeOf(IDM!Deterministic) then
-					ft.Occcurence.Value > 0 and ft.TransientDuration.Value = 0
+					ft.Occurrence.Value > 0 and ft.TransientDuration.Value = 0
 				else
 					false
 				endif
@@ -369,6 +384,7 @@ rule InternalFaultTI extends InternalFault { --FO timed, TD immediate
 		totmp : PNML!GSPNArc ( source <- fo ),
 		removetrans_trans : PNML!GSPNArc ( target <- td ),
 		removetrans_faulty : PNML!GSPNArc ( target <- td )
+--		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
 }
 rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
 	from 
@@ -405,6 +421,7 @@ rule InternalFaultIT extends InternalFault { --FO immediate, TD timed
 		totmp : PNML!GSPNArc ( source <- fo ),
 		removetrans_trans : PNML!GSPNArc ( target <- td ),
 		removetrans_faulty : PNML!GSPNArc ( target <- td )
+--		fireonce_to_fo : PNML!GSPNArc ( target <- fo )
 }
 
 rule Error { --manca l'implementazione di VanishingTime 
@@ -504,6 +521,79 @@ rule ErrorVanishTimed extends Error {
 			target <- vanish
 		)
 }
+rule ErrorEPFChoice(e : IDM!Error, epf : IDM!ErrorsProducesFailures) {
+	to
+		epfSelected : PNML!Place
+		(
+			id <- e.Name + '_sel_' + epf.Name,
+			containerPage <- thisModule.getPage,
+			initialMarking <- thisModule.newPTMarking(0)
+		),
+		trSelection : PNML!GSPNImmediateTransition
+		(
+			id <- e.Name + '_choice_' + epf.Name,
+			containerPage <- thisModule.getPage,
+			Weight <- epf.Weight,
+			Priority <- thisModule.priPropagationChoice,
+			Guard <- thisModule.CreateEPFGuard(epf)
+		),
+		tr_to_selected : PNML!GSPNArc 
+		(
+			containerPage <- thisModule.getPage,
+			source <- trSelection,
+			target <- epfSelected,
+			id <- trSelection.id + '_to_sel'
+		),
+		tr_to_selected_inh : PNML!GSPNArc 
+		(
+			containerPage <- thisModule.getPage,
+			source <- epfSelected,
+			target <- trSelection,
+			type <- #inhibitor,
+			id <- trSelection.id + '_to_sel_inh'
+		)
+	do {
+--		'ErrorEPFChoice'.debug();
+		epfSelected;
+	}
+}
+rule ErrorIPChoice(e : IDM!Error, iprop : IDM!InternalPropagation) {
+	to
+		ipSelected : PNML!Place
+		(
+			id <- e.Name + '_sel_' + iprop.Name,
+			containerPage <- thisModule.getPage,
+			initialMarking <- thisModule.newPTMarking(0)
+		),
+		trSelection : PNML!GSPNImmediateTransition
+		(
+			id <- e.Name + '_choice_' + iprop.Name,
+			containerPage <- thisModule.getPage,
+			Weight <- iprop.Weight,
+			Priority <- thisModule.priPropagationChoice,
+--			Guard <- PNML!OpFalse.newInstance()
+			Guard <- thisModule.CreateIPGuard(iprop)
+		),
+		tr_to_selected : PNML!GSPNArc 
+		(
+			containerPage <- thisModule.getPage,
+			source <- trSelection,
+			target <- ipSelected,
+			id <- trSelection.id + '_to_sel'
+		),
+		tr_to_selected_inh : PNML!GSPNArc 
+		(
+			containerPage <- thisModule.getPage,
+			source <- ipSelected,
+			target <- trSelection,
+			type <- #inhibitor,
+			id <- trSelection.id + '_to_sel_inh'
+		)
+	do {
+--		'ErrorIPChoice'.debug();
+		ipSelected;
+	}
+}
 
 rule FailureMode {
 	from
@@ -527,9 +617,26 @@ rule FailureMode {
 }
 
 --FaultsExpression elements
-rule FaultsExpressionFaultNode {
-	from
-		n : IDM!FaultsExpressionFaultNode
+rule FaultsExpressionNode(n : IDM!FaultsExpressionFaultNode) {
+	using {
+		out : PNML!LogicalExpression = OclUndefined;
+	}
+	do {
+		if(n.oclIsTypeOf(IDM!FaultsExpressionFaultNode)) {
+			out <- thisModule.FaultsExpressionFaultNode(n);
+		}else if(n.oclIsTypeOf(IDM!FaultsExpressionAndNode)) {
+			out <- thisModule.FaultsExpressionAndNode(n);
+		}else if(n.oclIsTypeOf(IDM!FaultsExpressionOrNode)) {
+			out <- thisModule.FaultsExpressionOrNode(n);
+		}else if(n.oclIsTypeOf(IDM!FaultsExpressionNotNode)) {
+			out <- thisModule.FaultsExpressionNotNode(n);
+		}
+
+		out;
+	}
+}
+
+rule FaultsExpressionFaultNode(n : IDM!FaultsExpressionFaultNode) {
 	to
 		nn : PNML!OpGreater ( expression1 <- e1, expression2 <- e2 ),
 		e1 : PNML!MarkingExpression (
@@ -541,30 +648,61 @@ rule FaultsExpressionFaultNode {
 			endif
 		),
 		e2 : PNML!ValueExpression ( value <- 0 )
+	do {
+		nn;	
+	}
 }
-rule FaultsExpressionNotNode {
-	from
-		n : IDM!FaultsExpressionNotNode
+rule FaultsExpressionNotNode(n : IDM!FaultsExpressionNotNode) {
 	to
-		nn : PNML!OpNot ( expression <- n.FaultsExpression )
+		nn : PNML!OpNot (
+			expression <- thisModule.FaultsExpressionNode(n.FaultsExpression)
+		)
+	do {
+		nn;	
+	}
 }
-rule FaultsExpressionAndNode {
-	from
-		n : IDM!FaultsExpressionAndNode
+rule FaultsExpressionAndNode(n : IDM!FaultsExpressionAndNode) {
 	to
-		nn : PNML!OpAnd ( expression1 <- n.FaultsExpression1, expression2 <- n.FaultsExpression2 )
+		nn : PNML!OpAnd (
+			expression1 <- thisModule.FaultsExpressionNode(n.FaultsExpression1),
+			expression2 <- thisModule.FaultsExpressionNode(n.FaultsExpression2)
+		)
+	do {
+		nn;	
+	}
 }
-rule FaultsExpressionOrNode {
-	from
-		n : IDM!FaultsExpressionOrNode
+rule FaultsExpressionOrNode(n : IDM!FaultsExpressionOrNode) {
 	to
-		nn : PNML!OpOr ( expression1 <- n.FaultsExpression1, expression2 <- n.FaultsExpression2 )
+		nn : PNML!OpOr ( 
+			expression1 <- thisModule.FaultsExpressionNode(n.FaultsExpression1), 
+			expression2 <- thisModule.FaultsExpressionNode(n.FaultsExpression2)
+		)
+	do {
+		nn;
+	}
 }
 
 --ErrorsExpression elements
-rule ErrorsExpressionFaultNode {
-	from
-		n : IDM!ErrorsExpressionErrorNode
+rule ErrorsExpressionNode(n : IDM!ErrorsExpressionNode) {
+	using {
+		out : PNML!LogicalExpression = OclUndefined;
+	}
+	do {
+		if(n.oclIsTypeOf(IDM!ErrorsExpressionErrorNode)) {
+			out <- thisModule.ErrorsExpressionErrorNode(n);
+		}else if(n.oclIsTypeOf(IDM!ErrorsExpressionAndNode)) {
+			out <- thisModule.ErrorsExpressionAndNode(n);
+		}else if(n.oclIsTypeOf(IDM!ErrorsExpressionOrNode)) {
+			out <- thisModule.ErrorsExpressionOrNode(n);
+		}else if(n.oclIsTypeOf(IDM!ErrorsExpressionNotNode)) {
+			out <- thisModule.ErrorsExpressionNotNode(n);
+		}
+
+		out;
+	}
+}
+
+rule ErrorsExpressionErrorNode(n : IDM!ErrorsExpressionErrorNode) {
 	to
 		nn : PNML!OpGreater ( expression1 <- e1, expression2 <- e2 ),
 		e1 : PNML!MarkingExpression
@@ -572,24 +710,39 @@ rule ErrorsExpressionFaultNode {
 			place <- n.Error
 		),
 		e2 : PNML!ValueExpression ( value <- 0 )
+	do {
+		nn;
+	}
 }
-rule ErrorsExpressionNotNode {
-	from
-		n : IDM!ErrorsExpressionNotNode
+rule ErrorsExpressionNotNode(n : IDM!ErrorsExpressionNotNode) {
 	to
-		nn : PNML!OpNot ( expression <- n.ErrorsExpression )
+		nn : PNML!OpNot ( 
+			expression <- 
+				thisModule.ErrorsExpressionNode(n.ErrorsExpression)
+		)
+	do {
+		nn;
+	}
 }
-rule ErrorsExpressionAndNode {
-	from
-		n : IDM!ErrorsExpressionAndNode
+rule ErrorsExpressionAndNode(n : IDM!ErrorsExpressionAndNode) {
 	to
-		nn : PNML!OpAnd ( e1 <- n.ErrorsExpression1, e2 <- n.ErrorsExpression2 )
+		nn : PNML!OpAnd (
+			e1 <- thisModule.ErrorsExpressionNode(n.ErrorsExpression1),
+			e2 <- thisModule.ErrorsExpressionNode(n.ErrorsExpression2)
+		)
+	do {
+		nn;
+	}
 }
-rule ErrorsExpressionOrNode {
-	from
-		n : IDM!ErrorsExpressionOrNode
+rule ErrorsExpressionOrNode(n : IDM!ErrorsExpressionOrNode) {
 	to
-		nn : PNML!OpOr ( e1 <- n.ErrorsExpression1, e2 <- n.ErrorsExpression2 )
+		nn : PNML!OpOr (
+			e1 <- thisModule.ErrorsExpressionNode(n.ErrorsExpression1),
+			e2 <- thisModule.ErrorsExpressionNode(n.ErrorsExpression2)
+		)
+	do {
+		nn;
+	}
 }
 
 --FaultsGenerateErrors
@@ -602,7 +755,7 @@ abstract rule FGE {
 	to
 		andop : PNML!OpAnd
 		(
-			expression1 <- thisModule.newOpAnd(fge.PropagationLogic,
+			expression1 <- thisModule.newOpAnd(thisModule.FaultsExpressionNode(fge.PropagationLogic),
 											   thisModule.newOpAnd(
 											       thisModule.newOpEqual(
 											           thisModule.newMarkingExpression(tmp),
@@ -620,16 +773,18 @@ abstract rule FGE {
 		casepropagate : PNML!GSPNImmediateTransition
 		(
 			id <- basename + '_caseprop',
-			Weight <- fge.PropagationProbability,
+--			Weight <- fge.PropagationProbability * fge.Weight,	--This is a workaround!
+			Weight <- fge.Weight,
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
 		),
 		caseskip : PNML!GSPNImmediateTransition
 		(
 			id <- basename + '_caseskip',
-			Weight <- ( 1 - fge.PropagationProbability ),
+			Weight <- ( 1 - casepropagate.Weight ),
 			Priority <- thisModule.priPropagationChoice,
-			containerPage <- thisModule.getPage
+			containerPage <- thisModule.getPage,
+			Guard <- PNML!OpFalse.newInstance()		--This is a workaround!
 		),
 		blocker : PNML!Place
 		(
@@ -691,6 +846,18 @@ abstract rule FGE {
 			MultiplicityFunction <- thisModule.newMarkingExpression(blocker),
 			id <- blocker_to_reset.defaultID()
 		)
+--		--Elements for firing only once
+--		fireonce : PNML!Place (
+--			containerPage <- thisModule.getPage,
+--			initialMarking <- thisModule.newPTMarking(1),
+--			id <- basename + '_fireonce'
+--		),
+--		fireonce_to_trfge : PNML!GSPNArc (
+--			containerPage <- thisModule.getPage,
+--			source <- fireonce,
+----			target <- ,
+--			id <- basename + '_fireoncetofo'
+--		)
 }
 rule FGETimed extends FGE {
 	from
@@ -714,6 +881,7 @@ rule FGETimed extends FGE {
 		totmp : PNML!GSPNArc ( source <- trfge ),
 		toblocker : PNML!GSPNArc ( source <- trfge ),
 		toblocker_inhibit : PNML!GSPNArc ( target <- trfge )
+--		fireonce_to_trfge : PNML!GSPNArc ( target <- trfge )
 	do {
 		thisModule.tmpLogicExp <- andop;
 
@@ -760,6 +928,7 @@ rule FGEImmediate extends FGE {
 		totmp : PNML!GSPNArc ( source <- trfge ),
 		toblocker : PNML!GSPNArc ( source <- trfge ),
 		toblocker_inhibit : PNML!GSPNArc ( target <- trfge )
+--		fireonce_to_trfge : PNML!GSPNArc ( target <- trfge )
 	do {
 	
 		thisModule.tmpLogicExp <- andop;
@@ -782,8 +951,6 @@ rule FGEImmediate extends FGE {
 		);
 		thisModule.newOutputArc(casepropagate, fge.Destination.first());
 		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
-		
-		
 	}
 }
 
@@ -795,17 +962,6 @@ abstract rule EPF {
 		basename : String = epf.refImmediateComposite().Name + '_' + epf.Name;
 	}
 	to
-		andop : PNML!OpAnd
-		(
-			expression1 <- thisModule.newOpAnd(epf.PropagationLogic,
-											   thisModule.newOpAnd(
-											       thisModule.newOpEqual(
-											           thisModule.newMarkingExpression(tmp),
-													   thisModule.newValueExpression(0)
-												   ),
-											       thisModule.buildConditionComponentIsNotFailed(epf.Component)
-											   ))
-		),		
 		tmp : PNML!Place
 		(
 			id <- basename + '_tmp',
@@ -902,34 +1058,18 @@ rule EPFTimed extends EPF {
 		(
 			id <- basename,
 			Distribution <- epf.PropagationDelay,
-			containerPage <- thisModule.getPage,
-			Guard <- andop
+			containerPage <- thisModule.getPage
 		),
-		andop : PNML!OpAnd,
 		totmp : PNML!GSPNArc ( source <- trepf ),
 		toblocker : PNML!GSPNArc ( source <- trepf ),
 		toblocker_inhibit : PNML!GSPNArc ( target <- trepf )
 	do {
-		thisModule.tmpLogicExp <- andop;
-
-		for(fm in epf.Destination.subSequence(2, epf.Destination.size())) {
-			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
-				thisModule.newOpEqual(
-					thisModule.newMarkingExpression(fm),
-					thisModule.newValueExpression(0)
-				),
-				OclUndefined
-			);
+		for(fm in epf.Destination) {
 			thisModule.newOutputArc(casepropagate, fm);
-			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
 		}
 		
-		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
-			thisModule.newMarkingExpression(epf.Destination.first()),
-			thisModule.newValueExpression(0)
-		);
-		thisModule.newOutputArc(casepropagate, epf.Destination.first());
-		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+		trepf.Guard <- thisModule.CreateEPFGuard(epf);
+		thisModule.EPFFinalizeChoice(epf);
 	}
 }
 rule EPFImmediate extends EPF {
@@ -948,34 +1088,74 @@ rule EPFImmediate extends EPF {
 			id <- basename,
 			containerPage <- thisModule.getPage,
 			Weight <- epf.Weight,
-			Priority <- thisModule.priPropagation,
-			Guard <- andop
+			Priority <- thisModule.priPropagation
 		),
-		andop : PNML!OpAnd,
 		totmp : PNML!GSPNArc ( source <- trepf ),
 		toblocker : PNML!GSPNArc ( source <- trepf ),
 		toblocker_inhibit : PNML!GSPNArc ( target <- trepf )
 	do {
-		thisModule.tmpLogicExp <- andop;
+--		'EPFImmediate'.debug();
+		for(fm in epf.Destination) {
+			thisModule.newOutputArc(casepropagate, fm);
+		}
+		
+		trepf.Guard <- thisModule.CreateEPFGuard(epf);
+		thisModule.EPFFinalizeChoice(epf);
+	}
+}
+rule CreateEPFGuard(epf : IDM!ErrorsProducesFailures) {
+	using {
+		tmpLogicExp : PNML!LogicalExpression = OclUndefined;
+		andop : PNML!OpAnd = OclUndefined;
+	}
+	do {
+		andop <- thisModule.newOpAnd (
+					thisModule.newOpAnd(
+							thisModule.ErrorsExpressionNode(epf.PropagationLogic),
+							thisModule.newOpAnd(
+								thisModule.newOpEqual(
+						            thisModule.newMarkingExpression(
+						           		thisModule.resolveTemp(epf, 'tmp')
+								    ),
+									thisModule.newValueExpression(0)
+								),
+								thisModule.buildConditionComponentIsNotFailed(epf.Component)
+							)
+					),			   
+					OclUndefined
+				);		
+		
+		tmpLogicExp <- andop;
 
 		for(fm in epf.Destination.subSequence(2, epf.Destination.size())) {
-			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
+			tmpLogicExp.expression2 <- thisModule.newOpOr( 
 				thisModule.newOpEqual(
 					thisModule.newMarkingExpression(fm),
 					thisModule.newValueExpression(0)
 				),
 				OclUndefined
 			);
-			thisModule.newOutputArc(casepropagate, fm);
-			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+			tmpLogicExp <- tmpLogicExp.expression2;
 		}
 		
-		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
+		tmpLogicExp.expression2 <- thisModule.newOpEqual(
 			thisModule.newMarkingExpression(epf.Destination.first()),
 			thisModule.newValueExpression(0)
 		);
-		thisModule.newOutputArc(casepropagate, epf.Destination.first());
-		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+		
+		andop;
+	}
+}
+rule EPFFinalizeChoice(epf : IDM!ErrorsProducesFailures) {
+	using {
+		tmpArc : PNML!GSPNArc = OclUndefined;
+		selPlace : PNML!Place = OclUndefined;
+	}
+	do {
+		for(e in epf.Source) {
+			selPlace <- thisModule.ErrorEPFChoice(e, epf);
+			thisModule.newOutputArc(selPlace, thisModule.resolveTemp(epf, 'trepf'));
+		}
 	}
 }
 
@@ -987,17 +1167,6 @@ abstract rule InternalPropagation {
 		basename : String = iprop.refImmediateComposite().Name + '_' + iprop.Name;
 	}
 	to
-		andop : PNML!OpAnd
-		(
-			expression1 <- thisModule.newOpAnd(iprop.PropagationLogic,
-											   thisModule.newOpAnd(
-											       thisModule.newOpEqual(
-											           thisModule.newMarkingExpression(tmp),
-													   thisModule.newValueExpression(0)
-												   ),
-											       thisModule.buildConditionComponentIsNotFailed(iprop.Component)
-											   ))
-		),		
 		tmp : PNML!Place
 		(
 			id <- basename + '_tmp',
@@ -1007,6 +1176,7 @@ abstract rule InternalPropagation {
 		casepropagate : PNML!GSPNImmediateTransition
 		(
 			id <- basename + '_caseprop',
+--			Weight <- iprop.PropagationProbability * iprop.Weight,	--This is a workaround!
 			Weight <- iprop.PropagationProbability,
 			Priority <- thisModule.priPropagationChoice,
 			containerPage <- thisModule.getPage
@@ -1014,9 +1184,11 @@ abstract rule InternalPropagation {
 		caseskip : PNML!GSPNImmediateTransition
 		(
 			id <- basename + '_caseskip',
-			Weight <- ( 1 - iprop.PropagationProbability ),
+			Weight <- ( 1 - casepropagate.Weight ),
+--			Weight <- '1.0E-6'.toReal(),
 			Priority <- thisModule.priPropagationChoice,
-			containerPage <- thisModule.getPage
+			containerPage <- thisModule.getPage,
+			Guard <- PNML!OpFalse.newInstance()		--This is a workaround!
 		),
 		blocker : PNML!Place
 		(
@@ -1094,35 +1266,17 @@ rule InternalPropagationTimed extends InternalPropagation {
 		(
 			id <- basename,
 			Distribution <- iprop.PropagationDelay,
-			containerPage <- thisModule.getPage,
-			Guard <- andop
+			containerPage <- thisModule.getPage
 		),
-		andop : PNML!OpAnd,
 		totmp : PNML!GSPNArc ( source <- triprop ),
 		toblocker : PNML!GSPNArc ( source <- triprop ),
 		toblocker_inhibit : PNML!GSPNArc ( target <- triprop )
 	do {
-	
-		thisModule.tmpLogicExp <- andop;
-
-		for(e in iprop.Destination.subSequence(2, iprop.Destination.size())) {
-			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
-				thisModule.newOpEqual(
-					thisModule.newMarkingExpression(e),
-					thisModule.newValueExpression(0)
-				),
-				OclUndefined
-			);
+		for(e in iprop.Destination) {
 			thisModule.newOutputArc(casepropagate, e);
-			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
 		}
-		
-		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
-			thisModule.newMarkingExpression(iprop.Destination.first()),
-			thisModule.newValueExpression(0)
-		);
-		thisModule.newOutputArc(casepropagate, iprop.Destination.first());
-		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+		triprop.Guard <- thisModule.CreateIPGuard(iprop);
+		thisModule.IPFinalizeChoice(iprop);
 	}
 }
 rule InternalPropagationImmediate extends InternalPropagation {
@@ -1139,36 +1293,91 @@ rule InternalPropagationImmediate extends InternalPropagation {
 		triprop : PNML!GSPNImmediateTransition
 		(
 			id <- basename,
-			containerPage <- thisModule.getPage,
 			Weight <- iprop.Weight,
 			Priority <- thisModule.priPropagation,
-			Guard <- andop
+			containerPage <- thisModule.getPage
 		),
-		andop : PNML!OpAnd,
 		totmp : PNML!GSPNArc ( source <- triprop ),
 		toblocker : PNML!GSPNArc ( source <- triprop ),
 		toblocker_inhibit : PNML!GSPNArc ( target <- triprop )
 	do {
-		thisModule.tmpLogicExp <- andop;
+--		'InternalPropagationImmediate'.debug();
+
+		for(e in iprop.Destination) {
+			thisModule.newOutputArc(casepropagate, e);
+		}
+		triprop.Guard <- thisModule.CreateIPGuard(iprop);
+		thisModule.IPFinalizeChoice(iprop);
+	}
+}
+rule CreateIPGuard(iprop : IDM!InternalPropagation) {
+	using {
+		tmpLogicExp : PNML!LogicalExpression = OclUndefined;
+		andop : PNML!OpAnd = OclUndefined;
+	}
+	do {
+--		'CreateIPGuard'.debug();
+		andop <- thisModule.newOpAnd( 
+			if(not iprop.FaultGuard.oclIsUndefined()) then
+				thisModule.newOpAnd(
+					thisModule.FaultsExpressionNode(iprop.FaultGuard),
+					thisModule.newOpAnd(thisModule.ErrorsExpressionNode(iprop.PropagationLogic),
+													   thisModule.newOpAnd(
+													       thisModule.newOpEqual(
+													           thisModule.newMarkingExpression(
+													           		thisModule.resolveTemp(iprop, 'tmp')
+													           ),
+															   thisModule.newValueExpression(0)
+														   ),
+													       thisModule.buildConditionComponentIsNotFailed(iprop.Component)
+													   ))
+				)
+			else			
+				thisModule.newOpAnd(thisModule.ErrorsExpressionNode(iprop.PropagationLogic),
+												   thisModule.newOpAnd(
+												       thisModule.newOpEqual(
+												           thisModule.newMarkingExpression(
+												           		thisModule.resolveTemp(iprop, 'tmp')
+												           ),
+														   thisModule.newValueExpression(0)
+													   ),
+												       thisModule.buildConditionComponentIsNotFailed(iprop.Component)
+												   ))
+			endif,
+			OclUndefined
+		);
+		
+		tmpLogicExp <- andop;
 
 		for(e in iprop.Destination.subSequence(2, iprop.Destination.size())) {
-			thisModule.tmpLogicExp.expression2 <- thisModule.newOpOr( 
+			tmpLogicExp.expression2 <- thisModule.newOpOr( 
 				thisModule.newOpEqual(
 					thisModule.newMarkingExpression(e),
 					thisModule.newValueExpression(0)
 				),
 				OclUndefined
 			);
-			thisModule.newOutputArc(casepropagate, e);
-			thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+			tmpLogicExp <- tmpLogicExp.expression2;
 		}
 		
-		thisModule.tmpLogicExp.expression2 <- thisModule.newOpEqual(
+		tmpLogicExp.expression2 <- thisModule.newOpEqual(
 			thisModule.newMarkingExpression(iprop.Destination.first()),
 			thisModule.newValueExpression(0)
 		);
-		thisModule.newOutputArc(casepropagate, iprop.Destination.first());
-		thisModule.tmpLogicExp <- thisModule.tmpLogicExp.expression2;
+	
+		andop;
+	}
+}
+rule IPFinalizeChoice(iprop : IDM!InternalPropagation) {
+	using {
+		tmpArc : PNML!GSPNArc = OclUndefined;
+		selPlace : PNML!Place = OclUndefined;
+	}
+	do {
+		for(e in iprop.Source) {
+			selPlace <- thisModule.ErrorIPChoice(e, iprop);
+			thisModule.newOutputArc(selPlace, thisModule.resolveTemp(iprop, 'triprop'));
+		}
 	}
 }
 
@@ -1882,6 +2091,70 @@ rule Availability extends MeasureOfInterest {
 		ite.condition <- thisModule.tmpLogicExp;
 	}
 }
+rule PFD extends MeasureOfInterest {
+	from 
+		idm_measure : IDM!FailureProbability
+	to
+		measure : PNML!Measure,
+		ite : PNML!IfThenElse
+		(
+			condition <- cond	
+		),
+		cond : PNML!OpGreater
+		(
+			expression1 <- thisModule.newMarkingExpression(relplace),
+			expression2 <- thisModule.newValueExpression(0)
+		),
+		relplace : PNML!Place
+		(
+			containerPage <- thisModule.getPage,
+			id <- measure.name + '_memory_pl',
+			initialMarking <- thisModule.newPTMarking(0)
+		),
+		reltrans : PNML!GSPNImmediateTransition
+		(
+			containerPage <- thisModule.getPage,
+			id <- measure.name + '_memory_tr',
+			Weight <- 1.0,
+			Priority <- thisModule.priReliability
+		),
+		relarc : PNML!GSPNArc 
+		(
+			containerPage <- thisModule.getPage,
+			id <- measure.name + '_memory_arc',
+			source <- reltrans,
+			target <- relplace
+		),
+		g_and : PNML!OpAnd
+		(
+--			expression1 <- g_first,
+			expression2 <- g_rel
+		),
+		g_first : PNML!OpGreater
+		(
+			expression1 <- thisModule.newMarkingExpression(idm_measure.target.first()),
+			expression2 <- thisModule.newValueExpression(0)				
+		),
+		g_rel : PNML!OpEqual
+		(
+			expression1 <- thisModule.newMarkingExpression(relplace),
+			expression2 <- thisModule.newValueExpression(0)
+		)
+	do {
+		thisModule.tmpLogicExp <- g_first;
+		for(fm in idm_measure.target.excluding(idm_measure.target.first())) {
+			thisModule.tmpLogicExp <- thisModule.newOpOr(
+				thisModule.newOpGreater(
+					thisModule.newMarkingExpression(fm),
+					thisModule.newValueExpression(0)
+				),
+				thisModule.tmpLogicExp
+			);
+		}
+		g_and.expression1 <- thisModule.tmpLogicExp;
+		reltrans.Guard <- g_and;
+	}
+}
 
 --Rules to generate expression nodes
 lazy rule newVariableExpression {
@@ -1982,11 +2255,12 @@ rule buildConditionComponentIsNotFailed(c : IDM!Component) {
 			exp <- thisModule.newOpAnd(
 				       exp,
 					   thisModule.newOpEqual(
-                           thisModule.newMarkingExpression(failures.first()),
+                           thisModule.newMarkingExpression(fm),
 				           thisModule.newValueExpression(0)
 			           )
 				   );
 		}
+		
 		exp;
 	}
 }
@@ -2122,4 +2396,49 @@ lazy rule newPTMarking {
 		m : PNML!PTMarking (
 			text <- v
 		)
+}
+	
+---FINAL RULE---
+--One of the purposes of this rule is to ensure that all the InternalPropagation
+--transitions that have the same 'Source' errors are mutually exclusive.
+--This is a workaround to avoid strange behavior in the petroleum use case
+endpoint rule Finalize() {
+	using {
+		errSet : Set(IDM!Error) = Set{};
+		errSetMap : Map(Set(IDM!Error),PNML!Place) = Map{};
+		tmpPlace : PNML!Place = OclUndefined;
+		j : Integer = 0;
+	}
+	do {		
+		--Loop through all the InternalPropagation elements, and find those
+		--that have the same set of Error elements as their Source attribute
+		--Create a place for each set, and store a reference in a map
+		for(ip in IDM!InternalPropagation.allInstances()) {
+			errSet <- ip.Source;
+
+			if(errSetMap->get(errSet).oclIsUndefined()) {
+				j <- j+1;				
+				tmpPlace <- PNML!Place.newInstance();
+				
+				tmpPlace.containerPage <- PNML!Page.allInstances()->first();
+				tmpPlace.id <- 'stopper' + j;
+				tmpPlace.initialMarking <- thisModule.newPTMarking(1);
+				
+				errSetMap <- errSetMap.including(errSet, tmpPlace);
+			}
+		}
+		
+		--Loop again through all the InternalPropagation elements,
+		--this time we add a transition between the place previously created
+		--and the transition that represents the InternalPropagation element
+		for(ip in IDM!InternalPropagation.allInstances()) {
+			errSet <- ip.Source;
+			tmpPlace <- errSetMap->get(errSet);
+			
+			thisModule.newInputArc(
+				tmpPlace, 
+				thisModule.resolveTemp(ip, 'triprop')
+			);
+		}	
+	}
 }
