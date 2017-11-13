@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+  <!--
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="TreeOutlinePage">
+         <propertyCategory
+               category="ContractProperty"></propertyCategory>
+      </propertyContributor>
+   </extension>
+-->
+<!--
+ <extension point="org.eclipse.ui.views.properties.tabbed.propertySections">
+	<propertySections contributorId="TreeOutlinePage">
+		<propertySection class="eu.fbk.contract.contractEditor.propertytab.BlockEditPartSection" id="ContractPropertyBlock_v2" tab="Contracts_v2">
+	   		<input type="org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockEditPart"/> 
+		</propertySection>
+		<propertySection class="eu.fbk.contract.contractEditor.propertytab.BlockEditPartSection" id="ContractPropertyClass_v2" tab="Contracts_v2">
+	   		<input type="org.eclipse.papyrus.uml.diagram.clazz.edit.parts.ClassEditPart"/> 
+		</propertySection>
+		<propertySection class="eu.fbk.contract.contractEditor.propertytab.BlockEditPartSection" id="ContractPropertyComponent_v2" tab="Contracts_v2">
+	   		<input type="org.eclipse.papyrus.uml.diagram.clazz.edit.parts.ComponentEditPart"/> 
+		</propertySection>
+		<propertySection class="eu.fbk.contract.contractEditor.propertytab.BlockEditPartSection" id="ContractPropertyBlock_v2" tab="Contracts_v2">
+	   		<input type="org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockCompositeEditPart"/> 
+		</propertySection>
+		<propertySection class="eu.fbk.contract.contractEditor.propertytab.BlockEditPartSection" id="ContractPropertyBlock_v2" tab="Contracts_v2">
+	   		<input type="org.eclipse.papyrus.sysml.diagram.common.edit.part.ConstraintBlockEditPart"/> 
+		</propertySection>
+		<propertySection class="org.polarsys.chess.contracts.chessextension.propertytab.BlockPropertyCompositeEditPartSection" id="ContractPropertyBlockProperty_v2" tab="Contracts_v2">
+	   		<input type="org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockPropertyCompositeEditPart"/> 
+		</propertySection>	
+		<propertySection class="eu.fbk.contract.contractEditor.propertytab.BlockEditPartSection" id="ContractPropertyClassComposite_v2" tab="Contracts_v2">
+	   		<input type="org.eclipse.papyrus.uml.diagram.composite.edit.parts.ClassCompositeEditPart"/> 
+		</propertySection>
+		<propertySection class="eu.fbk.contract.contractEditor.propertytab.BlockEditPartSection" id="ContractPropertyComponentComposite_v2" tab="Contracts_v2">
+	   		<input type="org.eclipse.papyrus.uml.diagram.composite.edit.parts.ComponentCompositeEditPart"/> 
+		</propertySection>
+		<propertySection class="org.polarsys.chess.contracts.chessextension.propertytab.BlockPropertyCompositeEditPartSection" id="ContractPropertyCompositeProperty_v2" tab="Contracts_v2">
+	   		<input type="org.eclipse.papyrus.uml.diagram.composite.edit.parts.PropertyPartEditPartCN"/> 
+		</propertySection>			
+		</propertySections>
+   </extension>
+   -->   
+   <!--
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="eu.fbk.contract.view.contractEditor.CustomContractEditorView"
+            icon="icons/editor.gif"
+            id="eu.fbk.contract.view.contractEditor.ContractEditorView"
+            name="ContractEditorView"
+            restorable="true">
+      </view>
+   </extension>
+   -->
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="TreeOutlinePage">
+        <!--
+         <propertyTab
+               afterTab="advanced"
+               category="Editors"
+               id="CustomPropertyTabOld"
+               label="CustomPropertyTabOld">
+         </propertyTab> -->
+         <propertyTab
+               afterTab="advanced"
+               category="Editors"
+               id="CustomContractTab"
+               label="ContractEditor+">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections
+            contributorId="TreeOutlinePage">
+             <!--
+         <propertySection
+               class="eu.fbk.contract.view.propertyEditorOld.CustomConstraintEditPartSection"
+               filter="eu.fbk.contract.view.propertyEditorOld.PropertyEditorFilter"
+               id="CustomPropertyEditorSectionOld"
+               tab="CustomPropertyTabOld">
+         </propertySection> -->
+         <propertySection
+               class="org.polarsys.chess.contracts.contractEditor.CustomContractEditorTab"
+               filter="org.polarsys.chess.contracts.contractEditor.CustomContractEditorFilter"
+               id="CustomContractEditorSection"
+               tab="CustomContractTab">
+         </propertySection>
+      </propertySections>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="TreeOutlinePage">
+         <propertyCategory
+               category="Editors">
+         </propertyCategory>
+      </propertyContributor>
+   </extension>
+   <!--
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="TreeOutlinePage"
+            overridableTabListContentProvider="true"
+            typeMapper="eu.fbk.contract.typeMapper.FormalPropertyMapper">
+         <propertyCategory
+               category="ContractProperty">
+         </propertyCategory>
+      </propertyContributor>
+   </extension>
+   -->
+ <!--  <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="TreeOutlinePage"
+            tabDescriptorProvider="org.eclipse.papyrus.infra.properties.ui.xwt.XWTTabDescriptorProvider"
+            typeMapper="eu.fbk.contract.typeMapper.ContractMapper">
+         <propertyCategory
+               category="ContractsTabsGroup">
+         </propertyCategory>
+      </propertyContributor>
+   </extension> -->   
+</plugin>

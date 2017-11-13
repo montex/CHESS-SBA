@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+     <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="TreeOutlinePage">
+         <propertyTab
+               afterTab="advanced"
+               category="Editors"
+               id="CustomPropertyTab"
+               label="PropertyEditor+">
+         </propertyTab>       
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections
+            contributorId="TreeOutlinePage">
+         <propertySection
+               class="org.polarsys.chess.properties.propertyEditor.CustomPropertyEditorTab"
+               filter="org.polarsys.chess.properties.propertyEditor.PropertyEditorFilter"
+               id="CustomPropertyEditorSection"
+               tab="CustomPropertyTab">
+         </propertySection>
+      </propertySections>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="TreeOutlinePage">
+         <propertyCategory
+               category="Editors">
+         </propertyCategory>
+      </propertyContributor>
+   </extension>
+
+</plugin>

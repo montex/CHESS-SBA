@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.eclipse.papyrus.views.category"
+            class="org.polarsys.chess.contracts.refinementView.view.CustomRefinementView"
+            icon="icons/main_tab.gif"
+            id="org.polarsys.chess.contracts.refinementView.view1"
+            name="Contract Refinement View"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.infra.core.modelListener">
+      <listener
+            name="org.polarsys.chess.contracts.refinementView.listener"
+            realization="org.polarsys.chess.contracts.refinementView.listener.PapyrusListener">
+      </listener>
+   </extension>
+
+</plugin>
