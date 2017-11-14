@@ -298,6 +298,7 @@ public class CHESSEditorUtils {
 	
 	/**
 	 * Utility function to remove orphan views from all the diagrams defined in the notation model
+	 * @since 0.11
 	 * 
 	 */
 	public static void cleanAllDiagrams(){
