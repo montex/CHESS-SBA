@@ -3,8 +3,6 @@
 package org.polarsys.chess.contracts.profile.chesscontract;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.opencert.evm.evidspec.evidence.Artefact;
-import org.eclipse.opencert.sam.arg.arg.Claim;
 import org.eclipse.papyrus.sysml.constraints.ConstraintBlock;
 
 import org.eclipse.papyrus.sysml.requirements.Requirement;
@@ -25,8 +23,6 @@ import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Languages;
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getLanguage <em>Language</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getContextStatement <em>Context Statement</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getArtefactStatement <em>Artefact Statement</em>}</li>
- *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getClaim <em>Claim</em>}</li>
- *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getSupportedBy <em>Supported By</em>}</li>
  * </ul>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContract()
@@ -172,37 +168,5 @@ public interface Contract extends ConstraintBlock {
 	 * @generated
 	 */
 	EList<String> getArtefactStatement();
-
-	/**
-	 * Returns the value of the '<em><b>Claim</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.opencert.sam.arg.arg.Claim}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Claim</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Claim</em>' reference list.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContract_Claim()
-	 * @model
-	 * @generated
-	 */
-	EList<Claim> getClaim();
-
-	/**
-	 * Returns the value of the '<em><b>Supported By</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.opencert.evm.evidspec.evidence.Artefact}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Supported By</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Supported By</em>' reference list.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContract_SupportedBy()
-	 * @model
-	 * @generated
-	 */
-	EList<Artefact> getSupportedBy();
 
 } // Contract

@@ -374,22 +374,13 @@ public interface CHESSContractPackage extends EPackage {
 	int FORMAL_PROPERTY__CONCERN = 2;
 
 	/**
-	 * The feature id for the '<em><b>Claim</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FORMAL_PROPERTY__CLAIM = 3;
-
-	/**
 	 * The number of structural features of the '<em>Formal Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FORMAL_PROPERTY_FEATURE_COUNT = 4;
+	int FORMAL_PROPERTY_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Formal Property</em>' class.
@@ -591,31 +582,13 @@ public interface CHESSContractPackage extends EPackage {
 	int CONTRACT__ARTEFACT_STATEMENT = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 5;
 
 	/**
-	 * The feature id for the '<em><b>Claim</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT__CLAIM = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 6;
-
-	/**
-	 * The feature id for the '<em><b>Supported By</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT__SUPPORTED_BY = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 7;
-
-	/**
 	 * The number of structural features of the '<em>Contract</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTRACT_FEATURE_COUNT = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 8;
+	int CONTRACT_FEATURE_COUNT = ConstraintsPackage.CONSTRAINT_BLOCK_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of operations of the '<em>Contract</em>' class.
@@ -1020,28 +993,6 @@ public interface CHESSContractPackage extends EPackage {
 	EAttribute getContract_ArtefactStatement();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getClaim <em>Claim</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Claim</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.Contract#getClaim()
-	 * @see #getContract()
-	 * @generated
-	 */
-	EReference getContract_Claim();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.polarsys.chess.contracts.profile.chesscontract.Contract#getSupportedBy <em>Supported By</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Supported By</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.Contract#getSupportedBy()
-	 * @see #getContract()
-	 * @generated
-	 */
-	EReference getContract_SupportedBy();
-
-	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty <em>Formal Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1083,17 +1034,6 @@ public interface CHESSContractPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getFormalProperty_Concern();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getClaim <em>Claim</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Claim</em>'.
-	 * @see org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getClaim()
-	 * @see #getFormalProperty()
-	 * @generated
-	 */
-	EReference getFormalProperty_Claim();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnalysisContext <em>Contract Refinement Analysis Context</em>}'.
@@ -1541,22 +1481,6 @@ public interface CHESSContractPackage extends EPackage {
 		EAttribute CONTRACT__ARTEFACT_STATEMENT = eINSTANCE.getContract_ArtefactStatement();
 
 		/**
-		 * The meta object literal for the '<em><b>Claim</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CONTRACT__CLAIM = eINSTANCE.getContract_Claim();
-
-		/**
-		 * The meta object literal for the '<em><b>Supported By</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CONTRACT__SUPPORTED_BY = eINSTANCE.getContract_SupportedBy();
-
-		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.FormalPropertyImpl <em>Formal Property</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1589,14 +1513,6 @@ public interface CHESSContractPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute FORMAL_PROPERTY__CONCERN = eINSTANCE.getFormalProperty_Concern();
-
-		/**
-		 * The meta object literal for the '<em><b>Claim</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FORMAL_PROPERTY__CLAIM = eINSTANCE.getFormalProperty_Claim();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementAnalysisContextImpl <em>Contract Refinement Analysis Context</em>}' class.

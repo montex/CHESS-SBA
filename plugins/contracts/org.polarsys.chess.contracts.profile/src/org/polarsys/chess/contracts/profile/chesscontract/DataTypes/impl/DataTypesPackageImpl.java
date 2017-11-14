@@ -8,8 +8,6 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import org.eclipse.opencert.sam.arg.arg.ArgPackage;
 import org.eclipse.papyrus.MARTE.MARTEPackage;
 import org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.BasicNFP_TypesPackage;
 import org.eclipse.papyrus.MARTE_Library.GRM_BasicTypes.GRM_BasicTypesPackage;
@@ -172,7 +170,6 @@ public class DataTypesPackageImpl extends EPackageImpl implements DataTypesPacka
 		isInited = true;
 
 		// Initialize simple dependencies
-		ArgPackage.eINSTANCE.eClass();
 		MARTEPackage.eINSTANCE.eClass();
 		MeasurementUnitsPackage.eINSTANCE.eClass();
 		GRM_BasicTypesPackage.eINSTANCE.eClass();

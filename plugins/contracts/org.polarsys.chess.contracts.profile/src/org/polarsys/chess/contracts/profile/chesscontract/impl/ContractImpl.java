@@ -10,8 +10,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.opencert.evm.evidspec.evidence.Artefact;
-import org.eclipse.opencert.sam.arg.arg.Claim;
 import org.eclipse.papyrus.sysml.constraints.internal.impl.ConstraintBlockImpl;
 import org.eclipse.papyrus.sysml.requirements.Requirement;
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
@@ -33,8 +31,6 @@ import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getLanguage <em>Language</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getContextStatement <em>Context Statement</em>}</li>
  *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getArtefactStatement <em>Artefact Statement</em>}</li>
- *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getClaim <em>Claim</em>}</li>
- *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractImpl#getSupportedBy <em>Supported By</em>}</li>
  * </ul>
  *
  * @generated
@@ -119,26 +115,6 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 	 * @ordered
 	 */
 	protected EList<String> artefactStatement;
-
-	/**
-	 * The cached value of the '{@link #getClaim() <em>Claim</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getClaim()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Claim> claim;
-
-	/**
-	 * The cached value of the '{@link #getSupportedBy() <em>Supported By</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSupportedBy()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Artefact> supportedBy;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -306,30 +282,6 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Claim> getClaim() {
-		if (claim == null) {
-			claim = new EObjectResolvingEList<Claim>(Claim.class, this, CHESSContractPackage.CONTRACT__CLAIM);
-		}
-		return claim;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Artefact> getSupportedBy() {
-		if (supportedBy == null) {
-			supportedBy = new EObjectResolvingEList<Artefact>(Artefact.class, this, CHESSContractPackage.CONTRACT__SUPPORTED_BY);
-		}
-		return supportedBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -347,10 +299,6 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 				return getContextStatement();
 			case CHESSContractPackage.CONTRACT__ARTEFACT_STATEMENT:
 				return getArtefactStatement();
-			case CHESSContractPackage.CONTRACT__CLAIM:
-				return getClaim();
-			case CHESSContractPackage.CONTRACT__SUPPORTED_BY:
-				return getSupportedBy();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -384,14 +332,6 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 				getArtefactStatement().clear();
 				getArtefactStatement().addAll((Collection<? extends String>)newValue);
 				return;
-			case CHESSContractPackage.CONTRACT__CLAIM:
-				getClaim().clear();
-				getClaim().addAll((Collection<? extends Claim>)newValue);
-				return;
-			case CHESSContractPackage.CONTRACT__SUPPORTED_BY:
-				getSupportedBy().clear();
-				getSupportedBy().addAll((Collection<? extends Artefact>)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -422,12 +362,6 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 			case CHESSContractPackage.CONTRACT__ARTEFACT_STATEMENT:
 				getArtefactStatement().clear();
 				return;
-			case CHESSContractPackage.CONTRACT__CLAIM:
-				getClaim().clear();
-				return;
-			case CHESSContractPackage.CONTRACT__SUPPORTED_BY:
-				getSupportedBy().clear();
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -452,10 +386,6 @@ public class ContractImpl extends ConstraintBlockImpl implements Contract {
 				return CONTEXT_STATEMENT_EDEFAULT == null ? contextStatement != null : !CONTEXT_STATEMENT_EDEFAULT.equals(contextStatement);
 			case CHESSContractPackage.CONTRACT__ARTEFACT_STATEMENT:
 				return artefactStatement != null && !artefactStatement.isEmpty();
-			case CHESSContractPackage.CONTRACT__CLAIM:
-				return claim != null && !claim.isEmpty();
-			case CHESSContractPackage.CONTRACT__SUPPORTED_BY:
-				return supportedBy != null && !supportedBy.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

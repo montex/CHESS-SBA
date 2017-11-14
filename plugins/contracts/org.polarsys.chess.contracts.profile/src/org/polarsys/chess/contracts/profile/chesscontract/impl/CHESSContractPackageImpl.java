@@ -7,8 +7,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.opencert.evm.evidspec.evidence.EvidencePackage;
-import org.eclipse.opencert.sam.arg.arg.ArgPackage;
 import org.eclipse.papyrus.MARTE.MARTEPackage;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GQAMPackage;
 import org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.BasicNFP_TypesPackage;
@@ -179,7 +177,6 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 		isInited = true;
 
 		// Initialize simple dependencies
-		ArgPackage.eINSTANCE.eClass();
 		MARTEPackage.eINSTANCE.eClass();
 		MeasurementUnitsPackage.eINSTANCE.eClass();
 		GRM_BasicTypesPackage.eINSTANCE.eClass();
@@ -288,24 +285,6 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getContract_Claim() {
-		return (EReference)contractEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getContract_SupportedBy() {
-		return (EReference)contractEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getFormalProperty() {
 		return formalPropertyEClass;
 	}
@@ -335,15 +314,6 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 	 */
 	public EAttribute getFormalProperty_Concern() {
 		return (EAttribute)formalPropertyEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getFormalProperty_Claim() {
-		return (EReference)formalPropertyEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -692,7 +662,6 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 		createEReference(formalPropertyEClass, FORMAL_PROPERTY__BASE_CONSTRAINT);
 		createEReference(formalPropertyEClass, FORMAL_PROPERTY__FORMALIZE);
 		createEAttribute(formalPropertyEClass, FORMAL_PROPERTY__CONCERN);
-		createEReference(formalPropertyEClass, FORMAL_PROPERTY__CLAIM);
 
 		contractRefinementAnalysisContextEClass = createEClass(CONTRACT_REFINEMENT_ANALYSIS_CONTEXT);
 		createEAttribute(contractRefinementAnalysisContextEClass, CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS);
@@ -706,8 +675,6 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 		createEAttribute(contractEClass, CONTRACT__LANGUAGE);
 		createEAttribute(contractEClass, CONTRACT__CONTEXT_STATEMENT);
 		createEAttribute(contractEClass, CONTRACT__ARTEFACT_STATEMENT);
-		createEReference(contractEClass, CONTRACT__CLAIM);
-		createEReference(contractEClass, CONTRACT__SUPPORTED_BY);
 
 		formalizeEClass = createEClass(FORMALIZE);
 		createEReference(formalizeEClass, FORMALIZE__BASE_ABSTRACTION);
@@ -760,11 +727,9 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		ConstraintsPackage theConstraintsPackage = (ConstraintsPackage)EPackage.Registry.INSTANCE.getEPackage(ConstraintsPackage.eNS_URI);
 		RequirementsPackage theRequirementsPackage = (RequirementsPackage)EPackage.Registry.INSTANCE.getEPackage(RequirementsPackage.eNS_URI);
-		ArgPackage theArgPackage = (ArgPackage)EPackage.Registry.INSTANCE.getEPackage(ArgPackage.eNS_URI);
 		GQAMPackage theGQAMPackage = (GQAMPackage)EPackage.Registry.INSTANCE.getEPackage(GQAMPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		BlocksPackage theBlocksPackage = (BlocksPackage)EPackage.Registry.INSTANCE.getEPackage(BlocksPackage.eNS_URI);
-		EvidencePackage theEvidencePackage = (EvidencePackage)EPackage.Registry.INSTANCE.getEPackage(EvidencePackage.eNS_URI);
 
 		// Add subpackages
 		getESubpackages().add(theDataTypesPackage);
@@ -803,7 +768,6 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 		initEReference(getFormalProperty_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, FormalProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getFormalProperty_Formalize(), theRequirementsPackage.getRequirement(), null, "Formalize", null, 0, -1, FormalProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getFormalProperty_Concern(), theDataTypesPackage.getConcerns(), "concern", null, 1, 1, FormalProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getFormalProperty_Claim(), theArgPackage.getClaim(), null, "claim", null, 0, -1, FormalProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(contractRefinementAnalysisContextEClass, ContractRefinementAnalysisContext.class, "ContractRefinementAnalysisContext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getContractRefinementAnalysisContext_CheckAllWeakContracts(), theTypesPackage.getBoolean(), "checkAllWeakContracts", "false", 1, 1, ContractRefinementAnalysisContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -817,8 +781,6 @@ public class CHESSContractPackageImpl extends EPackageImpl implements CHESSContr
 		initEAttribute(getContract_Language(), theDataTypesPackage.getLanguages(), "Language", null, 1, 1, Contract.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getContract_ContextStatement(), theTypesPackage.getString(), "contextStatement", null, 0, 1, Contract.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getContract_ArtefactStatement(), theTypesPackage.getString(), "artefactStatement", null, 0, -1, Contract.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getContract_Claim(), theArgPackage.getClaim(), null, "claim", null, 0, -1, Contract.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getContract_SupportedBy(), theEvidencePackage.getArtefact(), null, "supportedBy", null, 0, -1, Contract.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(formalizeEClass, Formalize.class, "Formalize", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFormalize_Base_Abstraction(), theUMLPackage.getAbstraction(), null, "base_Abstraction", null, 1, 1, Formalize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);

@@ -3,8 +3,8 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/uml2/2.2.0/GenModel"
     modelDirectory="/org.polarsys.chess.contracts.profile/src" modelPluginID="org.polarsys.chess.contracts.profile"
     modelName="CHESSContract" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
-    usedGenPackages="../../org.eclipse.opencert.sam.arg/model/arg.genmodel#//arg ../../org.eclipse.opencert.apm.assuranceassets/model/assuranceasset.genmodel#//assuranceasset ../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.opencert.evm.evidspec/model/evidence.genmodel#//evidence ../../org.eclipse.opencert.infra.general/model/general.genmodel#//general ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.genmodel#//MARTE ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.genmodel#//MARTE_Library ../../org.eclipse.opencert.infra.properties/model/property.genmodel#//property ../../org.eclipse.uml2.uml.profile.standard/model/Standard.genmodel#//standard ../../org.eclipse.papyrus.sysml/model/SysML.profile.genmodel#//sysml platform:/plugin/org.eclipse.uml2.types/model/Types.genmodel#//types platform:/plugin/org.eclipse.uml2.uml/model/UML.genmodel#//uml"
+    importerID="org.eclipse.uml2.uml.ecore.importer" complianceLevel="6.0" copyrightFields="false"
+    usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.genmodel#//MARTE ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.genmodel#//MARTE_Library ../../org.eclipse.uml2.uml.profile.standard/model/Standard.genmodel#//standard ../../org.eclipse.papyrus.sysml/model/SysML.profile.genmodel#//sysml platform:/plugin/org.eclipse.uml2.types/model/Types.genmodel#//types platform:/plugin/org.eclipse.uml2.uml/model/UML.genmodel#//uml"
     operationReflection="true" importOrganizing="true">
   <genAnnotations source="http://www.eclipse.org/emf/2002/GenModel/importer/org.eclipse.uml2.uml.ecore.importer">
     <details key="ECORE_TAGGED_VALUES" value="PROCESS"/>
@@ -30,9 +30,7 @@
     <details key="CAMEL_CASE_NAMES" value="IGNORE"/>
     <details key="SUPER_CLASS_ORDER" value="PROCESS"/>
   </genAnnotations>
-  <foreignModel>chesscontract.ecore</foreignModel>
-  <foreignModel>../../org.eclipse.opencert.sam.arg/model/arg.ecore</foreignModel>
-  <foreignModel>../../org.eclipse.opencert.evm.evidspec/model/evidence.ecore</foreignModel>
+  <foreignModel>CHESSContract.profile.uml</foreignModel>
   <genPackages xsi:type="genmodel:GenPackage" prefix="CHESSContract" basePackage="org.polarsys.chess.contracts.profile"
       disposableProviderFactory="true" ecorePackage="chesscontract.ecore#/">
     <genClasses xsi:type="genmodel:GenClass" ecoreClass="chesscontract.ecore#//ComponentInstance">
@@ -67,8 +65,6 @@
       <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
           propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//FormalProperty/Formalize"/>
       <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//FormalProperty/concern"/>
-      <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
-          propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//FormalProperty/claim"/>
     </genClasses>
     <genClasses xsi:type="genmodel:GenClass" ecoreClass="chesscontract.ecore#//ContractRefinementAnalysisContext">
       <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ContractRefinementAnalysisContext/checkAllWeakContracts"/>
@@ -84,10 +80,6 @@
       <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//Contract/Language"/>
       <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//Contract/contextStatement"/>
       <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//Contract/artefactStatement"/>
-      <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
-          propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//Contract/claim"/>
-      <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
-          propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//Contract/supportedBy"/>
     </genClasses>
     <genClasses xsi:type="genmodel:GenClass" ecoreClass="chesscontract.ecore#//Formalize">
       <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
