@@ -1,6 +1,6 @@
 /*******************************************************************************
  *
- * Copyright (c) 2013, 2015 Intecs SpA 
+ * Copyright (c) 2013, 2017 Intecs SpA 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,30 +16,13 @@ package org.polarsys.chess.contracts.chessextension.propertytab;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
-import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
-import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.util.LocalSelectionTransfer;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TreePath;
-import org.eclipse.jface.viewers.TreeSelection;
-import org.eclipse.opencert.evm.evidspec.evidence.Artefact;
-import org.eclipse.opencert.sam.arg.arg.Claim;
-import org.eclipse.opencert.sam.arg.arg.impl.ClaimImpl;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.emf.utils.EMFHelper;
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockEditPart;
@@ -49,8 +32,6 @@ import org.eclipse.papyrus.uml.diagram.clazz.edit.parts.ComponentEditPart;
 import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -59,22 +40,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPageLayout;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.navigator.resources.ProjectExplorer;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.uml2.uml.Class;
