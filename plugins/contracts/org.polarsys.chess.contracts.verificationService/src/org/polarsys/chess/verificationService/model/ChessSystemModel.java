@@ -60,6 +60,16 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 
 	@Override
+	public String getComponentTypeName(Object component) {
+		if(entityUtil.isBlock((Element) component)) {
+			return entityUtil.getComponentName(component);
+		}
+		return null;
+	}
+
+
+
+	@Override
 	public boolean isRangeType(Object port) {
 		return entityUtil.isRangeAttribute((Property) port);
 	}
@@ -84,7 +94,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	 * getComponentType(java.lang.Object)
 	 */
 	@Override
-	public String getComponentType(Object component) {
+	public String getComponentInstanceTypeName(Object component) {
 
 if (entityUtil.isBlock((Element) component)) {
 			return "";
@@ -562,13 +572,13 @@ if (entityUtil.isBlock((Element) component)) {
 	 * getSubComponents(java.lang.Object)
 	 */
 	@Override
-	public EList<Property> getSubComponents(Object component) {
+	public EList<Property> getSubComponentsInstances(Object component) {
 		if ((
 		// entityUtil.isSystem((Element) component)||
 		(entityUtil.isBlock((Element) component)))) {
-			return new BasicEList<Property>(entityUtil.getSubComponents((Class) component));
+			return new BasicEList<Property>(entityUtil.getSubComponentsInstances((Class) component));
 		} else if (entityUtil.isComponentInstance((Element) component)) {
-			return new BasicEList<Property>(entityUtil.getSubComponents((Class) ((Property) component).getType()));
+			return new BasicEList<Property>(entityUtil.getSubComponentsInstances((Class) ((Property) component).getType()));
 		}
 		return null;
 	}

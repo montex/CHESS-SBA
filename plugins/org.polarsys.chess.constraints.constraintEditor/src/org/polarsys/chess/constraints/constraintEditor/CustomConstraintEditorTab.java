@@ -69,7 +69,7 @@ public class CustomConstraintEditorTab extends ConstraintEditorTab {
 	public Object getSubComponent(Object constraint, String componentName) {
 		Element element = ((Constraint) constraint).getOwner();
 
-		for (Property umlProperty : entityUtil.getSubComponents((Class) element)) {
+		for (Property umlProperty : entityUtil.getSubComponentsInstances((Class) element)) {
 			if (umlProperty.getName().compareTo(componentName) == 0) {
 				return entityUtil.getUmlType(umlProperty);
 			}
