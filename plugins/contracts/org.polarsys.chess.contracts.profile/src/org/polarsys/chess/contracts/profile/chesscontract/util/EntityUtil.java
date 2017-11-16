@@ -91,7 +91,7 @@ public class EntityUtil {
 		return null;
 	}
 
-	public Set<Property> getSubComponents(Class umlComponent) {
+	public Set<Property> getSubComponentsInstances(Class umlComponent) {
 		Set<Property> subComponents = new HashSet<Property>();
 		for (Property umlProperty : ((Class) umlComponent).getAttributes()) {
 			if (isComponentInstance(umlProperty)) {
@@ -124,7 +124,7 @@ public class EntityUtil {
 	public Set<String> getSubComponentsNames(Class umlComponent) {
 
 		Set<String> subComponentsNames = new HashSet<String>();
-		for (Property umlProperty : getSubComponents(umlComponent)) {
+		for (Property umlProperty : getSubComponentsInstances(umlComponent)) {
 			subComponentsNames.add((umlProperty).getName());
 		}
 		return subComponentsNames;
@@ -285,7 +285,6 @@ public class EntityUtil {
 		if (umlProperty.getType() != null) {
 
 			if (UMLUtil.getAppliedStereotype(umlProperty.getType(), BOUNDED_TYPE, false) != null) {
-				System.out.println("true");
 				return true;
 			}
 			}
@@ -324,9 +323,7 @@ public class EntityUtil {
 	
 	public Set<String> getListValuesForEnumeratorType(Property umlProperty) {
 		Set<String> enumValuesNames = new HashSet<String>();
-		System.out.println("getValuesForEnumeratorType");
 		if(umlProperty.getType() instanceof Enumeration){
-			System.out.println("is enumerator!!!");
 			for(EnumerationLiteral enumLit : ((Enumeration)umlProperty.getType()).getOwnedLiterals()){
 				enumValuesNames.add(enumLit.getName());
 			}			

@@ -73,8 +73,13 @@ public class SelectionUtil {
 	}
 
 	public GraphicalEditPart getSelectedGraphicalObject(ExecutionEvent event) {
+		
+		System.out.println("ExecutionEvent: "+event);
+		
 	ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage()
 			.getSelection();
+	
+	System.out.println("selection: "+selection);
 	return getSelectedGraphicalObject(selection);
 	}
 
@@ -99,6 +104,9 @@ public class SelectionUtil {
 		System.out.println("current selection: " + selection);
 
 		Object selectedUmlElement = getUmlSelectedObject(selection);
+		
+		System.out.println("selectedUmlElement: "+selectedUmlElement);
+		
 		if (selectedUmlElement instanceof Property) {
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
 				selectedUmlElement = entityUtil.getUmlType((Property) selectedUmlElement);
