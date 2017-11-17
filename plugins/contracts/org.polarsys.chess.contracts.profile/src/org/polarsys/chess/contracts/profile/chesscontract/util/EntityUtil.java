@@ -298,6 +298,13 @@ public class EntityUtil {
 		return false;
 	}
 
+	public boolean isRealAttribute(Property umlProperty) {
+		if (umlProperty.getType() != null) {
+			return (umlProperty.getType().getName().compareTo("Real") == 0);
+		}
+		return false;
+	}
+	
 	public boolean isIntegerAttribute(Property umlProperty) {
 		if (umlProperty.getType() != null) {
 			return (umlProperty.getType().getName().compareTo("Integer") == 0);
