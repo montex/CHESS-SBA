@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------
 --          			CHESS core plugin							 --
 --                                                                   --
---                    Copyright (C) 2011-2012                        --
+--                    Copyright (C) 2011-2017                        --
 --                 University of Padova, ITALY                       --
 --                                                                   --
 -- Author: Alessandro Zovi         azovi@math.unipd.it 		         --
@@ -11,18 +11,22 @@
 -- are made available under the terms of the Eclipse Public License  --
 -- v1.0 which accompanies this distribution, and is available at     --
 -- http://www.eclipse.org/legal/epl-v10.html                         --
+
+Contributor:
+ Stefano Puri (Intecs) - support creating CHESS model
+
 -----------------------------------------------------------------------
 */
 
 package org.polarsys.chess.wizards.wizards;
 
-import java.net.URI;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
@@ -32,7 +36,7 @@ import org.polarsys.chess.core.util.CHESSProjectSupport;
 /**
  * The Class CHESSNewProjectWizard is the implementation of the wizard used to create a new CHESS project
  */
-public class CHESSNewProjectWizard extends Wizard implements INewWizard, IExecutableExtension {
+public class CHESSNewProjectWizard extends CreateCHESSModelWizard implements INewWizard, IExecutableExtension {
 
 	/** The Constant WIZARD_NAME. */
 	private static final String WIZARD_NAME = "CHESS";
@@ -43,12 +47,15 @@ public class CHESSNewProjectWizard extends Wizard implements INewWizard, IExecut
 	/** The configuration element. */
 	private IConfigurationElement configurationElement;
 	
+	
 	/**
 	 * Instantiates a new CHESS new project wizard.
 	 */
 	public CHESSNewProjectWizard() {
 		setWindowTitle(WIZARD_NAME);
 	}
+	
+
 	
 	/**
 	 * Sets title and description of the page and adds it to the wizard 
@@ -57,13 +64,18 @@ public class CHESSNewProjectWizard extends Wizard implements INewWizard, IExecut
 	 */
 	@Override
 	public void addPages() {
-		super.addPages();
+		
+		
 		pageOne = new WizardNewProjectCreationPage("CHESS Project Wizard");
 		
 		pageOne.setTitle("New CHESS Project");
 		pageOne.setDescription("Create a new CHESS Project");
 			 
 		addPage(pageOne);
+		
+		
+		super.addPages();
+
 	}
 
 	/**
@@ -74,14 +86,15 @@ public class CHESSNewProjectWizard extends Wizard implements INewWizard, IExecut
 	@Override
 	public boolean performFinish() {
 		String name = pageOne.getProjectName();
-		URI location = null;
+		java.net.URI location = null;
 		if (!pageOne.useDefaults()){
 			location = pageOne.getLocationURI();
 			System.err.println("location: " + location.toString());//$NON-NLS-1$
 		}
 		CHESSProjectSupport.createProject(name, location);
+		
 		BasicNewProjectResourceWizard.updatePerspective(configurationElement);
-		return true;
+		return super.performFinish();
 	}
 
 	/**
@@ -90,8 +103,8 @@ public class CHESSNewProjectWizard extends Wizard implements INewWizard, IExecut
 	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		// TODO Auto-generated method stub
-
+		
+		super.init(workbench, selection);
 	}
 	
 	/** 
@@ -104,6 +117,16 @@ public class CHESSNewProjectWizard extends Wizard implements INewWizard, IExecut
 		configurationElement = config;
 	}
 	
+	@Override
+	public boolean isCreateProjectWizard() {
+		return true;
+	}
+	
+	@Override
+	protected URI createNewModelURI(String categoryId) {
+		IPath newFilePath = pageOne.getProjectHandle().getFullPath().append(pageOne.getProjectName() + "." + getDiagramFileExtension(categoryId)); //$NON-NLS-1$
+		return URI.createPlatformResourceURI(newFilePath.toString(), true);
+	}
 	
 
 }
