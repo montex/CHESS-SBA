@@ -55,8 +55,19 @@ public class ContractEntityUtil {
 	}
 
 	
-	public String convertContractPropertyInStr(ContractProperty contractProperty) {
-		Class umlContract = (Class) contractProperty.getBase_Property().getType();
+	public String convertContractPropertyInStr(ContractProperty contractProperty) throws Exception {
+		
+		
+		
+		Property baseProperty = contractProperty.getBase_Property();
+		
+		String basePropertyName = baseProperty.getName();
+		Class umlContract = (Class) baseProperty.getType();
+		
+		if(umlContract == null){
+			throw new Exception("The contract instance "+basePropertyName+" of "+((Class)entityUtil.getOwner(baseProperty)).getName()+" does not have a contract.");
+		}
+		
 		String contractName = umlContract.getName();
 		String assume = getAssumeStrFromUmlContract(umlContract);
 		String guarantee = getGuaranteeStrFromUmlContract(umlContract);
