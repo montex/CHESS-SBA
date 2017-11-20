@@ -20,7 +20,7 @@ import org.eclipse.uml2.uml.Class;
 import org.polarsys.chess.contracts.transformations.main.GenerateErrorModel;
 
 import eu.fbk.eclipse.standardtools.exceptions.NoComponentException;
-import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
+//import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.DialogUtil;
 
 /**
@@ -39,7 +39,7 @@ public class SmvExportService {
 	}
 
 	private static DialogUtil dialogUtil = DialogUtil.getInstance();
-	private static NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
+	//private static NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 
 	
 

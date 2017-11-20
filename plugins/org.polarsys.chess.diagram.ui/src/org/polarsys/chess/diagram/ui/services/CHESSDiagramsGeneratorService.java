@@ -20,12 +20,8 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.papyrus.infra.gmfdiag.common.model.NotationModel;
 import org.eclipse.papyrus.infra.gmfdiag.common.model.NotationUtils;
 import org.eclipse.papyrus.infra.gmfdiag.common.utils.DiagramUtils;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.uml2.uml.Class;
-
-import eu.fbk.eclipse.standardtools.diagram.ContainterDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.DiagramDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.BlockDefinitionDiagramGeneratorService;
 import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.InternalBlockDiagramGeneratorService;
