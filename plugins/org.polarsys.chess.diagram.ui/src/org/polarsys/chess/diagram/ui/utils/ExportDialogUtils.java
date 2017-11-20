@@ -91,8 +91,7 @@ public class ExportDialogUtils {
 	public ModelToDocumentDialog getCompiledModelToDocumentDialog() {
 		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
-		final ModelToDocumentDialog parameterDialog = new ModelToDocumentDialog(shell);
-		parameterDialog.open();
+		final ModelToDocumentDialog parameterDialog = new ModelToDocumentDialog(shell);		
 		return parameterDialog;
 	}
 

@@ -50,7 +50,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.getLowerUpperBoundsForRangeType((Port) rangeTypePort);
 	}
 
-	
+	 
 	
 	@Override
 	public String[] getValuesForEnumeratorType(Object enumTypePort) {
@@ -533,6 +533,18 @@ if (entityUtil.isBlock((Element) component)) {
 		return entityUtil.isDoubleAttribute((Property) port);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
+	 * isRealType(java.lang.Object)
+	 */
+	@Override
+	public boolean isRealType(Object port) {
+		return entityUtil.isRealAttribute((Property) port);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

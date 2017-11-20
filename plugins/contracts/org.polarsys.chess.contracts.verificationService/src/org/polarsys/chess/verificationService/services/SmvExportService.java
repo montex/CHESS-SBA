@@ -43,13 +43,13 @@ public class SmvExportService {
 
 	
 
-	public File exportSmv(Class umlSelectedComponent,boolean showPopups, IProgressMonitor monitor)
+	public File exportSmv(Class umlSelectedComponent,boolean showPopups, String smvFilePath, IProgressMonitor monitor)
 			throws Exception {
 		if (umlSelectedComponent == null) {
 			throw new NoComponentException();
 		}
 
-		File smvOutput = new File(nuXmvDirectoryUtil.getSmvFilePath());
+		File smvOutput = new File(smvFilePath);
 		List<String> args = returnParams(umlSelectedComponent);
 
 		exportSmv(umlSelectedComponent, smvOutput, args, showPopups,monitor);

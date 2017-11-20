@@ -20,6 +20,7 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.papyrus.infra.gmfdiag.common.model.NotationModel;
 import org.eclipse.papyrus.infra.gmfdiag.common.model.NotationUtils;
 import org.eclipse.papyrus.infra.gmfdiag.common.utils.DiagramUtils;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.uml2.uml.Class;
@@ -78,7 +79,7 @@ public class CHESSDiagramsGeneratorService {
 		
 	}
 	
-	public DiagramDescriptor createDiagramWithDescriptor(Diagram diagram, IProgressMonitor monitor){
+	public DiagramDescriptor createDiagramWithDescriptor(Diagram diagram,Shell shell , IProgressMonitor monitor){
 		EObject diagramOwner = DiagramUtils.getOwner(diagram);
 		String diagramName = "";
 		String ownerName = null;
@@ -93,7 +94,11 @@ public class CHESSDiagramsGeneratorService {
 		
 		//if(diagram.getName().compareTo("Contracts")!=0){
 		try{
-		createDiagram(diagram,diagramName, monitor);
+			
+			
+		createDiagram(diagram,diagramName,shell, monitor);
+	
+		
 		return createDiagramDescriptor(diagramName,ownerName,hasComponentOwner );
 		}catch(NullPointerException e){
 			System.out.println("Unable to create diagram "+diagramName);
@@ -103,8 +108,8 @@ public class CHESSDiagramsGeneratorService {
 	
 	
 	
-	private void createDiagram(Diagram diagram,String diagramName, IProgressMonitor monitor){
-		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+	private void createDiagram(Diagram diagram,String diagramName, Shell shell,IProgressMonitor monitor){
+		
 		
 		System.out.println("diagram name: "+diagram.getName());
 		System.out.println("diagram type: "+diagram.getType());

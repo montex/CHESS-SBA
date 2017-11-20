@@ -23,7 +23,8 @@ Require-Bundle: org.eclipse.core.resources,
  eu.fbk.eclipse.standardtools.ExecOcraCommands,
  eu.fbk.eclipse.standardtools.nuXmvService,
  org.polarsys.chess.contracts.profile,
- org.polarsys.chess.core
+ org.polarsys.chess.core,
+ eu.fbk.tools.editor.oss
 Import-Package: eu.fbk.eclipse.standardtools.nuXmvService.dialogs,
  eu.fbk.eclipse.standardtools.nuXmvService.services,
  eu.fbk.eclipse.standardtools.nuXmvService.utils,
