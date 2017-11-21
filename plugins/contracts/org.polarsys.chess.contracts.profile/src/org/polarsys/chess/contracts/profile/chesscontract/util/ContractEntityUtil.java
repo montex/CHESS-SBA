@@ -31,18 +31,13 @@ import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.core.util.uml.UMLUtils;
+import org.polarsys.chess.contracts.profile.chesscontract.util.Constants;
 
 /**
  * Util class that provides methods to manage contracts.
  *
  */
 public class ContractEntityUtil {
-
-	
-	private static final String CONTRACT = "CHESSContract::Contract";
-	private static final String CONTRACT_PROP = "CHESSContract::ContractProperty";
-	private static final String DELEGATION_CONST = "CHESSContract::DelegationConstraint";
-	private static final String FORMAL_PROP = "CHESSContract::FormalProperty";
 
 	private static ContractEntityUtil contractEntityUtilInstance;
 	private EntityUtil entityUtil = EntityUtil.getInstance();
@@ -78,18 +73,18 @@ public class ContractEntityUtil {
 	}
 
 	private FormalProperty getAssumeFromUmlContract(Class umlContract) {
-		Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, CONTRACT, false);
+		Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, Constants.CONTRACT, false);
 		return (FormalProperty) umlContract.getValue(contractStereotype, "Assume");
 	}
 
 	private FormalProperty getGuaranteeFromUmlContract(Class umlContract) {
-		Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, CONTRACT, false);
+		Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, Constants.CONTRACT, false);
 		return (FormalProperty) umlContract.getValue(contractStereotype, "Guarantee");
 
 	}
 
 	private Contract getContract(Class umlContract) {
-		Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, CONTRACT, false);
+		Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, Constants.CONTRACT, false);
 		return (Contract) umlContract.getStereotypeApplication(contractStereotype);
 	}
 
@@ -116,11 +111,11 @@ public class ContractEntityUtil {
 	}
 
 	public boolean isContract(Element umlElement) {
-		return UMLUtil.getAppliedStereotype(umlElement, CONTRACT, false) != null;
+		return UMLUtil.getAppliedStereotype(umlElement, Constants.CONTRACT, false) != null;
 	}
 
 	public void applyContractStereotype(Class umlElement) {
-		UMLUtils.applyStereotype(umlElement, CONTRACT);
+		UMLUtils.applyStereotype(umlElement, Constants.CONTRACT);
 	}
 
 	public void createAssumptionToUmlContract(final Class umlContract) {
@@ -166,7 +161,7 @@ public class ContractEntityUtil {
 			@Override
 			protected void doExecute() {
 				Property newUmlProperty = umlComponent.createOwnedAttribute(propertyName, null);
-				UMLUtils.applyStereotype(newUmlProperty, CONTRACT_PROP);
+				UMLUtils.applyStereotype(newUmlProperty, Constants.CONTRACT_PROP);
 
 			}
 		});
@@ -191,7 +186,7 @@ public class ContractEntityUtil {
 			Property umlProperty = (Property) itAttributes.next();
 
 			if (umlProperty.getType().getName().equals(contractPropertyType)
-					&& umlProperty.getAppliedStereotype(CONTRACT_PROP) != null) {
+					&& umlProperty.getAppliedStereotype(Constants.CONTRACT_PROP) != null) {
 				found = true;
 				umlContractProperty = umlProperty;
 			}
@@ -211,7 +206,7 @@ public class ContractEntityUtil {
 		while (itAttributes.hasNext() && !found) {
 			Property umlProperty = (Property) itAttributes.next();
 			if (umlProperty.getName().equals(contractPropertyName)
-					&& umlProperty.getAppliedStereotype(CONTRACT_PROP) != null) {
+					&& umlProperty.getAppliedStereotype(Constants.CONTRACT_PROP) != null) {
 				found = true;
 				umlContractProperty = umlProperty;
 			}
@@ -235,7 +230,7 @@ public class ContractEntityUtil {
 	}
 
 	public FormalProperty getFormalProperty(Constraint umlConstraint) {
-		Stereotype formalPropertyStereotype = UMLUtil.getAppliedStereotype(umlConstraint, FORMAL_PROP, false);
+		Stereotype formalPropertyStereotype = UMLUtil.getAppliedStereotype(umlConstraint, Constants.FORMAL_PROP, false);
 		return (FormalProperty) umlConstraint.getStereotypeApplication(formalPropertyStereotype);
 	}
 
@@ -264,7 +259,7 @@ public class ContractEntityUtil {
 			@Override
 			protected void doExecute() {
 				Constraint umlNewConstraint = umlContractOwner.createOwnedRule(formalPropertyName);
-				UMLUtils.applyStereotype(umlNewConstraint, FORMAL_PROP);
+				UMLUtils.applyStereotype(umlNewConstraint, Constants.FORMAL_PROP);
 			}
 		});
 
@@ -274,7 +269,7 @@ public class ContractEntityUtil {
 	}
 
 	public boolean isFormalProperty(Element umlElement) {
-		return UMLUtil.getAppliedStereotype(umlElement, FORMAL_PROP, false) != null;
+		return UMLUtil.getAppliedStereotype(umlElement, Constants.FORMAL_PROP, false) != null;
 	}
 
 	public void saveFormalProperty(final String guarantee_or_assumption, final String formalPropertyText, final Class umlContract) {
@@ -285,7 +280,7 @@ public class ContractEntityUtil {
 			@Override
 			protected void doExecute() {
 				// rivedere questo codice
-				Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, CONTRACT, false);
+				Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, Constants.CONTRACT, false);
 				FormalProperty guarantee_or_assumptionFormalProperty = (FormalProperty) umlContract
 						.getValue(contractStereotype, guarantee_or_assumption);
 
@@ -349,15 +344,15 @@ public class ContractEntityUtil {
 	}
 
 	public boolean isContractProperty(Element umlProperty) {
-		return UMLUtil.getAppliedStereotype(umlProperty, CONTRACT_PROP, false) != null;
+		return UMLUtil.getAppliedStereotype(umlProperty, Constants.CONTRACT_PROP, false) != null;
 	}
 
 	public boolean isDelegationConstriants(Element umlProperty) {
-		return UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) != null;
+		return UMLUtil.getAppliedStereotype(umlProperty, Constants.DELEGATION_CONST, false) != null;
 	}
 
 	public ContractProperty getContractProperty(Property umlContractProperty) {
-		Stereotype contractPropertyStereotype = UMLUtil.getAppliedStereotype(umlContractProperty, CONTRACT_PROP, false);
+		Stereotype contractPropertyStereotype = UMLUtil.getAppliedStereotype(umlContractProperty, Constants.CONTRACT_PROP, false);
 		return (ContractProperty) umlContractProperty.getStereotypeApplication(contractPropertyStereotype);
 	}
 
