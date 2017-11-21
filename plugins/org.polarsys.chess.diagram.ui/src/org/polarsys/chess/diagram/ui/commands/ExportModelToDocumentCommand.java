@@ -15,7 +15,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramModel;
 import org.polarsys.chess.diagram.ui.utils.ExportDialogUtils;
-import org.polarsys.chess.service.internal.utils.SelectionUtil;
+import org.polarsys.chess.service.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.commands.AbstractAsyncJobCommand;
 import eu.fbk.eclipse.standardtools.diagram.ui.dialog.ModelToDocumentDialog;

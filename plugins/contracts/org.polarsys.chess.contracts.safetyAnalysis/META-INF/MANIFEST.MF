@@ -13,4 +13,4 @@ Require-Bundle: org.eclipse.core.commands,
  org.polarsys.chess.contracts.verificationService;bundle-version="1.0.0"
 Bundle-Vendor: Fondazione Bruno Kessler
 Import-Package: org.eclipse.core.runtime,
- org.polarsys.chess.service.internal.utils
+ org.polarsys.chess.service.utils

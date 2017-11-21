@@ -15,7 +15,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.uml2.uml.Class;
-import org.polarsys.chess.service.internal.utils.SelectionUtil;
+import org.polarsys.chess.service.utils.SelectionUtil;
 import org.polarsys.chess.verificationService.model.ChessSystemModel;
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.services.OCRAExecService;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;

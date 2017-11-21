@@ -20,7 +20,7 @@ import eu.fbk.eclipse.standardtools.commands.AbstractAsyncJobCommand;
 import eu.fbk.eclipse.standardtools.diagram.ui.dialog.ComponentToImageDialog;
 import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.InternalBlockDiagramGeneratorService;
 import eu.fbk.eclipse.standardtools.utils.DirectoryUtil;
-import org.polarsys.chess.service.internal.utils.SelectionUtil;
+import org.polarsys.chess.service.utils.SelectionUtil;
 
 /**
  * 

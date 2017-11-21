@@ -14,7 +14,7 @@ import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.service.internal.utils.SelectionUtil;
+import org.polarsys.chess.service.utils.SelectionUtil;
 
 /**
  * It filters the selected objects that are contracts or components. *

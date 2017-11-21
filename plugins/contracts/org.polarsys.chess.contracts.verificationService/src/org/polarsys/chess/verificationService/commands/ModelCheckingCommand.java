@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.uml2.uml.Class;
 
-import org.polarsys.chess.service.internal.utils.SelectionUtil;
+import org.polarsys.chess.service.utils.SelectionUtil;
 import org.polarsys.chess.verificationService.services.SmvExportService;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.nuXmvService.dialogs.NuXmvParametersDialog;

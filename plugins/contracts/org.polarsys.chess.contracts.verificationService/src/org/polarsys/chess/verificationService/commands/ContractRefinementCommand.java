@@ -22,7 +22,7 @@ import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.utils.OCRADirectoryUtil;
 
-import org.polarsys.chess.service.internal.utils.SelectionUtil;
+import org.polarsys.chess.service.utils.SelectionUtil;
 import org.polarsys.chess.verificationService.model.ChessSystemModel;
 
 public class ContractRefinementCommand extends  AbstractJobCommand { 

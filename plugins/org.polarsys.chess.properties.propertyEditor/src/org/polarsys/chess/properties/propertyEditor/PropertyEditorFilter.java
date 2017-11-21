@@ -12,7 +12,7 @@ package org.polarsys.chess.properties.propertyEditor;
 
 import org.eclipse.uml2.uml.Constraint;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
-import org.polarsys.chess.service.internal.utils.SelectionUtil;
+import org.polarsys.chess.service.utils.SelectionUtil;
 
 public class PropertyEditorFilter implements org.eclipse.jface.viewers.IFilter {
 

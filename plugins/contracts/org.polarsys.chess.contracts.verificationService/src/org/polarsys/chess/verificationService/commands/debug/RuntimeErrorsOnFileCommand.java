@@ -15,7 +15,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.services.OCRARuntimeErrorService;
 import eu.fbk.eclipse.standardtools.commands.AbstractAsyncJobCommand;
-import org.polarsys.chess.service.internal.utils.SelectionUtil;
+import org.polarsys.chess.service.utils.SelectionUtil;
 
 public class RuntimeErrorsOnFileCommand extends AbstractAsyncJobCommand {
 

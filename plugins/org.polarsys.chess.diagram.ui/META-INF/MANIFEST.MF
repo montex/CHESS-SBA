@@ -4,7 +4,7 @@ Bundle-Name: Ui
 Bundle-SymbolicName: org.polarsys.chess.diagram.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.polarsys.chess.service.internal.utils
+Import-Package: org.polarsys.chess.service.utils
 Require-Bundle: org.eclipse.core.commands,
  org.eclipse.swt,
  org.eclipse.core.jobs,

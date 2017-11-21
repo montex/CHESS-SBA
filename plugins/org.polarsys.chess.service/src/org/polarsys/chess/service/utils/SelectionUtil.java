@@ -8,7 +8,7 @@
  * Contributors:
  *     Alberto Debiasi - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.service.internal.utils;
+package org.polarsys.chess.service.utils;
 
 import java.util.List;
 

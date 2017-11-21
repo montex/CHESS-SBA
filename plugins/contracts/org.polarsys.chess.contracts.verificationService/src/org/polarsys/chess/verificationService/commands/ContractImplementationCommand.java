@@ -23,7 +23,7 @@ import eu.fbk.eclipse.standardtools.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.OCRADirectoryUtil;
 
-import org.polarsys.chess.service.internal.utils.SelectionUtil;
+import org.polarsys.chess.service.utils.SelectionUtil;
 import org.polarsys.chess.verificationService.model.ChessSystemModel;
 import org.polarsys.chess.verificationService.services.SmvExportService;
 
