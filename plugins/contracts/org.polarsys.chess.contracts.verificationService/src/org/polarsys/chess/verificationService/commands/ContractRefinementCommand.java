@@ -35,12 +35,12 @@ public class ContractRefinementCommand extends  AbstractJobCommand {
 		super("Contract Refinement");
 	}
 
-	Class umlSelectedComponent;
-	Resource umlSelectedResource;
-	boolean isDiscreteTime;
-	boolean showPopups;
-	String ossFilepath;
-	String resultFilePath;
+	private Class umlSelectedComponent;
+	private Resource umlSelectedResource;
+	private boolean isDiscreteTime;
+	private boolean showPopups;
+	private String ossFilepath;
+	private String resultFilePath;
 	
 	@Override
 	public void execGUIOperations(ExecutionEvent event) throws Exception {
@@ -57,7 +57,6 @@ public class ContractRefinementCommand extends  AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		ocraExecService.executeCheckContractRefinement(umlSelectedComponent,umlSelectedResource,isDiscreteTime,showPopups,ossFilepath,resultFilePath,monitor);
-
-	}
+}
 
 }

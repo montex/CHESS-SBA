@@ -30,17 +30,17 @@ import eu.fbk.tools.editor.oss.oss.OSS;
 
 public class GenerateDocumentCommand extends AbstractJobCommand {
 
-	
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	private ChessSystemModel chessToOCRAModelTranslator = ChessSystemModel.getInstance();
 	private OCRATranslatorService ocraTranslatorService = OCRATranslatorService.getInstance(chessToOCRAModelTranslator);
 	private ExportDialogUtils exportDialogUtils = ExportDialogUtils.getInstance();
-	private CHESSDiagramsGeneratorService chessDiagramsGeneratorService = CHESSDiagramsGeneratorService.getInstance(CHESSInternalBlockDiagramModel.getInstance(),CHESSBlockDefinitionDiagramModel.getInstance());
-	
-	
+	private CHESSDiagramsGeneratorService chessDiagramsGeneratorService = CHESSDiagramsGeneratorService
+			.getInstance(CHESSInternalBlockDiagramModel.getInstance(), CHESSBlockDefinitionDiagramModel.getInstance());
+
 	private DirectoryUtil directoryUtils = DirectoryUtil.getInstance();
-	
-	private DocumentGeneratorServiceFromOssModel documentGeneratorService ;
+
+	private DocumentGeneratorServiceFromOssModel documentGeneratorService;
+
 	/**
 	 * @param commandName
 	 */
@@ -48,14 +48,13 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		super("Generate Documentation");
 	}
 
-	Class umlSelectedComponent;
-	boolean isDiscreteTime;
-	ModelToDocumentDialog parameterDialog;
-	String outputDirectoryName;
-	String currentProjectName;
-	Collection<Diagram>  chessDiagrams;
-	
-	
+	private Class umlSelectedComponent;
+	private boolean isDiscreteTime;
+	private ModelToDocumentDialog parameterDialog;
+	private String outputDirectoryName;
+	private String currentProjectName;
+	private Collection<Diagram> chessDiagrams;
+
 	@Override
 	public void execGUIOperations(ExecutionEvent event) throws Exception {
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
@@ -63,27 +62,23 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		outputDirectoryName = exportDialogUtils.getDirectoryNameFromDialog();
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();
-		
+
 	}
-
-
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-		
+
 		OSS ossModel = ocraTranslatorService.getOssModel(umlSelectedComponent, isDiscreteTime, monitor);
-		
+
 		Display defaultDisplay = Display.getDefault();
 		defaultDisplay.syncExec(new Runnable() {
 			@Override
 			public void run() {
-				parameterDialog = exportDialogUtils.getCompiledModelToDocumentDialog();	
-		parameterDialog.open();
+				parameterDialog = exportDialogUtils.getCompiledModelToDocumentDialog();
+				parameterDialog.open();
 			}
-		}
-		);
-		
-		
+		});
+
 		if (!parameterDialog.goAhead()) {
 			return;
 		}
@@ -94,57 +89,38 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 			imageExtension = ".png";
 		}
 
-		// setShowLeafComponents(showLeafComponents);
-		
-		// setDirectoryName(directoryName);
 		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
 			return;
 		}
-		
-		
-		
-		
-		
-		//documentGeneratorService = DocumentGeneratorServiceFromOssModel.getInstance(CHESSDiagramModel.getInstance(), ossModel);
+
 		documentGeneratorService = new DocumentGeneratorServiceFromOssModel(ossModel);
-		documentGeneratorService.setParametersBeforeDocumentGeneration(
-				//parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout(),
-				outputDirectoryName, imageExtension, parameterDialog.getShowLeafComponents());
-		DocumentGenerator documentGenerator = documentGeneratorService.createDocumentFile(currentProjectName, docFormat, ossModel.getSystem(), monitor);
-		
-		
-		//documentGeneratorService.setParametersBeforeDiagramsGenerator(
-			//	outputDirectoryName, imageExtension,parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout());
-	
-		
-		
-		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, 
-				imageExtension, 
-				parameterDialog.getShowPortLabels(), 
-				parameterDialog.getAutomaticPortLabelLayout());
-		
-		
-		
-		
+		documentGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, imageExtension,
+				parameterDialog.getShowLeafComponents());
+		DocumentGenerator documentGenerator = documentGeneratorService.createDocumentFile(currentProjectName, docFormat,
+				ossModel.getSystem(), monitor);
+
+		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension,
+				parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout());
+
 		defaultDisplay.syncExec(new Runnable() {
 			@Override
 			public void run() {
-		Set<DiagramDescriptor> diagramDescriptors = new HashSet<DiagramDescriptor>();		
-		for(Diagram diagram : chessDiagrams){			
-		//chessDiagramsGeneratorService.createDiagram(diagram, monitor);
-			Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-			DiagramDescriptor dd = chessDiagramsGeneratorService.createDiagramWithDescriptor(diagram, shell,monitor);
-			if(dd!=null){
-			diagramDescriptors.add(dd);
-			}
-		}
-		documentGeneratorService.addDiagramDescriptors(diagramDescriptors, documentGenerator);
-		documentGeneratorService.generateDocument(documentGenerator);
+				Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+				Set<DiagramDescriptor> diagramDescriptors = new HashSet<DiagramDescriptor>();
+				for (Diagram diagram : chessDiagrams) {
+					// chessDiagramsGeneratorService.createDiagram(diagram,
+					// monitor);
+					DiagramDescriptor dd = chessDiagramsGeneratorService.createDiagramWithDescriptor(diagram, shell,
+							monitor);
+					if (dd != null) {
+						diagramDescriptors.add(dd);
+					}
+				}
+				documentGeneratorService.addDiagramDescriptors(diagramDescriptors, documentGenerator);
+				documentGeneratorService.generateDocument(documentGenerator);
 			}
 		});
-													   
-		
-		
+
 	}
 
 }

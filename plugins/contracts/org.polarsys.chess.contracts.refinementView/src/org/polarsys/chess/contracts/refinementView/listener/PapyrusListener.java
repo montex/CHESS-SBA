@@ -35,12 +35,15 @@ public class PapyrusListener implements IPapyrusListener {
 			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 			IViewPart modelExplorerViewPart;
 
+			if(window!=null){
 			modelExplorerViewPart = window.getActivePage().findView(CustomRefinementView.View_ID);
 
 			if (modelExplorerViewPart != null) {
 				CustomRefinementView view = (CustomRefinementView) modelExplorerViewPart;
 				view.updateView();
 			}
+			}
+			
 		}
 
 	}

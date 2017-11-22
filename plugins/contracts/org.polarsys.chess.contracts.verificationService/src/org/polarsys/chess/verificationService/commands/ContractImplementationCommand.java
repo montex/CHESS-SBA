@@ -40,13 +40,13 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 		super("Check Contract Implementation");
 	}
 
-	Class umlSelectedComponent;
-	Resource umlSelectedResource;
-	boolean isDiscreteTime;
-	boolean showPopups;
-	String ossFilepath;
-	String smvFilePath;
-	String resultFilePath;
+	private Class umlSelectedComponent;
+	private Resource umlSelectedResource;
+	private boolean isDiscreteTime;
+	private boolean showPopups;
+	private String ossFilepath;
+	private String smvFilePath;
+	private String resultFilePath;
 	
 	@Override
 	public void execGUIOperations(ExecutionEvent event) throws Exception {
@@ -56,8 +56,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 		 showPopups = false;
 		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 		 smvFilePath = nuXmvDirectoryUtil.getSmvFilePath();
-		 resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath();
-			
+		 resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath();			
 	}
 
 
@@ -65,10 +64,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		
-		//String smvOutputFilePath = ocraDirectoryUtil.getOSSFilePath();
 		File smvOutput = nuXmvService.exportSmv(umlSelectedComponent, showPopups,smvFilePath,monitor);
-		System.out.println("smvOutput: " + smvOutput);
-
 		ocraExecService.executeCheckContractImplementation(umlSelectedComponent,umlSelectedResource, smvOutput, isDiscreteTime,showPopups,ossFilepath,resultFilePath,monitor);
 
 	}

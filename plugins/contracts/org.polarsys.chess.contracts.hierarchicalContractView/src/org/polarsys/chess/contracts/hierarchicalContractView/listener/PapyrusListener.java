@@ -42,6 +42,7 @@ public class PapyrusListener implements IPapyrusListener {
 			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 			IViewPart modelExplorerViewPart;
 
+			if(window!=null){
 			modelExplorerViewPart = window.getActivePage().findView(CustomHierarchicalView.View_ID);
 			if (modelExplorerViewPart != null) {
 
@@ -53,6 +54,8 @@ public class PapyrusListener implements IPapyrusListener {
 					prevModelID = modelID;
 				}
 			}
+			}
+			
 		}
 	}
 

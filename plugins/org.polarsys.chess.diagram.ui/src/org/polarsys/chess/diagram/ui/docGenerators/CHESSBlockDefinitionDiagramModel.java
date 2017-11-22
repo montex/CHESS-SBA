@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
@@ -31,6 +33,15 @@ public class CHESSBlockDefinitionDiagramModel implements AbstractBlockDefinition
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 	
 	
+	
+	@Override
+	public Point getDiagramPoint(Object diagram) {
+		Rectangle diagramBounds = ((GraphicalEditPart) diagram).getFigure().getBounds();
+		System.out.println("diagramBounds: "+diagramBounds);
+		Point p = new Point(diagramBounds.x, diagramBounds.y);
+		return p;
+	}
+
 	@Override
 	public String getGraphicalComponentName(Object graphicalComponent) {
 		
