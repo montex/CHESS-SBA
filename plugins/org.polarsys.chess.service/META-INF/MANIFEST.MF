@@ -31,7 +31,8 @@ Export-Package: org.polarsys.chess.service.exceptions,
    org.eclipse.ui.part"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
-Import-Package: org.eclipse.emf.common.ui,
+Import-Package: org.apache.log4j;version="1.2.15",
+ org.eclipse.emf.common.ui,
  org.eclipse.gmf.runtime.notation,
  org.eclipse.papyrus.infra.gmfdiag.css,
  org.eclipse.papyrus.infra.gmfdiag.css.notation,

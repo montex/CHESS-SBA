@@ -12,6 +12,7 @@ package org.polarsys.chess.service.utils;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -32,12 +33,17 @@ import org.polarsys.chess.service.exceptions.NoComponentException;
 
 
 
+
+
 /**
  * Util class that provides methods for the object that are selected in the GUI
  * by the user.
  *
  */
 public class SelectionUtil {
+	
+	private static final Logger logger = Logger.getLogger(SelectionUtil.class);
+	
 	private static SelectionUtil selectionUtil;
 
 	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
@@ -74,19 +80,19 @@ public class SelectionUtil {
 
 	public GraphicalEditPart getSelectedGraphicalObject(ExecutionEvent event) {
 		
-		System.out.println("ExecutionEvent: "+event);
+		logger.debug("ExecutionEvent: "+event);
 		
 	ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage()
 			.getSelection();
 	
-	System.out.println("selection: "+selection);
+	logger.debug("selection: "+selection);
 	return getSelectedGraphicalObject(selection);
 	}
 
 	
 	private GraphicalEditPart getSelectedGraphicalObject(Object selection) {
 
-		System.out.println("selection: " + selection);
+		logger.debug("selection: " + selection);
 
 		Object selectedObject = selection;
 
@@ -101,11 +107,11 @@ public class SelectionUtil {
 	
 		ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
 
-		System.out.println("current selection: " + selection);
+		logger.debug("current selection: " + selection);
 
 		Object selectedUmlElement = getUmlSelectedObject(selection);
 		
-		System.out.println("selectedUmlElement: "+selectedUmlElement);
+		logger.debug("selectedUmlElement: "+selectedUmlElement);
 		
 		if (selectedUmlElement instanceof Property) {
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {

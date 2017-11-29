@@ -14,6 +14,7 @@ package org.polarsys.chess.contracts.profile.chesscontract.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 //import org.eclipse.emf.ecore.EObject;
@@ -43,6 +44,8 @@ import org.eclipse.uml2.uml.Type;
  */
 public class EntityUtil {
 
+	private static final Logger logger = Logger.getLogger(EntityUtil.class);
+	
 	private static final String BLOCK = "SysML::Blocks::Block";
 	private static final String SYSTEM = "CHESSContract::System";
 	private static final String FLOW_Port = "SysML::PortAndFlows::FlowPort";
@@ -51,6 +54,21 @@ public class EntityUtil {
 	private static final String COMP_TYPE = "CHESS::ComponentModel::ComponentType";
 	private static final String COMP_IMPL = "CHESS::ComponentModel::ComponentImplementation";
 
+	private static final String INTEGER_TYPE = "PrimitiveTypes::Integer";
+	private static final String REAL_TYPE = "PrimitiveTypes::Real";	
+	private static final String BOOLEAN_TYPE = "PrimitiveTypes::Boolean";
+	
+	private static final String CHESS_CONTINUOUS_TYPE = "CHESSContract::DataTypes::Continuous";
+	
+	private static final String MARTE_BOOLEAN_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Boolean";
+	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
+	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
+	
+	//not yet used
+	//private static final String STRING_TYPE = "PrimitiveTypes::String";
+	//private static final String UNLIMITED_NAT_TYPE = "PrimitiveTypes::UnlimitedNatural";
+	
+	
 	private static EntityUtil entityUtil;
 	private static ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 
@@ -111,10 +129,9 @@ public class EntityUtil {
 			}
 		}
 		
-		System.out.println("getEnumValuesFromComponentPorts");
-		for(String s : enumValuesEList){
-			System.out.println(s);
-		}
+		//for(String s : enumValuesEList){
+		//	System.out.println(s);
+		//}
 		
 			String[] enumValuesNamesStrArr = new String[enumValuesEList.size()];
 			return enumValuesEList.toArray(enumValuesNamesStrArr);
@@ -161,7 +178,6 @@ public class EntityUtil {
 	private Set<Port> getUmlPortsFromClass(Class umlComponent) {
 		Set<Port> ports = new HashSet<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
-			FlowPort fp = getFlowPort(umlPort);			
 				ports.add(umlPort);
 		}
 		return ports;
@@ -263,8 +279,9 @@ public class EntityUtil {
 	}
 
 	public boolean isBooleanAttribute(Property umlProperty) {
+		logger.debug("isBooleanAttribute");
 		if (umlProperty.getType() != null) {
-			return (umlProperty.getType().getName().compareTo("Boolean") == 0);
+			return ((umlProperty.getType().getQualifiedName().compareTo(BOOLEAN_TYPE) == 0)||(umlProperty.getType().getQualifiedName().compareTo(MARTE_BOOLEAN_TYPE) == 0));
 		}
 		return false;
 	}
@@ -291,6 +308,14 @@ public class EntityUtil {
 		return false;
 	}
 
+	
+	/*public boolean isStringAttribute(Property umlProperty) {
+		if (umlProperty.getType() != null) {
+			return (umlProperty.getType().getQualifiedName().compareTo(STRING_TYPE) == 0);
+			}
+		return false;
+	}*/
+	
 	public boolean isDoubleAttribute(Property umlProperty) {
 		if (umlProperty.getType() != null) {
 			return (umlProperty.getType().getName().compareTo("Double") == 0);
@@ -300,22 +325,22 @@ public class EntityUtil {
 
 	public boolean isRealAttribute(Property umlProperty) {
 		if (umlProperty.getType() != null) {
-			return (umlProperty.getType().getName().compareTo("Real") == 0);
+			return ((umlProperty.getType().getQualifiedName().compareTo(REAL_TYPE) == 0)||(umlProperty.getType().getQualifiedName().compareTo(MARTE_REAL_TYPE) == 0));
 		}
 		return false;
 	}
 	
 	public boolean isIntegerAttribute(Property umlProperty) {
 		if (umlProperty.getType() != null) {
-			return (umlProperty.getType().getName().compareTo("Integer") == 0);
+			return ((umlProperty.getType().getQualifiedName().compareTo(INTEGER_TYPE) == 0)||(umlProperty.getType().getQualifiedName().compareTo(MARTE_INTEGER_TYPE) == 0));
 		}
 		return false;
 	}
 
 	public boolean isContinuousAttribute(Property umlProperty) {
 		if (umlProperty.getType() != null) {
-			return (umlProperty.getType().getName().compareTo("Continuous") == 0);
-		}
+			return (umlProperty.getType().getQualifiedName().compareTo(CHESS_CONTINUOUS_TYPE) == 0);			
+			}
 		return false;
 	}
 
@@ -323,8 +348,7 @@ public class EntityUtil {
 	public boolean isEnumerationAttribute(Property umlProperty) {
 		if (umlProperty.getType() != null) {
 			return(umlProperty.getType() instanceof Enumeration);
-			//return (umlProperty.getType().getName().compareTo("Enumeration") == 0);
-		}
+			}
 		return false;
 	}
 	
@@ -337,9 +361,7 @@ public class EntityUtil {
 			return enumValuesNames;
 			
 		}
-		
-			// (umlProperty.getType().getName().compareTo("Enumeration") == 0);
-	return null;
+			return null;
 	}
 	
 	public String[] getValuesForEnumeratorType(Property umlProperty) {
