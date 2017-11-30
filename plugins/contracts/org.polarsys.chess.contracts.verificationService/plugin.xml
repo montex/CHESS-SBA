@@ -10,7 +10,8 @@
                label="AMASS"
                id="org.eclipse.ui.main.diagramEditorMenu.AMASS">
              <menu
-               label="Basic Operations">
+                   id="org.eclipse.ui.main.diagramEditorMenu.AMASS.basicOperations"
+                   label="Basic Operations">
             <command
                   commandId="org.polarsys.chess.verificationService.commands.ExportModelToFileCommand"
                   style="push">
@@ -41,7 +42,8 @@
             </command>
              </menu>
               <menu
-               label="Safety Analysis">
+                    id="org.eclipse.ui.main.diagramEditorMenu.AMASS.safetyAnalysis"
+                    label="Safety Analysis">
                </menu>
          </menu>        
       </menuContribution>
@@ -97,10 +99,12 @@
                label="AMASS"
                id="org.eclipse.ui.main.menu.AMASS">
                 <menu
-               label="//Debug Operations">       
+                      id="org.eclipse.ui.main.menu.AMASS.debug"
+                      label="//Debug Operations">       
              </menu>
              <menu
-               label="Basic Operations">
+                   id="org.eclipse.ui.main.menu.AMASS.basicOperation"
+                   label="Basic Operations">
                <menu
                label="//Debug Operations">
                <command
@@ -114,7 +118,7 @@
             </command>
             </menu>
              <menu
-                   id="org.eclipse.ui.main.menu.AMASS."
+                   id="org.eclipse.ui.main.menu.AMASS.validation"
                    label="Validation">
                 <command
                       commandId="org.polarsys.chess.verificationService.commands.CheckValidationPropertyCommand2"
@@ -160,7 +164,8 @@
             </command>
              </menu>
               <menu
-               label="Safety Analysis">
+                    id="org.eclipse.ui.main.menu.AMASS.safetyAnalysis"
+                    label="Safety Analysis">
                </menu>
          </menu>        
       </menuContribution>
