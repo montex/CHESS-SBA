@@ -65,7 +65,7 @@ public class PapyrusListener implements IPapyrusListener {
 			if (eventType == StereotypeExtensionNotification.STEREOTYPE_APPLIED_TO_ELEMENT) {
 
 				Property umlProperty = (Property) notifier;
-
+				
 				if (contractEntityUtil.isContractProperty(umlProperty)) {
 
 					if (notification.getNewValue() instanceof ContractProperty) {

@@ -10,6 +10,7 @@ import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockCompositeEditPart
 import org.eclipse.papyrus.sysml.diagram.internalblock.edit.part.InternalBlockDiagramEditPart;
 import org.eclipse.papyrus.sysml.diagram.blockdefinition.edit.part.BlockDefinitionDiagramEditPart;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -34,6 +35,8 @@ public class CHESSDiagramsGeneratorService {
 	
 	final private static String IBD = "InternalBlock"; 
 	final private static String BDD = "BlockDefinition";
+	
+	private static final Logger logger = Logger.getLogger(CHESSDiagramsGeneratorService.class);
 	
 	public static CHESSDiagramsGeneratorService getInstance(AbstractInternalBlockDiagramModel ibdModel,AbstractBlockDefinitionDiagramModel bddModel){
 		if(instance==null){
@@ -97,7 +100,7 @@ public class CHESSDiagramsGeneratorService {
 		
 		return createDiagramDescriptor(diagramName,ownerName,hasComponentOwner );
 		}catch(NullPointerException e){
-			System.out.println("Unable to create diagram "+diagramName);
+			logger.error("Unable to create diagram "+diagramName);
 		}
 		return null;
 	}
@@ -107,13 +110,12 @@ public class CHESSDiagramsGeneratorService {
 	private void createDiagram(Diagram diagram,String diagramName, Shell shell,IProgressMonitor monitor){
 		
 		
-		System.out.println("diagram name: "+diagram.getName());
-		System.out.println("diagram type: "+diagram.getType());
+		logger.debug("diagram name: "+diagram.getName());
+		logger.debug("diagram type: "+diagram.getType());
 		
 		EditPart editPart = OffscreenEditPartFactory.getInstance().createDiagramEditPart(diagram, shell);
 
 		RootEditPart root = editPart.getRoot();
-		System.out.println("root: "+root);
 		
 		if(isInternalBlockDiagram(diagram)){
 		InternalBlockDiagramEditPart idb = (InternalBlockDiagramEditPart) root.getChildren().get(0);
@@ -121,11 +123,10 @@ public class CHESSDiagramsGeneratorService {
 		
 	ibdGeneratorService.createDiagramFile(getComponentImageFilePath(diagramName), graphicalComponent, monitor);
 		}else if(isBlockDefinitionDiagram(diagram)){
-			System.out.println("isBlockDefinitionDiagram");
 			BlockDefinitionDiagramEditPart bdd = (BlockDefinitionDiagramEditPart) root.getChildren().get(0);
-			for(Object o : bdd.getChildren()){
-				System.out.println("o: "+o);
-			}
+			//for(Object o : bdd.getChildren()){
+			//	System.out.println("o: "+o);
+			//}
 			
 			bddGeneratorService.createDiagramFile(getComponentImageFilePath(diagramName), bdd, monitor);
 			
@@ -134,7 +135,7 @@ public class CHESSDiagramsGeneratorService {
 	
 	private DiagramDescriptor createDiagramDescriptor(String diagramName, String ownerName, boolean hasComponentOwner){
 		String saveFilePath = getComponentImageFilePath(diagramName);
-		System.out.println("saveFilePath: "+saveFilePath);
+		logger.debug("saveFilePath: "+saveFilePath);
 		// diagramGeneratorService.createDiagramFile(saveFilePath, component,
 		// monitor);
 		final DiagramDescriptor diagramDescriptor = //diagramGeneratorService.

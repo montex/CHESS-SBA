@@ -51,7 +51,7 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
 		 showPopups = false;
 		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();
-		 resultFilePath = ocraDirectoryUtil.getCommandFaultTreeGenResultPath();
+		 resultFilePath = ocraDirectoryUtil.getCommandFaultTreeGenResultPath(umlSelectedComponent.getName());
 	}
 
 	@Override

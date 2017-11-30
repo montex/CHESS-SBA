@@ -49,7 +49,7 @@ public class ContractRefinementCommand extends  AbstractJobCommand {
 		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
 		 showPopups = false;
 		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();	
-		  resultFilePath = ocraDirectoryUtil.getCommandCheckRefinementResultPath();
+		  resultFilePath = ocraDirectoryUtil.getCommandCheckRefinementResultPath(umlSelectedComponent.getName());
 	}
 
 

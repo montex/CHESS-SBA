@@ -15,6 +15,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
@@ -48,13 +49,13 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 		return chessModel;
 	}
 	
+	private static final Logger logger = Logger.getLogger(CHESSInternalBlockDiagramModel.class);
 	
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 	
 	@Override
 	public Point getDiagramPoint(Object diagram) {
 		Rectangle diagramBounds = ((GraphicalEditPart) diagram).getFigure().getBounds();
-		System.out.println("diagramBounds: "+diagramBounds);
 		Point p = new Point(diagramBounds.x, diagramBounds.y);
 		return p;
 	}
@@ -168,8 +169,6 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 
 		Point parentPoint = getOwnerPosition(graphicalComponent.getParent());
 
-		System.out.println("parentPoint: " + parentPoint);
-
 		point.x = point.x + parentPoint.x;
 		point.y = point.y + parentPoint.y;
 
@@ -179,9 +178,9 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 	private Object printlnGraphicalPosition(Object component) {
 		if (component instanceof GraphicalEditPart) {
 			GraphicalEditPart graphicalComponent = (GraphicalEditPart) component;
-			System.out.println("-------printlnGraphicalPosition------------");
-			System.out.println(graphicalComponent);
-			System.out.println(graphicalComponent.getFigure().getBounds());
+			logger.debug("-------printlnGraphicalPosition------------");
+			logger.debug(graphicalComponent);
+			logger.debug(graphicalComponent.getFigure().getBounds());
 			return printlnGraphicalPosition(graphicalComponent.getParent());
 		}
 		return null;
@@ -349,8 +348,7 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 		if (port instanceof ResizablePortEditPart) {
 			or = ((ResizablePortEditPart) port).getBorderItemLocator().getCurrentSideOfParent();
 		}
-		//System.out.println("or: " + or);
-
+		
 		EOrientation eOrientation = new EOrientation();
 		Point p = getGraphicalPortPosition(port);
 		int offset = 0;

@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
@@ -30,6 +31,8 @@ public class CHESSBlockDefinitionDiagramModel implements AbstractBlockDefinition
 		return instance;
 	}
 	
+	private static final Logger logger = Logger.getLogger(CHESSBlockDefinitionDiagramModel.class);
+	
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 	
 	
@@ -37,7 +40,7 @@ public class CHESSBlockDefinitionDiagramModel implements AbstractBlockDefinition
 	@Override
 	public Point getDiagramPoint(Object diagram) {
 		Rectangle diagramBounds = ((GraphicalEditPart) diagram).getFigure().getBounds();
-		System.out.println("diagramBounds: "+diagramBounds);
+		logger.debug("diagramBounds: "+diagramBounds);
 		Point p = new Point(diagramBounds.x, diagramBounds.y);
 		return p;
 	}
@@ -46,10 +49,10 @@ public class CHESSBlockDefinitionDiagramModel implements AbstractBlockDefinition
 	public String getGraphicalComponentName(Object graphicalComponent) {
 		
 		if(graphicalComponent instanceof EditPart){
-			System.out.println("is instanceof EditPart");
+			logger.debug("is instanceof EditPart");
 		}
 		if(graphicalComponent instanceof GraphicalEditPart){
-			System.out.println("is instanceof GraphicalEditPart");
+			logger.debug("is instanceof GraphicalEditPart");
 		}
 		
 		EObject component = ((GraphicalEditPart) graphicalComponent).resolveSemanticElement();
@@ -59,19 +62,19 @@ public class CHESSBlockDefinitionDiagramModel implements AbstractBlockDefinition
 	@Override
 	public List<?> getGraphicalComponentsOfBDD(Object graphicalComponent) {
 		
-		System.out.println("getGraphicalComponentsOfBDD");
+		logger.debug("getGraphicalComponentsOfBDD");
 		
 		if(graphicalComponent instanceof EditPart){
-			System.out.println("is instanceof EditPart");
+			logger.debug("is instanceof EditPart");
 		}
 		if(graphicalComponent instanceof GraphicalEditPart){
-			System.out.println("is instanceof GraphicalEditPart");
+			logger.debug("is instanceof GraphicalEditPart");
 		}
 		if(graphicalComponent instanceof BlockDefinitionDiagramEditPart){
-			System.out.println("is instanceof BlockDefinitionDiagramEditPart");
+			logger.debug("is instanceof BlockDefinitionDiagramEditPart");
 			
 			for(Object o : ((BlockDefinitionDiagramEditPart)graphicalComponent).getChildren()){
-				System.out.println("child: "+o);
+				logger.debug("child: "+o);
 			}
 			return ((BlockDefinitionDiagramEditPart)graphicalComponent).getChildren();
 		}
@@ -88,12 +91,6 @@ public class CHESSBlockDefinitionDiagramModel implements AbstractBlockDefinition
 	@Override
 	public Point getGraphicalComponentPosition(Object component) {
 		
-	/*	if(component instanceof EditPart){
-			for(Object o : ((EditPart)component).getChildren()){
-				System.out.println("child of component: "+o);
-			}
-		}*/
-		
 		GraphicalEditPart graphicalComponent = (GraphicalEditPart) component;
 
 		int x = 0;
@@ -103,14 +100,7 @@ public class CHESSBlockDefinitionDiagramModel implements AbstractBlockDefinition
 		y = graphicalComponent.getFigure().getBounds().y;
 
 			Point point = new Point(x, y);
-
-		//Point parentPoint = getOwnerPosition(graphicalComponent.getParent());
-
-		//System.out.println("parentPoint: " + parentPoint);
-
-		//point.x = point.x + parentPoint.x;
-		//point.y = point.y + parentPoint.y;
-
+	
 		return point;
 	}
 
@@ -119,10 +109,8 @@ public class CHESSBlockDefinitionDiagramModel implements AbstractBlockDefinition
 		List<AssociationEditPart> compositionAssociations = new ArrayList<AssociationEditPart>();
 		
 		if(graphicalComponent instanceof BlockDefinitionDiagramEditPart){
-			System.out.println("is instanceof BlockDefinitionDiagramEditPart");
 			
 			for(Object o : ((BlockDefinitionDiagramEditPart)graphicalComponent).getConnections()){
-				System.out.println("connections: "+o);
 				if(o instanceof AssociationEditPart){
 					compositionAssociations.add((AssociationEditPart)o);
 				}
@@ -136,9 +124,7 @@ public class CHESSBlockDefinitionDiagramModel implements AbstractBlockDefinition
 	@Override
 	public String getCompositionAssociationName(Object channel) {
 		AssociationEditPart association = ((AssociationEditPart)channel);
-		System.out.println("association.getModel(): "+association.getModel());
 		View v = ((View) association.getModel());
-		System.out.println("v.getElement(): "+v.getElement());
 		Association associationEleemnt = (Association)v.getElement();
 		return associationEleemnt.getName();
 	}
@@ -149,17 +135,12 @@ public class CHESSBlockDefinitionDiagramModel implements AbstractBlockDefinition
 		List<Point> points = new ArrayList<Point>();
 		
 		AssociationEditPart association = ((AssociationEditPart)channel);
-		//pointList = association.getConnectionFigure().getPoints().toIntArray();
 		
-
 		AssociationFigure associationFigure = (AssociationFigure)association.getFigure();
 		pointList =associationFigure.getPolygonPoints().toIntArray();
-		//pointList =associationFigure.getPoints().toIntArray();
 		
-		System.out.println("points");
 		for (int i = 0; i < pointList.length; i = i + 2) {
 			Point p = new Point(pointList[i], pointList[i + 1]);
-			System.out.println("p: "+p);
 			points.add(p);
 		}
 

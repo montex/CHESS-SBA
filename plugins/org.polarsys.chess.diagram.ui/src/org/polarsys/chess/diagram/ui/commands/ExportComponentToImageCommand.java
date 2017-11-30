@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.polarsys.chess.diagram.ui.commands;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
@@ -32,6 +33,8 @@ public class ExportComponentToImageCommand extends AbstractAsyncJobCommand {
 	private DirectoryUtil directoryUtils = DirectoryUtil.getInstance();
 	private ExportDialogUtils exportDialogUtils = ExportDialogUtils.getInstance();	
 	
+	private static final Logger logger = Logger.getLogger(ExportComponentToImageCommand.class);
+	
 	//private OCRAComponentToImage ocraComponentToImage = OCRAComponentToImage.getInstance();
 	//private DocumentGeneratorService ocraComponentToImage = DocumentGeneratorService.getInstance(CHESSGraphicalModel.getInstance());
 	private InternalBlockDiagramGeneratorService diagramGeneratorService = InternalBlockDiagramGeneratorService.getInstance(CHESSInternalBlockDiagramModel.getInstance());
@@ -44,12 +47,11 @@ public class ExportComponentToImageCommand extends AbstractAsyncJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		
-		System.out.println();
 		
 		GraphicalEditPart selectedGraphicalComponent = selectionUtil
 				.getSelectedGraphicalObject(event);
 
-		System.out.println("selectedGraphicalComponent: "+selectedGraphicalComponent);
+		logger.debug("selectedGraphicalComponent: "+selectedGraphicalComponent);
 		
 		if (selectedGraphicalComponent != null) {
 

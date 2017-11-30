@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.uml2.uml.Class;
 import org.polarsys.chess.contracts.transformations.main.GenerateErrorModel;
@@ -38,6 +39,8 @@ public class SmvExportService {
 		return smvExportService;
 	}
 
+	private static final Logger logger = Logger.getLogger(SmvExportService.class);
+	
 	private static DialogUtil dialogUtil = DialogUtil.getInstance();
 	//private static NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 
@@ -82,7 +85,7 @@ public class SmvExportService {
 		monitor.subTask("transforming...");
 
 		for (String s : args) {
-			System.out.println("-> " + s);
+			logger.debug("-> " + s);
 		}
 
 		GenerateErrorModel gen = new GenerateErrorModel(umlSelectedComponent, targetDir, args);

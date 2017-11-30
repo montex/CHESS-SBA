@@ -13,6 +13,7 @@ package org.polarsys.chess.verificationService.model;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
@@ -42,6 +43,8 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return chessToOCRAModelRunner;
 	}
 
+	private static final Logger logger = Logger.getLogger(ChessSystemModel.class);
+	
 	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 
@@ -469,9 +472,6 @@ if (entityUtil.isBlock((Element) component)) {
 	 */
 	@Override
 	public EList<ContractRefinement> getContractRefinements(Object parentContract) {
-		//for(ContractRefinement cr : ((ContractProperty) parentContract).getRefinedBy()){
-		//System.out.println("cr.getContract(): "+cr.getContract().getBase_Property().getName());
-		//}
 		return ((ContractProperty) parentContract).getRefinedBy();
 	}
 
@@ -479,7 +479,6 @@ if (entityUtil.isBlock((Element) component)) {
 	
 	@Override
 	public String getContractRefinementName(Object contractRefinement) {
-		// TODO Auto-generated method stub
 		return ((ContractRefinement) contractRefinement).getBase_DataType().getName();
 	}
 
@@ -605,16 +604,16 @@ if (entityUtil.isBlock((Element) component)) {
 	@Override
 	public boolean isContractInstanceOwnerEqualToComponent(Object contract, Object component) {
 		
-		System.out.println("isContractInstanceOwnerEqualToComponent, contractProperty name: "+((ContractProperty) contract).getBase_Property().getName());
+		logger.debug("isContractInstanceOwnerEqualToComponent, contractProperty name: "+((ContractProperty) contract).getBase_Property().getName());
 		
 		Element contractOwner = entityUtil
 		.getOwner(((ContractProperty) contract).getBase_Property());
 		
-		System.out.println("contract owner: "+((Class)contractOwner).getName());
+		logger.debug("contract owner: "+((Class)contractOwner).getName());
 		
 		Element componentType = (((Property) component).getType());
 		
-		System.out.println("component type: "+((Class)componentType).getName());
+		logger.debug("component type: "+((Class)componentType).getName());
 		
 		return contractOwner == componentType;
 	}

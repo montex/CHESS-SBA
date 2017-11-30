@@ -56,7 +56,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 		 showPopups = false;
 		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 		 smvFilePath = nuXmvDirectoryUtil.getSmvFilePath();
-		 resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath();			
+		 resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath(umlSelectedComponent.getName());			
 	}
 
 

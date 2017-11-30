@@ -56,7 +56,7 @@ public class CheckValidationPropertyCommand extends AbstractJobCommand {
 		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
 		 showPopups = false;
 		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();
-		  resultFilePath = ocraDirectoryUtil.getCommandCheckPropertyResultPath();
+		  resultFilePath = ocraDirectoryUtil.getCommandCheckPropertyResultPath(umlSelectedComponent.getName());
 	}
 
 
