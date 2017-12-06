@@ -57,7 +57,10 @@ public class SetContractRefinementDialog extends Dialog {
 		parent.setLayout(layout);
 		new Label(parent, SWT.NONE).setText("Select Refinements:");
 		
-		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		//GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		GridData gridData = new GridData();
+		gridData.heightHint=200;
+		gridData.widthHint=500;
 		refineList = new List(parent, SWT.BORDER | SWT.MULTI| SWT.V_SCROLL);
 		for (Property part : ownerClass.getParts()) {
 			if(!(part instanceof Port)){
@@ -97,7 +100,7 @@ public class SetContractRefinementDialog extends Dialog {
 
 	@Override
 	protected boolean isResizable() {
-		return true;
+		return false;
 	}
 	
 	@Override
