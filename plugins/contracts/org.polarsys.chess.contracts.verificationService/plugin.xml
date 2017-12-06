@@ -6,54 +6,10 @@
       <menuContribution
             allPopups="false"            
             locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=filtersMenu">
-              <menu
-               label="AMASS"
-               id="org.eclipse.ui.main.diagramEditorMenu.AMASS">
-             <menu
-                   id="org.eclipse.ui.main.diagramEditorMenu.AMASS.basicOperations"
-                   label="Basic Operations">
-            <command
-                  commandId="org.polarsys.chess.verificationService.commands.ExportModelToFileCommand"
-                  style="push">
-            </command>
-            </menu>
-             <menu
-                   id="org.eclipse.ui.main.diagramEditorMenu.AMASS.validation"
-                   label="Validation">
-                <command
-                      commandId="org.polarsys.chess.verificationService.commands.CheckValidationPropertyCommand2"
-                      style="push">
-                </command>
-             </menu>
-             <menu
-               label="Functional Verifications"
-               id="org.eclipse.ui.main.diagramEditorMenu.AMASS.funcVer">    
-            <command
-                  commandId="org.polarsys.chess.verificationService.commands.ContractRefinementCommand"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
-                  style="push">
-            </command>           
-             <command
-                  commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
-                  style="push">
-            </command>
-             </menu>
-              <menu
-                    id="org.eclipse.ui.main.diagramEditorMenu.AMASS.safetyAnalysis"
-                    label="Safety Analysis">
-               </menu>
-         </menu>        
       </menuContribution>
       <menuContribution
             allPopups="false"            
             locationURI="popup:org.eclipse.papyrus.views.modelexplorer.modelexplorer.popup">
-            <menu
-               label="AMASS"
-               id="org.eclipse.ui.main.diagramEditorMenu.AMASS">
-               </menu>
           <!--<menu
                label="AMASS"
                id="org.eclipse.ui.main.modelExplorerMenu.AMASS">
@@ -95,80 +51,130 @@
             <menuContribution
             allPopups="false"            
             locationURI="menu:org.eclipse.ui.main.menu">
-         <menu
-               label="AMASS"
-               id="org.eclipse.ui.main.menu.AMASS">
-                <menu
-                      id="org.eclipse.ui.main.menu.AMASS.debug"
-                      label="//Debug Operations">       
-             </menu>
-             <menu
-                   id="org.eclipse.ui.main.menu.AMASS.basicOperation"
-                   label="Basic Operations">
-               <menu
-               label="//Debug Operations">
-               <command
-                  commandId="org.polarsys.chess.verificationService.commands.debug.RuntimeErrorsOnFileCommand"
-                  style="push">
-            </command>
-               </menu>
-            <command
-                  commandId="org.polarsys.chess.verificationService.commands.ExportModelToFileCommand"
-                  style="push">
-            </command>
-            </menu>
-             <menu
-                   id="org.eclipse.ui.main.menu.AMASS.validation"
-                   label="Validation">
-                <command
-                      commandId="org.polarsys.chess.verificationService.commands.CheckValidationPropertyCommand2"
-                      style="push">
-                </command>
-                <menu
-                      label="//Debug Validation">
-                   <command
-                         commandId="org.polarsys.chess.verificationService.commands.debug.ModelCheckingOnFileCommand"
-                         style="push">
-                   </command>
-                </menu>
-             </menu>
-             <menu
-               label="Functional Verifications"
-               id="org.eclipse.ui.main.menu.AMASS.funcVer">    
-               <menu
-               label="//Debug Operations">
-               <command
-                  commandId="org.polarsys.chess.verificationService.commands.debug.ContractRefinementOnFileCommand"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.polarsys.chess.verificationService.commands.debug.ContractImplementationOnFileCommand"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.polarsys.chess.verificationService.commands.debug.CheckValidationPropertyOnFileCommand"
-                  style="push">
-            </command>
-               </menu>        
-            <command
-                  commandId="org.polarsys.chess.verificationService.commands.ContractRefinementCommand"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
-                  style="push">
-            </command>           
-             <command
-                  commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
-                  style="push">
-            </command>
-             </menu>
-              <menu
-                    id="org.eclipse.ui.main.menu.AMASS.safetyAnalysis"
-                    label="Safety Analysis">
-               </menu>
-         </menu>        
       </menuContribution>
+            <menuContribution
+                  allPopups="false"
+                  locationURI="popup:org.polarsys.chess.modelexplorerpopupmenu.id">
+               <menu
+                     id="org.eclipse.ui.main.diagramEditorMenu.CHESS.basicOperations"
+                     label="Basic Operations">
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.ExportModelToFileCommand"
+                        style="push">
+                  </command>
+               </menu>
+               <menu
+                     id="org.eclipse.ui.main.diagramEditorMenu.CHESS.validation"
+                     label="Validation">
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.CheckValidationPropertyCommand2"
+                        style="push">
+                  </command>
+               </menu>
+               <menu
+                     id="org.eclipse.ui.main.diagramEditorMenu.CHESS.funcVer"
+                     label="Functional Verifications">
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.ContractRefinementCommand"
+                        style="push">
+                  </command>
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
+                        style="push">
+                  </command>
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
+                        style="push">
+                  </command>
+               </menu>
+            </menuContribution>
+            <menuContribution
+                  allPopups="false"
+                  locationURI="menu:org.polarsys.chess.mainMenu">
+               <menu
+                     id="org.eclipse.ui.main.menu.CHESS.basicOperation"
+                     label="Basic Operations">
+                  <menu
+                        label="//Debug Operations">
+                     <command
+                           commandId="org.polarsys.chess.verificationService.commands.debug.RuntimeErrorsOnFileCommand"
+                           style="push">
+                     </command>
+                  </menu>
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.ExportModelToFileCommand"
+                        style="push">
+                  </command>
+               </menu>
+               <menu
+                     id="org.eclipse.ui.main.menu.CHESS.validation"
+                     label="Validation">
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.CheckValidationPropertyCommand2"
+                        style="push">
+                  </command>
+                  <menu
+                        label="//Debug Validation">
+                     <command
+                           commandId="org.polarsys.chess.verificationService.commands.debug.ModelCheckingOnFileCommand"
+                           style="push">
+                     </command>
+                  </menu>
+               </menu>
+               <menu
+                     id="org.eclipse.ui.main.menu.CHESS.funcVer"
+                     label="Functional Verifications">
+                  <menu
+                        label="//Debug Operations">
+                     <command
+                           commandId="org.polarsys.chess.verificationService.commands.debug.ContractRefinementOnFileCommand"
+                           style="push">
+                     </command>
+                     <command
+                           commandId="org.polarsys.chess.verificationService.commands.debug.ContractImplementationOnFileCommand"
+                           style="push">
+                     </command>
+                     <command
+                           commandId="org.polarsys.chess.verificationService.commands.debug.CheckValidationPropertyOnFileCommand"
+                           style="push">
+                     </command>
+                  </menu>
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.ContractRefinementCommand"
+                        style="push">
+                  </command>
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
+                        style="push">
+                  </command>
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
+                        style="push">
+                  </command>
+               </menu>
+               <menu
+                     id="org.eclipse.ui.main.menu.CHESS.safetyAnalysis"
+                     label="Safety Analysis">
+               </menu>
+            </menuContribution>
+            <menuContribution
+                  allPopups="false"
+                  locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=filtersMenu">
+               <menu
+                     icon="icons/CHESSicon.gif"
+                     id="org.polarsys.chess.modelexplorerpopupmenu.id"
+                     label="CHESS">
+               </menu>
+            </menuContribution>
+            <menuContribution
+                  allPopups="false"
+                  locationURI="popup:org.eclipse.papyrus.views.modelexplorer.modelexplorer.popup">
+               <menu
+                     icon="icons/CHESSicon.gif"
+                     id="org.polarsys.chess.modelexplorerpopupmenu.id"
+                     label="CHESS">
+               </menu>
+            </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commands">

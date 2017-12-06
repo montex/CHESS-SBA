@@ -42,7 +42,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 	private String smvFilePath;
 	
 	@Override
-	public void execGUIOperations(ExecutionEvent event) throws Exception {
+	public void execGUIOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
 		 umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		 showPopups = false;
 		 smvFilePath = nuXmvDirectoryUtil.getSmvFilePath();

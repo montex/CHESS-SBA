@@ -5,13 +5,13 @@
          point="org.eclipse.ui.menus">     
             <menuContribution
             allPopups="false"            
-            locationURI="menu:org.eclipse.ui.main.menu.AMASS?after=org.eclipse.ui.main.menu.AMASS.funcVer">
+            locationURI="menu:org.polarsys.chess.mainMenu?after=org.eclipse.ui.main.menu.CHESS.safetyAnalysis">
             <menu
                label="Safety Case"
-            id="org.eclipse.ui.main.menu.AMASS.safetyCase">
+            id="org.eclipse.ui.main.menu.CHESS.safetyCase">
          <menu
                label="Document Generation"
-               id="org.eclipse.ui.main.menu.AMASS.docGen">
+               id="org.eclipse.ui.main.menu.CHESS.docGen">
             <command
                   commandId="org.polarsys.chess.diagram.ui.commands.ExportComponentToImageCommand"
                   style="push">
@@ -29,13 +29,13 @@
       </menuContribution>
      <menuContribution
             allPopups="false"            
-            locationURI="popup:org.eclipse.ui.main.diagramEditorMenu.AMASS?after=org.eclipse.ui.main.diagramEditorMenu.AMASS.funcVer">              
+            locationURI="popup:org.polarsys.chess.modelexplorerpopupmenu.id?after=org.eclipse.ui.main.diagramEditorMenu.CHESS.safetyAnalysis">              
            <menu
                label="Safety Case"
-            id="org.eclipse.ui.main.diagramEditorMenu.AMASS.safetyCase">
+            id="org.eclipse.ui.main.diagramEditorMenu.CHESS.safetyCase">
          <menu
                label="Document Generation"
-               id="org.eclipse.ui.main.diagramEditorMenu.AMASS.docGen">
+               id="org.eclipse.ui.main.diagramEditorMenu.CHESS.docGen">
             <command
                   commandId="org.polarsys.chess.diagram.ui.commands.ExportComponentToImageCommand"
                   style="push">

@@ -44,7 +44,7 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 	String resultFilePath;
 	
 	@Override
-	public void execGUIOperations(ExecutionEvent event) throws Exception {
+	public void execGUIOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
 		
 		 umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		 umlSelectedResource = umlSelectedComponent.eResource();

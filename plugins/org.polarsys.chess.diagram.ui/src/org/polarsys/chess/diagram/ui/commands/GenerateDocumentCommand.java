@@ -56,7 +56,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	private Collection<Diagram> chessDiagrams;
 
 	@Override
-	public void execGUIOperations(ExecutionEvent event) throws Exception {
+	public void execGUIOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		isDiscreteTime = MessageTimeModelDialog.openQuestion();
 		outputDirectoryName = exportDialogUtils.getDirectoryNameFromDialog();

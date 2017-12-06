@@ -153,7 +153,7 @@
    </extension>
     <extension
          point="org.eclipse.ui.menus">
-      <menuContribution
+     <!-- <menuContribution
             allPopups="false"
             locationURI="popup:org.eclipse.papyrus.views.modelexplorer.modelexplorer.popup">
          <menu
@@ -180,6 +180,16 @@
                </visibleWhen>
             </command>
          </menu>
+      </menuContribution> -->
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.main.diagramEditorMenu.CHESS.basicOperations">
+         <command
+               commandId="org.polarsys.chess.contracts.transformations.smv.id"
+               id="org.polarsys.chess.contracts.transformations.smv.id"
+               label="Export as SMV"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
 </plugin>
