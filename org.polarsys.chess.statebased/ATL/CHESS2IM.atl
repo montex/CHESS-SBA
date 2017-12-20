@@ -219,7 +219,9 @@ rule SimpleStochasticBehaviorToComponent(inst : UML!InstanceSpecification) {
 		c.FaultsGeneratesErrors = c.FaultsGeneratesErrors.including(tmpFGE);
 		
 		if(not st.repairDelay.oclIsUndefined()) {
-			thisModule.SimpleStochasticBehaviorRepair(inst);	
+			if(st.repairDelay.trim().size() > 0) {
+				thisModule.SimpleStochasticBehaviorRepair(inst);
+			}
 		}
 	}
 }
