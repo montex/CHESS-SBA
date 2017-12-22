@@ -11,15 +11,20 @@ Further information can be found on the [Official Website](http://polarsys.org/c
 
 ## Usage
 
-This plugin performs **Quantitative Dependability Analysis** using a variant of the **Stochastic Petri Nets** formalism.
+This plugin performs **Quantitative Dependability Analysis** using a variant of the **Stochastic Petri Nets** formalism. It is _not_ a standalone program, but requires the full installation of [PolarSys CHESS](http://polarsys.org/chess/).
 
-Further information can be found in the following documents, as well as in the [scientific publications](#publications) related to this plugin.
+Usage instructions are available [in the wiki](https://github.com/montex/CHESS-SBA/wiki). Further information can be found in the following documents, as well as in the [scientific publications](#publications) related to this plugin.
 
-* [CHESS Toolset User Guide][1] (June 2016)
-* [CHESS-SBA Training Video][2] (June 2016)
-* [CONCERTO D5.6 Use Case Evaluations - Final Version][3] (May 2016)
-* [CONCERTO D3.3 Design and Implementation of Analysis Methods for Non-Functional Properties - Final Version][4] (November 2015)
-* [CHESS D3.2.2 Transformations and Analysis Support to Dependability][5] (December 2011)
+* [CHESS Toolset User Guide][1] (June 2016)  
+_The official user guide of the complete CHESS framework._
+* [CHESS-SBA Training Video][2] (June 2016)  
+_A training video of CHESS-SBA, produced within the CONCERTO project._
+* [CONCERTO D5.6 Use Case Evaluations - Final Version][3] (May 2016)  
+_Deliverable 5.6 of the CONCERTO project, contains evaluations of the CHESS framework by industrial user and experts._
+* [CONCERTO D3.3 Design and Implementation of Analysis Methods for Non-Functional Properties - Final Version][4] (November 2015)  
+_Deliverable 3.3 of the CONCERTO project, contains technical details on the implementation and usage of CHESS-SBA plugin._
+* [CHESS D3.2.2 Transformations and Analysis Support to Dependability][5] (December 2011)  
+_Deliverable 3.2.2 of the CHESS project, contains technical details on the implementation and usage of CHESS-SBA plugin._
 
 [1]: http://polarsys.org/chess/publis/CHESSToolset_UserGuide.pdf
 [2]: http://3sei.com/concerto/2016%20CHESS%20UNIFI%20Dependability%20Analysis%20QA.f4v
