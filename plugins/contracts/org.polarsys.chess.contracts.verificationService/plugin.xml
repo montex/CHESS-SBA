@@ -196,7 +196,7 @@
        <command
             defaultHandler="org.polarsys.chess.verificationService.commands.debug.ContractImplementationOnFileCommand"
             			id="org.polarsys.chess.verificationService.commands.debug.ContractImplementationOnFileCommand"
-            name="Check Contract Implementation on .oss and .fmv files">
+            name="Check Contract Implementation on .oss and .smv files">
       </command>
       <command
             defaultHandler="org.polarsys.chess.verificationService.commands.ExportModelToFileCommand"

@@ -57,6 +57,7 @@ public class CheckValidationPropertyCommand extends AbstractJobCommand {
 		 showPopups = false;
 		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 		  resultFilePath = ocraDirectoryUtil.getCommandCheckPropertyResultPath(umlSelectedComponent.getName());
+		  
 	}
 
 
