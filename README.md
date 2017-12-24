@@ -1,7 +1,8 @@
 # CHESS State-Based Analysis
 
 This software is part of **PolarSys CHESS**, an open source methodology and tool for the development of high-integrity embedded systems.
-Formerly the "CHESS Framework", it is an integrated collection of Eclipse plugins developed within different research projects, in particular the [CHESS](http://chess-project.org/) and [CONCERTO](http://concerto-project.eu/) projects.
+The CHESS methodology was devised and implemented initially in the [CHESS](http://chess-project.org/) project, later extended in the [CONCERTO](http://concerto-project.eu/) project, and then further developed within other projects.
+The toolset, which was formerly known as _"The CHESS Framework"_, is an integrated collection of Eclipse plugins, now forming a subproject of Eclipse PolarSys. Since then, we call it PolarSys CHESS. 
 
 ## PolarSys CHESS
 
