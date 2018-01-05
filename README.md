@@ -18,8 +18,8 @@ Usage instructions are available [in the wiki](https://github.com/montex/CHESS-S
 
 * [CHESS Toolset User Guide][1] (June 2016)  
 _The official user guide of the complete CHESS framework._
-* [CHESS-SBA Training Video][2] (June 2016)  
-_A training video of CHESS-SBA, produced within the CONCERTO project._
+* [CHESS-SBA Training Video][2] and [Training Slides][2a] (June 2016)  
+_A training video of CHESS-SBA, produced within the CONCERTO project, and the corresponding slides._
 * [CONCERTO D5.6 Use Case Evaluations - Final Version][3] (May 2016)  
 _Deliverable 5.6 of the CONCERTO project, contains evaluations of the CHESS framework by industrial user and experts._
 * [CONCERTO D3.3 Design and Implementation of Analysis Methods for Non-Functional Properties - Final Version][4] (November 2015)  
@@ -29,6 +29,7 @@ _Deliverable 3.2.2 of the CHESS project, contains technical details on the imple
 
 [1]: http://polarsys.org/chess/publis/CHESSToolset_UserGuide.pdf
 [2]: http://3sei.com/concerto/2016%20CHESS%20UNIFI%20Dependability%20Analysis%20QA.f4v
+[2a]: https://github.com/montex/CHESS-SBA/wiki/files/CHESS-SBA-Training.pdf
 [3]: http://api.ning.com/files/C*P8XcSSeqc3MxUI2YKOEFiInob-K*l89xHB9MNBm10O3GxE8eaNjU0PbPmAtbqGk-JiQ1spjGRLr-xPptE5IwqiWiEs7Wbe/D5.6UsecaseEvaluationsFinalVersionUpdate.pdf
 [4]: http://api.ning.com/files/HrJMLaNSVNhJXvecadVmzHDCs4n9OypBKROzgpm14JdNzAz19R0eGzNpCHwfDz7rOFbdtyoC*FVLbbsaKDfTnG3t8NnKWXjU/D3.3DesignandimplementationofanalysismethodsfornonfunctionalpropertiesFinalversion.pdf
 [5]: http://api.ning.com/files/cUeizBqjmZoDh3wZimWhgoO5IEzWZHEHUNNxQUoqeH2rOvyBJd404Jq0EYFSYjIfoy1CVBtCFJOiRTPi1E2z2rChNtFiz9yh/D3.2.2Transformationsandanalysissupporttodependabilityw.pdf
