@@ -34,6 +34,7 @@ import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.StateMachine;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Type;
 //import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
@@ -63,6 +64,8 @@ public class EntityUtil {
 	private static final String MARTE_BOOLEAN_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Boolean";
 	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
 	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
+	
+	private static final String FAULTY_STATE_MACHINE = "CHESS::Dependability::ThreatsPropagation";
 	
 	//not yet used
 	//private static final String STRING_TYPE = "PrimitiveTypes::String";
@@ -390,6 +393,14 @@ public class EntityUtil {
 		return UMLUtil.getAppliedStereotype(umlElement, SYSTEM, false) != null;
 	}
 
+	public boolean isFaultyStateMachine(Element umlElement) {
+		return UMLUtil.getAppliedStereotype(umlElement, FAULTY_STATE_MACHINE, false) != null;
+	}
+	
+	public boolean isNominalStateMachine(Element umlElement) {
+		return (umlElement instanceof StateMachine)&(UMLUtil.getAppliedStereotype(umlElement, FAULTY_STATE_MACHINE, false) == null);
+	}
+	
 	public void saveConstraint(final Constraint constraint, final String text) {
 
 		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(constraint);
