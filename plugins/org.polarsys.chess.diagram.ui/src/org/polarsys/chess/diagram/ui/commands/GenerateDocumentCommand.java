@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (C) 2017 Fondazione Bruno Kessler.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Alberto Debiasi - initial API and implementation
+ ******************************************************************************/
 package org.polarsys.chess.diagram.ui.commands;
 
 import java.util.Collection;
@@ -54,7 +64,10 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	private String outputDirectoryName;
 	private String currentProjectName;
 	private Collection<Diagram> chessDiagrams;
-
+	private String imageExtension;
+	private String docFormat;
+	
+	
 	@Override
 	public void execGUIOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
@@ -63,6 +76,30 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();
 
+		//Display defaultDisplay = Display.getDefault();
+		//defaultDisplay.syncExec(new Runnable() {
+		//	@Override
+		//	public void run() {
+				parameterDialog = exportDialogUtils.getCompiledModelToDocumentDialog();
+				parameterDialog.open();
+		//	}
+		//});
+
+		if (!parameterDialog.goAhead()) {
+			return;
+		}
+
+		docFormat = parameterDialog.getDocumentFormat();
+		imageExtension = ".svg";
+		if (docFormat.equals("tex")) {
+			imageExtension = ".png";
+		}
+
+		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
+			return;
+		}
+
+		
 	}
 
 	@Override
@@ -71,7 +108,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		OSS ossModel = ocraTranslatorService.getOssModel(umlSelectedComponent, isDiscreteTime, monitor);
 
 		Display defaultDisplay = Display.getDefault();
-		defaultDisplay.syncExec(new Runnable() {
+		/*defaultDisplay.syncExec(new Runnable() {
 			@Override
 			public void run() {
 				parameterDialog = exportDialogUtils.getCompiledModelToDocumentDialog();
@@ -92,7 +129,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
 			return;
 		}
-
+*/
 		documentGeneratorService = new DocumentGeneratorServiceFromOssModel(ossModel);
 		documentGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, imageExtension,
 				parameterDialog.getShowLeafComponents());

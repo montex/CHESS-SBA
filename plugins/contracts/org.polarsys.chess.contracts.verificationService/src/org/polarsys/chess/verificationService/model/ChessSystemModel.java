@@ -64,6 +64,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 	@Override
 	public String getComponentTypeName(Object component) {
+
 		if(entityUtil.isBlock((Element) component)) {
 			return entityUtil.getComponentName(component);
 		}
