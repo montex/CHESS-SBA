@@ -21,6 +21,8 @@ Require-Bundle: org.eclipse.ui,
  org.polarsys.chess.core,
  org.polarsys.chess.service,
  org.polarsys.chess.fla.flamm,
- org.polarsys.chess.fla.flaxml
+ org.polarsys.chess.fla.flaxml,
+ org.polarsys.chess.m2m,
+ org.eclipse.uml2.uml
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
