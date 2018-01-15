@@ -20,7 +20,6 @@ Require-Bundle: org.eclipse.core.resources,
  eu.fbk.eclipse.standardtools.utils,
  eu.fbk.tools.editor.nusmv.ui;bundle-version="1.0.0",
  eu.fbk.eclipse.standardtools.ExecOcraCommands,
- eu.fbk.eclipse.standardtools.nuXmvService,
  org.polarsys.chess.contracts.profile,
  org.polarsys.chess.core,
  eu.fbk.tools.editor.oss

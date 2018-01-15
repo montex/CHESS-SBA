@@ -43,7 +43,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return chessToOCRAModelRunner;
 	}
 
-	private static final Logger logger = Logger.getLogger(ChessSystemModel.class);
+	private final Logger logger = Logger.getLogger(ChessSystemModel.class);
 	
 	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 	private EntityUtil entityUtil = EntityUtil.getInstance();

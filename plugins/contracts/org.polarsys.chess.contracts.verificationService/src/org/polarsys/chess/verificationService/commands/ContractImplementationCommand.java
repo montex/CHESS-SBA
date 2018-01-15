@@ -34,7 +34,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 	//private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
 	private SmvExportService nuXmvService = SmvExportService.getInstance();
 	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
-	private static NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
+	private NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 	
 	public ContractImplementationCommand() {
 		super("Check Contract Implementation");

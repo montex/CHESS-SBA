@@ -95,6 +95,7 @@
                      id="org.eclipse.ui.main.menu.CHESS.basicOperation"
                      label="Basic Operations">
                   <menu
+                        id="org.eclipse.ui.main.menu.CHESS.basicOperation.debug"
                         label="//Debug Operations">
                      <command
                            commandId="org.polarsys.chess.verificationService.commands.debug.RuntimeErrorsOnFileCommand"

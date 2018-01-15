@@ -39,9 +39,9 @@ public class SmvExportService {
 		return smvExportService;
 	}
 
-	private static final Logger logger = Logger.getLogger(SmvExportService.class);
+	private final Logger logger = Logger.getLogger(SmvExportService.class);
 	
-	private static DialogUtil dialogUtil = DialogUtil.getInstance();
+	private DialogUtil dialogUtil = DialogUtil.getInstance();
 	//private static NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 
 	
