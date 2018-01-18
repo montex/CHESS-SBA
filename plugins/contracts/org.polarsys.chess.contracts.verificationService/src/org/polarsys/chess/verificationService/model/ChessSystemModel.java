@@ -233,7 +233,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 */
 	@Override
 	public EList<Property> getParameters(Object component) {
-		return new BasicEList<Property>(entityUtil.getBooleanAttributesExceptsPorts((Element) component));
+		return new BasicEList<Property>(entityUtil.getBooleanAttributesExceptPorts((Element) component));
 	}
 
 	/*
@@ -617,6 +617,13 @@ if (entityUtil.isBlock((Element) component)) {
 		logger.debug("component type: "+((Class)componentType).getName());
 		
 		return contractOwner == componentType;
+	}
+
+
+
+	@Override
+	public boolean isEventType(Object port_or_parameter) {
+		return entityUtil.isEventPortAttribute((Property)port_or_parameter);
 	}
 
 	
