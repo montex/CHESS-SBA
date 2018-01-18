@@ -123,7 +123,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 
 		if (selectedUmlElement instanceof Property) {
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
-				Class umlClass = entityUtil.getUmlType((Property) selectedUmlElement);
+				Element umlClass = entityUtil.getUmlType((Property) selectedUmlElement);
 
 				if (!contractEntityUtil.isContract(umlClass)) {
 					return umlClass;
@@ -157,7 +157,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 			}
 
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
-				Class classType = entityUtil.getUmlType((Property) selectedUmlElement);
+				Element classType = entityUtil.getUmlType((Property) selectedUmlElement);
 				if (contractEntityUtil.isContract(classType)) {
 					return classType;
 				}

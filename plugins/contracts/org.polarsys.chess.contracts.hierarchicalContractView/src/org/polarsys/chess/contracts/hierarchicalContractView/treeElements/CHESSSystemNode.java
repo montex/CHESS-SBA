@@ -40,7 +40,7 @@ public class CHESSSystemNode extends SystemNode {
 		for (Property umlProperty : ((Class) system).getAttributes()) {
 
 			if (contractEntityUtil.isContractProperty(umlProperty)) {
-				children.add(new ContractNode(this, entityUtil.getUmlType(umlProperty).getName()));
+				children.add(new ContractNode(this, ((Class)entityUtil.getUmlType(umlProperty)).getName()));
 			} else if (entityUtil.isComponentInstance(umlProperty)) {
 				children.add(new CHESSComponentNode(this, umlProperty));
 			}
