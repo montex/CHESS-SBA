@@ -124,7 +124,7 @@ public class SelectionUtil {
 				return (Class) selectedUmlElement;
 			}
 		}
-
+		
 		throw new NoComponentException();
 
 	
