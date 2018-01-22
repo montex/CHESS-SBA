@@ -130,7 +130,7 @@
 	assume:
 		TRUE;
 	guarantee:
-	[for (contrProp : Property | contrProps) separator (' and ')][let contract : Class = contrProp.type.oclAsType(Class)][if not isAssumptionTrue(contract)]([getAssume(contract)/]) implies [/if]([getGuarantee(contract)/])[/let][/for];
+	[for (contrProp : Property | contrProps) separator (' and ')][let contract : Class = contrProp.type.oclAsType(Class)][if not isAssumptionTrue(contract)](([getAssume(contract)/]) implies [/if]([getGuarantee(contract)/])[if not isAssumptionTrue(contract)])[/if][/let][/for];
 	[/if]
 	[/let]
 	[/if]
@@ -227,7 +227,7 @@
 	[for (contrProp : Property | contrProps)]
 	[let contract : Class = contrProp.type.oclAsType(Class)]
 		[if (isWeakContract(contrProp) and not isAssumptionTrue(contract))]
-	CONSISTENCY NAME [contrProp.name/]_consistency := [part.name/].[contrProp.name/].ASSUMPTION;
+	CONSISTENCY NAME [nextblock.name/]_[contrProp.name/]_consistency := [part.name/].[contrProp.name/].ASSUMPTION;
 		[/if]
 	[/let]
 	[/for]

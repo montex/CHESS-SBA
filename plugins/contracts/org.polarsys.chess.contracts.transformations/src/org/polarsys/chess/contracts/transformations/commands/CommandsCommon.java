@@ -17,13 +17,16 @@
 package org.polarsys.chess.contracts.transformations.commands;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -35,25 +38,33 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.jface.window.Window;
+import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
+import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.contracts.integration.ToolIntegration;
+import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
+import org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus;
 import org.polarsys.chess.contracts.transformations.dialogs.RefinementResultDialog;
 import org.polarsys.chess.contracts.transformations.main.Generate;
 import org.polarsys.chess.contracts.transformations.main.GenerateErrorModel;
 import org.polarsys.chess.contracts.transformations.main.GenerateFaultExtensions;
+import org.polarsys.chess.core.util.uml.ResourceUtils;
 
 public class CommandsCommon {
 
@@ -219,7 +230,7 @@ public class CommandsCommon {
 						openRefinementResult(text);
 						//update contract status after checking for weak contract assumptions
 						if(commandType.equals(CommandEnum.VALIDPROP))
-							updateContractStatus(gen.getModel(),args,text);
+							updateWeakContractStatus(editor,args,text);
 					}
 					
 				} catch (IOException e) {
@@ -259,15 +270,25 @@ public class CommandsCommon {
 			}
 		});
 	}
-	private static void updateContractStatus(EObject eobject,final List<String> args,final String text) {
+	private static void updateWeakContractStatus(final IEditorPart eobject,final List<String> args,final String text) {
 
-
-		Model model= (Model) eobject;
+		final Display display = PlatformUI.getWorkbench().getDisplay();
+		display.asyncExec(new Runnable() {
+			public void run() {
+				
+		Model model;
+		Resource res;
+		try {
+			PapyrusMultiDiagramEditor editor = (PapyrusMultiDiagramEditor)eobject;
+			TransactionalEditingDomain tdom=(TransactionalEditingDomain) editor.getEditingDomain();
+			res = ResourceUtils.getUMLResource(editor.getServicesRegistry());
+			model= ResourceUtils.getModel(res);
 		
 		Package sysView = null;
 		Package compView = null;
 		List<Property> allContractProperties = new ArrayList<Property>();
-		
+		List<Property> allCompInst = new ArrayList<Property>();
+
 		for (Package pkg : model.getNestedPackages()) {
 			if(pkg.getAppliedStereotype("CHESS::Core::CHESSViews::SystemView") != null){
 				sysView = pkg;
@@ -275,6 +296,7 @@ public class CommandsCommon {
 			if(pkg.getAppliedStereotype("CHESS::Core::CHESSViews::ComponentView") != null){
 				compView = pkg;
 			}
+			
 		} 
 
 		// Browse through the model and get all blocks, ports, properties and associations
@@ -287,10 +309,13 @@ public class CommandsCommon {
 				 if(elem.getAppliedStereotype("CHESSContract::ContractProperty") != null){
 						allContractProperties.add((Property) elem);
 					}
+				 else if (elem.getAppliedStereotype("CHESSContract::ComponentInstance") != null ) {
+						allCompInst.add((Property) elem);
+					}
 				}
 
 			}
-		
+		 
 		if (compView != null)
 			for (Element elem : compView.allOwnedElements()) {
 
@@ -300,22 +325,60 @@ public class CommandsCommon {
 					}
 				}
 			}
-		
+		for(Property prop:allContractProperties)
+		{
+			ContractProperty contractProp = (ContractProperty) prop.getStereotypeApplication(prop.getAppliedStereotype("CHESSContract::ContractProperty"));
+			System.out.println(prop.getName()+" "+contractProp.getStatus());
+		}
 		//if checkAllWeakContracts true then go through the validprop results if they are not empty
 		if(args.get(3).equalsIgnoreCase("true") && !text.isEmpty())
 		{
+			Map <Class,List<ContractProperty>> selectedWeakContracts=new HashMap<Class,List<ContractProperty>>();
 			for (Property prop:allContractProperties)
 			{
 				Stereotype contrPropStereo = prop.getAppliedStereotype("CHESSContract::ContractProperty");
+				Class block=(Class)prop.getOwner();
+				if(!selectedWeakContracts.containsKey(block))
+					selectedWeakContracts.put(block, new ArrayList<ContractProperty>());
 				ContractProperty contractProp = (ContractProperty) prop.getStereotypeApplication(contrPropStereo);
-				String match1 = "Consistency " +prop.getName()+ "_consistency: [OK]";
-				String match2 = "Consistency " +prop.getName()+ "_consistency: [NOT OK]";
-				
-				if(text.indexOf(match1)!= -1) 
-					contractProp.setStatus(ContractStatus.VALIDATED);
-				else if (text.indexOf(match2)!= -1)
-					contractProp.setStatus(ContractStatus.NOT_VALIDATED);
+				String match1 = "Consistency " +block.getName()+"_"+prop.getName()+ "_consistency: [OK]";
+				String match11 = "Consistency " +block.getName()+"_"+prop.getName()+ "_consistency: OK";
+				String match2 = "Consistency " +block.getName()+"_"+prop.getName()+ "_consistency: [NOT OK]";
+				String match22 = "Consistency " +block.getName()+"_"+prop.getName()+ "_consistency: NOT OK";
+				System.out.println(match1);
+				if(text.indexOf(match1)!= -1 || text.indexOf(match11)!= -1) 
+					{
+					//contractProp.setStatus(ContractStatus.VALIDATED);
+					tdom.getCommandStack().execute(SetCommand.create(editor.getEditingDomain(), contractProp, CHESSContractPackage.eINSTANCE.getContractProperty_Status(), ContractStatus.VALIDATED));
+					selectedWeakContracts.get(block).add(contractProp);
+					}
+				else if (text.indexOf(match2)!= -1 || text.indexOf(match22)!= -1)
+					{
+					tdom.getCommandStack().execute(SetCommand.create(editor.getEditingDomain(), contractProp, CHESSContractPackage.eINSTANCE.getContractProperty_Status(), ContractStatus.NOT_VALIDATED));
+					//contractProp.setStatus(ContractStatus.NOT_VALIDATED);
+					}
+			}
+			
+			for (Map.Entry<Class,List<ContractProperty>> entry:selectedWeakContracts.entrySet())
+			{
+				//Select the weak contracts in the corresponding component instances
+			for (Property compInstProp:allCompInst)
+			{
+				if(compInstProp.getType().equals(entry.getKey()))
+				{
+					ComponentInstance compInstStereo= (ComponentInstance) compInstProp.getStereotypeApplication(compInstProp.getAppliedStereotype("CHESSContract::ComponentInstance"));
+					tdom.getCommandStack().execute(SetCommand.create(editor.getEditingDomain(), compInstStereo, CHESSContractPackage.eINSTANCE.getComponentInstance_WeakGuarantees(),entry.getValue()));
+				}	
+			}
 			}
 		}
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
 	}
+			
+	});
+}
 }
