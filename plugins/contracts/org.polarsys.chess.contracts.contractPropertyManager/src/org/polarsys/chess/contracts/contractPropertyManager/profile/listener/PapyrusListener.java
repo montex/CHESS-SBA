@@ -65,34 +65,37 @@ public class PapyrusListener implements IPapyrusListener {
 			if (eventType == StereotypeExtensionNotification.STEREOTYPE_APPLIED_TO_ELEMENT) {
 
 				Property umlProperty = (Property) notifier;
-				
+
 				if (contractEntityUtil.isContractProperty(umlProperty)) {
 
 					if (notification.getNewValue() instanceof ContractProperty) {
 						ContractProperty newContractProperty = (ContractProperty) notification.getNewValue();
 
-						Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+						if (newContractProperty.getBase_Property().getType() == null) {
 
-						boolean res = MessageDialog.openQuestion(shell, "Question",
-								"Do you want to create a new contract or instantiate an existing one?");
+							Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
-						Class contract;
+							boolean res = MessageDialog.openQuestion(shell, "Question",
+									"Do you want to create a new contract or instantiate an existing one?");
 
-						if (res) {
-							String contractName = newContractProperty.getBase_Property().getName().replace("Property",
-									"") + "Type";
-							// create the class that will be converted as
+							Class contract;
+
+							if (res) {
+								String contractName = newContractProperty.getBase_Property().getName()
+										.replace("Property", "") + "Type";
+								// create the class that will be converted as
+								// contract
+								contract = createContract((Class) umlProperty.getOwner(), contractName);
+							} else {
+								// assign as type of the new contract property
+								// the
+								// selected contract
+								contract = selectContract(umlProperty);
+							}
+							// assign to the type of the contractproperty the
 							// contract
-							contract = createContract((Class) umlProperty.getOwner(), contractName);
-						} else {
-							// assign as type of the new contract property the
-							// selected contract
-							contract = selectContract(umlProperty);
+							newContractProperty.getBase_Property().setType((Type) contract);
 						}
-						// assign to the type of the contractproperty the
-						// contract
-						newContractProperty.getBase_Property().setType((Type) contract);
-
 					}
 				}
 
