@@ -48,8 +48,10 @@ public class PapyrusModelListener implements IPapyrusListener {
 	@Override
 	public void notifyChanged(Notification notification) {
 		Object notifier = notification.getNotifier();
-		if(notifier instanceof Class){
+		
+		if((notifier instanceof Class)&(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().isEditorAreaVisible())){
 			Class cblock = (Class) notifier;
+			
 			if(notification.getEventType() == StereotypeExtensionNotification.STEREOTYPE_APPLIED_TO_ELEMENT){
 				if(cblock.getAppliedStereotype(CONTRACT) != null){
 					
