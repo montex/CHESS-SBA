@@ -42,7 +42,7 @@ public class PapyrusListener implements IPapyrusListener {
 			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 			IViewPart modelExplorerViewPart;
 
-			if(window!=null){
+			if((window!=null)&&(window.getActivePage()!=null)){
 			modelExplorerViewPart = window.getActivePage().findView(CustomHierarchicalView.View_ID);
 			if (modelExplorerViewPart != null) {
 
