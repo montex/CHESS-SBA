@@ -74,7 +74,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 
 	@Override
-	public boolean isRangeType(Object port) {
+	public boolean isPortOrParameterWithRangeType(Object port) {
 		return entityUtil.isRangeAttribute((Property) port);
 	}
 
@@ -517,8 +517,8 @@ if (entityUtil.isBlock((Element) component)) {
 	 * isBooleanType(java.lang.Object)
 	 */
 	@Override
-	public boolean isBooleanType(Object port) {
-		return entityUtil.isBooleanAttribute((Property) port);
+	public boolean isPortOrParameterWithBooleanType(Object port_or_parameter) {
+		return entityUtil.isBooleanAttribute((Property) port_or_parameter);
 	}
 
 	/*
@@ -529,8 +529,8 @@ if (entityUtil.isBlock((Element) component)) {
 	 * isDoubleType(java.lang.Object)
 	 */
 	@Override
-	public boolean isDoubleType(Object port) {
-		return entityUtil.isDoubleAttribute((Property) port);
+	public boolean isPortOrParameterWithDoubleType(Object port_or_parameter) {
+		return entityUtil.isDoubleAttribute((Property) port_or_parameter);
 	}
 
 	/*
@@ -541,8 +541,8 @@ if (entityUtil.isBlock((Element) component)) {
 	 * isRealType(java.lang.Object)
 	 */
 	@Override
-	public boolean isRealType(Object port) {
-		return entityUtil.isRealAttribute((Property) port);
+	public boolean isPortOrParameterWithRealType(Object port_or_parameter) {
+		return entityUtil.isRealAttribute((Property) port_or_parameter);
 	}
 	
 	/*
@@ -553,8 +553,8 @@ if (entityUtil.isBlock((Element) component)) {
 	 * isIntType(java.lang.Object)
 	 */
 	@Override
-	public boolean isIntType(Object port) {
-		return entityUtil.isIntegerAttribute((Property) port);
+	public boolean isPortOrParameterWithIntType(Object port_or_parameter) {
+		return entityUtil.isIntegerAttribute((Property) port_or_parameter);
 	}
 
 	/*
@@ -565,15 +565,15 @@ if (entityUtil.isBlock((Element) component)) {
 	 * isContinuousType(java.lang.Object)
 	 */
 	@Override
-	public boolean isContinuousType(Object port) {
-		return entityUtil.isContinuousAttribute((Property) port);
+	public boolean isPortOrParameterWithContinuousType(Object port_or_parameter) {
+		return entityUtil.isContinuousAttribute((Property) port_or_parameter);
 	}
 
 	
 	
 	@Override
-	public boolean isEnumType(Object port) {
-		return entityUtil.isEnumerationAttribute((Property) port);
+	public boolean isPortOrParameterWithEnumType(Object port_or_parameter) {
+		return entityUtil.isEnumerationAttribute((Property) port_or_parameter);
 	}
 
 	/*
@@ -622,8 +622,22 @@ if (entityUtil.isBlock((Element) component)) {
 
 
 	@Override
-	public boolean isEventType(Object port_or_parameter) {
+	public boolean isPortOrParameterWithEventType(Object port_or_parameter) {
 		return entityUtil.isEventPortAttribute((Property)port_or_parameter);
+	}
+
+
+
+	@Override
+	public String getPortOrParameterOwnerName(Object port_or_parameter) {
+		return entityUtil.getComponentName(entityUtil.getOwner((Element)port_or_parameter));
+	}
+
+
+
+	@Override
+	public boolean isPortOrParameterWithNullType(Object port_or_parameter) {
+		return (((Property)port_or_parameter).getType() == null);
 	}
 
 	
