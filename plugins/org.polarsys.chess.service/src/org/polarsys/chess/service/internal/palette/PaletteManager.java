@@ -18,6 +18,8 @@ package org.polarsys.chess.service.internal.palette;
 
 import java.util.List;
 
+import javax.rmi.CORBA.Util;
+
 import org.eclipse.gef.palette.PaletteDrawer;
 import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
@@ -26,11 +28,15 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
+import org.eclipse.papyrus.infra.gmfdiag.css.notation.CSSDiagramImpl;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.uml2.uml.internal.impl.StateMachineImpl;
+import org.polarsys.chess.chessmlprofile.util.Constants;
 import org.polarsys.chess.core.constraint.PreferenceProperties;
 import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.ViewDiagramAssociations;
+import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 
 public class PaletteManager {
@@ -81,10 +87,48 @@ public class PaletteManager {
 	//TODO this code is temporary needs refactoring
 	private static void setPaletteVisibility(PaletteDrawer paletteDrawer, String viewName,
 			String diagramName) {
-				
-		if (diagramName.equals(CHESSProfileManager.SYSTEM_VIEW)) {
+		
+		String paletteId = paletteDrawer.getId();
+		
+		
+		
+		if (viewName.equals(CHESSProfileManager.SYSTEM_VIEW) ) {
 			//paletteDrawer.setVisible(false);
+			
+
+			if (diagramName.compareTo("PapyrusUMLStateMachineDiagram")==0){
+				paletteDrawer.setVisible(true);
+				
+				boolean isErrorModel = false;
+				try{
+					StateMachineImpl obj = (StateMachineImpl) ((CSSDiagramImpl) CHESSEditorUtils.getDiagramEditPart().getModel()).getElement();
+					if (obj != null){
+						if (obj.getAppliedStereotype(Constants.ERROR_MODEL)!= null){
+							isErrorModel = true;
+						}
+					}
+				}
+				catch(Exception ex){
+					ex.printStackTrace();
+				}
+				
+				
+				if (paletteId.compareTo("SM_ErrorModelDrawer__1317126136270")==0){
+					if (isErrorModel)
+							paletteDrawer.setVisible(true);
+					else
+						paletteDrawer.setVisible(false);
+				}
+					
+				
+				if (paletteId.compareTo("SM_FunctionalDrawer__1317124986519")==0)
+					if (!isErrorModel)
+						paletteDrawer.setVisible(true);
+					else
+						paletteDrawer.setVisible(false);
+			}
 			return;
+			
 		}
 		
 		if (diagramName.equals(ViewDiagramAssociations.ANYDIAGRAM)) {
@@ -94,7 +138,7 @@ public class PaletteManager {
 		
 		paletteDrawer.setVisible(true);
 		String label = paletteDrawer.getLabel();
-		String paletteId = paletteDrawer.getId();
+		;
 		if (viewName.equals(CHESSProfileManager.COMPONENT_VIEW)){
 			if (diagramName.equals(ViewDiagramAssociations.classDiagram)){
 				//set visibility only for the palette's functional tools

@@ -5,22 +5,34 @@
 			<aspectTool description="Initial"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Pseudostate_initial.gif"
 				id="createInitialCreationTool_1317125016987" name="Initial"
-				refToolId="createInitialCreationTool" />
+				refToolId="statemachine.createNodesGroup.initial" />
+				
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/State.gif"
+				id="createStateCreationTool_1317125014412_1317126453052" name="Error (State)"
+				refToolId="statemachine.createNodesGroup.state">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype stereotypeName="CHESS::Dependability::ThreatsPropagation::ErrorState" />
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
+				
 			<aspectTool description="Create an element with a stereotype"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Transition_local.gif"
-				id="createTransitionCreationTool_1317126191843" name="ExternalFault (Transition)"
-				refToolId="createTransitionCreationTool">
+				id="createTransitionCreationTool_1317126191843" name="InternalPropagation (Transition)"
+				refToolId="statemachine.createEdgesGroup.transition">
 				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
 					<stereotypesToApply>
 						<stereotype
-							stereotypeName="CHESS::Dependability::ThreatsPropagation::ExternalFault" />
+							stereotypeName="CHESS::Dependability::ThreatsPropagation::InternalPropagation" />
 					</stereotypesToApply>
 				</postAction>
 			</aspectTool>
 			<aspectTool description="Create an element with a stereotype"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Transition_local.gif"
 				id="createTransitionCreationTool_1317126216631" name="InternalFault (Transition)"
-				refToolId="createTransitionCreationTool">
+				refToolId="statemachine.createEdgesGroup.transition">
 				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
 					<stereotypesToApply>
 						<stereotype
@@ -31,25 +43,12 @@
 
 			<aspectTool description="Create an element with a stereotype"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Transition_local.gif"
-				id="createTransitionCreationTool_1317225825026" name="Propagation (Transition)"
-				refToolId="createTransitionCreationTool">
+				id="createTransitionCreationTool_1317225825026" name="Failure (Transition)"
+				refToolId="statemachine.createEdgesGroup.transition">
 				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
 					<stereotypesToApply>
 						<stereotype
-							stereotypeName="CHESS::Dependability::DependableComponent::Propagation" />
-					</stereotypesToApply>
-				</postAction>
-			</aspectTool>
-
-
-			<aspectTool description="Create an element with a stereotype"
-				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/State.gif"
-				id="createStateCreationTool_1317125014412_1317128380376" name="UnclassifiedError (State)"
-				refToolId="createStateCreationTool">
-				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
-					<stereotypesToApply>
-						<stereotype
-							stereotypeName="CHESS::Dependability::ThreatsPropagation::UnclassifiedError" />
+							stereotypeName="CHESS::Dependability::ThreatsPropagation::Failure" />
 					</stereotypesToApply>
 				</postAction>
 			</aspectTool>
@@ -57,62 +56,14 @@
 			<aspectTool description="Create an element with a stereotype"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/State.gif"
 				id="createStateCreationTool_1317125014412_1317126453052" name="Error (State)"
-				refToolId="createStateCreationTool">
+				refToolId="statemachine.createNodesGroup.state">
 				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
 					<stereotypesToApply>
-						<stereotype stereotypeName="CHESS::Dependability::ThreatsPropagation::Error" />
+						<stereotype stereotypeName="CHESS::Dependability::ThreatsPropagation::ErrorState" />
 					</stereotypesToApply>
 				</postAction>
 			</aspectTool>
-			<aspectTool description="Create an element with a stereotype"
-				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/State.gif"
-				id="createStateCreationTool_1317125014412_1317128350603" name="ErrorFree (State)"
-				refToolId="createStateCreationTool">
-				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
-					<stereotypesToApply>
-						<stereotype stereotypeName="CHESS::Dependability::ThreatsPropagation::ErrorFree" />
-					</stereotypesToApply>
-				</postAction>
-			</aspectTool>
-			<aspectTool description="Create an element with a stereotype"
-				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/State.gif"
-				id="createStateCreationTool_1317125014412_1317128364963" name="FailureFree (State)"
-				refToolId="createStateCreationTool">
-				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
-					<stereotypesToApply>
-						<stereotype
-							stereotypeName="CHESS::Dependability::ThreatsPropagation::FailureFree" />
-					</stereotypesToApply>
-				</postAction>
-			</aspectTool>
-			<aspectTool description="Create an element with a stereotype"
-				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/State.gif"
-				id="createStateCreationTool_1317125014412_1317128368235" name="FailureMode (State)"
-				refToolId="createStateCreationTool">
-				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
-					<stereotypesToApply>
-						<stereotype
-							stereotypeName="CHESS::Dependability::ThreatsPropagation::FailureMode" />
-					</stereotypesToApply>
-				</postAction>
-			</aspectTool>
-			<!--aspectTool description="Create an element with a stereotype" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/State.gif" 
-				id="createStateCreationTool_1317125014412_1317128376004" name="ThreatState 
-				(State)" refToolId="createStateCreationTool"> <postAction id="org.eclipse.papyrus.applystereotypeactionprovider"> 
-				<stereotypesToApply> <stereotype stereotypeName="CHESS::Dependability::ThreatsPropagation::ThreatState" 
-				/> </stereotypesToApply> </postAction> </aspectTool -->
-
-			<aspectTool description="Create an element with a stereotype"
-				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/State.gif"
-				id="createStateCreationTool_1317125014412_1317128385259" name="UnclassifiedFailure (State)"
-				refToolId="createStateCreationTool">
-				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
-					<stereotypesToApply>
-						<stereotype
-							stereotypeName="CHESS::Dependability::ThreatsPropagation::UnclassifiedFailure" />
-					</stereotypesToApply>
-				</postAction>
-			</aspectTool>
+			
 		</drawer>
 	</content>
 </paletteDefinition>

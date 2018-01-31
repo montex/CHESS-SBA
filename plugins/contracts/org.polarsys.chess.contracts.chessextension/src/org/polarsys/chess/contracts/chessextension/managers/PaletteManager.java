@@ -123,6 +123,10 @@ public class PaletteManager {
 			return;
 		}
 		
+		if (diagramName.equals("PapyrusUMLStateMachineDiagram")){
+			return;
+		}
+		
 			
 		paletteDrawer.setVisible(true);
 		String label = paletteDrawer.getLabel();

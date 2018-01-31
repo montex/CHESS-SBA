@@ -2,26 +2,31 @@
 	<content>
 		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif"
 			id="SM_FunctionalDrawer__1317124986519" name="Functional View">
-			<aspectTool description="State"
-				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/State.gif"
-				id="createStateCreationTool_1317125014412" name="State"
-				refToolId="createStateCreationTool" />
+			
 			<aspectTool description="Initial"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Pseudostate_initial.gif"
 				id="createInitialCreationTool_1317125016986" name="Initial"
-				refToolId="createInitialCreationTool" />
+				refToolId="statemachine.createNodesGroup.initial" />
+			
+			<aspectTool description="State"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/State.gif"
+				id="createStateCreationTool_1317125014412" name="State"
+				refToolId="statemachine.createNodesGroup.state" />
+				
+			<aspectTool description="Transition"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Transition_local.gif"
+				id="createTransitionCreationTool_1317125071228" name="Transition"
+				refToolId="statemachine.createEdgesGroup.transition" />
+			
 			<aspectTool description="FinalState"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/FinalState.gif"
 				id="createFinalStateCreationTool_1317125020980" name="FinalState"
-				refToolId="createFinalStateCreationTool" />
+				refToolId="statemachine.createNodesGroup.finalstate" />
 			<!--aspectTool description="Choice" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Pseudostate_choice.gif" 
 				id="createChoiceCreationTool_1317125031260" name="Choice" refToolId="createChoiceCreationTool"/ -->
 			<!--aspectTool description="Junction" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Pseudostate_junction.gif" 
 				id="createJunctionCreationTool_1317125035519" name="Junction" refToolId="createJunctionCreationTool"/ -->
-			<aspectTool description="Transition"
-				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Transition_local.gif"
-				id="createTransitionCreationTool_1317125071228" name="Transition"
-				refToolId="createTransitionCreationTool" />
+			
 		</drawer>
 	</content>
 </paletteDefinition>

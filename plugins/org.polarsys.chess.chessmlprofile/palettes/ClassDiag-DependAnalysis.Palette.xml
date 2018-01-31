@@ -26,6 +26,18 @@
 					</stereotypesToApply>
 				</postAction>
 			</aspectTool>
+			
+			<aspectTool description="Create an element with a stereotype"
+				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif"
+				id="clazz.tool.component_1316779916487_1317300377614" name="xSAP FTA Analysis (Component)"
+				refToolId="clazz.tool.component">
+				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
+					<stereotypesToApply>
+						<stereotype
+							stereotypeName="MARTE::MARTE_AnalysisModel::GQAM::GaAnalysisContext" />
+					</stereotypesToApply>
+				</postAction>
+			</aspectTool>
 		</drawer>
 
 	</content>
