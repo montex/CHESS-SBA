@@ -26,6 +26,7 @@ import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramMode
 import org.polarsys.chess.diagram.ui.services.CHESSDiagramsGeneratorService;
 import org.polarsys.chess.diagram.ui.utils.ExportDialogUtils;
 import org.polarsys.chess.service.internal.model.ChessSystemModel;
+import org.polarsys.chess.service.utils.DialogUtils;
 import org.polarsys.chess.service.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.services.OCRATranslatorService;
@@ -44,6 +45,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	private ChessSystemModel chessToOCRAModelTranslator = ChessSystemModel.getInstance();
 	private OCRATranslatorService ocraTranslatorService = OCRATranslatorService.getInstance(chessToOCRAModelTranslator);
 	private ExportDialogUtils exportDialogUtils = ExportDialogUtils.getInstance();
+	private DialogUtils dialogUtils = DialogUtils.getInstance();
 	private CHESSDiagramsGeneratorService chessDiagramsGeneratorService = CHESSDiagramsGeneratorService
 			.getInstance(CHESSInternalBlockDiagramModel.getInstance(), CHESSBlockDefinitionDiagramModel.getInstance());
 
@@ -72,7 +74,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	public void execGUIOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		isDiscreteTime = MessageTimeModelDialog.openQuestion();
-		outputDirectoryName = exportDialogUtils.getDirectoryNameFromDialog();
+		outputDirectoryName = dialogUtils.getDirectoryNameFromDialog();
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();
 

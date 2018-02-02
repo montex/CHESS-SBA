@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.eclipse.papyrus.views.category"
+            class="org.polarsys.chess.contracts.hierarchicalContractView.view.CustomHierarchicalView"
+            icon="icons/site_element.gif"
+            id="org.polarsys.chess.contracts.hierarchicalContractView.view1"
+            name="Hierarchical Model View"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.infra.core.modelListener">
+      <listener
+            name="org.polarsys.chess.contracts.hierarchicalContractView.listener"
+            realization="org.polarsys.chess.contracts.hierarchicalContractView.listener.PapyrusListener">
+      </listener>
+   </extension>
+ <!--  <extension
+         point="org.polarsys.chess.selectionListener">
+      <listener
+            name="eu.fbk.contracts.hierarchicalContractView.listener1"
+            realization="eu.fbk.contracts.hierarchicalcontractview.listener.SelectionListener">
+      </listener>
+   </extension> -->
+
+</plugin>

@@ -15,7 +15,7 @@ import java.util.Collection;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.uml2.uml.StateMachine;
-import org.polarsys.chess.diagram.ui.utils.ExportDialogUtils;
+import org.polarsys.chess.service.utils.DialogUtils;
 import org.polarsys.chess.service.utils.SelectionUtil;
 import org.polarsys.chess.smvExport.services.SmvExportService;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
@@ -24,7 +24,7 @@ import org.eclipse.uml2.uml.Class;
 public class ExportSelectedNominalSMsToSmvFilesCommand  extends AbstractJobCommand {
 
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
-	private ExportDialogUtils exportDialogUtils = ExportDialogUtils.getInstance();
+	private DialogUtils dialogUtils = DialogUtils.getInstance();
 	//private DirectoryUtil directoryUtils = DirectoryUtil.getInstance();
 	private SmvExportService smvExportService = SmvExportService.getInstance();
 	
@@ -42,7 +42,7 @@ public class ExportSelectedNominalSMsToSmvFilesCommand  extends AbstractJobComma
 	public void execGUIOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);	
-		outputDirectoryName = exportDialogUtils.getDirectoryNameFromDialog();
+		outputDirectoryName = dialogUtils.getDirectoryNameFromDialog();
 		//currentProjectName = directoryUtils.getCurrentProjectName();
 		showPopups = true;
 		stateMachines = smvExportService.getNominalStateMachines(umlSelectedComponent);

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+     <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="TreeOutlinePage">
+         <propertyTab
+               afterTab="advanced"
+               category="Editors"
+               id="CustomConstraintTab"
+               label="ConstraintEditor+">
+         </propertyTab>       
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections
+            contributorId="TreeOutlinePage">
+         <propertySection
+               class="org.polarsys.chess.constraints.constraintEditor.CustomConstraintEditorTab"
+               filter="org.polarsys.chess.constraints.constraintEditor.ConstraintEditorFilter"
+               id="CustomConstraintEditorSection"
+               tab="CustomConstraintTab">
+         </propertySection>
+      </propertySections>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="TreeOutlinePage">
+         <propertyCategory
+               category="Editors">
+         </propertyCategory>
+      </propertyContributor>
+   </extension>
+
+</plugin>

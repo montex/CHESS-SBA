@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.polarsys.chess.properties.propertyEditor
+Bundle-SymbolicName: org.polarsys.chess.properties.propertyEditor;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.papyrus.infra.core,
+ org.eclipse.ui.views.properties.tabbed,
+ eu.fbk.eclipse.standardtools.propertyEditor.core,
+ org.polarsys.chess.chessmlprofile;bundle-version="0.9.0",
+ org.polarsys.chess.utils
+Import-Package: org.eclipse.gef,
+ org.eclipse.gmf.runtime.diagram.ui.editparts,
+ org.eclipse.papyrus.infra.emf.utils,
+ org.eclipse.papyrus.uml.diagram.common.edit.part,
+ org.eclipse.uml2.uml
+Bundle-Vendor: Fondazione Bruno Kessler

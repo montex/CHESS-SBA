@@ -15,14 +15,14 @@ import java.util.Collection;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.uml2.uml.StateMachine;
-import org.polarsys.chess.diagram.ui.utils.ExportDialogUtils;
+import org.polarsys.chess.service.utils.DialogUtils;
 import org.polarsys.chess.smvExport.services.SmvExportService;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 
 public class ExportNominalSMsToSmvFilesCommand  extends AbstractJobCommand {
 
 	//private SelectionUtil selectionUtil = SelectionUtil.getInstance();
-	private ExportDialogUtils exportDialogUtils = ExportDialogUtils.getInstance();
+	private DialogUtils exportDialogUtils = DialogUtils.getInstance();
 	//private DirectoryUtil directoryUtils = DirectoryUtil.getInstance();
 	private SmvExportService smvExportService = SmvExportService.getInstance();
 	

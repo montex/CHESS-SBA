@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramModel;
 import org.polarsys.chess.diagram.ui.utils.ExportDialogUtils;
+import org.polarsys.chess.service.utils.DialogUtils;
 import org.polarsys.chess.service.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.commands.AbstractAsyncJobCommand;
@@ -36,6 +37,7 @@ public class ExportModelToDocumentCommand extends AbstractAsyncJobCommand {
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	private DirectoryUtil directoryUtils = DirectoryUtil.getInstance();
 	private ExportDialogUtils exportDialogUtils = ExportDialogUtils.getInstance();
+	private DialogUtils dialogUtils = DialogUtils.getInstance();
 	//private OCRAComponentToImage ocraComponentToImage = OCRAComponentToImage.getInstance();
 	private DocumentGeneratorService documentGeneratorService = DocumentGeneratorService.getInstance(CHESSInternalBlockDiagramModel.getInstance());
 	
@@ -63,7 +65,7 @@ public class ExportModelToDocumentCommand extends AbstractAsyncJobCommand {
 			}
 	
 			// setShowLeafComponents(showLeafComponents);
-			String outputDirectoryName = exportDialogUtils.getDirectoryNameFromDialog();
+			String outputDirectoryName = dialogUtils.getDirectoryNameFromDialog();
 			// setDirectoryName(directoryName);
 			if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
 				return;

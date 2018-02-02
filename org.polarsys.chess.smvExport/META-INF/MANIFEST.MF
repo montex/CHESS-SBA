@@ -8,7 +8,6 @@ Bundle-Vendor: Fondazione Bruno Kessler
 Require-Bundle: org.eclipse.papyrus.infra.gmfdiag.common,
  eu.fbk.eclipse.standardtools.utils,
  org.polarsys.chess.service,
- org.polarsys.chess.diagram.ui,
  org.eclipse.uml2.uml,
  org.polarsys.chess.contracts.profile;bundle-version="0.9.0",
  eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv;bundle-version="1.0.0",

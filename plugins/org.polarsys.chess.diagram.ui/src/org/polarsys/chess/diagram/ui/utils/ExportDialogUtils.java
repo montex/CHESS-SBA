@@ -52,22 +52,22 @@ public class ExportDialogUtils {
 				});
 			}
 	
-	public String getDirectoryNameFromDialog() throws Exception {
+	/*public String getDirectoryNameFromDialog() throws Exception {
 		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
 		final DirectoryDialog directoryDialog = new DirectoryDialog(shell);
 		directoryDialog.setText("Select the directory");
 		// try {
 		directoryDialog.setFilterPath(directoryUtils.getCurrentProjectDir());
-		/*
+		
 		 * } catch(Exception e) { e.printStackTrace(); }
-		 */
+		 
 		// dd.setFilterPath(getWorkspace().getRoot().getLocation().toString());
 
 		String directoryName = directoryDialog.open();
 
 		return directoryName;
-	}
+	}*/
 
 	public String openImageDialog(String projectDir, String imageName) {
 		//Shell shell2 = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
