@@ -49,7 +49,10 @@ public class PapyrusModelListener implements IPapyrusListener {
 	public void notifyChanged(Notification notification) {
 		Object notifier = notification.getNotifier();
 		
-		if((notifier instanceof Class)&(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().isEditorAreaVisible())){
+		if((PlatformUI.getWorkbench().getActiveWorkbenchWindow()!=null)
+				&&(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()!=null)
+				&&(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().isEditorAreaVisible())
+				&&(notifier instanceof Class)){
 			Class cblock = (Class) notifier;
 			
 			if(notification.getEventType() == StereotypeExtensionNotification.STEREOTYPE_APPLIED_TO_ELEMENT){
