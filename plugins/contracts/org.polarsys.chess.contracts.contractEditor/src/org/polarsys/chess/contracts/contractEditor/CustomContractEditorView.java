@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.polarsys.chess.contracts.contractEditor;
 
+
+import java.util.Set;
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.transaction.RecordingCommand;
@@ -44,19 +47,19 @@ public class CustomContractEditorView extends ContractEditorView {
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 
 	@Override
-	public String[] getContractOwnerInputPorts(Object contract) {		
+	public String[] getContractOwnerInputPortsNames(Object contract) {		
 		Element umlOwner = entityUtil.getOwner((Element) contract);
 		return entityUtil.getInputPortsNames(umlOwner);
 	}
 
 	@Override
-	public String[] getContractOwnerOutputPorts(Object contract) {		
+	public String[] getContractOwnerOutputPortsNames(Object contract) {		
 		Element umlOwner = entityUtil.getOwner((Element) contract);
 		return entityUtil.getOutputPortsNames(umlOwner);
 	}
 
 	@Override
-	public String[] getContractOwnerInputOutputPorts(Object contract) {
+	public String[] getContractOwnerInputOutputPortsNames(Object contract) {
 		Element umlOwner = entityUtil.getOwner((Element) contract);
 		return entityUtil.getInputOutputPortsNames(umlOwner);
 	}
@@ -230,6 +233,90 @@ public class CustomContractEditorView extends ContractEditorView {
 	public String[] getEnumValuesFromContractOwnerPorts(Object contract) {
 		Class element = (Class) ((Class) contract).getOwner();
 		return entityUtil.getEnumValuesFromComponentPorts(element);	
+	}
+
+	@Override
+	public Set<?> getContractOwnerPorts(Object contract) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<?> getContractOwnerAttributes(Object contract) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isNumberAttribute(Object attribute) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isIntAttribute(Object attribute) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEventAttribute(Object attribute) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnumAttribute(Object attribute) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isBoolAttribute(Object attribute) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isContinuousAttribute(Object attribute) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isWordAttribute(Object attribute) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isRealAttribute(Object attribute) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isInOutPort(Object port) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isOutputPort(Object port) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isInputPort(Object port) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getPortName(Object port) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

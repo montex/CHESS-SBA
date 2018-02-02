@@ -22,7 +22,9 @@ Require-Bundle: org.eclipse.core.resources,
  eu.fbk.eclipse.standardtools.ExecOcraCommands,
  org.polarsys.chess.contracts.profile,
  org.polarsys.chess.core,
- eu.fbk.tools.editor.oss
+ eu.fbk.tools.editor.oss,
+ org.polarsys.chess.smvExport,
+ org.polarsys.chess.service
 Import-Package: eu.fbk.eclipse.standardtools.nuXmvService.dialogs,
  eu.fbk.eclipse.standardtools.nuXmvService.services,
  eu.fbk.eclipse.standardtools.nuXmvService.utils,
@@ -33,5 +35,4 @@ Import-Package: eu.fbk.eclipse.standardtools.nuXmvService.dialogs,
  org.polarsys.chess.service.utils
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Fondazione Bruno Kessler
-Export-Package: org.polarsys.chess.verificationService.model
 

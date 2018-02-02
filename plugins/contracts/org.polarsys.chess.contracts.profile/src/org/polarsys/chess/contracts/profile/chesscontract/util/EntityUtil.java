@@ -117,9 +117,20 @@ public class EntityUtil {
 	public String[] getSubComponentsName(Object constraint) {
 		Element umlElement = ((Constraint) constraint).getOwner();
 		Set<String> subCompArr = getSubComponentsNames((Class) umlElement);
-		String[] subComStrArr = new String[subCompArr.size()];
-		return subCompArr.toArray(subComStrArr);
+		//String[] subComStrArr = new String[subCompArr.size()];
+		//return subCompArr.toArray(subComStrArr);
+		return toArray(subCompArr);
 
+	}
+	
+	private String[] toArray(Set<String> set){
+		String[] strArray = new String[set.size()];
+		return set.toArray(strArray);
+	}
+	
+	private String[] toArray(EList<String> eList){
+		String[] strArray = new String[eList.size()];
+		return eList.toArray(strArray);
 	}
 	
 	public String getComponentID(Object umlComponent) {
@@ -180,9 +191,28 @@ public class EntityUtil {
 		//	System.out.println(s);
 		//}
 		
-			String[] enumValuesNamesStrArr = new String[enumValuesEList.size()];
-			return enumValuesEList.toArray(enumValuesNamesStrArr);
+			//String[] enumValuesNamesStrArr = new String[enumValuesEList.size()];
+			// enumValuesEList.toArray(enumValuesNamesStrArr);
+		return toArray(enumValuesEList);
+	}
+	
+	public String[] getEnumValuesFromComponentAttributes(Class umlComponent){
+		EList<String> enumValuesEList = new BasicEList<String>();
 		
+		for(Property element :getAttributes(umlComponent)){
+			if(isEnumerationAttribute(element)){
+				Set<String> currValues = getListValuesForEnumeratorType(element);
+				enumValuesEList.addAll(currValues);
+			}
+		}
+		
+		//for(String s : enumValuesEList){
+		//	System.out.println(s);
+		//}
+		
+			//String[] enumValuesNamesStrArr = new String[enumValuesEList.size()];
+			//return enumValuesEList.toArray(enumValuesNamesStrArr);
+		return toArray(enumValuesEList);
 	}
 	
 	public Set<String> getSubComponentsNames(Class umlComponent) {
@@ -467,8 +497,9 @@ public class EntityUtil {
 	public String[] getValuesForEnumeratorType(Property umlProperty) {
 		Set<String> enumValuesNames = getListValuesForEnumeratorType(umlProperty);		
 		if(enumValuesNames!=null){
-			String[] enumValuesNamesStrArr = new String[enumValuesNames.size()];
-			return enumValuesNames.toArray(enumValuesNamesStrArr);
+			//String[] enumValuesNamesStrArr = new String[enumValuesNames.size()];
+			//return enumValuesNames.toArray(enumValuesNamesStrArr);
+			return toArray(enumValuesNames);
 		}
 		return null;
 		
@@ -528,8 +559,9 @@ public class EntityUtil {
 			portsNames.add(umlPort.getName());
 		}
 
-		String[] portsStrArr = new String[portsNames.size()];
-		return portsNames.toArray(portsStrArr);
+		return toArray(portsNames);
+		//String[] portsStrArr = new String[portsNames.size()];
+		//return portsNames.toArray(portsStrArr);
 	}
 
 	public EList<String> getPortsName(EList<Port> ports) {
@@ -577,6 +609,15 @@ public class EntityUtil {
 		return booleanAttributesNames;
 	}
 
+	public String[] getOwnerAttributesNames(Object contract) {
+		
+		Set<String> attrArr = getAttributesNamesExceptsPorts(((Class) contract).getOwner());
+		//attrArr.addAll(getAttributesNamesExceptsPorts(((Class) contract).getOwner()));
+		return toArray(attrArr);
+
+	}
+
+	
 	public Set<Property> getBooleanAttributes(Element umlElement) {
 		Set<Property> booleanAttributes = new HashSet<Property>();
 

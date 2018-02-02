@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.polarsys.chess.contracts.contractEditor;
 
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -29,9 +30,11 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
+import org.polarsys.chess.service.internal.model.ChessSystemModel;
 import org.polarsys.chess.service.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab;
+import eu.fbk.eclipse.standardtools.model.AbstractSystemModel;
 
 /**
  * This is the contract editor designed for the CHESS platform. It extends the
@@ -58,11 +61,11 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
 	 * #getContractOwnerInputPorts(java.lang.Object)
 	 */
-	@Override
-	public String[] getContractOwnerInputPorts(Object contract) {
+	/*@Override
+	public String[] getOwnerInputPortsNames(Object contract) {
 		Element umlOwner = entityUtil.getOwner((Element) contract);
 		return entityUtil.getInputPortsNames(umlOwner);
-	}
+	}*/
 
 	/*
 	 * (non-Javadoc)
@@ -71,11 +74,11 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
 	 * #getContractOwnerOutputPorts(java.lang.Object)
 	 */
-	@Override
-	public String[] getContractOwnerOutputPorts(Object contract) {
+	/*@Override
+	public String[] getOwnerOutputPortsNames(Object contract) {
 		Element umlOwner = entityUtil.getOwner((Element) contract);
 		return entityUtil.getOutputPortsNames(umlOwner);
-	}
+	}*/
 
 	/*
 	 * (non-Javadoc)
@@ -84,13 +87,13 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
 	 * #getContractOwnerInputOutputPorts(java.lang.Object)
 	 */
-	@Override
-	public String[] getContractOwnerInputOutputPorts(Object contract) {
+	/*@Override
+	public String[] getOwnerInputOutputPortsNames(Object contract) {
 		Element umlOwner = entityUtil.getOwner((Element) contract);
 		return entityUtil.getInputOutputPortsNames(umlOwner);
 
 	}
-
+*/
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -98,17 +101,19 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
 	 * #getContractOwnerAttributes(java.lang.Object)
 	 */
-	@Override
-	public String[] getContractOwnerAttributes(Object contract) {
-		Element element = ((Class) contract).getOwner();
-		EList<String> attrArr = new BasicEList<String>();
+	/*@Override
+	public String[] getOwnerAttributesNames(Object contract) {
+		return entityUtil.getOwnerAttributesNames(contract);
 
-		attrArr.addAll(entityUtil.getBooleanAttributesNamesExceptsPorts(element));
-		String[] attributesStrArr = new String[attrArr.size()];
-		return attrArr.toArray(attributesStrArr);
+	}*/
 
+	public String getContractQualifiedName(Object contract) {
+		if (contract != null) {
+			return ((Class) contract).getQualifiedName();
+		}
+		return null;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -215,10 +220,10 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
 	 * #getComponentName(java.lang.Object)
 	 */
-	@Override
+	/*@Override
 	public String getComponentName(Object component) {
 		return ((Class) component).getQualifiedName();
-	}
+	}*/
 
 	/*
 	 * (non-Javadoc)
@@ -393,10 +398,93 @@ public class CustomContractEditorTab extends ContractEditorTab {
 		return null;
 	}
 
-	@Override
+	/*@Override
 	public String[] getEnumValuesFromContractOwnerPorts(Object contract) {
 		Class element = (Class) ((Class) contract).getOwner();
 		return entityUtil.getEnumValuesFromComponentPorts(element);		
+	}*/
+
+
+	/*@Override
+	public String getPortName(Object port) {
+		return entityUtil.getPortName((Port)port);
 	}
+
+	@Override
+	public String getAttributeName(Object attribute) {
+		return entityUtil.getAttributeName((Property)attribute);
+	}
+
+	@Override
+	public Set<?> getContractOwnerPorts(Object contract) {
+		return entityUtil.getUmlPorts(entityUtil.getOwner((Element)contract));
+	}
+
+	@Override
+	public Set<?> getContractOwnerAttributes(Object contract) {
+		return entityUtil.getAttributes(entityUtil.getOwner((Element)contract));
+	}
+	
+	@Override
+	public boolean isNumberAttribute(Object attribute) {
+		return false;
+	}
+
+	@Override
+	public boolean isIntAttribute(Object attribute) {
+		return entityUtil.isIntegerAttribute((Property)attribute);
+	}
+
+	@Override
+	public boolean isEventAttribute(Object attribute) {
+		return entityUtil.isEventPortAttribute((Property)attribute);
+	}
+
+	@Override
+	public boolean isEnumAttribute(Object attribute) {
+		return entityUtil.isEnumerationAttribute((Property)attribute);
+	}
+
+	@Override
+	public boolean isBoolAttribute(Object attribute) {
+		return entityUtil.isBooleanAttribute((Property)attribute);
+	}
+
+	@Override
+	public boolean isContinuousAttribute(Object attribute) {
+		return entityUtil.isContinuousAttribute((Property)attribute);
+	}
+
+	@Override
+	public boolean isWordAttribute(Object attribute) {
+		return false;
+	}
+
+	@Override
+	public boolean isRealAttribute(Object attribute) {
+		return entityUtil.isRealAttribute((Property)attribute);
+	}
+
+	@Override
+	public boolean isInOutPort(Object port) {
+		return entityUtil.isInOutPort((Port)port);
+	}
+
+	@Override
+	public boolean isOutputPort(Object port) {
+		return entityUtil.isOutputPort((Port)port);
+	}
+
+	@Override
+	public boolean isInputPort(Object port) {
+		return entityUtil.isInputPort((Port)port);
+	}*/
+
+	@Override
+	public AbstractSystemModel getSystemModel() {
+		return ChessSystemModel.getInstance();
+	}
+
+	
 
 }

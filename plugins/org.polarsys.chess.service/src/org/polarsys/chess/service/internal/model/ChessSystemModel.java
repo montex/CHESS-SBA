@@ -8,10 +8,11 @@
  * Contributors:
  *     Alberto Debiasi - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.verificationService.model;
+package org.polarsys.chess.service.internal.model;
 
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
@@ -22,6 +23,7 @@ import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
@@ -30,7 +32,7 @@ import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
-import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.model.AbstractSystemModel;
+import eu.fbk.eclipse.standardtools.model.AbstractSystemModel;
 
 public class ChessSystemModel implements AbstractSystemModel {
 
@@ -132,7 +134,7 @@ if (entityUtil.isBlock((Element) component)) {
 	@Override
 	public String getPortName(Object port) {
 		// return ((Port)port).getQualifiedName().replaceAll("::", "_");
-		return ((Port) port).getName();
+		return entityUtil.getPortName((Port)port);
 	}
 
 	/*
@@ -212,6 +214,11 @@ if (entityUtil.isBlock((Element) component)) {
 		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, FlowDirection.IN_VALUE));
 	}
 
+	@Override
+	public Set<?> getPorts(Object component) {
+		return entityUtil.getUmlPorts((Element)component);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -221,7 +228,8 @@ if (entityUtil.isBlock((Element) component)) {
 	 */
 	@Override
 	public String getParameterName(Object parameter) {
-		return ((Property) parameter).getName();
+		return entityUtil.getAttributeName((Property)parameter);
+		//return ((Property) parameter).getName();
 	}
 
 	/*
@@ -464,6 +472,13 @@ if (entityUtil.isBlock((Element) component)) {
 		return entityUtil.getComponentName(component);
 	}
 
+	
+	
+	@Override
+	public String getContractQualifiedName(Object contract) {
+		return contractEntityUtil.getContractQualifiedName((Class)contract);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -640,5 +655,123 @@ if (entityUtil.isBlock((Element) component)) {
 		return (((Property)port_or_parameter).getType() == null);
 	}
 
-	
+
+
+	@Override
+	public boolean isInputPort(Object port) {
+		return entityUtil.isInputPort((Port)port);
+	}
+
+
+
+	@Override
+	public boolean isOutputPort(Object port) {
+		return entityUtil.isOutputPort((Port)port);
+	}
+
+
+
+	@Override
+	public boolean isInOutPort(Object port) {
+		return entityUtil.isInputPort((Port)port);
+	}
+
+
+
+	@Override
+	public boolean isPortOrParameterWithNumberType(Object attribute) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isPortOrParameterWithWordType(Object attribute) {
+		return entityUtil.isStringAttribute((Property)attribute);
+		
+	}
+
+
+
+	@Override
+	public String getVariableName(Object attribute) {
+		return entityUtil.getAttributeName((Property)attribute);
+}
+
+
+
+	@Override
+	public String getFormalPropertyName(Object formalProperty) {
+		return contractEntityUtil.getFormalPropertyName(formalProperty);
+	}
+
+	@Override
+	public Set<?> getOwnerPorts(Object formalProperty) {
+		Class owner = (Class)entityUtil.getOwner((Element)formalProperty);
+		//block added to manage formal properties with contract as owner
+		if(contractEntityUtil.isContract(owner)){
+			owner = (Class)entityUtil.getOwner(owner);
+		}
+		return entityUtil.getUmlPorts(owner);		
+	}
+
+	@Override
+	public Set<?> getOwnerVariables(Object formalProperty) {
+		Class owner = (Class)entityUtil.getOwner((Element)formalProperty);
+		//block added to manage formal properties with contract as owner
+		if(contractEntityUtil.isContract(owner)){
+			owner = (Class)entityUtil.getOwner(owner);
+		}
+		return entityUtil.getAttributes(owner);
+	}
+
+	@Override
+	public String[] getEnumValuesFromOwnerAttributes(Object formalProperty) {
+		Class owner = (Class)entityUtil.getOwner((Element)formalProperty);
+		//block added to manage formal properties with contract as owner
+		if(contractEntityUtil.isContract(owner)){
+			owner = (Class)entityUtil.getOwner(owner);
+		}
+		//return entityUtil.getEnumValuesFromComponentPorts(element);	
+		return entityUtil.getEnumValuesFromComponentAttributes(owner);
+	}
+
+
+
+	@Override
+	public String[] getSubComponentsName(Object constraint) {
+		return entityUtil.getSubComponentsName(constraint);
+	}
+
+
+
+	@Override
+	public Object getSubComponent(Object constraint, String subCompName) {
+		return entityUtil.getSubComponent(constraint, subCompName);
+	}
+
+
+	@Override
+	public String getConstraintQualifiedName(Object constraint) {
+		return entityUtil.getQualifiedName((NamedElement)constraint);
+	}
+
+
+
+	@Override
+	public String getComponentQualifiedName(Object component) {
+		return entityUtil.getQualifiedName((NamedElement)component);
+	}
+
+
+
+	@Override
+	public String[] getEnumValuesFromOwnerPorts(Object port_or_parameter) {
+		Class owner = (Class)entityUtil.getOwner((Element)port_or_parameter);
+		if(contractEntityUtil.isContract(owner)){
+			owner = (Class)entityUtil.getOwner(owner);
+		}
+		return entityUtil.getEnumValuesFromComponentPorts(owner);	
+	}
 }

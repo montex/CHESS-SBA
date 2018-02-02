@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.polarsys.chess.verificationService.services;
 
-import java.io.File;
+/*import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import org.polarsys.chess.contracts.transformations.main.GenerateErrorModel;
 
 import eu.fbk.eclipse.standardtools.exceptions.NoComponentException;
 //import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
-import eu.fbk.eclipse.standardtools.utils.DialogUtil;
+import eu.fbk.eclipse.standardtools.utils.DialogUtil;*/
 
 /**
  * 
@@ -39,14 +39,14 @@ public class SmvExportService {
 		return smvExportService;
 	}
 
-	private final Logger logger = Logger.getLogger(SmvExportService.class);
+	//private final Logger logger = Logger.getLogger(SmvExportService.class);
 	
-	private DialogUtil dialogUtil = DialogUtil.getInstance();
+	//private DialogUtil dialogUtil = DialogUtil.getInstance();
 	//private static NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 
 	
 
-	public File exportSmv(Class umlSelectedComponent,boolean showPopups, String smvFilePath, IProgressMonitor monitor)
+	/*private File exportSmv(Class umlSelectedComponent,boolean showPopups, String smvFilePath, IProgressMonitor monitor)
 			throws Exception {
 		if (umlSelectedComponent == null) {
 			throw new NoComponentException();
@@ -58,10 +58,10 @@ public class SmvExportService {
 		exportSmv(umlSelectedComponent, smvOutput, args, showPopups,monitor);
 
 		return new File(smvOutput + "/" + getSmvFileName(umlSelectedComponent)+".smv");
-	}
+	}*/
 	
 
-	private List<String> returnParams(Class umlSelectedComponent) {
+	/*private List<String> returnParams(Class umlSelectedComponent) {
 		String systemQN = umlSelectedComponent.getQualifiedName();
 		final List<String> args = new ArrayList<String>();
 		args.add(systemQN);
@@ -97,5 +97,5 @@ if(showPopups){
 		dialogUtil.showMessage_ExportBehaviourDone(targetDir.getAbsolutePath());
 }
 		monitor.done();
-	}
+	}*/
 }

@@ -15,10 +15,13 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.papyrus.infra.ui,
  org.eclipse.emf.cdo;bundle-version="4.5.0",
  org.eclipse.papyrus.cdo.core;bundle-version="1.2.0",
- org.eclipse.papyrus.uml.tools
+ org.eclipse.papyrus.uml.tools,
+ eu.fbk.eclipse.standardtools.utils,
+ org.polarsys.chess.contracts.profile
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.polarsys.chess.service.exceptions,
  org.polarsys.chess.service.internal.commands.switchers,
+ org.polarsys.chess.service.internal.model,
  org.polarsys.chess.service.utils;
   uses:="org.eclipse.ui,
    org.eclipse.papyrus.infra.core.services,

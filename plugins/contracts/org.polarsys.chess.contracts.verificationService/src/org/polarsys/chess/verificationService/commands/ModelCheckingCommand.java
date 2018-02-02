@@ -17,7 +17,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.uml2.uml.Class;
 
 import org.polarsys.chess.service.utils.SelectionUtil;
-import org.polarsys.chess.verificationService.services.SmvExportService;
+import org.polarsys.chess.smvExport.services.SmvExportService;
+
+//import org.polarsys.chess.verificationService.services.SmvExportService;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.nuXmvService.services.NuXmvService;
 import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
@@ -44,7 +46,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 	@Override
 	public void execGUIOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
 		 umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
-		 showPopups = false;
+		 showPopups = true;
 		 smvFilePath = nuXmvDirectoryUtil.getSmvFilePath();
 	}
 

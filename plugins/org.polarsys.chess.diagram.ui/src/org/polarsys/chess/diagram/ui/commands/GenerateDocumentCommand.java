@@ -25,8 +25,8 @@ import org.polarsys.chess.diagram.ui.docGenerators.CHESSBlockDefinitionDiagramMo
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramModel;
 import org.polarsys.chess.diagram.ui.services.CHESSDiagramsGeneratorService;
 import org.polarsys.chess.diagram.ui.utils.ExportDialogUtils;
+import org.polarsys.chess.service.internal.model.ChessSystemModel;
 import org.polarsys.chess.service.utils.SelectionUtil;
-import org.polarsys.chess.verificationService.model.ChessSystemModel;
 
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.services.OCRATranslatorService;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;

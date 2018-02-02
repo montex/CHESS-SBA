@@ -23,9 +23,9 @@ import eu.fbk.eclipse.standardtools.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.OCRADirectoryUtil;
 
+import org.polarsys.chess.service.internal.model.ChessSystemModel;
 import org.polarsys.chess.service.utils.SelectionUtil;
-import org.polarsys.chess.verificationService.model.ChessSystemModel;
-import org.polarsys.chess.verificationService.services.SmvExportService;
+import org.polarsys.chess.smvExport.services.SmvExportService;
 
 public class ContractImplementationCommand extends AbstractJobCommand {
 
@@ -53,7 +53,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 		 umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		 umlSelectedResource = umlSelectedComponent.eResource();
 		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
-		 showPopups = false;
+		 showPopups = true;
 		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 		 smvFilePath = nuXmvDirectoryUtil.getSmvFilePath();
 		 resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath(umlSelectedComponent.getName());			

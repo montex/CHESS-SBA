@@ -10,7 +10,9 @@ Require-Bundle: org.eclipse.ui.views.properties.tabbed,
  org.eclipse.papyrus.infra.emf,
  org.polarsys.chess.chessmlprofile;bundle-version="0.9.0",
  org.polarsys.chess.contracts.profile,
- org.polarsys.chess.core
+ org.polarsys.chess.core,
+ eu.fbk.eclipse.standardtools.utils,
+ org.polarsys.chess.service
 Import-Package: eu.fbk.eclipse.standardtools.constraintEditor.constraintTab,
  org.eclipse.emf.edit.ui.action,
  org.eclipse.gef,

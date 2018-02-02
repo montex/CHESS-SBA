@@ -12,7 +12,7 @@ package org.polarsys.chess.safetyAnalysis.commands.debug;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.polarsys.chess.verificationService.model.ChessSystemModel;
+import org.polarsys.chess.service.internal.model.ChessSystemModel;
 
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.services.OCRAExecService;
 import eu.fbk.eclipse.standardtools.commands.AbstractAsyncJobCommand;
