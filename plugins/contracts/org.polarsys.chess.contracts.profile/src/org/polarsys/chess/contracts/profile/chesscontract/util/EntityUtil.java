@@ -17,12 +17,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import  org.eclipse.uml2.uml.NamedElement;
 //import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -62,7 +63,7 @@ import org.eclipse.uml2.uml.Vertex;
  */
 public class EntityUtil {
 
-	private static final Logger logger = Logger.getLogger(EntityUtil.class);
+	//private static final Logger logger = Logger.getLogger(EntityUtil.class);
 	
 	private static final String BLOCK = "SysML::Blocks::Block";
 	private static final String SYSTEM = "CHESSContract::System";
@@ -73,6 +74,7 @@ public class EntityUtil {
 	private static final String COMP_IMPL = "CHESS::ComponentModel::ComponentImplementation";
 
 	private static final String INTEGER_TYPE = "PrimitiveTypes::Integer";
+	private static final String STRING_TYPE = "PrimitiveTypes::String";
 	private static final String REAL_TYPE = "PrimitiveTypes::Real";	
 	private static final String BOOLEAN_TYPE = "PrimitiveTypes::Boolean";
 	
@@ -82,7 +84,7 @@ public class EntityUtil {
 	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
 	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
 	
-	private static final String FAULTY_STATE_MACHINE = "CHESS::Dependability::ThreatsPropagation";
+	private static final String FAULTY_STATE_MACHINE = "CHESS::Dependability::ThreatsPropagation::ErrorModel";
 	
 	//not yet used
 	//private static final String STRING_TYPE = "PrimitiveTypes::String";
@@ -99,6 +101,27 @@ public class EntityUtil {
 		return entityUtil;
 	}
 
+	public Object getSubComponent(Object constraint, String componentName) {
+		Element element = ((Constraint) constraint).getOwner();
+
+		for (Property umlProperty : getSubComponentsInstances((Class) element)) {
+			if (umlProperty.getName().compareTo(componentName) == 0) {
+				return getUmlType(umlProperty);
+			}
+		}
+
+		return null;
+	}
+
+	
+	public String[] getSubComponentsName(Object constraint) {
+		Element umlElement = ((Constraint) constraint).getOwner();
+		Set<String> subCompArr = getSubComponentsNames((Class) umlElement);
+		String[] subComStrArr = new String[subCompArr.size()];
+		return subCompArr.toArray(subComStrArr);
+
+	}
+	
 	public String getComponentID(Object umlComponent) {
 
 		if (
@@ -114,6 +137,10 @@ public class EntityUtil {
 		return null;
 	}
 
+	public String getQualifiedName(NamedElement element) {
+		return ((NamedElement) element).getQualifiedName();
+	}
+	
 	public String getComponentName(Object umlComponent) {
 
 		if (
@@ -167,6 +194,23 @@ public class EntityUtil {
 		return subComponentsNames;
 	}
 
+	public Set<Port> getUmlPorts(Element umlElement) {
+		Set<Port> portsArr = new HashSet<Port>();
+		if (isBlock(umlElement)) {
+			portsArr.addAll(getUmlPortsFromClass((Class) umlElement));
+		}
+
+		if (isCompType(umlElement) || (isComponentImplementation(umlElement))) {
+			portsArr.addAll(getUmlPortsFromComponent((Component) umlElement));
+		}
+
+		if (isComponentInstance(umlElement)) {
+			portsArr.addAll(getUmlPorts(getUmlType((Property) umlElement)));
+		}
+		return portsArr;
+
+	}
+	
 	public Set<Port> getUmlPorts(Element umlElement, int portDirection) {
 		Set<Port> portsArr = new HashSet<Port>();
 		if (isBlock(umlElement)) {
@@ -211,6 +255,14 @@ public class EntityUtil {
 		}
 	}
 
+	public boolean isInOutPort(Element umlPort) {
+		if (getPortDirection(umlPort) == FlowDirection.INOUT_VALUE) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public boolean isOutputPort(Element umlPort) {
 		if (getPortDirection(umlPort) == FlowDirection.OUT_VALUE) {
 			return true;
@@ -238,6 +290,15 @@ public class EntityUtil {
 			if (fp.getDirection().getValue() == portDirection) {
 				ports.add(umlPort);
 			}
+		}
+		return ports;
+	}
+	
+	private Set<Port> getUmlPortsFromComponent(Component umlComponent) {
+		Set<Port> ports = new HashSet<Port>();
+
+		for (Port umlPort : umlComponent.getOwnedPorts()) {
+			ports.add(umlPort);
 		}
 		return ports;
 	}
@@ -299,7 +360,6 @@ public class EntityUtil {
 	}
 
 	public boolean isBooleanAttribute(Property umlProperty) {
-		logger.debug("isBooleanAttribute");
 		return isBooleanType(umlProperty.getType());
 	}
 
@@ -352,6 +412,12 @@ public class EntityUtil {
 		}
 		return false;
 	}
+
+	public boolean isStringAttribute(Property umlProperty) {
+		return isStringType(umlProperty.getType());
+	}
+	
+	
 
 	public boolean isRealAttribute(Property umlProperty) {
 		return isRealType(umlProperty.getType());
@@ -498,6 +564,14 @@ public class EntityUtil {
 	public Set<String> getBooleanAttributesNamesExceptsPorts(Element umlElement) {
 		Set<String> booleanAttributesNames = new HashSet<String>();
 		for (Property umlProperty : getBooleanAttributesExceptPorts(umlElement)) {
+			booleanAttributesNames.add(umlProperty.getName());
+		}
+		return booleanAttributesNames;
+	}
+	
+	public Set<String> getAttributesNamesExceptsPorts(Element umlElement) {
+		Set<String> booleanAttributesNames = new HashSet<String>();
+		for (Property umlProperty : getAttributesExceptPorts(umlElement)) {
 			booleanAttributesNames.add(umlProperty.getName());
 		}
 		return booleanAttributesNames;
@@ -723,6 +797,24 @@ public class EntityUtil {
 		
 		return stateMachines;
 	}
+	
+public Set<StateMachine> getNominalStateMachines(Class umlSelectedComponent){
+		
+		Set<StateMachine> stateMachines = new HashSet<StateMachine>();
+		
+		if (umlSelectedComponent != null) {
+			EList<Behavior> behaviours = umlSelectedComponent.getOwnedBehaviors();
+			if (behaviours != null) {				
+				for (Class c : behaviours) {
+					if (isNominalStateMachine(c)) {
+						stateMachines.add((StateMachine)c);
+					}
+				}
+			}
+		}
+		
+		return stateMachines;
+	}
 
 	private <T> Collection<T> iterator2Collection(final Iterator<T> iter) {
 		ArrayList<T> list = new ArrayList<T>();
@@ -745,16 +837,11 @@ Region region = stateMachine.getRegions().get(0);
 	
 	public boolean isInitialState(Vertex state){
 		
-		boolean isInitialState = false;
-		boolean isPseudoState = (state instanceof Pseudostate);
-		if(isPseudoState){
-			
-			System.out.println("kind: "+((Pseudostate)state).getKind());
-		isInitialState = ((Pseudostate)state).getKind().equals(PseudostateKind.INITIAL_LITERAL);
-		}
-		System.out.println("state name: "+state.getName());
-		System.out.println("isPseudoState: "+isPseudoState);
-		System.out.println("isInitialState: "+isInitialState);
+		//boolean isInitialState = false;
+		//boolean isPseudoState = (state instanceof Pseudostate);
+		//if(isPseudoState){			
+		//isInitialState = ((Pseudostate)state).getKind().equals(PseudostateKind.INITIAL_LITERAL);
+		//}
 		
 		return (state instanceof Pseudostate)&&((Pseudostate)state).getKind().equals(PseudostateKind.INITIAL_LITERAL);
 	}
@@ -781,11 +868,15 @@ Region region = stateMachine.getRegions().get(0);
 				return names;
 			}
 	
-	public EList<String> getTransitionNameList(EList<Transition> transitions){
+	public EList<String> getTransitionNameList(EList<Transition> transitions) throws Exception{
 	EList<String> transNames = new BasicEList<String>();
 	for(Transition trans : transitions){
+		if(trans.getName()==null){
+			throw new Exception("In "+trans.containingStateMachine().getQualifiedName()+", one transition has name == null.");
+		}
 		transNames.add(trans.getName());
 	}
+	
 	return transNames;
 	}
 	
@@ -908,10 +999,14 @@ Region region = stateMachine.getRegions().get(0);
 		return null;
 	}
 
-	public String getPortName(Port event) {		
-		return event.getName();
+	public String getPortName(Port port) {		
+		return port.getName();
 	}
 
+	public String getAttributeName(Property attribute) {		
+		return attribute.getName();
+	}
+	
 	public boolean isTransitionWithNoEvent(Transition transition) {
 		return !((transition.getTriggers()!=null)&&(transition.getTriggers().size()!=0)&&(transition.getTriggers().get(0).getPorts()!=null)&&transition.getTriggers().get(0).getPorts().size()!=0);
 		
@@ -931,6 +1026,13 @@ Region region = stateMachine.getRegions().get(0);
 		return false;
 	}
 
+	private boolean isStringType(Type type) {
+		if (type != null) {
+			return (type.getQualifiedName().compareTo(STRING_TYPE) == 0);
+		}
+		return false;
+	}
+	
 	public Collection<? extends Port> getUmlPortsExceptEvents(Element umlElement, int portDirection) {
 		
 		if (isComponentInstance(umlElement)) {
@@ -974,11 +1076,11 @@ Region region = stateMachine.getRegions().get(0);
 	}
 
 	public String getConditionExpression(Constraint condition) {	
-		System.out.println("getConditionExpression: "+condition);
-		System.out.println("condition.getSpecification(): "+condition.getSpecification());
 		if((condition.getSpecification() instanceof OpaqueExpression)&&(condition.getSpecification() !=null)&&((OpaqueExpression)condition.getSpecification()).getBodies()!=null){
 		return ((OpaqueExpression)condition.getSpecification()).getBodies().get(0);
 		}
 		return null;
 	}
+
+	
 }
