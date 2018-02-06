@@ -26,6 +26,7 @@ import org.polarsys.chess.smvExport.model.UMLStateMachineModel;
 
 import eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv.services.SMVTranslatorService;
 import eu.fbk.eclipse.standardtools.exceptions.NoComponentException;
+import eu.fbk.eclipse.standardtools.exceptions.NoStateMachineException;
 import eu.fbk.eclipse.standardtools.utils.DialogUtil;
 
 public class SmvExportService {
@@ -72,7 +73,8 @@ private static SmvExportService instance;
 			dialogUtil.showMessage_ExportBehaviourDone(smvFile.getAbsolutePath());			
 	}
 		}else{			
-			dialogUtil.showMessage_NoStateMachine();
+			throw new NoStateMachineException();
+			//dialogUtil.showMessage_NoStateMachine();
 		}
 		
 		return smvFile;
@@ -96,7 +98,7 @@ private static SmvExportService instance;
 public Collection<StateMachine> getNominalStateMachines(Class umlSelectedComponent) {
 		
 	
-		Set<StateMachine> stateMachines =  entityUtil.getNominalStateMachines(umlSelectedComponent);
+		Set<StateMachine> stateMachines =  entityUtil.getNominalStateMachines(umlSelectedComponent,true);
 		System.out.println("stateMachines");
 		for (StateMachine sm : stateMachines) {
 			System.out.println(sm);			
