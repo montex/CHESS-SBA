@@ -839,6 +839,19 @@ public class EntityUtil {
 		return stateMachines;
 	}
 	
+	
+public Set<StateMachine> getNominalStateMachines(Class umlSelectedComponent, boolean fromSubComponent){
+		
+	Set<StateMachine> stateMachines = getNominalStateMachines(umlSelectedComponent);
+	if(fromSubComponent){
+	for(Property subComponentInstance : getSubComponentsInstances(umlSelectedComponent)){
+		stateMachines.addAll(getNominalStateMachines((Class)subComponentInstance.getType(), true));
+	}
+	}
+		return stateMachines;
+	}
+
+	
 public Set<StateMachine> getNominalStateMachines(Class umlSelectedComponent){
 		
 		Set<StateMachine> stateMachines = new HashSet<StateMachine>();
