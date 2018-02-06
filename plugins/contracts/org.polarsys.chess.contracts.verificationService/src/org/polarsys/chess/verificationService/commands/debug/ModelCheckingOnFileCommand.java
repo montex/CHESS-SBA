@@ -15,7 +15,8 @@ import java.io.File;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import eu.fbk.eclipse.standardtools.commands.AbstractAsyncJobCommand;
+
+import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.nuXmvService.dialogs.NuXmvParametersDialog;
 import eu.fbk.eclipse.standardtools.nuXmvService.services.NuXmvService;
 import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDialogUtil;
@@ -25,7 +26,7 @@ import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
  * 
  *
  */
-public class ModelCheckingOnFileCommand extends AbstractAsyncJobCommand {
+public class ModelCheckingOnFileCommand extends AbstractJobCommand {
 
 	
 	private NuXmvService nuXmvService = NuXmvService.getInstance();
@@ -36,22 +37,40 @@ public class ModelCheckingOnFileCommand extends AbstractAsyncJobCommand {
 		super("Model Checking");
 	}
 
+	boolean goAhead = false;
+	String alg_type;
+	String check_type;
+	String property;
+	
 	@Override
-	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-
-		File smvFile = nuXmvDialogUtil.getSmvFileFromFileDialog(nuXmvDirectoryUtil.getSmvFilePath());
+	public void execGUIOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
+		
 		//boolean isDiscreteTime = MessageTimeModelDialog.openQuestion();
 
 		
 			final NuXmvParametersDialog dialog = new NuXmvParametersDialog();
 			dialog.open();
-
-			if (dialog.goAhead()) {
-				String alg_type = dialog.getAlgorithmType();
-				String check_type = dialog.getCheckType();
-				String property = dialog.getProperty();
-				nuXmvService.modelCheckingCommand(smvFile, property, alg_type, check_type);
+			
+			goAhead = dialog.goAhead();
+			
+			if (goAhead) {
+				 alg_type = dialog.getAlgorithmType();
+				 check_type = dialog.getCheckType();
+				 property = dialog.getProperty();
+				 
 			}
+	}
+
+	@Override
+	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
+
+		if (goAhead) {
+			
+			File smvFile = nuXmvDialogUtil.getSmvFileFromFileDialog(nuXmvDirectoryUtil.getSmvFilePath());
+			String resultFilePath = nuXmvDirectoryUtil.getCommandModelCheckingResultPath(smvFile.getName());
+		nuXmvService.modelCheckingCommand(smvFile, property, alg_type, check_type,resultFilePath);
+		}
+			
 
 		}
 	

@@ -65,6 +65,8 @@ public class ExportModelToFileCommand extends AbstractJobCommand {
 	
 	ocraTranslatorService.exportModelToOssFile(umlSelectedComponent, umlSelectedResource,
 				isDiscreteTime,showPopups,ossFilepath, monitor);
+	
+	
 	}
 
 }

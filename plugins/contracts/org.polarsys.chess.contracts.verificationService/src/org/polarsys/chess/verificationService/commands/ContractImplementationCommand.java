@@ -32,7 +32,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 	private OCRAExecService ocraExecService = OCRAExecService.getInstance(ChessSystemModel.getInstance());
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	//private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
-	private SmvExportService nuXmvService = SmvExportService.getInstance();
+	private SmvExportService smvExportService = SmvExportService.getInstance();
 	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
 	private NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 	
@@ -64,7 +64,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		
-		File smvOutput = nuXmvService.exportSmv(umlSelectedComponent, showPopups,smvFilePath,monitor);
+		File smvOutput = smvExportService.exportSmv( umlSelectedComponent,showPopups,smvFilePath, monitor);
 		ocraExecService.executeCheckContractImplementation(umlSelectedComponent,umlSelectedResource, smvOutput, isDiscreteTime,showPopups,ossFilepath,resultFilePath,monitor);
 
 	}
