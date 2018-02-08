@@ -49,7 +49,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 	private String resultFilePath;
 	
 	@Override
-	public void execGUIOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
+	public void execPreJobOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
 		 umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		 umlSelectedResource = umlSelectedComponent.eResource();
 		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
@@ -64,7 +64,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		
-		File smvOutput = smvExportService.exportSmv( umlSelectedComponent,showPopups,smvFilePath, monitor);
+		File smvOutput = smvExportService.exportSingleSmv( umlSelectedComponent,showPopups,smvFilePath, monitor);
 		ocraExecService.executeCheckContractImplementation(umlSelectedComponent,umlSelectedResource, smvOutput, isDiscreteTime,showPopups,ossFilepath,resultFilePath,monitor);
 
 	}

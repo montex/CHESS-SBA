@@ -32,6 +32,7 @@ import org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.DataTypes.BoundedSubtype;
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
 import org.eclipse.papyrus.uml.tools.model.UmlModel;
+import org.eclipse.papyrus.uml.tools.model.UmlUtils;
 import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
 import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.Class;
@@ -819,6 +820,14 @@ public class EntityUtil {
 		return integerAttributes;
 	}
 	
+	public Collection<StateMachine> getNominalStateMachines() {
+		
+		UmlModel umlModel = UmlUtils.getUmlModel();
+			Set<StateMachine> stateMachines =  getNominalStateMachines(umlModel);			
+			return stateMachines;
+		
+		}
+	
 	public Set<StateMachine> getNominalStateMachines(UmlModel umlModel){
 		
 		Set<StateMachine> stateMachines = new HashSet<StateMachine>();
@@ -852,6 +861,13 @@ public Set<StateMachine> getNominalStateMachines(Class umlSelectedComponent, boo
 	}
 
 	
+public StateMachine getFirstNominalStateMachine(Class umlSelectedComponent) {		
+	Set<StateMachine> stateMachines = getNominalStateMachines(umlSelectedComponent);
+	if((stateMachines!=null)&&(stateMachines.size()>0)){
+	return stateMachines.iterator().next();
+	}else return null;
+}
+
 public Set<StateMachine> getNominalStateMachines(Class umlSelectedComponent){
 		
 		Set<StateMachine> stateMachines = new HashSet<StateMachine>();

@@ -68,24 +68,17 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	private Collection<Diagram> chessDiagrams;
 	private String imageExtension;
 	private String docFormat;
-	
-	
+
 	@Override
-	public void execGUIOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
+	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		isDiscreteTime = MessageTimeModelDialog.openQuestion();
 		outputDirectoryName = dialogUtils.getDirectoryNameFromDialog();
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();
 
-		//Display defaultDisplay = Display.getDefault();
-		//defaultDisplay.syncExec(new Runnable() {
-		//	@Override
-		//	public void run() {
-				parameterDialog = exportDialogUtils.getCompiledModelToDocumentDialog();
-				parameterDialog.open();
-		//	}
-		//});
+		parameterDialog = exportDialogUtils.getCompiledModelToDocumentDialog();
+		parameterDialog.open();
 
 		if (!parameterDialog.goAhead()) {
 			return;
@@ -101,7 +94,6 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 			return;
 		}
 
-		
 	}
 
 	@Override
@@ -110,28 +102,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		OSS ossModel = ocraTranslatorService.getOssModel(umlSelectedComponent, isDiscreteTime, monitor);
 
 		Display defaultDisplay = Display.getDefault();
-		/*defaultDisplay.syncExec(new Runnable() {
-			@Override
-			public void run() {
-				parameterDialog = exportDialogUtils.getCompiledModelToDocumentDialog();
-				parameterDialog.open();
-			}
-		});
 
-		if (!parameterDialog.goAhead()) {
-			return;
-		}
-
-		String docFormat = parameterDialog.getDocumentFormat();
-		String imageExtension = ".svg";
-		if (docFormat.equals("tex")) {
-			imageExtension = ".png";
-		}
-
-		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
-			return;
-		}
-*/
 		documentGeneratorService = new DocumentGeneratorServiceFromOssModel(ossModel);
 		documentGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, imageExtension,
 				parameterDialog.getShowLeafComponents());

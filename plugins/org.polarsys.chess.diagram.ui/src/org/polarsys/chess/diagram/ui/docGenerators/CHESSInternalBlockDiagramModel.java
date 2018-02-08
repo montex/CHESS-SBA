@@ -37,22 +37,21 @@ import eu.fbk.eclipse.standardtools.diagram.ui.layout.EOrientation;
 import eu.fbk.eclipse.standardtools.diagram.ui.layout.EOrientation.Orientation;
 import eu.fbk.eclipse.standardtools.diagram.ui.model.AbstractInternalBlockDiagramModel;
 
-public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiagramModel{
-	
-	
+public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiagramModel {
+
 	private static CHESSInternalBlockDiagramModel chessModel;
-	
-	public static CHESSInternalBlockDiagramModel getInstance(){
-		if(chessModel == null){
+
+	public static CHESSInternalBlockDiagramModel getInstance() {
+		if (chessModel == null) {
 			chessModel = new CHESSInternalBlockDiagramModel();
 		}
 		return chessModel;
 	}
-	
+
 	private static final Logger logger = Logger.getLogger(CHESSInternalBlockDiagramModel.class);
-	
+
 	private EntityUtil entityUtil = EntityUtil.getInstance();
-	
+
 	@Override
 	public Point getDiagramPoint(Object diagram) {
 		Rectangle diagramBounds = ((GraphicalEditPart) diagram).getFigure().getBounds();
@@ -60,7 +59,6 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 		return p;
 	}
 
-	
 	@Override
 	public String getGraphicalComponentId(Object graphicalComponent) {
 		Element umlElement = null;
@@ -81,9 +79,6 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 	@Override
 	public String getGraphicalComponentName(Object graphicalComponent) {
 		EObject component = ((GraphicalEditPart) graphicalComponent).resolveSemanticElement();
-
-		// ((AppliedStereotypeEmptyEditPart)graphicalComponent).get
-
 		return entityUtil.getComponentName(component);
 	}
 
@@ -155,16 +150,6 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 
 		printlnGraphicalPosition(graphicalComponent);
 
-		// System.out.println("----------------------------");
-		// System.out.println(graphicalComponent.getLocation());
-		// System.out.println(component);
-		// System.out.println(graphicalComponent.getContentPane().getBounds());
-		// System.out.println(graphicalComponent.getFigure().getBounds());
-		// System.out.println(graphicalComponent.getMainFigure().getBounds());
-		// System.out.println(graphicalComponent.getBorderedFigure().getBounds());
-		// System.out.println(graphicalComponent.getPrimaryShape().getBounds());
-		// System.out.println(graphicalComponent.getPrimaryShape().getLocation());
-
 		Point point = new Point(x, y);
 
 		Point parentPoint = getOwnerPosition(graphicalComponent.getParent());
@@ -174,7 +159,7 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 
 		return point;
 	}
-	
+
 	private Object printlnGraphicalPosition(Object component) {
 		if (component instanceof GraphicalEditPart) {
 			GraphicalEditPart graphicalComponent = (GraphicalEditPart) component;
@@ -185,38 +170,6 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 		}
 		return null;
 	}
-
-	/*
-	 * @Override public Point getGraphicalComponentPosition(Object component) {
-	 * 
-	 * GraphicalEditPart graphicalComponent = (GraphicalEditPart)component;
-	 * 
-	 * int x =0; int y =0; if(!(component instanceof
-	 * StructureCompartmentEditPart)){ x =
-	 * graphicalComponent.getFigure().getBounds().x; y =
-	 * graphicalComponent.getFigure().getBounds().y; }
-	 * 
-	 * 
-	 * System.out.println("----------------------------");
-	 * //System.out.println(graphicalComponent.getLocation());
-	 * System.out.println(component);
-	 * //System.out.println(graphicalComponent.getContentPane().getBounds());
-	 * System.out.println(graphicalComponent.getFigure().getBounds());
-	 * //System.out.println(graphicalComponent.getMainFigure().getBounds());
-	 * //System.out.println(graphicalComponent.getBorderedFigure().getBounds());
-	 * //System.out.println(graphicalComponent.getPrimaryShape().getBounds());
-	 * //System.out.println(graphicalComponent.getPrimaryShape().getLocation());
-	 * 
-	 * 
-	 * Point point = new Point(x, y);
-	 * 
-	 * if(graphicalComponent.getParent() instanceof GraphicalEditPart){ Point
-	 * parentPoint =
-	 * getGraphicalComponentPosition(graphicalComponent.getParent());
-	 * point.x=point.x+parentPoint.x; point.y=point.y+parentPoint.y; } return
-	 * point; }
-	 */
-	
 
 	private Point getOwnerPosition(Object component) {
 
@@ -288,8 +241,6 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 		return null;
 	}
 
-	
-
 	@Override
 	public Object getGraphicalPortVariableType(Object port) {
 		if (port instanceof FlowPortAffixedNodeEditPart) {
@@ -304,24 +255,10 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 	@Override
 	public Point getGraphicalPortPosition(Object port) {
 
-		// org.eclipse.draw2d.geometry.Point p =
-		// ((FlowPortAffixedNodeEditPart)Port).getLocation();
-		// org.eclipse.draw2d.geometry.Point p =
-		// ((GraphicalEditPart)Port).getFigure().getBounds();
 		int x = ((GraphicalEditPart) port).getFigure().getBounds().x;
 		int y = ((GraphicalEditPart) port).getFigure().getBounds().y;
-
-		// System.out.println("port bounds:
-		// "+((FlowPortAffixedNodeEditPart)Port).getFigure().getBounds());
-		// System.out.println("port loc: "+p);
-
-		// Point point = new Point(p.x, p.y);
 		Point point = new Point(x, y);
 
-		// GraphicalEditPart portParent =
-		// (GraphicalEditPart)((GraphicalEditPart)Port).getParent();
-		// Point partentPoint =
-		// getGraphicalComponentPosition(portParent.getParent());
 		Point partentPoint = getOwnerPosition(port);
 
 		point.x = point.x + partentPoint.x;
@@ -348,7 +285,7 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 		if (port instanceof ResizablePortEditPart) {
 			or = ((ResizablePortEditPart) port).getBorderItemLocator().getCurrentSideOfParent();
 		}
-		
+
 		EOrientation eOrientation = new EOrientation();
 		Point p = getGraphicalPortPosition(port);
 		int offset = 0;
@@ -402,22 +339,10 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 
 			for (Object subComponents : getGraphicalSubComponents(graphicalComponent)) {
 				connections.addAll(getPortChannels(subComponents));
-				/*
-				 * List children
-				 * =((GraphicalEditPart)subComponents).getChildren(); for(Object
-				 * child : children){ if(child instanceof
-				 * FlowPortAffixedNodeEditPart){ GraphicalEditPart graphicalPort
-				 * = (GraphicalEditPart) child;
-				 * System.out.println("child: "+child);
-				 * connections.addAll(graphicalPort.getSourceConnections());
-				 * connections.addAll(graphicalPort.getTargetConnections());
-				 * 
-				 * } }
-				 */
 			}
 
 		}
-		
+
 		return connections;
 	}
 
@@ -490,11 +415,9 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 		return ((GraphicalEditPart) channel).getParent();
 	}
 
-	
-
 	@Override
 	public String getGraphicalPortRange(Object component, Object port) {
 		return "PortRange";
 	}
-	
+
 }

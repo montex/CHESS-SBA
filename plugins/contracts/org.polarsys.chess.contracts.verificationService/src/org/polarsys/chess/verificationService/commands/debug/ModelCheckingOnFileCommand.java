@@ -43,7 +43,7 @@ public class ModelCheckingOnFileCommand extends AbstractJobCommand {
 	String property;
 	
 	@Override
-	public void execGUIOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
+	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		
 		//boolean isDiscreteTime = MessageTimeModelDialog.openQuestion();
 

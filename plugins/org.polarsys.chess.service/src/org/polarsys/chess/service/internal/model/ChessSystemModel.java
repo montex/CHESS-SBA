@@ -171,9 +171,11 @@ if (entityUtil.isBlock((Element) component)) {
 			listCp = contractEntityUtil.getContractProperties((Class) component);
 		}
 		String definitions = "";
+		if(listCp!=null){
 		for (ContractProperty contractProperty : listCp) {
 			String currContract = contractEntityUtil.convertContractPropertyInStr(contractProperty);
 			definitions = definitions.concat(currContract);
+		}
 		}
 		return definitions;
 	}

@@ -55,11 +55,11 @@ public class CustomRefinementView extends RefinementView {
 
 					if (entityUtil.isSystem(umlClass)) {
 
-						for (Property ummlProperty : umlClass.getAttributes()) {
+						for (Property umlProperty : umlClass.getAttributes()) {
 
-							if (contractEntityUtil.isContractProperty(ummlProperty)) {
+							if (contractEntityUtil.isContractProperty(umlProperty)) {
 								ContractProperty contractProperty = contractEntityUtil
-										.getContractProperty(ummlProperty);
+										.getContractProperty(umlProperty);
 								// if
 								// (cp.getContractType().equals(ContractTypes.STRONG)){
 								if (true) {

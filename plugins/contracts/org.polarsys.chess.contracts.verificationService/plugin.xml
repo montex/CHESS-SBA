@@ -86,6 +86,10 @@
                         commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
                         style="push">
                   </command>
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.CompositeContractImplementationCommand"
+                        style="push">
+                  </command>
                </menu>
             </menuContribution>
             <menuContribution
@@ -150,6 +154,10 @@
                   </command>
                   <command
                         commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
+                        style="push">
+                  </command>
+                  <command
+                        commandId="org.polarsys.chess.verificationService.commands.CompositeContractImplementationCommand"
                         style="push">
                   </command>
                </menu>
@@ -228,6 +236,11 @@
             defaultHandler="org.polarsys.chess.verificationService.commands.debug.CheckValidationPropertyOnFileCommand"
             id="org.polarsys.chess.verificationService.commands.debug.CheckValidationPropertyOnFileCommand"
             name="Check Validation Property on .oss file">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.verificationService.commands.CompositeContractImplementationCommand"
+            id="org.polarsys.chess.verificationService.commands.CompositeContractImplementationCommand"
+            name="Check Composite Contract Implementation on selected component">
       </command>
    </extension> 
 </plugin>

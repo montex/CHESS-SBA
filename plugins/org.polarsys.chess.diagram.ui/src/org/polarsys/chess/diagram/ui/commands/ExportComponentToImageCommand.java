@@ -31,56 +31,47 @@ public class ExportComponentToImageCommand extends AbstractAsyncJobCommand {
 
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	private DirectoryUtil directoryUtils = DirectoryUtil.getInstance();
-	private ExportDialogUtils exportDialogUtils = ExportDialogUtils.getInstance();	
-	
+	private ExportDialogUtils exportDialogUtils = ExportDialogUtils.getInstance();
+
 	private static final Logger logger = Logger.getLogger(ExportComponentToImageCommand.class);
-	
-	//private OCRAComponentToImage ocraComponentToImage = OCRAComponentToImage.getInstance();
-	//private DocumentGeneratorService ocraComponentToImage = DocumentGeneratorService.getInstance(CHESSGraphicalModel.getInstance());
-	private InternalBlockDiagramGeneratorService diagramGeneratorService = InternalBlockDiagramGeneratorService.getInstance(CHESSInternalBlockDiagramModel.getInstance());
-	
-	
+
+	private InternalBlockDiagramGeneratorService diagramGeneratorService = InternalBlockDiagramGeneratorService
+			.getInstance(CHESSInternalBlockDiagramModel.getInstance());
+
 	public ExportComponentToImageCommand() {
 		super("Export Component To Image Command");
 	}
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-		
-		
-		GraphicalEditPart selectedGraphicalComponent = selectionUtil
-				.getSelectedGraphicalObject(event);
 
-		logger.debug("selectedGraphicalComponent: "+selectedGraphicalComponent);
-		
+		GraphicalEditPart selectedGraphicalComponent = selectionUtil.getSelectedGraphicalObject(event);
+
+		logger.debug("selectedGraphicalComponent: " + selectedGraphicalComponent);
+
 		if (selectedGraphicalComponent != null) {
 
-			final ComponentToImageDialog parameterDialog = exportDialogUtils
-					.getCompiledComponentToImageDialog();
+			final ComponentToImageDialog parameterDialog = exportDialogUtils.getCompiledComponentToImageDialog();
 
 			if (!parameterDialog.goAhead()) {
 				return;
 			}
 
 			String projectDir = directoryUtils.getCurrentProjectDir();
-			String imageName = diagramGeneratorService.getImageName(
-					selectedGraphicalComponent)+ "." + parameterDialog.getImageFormat() ;
+			String imageName = diagramGeneratorService.getImageName(selectedGraphicalComponent) + "."
+					+ parameterDialog.getImageFormat();
 
 			String imageFilePath = exportDialogUtils.openImageDialog(projectDir, imageName);
 			if ((imageFilePath == null) || imageFilePath.isEmpty()) {
 				return;
 			}
 
-			diagramGeneratorService.setParametersBeforeDiagramGenerator
-			//setParametersBeforeExport
-			(parameterDialog.getShowPortLabels(),
+			diagramGeneratorService.setParametersBeforeDiagramGenerator(parameterDialog.getShowPortLabels(),
 					parameterDialog.getAutomaticPortLabelLayout());
-			diagramGeneratorService.createDiagramFile(imageFilePath, selectedGraphicalComponent,monitor);
+			diagramGeneratorService.createDiagramFile(imageFilePath, selectedGraphicalComponent, monitor);
 			exportDialogUtils.showMessage_ExportDone(imageFilePath);
 		}
-	
-	}
 
-	
+	}
 
 }

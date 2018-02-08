@@ -38,11 +38,11 @@ public class ExportModelToDocumentCommand extends AbstractAsyncJobCommand {
 	private DirectoryUtil directoryUtils = DirectoryUtil.getInstance();
 	private ExportDialogUtils exportDialogUtils = ExportDialogUtils.getInstance();
 	private DialogUtils dialogUtils = DialogUtils.getInstance();
-	//private OCRAComponentToImage ocraComponentToImage = OCRAComponentToImage.getInstance();
-	private DocumentGeneratorService documentGeneratorService = DocumentGeneratorService.getInstance(CHESSInternalBlockDiagramModel.getInstance());
-	
+	private DocumentGeneratorService documentGeneratorService = DocumentGeneratorService
+			.getInstance(CHESSInternalBlockDiagramModel.getInstance());
+
 	private static final Logger logger = Logger.getLogger(ExportComponentToImageCommand.class);
-	
+
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
@@ -63,7 +63,7 @@ public class ExportModelToDocumentCommand extends AbstractAsyncJobCommand {
 			if (docFormat.equals("tex")) {
 				imageExtension = ".png";
 			}
-	
+
 			// setShowLeafComponents(showLeafComponents);
 			String outputDirectoryName = dialogUtils.getDirectoryNameFromDialog();
 			// setDirectoryName(directoryName);
@@ -72,23 +72,22 @@ public class ExportModelToDocumentCommand extends AbstractAsyncJobCommand {
 			}
 
 			String currentProjectName = directoryUtils.getCurrentProjectName();
-	
+
 			documentGeneratorService.setParametersBeforeDocumentGeneration
-			//setParametersBeforeExport
-			(parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout(),
-					outputDirectoryName, imageExtension,parameterDialog.getShowLeafComponents());
+			// setParametersBeforeExport
+			(parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout(), outputDirectoryName,
+					imageExtension, parameterDialog.getShowLeafComponents());
 
 			// ocraComponentToImage.setXTranslation(150);
 			// ocraComponentToImage.setYTranslation(100);
 
 			documentGeneratorService.createDocumentFile(currentProjectName, docFormat, selectedGraphicalComponent,
-					 monitor);
+					monitor);
 
 			exportDialogUtils.showMessage_ExportDone(outputDirectoryName);
 
 		}
 
 	}
-
 
 }

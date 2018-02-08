@@ -40,125 +40,109 @@ import eu.fbk.eclipse.standardtools.diagram.ui.model.AbstractBlockDefinitionDiag
 import eu.fbk.eclipse.standardtools.diagram.ui.model.AbstractInternalBlockDiagramModel;
 
 public class CHESSDiagramsGeneratorService {
-	
+
 	private static CHESSDiagramsGeneratorService instance;
-	
-	final private static String IBD = "InternalBlock"; 
+
+	final private static String IBD = "InternalBlock";
 	final private static String BDD = "BlockDefinition";
-	
+
 	private static final Logger logger = Logger.getLogger(CHESSDiagramsGeneratorService.class);
-	
-	public static CHESSDiagramsGeneratorService getInstance(AbstractInternalBlockDiagramModel ibdModel,AbstractBlockDefinitionDiagramModel bddModel){
-		if(instance==null){
+
+	public static CHESSDiagramsGeneratorService getInstance(AbstractInternalBlockDiagramModel ibdModel,
+			AbstractBlockDefinitionDiagramModel bddModel) {
+		if (instance == null) {
 			instance = new CHESSDiagramsGeneratorService(ibdModel, bddModel);
 		}
 		return instance;
 	}
-	
-	
-	
-	public CHESSDiagramsGeneratorService(AbstractInternalBlockDiagramModel ibdModel, AbstractBlockDefinitionDiagramModel bddModel) {
+
+	public CHESSDiagramsGeneratorService(AbstractInternalBlockDiagramModel ibdModel,
+			AbstractBlockDefinitionDiagramModel bddModel) {
 		super();
-		//graphicalModel = graphModel;
 		ibdGeneratorService = InternalBlockDiagramGeneratorService.getInstance(ibdModel);
 		bddGeneratorService = BlockDefinitionDiagramGeneratorService.getInstance(bddModel);
 	}
 
-
-
-	//private static AbstractDiagramModel graphicalModel;	
 	private InternalBlockDiagramGeneratorService ibdGeneratorService;
 	private BlockDefinitionDiagramGeneratorService bddGeneratorService;
 
-	
 	private String directoryName;
 	private String imageExtension;
-	
 
-	
-	public void setParametersBeforeDiagramsGenerator(
-			String directoryName, String imageExtension, 
+	public void setParametersBeforeDiagramsGenerator(String directoryName, String imageExtension,
 			boolean showPortLabels, boolean automaticLabelLayout) {
-		
-		this.directoryName=directoryName;
-		this.imageExtension=imageExtension;
-		
-		
+
+		this.directoryName = directoryName;
+		this.imageExtension = imageExtension;
+
 		ibdGeneratorService.setParametersBeforeDiagramGenerator(showPortLabels, automaticLabelLayout);
-		
+
 	}
-	
-	public DiagramDescriptor createDiagramWithDescriptor(Diagram diagram,Shell shell , IProgressMonitor monitor){
+
+	public DiagramDescriptor createDiagramWithDescriptor(Diagram diagram, Shell shell, IProgressMonitor monitor) {
 		EObject diagramOwner = DiagramUtils.getOwner(diagram);
 		String diagramName = "";
 		String ownerName = null;
 		boolean hasComponentOwner = true;
-		if(diagramOwner instanceof Class){
-		ownerName = ((Class)diagramOwner).getName();
-		diagramName = ownerName+"_"+diagram.getName();
-		}else{
+		if (diagramOwner instanceof Class) {
+			ownerName = ((Class) diagramOwner).getName();
+			diagramName = ownerName + "_" + diagram.getName();
+		} else {
 			hasComponentOwner = false;
 			diagramName = diagram.getName();
 		}
-		
-		//if(diagram.getName().compareTo("Contracts")!=0){
-		try{
-			
-			
-		createDiagram(diagram,diagramName,shell, monitor);
-	
-		
-		return createDiagramDescriptor(diagramName,ownerName,hasComponentOwner );
-		}catch(NullPointerException e){
-			logger.error("Unable to create diagram "+diagramName);
+
+		try {
+
+			createDiagram(diagram, diagramName, shell, monitor);
+
+			return createDiagramDescriptor(diagramName, ownerName, hasComponentOwner);
+		} catch (NullPointerException e) {
+			logger.error("Unable to create diagram " + diagramName);
 		}
 		return null;
 	}
-	
-	
-	
-	private void createDiagram(Diagram diagram,String diagramName, Shell shell,IProgressMonitor monitor){
-		
-		
-		logger.debug("diagram name: "+diagram.getName());
-		logger.debug("diagram type: "+diagram.getType());
-		
+
+	private void createDiagram(Diagram diagram, String diagramName, Shell shell, IProgressMonitor monitor) {
+
+		logger.debug("diagram name: " + diagram.getName());
+		logger.debug("diagram type: " + diagram.getType());
+
 		EditPart editPart = OffscreenEditPartFactory.getInstance().createDiagramEditPart(diagram, shell);
 
 		RootEditPart root = editPart.getRoot();
-		
-		if(isInternalBlockDiagram(diagram)){
-		InternalBlockDiagramEditPart idb = (InternalBlockDiagramEditPart) root.getChildren().get(0);
-		BlockCompositeEditPart graphicalComponent = (BlockCompositeEditPart)idb.getChildren().get(0);
-		
-	ibdGeneratorService.createDiagramFile(getComponentImageFilePath(diagramName), graphicalComponent, monitor);
-		}else if(isBlockDefinitionDiagram(diagram)){
+
+		if (isInternalBlockDiagram(diagram)) {
+			InternalBlockDiagramEditPart idb = (InternalBlockDiagramEditPart) root.getChildren().get(0);
+			BlockCompositeEditPart graphicalComponent = (BlockCompositeEditPart) idb.getChildren().get(0);
+
+			ibdGeneratorService.createDiagramFile(getComponentImageFilePath(diagramName), graphicalComponent, monitor);
+		} else if (isBlockDefinitionDiagram(diagram)) {
 			BlockDefinitionDiagramEditPart bdd = (BlockDefinitionDiagramEditPart) root.getChildren().get(0);
-			//for(Object o : bdd.getChildren()){
-			//	System.out.println("o: "+o);
-			//}
-			
+			// for(Object o : bdd.getChildren()){
+			// System.out.println("o: "+o);
+			// }
+
 			bddGeneratorService.createDiagramFile(getComponentImageFilePath(diagramName), bdd, monitor);
-			
+
 		}
 	}
-	
-	private DiagramDescriptor createDiagramDescriptor(String diagramName, String ownerName, boolean hasComponentOwner){
+
+	private DiagramDescriptor createDiagramDescriptor(String diagramName, String ownerName, boolean hasComponentOwner) {
 		String saveFilePath = getComponentImageFilePath(diagramName);
-		logger.debug("saveFilePath: "+saveFilePath);
-		// diagramGeneratorService.createDiagramFile(saveFilePath, component,
-		// monitor);
-		final DiagramDescriptor diagramDescriptor = //diagramGeneratorService.
-				createDiagramDescriptorWithImageFileUrl(diagramName, saveFilePath,ownerName,hasComponentOwner);
+		logger.debug("saveFilePath: " + saveFilePath);
+		final DiagramDescriptor diagramDescriptor = // diagramGeneratorService.
+				createDiagramDescriptorWithImageFileUrl(diagramName, saveFilePath, ownerName, hasComponentOwner);
 		return diagramDescriptor;
 	}
-	
-	private DiagramDescriptor createDiagramDescriptorWithImageFileUrl(String diagramName, String saveFilePath,String owner,boolean hasComponentOwner) {
+
+	private DiagramDescriptor createDiagramDescriptorWithImageFileUrl(String diagramName, String saveFilePath,
+			String owner, boolean hasComponentOwner) {
 		DiagramDescriptor diagramDescriptor = new DiagramDescriptor();
 		diagramDescriptor.name = diagramName;
 		diagramDescriptor.hasComponentOwner = hasComponentOwner;
-		if(owner!=null){
-		diagramDescriptor.ownerName = owner;
+		if (owner != null) {
+			diagramDescriptor.ownerName = owner;
 		}
 		String diagramFileName;
 		try {
@@ -171,71 +155,70 @@ public class CHESSDiagramsGeneratorService {
 
 		return diagramDescriptor;
 	}
-	
+
 	public Collection<Diagram> getDiagrams() {
-		
+
 		NotationModel notationModel = NotationUtils.getNotationModel();
-		Set<Diagram> diagrams =  getIBD_BDD_Diagrams(notationModel.getResources());
+		Set<Diagram> diagrams = getIBD_BDD_Diagrams(notationModel.getResources());
 		System.out.println("diagrams");
 		for (Diagram c : diagrams) {
-			System.out.println(c);			
+			System.out.println(c);
 		}
 		return diagrams;
-	
+
 	}
 
-	public Set<Diagram> getDiagrams(Set<Resource> resources){
-		
+	public Set<Diagram> getDiagrams(Set<Resource> resources) {
+
 		Set<Diagram> diagrams = new HashSet<Diagram>();
-		
+
 		for (Resource current : resources) {
 			for (EObject element : current.getContents()) {
 				if (element instanceof Diagram) {
-					diagrams.add((Diagram)element);
-					}
+					diagrams.add((Diagram) element);
 				}
 			}
-		
+		}
+
 		return diagrams;
 	}
-	
-private Set<Diagram> getIBD_BDD_Diagrams(Set<Resource> resources){
-		
+
+	private Set<Diagram> getIBD_BDD_Diagrams(Set<Resource> resources) {
+
 		Set<Diagram> diagrams = new HashSet<Diagram>();
-		
+
 		for (Resource current : resources) {
 			for (EObject element : current.getContents()) {
 				if (element instanceof Diagram) {
-					Diagram diagram = (Diagram)element;
-					System.out.println("diagram type: "+diagram.getType());
-					
-					if (isBlockDefinitionDiagram(diagram)||isInternalBlockDiagram(diagram)){
-					diagrams.add((Diagram)element);
-					}
+					Diagram diagram = (Diagram) element;
+					System.out.println("diagram type: " + diagram.getType());
+
+					if (isBlockDefinitionDiagram(diagram) || isInternalBlockDiagram(diagram)) {
+						diagrams.add((Diagram) element);
 					}
 				}
 			}
-		
+		}
+
 		return diagrams;
 	}
-	
-	
-private boolean isBlockDefinitionDiagram(Diagram diagram){
-	if(diagram.getType().compareTo(BDD)==0){
-		return true;
-	}
-	return false;
-}
 
-private boolean isInternalBlockDiagram(Diagram diagram){
-	if(diagram.getType().compareTo(IBD)==0){
-		return true;
+	private boolean isBlockDefinitionDiagram(Diagram diagram) {
+		if (diagram.getType().compareTo(BDD) == 0) {
+			return true;
+		}
+		return false;
 	}
-	return false;
-}
-	
+
+	private boolean isInternalBlockDiagram(Diagram diagram) {
+		if (diagram.getType().compareTo(IBD) == 0) {
+			return true;
+		}
+		return false;
+	}
+
 	private String getComponentImageFilePath(String fileName) {
-			return directoryName + File.separator + fileName + imageExtension;
-		}
-	
+		return directoryName + File.separator + fileName + imageExtension;
+	}
+
 }
