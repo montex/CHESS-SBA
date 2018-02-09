@@ -121,7 +121,7 @@
                   <menu
                         label="//Debug Validation">
                      <command
-                           commandId="org.polarsys.chess.verificationService.commands.debug.ModelCheckingOnFileCommand"
+                           commandId="org.polarsys.chess.verificationService.commands.debug.CheckValidationPropertyOnFileCommand"
                            style="push">
                      </command>
                   </menu>
@@ -140,7 +140,7 @@
                            style="push">
                      </command>
                      <command
-                           commandId="org.polarsys.chess.verificationService.commands.debug.CheckValidationPropertyOnFileCommand"
+                           commandId="org.polarsys.chess.verificationService.commands.debug.ModelCheckingOnFileCommand"
                            style="push">
                      </command>
                   </menu>

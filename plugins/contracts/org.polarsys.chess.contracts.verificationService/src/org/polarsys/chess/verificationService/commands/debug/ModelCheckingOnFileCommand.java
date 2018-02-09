@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.nuXmvService.dialogs.NuXmvParametersDialog;
-import eu.fbk.eclipse.standardtools.nuXmvService.services.NuXmvService;
+import eu.fbk.eclipse.standardtools.nuXmvService.services.NuXmvExecService;
 import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDialogUtil;
 import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
 
@@ -29,7 +29,7 @@ import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
 public class ModelCheckingOnFileCommand extends AbstractJobCommand {
 
 	
-	private NuXmvService nuXmvService = NuXmvService.getInstance();
+	private NuXmvExecService nuXmvService = NuXmvExecService.getInstance();
 	private NuXmvDialogUtil nuXmvDialogUtil = NuXmvDialogUtil.getInstance();
 	private NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 	
@@ -66,8 +66,8 @@ public class ModelCheckingOnFileCommand extends AbstractJobCommand {
 
 		if (goAhead) {
 			
-			File smvFile = nuXmvDialogUtil.getSmvFileFromFileDialog(nuXmvDirectoryUtil.getSmvFilePath());
-			String resultFilePath = nuXmvDirectoryUtil.getCommandModelCheckingResultPath(smvFile.getName());
+			File smvFile = nuXmvDialogUtil.getSmvFileFromFileDialog(nuXmvDirectoryUtil.getSmvFileDirectory());
+			String resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(smvFile.getName());
 		nuXmvService.modelCheckingCommand(smvFile, property, alg_type, check_type,resultFilePath);
 		}
 			

@@ -1,50 +1,36 @@
-/*******************************************************************************
- * Copyright (C) 2017 Fondazione Bruno Kessler.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *     Alberto Debiasi - initial API and implementation
- ******************************************************************************/
 package org.polarsys.chess.verificationService.commands;
 
-import java.io.File;
-
+import java.util.HashMap;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.uml2.uml.Class;
-
+import org.polarsys.chess.service.internal.model.ChessSystemModel;
+import org.polarsys.chess.service.utils.SelectionUtil;
+import org.polarsys.chess.smvExport.services.SmvExportService;
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.services.OCRAExecService;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.OCRADirectoryUtil;
 
-import org.polarsys.chess.service.internal.model.ChessSystemModel;
-import org.polarsys.chess.service.utils.SelectionUtil;
-import org.polarsys.chess.smvExport.services.SmvExportService;
-
-public class ContractImplementationCommand extends AbstractJobCommand {
+public class CompositeContractImplementationCommand extends AbstractJobCommand {
 
 	private OCRAExecService ocraExecService = OCRAExecService.getInstance(ChessSystemModel.getInstance());
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
-	//private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
 	private SmvExportService smvExportService = SmvExportService.getInstance();
 	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
 	private NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 	
-	public ContractImplementationCommand() {
-		super("Check Contract Implementation");
+	public CompositeContractImplementationCommand() {
+		super("Check Compositional Contract Implementation");
 	}
 
 	private Class umlSelectedComponent;
 	private Resource umlSelectedResource;
 	private boolean isDiscreteTime;
 	private boolean showPopups;
-	private String ossFilepath;
+	private String smvMapFilepath;
 	private String smvFilePath;
 	private String resultFilePath;
 	
@@ -54,7 +40,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 		 umlSelectedResource = umlSelectedComponent.eResource();
 		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
 		 showPopups = true;
-		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();
+		 smvMapFilepath = ocraDirectoryUtil.getSmvMapFilePath();
 		 smvFilePath = nuXmvDirectoryUtil.getSmvFileDirectory();
 		 resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath(umlSelectedComponent.getName());			
 	}
@@ -64,8 +50,8 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		
-		File smvOutput = smvExportService.exportSingleSmv( umlSelectedComponent,showPopups,smvFilePath, monitor);
-		ocraExecService.executeCheckContractImplementation(umlSelectedComponent,umlSelectedResource, smvOutput, isDiscreteTime,showPopups,ossFilepath,resultFilePath,monitor);
+		HashMap<String,String> smvPathComponentNameMap = smvExportService.exportSmv( umlSelectedComponent,showPopups,smvFilePath, monitor);		
+		ocraExecService.executeCheckCompositeContractImplementation(umlSelectedComponent,umlSelectedResource, smvPathComponentNameMap, isDiscreteTime,showPopups,smvMapFilepath,resultFilePath,monitor);
 
 	}
 
