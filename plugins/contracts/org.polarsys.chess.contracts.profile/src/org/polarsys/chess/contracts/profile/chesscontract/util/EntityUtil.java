@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -334,12 +334,12 @@ public class EntityUtil {
 		return ports;
 	}
 
-	public org.eclipse.uml2.uml.Package getToPackage(org.eclipse.uml2.uml.Element umlElememt) {
+	public Package getToPackage(org.eclipse.uml2.uml.Element umlElememt) {
 
-		org.eclipse.uml2.uml.Package tmp = umlElememt.getNearestPackage();
+		Package tmp = umlElememt.getNearestPackage();
 		while (tmp.getOwner() != null && (tmp.getOwner() instanceof Package)) {
-			tmp = (org.eclipse.uml2.uml.Package) tmp.getOwner();
-		}
+			tmp = (Package) tmp.getOwner();
+			}
 		return tmp;
 	}
 
