@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.polarsys.chess.verificationService.commands;
 
-import java.io.File;
+
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -45,7 +45,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 	private boolean isDiscreteTime;
 	private boolean showPopups;
 	private String ossFilepath;
-	private String smvFilePath;
+	private String smvFileDirectory;
 	private String resultFilePath;
 	
 	@Override
@@ -53,9 +53,9 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 		 umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		 umlSelectedResource = umlSelectedComponent.eResource();
 		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
-		 showPopups = true;
+		 showPopups = false;
 		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();
-		 smvFilePath = nuXmvDirectoryUtil.getSmvFileDirectory();
+		 smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
 		 resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath(umlSelectedComponent.getName());			
 	}
 
@@ -64,8 +64,8 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		
-		File smvOutput = smvExportService.exportSingleSmv( umlSelectedComponent,showPopups,smvFilePath, monitor);
-		ocraExecService.executeCheckContractImplementation(umlSelectedComponent,umlSelectedResource, smvOutput, isDiscreteTime,showPopups,ossFilepath,resultFilePath,monitor);
+		String smvOutputPath = smvExportService.exportSingleSmv( umlSelectedComponent,showPopups,smvFileDirectory, monitor);
+		ocraExecService.executeCheckContractImplementation(umlSelectedComponent,umlSelectedResource, smvOutputPath, isDiscreteTime,showPopups,ossFilepath,resultFilePath,monitor);
 
 	}
 

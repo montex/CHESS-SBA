@@ -39,7 +39,7 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 		 umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		 umlSelectedResource = umlSelectedComponent.eResource();
 		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
-		 showPopups = true;
+		 showPopups = false;
 		 smvMapFilepath = ocraDirectoryUtil.getSmvMapFilePath();
 		 smvFilePath = nuXmvDirectoryUtil.getSmvFileDirectory();
 		 resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath(umlSelectedComponent.getName());			

@@ -13,8 +13,10 @@ package org.polarsys.chess.smvExport.services;
 import java.io.File;
 import java.util.HashMap;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.papyrus.uml.tools.model.UmlModel;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.service.internal.model.ChessSystemModel;
 import org.polarsys.chess.smvExport.model.UMLStateMachineModel;
 import eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv.services.SMVTranslatorService;
@@ -23,8 +25,9 @@ import eu.fbk.eclipse.standardtools.utils.DialogUtil;
 public class SmvExportService {
 
 	private static SmvExportService instance;
-
-	private SMVTranslatorService smvTranslatorService = SMVTranslatorService.getInstance(ChessSystemModel.getInstance(),
+private  ChessSystemModel chessSystemModel = ChessSystemModel.getInstance();
+	
+	private SMVTranslatorService smvTranslatorService = SMVTranslatorService.getInstance(chessSystemModel,
 			UMLStateMachineModel.getInstance());
 	private DialogUtil dialogUtil = DialogUtil.getInstance();
 
@@ -58,7 +61,7 @@ public class SmvExportService {
 
 	}
 
-	public File exportSingleSmv(Class umlSelectedComponent, boolean showPopups, String selectedDirectory,
+	public String exportSingleSmv(Class umlSelectedComponent, boolean showPopups, String selectedDirectory,
 			IProgressMonitor monitor) throws Exception {
 
 		File smvFile = smvTranslatorService.exportSingleSmv(umlSelectedComponent, showPopups, selectedDirectory,
@@ -68,7 +71,7 @@ public class SmvExportService {
 			dialogUtil.showMessage_ExportBehaviourDone(smvFile.getAbsolutePath());
 		}
 
-		return smvFile;
+		return smvFile.getPath();
 
 	}
 
@@ -86,5 +89,9 @@ public class SmvExportService {
 
 	}
 
+	public boolean isLeafComponent(Class umlSelectedComponent){
+		EList<Property> subComponents = chessSystemModel.getSubComponentsInstances(umlSelectedComponent);
+		return ((subComponents==null)||(subComponents.size()==0));
+	}
 	
 }
