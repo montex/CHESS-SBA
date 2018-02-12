@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.core.resources,
  org.polarsys.chess.contracts.profile,
  org.polarsys.chess.core,
  eu.fbk.tools.editor.oss,
- org.polarsys.chess.smvExport,
+ org.polarsys.chess.smvExporter,
  org.polarsys.chess.service
 Import-Package: eu.fbk.eclipse.standardtools.nuXmvService.dialogs,
  eu.fbk.eclipse.standardtools.nuXmvService.services,
