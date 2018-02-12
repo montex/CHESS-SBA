@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            category="org.eclipse.papyrus.views.category"
+            category="org.polarsys.chess.views.category"
             class="org.polarsys.chess.contracts.hierarchicalContractView.view.CustomHierarchicalView"
             icon="icons/site_element.gif"
             id="org.polarsys.chess.contracts.hierarchicalContractView.view1"
