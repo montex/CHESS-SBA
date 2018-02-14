@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.polarsys.chess.OSSImporter
+Bundle-SymbolicName: org.polarsys.chess.OSSImporter;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: eu.fbk.eclipse.standardtools.ModelTranslatorToOcra;bundle-version="1.0.0",
+ org.eclipse.xtext,
+ eu.fbk.tools.editor.oss,
+ eu.fbk.eclipse.standardtools.utils;bundle-version="1.0.0",
+ eu.fbk.tools.editor.contract.expression,
+ eu.fbk.tools.editor.basetype,
+ org.polarsys.chess.contracts.profile,
+ eu.fbk.tools.editor.contract,
+ org.polarsys.chess.core,
+ org.polarsys.chess.service;bundle-version="0.11.0",
+ org.eclipse.papyrus.infra.gmfdiag.css,
+ org.eclipse.opencert.apm.baseline.diagram,
+ org.eclipse.papyrus.sysml.diagram.internalblock,
+ org.eclipse.papyrus.sysml.service.types;bundle-version="1.2.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: com.google.inject,
+ org.eclipse.papyrus.uml.diagram.common.commands
+Bundle-Vendor: Fondazione Bruno Kessler
