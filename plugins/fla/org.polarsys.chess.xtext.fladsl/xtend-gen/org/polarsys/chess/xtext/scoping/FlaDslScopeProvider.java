@@ -8,7 +8,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.EncapsulatedClassifier;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Port;
@@ -32,8 +31,7 @@ public class FlaDslScopeProvider extends AbstractDeclarativeScopeProvider {
   public FlaDslScopeProvider() {
     final Object contextElement = XtextUtils.getContextElement();
     if ((contextElement instanceof FPTC)) {
-      Component _base_Component = ((FPTC) contextElement).getBase_Component();
-      this.contextComponent = _base_Component;
+      this.contextComponent = ((FPTC) contextElement).getBase_Component();
     } else {
       if ((contextElement instanceof FLABehavior)) {
         org.eclipse.uml2.uml.Class _base_Class = ((FLABehavior) contextElement).getBase_Class();
@@ -45,9 +43,7 @@ public class FlaDslScopeProvider extends AbstractDeclarativeScopeProvider {
           InstanceSpecification _base_InstanceSpecification = ((FLABehavior) contextElement).getBase_InstanceSpecification();
           boolean _notEquals_1 = (!Objects.equal(_base_InstanceSpecification, null));
           if (_notEquals_1) {
-            InstanceSpecification _base_InstanceSpecification_1 = ((FLABehavior) contextElement).getBase_InstanceSpecification();
-            EList<Classifier> _classifiers = _base_InstanceSpecification_1.getClassifiers();
-            Classifier _get = _classifiers.get(0);
+            Classifier _get = ((FLABehavior) contextElement).getBase_InstanceSpecification().getClassifiers().get(0);
             this.contextComponent = ((EncapsulatedClassifier) _get);
           }
         }
