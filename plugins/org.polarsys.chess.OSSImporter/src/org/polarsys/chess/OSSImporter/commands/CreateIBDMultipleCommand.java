@@ -1,36 +1,35 @@
+/*******************************************************************************
+ * Copyright (C) 2018 Fondazione Bruno Kessler.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *  
+ * Contributors:
+ *     Luca Cristoforetti - initial API and implementation
+ ******************************************************************************/
 package org.polarsys.chess.OSSImporter.commands;
-
-import java.io.File;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.papyrus.sysml.blocks.Block;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
-import org.eclipse.uml2.uml.PackageableElement;
-import org.eclipse.uml2.uml.Stereotype;
-import org.polarsys.chess.OSSImporter.actions.ImportOSSFileAction;
 import org.polarsys.chess.OSSImporter.actions.ShowIBDElementsAction;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.service.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 
 public class CreateIBDMultipleCommand extends AbstractJobCommand {
 	private static final String SYSVIEW =	"CHESS::Core::CHESSViews::SystemView";
-	private static final String BLOCK =		"SysML::Blocks::Block";
-	private static final String CONTRACT =	"CHESSContract::Contract";
 	private Object umlObject;
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	private ShowIBDElementsAction action;
