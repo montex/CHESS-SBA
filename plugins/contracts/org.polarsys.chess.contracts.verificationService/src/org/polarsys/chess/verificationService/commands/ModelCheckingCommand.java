@@ -58,10 +58,32 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 	
 	@Override
 	public void execPreJobOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
-		 umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
+		String paramElementURI = event.getParameter("elementURI");
+		String paramProject = event.getParameter("projectName");
+		String paramModel= event.getParameter("modelName");
+		System.out.println(paramElementURI);
+		System.out.println(paramProject);
+		System.out.println(paramModel);
+		 if((paramElementURI==null)|(paramProject==null)|(paramModel==null)){ 
+			 System.out.println("getUmlComponentFromSelectedObject");
+		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
+		 }else{
+			 System.out.println("selectionUtil.getElement");
+			 umlSelectedComponent=	(Class)selectionUtil.getElement(paramProject,paramModel, paramElementURI);
+		 }
+			 
 		 umlSelectedResource = umlSelectedComponent.eResource();
 		 showPopups = false;
+		 String paramIsDiscrete = event.getParameter("isDiscrete");
+		 if(paramIsDiscrete==null){
+			 System.out.println("param==null");
 		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
+		 }else{
+			 System.out.println("param: "+paramIsDiscrete);
+		isDiscreteTime=Boolean.valueOf(paramIsDiscrete);	 
+		System.out.println("isDiscreteTime: "+isDiscreteTime);
+		 }
+		 
 		 smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
 		 monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(umlSelectedComponent.getName());
 		 resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(umlSelectedComponent.getName());
@@ -84,7 +106,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 		}
 		//nuXmvExecService.executeModelChecking(smvOutput,resultFilePath);
 		
-		nuXmvExecService.executeModelChecking(generatedSmvFilePath,resultFilePath);
+		nuXmvExecService.executeModelChecking(generatedSmvFilePath,resultFilePath,event.getParameter("algorithm_type"),event.getParameter("check_type"),event.getParameter("property"));
 		}
 
 }

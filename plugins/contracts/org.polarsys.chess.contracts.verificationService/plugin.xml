@@ -221,6 +221,44 @@
             defaultHandler="org.polarsys.chess.verificationService.commands.ModelCheckingCommand"
             id="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
             name="Model Checking on selected component">
+         <commandParameter
+               id="isDiscrete"
+               name="isDiscrete"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="elementURI"
+               name="elementURI"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="projectName"
+               name="projectName"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="modelName"
+               name="modelName"
+               optional="true">
+         </commandParameter>
+         	<commandParameter
+               id="property"
+               name="Property"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="algorithm_type"
+               name="AlgorithmType"
+               optional="true"
+               values="bmc, bdd, ic3, klive">
+         </commandParameter>
+         <commandParameter
+               id="check_type"
+               name="CheckType"
+               optional="true"
+               values="invar, ltlspec, ctl">
+         </commandParameter>
+         
       </command>
       <command
             defaultHandler="org.polarsys.chess.verificationService.commands.debug.ModelCheckingOnFileCommand"
