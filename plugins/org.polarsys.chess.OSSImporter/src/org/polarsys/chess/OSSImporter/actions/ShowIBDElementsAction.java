@@ -114,7 +114,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			
 			final EditPartRepresentation editPart = (EditPartRepresentation) results[i];
 
-			printMessageOnOut("\n\n\nLavoro su results[" + i + "] = " + editPart);
+			printMessageOnOut("\n\n\nWorking on results[" + i + "] = " + editPart);
 			
 			final Element semanticElement = (Element) editPart.getSemanticElement();
 			
@@ -138,18 +138,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 					contractEntityUtil.isDelegationConstraints(semanticElement)) {
 				result.add(editPart);
 			}
-
-//			if(entityUtil.isPort(semanticElement) || 
-//					entityUtil.isComponentInstance(semanticElement) || 
-//					contractEntityUtil.isDelegationConstriants(semanticElement)) {
-//				result.add(editPart);
-//			}
-
-		
-		
 		}
-		
-		printMessageOnOut("\nDentro buildshowhidelist, result size = " + result.size());
 		
 		// we are looking for the objects to show
 		for (Object element : result) {
@@ -157,7 +146,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				viewsToCreate.add((EditPartRepresentation) element);
 			}
 		}
-		printMessageOnOut("\nDentro buildshowhidelist, viewsToCreate size = " + viewsToCreate.size() + "\n\n");
 	}
 
 	/**
@@ -200,36 +188,49 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * Creates the list of commands to show the various elements 
 	 */
 	protected Command getActionCommand() {
-
-		ShowHideElementsRequest req = null;
 		final CompoundCommand completeCmd = new CompoundCommand("Show/Hide Inherited Elements Command"); //$NON-NLS-1$
+		ShowHideElementsRequest request = null;
 
+		// Initial position of the elements
 		final Point propertyLocation = new Point(500, 20);	
-		final Point portLocation = new Point(-10, 20);
-		
+		final Point portLocationLeft = new Point(-10, 20);
+		final Point portLocationRight = new Point(-10, 20);
 		
 		for (EditPartRepresentation rep : this.viewsToCreate) {
 			if (!(rep instanceof OptionalEditPartRepresentation)) {
 				continue;
 			}
-			final EditPart ep = ((OptionalEditPartRepresentation) rep).getParentRepresentation().getParentRepresentation().getRepresentedEditPart();
+			final EditPart editPart = ((OptionalEditPartRepresentation) rep).getParentRepresentation().getParentRepresentation().getRepresentedEditPart();
 			final View compartmentView = ((OptionalEditPartRepresentation) rep).getParentRepresentation().getRepresentedEditPart().getNotationView();
 
-			printMessageOnOut("\n\nep = " + ep);
+			printMessageOnOut("\n\nep = " + editPart);
 			printMessageOnOut("compView = " + compartmentView);
+
+			// Get the width of the component to set the position of output ports
+			final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) editPart).getNotationView();
+			final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
+			portLocationRight.x += layout.getWidth() + 20;
 			
 			if (compartmentView != null) {
-				req = new ShowHideElementsRequest(compartmentView, ((OptionalEditPartRepresentation) rep).getSemanticElement());
-				if (isXYLayout(compartmentView, ep)) {
+				request = new ShowHideElementsRequest(compartmentView, ((OptionalEditPartRepresentation) rep).getSemanticElement());
+				if (isXYLayout(compartmentView, editPart)) {
 					propertyLocation.x += INCREMENT;
 					propertyLocation.y += INCREMENT;
-					req.setLocation(new Point(propertyLocation));
+					request.setLocation(new Point(propertyLocation));
 
-				} else if (isAffixedChildNode(ep, ((OptionalEditPartRepresentation) rep).getSemanticElement())) {
-					portLocation.y += INCREMENT;
-					req.setLocation(new Point(portLocation));
+				} else if (isAffixedChildNode(editPart, ((OptionalEditPartRepresentation) rep).getSemanticElement())) {				
+					Element element = (Element) ((OptionalEditPartRepresentation) rep).getSemanticElement();
+					if (element instanceof Port) {
+						if (EntityUtil.getInstance().isInputPort(element)) {
+							portLocationLeft.y += INCREMENT;
+							request.setLocation(new Point(portLocationLeft));
+						} else {
+							portLocationRight.y += INCREMENT;
+							request.setLocation(new Point(portLocationRight));
+						}
+					}
 				}
-				Command cmd = ep.getCommand(req);
+				Command cmd = editPart.getCommand(request);
 				if (cmd != null && cmd.canExecute()) {
 					completeCmd.add(cmd);
 				}
@@ -245,7 +246,12 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 */
 	private void drawComponentInstancesPorts(IGraphicalEditPart diagramEP, Object umlObject) {
 		final CompoundCommand command = new CompoundCommand("Draw Component Instances Ports Commands"); //$NON-NLS-1$
-		
+		Property prop = null;
+		Class propertyType = null;
+		View compartmentView = null;
+		Point portLocationLeft = null;
+		Point portLocationRight = null;
+
 		// Get the edit part of the main element, from the diagram edit part
 		IGraphicalEditPart elementEP = (IGraphicalEditPart) diagramEP.getChildren().get(0);
 		
@@ -254,40 +260,49 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		
 		printMessageOnOut("\nCompartment edit part = " + compartmentEP);
 
-		List<IGraphicalEditPart>compartmentChildren = compartmentEP.getChildren();
-		for (IGraphicalEditPart childEP : compartmentChildren) {
+		List<?>compartmentChildren = compartmentEP.getChildren();
+		for (Object childEP : compartmentChildren) {
 			printMessageOnOut("child of compartment = " + childEP);
 			
 			// Get the UML element associated to the EP
-			EObject semanticElement = childEP.resolveSemanticElement();
-			
+			EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
 			printMessageOnOut("SemanticElement del compartment = " + semanticElement);
-						
+									
 			if (semanticElement instanceof Property) {			
 			
 				// Get the element type
-				Property prop = (Property) semanticElement;
-				Class propertyType = (Class) prop.getType(); 
+				prop = (Property) semanticElement;
+				propertyType = (Class) prop.getType(); 
 
-				Point portLocation = new Point(-10, 40);
-				
 				// Get the compartment view of the property
-				View compartmentView = childEP.getNotationView();
+				compartmentView = ((IGraphicalEditPart) childEP).getNotationView();
+
+				// Set the initial position of the ports
+				portLocationLeft = new Point(-10, 40);
+				portLocationRight = new Point(-10, 40);
+				
+				// Get the width of the component to set the position of output ports
+				final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) childEP).getNotationView();
+				final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
+				portLocationRight.x += layout.getWidth() + 20;
 
 				EList<Port> ports = propertyType.getOwnedPorts();
 				for (Port port : ports) {
-					printMessageOnOut("\nHo trovato questa port = " + port);
-				
 					if (compartmentView != null) {
 						
-						ShowHideElementsRequest req = new ShowHideElementsRequest(compartmentView, port);
+						ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
 						
-						printMessageOnOut("req = " + req);
+						printMessageOnOut("req = " + request);
 						
-						portLocation.y += INCREMENT;
-						req.setLocation(new Point(portLocation));					
-						
-						Command cmd = childEP.getCommand(req);	// Non puo' essere l'EditPart del diagramma
+						if (EntityUtil.getInstance().isInputPort(port)) {
+							portLocationLeft.y += INCREMENT;
+							request.setLocation(new Point(portLocationLeft));
+						} else {
+							portLocationRight.y += INCREMENT;
+							request.setLocation(new Point(portLocationRight));
+						}
+
+						Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);	// Cannot be the diagram EditPart
 						printMessageOnOut("cmd = " + cmd);
 						printMessageOnOut("cmd label = " + cmd.getLabel());
 						if (cmd != null && cmd.canExecute()) {
@@ -297,8 +312,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				}
 			}
 		}
-
-		printMessageOnOut("Il comando e' composto da elementi = " + ((CompoundCommand) command).size());
 
 		// Execute the commands
 		final TransactionalEditingDomain domain  = elementEP.getEditingDomain();
@@ -334,15 +347,15 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		}
 		
 		// Now I should resize also the inner components
-		final EList<View>compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
+		final EList<?>compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
 		EObject semanticElement = null;
 		int offset = 100;
 
 		// Loop on the children on the compartment view
-		for (View child : compartmentChildren) {
+		for (Object child : compartmentChildren) {
 			
 			// Get the UML element associated to the EP
-			semanticElement = child.getElement();
+			semanticElement = ((View) child).getElement();
 			if (semanticElement instanceof Property) {			
 				if (child instanceof CSSShapeImpl) {
 					final CSSShapeImpl viewShape = (CSSShapeImpl) child;
@@ -574,7 +587,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 
 		// Create the list of commands to display the elements
 		final Command command = getActionCommand();		
-		printMessageOnOut("Il comando e' composto da elementi = " + ((CompoundCommand) command).size());
 		
 		// Execute the commands
 		final TransactionalEditingDomain domain = this.selectedElements.get(0).getEditingDomain();
@@ -593,5 +605,4 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 }
 
-//TODO: rivedere il tutorial su come creare elementi grafici, discorso delle edit part e edge tra views...
-
+//TODO: mettere a destra le output port nei componenti interni
