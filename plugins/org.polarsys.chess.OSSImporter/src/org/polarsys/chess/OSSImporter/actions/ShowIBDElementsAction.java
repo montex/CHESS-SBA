@@ -77,7 +77,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 	
 	/**
-	 * Adds a IBD diagram to the given block
+	 * Adds a IBD diagram to the given block.
 	 * @param owner the selected block
 	 * @throws Exception
 	 */
@@ -101,7 +101,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
-	 * Builds a list of elements I'm interested to display
+	 * Builds a list of elements I'm interested to display.
 	 * @param results the list of all the possible EditPartRepresentation elements
 	 */
 	protected void buildShowHideElementsList(Object[] results) {	
@@ -149,7 +149,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
-	 * Builds the selection with all the possible elements
+	 * Builds the selection with all the possible elements.
 	 */
 	protected void buildSelection() {
 		selection = new ArrayList<Object>();
@@ -159,7 +159,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
-	 * Completes the list of selection for the given representation and its potential children
+	 * Completes the list of selection for the given representation and its potential children.
 	 * @param listToComplete the list of selected elements to complete
 	 * @param representation the edit part representation that completes the list
 	 */
@@ -185,7 +185,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
-	 * Creates the list of commands to show the various elements 
+	 * Creates the list of commands to show the various elements .
 	 */
 	protected Command getActionCommand() {
 		final CompoundCommand completeCmd = new CompoundCommand("Show/Hide Inherited Elements Command"); //$NON-NLS-1$
@@ -240,7 +240,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
-	 * Draws the ports on the inner instances
+	 * Draws the ports on the inner instances.
 	 * @param diagramEP the EditPart of the diagram
 	 * @param umlObject the selected UML object
 	 */
@@ -319,7 +319,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
-	 * Resizes the component blocks
+	 * Resizes the component blocks.
 	 * @param diagramEP the diagram EditPart
 	 */
 	private void resizeElements(IGraphicalEditPart diagramEP) {
@@ -389,9 +389,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	
 	/**
 	 * Gets the editpart from view.
-	 *
-	 * @param view
-	 *            the view
+	 * @param view the view
 	 * @return the EditPart from the view
 	 */
 	protected EditPart getEditPartFromView(View view) {
@@ -468,7 +466,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 	
 	/**
-	 * Returns the command to show the connection line between the given edit parts
+	 * Returns the command to show the connection line between the given edit parts.
 	 * @param sourceEP the EditPart of the source port
 	 * @param targetEP the EditPart of the target port
 	 * @param connector the Connector between the ports
@@ -529,8 +527,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				targetEP = getPortEditPart((Port) targetEnd.getRole(), targetEnd.getPartWithPort(), elementView);
 			}
 
-//			printMessageOnOut("\n\nFound sourceEP = " + sourceEP);
-//			printMessageOnOut("\nFound targetEP = " + targetEP);
+			printMessageOnOut("\n\nFound sourceEP = " + sourceEP);
+			printMessageOnOut("\nFound targetEP = " + targetEP);
 
 			if (sourceEP != null && targetEP != null) {
 				Command cmd = getShowLinkCommand(sourceEP, targetEP, connector);
@@ -546,7 +544,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 	
 	/**
-	 * Fills the diagram with graphical components
+	 * Fills the diagram with graphical components.
 	 * @param diagram
 	 * @throws ServiceException 
 	 */
@@ -601,8 +599,5 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		
 		// Draw the connectors
 		drawConnectors(selectedElementEP);
-		
 	}
 }
-
-//TODO: mettere a destra le output port nei componenti interni

@@ -31,7 +31,7 @@ public class CreateIBDSingleCommand extends AbstractJobCommand {
 	}
 		
 	/**
-	 * Utility dialog to display a message on screen
+	 * Utility dialog to display a message on screen.
 	 * @param message the text to display
 	 */
 	private void showMessage(String message) {
