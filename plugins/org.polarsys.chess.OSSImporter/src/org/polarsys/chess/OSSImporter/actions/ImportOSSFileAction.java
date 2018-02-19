@@ -221,19 +221,12 @@ public class ImportOSSFileAction {
 		printMessageOnOut("\n\n\n Creating property " + elementName + " for owner " + owner + " with type " + elementType);
 		printMessageOnOut("\n\n\n");
 
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(owner);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-				Property newUMLProperty = owner.createOwnedAttribute(elementName, elementType);
-				UMLUtils.applyStereotype(newUMLProperty, COMPINST);
-				newUMLProperty.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE)); //FIXME: e' sempre cosi?
-			}
-		});
+		Property newUMLProperty = owner.createOwnedAttribute(elementName, elementType);
+		UMLUtils.applyStereotype(newUMLProperty, COMPINST);
+		newUMLProperty.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE)); //FIXME: e' sempre cosi?
 
 		printMessageOnOut("\n\nCreated " + elementName + " Property\n\n");
-		return owner.getOwnedAttribute(elementName, elementType);
+		return newUMLProperty;
 	}
 	
 	/** 
@@ -248,18 +241,11 @@ public class ImportOSSFileAction {
 		printMessageOnOut("\n\n\n Creating contract property " + elementName + " for owner " + owner + " with type " + elementType);
 		printMessageOnOut("\n\n\n");
 
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(owner);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-				Property newUMLProperty = owner.createOwnedAttribute(elementName, elementType);
-				UMLUtils.applyStereotype(newUMLProperty, CONTRACT_PROP);
-			}
-		});
+		Property newUMLProperty = owner.createOwnedAttribute(elementName, elementType);
+		UMLUtils.applyStereotype(newUMLProperty, CONTRACT_PROP);
 
 		printMessageOnOut("\n\nCreated " + elementName + " Property\n\n");
-		return owner.getOwnedAttribute(elementName, elementType);
+		return newUMLProperty;
 	}
 	
 	/**
@@ -299,25 +285,17 @@ public class ImportOSSFileAction {
 		printMessageOnOut("\n\n\n Creating delegation constraint " + delegationName + " for owner " + owner);
 		printMessageOnOut("\n\n\n");
 
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(owner);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
+		Constraint newUMLConstraint = owner.createOwnedRule(delegationName.toString());
+		UMLUtils.applyStereotype(newUMLConstraint, DELEGATION_CONST);
 
-			@Override
-			protected void doExecute() {
-				
-				Constraint newUMLConstraint = owner.createOwnedRule(delegationName.toString());
-				UMLUtils.applyStereotype(newUMLConstraint, DELEGATION_CONST);
-				
-				LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
-				literalString.setName(DELEGATION_CONSTRAINT_NAME);
-				final String formalPropertyText = createDelegationConstraintText(variable, constraint);
-				literalString.setValue(formalPropertyText);
-				newUMLConstraint.setSpecification(literalString);
-			}
-		});
+		LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
+		literalString.setName(DELEGATION_CONSTRAINT_NAME);
+		final String formalPropertyText = createDelegationConstraintText(variable, constraint);
+		literalString.setValue(formalPropertyText);
+		newUMLConstraint.setSpecification(literalString);
 
 		printMessageOnOut("\n\nCreated " + delegationName + " Delegation Constraint\n\n");
-		return owner.getOwnedRule(delegationName.toString());
+		return newUMLConstraint;
 	}
 
 	/**
@@ -425,24 +403,17 @@ public class ImportOSSFileAction {
 			printMessageOnOut("\n\n Creating contract refinement " + refinementName + " for owner " + owner.getName());
 			printMessageOnOut("\n\n");
 	
-			TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(owner);
-			domain.getCommandStack().execute(new RecordingCommand(domain) {
-	
-				@Override
-				protected void doExecute() {
-					DataType newUmlDataType = UMLFactory.eINSTANCE.createDataType();
-					Classifier newClass = owner.createNestedClassifier(refinementName, newUmlDataType.eClass());
-					Stereotype stereotype = UMLUtils.applyStereotype(newClass, CONTRACT_REFINEMENT);
-					ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(stereotype);
-					
-					// Set the correct links for the refinement
-					contractRefinement.setInstance(componentInstance); // The component instance containing the definition
-					contractRefinement.setContract(contractProperty);  // The contract property that refines the contract
-				}
-			});
+			DataType newUmlDataType = UMLFactory.eINSTANCE.createDataType();
+			Classifier newClass = owner.createNestedClassifier(refinementName, newUmlDataType.eClass());
+			Stereotype stereotype = UMLUtils.applyStereotype(newClass, CONTRACT_REFINEMENT);
+			ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(stereotype);
+
+			// Set the correct links for the refinement
+			contractRefinement.setInstance(componentInstance); // The component instance containing the definition
+			contractRefinement.setContract(contractProperty);  // The contract property that refines the contract
 					
 			printMessageOnOut("\n\nCreated " + refinementName + " Contract Refinement\n\n");
-			return (DataType) owner.getNestedClassifier(refinementName);
+			return (DataType) newClass;
 		}
 	}
 
@@ -540,28 +511,19 @@ public class ImportOSSFileAction {
 	 */
 	private Type createBoundedSubType(Package pkg, String typeName, int lowerBound, int upperBound) {
 			
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(pkg);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
+		// Create a data type to the component view and apply the stereotype
+		Type dataType = pkg.createOwnedType(typeName, UMLPackage.Literals.DATA_TYPE);
+		Stereotype stereotype = UMLUtils.applyStereotype(dataType, BOUNDED_TYPE);
 
-			@Override
-			protected void doExecute() {
+		// Extract the stereotiped type and configure it
+		BoundedSubtype boundedType = (BoundedSubtype) dataType.getStereotypeApplication(stereotype);		
+		boundedType.setMinValue(String.valueOf(lowerBound));
+		boundedType.setMaxValue(String.valueOf(upperBound));
+		boundedType.setBaseType((DataType) getPrimitiveType("Integer"));
+//		boundedType.setBaseType((DataType) getUMLPrimitiveType("Integer"));	// Alternative version	
 
-				// Create a data type to the component view and apply the stereotype
-				Type dataType = pkg.createOwnedType(typeName, UMLPackage.Literals.DATA_TYPE);
-				Stereotype stereotype = UMLUtils.applyStereotype(dataType, BOUNDED_TYPE);
-
-				// Extract the stereotiped type and configure it
-				BoundedSubtype boundedType = (BoundedSubtype) dataType.getStereotypeApplication(stereotype);		
-				boundedType.setMinValue(String.valueOf(lowerBound));
-				boundedType.setMaxValue(String.valueOf(upperBound));
-				boundedType.setBaseType((DataType) getPrimitiveType("Integer"));
-//				boundedType.setBaseType((DataType) getUMLPrimitiveType("Integer"));	// Alternative version	
-			}
-		});
-
-		Type type = pkg.getOwnedType(typeName);
-		printMessageOnOut("Type '" + type.getQualifiedName() + "' created.");
-		return type;
+		printMessageOnOut("Type '" + dataType.getQualifiedName() + "' created.");
+		return dataType;
 	}
 	
 	/**
@@ -679,23 +641,14 @@ public class ImportOSSFileAction {
 		// Create the name using an incremental value
 		final String enumerationName = ENUMERATION_NAME + (getEnumerations(pkg).size() + 1);
 
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(pkg);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
+		Enumeration enumeration = pkg.createOwnedEnumeration(enumerationName);
+		Set<String> values = getListValuesForEnumType(enumType);
+		for (String string : values) {
+			enumeration.createOwnedLiteral(string);
+		}				
 
-			@Override
-			protected void doExecute() {
-
-				Enumeration enumeration = pkg.createOwnedEnumeration(enumerationName);
-				Set<String> values = getListValuesForEnumType(enumType);
-				for (String string : values) {
-					enumeration.createOwnedLiteral(string);
-				}				
-			}
-		});
-
-		Type type = pkg.getOwnedType(enumerationName);
-		printMessageOnOut("Type '" + type.getQualifiedName() + "' created.");
-		return (Enumeration) type;
+		printMessageOnOut("Type '" + enumeration.getQualifiedName() + "' created.");
+		return enumeration;
 	}
 	
 	/**
@@ -744,17 +697,8 @@ public class ImportOSSFileAction {
 	private Signal createSignalType(Package pkg) {
 		final String signalName = SIGNAL_NAME;
 				
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(pkg);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-
-				pkg.createOwnedType(signalName, UMLPackage.Literals.SIGNAL);
-			}
-		});
+		Type type = pkg.createOwnedType(signalName, UMLPackage.Literals.SIGNAL);
 		
-		Type type = pkg.getOwnedType(signalName);
 		printMessageOnOut("Type '" + type.getQualifiedName() + "' created.");
 		return (Signal) type;
 	}
@@ -842,21 +786,14 @@ public class ImportOSSFileAction {
 //			return null;	// Create the port anyway, without type
 		}
 		
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(owner);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-			
-			@Override
-			protected void doExecute() {
-				org.eclipse.uml2.uml.Port umlPort = owner.createOwnedPort(portName, portType);
-				Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
-				umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE)); //FIXME: e' sempre cosi?
-				FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
-				flowPort.setDirection(isInput? FlowDirection.IN: FlowDirection.OUT);
-			}
-		});
+		org.eclipse.uml2.uml.Port umlPort = owner.createOwnedPort(portName, portType);
+		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE)); //FIXME: e' sempre cosi?
+		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+		flowPort.setDirection(isInput? FlowDirection.IN: FlowDirection.OUT);
 
 		printMessageOnOut("\n\nCreated " + portName + " Port\n\n");
-		return owner.getOwnedPort(portName, portType);
+		return umlPort;
 	}
 	
 	/** 
@@ -866,20 +803,13 @@ public class ImportOSSFileAction {
 	 * @return the created Class
 	 */
 	private Class createSystemBlock(Package owner, final String elementName) {
-		
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(owner);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
 
-			@Override
-			protected void doExecute() {
-				Class sysBlock = owner.createOwnedClass(elementName, false);
-				UMLUtils.applyStereotype(sysBlock, BLOCK);
-				UMLUtils.applyStereotype(sysBlock, SYSTEM);
-			}
-		});
+		Class sysBlock = owner.createOwnedClass(elementName, false);
+		UMLUtils.applyStereotype(sysBlock, BLOCK);
+		UMLUtils.applyStereotype(sysBlock, SYSTEM);
 		
 		printMessageOnOut("\n\nCreated " + elementName + " System Block\n\n");
-		return (Class) owner.getPackagedElement(elementName);
+		return sysBlock;
 	}
 	
 	/** 
@@ -893,20 +823,13 @@ public class ImportOSSFileAction {
 		printMessageOnOut("\n\n\n Creating contract " + contractName + " for owner " + owner);
 		printMessageOnOut("\n\n\n");
 
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(owner);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-				Class newUmlClass = UMLFactory.eINSTANCE.createClass();
-				Classifier newClass = owner.createNestedClassifier(contractName, newUmlClass.eClass());
-				UMLUtils.applyStereotype(newClass, CONTRACT);
-			}
-		});
+		Class newUmlClass = UMLFactory.eINSTANCE.createClass();
+		Classifier newClass = owner.createNestedClassifier(contractName, newUmlClass.eClass());
+		UMLUtils.applyStereotype(newClass, CONTRACT);
 		
 		printMessageOnOut("\n\nCreated " + contractName + " Property\n\n");
 
-		return (Class) owner.getNestedClassifier(contractName);
+		return (Class) newClass;
 	}
 	
 	/** 
@@ -917,21 +840,14 @@ public class ImportOSSFileAction {
 	 */
 	private Class createBlock(Package owner, final String elementName) {
 
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(owner);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
+		Class umlClass = owner.createOwnedClass(elementName, false);
+		UMLUtils.applyStereotype(umlClass, BLOCK);
 
-			@Override
-			protected void doExecute() {
-				Class out = owner.createOwnedClass(elementName, false);
-				UMLUtils.applyStereotype(out, BLOCK);
-
-//				owner.createPackagedElement(elementName, newUMLClass.eClass()); This also works...
-//				owner.getPackagedElements().add(newUMLClass);	// This works too!
-			}
-		});
+//		owner.createPackagedElement(elementName, newUMLClass.eClass()); This also works...
+//		owner.getPackagedElements().add(newUMLClass);	// This works too!
 		
 		printMessageOnOut("\n\nCreated " + elementName + " Block\n\n");
-		return (Class) owner.getPackagedElement(elementName);	// Return the first occurence
+		return umlClass;	// Return the first occurence
 	}
 	
 	/** 
@@ -943,16 +859,8 @@ public class ImportOSSFileAction {
 		final Stereotype stereotype = umlRefinement.getAppliedStereotype(CONTRACT_REFINEMENT);	
 		final ContractRefinement contractRefinement = (ContractRefinement) umlRefinement.getStereotypeApplication(stereotype);
 		
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(contractProperty);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-				
-				// Add the new refinement to the list
-				contractProperty.getRefinedBy().add(contractRefinement);
-			}
-		});
+		// Add the new refinement to the list
+		contractProperty.getRefinedBy().add(contractRefinement);
 	}
 	
 	/**
@@ -982,16 +890,8 @@ public class ImportOSSFileAction {
 	 */
 	private void addConnector(Class owner, Connector connector) {
 		
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(owner);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-				
-				// Add the new connector to the list
-				owner.getOwnedConnectors().add(connector);
-			}
-		});
+		// Add the new connector to the list
+		owner.getOwnedConnectors().add(connector);
 	}
 	
 	/**
@@ -1413,44 +1313,54 @@ public class ImportOSSFileAction {
 		// If the OCRA system component type is not defined, set it to 'System'
 		final String dslSystemComponentName = dslSystemComponent.getType() == null ? "System" : dslSystemComponent.getType();
 		dslSystemComponent.setType(dslSystemComponentName);
-		
+
 		printMessageOnOut("dslSystemComponent.type = " + dslSystemComponentName);
-		
-		// Add the systemComponent to the package
-		Class systemComponent = createSystemBlock(sysView, dslSystemComponent.getType());
-//		Class systemComponent = createSystemBlock(sysView, dslSystemComponent.getType() + SUFFIX);
 
-		// Store the systemComponent in a hash with its name
-		dslTypeToComponent.put(dslSystemComponentName, systemComponent);
-		
-		// Populate the map and the package with the other Component elements 
-		for (Component dslComponent : ocraOssFile.getComponents()) {
-			Class component = createBlock(sysView, dslComponent.getType());
-//			Class component = createBlock(sysView, dslComponent.getType() + SUFFIX);
-			if(dslTypeToComponent.put(dslComponent.getType(), component) != null) {
-				printMessageOnOut("Duplicated component type, not added: " + dslComponent.getType());
-			} else {
-				printMessageOnOut("component.type = " + dslComponent.getType());
+		// Start a transaction to modify the package content 
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(pkg);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
+
+
+				// Add the systemComponent to the package
+				Class systemComponent = createSystemBlock(sysView, dslSystemComponent.getType());
+				//		Class systemComponent = createSystemBlock(sysView, dslSystemComponent.getType() + SUFFIX);
+
+				// Store the systemComponent in a hash with its name
+				dslTypeToComponent.put(dslSystemComponentName, systemComponent);
+
+				// Populate the map and the package with the other Component elements 
+				for (Component dslComponent : ocraOssFile.getComponents()) {
+					Class component = createBlock(sysView, dslComponent.getType());
+					//			Class component = createBlock(sysView, dslComponent.getType() + SUFFIX);
+					if(dslTypeToComponent.put(dslComponent.getType(), component) != null) {
+						printMessageOnOut("Duplicated component type, not added: " + dslComponent.getType());
+					} else {
+						printMessageOnOut("component.type = " + dslComponent.getType());
+					}
+				}
+
+				// Now I have created all the Blocks in the package, loop on them, but not getting them from 
+				// the package (it may be polluted with other blocks), but from the OSS model again.
+
+				// parse the system component
+				parseComponentInterfaces(dslSystemComponent);
+
+				// Parse all the other components 
+				for (Component dslComponent : ocraOssFile.getComponents()) {
+					parseComponentInterfaces(dslComponent);
+				}
+
+				// parse the system component
+				parseComponentRefinements(dslSystemComponent);
+
+				// Parse all the other components 
+				for (Component dslComponent : ocraOssFile.getComponents()) {
+					parseComponentRefinements(dslComponent);
+				}
 			}
-		}
-		
-		// Now I have created all the Blocks in the package, loop on them, but not getting them from 
-		// the package (it may be polluted with other blocks), but from the OSS model again.
-
-		// parse the system component
-		parseComponentInterfaces(dslSystemComponent);
-
-		// Parse all the other components 
-		for (Component dslComponent : ocraOssFile.getComponents()) {
-			parseComponentInterfaces(dslComponent);
-		}
-		
-		// parse the system component
-		parseComponentRefinements(dslSystemComponent);
-
-		// Parse all the other components 
-		for (Component dslComponent : ocraOssFile.getComponents()) {
-			parseComponentRefinements(dslComponent);
-		}
+		});
 	}
 }
