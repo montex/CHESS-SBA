@@ -50,15 +50,14 @@ public class CustomHierarchicalView extends HierarchicalView {
 					}
 				}
 
-				if(systems.size()>0){
-				return new CHESSRootNode(systems);
+				if (systems.size() > 0) {
+					return new CHESSRootNode(systems);
 				}
 			}
 		}
 		return null;
 	}
 
-	
 	private <T> Collection<T> iterator2Collection(final Iterator<T> iter) {
 		ArrayList<T> list = new ArrayList<T>();
 		for (; iter.hasNext();) {

@@ -27,7 +27,6 @@ public class CustomContractEditorFilter implements org.eclipse.jface.viewers.IFi
 
 	@Override
 	public boolean select(Object selection) {
-	
 
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selection);
 

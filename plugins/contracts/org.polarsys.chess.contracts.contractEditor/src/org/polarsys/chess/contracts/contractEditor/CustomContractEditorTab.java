@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.polarsys.chess.contracts.contractEditor;
 
-
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -56,15 +55,13 @@ public class CustomContractEditorTab extends ContractEditorTab {
 		return ((Class) contract).eResource();
 	}
 
-
-
 	public String getContractQualifiedName(Object contract) {
 		if (contract != null) {
 			return ((Class) contract).getQualifiedName();
 		}
 		return null;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -104,7 +101,6 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	@Override
 	public Object returnContract(ISelection selection) {
 
-	
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selection);
 
 		if (selectedUmlElement instanceof Property) {
@@ -163,8 +159,6 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	public Object extractContractFromComponent(Object component, String contractName) {
 		return contractEntityUtil.getUmlContract((Class) component, contractName);
 	}
-
-	
 
 	/*
 	 * (non-Javadoc)
@@ -322,13 +316,13 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	private Constraint selectProperty(Object contract) {
 		TreeSelectorDialog dialog = new TreeSelectorDialog(Display.getDefault().getActiveShell());
 		org.eclipse.uml2.uml.Package pkg = entityUtil.getToPackage((Class) contract);
-//Profile profile = null;
-Profile profile = pkg.getAppliedProfile("CHESSContract", true);
-Stereotype formalPropertyStereotype = profile.getOwnedStereotype("FormalProperty");
+		// Profile profile = null;
+		Profile profile = pkg.getAppliedProfile("CHESSContract", true);
+		Stereotype formalPropertyStereotype = profile.getOwnedStereotype("FormalProperty");
 		UMLContentProvider provider = new UMLContentProvider(pkg,
 				// contract.getOwner(),
-					UMLPackage.eINSTANCE.getPackage_PackagedElement(),formalPropertyStereotype);
-	dialog.setContentProvider(provider);
+				UMLPackage.eINSTANCE.getPackage_PackagedElement(), formalPropertyStereotype);
+		dialog.setContentProvider(provider);
 		dialog.setLabelProvider(new UMLLabelProvider());
 		dialog.setMessage(Messages.UMLModelingAssistantProviderMessage);
 		dialog.setTitle(Messages.UMLModelingAssistantProviderTitle);
@@ -341,13 +335,9 @@ Stereotype formalPropertyStereotype = profile.getOwnedStereotype("FormalProperty
 		return null;
 	}
 
-	
-
 	@Override
 	public AbstractSystemModel getSystemModel() {
 		return ChessSystemModel.getInstance();
 	}
-
-	
 
 }
