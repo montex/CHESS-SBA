@@ -32,8 +32,6 @@ public class CustomConstraintEditorTab extends ConstraintEditorTab {
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 
-	
-	
 	@Override
 	public Resource getResourceFromConstraint(Object constraint) {
 
@@ -49,7 +47,6 @@ public class CustomConstraintEditorTab extends ConstraintEditorTab {
 	 */
 	@Override
 	public Object returnConstraint(ISelection selection) {
-		
 
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selection);
 
@@ -93,7 +90,7 @@ public class CustomConstraintEditorTab extends ConstraintEditorTab {
 	 */
 	public String getStrFromConstraint(Object constraint) {
 		String strContraint = ((Constraint) constraint).getSpecification().stringValue();
-		if(strContraint==null){
+		if (strContraint == null) {
 			return "";
 		}
 		return strContraint;
@@ -103,8 +100,5 @@ public class CustomConstraintEditorTab extends ConstraintEditorTab {
 	public AbstractSystemModel getSystemModel() {
 		return ChessSystemModel.getInstance();
 	}
-
-	
-	
 
 }

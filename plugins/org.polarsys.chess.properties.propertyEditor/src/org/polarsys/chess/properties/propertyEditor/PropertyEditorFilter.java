@@ -21,7 +21,7 @@ public class PropertyEditorFilter implements org.eclipse.jface.viewers.IFilter {
 
 	@Override
 	public boolean select(Object selection) {
-	
+
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selection);
 
 		if (selectedUmlElement instanceof Constraint) {
