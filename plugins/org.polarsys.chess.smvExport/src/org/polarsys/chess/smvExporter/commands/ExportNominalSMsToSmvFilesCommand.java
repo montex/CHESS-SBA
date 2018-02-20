@@ -8,42 +8,42 @@
  * Contributors:
  *   Alberto Debiasi - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.smvExport.commands;
+package org.polarsys.chess.smvExporter.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.papyrus.uml.tools.model.UmlModel;
+import org.eclipse.papyrus.uml.tools.model.UmlUtils;
 import org.polarsys.chess.service.utils.DialogUtils;
-import org.polarsys.chess.service.utils.SelectionUtil;
-import org.polarsys.chess.smvExport.services.SmvExportService;
+import org.polarsys.chess.smvExporter.services.SmvExportService;
+
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
-import org.eclipse.uml2.uml.Class;
 
-public class ExportSelectedNominalSMsToSmvFilesCommand extends AbstractJobCommand {
+public class ExportNominalSMsToSmvFilesCommand extends AbstractJobCommand {
 
-	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
-	private DialogUtils dialogUtils = DialogUtils.getInstance();
+	private DialogUtils exportDialogUtils = DialogUtils.getInstance();
 	private SmvExportService smvExportService = SmvExportService.getInstance();
 
-	public ExportSelectedNominalSMsToSmvFilesCommand() {
+	public ExportNominalSMsToSmvFilesCommand() {
 		super("Export Nominal State Machines To .smv Files");
 	}
 
-	private Class umlSelectedComponent;
 	private String outputDirectoryName;
 	private boolean showPopups;
+	private UmlModel umlModel;
 
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
-		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
-		outputDirectoryName = dialogUtils.getDirectoryNameFromDialog();
+		outputDirectoryName = exportDialogUtils.getDirectoryNameFromDialog();
 		showPopups = true;
-
+		umlModel = UmlUtils.getUmlModel();
 	}
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-		smvExportService.exportNominalStateMachines(umlSelectedComponent, outputDirectoryName, showPopups, monitor);
+		smvExportService.exportAllNominalStateMachinesOfTheModel(umlModel, outputDirectoryName, showPopups, monitor);
+
 	}
 
 }

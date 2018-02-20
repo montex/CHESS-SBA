@@ -8,25 +8,30 @@
  * Contributors:
  *   Alberto Debiasi - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.smvExport.services;
+package org.polarsys.chess.smvExporter.services;
 
 import java.io.File;
 import java.util.HashMap;
+
+import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.papyrus.uml.tools.model.UmlModel;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.service.internal.model.ChessSystemModel;
-import org.polarsys.chess.smvExport.model.UMLStateMachineModel;
+import org.polarsys.chess.smvExporter.model.UMLStateMachineModel;
+
 import eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv.services.SMVTranslatorService;
 import eu.fbk.eclipse.standardtools.utils.DialogUtil;
 
 public class SmvExportService {
 
+	private static final Logger logger = Logger.getLogger(SmvExportService.class);
+
 	private static SmvExportService instance;
-private  ChessSystemModel chessSystemModel = ChessSystemModel.getInstance();
-	
+	private ChessSystemModel chessSystemModel = ChessSystemModel.getInstance();
+
 	private SMVTranslatorService smvTranslatorService = SMVTranslatorService.getInstance(chessSystemModel,
 			UMLStateMachineModel.getInstance());
 	private DialogUtil dialogUtil = DialogUtil.getInstance();
@@ -41,7 +46,7 @@ private  ChessSystemModel chessSystemModel = ChessSystemModel.getInstance();
 	public void exportAllNominalStateMachinesOfTheModel(UmlModel umlModel, String selectedDirectory, boolean showPopups,
 			IProgressMonitor monitor) throws Exception {
 
-		System.out.println("umlModel: " + umlModel);
+		logger.debug("umlModel: " + umlModel);
 		smvTranslatorService.exportAllNominalStateMachinesOfTheModel(umlModel, selectedDirectory, null, monitor);
 
 		if (showPopups) {
@@ -81,6 +86,7 @@ private  ChessSystemModel chessSystemModel = ChessSystemModel.getInstance();
 		HashMap<String, String> mapSmvFile_ComponentName = smvTranslatorService.exportSmv(umlSelectedComponent,
 				selectedDirectory, monitor);
 
+		logger.debug("exportSmv done");
 		if (showPopups) {
 			dialogUtil.showMessage_ExportBehaviourDone(selectedDirectory);
 		}
@@ -89,9 +95,9 @@ private  ChessSystemModel chessSystemModel = ChessSystemModel.getInstance();
 
 	}
 
-	public boolean isLeafComponent(Class umlSelectedComponent){
+	public boolean isLeafComponent(Class umlSelectedComponent) {
 		EList<Property> subComponents = chessSystemModel.getSubComponentsInstances(umlSelectedComponent);
-		return ((subComponents==null)||(subComponents.size()==0));
+		return ((subComponents == null) || (subComponents.size() == 0));
 	}
-	
+
 }

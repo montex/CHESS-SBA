@@ -8,7 +8,7 @@
  * Contributors:
  *   Alberto Debiasi - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.smvExport.model;
+package org.polarsys.chess.smvExporter.model;
 
 import java.util.Set;
 
