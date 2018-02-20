@@ -14,16 +14,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.jface.viewers.ISelection;
@@ -34,11 +26,9 @@ import org.eclipse.papyrus.uml.tools.model.UmlUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.exceptions.NoComponentException;
 
 
@@ -112,22 +102,7 @@ public class SelectionUtil {
 		return (GraphicalEditPart) editPart;
 	}
 
-public EObject getElement(String projectName,String fileModelPath, String elementID) throws Exception{
-		
-	Model model = loadModel(projectName, fileModelPath);
-	
-		if (model != null) {
-			/*TreeIterator<EObject> allElements = model.eResource().getAllContents();
-			while(allElements.hasNext()){
-				logger.debug("URI  fragment: "+allElements.next().eResource().getURI().fragment());
-			}*/
-			EObject umlElement = model.eResource().getEObject(elementID.trim());
-			return umlElement;
-			}
-		
-	     return null;
-              
-}
+
 	
 	public Class getUmlComponentFromSelectedObject(ExecutionEvent event) throws NoComponentException {
 
@@ -165,15 +140,5 @@ public EObject getElement(String projectName,String fileModelPath, String elemen
 		return null;
 	}
 
-	public Model loadModel(String projectName, String fileName) {
-		IWorkspaceRoot wRoot = ResourcesPlugin.getWorkspace().getRoot();		
-		IProject proj = wRoot.getProject(projectName);
-		IFile file = proj.getFile(fileName);			
-		IPath loc = file.getLocation();
-		ResourceSet resSet = new ResourceSetImpl();
-		Resource resource = resSet.getResource(URI
-				.createFileURI(loc.toString()), true);
-		Model model = ResourceUtils.getModel(resource);
-		return model;
-	}
+	
 }
