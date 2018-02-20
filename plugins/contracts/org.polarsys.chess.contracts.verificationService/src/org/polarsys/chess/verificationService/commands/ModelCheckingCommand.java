@@ -14,8 +14,16 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.NotEnabledException;
+import org.eclipse.core.commands.NotHandledException;
+import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.uml2.uml.Class;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.internal.model.ChessSystemModel;
@@ -27,6 +35,7 @@ import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.nuXmvService.services.NuXmvExecService;
 import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
+import eu.fbk.eclipse.standardtools.utils.CommandBuilder;
 import eu.fbk.eclipse.standardtools.utils.OCRADirectoryUtil;
 
 /**
