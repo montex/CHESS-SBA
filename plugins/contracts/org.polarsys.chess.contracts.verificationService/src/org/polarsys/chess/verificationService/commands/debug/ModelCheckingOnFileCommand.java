@@ -15,7 +15,6 @@ import java.io.File;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.nuXmvService.dialogs.NuXmvParametersDialog;
 import eu.fbk.eclipse.standardtools.nuXmvService.services.NuXmvExecService;
@@ -28,11 +27,10 @@ import eu.fbk.eclipse.standardtools.nuXmvService.utils.NuXmvDirectoryUtil;
  */
 public class ModelCheckingOnFileCommand extends AbstractJobCommand {
 
-	
 	private NuXmvExecService nuXmvService = NuXmvExecService.getInstance();
 	private NuXmvDialogUtil nuXmvDialogUtil = NuXmvDialogUtil.getInstance();
 	private NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
-	
+
 	public ModelCheckingOnFileCommand() {
 		super("Model Checking");
 	}
@@ -41,38 +39,35 @@ public class ModelCheckingOnFileCommand extends AbstractJobCommand {
 	String alg_type;
 	String check_type;
 	String property;
-	
+
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-		
-		//boolean isDiscreteTime = MessageTimeModelDialog.openQuestion();
 
-		
-			final NuXmvParametersDialog dialog = new NuXmvParametersDialog();
-			dialog.open();
-			
-			goAhead = dialog.goAhead();
-			
-			if (goAhead) {
-				 alg_type = dialog.getAlgorithmType();
-				 check_type = dialog.getCheckType();
-				 property = dialog.getProperty();
-				 
-			}
+		// boolean isDiscreteTime = MessageTimeModelDialog.openQuestion();
+
+		final NuXmvParametersDialog dialog = new NuXmvParametersDialog();
+		dialog.open();
+
+		goAhead = dialog.goAhead();
+
+		if (goAhead) {
+			alg_type = dialog.getAlgorithmType();
+			check_type = dialog.getCheckType();
+			property = dialog.getProperty();
+
+		}
 	}
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
 		if (goAhead) {
-			
+
 			File smvFile = nuXmvDialogUtil.getSmvFileFromFileDialog(nuXmvDirectoryUtil.getSmvFileDirectory());
 			String resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(smvFile.getName());
-		nuXmvService.modelCheckingCommand(smvFile.getPath(), property, alg_type, check_type,resultFilePath);
+			nuXmvService.modelCheckingCommand(smvFile.getPath(), property, alg_type, check_type, resultFilePath);
 		}
-			
 
-		}
-	
+	}
 
 }

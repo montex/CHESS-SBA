@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.polarsys.chess.verificationService.commands.debug;
 
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.polarsys.chess.service.internal.model.ChessSystemModel;
@@ -34,8 +33,8 @@ public class CheckValidationPropertyOnFileCommand extends AbstractAsyncJobComman
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
-		boolean isDiscreteTime = MessageTimeModelDialog.openQuestion();		
-		ocraExecService.executeValidationProperty(isDiscreteTime,monitor);
+		boolean isDiscreteTime = MessageTimeModelDialog.openQuestion();
+		ocraExecService.executeValidationProperty(isDiscreteTime, monitor);
 	}
 
 }

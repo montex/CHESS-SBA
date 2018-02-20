@@ -20,8 +20,7 @@ import eu.fbk.eclipse.standardtools.commands.AbstractAsyncJobCommand;
 public class ContractImplementationOnFileCommand extends AbstractAsyncJobCommand {
 
 	private OCRAExecService ocraExecService = OCRAExecService.getInstance(ChessSystemModel.getInstance());
-	
-	
+
 	public ContractImplementationOnFileCommand() {
 		super("Check Implementation on oss file");
 	}

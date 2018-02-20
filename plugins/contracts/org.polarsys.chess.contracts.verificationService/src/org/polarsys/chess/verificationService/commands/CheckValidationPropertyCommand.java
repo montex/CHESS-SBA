@@ -10,9 +10,6 @@
  ******************************************************************************/
 package org.polarsys.chess.verificationService.commands;
 
-
-
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -35,39 +32,35 @@ public class CheckValidationPropertyCommand extends AbstractJobCommand {
 	private OCRAExecService ocraExecService = OCRAExecService.getInstance(chessToOCRAModelTranslator);
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
-	
+
 	public CheckValidationPropertyCommand() {
 		super("Check Validation Property");
 	}
-	
+
 	private Class umlSelectedComponent;
-	private Resource umlSelectedResource;		
+	private Resource umlSelectedResource;
 	private boolean isDiscreteTime;
 	private boolean showPopups;
 	private String ossFilepath;
 	private String resultFilePath;
 
-	
-	
 	@Override
-	public void execPreJobOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
-		 umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
-		 umlSelectedResource = umlSelectedComponent.eResource();		
-		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
-		 showPopups = false;
-		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();
-		  resultFilePath = ocraDirectoryUtil.getCommandCheckPropertyResultPath(umlSelectedComponent.getName());
-		  
+	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
+		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
+		umlSelectedResource = umlSelectedComponent.eResource();
+		isDiscreteTime = MessageTimeModelDialog.openQuestion();
+		showPopups = false;
+		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
+		resultFilePath = ocraDirectoryUtil.getCommandCheckPropertyResultPath(umlSelectedComponent.getName());
+
 	}
 
-
-
-
 	@Override
-	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {		
-	
-		ocraExecService.executeValidationProperty(umlSelectedComponent, umlSelectedResource, isDiscreteTime,showPopups,ossFilepath,resultFilePath, monitor);
-		
+	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
+
+		ocraExecService.executeValidationProperty(umlSelectedComponent, umlSelectedResource, isDiscreteTime, showPopups,
+				ossFilepath, resultFilePath, monitor);
+
 	}
 
 }

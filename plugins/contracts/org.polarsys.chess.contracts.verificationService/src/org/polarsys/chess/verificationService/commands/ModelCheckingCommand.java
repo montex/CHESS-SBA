@@ -10,19 +10,19 @@
  ******************************************************************************/
 package org.polarsys.chess.verificationService.commands;
 
-
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.uml2.uml.Class;
+import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.internal.model.ChessSystemModel;
 import org.polarsys.chess.service.utils.SelectionUtil;
-import org.polarsys.chess.smvExport.services.SmvExportService;
+import org.polarsys.chess.smvExporter.services.SmvExportService;
 
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.services.OCRAExecService;
-//import org.polarsys.chess.verificationService.services.SmvExportService;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.nuXmvService.services.NuXmvExecService;
@@ -35,14 +35,16 @@ import eu.fbk.eclipse.standardtools.utils.OCRADirectoryUtil;
  */
 public class ModelCheckingCommand extends AbstractJobCommand {
 
+	private static final Logger logger = Logger.getLogger(ModelCheckingCommand.class);
+
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	private SmvExportService smvExportService = SmvExportService.getInstance();
 	private NuXmvExecService nuXmvExecService = NuXmvExecService.getInstance();
 	private static NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
 	private OCRAExecService ocraExecService = OCRAExecService.getInstance(ChessSystemModel.getInstance());
-	
-	
+	private EntityUtil entityUtil = EntityUtil.getInstance();
+
 	public ModelCheckingCommand() {
 		super("Model Checking");
 	}
@@ -55,58 +57,73 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 	private String resultFilePath;
 	private String smvMapFilepath;
 	private Resource umlSelectedResource;
-	
+
 	@Override
-	public void execPreJobOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
-		String paramElementURI = event.getParameter("elementURI");
-		String paramProject = event.getParameter("projectName");
-		String paramModel= event.getParameter("modelName");
-		System.out.println(paramElementURI);
-		System.out.println(paramProject);
-		System.out.println(paramModel);
-		 if((paramElementURI==null)|(paramProject==null)|(paramModel==null)){ 
-			 System.out.println("getUmlComponentFromSelectedObject");
-		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
-		 }else{
-			 System.out.println("selectionUtil.getElement");
-			 umlSelectedComponent=	(Class)selectionUtil.getElement(paramProject,paramModel, paramElementURI);
-		 }
-			 
-		 umlSelectedResource = umlSelectedComponent.eResource();
-		 showPopups = false;
-		 String paramIsDiscrete = event.getParameter("isDiscrete");
-		 if(paramIsDiscrete==null){
-			 System.out.println("param==null");
-		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
-		 }else{
-			 System.out.println("param: "+paramIsDiscrete);
-		isDiscreteTime=Boolean.valueOf(paramIsDiscrete);	 
-		System.out.println("isDiscreteTime: "+isDiscreteTime);
-		 }
-		 
-		 smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
-		 monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(umlSelectedComponent.getName());
-		 resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(umlSelectedComponent.getName());
-		  smvMapFilepath = ocraDirectoryUtil.getSmvMapFilePath();
+	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
+
+		if (!isProgrammaticallyExecuted(event)) {
+			logger.debug("!isProgrammaticallyExecution(event)");
+			umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
+			isDiscreteTime = MessageTimeModelDialog.openQuestion();
+			smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
+			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(umlSelectedComponent.getName());
+			resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(umlSelectedComponent.getName());
+			smvMapFilepath = ocraDirectoryUtil.getSmvMapFilePath();
+		} else {
+			String paramElementURI = event.getParameter("elementURI");
+			String paramProject = event.getParameter("projectName");
+			String paramModel = event.getParameter("modelName");
+			String projectPath = event.getParameter("projectPath");
+
+			logger.debug(paramElementURI);
+			logger.debug(paramProject);
+			logger.debug(paramModel);
+			logger.debug(projectPath);
+			logger.debug("isProgrammaticallyExecution(event)");
+			umlSelectedComponent = (Class) entityUtil.getElement(paramProject, paramModel, paramElementURI);
+			String paramIsDiscrete = event.getParameter("isDiscrete");
+			isDiscreteTime = Boolean.valueOf(paramIsDiscrete);
+			smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory(projectPath);
+			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(projectPath,
+					umlSelectedComponent.getName());
+			resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(projectPath, umlSelectedComponent.getName());
+			smvMapFilepath = ocraDirectoryUtil.getSmvMapFilePath(projectPath);
+		}
+
+		umlSelectedResource = umlSelectedComponent.eResource();
+		showPopups = false;
+
 	}
-
-
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-	
+
 		String generatedSmvFilePath;
-		
-		if(smvExportService.isLeafComponent(umlSelectedComponent)){
-			generatedSmvFilePath = smvExportService.exportSingleSmv( umlSelectedComponent,showPopups,smvFileDirectory, monitor);
-		}else{
-			HashMap<String,String> smvPathComponentNameMap = smvExportService.exportSmv( umlSelectedComponent,showPopups,smvFileDirectory, monitor);		
-			ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap, isDiscreteTime, showPopups, smvMapFilepath, monolithicSMVFilePath, monitor);
+
+		// CommandBuilder checkContractImplementation =
+		// CommandBuilder.build("org.polarsys.chess.verificationService.commands.TestCommand2");
+		// checkContractImplementation.execute();
+
+		if (smvExportService.isLeafComponent(umlSelectedComponent)) {
+			generatedSmvFilePath = smvExportService.exportSingleSmv(umlSelectedComponent, showPopups, smvFileDirectory,
+					monitor);
+		} else {
+			logger.debug("exportSmv");
+			HashMap<String, String> smvPathComponentNameMap = smvExportService.exportSmv(umlSelectedComponent,
+					showPopups, smvFileDirectory, monitor);
+			logger.debug("createMonolithicSMV");
+			ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
+					isDiscreteTime, showPopups, smvMapFilepath, monolithicSMVFilePath, monitor);
+
 			generatedSmvFilePath = monolithicSMVFilePath;
+			logger.debug("createMonolithicSMV done");
 		}
-		//nuXmvExecService.executeModelChecking(smvOutput,resultFilePath);
-		
-		nuXmvExecService.executeModelChecking(generatedSmvFilePath,resultFilePath,event.getParameter("algorithm_type"),event.getParameter("check_type"),event.getParameter("property"));
-		}
+		// nuXmvExecService.executeModelChecking(smvOutput,resultFilePath);
+
+		logger.debug("executeModelChecking");
+		nuXmvExecService.executeModelChecking(generatedSmvFilePath, resultFilePath,
+				event.getParameter("algorithm_type"), event.getParameter("check_type"), event.getParameter("property"));
+		logger.debug("executeModelChecking done");
+	}
 
 }

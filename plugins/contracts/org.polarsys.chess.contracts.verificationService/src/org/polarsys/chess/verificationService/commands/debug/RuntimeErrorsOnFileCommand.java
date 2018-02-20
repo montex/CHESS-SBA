@@ -21,16 +21,16 @@ public class RuntimeErrorsOnFileCommand extends AbstractAsyncJobCommand {
 
 	private SelectionUtil chessSelectionUtil = SelectionUtil.getInstance();
 	private OCRARuntimeErrorService ocraRuntimeErrorService = OCRARuntimeErrorService.getInstance();
-	
+
 	public RuntimeErrorsOnFileCommand() {
 		super("Show Runtime Errors");
 	}
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-		
+
 		boolean showNoErrorPopup = true;
-		
+
 		Resource modelResource = chessSelectionUtil.getSelectedModelResource();
 		ocraRuntimeErrorService.showRuntimeErrors(modelResource, showNoErrorPopup, monitor);
 	}
