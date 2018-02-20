@@ -10,16 +10,15 @@ import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
 import org.polarsys.chess.contracts.profile.chesscontract.SubSystem;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Sub System</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Sub
+ * System</b></em>'. <!-- end-user-doc -->
  *
  * @generated
  */
 public class SubSystemImpl extends BlockImpl implements SubSystem {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected SubSystemImpl() {
@@ -27,8 +26,8 @@ public class SubSystemImpl extends BlockImpl implements SubSystem {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -36,4 +35,4 @@ public class SubSystemImpl extends BlockImpl implements SubSystem {
 		return CHESSContractPackage.Literals.SUB_SYSTEM;
 	}
 
-} //SubSystemImpl
+} // SubSystemImpl

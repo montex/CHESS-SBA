@@ -49,20 +49,18 @@ public class ContractEntityUtil {
 		return contractEntityUtilInstance;
 	}
 
-	
 	public String convertContractPropertyInStr(ContractProperty contractProperty) throws Exception {
-		
-		
-		
+
 		Property baseProperty = contractProperty.getBase_Property();
-		
+
 		String basePropertyName = baseProperty.getName();
 		Class umlContract = (Class) baseProperty.getType();
-		
-		if(umlContract == null){
-			throw new Exception("The contract instance "+basePropertyName+" of "+((Class)entityUtil.getOwner(baseProperty)).getName()+" does not have a contract.");
+
+		if (umlContract == null) {
+			throw new Exception("The contract instance " + basePropertyName + " of "
+					+ ((Class) entityUtil.getOwner(baseProperty)).getName() + " does not have a contract.");
 		}
-		
+
 		String contractName = umlContract.getName();
 		String assume = getAssumeStrFromUmlContract(umlContract);
 		String guarantee = getGuaranteeStrFromUmlContract(umlContract);
@@ -87,14 +85,14 @@ public class ContractEntityUtil {
 		Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, Constants.CONTRACT, false);
 		return (Contract) umlContract.getStereotypeApplication(contractStereotype);
 	}
-	
+
 	public String getContractQualifiedName(Class contract) {
 		if (contract != null) {
-			return ( contract).getQualifiedName();
+			return (contract).getQualifiedName();
 		}
 		return null;
 	}
-	
+
 	public String getAssumeStrFromUmlContract(Class umlContract) {
 		FormalProperty assumeFormalProperty = getAssumeFromUmlContract(umlContract);
 		return getPropertyStr(assumeFormalProperty);
@@ -242,7 +240,7 @@ public class ContractEntityUtil {
 		}
 		return null;
 	}
-	
+
 	public FormalProperty getFormalProperty(Constraint umlConstraint) {
 		Stereotype formalPropertyStereotype = UMLUtil.getAppliedStereotype(umlConstraint, Constants.FORMAL_PROP, false);
 		return (FormalProperty) umlConstraint.getStereotypeApplication(formalPropertyStereotype);
@@ -262,7 +260,8 @@ public class ContractEntityUtil {
 		return assumeFormalProperty;
 	}
 
-	public FormalProperty createFormalProperty(final Namespace umlContractOwner, Class umlContract, String prefix_name) {
+	public FormalProperty createFormalProperty(final Namespace umlContractOwner, Class umlContract,
+			String prefix_name) {
 
 		Contract contract = getContract(umlContract);
 		final String formalPropertyName = prefix_name + "_" + contract.getBase_Class().getName();
@@ -286,7 +285,8 @@ public class ContractEntityUtil {
 		return UMLUtil.getAppliedStereotype(umlElement, Constants.FORMAL_PROP, false) != null;
 	}
 
-	public void saveFormalProperty(final String guarantee_or_assumption, final String formalPropertyText, final Class umlContract) {
+	public void saveFormalProperty(final String guarantee_or_assumption, final String formalPropertyText,
+			final Class umlContract) {
 
 		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlContract);
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
@@ -366,7 +366,8 @@ public class ContractEntityUtil {
 	}
 
 	public ContractProperty getContractProperty(Property umlContractProperty) {
-		Stereotype contractPropertyStereotype = UMLUtil.getAppliedStereotype(umlContractProperty, Constants.CONTRACT_PROP, false);
+		Stereotype contractPropertyStereotype = UMLUtil.getAppliedStereotype(umlContractProperty,
+				Constants.CONTRACT_PROP, false);
 		return (ContractProperty) umlContractProperty.getStereotypeApplication(contractPropertyStereotype);
 	}
 
