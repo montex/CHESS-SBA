@@ -39,12 +39,14 @@ public class ModelCheckingOnFileCommand extends AbstractJobCommand {
 	String alg_type;
 	String check_type;
 	String property;
+	boolean isProgrExec;
 
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
 		// boolean isDiscreteTime = MessageTimeModelDialog.openQuestion();
 
+		isProgrExec = isProgrammaticallyExecuted(event);
 		final NuXmvParametersDialog dialog = new NuXmvParametersDialog();
 		dialog.open();
 
@@ -65,7 +67,7 @@ public class ModelCheckingOnFileCommand extends AbstractJobCommand {
 
 			File smvFile = nuXmvDialogUtil.getSmvFileFromFileDialog(nuXmvDirectoryUtil.getSmvFileDirectory());
 			String resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(smvFile.getName());
-			nuXmvService.modelCheckingCommand(smvFile.getPath(), property, alg_type, check_type, resultFilePath);
+			nuXmvService.modelCheckingCommand(smvFile.getPath(), property, alg_type, check_type, resultFilePath,isProgrExec);
 		}
 
 	}

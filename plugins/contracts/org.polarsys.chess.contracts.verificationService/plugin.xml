@@ -268,6 +268,11 @@
                name="isProgrExec"
                optional="true">
          </commandParameter>
+         <commandParameter
+               id="resultFilePath"
+               name="resultFilePath"
+               optional="true">
+         </commandParameter>
          
       </command>
       <command
@@ -289,16 +294,6 @@
             defaultHandler="org.polarsys.chess.verificationService.commands.CompositeContractImplementationCommand"
             id="org.polarsys.chess.verificationService.commands.CompositeContractImplementationCommand"
             name="Check Composite Contract Implementation on selected component">
-      </command>
-      <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.TestCommand"
-            id="org.polarsys.chess.verificationService.commands.TestCommand"
-            name="TestCommand">
-      </command>
-      <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.TestCommand2"
-            id="org.polarsys.chess.verificationService.commands.TestCommand2"
-            name="TestCommand2">
       </command>
    </extension> 
 </plugin>
