@@ -42,6 +42,7 @@ import org.eclipse.papyrus.sysml.portandflows.FlowPort;
 import org.eclipse.papyrus.uml.tools.model.UmlModel;
 import org.eclipse.papyrus.uml.tools.model.UmlUtils;
 import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
+import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Component;
@@ -103,7 +104,7 @@ public class EntityUtil {
 	// "PrimitiveTypes::UnlimitedNatural";
 
 	private static EntityUtil entityUtil;
-	private static ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+	//private static ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 
 	public static EntityUtil getInstance() {
 		if (entityUtil == null) {
@@ -160,6 +161,19 @@ public class EntityUtil {
 
 	}
 
+	public String getUmlElementName(String projectName, String fileModelPath, String elementID) throws Exception {
+
+		Model model = loadModel(projectName, fileModelPath);
+
+		if (model != null) {
+			EObject umlElement = model.eResource().getEObject(elementID.trim());
+			return ((Class)umlElement).getName();
+		}
+
+		return null;
+
+	}
+	
 	public Object getSubComponent(Object constraint, String componentName) {
 		Element element = ((Constraint) constraint).getOwner();
 
@@ -175,10 +189,7 @@ public class EntityUtil {
 	public String[] getSubComponentsName(Object constraint) {
 		Element umlElement = ((Constraint) constraint).getOwner();
 		Set<String> subCompArr = getSubComponentsNames((Class) umlElement);
-		// String[] subComStrArr = new String[subCompArr.size()];
-		// return subCompArr.toArray(subComStrArr);
 		return toArray(subCompArr);
-
 	}
 
 	private String[] toArray(Set<String> set) {
@@ -194,7 +205,6 @@ public class EntityUtil {
 	public String getComponentID(Object umlComponent) {
 
 		if (
-		// isSystem((Element) umlComponent)||
 		(isBlock((Element) umlComponent))) {
 			return ((Class) umlComponent).getName();
 		}
@@ -213,7 +223,6 @@ public class EntityUtil {
 	public String getComponentName(Object umlComponent) {
 
 		if (
-		// isSystem((Element) umlComponent)||
 		(isBlock((Element) umlComponent))) {
 			return ((Class) umlComponent).getName();
 		}
@@ -427,11 +436,27 @@ public class EntityUtil {
 		if (!(umlProperty instanceof Property)) {
 			return false;
 		}
-		if (contractEntityUtil.isContractProperty(umlProperty)) {
+		
+		Property property = (Property)umlProperty;
+		
+		if (property.getAssociation() ==null) {
 			return false;
 		}
-		Type umlPropertyType = ((Property) umlProperty).getType();
-		return (isBlock(umlPropertyType) || isComponentImplementation(umlPropertyType));
+		
+		//if (contractEntityUtil.isContractProperty(property)) {
+		//	return false;
+		//}
+		
+		Element owner = (getOwner(umlProperty));
+		Association association = property.getAssociation();
+		int associationEndsSize = association.getEndTypes().size();
+		boolean End1TypeIsOwner = association.getEndTypes().get(0).equals(owner);
+		boolean End2TypeIsOwner = association.getEndTypes().get(1).equals(owner);
+		
+		return(associationEndsSize==2)&&((End1TypeIsOwner)|(End2TypeIsOwner));
+		
+		//Type umlPropertyType = ((Property) umlProperty).getType();
+		//return (isBlock(umlPropertyType) || isComponentImplementation(umlPropertyType));
 	}
 
 	public boolean isBooleanAttribute(Property umlProperty) {
@@ -475,12 +500,7 @@ public class EntityUtil {
 		return false;
 	}
 
-	/*
-	 * public boolean isStringAttribute(Property umlProperty) { if
-	 * (umlProperty.getType() != null) { return
-	 * (umlProperty.getType().getQualifiedName().compareTo(STRING_TYPE) == 0); }
-	 * return false; }
-	 */
+	
 
 	public boolean isDoubleAttribute(Property umlProperty) {
 		if (umlProperty.getType() != null) {
@@ -538,9 +558,6 @@ public class EntityUtil {
 	public String[] getValuesForEnumeratorType(Property umlProperty) {
 		Set<String> enumValuesNames = getListValuesForEnumeratorType(umlProperty);
 		if (enumValuesNames != null) {
-			// String[] enumValuesNamesStrArr = new
-			// String[enumValuesNames.size()];
-			// return enumValuesNames.toArray(enumValuesNamesStrArr);
 			return toArray(enumValuesNames);
 		}
 		return null;
@@ -603,9 +620,7 @@ public class EntityUtil {
 		}
 
 		return toArray(portsNames);
-		// String[] portsStrArr = new String[portsNames.size()];
-		// return portsNames.toArray(portsStrArr);
-	}
+		}
 
 	public EList<String> getPortsName(EList<Port> ports) {
 		EList<String> portsNames = new BasicEList<String>();
@@ -656,10 +671,7 @@ public class EntityUtil {
 	public String[] getOwnerAttributesNames(Object contract) {
 
 		Set<String> attrArr = getAttributesNamesExceptsPorts(((Class) contract).getOwner());
-		// attrArr.addAll(getAttributesNamesExceptsPorts(((Class)
-		// contract).getOwner()));
 		return toArray(attrArr);
-
 	}
 
 	public Set<Property> getBooleanAttributes(Element umlElement) {
@@ -947,14 +959,6 @@ public class EntityUtil {
 	}
 
 	public boolean isInitialState(Vertex state) {
-
-		// boolean isInitialState = false;
-		// boolean isPseudoState = (state instanceof Pseudostate);
-		// if(isPseudoState){
-		// isInitialState =
-		// ((Pseudostate)state).getKind().equals(PseudostateKind.INITIAL_LITERAL);
-		// }
-
 		return (state instanceof Pseudostate)
 				&& ((Pseudostate) state).getKind().equals(PseudostateKind.INITIAL_LITERAL);
 	}
