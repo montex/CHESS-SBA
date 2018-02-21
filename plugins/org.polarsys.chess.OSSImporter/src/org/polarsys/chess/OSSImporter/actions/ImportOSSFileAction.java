@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.uml2.uml.AggregationKind;
+import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.DataType;
@@ -22,6 +23,7 @@ import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Profile;
 import org.eclipse.uml2.uml.Property;
@@ -72,6 +74,8 @@ import eu.fbk.tools.editor.oss.oss.RefinementInstance;
 import org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.DataTypes.BoundedSubtype;
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
+import org.eclipse.papyrus.sysml.service.types.element.SysMLElementTypes;
+import org.eclipse.papyrus.uml.service.types.utils.ElementUtil;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -110,6 +114,7 @@ public class ImportOSSFileAction {
 	private static final String DELEGATION_PREFIX = "Define_";
 	private static final String DELEGATION_CONSTRAINT_NAME = "constraintSpec";
 	private static final String CONNECTOR_NAME = "connector";
+	private static final String ASSOCIATION_NAME = "association";
 	private static final String ENUMERATION_NAME = "Enumeration";
 	private static final String SIGNAL_NAME = "Signal";
 
@@ -155,7 +160,7 @@ public class ImportOSSFileAction {
 //	private Package compView = null;
 
 	// Map the name of the component with the Component object
-	private final Map<String, Class> dslTypeToComponent = new HashMap<String, Class>();
+	private Map<String, Class> dslTypeToComponent;
 
 	/**
 	 * The constructor
@@ -221,6 +226,57 @@ public class ImportOSSFileAction {
 		return newUMLProperty;
 	}
 	
+	/**
+	 * Returns the number or defined associations for the given package.
+	 * @param pkg the package to analyze
+	 * @return the number of associations found in package
+	 */
+	private int countPackageAssociations(Package pkg) {
+		int counter = 0;
+		
+		EList<NamedElement> namedList = pkg.getOwnedMembers();
+		for (NamedElement namedElement : namedList) {
+			if (namedElement instanceof Association) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+	
+	/**
+	 * Creates an association between the given owner and element. It will also create the relative
+	 * component instance inside the owner element.
+	 * @param owner the parent Class
+	 * @param elementName the name of the end element
+	 * @param elementType the type of the end element
+	 * @return the created Association
+	 */
+	private Association createAssociation(Class owner, String elementName, Type elementType) {
+		
+		// Create the name using an incremental value
+		final String associationName = ASSOCIATION_NAME + (countPackageAssociations(owner.getNearestPackage()) + 1);
+
+		printMessageOnOut("\n\n\n Creating association " + associationName + " for owner " + owner);
+		printMessageOnOut("elementName = " + elementName + " with type " + elementType);
+		printMessageOnOut("\n\n\n");
+	
+		// Create the association and adds it to the owning package
+		Association association = owner.createAssociation(
+				true, AggregationKind.get(AggregationKind.COMPOSITE), elementName, 1, 1, elementType, 
+				false, AggregationKind.get(AggregationKind.NONE), owner.getName().toLowerCase(), 1, 1);
+
+		// Apply the component instance stereotype to the 
+		Property property = association.getMemberEnd(elementName, elementType);
+		UMLUtils.applyStereotype(property, COMPINST);
+		
+		association.setName(associationName);
+		
+		// Add SysML Nature on the new Association
+		ElementUtil.addNature(association, SysMLElementTypes.SYSML_NATURE);
+		
+		return association;
+	}
+ 	
 	/** 
 	 * Creates and adds a Contract Property to the model
 	 * @param owner the parent Class
@@ -945,7 +1001,9 @@ public class ImportOSSFileAction {
 					printMessageOnOut("\tsubcomponent name = " + subName);
 					printMessageOnOut("\tsubcomponent type = " + subType);
 
-					createComponentInstance(dslTypeToComponent.get(dslParentComponent.getType()), subName, (Type) dslTypeToComponent.get(subType));
+					// I should create an Association between the elements and not a Component Instance!
+					createAssociation(dslTypeToComponent.get(dslParentComponent.getType()), subName, (Type) dslTypeToComponent.get(subType)); 
+
 				} else if (dslRefInstance != null && dslRefInstance.getConnection() != null) {
 					
 					// CONNECTION processing
@@ -1199,6 +1257,8 @@ public class ImportOSSFileAction {
 
 		printMessageOnOut("dslSystemComponent.type = " + dslSystemComponentName);
 
+		dslTypeToComponent = new HashMap<String, Class>();
+		
 		// Start a transaction to modify the package content 
 		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(pkg);
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
@@ -1219,7 +1279,7 @@ public class ImportOSSFileAction {
 					Class component = createBlock(sysView, dslComponent.getType());
 					//			Class component = createBlock(sysView, dslComponent.getType() + SUFFIX);
 					if(dslTypeToComponent.put(dslComponent.getType(), component) != null) {
-						printMessageOnOut("Duplicated component type, not added: " + dslComponent.getType());
+						System.err.println("Duplicated component type, not added: " + dslComponent.getType());
 					} else {
 						printMessageOnOut("component.type = " + dslComponent.getType());
 					}
