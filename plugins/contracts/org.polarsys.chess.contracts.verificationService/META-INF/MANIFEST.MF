@@ -35,4 +35,5 @@ Import-Package: eu.fbk.eclipse.standardtools.nuXmvService.dialogs,
  org.polarsys.chess.service.utils
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Fondazione Bruno Kessler
+Export-Package: org.polarsys.chess.verificationService.services
 
