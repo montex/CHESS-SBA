@@ -710,7 +710,12 @@ if (entityUtil.isBlock((Element) component)) {
 
 	@Override
 	public Set<?> getOwnerPorts(Object formalProperty) {
-		Class owner = (Class)entityUtil.getOwner((Element)formalProperty);
+		
+		Element owner = entityUtil.getOwner((Element)formalProperty);
+		
+		if(!(owner instanceof Class)){
+			return null;
+		}
 		//block added to manage formal properties with contract as owner
 		if(contractEntityUtil.isContract(owner)){
 			owner = (Class)entityUtil.getOwner(owner);
@@ -720,7 +725,11 @@ if (entityUtil.isBlock((Element) component)) {
 
 	@Override
 	public Set<?> getOwnerVariables(Object formalProperty) {
-		Class owner = (Class)entityUtil.getOwner((Element)formalProperty);
+		Element owner = (Element)entityUtil.getOwner((Element)formalProperty);
+		
+		if(!(owner instanceof Class)){
+			return null;
+		}
 		//block added to manage formal properties with contract as owner
 		if(contractEntityUtil.isContract(owner)){
 			owner = (Class)entityUtil.getOwner(owner);
@@ -730,13 +739,17 @@ if (entityUtil.isBlock((Element) component)) {
 
 	@Override
 	public String[] getEnumValuesFromOwnerAttributes(Object formalProperty) {
-		Class owner = (Class)entityUtil.getOwner((Element)formalProperty);
+		Element owner = (Element)entityUtil.getOwner((Element)formalProperty);
+		
+		if(!(owner instanceof Class)){
+			return null;
+		}
 		//block added to manage formal properties with contract as owner
 		if(contractEntityUtil.isContract(owner)){
 			owner = (Class)entityUtil.getOwner(owner);
 		}
 		//return entityUtil.getEnumValuesFromComponentPorts(element);	
-		return entityUtil.getEnumValuesFromComponentAttributes(owner);
+		return entityUtil.getEnumValuesFromComponentAttributes((Class)owner);
 	}
 
 
@@ -770,10 +783,15 @@ if (entityUtil.isBlock((Element) component)) {
 
 	@Override
 	public String[] getEnumValuesFromOwnerPorts(Object port_or_parameter) {
-		Class owner = (Class)entityUtil.getOwner((Element)port_or_parameter);
+		Element owner = entityUtil.getOwner((Element)port_or_parameter);
+		
+		if(!(owner instanceof Class)){
+			return null;
+		}
+		
 		if(contractEntityUtil.isContract(owner)){
 			owner = (Class)entityUtil.getOwner(owner);
 		}
-		return entityUtil.getEnumValuesFromComponentPorts(owner);	
+		return entityUtil.getEnumValuesFromComponentPorts((Class)owner);	
 	}
 }
