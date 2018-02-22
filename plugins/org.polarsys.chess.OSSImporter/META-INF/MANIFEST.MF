@@ -16,8 +16,9 @@ Require-Bundle: eu.fbk.eclipse.standardtools.ModelTranslatorToOcra;bundle-versio
  org.eclipse.papyrus.infra.gmfdiag.css,
  org.eclipse.opencert.apm.baseline.diagram,
  org.eclipse.papyrus.sysml.diagram.internalblock,
- org.eclipse.papyrus.sysml.service.types;bundle-version="1.2.0"
+ org.eclipse.papyrus.sysml.service.types;bundle-version="1.2.0",
+ org.eclipse.papyrus.editor,
+ org.eclipse.papyrus.sysml.diagram.blockdefinition
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: com.google.inject,
- org.eclipse.papyrus.uml.diagram.common.commands
+Import-Package: com.google.inject
 Bundle-Vendor: Fondazione Bruno Kessler

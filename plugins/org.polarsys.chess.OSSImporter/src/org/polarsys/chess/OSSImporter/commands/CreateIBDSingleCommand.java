@@ -19,10 +19,13 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Class;
 import org.polarsys.chess.OSSImporter.actions.ShowIBDElementsAction;
+import org.polarsys.chess.OSSImporter.utils.Utils;
 import org.polarsys.chess.service.utils.SelectionUtil;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 
 public class CreateIBDSingleCommand extends AbstractJobCommand {
+	private static final String DIALOG_TITLE =	"Single IBD creator";
+	
 	private ShowIBDElementsAction action;
 	private Object umlObject;
 	
@@ -30,14 +33,6 @@ public class CreateIBDSingleCommand extends AbstractJobCommand {
 		super("Create IBD Single");
 	}
 		
-	/**
-	 * Utility dialog to display a message on screen.
-	 * @param message the text to display
-	 */
-	private void showMessage(String message) {
-		MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "OSS parser", message);
-	}
-
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
@@ -56,7 +51,7 @@ public class CreateIBDSingleCommand extends AbstractJobCommand {
 			action.populateDiagram(diagram, umlObject);
 			
 		} else {
-			showMessage("Please select a Block from the <<SystemView>> package");
+			Utils.showMessage(DIALOG_TITLE, "Please select a Block from the <<SystemView>> package");
 			umlObject = null;
 		}
 	}

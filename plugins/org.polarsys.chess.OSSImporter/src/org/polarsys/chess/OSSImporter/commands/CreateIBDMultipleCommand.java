@@ -14,14 +14,13 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.gmf.runtime.notation.Diagram;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.OSSImporter.actions.ShowIBDElementsAction;
+import org.polarsys.chess.OSSImporter.utils.Utils;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.utils.SelectionUtil;
@@ -29,43 +28,14 @@ import org.polarsys.chess.service.utils.SelectionUtil;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 
 public class CreateIBDMultipleCommand extends AbstractJobCommand {
-	private static final String SYSVIEW =	"CHESS::Core::CHESSViews::SystemView";
+	private static final String DIALOG_TITLE =	"Multiple IBD creator";
+	
 	private Object umlObject;
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	private ShowIBDElementsAction action;
 
 	public CreateIBDMultipleCommand() {
 		super("Create IBD Single");
-	}
-
-	/**
-	 * Checks if the selected object is a package in the <<SystemView>> branch.
-	 * @param pkg the selected object 
-	 * @return true if the package is valid
-	 */
-	private boolean objectIsSystemViewPackage(Object obj) {
-		if (obj instanceof Package) {
-			final Package pkg = (Package) obj;
-			if(pkg.getAppliedStereotype(SYSVIEW) != null) {
-				return true;
-			} else {
-				EList<Package> owningPackages = pkg.allOwningPackages();
-				for (Package owningPackage : owningPackages) {
-					if (owningPackage.getAppliedStereotype(SYSVIEW) != null) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Utility dialog to display a message on screen.
-	 * @param message the text to display
-	 */
-	private void showMessage(String message) {
-		MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "OSS parser", message);
 	}
 
 	@Override
@@ -76,7 +46,7 @@ public class CreateIBDMultipleCommand extends AbstractJobCommand {
 		
 //		System.out.println("selectedUmlElement: " + umlObject);
 		
-		if (objectIsSystemViewPackage(umlObject)) {
+		if (Utils.objectIsSystemViewPackage(umlObject)) {
 			
 			//Now browse all the blocks and create the diagram
 			Package pkg = (Package) umlObject;
@@ -91,7 +61,7 @@ public class CreateIBDMultipleCommand extends AbstractJobCommand {
 				}
 			}
 		} else {
-			showMessage("Please select a package from <<SystemView>>");
+			Utils.showMessage(DIALOG_TITLE, "Please select a package from <<SystemView>>");
 		}
 	}
 

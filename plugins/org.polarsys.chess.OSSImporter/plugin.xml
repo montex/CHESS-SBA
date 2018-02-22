@@ -64,6 +64,11 @@
                   </iterate>
                </visibleWhen>
             </command>
+            <command
+                  commandId="org.polarsys.chess.OSSImporter.commands.createBDD"
+                  label="Create the BDD"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -83,6 +88,11 @@
             defaultHandler="org.polarsys.chess.OSSImporter.commands.CreateIBDMultipleCommand"
             id="org.polarsys.chess.OSSImporter.commands.createAllIBDs"
             name="Create the IBD diagrams for all the components">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.OSSImporter.commands.CreateBDDCommand"
+            id="org.polarsys.chess.OSSImporter.commands.createBDD"
+            name="Create the BDD">
       </command>
    </extension>
 

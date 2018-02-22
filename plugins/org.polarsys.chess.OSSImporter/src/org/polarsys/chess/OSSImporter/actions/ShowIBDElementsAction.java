@@ -66,7 +66,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	private EditPart host;
 
 	/** Selection of all the possible elements */
-	protected List<Object> selection;
+	private List<Object> selection;
 
 	/**
 	 * Prints a message on the console.
@@ -104,43 +104,36 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * Builds a list of elements I'm interested to display.
 	 * @param results the list of all the possible EditPartRepresentation elements
 	 */
+	@Override
 	protected void buildShowHideElementsList(Object[] results) {	
+		final EntityUtil entityUtil = EntityUtil.getInstance();
+		final ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+		
 		viewsToCreate = new ArrayList<EditPartRepresentation>();
 		viewsToDestroy = new ArrayList<EditPartRepresentation>();
 
 		List<Object> result = new ArrayList<>();
-
 		for (int i = 0; i < results.length; i++) {
 			
-			final EditPartRepresentation editPart = (EditPartRepresentation) results[i];
+			final EditPartRepresentation editPartRepresentation = (EditPartRepresentation) results[i];
 
-			printMessageOnOut("\n\n\nWorking on results[" + i + "] = " + editPart);
+			printMessageOnOut("\n\n\nWorking on results[" + i + "] = " + editPartRepresentation);
 			
-			final Element semanticElement = (Element) editPart.getSemanticElement();
+			final Element semanticElement = (Element) editPartRepresentation.getSemanticElement();
 			
 			printMessageOnOut("Semantic Element = " + semanticElement);
-			printMessageOnOut("Label = " + editPart.getLabel());
+			printMessageOnOut("Label = " + editPartRepresentation.getLabel());
 			
-			View view = null;
-			if (editPart.getRepresentedEditPart() != null) {
-				view = editPart.getRepresentedEditPart().getNotationView();
-
-				printMessageOnOut("\nview = " + view);
-				printMessageOnOut("\tview.getElement = " + view.getElement());
-			}
-
-			final EntityUtil entityUtil = EntityUtil.getInstance();
-			final ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
-			
+			// If the element is interesting, add it
 			if(entityUtil.isPort(semanticElement) || 
 					entityUtil.isComponentInstance(semanticElement) || 
 					semanticElement instanceof Connector ||
 					contractEntityUtil.isDelegationConstraints(semanticElement)) {
-				result.add(editPart);
+				result.add(editPartRepresentation);
 			}
 		}
 		
-		// we are looking for the objects to show
+		// Add the result to the views to create
 		for (Object element : result) {
 			if (element instanceof EditPartRepresentation) {
 				viewsToCreate.add((EditPartRepresentation) element);
@@ -151,7 +144,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	/**
 	 * Builds the selection with all the possible elements.
 	 */
-	protected void buildSelection() {
+	private void buildSelection() {
 		selection = new ArrayList<Object>();
 		for (EditPartRepresentation current : representations) {
 			contributeToSelection(selection, current);
@@ -163,7 +156,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * @param listToComplete the list of selected elements to complete
 	 * @param representation the edit part representation that completes the list
 	 */
-	protected void contributeToSelection(List<Object> listToComplete, EditPartRepresentation representation) {
+	private void contributeToSelection(List<Object> listToComplete, EditPartRepresentation representation) {
 		
 		printMessageOnOut("\n\nrepresentation = " + representation);
 		printMessageOnOut("\tlistToComplete.size = " + listToComplete.size());
@@ -185,8 +178,9 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
-	 * Creates the list of commands to show the various elements .
+	 * Creates the list of commands to show the various elements.
 	 */
+	@Override
 	protected Command getActionCommand() {
 		final CompoundCommand completeCmd = new CompoundCommand("Show/Hide Inherited Elements Command"); //$NON-NLS-1$
 		ShowHideElementsRequest request = null;
@@ -392,7 +386,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * @param view the view
 	 * @return the EditPart from the view
 	 */
-	protected EditPart getEditPartFromView(View view) {
+	private EditPart getEditPartFromView(View view) {
 		if (view != null) {
 			return (EditPart) getHost().getViewer().getEditPartRegistry().get(view);
 		}
