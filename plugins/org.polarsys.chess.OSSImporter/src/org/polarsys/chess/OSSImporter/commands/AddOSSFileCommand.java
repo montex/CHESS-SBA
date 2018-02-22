@@ -21,7 +21,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.edit.ui.action.ValidateAction.EclipseResourcesUtil;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -31,6 +30,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.polarsys.chess.OSSImporter.actions.ImportOSSFileAction;
+import org.polarsys.chess.OSSImporter.utils.Utils;
 import org.polarsys.chess.service.utils.SelectionUtil;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.xtext.resource.XtextResource;
@@ -40,11 +40,11 @@ import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.exceptions.NoResourceE
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.utils.OCRARuntimeErrorsDialogUtil;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 
-
 public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 	private static final String SYSVIEW =	"CHESS::Core::CHESSViews::SystemView";
 	private static final String PROBLEMS_VIEW = "org.eclipse.ui.views.ProblemView";
-
+	private static final String DIALOG_TITLE =	"OSS parser";
+	
 	private ImportOSSFileAction sampleView;
 	private Object umlObject;
 	private File ossFile;
@@ -74,8 +74,9 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 		}
 		return null;
 	}
+	
 	/**
-	 * It visualizes all the errors in the error view of Eclipse.
+	 * Visualizes all the errors in the error view of Eclipse.
 	 */
 	private String[] showRuntimeErrors(Resource resource, File ossFile) {
 
@@ -131,9 +132,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 		final XtextResourceSet resourceSet = new XtextResourceSet();
 		resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
 		return (XtextResource) resourceSet.getResource(URI.createFileURI(path), true);
-
 	}
-
 	
 	/**
 	 * Checks if the given OSS file is valid or contains errors
@@ -150,14 +149,6 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 	}
 
 	/**
-	 * Utility dialog to display a message on screen
-	 * @param message the text to display
-	 */
-	private void showMessage(String message) {
-		MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "OSS parser", message);
-	}
-	
-	/**
 	 * Displays a file dialog to select the OSS file
 	 * @return the selected File
 	 */
@@ -172,7 +163,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 			ossFile = new File(result);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			showMessage("File not valid!");
+			Utils.showMessage(DIALOG_TITLE, "File not valid!");
 		}
 		return ossFile;
 	}
@@ -206,11 +197,10 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 		umlObject = selectionUtil.getUmlSelectedObject(selection);
 		modelResource = selectionUtil.getSelectedModelResource();
 	
-		System.out.println("selectedUmlElement: " + umlObject);
+//		System.out.println("selectedUmlElement: " + umlObject);
 		
 		if (objectIsSystemViewPackage(umlObject)) {
 			ossFile = getOSSFile();
-//			ossFile = new File("/hardmnt/nemesis0/home/cristofo/Downloads/System_simple.oss");
 
 			String[] errors = showRuntimeErrors(modelResource, ossFile, showNoErrorPopup, monitor);
 			
@@ -227,12 +217,11 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 			
 			monitor.done();
 
-			showMessage("Import done!");
+			Utils.showMessage(DIALOG_TITLE, "Import done!");
 			
 			return;
-			
 		}
-		showMessage("Please select a package from <<SystemView>>");
+		Utils.showMessage(DIALOG_TITLE, "Please select a package from <<SystemView>>");
 	}
 
 	@Override

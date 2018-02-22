@@ -12,8 +12,6 @@ package org.polarsys.chess.OSSImporter.actions;
 
 import org.eclipse.emf.ecore.resource.*;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.uml2.uml.AggregationKind;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
@@ -38,6 +36,7 @@ import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.xtext.serializer.ISerializer;
 import org.polarsys.chess.OSSImporter.parser.ParseHelper;
+import org.polarsys.chess.OSSImporter.utils.Utils;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
@@ -91,16 +90,13 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.jface.dialogs.MessageDialog;
 
-/**
- */
 public class ImportOSSFileAction {
 
 	private static ImportOSSFileAction sampleView;
 	
 	/**
-	 * Gets an instance of the class if already present, or a new one if not
+	 * Gets an instance of the class if already present, or a new one if not.
 	 * @return the instance of this class
 	 */
 	public static ImportOSSFileAction getInstance() {
@@ -139,54 +135,31 @@ public class ImportOSSFileAction {
 //	private static final String CHESS =		"CHESS::Core::CHESS";
 	
 	private static final String BLOCK =		"SysML::Blocks::Block";
-	
 	private static final String FLOWPORT =	"SysML::PortAndFlows::FlowPort";
 	
-	/*
-	
-	private static final String SUBSYSTEM = "CHESSContract::SubSystem";
-	public static final String COLLECTIONTYPE = "MARTE::MARTE_Annexes::VSL::DataTypes::CollectionType";
-	private static final String MARTE_BOOLEAN_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Boolean";
-	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
-	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
-
-	 */
+//	private static final String SUBSYSTEM = "CHESSContract::SubSystem";
+//	public static final String COLLECTIONTYPE = "MARTE::MARTE_Annexes::VSL::DataTypes::CollectionType";
+//	private static final String MARTE_BOOLEAN_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Boolean";
+//	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
+//	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
+	 
+	private static final String DIALOG_TITLE =	"OSS parser";
 	
 	final Injector injector = new OssStandaloneSetup().createInjector();
 	private final ISerializer serializer = injector.getInstance(ISerializer.class);
-//	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
-//	private EntityUtil entityUtil = EntityUtil.getInstance();
 	private Package sysView = null;
-//	private Package compView = null;
 
 	// Map the name of the component with the Component object
 	private Map<String, Class> dslTypeToComponent;
 
 	/**
-	 * The constructor
+	 * The constructor.
 	 */
 	public ImportOSSFileAction() {
 	}
 
 	/**
-	 * Utility dialog to display a message on screen
-	 * @param message the text to display
-	 */
-	private void showMessage(String message) {
-		
-		Display defaultDisplay = Display.getDefault();
-
-		defaultDisplay.syncExec(new Runnable() {
-			@Override
-			public void run() {
-				Shell currShell = defaultDisplay.getActiveShell();
-				MessageDialog.openInformation(currShell, "OSS parser", message);
-			}
-		});
-	}
-
-	/**
-	 * Print a message on the console
+	 * Prints a message on the console.
 	 * @param message the message to print
 	 */
 	private void printMessageOnOut(String message) {
@@ -194,7 +167,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/** 
-	 * Creates a OSS Model 
+	 * Creates a OSS Model.
 	 * @param ossFile a File containing the OCRA model
 	 * @return the OSS object 
 	 */
@@ -207,7 +180,7 @@ public class ImportOSSFileAction {
 	}
 
 	/** 
-	 * Creates and adds a Component Instance to the model
+	 * Creates and adds a Component Instance to the model.
 	 * @param owner the parent Class
 	 * @param elementName the name of the property to create
 	 * @param elementType the type of the property to create
@@ -274,11 +247,12 @@ public class ImportOSSFileAction {
 		// Add SysML Nature on the new Association
 		ElementUtil.addNature(association, SysMLElementTypes.SYSML_NATURE);
 		
+		printMessageOnOut("\n\nCreated " + associationName + " Association\n\n");
 		return association;
 	}
  	
 	/** 
-	 * Creates and adds a Contract Property to the model
+	 * Creates and adds a Contract Property to the model.
 	 * @param owner the parent Class
 	 * @param elementName the name of the property to create
 	 * @param elementType the type of the property to create
@@ -297,7 +271,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 * Creates the Delegation Constraint value
+	 * Creates the Delegation Constraint value.
 	 * @param variable the left part of the expression
 	 * @param constraint the right part of the expression
 	 * @return a string with the expression
@@ -314,7 +288,7 @@ public class ImportOSSFileAction {
 	}
 			
 	/** 
-	 * Creates and adds a Delegation Constraint to the model
+	 * Creates and adds a Delegation Constraint to the model.
 	 * @param owner the parent Class
 	 * @param connection the Connection defining the delegation
 	 * @param variable the target of the connection
@@ -347,7 +321,7 @@ public class ImportOSSFileAction {
 	}
 
 	/**
-	 * Returns the contract with the given name
+	 * Returns the contract with the given name.
 	 * @param umlComponent the component containing the contract
 	 * @param contractName the name of the contract
 	 * @return the UML class of the contract
@@ -357,7 +331,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/** 
-	 * Returns the contract property generated by the given contract name
+	 * Returns the contract property generated by the given contract name.
 	 * @param component the component containing the contract
 	 * @param contractName the name of the contract
 	 * @return the associated Contract Property
@@ -378,7 +352,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 *  Returns the refinement associated to the component
+	 *  Returns the refinement associated to the component.
 	 *  @param owner of the refinement
 	 *  @param refinementName the name of the refinement
 	 *  @return the umlRefinement
@@ -388,7 +362,7 @@ public class ImportOSSFileAction {
 	}
 
 	/**
-	 * Returns the component instance with the given name 
+	 * Returns the component instance with the given name.
 	 * @param owner the class owning the instance
 	 * @param componentName the name of the instance
 	 * @return the UML property representing the component instance
@@ -459,7 +433,7 @@ public class ImportOSSFileAction {
 	}
 
 	/**
-	 * Loads a package from the given resource
+	 * Loads a package from the given resource.
 	 * @param uri the URI of the resource to load
 	 * @return the retrieved package
 	 */
@@ -478,7 +452,7 @@ public class ImportOSSFileAction {
 	}
 
 	/**
-	 * Returns the primitive type from the standard primitive library
+	 * Returns the primitive type from the standard primitive library.
 	 * @param name the name of the Type
 	 * @return the requested primitive type
 	 */
@@ -498,7 +472,7 @@ public class ImportOSSFileAction {
 	}
 
 	/**
-	 * Returns the primitive type from another UML library
+	 * Returns the primitive type from another UML library.
 	 * @param name the name of the Type
 	 * @return the requested primitive type
 	 */
@@ -518,7 +492,7 @@ public class ImportOSSFileAction {
 	}
 
 	/**
-	 * Returns the Type Continuous
+	 * Returns the Type Continuous.
 	 * @param name the name of the Type
 	 * @return the requested Type
 	 */
@@ -543,7 +517,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 * Creates a new BoundedSubType as requested
+	 * Creates a new BoundedSubType as requested.
 	 * @param pkg the package where to create the Enumeration
 	 * @param typeName the name of the type
 	 * @param lowerBound the lower bound
@@ -568,7 +542,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 * Returns a BoundedSubType as requested
+	 * Returns a BoundedSubType as requested.
 	 * @param rangeType the type containing the specifications 
 	 * @return the requested type
 	 */
@@ -605,7 +579,7 @@ public class ImportOSSFileAction {
 	}
 
 	/**
-	 * Retrieves all the Enumerations owned by the package
+	 * Retrieves all the Enumerations owned by the package.
 	 * @param pkg the package to be searched
 	 * @return 
 	 */
@@ -622,7 +596,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 * Returns the list of the values inside a given Enumeration
+	 * Returns the list of the values inside a given Enumeration.
 	 * @param enumeration the Enumeration to be analysed
 	 * @return the list of contained values
 	 */
@@ -636,7 +610,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 * Returns the list of the values inside a given EnumType
+	 * Returns the list of the values inside a given EnumType.
 	 * @param enumType the EnumType to be analysed
 	 * @return the list of contained values
 	 */
@@ -650,7 +624,7 @@ public class ImportOSSFileAction {
 	}
 
 	/**
-	 * Looks for a specific enumeration among existing enumerations of the given package
+	 * Looks for a specific enumeration among existing enumerations of the given package.
 	 * @param pkg the package in which look for the Enumeration
 	 * @param enumType the enumeration to match
 	 * @return the enumeration already defined
@@ -672,7 +646,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 * Creates a new Enumeration as requested
+	 * Creates a new Enumeration as requested.
 	 * @param pkg the package where to create the Enumeration
 	 * @param enumType the type specifying the values
 	 * @return the created Enumeration
@@ -693,7 +667,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 * Returns an Enumeration as requested
+	 * Returns an Enumeration as requested.
 	 * @param enumType the type containing the specifications 
 	 * @return the requested type
 	 */
@@ -715,7 +689,7 @@ public class ImportOSSFileAction {
 	}
 		
 	/**
-	 * Looks for a Signal already defined in the package
+	 * Looks for a Signal already defined in the package.
 	 * @param pkg the package in which look for the Signal
 	 * @return the Signal already defined
 	 */
@@ -731,7 +705,7 @@ public class ImportOSSFileAction {
 	}
 
 	/**
-	 * Creates a Signal type in the given package
+	 * Creates a Signal type in the given package.
 	 * @param pkg the package where to create the Enumeration 
 	 * @return the newly created type 
 	 */
@@ -745,7 +719,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 * Returns a Signal as requested (Only a Signal can be defined in the package)
+	 * Returns a Signal as requested (Only a Signal can be defined in the package).
 	 * @return the requested type
 	 */
 	private Type getSignalType() {
@@ -766,7 +740,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/** 
-	 * Returns the correct Type given the DSL SimpleType
+	 * Returns the correct Type given the DSL SimpleType.
 	 * @param dslSimpleType the type from OSS
 	 * @return the UML Type
 	 */
@@ -811,7 +785,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/** 
-	 * Creates and adds a Port to the model
+	 * Creates and adds a Port to the model.
 	 * @param owner the parent Class
 	 * @param elementName the name of the port to create
 	 * @param elementType the type of the port to create
@@ -823,7 +797,7 @@ public class ImportOSSFileAction {
 		final Type portType = getTypeFromDSLType(elementType);
 		  
 		if(portType == null) {
-			showMessage("Not able to map the requested type for port : " + portName);
+			Utils.showMessage(DIALOG_TITLE, "Not able to map the requested type for port : " + portName);
 //			return null;	// Create the port anyway, without type
 		}
 		
@@ -838,7 +812,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/** 
-	 * Creates a System Block element in the given package
+	 * Creates a System Block element in the given package.
 	 * @param owner the Package that will contain the element
 	 * @param elementName the name of the new System Block
 	 * @return the created Class
@@ -854,7 +828,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/** 
-	 * Creates a Contract element
+	 * Creates a Contract element.
 	 * @param owner the Class that will contain the element
 	 * @param contractName the name of the new Contract
 	 * @return the newly created Class
@@ -869,12 +843,11 @@ public class ImportOSSFileAction {
 		UMLUtils.applyStereotype(newClass, CONTRACT);
 		
 		printMessageOnOut("\n\nCreated " + contractName + " Property\n\n");
-
 		return (Class) newClass;
 	}
 	
 	/** 
-	 * Creates a Block element in the given package
+	 * Creates a Block element in the given package.
 	 * @param owner the Package that will contain the element
 	 * @param elementName the name of the new Block
 	 * @return the newly created Class
@@ -892,7 +865,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/** 
-	 * Adds a contract refinement to a contract property
+	 * Adds a contract refinement to a contract property.
 	 * @param contractProperty the property to be enriched
 	 * @param umlRefinement the refinement to add
 	 */
@@ -905,7 +878,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 * Creates a connector, but doesn't add it to the owner
+	 * Creates a connector, but doesn't add it to the owner.
 	 * @param owner the owner element
 	 * @return the created Connector
 	 */
@@ -925,7 +898,7 @@ public class ImportOSSFileAction {
 	}
 
 	/**
-	 * Adds a connector to the given element
+	 * Adds a connector to the given element.
 	 * @param owner the owner element
 	 * @param connector the conne
 	 */
@@ -978,7 +951,7 @@ public class ImportOSSFileAction {
 	}
 
 	/** 
-	 * Parses the Refinements of the component
+	 * Parses the Refinements of the component.
 	 * @param dslParentComponent the AST Component owning the refinement
 	 * @param dslComponentRefinement the Refinement element to be parsed
 	 */
@@ -1031,7 +1004,7 @@ public class ImportOSSFileAction {
 						
 						// Unknown type of connection
 						System.err.println("Constraint = " + constraint);
-						showMessage("Import Error: Not able to recognize the connection type " + constraint.getValue());
+						Utils.showMessage(DIALOG_TITLE, "Import Error: Not able to recognize the connection type " + constraint.getValue());
 						continue;						
 					}
 
@@ -1085,7 +1058,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/** 
-	 * Gets the expression string from the Expression constraint
+	 * Gets the expression string from the Expression constraint.
 	 * @param constraint the expression to convert
 	 */
 	private String getConstraintText(Expression constraint) {
@@ -1095,7 +1068,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/** 
-	 * Returns a name for the ContractProperty, deriving it from the Contract type
+	 * Returns a name for the ContractProperty, deriving it from the Contract type.
 	 * @param contract the contract from which it derives
 	 * @return a derived name, going lowercase
 	 */
@@ -1111,7 +1084,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/** 
-	 * Parses the Interfaces of the component
+	 * Parses the Interfaces of the component.
 	 * @param dslParentComponent the AST Component owning the refinement
 	 * @param dslComponentInterface the Interface element to be parsed
 	 */
@@ -1182,7 +1155,7 @@ public class ImportOSSFileAction {
 		}
 	}
 	
-	/** Navigates the component and processes its interfaces
+	/** Navigates the component and processes its interfaces.
 	 * @param dslParentComponent the element in the tree
 	 */
 	private void parseComponentInterfaces(AbstractComponent dslParentComponent) {
@@ -1196,7 +1169,7 @@ public class ImportOSSFileAction {
 		}
 	}
 
-	/** Navigates the component and processes its refinements
+	/** Navigates the component and processes its refinements.
 	 * @param dslParentComponent the element in the tree
 	 */
 	private void parseComponentRefinements(AbstractComponent dslParentComponent) {
@@ -1211,33 +1184,19 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 * Main method to be invoked to parse an OSS file
+	 * Main method to be invoked to parse an OSS file.
 	 * @throws Exception
 	 */
-	public void startParsing(Package pkg, File ossFile) throws Exception {
-		
+	public void startParsing(Package pkg, File ossFile) throws Exception {	
 		OSS ocraOssFile;
-//		File ossFile;
-		
 		sysView = pkg;	// Set the given package as working package
 
-//		ossFile = new File("/hardmnt/nemesis0/home/cristofo/Downloads/System.oss");
-//		ossFile = getOSSFile();
 		if (ossFile != null) {
 			ocraOssFile = getOssModel(ossFile);
 		} else {
 			return;
 		}
 		
-		// Retrieve the SystemComponent
-		SystemComponent dslSystemComponent = ocraOssFile.getSystem();
-		
-		if (dslSystemComponent == null) {
-			System.err.println("Import Error: System component is missing");
-			showMessage("System component is missing");
-			return;
-		}
-
 		//Retrieve SystemView and ComponentView packages
 //		sysView = getSystemView();
 //		compView = getComponentView();
@@ -1251,6 +1210,15 @@ public class ImportOSSFileAction {
 //			}
 //		}
 						
+		// Retrieve the SystemComponent
+		SystemComponent dslSystemComponent = ocraOssFile.getSystem();
+		
+		if (dslSystemComponent == null) {
+			System.err.println("Import Error: System component is missing");
+			Utils.showMessage(DIALOG_TITLE, "System component is missing");
+			return;
+		}
+
 		// If the OCRA system component type is not defined, set it to 'System'
 		final String dslSystemComponentName = dslSystemComponent.getType() == null ? "System" : dslSystemComponent.getType();
 		dslSystemComponent.setType(dslSystemComponentName);
@@ -1265,7 +1233,6 @@ public class ImportOSSFileAction {
 
 			@Override
 			protected void doExecute() {
-
 
 				// Add the systemComponent to the package
 				Class systemComponent = createSystemBlock(sysView, dslSystemComponent.getType());
