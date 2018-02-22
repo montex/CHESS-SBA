@@ -128,7 +128,7 @@ public class ImportOSSFileAction {
 //	private static final String FORMAL_PROP =			"CHESSContract::FormalProperty";
 	private static final String CONTRACT_REFINEMENT =	"CHESSContract::ContractRefinement";
 	private static final String SYSTEM =				"CHESSContract::System";
-	private static final String COMPINST =				"CHESSContract::ComponentInstance";
+//	private static final String COMPINST =				"CHESSContract::ComponentInstance";
 
 //	private static final String SYSVIEW =	"CHESS::Core::CHESSViews::SystemView";
 //	private static final String COMPVIEW =	"CHESS::Core::CHESSViews::ComponentView";
@@ -178,26 +178,6 @@ public class ImportOSSFileAction {
 
 		return result;
 	}
-
-	/** 
-	 * Creates and adds a Component Instance to the model.
-	 * @param owner the parent Class
-	 * @param elementName the name of the property to create
-	 * @param elementType the type of the property to create
-	 * @return the created Property
-	 */
-	private Property createComponentInstance(Class owner, String elementName, Type elementType) {
-		
-		printMessageOnOut("\n\n\n Creating property " + elementName + " for owner " + owner + " with type " + elementType);
-		printMessageOnOut("\n\n\n");
-
-		Property newUMLProperty = owner.createOwnedAttribute(elementName, elementType);
-		UMLUtils.applyStereotype(newUMLProperty, COMPINST);
-		newUMLProperty.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
-
-		printMessageOnOut("\n\nCreated " + elementName + " Property\n\n");
-		return newUMLProperty;
-	}
 	
 	/**
 	 * Returns the number or defined associations for the given package.
@@ -234,14 +214,10 @@ public class ImportOSSFileAction {
 		printMessageOnOut("\n\n\n");
 	
 		// Create the association and adds it to the owning package
-		Association association = owner.createAssociation(
+		final Association association = owner.createAssociation(
 				true, AggregationKind.get(AggregationKind.COMPOSITE), elementName, 1, 1, elementType, 
 				false, AggregationKind.get(AggregationKind.NONE), owner.getName().toLowerCase(), 1, 1);
 
-		// Apply the component instance stereotype to the 
-		Property property = association.getMemberEnd(elementName, elementType);
-		UMLUtils.applyStereotype(property, COMPINST);
-		
 		association.setName(associationName);
 		
 		// Add SysML Nature on the new Association
@@ -371,7 +347,7 @@ public class ImportOSSFileAction {
 		
 		final Set<Property> componentInstances = EntityUtil.getInstance().getSubComponentsInstances(owner);
 		for (Property property : componentInstances) {
-			if (property.getAppliedStereotype(COMPINST) != null && property.getName().equals(componentName)) {
+			if (property.getName().equals(componentName)) {
 				return property;
 			}
 		}
