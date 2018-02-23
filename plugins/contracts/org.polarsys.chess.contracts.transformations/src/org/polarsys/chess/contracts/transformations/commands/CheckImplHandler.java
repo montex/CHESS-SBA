@@ -37,7 +37,7 @@ import org.polarsys.chess.contracts.transformations.commands.CommandsCommon.Comm
 import org.polarsys.chess.contracts.transformations.dialogs.SelectImplementationDialog;
 import org.polarsys.chess.contracts.transformations.dialogs.SelectOcraAnalysisCtxDialog;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
 public class CheckImplHandler extends AbstractHandler{
 

@@ -19,5 +19,5 @@ Import-Package: eu.fbk.eclipse.standardtools.constraintEditor.constraintTab,
  org.eclipse.gmf.runtime.diagram.ui.editparts,
  org.eclipse.papyrus.uml.diagram.common.edit.part,
  org.eclipse.uml2.uml,
- org.polarsys.chess.service.utils
+ org.polarsys.chess.service.gui.utils
 Bundle-Vendor: Fondazione Bruno Kessler

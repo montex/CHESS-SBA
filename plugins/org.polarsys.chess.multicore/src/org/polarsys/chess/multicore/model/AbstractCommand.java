@@ -27,7 +27,7 @@ import org.polarsys.chess.core.notifications.ResourceNotification;
 import org.polarsys.chess.core.util.uml.ModelError;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
 public abstract class AbstractCommand extends AbstractHandler {
 	protected Model umlModel;

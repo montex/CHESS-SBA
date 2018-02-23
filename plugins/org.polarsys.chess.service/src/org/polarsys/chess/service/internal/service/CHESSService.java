@@ -40,8 +40,8 @@ import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.resourcelistener.ResourceSetListenerManager;
 import org.polarsys.chess.core.resourcelistener.SelectionListenerManager;
 import org.polarsys.chess.core.views.DiagramStatus;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 import org.polarsys.chess.service.internal.Activator;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 public class CHESSService {
 	private static final String ICON_LOCATION = "org.polarsys.chess.service";

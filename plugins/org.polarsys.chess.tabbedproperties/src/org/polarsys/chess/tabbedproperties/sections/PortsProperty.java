@@ -55,7 +55,7 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.polarsys.chess.core.profiles.MARTEProfileManager;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
 public class PortsProperty extends AbstractPropertySection {
 

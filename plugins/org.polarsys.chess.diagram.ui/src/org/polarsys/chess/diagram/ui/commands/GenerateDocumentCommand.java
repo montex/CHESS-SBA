@@ -25,18 +25,18 @@ import org.polarsys.chess.diagram.ui.docGenerators.CHESSBlockDefinitionDiagramMo
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramModel;
 import org.polarsys.chess.diagram.ui.services.CHESSDiagramsGeneratorService;
 import org.polarsys.chess.diagram.ui.utils.ExportDialogUtils;
-import org.polarsys.chess.service.internal.model.ChessSystemModel;
-import org.polarsys.chess.service.utils.DialogUtils;
-import org.polarsys.chess.service.utils.SelectionUtil;
+import org.polarsys.chess.service.core.model.ChessSystemModel;
+import org.polarsys.chess.service.gui.utils.DialogUtils;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
-import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.services.OCRATranslatorService;
-import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
+import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.ui.services.OCRATranslatorService;
 import eu.fbk.eclipse.standardtools.diagram.DiagramDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.DocumentGenerator;
 import eu.fbk.eclipse.standardtools.diagram.ui.dialog.ModelToDocumentDialog;
 import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.DocumentGeneratorServiceFromOssModel;
-import eu.fbk.eclipse.standardtools.dialogs.MessageTimeModelDialog;
-import eu.fbk.eclipse.standardtools.utils.DirectoryUtil;
+import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
+import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
+import eu.fbk.eclipse.standardtools.utils.ui.utils.DirectoryUtil;
 import eu.fbk.tools.editor.oss.oss.OSS;
 
 public class GenerateDocumentCommand extends AbstractJobCommand {

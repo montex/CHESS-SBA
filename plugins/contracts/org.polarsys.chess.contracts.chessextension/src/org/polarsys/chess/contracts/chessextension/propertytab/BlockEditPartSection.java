@@ -52,7 +52,7 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.contracts.chessextension.popup.actions.SetContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
 
 public class BlockEditPartSection extends AbstractPropertySection{

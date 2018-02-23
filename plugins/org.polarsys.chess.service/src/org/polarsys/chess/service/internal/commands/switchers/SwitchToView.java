@@ -35,10 +35,10 @@ import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 import org.polarsys.chess.service.internal.palette.PaletteManager;
 import org.polarsys.chess.service.internal.utils.CHESSInternalEditorUtils;
 import org.polarsys.chess.service.internal.visibility.HidePortCommand;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 /**
  * @since 0.10

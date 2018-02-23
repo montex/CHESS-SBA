@@ -4,12 +4,12 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.polarsys.chess.smvExporter.commands.ExportNominalSMsToSmvFilesCommand"
+            defaultHandler="org.polarsys.chess.smvExporter.ui.commands.ExportNominalSMsToSmvFilesCommand"
             id="org.polarsys.chess.smvExport.commands.ExportNominalSMsToSmvFilesCommand"
             name="Export state machines as .smv files">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.smvExporter.commands.ExportSelectedNominalSMsToSmvFilesCommand"
+            defaultHandler="org.polarsys.chess.smvExporter.ui.commands.ExportSelectedNominalSMsToSmvFilesCommand"
             id="org.polarsys.chess.smvExport.commands.ExportSelectedNominalSMsToSmvFilesCommand"
             name="Export state machines of Selected Component as .smv files">
       </command>

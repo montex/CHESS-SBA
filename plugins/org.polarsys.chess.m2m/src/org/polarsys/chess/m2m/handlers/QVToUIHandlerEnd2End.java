@@ -34,7 +34,7 @@ import org.polarsys.chess.m2m.transformations.TransUtil;
 import org.polarsys.chess.m2m.transformations.TransformationResultsData;
 import org.polarsys.chess.m2m.ui.AnalysisContextSelectionDialog;
 import org.polarsys.chess.m2m.ui.End2EndResultDialog;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;

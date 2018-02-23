@@ -31,11 +31,11 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.service.internal.model.ChessSystemModel;
-import org.polarsys.chess.service.utils.SelectionUtil;
+import org.polarsys.chess.service.core.model.ChessSystemModel;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab;
-import eu.fbk.eclipse.standardtools.model.AbstractSystemModel;
+import eu.fbk.eclipse.standardtools.utils.core.model.AbstractSystemModel;
 
 /**
  * This is the contract editor designed for the CHESS platform. It extends the

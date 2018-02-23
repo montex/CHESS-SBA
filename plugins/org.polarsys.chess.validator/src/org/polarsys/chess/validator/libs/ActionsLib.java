@@ -86,7 +86,7 @@ import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ModelError;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.ViewUtils;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 import org.polarsys.chess.validator.Activator;
 import org.polarsys.chess.validator.managers.AddDiagramElement;
 import org.polarsys.chess.validator.messages.Messages;

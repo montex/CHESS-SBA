@@ -14,11 +14,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.uml2.uml.Constraint;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.service.internal.model.ChessSystemModel;
-import org.polarsys.chess.service.utils.SelectionUtil;
+import org.polarsys.chess.service.core.model.ChessSystemModel;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.constraintEditor.constraintTab.ConstraintEditorTab;
-import eu.fbk.eclipse.standardtools.model.AbstractSystemModel;
+import eu.fbk.eclipse.standardtools.utils.core.model.AbstractSystemModel;
 
 /**
  * This is the constraint editor designed for the CHESS platform. It extends the

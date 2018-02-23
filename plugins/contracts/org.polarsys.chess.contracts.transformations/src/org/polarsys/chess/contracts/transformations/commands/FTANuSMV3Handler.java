@@ -32,7 +32,7 @@ import org.eclipse.uml2.uml.Model;
 import org.polarsys.chess.contracts.transformations.commands.CommandsCommon.CommandEnum;
 import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAAnalysisCtxDialog;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
 public class FTANuSMV3Handler extends AbstractHandler {
 	
