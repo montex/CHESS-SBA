@@ -11,8 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.verificationService.services.ExecCommandService;
-
+import org.polarsys.chess.verificationService.ui.services.ExecCommandService;
 import org.junit.Assert;
 
 public class TestModelChecking {

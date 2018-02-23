@@ -12,7 +12,7 @@ import org.junit.runner.Result;
 import org.polarsys.chess.contracts.verificationService.test.runtime.tests.AllTests;
 import org.polarsys.chess.contracts.verificationService.test.runtime.util.TestUtil;
 
-import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
+import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 
 public class ModelCheckingTest extends AbstractJobCommand {
 
