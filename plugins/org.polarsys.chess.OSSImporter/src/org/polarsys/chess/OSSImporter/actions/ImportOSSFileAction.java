@@ -93,20 +93,6 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 
 public class ImportOSSFileAction {
 
-	private static ImportOSSFileAction sampleView;
-	
-	/**
-	 * Gets an instance of the class if already present, or a new one if not.
-	 * @return the instance of this class
-	 */
-	public static ImportOSSFileAction getInstance() {
-		if (sampleView == null) {
-			sampleView = new ImportOSSFileAction();
-		}
-		return sampleView;
-	}
-	
-//	private static final String SUFFIX = "_test";	// It could be possible to add a suffix to block names
 	private static final String DELEGATION_PREFIX = "Define_";
 	private static final String DELEGATION_CONSTRAINT_NAME = "constraintSpec";
 	private static final String CONNECTOR_NAME = "connector";
@@ -149,15 +135,35 @@ public class ImportOSSFileAction {
 	private final ISerializer serializer = injector.getInstance(ISerializer.class);
 	private Package sysView = null;
 
-	// Map the name of the component with the Component object
+	/** Library for UML primitive types */
+	private final Model umlLibrary = (Model) load(URI.createURI(UMLResource.UML_PRIMITIVE_TYPES_LIBRARY_URI));
+
+	/** Library for CHESS types like continuous */
+	final Profile chessContractLibrary = (Profile) load(URI.createURI("pathmap://CHESSContract/CHESSContract.profile.uml"));
+	
+	/** Map the name of the component with the Component object */
 	private Map<String, Class> dslTypeToComponent;
+
+	/** The instance of this class */
+	private static ImportOSSFileAction sampleView;
 
 	/**
 	 * The constructor.
 	 */
 	public ImportOSSFileAction() {
 	}
-
+	
+	/**
+	 * Gets an instance of the class if already present, or a new one if not.
+	 * @return the instance of this class
+	 */
+	public static ImportOSSFileAction getInstance() {
+		if (sampleView == null) {
+			sampleView = new ImportOSSFileAction();
+		}
+		return sampleView;
+	}
+	
 	/**
 	 * Prints a message on the console.
 	 * @param message the message to print
@@ -318,7 +324,7 @@ public class ImportOSSFileAction {
 		final Class umlContract = getUMLContractFromContractName(component, contractName);
 		
 		// Get the contract property name, derived from the contract name
-		final String contractPropertyName = getContractPropertyName(umlContract);
+		final String contractPropertyName = createContractPropertyNameFromContract(umlContract);
 			
 		// Get the contract property from the component, generic type
 		final Property umlProperty = component.getOwnedAttribute(contractPropertyName, umlContract);
@@ -345,10 +351,9 @@ public class ImportOSSFileAction {
 	 */
 	private Property getUMLComponentInstance(Class owner, String componentName) {
 		
-		final Set<Property> componentInstances = EntityUtil.getInstance().getSubComponentsInstances(owner);
-		for (Property property : componentInstances) {
-			if (property.getName().equals(componentName)) {
-				return property;
+		for (Property umlProperty : (owner.getAttributes())) {
+			if (umlProperty.getName().equals(componentName) && EntityUtil.getInstance().isComponentInstance(umlProperty)) {
+				return umlProperty;
 			}
 		}
 		return null;
@@ -359,7 +364,7 @@ public class ImportOSSFileAction {
 	 * The refinement should specify the component instance that contains the original contract property
 	 * and the contract property itself 
 	 *  
-	 * @param owner the containter of the refinement
+	 * @param owner the container of the refinement
 	 * @param componentName the component instance containing the contract property
 	 * @param contractName the type of the contract
 	 * @return the created DataType 
@@ -367,21 +372,15 @@ public class ImportOSSFileAction {
 	private DataType createContractRefinement(Class owner, String componentName, String contractName) {
 					
 		final Property componentInstance = getUMLComponentInstance(owner, componentName);
-				
-		// Get the type of the component instance 
-		String typeName = componentInstance.getType().getName();
-		
+
 		printMessageOnOut("\n\n\n Creating contract refinement for componentName = " + componentName + " of contract " + contractName);
 		printMessageOnOut("\n\n\n");
 				
-		// Remove the optional suffix
-//		typeName = typeName.substring(0, typeName.indexOf(SUFFIX));
-				
 		// Get the component type where the contract property is defined
-		final Class component = dslTypeToComponent.get(typeName);
+		final Class component = (Class) componentInstance.getType();
 		
 		final ContractProperty contractProperty = getContractPropertyFromContract(component, contractName);
-				
+		
 		// Compose the correct name of the contract refinement 
 		final String refinementName = componentName + "." + contractProperty.getBase_Property().getName();
 		
@@ -433,13 +432,10 @@ public class ImportOSSFileAction {
 	 * @return the requested primitive type
 	 */
 	private Type getPrimitiveType(String name) {
-
-		// Load the correct library
-		final Model umlLibrary = (Model) load(URI.createURI(UMLResource.UML_PRIMITIVE_TYPES_LIBRARY_URI));
-
-		// Get the correct type
+		
+		// Get the correct type from the library
 		final Type type = umlLibrary.getOwnedType(name);
-
+		
 		if (type != null) {
 			printMessageOnOut("Type '" + type.getQualifiedName() + "' found.");
 			return type;
@@ -455,10 +451,10 @@ public class ImportOSSFileAction {
 	private Type getUMLPrimitiveType(String name) {
 			
 		// Get the correct model
-		final Model chessContract = (Model) load(URI.createURI("pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml"));
+		final Model umlLibrary = (Model) load(URI.createURI("pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml"));
 			
 		// Get the correct type
-		final Type type = chessContract.getOwnedType(name);
+		final Type type = umlLibrary.getOwnedType(name);
 		
 		if (type != null) {
 			printMessageOnOut("Type '" + type.getQualifiedName() + "' found.");
@@ -476,11 +472,8 @@ public class ImportOSSFileAction {
 		
 		// The Continuous type is defined here: CHESSContract::DataTypes::Continuous
 		
-		// Get the correct profile
-		final Profile chessContract = (Profile) load(URI.createURI("pathmap://CHESSContract/CHESSContract.profile.uml"));
-		
 		// Get the correct package inside the profile
-		final Package dataTypes = chessContract.getNestedPackage("DataTypes");
+		final Package dataTypes = chessContractLibrary.getNestedPackage("DataTypes");
 		
 		// Get the correct type
 		final Type type = dataTypes.getOwnedType(name);
@@ -771,18 +764,28 @@ public class ImportOSSFileAction {
 	private org.eclipse.uml2.uml.Port createPort(Class owner, VariableId elementName, SimpleType elementType, boolean isInput) {
 		final String portName = elementName.getName();
 		final Type portType = getTypeFromDSLType(elementType);
-		  
+		
 		if(portType == null) {
 			Utils.showMessage(DIALOG_TITLE, "Not able to map the requested type for port : " + portName);
 //			return null;	// Create the port anyway, without type
 		}
 		
-		org.eclipse.uml2.uml.Port umlPort = owner.createOwnedPort(portName, portType);
+		org.eclipse.uml2.uml.Port umlPort = UMLFactory.eINSTANCE.createPort();
+		umlPort.setName(portName);
+		umlPort.setType(portType);
+		owner.getOwnedPorts().add(umlPort);
 		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
 		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
 		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
 		flowPort.setDirection(isInput? FlowDirection.IN: FlowDirection.OUT);
-
+		
+		// This version is nicer but a little slower
+//		org.eclipse.uml2.uml.Port umlPort = owner.createOwnedPort(portName, portType);
+//		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+//		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
+//		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+//		flowPort.setDirection(isInput? FlowDirection.IN: FlowDirection.OUT);
+		
 		printMessageOnOut("\n\nCreated " + portName + " Port\n\n");
 		return umlPort;
 	}
@@ -912,9 +915,6 @@ public class ImportOSSFileAction {
 			// Get the component type
 			String typeName = componentInstance.getType().getName();
 
-			// Remove the optional suffix
-//			typeName = typeName.substring(0, typeName.indexOf(SUFFIX));
-
 			// Get the component object containing the definition of the port
 			final Class portOwner = dslTypeToComponent.get(typeName);
 
@@ -932,7 +932,7 @@ public class ImportOSSFileAction {
 	 * @param dslComponentRefinement the Refinement element to be parsed
 	 */
 	private void parseRefinements(AbstractComponent dslParentComponent, Refinement dslComponentRefinement) {
-
+		
 		// Get all the RefinementInstances of the Refinement
 		final EList<RefinementInstance> dslRefInstances = dslComponentRefinement.getRefinements(); 
 
@@ -952,7 +952,7 @@ public class ImportOSSFileAction {
 
 					// I should create an Association between the elements and not a Component Instance!
 					createAssociation(dslTypeToComponent.get(dslParentComponent.getType()), subName, (Type) dslTypeToComponent.get(subType)); 
-
+					
 				} else if (dslRefInstance != null && dslRefInstance.getConnection() != null) {
 					
 					// CONNECTION processing
@@ -994,7 +994,7 @@ public class ImportOSSFileAction {
 					
 					// At last, add the connector to the owner
 					addConnector(dslTypeToComponent.get(dslParentComponent.getType()), connector);
-					
+
 				} else if (dslRefInstance != null && dslRefInstance.getRefinedby() != null) {
 					
 					// REFINEDBY processing
@@ -1004,7 +1004,7 @@ public class ImportOSSFileAction {
 					printMessageOnOut("\n\n\nContract name = " + refinedContract + " from " + dslTypeToComponent.get(dslParentComponent.getType()).getName());
 
 					ContractProperty contractProperty = getContractPropertyFromContract(dslTypeToComponent.get(dslParentComponent.getType()), refinedContract);
-
+					
 					// Alternative version using a library function
 //					Property p = ContractEntityUtil.getInstance().getUmlContractPropertyOfUmlComponentFromContractPropertyType(dslTypeToComponent.get(dslParentComponent.getType()), refinedContract);
 //					ContractProperty cp = ContractEntityUtil.getInstance().getContractProperty(p);
@@ -1048,9 +1048,8 @@ public class ImportOSSFileAction {
 	 * @param contract the contract from which it derives
 	 * @return a derived name, going lowercase
 	 */
-	private String getContractPropertyName(Class contract) {
+	private String createContractPropertyNameFromContract(Class contract) {
 		String contractName = contract.getName();
-//		contractName = contractName.substring(contractName.indexOf('_') + 1);
 		
 		if (contractName.length() > 0) {
 			return contractName.toLowerCase();
@@ -1089,7 +1088,6 @@ public class ImportOSSFileAction {
 						} else if (dslVariable instanceof OutputPort) {
 							createPort(dslTypeToComponent.get(dslParentComponent.getType()), dslVariableID, dslVariableType, false);
 						}
-						
 					} else if (dslVariable instanceof Parameter) {
 						
 						// PARAMETER processing
@@ -1124,7 +1122,7 @@ public class ImportOSSFileAction {
 					ContractEntityUtil.getInstance().saveFormalProperty("Guarantee", getConstraintText(dslGuarantee.getConstraint()), contract);
 
 					// Create a Contract Property
-					String contractPropertyName = getContractPropertyName(contract);
+					String contractPropertyName = createContractPropertyNameFromContract(contract);
 					createContractProperty(dslTypeToComponent.get(dslParentComponent.getType()), contractPropertyName, (Type) contract);
 				}
 			}
@@ -1167,12 +1165,14 @@ public class ImportOSSFileAction {
 		OSS ocraOssFile;
 		sysView = pkg;	// Set the given package as working package
 
+		long startTime = System.currentTimeMillis();
+		
 		if (ossFile != null) {
 			ocraOssFile = getOssModel(ossFile);
 		} else {
 			return;
 		}
-		
+			
 		//Retrieve SystemView and ComponentView packages
 //		sysView = getSystemView();
 //		compView = getComponentView();
@@ -1212,7 +1212,6 @@ public class ImportOSSFileAction {
 
 				// Add the systemComponent to the package
 				Class systemComponent = createSystemBlock(sysView, dslSystemComponent.getType());
-				//		Class systemComponent = createSystemBlock(sysView, dslSystemComponent.getType() + SUFFIX);
 
 				// Store the systemComponent in a hash with its name
 				dslTypeToComponent.put(dslSystemComponentName, systemComponent);
@@ -1220,7 +1219,6 @@ public class ImportOSSFileAction {
 				// Populate the map and the package with the other Component elements 
 				for (Component dslComponent : ocraOssFile.getComponents()) {
 					Class component = createBlock(sysView, dslComponent.getType());
-					//			Class component = createBlock(sysView, dslComponent.getType() + SUFFIX);
 					if(dslTypeToComponent.put(dslComponent.getType(), component) != null) {
 						System.err.println("Duplicated component type, not added: " + dslComponent.getType());
 					} else {
@@ -1231,7 +1229,7 @@ public class ImportOSSFileAction {
 				// Now I have created all the Blocks in the package, loop on them, but not getting them from 
 				// the package (it may be polluted with other blocks), but from the OSS model again.
 
-				// parse the system component
+				// Parse the system component
 				parseComponentInterfaces(dslSystemComponent);
 
 				// Parse all the other components 
@@ -1239,13 +1237,15 @@ public class ImportOSSFileAction {
 					parseComponentInterfaces(dslComponent);
 				}
 
-				// parse the system component
+				// Parse the system component
 				parseComponentRefinements(dslSystemComponent);
 
 				// Parse all the other components 
 				for (Component dslComponent : ocraOssFile.getComponents()) {
 					parseComponentRefinements(dslComponent);
 				}
+				
+				printMessageOnOut("Total time = " + (System.currentTimeMillis() - startTime));
 			}
 		});
 	}
