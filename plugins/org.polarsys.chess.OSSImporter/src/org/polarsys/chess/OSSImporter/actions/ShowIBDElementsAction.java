@@ -568,30 +568,27 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				
 		printMessageOnOut("Selection size = " + selection.size());
 		
-		for (Object object : selection) {
-			printMessageOnOut("\nselection = " + object);
-			EditPartRepresentation epr = (EditPartRepresentation) object;
-			printMessageOnOut("\tepr graphical edit part = " + epr.getRepresentedEditPart());
+		if (selection.size() > 0) {
+			
+			// Filter the list to extract only the elements I'm interested in
+			buildShowHideElementsList(selection.toArray());
+	
+			// Create the list of commands to display the elements
+			final Command command = getActionCommand();		
+			
+			// Execute the commands
+			final TransactionalEditingDomain domain = this.selectedElements.get(0).getEditingDomain();
+			domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+			
+			// Resize the graphical elements
+			resizeElements(diagramEP);
+			
+			// Draw the ports on the inner components
+			// NB: labels are put in the wrong place, but if done in another command they are fine!
+			drawComponentInstancesPorts(diagramEP, umlObject);
+			
+			// Draw the connectors
+			drawConnectors(selectedElementEP);
 		}
-		
-		// Filter the list to extract only the elements I'm interested in
-		buildShowHideElementsList(selection.toArray());
-
-		// Create the list of commands to display the elements
-		final Command command = getActionCommand();		
-		
-		// Execute the commands
-		final TransactionalEditingDomain domain = this.selectedElements.get(0).getEditingDomain();
-		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
-		
-		// Resize the graphical elements
-		resizeElements(diagramEP);
-		
-		// Draw the ports on the inner components
-		// NB: labels are put in the wrong place, but if done in another command they are fine!
-		drawComponentInstancesPorts(diagramEP, umlObject);
-		
-		// Draw the connectors
-		drawConnectors(selectedElementEP);
 	}
 }

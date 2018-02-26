@@ -48,7 +48,7 @@ public class CreateIBDMultipleCommand extends AbstractJobCommand {
 		
 		if (Utils.objectIsSystemViewPackage(umlObject)) {
 			
-			//Now browse all the blocks and create the diagram
+			// Now browse all the blocks and create the diagram
 			Package pkg = (Package) umlObject;
 			
 			EList<Element> packageChildren = pkg.getOwnedElements();
