@@ -26,6 +26,7 @@ import org.eclipse.papyrus.sysml.diagram.blockdefinition.edit.part.BlockDefiniti
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.AssociationEditPart;
 import org.eclipse.papyrus.sysml.diagram.common.figure.AssociationFigure;
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Element;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
 import eu.fbk.eclipse.standardtools.diagram.ui.model.AbstractBlockDefinitionDiagramModel;
@@ -64,7 +65,7 @@ public class CHESSBlockDefinitionDiagramModel implements AbstractBlockDefinition
 		}
 
 		EObject component = ((GraphicalEditPart) graphicalComponent).resolveSemanticElement();
-		return entityUtil.getComponentName(component);
+		return entityUtil.getComponentName((Element)component);
 	}
 
 	@Override

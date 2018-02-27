@@ -125,6 +125,22 @@ public class EntityUtil {
 		return model;
 	}
 
+	 /**
+     * Returns the component instance with the given name.
+     * @param owner the class owning the instance
+     * @param componentName the name of the instance
+     * @return the UML property representing the component instance
+     */
+    public Property getSubComponentInstance(Class owner, String componentName) {
+       
+        for (Property umlProperty : (owner.getAttributes())) {
+            if (umlProperty.getName().equals(componentName) && EntityUtil.getInstance().isComponentInstance(umlProperty)) {
+                return umlProperty;
+            }
+        }
+        return null;
+    }
+	
 	public String getSystemElementURIFragment(Model model) throws Exception {
 
 		if (model != null) {
@@ -180,8 +196,8 @@ public class EntityUtil {
 
 	}
 
-	public Object getSubComponent(Object constraint, String componentName) {
-		Element element = ((Constraint) constraint).getOwner();
+	public Element getSubComponentOfConstraintOwner(Constraint constraint, String componentName) {
+		Element element = constraint.getOwner();
 
 		for (Property umlProperty : getSubComponentsInstances((Class) element)) {
 			if (umlProperty.getName().compareTo(componentName) == 0) {
@@ -192,8 +208,8 @@ public class EntityUtil {
 		return null;
 	}
 
-	public String[] getSubComponentsName(Object constraint) {
-		Element umlElement = ((Constraint) constraint).getOwner();
+	public String[] getSubComponentsNameOfConstraintOwner(Constraint constraint) {
+		Element umlElement = constraint.getOwner();
 		Set<String> subCompArr = getSubComponentsNames((Class) umlElement);
 		return toArray(subCompArr);
 	}
@@ -208,9 +224,9 @@ public class EntityUtil {
 		return eList.toArray(strArray);
 	}
 
-	public String getComponentID(Object umlComponent) {
+	public String getComponentID(Element umlComponent) {
 
-		if ((isBlock((Element) umlComponent))) {
+		if ((isBlock(umlComponent))) {
 			return ((Class) umlComponent).getName();
 		}
 
@@ -225,9 +241,9 @@ public class EntityUtil {
 		return ((NamedElement) element).getQualifiedName();
 	}
 
-	public String getComponentName(Object umlComponent) {
+	public String getComponentName(Element umlComponent) {
 
-		if ((isBlock((Element) umlComponent))) {
+		if ((isBlock( umlComponent))) {
 			return ((Class) umlComponent).getName();
 		}
 
@@ -671,9 +687,9 @@ public class EntityUtil {
 		return booleanAttributesNames;
 	}
 
-	public String[] getOwnerAttributesNames(Object contract) {
+	public String[] getOwnerAttributesNames(Class contract) {
 
-		Set<String> attrArr = getAttributesNamesExceptsPorts(((Class) contract).getOwner());
+		Set<String> attrArr = getAttributesNamesExceptsPorts(contract.getOwner());
 		return toArray(attrArr);
 	}
 

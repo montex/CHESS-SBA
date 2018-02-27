@@ -68,7 +68,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	public String getComponentTypeName(Object component) {
 
 		if(entityUtil.isBlock((Element) component)) {
-			return entityUtil.getComponentName(component);
+			return entityUtil.getComponentName((Element)component);
 		}
 		return null;
 	}
@@ -471,7 +471,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 */
 	@Override
 	public String getComponentName(Object component) {
-		return entityUtil.getComponentName(component);
+		return entityUtil.getComponentName((Element)component);
 	}
 
 	
@@ -756,14 +756,14 @@ if (entityUtil.isBlock((Element) component)) {
 
 	@Override
 	public String[] getSubComponentsName(Object constraint) {
-		return entityUtil.getSubComponentsName(constraint);
+		return entityUtil.getSubComponentsNameOfConstraintOwner((Constraint)constraint);
 	}
 
 
 
 	@Override
 	public Object getSubComponent(Object constraint, String subCompName) {
-		return entityUtil.getSubComponent(constraint, subCompName);
+		return entityUtil.getSubComponentOfConstraintOwner((Constraint)constraint, subCompName);
 	}
 
 
