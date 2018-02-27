@@ -1204,6 +1204,8 @@ public class ImportOSSFileAction {
 
 		dslTypeToComponent = new HashMap<String, Class>();
 
+		// Clear the exception before starting the import
+		importException = null;
 		
 		// Start a transaction to modify the package content 
 		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(pkg);
@@ -1230,7 +1232,6 @@ public class ImportOSSFileAction {
 
 				// Now I have created all the Blocks in the package, loop on them, but not getting them from 
 				// the package (it may be polluted with other blocks), but from the OSS model again.
-
 				try {
 				
 					// Parse the system component
