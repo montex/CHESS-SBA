@@ -35,8 +35,7 @@ import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.xtext.serializer.ISerializer;
-import org.polarsys.chess.OSSImporter.parser.ParseHelper;
-import org.polarsys.chess.OSSImporter.utils.Utils;
+import org.polarsys.chess.OSSImporter.exceptions.ImportException;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
@@ -45,6 +44,7 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 
 import com.google.inject.Injector;
 
+import eu.fbk.eclipse.standardtools.parser.ParseHelper;
 import eu.fbk.eclipse.standardtools.utils.FileSystemUtil;
 import eu.fbk.tools.editor.basetype.baseType.*;
 import eu.fbk.tools.editor.contract.contract.Assumption;
@@ -76,6 +76,7 @@ import org.eclipse.papyrus.sysml.portandflows.FlowPort;
 import org.eclipse.papyrus.sysml.service.types.element.SysMLElementTypes;
 import org.eclipse.papyrus.uml.service.types.utils.ElementUtil;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -129,8 +130,6 @@ public class ImportOSSFileAction {
 //	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
 //	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
 	 
-	private static final String DIALOG_TITLE =	"OSS parser";
-	
 	final Injector injector = new OssStandaloneSetup().createInjector();
 	private final ISerializer serializer = injector.getInstance(ISerializer.class);
 	private Package sysView = null;
@@ -146,6 +145,9 @@ public class ImportOSSFileAction {
 
 	/** The instance of this class */
 	private static ImportOSSFileAction sampleView;
+	
+	/** A possible exception that could happen during parsing */
+	ImportException importException;
 
 	/**
 	 * The constructor.
@@ -176,8 +178,9 @@ public class ImportOSSFileAction {
 	 * Creates a OSS Model.
 	 * @param ossFile a File containing the OCRA model
 	 * @return the OSS object 
+	 * @throws Exception
 	 */
-	private OSS getOssModel(File ossFile) throws Exception {
+	private OSS getOssModel(File ossFile) throws Exception, IOException {
 		String ossDefinition = FileSystemUtil.getFileContent(ossFile);
 		final ParseHelper<?> parseHelper = injector.getInstance(ParseHelper.class);
 		OSS result = (OSS) parseHelper.parse(ossDefinition);
@@ -760,13 +763,14 @@ public class ImportOSSFileAction {
 	 * @param elementType the type of the port to create
 	 * @param isInput tells the direction of the flow
 	 * @return the created Port
+	 * @throws ImportException 
 	 */
-	private org.eclipse.uml2.uml.Port createPort(Class owner, VariableId elementName, SimpleType elementType, boolean isInput) {
+	private org.eclipse.uml2.uml.Port createPort(Class owner, VariableId elementName, SimpleType elementType, boolean isInput) throws ImportException {
 		final String portName = elementName.getName();
 		final Type portType = getTypeFromDSLType(elementType);
 		
 		if(portType == null) {
-			Utils.showMessage(DIALOG_TITLE, "Not able to map the requested type for port : " + portName);
+			throw new ImportException("Not able to map the requested type for port : " + portName);
 //			return null;	// Create the port anyway, without type
 		}
 		
@@ -930,8 +934,9 @@ public class ImportOSSFileAction {
 	 * Parses the Refinements of the component.
 	 * @param dslParentComponent the AST Component owning the refinement
 	 * @param dslComponentRefinement the Refinement element to be parsed
+	 * @throws ImportException 
 	 */
-	private void parseRefinements(AbstractComponent dslParentComponent, Refinement dslComponentRefinement) {
+	private void parseRefinements(AbstractComponent dslParentComponent, Refinement dslComponentRefinement) throws ImportException {
 		
 		// Get all the RefinementInstances of the Refinement
 		final EList<RefinementInstance> dslRefInstances = dslComponentRefinement.getRefinements(); 
@@ -980,8 +985,7 @@ public class ImportOSSFileAction {
 						
 						// Unknown type of connection
 						System.err.println("Constraint = " + constraint);
-						Utils.showMessage(DIALOG_TITLE, "Import Error: Not able to recognize the connection type " + constraint.getValue());
-						continue;						
+						throw new ImportException("Import Error: Not able to recognize the connection type " + constraint.getValue());
 					}
 
 					// Create the target end
@@ -1020,13 +1024,11 @@ public class ImportOSSFileAction {
 					
 					// CONSTRAINT processing
 					//TODO: implement this
-//					showMessage("Found a CONSTRAINT tag, don't know how to handle it!");
 					System.err.println("Import Error: Found a CONSTRAINT tag, don't know how to handle it!");
 				} else if (dslRefInstance != null && dslRefInstance.getProp() != null) {
 
 					// PROP processing
 					//TODO: implement this
-//					showMessage("Found a PROP tag, don't know how to handle it!");
 					System.err.println("Import Error: Found a PROP tag, don't know how to handle it!");
 				}
 			}
@@ -1062,8 +1064,9 @@ public class ImportOSSFileAction {
 	 * Parses the Interfaces of the component.
 	 * @param dslParentComponent the AST Component owning the refinement
 	 * @param dslComponentInterface the Interface element to be parsed
+	 * @throws ImportException 
 	 */
-	private void parseInterfaces(AbstractComponent dslParentComponent, Interface dslComponentInterface) {
+	private void parseInterfaces(AbstractComponent dslParentComponent, Interface dslComponentInterface) throws ImportException {
 
 		// Get all the InterfaceInstances of the Interface
 		final EList<InterfaceInstance> dslIntInstances = dslComponentInterface.getInterfaces();
@@ -1092,20 +1095,17 @@ public class ImportOSSFileAction {
 						
 						// PARAMETER processing
 						//TODO: implement this
-//						showMessage("Found a PARAMETER tag, don't know how to handle it!");
 						System.err.println("Import Error: Found a PARAMETER tag, don't know how to handle it!");
 					} else if (dslVariable instanceof Operation) {
 						
 						// PROVIDED OPERATION processing
 						//TODO: implement this
-//						showMessage("Found a OPERATION tag, don't know how to handle it!");
 						System.err.println("Import Error: Found a OPERATION tag, don't know how to handle it!");
 					}
 				} else if (dslIntInstance != null && dslIntInstance.getDefine() != null) {
 				
 					// DEFINE processing
 					//TODO: implement this
-//					showMessage("Found a DEFINE tag, don't know how to handle it!");
 					System.err.println("Import Error: Found a DEFINE tag, don't know how to handle it!");
 				} else if (dslIntInstance != null && dslIntInstance.getContract() != null) {
 					
@@ -1131,8 +1131,9 @@ public class ImportOSSFileAction {
 	
 	/** Navigates the component and processes its interfaces.
 	 * @param dslParentComponent the element in the tree
+	 * @throws ImportException 
 	 */
-	private void parseComponentInterfaces(AbstractComponent dslParentComponent) {
+	private void parseComponentInterfaces(AbstractComponent dslParentComponent) throws ImportException {
 
 		printMessageOnOut("\n\n\nParsing Interfaces for  " + dslParentComponent.getType() + "\n");
 		
@@ -1145,8 +1146,9 @@ public class ImportOSSFileAction {
 
 	/** Navigates the component and processes its refinements.
 	 * @param dslParentComponent the element in the tree
+	 * @throws ImportException 
 	 */
-	private void parseComponentRefinements(AbstractComponent dslParentComponent) {
+	private void parseComponentRefinements(AbstractComponent dslParentComponent) throws ImportException {
 
 		printMessageOnOut("\n\n\nParsing Refinements for " + dslParentComponent.getType() + "\n");
 
@@ -1161,7 +1163,7 @@ public class ImportOSSFileAction {
 	 * Main method to be invoked to parse an OSS file.
 	 * @throws Exception
 	 */
-	public void startParsing(Package pkg, File ossFile) throws Exception {	
+	public void startParsing(Package pkg, File ossFile) throws Exception, ImportException, IOException {	
 		OSS ocraOssFile;
 		sysView = pkg;	// Set the given package as working package
 
@@ -1191,8 +1193,7 @@ public class ImportOSSFileAction {
 		
 		if (dslSystemComponent == null) {
 			System.err.println("Import Error: System component is missing");
-			Utils.showMessage(DIALOG_TITLE, "System component is missing");
-			return;
+			throw new ImportException("System component is missing");
 		}
 
 		// If the OCRA system component type is not defined, set it to 'System'
@@ -1202,6 +1203,7 @@ public class ImportOSSFileAction {
 		printMessageOnOut("dslSystemComponent.type = " + dslSystemComponentName);
 
 		dslTypeToComponent = new HashMap<String, Class>();
+
 		
 		// Start a transaction to modify the package content 
 		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(pkg);
@@ -1229,24 +1231,35 @@ public class ImportOSSFileAction {
 				// Now I have created all the Blocks in the package, loop on them, but not getting them from 
 				// the package (it may be polluted with other blocks), but from the OSS model again.
 
-				// Parse the system component
-				parseComponentInterfaces(dslSystemComponent);
-
-				// Parse all the other components 
-				for (Component dslComponent : ocraOssFile.getComponents()) {
-					parseComponentInterfaces(dslComponent);
-				}
-
-				// Parse the system component
-				parseComponentRefinements(dslSystemComponent);
-
-				// Parse all the other components 
-				for (Component dslComponent : ocraOssFile.getComponents()) {
-					parseComponentRefinements(dslComponent);
+				try {
+				
+					// Parse the system component
+					parseComponentInterfaces(dslSystemComponent);
+	
+					// Parse all the other components 
+					for (Component dslComponent : ocraOssFile.getComponents()) {
+						parseComponentInterfaces(dslComponent);
+					}
+	
+					// Parse the system component
+					parseComponentRefinements(dslSystemComponent);
+	
+					// Parse all the other components 
+					for (Component dslComponent : ocraOssFile.getComponents()) {
+						parseComponentRefinements(dslComponent);
+					}
+				} catch (ImportException e) {
+					importException = e;
+					return;
 				}
 				
 				printMessageOnOut("Total time = " + (System.currentTimeMillis() - startTime));
 			}
 		});
+		
+		// Propagate the exception, if any
+		if (importException != null) {
+			throw importException;
+		}
 	}
 }

@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.edit.ui.action.ValidateAction.EclipseResourcesUtil;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -30,7 +31,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.polarsys.chess.OSSImporter.actions.ImportOSSFileAction;
-import org.polarsys.chess.OSSImporter.utils.Utils;
 import org.polarsys.chess.service.utils.SelectionUtil;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.xtext.resource.XtextResource;
@@ -53,11 +53,23 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 	private OCRARuntimeErrorsDialogUtil ocraRuntimeErrorsDialogUtil = OCRARuntimeErrorsDialogUtil.getInstance();
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	
+	/**
+	 * Constructor.
+	 */
 	public AddOSSFileCommand() {
 		super("Add content from OSS file");
 	}
 	
-	public String[] showOSSRuntimeErrors(Resource resource, File file, boolean showNoErrorPopup, IProgressMonitor monitor) throws NoResourceException {
+	/**
+	 * Utility dialog to display a message on screen.
+	 * @param title the title of the dialog
+	 * @param message the text to display
+	 */
+	private void showMessage(String title, String message) {
+		MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),title, message);
+	}
+	
+	private String[] showOSSRuntimeErrors(Resource resource, File file, boolean showNoErrorPopup, IProgressMonitor monitor) throws NoResourceException {
 		if (resource != null) {
 			if (file != null) {
 				if (file.exists()) {
@@ -163,7 +175,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 			ossFile = new File(result);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			Utils.showMessage(DIALOG_TITLE, "File not valid!");
+			showMessage(DIALOG_TITLE, "File not valid!");
 		}
 		return ossFile;
 	}
@@ -202,7 +214,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 		if (objectIsSystemViewPackage(umlObject)) {
 			ossFile = getOSSFile();
 
-			String[] errors = showRuntimeErrors(modelResource, ossFile, showNoErrorPopup, monitor);
+			final String[] errors = showRuntimeErrors(modelResource, ossFile, showNoErrorPopup, monitor);
 			
 			monitor.beginTask("Importing elements from OSS file", 1);
 
@@ -211,17 +223,20 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 			if (errors == null && sampleView != null) {
 				IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				activePage.setEditorAreaVisible(false);
-				sampleView.startParsing((Package) umlObject, ossFile);	
+				try {
+					sampleView.startParsing((Package) umlObject, ossFile);
+				} catch (Exception e) {
+					showMessage(DIALOG_TITLE, e.getMessage());
+					monitor.done();
+					return;
+				}
 				activePage.setEditorAreaVisible(true);
+				showMessage(DIALOG_TITLE, "Import done!");
 			}
-			
 			monitor.done();
-
-			Utils.showMessage(DIALOG_TITLE, "Import done!");
-			
 			return;
 		}
-		Utils.showMessage(DIALOG_TITLE, "Please select a package from <<SystemView>>");
+		showMessage(DIALOG_TITLE, "Please select a package from <<SystemView>>");
 	}
 
 	@Override

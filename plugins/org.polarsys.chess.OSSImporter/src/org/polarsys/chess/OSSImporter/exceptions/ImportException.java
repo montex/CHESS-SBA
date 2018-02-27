@@ -8,19 +8,25 @@
  * Contributors:
  *     Luca Cristoforetti - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.OSSImporter.utils;
+package org.polarsys.chess.OSSImporter.exceptions;
 
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.PlatformUI;
-
-public class Utils {
+/**
+ * An exception that could arise during the import.
+ * @author cristofo
+ *
+ */
+public class ImportException extends Exception {
 
 	/**
-	 * Utility dialog to display a message on screen
-	 * @param title the title of the dialog
-	 * @param message the text to display
+	 * 
 	 */
-	public static void showMessage(String title, String message) {
-		MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),title, message);
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Constructor 
+	 * @param message the message that defines the exception
+	 */
+	public ImportException(String message) {
+		super(message);
 	}
 }
