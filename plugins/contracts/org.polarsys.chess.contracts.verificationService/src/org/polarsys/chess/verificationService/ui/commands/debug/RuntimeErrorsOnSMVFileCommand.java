@@ -15,15 +15,15 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
-import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.ui.services.OCRARuntimeErrorService;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractAsyncJobCommand;
+import eu.fbk.eclipse.standardtools.xtextService.ui.services.RuntimeErrorService;
 
-public class RuntimeErrorsOnFileCommand extends AbstractAsyncJobCommand {
+public class RuntimeErrorsOnSMVFileCommand extends AbstractAsyncJobCommand {
 
 	private SelectionUtil chessSelectionUtil = SelectionUtil.getInstance();
-	private OCRARuntimeErrorService ocraRuntimeErrorService = OCRARuntimeErrorService.getInstance();
+	private RuntimeErrorService runtimeErrorService = RuntimeErrorService.getInstance();
 
-	public RuntimeErrorsOnFileCommand() {
+	public RuntimeErrorsOnSMVFileCommand() {
 		super("Show Runtime Errors");
 	}
 
@@ -31,9 +31,10 @@ public class RuntimeErrorsOnFileCommand extends AbstractAsyncJobCommand {
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
 		boolean showNoErrorPopup = true;
-
+		boolean usexTextValidation = true;
+		
 		Resource modelResource = chessSelectionUtil.getSelectedModelResource();
-		ocraRuntimeErrorService.showRuntimeErrors(modelResource, showNoErrorPopup, monitor);
+		runtimeErrorService.showSMVRuntimeErrors(modelResource, usexTextValidation,showNoErrorPopup, monitor);
 	}
 
 }

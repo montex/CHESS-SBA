@@ -41,6 +41,7 @@ public class CheckValidationPropertyCommand extends AbstractJobCommand {
 	private Resource umlSelectedResource;
 	private boolean isDiscreteTime;
 	private boolean showPopups;
+	private boolean usexTextValidation;
 	private String ossFilepath;
 	private String resultFilePath;
 
@@ -50,6 +51,7 @@ public class CheckValidationPropertyCommand extends AbstractJobCommand {
 		umlSelectedResource = umlSelectedComponent.eResource();
 		isDiscreteTime = MessageTimeModelDialog.openQuestion();
 		showPopups = false;
+		usexTextValidation=true;
 		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 		resultFilePath = ocraDirectoryUtil.getCommandCheckPropertyResultPath(umlSelectedComponent.getName());
 
@@ -58,7 +60,7 @@ public class CheckValidationPropertyCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
-		ocraExecService.executeValidationProperty(umlSelectedComponent, umlSelectedResource, isDiscreteTime, showPopups,
+		ocraExecService.executeValidationProperty(umlSelectedComponent, umlSelectedResource, isDiscreteTime, usexTextValidation,showPopups,
 				ossFilepath, resultFilePath, monitor);
 
 	}

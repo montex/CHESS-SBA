@@ -52,6 +52,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 	private boolean isProgrExec;
 	private Class umlSelectedComponent;
 	private boolean showPopups;
+	private boolean usexTextValidation;
 	private String smvFileDirectory;
 	private boolean isDiscreteTime;
 	private String monolithicSMVFilePath;
@@ -96,6 +97,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 
 		umlSelectedResource = umlSelectedComponent.eResource();
 		showPopups = false;
+		usexTextValidation=true;
 
 	}
 
@@ -117,7 +119,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 					showPopups, smvFileDirectory, monitor);
 			logger.debug("createMonolithicSMV");
 			ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
-					isDiscreteTime, showPopups, smvMapFilepath, monolithicSMVFilePath, isProgrExec,monitor);
+					isDiscreteTime, usexTextValidation,showPopups, smvMapFilepath, monolithicSMVFilePath, isProgrExec,monitor);
 
 			generatedSmvFilePath = monolithicSMVFilePath;
 			logger.debug("createMonolithicSMV done");

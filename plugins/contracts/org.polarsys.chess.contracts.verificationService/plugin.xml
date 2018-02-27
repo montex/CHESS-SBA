@@ -105,6 +105,10 @@
                            commandId="org.polarsys.chess.verificationService.commands.debug.RuntimeErrorsOnFileCommand"
                            style="push">
                      </command>
+                     <command
+                           commandId="org.polarsys.chess.verificationService.ui.commands.debug.RuntimeErrorsOnSMVFileCommand"
+                           style="push">
+                     </command>
                   </menu>
                   <command
                         commandId="org.polarsys.chess.verificationService.commands.ExportModelToFileCommand"
@@ -149,11 +153,11 @@
                         style="push">
                   </command>
                   <command
-                        commandId="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
+                        commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
                         style="push">
                   </command>
                   <command
-                        commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
+                        commandId="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
                         style="push">
                   </command>
                   <command
@@ -193,7 +197,7 @@
             name="Check Contract Refinement on selected component">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.RuntimeErrorsOnFileCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.RuntimeErrorsOnOSSFileCommand"
             id="org.polarsys.chess.verificationService.commands.debug.RuntimeErrorsOnFileCommand"
             name="Check Grammar on .oss file">
       </command>
@@ -294,6 +298,11 @@
             defaultHandler="org.polarsys.chess.verificationService.ui.commands.CompositeContractImplementationCommand"
             id="org.polarsys.chess.verificationService.commands.CompositeContractImplementationCommand"
             name="Check Composite Contract Implementation on selected component">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.RuntimeErrorsOnSMVFileCommand"
+            id="org.polarsys.chess.verificationService.ui.commands.debug.RuntimeErrorsOnSMVFileCommand"
+            name="Check Grammar on .smv file">
       </command>
    </extension> 
 </plugin>

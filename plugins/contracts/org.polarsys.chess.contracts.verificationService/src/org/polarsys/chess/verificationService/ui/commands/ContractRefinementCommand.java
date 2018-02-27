@@ -37,6 +37,7 @@ public class ContractRefinementCommand extends AbstractJobCommand {
 	private Resource umlSelectedResource;
 	private boolean isDiscreteTime;
 	private boolean showPopups;
+	private boolean usexTextValidation;
 	private String ossFilepath;
 	private String resultFilePath;
 
@@ -46,6 +47,7 @@ public class ContractRefinementCommand extends AbstractJobCommand {
 		umlSelectedResource = umlSelectedComponent.eResource();
 		isDiscreteTime = MessageTimeModelDialog.openQuestion();
 		showPopups = false;
+		usexTextValidation=true;
 		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 		resultFilePath = ocraDirectoryUtil.getCommandCheckRefinementResultPath(umlSelectedComponent.getName());
 	}
@@ -53,7 +55,7 @@ public class ContractRefinementCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		ocraExecService.executeCheckContractRefinement(umlSelectedComponent, umlSelectedResource, isDiscreteTime,
-				showPopups, ossFilepath, resultFilePath, monitor);
+				usexTextValidation,showPopups, ossFilepath, resultFilePath, monitor);
 	}
 
 }

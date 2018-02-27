@@ -46,6 +46,7 @@ public class ExportModelToFileCommand extends AbstractJobCommand {
 	private boolean isDiscreteTime;
 	private String ossFilepath;
 	private boolean showPopups;
+	private boolean usexTextValidation;
 	private Class umlSelectedComponent;
 
 	@Override
@@ -55,13 +56,14 @@ public class ExportModelToFileCommand extends AbstractJobCommand {
 		isDiscreteTime = MessageTimeModelDialog.openQuestion();
 		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 		showPopups = true;
+		usexTextValidation=true;
 	}
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
 		ocraTranslatorService.exportModelToOssFile(umlSelectedComponent, umlSelectedResource, isDiscreteTime,
-				showPopups, ossFilepath, monitor);
+				usexTextValidation,showPopups, ossFilepath, monitor);
 
 	}
 

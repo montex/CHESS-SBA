@@ -43,6 +43,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 	private Resource umlSelectedResource;
 	private boolean isDiscreteTime;
 	private boolean showPopups;
+	private boolean usexTextValidation;
 	private String ossFilepath;
 	private String smvFileDirectory;
 	private String resultFilePath;
@@ -53,6 +54,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 		umlSelectedResource = umlSelectedComponent.eResource();
 		isDiscreteTime = MessageTimeModelDialog.openQuestion();
 		showPopups = false;
+		usexTextValidation=true;
 		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 		smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
 		resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath(umlSelectedComponent.getName());
@@ -64,7 +66,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 		String smvOutputPath = smvExportService.exportSingleSmv(umlSelectedComponent, showPopups, smvFileDirectory,
 				monitor);
 		ocraExecService.executeCheckContractImplementation(umlSelectedComponent, umlSelectedResource, smvOutputPath,
-				isDiscreteTime, showPopups, ossFilepath, resultFilePath, monitor);
+				isDiscreteTime, usexTextValidation,showPopups, ossFilepath, resultFilePath, monitor);
 
 	}
 
