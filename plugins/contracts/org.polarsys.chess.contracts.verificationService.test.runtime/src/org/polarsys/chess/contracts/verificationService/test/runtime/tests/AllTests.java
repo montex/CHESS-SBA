@@ -17,11 +17,11 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	//TestCommands.class,	
-	TestApplyRecursively.class, 
-	TestApplyCHESSStereotype.class, 
-	TestCreateViews.class,
-	TestModelChecking.class 
+	//TestApplyRecursively.class, 
+	//TestApplyCHESSStereotype.class, 
+	//TestCreateViews.class,
+	//TestModelChecking.class
+	TestExportCHESSModelAsOssFile.class
 	})
 public class AllTests {
 }
