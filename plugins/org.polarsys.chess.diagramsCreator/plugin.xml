@@ -11,25 +11,7 @@
                id="org.eclipse.ui.main.diagramEditorMenu.CHESS.basicOperations"
                label="Basic Operations">
             <command
-                  commandId="org.polarsys.chess.OSSImporter.commands.AddOSSFile"
-                  label="Import &lt;&lt;SystemView&gt;&gt; components from .oss file"
-                  style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <iterate
-                        ifEmpty="false"
-                        operator="and">
-                     <adapt
-                           type="org.eclipse.emf.ecore.EObject">
-                        <instanceof
-                              value="org.eclipse.uml2.uml.Package">
-                        </instanceof>
-                     </adapt>
-                  </iterate>
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="org.polarsys.chess.OSSImporter.commands.createIBD"
+                  commandId="org.polarsys.chess.diagramsCreator.commands.createIBD"
                   label="Create the IBD diagram for the selected component"
                   style="push">
                <visibleWhen
@@ -47,7 +29,7 @@
                </visibleWhen>
             </command>
             <command
-                  commandId="org.polarsys.chess.OSSImporter.commands.createAllIBDs"
+                  commandId="org.polarsys.chess.diagramsCreator.commands.createAllIBDs"
                   label="Create the IBD diagrams for all the package components"
                   style="push">
                <visibleWhen
@@ -65,9 +47,22 @@
                </visibleWhen>
             </command>
             <command
-                  commandId="org.polarsys.chess.OSSImporter.commands.createBDD"
-                  label="Create the BDD"
+                  commandId="org.polarsys.chess.diagramsCreator.commands.createBDD"
+                  label="Create the BDD diagram for the selected package"
                   style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.emf.ecore.EObject">
+                        <instanceof
+                              value="org.eclipse.uml2.uml.Package">
+                        </instanceof>
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
             </command>
          </menu>
       </menuContribution>
@@ -75,23 +70,18 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.polarsys.chess.OSSImporter.commands.AddOSSFileCommand"
-            id="org.polarsys.chess.OSSImporter.commands.AddOSSFile"
-            name="Add System View components from .oss file">
-      </command>
-      <command
-            defaultHandler="org.polarsys.chess.OSSImporter.commands.CreateIBDSingleCommand"
-            id="org.polarsys.chess.OSSImporter.commands.createIBD"
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateIBDSingleCommand"
+            id="org.polarsys.chess.diagramsCreator.commands.createIBD"
             name="Create the IBD diagram for the selected component">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.OSSImporter.commands.CreateIBDMultipleCommand"
-            id="org.polarsys.chess.OSSImporter.commands.createAllIBDs"
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateIBDMultipleCommand"
+            id="org.polarsys.chess.diagramsCreator.commands.createAllIBDs"
             name="Create the IBD diagrams for all the components">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.OSSImporter.commands.CreateBDDCommand"
-            id="org.polarsys.chess.OSSImporter.commands.createBDD"
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateBDDCommand"
+            id="org.polarsys.chess.diagramsCreator.commands.createBDD"
             name="Create the BDD">
       </command>
    </extension>

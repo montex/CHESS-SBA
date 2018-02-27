@@ -8,7 +8,7 @@
  * Contributors:
  *     Luca Cristoforetti - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.OSSImporter.commands;
+package org.polarsys.chess.diagramsCreator.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -19,10 +19,10 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
-import org.polarsys.chess.OSSImporter.actions.ShowIBDElementsAction;
-import org.polarsys.chess.OSSImporter.utils.Utils;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
+import org.polarsys.chess.diagramsCreator.actions.ShowIBDElementsAction;
+import org.polarsys.chess.diagramsCreator.utils.Utils;
 import org.polarsys.chess.service.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;

@@ -8,7 +8,7 @@
  * Contributors:
  *     Luca Cristoforetti - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.OSSImporter.utils;
+package org.polarsys.chess.diagramsCreator.utils;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.MessageDialog;

@@ -8,7 +8,7 @@
  * Contributors:
  *     Luca Cristoforetti - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.OSSImporter.commands;
+package org.polarsys.chess.diagramsCreator.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -16,8 +16,8 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Class;
-import org.polarsys.chess.OSSImporter.actions.ShowIBDElementsAction;
-import org.polarsys.chess.OSSImporter.utils.Utils;
+import org.polarsys.chess.diagramsCreator.actions.ShowIBDElementsAction;
+import org.polarsys.chess.diagramsCreator.utils.Utils;
 import org.polarsys.chess.service.utils.SelectionUtil;
 import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 

@@ -8,7 +8,7 @@
  * Contributors:
  *     Luca Cristoforetti - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.OSSImporter.actions;
+package org.polarsys.chess.diagramsCreator.actions;
 
 import java.util.ArrayList;
 import java.util.List;

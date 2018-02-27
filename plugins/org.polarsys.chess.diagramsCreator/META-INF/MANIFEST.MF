@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.polarsys.chess.OSSImporter
-Bundle-SymbolicName: org.polarsys.chess.OSSImporter;singleton:=true
+Bundle-Name: org.polarsys.chess.diagramsCreator
+Bundle-SymbolicName: org.polarsys.chess.diagramsCreator;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: eu.fbk.eclipse.standardtools.ModelTranslatorToOcra;bundle-version="1.0.0",
  org.eclipse.xtext,
