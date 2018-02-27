@@ -104,7 +104,8 @@ public class EntityUtil {
 	// "PrimitiveTypes::UnlimitedNatural";
 
 	private static EntityUtil entityUtil;
-	//private static ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+	// private static ContractEntityUtil contractEntityUtil =
+	// ContractEntityUtil.getInstance();
 
 	public static EntityUtil getInstance() {
 		if (entityUtil == null) {
@@ -145,6 +146,11 @@ public class EntityUtil {
 	public EObject getElement(String projectName, String fileModelPath, String elementID) throws Exception {
 
 		Model model = loadModel(projectName, fileModelPath);
+		return getElement(model, elementID);
+
+	}
+
+	public EObject getElement(Model model, String elementID) throws Exception {
 
 		if (model != null) {
 			/*
@@ -167,13 +173,13 @@ public class EntityUtil {
 
 		if (model != null) {
 			EObject umlElement = model.eResource().getEObject(elementID.trim());
-			return ((Class)umlElement).getName();
+			return ((Class) umlElement).getName();
 		}
 
 		return null;
 
 	}
-	
+
 	public Object getSubComponent(Object constraint, String componentName) {
 		Element element = ((Constraint) constraint).getOwner();
 
@@ -204,8 +210,7 @@ public class EntityUtil {
 
 	public String getComponentID(Object umlComponent) {
 
-		if (
-		(isBlock((Element) umlComponent))) {
+		if ((isBlock((Element) umlComponent))) {
 			return ((Class) umlComponent).getName();
 		}
 
@@ -222,8 +227,7 @@ public class EntityUtil {
 
 	public String getComponentName(Object umlComponent) {
 
-		if (
-		(isBlock((Element) umlComponent))) {
+		if ((isBlock((Element) umlComponent))) {
 			return ((Class) umlComponent).getName();
 		}
 
@@ -436,27 +440,28 @@ public class EntityUtil {
 		if (!(umlProperty instanceof Property)) {
 			return false;
 		}
-		
-		Property property = (Property)umlProperty;
-		
-		if (property.getAssociation() ==null) {
+
+		Property property = (Property) umlProperty;
+
+		if (property.getAssociation() == null) {
 			return false;
 		}
-		
-		//if (contractEntityUtil.isContractProperty(property)) {
-		//	return false;
-		//}
-		
+
+		// if (contractEntityUtil.isContractProperty(property)) {
+		// return false;
+		// }
+
 		Element owner = (getOwner(umlProperty));
 		Association association = property.getAssociation();
 		int associationEndsSize = association.getEndTypes().size();
 		boolean End1TypeIsOwner = association.getEndTypes().get(0).equals(owner);
 		boolean End2TypeIsOwner = association.getEndTypes().get(1).equals(owner);
-		
-		return(associationEndsSize==2)&&((End1TypeIsOwner)|(End2TypeIsOwner));
-		
-		//Type umlPropertyType = ((Property) umlProperty).getType();
-		//return (isBlock(umlPropertyType) || isComponentImplementation(umlPropertyType));
+
+		return (associationEndsSize == 2) && ((End1TypeIsOwner) | (End2TypeIsOwner));
+
+		// Type umlPropertyType = ((Property) umlProperty).getType();
+		// return (isBlock(umlPropertyType) ||
+		// isComponentImplementation(umlPropertyType));
 	}
 
 	public boolean isBooleanAttribute(Property umlProperty) {
@@ -499,8 +504,6 @@ public class EntityUtil {
 		}
 		return false;
 	}
-
-	
 
 	public boolean isDoubleAttribute(Property umlProperty) {
 		if (umlProperty.getType() != null) {
@@ -620,7 +623,7 @@ public class EntityUtil {
 		}
 
 		return toArray(portsNames);
-		}
+	}
 
 	public EList<String> getPortsName(EList<Port> ports) {
 		EList<String> portsNames = new BasicEList<String>();
