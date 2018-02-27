@@ -22,6 +22,11 @@ Require-Bundle: eu.fbk.eclipse.standardtools.utils,
  org.polarsys.chess.contracts.profile,
  org.polarsys.chess.service,
  org.polarsys.chess.contracts.verificationService,
- eu.fbk.eclipse.standardtools.nuXmvService
+ eu.fbk.eclipse.standardtools.nuXmvService,
+ eu.fbk.eclipse.standardtools.ModelTranslatorToOcra,
+ eu.fbk.tools.editor.oss,
+ eu.fbk.eclipse.standardtools.xtextService,
+ org.eclipse.xtext,
+ eu.fbk.tools.adapter.core
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j
