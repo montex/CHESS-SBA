@@ -280,7 +280,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 * getConnectionSource(java.lang.Object)
 	 */
 	@Override
-	public Object getConnectionSource(Object connection) {
+	public Object getConnectionSource(Object connection) throws Exception {
 
 		ConnectorEnd source = ((Connector) connection).getEnds().get(0);
 		ConnectorEnd target = ((Connector) connection).getEnds().get(1);
@@ -290,9 +290,24 @@ if (entityUtil.isBlock((Element) component)) {
 		Element sourcePort = source.getRole();
 		Element targetPort = target.getRole();
 
-		int sourceDir = entityUtil.getPortDirection(sourcePort);
-		int targetDir = entityUtil.getPortDirection(targetPort);
+		if(sourcePort == null){
+			throw new Exception("The connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have a source port");
+		}
+		
+		if(targetPort == null){
+			throw new Exception("The connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have a target port");
+		}
+		
+		Integer sourceDir = entityUtil.getPortDirection(sourcePort);
+		Integer targetDir = entityUtil.getPortDirection(targetPort);
 
+		if(sourceDir == null){
+			throw new Exception("The source port of the connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have assiociated a port");
+		}
+		
+		if(targetDir == null){
+			throw new Exception("The target port of the connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have assiociated a port");
+			}
 		
 		if ((sourceOwner == null) && (sourceDir == FlowDirection.IN_VALUE)) {
 			return source;
@@ -319,7 +334,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 * getConnectionTarget(java.lang.Object)
 	 */
 	@Override
-	public Object getConnectionTarget(Object connection) {
+	public Object getConnectionTarget(Object connection) throws Exception {
 
 		ConnectorEnd source = ((Connector) connection).getEnds().get(0);
 		ConnectorEnd target = ((Connector) connection).getEnds().get(1);
@@ -330,9 +345,26 @@ if (entityUtil.isBlock((Element) component)) {
 		Element sourcePort = source.getRole();
 		Element targetPort = target.getRole();
 
-		int sourceDir = entityUtil.getPortDirection(sourcePort);
-		int targetDir = entityUtil.getPortDirection(targetPort);
+		if(sourcePort == null){
+			throw new Exception("The connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have a source port");
+		}
+		
+		if(targetPort == null){
+			throw new Exception("The connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have a target port");
+		}
+		
+		Integer sourceDir = entityUtil.getPortDirection(sourcePort);
+		Integer targetDir = entityUtil.getPortDirection(targetPort);
 
+		if(sourceDir == null){
+			throw new Exception("The source port of the connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have assiociated a port");
+		}
+		
+		if(targetDir == null){
+			throw new Exception("The target port of the connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have assiociated a port");
+			}
+		
+		
 	
 		if ((sourceOwner == null) && (sourceDir == FlowDirection.OUT_VALUE)) {
 			return source;
@@ -430,8 +462,13 @@ if (entityUtil.isBlock((Element) component)) {
 		} else if (
 		// entityUtil.isSystem((Element) component)||
 		(entityUtil.isBlock((Element) component))) {
-			return contractEntityUtil.getContractProperty(contractEntityUtil
-					.getUmlContractPropertyOfUmlComponentFromContractPropertyType((Class) component, contractName));
+			System.out.println("1 component: "+component);
+			System.out.println("1 contractName: "+contractName);
+			Property property = contractEntityUtil
+			.getUmlContractPropertyOfUmlComponentFromContractPropertyType((Class) component, contractName);
+			if(property!=null){
+			return contractEntityUtil.getContractProperty(property);
+			}
 		}
 		return null;
 	}

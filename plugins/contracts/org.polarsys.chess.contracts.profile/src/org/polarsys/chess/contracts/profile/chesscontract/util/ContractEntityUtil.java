@@ -57,11 +57,17 @@ public class ContractEntityUtil {
 		Class umlContract = (Class) baseProperty.getType();
 
 		if (umlContract == null) {
-			throw new Exception("The contract instance " + basePropertyName + " of "
-					+ ((Class) entityUtil.getOwner(baseProperty)).getName() + " does not have a contract.");
+			throw new Exception("The contract instance '" + basePropertyName + "' of '"
+					+ ((Class) entityUtil.getOwner(baseProperty)).getName() + "' does not have a contract.");
 		}
 
 		String contractName = umlContract.getName();
+		
+		if(contractName.contains(" ")){
+			throw new Exception("The name of the contract '" + contractName + "' of '"
+					+ ((Class) entityUtil.getOwner(baseProperty)).getName() + "' has empty spaces. Please remove them from the name.");
+		}
+		
 		String assume = getAssumeStrFromUmlContract(umlContract);
 		String guarantee = getGuaranteeStrFromUmlContract(umlContract);
 

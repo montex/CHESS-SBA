@@ -334,8 +334,10 @@ public class EntityUtil {
 	}
 
 	private Set<Port> getUmlPortsFromClass(Class umlComponent, int portDirection) {
+		System.out.println(umlComponent);
 		Set<Port> ports = new HashSet<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
+			System.out.println(umlPort);
 			FlowPort fp = getFlowPort(umlPort);
 			if (fp.getDirection().getValue() == portDirection) {
 				ports.add(umlPort);
