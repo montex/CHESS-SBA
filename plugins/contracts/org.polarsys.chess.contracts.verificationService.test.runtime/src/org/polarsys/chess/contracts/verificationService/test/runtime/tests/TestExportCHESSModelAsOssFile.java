@@ -18,8 +18,7 @@ import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.apache.commons.lang3.tuple.Pair;
-import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.modelTranslators.ToolToOCRAModelTranslator;
-import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.utils.OCRAModelUtil;
+import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSTranslatorServiceAPI;
 import eu.fbk.eclipse.standardtools.xtextService.core.utils.XTextResourceUtil;
 import eu.fbk.eclipse.standardtools.xtextService.core.utils.XTextValidation;
 import eu.fbk.tools.adapter.ocra.CheckContractRefinement;
@@ -29,12 +28,8 @@ import eu.fbk.tools.adapter.ocra.OcraRunner;
 public class TestExportCHESSModelAsOssFile {
 
 	private EntityUtil entityUtil = EntityUtil.getInstance();
-	// private OCRATranslatorService ocraTranslatorService =
-	// OCRATranslatorService.getInstance(ChessSystemModel.getInstance());
-	private ToolToOCRAModelTranslator toolToOCRAModelTranslator = ToolToOCRAModelTranslator
+	private OSSTranslatorServiceAPI ossTranslatorServiceAPI = OSSTranslatorServiceAPI
 			.getInstance(ChessSystemModel.getInstance());
-	private OCRAModelUtil ocraModelUtil = OCRAModelUtil.getInstance();
-	// private XtextErrorUtil xTextErrorUtil = XtextErrorUtil.getInstance();
 	private XTextResourceUtil xTextResourceUtil = XTextResourceUtil.getInstance();
 	private XTextValidation xtextValidation = XTextValidation.getInstance();
 	private static final Logger logger = Logger.getLogger(TestModelChecking.class);
@@ -52,7 +47,7 @@ private final int timeout = 1000*60*5;
 	Resource componentResource;
 
 	@Before
-	public void loadModel() throws Exception {
+	public void setTestParameters() throws Exception {
 		Model model = entityUtil.loadModel(projectName, modelName);
 		String elementURI = entityUtil.getSystemElementURIFragment(model);
 		umlSelectedComponent = entityUtil.getElement(model, elementURI);
@@ -61,16 +56,16 @@ private final int timeout = 1000*60*5;
 	}
 
 	@Test
-	public void testExportCHESSModelAsOssFile() throws Exception {
+	public void testCheckContractRefinementOfCHESSComponent() throws Exception {
 
 		System.out.println("Workspace: "+workspace);
 		
 		IProgressMonitor monitor = new NullProgressMonitor();
 
-		Object ocraModel = toolToOCRAModelTranslator.exportRootComponentAsOssModel(umlSelectedComponent,
+		Object ocraModel = ossTranslatorServiceAPI.exportRootComponentToOssModel(umlSelectedComponent,
 				temp_variable_is_discrete, monitor);
-		String fileName = toolToOCRAModelTranslator.getFileName(umlSelectedComponent);
-		File ossFile = ocraModelUtil.generateOssFileFromOssModel(resultFilePath, fileName, ocraModel, monitor);
+		String fileName = ossTranslatorServiceAPI.getFileName(umlSelectedComponent);
+		File ossFile = ossTranslatorServiceAPI.exportOSSModelToOSSFile(ocraModel,fileName,resultFilePath);
 		
 		XtextResource xTextResource = xTextResourceUtil.createOSSResourceFromFile(ossFile.getPath());
 		List<Issue> issues = xtextValidation.xTextValidation(xTextResource);
