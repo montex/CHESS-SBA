@@ -19,7 +19,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.uml2.uml.Class;
 
-import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.ui.services.OCRATranslatorService;
+import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.ui.services.OSSTranslatorServiceUI;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
@@ -34,7 +34,7 @@ import org.polarsys.chess.service.gui.utils.SelectionUtil;
 public class ExportModelToFileCommand extends AbstractJobCommand {
 
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
-	private OCRATranslatorService ocraTranslatorService = OCRATranslatorService
+	private OSSTranslatorServiceUI ocraTranslatorService = OSSTranslatorServiceUI
 			.getInstance(ChessSystemModel.getInstance());
 	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
 
@@ -62,7 +62,7 @@ public class ExportModelToFileCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
-		ocraTranslatorService.exportModelToOssFile(umlSelectedComponent, umlSelectedResource, isDiscreteTime,
+		ocraTranslatorService.exportRootComponentToOssFile(umlSelectedComponent, umlSelectedResource, isDiscreteTime,
 				usexTextValidation,showPopups, ossFilepath, monitor);
 
 	}

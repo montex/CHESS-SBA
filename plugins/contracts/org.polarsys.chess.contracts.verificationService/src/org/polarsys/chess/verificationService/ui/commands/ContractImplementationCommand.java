@@ -23,7 +23,7 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
 
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
-import org.polarsys.chess.smvExporter.ui.services.SmvExportService;
+import org.polarsys.chess.smvExporter.ui.services.SmvExportServiceUI;
 
 public class ContractImplementationCommand extends AbstractJobCommand {
 
@@ -31,7 +31,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	// private OCRADirectoryUtil ocraDirectoryUtil =
 	// OCRADirectoryUtil.getInstance();
-	private SmvExportService smvExportService = SmvExportService.getInstance();
+	private SmvExportServiceUI smvExportService = SmvExportServiceUI.getInstance();
 	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
 	private NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 

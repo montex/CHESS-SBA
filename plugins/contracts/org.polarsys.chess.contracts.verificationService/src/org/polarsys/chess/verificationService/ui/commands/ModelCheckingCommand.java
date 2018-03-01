@@ -20,7 +20,7 @@ import org.eclipse.uml2.uml.Class;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
-import org.polarsys.chess.smvExporter.ui.services.SmvExportService;
+import org.polarsys.chess.smvExporter.ui.services.SmvExportServiceUI;
 
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService;
 import eu.fbk.eclipse.standardtools.nuXmvService.ui.services.NuXmvExecService;
@@ -38,7 +38,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 	private static final Logger logger = Logger.getLogger(ModelCheckingCommand.class);
 
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
-	private SmvExportService smvExportService = SmvExportService.getInstance();
+	private SmvExportServiceUI smvExportService = SmvExportServiceUI.getInstance();
 	private NuXmvExecService nuXmvExecService = NuXmvExecService.getInstance();
 	private static NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
