@@ -92,20 +92,20 @@
       <command
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateBDDCommand"
             id="org.polarsys.chess.diagramsCreator.commands.createBDD"
-            name="Create the BDD">
+            name="Create the BDD diagram">
       </command>
       <command
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.BothCommand"
-            id="org.polarsys.chess.diagramsCreator.command2"
-            name="both">
+            id="org.polarsys.chess.diagramsCreator.commands.createBDDHandler"
+            name="Create the BDD diagram handler">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.diagramsCreator.commands.SingleIBDHandler"
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateSingleIBDHandler"
             id="org.polarsys.chess.diagramsCreator.createIBDHandler"
             name="Create the IBD diagram handler">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.diagramsCreator.commands.MultipleIBDHandler"
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateMultipleIBDHandler"
             id="org.polarsys.chess.diagramsCreator.commands.createAllIBDsHandler"
             name="Create the IBD diagrams handler">
       </command>
