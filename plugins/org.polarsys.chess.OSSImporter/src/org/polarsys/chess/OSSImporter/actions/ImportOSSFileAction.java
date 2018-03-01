@@ -130,6 +130,7 @@ public class ImportOSSFileAction {
 //	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
 //	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
 	 
+	//TODO use instead method in xText plugin
 	final Injector injector = new OssStandaloneSetup().createInjector();
 	private final ISerializer serializer = injector.getInstance(ISerializer.class);
 	private Package sysView = null;
@@ -180,7 +181,9 @@ public class ImportOSSFileAction {
 	 * @return the OSS object 
 	 * @throws Exception
 	 */
+	//TODO try to reuse existing methods instead
 	private OSS getOssModel(File ossFile) throws Exception, IOException {
+		//FIXME USE EXISTING METHOD//
 		String ossDefinition = FileSystemUtil.getFileContent(ossFile);
 		final ParseHelper<?> parseHelper = injector.getInstance(ParseHelper.class);
 		OSS result = (OSS) parseHelper.parse(ossDefinition);
@@ -236,6 +239,7 @@ public class ImportOSSFileAction {
 		return association;
 	}
  	
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
 	/** 
 	 * Creates and adds a Contract Property to the model.
 	 * @param owner the parent Class
@@ -346,6 +350,7 @@ public class ImportOSSFileAction {
 		return (DataType) owner.getNestedClassifier(refinementName);
 	}
 
+	//TODO move to entityutils class
 	/**
 	 * Returns the component instance with the given name.
 	 * @param owner the class owning the instance
@@ -396,6 +401,7 @@ public class ImportOSSFileAction {
 			printMessageOnOut("\n\n Creating contract refinement " + refinementName + " for owner " + owner.getName());
 			printMessageOnOut("\n\n");
 	
+			//TODO create a new class e.g. CHESSElementsUtil and move this method there
 			DataType newUmlDataType = UMLFactory.eINSTANCE.createDataType();
 			Classifier newClass = owner.createNestedClassifier(refinementName, newUmlDataType.eClass());
 			Stereotype stereotype = UMLUtils.applyStereotype(newClass, CONTRACT_REFINEMENT);
@@ -676,6 +682,7 @@ public class ImportOSSFileAction {
 		return null;
 	}
 
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
 	/**
 	 * Creates a Signal type in the given package.
 	 * @param pkg the package where to create the Enumeration 
@@ -774,6 +781,7 @@ public class ImportOSSFileAction {
 //			return null;	// Create the port anyway, without type
 		}
 		
+		//TODO create a new class e.g. CHESSElementsUtil and move this method there
 		org.eclipse.uml2.uml.Port umlPort = UMLFactory.eINSTANCE.createPort();
 		umlPort.setName(portName);
 		umlPort.setType(portType);
@@ -794,6 +802,7 @@ public class ImportOSSFileAction {
 		return umlPort;
 	}
 	
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
 	/** 
 	 * Creates a System Block element in the given package.
 	 * @param owner the Package that will contain the element
@@ -810,6 +819,7 @@ public class ImportOSSFileAction {
 		return sysBlock;
 	}
 	
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
 	/** 
 	 * Creates a Contract element.
 	 * @param owner the Class that will contain the element
@@ -829,6 +839,7 @@ public class ImportOSSFileAction {
 		return (Class) newClass;
 	}
 	
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
 	/** 
 	 * Creates a Block element in the given package.
 	 * @param owner the Package that will contain the element
@@ -860,6 +871,7 @@ public class ImportOSSFileAction {
 		contractProperty.getRefinedBy().add(contractRefinement);
 	}
 	
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
 	/**
 	 * Creates a connector, but doesn't add it to the owner.
 	 * @param owner the owner element

@@ -14,7 +14,6 @@ Require-Bundle: eu.fbk.eclipse.standardtools.ModelTranslatorToOcra;bundle-versio
  org.polarsys.chess.core,
  org.polarsys.chess.service;bundle-version="0.11.0",
  org.eclipse.papyrus.infra.gmfdiag.css,
- org.eclipse.opencert.apm.baseline.diagram,
  org.eclipse.papyrus.sysml.diagram.internalblock,
  org.eclipse.papyrus.sysml.service.types;bundle-version="1.2.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

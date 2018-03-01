@@ -32,6 +32,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.polarsys.chess.OSSImporter.actions.ImportOSSFileAction;
 import org.polarsys.chess.service.utils.SelectionUtil;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
@@ -69,6 +70,8 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 		MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),title, message);
 	}
 	
+	
+	//TODO try to reuse existing methods
 	private String[] showOSSRuntimeErrors(Resource resource, File file, boolean showNoErrorPopup, IProgressMonitor monitor) throws NoResourceException {
 		if (resource != null) {
 			if (file != null) {
@@ -160,6 +163,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 		return errors;
 	}
 
+	//TODO this method already exist in another plugin 
 	/**
 	 * Displays a file dialog to select the OSS file
 	 * @return the selected File
@@ -180,12 +184,13 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 		return ossFile;
 	}
 	
+	
 	/**
 	 * Checks if the selected object is a package in the <<SystemView>> branch 
 	 * @param pkg the selected object 
 	 * @return true if the package is valid
 	 */
-	private boolean objectIsSystemViewPackage(Object obj) {
+	private boolean isSystemViewPackage(Element obj) {
 		if (obj instanceof Package) {
 			final Package pkg = (Package) obj;
 			if(pkg.getAppliedStereotype(SYSVIEW) != null) {
@@ -211,7 +216,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 	
 //		System.out.println("selectedUmlElement: " + umlObject);
 		
-		if (objectIsSystemViewPackage(umlObject)) {
+		if (isSystemViewPackage((Element)umlObject)) {
 			ossFile = getOSSFile();
 
 			final String[] errors = showRuntimeErrors(modelResource, ossFile, showNoErrorPopup, monitor);
