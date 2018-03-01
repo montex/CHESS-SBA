@@ -69,11 +69,12 @@ public class SmvExportServiceUI {
 	public String exportSingleSmv(Class umlSelectedComponent, boolean showPopups, String selectedDirectory,
 			IProgressMonitor monitor) throws Exception {
 
-		File smvFile = smvTranslatorServiceAPI.exportStateMachineOfComponentToSMVFile(umlSelectedComponent, showPopups, selectedDirectory,
-				monitor);
+		File smvFile = smvTranslatorServiceAPI.exportStateMachineOfComponentToSMVFile(umlSelectedComponent, showPopups,
+				selectedDirectory, monitor);
 
-		//inserire check errors
-		
+		//////////////////////////////////////
+		// insert check errors method
+		//////////////////////////////////////
 		if (showPopups) {
 			dialogUtil.showMessage_ExportBehaviourDone(smvFile.getAbsolutePath());
 		}
@@ -85,11 +86,13 @@ public class SmvExportServiceUI {
 	public HashMap<String, String> exportSmv(Class umlSelectedComponent, boolean showPopups, String selectedDirectory,
 			IProgressMonitor monitor) throws Exception {
 
-		HashMap<String, String> mapSmvFile_ComponentName = smvTranslatorServiceAPI.exportAllStateMachinesToSMVFiles(umlSelectedComponent,
-				selectedDirectory, monitor);
+		HashMap<String, String> mapSmvFile_ComponentName = smvTranslatorServiceAPI
+				.exportAllStateMachinesToSMVFiles(umlSelectedComponent, selectedDirectory, monitor);
 
-		//inserire check errors
-		
+		//////////////////////////////////////
+		// insert check errors method
+		//////////////////////////////////////
+
 		logger.debug("exportSmv done");
 		if (showPopups) {
 			dialogUtil.showMessage_ExportBehaviourDone(selectedDirectory);
