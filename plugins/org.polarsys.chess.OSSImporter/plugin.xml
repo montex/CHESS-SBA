@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.polarsys.chess.modelexplorerpopupmenu.id">
+         <menu
+               id="org.eclipse.ui.main.diagramEditorMenu.CHESS.basicOperations"
+               label="Basic Operations">
+            <command
+                  commandId="org.polarsys.chess.OSSImporter.commands.AddOSSFile"
+                  label="Import &lt;&lt;SystemView&gt;&gt; components from .oss file"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.emf.ecore.EObject">
+                        <instanceof
+                              value="org.eclipse.uml2.uml.Package">
+                        </instanceof>
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.polarsys.chess.OSSImporter.commands.AddOSSFileCommand"
+            id="org.polarsys.chess.OSSImporter.commands.AddOSSFile"
+            name="Add System View components from .oss file">
+      </command>
+   </extension>
+
+</plugin>
