@@ -27,6 +27,8 @@ public class CreateIBDMultipleCommand extends AbstractJobCommand {
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
+
+		// Call the command to create all the diagrams and populate them
 		final String BDD_CREATOR_COMMAND = "org.polarsys.chess.diagramsCreator.commands.createAllIBDsHandler";
 		try {
 			final CommandBuilder diagramBDDCreator = CommandBuilder.build(BDD_CREATOR_COMMAND);

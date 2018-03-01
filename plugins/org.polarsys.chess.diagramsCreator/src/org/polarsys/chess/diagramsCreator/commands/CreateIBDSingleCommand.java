@@ -16,6 +16,7 @@ import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.CommandBuilder;
 
 public class CreateIBDSingleCommand extends AbstractJobCommand {
+
 	public CreateIBDSingleCommand() {
 		super("Create IBD Single");
 	}
@@ -26,7 +27,9 @@ public class CreateIBDSingleCommand extends AbstractJobCommand {
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-		final String BDD_CREATOR_COMMAND = "org.polarsys.chess.diagramsCreator.createIBDHandler";
+
+		// Call the command to create the diagram and populate it
+		final String BDD_CREATOR_COMMAND = "org.polarsys.chess.diagramsCreator.commands.createIBDHandler";
 		try {
 			final CommandBuilder diagramBDDCreator = CommandBuilder.build(BDD_CREATOR_COMMAND);
 			diagramBDDCreator.execute();
