@@ -142,16 +142,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
-	 * Builds the selection with all the possible elements.
-	 */
-	private void buildSelection() {
-		selection = new ArrayList<Object>();
-		for (EditPartRepresentation current : representations) {
-			contributeToSelection(selection, current);
-		}
-	}
-
-	/**
 	 * Completes the list of selection for the given representation and its potential children.
 	 * @param listToComplete the list of selected elements to complete
 	 * @param representation the edit part representation that completes the list
@@ -174,6 +164,16 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				printMessageOnOut("Working on child " + child);
 				contributeToSelection(listToComplete, child);
 			}
+		}
+	}
+
+	/**
+	 * Builds the selection with all the possible elements.
+	 */
+	private void buildSelection() {
+		selection = new ArrayList<Object>();
+		for (EditPartRepresentation current : representations) {
+			contributeToSelection(selection, current);
 		}
 	}
 

@@ -64,7 +64,17 @@
                   </iterate>
                </visibleWhen>
             </command>
+            <command
+                  commandId="org.polarsys.chess.diagramsCreator.command2"
+                  label="execute both"
+                  style="push">
+            </command>
          </menu>
+         <command
+               commandId="org.polarsys.chess.diagramsCreator.command1"
+               label="test handler"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
    <extension
@@ -83,6 +93,21 @@
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateBDDCommand"
             id="org.polarsys.chess.diagramsCreator.commands.createBDD"
             name="Create the BDD">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.BothCommand"
+            id="org.polarsys.chess.diagramsCreator.command2"
+            name="both">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.SingleIBDHandler"
+            id="org.polarsys.chess.diagramsCreator.createIBDHandler"
+            name="Create the IBD diagram handler">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.MultipleIBDHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.createAllIBDsHandler"
+            name="Create the IBD diagrams handler">
       </command>
    </extension>
 
