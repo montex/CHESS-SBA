@@ -56,6 +56,8 @@ public class SelectionUtil {
 		return selectionUtil;
 	}
 
+	
+	//TODO check if if can return only the Element class
 	public Object getUmlSelectedObject(Object selection) {
 
 		Object selectedObject = selection;

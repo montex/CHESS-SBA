@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="generateFaultExtensions" name="org.polarsys.chess.contracts.transformations">
-    <property name="ECLIPSE_HOME" value="../../../../../../../Google Drive/AMASS Project/ARTA_p1/eclipse"/>
-    <property name="ECLIPSE_WORKSPACE" value="../../../../../../../Google Drive/AMASS Project/ARTA_p1/eclipse/workspace"/>
+    <property name="ECLIPSE_HOME" value="../../../../../../Tools/eclipse"/>
+    <property name="ECLIPSE_WORKSPACE" value="../../../../../../../../home/cristofo/workspace"/>
 
     <!-- The classpath with only the dependencies used by the project -->
     <path id="org.polarsys.chess.contracts.transformations.libraryclasspath">
@@ -10,7 +10,6 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/javax.inject_1.0.0.v20091030.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.osgi_3.11.3.v20170209-1843.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.osgi.compatibility.state_1.0.200.v20160504-1419.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.wst.jsdt.nashorn.extension_1.0.2.v201610280128.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.equinox.common_3.8.0.v20160509-1230.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.core.jobs_3.8.0.v20160509-0411.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.equinox.registry_3.6.100.v20160223-2218.jar"/>
@@ -37,7 +36,7 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.codegen_2.11.0.v20160526-0356.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.ui_3.108.1.v20160929-1045.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.swt_3.105.3.v20170228-0512.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.swt.win32.win32.x86_64_3.105.3.v20170228-0512.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.swt.gtk.linux.x86_64_3.105.3.v20170228-0512.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.jface_3.12.2.v20170113-2113.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.core.commands_3.8.1.v20161221-1651.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.ui.workbench_3.108.3.v20170216-1539.jar"/>

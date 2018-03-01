@@ -1,0 +1,166 @@
+/*****************************************************************************
+ * Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
+ *
+ *    
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ *****************************************************************************/
+
+package org.polarsys.chess.instance.view
+
+import "http://www.eclipse.org/uml2/5.0.0/UML"
+import "http://www.eclipse.org/emf/2002/Ecore"
+import "http://CHESS"
+import "http://CHESS/Core/Views"
+import "http://CHESS/Core"
+import "http://CHESS/ComponentModel"
+import "http://CHESS/Predictability/RTComponentModel"
+import "http://www.eclipse.org/papyrus/GCM/1"
+
+
+@Item(item = instSpec, hierarchy = "child", label = "$instSpec.name$ (Package)")
+//@ContainsItem(container = modelComponentView, item = instSpec)
+pattern swSystemCHGaResourcePlatform(instSpec) {
+	//find modelComponentView(modelComponentView);
+	CHGaResourcePlatform.base_Package(_, instSpec);
+}
+
+@Item(item = root, hierarchy = "root", label = "$name$ (Instance)")
+//@ContainsItem(container = instSpec, item = root)
+pattern swSystemRoot(root, instSpec, name) {
+	find swSystemCHGaResourcePlatform(instSpec);
+	Package.packagedElement(instSpec, root);
+	InstanceSpecification(root);
+	InstanceSpecification.name(root, name);
+	check(!name.contains("."));
+}
+
+
+@Item(item = child, hierarchy = "child", label = "$name$ (Instance)")
+pattern swSystemChild2Item(child, name) {
+	
+	find  swSystemChild2(child, _,  _, name);
+	//check(name.startsWith(parentname) && !name.equalsIgnoreCase(parentname) && !name.substring(parentname.length+1).contains("."));
+	InstanceSpecification.classifier(child, class);
+	Classifier.name(class, classname);
+	
+	check(name.contains("."));
+	check(!classname.empty);
+	
+}
+
+
+@ContainsItem(container = parent, item = child)
+
+pattern swSystemChild2(child, instSpec, parent, name) {
+	find swSystemCHGaResourcePlatform(instSpec);
+	Package.packagedElement(instSpec, child);
+	InstanceSpecification(child);
+	InstanceSpecification.name(child, name);
+	
+	Package.packagedElement(instSpec, parent);
+	InstanceSpecification.name(parent, parentname);
+	child != parent;
+	check(name.startsWith(parentname) && !name.equalsIgnoreCase(parentname) && !name.substring(parentname.length+1).contains("."));
+	
+}
+
+
+@Item(item = slot, hierarchy = "child", label = "$name$ ( Provided Port)")
+@ContainsItem(container = child, item = slot)
+pattern childPortSlots(child, slot, name) {
+	//find swSystemChild2(child, _, _, _, _);
+	InstanceSpecification.slot(child, slot);
+	Slot.definingFeature(slot, port);
+	Port.name(port,name);
+	
+	ClientServerPort.base_Port(csp, port);
+
+	neg find portHelperWithValue(slot,_);
+	find clientServerPortHelperWithInterface (csp, _);
+}
+
+@Item(item = privoperation, hierarchy = "child", label = "$name$ (Operation)")
+@ContainsItem(container = child, item = privoperation)
+pattern childPrivateOperations(child, privoperation, name) {
+		
+	InstanceSpecification.classifier(child, component);
+	Component.ownedOperation(component, privoperation);
+	neg find childPortSlotsOperation(_, privoperation, _);
+	Operation.name(privoperation, name);
+}
+
+@Item(item = operation, hierarchy = "child", label = "$nameC$ (Operation)")
+pattern childPortSlotsOperationItem(operation, nameC) {
+    find childPortSlotsOperation(_, operation, nameC);
+} 
+
+
+@ContainsItem(container = slot, item = operation)
+pattern childPortSlotsOperation(slot, operation, nameC) {
+	find childPortSlots(child, slot, _);
+	Slot.definingFeature(slot, port);
+	ClientServerPort.base_Port(csp, port);
+	find clientServerPortHelperWithInterface (csp,interface);
+	Interface.ownedOperation(interface, operationI);
+	
+	//retrieve the same operation owned by the referred component
+
+	InstanceSpecification.classifier(child, component);
+	
+    Component.ownedOperation(component, operation);
+    Operation.name(operationI, nameI);
+    Operation.name(operation, nameC);
+    check(nameI.compareTo(nameC)==0);
+}
+
+
+@Item(item = chrtspecComment, hierarchy = "child", label = "CHRtSpecification")
+pattern childCHRTSpecItem(chrtspecComment) {
+	//find childPortSlotsOperation(slot, operation, _);
+	find childCHRTSpec(chrtspecComment, _);
+}
+
+@ContainsItem(container = operation, item = chrtspecComment)
+pattern childCHRTSpec(chrtspecComment, operation) {
+		
+	//find childPortSlotsOperation(slot, operation, _);
+	CHRtPortSlot.base_Slot(chrtportslot, slot);
+	CHRtPortSlot.cH_RtSpecification(chrtportslot, chrt);
+	CHRtSpecification.context(chrt, operation);
+	CHRtSpecification.base_Comment(chrt, chrtspecComment);
+
+	
+}
+
+
+@Item(item = chrtspecComment, hierarchy = "child", label = "CHRtSpecification")
+pattern childPrivCHRTSpecItem(chrtspecComment) {
+	//find childPortSlotsOperation(slot, operation, _);
+	find childPrivCHRTSpec(chrtspecComment, _);
+}
+
+@ContainsItem(container = privoperation, item = chrtspecComment)
+pattern childPrivCHRTSpec(chrtspecComment, privoperation) {
+		
+	//find childPortSlotsOperation(slot, operation, _);
+	CHRtPortSlot.base_InstanceSpecification(chrtportslot, instancespec);
+	CHRtPortSlot.cH_RtSpecification(chrtportslot, chrt);
+	CHRtSpecification.context(chrt, privoperation);
+	CHRtSpecification.base_Comment(chrt, chrtspecComment);
+
+	
+}
+
+
+private pattern portHelperWithValue(slot, value) {
+	Slot.value(slot,value);
+}
+
+private pattern clientServerPortHelperWithInterface(csp, interf) {
+	ClientServerPort.provInterface(csp, interf);
+}
+
