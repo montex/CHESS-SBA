@@ -15,14 +15,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.papyrus.uml.tools.model.UmlModel;
 import org.eclipse.papyrus.uml.tools.model.UmlUtils;
 import org.polarsys.chess.service.gui.utils.DialogUtils;
-import org.polarsys.chess.smvExporter.ui.services.SmvExportService;
+import org.polarsys.chess.smvExporter.ui.services.SmvExportServiceUI;
 
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 
 public class ExportNominalSMsToSmvFilesCommand extends AbstractJobCommand {
 
 	private DialogUtils exportDialogUtils = DialogUtils.getInstance();
-	private SmvExportService smvExportService = SmvExportService.getInstance();
+	private SmvExportServiceUI smvExportServiceUI = SmvExportServiceUI.getInstance();
 
 	public ExportNominalSMsToSmvFilesCommand() {
 		super("Export Nominal State Machines To .smv Files");
@@ -42,7 +42,7 @@ public class ExportNominalSMsToSmvFilesCommand extends AbstractJobCommand {
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-		smvExportService.exportAllNominalStateMachinesOfTheModel(umlModel, outputDirectoryName, showPopups, monitor);
+		smvExportServiceUI.exportAllNominalStateMachinesOfTheModel(umlModel, outputDirectoryName, showPopups, monitor);
 
 	}
 

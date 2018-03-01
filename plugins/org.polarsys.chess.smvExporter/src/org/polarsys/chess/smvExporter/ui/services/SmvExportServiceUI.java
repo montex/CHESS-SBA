@@ -22,23 +22,23 @@ import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.polarsys.chess.smvExporter.core.model.UMLStateMachineModel;
 
-import eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv.core.services.SMVTranslatorService;
+import eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv.core.services.SMVTranslatorServiceAPI;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 
-public class SmvExportService {
+public class SmvExportServiceUI {
 
-	private static final Logger logger = Logger.getLogger(SmvExportService.class);
+	private static final Logger logger = Logger.getLogger(SmvExportServiceUI.class);
 
-	private static SmvExportService instance;
+	private static SmvExportServiceUI instance;
 	private ChessSystemModel chessSystemModel = ChessSystemModel.getInstance();
 
-	private SMVTranslatorService smvTranslatorService = SMVTranslatorService.getInstance(chessSystemModel,
+	private SMVTranslatorServiceAPI smvTranslatorServiceAPI = SMVTranslatorServiceAPI.getInstance(chessSystemModel,
 			UMLStateMachineModel.getInstance());
 	private DialogUtil dialogUtil = DialogUtil.getInstance();
 
-	public static SmvExportService getInstance() {
+	public static SmvExportServiceUI getInstance() {
 		if (instance == null) {
-			instance = new SmvExportService();
+			instance = new SmvExportServiceUI();
 		}
 		return instance;
 	}
@@ -47,7 +47,7 @@ public class SmvExportService {
 			IProgressMonitor monitor) throws Exception {
 
 		logger.debug("umlModel: " + umlModel);
-		smvTranslatorService.exportAllNominalStateMachinesOfTheModel(umlModel, selectedDirectory, null, monitor);
+		smvTranslatorServiceAPI.exportAllNominalStateMachinesOfTheModel(umlModel, selectedDirectory, null, monitor);
 
 		if (showPopups) {
 			dialogUtil.showMessage_ExportNominalStateMachinesDone(selectedDirectory);
@@ -58,7 +58,7 @@ public class SmvExportService {
 	public void exportNominalStateMachines(Class umlSelectedComponent, String selectedDirectory, boolean showPopups,
 			IProgressMonitor monitor) throws Exception {
 
-		smvTranslatorService.exportNominalStateMachines(umlSelectedComponent, selectedDirectory, null, monitor);
+		smvTranslatorServiceAPI.exportNominalStateMachines(umlSelectedComponent, selectedDirectory, null, monitor);
 
 		if (showPopups) {
 			dialogUtil.showMessage_ExportNominalStateMachinesDone(selectedDirectory);
@@ -69,9 +69,11 @@ public class SmvExportService {
 	public String exportSingleSmv(Class umlSelectedComponent, boolean showPopups, String selectedDirectory,
 			IProgressMonitor monitor) throws Exception {
 
-		File smvFile = smvTranslatorService.exportSingleSmv(umlSelectedComponent, showPopups, selectedDirectory,
+		File smvFile = smvTranslatorServiceAPI.exportStateMachineOfComponentToSMVFile(umlSelectedComponent, showPopups, selectedDirectory,
 				monitor);
 
+		//inserire check errors
+		
 		if (showPopups) {
 			dialogUtil.showMessage_ExportBehaviourDone(smvFile.getAbsolutePath());
 		}
@@ -83,9 +85,11 @@ public class SmvExportService {
 	public HashMap<String, String> exportSmv(Class umlSelectedComponent, boolean showPopups, String selectedDirectory,
 			IProgressMonitor monitor) throws Exception {
 
-		HashMap<String, String> mapSmvFile_ComponentName = smvTranslatorService.exportSmv(umlSelectedComponent,
+		HashMap<String, String> mapSmvFile_ComponentName = smvTranslatorServiceAPI.exportAllStateMachinesToSMVFiles(umlSelectedComponent,
 				selectedDirectory, monitor);
 
+		//inserire check errors
+		
 		logger.debug("exportSmv done");
 		if (showPopups) {
 			dialogUtil.showMessage_ExportBehaviourDone(selectedDirectory);

@@ -29,7 +29,7 @@ import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.polarsys.chess.service.gui.utils.DialogUtils;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
-import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.ui.services.OCRATranslatorService;
+import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSTranslatorServiceAPI;
 import eu.fbk.eclipse.standardtools.diagram.DiagramDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.DocumentGenerator;
 import eu.fbk.eclipse.standardtools.diagram.ui.dialog.ModelToDocumentDialog;
@@ -43,12 +43,11 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	private ChessSystemModel chessToOCRAModelTranslator = ChessSystemModel.getInstance();
-	private OCRATranslatorService ocraTranslatorService = OCRATranslatorService.getInstance(chessToOCRAModelTranslator);
+	private OSSTranslatorServiceAPI ocraTranslatorService = OSSTranslatorServiceAPI.getInstance(chessToOCRAModelTranslator);
 	private ExportDialogUtils exportDialogUtils = ExportDialogUtils.getInstance();
 	private DialogUtils dialogUtils = DialogUtils.getInstance();
 	private CHESSDiagramsGeneratorService chessDiagramsGeneratorService = CHESSDiagramsGeneratorService
 			.getInstance(CHESSInternalBlockDiagramModel.getInstance(), CHESSBlockDefinitionDiagramModel.getInstance());
-
 	private DirectoryUtil directoryUtils = DirectoryUtil.getInstance();
 
 	private DocumentGeneratorServiceFromOssModel documentGeneratorService;
@@ -99,7 +98,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
-		OSS ossModel = ocraTranslatorService.getOssModel(umlSelectedComponent, isDiscreteTime, monitor);
+		OSS ossModel = ocraTranslatorService.exportRootComponentToOssModel(umlSelectedComponent, isDiscreteTime, monitor);
 
 		Display defaultDisplay = Display.getDefault();
 
