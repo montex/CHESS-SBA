@@ -11,7 +11,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	//TestApplyCHESSStereotype.class, 
 	//TestCreateViews.class,
 	//TestModelChecking.class
-	TestExportCHESSModelAsOssFile.class
+	TestCheckContractRefinementOfCHESSComponent.class
 	})
 public class AllTests {
 }

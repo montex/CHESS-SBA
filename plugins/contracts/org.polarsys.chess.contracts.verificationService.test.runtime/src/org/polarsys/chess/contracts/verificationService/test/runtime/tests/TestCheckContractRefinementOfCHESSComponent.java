@@ -35,7 +35,7 @@ import eu.fbk.tools.adapter.ocra.CheckContractRefinement;
 import eu.fbk.tools.adapter.ocra.CheckContractResultBuilder;
 import eu.fbk.tools.adapter.ocra.OcraRunner;
 
-public class TestExportCHESSModelAsOssFile {
+public class TestCheckContractRefinementOfCHESSComponent {
 
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 	private OSSTranslatorServiceAPI ossTranslatorServiceAPI = OSSTranslatorServiceAPI
