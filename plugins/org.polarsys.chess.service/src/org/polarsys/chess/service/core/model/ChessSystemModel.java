@@ -712,7 +712,7 @@ if (entityUtil.isBlock((Element) component)) {
 
 	@Override
 	public boolean isInOutPort(Object port) {
-		return entityUtil.isInputPort((Port)port);
+		return entityUtil.isInOutPort((Port)port);
 	}
 
 
