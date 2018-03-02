@@ -11,9 +11,13 @@
 package org.polarsys.chess.contracts.verificationService.test.runtime.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -142,5 +146,15 @@ public class TestUtil {
 	}
 	
 	
+	public Properties getConfigTestProperties() throws IOException{
+		File configFile = new File("configTest.properties");
+	
+		    FileReader reader = new FileReader(configFile);
+		    Properties props = new Properties();
+		    props.load(reader);
+		    reader.close();
+		 return props;
+		  
+	}
 	
 }

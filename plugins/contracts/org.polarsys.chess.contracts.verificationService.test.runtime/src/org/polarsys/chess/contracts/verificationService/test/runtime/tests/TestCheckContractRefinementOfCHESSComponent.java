@@ -12,6 +12,7 @@ package org.polarsys.chess.contracts.verificationService.test.runtime.tests;
 
 import java.io.File;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.log4j.Logger;
@@ -24,6 +25,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
+import org.polarsys.chess.contracts.verificationService.test.runtime.util.TestUtil;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -47,9 +49,9 @@ public class TestCheckContractRefinementOfCHESSComponent {
 	private boolean temp_variable_is_discrete = false;
 	private final String projectName = "WBS_SM_Multi_State";
 	private final String modelName = "WBS.uml";
-	private final String workspace = "C:\\Windows\\Temp\\amass\\";
-	private final String resultFilePath = workspace+"exportedOSS.oss";
-	private final String OCRAPath = "C:\\Users\\Alberto\\Downloads\\20180124_OpenCertCHESSClient_Win_x64\\amass_P1\\FBK_Tools\\OCRA\\ocra_win64.exe"; 
+	private String workspace;// = "C:\\Windows\\Temp\\amass\\";
+	private String resultFilePath;// = workspace+"exportedOSS.oss";
+	private String OCRAPath;// = "C:\\Users\\Alberto\\Downloads\\20180124_OpenCertCHESSClient_Win_x64\\amass_P1\\FBK_Tools\\OCRA\\ocra_win64.exe"; 
 
 private final int timeout = 1000*60*5;
 
@@ -58,6 +60,14 @@ private final int timeout = 1000*60*5;
 
 	@Before
 	public void setTestParameters() throws Exception {
+		
+		
+		Properties prop = TestUtil.getInstance().getConfigTestProperties();
+		workspace = prop.getProperty("workspace");
+		System.out.println("workspace: "+workspace);
+		OCRAPath = prop.getProperty("OCRAPath");
+		System.out.println("OCRAPath: "+OCRAPath);
+		resultFilePath = workspace+"exportedOSS.oss";
 		Model model = entityUtil.loadModel(projectName, modelName);
 		String elementURI = entityUtil.getSystemElementURIFragment(model);
 		umlSelectedComponent = entityUtil.getElement(model, elementURI);
@@ -77,10 +87,12 @@ private final int timeout = 1000*60*5;
 		String fileName = ossTranslatorServiceAPI.getFileName(umlSelectedComponent);
 		File ossFile = ossTranslatorServiceAPI.exportOSSModelToOSSFile(ocraModel,fileName,resultFilePath);
 		
+		Assert.assertTrue("The generated file exists", ossFile.exists());
+		
 		XtextResource xTextResource = xTextResourceUtil.createOSSResourceFromFile(ossFile.getPath());
 		List<Issue> issues = xtextValidation.xTextValidation(xTextResource);
 		
-		Assert.assertTrue("The generated file exists", ossFile.exists());
+		
 		Assert.assertTrue("No xText issues", issues.isEmpty());
 
 		checkContractRefinement(ossFile);
@@ -111,9 +123,11 @@ private final int timeout = 1000*60*5;
 		}
 		catch (TimeoutException e)
 		{
+			
 			Assert.assertTrue("Timeout error checking model [" + contractFile.getName() + "]", false);
 		}
 		catch (Throwable t) {
+			t.printStackTrace();
 		}
 		
 		runner.cleanSessionWorkspace();
