@@ -29,11 +29,11 @@ import org.eclipse.ui.services.ISourceProviderService;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.polarsys.chess.core.resourcelistener.SelectionListenerExtra;
 import org.polarsys.chess.core.views.DiagramStatus;
-import org.polarsys.chess.service.exceptions.NoDiagramStatusException;
+import org.polarsys.chess.service.core.exceptions.NoDiagramStatusException;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 import org.polarsys.chess.service.internal.Activator;
 import org.polarsys.chess.service.internal.commands.switchers.SwitchSourceProvider;
 import org.polarsys.chess.service.internal.palette.PaletteManager;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 public class SelectionListener extends SelectionListenerExtra {
 

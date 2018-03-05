@@ -5,7 +5,7 @@
          point="org.eclipse.papyrus.infra.core.modelListener">
       <listener
             name="org.polarsys.chess.contracts.contractPropertyManager.profile.listener.PapyrusListener"
-            realization="org.polarsys.chess.contracts.contractPropertyManager.profile.listener.PapyrusListener">
+            realization="org.polarsys.chess.contracts.contractPropertyManager.ui.profile.listener.PapyrusListener">
       </listener>
    </extension>
  <!--

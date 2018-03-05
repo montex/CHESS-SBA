@@ -10,27 +10,24 @@
  ******************************************************************************/
 package org.polarsys.chess.properties.propertyEditor;
 
-
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.uml2.uml.Constraint;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
-import org.polarsys.chess.service.internal.model.ChessSystemModel;
-import org.polarsys.chess.service.utils.SelectionUtil;
+import org.polarsys.chess.service.core.model.ChessSystemModel;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
-import eu.fbk.eclipse.standardtools.model.AbstractSystemModel;
 import eu.fbk.eclipse.standardtools.propertyEditor.propertyTab.PropertyEditorTab;
+import eu.fbk.eclipse.standardtools.utils.core.model.AbstractSystemModel;
 
 public class CustomPropertyEditorTab extends PropertyEditorTab {
 
 	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
-	
 
 	@Override
 	public Object returnProperty(ISelection selection) {
-	
 
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selection);
 
@@ -65,5 +62,4 @@ public class CustomPropertyEditorTab extends PropertyEditorTab {
 		return ChessSystemModel.getInstance();
 	}
 
-	
 }

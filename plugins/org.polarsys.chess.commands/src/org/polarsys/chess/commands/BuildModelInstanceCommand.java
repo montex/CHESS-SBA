@@ -70,7 +70,7 @@ import org.polarsys.chess.core.profiles.CHESSProfileManager;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.ViewUtils;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
 /**
  * BuildModelInstanceCommand allows to create UML InstanceSpecifications starting from a Component definition

@@ -16,12 +16,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramModel;
 import org.polarsys.chess.diagram.ui.utils.ExportDialogUtils;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
-import eu.fbk.eclipse.standardtools.commands.AbstractAsyncJobCommand;
 import eu.fbk.eclipse.standardtools.diagram.ui.dialog.ComponentToImageDialog;
 import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.InternalBlockDiagramGeneratorService;
-import eu.fbk.eclipse.standardtools.utils.DirectoryUtil;
-import org.polarsys.chess.service.utils.SelectionUtil;
+import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractAsyncJobCommand;
+import eu.fbk.eclipse.standardtools.utils.ui.utils.DirectoryUtil;
 
 /**
  * 

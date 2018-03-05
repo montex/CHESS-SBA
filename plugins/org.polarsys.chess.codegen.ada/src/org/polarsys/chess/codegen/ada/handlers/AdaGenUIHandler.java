@@ -32,7 +32,7 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.m2m.Activator;
 import org.polarsys.chess.m2m.transformations.PIMPSMTransformationVERDE;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;

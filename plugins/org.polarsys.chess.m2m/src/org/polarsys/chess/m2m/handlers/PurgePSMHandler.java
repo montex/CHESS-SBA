@@ -61,7 +61,7 @@ import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.m2m.transformations.TransUtil;
 import org.polarsys.chess.m2m.ui.AnalysisContextSelectionDialog;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
 
 

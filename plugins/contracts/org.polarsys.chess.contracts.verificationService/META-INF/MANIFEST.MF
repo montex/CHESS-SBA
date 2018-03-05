@@ -24,15 +24,17 @@ Require-Bundle: org.eclipse.core.resources,
  org.polarsys.chess.core,
  eu.fbk.tools.editor.oss,
  org.polarsys.chess.smvExporter,
- org.polarsys.chess.service
-Import-Package: eu.fbk.eclipse.standardtools.nuXmvService.dialogs,
- eu.fbk.eclipse.standardtools.nuXmvService.services,
- eu.fbk.eclipse.standardtools.nuXmvService.utils,
+ org.polarsys.chess.service,
+ eu.fbk.eclipse.standardtools.xtextService
+Import-Package: eu.fbk.eclipse.standardtools.nuXmvService.ui.dialogs,
+ eu.fbk.eclipse.standardtools.nuXmvService.ui.services,
+ eu.fbk.eclipse.standardtools.nuXmvService.ui.utils,
  org.apache.log4j;version="1.2.15",
  org.eclipse.gmf.runtime.diagram.ui.editparts,
  org.eclipse.papyrus.infra.core.utils,
  org.eclipse.papyrus.infra.emf.utils,
- org.polarsys.chess.service.utils
+ org.polarsys.chess.service.gui.utils
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Fondazione Bruno Kessler
+Export-Package: org.polarsys.chess.verificationService.ui.services
 

@@ -79,7 +79,7 @@ public class CHESSInternalBlockDiagramModel implements AbstractInternalBlockDiag
 	@Override
 	public String getGraphicalComponentName(Object graphicalComponent) {
 		EObject component = ((GraphicalEditPart) graphicalComponent).resolveSemanticElement();
-		return entityUtil.getComponentName(component);
+		return entityUtil.getComponentName((Element)component);
 	}
 
 	@Override

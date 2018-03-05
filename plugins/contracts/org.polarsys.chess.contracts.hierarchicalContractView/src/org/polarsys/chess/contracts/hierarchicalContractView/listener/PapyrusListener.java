@@ -42,20 +42,21 @@ public class PapyrusListener implements IPapyrusListener {
 			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 			IViewPart modelExplorerViewPart;
 
-			if((window!=null)&&(window.getActivePage()!=null)){
-			modelExplorerViewPart = window.getActivePage().findView(CustomHierarchicalView.View_ID);
-			if (modelExplorerViewPart != null) {
+			if ((window != null) && (window.getActivePage() != null)) {
+				modelExplorerViewPart = window.getActivePage().findView(CustomHierarchicalView.View_ID);
 
-				UmlModel modelID = UmlUtils.getUmlModel();
+				if (modelExplorerViewPart != null) {
 
-				if (modelID != prevModelID) {
-					HierarchicalView view = (HierarchicalView) modelExplorerViewPart;
-					view.updateView();
-					prevModelID = modelID;
+					UmlModel modelID = UmlUtils.getUmlModel();
+
+					if (modelID != prevModelID) {
+						HierarchicalView view = (HierarchicalView) modelExplorerViewPart;
+						view.updateView();
+						prevModelID = modelID;
+					}
 				}
 			}
-			}
-			
+
 		}
 	}
 

@@ -10,16 +10,15 @@ import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Continuous;
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Continuous</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Continuous</b></em>'. <!-- end-user-doc -->
  *
  * @generated
  */
 public class ContinuousImpl extends MinimalEObjectImpl.Container implements Continuous {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ContinuousImpl() {
@@ -27,8 +26,8 @@ public class ContinuousImpl extends MinimalEObjectImpl.Container implements Cont
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -36,4 +35,4 @@ public class ContinuousImpl extends MinimalEObjectImpl.Container implements Cont
 		return DataTypesPackage.Literals.CONTINUOUS;
 	}
 
-} //ContinuousImpl
+} // ContinuousImpl

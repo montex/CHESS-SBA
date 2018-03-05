@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.polarsys.chess.contracts.contractEditor;
 
-
 import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -31,7 +30,7 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.service.utils.SelectionUtil;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.contractEditor.view.ContractEditorView;
 
@@ -47,13 +46,13 @@ public class CustomContractEditorView extends ContractEditorView {
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 
 	@Override
-	public String[] getContractOwnerInputPortsNames(Object contract) {		
+	public String[] getContractOwnerInputPortsNames(Object contract) {
 		Element umlOwner = entityUtil.getOwner((Element) contract);
 		return entityUtil.getInputPortsNames(umlOwner);
 	}
 
 	@Override
-	public String[] getContractOwnerOutputPortsNames(Object contract) {		
+	public String[] getContractOwnerOutputPortsNames(Object contract) {
 		Element umlOwner = entityUtil.getOwner((Element) contract);
 		return entityUtil.getOutputPortsNames(umlOwner);
 	}
@@ -67,7 +66,6 @@ public class CustomContractEditorView extends ContractEditorView {
 	@Override
 	public Object returnComponent(ISelection selection) {
 
-	
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selection);
 
 		if (selectedUmlElement instanceof Property) {
@@ -89,7 +87,6 @@ public class CustomContractEditorView extends ContractEditorView {
 	@Override
 	public Object returnContract(ISelection selection) {
 
-	
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selection);
 
 		if (selectedUmlElement instanceof Property) {
@@ -232,7 +229,7 @@ public class CustomContractEditorView extends ContractEditorView {
 	@Override
 	public String[] getEnumValuesFromContractOwnerPorts(Object contract) {
 		Class element = (Class) ((Class) contract).getOwner();
-		return entityUtil.getEnumValuesFromComponentPorts(element);	
+		return entityUtil.getEnumValuesFromComponentPorts(element);
 	}
 
 	@Override

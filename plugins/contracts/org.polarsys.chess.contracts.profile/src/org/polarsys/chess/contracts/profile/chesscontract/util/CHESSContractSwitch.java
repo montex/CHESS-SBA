@@ -26,31 +26,28 @@ import org.polarsys.chess.contracts.profile.chesscontract.SRAComponent;
 import org.polarsys.chess.contracts.profile.chesscontract.SubSystem;
 
 /**
- * <!-- begin-user-doc -->
- * The <b>Switch</b> for the model's inheritance hierarchy.
- * It supports the call {@link #doSwitch(EObject) doSwitch(object)}
+ * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance
+ * hierarchy. It supports the call {@link #doSwitch(EObject) doSwitch(object)}
  * to invoke the <code>caseXXX</code> method for each class of the model,
- * starting with the actual class of the object
- * and proceeding up the inheritance hierarchy
- * until a non-null result is returned,
- * which is the result of the switch.
- * <!-- end-user-doc -->
+ * starting with the actual class of the object and proceeding up the
+ * inheritance hierarchy until a non-null result is returned, which is the
+ * result of the switch. <!-- end-user-doc -->
+ * 
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage
  * @generated
  */
 public class CHESSContractSwitch<T> extends Switch<T> {
 	/**
-	 * The cached model package
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected static CHESSContractPackage modelPackage;
 
 	/**
-	 * Creates an instance of the switch.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates an instance of the switch. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CHESSContractSwitch() {
@@ -60,10 +57,11 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Checks whether this is a switch for the given package.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param ePackage the package in question.
+	 * Checks whether this is a switch for the given package. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @param ePackage
+	 *            the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
@@ -73,108 +71,134 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the first non-null result returned by a <code>caseXXX</code> call.
+	 * Calls <code>caseXXX</code> for each class of the model until one returns
+	 * a non null result; it yields that result. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
+	 * @return the first non-null result returned by a <code>caseXXX</code>
+	 *         call.
 	 * @generated
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case CHESSContractPackage.COMPONENT_INSTANCE: {
-				ComponentInstance componentInstance = (ComponentInstance)theEObject;
-				T result = caseComponentInstance(componentInstance);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.CONTRACT_PROPERTY: {
-				ContractProperty contractProperty = (ContractProperty)theEObject;
-				T result = caseContractProperty(contractProperty);
-				if (result == null) result = caseConstraintProperty(contractProperty);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.CONTRACT_REFINEMENT: {
-				ContractRefinement contractRefinement = (ContractRefinement)theEObject;
-				T result = caseContractRefinement(contractRefinement);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.FORMAL_PROPERTY: {
-				FormalProperty formalProperty = (FormalProperty)theEObject;
-				T result = caseFormalProperty(formalProperty);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT: {
-				ContractRefinementAnalysisContext contractRefinementAnalysisContext = (ContractRefinementAnalysisContext)theEObject;
-				T result = caseContractRefinementAnalysisContext(contractRefinementAnalysisContext);
-				if (result == null) result = caseGaAnalysisContext(contractRefinementAnalysisContext);
-				if (result == null) result = caseConfiguration(contractRefinementAnalysisContext);
-				if (result == null) result = caseExpressionContext(contractRefinementAnalysisContext);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.SYSTEM: {
-				org.polarsys.chess.contracts.profile.chesscontract.System system = (org.polarsys.chess.contracts.profile.chesscontract.System)theEObject;
-				T result = caseSystem(system);
-				if (result == null) result = caseBlock(system);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.CONTRACT: {
-				Contract contract = (Contract)theEObject;
-				T result = caseContract(contract);
-				if (result == null) result = caseConstraintBlock(contract);
-				if (result == null) result = caseBlock(contract);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.FORMALIZE: {
-				Formalize formalize = (Formalize)theEObject;
-				T result = caseFormalize(formalize);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.SUB_SYSTEM: {
-				SubSystem subSystem = (SubSystem)theEObject;
-				T result = caseSubSystem(subSystem);
-				if (result == null) result = caseBlock(subSystem);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.CHESS_REQUIREMENT: {
-				CHESSRequirement chessRequirement = (CHESSRequirement)theEObject;
-				T result = caseCHESSRequirement(chessRequirement);
-				if (result == null) result = caseRequirement(chessRequirement);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.DELEGATION_CONSTRAINT: {
-				DelegationConstraint delegationConstraint = (DelegationConstraint)theEObject;
-				T result = caseDelegationConstraint(delegationConstraint);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CHESSContractPackage.SRA_COMPONENT: {
-				SRAComponent sraComponent = (SRAComponent)theEObject;
-				T result = caseSRAComponent(sraComponent);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			default: return defaultCase(theEObject);
+		case CHESSContractPackage.COMPONENT_INSTANCE: {
+			ComponentInstance componentInstance = (ComponentInstance) theEObject;
+			T result = caseComponentInstance(componentInstance);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case CHESSContractPackage.CONTRACT_PROPERTY: {
+			ContractProperty contractProperty = (ContractProperty) theEObject;
+			T result = caseContractProperty(contractProperty);
+			if (result == null)
+				result = caseConstraintProperty(contractProperty);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case CHESSContractPackage.CONTRACT_REFINEMENT: {
+			ContractRefinement contractRefinement = (ContractRefinement) theEObject;
+			T result = caseContractRefinement(contractRefinement);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case CHESSContractPackage.FORMAL_PROPERTY: {
+			FormalProperty formalProperty = (FormalProperty) theEObject;
+			T result = caseFormalProperty(formalProperty);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT: {
+			ContractRefinementAnalysisContext contractRefinementAnalysisContext = (ContractRefinementAnalysisContext) theEObject;
+			T result = caseContractRefinementAnalysisContext(contractRefinementAnalysisContext);
+			if (result == null)
+				result = caseGaAnalysisContext(contractRefinementAnalysisContext);
+			if (result == null)
+				result = caseConfiguration(contractRefinementAnalysisContext);
+			if (result == null)
+				result = caseExpressionContext(contractRefinementAnalysisContext);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case CHESSContractPackage.SYSTEM: {
+			org.polarsys.chess.contracts.profile.chesscontract.System system = (org.polarsys.chess.contracts.profile.chesscontract.System) theEObject;
+			T result = caseSystem(system);
+			if (result == null)
+				result = caseBlock(system);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case CHESSContractPackage.CONTRACT: {
+			Contract contract = (Contract) theEObject;
+			T result = caseContract(contract);
+			if (result == null)
+				result = caseConstraintBlock(contract);
+			if (result == null)
+				result = caseBlock(contract);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case CHESSContractPackage.FORMALIZE: {
+			Formalize formalize = (Formalize) theEObject;
+			T result = caseFormalize(formalize);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case CHESSContractPackage.SUB_SYSTEM: {
+			SubSystem subSystem = (SubSystem) theEObject;
+			T result = caseSubSystem(subSystem);
+			if (result == null)
+				result = caseBlock(subSystem);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case CHESSContractPackage.CHESS_REQUIREMENT: {
+			CHESSRequirement chessRequirement = (CHESSRequirement) theEObject;
+			T result = caseCHESSRequirement(chessRequirement);
+			if (result == null)
+				result = caseRequirement(chessRequirement);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case CHESSContractPackage.DELEGATION_CONSTRAINT: {
+			DelegationConstraint delegationConstraint = (DelegationConstraint) theEObject;
+			T result = caseDelegationConstraint(delegationConstraint);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case CHESSContractPackage.SRA_COMPONENT: {
+			SRAComponent sraComponent = (SRAComponent) theEObject;
+			T result = caseSRAComponent(sraComponent);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		default:
+			return defaultCase(theEObject);
 		}
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>System</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>System</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>System</em>'. <!-- begin-user-doc --> This implementation returns
+	 * null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>System</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -183,13 +207,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Contract</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Contract</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Contract</em>'. <!-- begin-user-doc --> This implementation returns
+	 * null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Contract</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -198,13 +224,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Formal Property</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Formal Property</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Formal Property</em>'. <!-- begin-user-doc --> This implementation
+	 * returns null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Formal Property</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -213,13 +241,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Contract Refinement Analysis Context</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Contract Refinement Analysis Context</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Contract Refinement Analysis Context</em>'. <!-- begin-user-doc -->
+	 * This implementation returns null; returning a non-null result will
+	 * terminate the switch. <!-- end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Contract Refinement Analysis Context</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -228,13 +258,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Formalize</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Formalize</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Formalize</em>'. <!-- begin-user-doc --> This implementation returns
+	 * null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Formalize</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -243,13 +275,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Sub System</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Sub System</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Sub
+	 * System</em>'. <!-- begin-user-doc --> This implementation returns null;
+	 * returning a non-null result will terminate the switch. <!-- end-user-doc
+	 * -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Sub
+	 *         System</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -258,13 +292,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>CHESS Requirement</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>CHESS Requirement</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>CHESS Requirement</em>'. <!-- begin-user-doc --> This implementation
+	 * returns null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>CHESS Requirement</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -273,13 +309,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Contract Property</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Contract Property</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Contract Property</em>'. <!-- begin-user-doc --> This implementation
+	 * returns null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Contract Property</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -288,13 +326,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Contract Refinement</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Contract Refinement</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Contract Refinement</em>'. <!-- begin-user-doc --> This
+	 * implementation returns null; returning a non-null result will terminate
+	 * the switch. <!-- end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Contract Refinement</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -303,13 +343,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Delegation Constraint</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Delegation Constraint</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Delegation Constraint</em>'. <!-- begin-user-doc --> This
+	 * implementation returns null; returning a non-null result will terminate
+	 * the switch. <!-- end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Delegation Constraint</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -318,13 +360,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>SRA Component</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>SRA Component</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>SRA
+	 * Component</em>'. <!-- begin-user-doc --> This implementation returns
+	 * null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>SRA
+	 *         Component</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -333,13 +377,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Component Instance</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Component Instance</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Component Instance</em>'. <!-- begin-user-doc --> This
+	 * implementation returns null; returning a non-null result will terminate
+	 * the switch. <!-- end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Component Instance</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -348,13 +394,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Block</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Block</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Block</em>'. <!-- begin-user-doc --> This implementation returns
+	 * null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Block</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -363,13 +411,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Constraint Block</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Constraint Block</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Constraint Block</em>'. <!-- begin-user-doc --> This implementation
+	 * returns null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Constraint Block</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -378,13 +428,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Requirement</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Requirement</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Requirement</em>'. <!-- begin-user-doc --> This implementation
+	 * returns null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Requirement</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -393,13 +445,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Constraint Property</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Constraint Property</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Constraint Property</em>'. <!-- begin-user-doc --> This
+	 * implementation returns null; returning a non-null result will terminate
+	 * the switch. <!-- end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Constraint Property</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -408,13 +462,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Configuration</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Configuration</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Configuration</em>'. <!-- begin-user-doc --> This implementation
+	 * returns null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Configuration</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -423,13 +479,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Expression Context</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Expression Context</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>Expression Context</em>'. <!-- begin-user-doc --> This
+	 * implementation returns null; returning a non-null result will terminate
+	 * the switch. <!-- end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>Expression Context</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -438,13 +496,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Ga Analysis Context</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Ga Analysis Context</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Ga
+	 * Analysis Context</em>'. <!-- begin-user-doc --> This implementation
+	 * returns null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Ga
+	 *         Analysis Context</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -453,13 +513,15 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch, but this is the last case anyway.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
+	 * Returns the result of interpreting the object as an instance of
+	 * '<em>EObject</em>'. <!-- begin-user-doc --> This implementation returns
+	 * null; returning a non-null result will terminate the switch, but this is
+	 * the last case anyway. <!-- end-user-doc -->
+	 * 
+	 * @param object
+	 *            the target of the switch.
+	 * @return the result of interpreting the object as an instance of
+	 *         '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
 	 * @generated
 	 */
@@ -468,4 +530,4 @@ public class CHESSContractSwitch<T> extends Switch<T> {
 		return null;
 	}
 
-} //CHESSContractSwitch
+} // CHESSContractSwitch

@@ -22,35 +22,35 @@ import org.polarsys.chess.contracts.profile.chesscontract.SRAComponent;
 import org.polarsys.chess.contracts.profile.chesscontract.SubSystem;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!--
+ * end-user-doc -->
+ * 
  * @generated
  */
 public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContractFactory {
 	/**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates the default factory implementation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static CHESSContractFactory init() {
 		try {
-			CHESSContractFactory theCHESSContractFactory = (CHESSContractFactory)EPackage.Registry.INSTANCE.getEFactory(CHESSContractPackage.eNS_URI);
+			CHESSContractFactory theCHESSContractFactory = (CHESSContractFactory) EPackage.Registry.INSTANCE
+					.getEFactory(CHESSContractPackage.eNS_URI);
 			if (theCHESSContractFactory != null) {
 				return theCHESSContractFactory;
 			}
-		}
-		catch (Exception exception) {
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new CHESSContractFactoryImpl();
 	}
 
 	/**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates an instance of the factory. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CHESSContractFactoryImpl() {
@@ -58,33 +58,45 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case CHESSContractPackage.COMPONENT_INSTANCE: return createComponentInstance();
-			case CHESSContractPackage.CONTRACT_PROPERTY: return createContractProperty();
-			case CHESSContractPackage.CONTRACT_REFINEMENT: return createContractRefinement();
-			case CHESSContractPackage.FORMAL_PROPERTY: return createFormalProperty();
-			case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT: return createContractRefinementAnalysisContext();
-			case CHESSContractPackage.SYSTEM: return createSystem();
-			case CHESSContractPackage.CONTRACT: return createContract();
-			case CHESSContractPackage.FORMALIZE: return createFormalize();
-			case CHESSContractPackage.SUB_SYSTEM: return createSubSystem();
-			case CHESSContractPackage.CHESS_REQUIREMENT: return createCHESSRequirement();
-			case CHESSContractPackage.DELEGATION_CONSTRAINT: return createDelegationConstraint();
-			case CHESSContractPackage.SRA_COMPONENT: return createSRAComponent();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		case CHESSContractPackage.COMPONENT_INSTANCE:
+			return createComponentInstance();
+		case CHESSContractPackage.CONTRACT_PROPERTY:
+			return createContractProperty();
+		case CHESSContractPackage.CONTRACT_REFINEMENT:
+			return createContractRefinement();
+		case CHESSContractPackage.FORMAL_PROPERTY:
+			return createFormalProperty();
+		case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT:
+			return createContractRefinementAnalysisContext();
+		case CHESSContractPackage.SYSTEM:
+			return createSystem();
+		case CHESSContractPackage.CONTRACT:
+			return createContract();
+		case CHESSContractPackage.FORMALIZE:
+			return createFormalize();
+		case CHESSContractPackage.SUB_SYSTEM:
+			return createSubSystem();
+		case CHESSContractPackage.CHESS_REQUIREMENT:
+			return createCHESSRequirement();
+		case CHESSContractPackage.DELEGATION_CONSTRAINT:
+			return createDelegationConstraint();
+		case CHESSContractPackage.SRA_COMPONENT:
+			return createSRAComponent();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public org.polarsys.chess.contracts.profile.chesscontract.System createSystem() {
@@ -93,8 +105,8 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Contract createContract() {
@@ -103,8 +115,8 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public FormalProperty createFormalProperty() {
@@ -113,8 +125,8 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ContractRefinementAnalysisContext createContractRefinementAnalysisContext() {
@@ -123,8 +135,8 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Formalize createFormalize() {
@@ -133,8 +145,8 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public SubSystem createSubSystem() {
@@ -143,8 +155,8 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CHESSRequirement createCHESSRequirement() {
@@ -153,8 +165,8 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ContractProperty createContractProperty() {
@@ -163,8 +175,8 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ContractRefinement createContractRefinement() {
@@ -173,8 +185,8 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public DelegationConstraint createDelegationConstraint() {
@@ -183,8 +195,8 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public SRAComponent createSRAComponent() {
@@ -193,8 +205,8 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ComponentInstance createComponentInstance() {
@@ -203,17 +215,17 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CHESSContractPackage getCHESSContractPackage() {
-		return (CHESSContractPackage)getEPackage();
+		return (CHESSContractPackage) getEPackage();
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */
@@ -222,4 +234,4 @@ public class CHESSContractFactoryImpl extends EFactoryImpl implements CHESSContr
 		return CHESSContractPackage.eINSTANCE;
 	}
 
-} //CHESSContractFactoryImpl
+} // CHESSContractFactoryImpl
