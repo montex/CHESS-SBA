@@ -26,7 +26,7 @@ import org.eclipse.papyrus.uml.diagram.composite.edit.parts.ComponentCompositeEd
 import org.eclipse.papyrus.uml.diagram.composite.edit.parts.CompositeStructureDiagramEditPart;
 import org.polarsys.chess.core.notifications.ResourceNotification;
 import org.polarsys.chess.core.views.DiagramStatus;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
 
 /**

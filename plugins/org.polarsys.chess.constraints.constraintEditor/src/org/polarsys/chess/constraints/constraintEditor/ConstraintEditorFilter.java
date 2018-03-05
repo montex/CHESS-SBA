@@ -10,10 +10,10 @@
  ******************************************************************************/
 package org.polarsys.chess.constraints.constraintEditor;
 
-
 import org.eclipse.uml2.uml.Constraint;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
-import org.polarsys.chess.service.utils.SelectionUtil;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
+
 /**
  * It Filters the selected objects that are constraints. *
  */
@@ -25,7 +25,6 @@ public class ConstraintEditorFilter implements org.eclipse.jface.viewers.IFilter
 	@Override
 	public boolean select(Object selected) {
 
-	
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selected);
 
 		if (selectedUmlElement instanceof Constraint) {

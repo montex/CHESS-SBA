@@ -15,13 +15,13 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.uml2.uml.Class;
-import org.polarsys.chess.service.internal.model.ChessSystemModel;
-import org.polarsys.chess.service.utils.SelectionUtil;
+import org.polarsys.chess.service.core.model.ChessSystemModel;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
-import eu.fbk.eclipse.standardtools.ExecOcraCommands.services.OCRAExecService;
-import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
-import eu.fbk.eclipse.standardtools.dialogs.MessageTimeModelDialog;
-import eu.fbk.eclipse.standardtools.utils.OCRADirectoryUtil;
+import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService;
+import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
+import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
+import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
 
 /**
  * 
@@ -37,12 +37,13 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 		super("Contract-based Fault Tree");
 	}
 
-	Class umlSelectedComponent;
-	Resource umlSelectedResource;
-	boolean isDiscreteTime;
-	boolean showPopups;
-	String ossFilepath;
-	String resultFilePath;
+	private Class umlSelectedComponent;
+	private Resource umlSelectedResource;
+	private boolean isDiscreteTime;
+	private boolean showPopups;
+	private String ossFilepath;
+	private String resultFilePath;
+	private boolean usexTextValidation;
 	
 	@Override
 	public void execPreJobOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
@@ -51,6 +52,7 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 		 umlSelectedResource = umlSelectedComponent.eResource();
 		 isDiscreteTime = MessageTimeModelDialog.openQuestion();
 		 showPopups = false;
+		 usexTextValidation=true;
 		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 		 resultFilePath = ocraDirectoryUtil.getCommandFaultTreeGenResultPath(umlSelectedComponent.getName());
 	}
@@ -58,7 +60,7 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
-		ocraExecService.executeComputeFaultTree(umlSelectedComponent,umlSelectedResource, isDiscreteTime, showPopups,ossFilepath,resultFilePath,monitor);
+		ocraExecService.executeComputeFaultTree(umlSelectedComponent,umlSelectedResource, isDiscreteTime, usexTextValidation,showPopups,ossFilepath,resultFilePath,monitor);
 	}
 
 }

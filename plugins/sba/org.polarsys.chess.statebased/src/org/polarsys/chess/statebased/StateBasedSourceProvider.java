@@ -19,7 +19,7 @@ package org.polarsys.chess.statebased;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.core.views.ViewUtils;
 import org.polarsys.chess.core.views.DiagramStatus.DesignView;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
 import java.util.HashMap;
 import java.util.Map;

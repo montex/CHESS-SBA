@@ -41,7 +41,7 @@ import org.polarsys.chess.core.resourcelistener.ResourceSetListenerExtra;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.NotificationManager;
 import org.polarsys.chess.core.views.DiagramStatus;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 import org.polarsys.chess.validator.Activator;
 
 // TODO: Auto-generated Javadoc

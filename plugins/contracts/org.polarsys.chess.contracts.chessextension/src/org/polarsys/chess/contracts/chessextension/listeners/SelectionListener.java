@@ -25,8 +25,7 @@ import org.eclipse.ui.views.properties.PropertySheet;
 import org.polarsys.chess.contracts.chessextension.managers.PaletteManager;
 import org.polarsys.chess.core.resourcelistener.SelectionListenerExtra;
 import org.polarsys.chess.core.views.DiagramStatus;
-//import org.polarsys.chess.service.commands.SwitchSourceProvider;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
 public class SelectionListener extends SelectionListenerExtra {
 

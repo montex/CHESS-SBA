@@ -52,6 +52,7 @@ import org.eclipse.gmf.runtime.notation.impl.DiagramImpl;
 
 import org.polarsys.chess.fla.impl.FlaAnalysisRunner;
 import org.polarsys.chess.m2m.ui.AnalysisContextSelectionDialog;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationAnalysis;
 import org.polarsys.chess.chessmlprofile.util.Constants;
@@ -63,7 +64,6 @@ import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.sysml.diagram.internalblock.edit.part.InternalBlockDiagramEditPart;
 import org.eclipse.papyrus.uml.diagram.clazz.part.UMLDiagramEditor;
 import org.eclipse.papyrus.uml.diagram.composite.edit.parts.CompositeStructureDiagramEditPart;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
 
 public class FlaAnalysisCommand extends AbstractHandler {
 
@@ -85,7 +85,7 @@ public class FlaAnalysisCommand extends AbstractHandler {
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
+		final PapyrusMultiDiagramEditor editor = org.polarsys.chess.service.gui.utils.CHESSEditorUtils.getCHESSEditor();
 		final DiagramStatus ds = CHESSEditorUtils.getDiagramStatus(editor);
 		
 		Classifier rootComponent = null;

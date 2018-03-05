@@ -31,15 +31,14 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.polarsys.chess.OSSImporter.actions.ImportOSSFileAction;
-import org.polarsys.chess.service.utils.SelectionUtil;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
-
-import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.exceptions.NoResourceException;
-import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.utils.OCRARuntimeErrorsDialogUtil;
-import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
+import eu.fbk.eclipse.standardtools.utils.core.exceptions.NoResourceException;
+import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
+import eu.fbk.eclipse.standardtools.utils.ui.utils.ErrorsDialogUtil;
 
 public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 	private static final String SYSVIEW =	"CHESS::Core::CHESSViews::SystemView";
@@ -51,7 +50,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 	private File ossFile;
 	private Resource modelResource;
 	private boolean showNoErrorPopup = true;
-	private OCRARuntimeErrorsDialogUtil ocraRuntimeErrorsDialogUtil = OCRARuntimeErrorsDialogUtil.getInstance();
+	private ErrorsDialogUtil ocraRuntimeErrorsDialogUtil = ErrorsDialogUtil.getInstance();
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	
 	/**

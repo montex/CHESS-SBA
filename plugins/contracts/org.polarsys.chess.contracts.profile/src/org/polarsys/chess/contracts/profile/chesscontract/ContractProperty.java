@@ -11,23 +11,25 @@ import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStat
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Contract Property</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Contract
+ * Property</b></em>'. <!-- end-user-doc -->
  *
- * <!-- begin-model-doc -->
- * used to instantiate a contract in a given class/component.
- * Can extend a slot to represent contract instantiation for an InstanceSpecification
- * <!-- end-model-doc -->
+ * <!-- begin-model-doc --> used to instantiate a contract in a given
+ * class/component. Can extend a slot to represent contract instantiation for an
+ * InstanceSpecification <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getRefinedBy <em>Refined By</em>}</li>
- *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getContractType <em>Contract Type</em>}</li>
- *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getBase_Slot <em>Base Slot</em>}</li>
- *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getStatus <em>Status</em>}</li>
+ * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getRefinedBy
+ * <em>Refined By</em>}</li>
+ * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getContractType
+ * <em>Contract Type</em>}</li>
+ * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getBase_Slot
+ * <em>Base Slot</em>}</li>
+ * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getStatus
+ * <em>Status</em>}</li>
  * </ul>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContractProperty()
@@ -36,14 +38,16 @@ import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractType
  */
 public interface ContractProperty extends ConstraintProperty {
 	/**
-	 * Returns the value of the '<em><b>Refined By</b></em>' reference list.
-	 * The list contents are of type {@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement}.
+	 * Returns the value of the '<em><b>Refined By</b></em>' reference list. The
+	 * list contents are of type
+	 * {@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Refined By</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Refined By</em>' reference list.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContractProperty_RefinedBy()
 	 * @model ordered="false"
@@ -52,14 +56,16 @@ public interface ContractProperty extends ConstraintProperty {
 	EList<ContractRefinement> getRefinedBy();
 
 	/**
-	 * Returns the value of the '<em><b>Contract Type</b></em>' attribute.
-	 * The literals are from the enumeration {@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes}.
+	 * Returns the value of the '<em><b>Contract Type</b></em>' attribute. The
+	 * literals are from the enumeration
+	 * {@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Contract Type</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Contract Type</em>' attribute.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes
 	 * @see #setContractType(ContractTypes)
@@ -70,10 +76,13 @@ public interface ContractProperty extends ConstraintProperty {
 	ContractTypes getContractType();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getContractType <em>Contract Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Contract Type</em>' attribute.
+	 * Sets the value of the
+	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getContractType
+	 * <em>Contract Type</em>}' attribute. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
+	 * @param value
+	 *            the new value of the '<em>Contract Type</em>' attribute.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes
 	 * @see #getContractType()
 	 * @generated
@@ -81,13 +90,14 @@ public interface ContractProperty extends ConstraintProperty {
 	void setContractType(ContractTypes value);
 
 	/**
-	 * Returns the value of the '<em><b>Base Slot</b></em>' reference.
-	 * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Base Slot</b></em>' reference. <!--
+	 * begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Base Slot</em>' reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Base Slot</em>' reference isn't clear, there
+	 * really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Base Slot</em>' reference.
 	 * @see #setBase_Slot(Slot)
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContractProperty_Base_Slot()
@@ -97,24 +107,29 @@ public interface ContractProperty extends ConstraintProperty {
 	Slot getBase_Slot();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getBase_Slot <em>Base Slot</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Base Slot</em>' reference.
+	 * Sets the value of the
+	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getBase_Slot
+	 * <em>Base Slot</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
+	 * @param value
+	 *            the new value of the '<em>Base Slot</em>' reference.
 	 * @see #getBase_Slot()
 	 * @generated
 	 */
 	void setBase_Slot(Slot value);
 
 	/**
-	 * Returns the value of the '<em><b>Status</b></em>' attribute.
-	 * The literals are from the enumeration {@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus}.
+	 * Returns the value of the '<em><b>Status</b></em>' attribute. The literals
+	 * are from the enumeration
+	 * {@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Status</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Status</em>' attribute isn't clear, there
+	 * really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Status</em>' attribute.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus
 	 * @see #setStatus(ContractStatus)
@@ -125,10 +140,13 @@ public interface ContractProperty extends ConstraintProperty {
 	ContractStatus getStatus();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getStatus <em>Status</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Status</em>' attribute.
+	 * Sets the value of the
+	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractProperty#getStatus
+	 * <em>Status</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
+	 * @param value
+	 *            the new value of the '<em>Status</em>' attribute.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus
 	 * @see #getStatus()
 	 * @generated

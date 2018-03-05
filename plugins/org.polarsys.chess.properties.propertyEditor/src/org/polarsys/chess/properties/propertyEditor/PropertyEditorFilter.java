@@ -12,7 +12,7 @@ package org.polarsys.chess.properties.propertyEditor;
 
 import org.eclipse.uml2.uml.Constraint;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
-import org.polarsys.chess.service.utils.SelectionUtil;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 public class PropertyEditorFilter implements org.eclipse.jface.viewers.IFilter {
 
@@ -21,7 +21,7 @@ public class PropertyEditorFilter implements org.eclipse.jface.viewers.IFilter {
 
 	@Override
 	public boolean select(Object selection) {
-	
+
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selection);
 
 		if (selectedUmlElement instanceof Constraint) {

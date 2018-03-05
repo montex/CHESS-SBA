@@ -105,6 +105,10 @@
                            commandId="org.polarsys.chess.verificationService.commands.debug.RuntimeErrorsOnFileCommand"
                            style="push">
                      </command>
+                     <command
+                           commandId="org.polarsys.chess.verificationService.ui.commands.debug.RuntimeErrorsOnSMVFileCommand"
+                           style="push">
+                     </command>
                   </menu>
                   <command
                         commandId="org.polarsys.chess.verificationService.commands.ExportModelToFileCommand"
@@ -149,11 +153,11 @@
                         style="push">
                   </command>
                   <command
-                        commandId="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
+                        commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
                         style="push">
                   </command>
                   <command
-                        commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
+                        commandId="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
                         style="push">
                   </command>
                   <command
@@ -188,59 +192,117 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.ContractRefinementCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.ContractRefinementCommand"
             id="org.polarsys.chess.verificationService.commands.ContractRefinementCommand"
             name="Check Contract Refinement on selected component">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.debug.RuntimeErrorsOnFileCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.RuntimeErrorsOnOSSFileCommand"
             id="org.polarsys.chess.verificationService.commands.debug.RuntimeErrorsOnFileCommand"
             name="Check Grammar on .oss file">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.debug.ContractRefinementOnFileCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.ContractRefinementOnFileCommand"
             id="org.polarsys.chess.verificationService.commands.debug.ContractRefinementOnFileCommand"
             name="Check Contract Refinement on .oss file">
       </command>
        <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.debug.ContractImplementationOnFileCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.ContractImplementationOnFileCommand"
             			id="org.polarsys.chess.verificationService.commands.debug.ContractImplementationOnFileCommand"
             name="Check Contract Implementation on .oss and .smv files">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.ExportModelToFileCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.ExportModelToFileCommand"
             id="org.polarsys.chess.verificationService.commands.ExportModelToFileCommand"
             name="Export model as .oss file">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.ContractImplementationCommand"
             id="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
             name="Check Contract Implementation on selected component">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.ModelCheckingCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.ModelCheckingCommand"
             id="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
             name="Model Checking on selected component">
+         <commandParameter
+               id="isDiscrete"
+               name="isDiscrete"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="elementURI"
+               name="elementURI"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="projectName"
+               name="projectName"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="modelName"
+               name="modelName"
+               optional="true">
+         </commandParameter>
+         	<commandParameter
+               id="property"
+               name="Property"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="algorithm_type"
+               name="AlgorithmType"
+               optional="true"
+               values="bmc, bdd, ic3, klive">
+         </commandParameter>
+         <commandParameter
+               id="check_type"
+               name="CheckType"
+               optional="true"
+               values="invar, ltlspec, ctl">
+         </commandParameter>
+         <commandParameter
+               id="projectPath"
+               name="projectPath"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="isProgrExec"
+               name="isProgrExec"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="resultFilePath"
+               name="resultFilePath"
+               optional="true">
+         </commandParameter>
+         
       </command>
       <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.debug.ModelCheckingOnFileCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.ModelCheckingOnFileCommand"
             id="org.polarsys.chess.verificationService.commands.debug.ModelCheckingOnFileCommand"
             name="Model Checking on .smv file">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.CheckValidationPropertyCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.CheckValidationPropertyCommand"
             id="org.polarsys.chess.verificationService.commands.CheckValidationPropertyCommand2"
             name="Check Validation Property on selected component">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.debug.CheckValidationPropertyOnFileCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.CheckValidationPropertyOnFileCommand"
             id="org.polarsys.chess.verificationService.commands.debug.CheckValidationPropertyOnFileCommand"
             name="Check Validation Property on .oss file">
       </command>
       <command
-            defaultHandler="org.polarsys.chess.verificationService.commands.CompositeContractImplementationCommand"
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.CompositeContractImplementationCommand"
             id="org.polarsys.chess.verificationService.commands.CompositeContractImplementationCommand"
             name="Check Composite Contract Implementation on selected component">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.RuntimeErrorsOnSMVFileCommand"
+            id="org.polarsys.chess.verificationService.ui.commands.debug.RuntimeErrorsOnSMVFileCommand"
+            name="Check Grammar on .smv file">
       </command>
    </extension> 
 </plugin>

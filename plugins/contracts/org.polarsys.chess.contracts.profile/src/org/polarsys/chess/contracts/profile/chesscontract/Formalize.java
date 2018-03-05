@@ -7,15 +7,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Abstraction;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Formalize</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object
+ * '<em><b>Formalize</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Formalize#getBase_Abstraction <em>Base Abstraction</em>}</li>
+ * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.Formalize#getBase_Abstraction
+ * <em>Base Abstraction</em>}</li>
  * </ul>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getFormalize()
@@ -31,6 +31,7 @@ public interface Formalize extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Base Abstraction</em>' reference.
 	 * @see #setBase_Abstraction(Abstraction)
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getFormalize_Base_Abstraction()
@@ -40,10 +41,13 @@ public interface Formalize extends EObject {
 	Abstraction getBase_Abstraction();
 
 	/**
-	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.Formalize#getBase_Abstraction <em>Base Abstraction</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Base Abstraction</em>' reference.
+	 * Sets the value of the
+	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.Formalize#getBase_Abstraction
+	 * <em>Base Abstraction</em>}' reference. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
+	 * @param value
+	 *            the new value of the '<em>Base Abstraction</em>' reference.
 	 * @see #getBase_Abstraction()
 	 * @generated
 	 */

@@ -9,16 +9,15 @@ import org.eclipse.papyrus.sysml.blocks.internal.impl.BlockImpl;
 import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>System</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>System</b></em>'. <!-- end-user-doc -->
  *
  * @generated
  */
 public class SystemImpl extends BlockImpl implements org.polarsys.chess.contracts.profile.chesscontract.System {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected SystemImpl() {
@@ -26,8 +25,8 @@ public class SystemImpl extends BlockImpl implements org.polarsys.chess.contract
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -35,4 +34,4 @@ public class SystemImpl extends BlockImpl implements org.polarsys.chess.contract
 		return CHESSContractPackage.Literals.SYSTEM;
 	}
 
-} //SystemImpl
+} // SystemImpl

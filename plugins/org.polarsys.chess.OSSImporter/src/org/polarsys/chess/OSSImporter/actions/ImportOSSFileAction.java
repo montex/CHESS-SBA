@@ -44,8 +44,8 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 
 import com.google.inject.Injector;
 
-import eu.fbk.eclipse.standardtools.parser.ParseHelper;
-import eu.fbk.eclipse.standardtools.utils.FileSystemUtil;
+import eu.fbk.eclipse.standardtools.utils.core.parser.ParseHelper;
+import eu.fbk.eclipse.standardtools.utils.core.utils.FileSystemUtil;
 import eu.fbk.tools.editor.basetype.baseType.*;
 import eu.fbk.tools.editor.contract.contract.Assumption;
 import eu.fbk.tools.editor.contract.contract.Contract;

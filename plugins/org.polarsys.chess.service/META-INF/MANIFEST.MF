@@ -19,10 +19,9 @@ Require-Bundle: org.eclipse.core.runtime,
  eu.fbk.eclipse.standardtools.utils,
  org.polarsys.chess.contracts.profile
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: org.polarsys.chess.service.exceptions,
- org.polarsys.chess.service.internal.commands.switchers,
- org.polarsys.chess.service.internal.model,
- org.polarsys.chess.service.utils;
+Export-Package: org.polarsys.chess.service.core.exceptions,
+ org.polarsys.chess.service.core.model,
+ org.polarsys.chess.service.gui.utils;
   uses:="org.eclipse.ui,
    org.eclipse.papyrus.infra.core.services,
    org.eclipse.papyrus.editor,
@@ -31,7 +30,8 @@ Export-Package: org.polarsys.chess.service.exceptions,
    org.eclipse.gmf.runtime.diagram.ui.editparts,
    org.eclipse.gmf.runtime.notation,
    org.polarsys.chess.core.views,
-   org.eclipse.ui.part"
+   org.eclipse.ui.part",
+ org.polarsys.chess.service.internal.commands.switchers
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
 Import-Package: org.apache.log4j;version="1.2.15",

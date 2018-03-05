@@ -35,7 +35,7 @@ public class CHESSComponentNode extends ComponentNode {
 	public void createChildren(Object associatedObject, List<TreeNode> children) {
 		for (Property umlProperty : ((Class) entityUtil.getUmlType((Property) associatedObject)).getAttributes()) {
 			if (contractEntityUtil.isContractProperty(umlProperty)) {
-				children.add(new ContractNode(this, ((Class)entityUtil.getUmlType(umlProperty)).getName()));
+				children.add(new ContractNode(this, ((Class) entityUtil.getUmlType(umlProperty)).getName()));
 			} else if (entityUtil.isComponentInstance(umlProperty)) {
 				children.add(new CHESSComponentNode(this, umlProperty));
 			}
@@ -45,9 +45,9 @@ public class CHESSComponentNode extends ComponentNode {
 
 	@Override
 	public String getName(Object associatedObject) {
-		String typeName = ((Class)entityUtil.getUmlType((Property) associatedObject)).getName();
+		String typeName = ((Class) entityUtil.getUmlType((Property) associatedObject)).getName();
 		String propertyName = ((Property) associatedObject).getName();
 		return propertyName + ":" + typeName;
-		}
+	}
 
 }
