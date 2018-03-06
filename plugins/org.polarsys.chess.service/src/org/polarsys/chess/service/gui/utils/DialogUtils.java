@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
-import eu.fbk.eclipse.standardtools.utils.ui.utils.DirectoryUtil;
+import eu.fbk.eclipse.standardtools.utils.core.utils.DirectoryUtil;
 
 /**
  * 
