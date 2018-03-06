@@ -76,12 +76,12 @@ public class UMLStateMachineModel implements AbstractStateMachineModel {
 	}
 
 	@Override
-	public EList<Transition> getStartTransitions(Object stateMachine) throws Exception {
+	public EList<Transition> getInitTransitions(Object stateMachine) throws Exception {
 		return entityUtil.getInitialTransitions((StateMachine) stateMachine);
 	}
 
 	@Override
-	public EList<Transition> getNonStartTransitions(Object stateMachine) {
+	public EList<Transition> getNonInitTransitions(Object stateMachine) {
 		return entityUtil.getNonInitialTransitions((StateMachine) stateMachine);
 	}
 
@@ -211,5 +211,15 @@ public class UMLStateMachineModel implements AbstractStateMachineModel {
 	public Object getStateMachineOwner(Object stateMachine) {
 		return entityUtil.getOwner((StateMachine) stateMachine);
 
+	}
+
+	@Override
+	public EList<String> getInitTransitionsNameList(Object stateMachine) throws Exception {
+		return entityUtil.getTransitionNameList(entityUtil.getInitialTransitions((StateMachine) stateMachine));
+	}
+
+	@Override
+	public EList<String> getNonInitTransitionsNameList(Object stateMachine) throws Exception {
+		return entityUtil.getTransitionNameList(entityUtil.getNonInitialTransitions((StateMachine) stateMachine));
 	}
 }
