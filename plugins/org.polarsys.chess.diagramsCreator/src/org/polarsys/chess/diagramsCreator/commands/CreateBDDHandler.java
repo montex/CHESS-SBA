@@ -16,15 +16,15 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.uml2.uml.Class;
-import org.polarsys.chess.diagramsCreator.actions.ShowIBDElementsAction;
+import org.eclipse.uml2.uml.Package;
+import org.polarsys.chess.diagramsCreator.actions.ShowBDDElementsAction;
 import org.polarsys.chess.diagramsCreator.utils.Utils;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
-public class CreateSingleIBDHandler extends AbstractHandler {
-	private static final String DIALOG_TITLE =	"Single IBD creator";
+public class CreateBDDHandler extends AbstractHandler {
+	private static final String DIALOG_TITLE =	"BDD creator";
 	
-	public CreateSingleIBDHandler() {
+	public CreateBDDHandler() {
 	}
 
 	@Override
@@ -32,24 +32,21 @@ public class CreateSingleIBDHandler extends AbstractHandler {
 		final ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
 		final Object umlObject = SelectionUtil.getInstance().getUmlSelectedObject(selection);
 
-		ShowIBDElementsAction action = new ShowIBDElementsAction();
+		if (Utils.objectIsSystemViewPackage(umlObject)) {
 
-		if (umlObject instanceof Class) {
+			Package pkg = (Package) umlObject;
 
+			ShowBDDElementsAction action = new ShowBDDElementsAction();
+			
 			try {
-				final Diagram diagram = action.addIBD((Class) umlObject);
-
-				action.populateDiagram(diagram, umlObject);
-
+				Diagram diagram = action.addBDD(pkg);
+				action.populateDiagram(diagram);
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
-
 		} else {
-			Utils.showMessage(DIALOG_TITLE, "Please select a Block from the <<SystemView>> package");
+			Utils.showMessage(DIALOG_TITLE, "Please select a package from <<SystemView>>");
 		}
-
 		return null;
 	}
-
 }

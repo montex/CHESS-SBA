@@ -12,8 +12,8 @@ package org.polarsys.chess.diagramsCreator.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
-import eu.fbk.eclipse.standardtools.commands.AbstractJobCommand;
-import eu.fbk.eclipse.standardtools.utils.CommandBuilder;
+import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
+import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 
 public class CreateIBDSingleCommand extends AbstractJobCommand {
 

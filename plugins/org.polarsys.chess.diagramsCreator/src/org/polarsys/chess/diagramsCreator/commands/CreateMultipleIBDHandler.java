@@ -24,7 +24,8 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUti
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.diagramsCreator.actions.ShowIBDElementsAction;
 import org.polarsys.chess.diagramsCreator.utils.Utils;
-import org.polarsys.chess.service.utils.SelectionUtil;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
+
 
 public class CreateMultipleIBDHandler extends AbstractHandler {
 	private static final String DIALOG_TITLE =	"Multiple IBD creator";
