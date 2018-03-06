@@ -37,24 +37,22 @@ public class CreateMultipleIBDHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
 		final Object umlObject = SelectionUtil.getInstance().getUmlSelectedObject(selection);
-		ShowIBDElementsAction action = new ShowIBDElementsAction();
+		final ShowIBDElementsAction action = new ShowIBDElementsAction();
 		
-		if (Utils.objectIsSystemViewPackage(umlObject)) {
+		if (Utils.isSystemViewPackage((Element) umlObject)) {
 			
 			// Now browse all the blocks and create the diagram
-			Package pkg = (Package) umlObject;
+			final Package pkg = (Package) umlObject;
 			
-			EList<Element> packageChildren = pkg.getOwnedElements();
+			final EList<Element> packageChildren = pkg.getOwnedElements();
 			
 			for (Element element : packageChildren) {
 				
 				if (EntityUtil.getInstance().isBlock(element) && !ContractEntityUtil.getInstance().isContract(element)) {
-					Diagram diagram;
 					try {
-						diagram = action.addIBD((Class) element);
+						final Diagram diagram = action.addIBD((Class) element);
 						action.populateDiagram(diagram, element);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

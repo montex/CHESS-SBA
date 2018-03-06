@@ -56,6 +56,7 @@ import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
+import org.polarsys.chess.diagramsCreator.utils.Utils;
 
 public class ShowIBDElementsAction extends ShowHideContentsAction {
 
@@ -68,14 +69,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	/** Selection of all the possible elements */
 	private List<Object> selection;
 
-	/**
-	 * Prints a message on the console.
-	 * @param message the message to print
-	 */
-	private void printMessageOnOut(String message) {
-//		System.out.println(message);	// Comment to avoid printing
-	}
-	
 	/**
 	 * Adds a IBD diagram to the given block.
 	 * @param owner the selected block
@@ -117,12 +110,12 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			
 			final EditPartRepresentation editPartRepresentation = (EditPartRepresentation) results[i];
 
-			printMessageOnOut("\n\n\nWorking on results[" + i + "] = " + editPartRepresentation);
+			Utils.printMessageOnOut("\n\n\nWorking on results[" + i + "] = " + editPartRepresentation);
 			
 			final Element semanticElement = (Element) editPartRepresentation.getSemanticElement();
 			
-			printMessageOnOut("Semantic Element = " + semanticElement);
-			printMessageOnOut("Label = " + editPartRepresentation.getLabel());
+			Utils.printMessageOnOut("Semantic Element = " + semanticElement);
+			Utils.printMessageOnOut("Label = " + editPartRepresentation.getLabel());
 			
 			// If the element is interesting, add it
 			if(entityUtil.isPort(semanticElement) || 
@@ -148,20 +141,20 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 */
 	private void contributeToSelection(List<Object> listToComplete, EditPartRepresentation representation) {
 		
-		printMessageOnOut("\n\nrepresentation = " + representation);
-		printMessageOnOut("\tlistToComplete.size = " + listToComplete.size());
+		Utils.printMessageOnOut("\n\nrepresentation = " + representation);
+		Utils.printMessageOnOut("\tlistToComplete.size = " + listToComplete.size());
 		
 		listToComplete.addAll(representation.getPossibleElement());
 
-		printMessageOnOut("\tlistToComplete.size = " + listToComplete.size());
+		Utils.printMessageOnOut("\tlistToComplete.size = " + listToComplete.size());
 		
 		final List<EditPartRepresentation> children = representation.getPossibleElement();
 		
-		printMessageOnOut("\tChildren di representation size = " + children.size());
+		Utils.printMessageOnOut("\tChildren di representation size = " + children.size());
 		
 		if (children != null) {
 			for (EditPartRepresentation child : children) {
-				printMessageOnOut("Working on child " + child);
+				Utils.printMessageOnOut("Working on child " + child);
 				contributeToSelection(listToComplete, child);
 			}
 		}
@@ -197,8 +190,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			final EditPart editPart = ((OptionalEditPartRepresentation) rep).getParentRepresentation().getParentRepresentation().getRepresentedEditPart();
 			final View compartmentView = ((OptionalEditPartRepresentation) rep).getParentRepresentation().getRepresentedEditPart().getNotationView();
 
-			printMessageOnOut("\n\nep = " + editPart);
-			printMessageOnOut("compView = " + compartmentView);
+			Utils.printMessageOnOut("\n\nep = " + editPart);
+			Utils.printMessageOnOut("compView = " + compartmentView);
 
 			// Get the width of the component to set the position of output ports
 			final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) editPart).getNotationView();
@@ -252,15 +245,15 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		// Get the compartment edit part
 		IGraphicalEditPart compartmentEP = (IGraphicalEditPart) elementEP.getChildren().get(1);
 		
-		printMessageOnOut("\nCompartment edit part = " + compartmentEP);
+		Utils.printMessageOnOut("\nCompartment edit part = " + compartmentEP);
 
 		List<?>compartmentChildren = compartmentEP.getChildren();
 		for (Object childEP : compartmentChildren) {
-			printMessageOnOut("child of compartment = " + childEP);
+			Utils.printMessageOnOut("child of compartment = " + childEP);
 			
 			// Get the UML element associated to the EP
 			EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
-			printMessageOnOut("SemanticElement del compartment = " + semanticElement);
+			Utils.printMessageOnOut("SemanticElement del compartment = " + semanticElement);
 									
 			if (semanticElement instanceof Property) {			
 			
@@ -286,7 +279,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 						
 						ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
 						
-						printMessageOnOut("req = " + request);
+						Utils.printMessageOnOut("req = " + request);
 						
 						if (EntityUtil.getInstance().isInputPort(port)) {
 							portLocationLeft.y += INCREMENT;
@@ -297,8 +290,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 						}
 
 						Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);	// Cannot be the diagram EditPart
-						printMessageOnOut("cmd = " + cmd);
-						printMessageOnOut("cmd label = " + cmd.getLabel());
+						Utils.printMessageOnOut("cmd = " + cmd);
+						Utils.printMessageOnOut("cmd label = " + cmd.getLabel());
 						if (cmd != null && cmd.canExecute()) {
 							((CompoundCommand) command).add(cmd);
 						}
@@ -402,12 +395,12 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 */
 	private EditPart getPortEditPart(Port role, Property property, View elementView) {
 
-		printMessageOnOut("\n\nLooking for port " + role.getQualifiedName());
+		Utils.printMessageOnOut("\n\nLooking for port " + role.getQualifiedName());
 
 		// If the port is inside a component instance, go inside the element
 		if (property != null) {
 			
-			printMessageOnOut("Containing property: " + property.getQualifiedName());
+			Utils.printMessageOnOut("Containing property: " + property.getQualifiedName());
 
 			// Get the comparment view of the element 
 			View compartmentView = (View) elementView.getChildren().get(1);
@@ -421,7 +414,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 					if (shape.getElement() instanceof Property) {
 						Property propertyImpl = (Property) shape.getElement();
 						if (propertyImpl != null) {
-//							printMessageOnOut("\tpropertyImpl qualifiedName = " + propertyImpl.getQualifiedName());
+//							Utils.printMessageOnOut("\tpropertyImpl qualifiedName = " + propertyImpl.getQualifiedName());
 
 							if (property.getQualifiedName().equals(propertyImpl.getQualifiedName())) {
 
@@ -432,7 +425,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 									IGraphicalEditPart ep = (IGraphicalEditPart) getEditPartFromView((View) childView);
 									if (ep instanceof FlowPortAffixedNodeEditPart || ep instanceof PortAffixedNodeEditPart) {
 										if (role == ep.resolveSemanticElement()) {
-											printMessageOnOut("\nPort found in part, view = "  + ep);
+											Utils.printMessageOnOut("\nPort found in part, view = "  + ep);
 											return ep;
 										}
 									}
@@ -450,7 +443,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				IGraphicalEditPart ep = (IGraphicalEditPart) getEditPartFromView((View) childView);
 				if (ep instanceof FlowPortAffixedNodeEditPart || ep instanceof PortAffixedNodeEditPart) {
 					if (role == ep.resolveSemanticElement()) {
-						printMessageOnOut("\nPort found in main elemement, view = "  + ep);
+						Utils.printMessageOnOut("\nPort found in main elemement, view = "  + ep);
 						return ep;
 					}
 				}
@@ -521,8 +514,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				targetEP = getPortEditPart((Port) targetEnd.getRole(), targetEnd.getPartWithPort(), elementView);
 			}
 
-			printMessageOnOut("\n\nFound sourceEP = " + sourceEP);
-			printMessageOnOut("\nFound targetEP = " + targetEP);
+			Utils.printMessageOnOut("\n\nFound sourceEP = " + sourceEP);
+			Utils.printMessageOnOut("\nFound targetEP = " + targetEP);
 
 			if (sourceEP != null && targetEP != null) {
 				Command cmd = getShowLinkCommand(sourceEP, targetEP, connector);
@@ -554,7 +547,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 
 		// The main EditPart 
 		final IGraphicalEditPart selectedElementEP = (IGraphicalEditPart) diagramEP.getChildren().get(0);
-		printMessageOnOut("\n\nselectedElement EditPart = " + selectedElementEP + "\n\n");
+		Utils.printMessageOnOut("\n\nselectedElement EditPart = " + selectedElementEP + "\n\n");
 		
 		// Add the selected element to the list, there could be more than one...
 		selectedElements = new ArrayList<IGraphicalEditPart>();
@@ -566,7 +559,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		// Get a selection with all the possible elements
 		buildSelection();
 				
-		printMessageOnOut("Selection size = " + selection.size());
+		Utils.printMessageOnOut("Selection size = " + selection.size());
 		
 		if (selection.size() > 0) {
 			

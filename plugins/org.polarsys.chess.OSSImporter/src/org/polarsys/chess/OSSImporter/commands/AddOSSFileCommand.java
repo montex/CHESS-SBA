@@ -215,7 +215,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 	
 //		System.out.println("selectedUmlElement: " + umlObject);
 		
-		if (isSystemViewPackage((Element)umlObject)) {
+		if (isSystemViewPackage((Element) umlObject)) {
 			ossFile = getOSSFile();
 
 			final String[] errors = showRuntimeErrors(modelResource, ossFile, showNoErrorPopup, monitor);

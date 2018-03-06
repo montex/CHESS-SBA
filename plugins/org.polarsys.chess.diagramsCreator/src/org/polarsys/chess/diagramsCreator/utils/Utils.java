@@ -13,6 +13,7 @@ package org.polarsys.chess.diagramsCreator.utils;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 
 public class Utils {
@@ -32,7 +33,7 @@ public class Utils {
 	 * @param pkg the selected object 
 	 * @return true if the package is valid
 	 */
-	public static boolean objectIsSystemViewPackage(Object obj) {
+	public static boolean isSystemViewPackage(Element obj) {
 		if (obj instanceof Package) {
 			final Package pkg = (Package) obj;
 			if(pkg.getAppliedStereotype(SYSVIEW) != null) {
@@ -47,5 +48,13 @@ public class Utils {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Prints a message on the console.
+	 * @param message the message to print
+	 */
+	public static void printMessageOnOut(String message) {
+//		System.out.println(message);	// Comment to avoid printing
 	}
 }

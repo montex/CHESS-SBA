@@ -41,9 +41,12 @@ public class CreateBDDCommand extends AbstractJobCommand {
 		//FIXME: I should be sure that the command was executed in a correct way
 		final String ARRANGE_COMMAND = "org.eclipse.papyrus.uml.diagram.menu.commands.ArrangeAllCommand";
 		try {
-			CommandBuilder arrangeElements = CommandBuilder.build(ARRANGE_COMMAND);
+			final CommandBuilder arrangeElements = CommandBuilder.build(ARRANGE_COMMAND);
 			arrangeElements.execute();
-			arrangeElements.execute(); // Call it twice, the second run is better than the first
+			
+			// Call it twice, the second run improves the first
+			Thread.sleep(500);
+			arrangeElements.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

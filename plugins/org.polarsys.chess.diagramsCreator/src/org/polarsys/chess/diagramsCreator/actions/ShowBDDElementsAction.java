@@ -17,7 +17,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
@@ -40,7 +39,6 @@ import org.eclipse.papyrus.infra.gmfdiag.common.utils.ServiceUtilsForEditPart;
 import org.eclipse.papyrus.infra.gmfdiag.css.CSSShapeImpl;
 import org.eclipse.papyrus.sysml.diagram.blockdefinition.BlockDefinitionDiagramCreateCommand;
 import org.eclipse.papyrus.uml.diagram.common.actions.ShowHideContentsAction;
-import org.eclipse.papyrus.uml.diagram.menu.actions.ArrangeAction;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -49,8 +47,7 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-
-import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
+import org.polarsys.chess.diagramsCreator.utils.Utils;
 
 import org.eclipse.gmf.runtime.diagram.ui.requests.DropObjectsRequest;
 
@@ -89,14 +86,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
-	 * Prints a message on the console.
-	 * @param message the message to print
-	 */
-	private void printMessageOnOut(String message) {
-//		System.out.println(message);	// Comment to avoid printing
-	}
-
-	/**
 	 * Adds a IBD diagram to the given block.
 	 * @param owner the selected block
 	 * @throws Exception
@@ -126,8 +115,8 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		
 		for (Object child : childrenView) {
 			View childView = (View) child;
-			printMessageOnOut("child View = " + child);
-			printMessageOnOut("\telement of view = " + childView.getElement());
+			Utils.printMessageOnOut("child View = " + child);
+			Utils.printMessageOnOut("\telement of view = " + childView.getElement());
 			
 			if (EntityUtil.getInstance().isSystem((Element) childView.getElement())) {
 
@@ -178,20 +167,20 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	 */
 	private void contributeToSelection(List<Object> listToComplete, EditPartRepresentation representation) {
 		
-		printMessageOnOut("\n\nrepresentation = " + representation);
-		printMessageOnOut("\tlistToComplete.size = " + listToComplete.size());
+		Utils.printMessageOnOut("\n\nrepresentation = " + representation);
+		Utils.printMessageOnOut("\tlistToComplete.size = " + listToComplete.size());
 		
 		listToComplete.addAll(representation.getPossibleElement());
 
-		printMessageOnOut("\tlistToComplete.size = " + listToComplete.size());
+		Utils.printMessageOnOut("\tlistToComplete.size = " + listToComplete.size());
 		
 		final List<EditPartRepresentation> children = representation.getPossibleElement();
 		
-		printMessageOnOut("\tChildren di representation size = " + children.size());
+		Utils.printMessageOnOut("\tChildren di representation size = " + children.size());
 		
 		if (children != null) {
 			for (EditPartRepresentation child : children) {
-				printMessageOnOut("Working on child " + child);
+				Utils.printMessageOnOut("Working on child " + child);
 				contributeToSelection(listToComplete, child);
 			}
 		}
@@ -224,13 +213,13 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 			
 			final EditPartRepresentation editPartRepresentation = (EditPartRepresentation) results[i];
 
-			printMessageOnOut("\n\n\nWorking on results[" + i + "] = " + editPartRepresentation);
+			Utils.printMessageOnOut("\n\n\nWorking on results[" + i + "] = " + editPartRepresentation);
 			
 			final Element semanticElement = (Element) editPartRepresentation.getSemanticElement();
 			
-			printMessageOnOut("Semantic Element = " + semanticElement);
-			printMessageOnOut("Label = " + editPartRepresentation.getLabel());
-			printMessageOnOut("Parent = " + editPartRepresentation.getParentRepresentation());
+			Utils.printMessageOnOut("Semantic Element = " + semanticElement);
+			Utils.printMessageOnOut("Label = " + editPartRepresentation.getLabel());
+			Utils.printMessageOnOut("Parent = " + editPartRepresentation.getParentRepresentation());
 			
 			// If the element is interesting, add it
 			if((entityUtil.isPort(semanticElement) && 
@@ -275,7 +264,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		// Get the EditPart associated to the diagram
 		final IGraphicalEditPart diagramEP = OffscreenEditPartFactory.getInstance().createDiagramEditPart(diagram, shell);
 		
-		printMessageOnOut("diagram = " + diagram);
+		Utils.printMessageOnOut("diagram = " + diagram);
 		
 		Package pkg = (Package) diagramEP.resolveSemanticElement();
 				
@@ -283,17 +272,17 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		
 		IEditorPart ed =  PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		
-		printMessageOnOut("ed = " + ed);
+		Utils.printMessageOnOut("ed = " + ed);
 		
 		IEditorPart activeEditor = ((PapyrusMultiDiagramEditor) ed).getActiveEditor();
 		
-		printMessageOnOut("activeEditor = " + activeEditor);
+		Utils.printMessageOnOut("activeEditor = " + activeEditor);
 
 		// First loop to draw Block elements and contracts
 		for (Element element : packageChildren) {
 //			if (EntityUtil.getInstance().isBlock(element) && !ContractEntityUtil.getInstance().isContract(element)) {
 			if (EntityUtil.getInstance().isBlock(element)) {
-				printMessageOnOut("calling showElementIn for element = " + element);
+				Utils.printMessageOnOut("calling showElementIn for element = " + element);
 				showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1);
 			}
 		}
@@ -320,7 +309,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		// Get a selection with all the possible elements
 		buildSelection();
 
-		printMessageOnOut("Selection size = " + selection.size());
+		Utils.printMessageOnOut("Selection size = " + selection.size());
 
 		// Draw the innter attributes
 		if (selection.size() > 0) {
@@ -339,76 +328,9 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		// Second loop to draw Associations
 		for (Element element : packageChildren) {
 			if (element instanceof Association) {
-				printMessageOnOut("calling showElementIn for Association = " + element);
+				Utils.printMessageOnOut("calling showElementIn for Association = " + element);
 				showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1);
 			}
 		}
-
-		
-		
-		diagramEP.refresh();
-		EcoreUtil.resolveAll(getEditingDomain(diagramEP).getResourceSet());
-		
-		// TODO: qui devo invocare il mio comando o meglio quello gia' presente.
-		
-		// devo aspettare che i comandi finiscano, come?
-		
-		// Arrange elements
-		List<IGraphicalEditPart> l = new ArrayList<IGraphicalEditPart>();
-		l.add((IGraphicalEditPart) diagramEP);
-		
-		ArrangeAction action = new ArrangeAction(ArrangeAction.ARRANGE_ALL, l);
-		Command cmd = action.getCommand();
-		
-		
-		
-		if (cmd.canExecute()) {
-			//		cmd.execute();
-		}
-		
-//		String ID_COMMAND = "org.eclipse.papyrus.uml.diagram.menu.commands.ArrangeAllCommand";
-		String ID_COMMAND = "org.polarsys.chess.diagramsCreator.command1";
-		try {
-			CommandBuilder checkContractImplementation = CommandBuilder.build(ID_COMMAND);
-//			checkContractImplementation.execute();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
 	}
-	
-	
-	public void modelCheckingCommand(String behaviour_model_filePath, String property, String alg_type, String check_type,String resultFilePath)
-			throws Exception {
-
-		String ID_COMMAND = "eu.fbk.tools.adapter.ui.commands.behaviour.CheckModel";
-		String ID_PARAMETER_BEHAVIOUR_MODEL = "behaviour_model";
-		String ID_PARAMETER_PROPERTY = "property";
-		String ID_PARAMETER_ALG_TYPE = "algorithm_type";
-		String ID_PARAMETER_CHECK_TYPE = "check_type";
-		String ID_PARAMETER_RESULT_FILE = "result_file";
-		
-		String behaviour_model_Path = behaviour_model_filePath;
-				//behaviour_model_file.getPath()
-				//.replace('\\', '/')
-				;
-
-		System.out.println("result file : "+resultFilePath);
-		
-		CommandBuilder checkContractImplementation = CommandBuilder.build(ID_COMMAND);
-		checkContractImplementation.setParameter(ID_PARAMETER_BEHAVIOUR_MODEL, behaviour_model_Path);
-		checkContractImplementation.setParameter(ID_PARAMETER_PROPERTY, property);
-		
-		checkContractImplementation.setParameter(ID_PARAMETER_ALG_TYPE, alg_type);
-		
-		//checkContractImplementation.setParameter(ID_PARAMETER_ALG_TYPE, "");		
-		checkContractImplementation.setParameter(ID_PARAMETER_CHECK_TYPE, check_type);
-		checkContractImplementation.setParameter(ID_PARAMETER_RESULT_FILE, resultFilePath);
-		checkContractImplementation.execute();
-	}
-
-	
-	
 }

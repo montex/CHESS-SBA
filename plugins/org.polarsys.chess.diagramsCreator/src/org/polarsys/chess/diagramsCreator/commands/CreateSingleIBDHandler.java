@@ -32,23 +32,20 @@ public class CreateSingleIBDHandler extends AbstractHandler {
 		final ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
 		final Object umlObject = SelectionUtil.getInstance().getUmlSelectedObject(selection);
 
-		ShowIBDElementsAction action = new ShowIBDElementsAction();
+		final ShowIBDElementsAction action = new ShowIBDElementsAction();
 
 		if (umlObject instanceof Class) {
 
 			try {
 				final Diagram diagram = action.addIBD((Class) umlObject);
-
 				action.populateDiagram(diagram, umlObject);
 
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
-
 		} else {
 			Utils.showMessage(DIALOG_TITLE, "Please select a Block from the <<SystemView>> package");
 		}
-
 		return null;
 	}
 

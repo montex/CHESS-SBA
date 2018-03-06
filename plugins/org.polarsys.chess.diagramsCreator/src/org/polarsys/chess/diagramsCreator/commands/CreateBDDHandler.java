@@ -16,6 +16,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.diagramsCreator.actions.ShowBDDElementsAction;
 import org.polarsys.chess.diagramsCreator.utils.Utils;
@@ -32,14 +33,12 @@ public class CreateBDDHandler extends AbstractHandler {
 		final ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
 		final Object umlObject = SelectionUtil.getInstance().getUmlSelectedObject(selection);
 
-		if (Utils.objectIsSystemViewPackage(umlObject)) {
-
-			Package pkg = (Package) umlObject;
-
-			ShowBDDElementsAction action = new ShowBDDElementsAction();
+		if (Utils.isSystemViewPackage((Element) umlObject)) {
+			final Package pkg = (Package) umlObject;
+			final ShowBDDElementsAction action = new ShowBDDElementsAction();
 			
 			try {
-				Diagram diagram = action.addBDD(pkg);
+				final Diagram diagram = action.addBDD(pkg);
 				action.populateDiagram(diagram);
 			} catch (Exception e) {
 				e.printStackTrace();
