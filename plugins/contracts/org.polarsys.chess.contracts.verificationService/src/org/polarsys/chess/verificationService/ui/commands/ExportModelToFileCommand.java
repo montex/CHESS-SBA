@@ -53,7 +53,7 @@ public class ExportModelToFileCommand extends AbstractJobCommand {
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		umlSelectedResource = umlSelectedComponent.eResource();
-		isDiscreteTime = MessageTimeModelDialog.openQuestion();
+		isDiscreteTime = MessageTimeModelDialog.openQuestion(false);
 		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 		showPopups = true;
 		usexTextValidation=true;

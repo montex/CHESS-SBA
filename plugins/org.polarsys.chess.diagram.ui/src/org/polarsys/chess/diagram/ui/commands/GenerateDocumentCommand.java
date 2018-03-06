@@ -71,7 +71,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
-		isDiscreteTime = MessageTimeModelDialog.openQuestion();
+		isDiscreteTime = MessageTimeModelDialog.openQuestion(false);
 		outputDirectoryName = dialogUtils.getDirectoryNameFromDialog();
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();
