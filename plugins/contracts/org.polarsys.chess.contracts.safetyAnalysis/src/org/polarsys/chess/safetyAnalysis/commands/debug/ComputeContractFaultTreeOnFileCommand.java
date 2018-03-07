@@ -36,7 +36,7 @@ public class ComputeContractFaultTreeOnFileCommand extends AbstractAsyncJobComma
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 	
-		boolean isDiscreteTime = MessageTimeModelDialog.openQuestion();
+		boolean isDiscreteTime = MessageTimeModelDialog.openQuestion(true);
 		ocraExecService.executeComputeFaultTree(isDiscreteTime, monitor);
 	}
 

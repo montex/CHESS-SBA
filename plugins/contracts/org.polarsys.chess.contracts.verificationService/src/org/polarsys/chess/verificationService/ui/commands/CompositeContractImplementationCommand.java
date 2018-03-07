@@ -40,7 +40,7 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		umlSelectedResource = umlSelectedComponent.eResource();
-		isDiscreteTime = MessageTimeModelDialog.openQuestion();
+		isDiscreteTime = MessageTimeModelDialog.openQuestion(true);
 		showPopups = false;
 		usexTextValidation=true;
 		smvMapFilepath = ocraDirectoryUtil.getSmvMapFilePath();

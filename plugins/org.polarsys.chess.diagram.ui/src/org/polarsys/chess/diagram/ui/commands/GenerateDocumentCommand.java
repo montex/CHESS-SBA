@@ -34,9 +34,9 @@ import eu.fbk.eclipse.standardtools.diagram.DiagramDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.DocumentGenerator;
 import eu.fbk.eclipse.standardtools.diagram.ui.dialog.ModelToDocumentDialog;
 import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.DocumentGeneratorServiceFromOssModel;
+import eu.fbk.eclipse.standardtools.utils.core.utils.DirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
-import eu.fbk.eclipse.standardtools.utils.ui.utils.DirectoryUtil;
 import eu.fbk.tools.editor.oss.oss.OSS;
 
 public class GenerateDocumentCommand extends AbstractJobCommand {
@@ -71,7 +71,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
-		isDiscreteTime = MessageTimeModelDialog.openQuestion();
+		isDiscreteTime = MessageTimeModelDialog.openQuestion(false);
 		outputDirectoryName = dialogUtils.getDirectoryNameFromDialog();
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();

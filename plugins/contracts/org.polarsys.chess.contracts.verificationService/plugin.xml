@@ -79,11 +79,11 @@
                         style="push">
                   </command>
                   <command
-                        commandId="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
+                        commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
                         style="push">
                   </command>
                   <command
-                        commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
+                        commandId="org.polarsys.chess.verificationService.commands.ContractImplementationCommand"
                         style="push">
                   </command>
                   <command

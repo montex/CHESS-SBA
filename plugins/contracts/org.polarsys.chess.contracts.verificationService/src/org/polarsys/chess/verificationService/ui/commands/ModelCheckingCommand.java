@@ -67,7 +67,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 		if (!isProgrExec) {
 			logger.debug("!isProgrammaticallyExecution(event)");
 			umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
-			isDiscreteTime = MessageTimeModelDialog.openQuestion();
+			isDiscreteTime = MessageTimeModelDialog.openQuestion(true);
 			smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
 			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(umlSelectedComponent.getName());
 			resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(umlSelectedComponent.getName());

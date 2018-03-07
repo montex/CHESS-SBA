@@ -33,7 +33,7 @@ public class CheckValidationPropertyOnFileCommand extends AbstractAsyncJobComman
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
-		boolean isDiscreteTime = MessageTimeModelDialog.openQuestion();
+		boolean isDiscreteTime = MessageTimeModelDialog.openQuestion(false);
 		ocraExecService.executeValidationProperty(isDiscreteTime, monitor);
 	}
 
