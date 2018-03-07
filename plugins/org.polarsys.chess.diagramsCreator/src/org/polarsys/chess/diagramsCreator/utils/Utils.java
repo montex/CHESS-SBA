@@ -10,14 +10,10 @@
  ******************************************************************************/
 package org.polarsys.chess.diagramsCreator.utils;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.Package;
 
 public class Utils {
-	private static final String SYSVIEW =	"CHESS::Core::CHESSViews::SystemView";
 
 	/**
 	 * Utility dialog to display a message on screen
@@ -26,28 +22,6 @@ public class Utils {
 	 */
 	public static void showMessage(String title, String message) {
 		MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),title, message);
-	}
-	
-	/**
-	 * Checks if the selected object is a package in the <<SystemView>> branch.
-	 * @param pkg the selected object 
-	 * @return true if the package is valid
-	 */
-	public static boolean isSystemViewPackage(Element obj) {
-		if (obj instanceof Package) {
-			final Package pkg = (Package) obj;
-			if(pkg.getAppliedStereotype(SYSVIEW) != null) {
-				return true;
-			} else {
-				EList<Package> owningPackages = pkg.allOwningPackages();
-				for (Package owningPackage : owningPackages) {
-					if (owningPackage.getAppliedStereotype(SYSVIEW) != null) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
 	}
 	
 	/**

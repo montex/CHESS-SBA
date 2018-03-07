@@ -21,17 +21,16 @@ import org.polarsys.chess.diagramsCreator.actions.ShowIBDElementsAction;
 import org.polarsys.chess.diagramsCreator.utils.Utils;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
-public class CreateSingleIBDHandler extends AbstractHandler {
+public class CreateIBDSingleHandler extends AbstractHandler {
 	private static final String DIALOG_TITLE =	"Single IBD creator";
 	
-	public CreateSingleIBDHandler() {
+	public CreateIBDSingleHandler() {
 	}
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
 		final Object umlObject = SelectionUtil.getInstance().getUmlSelectedObject(selection);
-
 		final ShowIBDElementsAction action = new ShowIBDElementsAction();
 
 		if (umlObject instanceof Class) {

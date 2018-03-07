@@ -21,6 +21,7 @@ import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.diagramsCreator.actions.ShowBDDElementsAction;
 import org.polarsys.chess.diagramsCreator.utils.Utils;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
+import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
 public class CreateBDDHandler extends AbstractHandler {
 	private static final String DIALOG_TITLE =	"BDD creator";
@@ -32,8 +33,9 @@ public class CreateBDDHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
 		final Object umlObject = SelectionUtil.getInstance().getUmlSelectedObject(selection);
+		final EntityUtil entityUtil = EntityUtil.getInstance();
 
-		if (Utils.isSystemViewPackage((Element) umlObject)) {
+		if (entityUtil.isSystemViewPackage((Element) umlObject)) {
 			final Package pkg = (Package) umlObject;
 			final ShowBDDElementsAction action = new ShowBDDElementsAction();
 			
