@@ -82,6 +82,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -150,6 +151,9 @@ public class ImportOSSFileAction {
 	/** A possible exception that could happen during parsing */
 	ImportException importException;
 
+	/** Logger for messages */
+	private static final Logger logger = Logger.getLogger(ImportOSSFileAction.class);
+
 	/**
 	 * The constructor.
 	 */
@@ -165,14 +169,6 @@ public class ImportOSSFileAction {
 			sampleView = new ImportOSSFileAction();
 		}
 		return sampleView;
-	}
-	
-	/**
-	 * Prints a message on the console.
-	 * @param message the message to print
-	 */
-	private void printMessageOnOut(String message) {
-//		System.out.println(message);	// Comment to avoid printing
 	}
 	
 	/** 
@@ -221,9 +217,9 @@ public class ImportOSSFileAction {
 		// Create the name using an incremental value
 		final String associationName = ASSOCIATION_NAME + (countPackageAssociations(owner.getNearestPackage()) + 1);
 
-		printMessageOnOut("\n\n\n Creating association " + associationName + " for owner " + owner);
-		printMessageOnOut("elementName = " + elementName + " with type " + elementType);
-		printMessageOnOut("\n\n\n");
+		logger.debug("\n\n\n Creating association " + associationName + " for owner " + owner);
+		logger.debug("elementName = " + elementName + " with type " + elementType);
+		logger.debug("\n\n\n");
 	
 		// Create the association and adds it to the owning package
 		final Association association = owner.createAssociation(
@@ -235,7 +231,7 @@ public class ImportOSSFileAction {
 		// Add SysML Nature on the new Association
 		ElementUtil.addNature(association, SysMLElementTypes.SYSML_NATURE);
 		
-		printMessageOnOut("\n\nCreated " + associationName + " Association\n\n");
+		logger.debug("\n\nCreated " + associationName + " Association\n\n");
 		return association;
 	}
  	
@@ -249,13 +245,13 @@ public class ImportOSSFileAction {
 	 */
 	private Property createContractProperty(Class owner, String elementName, Type elementType) {
 		
-		printMessageOnOut("\n\n\n Creating contract property " + elementName + " for owner " + owner + " with type " + elementType);
-		printMessageOnOut("\n\n\n");
+		logger.debug("\n\n\n Creating contract property " + elementName + " for owner " + owner + " with type " + elementType);
+		logger.debug("\n\n\n");
 
 		Property newUMLProperty = owner.createOwnedAttribute(elementName, elementType);
 		UMLUtils.applyStereotype(newUMLProperty, CONTRACT_PROP);
 
-		printMessageOnOut("\n\nCreated " + elementName + " Property\n\n");
+		logger.debug("\n\nCreated " + elementName + " Property\n\n");
 		return newUMLProperty;
 	}
 	
@@ -293,8 +289,8 @@ public class ImportOSSFileAction {
 
 		delegationName.append(variable.getName());
 		
-		printMessageOnOut("\n\n\n Creating delegation constraint " + delegationName + " for owner " + owner);
-		printMessageOnOut("\n\n\n");
+		logger.debug("\n\n\n Creating delegation constraint " + delegationName + " for owner " + owner);
+		logger.debug("\n\n\n");
 
 		Constraint newUMLConstraint = owner.createOwnedRule(delegationName.toString());
 		UMLUtils.applyStereotype(newUMLConstraint, DELEGATION_CONST);
@@ -305,7 +301,7 @@ public class ImportOSSFileAction {
 		literalString.setValue(formalPropertyText);
 		newUMLConstraint.setSpecification(literalString);
 
-		printMessageOnOut("\n\nCreated " + delegationName + " Delegation Constraint\n\n");
+		logger.debug("\n\nCreated " + delegationName + " Delegation Constraint\n\n");
 		return newUMLConstraint;
 	}
 
@@ -381,8 +377,8 @@ public class ImportOSSFileAction {
 					
 		final Property componentInstance = getUMLComponentInstance(owner, componentName);
 
-		printMessageOnOut("\n\n\n Creating contract refinement for componentName = " + componentName + " of contract " + contractName);
-		printMessageOnOut("\n\n\n");
+		logger.debug("\n\n\n Creating contract refinement for componentName = " + componentName + " of contract " + contractName);
+		logger.debug("\n\n\n");
 				
 		// Get the component type where the contract property is defined
 		final Class component = (Class) componentInstance.getType();
@@ -398,8 +394,8 @@ public class ImportOSSFileAction {
 		if (umlRefinement != null) {
 			return umlRefinement;
 		} else {
-			printMessageOnOut("\n\n Creating contract refinement " + refinementName + " for owner " + owner.getName());
-			printMessageOnOut("\n\n");
+			logger.debug("\n\n Creating contract refinement " + refinementName + " for owner " + owner.getName());
+			logger.debug("\n\n");
 	
 			//TODO create a new class e.g. CHESSElementsUtil and move this method there
 			DataType newUmlDataType = UMLFactory.eINSTANCE.createDataType();
@@ -411,7 +407,7 @@ public class ImportOSSFileAction {
 			contractRefinement.setInstance(componentInstance); // The component instance containing the definition
 			contractRefinement.setContract(contractProperty);  // The contract property that refines the contract
 					
-			printMessageOnOut("\n\nCreated " + refinementName + " Contract Refinement\n\n");
+			logger.debug("\n\nCreated " + refinementName + " Contract Refinement\n\n");
 			return (DataType) newClass;
 		}
 	}
@@ -429,7 +425,7 @@ public class ImportOSSFileAction {
 			final Resource resource = resourceSet.getResource(uri, true);
 			package_ = (Package) EcoreUtil.getObjectByType(resource.getContents(), UMLPackage.Literals.PACKAGE);
 		} catch (WrappedException we) {
-			System.err.println(we.getMessage());
+			logger.error(we.getMessage());
 			System.exit(1);
 		}
 		return package_;
@@ -446,7 +442,7 @@ public class ImportOSSFileAction {
 		final Type type = umlLibrary.getOwnedType(name);
 		
 		if (type != null) {
-			printMessageOnOut("Type '" + type.getQualifiedName() + "' found.");
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
 			return type;
 		}
 		return null;
@@ -466,7 +462,7 @@ public class ImportOSSFileAction {
 		final Type type = umlLibrary.getOwnedType(name);
 		
 		if (type != null) {
-			printMessageOnOut("Type '" + type.getQualifiedName() + "' found.");
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
 			return type;
 		}
 		return null;
@@ -488,7 +484,7 @@ public class ImportOSSFileAction {
 		final Type type = dataTypes.getOwnedType(name);
 		
 		if (type != null) {
-			printMessageOnOut("Type '" + type.getQualifiedName() + "' found.");
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
 			return type;
 		}
 		return null;
@@ -515,7 +511,7 @@ public class ImportOSSFileAction {
 		boundedType.setBaseType((DataType) getPrimitiveType("Integer"));
 //		boundedType.setBaseType((DataType) getUMLPrimitiveType("Integer"));	// Alternative version	
 
-		printMessageOnOut("Type '" + dataType.getQualifiedName() + "' created.");
+		logger.debug("Type '" + dataType.getQualifiedName() + "' created.");
 		return dataType;
 	}
 	
@@ -537,7 +533,7 @@ public class ImportOSSFileAction {
 			intLit = (IntegerLiteral) rangeType.getUpperBound();
 			upperBound = Integer.parseInt(intLit.getValue());
 		} else {
-			System.err.println("Import Error: Cannot understand the Bounded type limits! " + rangeType);
+			logger.error("Import Error: Cannot understand the Bounded type limits! " + rangeType);
 			return type;
 		}
 		
@@ -549,7 +545,7 @@ public class ImportOSSFileAction {
 		if (type != null) {
 			
 			// The type has been found in the package, use it
-			printMessageOnOut("Type '" + type.getQualifiedName() + "' found.");
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
 			return type;
 		} else {
 			return (Type) createBoundedSubType(pkg, typeName, lowerBound, upperBound);
@@ -640,7 +636,7 @@ public class ImportOSSFileAction {
 			enumeration.createOwnedLiteral(string);
 		}				
 
-		printMessageOnOut("Type '" + enumeration.getQualifiedName() + "' created.");
+		logger.debug("Type '" + enumeration.getQualifiedName() + "' created.");
 		return enumeration;
 	}
 	
@@ -659,7 +655,7 @@ public class ImportOSSFileAction {
 		if (type != null) {
 
 			// The type has been found in the package, use it
-			printMessageOnOut("Type '" + type.getQualifiedName() + "' found.");
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
 			return type;
 		} else {
 			return createEnumerationFromEnumType(pkg, enumType);
@@ -693,7 +689,7 @@ public class ImportOSSFileAction {
 				
 		Type type = pkg.createOwnedType(signalName, UMLPackage.Literals.SIGNAL);
 		
-		printMessageOnOut("Type '" + type.getQualifiedName() + "' created.");
+		logger.debug("Type '" + type.getQualifiedName() + "' created.");
 		return (Signal) type;
 	}
 	
@@ -711,7 +707,7 @@ public class ImportOSSFileAction {
 		if (type != null) {
 			
 			// The type has been found in the package, use it
-			printMessageOnOut("Type '" + type.getQualifiedName() + "' found.");
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
 			return type;
 		} else {
 			return createSignalType(pkg);
@@ -726,40 +722,40 @@ public class ImportOSSFileAction {
 	private Type getTypeFromDSLType(SimpleType dslSimpleType) {
 		
 		if (dslSimpleType instanceof BooleanType) {
-			printMessageOnOut("BooleanType");
+			logger.debug("BooleanType");
 			return getPrimitiveType("Boolean");
 		} else if (dslSimpleType instanceof IntegerType) {
-			printMessageOnOut("IntegerType");
+			logger.debug("IntegerType");
 			return  getPrimitiveType("Integer");
 		} else if (dslSimpleType instanceof RealType) {
-			printMessageOnOut("RealType");
+			logger.debug("RealType");
 			return getPrimitiveType("Real");
 		} else if (dslSimpleType instanceof WordType) {
-			printMessageOnOut("WordType");
+			logger.debug("WordType");
 		} else if (dslSimpleType instanceof UnsignedWordType) {
-			printMessageOnOut("UnsignedWordType");
+			logger.debug("UnsignedWordType");
 		} else if (dslSimpleType instanceof SignedWordType) {
-			printMessageOnOut("SignedWordType");
+			logger.debug("SignedWordType");
 		} else if (dslSimpleType instanceof ContinuousType) {
-			printMessageOnOut("ContinuousType");
+			logger.debug("ContinuousType");
 			return getContinuousType("Continuous");
 		} else if (dslSimpleType instanceof EventType) {
-			printMessageOnOut("EventType");
+			logger.debug("EventType");
 			return getSignalType();
 		} else if (dslSimpleType instanceof RangeType) {
-			printMessageOnOut("RangeType");
+			logger.debug("RangeType");
 			return getBoundedSubType((RangeType) dslSimpleType);
 		} else if (dslSimpleType instanceof EnumType) {
-			printMessageOnOut("EnumType");
+			logger.debug("EnumType");
 			return getEnumerationType((EnumType) dslSimpleType);
 		} else if (dslSimpleType instanceof ArrayType) {
-			printMessageOnOut("ArrayType");
+			logger.debug("ArrayType");
 		} else if (dslSimpleType instanceof IntegerArrayType) {
-			printMessageOnOut("IntegerArrayType");
+			logger.debug("IntegerArrayType");
 		} else if (dslSimpleType instanceof WordArrayType) {
-			printMessageOnOut("WordArrayType");
+			logger.debug("WordArrayType");
 		}
-		System.err.println("Import Error: Not able to map the requested DSL type!");
+		logger.error("Import Error: Not able to map the requested DSL type!");
 		return null;
 	}
 	
@@ -798,7 +794,7 @@ public class ImportOSSFileAction {
 //		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
 //		flowPort.setDirection(isInput? FlowDirection.IN: FlowDirection.OUT);
 		
-		printMessageOnOut("\n\nCreated " + portName + " Port\n\n");
+		logger.debug("\n\nCreated " + portName + " Port\n\n");
 		return umlPort;
 	}
 	
@@ -815,7 +811,7 @@ public class ImportOSSFileAction {
 		UMLUtils.applyStereotype(sysBlock, BLOCK);
 		UMLUtils.applyStereotype(sysBlock, SYSTEM);
 		
-		printMessageOnOut("\n\nCreated " + elementName + " System Block\n\n");
+		logger.debug("\n\nCreated " + elementName + " System Block\n\n");
 		return sysBlock;
 	}
 	
@@ -828,14 +824,14 @@ public class ImportOSSFileAction {
 	 */
 	private Class createContract(Class owner, String contractName) {
 
-		printMessageOnOut("\n\n\n Creating contract " + contractName + " for owner " + owner);
-		printMessageOnOut("\n\n\n");
+		logger.debug("\n\n\n Creating contract " + contractName + " for owner " + owner);
+		logger.debug("\n\n\n");
 
 		Class newUmlClass = UMLFactory.eINSTANCE.createClass();
 		Classifier newClass = owner.createNestedClassifier(contractName, newUmlClass.eClass());
 		UMLUtils.applyStereotype(newClass, CONTRACT);
 		
-		printMessageOnOut("\n\nCreated " + contractName + " Property\n\n");
+		logger.debug("\n\nCreated " + contractName + " Property\n\n");
 		return (Class) newClass;
 	}
 	
@@ -854,7 +850,7 @@ public class ImportOSSFileAction {
 //		owner.createPackagedElement(elementName, newUMLClass.eClass()); This also works...
 //		owner.getPackagedElements().add(newUMLClass);	// This works too!
 		
-		printMessageOnOut("\n\nCreated " + elementName + " Block\n\n");
+		logger.debug("\n\nCreated " + elementName + " Block\n\n");
 		return umlClass;	// Return the first occurence
 	}
 	
@@ -882,13 +878,13 @@ public class ImportOSSFileAction {
 		// Create the name using an incremental value
 		final String connectorName = CONNECTOR_NAME + (owner.getOwnedConnectors().size() + 1);
 		
-		printMessageOnOut("\n\n\n Creating connector " + connectorName + " for owner " + owner);
-		printMessageOnOut("\n\n\n");
+		logger.debug("\n\n\n Creating connector " + connectorName + " for owner " + owner);
+		logger.debug("\n\n\n");
 
 		Connector connector = UMLFactory.eINSTANCE.createConnector();
 		connector.setName(connectorName);
 		
-		printMessageOnOut("\n\nCreated " + connectorName + " Connector\n\n");
+		logger.debug("\n\nCreated " + connectorName + " Connector\n\n");
 		return connector;	
 	}
 
@@ -964,8 +960,8 @@ public class ImportOSSFileAction {
 					final String subName = dslRefInstance.getSubcomponent().getName();					
 					final String subType = dslRefInstance.getSubcomponent().getType();
 
-					printMessageOnOut("\tsubcomponent name = " + subName);
-					printMessageOnOut("\tsubcomponent type = " + subType);
+					logger.debug("\tsubcomponent name = " + subName);
+					logger.debug("\tsubcomponent type = " + subType);
 
 					// I should create an Association between the elements and not a Component Instance!
 					createAssociation(dslTypeToComponent.get(dslParentComponent.getType()), subName, (Type) dslTypeToComponent.get(subType)); 
@@ -986,7 +982,7 @@ public class ImportOSSFileAction {
 						
 						final String portOwner = ((PortId) constraint).getComponentName();
 						final String portName = ((PortId) constraint).getName();
-						printMessageOnOut("Creating source end " + portOwner + ":" + portName);
+						logger.debug("Creating source end " + portOwner + ":" + portName);
 						createConnectorEnd(dslTypeToComponent.get(dslParentComponent.getType()), connector, portOwner, portName);
 					} else if (constraint instanceof Expression) {
 						
@@ -996,7 +992,7 @@ public class ImportOSSFileAction {
 					} else {
 						
 						// Unknown type of connection
-						System.err.println("Constraint = " + constraint);
+						logger.error("Constraint = " + constraint);
 						throw new ImportException("Import Error: Not able to recognize the connection type " + constraint.getValue());
 					}
 
@@ -1004,7 +1000,7 @@ public class ImportOSSFileAction {
 					if (variable instanceof PortId) {
 						final String portOwner = ((PortId) variable).getComponentName();
 						final String portName = ((PortId) variable).getName();					
-						printMessageOnOut("Creating target end " + portOwner + ":" + portName);
+						logger.debug("Creating target end " + portOwner + ":" + portName);
 						createConnectorEnd(dslTypeToComponent.get(dslParentComponent.getType()), connector, portOwner, portName);
 					}
 					
@@ -1017,7 +1013,7 @@ public class ImportOSSFileAction {
 					final RefinedBy refinement = dslRefInstance.getRefinedby();
 					final String refinedContract = refinement.getName();
 					
-					printMessageOnOut("\n\n\nContract name = " + refinedContract + " from " + dslTypeToComponent.get(dslParentComponent.getType()).getName());
+					logger.debug("\n\n\nContract name = " + refinedContract + " from " + dslTypeToComponent.get(dslParentComponent.getType()).getName());
 
 					ContractProperty contractProperty = getContractPropertyFromContract(dslTypeToComponent.get(dslParentComponent.getType()), refinedContract);
 					
@@ -1028,7 +1024,7 @@ public class ImportOSSFileAction {
 					// Create a ContractRefinement for each ContractId found
 					final EList<ContractId> contractIds = refinement.getContractIds();					
 					for (ContractId contractId : contractIds) {
-						printMessageOnOut("\n\tContractID = " + contractId.getComponentName() +	"." + contractId.getName());	
+						logger.debug("\n\tContractID = " + contractId.getComponentName() +	"." + contractId.getName());	
 						final DataType umlRefinement = createContractRefinement(dslTypeToComponent.get(dslParentComponent.getType()), contractId.getComponentName(), contractId.getName());
 						addContractRefinementToContractProperty(contractProperty, umlRefinement);
 					}
@@ -1036,12 +1032,12 @@ public class ImportOSSFileAction {
 					
 					// CONSTRAINT processing
 					//TODO: implement this
-					System.err.println("Import Error: Found a CONSTRAINT tag, don't know how to handle it!");
+					logger.error("Import Error: Found a CONSTRAINT tag, don't know how to handle it!");
 				} else if (dslRefInstance != null && dslRefInstance.getProp() != null) {
 
 					// PROP processing
 					//TODO: implement this
-					System.err.println("Import Error: Found a PROP tag, don't know how to handle it!");
+					logger.error("Import Error: Found a PROP tag, don't know how to handle it!");
 				}
 			}
 		}
@@ -1107,18 +1103,18 @@ public class ImportOSSFileAction {
 						
 						// PARAMETER processing
 						//TODO: implement this
-						System.err.println("Import Error: Found a PARAMETER tag, don't know how to handle it!");
+						logger.error("Import Error: Found a PARAMETER tag, don't know how to handle it!");
 					} else if (dslVariable instanceof Operation) {
 						
 						// PROVIDED OPERATION processing
 						//TODO: implement this
-						System.err.println("Import Error: Found a OPERATION tag, don't know how to handle it!");
+						logger.error("Import Error: Found a OPERATION tag, don't know how to handle it!");
 					}
 				} else if (dslIntInstance != null && dslIntInstance.getDefine() != null) {
 				
 					// DEFINE processing
 					//TODO: implement this
-					System.err.println("Import Error: Found a DEFINE tag, don't know how to handle it!");
+					logger.error("Import Error: Found a DEFINE tag, don't know how to handle it!");
 				} else if (dslIntInstance != null && dslIntInstance.getContract() != null) {
 					
 					// CONTRACT processing					
@@ -1147,7 +1143,7 @@ public class ImportOSSFileAction {
 	 */
 	private void parseComponentInterfaces(AbstractComponent dslParentComponent) throws ImportException {
 
-		printMessageOnOut("\n\n\nParsing Interfaces for  " + dslParentComponent.getType() + "\n");
+		logger.debug("\n\n\nParsing Interfaces for  " + dslParentComponent.getType() + "\n");
 		
 		// Get the Interfaces, if any
 		final Interface dslComponentInterface = dslParentComponent.getInterface();
@@ -1162,7 +1158,7 @@ public class ImportOSSFileAction {
 	 */
 	private void parseComponentRefinements(AbstractComponent dslParentComponent) throws ImportException {
 
-		printMessageOnOut("\n\n\nParsing Refinements for " + dslParentComponent.getType() + "\n");
+		logger.debug("\n\n\nParsing Refinements for " + dslParentComponent.getType() + "\n");
 
 		// Get the Refinement, if any
 		final Refinement dslComponentRefinement = dslParentComponent.getRefinement();
@@ -1204,7 +1200,7 @@ public class ImportOSSFileAction {
 		SystemComponent dslSystemComponent = ocraOssFile.getSystem();
 		
 		if (dslSystemComponent == null) {
-			System.err.println("Import Error: System component is missing");
+			logger.error("Import Error: System component is missing");
 			throw new ImportException("System component is missing");
 		}
 
@@ -1212,7 +1208,7 @@ public class ImportOSSFileAction {
 		final String dslSystemComponentName = dslSystemComponent.getType() == null ? "System" : dslSystemComponent.getType();
 		dslSystemComponent.setType(dslSystemComponentName);
 
-		printMessageOnOut("dslSystemComponent.type = " + dslSystemComponentName);
+		logger.debug("dslSystemComponent.type = " + dslSystemComponentName);
 
 		dslTypeToComponent = new HashMap<String, Class>();
 
@@ -1236,9 +1232,9 @@ public class ImportOSSFileAction {
 				for (Component dslComponent : ocraOssFile.getComponents()) {
 					Class component = createBlock(sysView, dslComponent.getType());
 					if(dslTypeToComponent.put(dslComponent.getType(), component) != null) {
-						System.err.println("Duplicated component type, not added: " + dslComponent.getType());
+						logger.error("Duplicated component type, not added: " + dslComponent.getType());
 					} else {
-						printMessageOnOut("component.type = " + dslComponent.getType());
+						logger.debug("component.type = " + dslComponent.getType());
 					}
 				}
 
@@ -1266,7 +1262,7 @@ public class ImportOSSFileAction {
 					return;
 				}
 				
-				printMessageOnOut("Total time = " + (System.currentTimeMillis() - startTime));
+				logger.debug("Total time = " + (System.currentTimeMillis() - startTime));
 			}
 		});
 		

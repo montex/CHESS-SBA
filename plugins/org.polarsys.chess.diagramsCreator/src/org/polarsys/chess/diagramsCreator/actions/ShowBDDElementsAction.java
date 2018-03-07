@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.log4j.Logger;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -47,7 +48,6 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.diagramsCreator.utils.Utils;
 
 import org.eclipse.gmf.runtime.diagram.ui.requests.DropObjectsRequest;
 
@@ -56,6 +56,9 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	
 	/** Selection of all the possible elements */
 	private List<Object> selection;
+
+	/** Logger for messages */
+	private static final Logger logger = Logger.getLogger(ShowBDDElementsAction.class);
 
 	/**
 	 * Tries to show an Element in an EditPart.
@@ -115,8 +118,8 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		
 		for (Object child : childrenView) {
 			View childView = (View) child;
-			Utils.printMessageOnOut("child View = " + child);
-			Utils.printMessageOnOut("\telement of view = " + childView.getElement());
+			logger.debug("child View = " + child);
+			logger.debug("\telement of view = " + childView.getElement());
 			
 			if (EntityUtil.getInstance().isSystem((Element) childView.getElement())) {
 
@@ -167,20 +170,20 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	 */
 	private void contributeToSelection(List<Object> listToComplete, EditPartRepresentation representation) {
 		
-		Utils.printMessageOnOut("\n\nrepresentation = " + representation);
-		Utils.printMessageOnOut("\tlistToComplete.size = " + listToComplete.size());
+		logger.debug("\n\nrepresentation = " + representation);
+		logger.debug("\tlistToComplete.size = " + listToComplete.size());
 		
 		listToComplete.addAll(representation.getPossibleElement());
 
-		Utils.printMessageOnOut("\tlistToComplete.size = " + listToComplete.size());
+		logger.debug("\tlistToComplete.size = " + listToComplete.size());
 		
 		final List<EditPartRepresentation> children = representation.getPossibleElement();
 		
-		Utils.printMessageOnOut("\tChildren di representation size = " + children.size());
+		logger.debug("\tChildren di representation size = " + children.size());
 		
 		if (children != null) {
 			for (EditPartRepresentation child : children) {
-				Utils.printMessageOnOut("Working on child " + child);
+				logger.debug("Working on child " + child);
 				contributeToSelection(listToComplete, child);
 			}
 		}
@@ -213,13 +216,13 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 			
 			final EditPartRepresentation editPartRepresentation = (EditPartRepresentation) results[i];
 
-			Utils.printMessageOnOut("\n\n\nWorking on results[" + i + "] = " + editPartRepresentation);
+			logger.debug("\n\n\nWorking on results[" + i + "] = " + editPartRepresentation);
 			
 			final Element semanticElement = (Element) editPartRepresentation.getSemanticElement();
 			
-			Utils.printMessageOnOut("Semantic Element = " + semanticElement);
-			Utils.printMessageOnOut("Label = " + editPartRepresentation.getLabel());
-			Utils.printMessageOnOut("Parent = " + editPartRepresentation.getParentRepresentation());
+			logger.debug("Semantic Element = " + semanticElement);
+			logger.debug("Label = " + editPartRepresentation.getLabel());
+			logger.debug("Parent = " + editPartRepresentation.getParentRepresentation());
 			
 			// If the element is interesting, add it
 			if((entityUtil.isPort(semanticElement) && 
@@ -251,7 +254,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		}
 		return null;
 	}
-
 	
 	/**
 	 * Fills the diagram with graphical components.
@@ -264,7 +266,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		// Get the EditPart associated to the diagram
 		final IGraphicalEditPart diagramEP = OffscreenEditPartFactory.getInstance().createDiagramEditPart(diagram, shell);
 		
-		Utils.printMessageOnOut("diagram = " + diagram);
+		logger.debug("diagram = " + diagram);
 		
 		Package pkg = (Package) diagramEP.resolveSemanticElement();
 				
@@ -272,17 +274,17 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		
 		IEditorPart ed =  PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		
-		Utils.printMessageOnOut("ed = " + ed);
+		logger.debug("ed = " + ed);
 		
 		IEditorPart activeEditor = ((PapyrusMultiDiagramEditor) ed).getActiveEditor();
 		
-		Utils.printMessageOnOut("activeEditor = " + activeEditor);
+		logger.debug("activeEditor = " + activeEditor);
 
 		// First loop to draw Block elements and contracts
 		for (Element element : packageChildren) {
 //			if (EntityUtil.getInstance().isBlock(element) && !ContractEntityUtil.getInstance().isContract(element)) {
 			if (EntityUtil.getInstance().isBlock(element)) {
-				Utils.printMessageOnOut("calling showElementIn for element = " + element);
+				logger.debug("calling showElementIn for element = " + element);
 				showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1);
 			}
 		}
@@ -309,7 +311,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		// Get a selection with all the possible elements
 		buildSelection();
 
-		Utils.printMessageOnOut("Selection size = " + selection.size());
+		logger.debug("Selection size = " + selection.size());
 
 		// Draw the innter attributes
 		if (selection.size() > 0) {
@@ -328,7 +330,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		// Second loop to draw Associations
 		for (Element element : packageChildren) {
 			if (element instanceof Association) {
-				Utils.printMessageOnOut("calling showElementIn for Association = " + element);
+				logger.debug("calling showElementIn for Association = " + element);
 				showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1);
 			}
 		}
