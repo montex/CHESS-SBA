@@ -25,6 +25,8 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.diagramsCreator.actions.ShowIBDElementsAction;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
+import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
+
 
 public class CreateIBDMultipleHandler extends AbstractHandler {
 	private static final String DIALOG_TITLE =	"Multiple IBD creator";
@@ -59,7 +61,7 @@ public class CreateIBDMultipleHandler extends AbstractHandler {
 				}
 			}
 		} else {
-			org.polarsys.chess.diagramsCreator.utils.Utils.showMessage(DIALOG_TITLE, "Please select a package from <<SystemView>>");
+			DialogUtil.getInstance().showMessage_GenericMessage(DIALOG_TITLE, "Please select a package from <<SystemView>>");
 		}
 		return null;
 	}

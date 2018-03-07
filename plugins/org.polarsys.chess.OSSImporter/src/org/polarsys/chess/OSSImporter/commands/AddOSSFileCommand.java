@@ -16,7 +16,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -29,27 +28,19 @@ import org.polarsys.chess.service.gui.utils.SelectionUtil;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
+import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 import eu.fbk.eclipse.standardtools.xtextService.ui.services.RuntimeErrorService;
 
 public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 	private static final String DIALOG_TITLE =	"OSS parser";
 	
-	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
+	final DialogUtil dialogUtil = DialogUtil.getInstance();
 	
 	/**
 	 * Constructor.
 	 */
 	public AddOSSFileCommand() {
 		super("Add content from OSS file");
-	}
-	
-	/**
-	 * Utility dialog to display a message on screen.
-	 * @param title the title of the dialog
-	 * @param message the text to display
-	 */
-	private void showMessage(String title, String message) {
-		MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),title, message);
 	}
 	
 	/**
@@ -67,7 +58,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 			ossFile = new File(result);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			showMessage(DIALOG_TITLE, "File not valid!");
+			dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, "File not valid!");
 		}
 		return ossFile;
 	}
@@ -76,6 +67,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
 		final ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
+		final SelectionUtil selectionUtil = SelectionUtil.getInstance();
 		final Object umlObject = selectionUtil.getUmlSelectedObject(selection);
 		final Resource modelResource = selectionUtil.getSelectedModelResource();
 		final EntityUtil entityUtil = EntityUtil.getInstance();
@@ -96,17 +88,17 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 				try {
 					action.startParsing((Package) umlObject, ossFile);
 				} catch (Exception e) {
-					showMessage(DIALOG_TITLE, e.getMessage());
+					dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, e.getMessage());
 					monitor.done();
 					return;
 				}
 				activePage.setEditorAreaVisible(true);
-				showMessage(DIALOG_TITLE, "Import done!");
+				dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, "Import done!");
 			}
 			monitor.done();
 			return;
 		}
-		showMessage(DIALOG_TITLE, "Please select a package from <<SystemView>>");
+		dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, "Please select a package from <<SystemView>>");
 	}
 
 	@Override

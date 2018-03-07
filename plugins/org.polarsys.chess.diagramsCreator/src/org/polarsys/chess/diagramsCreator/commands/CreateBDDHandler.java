@@ -19,8 +19,10 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.diagramsCreator.actions.ShowBDDElementsAction;
-import org.polarsys.chess.diagramsCreator.utils.Utils;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
+
+import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
+
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
 public class CreateBDDHandler extends AbstractHandler {
@@ -46,7 +48,7 @@ public class CreateBDDHandler extends AbstractHandler {
 				e.printStackTrace();
 			}
 		} else {
-			Utils.showMessage(DIALOG_TITLE, "Please select a package from <<SystemView>>");
+			DialogUtil.getInstance().showMessage_GenericMessage(DIALOG_TITLE, "Please select a package from <<SystemView>>");
 		}
 		return null;
 	}

@@ -18,8 +18,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Class;
 import org.polarsys.chess.diagramsCreator.actions.ShowIBDElementsAction;
-import org.polarsys.chess.diagramsCreator.utils.Utils;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
+
+import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 
 public class CreateIBDSingleHandler extends AbstractHandler {
 	private static final String DIALOG_TITLE =	"Single IBD creator";
@@ -43,7 +44,7 @@ public class CreateIBDSingleHandler extends AbstractHandler {
 				e.printStackTrace();
 			}
 		} else {
-			Utils.showMessage(DIALOG_TITLE, "Please select a Block from the <<SystemView>> package");
+			DialogUtil.getInstance().showMessage_GenericMessage(DIALOG_TITLE, "Please select a Block from the <<SystemView>> package");
 		}
 		return null;
 	}
