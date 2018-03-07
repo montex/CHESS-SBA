@@ -84,6 +84,7 @@ public class EntityUtil {
 	private static final String BOUNDED_TYPE = "MARTE::MARTE_Annexes::VSL::DataTypes::BoundedSubtype";
 	private static final String COMP_TYPE = "CHESS::ComponentModel::ComponentType";
 	private static final String COMP_IMPL = "CHESS::ComponentModel::ComponentImplementation";
+	private static final String SYSVIEW =	"CHESS::Core::CHESSViews::SystemView";
 
 	private static final String INTEGER_TYPE = "PrimitiveTypes::Integer";
 	private static final String STRING_TYPE = "PrimitiveTypes::String";
@@ -1225,4 +1226,25 @@ public class EntityUtil {
 		return null;
 	}
 
+	/**
+	 * Checks if the selected object is a package in the <<SystemView>> branch.
+	 * @param pkg the selected element 
+	 * @return true if the package is valid
+	 */
+	public boolean isSystemViewPackage(Element obj) {
+		if (obj instanceof Package) {
+			final Package pkg = (Package) obj;
+			if(pkg.getAppliedStereotype(SYSVIEW) != null) {
+				return true;
+			} else {
+				EList<Package> owningPackages = pkg.allOwningPackages();
+				for (Package owningPackage : owningPackages) {
+					if (owningPackage.getAppliedStereotype(SYSVIEW) != null) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 }
