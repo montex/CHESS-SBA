@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.polarsys.chess.modelexplorerpopupmenu.id">
+         <menu
+               id="org.eclipse.ui.main.diagramEditorMenu.CHESS.basicOperations"
+               label="Basic Operations">
+            <command
+                  commandId="org.polarsys.chess.diagramsCreator.commands.createIBD"
+                  label="Create the IBD diagram for the selected component"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.emf.ecore.EObject">
+                        <instanceof
+                              value="org.eclipse.uml2.uml.Class">
+                        </instanceof>
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.polarsys.chess.diagramsCreator.commands.createAllIBDs"
+                  label="Create the IBD diagrams for all the package components"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.emf.ecore.EObject">
+                        <instanceof
+                              value="org.eclipse.uml2.uml.Package">
+                        </instanceof>
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.polarsys.chess.diagramsCreator.commands.createBDD"
+                  label="Create the BDD diagram for the selected package"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.emf.ecore.EObject">
+                        <instanceof
+                              value="org.eclipse.uml2.uml.Package">
+                        </instanceof>
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateIBDSingleCommand"
+            id="org.polarsys.chess.diagramsCreator.commands.createIBD"
+            name="Create the IBD diagram for the selected component">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateIBDMultipleCommand"
+            id="org.polarsys.chess.diagramsCreator.commands.createAllIBDs"
+            name="Create the IBD diagrams for all the components">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateBDDCommand"
+            id="org.polarsys.chess.diagramsCreator.commands.createBDD"
+            name="Create the BDD diagram">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateBDDHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.createBDDHandler"
+            name="Create the BDD diagram handler">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateIBDSingleHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.createIBDHandler"
+            name="Create the IBD diagram handler">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateIBDMultipleHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.createAllIBDsHandler"
+            name="Create the IBD diagrams handler">
+      </command>
+   </extension>
+
+</plugin>

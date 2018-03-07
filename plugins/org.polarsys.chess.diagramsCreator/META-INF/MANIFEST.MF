@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.polarsys.chess.diagramsCreator
+Bundle-SymbolicName: org.polarsys.chess.diagramsCreator;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.xtext,
+ eu.fbk.eclipse.standardtools.utils;bundle-version="1.0.0",
+ org.polarsys.chess.contracts.profile,
+ org.polarsys.chess.service;bundle-version="0.11.0",
+ org.eclipse.papyrus.infra.gmfdiag.css,
+ org.eclipse.papyrus.sysml.diagram.internalblock,
+ org.eclipse.papyrus.sysml.service.types;bundle-version="1.2.0",
+ org.eclipse.papyrus.editor,
+ org.eclipse.papyrus.sysml.diagram.blockdefinition,
+ org.eclipse.papyrus.uml.diagram.menu;bundle-version="1.2.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Fondazione Bruno Kessler
+Import-Package: org.apache.log4j
