@@ -24,9 +24,6 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 
 public class CreateIBDSingleHandler extends AbstractHandler {
 	private static final String DIALOG_TITLE =	"Single IBD creator";
-	
-	public CreateIBDSingleHandler() {
-	}
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -48,5 +45,4 @@ public class CreateIBDSingleHandler extends AbstractHandler {
 		}
 		return null;
 	}
-
 }

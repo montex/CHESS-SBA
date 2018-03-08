@@ -31,9 +31,6 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 public class CreateIBDMultipleHandler extends AbstractHandler {
 	private static final String DIALOG_TITLE =	"Multiple IBD creator";
 
-	public CreateIBDMultipleHandler() {
-	}
-
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();

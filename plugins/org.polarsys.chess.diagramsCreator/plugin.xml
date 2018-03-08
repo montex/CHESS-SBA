@@ -99,6 +99,11 @@
             id="org.polarsys.chess.diagramsCreator.commands.createAllIBDsHandler"
             name="Create the IBD diagrams handler">
       </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.AdjustAssociationsHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.adjustAssociationsHandler"
+            name="Adjust associations handler">
+      </command>
    </extension>
 
 </plugin>

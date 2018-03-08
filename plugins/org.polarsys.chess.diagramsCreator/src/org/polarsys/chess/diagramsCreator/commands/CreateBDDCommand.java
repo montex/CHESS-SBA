@@ -11,12 +11,16 @@
 package org.polarsys.chess.diagramsCreator.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.runtime.IProgressMonitor;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 
 public class CreateBDDCommand extends AbstractJobCommand {
-
+	final String BDD_CREATOR_COMMAND = "org.polarsys.chess.diagramsCreator.commands.createBDDHandler";
+	final String ARRANGE_COMMAND = "org.eclipse.papyrus.uml.diagram.menu.commands.ArrangeAllCommand";
+	final String ADJUST_COMMAND = "org.polarsys.chess.diagramsCreator.commands.adjustAssociationsHandler";
+	
 	public CreateBDDCommand() {
 		super("Create BDD");
 	}
@@ -29,7 +33,6 @@ public class CreateBDDCommand extends AbstractJobCommand {
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		
 		// Call the command to create the diagram and populate it
-		final String BDD_CREATOR_COMMAND = "org.polarsys.chess.diagramsCreator.commands.createBDDHandler";
 		try {
 			final CommandBuilder diagramBDDCreator = CommandBuilder.build(BDD_CREATOR_COMMAND);
 			diagramBDDCreator.execute();
@@ -38,15 +41,30 @@ public class CreateBDDCommand extends AbstractJobCommand {
 		}
 		
 		// Call the command to arrange the components
-		//FIXME: I should be sure that the command was executed in a correct way
-		final String ARRANGE_COMMAND = "org.eclipse.papyrus.uml.diagram.menu.commands.ArrangeAllCommand";
 		try {
 			final CommandBuilder arrangeElements = CommandBuilder.build(ARRANGE_COMMAND);
-			arrangeElements.execute();
 			
-			// Call it twice again, it may improve the layout
-			arrangeElements.execute();
-			arrangeElements.execute();
+			ParameterizedCommand parameterizedCommand = arrangeElements.getCommand();
+
+			// Check if there is a handler, in case of wrong package it won't be handled
+			if(parameterizedCommand != null && 
+					(parameterizedCommand.getCommand().getHandler() != null) &&
+					(parameterizedCommand.getCommand().getHandler().isHandled())) {
+
+				arrangeElements.execute();
+				
+				// Call it twice again, it may improve the layout
+				arrangeElements.execute();
+				arrangeElements.execute();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// Call the command to adjust the associations
+		try {
+			final CommandBuilder adjustAssociations = CommandBuilder.build(ADJUST_COMMAND);
+			adjustAssociations.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
