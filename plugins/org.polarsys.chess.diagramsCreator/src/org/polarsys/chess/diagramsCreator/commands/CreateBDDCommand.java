@@ -44,8 +44,8 @@ public class CreateBDDCommand extends AbstractJobCommand {
 			final CommandBuilder arrangeElements = CommandBuilder.build(ARRANGE_COMMAND);
 			arrangeElements.execute();
 			
-			// Call it twice, the second run improves the first
-			Thread.sleep(500);
+			// Call it twice again, it may improve the layout
+			arrangeElements.execute();
 			arrangeElements.execute();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -44,8 +44,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
@@ -53,6 +56,10 @@ import org.eclipse.gmf.runtime.diagram.ui.requests.DropObjectsRequest;
 
 
 public class ShowBDDElementsAction extends ShowHideContentsAction {
+	private static int MIN_WIDTH = 150;
+	private static int MAX_WIDTH = 500;
+	private static int MIN_HEIGHT = 150;
+	private static int MAX_HEIGHT = 500;
 	
 	/** Selection of all the possible elements */
 	private List<Object> selection;
@@ -107,6 +114,71 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
+	 * Returns the suggested size for the graphical element.
+	 * @param element the Element to be analyzed
+	 * @return width and height of the box
+	 */
+	private int[] getSize(Element element) {
+		int width = 0;
+		int height = 0;
+		int maxLength = 0;
+		int childrenNumber = 0;
+		final int[] size = new int[2];
+
+		EntityUtil entityUtil = EntityUtil.getInstance();
+		ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+		
+		// Loop on the children to find interesting elements
+		EList<Element> children = element.getOwnedElements();
+		for (Element child : children) {
+			if (entityUtil.isPort(child) || 
+					contractEntityUtil.isContractProperty(child)||
+					contractEntityUtil.isDelegationConstraints(child)) {
+				
+				int textLength = 0;
+				childrenNumber++;
+				if (child instanceof Property) {
+					textLength = ((Property) child).getName().length();
+					textLength += ((Property) child).getType().getName().length();
+				} else if (child instanceof Constraint) {
+					LiteralString literalString = (LiteralString) ((Constraint) child).getSpecification();
+					textLength = literalString.getValue().length();
+				} else {
+					logger.debug("Unknown type: " + child);
+				}
+				if (textLength > maxLength) {
+					maxLength = textLength;
+				}
+			}
+		}
+		
+		// Empirical values 
+		width = (int) Math.round(140 + (4.7 * maxLength));
+		height = 132 + (14 * childrenNumber);
+		
+		logger.debug("Element width = " + width);
+		logger.debug("Element height = " + height);
+		
+		if (width < MIN_WIDTH) {
+			size[0] = MIN_WIDTH;
+		} else if (width > MAX_WIDTH) {
+			size[0] = MAX_WIDTH;
+		} else {
+			size[0] = width;
+		}
+		
+		if (height < MIN_HEIGHT) {
+			size[1] = MIN_HEIGHT;
+		} else if (height > MAX_HEIGHT) {
+			size[1] = MAX_HEIGHT;
+		} else {
+			size[1] = height;
+		}
+		
+		return size;
+	}
+
+	/**
 	 * Resizes the component blocks.
 	 * @param diagramEP the diagram EditPart
 	 */
@@ -119,9 +191,10 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		for (Object child : childrenView) {
 			View childView = (View) child;
 			logger.debug("child View = " + child);
-			logger.debug("\telement of view = " + childView.getElement());
+			final Element semanticElement = (Element) childView.getElement();
+			logger.debug("\telement of view = " + semanticElement);
 			
-			if (EntityUtil.getInstance().isSystem((Element) childView.getElement())) {
+			if (EntityUtil.getInstance().isSystem(semanticElement)) {
 
 				// Enlarge and center the system component
 				if (childView instanceof CSSShapeImpl) {
@@ -133,14 +206,16 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 
 						@Override
 						protected void doExecute() {
-							layout.setWidth(250);
-							layout.setHeight(250);
+							
+							final int[] size = getSize(semanticElement);
+							layout.setWidth(size[0]);
+							layout.setHeight(size[1]);
 							layout.setX(400);
 							layout.setY(50);
 						}
 					});
 				}
-			} else if (EntityUtil.getInstance().isBlock((Element) childView.getElement())) {
+			} else if (EntityUtil.getInstance().isBlock(semanticElement)) {
 				
 				// Enlarge the other components
 				if (childView instanceof CSSShapeImpl) {
@@ -152,8 +227,9 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 
 						@Override
 						protected void doExecute() {
-							layout.setWidth(250);
-							layout.setHeight(250);
+							final int[] size = getSize(semanticElement);
+							layout.setWidth(size[0]);
+							layout.setHeight(size[1]);
 							layout.setX(50 + 300 * subElementCounter.getAndIncrement());
 							layout.setY(400);
 						}
@@ -282,7 +358,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 
 		// First loop to draw Block elements and contracts
 		for (Element element : packageChildren) {
-//			if (EntityUtil.getInstance().isBlock(element) && !ContractEntityUtil.getInstance().isContract(element)) {
 			if (EntityUtil.getInstance().isBlock(element)) {
 				logger.debug("calling showElementIn for element = " + element);
 				showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1);
@@ -291,8 +366,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		
 		// Resize the graphical elements
 		resizeElements(diagramEP);
-
-		// Fill inner fields of the elements
 
 		// Select all the blocks avoiding contracts and add them to the list to be enriched
 		selectedElements = new ArrayList<IGraphicalEditPart>();
@@ -311,9 +384,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		// Get a selection with all the possible elements
 		buildSelection();
 
-		logger.debug("Selection size = " + selection.size());
-
-		// Draw the innter attributes
+		// Draw the inner attributes
 		if (selection.size() > 0) {
 
 			// Filter the list to extract only the elements I'm interested in
