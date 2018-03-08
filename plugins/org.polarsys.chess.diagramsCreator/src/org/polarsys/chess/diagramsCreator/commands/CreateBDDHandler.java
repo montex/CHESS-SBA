@@ -28,9 +28,6 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 public class CreateBDDHandler extends AbstractHandler {
 	private static final String DIALOG_TITLE =	"BDD creator";
 	
-	public CreateBDDHandler() {
-	}
-
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
