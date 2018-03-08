@@ -44,8 +44,7 @@ import org.polarsys.chess.core.util.uml.UMLUtils;
 
 import com.google.inject.Injector;
 
-import eu.fbk.eclipse.standardtools.utils.core.parser.ParseHelper;
-import eu.fbk.eclipse.standardtools.utils.core.utils.FileSystemUtil;
+import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSModelFactory;
 import eu.fbk.tools.editor.basetype.baseType.*;
 import eu.fbk.tools.editor.contract.contract.Assumption;
 import eu.fbk.tools.editor.contract.contract.Contract;
@@ -169,22 +168,6 @@ public class ImportOSSFileAction {
 			sampleView = new ImportOSSFileAction();
 		}
 		return sampleView;
-	}
-	
-	/** 
-	 * Creates a OSS Model.
-	 * @param ossFile a File containing the OCRA model
-	 * @return the OSS object 
-	 * @throws Exception
-	 */
-	//TODO try to reuse existing methods instead
-	private OSS getOssModel(File ossFile) throws Exception, IOException {
-		//FIXME USE EXISTING METHOD//
-		String ossDefinition = FileSystemUtil.getFileContent(ossFile);
-		final ParseHelper<?> parseHelper = injector.getInstance(ParseHelper.class);
-		OSS result = (OSS) parseHelper.parse(ossDefinition);
-
-		return result;
 	}
 	
 	/**
@@ -1178,7 +1161,7 @@ public class ImportOSSFileAction {
 		long startTime = System.currentTimeMillis();
 		
 		if (ossFile != null) {
-			ocraOssFile = getOssModel(ossFile);
+			ocraOssFile = OSSModelFactory.getInstance().createOssModel(ossFile);
 		} else {
 			return;
 		}
