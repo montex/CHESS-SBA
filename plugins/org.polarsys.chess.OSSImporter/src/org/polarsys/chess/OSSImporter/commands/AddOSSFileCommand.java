@@ -76,13 +76,15 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 			final File ossFile = getOSSFile();
 
 			// Check if there are errors in the OSS file
-			final boolean isValid = RuntimeErrorService.getInstance().showOSSRuntimeErrors(ossFile, modelResource, true, true, monitor);
+			final boolean isValid = RuntimeErrorService.getInstance().showOSSRuntimeErrors(ossFile, modelResource, true, false, monitor);
 			
 			monitor.beginTask("Importing elements from OSS file", 1);
 
 			final ImportOSSFileAction action = ImportOSSFileAction.getInstance();
 
 			if (isValid && action != null) {
+				
+				// Hide the active page in order to avoid popups appearing
 				IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				activePage.setEditorAreaVisible(false);
 				try {
@@ -92,6 +94,8 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 					monitor.done();
 					return;
 				}
+				
+				// Restore the active page
 				activePage.setEditorAreaVisible(true);
 				dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, "Import done!");
 			}
