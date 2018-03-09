@@ -84,6 +84,8 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 			final ImportOSSFileAction action = ImportOSSFileAction.getInstance();
 
 			if (isValid && action != null) {
+				
+				// Hide the active page in order to avoid popups appearing
 				IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				activePage.setEditorAreaVisible(false);
 				try {
@@ -95,6 +97,8 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				
+				// Restore the active page
 				activePage.setEditorAreaVisible(true);
 				dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, "Import done!");
 			}
