@@ -57,9 +57,9 @@ import org.eclipse.gmf.runtime.diagram.ui.requests.DropObjectsRequest;
 
 public class ShowBDDElementsAction extends ShowHideContentsAction {
 	private static int MIN_WIDTH = 150;
-	private static int MAX_WIDTH = 500;
+	private static int MAX_WIDTH = 1500;
 	private static int MIN_HEIGHT = 150;
-	private static int MAX_HEIGHT = 500;
+	private static int MAX_HEIGHT = 1500;
 	
 	/** Selection of all the possible elements */
 	private List<Object> selection;
@@ -153,8 +153,11 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		}
 		
 		// Empirical values 
-		width = (int) Math.round(140 + (4.7 * maxLength));
-		height = 132 + (14 * childrenNumber);
+//		width = (int) Math.round(140 + (4.7 * maxLength));
+//		width = (int) Math.round(150 + (5.3 * maxLength));
+		width = (int) Math.round(140 + (5.4 * maxLength));
+//		height = 132 + (14 * childrenNumber);
+		height = 132 + (16 * childrenNumber);
 		
 		logger.debug("Element width = " + width);
 		logger.debug("Element height = " + height);
