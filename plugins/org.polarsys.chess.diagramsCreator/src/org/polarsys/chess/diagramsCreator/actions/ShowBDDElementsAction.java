@@ -51,7 +51,6 @@ import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-
 import org.eclipse.gmf.runtime.diagram.ui.requests.DropObjectsRequest;
 
 
@@ -345,20 +344,14 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		// Get the EditPart associated to the diagram
 		final IGraphicalEditPart diagramEP = OffscreenEditPartFactory.getInstance().createDiagramEditPart(diagram, shell);
 		
-		logger.debug("diagram = " + diagram);
-		
-		Package pkg = (Package) diagramEP.resolveSemanticElement();
-				
-		EList<Element> packageChildren = pkg.getOwnedElements();
-		
-		IEditorPart ed =  PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		
-		logger.debug("ed = " + ed);
-		
-		IEditorPart activeEditor = ((PapyrusMultiDiagramEditor) ed).getActiveEditor();
-		
+		// Get the EditorPart and the active editor
+		IEditorPart editorPart =  PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		IEditorPart activeEditor = ((PapyrusMultiDiagramEditor) editorPart).getActiveEditor();
 		logger.debug("activeEditor = " + activeEditor);
 
+		Package pkg = (Package) diagramEP.resolveSemanticElement();
+		EList<Element> packageChildren = pkg.getOwnedElements();
+		
 		// First loop to draw Block elements and contracts
 		for (Element element : packageChildren) {
 			if (EntityUtil.getInstance().isBlock(element)) {
