@@ -117,7 +117,7 @@ public class SelectionUtil {
 		
 		if (selectedUmlElement instanceof Property) {
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
-				selectedUmlElement = entityUtil.getUmlType((Property) selectedUmlElement);
+				selectedUmlElement = entityUtil.getUMLType((Property) selectedUmlElement);
 			}
 		}
 

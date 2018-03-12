@@ -213,7 +213,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 */
 	@Override
 	public EList<Port> getNonStaticInputPorts(Object component) {
-		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, FlowDirection.IN_VALUE,false));
+		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, FlowDirection.IN_VALUE,false));
 	}
 
 	@Override
@@ -257,7 +257,7 @@ if (entityUtil.isBlock((Element) component)) {
 	@Override
 	public EList<Port> getNonStaticOutputPorts(Object component) {
 		int direction = FlowDirection.OUT_VALUE;
-		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, direction,false));
+		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, direction,false));
 	}
 
 	/*
@@ -270,7 +270,7 @@ if (entityUtil.isBlock((Element) component)) {
 	@Override
 	public EList<Port> getNonStaticGenericPorts(Object component) {
 		int direction = FlowDirection.INOUT_VALUE;
-		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, direction, false));
+		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, direction, false));
 	}
 
 	/*
