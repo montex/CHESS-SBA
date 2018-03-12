@@ -217,7 +217,7 @@ if (entityUtil.isBlock((Element) component)) {
 	}
 
 	@Override
-	public Set<?> getNonStaticPorts(Object component) {
+	public EList<?> getNonStaticPorts(Object component) {
 		return entityUtil.getUMLPorts((Element)component,false);
 	}
 	
@@ -255,7 +255,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 * getOutputPorts(java.lang.Object)
 	 */
 	@Override
-	public EList<Port> getOutputNonStaticPorts(Object component) {
+	public EList<Port> getNonStaticOutputPorts(Object component) {
 		int direction = FlowDirection.OUT_VALUE;
 		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, direction,false));
 	}
@@ -268,7 +268,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 * getGenericPorts(java.lang.Object)
 	 */
 	@Override
-	public EList<Port> getGenericNonStaticPorts(Object component) {
+	public EList<Port> getNonStaticGenericPorts(Object component) {
 		int direction = FlowDirection.INOUT_VALUE;
 		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, direction, false));
 	}
@@ -747,7 +747,7 @@ if (entityUtil.isBlock((Element) component)) {
 	}
 
 	@Override
-	public Set<?> getOwnerNonStaticPorts(Object formalProperty) {
+	public EList<?> getOwnerNonStaticPorts(Object formalProperty) {
 		
 		Element owner = entityUtil.getOwner((Element)formalProperty);
 		
@@ -839,7 +839,7 @@ if (entityUtil.isBlock((Element) component)) {
 
 
 	@Override
-	public Set<?> getOwnerStaticPorts(Object element) {
+	public EList<?> getOwnerStaticPorts(Object element) {
 Element owner = entityUtil.getOwner((Element)element);
 		
 		if(!(owner instanceof Class)){
@@ -852,5 +852,12 @@ Element owner = entityUtil.getOwner((Element)element);
 		return entityUtil.getUMLPorts(owner,true);	
 		
 		
+	}
+
+
+
+	@Override
+	public EList<?> getStaticPorts(Object component) {
+		return entityUtil.getUMLPorts((Element)component,true);
 	}
 }
