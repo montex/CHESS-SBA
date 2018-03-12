@@ -303,8 +303,8 @@ public class EntityUtil {
 
 	
 
-	public Set<Port> getUMLPorts(Element umlElement, boolean isStaticPort) {
-		Set<Port> portsArr = new HashSet<Port>();
+	public EList<Port> getUMLPorts(Element umlElement, boolean isStaticPort) {
+		EList<Port> portsArr = new BasicEList<Port>();
 		if (isBlock(umlElement)||isCompType(umlElement) || isComponentImplementation(umlElement)) {
 			portsArr.addAll(getUMLPortsFromClass((Class) umlElement,isStaticPort));
 		}
@@ -327,7 +327,7 @@ public class EntityUtil {
 		}
 
 		if (isCompType(umlElement) || (isComponentImplementation(umlElement))) {
-			portsArr.addAll(getUMLPortsFromComponent((Component) umlElement, portDirection));
+			portsArr.addAll(getUMLPortsFromComponent((Component) umlElement, portDirection,isStaticPort));
 		}
 
 		if (isComponentInstance(umlElement)) {
@@ -343,7 +343,7 @@ public class EntityUtil {
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
 			System.out.println(umlPort);
 			FlowPort fp = getFlowPort(umlPort);
-			if (fp.getDirection().getValue() == portDirection) {
+			if ((fp.getDirection().getValue() == portDirection)&&(umlPort.isStatic()==isStatic) ){
 				ports.add(umlPort);
 			}
 		}
@@ -387,12 +387,12 @@ public class EntityUtil {
 		}
 	}
 
-	private Set<Port> getUMLPortsFromComponent(Component umlComponent, int portDirection) {
+	private Set<Port> getUMLPortsFromComponent(Component umlComponent, int portDirection, boolean isStaticPort) {
 		Set<Port> ports = new HashSet<Port>();
 
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
 			org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.FlowPort fp = getFlowPortMarte(umlPort);
-			if (fp.getDirection().getValue() == portDirection) {
+			if ((fp.getDirection().getValue() == portDirection)&&(umlPort.isStatic()==isStaticPort)){
 				ports.add(umlPort);
 			}
 		}

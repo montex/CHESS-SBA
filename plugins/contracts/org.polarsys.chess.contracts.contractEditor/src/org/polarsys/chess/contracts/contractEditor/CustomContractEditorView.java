@@ -237,13 +237,13 @@ public class CustomContractEditorView extends ContractEditorView {
 	}
 
 	@Override
-	public Set<?> getContractOwnerPorts(Object contract) {
+	public EList<?> getContractOwnerPorts(Object contract) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<?> getContractOwnerAttributes(Object contract) {
+	public EList<?> getContractOwnerAttributes(Object contract) {
 		// TODO Auto-generated method stub
 		return null;
 	}
