@@ -43,13 +43,13 @@ public class UMLStateMachineModel implements AbstractStateMachineModel {
 	@Override
 	public EList<Port> getOwnerInputPortsExceptEvents(Object stateMachine) {
 		Element owner = ((StateMachine) stateMachine).getOwner();
-		return new BasicEList<Port>(entityUtil.getUmlPortsExceptEvents(owner, FlowDirection.IN_VALUE));
+		return new BasicEList<Port>(entityUtil.getUMLPortsExceptEvents(owner, FlowDirection.IN_VALUE));
 	}
 
 	@Override
 	public EList<Port> getOwnerOutputPortsExceptEvents(Object stateMachine) {
 		Element owner = ((StateMachine) stateMachine).getOwner();
-		return new BasicEList<Port>(entityUtil.getUmlPortsExceptEvents(owner, FlowDirection.OUT_VALUE));
+		return new BasicEList<Port>(entityUtil.getUMLPortsExceptEvents(owner, FlowDirection.OUT_VALUE));
 	}
 
 	/*@Override
@@ -158,7 +158,7 @@ public class UMLStateMachineModel implements AbstractStateMachineModel {
 
 	@Override
 	public Object getAttributeType(Object property) {
-		return entityUtil.getUmlType((Property) property);
+		return entityUtil.getUMLType((Property) property);
 	}
 
 	@Override
