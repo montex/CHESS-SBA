@@ -17,10 +17,18 @@ import java.util.Map;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.AssociationEditPart;
+import org.eclipse.papyrus.uml.diagram.common.edit.part.AssociationLinkLabelSourceMultiplicityEditPart;
+import org.eclipse.papyrus.uml.diagram.common.edit.part.AssociationLinkLabelSourceRoleEditPart;
+import org.eclipse.papyrus.uml.diagram.common.edit.part.AssociationLinkLabelTargetMultiplicityEditPart;
+import org.eclipse.papyrus.uml.diagram.common.edit.part.AssociationLinkLabelTargetRoleEditPart;
+import org.eclipse.papyrus.uml.diagram.common.edit.part.NamedElementLinkLabelNameEditPart;
 import org.eclipse.papyrus.uml.diagram.menu.actions.LineStyleAction;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
@@ -49,12 +57,43 @@ public class AdjustAssociationsHandler extends AbstractHandler {
 		
 		Object[] values = elements.values().toArray();
 
-		// Loop on the array to find the associations
-		for (int i = 0; i < values.length; i++) {
-			if (values[i] instanceof AssociationEditPart) {
-				add(associationEditParts, (AssociationEditPart) values[i]);
+		final TransactionalEditingDomain domain = 
+				TransactionUtil.getEditingDomain(((IGraphicalEditPart) selectedEditPart).getNotationView());
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
+
+				// Loop on the array to find the associations
+				for (int i = 0; i < values.length; i++) {
+					if (values[i] instanceof AssociationEditPart) {
+
+						// Add the association Edit Part to the list to be modified
+						add(associationEditParts, (AssociationEditPart) values[i]);
+					} else if (values[i] instanceof NamedElementLinkLabelNameEditPart) {
+
+						// This will hide the name of the association
+						((IGraphicalEditPart)values[i]).getNotationView().setVisible(false);
+					} else if (values[i] instanceof AssociationLinkLabelSourceRoleEditPart) {
+
+						// This will remove the "+" and name of the component instance on child size
+//						((IGraphicalEditPart)values[i]).getNotationView().setVisible(false);
+					} else if (values[i] instanceof AssociationLinkLabelSourceMultiplicityEditPart) {
+
+						// This will remove the "1" label on child side
+						((IGraphicalEditPart)values[i]).getNotationView().setVisible(false);
+					} else if (values[i] instanceof AssociationLinkLabelTargetRoleEditPart) {
+
+						// This will remove the "+" label on father side
+						((IGraphicalEditPart)values[i]).getNotationView().setVisible(false);
+					} else if (values[i] instanceof AssociationLinkLabelTargetMultiplicityEditPart) {
+
+						// This will remove the "1" label on father side
+						((IGraphicalEditPart)values[i]).getNotationView().setVisible(false);
+					}
+				}
 			}
-		}
+		});
 
 		// Get the command to adjust the lines
 //		final LineStyleAction action = new LineStyleAction(LineStyleAction.RECTILINEAR, associationEditParts);
