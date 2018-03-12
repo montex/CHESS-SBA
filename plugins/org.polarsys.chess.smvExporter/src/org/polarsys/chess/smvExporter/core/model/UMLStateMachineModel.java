@@ -52,12 +52,26 @@ public class UMLStateMachineModel implements AbstractStateMachineModel {
 		return new BasicEList<Port>(entityUtil.getUmlPortsExceptEvents(owner, FlowDirection.OUT_VALUE));
 	}
 
-	@Override
+	/*@Override
 	public EList<Element> getOwnerAttributes(Object stateMachine) {
 		Element owner = ((StateMachine) stateMachine).getOwner();
-		return new BasicEList<Element>(entityUtil.getAttributesExceptPorts(owner));
+		//return new BasicEList<Element>(entityUtil.getAttributesExceptPorts(owner));
+		return null;
+	}*/
+
+	@Override
+	public EList<Property> getOwnerNonStaticAttributesExceptPorts(Object stateMachine) {
+		Element owner = ((StateMachine) stateMachine).getOwner();		
+		return new BasicEList<Property>(entityUtil.getAttributesExceptPorts(owner,false));		
 	}
 
+	@Override
+	public EList<Property> getOwnerStaticAttributesExceptPorts(Object stateMachine) {
+		Element owner = ((StateMachine) stateMachine).getOwner();		
+		return new BasicEList<Property>(entityUtil.getAttributesExceptPorts(owner,true));
+	}
+
+	
 	@Override
 	public EList<String> getTransitionsNameList(Object stateMachine) throws Exception {
 		return entityUtil.getTransitionNameList(entityUtil.getTranstitions((StateMachine) stateMachine));
@@ -138,13 +152,13 @@ public class UMLStateMachineModel implements AbstractStateMachineModel {
 	}
 
 	@Override
-	public String getVariableName(Object variable) {
-		return ((Property) variable).getName();
+	public String getAttributeName(Object property) {
+		return ((Property) property).getName();
 	}
 
 	@Override
-	public Object getVariableType(Object variable) {
-		return entityUtil.getUmlType((Property) variable);
+	public Object getAttributeType(Object property) {
+		return entityUtil.getUmlType((Property) property);
 	}
 
 	@Override
