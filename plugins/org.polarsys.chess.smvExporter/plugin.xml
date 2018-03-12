@@ -11,7 +11,7 @@
       <command
             defaultHandler="org.polarsys.chess.smvExporter.ui.commands.ExportSelectedNominalSMsToSmvFilesCommand"
             id="org.polarsys.chess.smvExport.commands.ExportSelectedNominalSMsToSmvFilesCommand"
-            name="Export state machines of Selected Component as .smv files">
+            name="Export state machines of selected component or its sub-components as .smv files">
       </command>
    </extension>
    <extension
