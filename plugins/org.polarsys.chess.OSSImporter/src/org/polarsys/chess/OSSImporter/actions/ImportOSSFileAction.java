@@ -448,25 +448,25 @@ public class ImportOSSFileAction {
 		return null;
 	}
 
-	/**
-	 * Returns the primitive type from another UML library.
-	 * @param name the name of the Type
-	 * @return the requested primitive type
-	 */
-	private Type getUMLPrimitiveType(String name) {
-			
-		// Get the correct model
-		final Model umlLibrary = (Model) load(URI.createURI("pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml"));
-			
-		// Get the correct type
-		final Type type = umlLibrary.getOwnedType(name);
-		
-		if (type != null) {
-			logger.debug("Type '" + type.getQualifiedName() + "' found.");
-			return type;
-		}
-		return null;
-	}
+//	/**
+//	 * Returns the primitive type from another UML library.
+//	 * @param name the name of the Type
+//	 * @return the requested primitive type
+//	 */
+//	private Type getUMLPrimitiveType(String name) {
+//			
+//		// Get the correct model
+//		final Model umlLibrary = (Model) load(URI.createURI("pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml"));
+//			
+//		// Get the correct type
+//		final Type type = umlLibrary.getOwnedType(name);
+//		
+//		if (type != null) {
+//			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+//			return type;
+//		}
+//		return null;
+//	}
 
 	/**
 	 * Returns the Type Continuous.
@@ -760,7 +760,7 @@ public class ImportOSSFileAction {
 	}
 	
 	/** 
-	 * Creates and adds a Port to the model.
+	 * Creates and adds a non-static Port to the model.
 	 * @param owner the parent Class
 	 * @param elementName the name of the port to create
 	 * @param elementType the type of the port to create
@@ -768,7 +768,8 @@ public class ImportOSSFileAction {
 	 * @return the created Port
 	 * @throws ImportException 
 	 */
-	private org.eclipse.uml2.uml.Port createPort(Class owner, VariableId elementName, SimpleType elementType, boolean isInput) throws ImportException {
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
+	private org.eclipse.uml2.uml.Port createNonStaticPort(Class owner, VariableId elementName, SimpleType elementType, boolean isInput) throws ImportException {
 		final String portName = elementName.getName();
 		final Type portType = getTypeFromDSLType(elementType);
 		
@@ -777,7 +778,6 @@ public class ImportOSSFileAction {
 //			return null;	// Create the port anyway, without type
 		}
 		
-		//TODO create a new class e.g. CHESSElementsUtil and move this method there
 		org.eclipse.uml2.uml.Port umlPort = UMLFactory.eINSTANCE.createPort();
 		umlPort.setName(portName);
 		umlPort.setType(portType);
@@ -793,6 +793,37 @@ public class ImportOSSFileAction {
 //		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
 //		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
 //		flowPort.setDirection(isInput? FlowDirection.IN: FlowDirection.OUT);
+		
+		logger.debug("\n\nCreated " + portName + " Port\n\n");
+		return umlPort;
+	}
+	
+	/** 
+	 * Creates and adds a static Port to the model.
+	 * @param owner the parent Class
+	 * @param elementName the name of the port to create
+	 * @param elementType the type of the port to create
+	 * @return the created Port
+	 * @throws ImportException 
+	 */
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
+	private org.eclipse.uml2.uml.Port createStaticPort(Class owner, VariableId elementName, SimpleType elementType) throws ImportException {
+		final String portName = elementName.getName();
+		final Type portType = getTypeFromDSLType(elementType);
+		
+		if(portType == null) {
+			throw new ImportException("Not able to map the requested type for port : " + portName);
+		}
+		
+		org.eclipse.uml2.uml.Port umlPort = UMLFactory.eINSTANCE.createPort();
+		umlPort.setName(portName);
+		umlPort.setType(portType);
+		owner.getOwnedPorts().add(umlPort);
+		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
+		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+		flowPort.setDirection(FlowDirection.INOUT);
+		umlPort.setIsStatic(true);
 		
 		logger.debug("\n\nCreated " + portName + " Port\n\n");
 		return umlPort;
@@ -1095,15 +1126,23 @@ public class ImportOSSFileAction {
 						final SimpleType dslVariableType = dslVariable.getType();
 
 						if (dslVariable instanceof InputPort) {
-							createPort(dslTypeToComponent.get(dslParentComponent.getType()), dslVariableID, dslVariableType, true);
+							createNonStaticPort(dslTypeToComponent.get(dslParentComponent.getType()), dslVariableID, dslVariableType, true);
 						} else if (dslVariable instanceof OutputPort) {
-							createPort(dslTypeToComponent.get(dslParentComponent.getType()), dslVariableID, dslVariableType, false);
+							createNonStaticPort(dslTypeToComponent.get(dslParentComponent.getType()), dslVariableID, dslVariableType, false);
 						}
 					} else if (dslVariable instanceof Parameter) {
 						
 						// PARAMETER processing
-						//TODO: implement this
-						logger.error("Import Error: Found a PARAMETER tag, don't know how to handle it!");
+						final VariableId dslVariableID = dslVariable.getId();
+						final SimpleType dslVariableType = dslVariable.getType();
+
+						// Check if there are optional parameters, if yes, it cannot handle them
+						EList<SimpleType> parameters = ((Parameter) dslVariable).getParameters();
+						if (parameters.size() != 0) {
+							logger.error("Import Error: Cannot handle this type of PARAMETER");
+						} else {
+							createStaticPort(dslTypeToComponent.get(dslParentComponent.getType()), dslVariableID, dslVariableType);
+						}
 					} else if (dslVariable instanceof Operation) {
 						
 						// PROVIDED OPERATION processing
