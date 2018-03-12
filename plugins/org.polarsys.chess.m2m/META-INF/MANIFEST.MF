@@ -27,7 +27,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide,
  org.eclipse.ui.workbench,
  org.polarsys.chess.service,
- org.polarsys.chess.m2m,
  org.eclipse.emf.common,
  org.eclipse.jface,
  org.eclipse.papyrus.infra.services.validation
