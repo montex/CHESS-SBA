@@ -265,10 +265,11 @@ public class EntityUtil {
 		return subComponents;
 	}
 
+	
 	public String[] getEnumValuesFromComponentPorts(Class umlComponent) {
 		EList<String> enumValuesEList = new BasicEList<String>();
 
-		for (Port port : getUmlPortsFromClass(umlComponent)) {
+		for (Port port : getUMLPortsFromClass(umlComponent)) {
 			if (isEnumerationAttribute(port)) {
 				Set<String> currValues = getListValuesForEnumeratorType(port);
 				enumValuesEList.addAll(currValues);
@@ -281,7 +282,7 @@ public class EntityUtil {
 	public String[] getEnumValuesFromComponentAttributes(Class umlComponent) {
 		EList<String> enumValuesEList = new BasicEList<String>();
 
-		for (Property element : getAttributes(umlComponent)) {
+		for (Property element : getSupportedAttributes(umlComponent,null)) {
 			if (isEnumerationAttribute(element)) {
 				Set<String> currValues = getListValuesForEnumeratorType(element);
 				enumValuesEList.addAll(currValues);
@@ -300,41 +301,43 @@ public class EntityUtil {
 		return subComponentsNames;
 	}
 
-	public Set<Port> getUmlPorts(Element umlElement) {
-		Set<Port> portsArr = new HashSet<Port>();
-		if (isBlock(umlElement)) {
-			portsArr.addAll(getUmlPortsFromClass((Class) umlElement));
-		}
+	
 
-		if (isCompType(umlElement) || (isComponentImplementation(umlElement))) {
-			portsArr.addAll(getUmlPortsFromComponent((Component) umlElement));
+	public Set<Port> getUMLPorts(Element umlElement, boolean isStaticPort) {
+		Set<Port> portsArr = new HashSet<Port>();
+		if (isBlock(umlElement)||isCompType(umlElement) || isComponentImplementation(umlElement)) {
+			portsArr.addAll(getUMLPortsFromClass((Class) umlElement,isStaticPort));
 		}
 
 		if (isComponentInstance(umlElement)) {
-			portsArr.addAll(getUmlPorts(getUmlType((Property) umlElement)));
+			portsArr.addAll(getUMLPortsFromProperty((Property) umlElement,isStaticPort));
+		}
+		return portsArr;
+
+	}
+	
+	private Set<Port> getUMLPortsFromProperty(Property umlElement, boolean isStaticPort) {
+		return getUMLPortsFromClass((Class)getUmlType((Property) umlElement),isStaticPort);
+	}
+	
+	public Set<Port> getUmlPorts(Element umlElement, int portDirection, boolean isStaticPort) {
+		Set<Port> portsArr = new HashSet<Port>();
+		if (isBlock(umlElement)) {
+			portsArr.addAll(getUmlPortsFromClass((Class) umlElement, portDirection,isStaticPort));
+		}
+
+		if (isCompType(umlElement) || (isComponentImplementation(umlElement))) {
+			portsArr.addAll(getUMLPortsFromComponent((Component) umlElement, portDirection));
+		}
+
+		if (isComponentInstance(umlElement)) {
+			portsArr.addAll(getUmlPorts(getUmlType((Property) umlElement), portDirection,isStaticPort));
 		}
 		return portsArr;
 
 	}
 
-	public Set<Port> getUmlPorts(Element umlElement, int portDirection) {
-		Set<Port> portsArr = new HashSet<Port>();
-		if (isBlock(umlElement)) {
-			portsArr.addAll(getUmlPortsFromClass((Class) umlElement, portDirection));
-		}
-
-		if (isCompType(umlElement) || (isComponentImplementation(umlElement))) {
-			portsArr.addAll(getUmlPortsFromComponent((Component) umlElement, portDirection));
-		}
-
-		if (isComponentInstance(umlElement)) {
-			portsArr.addAll(getUmlPorts(getUmlType((Property) umlElement), portDirection));
-		}
-		return portsArr;
-
-	}
-
-	private Set<Port> getUmlPortsFromClass(Class umlComponent, int portDirection) {
+	private Set<Port> getUmlPortsFromClass(Class umlComponent, int portDirection, boolean isStatic) {
 		System.out.println(umlComponent);
 		Set<Port> ports = new HashSet<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
@@ -347,13 +350,7 @@ public class EntityUtil {
 		return ports;
 	}
 
-	private Set<Port> getUmlPortsFromClass(Class umlComponent) {
-		Set<Port> ports = new HashSet<Port>();
-		for (Port umlPort : umlComponent.getOwnedPorts()) {
-			ports.add(umlPort);
-		}
-		return ports;
-	}
+	
 
 	public boolean isInputPort(Element umlPort) {
 		if (getPortDirection(umlPort) == FlowDirection.IN_VALUE) {
@@ -390,7 +387,7 @@ public class EntityUtil {
 		}
 	}
 
-	private Set<Port> getUmlPortsFromComponent(Component umlComponent, int portDirection) {
+	private Set<Port> getUMLPortsFromComponent(Component umlComponent, int portDirection) {
 		Set<Port> ports = new HashSet<Port>();
 
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
@@ -402,14 +399,34 @@ public class EntityUtil {
 		return ports;
 	}
 
-	private Set<Port> getUmlPortsFromComponent(Component umlComponent) {
+	
+	
+	private Set<Port> getUMLPortsFromClass(Class umlComponent, boolean isStaticPort) {
+		Set<Port> ports = new HashSet<Port>();
+		for (Port umlPort : umlComponent.getOwnedPorts()) {
+			if(umlPort.isStatic()==isStaticPort){
+			ports.add(umlPort);
+			}
+		}
+		return ports;
+	}
+	
+	private Set<Port> getUMLPortsFromClass(Class umlComponent) {
+		Set<Port> ports = new HashSet<Port>();
+		for (Port umlPort : umlComponent.getOwnedPorts()) {			
+			ports.add(umlPort);
+		}
+		return ports;
+	}
+	
+	/*private Set<Port> getUmlPortsFromComponent(Component umlComponent) {
 		Set<Port> ports = new HashSet<Port>();
 
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
 			ports.add(umlPort);
 		}
 		return ports;
-	}
+	}*/
 
 	public Package getToPackage(org.eclipse.uml2.uml.Element umlElememt) {
 
@@ -634,10 +651,10 @@ public class EntityUtil {
 		return umlClass.getName();
 	}
 
-	public String[] getPortsNames(Element umlElement, int portDirection) {
+	public String[] getPortsNames(Element umlElement, int portDirection, boolean isStaticPort) {
 		EList<String> portsNames = new BasicEList<String>();
 
-		for (Port umlPort : getUmlPorts(umlElement, portDirection)) {
+		for (Port umlPort : getUmlPorts(umlElement, portDirection,isStaticPort)) {
 			portsNames.add(umlPort.getName());
 		}
 
@@ -653,19 +670,19 @@ public class EntityUtil {
 		return portsNames;
 	}
 
-	public String[] getInputPortsNames(Element umlElement) {
-		return getPortsNames(umlElement, FlowDirection.IN_VALUE);
+	public String[] getInputPortsNames(Element umlElement,boolean isStaticPort) {
+		return getPortsNames(umlElement, FlowDirection.IN_VALUE, isStaticPort);
 	}
 
-	public String[] getOutputPortsNames(Element umlElement) {
-		return getPortsNames(umlElement, FlowDirection.OUT_VALUE);
+	public String[] getOutputPortsNames(Element umlElement,boolean isStaticPort) {
+		return getPortsNames(umlElement, FlowDirection.OUT_VALUE,isStaticPort);
 	}
 
-	public String[] getInputOutputPortsNames(Element umlElement) {
-		return getPortsNames(umlElement, FlowDirection.INOUT_VALUE);
+	public String[] getInputOutputPortsNames(Element umlElement,boolean isStaticPort) {
+		return getPortsNames(umlElement, FlowDirection.INOUT_VALUE,isStaticPort);
 	}
 
-	public Set<String> getBooleanAttributesNames(Element umlElement) {
+	private Set<String> getBooleanAttributesNames(Element umlElement) {
 
 		Set<String> booleanAttributesNames = new HashSet<String>();
 		for (Property umlProperty : getBooleanAttributes(umlElement)) {
@@ -674,7 +691,7 @@ public class EntityUtil {
 		return booleanAttributesNames;
 	}
 
-	public Set<String> getBooleanAttributesNamesExceptsPorts(Element umlElement) {
+	private Set<String> getBooleanAttributesNamesExceptsPorts(Element umlElement) {
 		Set<String> booleanAttributesNames = new HashSet<String>();
 		for (Property umlProperty : getBooleanAttributesExceptPorts(umlElement)) {
 			booleanAttributesNames.add(umlProperty.getName());
@@ -682,21 +699,21 @@ public class EntityUtil {
 		return booleanAttributesNames;
 	}
 
-	public Set<String> getAttributesNamesExceptsPorts(Element umlElement) {
+	private Set<String> getAttributesNamesExceptsPorts(Element umlElement) {
 		Set<String> booleanAttributesNames = new HashSet<String>();
-		for (Property umlProperty : getAttributesExceptPorts(umlElement)) {
+		for (Property umlProperty : getAttributesExceptPorts(umlElement,null)) {
 			booleanAttributesNames.add(umlProperty.getName());
 		}
 		return booleanAttributesNames;
 	}
 
-	public String[] getOwnerAttributesNames(Class contract) {
+	private String[] getOwnerAttributesNames(Class contract) {
 
 		Set<String> attrArr = getAttributesNamesExceptsPorts(contract.getOwner());
 		return toArray(attrArr);
 	}
 
-	public Set<Property> getBooleanAttributes(Element umlElement) {
+	private Set<Property> getBooleanAttributes(Element umlElement) {
 		Set<Property> booleanAttributes = new HashSet<Property>();
 
 		if (isBlock(umlElement) || (isCompType(umlElement) || (isComponentImplementation(umlElement)))) {
@@ -715,7 +732,7 @@ public class EntityUtil {
 		return booleanAttributes;
 	}
 
-	public Set<Property> getRealAttributes(Element umlElement) {
+	private Set<Property> getRealAttributes(Element umlElement) {
 		Set<Property> realAttributes = new HashSet<Property>();
 
 		if (isBlock(umlElement) || (isCompType(umlElement) || (isComponentImplementation(umlElement)))) {
@@ -734,7 +751,7 @@ public class EntityUtil {
 		return realAttributes;
 	}
 
-	public Set<Property> getContinuousAttributes(Element umlElement) {
+	private Set<Property> getContinuousAttributes(Element umlElement) {
 		Set<Property> continuousAttributes = new HashSet<Property>();
 
 		if (isBlock(umlElement) || (isCompType(umlElement) || (isComponentImplementation(umlElement)))) {
@@ -753,7 +770,7 @@ public class EntityUtil {
 		return continuousAttributes;
 	}
 
-	public Set<Property> getDoubleAttributes(Element umlElement) {
+	private Set<Property> getDoubleAttributes(Element umlElement) {
 		Set<Property> doubleAttributes = new HashSet<Property>();
 
 		if (isBlock(umlElement) || (isCompType(umlElement) || (isComponentImplementation(umlElement)))) {
@@ -772,7 +789,7 @@ public class EntityUtil {
 		return doubleAttributes;
 	}
 
-	public Set<Property> getEnumerationAttributes(Element umlElement) {
+	private Set<Property> getEnumerationAttributes(Element umlElement) {
 		Set<Property> enumAttributes = new HashSet<Property>();
 
 		if (isBlock(umlElement) || (isCompType(umlElement) || (isComponentImplementation(umlElement)))) {
@@ -791,7 +808,7 @@ public class EntityUtil {
 		return enumAttributes;
 	}
 
-	public Set<Property> getRangeAttributes(Element umlElement) {
+	private Set<Property> getRangeAttributes(Element umlElement) {
 		Set<Property> rangeAttributes = new HashSet<Property>();
 
 		if (isBlock(umlElement) || (isCompType(umlElement) || (isComponentImplementation(umlElement)))) {
@@ -810,7 +827,7 @@ public class EntityUtil {
 		return rangeAttributes;
 	}
 
-	public Set<Property> getAttributes(Element umlElement) {
+	private Set<Property> getSupportedAttributes(Element umlElement, Boolean isStaticAttribute) {
 		Set<Property> simpleAttributes = new HashSet<Property>();
 
 		if (isComponentInstance(umlElement)) {
@@ -820,6 +837,7 @@ public class EntityUtil {
 		if (isBlock(umlElement) || (isCompType(umlElement) || (isComponentImplementation(umlElement)))) {
 			Class umlClass = (Class) umlElement;
 			for (Property umlProperty : umlClass.getOwnedAttributes()) {
+				if((isStaticAttribute==null)||(umlProperty.isStatic()==isStaticAttribute)){
 				if (isBooleanAttribute(umlProperty)) {
 					simpleAttributes.add(umlProperty);
 				}
@@ -841,13 +859,14 @@ public class EntityUtil {
 				if (isRealAttribute(umlProperty)) {
 					simpleAttributes.add(umlProperty);
 				}
+				}
 			}
 		}
 
 		return simpleAttributes;
 	}
 
-	public Set<Property> getIntegerAttributes(Element umlElement) {
+	private Set<Property> getIntegerAttributes(Element umlElement) {
 		Set<Property> integerAttributes = new HashSet<Property>();
 
 		if (isBlock(umlElement) || (isCompType(umlElement) || (isComponentImplementation(umlElement)))) {
@@ -866,7 +885,7 @@ public class EntityUtil {
 		return integerAttributes;
 	}
 
-	public Set<Property> getBooleanAttributesExceptPorts(Element umlElement) {
+	private Set<Property> getBooleanAttributesExceptPorts(Element umlElement) {
 		Set<Property> booleanAttributes = new HashSet<Property>();
 		for (Property umlProperty : getBooleanAttributes(umlElement)) {
 			if (!isPort(umlProperty)) {
@@ -876,9 +895,9 @@ public class EntityUtil {
 		return booleanAttributes;
 	}
 
-	public Set<Property> getAttributesExceptPorts(Element umlElement) {
+	public Set<Property> getAttributesExceptPorts(Element umlElement, Boolean isStaticAttribute) {
 		Set<Property> attributes = new HashSet<Property>();
-		for (Property umlProperty : getAttributes(umlElement)) {
+		for (Property umlProperty : getSupportedAttributes(umlElement,isStaticAttribute)) {
 			if (!isPort(umlProperty)) {
 				attributes.add(umlProperty);
 			}
