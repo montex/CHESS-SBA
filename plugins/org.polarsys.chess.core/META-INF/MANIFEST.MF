@@ -6,7 +6,8 @@ Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.polarsys.chess.core.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.polarsys.chess.core,
+Export-Package: javax.xml.bind,
+ org.polarsys.chess.core,
  org.polarsys.chess.core.constraint;uses:="org.eclipse.core.runtime,org.eclipse.emf.common.notify",
  org.polarsys.chess.core.extensionpoint,
  org.polarsys.chess.core.internal.extensionpoint,
