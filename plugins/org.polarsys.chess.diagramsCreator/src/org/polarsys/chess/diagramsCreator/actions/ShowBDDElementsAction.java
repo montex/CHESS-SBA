@@ -23,6 +23,7 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gmf.runtime.diagram.ui.OffscreenEditPartFactory;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
@@ -60,6 +61,9 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	private static int MIN_HEIGHT = 150;
 	private static int MAX_HEIGHT = 1500;
 	
+	final EntityUtil entityUtil = EntityUtil.getInstance();
+	final ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+
 	/** Selection of all the possible elements */
 	private List<Object> selection;
 
@@ -72,11 +76,10 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	 * @param activeEditor the editor corresponding to the editPart
 	 * @param editPart the EditPart to show the Element in
 	 * @param position position is used to try to distribute the drop
-	 * @return the EditPart in which the Element has been actually added
+	 * @return the Command to display the element
 	 */
-	private EditPart showElementIn(EObject elementToShow, DiagramEditor activeEditor, EditPart editPart, int position) {
-		EditPart returnEditPart = null;
-
+	private Command showElementIn(EObject elementToShow, DiagramEditor activeEditor, EditPart editPart, int position) {
+		
 		if (elementToShow instanceof Element) {
 			DropObjectsRequest dropObjectsRequest = new DropObjectsRequest();
 			ArrayList<Element> list = new ArrayList<Element>();
@@ -86,12 +89,11 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 			Command cmd = editPart.getCommand(dropObjectsRequest);
 
 			if (cmd != null && cmd.canExecute()) {
-				activeEditor.getDiagramEditDomain().getDiagramCommandStack().execute(cmd);
-				returnEditPart = editPart;
+				return cmd;
+//				activeEditor.getDiagramEditDomain().getDiagramCommandStack().execute(cmd);
 			}
 		}
-
-		return returnEditPart;
+		return null;
 	}
 
 	/**
@@ -101,6 +103,8 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	 */
 	public Diagram addBDD(Package owner) throws Exception {
 
+		System.out.println("\n\nchiamata la addBDD!");
+		
 		// Get the services registry
 		final ServicesRegistry servicesRegistry = ServiceUtilsForResource.getInstance().getServiceRegistry(owner.eResource());
 
@@ -112,11 +116,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		return command.createDiagram(modelSet, owner, owner.getName() + "_BDD");
 	}
 
-	/**
-	 * Returns the suggested size for the graphical element.
-	 * @param element the Element to be analyzed
-	 * @return width and height of the box
-	 */
 	private int[] getSize(Element element) {
 		int width = 0;
 		int height = 0;
@@ -185,62 +184,37 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	 * @param diagramEP the diagram EditPart
 	 */
 	private void resizeElements(IGraphicalEditPart diagramEP) {
-		final AtomicInteger subElementCounter = new AtomicInteger(0);
 
 		// Get all the views of the diagram and loop on them
 		List<?> childrenView = diagramEP.getNotationView().getChildren();
 		
-		for (Object child : childrenView) {
-			View childView = (View) child;
-			logger.debug("child View = " + child);
-			final Element semanticElement = (Element) childView.getElement();
-			logger.debug("\telement of view = " + semanticElement);
-			
-			if (EntityUtil.getInstance().isSystem(semanticElement)) {
+		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(diagramEP.getNotationView());
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
 
-				// Enlarge and center the system component
-				if (childView instanceof CSSShapeImpl) {
-					final CSSShapeImpl viewShape = (CSSShapeImpl) childView;
-					final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
+			@Override
+			protected void doExecute() {
 
-					final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(childView);
-					domain.getCommandStack().execute(new RecordingCommand(domain) {
+				for (Object child : childrenView) {
+					View childView = (View) child;
+					final Element semanticElement = (Element) childView.getElement();
 
-						@Override
-						protected void doExecute() {
-							
+					if (EntityUtil.getInstance().isBlock(semanticElement)) {
+
+						// Enlarge the component but don't position it, arrange will do it later
+						if (childView instanceof CSSShapeImpl) {
+							final CSSShapeImpl viewShape = (CSSShapeImpl) childView;
+							final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
+
 							final int[] size = getSize(semanticElement);
 							layout.setWidth(size[0]);
 							layout.setHeight(size[1]);
-							layout.setX(400);
-							layout.setY(50);
 						}
-					});
-				}
-			} else if (EntityUtil.getInstance().isBlock(semanticElement)) {
-				
-				// Enlarge the other components
-				if (childView instanceof CSSShapeImpl) {
-					final CSSShapeImpl viewShape = (CSSShapeImpl) childView;
-					final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
-
-					final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(childView);
-					domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-						@Override
-						protected void doExecute() {
-							final int[] size = getSize(semanticElement);
-							layout.setWidth(size[0]);
-							layout.setHeight(size[1]);
-							layout.setX(50 + 300 * subElementCounter.getAndIncrement());
-							layout.setY(400);
-						}
-					});
+					}
 				}
 			}
-		}
+		});
 	}
-	
+
 	/**
 	 * Completes the list of selection for the given representation and its potential children.
 	 * @param listToComplete the list of selected elements to complete
@@ -283,8 +257,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	 */
 //	@Override
 	protected void buildShowHideElementsList(Object[] results) {	
-		final EntityUtil entityUtil = EntityUtil.getInstance();
-		final ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 
 		viewsToCreate = new ArrayList<EditPartRepresentation>();
 		viewsToDestroy = new ArrayList<EditPartRepresentation>();
@@ -352,14 +324,29 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		Package pkg = (Package) diagramEP.resolveSemanticElement();
 		EList<Element> packageChildren = pkg.getOwnedElements();
 		
+		CompoundCommand completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
+
 		// First loop to draw Block elements and contracts
 		for (Element element : packageChildren) {
 			if (EntityUtil.getInstance().isBlock(element)) {
 				logger.debug("calling showElementIn for element = " + element);
-				showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1);
+				Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1); 
+				completeCmd.add(cmd);
 			}
 		}
+		System.out.println("completeCommand.size =" + completeCmd.size());
 		
+		// Execute the commands
+		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(diagram);
+
+		
+		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(completeCmd));
+
+//		completeCmd.dispose();
+
+		// Create a new command, dispose doesn't work...
+		completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
+
 		// Resize the graphical elements
 		resizeElements(diagramEP);
 
@@ -383,14 +370,17 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		// Draw the inner attributes
 		if (selection.size() > 0) {
 
+			long start = System.currentTimeMillis();
 			// Filter the list to extract only the elements I'm interested in
 			buildShowHideElementsList(selection.toArray());
 
+			System.out.println("Time = " + (System.currentTimeMillis() - start));
+			
 			// Create the list of commands to display the elements
 			final Command command = getActionCommand();		
 
 			// Execute the commands
-			final TransactionalEditingDomain domain = this.selectedElements.get(0).getEditingDomain();
+//			final TransactionalEditingDomain domain = this.selectedElements.get(0).getEditingDomain();
 			domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
 		}
 		
@@ -398,8 +388,15 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		for (Element element : packageChildren) {
 			if (element instanceof Association) {
 				logger.debug("calling showElementIn for Association = " + element);
-				showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1);
+				Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1); 
+				completeCmd.add(cmd);
 			}
 		}
+		System.out.println("completeCommand.size =" + completeCmd.size());
+		
+		// Execute the commands
+//		final TransactionalEditingDomain domain = this.selectedElements.get(0).getEditingDomain();
+		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(completeCmd));
+
 	}
 }
