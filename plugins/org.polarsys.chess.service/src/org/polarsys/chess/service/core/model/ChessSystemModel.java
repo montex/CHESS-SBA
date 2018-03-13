@@ -76,7 +76,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 
 	@Override
-	public boolean isPortOrParameterWithRangeType(Object port) {
+	public boolean isRangeAttribute(Object port) {
 		return entityUtil.isRangeAttribute((Property) port);
 	}
 
@@ -212,13 +212,13 @@ if (entityUtil.isBlock((Element) component)) {
 	 * getInputPorts(java.lang.Object)
 	 */
 	@Override
-	public EList<Port> getInputPorts(Object component) {
-		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, FlowDirection.IN_VALUE));
+	public EList<Port> getNonStaticInputPorts(Object component) {
+		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, FlowDirection.IN_VALUE,false));
 	}
 
 	@Override
-	public Set<?> getPorts(Object component) {
-		return entityUtil.getUmlPorts((Element)component);
+	public EList<?> getNonStaticPorts(Object component) {
+		return entityUtil.getUMLPorts((Element)component,false);
 	}
 	
 	/*
@@ -229,7 +229,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 * getParameterName(java.lang.Object)
 	 */
 	@Override
-	public String getParameterName(Object parameter) {
+	public String getAttributeName(Object parameter) {
 		return entityUtil.getAttributeName((Property)parameter);
 		//return ((Property) parameter).getName();
 	}
@@ -241,10 +241,11 @@ if (entityUtil.isBlock((Element) component)) {
 	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
 	 * getParameters(java.lang.Object)
 	 */
-	@Override
+	/*@Override
 	public EList<Property> getParameters(Object component) {
-		return new BasicEList<Property>(entityUtil.getBooleanAttributesExceptPorts((Element) component));
-	}
+		return null;
+		//return new BasicEList<Property>(entityUtil.getBooleanAttributesExceptPorts((Element) component));
+	}*/
 
 	/*
 	 * (non-Javadoc)
@@ -254,9 +255,9 @@ if (entityUtil.isBlock((Element) component)) {
 	 * getOutputPorts(java.lang.Object)
 	 */
 	@Override
-	public EList<Port> getOutputPorts(Object component) {
+	public EList<Port> getNonStaticOutputPorts(Object component) {
 		int direction = FlowDirection.OUT_VALUE;
-		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, direction));
+		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, direction,false));
 	}
 
 	/*
@@ -267,9 +268,9 @@ if (entityUtil.isBlock((Element) component)) {
 	 * getGenericPorts(java.lang.Object)
 	 */
 	@Override
-	public EList<Port> getGenericPorts(Object component) {
+	public EList<Port> getNonStaticGenericPorts(Object component) {
 		int direction = FlowDirection.INOUT_VALUE;
-		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, direction));
+		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, direction, false));
 	}
 
 	/*
@@ -571,7 +572,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 * isBooleanType(java.lang.Object)
 	 */
 	@Override
-	public boolean isPortOrParameterWithBooleanType(Object port_or_parameter) {
+	public boolean isBooleanAttribute(Object port_or_parameter) {
 		return entityUtil.isBooleanAttribute((Property) port_or_parameter);
 	}
 
@@ -583,7 +584,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 * isDoubleType(java.lang.Object)
 	 */
 	@Override
-	public boolean isPortOrParameterWithDoubleType(Object port_or_parameter) {
+	public boolean isDoubleAttribute(Object port_or_parameter) {
 		return entityUtil.isDoubleAttribute((Property) port_or_parameter);
 	}
 
@@ -595,7 +596,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 * isRealType(java.lang.Object)
 	 */
 	@Override
-	public boolean isPortOrParameterWithRealType(Object port_or_parameter) {
+	public boolean isRealAttribute(Object port_or_parameter) {
 		return entityUtil.isRealAttribute((Property) port_or_parameter);
 	}
 	
@@ -607,7 +608,7 @@ if (entityUtil.isBlock((Element) component)) {
 	 * isIntType(java.lang.Object)
 	 */
 	@Override
-	public boolean isPortOrParameterWithIntType(Object port_or_parameter) {
+	public boolean isIntAttribute(Object port_or_parameter) {
 		return entityUtil.isIntegerAttribute((Property) port_or_parameter);
 	}
 
@@ -619,14 +620,14 @@ if (entityUtil.isBlock((Element) component)) {
 	 * isContinuousType(java.lang.Object)
 	 */
 	@Override
-	public boolean isPortOrParameterWithContinuousType(Object port_or_parameter) {
+	public boolean isContinuousAttribute(Object port_or_parameter) {
 		return entityUtil.isContinuousAttribute((Property) port_or_parameter);
 	}
 
 	
 	
 	@Override
-	public boolean isPortOrParameterWithEnumType(Object port_or_parameter) {
+	public boolean isEnumAttribute(Object port_or_parameter) {
 		return entityUtil.isEnumerationAttribute((Property) port_or_parameter);
 	}
 
@@ -676,22 +677,22 @@ if (entityUtil.isBlock((Element) component)) {
 
 
 	@Override
-	public boolean isPortOrParameterWithEventType(Object port_or_parameter) {
-		return entityUtil.isEventPortAttribute((Property)port_or_parameter);
+	public boolean isEventAttribute(Object attribute) {
+		return entityUtil.isEventPortAttribute((Property)attribute);
 	}
 
 
 
 	@Override
-	public String getPortOrParameterOwnerName(Object port_or_parameter) {
-		return entityUtil.getComponentName(entityUtil.getOwner((Element)port_or_parameter));
+	public String getAttributeOwnerName(Object attribute) {
+		return entityUtil.getComponentName(entityUtil.getOwner((Element)attribute));
 	}
 
 
 
 	@Override
-	public boolean isPortOrParameterWithNullType(Object port_or_parameter) {
-		return (((Property)port_or_parameter).getType() == null);
+	public boolean isNullAttribute(Object attribute) {
+		return (((Property)attribute).getType() == null);
 	}
 
 
@@ -718,7 +719,7 @@ if (entityUtil.isBlock((Element) component)) {
 
 
 	@Override
-	public boolean isPortOrParameterWithNumberType(Object attribute) {
+	public boolean isNumberAttribute(Object attribute) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -726,7 +727,7 @@ if (entityUtil.isBlock((Element) component)) {
 
 
 	@Override
-	public boolean isPortOrParameterWithWordType(Object attribute) {
+	public boolean isWordAttribute(Object attribute) {
 		return entityUtil.isStringAttribute((Property)attribute);
 		
 	}
@@ -746,7 +747,7 @@ if (entityUtil.isBlock((Element) component)) {
 	}
 
 	@Override
-	public Set<?> getOwnerPorts(Object formalProperty) {
+	public EList<?> getOwnerNonStaticPorts(Object formalProperty) {
 		
 		Element owner = entityUtil.getOwner((Element)formalProperty);
 		
@@ -757,11 +758,12 @@ if (entityUtil.isBlock((Element) component)) {
 		if(contractEntityUtil.isContract(owner)){
 			owner = (Class)entityUtil.getOwner(owner);
 		}
-		return entityUtil.getUmlPorts(owner);		
+		return entityUtil.getUMLPorts(owner,false);		
 	}
 
-	@Override
-	public Set<?> getOwnerVariables(Object formalProperty) {
+/*	
+	//@Override
+	private Set<?> getOwnerVariables(Object formalProperty) {
 		Element owner = (Element)entityUtil.getOwner((Element)formalProperty);
 		
 		if(!(owner instanceof Class)){
@@ -771,8 +773,10 @@ if (entityUtil.isBlock((Element) component)) {
 		if(contractEntityUtil.isContract(owner)){
 			owner = (Class)entityUtil.getOwner(owner);
 		}
-		return entityUtil.getAttributes(owner);
-	}
+		//FIXME use instead entityUtil.getStaticPorts
+		//return entityUtil.getAttributes(owner);
+		return null;
+	}*/
 
 	@Override
 	public String[] getEnumValuesFromOwnerAttributes(Object formalProperty) {
@@ -818,7 +822,7 @@ if (entityUtil.isBlock((Element) component)) {
 
 
 
-	@Override
+	/*@Override
 	public String[] getEnumValuesFromOwnerPorts(Object port_or_parameter) {
 		Element owner = entityUtil.getOwner((Element)port_or_parameter);
 		
@@ -830,5 +834,30 @@ if (entityUtil.isBlock((Element) component)) {
 			owner = (Class)entityUtil.getOwner(owner);
 		}
 		return entityUtil.getEnumValuesFromComponentPorts((Class)owner);	
+	}*/
+
+
+
+	@Override
+	public EList<?> getOwnerStaticPorts(Object element) {
+Element owner = entityUtil.getOwner((Element)element);
+		
+		if(!(owner instanceof Class)){
+			return null;
+		}
+		//block added to manage formal properties with contract as owner
+		if(contractEntityUtil.isContract(owner)){
+			owner = (Class)entityUtil.getOwner(owner);
+		}
+		return entityUtil.getUMLPorts(owner,true);	
+		
+		
+	}
+
+
+
+	@Override
+	public EList<?> getStaticPorts(Object component) {
+		return entityUtil.getUMLPorts((Element)component,true);
 	}
 }

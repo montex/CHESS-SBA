@@ -48,19 +48,22 @@ public class CustomContractEditorView extends ContractEditorView {
 	@Override
 	public String[] getContractOwnerInputPortsNames(Object contract) {
 		Element umlOwner = entityUtil.getOwner((Element) contract);
-		return entityUtil.getInputPortsNames(umlOwner);
+		//return entityUtil.getInputPortsNames(umlOwner);
+		return null;
 	}
 
 	@Override
 	public String[] getContractOwnerOutputPortsNames(Object contract) {
 		Element umlOwner = entityUtil.getOwner((Element) contract);
-		return entityUtil.getOutputPortsNames(umlOwner);
+		//return entityUtil.getOutputPortsNames(umlOwner);
+		return null;
 	}
 
 	@Override
 	public String[] getContractOwnerInputOutputPortsNames(Object contract) {
 		Element umlOwner = entityUtil.getOwner((Element) contract);
-		return entityUtil.getInputOutputPortsNames(umlOwner);
+		//return entityUtil.getInputOutputPortsNames(umlOwner);
+		return null;
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public class CustomContractEditorView extends ContractEditorView {
 
 		if (selectedUmlElement instanceof Property) {
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
-				Element classType = entityUtil.getUmlType((Property) selectedUmlElement);
+				Element classType = entityUtil.getUMLType((Property) selectedUmlElement);
 				if (!contractEntityUtil.isContract(classType)) {
 					return classType;
 				}
@@ -91,11 +94,11 @@ public class CustomContractEditorView extends ContractEditorView {
 
 		if (selectedUmlElement instanceof Property) {
 			if (contractEntityUtil.isContractProperty((Property) selectedUmlElement)) {
-				return entityUtil.getUmlType((Property) selectedUmlElement);
+				return entityUtil.getUMLType((Property) selectedUmlElement);
 			}
 
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
-				Element classType = entityUtil.getUmlType((Property) selectedUmlElement);
+				Element classType = entityUtil.getUMLType((Property) selectedUmlElement);
 				if (contractEntityUtil.isContract(classType)) {
 					return classType;
 				}
@@ -229,17 +232,18 @@ public class CustomContractEditorView extends ContractEditorView {
 	@Override
 	public String[] getEnumValuesFromContractOwnerPorts(Object contract) {
 		Class element = (Class) ((Class) contract).getOwner();
-		return entityUtil.getEnumValuesFromComponentPorts(element);
+		//return entityUtil.getEnumValuesFromNonStaticComponentPorts(element);
+		return null;
 	}
 
 	@Override
-	public Set<?> getContractOwnerPorts(Object contract) {
+	public EList<?> getContractOwnerPorts(Object contract) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<?> getContractOwnerAttributes(Object contract) {
+	public EList<?> getContractOwnerAttributes(Object contract) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -357,7 +357,7 @@ public class ContractEntityUtil {
 		}
 
 		if (entityUtil.isComponentInstance(umlElement)) {
-			constraints.addAll(getConstraintsProperties(entityUtil.getUmlType((Property) umlElement)));
+			constraints.addAll(getConstraintsProperties(entityUtil.getUMLType((Property) umlElement)));
 		}
 
 		return constraints;
