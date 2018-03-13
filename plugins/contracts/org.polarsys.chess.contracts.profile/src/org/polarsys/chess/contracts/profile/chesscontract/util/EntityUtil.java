@@ -450,7 +450,7 @@ public class EntityUtil {
 	}
 
 	public boolean isPort(Element umlElement) {
-		return isFlowPort(umlElement) || isFlowPortMarte(umlElement);
+		return ((umlElement instanceof Property) && (isFlowPort(umlElement) || isFlowPortMarte(umlElement)));
 	}
 
 	private boolean isFlowPort(Element umlElement) {
@@ -608,7 +608,7 @@ public class EntityUtil {
 	}
 
 	public boolean isBlock(Element umlClass) {
-		return UMLUtil.getAppliedStereotype(umlClass, BLOCK, false) != null;
+		return ((umlClass instanceof Class) && (UMLUtil.getAppliedStereotype(umlClass, BLOCK, false) != null));
 	}
 
 	public boolean isCompType(Element umlComponent) {
@@ -616,7 +616,7 @@ public class EntityUtil {
 	}
 
 	public boolean isSystem(Element umlElement) {
-		return UMLUtil.getAppliedStereotype(umlElement, SYSTEM, false) != null;
+		return ((umlElement instanceof Class) && (UMLUtil.getAppliedStereotype(umlElement, SYSTEM, false) != null));
 	}
 
 	public boolean isFaultyStateMachine(Element umlElement) {
