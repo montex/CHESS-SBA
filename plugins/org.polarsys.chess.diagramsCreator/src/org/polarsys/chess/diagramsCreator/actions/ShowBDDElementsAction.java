@@ -102,8 +102,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	 */
 	public Diagram addBDD(Package owner) throws Exception {
 
-		System.out.println("\n\nchiamata la addBDD!");
-		
 		// Get the services registry
 		final ServicesRegistry servicesRegistry = ServiceUtilsForResource.getInstance().getServiceRegistry(owner.eResource());
 

@@ -72,6 +72,9 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	/** Logger for messages */
 	private static final Logger logger = Logger.getLogger(ShowIBDElementsAction.class);
 	
+	final EntityUtil entityUtil = EntityUtil.getInstance();
+	final ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+
 	/**
 	 * Adds a IBD diagram to the given block.
 	 * @param owner the selected block
@@ -102,8 +105,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 */
 	@Override
 	protected void buildShowHideElementsList(Object[] results) {	
-		final EntityUtil entityUtil = EntityUtil.getInstance();
-		final ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 		
 		viewsToCreate = new ArrayList<EditPartRepresentation>();
 		viewsToDestroy = new ArrayList<EditPartRepresentation>();
@@ -211,7 +212,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				} else if (isAffixedChildNode(editPart, ((OptionalEditPartRepresentation) rep).getSemanticElement())) {				
 					Element element = (Element) ((OptionalEditPartRepresentation) rep).getSemanticElement();
 					if (element instanceof Port) {
-						if (EntityUtil.getInstance().isInputPort(element)) {
+						if (entityUtil.isInputPort(element)) {
 							portLocationLeft.y += INCREMENT;
 							request.setLocation(new Point(portLocationLeft));
 						} else {
@@ -284,7 +285,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 						
 						logger.debug("req = " + request);
 						
-						if (EntityUtil.getInstance().isInputPort(port)) {
+						if (entityUtil.isInputPort(port)) {
 							portLocationLeft.y += INCREMENT;
 							request.setLocation(new Point(portLocationLeft));
 						} else {
@@ -556,8 +557,9 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		selectedElements = new ArrayList<IGraphicalEditPart>();
 		selectedElements.add(selectedElementEP);
 				
+		// Call superclass methods to setup the action
 		initAction();
-		buildInitialSelection();	// initialSelection should be empty at this moment
+		buildInitialSelection();
 		
 		// Get a selection with all the possible elements
 		buildSelection();
