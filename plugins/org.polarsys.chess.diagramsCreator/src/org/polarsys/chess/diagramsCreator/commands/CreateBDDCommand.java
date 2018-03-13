@@ -18,7 +18,7 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 
 public class CreateBDDCommand extends AbstractJobCommand {
 	final String BDD_CREATOR_COMMAND = "org.polarsys.chess.diagramsCreator.commands.createBDDHandler";
-	final String ARRANGE_COMMAND = "org.eclipse.papyrus.uml.diagram.menu.commands.ArrangeAllCommand";
+	final String ARRANGE_COMMAND = "org.polarsys.chess.diagramsCreator.commands.arrangeHandler";
 	final String ADJUST_COMMAND = "org.polarsys.chess.diagramsCreator.commands.adjustAssociationsHandler";
 	final String FITZOOM_COMMAND = "org.eclipse.papyrus.uml.diagram.menu.commands.ZoomFitCommand";
 	
@@ -53,27 +53,41 @@ public class CreateBDDCommand extends AbstractJobCommand {
 					(parameterizedCommand.getCommand().getHandler().isHandled())) {
 
 				arrangeElements.execute();
-				
-				// Call it twice again, it may improve the layout
-				arrangeElements.execute();
-				arrangeElements.execute();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+						
 		// Call the command to adjust the associations
 		try {
 			final CommandBuilder adjustAssociations = CommandBuilder.build(ADJUST_COMMAND);
-			adjustAssociations.execute();
+			
+			ParameterizedCommand parameterizedCommand = adjustAssociations.getCommand();
+
+			// Check if there is a handler, in case of wrong package it won't be handled
+			if(parameterizedCommand != null && 
+					(parameterizedCommand.getCommand().getHandler() != null) &&
+					(parameterizedCommand.getCommand().getHandler().isHandled())) {
+
+				adjustAssociations.execute();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		// Call the command to fit the diagram in the screen
 		try {
-			final CommandBuilder adjustAssociations = CommandBuilder.build(FITZOOM_COMMAND);
-			adjustAssociations.execute();
+			final CommandBuilder fitDiagram = CommandBuilder.build(FITZOOM_COMMAND);
+
+			ParameterizedCommand parameterizedCommand = fitDiagram.getCommand();
+
+			// Check if there is a handler, in case of wrong package it won't be handled
+			if(parameterizedCommand != null && 
+					(parameterizedCommand.getCommand().getHandler() != null) &&
+					(parameterizedCommand.getCommand().getHandler().isHandled())) {
+
+				fitDiagram.execute();
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
