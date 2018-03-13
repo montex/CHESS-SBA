@@ -109,6 +109,11 @@
             id="org.polarsys.chess.diagramsCreator.commands.arrangeHandler"
             name="Arrange the graphical elements handler">
       </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.AdjustConnectorsHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.adjustConnectorsHandler"
+            name="Adjust associations handler">
+      </command>
    </extension>
 
 </plugin>
