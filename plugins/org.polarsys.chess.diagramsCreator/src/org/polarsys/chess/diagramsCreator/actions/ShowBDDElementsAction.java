@@ -12,7 +12,6 @@ package org.polarsys.chess.diagramsCreator.actions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.Logger;
 import org.eclipse.draw2d.geometry.Point;
@@ -123,9 +122,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		int childrenNumber = 0;
 		final int[] size = new int[2];
 
-		EntityUtil entityUtil = EntityUtil.getInstance();
-		ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
-		
 		// Loop on the children to find interesting elements
 		EList<Element> children = element.getOwnedElements();
 		for (Element child : children) {
@@ -198,7 +194,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 					View childView = (View) child;
 					final Element semanticElement = (Element) childView.getElement();
 
-					if (EntityUtil.getInstance().isBlock(semanticElement)) {
+					if (entityUtil.isBlock(semanticElement)) {
 
 						// Enlarge the component but don't position it, arrange will do it later
 						if (childView instanceof CSSShapeImpl) {
@@ -328,24 +324,16 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 
 		// First loop to draw Block elements and contracts
 		for (Element element : packageChildren) {
-			if (EntityUtil.getInstance().isBlock(element)) {
+			if (entityUtil.isBlock(element)) {
 				logger.debug("calling showElementIn for element = " + element);
 				Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1); 
 				completeCmd.add(cmd);
 			}
 		}
-		System.out.println("completeCommand.size =" + completeCmd.size());
 		
 		// Execute the commands
 		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(diagram);
-
-		
 		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(completeCmd));
-
-//		completeCmd.dispose();
-
-		// Create a new command, dispose doesn't work...
-		completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
 
 		// Resize the graphical elements
 		resizeElements(diagramEP);
@@ -355,7 +343,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		List<?> editPartChildren = diagramEP.getChildren();
 		for (Object editPartChild : editPartChildren) {
 			Element element = (Element) ((IGraphicalEditPart) editPartChild).resolveSemanticElement();
-			if (EntityUtil.getInstance().isBlock(element) && !ContractEntityUtil.getInstance().isContract(element)) {
+			if (entityUtil.isBlock(element) && !contractEntityUtil.isContract(element)) {
 				selectedElements.add((IGraphicalEditPart) editPartChild);
 			}
 		}
@@ -370,20 +358,20 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		// Draw the inner attributes
 		if (selection.size() > 0) {
 
-			long start = System.currentTimeMillis();
 			// Filter the list to extract only the elements I'm interested in
 			buildShowHideElementsList(selection.toArray());
 
-			System.out.println("Time = " + (System.currentTimeMillis() - start));
-			
 			// Create the list of commands to display the elements
 			final Command command = getActionCommand();		
 
 			// Execute the commands
-//			final TransactionalEditingDomain domain = this.selectedElements.get(0).getEditingDomain();
 			domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
 		}
 		
+		// Create a new command, dispose doesn't work...
+//		completeCmd.dispose();
+		completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
+
 		// Second loop to draw Associations
 		for (Element element : packageChildren) {
 			if (element instanceof Association) {
@@ -392,11 +380,8 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 				completeCmd.add(cmd);
 			}
 		}
-		System.out.println("completeCommand.size =" + completeCmd.size());
 		
 		// Execute the commands
-//		final TransactionalEditingDomain domain = this.selectedElements.get(0).getEditingDomain();
 		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(completeCmd));
-
 	}
 }
