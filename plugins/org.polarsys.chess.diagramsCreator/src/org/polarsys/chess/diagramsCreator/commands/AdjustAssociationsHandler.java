@@ -73,23 +73,23 @@ public class AdjustAssociationsHandler extends AbstractHandler {
 					} else if (values[i] instanceof NamedElementLinkLabelNameEditPart) {
 
 						// This will hide the name of the association
-						((IGraphicalEditPart)values[i]).getNotationView().setVisible(false);
+						((IGraphicalEditPart) values[i]).getNotationView().setVisible(false);
 					} else if (values[i] instanceof AssociationLinkLabelSourceRoleEditPart) {
 
 						// This will remove the "+" and name of the component instance on child size
-//						((IGraphicalEditPart)values[i]).getNotationView().setVisible(false);
+//						((IGraphicalEditPart) values[i]).getNotationView().setVisible(false);
 					} else if (values[i] instanceof AssociationLinkLabelSourceMultiplicityEditPart) {
 
 						// This will remove the "1" label on child side
-						((IGraphicalEditPart)values[i]).getNotationView().setVisible(false);
+						((IGraphicalEditPart) values[i]).getNotationView().setVisible(false);
 					} else if (values[i] instanceof AssociationLinkLabelTargetRoleEditPart) {
 
 						// This will remove the "+" label on father side
-						((IGraphicalEditPart)values[i]).getNotationView().setVisible(false);
+						((IGraphicalEditPart) values[i]).getNotationView().setVisible(false);
 					} else if (values[i] instanceof AssociationLinkLabelTargetMultiplicityEditPart) {
 
 						// This will remove the "1" label on father side
-						((IGraphicalEditPart)values[i]).getNotationView().setVisible(false);
+						((IGraphicalEditPart) values[i]).getNotationView().setVisible(false);
 					}
 				}
 			}
