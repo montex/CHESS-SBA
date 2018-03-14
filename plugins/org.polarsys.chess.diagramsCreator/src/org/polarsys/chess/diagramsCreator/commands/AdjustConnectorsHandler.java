@@ -49,7 +49,6 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 
 				// Loop on the array to find the connections
 				for (int i = 0; i < values.length; i++) {
-					System.out.println("Values[i] = " + values[i]);
 					
 					if (values[i] instanceof ConnectorLinkLabelEditPart) {
 
