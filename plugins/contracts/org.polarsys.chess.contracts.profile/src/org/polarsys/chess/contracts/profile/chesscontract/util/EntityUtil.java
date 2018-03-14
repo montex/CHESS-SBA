@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.eclipse.uml2.uml.Package;
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -78,7 +79,7 @@ import org.polarsys.chess.core.util.uml.ResourceUtils;
  */
 public class EntityUtil {
 
-	// private static final Logger logger = Logger.getLogger(EntityUtil.class);
+	private static final Logger logger = Logger.getLogger(EntityUtil.class);
 
 	private static final String BLOCK = "SysML::Blocks::Block";
 	private static final String SYSTEM = "CHESSContract::System";
@@ -952,12 +953,14 @@ public class EntityUtil {
 	}
 
 	public EList<String> getTransitionNameList(EList<Transition> transitions) throws Exception {
+		logger.debug("getTransitionNameList");
 		EList<String> transNames = new BasicEList<String>();
 		for (Transition trans : transitions) {
 			if (trans.getName() == null) {
 				throw new Exception("In " + trans.containingStateMachine().getQualifiedName()
 						+ ", one transition has name == null.");
 			}
+			logger.debug("transition Name: " +trans.getName());
 			transNames.add(trans.getName());
 		}
 
