@@ -13,6 +13,10 @@ package org.polarsys.chess.diagramsCreator.commands;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.ui.handlers.HandlerUtil;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
+
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 
@@ -33,6 +37,15 @@ public class CreateIBDSingleCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
+		
+		final ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
+		
+		System.out.println("selection = " + selection);
+		final Object umlObject = SelectionUtil.getInstance().getUmlSelectedObject(selection);
+System.out.println("umlObject = " + umlObject);
+		
+		
+		
 		// Call the command to create the diagram and populate it
 		try {
 			final CommandBuilder diagramIBDCreator = CommandBuilder.build(BDD_CREATOR_COMMAND);
@@ -61,6 +74,9 @@ public class CreateIBDSingleCommand extends AbstractJobCommand {
 		// Call the command to arrange the components
 		try {
 			final CommandBuilder arrangeElements = CommandBuilder.build(ARRANGE_COMMAND);
+			
+			// Do not process the diagram but its main element content
+			arrangeElements.setParameter(CreateBDDCommand.ARRANGE_PROCESS_DIAGRAM, "false");
 			
 			ParameterizedCommand parameterizedCommand = arrangeElements.getCommand();
 
