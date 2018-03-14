@@ -21,6 +21,9 @@ public class CreateBDDCommand extends AbstractJobCommand {
 	private static final String ARRANGE_COMMAND = "org.polarsys.chess.diagramsCreator.commands.arrangeHandler";
 	private static final String ADJUST_COMMAND = "org.polarsys.chess.diagramsCreator.commands.adjustAssociationsHandler";
 	private static final String FITZOOM_COMMAND = "org.eclipse.papyrus.uml.diagram.menu.commands.ZoomFitCommand";
+
+	public static final String ARRANGE_LOOP_TIMES = "loop_times";
+	public static final String ARRANGE_PROCESS_DIAGRAM = "process_diagram";
 	
 	public CreateBDDCommand() {
 		super("Create BDD");
@@ -44,6 +47,9 @@ public class CreateBDDCommand extends AbstractJobCommand {
 		// Call the command to arrange the components
 		try {
 			final CommandBuilder arrangeElements = CommandBuilder.build(ARRANGE_COMMAND);
+			
+			arrangeElements.setParameter(ARRANGE_LOOP_TIMES, "3");	// Number of times to call the command
+			arrangeElements.setParameter(ARRANGE_PROCESS_DIAGRAM, "true"); // Process the diagram itself, default
 			
 			ParameterizedCommand parameterizedCommand = arrangeElements.getCommand();
 

@@ -59,6 +59,8 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUti
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
 public class ShowIBDElementsAction extends ShowHideContentsAction {
+	
+	// Constant values for the size of IBD elements
 	private static final int MAIN_WIDTH = 1000;
 	private static final int MIN_MAIN_HEIGHT = 600;
 	private static final int MAX_MAIN_HEIGHT = 6000;
