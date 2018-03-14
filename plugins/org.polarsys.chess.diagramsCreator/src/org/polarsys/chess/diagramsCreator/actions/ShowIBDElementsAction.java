@@ -59,6 +59,13 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUti
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
 public class ShowIBDElementsAction extends ShowHideContentsAction {
+	private static final int MAIN_WIDTH = 1000;
+	private static final int MIN_MAIN_HEIGHT = 600;
+	private static final int MAX_MAIN_HEIGHT = 6000;
+	private static final int MIN_SUB_WIDTH = 150;
+	private static final int MAX_SUB_WIDTH = 500;
+	private static final int MIN_SUB_HEIGHT = 150;
+	private static final int MAX_SUB_HEIGHT = 2000;
 
 	/** INCREMENT for the location of the elements to show (ports and properties) */
 	private static final int INCREMENT = 40;
@@ -257,7 +264,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			
 			// Get the UML element associated to the EP
 			EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
-			logger.debug("SemanticElement del compartment = " + semanticElement);
+			logger.debug("SemanticElement of compartment = " + semanticElement);
 									
 			if (semanticElement instanceof Property) {			
 			
@@ -269,8 +276,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				compartmentView = ((IGraphicalEditPart) childEP).getNotationView();
 
 				// Set the initial position of the ports
-				portLocationLeft = new Point(-10, 40);
-				portLocationRight = new Point(-10, 40);
+				portLocationLeft = new Point(-10, 20);
+				portLocationRight = new Point(-10, 20);
 				
 				// Get the width of the component to set the position of output ports
 				final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) childEP).getNotationView();
@@ -310,6 +317,93 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
+	 * Computes the ideal size for the element, depending on its features.
+	 * @param element the Element to analyze
+	 * @return an array with ideal dimensions
+	 */
+	private int[] getSize(Element element) {
+		int width = 0;
+		int height = 60;
+		final int[] size = new int[2];
+		int inputPorts = 0;
+		int outputPorts = 0;
+		EList<Port> ports;
+		int textLength = 0;
+		boolean isMain = false;
+		
+		if (element instanceof Property) {
+			
+			// Subcomponent
+			Property property = (Property) element;
+			textLength = property.getName().length();
+			textLength += property.getType().getName().length();
+			
+			// Empirical value
+			width = 30 + 8 * textLength;
+
+			// Get the ports of the component
+			ports = ((Class) property.getType()).getOwnedPorts();
+		} else {
+			
+			// Main component
+			isMain = true;
+
+			// Get the ports of the component
+			ports = ((Class) element).getOwnedPorts();
+		}
+		
+		// Count the number of input and output ports
+		for (Port port : ports) {
+			if (entityUtil.isInputPort(port)) {
+				inputPorts++;
+			} else {
+				outputPorts++;
+			}
+		}
+		
+		// Compute the height of the element based on number of ports
+		if (inputPorts > outputPorts) {
+			height += INCREMENT * inputPorts;
+		} else {
+			height += INCREMENT * outputPorts;
+		}
+		
+		logger.debug("Element width = " + width);
+		logger.debug("Element height = " + height);
+		
+		// Check box limits
+		if (isMain) {
+			size[0] = MAIN_WIDTH;
+			
+			if (height < MIN_MAIN_HEIGHT) {
+				size[1] = MIN_MAIN_HEIGHT;
+			} else if (height > MAX_MAIN_HEIGHT) {
+				size[1] = MAX_MAIN_HEIGHT;
+			} else {
+				size[1] = height;
+			}
+		} else {
+			if (width < MIN_SUB_WIDTH) {
+				size[0] = MIN_SUB_WIDTH;
+			} else if (width > MAX_SUB_WIDTH) {
+				size[0] = MAX_SUB_WIDTH;
+			} else {
+				size[0] = width;
+			}
+			
+			if (height < MIN_SUB_HEIGHT) {
+				size[1] = MIN_SUB_HEIGHT;
+			} else if (height > MAX_SUB_HEIGHT) {
+				size[1] = MAX_SUB_HEIGHT;
+			} else {
+				size[1] = height;
+			}
+		}
+		
+		return size;
+	}
+
+	/**
 	 * Resizes the component blocks.
 	 * @param diagramEP the diagram EditPart
 	 */
@@ -320,56 +414,54 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 
 		// Get the view of the main element
 		final View elementView = elementEP.getNotationView();
-		
-		// Enlarge the main component
-		if (elementView instanceof CSSShapeImpl) {
-			final CSSShapeImpl viewShape = (CSSShapeImpl) elementView;
-			final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
 
-			final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(elementView);
-			domain.getCommandStack().execute(new RecordingCommand(domain) {
+		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(elementView);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
 
-				@Override
-				protected void doExecute() {
-					layout.setWidth(1000);
-					layout.setHeight(600);
+			@Override
+			protected void doExecute() {
+
+				// Enlarge the main component
+				if (elementView instanceof CSSShapeImpl) {
+					final CSSShapeImpl viewShape = (CSSShapeImpl) elementView;
+					final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
+
+					final int[] size = getSize((Element) elementView.getElement());
+					layout.setWidth(size[0]);
+					layout.setHeight(size[1]);
 				}
-			});
-		}
-		
-		// Now I should resize also the inner components
-		final EList<?>compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
-		EObject semanticElement = null;
-		int offset = 100;
 
-		// Loop on the children on the compartment view
-		for (Object child : compartmentChildren) {
-			
-			// Get the UML element associated to the EP
-			semanticElement = ((View) child).getElement();
-			if (semanticElement instanceof Property) {			
-				if (child instanceof CSSShapeImpl) {
-					final CSSShapeImpl viewShape = (CSSShapeImpl) child;
-					final Bounds layout = NotationFactory.eINSTANCE.createBounds();
-					layout.setWidth(200);
-					layout.setHeight(300);
-					layout.setX(offset);
-					layout.setY(200);
-					offset += 250;
+				// Now I should resize also the inner components
+				final EList<?>compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
+				EObject semanticElement = null;
+				int offset = 100;
 
-					final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(child);
-					domain.getCommandStack().execute(new RecordingCommand(domain) {
+				// Loop on the children on the compartment view
+				for (Object child : compartmentChildren) {
 
-						@Override
-						protected void doExecute() {
+					// Get the UML element associated to the EP
+					semanticElement = ((View) child).getElement();
+					
+					if (semanticElement instanceof Property) {			
+						if (child instanceof CSSShapeImpl) {
+							final CSSShapeImpl viewShape = (CSSShapeImpl) child;
+							final Bounds layout = NotationFactory.eINSTANCE.createBounds();
+														
+							final int[] size = getSize((Property) semanticElement);
+							layout.setWidth(size[0]);
+							layout.setHeight(size[1]);
+							layout.setX(offset);
+							layout.setY(200);
+							offset += 250;
+
 							viewShape.setLayoutConstraint(layout);
 						}
-					});
+					}
 				}
 			}
-		}
+		});
 	}
-	
+
 	/**
 	 * Returns the diagram EditPart.
 	 * @return
