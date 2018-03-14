@@ -55,10 +55,10 @@ import org.eclipse.gmf.runtime.diagram.ui.requests.DropObjectsRequest;
 
 
 public class ShowBDDElementsAction extends ShowHideContentsAction {
-	private static int MIN_WIDTH = 150;
-	private static int MAX_WIDTH = 1500;
-	private static int MIN_HEIGHT = 150;
-	private static int MAX_HEIGHT = 1500;
+	private static final int MIN_WIDTH = 150;
+	private static final int MAX_WIDTH = 1500;
+	private static final int MIN_HEIGHT = 150;
+	private static final int MAX_HEIGHT = 1500;
 	
 	final EntityUtil entityUtil = EntityUtil.getInstance();
 	final ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
@@ -113,6 +113,11 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		return command.createDiagram(modelSet, owner, owner.getName() + "_BDD");
 	}
 
+	/**
+	 * Computes the ideal size for the element, depending on its features.
+	 * @param element the Element to analyze
+	 * @return an array with ideal dimensions
+	 */
 	private int[] getSize(Element element) {
 		int width = 0;
 		int height = 0;

@@ -42,10 +42,13 @@ public class CreateIBDSingleCommand extends AbstractJobCommand {
 		}
 		
 		long start = System.currentTimeMillis();
+		
 		// Call the command to adjust connectors and labels
 		try {
 			final CommandBuilder adjustConnectors = CommandBuilder.build(ADJUST_COMMAND);
+			System.out.println("Time for creating object = " + (System.currentTimeMillis() - start));
 			adjustConnectors.execute();
+			System.out.println("Time for running code = " + (System.currentTimeMillis() - start));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -72,23 +75,22 @@ public class CreateIBDSingleCommand extends AbstractJobCommand {
 			e.printStackTrace();
 		}
 		
-		// Call the command to fit the diagram in the screen
-		try {
-			final CommandBuilder fitDiagram = CommandBuilder.build(FITZOOM_COMMAND);
-
-			ParameterizedCommand parameterizedCommand = fitDiagram.getCommand();
-
-			// Check if there is a handler, in case of wrong package it won't be handled
-			if(parameterizedCommand != null && 
-					(parameterizedCommand.getCommand().getHandler() != null) &&
-					(parameterizedCommand.getCommand().getHandler().isHandled())) {
-
-				fitDiagram.execute();
-			}			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+//		// Call the command to fit the diagram in the screen
+//		try {
+//			final CommandBuilder fitDiagram = CommandBuilder.build(FITZOOM_COMMAND);
+//
+//			ParameterizedCommand parameterizedCommand = fitDiagram.getCommand();
+//
+//			// Check if there is a handler, in case of wrong package it won't be handled
+//			if(parameterizedCommand != null && 
+//					(parameterizedCommand.getCommand().getHandler() != null) &&
+//					(parameterizedCommand.getCommand().getHandler().isHandled())) {
+//
+//				fitDiagram.execute();
+//			}			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 	}
 }
