@@ -12,17 +12,20 @@ package org.polarsys.chess.contracts.profile.chesscontract.util;
 
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.papyrus.uml.tools.utils.OpaqueExpressionUtil;
 import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Namespace;
+import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.UMLFactory;
@@ -42,6 +45,8 @@ public class ContractEntityUtil {
 	private static ContractEntityUtil contractEntityUtilInstance;
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 
+	private static final Logger logger = Logger.getLogger(ContractEntityUtil.class);
+	
 	public static ContractEntityUtil getInstance() {
 		if (contractEntityUtilInstance == null) {
 			contractEntityUtilInstance = new ContractEntityUtil();
@@ -110,7 +115,12 @@ public class ContractEntityUtil {
 		String str = null;
 		if (formalProperty != null) {
 			if (formalProperty.getBase_Constraint().getSpecification() != null) {
-				str = formalProperty.getBase_Constraint().getSpecification().stringValue();
+				if(formalProperty.getBase_Constraint().getSpecification() instanceof LiteralString){
+					str = formalProperty.getBase_Constraint().getSpecification().stringValue();
+				}else if(formalProperty.getBase_Constraint().getSpecification() instanceof OpaqueExpression){
+					str = OpaqueExpressionUtil.getBodyForLanguage((OpaqueExpression)formalProperty.getBase_Constraint().getSpecification(), "OCRA");
+				}
+				
 			}
 		}
 		return str;
@@ -326,13 +336,37 @@ public class ContractEntityUtil {
 			protected void doExecute() {
 
 				Constraint umlConstraint = formalProperty.getBase_Constraint();
+				if(umlConstraint.getSpecification() instanceof LiteralString){
+					logger.debug("saveFormalProperty LiteralString");
 				LiteralString litString = (LiteralString) umlConstraint.getSpecification();
 				litString.setValue(formalPropertyText);
 				umlConstraint.setSpecification(litString);
+				}else if(umlConstraint.getSpecification() instanceof OpaqueExpression){
+					logger.debug("saveFormalProperty OpaqueExpression");
+					OpaqueExpression opaqueExpr = (OpaqueExpression) umlConstraint.getSpecification();	
+					//opaqueExpr.getLanguages().
+					setOpaqueExpressionBodyForLanguage(opaqueExpr, "OCRA", formalPropertyText);
+					
+				}
 			}
 		});
 	}
 
+	private void setOpaqueExpressionBodyForLanguage(org.eclipse.uml2.uml.OpaqueExpression opaqueExpression, String language, String body) {
+		// checks both lists by size
+		OpaqueExpressionUtil.checkAndCorrectLists(opaqueExpression);
+		// checks if language exists, if not, creates one
+		if (!opaqueExpression.getLanguages().contains(language)) {
+			opaqueExpression.getLanguages().add(0,language);
+			opaqueExpression.getBodies().add(0,body);
+		} else {
+			// retrieve the index of the given language in the opaque Expression
+			int index = opaqueExpression.getLanguages().indexOf(language);
+			// sets the body at the given index in the list of bodies.
+			opaqueExpression.getBodies().set(index, body);
+		}
+	}
+	
 	public EList<ContractProperty> getContractProperties(Class umlComponent) {
 		EList<ContractProperty> contractProperties = new BasicEList<ContractProperty>();
 		for (Property umlProperty : ((Class) umlComponent).getAttributes()) {
