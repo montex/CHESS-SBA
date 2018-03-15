@@ -11,7 +11,7 @@
 package org.polarsys.chess.constraints.constraintEditor;
 
 import org.eclipse.uml2.uml.Constraint;
-import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
+import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 /**
@@ -19,7 +19,7 @@ import org.polarsys.chess.service.gui.utils.SelectionUtil;
  */
 public class ConstraintEditorFilter implements org.eclipse.jface.viewers.IFilter {
 
-	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+	private EntityUtil contractEntityUtil = EntityUtil.getInstance();
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 
 	@Override

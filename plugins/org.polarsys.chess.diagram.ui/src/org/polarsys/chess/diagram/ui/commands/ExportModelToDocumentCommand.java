@@ -21,8 +21,8 @@ import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.diagram.ui.dialog.ModelToDocumentDialog;
 import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.DocumentGeneratorService;
-import eu.fbk.eclipse.standardtools.utils.core.utils.DirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractAsyncJobCommand;
+import eu.fbk.eclipse.standardtools.utils.ui.utils.DirectoryUtil;
 
 /**
  * 
