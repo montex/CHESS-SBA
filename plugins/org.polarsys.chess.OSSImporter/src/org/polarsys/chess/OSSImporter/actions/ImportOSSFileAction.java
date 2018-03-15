@@ -40,8 +40,6 @@ import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.core.util.uml.UMLUtils;
-
 import com.google.inject.Injector;
 
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSModelFactory;
@@ -74,6 +72,8 @@ import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
 import org.eclipse.papyrus.sysml.service.types.element.SysMLElementTypes;
 import org.eclipse.papyrus.uml.service.types.utils.ElementUtil;
+import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -130,6 +130,16 @@ public class ImportOSSFileAction {
 //	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
 //	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
 	 
+	// Stereotype objects needed to customize the elements
+	Stereotype contractPropertyStereotype;
+	Stereotype delegationConstraintStereotype;
+	Stereotype contractRefinementStereotype;
+	Stereotype flowPortStereotype;
+	Stereotype contractStereotype;
+	Stereotype boundedTypeStereotype;
+	Stereotype blockStereotype;
+	Stereotype systemStereotype;
+	
 	//TODO use instead method in xText plugin
 	final Injector injector = new OssStandaloneSetup().createInjector();
 	private final ISerializer serializer = injector.getInstance(ISerializer.class);
@@ -232,8 +242,9 @@ public class ImportOSSFileAction {
 		logger.debug("\n\n\n");
 
 		Property newUMLProperty = owner.createOwnedAttribute(elementName, elementType);
-		UMLUtils.applyStereotype(newUMLProperty, CONTRACT_PROP);
-
+//		UMLUtils.applyStereotype(newUMLProperty, CONTRACT_PROP);
+		newUMLProperty.applyStereotype(contractPropertyStereotype);
+		
 		logger.debug("\n\nCreated " + elementName + " Property\n\n");
 		return newUMLProperty;
 	}
@@ -276,8 +287,9 @@ public class ImportOSSFileAction {
 		logger.debug("\n\n\n");
 
 		Constraint newUMLConstraint = owner.createOwnedRule(delegationName.toString());
-		UMLUtils.applyStereotype(newUMLConstraint, DELEGATION_CONST);
-
+//		UMLUtils.applyStereotype(newUMLConstraint, DELEGATION_CONST);
+		newUMLConstraint.applyStereotype(delegationConstraintStereotype);
+		
 		LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
 		literalString.setName(DELEGATION_CONSTRAINT_NAME);
 		final String formalPropertyText = createDelegationConstraintText(variable, constraint);
@@ -383,8 +395,10 @@ public class ImportOSSFileAction {
 			//TODO create a new class e.g. CHESSElementsUtil and move this method there
 			DataType newUmlDataType = UMLFactory.eINSTANCE.createDataType();
 			Classifier newClass = owner.createNestedClassifier(refinementName, newUmlDataType.eClass());
-			Stereotype stereotype = UMLUtils.applyStereotype(newClass, CONTRACT_REFINEMENT);
-			ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(stereotype);
+//			Stereotype stereotype = UMLUtils.applyStereotype(newClass, CONTRACT_REFINEMENT);
+//			ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(stereotype);
+			newClass.applyStereotype(contractRefinementStereotype);
+			ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(contractRefinementStereotype);
 
 			// Set the correct links for the refinement
 			contractRefinement.setInstance(componentInstance); // The component instance containing the definition
@@ -485,10 +499,12 @@ public class ImportOSSFileAction {
 			
 		// Create a data type to the component view and apply the stereotype
 		Type dataType = pkg.createOwnedType(typeName, UMLPackage.Literals.DATA_TYPE);
-		Stereotype stereotype = UMLUtils.applyStereotype(dataType, BOUNDED_TYPE);
+//		Stereotype stereotype = UMLUtils.applyStereotype(dataType, BOUNDED_TYPE);
+		dataType.applyStereotype(boundedTypeStereotype);
 
 		// Extract the stereotiped type and configure it
-		BoundedSubtype boundedType = (BoundedSubtype) dataType.getStereotypeApplication(stereotype);		
+//		BoundedSubtype boundedType = (BoundedSubtype) dataType.getStereotypeApplication(stereotype);
+		BoundedSubtype boundedType = (BoundedSubtype) dataType.getStereotypeApplication(boundedTypeStereotype);
 		boundedType.setMinValue(String.valueOf(lowerBound));
 		boundedType.setMaxValue(String.valueOf(upperBound));
 		boundedType.setBaseType((DataType) getPrimitiveType("Integer"));
@@ -765,9 +781,11 @@ public class ImportOSSFileAction {
 		umlPort.setName(portName);
 		umlPort.setType(portType);
 		owner.getOwnedPorts().add(umlPort);
-		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+//		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+		umlPort.applyStereotype(flowPortStereotype);
 		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
-		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+//		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(flowPortStereotype);
 		flowPort.setDirection(isInput? FlowDirection.IN: FlowDirection.OUT);
 		
 		// This version is nicer but a little slower
@@ -802,9 +820,11 @@ public class ImportOSSFileAction {
 		umlPort.setName(portName);
 		umlPort.setType(portType);
 		owner.getOwnedPorts().add(umlPort);
-		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+//		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+		umlPort.applyStereotype(flowPortStereotype);
 		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
-		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+//		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(flowPortStereotype);
 		flowPort.setDirection(FlowDirection.INOUT);
 		umlPort.setIsStatic(true);
 		
@@ -822,8 +842,10 @@ public class ImportOSSFileAction {
 	private Class createSystemBlock(Package owner, final String elementName) {
 
 		Class sysBlock = owner.createOwnedClass(elementName, false);
-		UMLUtils.applyStereotype(sysBlock, BLOCK);
-		UMLUtils.applyStereotype(sysBlock, SYSTEM);
+//		UMLUtils.applyStereotype(sysBlock, BLOCK);
+//		UMLUtils.applyStereotype(sysBlock, SYSTEM);
+		sysBlock.applyStereotype(blockStereotype);
+		sysBlock.applyStereotype(systemStereotype);
 		
 		logger.debug("\n\nCreated " + elementName + " System Block\n\n");
 		return sysBlock;
@@ -843,7 +865,8 @@ public class ImportOSSFileAction {
 
 		Class newUmlClass = UMLFactory.eINSTANCE.createClass();
 		Classifier newClass = owner.createNestedClassifier(contractName, newUmlClass.eClass());
-		UMLUtils.applyStereotype(newClass, CONTRACT);
+//		UMLUtils.applyStereotype(newClass, CONTRACT);
+		newClass.applyStereotype(contractStereotype);
 		
 		logger.debug("\n\nCreated " + contractName + " Property\n\n");
 		return (Class) newClass;
@@ -859,8 +882,9 @@ public class ImportOSSFileAction {
 	private Class createBlock(Package owner, final String elementName) {
 
 		Class umlClass = owner.createOwnedClass(elementName, false);
-		UMLUtils.applyStereotype(umlClass, BLOCK);
-
+//		UMLUtils.applyStereotype(umlClass, BLOCK);
+		umlClass.applyStereotype(blockStereotype);
+		
 //		owner.createPackagedElement(elementName, newUMLClass.eClass()); This also works...
 //		owner.getPackagedElements().add(newUMLClass);	// This works too!
 		
@@ -1190,6 +1214,69 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
+	 * Collects the needed stereotypes from the given package.
+	 * @param pkg the package in which to look for the stereotypes
+	 */
+	private void refreshStereotypes(Package pkg) {
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT_PROP)) {
+			if (sub.getQualifiedName().equals(CONTRACT_PROP)) {
+				contractPropertyStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, DELEGATION_CONST)) {
+			if (sub.getQualifiedName().equals(DELEGATION_CONST)) {
+				delegationConstraintStereotype = sub;
+				break;
+			}
+		}
+
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT_REFINEMENT)) {
+			if (sub.getQualifiedName().equals(CONTRACT_REFINEMENT)) {
+				contractRefinementStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, BOUNDED_TYPE)) {
+			if (sub.getQualifiedName().equals(BOUNDED_TYPE)) {
+				boundedTypeStereotype = sub;
+				break;
+			}
+		}
+
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, FLOWPORT)) {
+			if (sub.getQualifiedName().equals(FLOWPORT)) {
+				flowPortStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, BLOCK)) {
+			if (sub.getQualifiedName().equals(BLOCK)) {
+				blockStereotype = sub;
+				break;
+			}
+		}
+
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, SYSTEM)) {
+			if (sub.getQualifiedName().equals(SYSTEM)) {
+				systemStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT)) {
+			if (sub.getQualifiedName().equals(CONTRACT)) {
+				contractStereotype = sub;
+				break;
+			}
+		}
+	}
+	
+	/**
 	 * Main method to be invoked to parse an OSS file.
 	 * @throws Exception
 	 */
@@ -1197,6 +1284,9 @@ public class ImportOSSFileAction {
 		OSS ocraOssFile;
 		sysView = pkg;	// Set the given package as working package
 
+		// Retrieve the needed stereotypes 
+		refreshStereotypes(sysView);
+		
 		long startTime = System.currentTimeMillis();
 		
 		if (ossFile != null) {
@@ -1285,6 +1375,7 @@ public class ImportOSSFileAction {
 				}
 				
 				logger.debug("Total time = " + (System.currentTimeMillis() - startTime));
+				System.out.println("Total time = " + (System.currentTimeMillis() - startTime));
 			}
 		});
 		
