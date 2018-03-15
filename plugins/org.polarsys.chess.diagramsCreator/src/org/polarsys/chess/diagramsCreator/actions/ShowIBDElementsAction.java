@@ -330,19 +330,16 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		int inputPorts = 0;
 		int outputPorts = 0;
 		EList<Port> ports;
-		int textLength = 0;
+		int maxLength = 0;
 		boolean isMain = false;
 		
 		if (element instanceof Property) {
 			
-			// Subcomponent
+			// Subcomponent, get the length of its name
 			Property property = (Property) element;
-			textLength = property.getName().length();
-			textLength += property.getType().getName().length();
+			maxLength = property.getName().length();
+			maxLength += property.getType().getName().length();
 			
-			// Empirical value
-			width = 30 + 8 * textLength;
-
 			// Get the ports of the component
 			ports = ((Class) property.getType()).getOwnedPorts();
 		} else {
@@ -358,10 +355,20 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		for (Port port : ports) {
 			if (entityUtil.isInputPort(port)) {
 				inputPorts++;
+				
+				// Get the text size for enlarging the box
+				int textLength = port.getName().length();
+				textLength += port.getType().getName().length();
+				if (textLength > maxLength) {
+					maxLength = textLength;
+				}
 			} else {
 				outputPorts++;
 			}
 		}
+		
+		// Empirical value for the width of the element
+		width = 30 + 8 * maxLength;
 		
 		// Compute the height of the element based on number of ports
 		if (inputPorts > outputPorts) {
@@ -401,7 +408,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				size[1] = height;
 			}
 		}
-		
 		return size;
 	}
 
