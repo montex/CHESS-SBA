@@ -266,7 +266,7 @@ public class ImportOSSFileAction {
 
 		EList<String> componentNames = variable.getComponentNames();
 		
-		if (componentNames.size() != 0) {
+		if (componentNames != null && componentNames.size() != 0) {
 			delegationText.append(componentNames.get(0) + ".");
 		}
 		
@@ -291,7 +291,7 @@ public class ImportOSSFileAction {
 		
 		EList<String> componentNames = variable.getComponentNames();
 		
-		if (componentNames.size() != 0) {
+		if (componentNames != null && componentNames.size() != 0) {
 			delegationName.append(componentNames.get(0) + ".");
 		}
 
@@ -1026,7 +1026,7 @@ public class ImportOSSFileAction {
 						
 						// Get the component name, should be at max one
 						EList<String> componentNames = ((PortId) constraint).getComponentNames();
-						if (componentNames.size() != 0) {
+						if (componentNames != null && componentNames.size() != 0) {
 							portOwner = componentNames.get(0);
 						}
 						//final String portOwner = ((PortId) constraint).getComponentName();
@@ -1053,7 +1053,7 @@ public class ImportOSSFileAction {
 						
 						// Get the component name, should be at max one
 						EList<String> componentNames = ((PortId) variable).getComponentNames();
-						if (componentNames.size() != 0) {
+						if (componentNames != null && componentNames.size() != 0) {
 							portOwner = componentNames.get(0);
 						}
 //						final String portOwner = ((PortId) variable).getComponentName();
