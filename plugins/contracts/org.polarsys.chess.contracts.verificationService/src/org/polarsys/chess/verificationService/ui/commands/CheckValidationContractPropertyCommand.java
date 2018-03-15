@@ -26,14 +26,14 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
  * 
  *
  */
-public class CheckValidationPropertyCommand extends AbstractJobCommand {
+public class CheckValidationContractPropertyCommand extends AbstractJobCommand {
 
 	private ChessSystemModel chessToOCRAModelTranslator = ChessSystemModel.getInstance();
 	private OCRAExecService ocraExecService = OCRAExecService.getInstance(chessToOCRAModelTranslator);
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
 
-	public CheckValidationPropertyCommand() {
+	public CheckValidationContractPropertyCommand() {
 		super("Check Validation Property");
 	}
 
@@ -60,7 +60,7 @@ public class CheckValidationPropertyCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
-		ocraExecService.executeValidationProperty(umlSelectedComponent, umlSelectedResource, isDiscreteTime, usexTextValidation,showPopups,
+		ocraExecService.executeValidationContractProperty(umlSelectedComponent, umlSelectedResource, isDiscreteTime, usexTextValidation,showPopups,
 				ossFilepath, resultFilePath, monitor);
 
 	}
