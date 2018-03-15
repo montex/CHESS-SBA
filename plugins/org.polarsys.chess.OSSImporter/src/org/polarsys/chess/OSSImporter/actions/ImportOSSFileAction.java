@@ -263,9 +263,15 @@ public class ImportOSSFileAction {
 	 */
 	private String createDelegationConstraintText(VariableId variable, Expression constraint) {
 		final StringBuffer delegationText = new StringBuffer();
+
+		EList<String> componentNames = variable.getComponentNames();
 		
-		if (variable.getComponentName() != null)
-			delegationText.append(variable.getComponentName() + ".");
+		if (componentNames.size() != 0) {
+			delegationText.append(componentNames.get(0) + ".");
+		}
+		
+//		if (variable.getComponentName() != null)
+//			delegationText.append(variable.getComponentName() + ".");
 		
 		delegationText.append(variable.getName() + " := " + getConstraintText(constraint));
 		
@@ -280,12 +286,17 @@ public class ImportOSSFileAction {
 	 * @param constraint the source of the connection
 	 * @return the created delegation constraint 
 	 */
-	private Constraint createDelegationConstraint(Class owner, VariableId variable, Expression constraint) {
-		
+	private Constraint createDelegationConstraint(Class owner, VariableId variable, Expression constraint) {		
 		final StringBuffer delegationName = new StringBuffer(DELEGATION_PREFIX);
 		
-		if (variable.getComponentName() != null)
-			delegationName.append(variable.getComponentName() + ".");
+		EList<String> componentNames = variable.getComponentNames();
+		
+		if (componentNames.size() != 0) {
+			delegationName.append(componentNames.get(0) + ".");
+		}
+
+//		if (variable.getComponentName() != null)
+//			delegationName.append(variable.getComponentName() + ".");
 
 		delegationName.append(variable.getName());
 		
@@ -1011,7 +1022,15 @@ public class ImportOSSFileAction {
 						// Create a connector, but only after I'm sure it isn't a delegation constraint
 						connector = createConnector(dslTypeToComponent.get(dslParentComponent.getType()));
 						
-						final String portOwner = ((PortId) constraint).getComponentName();
+						String portOwner = null;
+						
+						// Get the component name, should be at max one
+						EList<String> componentNames = ((PortId) constraint).getComponentNames();
+						if (componentNames.size() != 0) {
+							portOwner = componentNames.get(0);
+						}
+						//final String portOwner = ((PortId) constraint).getComponentName();
+
 						final String portName = ((PortId) constraint).getName();
 						logger.debug("Creating source end " + portOwner + ":" + portName);
 						createConnectorEnd(dslTypeToComponent.get(dslParentComponent.getType()), connector, portOwner, portName);
@@ -1029,7 +1048,16 @@ public class ImportOSSFileAction {
 
 					// Create the target end
 					if (variable instanceof PortId) {
-						final String portOwner = ((PortId) variable).getComponentName();
+						
+						String portOwner = null;
+						
+						// Get the component name, should be at max one
+						EList<String> componentNames = ((PortId) variable).getComponentNames();
+						if (componentNames.size() != 0) {
+							portOwner = componentNames.get(0);
+						}
+//						final String portOwner = ((PortId) variable).getComponentName();
+						
 						final String portName = ((PortId) variable).getName();					
 						logger.debug("Creating target end " + portOwner + ":" + portName);
 						createConnectorEnd(dslTypeToComponent.get(dslParentComponent.getType()), connector, portOwner, portName);
