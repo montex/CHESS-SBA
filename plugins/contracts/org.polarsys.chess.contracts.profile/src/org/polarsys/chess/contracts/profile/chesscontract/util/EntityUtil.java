@@ -41,6 +41,7 @@ import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
 import org.eclipse.papyrus.uml.tools.model.UmlModel;
 import org.eclipse.papyrus.uml.tools.model.UmlUtils;
+import org.eclipse.papyrus.uml.tools.utils.OpaqueExpressionUtil;
 import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Behavior;
@@ -67,6 +68,8 @@ import org.eclipse.uml2.uml.Type;
 //import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.Vertex;
+import org.eclipse.uml2.uml.VisibilityKind;
+import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 
 /**
@@ -99,6 +102,8 @@ public class EntityUtil {
 
 	private static final String FAULTY_STATE_MACHINE = "CHESS::Dependability::ThreatsPropagation::ErrorModel";
 
+	private static final String ALLOC = "SysML::Allocations::Allocated";
+	
 	// not yet used
 	// private static final String STRING_TYPE = "PrimitiveTypes::String";
 	// private static final String UNLIMITED_NAT_TYPE =
@@ -126,6 +131,33 @@ public class EntityUtil {
 		return model;
 	}
 
+	public String getFormalPropertyStr(FormalProperty formalProperty) {
+
+		String str = null;
+		if (formalProperty != null) {
+			str=getConstraintBodyStr(formalProperty.getBase_Constraint());
+		}
+		return str;
+	}
+	
+	public String getConstraintBodyStr(Constraint formalProperty) {
+
+		String str = null;
+		if (formalProperty != null) {
+			if (formalProperty.getSpecification() != null) {
+				if(formalProperty.getSpecification() instanceof LiteralString){
+					str = formalProperty.getSpecification().stringValue();
+				}else if(formalProperty.getSpecification() instanceof OpaqueExpression){
+					str = OpaqueExpressionUtil.getBodyForLanguage((OpaqueExpression)formalProperty.getSpecification(), "OCRA");
+				}
+				
+			}
+		}
+		logger.debug("getFormalPropertyStr: "+str);
+		
+		return str;
+	}
+	
 	 /**
      * Returns the component instance with the given name.
      * @param owner the class owning the instance
@@ -197,6 +229,17 @@ public class EntityUtil {
 
 	}
 
+	public EList<Element> getSubComponentsOfOwner(Constraint constraint) {
+		Element element = constraint.getOwner();
+		EList<Element> subComponents = new BasicEList<Element>();
+		
+		for (Property umlProperty : getSubComponentsInstances((Class) element)) {			
+				subComponents.add(getUMLType(umlProperty));
+			}
+
+		return subComponents;
+	}
+	
 	public Element getSubComponentOfConstraintOwner(Constraint constraint, String componentName) {
 		Element element = constraint.getOwner();
 
@@ -333,12 +376,17 @@ public class EntityUtil {
 
 	}
 	
-	private Set<Port> getUMLPortsFromProperty(Property umlElement, boolean isStaticPort) {
+	private EList<Port> getUMLPortsFromProperty(Property umlElement, boolean isStaticPort) {
 		return getUMLPortsFromClass((Class)getUMLType((Property) umlElement),isStaticPort);
 	}
 	
-	public Set<Port> getUMLPorts(Element umlElement, int portDirection, boolean isStaticPort) {
-		Set<Port> portsArr = new HashSet<Port>();
+	/*private EList<Port> getUMLPortsFromProperty(Element umlElement, int portDirection,
+			boolean isStaticPort) {
+		return getUMLPortsFromClass((Class)getUMLType((Property) umlElement),portDirection,isStaticPort);		
+	}*/
+	
+	public EList<Port> getUMLPorts(Element umlElement, int portDirection, boolean isStaticPort) {
+		EList<Port> portsArr = new BasicEList<Port>();
 		if (isBlock(umlElement)) {
 			portsArr.addAll(getUMLPortsFromClass((Class) umlElement, portDirection,isStaticPort));
 		}
@@ -354,9 +402,11 @@ public class EntityUtil {
 
 	}
 
-	private Set<Port> getUMLPortsFromClass(Class umlComponent, int portDirection, boolean isStatic) {
+	
+
+	private EList<Port> getUMLPortsFromClass(Class umlComponent, int portDirection, boolean isStatic) {
 		System.out.println(umlComponent);
-		Set<Port> ports = new HashSet<Port>();
+		EList<Port> ports = new BasicEList<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
 			System.out.println(umlPort);
 			FlowPort fp = getFlowPort(umlPort);
@@ -421,8 +471,8 @@ public class EntityUtil {
 
 	
 	
-	private Set<Port> getUMLPortsFromClass(Class umlComponent, boolean isStaticPort) {
-		Set<Port> ports = new HashSet<Port>();
+	private EList<Port> getUMLPortsFromClass(Class umlComponent, boolean isStaticPort) {
+		EList<Port> ports = new BasicEList<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
 			if(umlPort.isStatic()==isStaticPort){
 			ports.add(umlPort);
@@ -884,7 +934,7 @@ public class EntityUtil {
 	public EList<Vertex> getIntermediateStates(StateMachine stateMachine) {
 		EList<Vertex> intermediateStates = new BasicEList<Vertex>();
 		for (Vertex state : getStates(stateMachine)) {
-			if (!isInitialState(state) & !isFinalState(state)) {
+			if (!isInitialState(state) && !isFinalState(state)) {
 				intermediateStates.add(state);
 			}
 		}
@@ -1091,7 +1141,7 @@ public class EntityUtil {
 
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
 			org.eclipse.papyrus.MARTE.MARTE_DesignModel.GCM.FlowPort fp = getFlowPortMarte(umlPort);
-			if ((fp.getDirection().getValue() == portDirection) & (!isEventPortAttribute(umlPort))) {
+			if ((fp.getDirection().getValue() == portDirection) && (!isEventPortAttribute(umlPort))) {
 				ports.add(umlPort);
 			}
 		}
@@ -1102,7 +1152,7 @@ public class EntityUtil {
 		Set<Port> ports = new HashSet<Port>();
 		for (Port umlPort : umlElement.getOwnedPorts()) {
 			FlowPort fp = getFlowPort(umlPort);
-			if ((fp.getDirection().getValue() == portDirection) & (!isEventPortAttribute(umlPort))) {
+			if ((fp.getDirection().getValue() == portDirection) && (!isEventPortAttribute(umlPort))) {
 				ports.add(umlPort);
 			}
 		}
@@ -1138,6 +1188,114 @@ public class EntityUtil {
 		}
 		return false;
 	}
+
+	public EList<Constraint> getRefinementFormalPropertiesAsConstraints(Element component) {
+
+		if(component instanceof Class){
+			return getRefinementFormalPropertiesAsConstraintsFromClass((Class)component);
+		}else if(component instanceof Property){
+			return getRefinementFormalPropertiesAsConstraintsFromProperty((Property)component);
+		}
+		
+		return null;
+	}
+	
+	private EList<Constraint> getRefinementFormalPropertiesAsConstraintsFromClass(Class component) {
+
+		EList<Constraint> formalProperties = new BasicEList<Constraint>();
+		
+		for(Constraint umlConstraint : ((Class)component).getOwnedRules()){
+		if(isRefinementFormalProperty(umlConstraint)){
+			formalProperties.add(umlConstraint);
+		}
+		}
+		
+		return formalProperties;
+	}
+	
+	private EList<Constraint> getRefinementFormalPropertiesAsConstraintsFromProperty(Property componentInstance) {
+
+		return getRefinementFormalPropertiesAsConstraintsFromClass((Class)componentInstance.getType());
+	}
+	
+	public EList<Constraint> getInterfaceFormalPropertiesAsConstraints(Element component) {
+
+		if(component instanceof Class){
+			return getInterfaceFormalPropertiesAsConstraintsFromClass((Class)component);
+		}else if(component instanceof Property){
+			return getInterfaceFormalPropertiesAsConstraintsFromProperty((Property)component);
+		}
+		
+		return null;
+	}
+	
+	private EList<Constraint> getInterfaceFormalPropertiesAsConstraintsFromClass(Class component) {
+
+		EList<Constraint> formalProperties = new BasicEList<Constraint>();
+		
+		for(Constraint umlConstraint : ((Class)component).getOwnedRules()){
+		if(isInterfaceFormalProperty(umlConstraint)){
+			formalProperties.add(umlConstraint);
+		}
+		}
+		
+		return formalProperties;
+	}
+	
+	private EList<Constraint> getInterfaceFormalPropertiesAsConstraintsFromProperty(Property componentInstance) {
+
+		return getInterfaceFormalPropertiesAsConstraintsFromClass((Class)componentInstance.getType());
+	}
+	
+	public boolean isFormalProperty(Element umlConstraint) {
+		if(umlConstraint instanceof Constraint){
+		return UMLUtil.getAppliedStereotype(umlConstraint, Constants.FORMAL_PROP, false) != null;
+		} return false;
+	}
+	
+	public boolean isInterfaceFormalProperty(Element umlConstraint) {
+		if(umlConstraint instanceof Constraint){
+		return (
+				(UMLUtil.getAppliedStereotype(umlConstraint, Constants.FORMAL_PROP, false) != null)
+				&&	(((Constraint)umlConstraint).getVisibility()==VisibilityKind.PUBLIC_LITERAL)
+				);
+		} return false;
+	}
+	
+	public boolean isRefinementFormalProperty(Element umlConstraint) {
+		if(umlConstraint instanceof Constraint){
+			return (
+					(UMLUtil.getAppliedStereotype(umlConstraint, Constants.FORMAL_PROP, false) != null)
+					&&	(((Constraint)umlConstraint).getVisibility()==VisibilityKind.PRIVATE_LITERAL)
+					);
+		} return false;
+	}
+	
+	public String getConstraintQualifiedName(Constraint formalProperty) {
+		if (formalProperty != null) {
+			return ((Constraint) formalProperty).getQualifiedName();
+		}
+		return null;
+	}
+
+	public String getConstraintName(Constraint constraint) {
+		if (constraint != null) {
+			return ((Constraint) constraint).getName();
+		}
+		return null;
+	}
+	
+	public FormalProperty getFormalProperty(Constraint umlConstraint) {
+		Stereotype formalPropertyStereotype = UMLUtil.getAppliedStereotype(umlConstraint, Constants.FORMAL_PROP, false);
+		return (FormalProperty) umlConstraint.getStereotypeApplication(formalPropertyStereotype);
+	}
+
+	
+
+	
+
+	
+
 	
 /*	UNUSED METHODS
   
