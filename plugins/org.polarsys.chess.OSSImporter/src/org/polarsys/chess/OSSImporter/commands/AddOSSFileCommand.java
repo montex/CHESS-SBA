@@ -76,7 +76,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 			final File ossFile = getOSSFile();
 
 			// Check if there are errors in the OSS file
-			final boolean isValid = RuntimeErrorService.getInstance().showOSSRuntimeErrors(ossFile, modelResource, true, true, monitor);
+			final boolean isValid = RuntimeErrorService.getInstance().showOSSRuntimeErrors(ossFile, modelResource, true, false, monitor);
 			
 			monitor.beginTask("Importing elements from OSS file", 1);
 
