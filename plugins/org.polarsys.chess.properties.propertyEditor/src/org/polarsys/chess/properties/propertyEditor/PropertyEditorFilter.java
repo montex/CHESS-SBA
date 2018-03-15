@@ -11,13 +11,13 @@
 package org.polarsys.chess.properties.propertyEditor;
 
 import org.eclipse.uml2.uml.Constraint;
-import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
+import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 public class PropertyEditorFilter implements org.eclipse.jface.viewers.IFilter {
 
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
-	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+	private EntityUtil entityUtil = EntityUtil.getInstance();
 
 	@Override
 	public boolean select(Object selection) {
@@ -25,7 +25,7 @@ public class PropertyEditorFilter implements org.eclipse.jface.viewers.IFilter {
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selection);
 
 		if (selectedUmlElement instanceof Constraint) {
-			if (contractEntityUtil.isFormalProperty((Constraint) selectedUmlElement)) {
+			if (entityUtil.isFormalProperty((Constraint) selectedUmlElement)) {
 				return true;
 			}
 		}
