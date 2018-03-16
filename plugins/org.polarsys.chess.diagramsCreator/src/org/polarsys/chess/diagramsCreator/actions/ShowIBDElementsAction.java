@@ -65,7 +65,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	private static final int MIN_MAIN_HEIGHT = 600;
 	private static final int MAX_MAIN_HEIGHT = 6000;
 	private static final int MIN_SUB_WIDTH = 150;
-	private static final int MAX_SUB_WIDTH = 500;
+	private static final int MAX_SUB_WIDTH = 1000;
 	private static final int MIN_SUB_HEIGHT = 150;
 	private static final int MAX_SUB_HEIGHT = 2000;
 
@@ -330,15 +330,16 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		int inputPorts = 0;
 		int outputPorts = 0;
 		EList<Port> ports;
-		int maxLength = 0;
+		int maxLengthInput = 0;
+		int maxLengthOutput = 0;
 		boolean isMain = false;
 		
 		if (element instanceof Property) {
 			
 			// Subcomponent, get the length of its name
 			Property property = (Property) element;
-			maxLength = property.getName().length();
-			maxLength += property.getType().getName().length();
+//			maxLengthInput = property.getName().length();
+//			maxLengthInput += property.getType().getName().length();
 			
 			// Get the ports of the component
 			ports = ((Class) property.getType()).getOwnedPorts();
@@ -351,7 +352,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			ports = ((Class) element).getOwnedPorts();
 		}
 		
-		// Count the number of input and output ports
+		// Count the number of input and output ports and their length
 		for (Port port : ports) {
 			if (entityUtil.isInputPort(port)) {
 				inputPorts++;
@@ -359,16 +360,26 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				// Get the text size for enlarging the box
 				int textLength = port.getName().length();
 				textLength += port.getType().getName().length();
-				if (textLength > maxLength) {
-					maxLength = textLength;
+				if (textLength > maxLengthInput) {
+					maxLengthInput = textLength;
 				}
 			} else {
 				outputPorts++;
+				
+				// Get the text size for enlarging the box
+				int textLength = port.getName().length();
+				textLength += port.getType().getName().length();
+				if (textLength > maxLengthOutput) {
+					maxLengthOutput = textLength;
+				}
 			}
 		}
 		
+		System.out.println("maxLengthInput = " + maxLengthInput);
+		System.out.println("maxLengthOutput = " + maxLengthOutput);
+		
 		// Empirical value for the width of the element
-		width = 30 + 8 * maxLength;
+		width = (int) Math.round(100 + 7.5 * (maxLengthInput + maxLengthOutput));
 		
 		// Compute the height of the element based on number of ports
 		if (inputPorts > outputPorts) {
