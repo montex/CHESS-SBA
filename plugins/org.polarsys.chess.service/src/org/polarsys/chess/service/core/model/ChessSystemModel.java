@@ -724,7 +724,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	 */
 
 	@Override
-	public String[] getEnumValuesFromOwnerAttributes(Object formalProperty) {
+	public EList<String> getEnumValuesFromOwnerAttributes(Object formalProperty) {
 		Element owner = (Element) entityUtil.getOwner((Element) formalProperty);
 
 		if (!(owner instanceof Class)) {
@@ -834,6 +834,12 @@ public class ChessSystemModel implements AbstractSystemModel {
 	public boolean isInterfaceAssertion(Object constraint) {
 		return entityUtil.isInterfaceFormalProperty((Constraint)constraint);
 	}
+
+	@Override
+	public EList<String> getEnumValues(Object component) {
+		return entityUtil.getEnumValuesFromComponentAttributes((Element) component);
+	}
+	
 	
 	
 }
