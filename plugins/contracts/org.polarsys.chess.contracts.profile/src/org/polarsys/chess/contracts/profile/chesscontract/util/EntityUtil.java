@@ -339,7 +339,7 @@ public class EntityUtil {
 		return toArray(enumValuesEList);
 	}
 
-	public String[] getEnumValuesFromComponentAttributes(Class umlComponent) {
+	public EList<String> getEnumValuesFromComponentAttributes(Element umlComponent) {
 		EList<String> enumValuesEList = new BasicEList<String>();
 
 		for (Property element : getSupportedAttributes(umlComponent,null)) {
@@ -349,7 +349,8 @@ public class EntityUtil {
 			}
 		}
 
-		return toArray(enumValuesEList);
+		return enumValuesEList;
+		//return toArray(enumValuesEList);
 	}
 
 	public Set<String> getSubComponentsNames(Class umlComponent) {
