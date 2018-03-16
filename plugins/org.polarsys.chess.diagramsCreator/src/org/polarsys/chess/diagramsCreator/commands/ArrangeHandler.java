@@ -31,15 +31,12 @@ public class ArrangeHandler extends AbstractHandler {
 
 	private void resizeMainBlock(IGraphicalEditPart block) {
 
-		//TODO: devo passare tutti i blocchi figli e trovare le loro coordinate massime (x+width
-		
 		int maxX = 0;
 		int maxY = 0;
 		
 		// Get the compartment edit part
 		IGraphicalEditPart compartmentEP = (IGraphicalEditPart) block.getChildren().get(1);
 		
-
 		List<?>compartmentChildren = compartmentEP.getChildren();
 		for (Object childEP : compartmentChildren) {
 			System.out.println("child of compartment = " + childEP);
@@ -70,8 +67,8 @@ public class ArrangeHandler extends AbstractHandler {
 		}
 		System.out.println("max X = " + maxX + ", max Y = " + maxY);
 
-		final int width = maxX;
-		final int heigth = maxY;
+		final int width = maxX + 100;
+		final int heigth = maxY + 100;
 		
 		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(block.getNotationView());
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
@@ -80,13 +77,16 @@ public class ArrangeHandler extends AbstractHandler {
 			protected void doExecute() {
 				final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) block).getNotationView();
 				final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
-				layout.setWidth(width + 250);	// Should cover also output ports...
-				layout.setHeight(heigth + 100);
-
+				
+				// If needed, resize the box 
+				if (layout.getWidth() < width) {
+					layout.setWidth(width);
+				}
+				if (layout.getHeight() < heigth) {
+					layout.setHeight(heigth);
+				}
 			}
 		});
-		
-		
 	}
 
 	@Override
