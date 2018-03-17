@@ -1144,8 +1144,9 @@ public class EntityUtil {
 		return ports;
 	}
 
+	//FIXME no control on languages on OpaqueExpression
 	public String getConditionExpression(Constraint condition) {
-		if ((condition.getSpecification() instanceof OpaqueExpression) && (condition.getSpecification() != null)
+		if ((condition.getSpecification() != null)&&(condition.getSpecification() instanceof OpaqueExpression)  
 				&& ((OpaqueExpression) condition.getSpecification()).getBodies() != null) {
 			return ((OpaqueExpression) condition.getSpecification()).getBodies().get(0);
 		}
