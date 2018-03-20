@@ -72,6 +72,7 @@
                   </command>
                   <command
                         commandId="org.polarsys.chess.verificationService.commands.CheckValidationPropertyCommand2"
+                        label="Check Validation on Assumption/Guarantee Properties on selected component"
                         style="push">
                   </command>
                </menu>
@@ -124,6 +125,7 @@
                      label="Validation">
                   <command
                         commandId="org.polarsys.chess.verificationService.commands.CheckValidationPropertyCommand2"
+                        label="Check Validation on Assumption/Guarantee Properties on selected component"
                         style="push">
                   </command>
                   <command
