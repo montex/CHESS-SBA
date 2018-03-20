@@ -110,8 +110,8 @@ public class EntityUtil {
 	// "PrimitiveTypes::UnlimitedNatural";
 
 	private static EntityUtil entityUtil;
-	// private static ContractEntityUtil contractEntityUtil =
-	// ContractEntityUtil.getInstance();
+	 private static ContractEntityUtil contractEntityUtil =
+	 ContractEntityUtil.getInstance();
 
 	public static EntityUtil getInstance() {
 		if (entityUtil == null) {
@@ -554,13 +554,16 @@ public class EntityUtil {
 			return false;
 		}
 
-		// if (contractEntityUtil.isContractProperty(property)) {
-		// return false;
-		// }
+		 if (contractEntityUtil.isContractProperty(property)) {
+		 return false;
+		 }
 
 		Element owner = (getOwner(umlProperty));
 		Association association = property.getAssociation();
 		int associationEndsSize = association.getEndTypes().size();
+		if(associationEndsSize!=2){
+			return false;
+		}
 		boolean End1TypeIsOwner = association.getEndTypes().get(0).equals(owner);
 		boolean End2TypeIsOwner = association.getEndTypes().get(1).equals(owner);
 
