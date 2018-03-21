@@ -122,7 +122,27 @@
       <command
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.AdjustConnectorsHandler"
             id="org.polarsys.chess.diagramsCreator.commands.adjustConnectorsHandler"
-            name="Adjust associations handler">
+            name="Adjust connectors handler">
+         <commandParameter
+               id="show_flowports"
+               name="show_flowports"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_connectors"
+               name="show_connectors"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_stereotypes"
+               name="show_stereotypes"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="routing_style"
+               name="routing_style"
+               optional="true">
+         </commandParameter>
       </command>
    </extension>
 

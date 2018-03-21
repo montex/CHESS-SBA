@@ -27,55 +27,65 @@ import org.eclipse.papyrus.infra.gmfdiag.css.CSSShapeImpl;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
+/**
+ * A class that arranges the graphical elements inside the diagram (via arrange all command) and
+ * resizes the main block if requested
+ * @author cristofo
+ *
+ */
 public class ArrangeHandler extends AbstractHandler {
 
-	private void resizeMainBlock(IGraphicalEditPart block) {
-
+	/** Int value that indicates the number of times to execute the command */
+	public static final String LOOP_TIMES = "loop_times";
+	
+	/** Boolean flag that indicates whether the main diagram should be processed, or its main element */
+	public static final String PROCESS_DIAGRAM = "process_diagram";
+	
+	/**
+	 * Resizes the given element depending on the contained components.
+	 * @param element the element to resize
+	 */
+	private void resizeElement(IGraphicalEditPart element) {
 		int maxX = 0;
 		int maxY = 0;
 		
 		// Get the compartment edit part
-		IGraphicalEditPart compartmentEP = (IGraphicalEditPart) block.getChildren().get(1);
+		IGraphicalEditPart compartmentEP = (IGraphicalEditPart) element.getChildren().get(1);
 		
+		// Loop on all the edit parts
 		List<?>compartmentChildren = compartmentEP.getChildren();
 		for (Object childEP : compartmentChildren) {
-			System.out.println("child of compartment = " + childEP);
 			
-			// Get the UML element associated to the EP
+			// Get the UML element associated to the EP and look for properties
 			EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
-			System.out.println("SemanticElement of compartment = " + semanticElement);
-									
 			if (semanticElement instanceof Property) {			
 			
-				// Get the width of the component to set the position of output ports
+				// Get the size and position of the Property box
 				final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) childEP).getNotationView();
 				final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
 
 				int x = layout.getX() + layout.getWidth();
 				int y = layout.getY() + layout.getHeight();
 				
-				System.out.println("x = " + x + ", y = " + y);
-				
 				if (x > maxX) {
 					maxX = x;
 				}
-				
 				if (y > maxY) {
 					maxY = y;
 				}
 			}
 		}
-		System.out.println("max X = " + maxX + ", max Y = " + maxY);
 
-		final int width = maxX + 100;
-		final int heigth = maxY + 100;
+		final int width = maxX + 100;	// Needed to pass it to the inner class
+		final int heigth = maxY + 100;	// Needed to pass it to the inner class
 		
-		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(block.getNotationView());
+		// Resize the main element to fit all the internal boxes
+		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(element.getNotationView());
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
 
 			@Override
 			protected void doExecute() {
-				final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) block).getNotationView();
+				final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) element).getNotationView();
 				final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
 				
 				// If needed, resize the box 
@@ -95,7 +105,7 @@ public class ArrangeHandler extends AbstractHandler {
 		final IGraphicalEditPart selectedEditPart = SelectionUtil.getInstance().getSelectedGraphicalObject(event);
 
 		// Read the parameter to understand what to arrange
-		final String processDiagram = event.getParameter(CreateBDDCommand.ARRANGE_PROCESS_DIAGRAM);
+		final String processDiagram = event.getParameter(PROCESS_DIAGRAM);
 		
 		if (processDiagram != null && processDiagram.equals("false")) {
 			
@@ -118,7 +128,7 @@ public class ArrangeHandler extends AbstractHandler {
 		// Retrieve the number of times to execute the command
 		int loopTimes = 1;
 		try {
-			loopTimes = Integer.parseInt(event.getParameter(CreateBDDCommand.ARRANGE_LOOP_TIMES));	
+			loopTimes = Integer.parseInt(event.getParameter(LOOP_TIMES));	
 		} catch (NumberFormatException e) {
 
 			// No parameter given or NAN, just do one loop
@@ -131,10 +141,9 @@ public class ArrangeHandler extends AbstractHandler {
 			}
 		}
 		
-		// Resize the main block, if needed
+		// Resize the main element and not the diagram, if needed
 		if (processDiagram != null && processDiagram.equals("false")) {		
-			resizeMainBlock((IGraphicalEditPart) selectedEditPart.getChildren().get(0));
-			
+			resizeElement((IGraphicalEditPart) selectedEditPart.getChildren().get(0));
 		}
 		
 		return null;

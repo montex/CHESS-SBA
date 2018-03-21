@@ -30,40 +30,88 @@ import org.eclipse.papyrus.sysml.diagram.common.edit.part.FlowPortAffixedLabelNa
 import org.eclipse.papyrus.uml.diagram.common.edit.part.ConnectorEditPart;
 import org.eclipse.papyrus.uml.diagram.common.edit.part.ConnectorLinkLabelEditPart;
 import org.eclipse.papyrus.uml.diagram.common.edit.part.PortAffixedLabelNameEditPart;
+import org.eclipse.papyrus.uml.diagram.stereotype.edition.editpart.AppliedStereotypeEmptyEditPart;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Port;
+import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 public class AdjustConnectorsHandler extends AbstractHandler {
 
+	/** Boolean flag that indicates whether or not the connectors names should be displayed */
+	public static final String SHOW_CONNECTORS = "show_connectors";
+
+	/** Boolean flag that indicates whether or not the FlowPort label should be displayed */
+	public static final String SHOW_FLOWPORTS = "show_flowports";
+
+	/** Boolean flag that indicates whether or not the instances stereotypes should be displayed */
+	public static final String SHOW_STEREOTYPES = "show_stereotypes";
+
+	/** Routing style for the connectors, values as specified below */
+	public static final String ROUTING_STYLE = "routing_style";
+	
+	/** Rectilinear style for the connectors */
+	public static final String RECTILINEAR = "rectilinear";
+
+	/** Oblique style for the connectors */
+	public static final String OBLIQUE = "oblique";
+		
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-
-		long start = System.currentTimeMillis();
+	
+		// Parameter reading
+		final boolean showFlowPorts = (event.getParameter(SHOW_FLOWPORTS) != null && event.getParameter(SHOW_FLOWPORTS).equals("true")) ? true : false;
+		final boolean showConnectors = (event.getParameter(SHOW_CONNECTORS) != null && event.getParameter(SHOW_CONNECTORS).equals("true")) ? true : false;
+		final boolean showStereotypes = (event.getParameter(SHOW_STEREOTYPES) != null && event.getParameter(SHOW_STEREOTYPES).equals("true")) ? true : false;
+		final String selectedRoutingStyle = event.getParameter(ROUTING_STYLE);
 		
-		final GraphicalEditPart selectedEditPart = SelectionUtil.getInstance().getSelectedGraphicalObject(event);
+		System.out.println("showFlowPorts = " + showFlowPorts);
+		System.out.println("showConnectors = " + showConnectors);
+		System.out.println("showStereotypes = " + showStereotypes);
+		System.out.println("routing style = " + selectedRoutingStyle);
+		 
+		final GraphicalEditPart selectedEP = SelectionUtil.getInstance().getSelectedGraphicalObject(event);
+		final GraphicalEditPart mainElementEP = (GraphicalEditPart) selectedEP.getChildren().get(0);
 		
-		final GraphicalEditPart mainElement = (GraphicalEditPart) selectedEditPart.getChildren().get(0);
-		
-		// Get all the EditParts 
-		final Map<?, ?> elements = selectedEditPart.getViewer().getEditPartRegistry();
-		
+		// Get all the EditParts of the diagram
+		final Map<?, ?> elements = selectedEP.getViewer().getEditPartRegistry();
 		final Object[] editParts = elements.values().toArray();
 
 		final TransactionalEditingDomain domain = 
-				TransactionUtil.getEditingDomain(((IGraphicalEditPart) selectedEditPart).getNotationView());
+				TransactionUtil.getEditingDomain(((IGraphicalEditPart) selectedEP).getNotationView());
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
 
 			@Override
 			protected void doExecute() {
 
-				// Loop on the array to find the connectors
+				// Loop on the edit parts to find interesting elements
 				for (int i = 0; i < editParts.length; i++) {
 					
-					if (editParts[i] instanceof ConnectorLinkLabelEditPart) {
-						
-						// Hide the name of the connector
-						((IGraphicalEditPart) editParts[i]).getNotationView().setVisible(false);
+					System.out.println("\neditpart = " + editParts[i]);
+					if (editParts[i] instanceof IGraphicalEditPart) { 
+						System.out.println("\teditpart element = " + ((IGraphicalEditPart) editParts[i]).resolveSemanticElement());
+					}
+					
+					if (editParts[i] instanceof AppliedStereotypeEmptyEditPart) {
+						if (!showStereotypes) {
+							
+							final Element element = (Element) ((IGraphicalEditPart) editParts[i]).resolveSemanticElement();
+							if (element instanceof Stereotype && !(((Stereotype) element).getName().equals("FlowPort") ||
+									((Stereotype) element).getName().equals("DelegationConstraint"))) {
+
+								// Hide stereotype labes <<Block, SubSystem, ComponentInstance, etc.>>, but not part and property
+								((IGraphicalEditPart) editParts[i]).getNotationView().setVisible(false);
+								System.out.println("Hided: 1-" + editParts[i]);
+							}
+						}
+					} else if (editParts[i] instanceof ConnectorLinkLabelEditPart) {
+						if (!showConnectors) {
+							
+							// Hide the name of the connector
+							((IGraphicalEditPart) editParts[i]).getNotationView().setVisible(false);
+							System.out.println("Hided: 2-" + editParts[i]);
+						}
 					} else if (editParts[i] instanceof FlowPortAffixedLabelNameEditPart) {
 						
 						// Label containing the name of the port
@@ -77,13 +125,13 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 
 						// Determine the owner and the direction of port to position the label
 						if (EntityUtil.getInstance().isInputPort(port)) {
-							if(editPart.getParent().getParent() == mainElement) {
+							if(editPart.getParent().getParent() == mainElementEP) {
 								layout.setX(layout.getX() - 55 - 7 * textLength);
 							} else {
 								layout.setX(layout.getX() + 20);
 							}
 						} else {
-							if(editPart.getParent().getParent() == mainElement) {
+							if(editPart.getParent().getParent() == mainElementEP) {
 								layout.setX(layout.getX() + 20);
 							} else {
 								layout.setX(layout.getX() - 55 - 7 * textLength);
@@ -102,65 +150,72 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 
 						// Determine the owner and the direction of port to position the label
 						if (EntityUtil.getInstance().isInputPort(port)) {
-							if(editPart.getParent().getParent() == mainElement) {
+							if(editPart.getParent().getParent() == mainElementEP) {
 								layout.setX(layout.getX() - 30 - 7 * textLength);
 							} else {
 								layout.setX(layout.getX() + 20);
 							}
 						} else {
-							if(editPart.getParent().getParent() == mainElement) {
+							if(editPart.getParent().getParent() == mainElementEP) {
 								layout.setX(layout.getX() + 20);
 							} else {
 								layout.setX(layout.getX() - 30 - 7 * textLength);
 							}
 						}
 					} else if (editParts[i] instanceof CustomFlowPortAppliedStereotypeEditPart) {
-
-						// Hide the label containing <<flowport>>
-						((IGraphicalEditPart) editParts[i]).getNotationView().setVisible(false);
-
-						// Adjust the label containing <<flowport>>
-//						CustomFlowPortAppliedStereotypeEditPart editPart = (CustomFlowPortAppliedStereotypeEditPart) editParts[i];
-//						CSSDecorationNodeImpl view = (CSSDecorationNodeImpl) editPart.getNotationView();
-//						org.eclipse.gmf.runtime.notation.impl.LocationImpl layout = (org.eclipse.gmf.runtime.notation.impl.LocationImpl) view.getLayoutConstraint();
-//						
-//						// Move up the label
-//						layout.setY(layout.getY() - 15);
-//
-//						// Get the port owning the label
-//						Port port = (Port) ((CustomFlowPortAppliedStereotypeEditPart) editParts[i]).resolveSemanticElement();
-//						
-//						// Determine the owner and the direction of port to position the label
-//						if (EntityUtil.getInstance().isInputPort(port)) {
-//							System.out.println("input port");
-//							if(editPart.getParent().getParent() == selectedEditPart.getChildren().get(0)) {
-//								layout.setX(layout.getX() - 65);
-//							} else {
-//								layout.setX(layout.getX() + 20);
-//							}
-//						} else {
-//							System.out.println("output port");
-//							if(editPart.getParent().getParent() == selectedEditPart.getChildren().get(0)) {
-//								layout.setX(layout.getX() + 20);
-//							} else {
-//								layout.setX(layout.getX() - 65);
-//							}
-//						}
+						if (showFlowPorts) {
+						
+							// Adjust the label containing <<flowport>>
+							CustomFlowPortAppliedStereotypeEditPart editPart = (CustomFlowPortAppliedStereotypeEditPart) editParts[i];
+							CSSDecorationNodeImpl view = (CSSDecorationNodeImpl) editPart.getNotationView();
+							org.eclipse.gmf.runtime.notation.impl.LocationImpl layout = (org.eclipse.gmf.runtime.notation.impl.LocationImpl) view.getLayoutConstraint();
+							
+							// Move up the label
+							layout.setY(layout.getY() - 15);
+	
+							// Get the port owning the label
+							Port port = (Port) ((CustomFlowPortAppliedStereotypeEditPart) editParts[i]).resolveSemanticElement();
+							
+							// Determine the owner and the direction of port to position the label
+							if (EntityUtil.getInstance().isInputPort(port)) {
+								System.out.println("input port");
+								if(editPart.getParent().getParent() == selectedEP.getChildren().get(0)) {
+									layout.setX(layout.getX() - 65);
+								} else {
+									layout.setX(layout.getX() + 20);
+								}
+							} else {
+								System.out.println("output port");
+								if(editPart.getParent().getParent() == selectedEP.getChildren().get(0)) {
+									layout.setX(layout.getX() + 20);
+								} else {
+									layout.setX(layout.getX() - 65);
+								}
+							}
+						} else {
+							
+							// Hide the label containing <<FlowPort>>
+							((IGraphicalEditPart) editParts[i]).getNotationView().setVisible(false);
+							System.out.println("Hided: 3-" + editParts[i]);
+						}
 					} else if (editParts[i] instanceof ConnectorEditPart) {
 						
-						// The connector itself, set the Avoid Obstruction flag
+						// The connector itself, set the Avoid Obstruction flag and the routing style
 						ConnectorEditPart connectorEP = (ConnectorEditPart) editParts[i];
 						RoutingStyle routingStyle = (RoutingStyle) connectorEP.getNotationView().getStyle(NotationPackage.eINSTANCE.getRoutingStyle());
 						if (routingStyle != null) {
 							routingStyle.setAvoidObstructions(true);
-							routingStyle.setRouting(Routing.RECTILINEAR_LITERAL);
+							if (selectedRoutingStyle != null && selectedRoutingStyle.equals(RECTILINEAR)) {
+								routingStyle.setRouting(Routing.RECTILINEAR_LITERAL);
+							} else {
+								routingStyle.setRouting(Routing.MANUAL_LITERAL);
+							}
 						}
 					}
 				}
 			}
 		});
-		
-		System.out.println("tempo = " + (System.currentTimeMillis() - start));
+
 		return null;
 	}
 }
