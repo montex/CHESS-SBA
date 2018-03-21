@@ -21,7 +21,8 @@ import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 
 /**
- * Class that creates a single IBD. It is triggered by the contextual menu item.
+ * Class that creates a single IBD by calling different handlers. 
+ * It is triggered by the contextual menu item on a single element.
  * @author cristofo
  *
  */

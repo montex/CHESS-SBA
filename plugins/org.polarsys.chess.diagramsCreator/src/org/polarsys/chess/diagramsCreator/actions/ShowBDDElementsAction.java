@@ -53,7 +53,11 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUti
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.eclipse.gmf.runtime.diagram.ui.requests.DropObjectsRequest;
 
-
+/**
+ * This class creates a Block Definition Diagram and populates it with elements
+ * @author cristofo
+ *
+ */
 public class ShowBDDElementsAction extends ShowHideContentsAction {
 	private static final int MIN_WIDTH = 150;
 	private static final int MAX_WIDTH = 1500;
