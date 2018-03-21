@@ -11,8 +11,9 @@
 package org.polarsys.chess.diagramsCreator.actions;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.draw2d.geometry.Point;
@@ -58,6 +59,11 @@ import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
+/**
+ * This class creates an Internal Block Diagram and populates it with elements
+ * @author cristofo
+ *
+ */
 public class ShowIBDElementsAction extends ShowHideContentsAction {
 	
 	// Constant values for the size of IBD elements
@@ -83,6 +89,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	
 	final EntityUtil entityUtil = EntityUtil.getInstance();
 	final ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+
+	private boolean sortedPorts; // Sort the ports in alphabetical order
 
 	/**
 	 * Adds a IBD diagram to the given block.
@@ -196,6 +204,12 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		final Point portLocationLeft = new Point(-10, 20);
 		final Point portLocationRight = new Point(-10, 20);
 		
+		// Get the ports of the main component
+		final Class mainElement = (Class) ((IGraphicalEditPart) getHost()).resolveSemanticElement();
+		final EList<Port> ports = mainElement.getOwnedPorts();
+		final ArrayList<Port> inputPorts = getPorts(ports, true, sortedPorts);
+		final ArrayList<Port> outputPorts = getPorts(ports, false, sortedPorts);
+		
 		for (EditPartRepresentation rep : this.viewsToCreate) {
 			if (!(rep instanceof OptionalEditPartRepresentation)) {
 				continue;
@@ -217,17 +231,23 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 					propertyLocation.x += INCREMENT;
 					propertyLocation.y += INCREMENT;
 					request.setLocation(new Point(propertyLocation));
-
 				} else if (isAffixedChildNode(editPart, ((OptionalEditPartRepresentation) rep).getSemanticElement())) {				
 					Element element = (Element) ((OptionalEditPartRepresentation) rep).getSemanticElement();
 					if (element instanceof Port) {
-						if (entityUtil.isInputPort(element)) {
-							portLocationLeft.y += INCREMENT;
+						if (inputPorts.indexOf(element) != -1) {
+							portLocationLeft.y = 20 + INCREMENT * (inputPorts.indexOf(element) + 1);
 							request.setLocation(new Point(portLocationLeft));
-						} else {
-							portLocationRight.y += INCREMENT;
+						} else if (outputPorts.indexOf(element) != -1){
+							portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(element) + 1);
 							request.setLocation(new Point(portLocationRight));
 						}
+//						if (entityUtil.isInputPort(element)) {
+//							portLocationLeft.y += INCREMENT;
+//							request.setLocation(new Point(portLocationLeft));
+//						} else {
+//							portLocationRight.y += INCREMENT;
+//							request.setLocation(new Point(portLocationRight));
+//						}
 					}
 				}
 				Command cmd = editPart.getCommand(request);
@@ -239,6 +259,42 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		return completeCmd;
 	}
 
+	/**
+	 * Returns a list of ports, with direction and sorting as specified.
+	 * @param ports the list of Ports to process
+	 * @param inputType true to get input direction, false for the rest
+	 * @param sorted true to get an alphabetically ordered list
+	 * @return the list of requested ports
+	 */
+	private ArrayList<Port> getPorts(EList<Port> ports, boolean inputType, boolean sorted) {
+		ArrayList<Port> listPorts = new ArrayList<Port>();
+
+		// Fill the list with the requested type
+		for (Port port : ports) {
+			if (inputType) {
+				if (entityUtil.isInputPort(port)) {
+					listPorts.add(port);
+				}
+			} else {
+				if (!entityUtil.isInputPort(port)) {
+					listPorts.add(port);
+				}
+			}
+		}
+
+		// Sort list in alphabetical order if requested
+		if (sorted) {		
+			Comparator<Port> comparator = new Comparator<Port>() {
+			    @Override
+			    public int compare(Port left, Port right) {
+			        return left.getName().compareToIgnoreCase(right.getName());
+			    }
+			};
+			Collections.sort(listPorts, comparator);
+		}		
+		return listPorts;
+	}
+	
 	/**
 	 * Draws the ports on the inner instances.
 	 * @param diagramEP the EditPart of the diagram
@@ -253,19 +309,19 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		Point portLocationRight = null;
 
 		// Get the edit part of the main element, from the diagram edit part
-		IGraphicalEditPart elementEP = (IGraphicalEditPart) diagramEP.getChildren().get(0);
+		final IGraphicalEditPart elementEP = (IGraphicalEditPart) diagramEP.getChildren().get(0);
 		
 		// Get the compartment edit part
-		IGraphicalEditPart compartmentEP = (IGraphicalEditPart) elementEP.getChildren().get(1);
+		final IGraphicalEditPart compartmentEP = (IGraphicalEditPart) elementEP.getChildren().get(1);
 		
 		logger.debug("\nCompartment edit part = " + compartmentEP);
 
-		List<?>compartmentChildren = compartmentEP.getChildren();
+		final List<?>compartmentChildren = compartmentEP.getChildren();
 		for (Object childEP : compartmentChildren) {
 			logger.debug("child of compartment = " + childEP);
 			
 			// Get the UML element associated to the EP
-			EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
+			final EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
 			logger.debug("SemanticElement of compartment = " + semanticElement);
 									
 			if (semanticElement instanceof Property) {			
@@ -286,23 +342,24 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
 				portLocationRight.x += layout.getWidth() + 20;
 
-				EList<Port> ports = propertyType.getOwnedPorts();
+				// Get the ports of the property
+				final EList<Port> ports = propertyType.getOwnedPorts();
+				final ArrayList<Port> inputPorts = getPorts(ports, true, sortedPorts);
+				final ArrayList<Port> outputPorts = getPorts(ports, false, sortedPorts);
+
+				// Display the ports
 				for (Port port : ports) {
 					if (compartmentView != null) {
-						
-						ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
-						
-						logger.debug("req = " + request);
-						
-						if (entityUtil.isInputPort(port)) {
-							portLocationLeft.y += INCREMENT;
+						final ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
+						if (inputPorts.indexOf(port) != -1) {
+							portLocationLeft.y = 20 + INCREMENT * (inputPorts.indexOf(port) + 1);
 							request.setLocation(new Point(portLocationLeft));
-						} else {
-							portLocationRight.y += INCREMENT;
+						} else if (outputPorts.indexOf(port) != -1){
+							portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(port) + 1);
 							request.setLocation(new Point(portLocationRight));
 						}
 
-						Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);	// Cannot be the diagram EditPart
+						final Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);	// Cannot be the diagram EditPart
 						logger.debug("cmd = " + cmd);
 						logger.debug("cmd label = " + cmd.getLabel());
 						if (cmd != null && cmd.canExecute()) {
@@ -310,6 +367,29 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 						}
 					}
 				}
+//				for (Port port : ports) {
+//					if (compartmentView != null) {
+//						
+//						ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
+//						
+//						logger.debug("req = " + request);
+//						
+//						if (entityUtil.isInputPort(port)) {
+//							portLocationLeft.y += INCREMENT;
+//							request.setLocation(new Point(portLocationLeft));
+//						} else {
+//							portLocationRight.y += INCREMENT;
+//							request.setLocation(new Point(portLocationRight));
+//						}
+//
+//						Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);	// Cannot be the diagram EditPart
+//						logger.debug("cmd = " + cmd);
+//						logger.debug("cmd label = " + cmd.getLabel());
+//						if (cmd != null && cmd.canExecute()) {
+//							((CompoundCommand) command).add(cmd);
+//						}
+//					}
+//				}
 			}
 		}
 
@@ -374,9 +454,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				}
 			}
 		}
-		
-		System.out.println("maxLengthInput = " + maxLengthInput);
-		System.out.println("maxLengthOutput = " + maxLengthOutput);
 		
 		// Empirical value for the width of the element
 		width = (int) Math.round(100 + 7.5 * (maxLengthInput + maxLengthOutput));
@@ -650,7 +727,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * @param diagram
 	 * @throws ServiceException 
 	 */
-	public void populateDiagram(Diagram diagram, Object umlObject) {
+	public void populateDiagram(Diagram diagram, Object umlObject, boolean sortedPorts) {
 		
 		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		
@@ -660,6 +737,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		// Store the EditPart
 		host = diagramEP;
 
+		this.sortedPorts = sortedPorts;
+		
 		// The main EditPart 
 		final IGraphicalEditPart selectedElementEP = (IGraphicalEditPart) diagramEP.getChildren().get(0);
 		logger.debug("\n\nselectedElement EditPart = " + selectedElementEP + "\n\n");

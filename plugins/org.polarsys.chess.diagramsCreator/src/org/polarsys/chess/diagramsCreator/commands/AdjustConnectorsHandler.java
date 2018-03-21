@@ -66,11 +66,6 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 		final boolean showStereotypes = (event.getParameter(SHOW_STEREOTYPES) != null && event.getParameter(SHOW_STEREOTYPES).equals("true")) ? true : false;
 		final String selectedRoutingStyle = event.getParameter(ROUTING_STYLE);
 		
-		System.out.println("showFlowPorts = " + showFlowPorts);
-		System.out.println("showConnectors = " + showConnectors);
-		System.out.println("showStereotypes = " + showStereotypes);
-		System.out.println("routing style = " + selectedRoutingStyle);
-		 
 		final GraphicalEditPart selectedEP = SelectionUtil.getInstance().getSelectedGraphicalObject(event);
 		final GraphicalEditPart mainElementEP = (GraphicalEditPart) selectedEP.getChildren().get(0);
 		
@@ -88,11 +83,11 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 				// Loop on the edit parts to find interesting elements
 				for (int i = 0; i < editParts.length; i++) {
 					
-					System.out.println("\neditpart = " + editParts[i]);
-					if (editParts[i] instanceof IGraphicalEditPart) { 
-						System.out.println("\teditpart element = " + ((IGraphicalEditPart) editParts[i]).resolveSemanticElement());
-					}
-					
+//					System.out.println("\neditpart = " + editParts[i]);
+//					if (editParts[i] instanceof IGraphicalEditPart) { 
+//						System.out.println("\teditpart element = " + ((IGraphicalEditPart) editParts[i]).resolveSemanticElement());
+//					}
+//					
 					if (editParts[i] instanceof AppliedStereotypeEmptyEditPart) {
 						if (!showStereotypes) {
 							
@@ -102,7 +97,6 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 
 								// Hide stereotype labes <<Block, SubSystem, ComponentInstance, etc.>>, but not part and property
 								((IGraphicalEditPart) editParts[i]).getNotationView().setVisible(false);
-								System.out.println("Hided: 1-" + editParts[i]);
 							}
 						}
 					} else if (editParts[i] instanceof ConnectorLinkLabelEditPart) {
@@ -110,7 +104,6 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 							
 							// Hide the name of the connector
 							((IGraphicalEditPart) editParts[i]).getNotationView().setVisible(false);
-							System.out.println("Hided: 2-" + editParts[i]);
 						}
 					} else if (editParts[i] instanceof FlowPortAffixedLabelNameEditPart) {
 						
@@ -178,14 +171,12 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 							
 							// Determine the owner and the direction of port to position the label
 							if (EntityUtil.getInstance().isInputPort(port)) {
-								System.out.println("input port");
 								if(editPart.getParent().getParent() == selectedEP.getChildren().get(0)) {
 									layout.setX(layout.getX() - 65);
 								} else {
 									layout.setX(layout.getX() + 20);
 								}
 							} else {
-								System.out.println("output port");
 								if(editPart.getParent().getParent() == selectedEP.getChildren().get(0)) {
 									layout.setX(layout.getX() + 20);
 								} else {
@@ -196,7 +187,6 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 							
 							// Hide the label containing <<FlowPort>>
 							((IGraphicalEditPart) editParts[i]).getNotationView().setVisible(false);
-							System.out.println("Hided: 3-" + editParts[i]);
 						}
 					} else if (editParts[i] instanceof ConnectorEditPart) {
 						

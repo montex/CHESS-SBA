@@ -1,19 +1,14 @@
 /*******************************************************************************
- * Copyright (c) 2013-2015 Fondazione Bruno Kessler
- *   
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *   
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and 
- * limitations under the License.
+ * Copyright (C) 2018 Fondazione Bruno Kessler.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *  
- *******************************************************************************/
+ * Contributors:
+ *     Luca Cristoforetti - initial API and implementation
+ *     Pietro Braghieri - original code
+ ******************************************************************************/
 package org.polarsys.chess.diagramsCreator.dialogs;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -28,8 +23,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 
-public class IBDCreatorDialog extends Dialog
-{
+/**
+ * This class dispays a dialog to set some parameters for the IBD creation.
+ * @author cristofo
+ *
+ */
+public class IBDCreatorDialog extends Dialog {
 	private Button btnPortLexicographicallyOrder;
 	private boolean portLexicographicallyOrder;
 
@@ -49,7 +48,8 @@ public class IBDCreatorDialog extends Dialog
 
 	/**
 	 * Creates the dialog.
-	 * @param parentShell
+	 * @param parentShell the parent shell
+	 * @param blocking indicates if the dialog should be modal
 	 */
 	public IBDCreatorDialog(Shell parentShell, boolean blocking) {
 		super(parentShell);
@@ -77,7 +77,7 @@ public class IBDCreatorDialog extends Dialog
 		super.okPressed();
 	}
 	/**
-	 * Create contents of the dialog.
+	 * Creates contents of the dialog.
 	 * @param parent
 	 */
 	@Override
@@ -85,22 +85,23 @@ public class IBDCreatorDialog extends Dialog
 		parent.setToolTipText("");
 		Composite container = (Composite) super.createDialogArea(parent);
 		GridLayout gridLayout = (GridLayout) container.getLayout();
-		gridLayout.numColumns = 1;
+		gridLayout.numColumns = 2;
+		gridLayout.makeColumnsEqualWidth = true;
 
 		btnPortLexicographicallyOrder = new Button(container, SWT.CHECK);
 		btnPortLexicographicallyOrder.setSelection(false);
 		btnPortLexicographicallyOrder.setAlignment(SWT.RIGHT);
-		btnPortLexicographicallyOrder.setText("Lexicographically port name ordering");
+		btnPortLexicographicallyOrder.setText("Alphabetical port name ordering");
 
 		btnShowFlowPorts = new Button(container, SWT.CHECK);
 		btnShowFlowPorts.setSelection(false);
 		btnShowFlowPorts.setAlignment(SWT.RIGHT);
-		btnShowFlowPorts.setText("Show <<FlowPort>> label");
+		btnShowFlowPorts.setText("Show <<FlowPort>> labels");
 
 		btnShowStereotypes = new Button(container, SWT.CHECK);
 		btnShowStereotypes.setSelection(false);
 		btnShowStereotypes.setAlignment(SWT.RIGHT);
-		btnShowStereotypes.setText("Show stereotypes label");
+		btnShowStereotypes.setText("Show stereotypes labels");
 
 		btnShowConnectorNames = new Button(container, SWT.CHECK);
 		btnShowConnectorNames.setSelection(false);
@@ -108,9 +109,9 @@ public class IBDCreatorDialog extends Dialog
 		btnShowConnectorNames.setText("Show connectors names");
 		
 		final Label selectRoutingStyle = new Label(container, SWT.RIGHT);
-		selectRoutingStyle.setText("Select routing style");
+		selectRoutingStyle.setText("Select routing style:");
 		
-	    combo = new Combo(parent, SWT.DROP_DOWN | SWT.READ_ONLY);
+	    combo = new Combo(container, SWT.DROP_DOWN | SWT.READ_ONLY);
 	    combo.setItems(new String [] {"Rectilinear", "Oblique"});
 	    combo.select(0);
 
@@ -118,22 +119,27 @@ public class IBDCreatorDialog extends Dialog
 	}
 
 	/**
-	 * Create contents of the button bar.
+	 * Creates contents of the button bar.
 	 * @param parent
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, true);
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 	}
 
 	/**
-	 * Return the initial size of the dialog.
+	 * Returns the initial size of the dialog.
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(363, 300);
+		return new Point(500, 230);
 	}
 
+	/**
+	 * Returns true if the user pressed the OK button.
+	 * @return
+	 */
 	public boolean goAhead() {
 		return goAhead;
 	}

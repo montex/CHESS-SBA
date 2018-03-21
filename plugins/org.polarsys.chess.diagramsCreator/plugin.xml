@@ -93,6 +93,11 @@
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateIBDSingleHandler"
             id="org.polarsys.chess.diagramsCreator.commands.createIBDHandler"
             name="Create the IBD diagram handler">
+         <commandParameter
+               id="sortedPorts"
+               name="sortedPorts"
+               optional="true">
+         </commandParameter>
       </command>
       <command
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateIBDMultipleHandler"
