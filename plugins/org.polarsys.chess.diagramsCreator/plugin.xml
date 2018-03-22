@@ -108,6 +108,41 @@
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.AdjustAssociationsHandler"
             id="org.polarsys.chess.diagramsCreator.commands.adjustAssociationsHandler"
             name="Adjust associations handler">
+         <commandParameter
+               id="show_stereotypes"
+               name="show_stereotypes"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_associations_names"
+               name="show_associations_names"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_source_role"
+               name="show_source_role"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_source_multiplicity"
+               name="show_source_multiplicity"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_target_role"
+               name="show_target_role"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_target_multiplicity"
+               name="show_target_multiplicity"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="routing_style"
+               name="routing_style"
+               optional="true">
+         </commandParameter>
       </command>
       <command
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.ArrangeHandler"
