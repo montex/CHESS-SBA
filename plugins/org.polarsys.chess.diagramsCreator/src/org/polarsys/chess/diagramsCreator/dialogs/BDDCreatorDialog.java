@@ -24,25 +24,31 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 
 /**
- * This class dispays a dialog to set some parameters for the IBD creation.
+ * This class dispays a dialog to set some parameters for the BDD creation.
  * @author cristofo
  *
  */
-public class IBDCreatorDialog extends Dialog {	
-	private static final String TITLE = "IBD diagram parameters";
-
-	private Button btnPortLexicographicallyOrder;
-	private boolean portLexicographicallyOrder;
-
-	private Button btnShowFlowPorts;
-	private boolean showFlowPorts;
+public class BDDCreatorDialog extends Dialog {
+	private static final String TITLE = "BDD diagram parameters";
 	
 	private Button btnShowStereotypes;
 	private boolean showStereotypes;
 	
-	private Button btnShowConnectorNames;
-	private boolean showConnectorNames;
+	private Button btnShowAssociationsNames;
+	private boolean showAssociationsNames;
 	
+	private Button btnShowSourceMultiplicity;
+	private boolean showSourceMultiplicity;
+	
+	private Button btnShowTargetMultiplicity;
+	private boolean showTargetMultiplicity;
+	
+	private Button btnShowSourceRole;
+	private boolean showSourceRole;
+	
+	private Button btnShowTargetRole;
+	private boolean showTargetRole;
+
 	private Combo combo;
 	private boolean rectilinearRouting;
 	
@@ -53,7 +59,7 @@ public class IBDCreatorDialog extends Dialog {
 	 * @param parentShell the parent shell
 	 * @param blocking indicates if the dialog should be modal
 	 */
-	public IBDCreatorDialog(Shell parentShell, boolean blocking) {
+	public BDDCreatorDialog(Shell parentShell, boolean blocking) {
 		super(parentShell);
 		setShellStyle(SWT.TITLE);
 //		setShellStyle(SWT.CLOSE | SWT.MODELESS| SWT.BORDER | SWT.TITLE);
@@ -69,10 +75,12 @@ public class IBDCreatorDialog extends Dialog {
 
 	@Override
 	protected void okPressed() {
-		portLexicographicallyOrder = btnPortLexicographicallyOrder.getSelection();
-		showFlowPorts = btnShowFlowPorts.getSelection();
 		showStereotypes = btnShowStereotypes.getSelection();
-		showConnectorNames = btnShowConnectorNames.getSelection();
+		showAssociationsNames = btnShowAssociationsNames.getSelection();
+		showSourceRole = btnShowSourceRole.getSelection();
+		showSourceMultiplicity = btnShowSourceMultiplicity.getSelection();
+		showTargetRole = btnShowTargetRole.getSelection();
+		showTargetMultiplicity = btnShowTargetMultiplicity.getSelection();
 		rectilinearRouting = (combo.getSelectionIndex() == 0); 
 		goAhead = true;
 
@@ -90,25 +98,35 @@ public class IBDCreatorDialog extends Dialog {
 		gridLayout.numColumns = 2;
 		gridLayout.makeColumnsEqualWidth = true;
 
-		btnPortLexicographicallyOrder = new Button(container, SWT.CHECK);
-		btnPortLexicographicallyOrder.setSelection(false);
-		btnPortLexicographicallyOrder.setAlignment(SWT.RIGHT);
-		btnPortLexicographicallyOrder.setText("Alphabetical port name ordering");
-
-		btnShowFlowPorts = new Button(container, SWT.CHECK);
-		btnShowFlowPorts.setSelection(false);
-		btnShowFlowPorts.setAlignment(SWT.RIGHT);
-		btnShowFlowPorts.setText("Show <<FlowPort>> labels");
-
 		btnShowStereotypes = new Button(container, SWT.CHECK);
 		btnShowStereotypes.setSelection(false);
 		btnShowStereotypes.setAlignment(SWT.RIGHT);
 		btnShowStereotypes.setText("Show stereotypes labels");
 
-		btnShowConnectorNames = new Button(container, SWT.CHECK);
-		btnShowConnectorNames.setSelection(false);
-		btnShowConnectorNames.setAlignment(SWT.RIGHT);
-		btnShowConnectorNames.setText("Show connectors names");
+		btnShowAssociationsNames = new Button(container, SWT.CHECK);
+		btnShowAssociationsNames.setSelection(false);
+		btnShowAssociationsNames.setAlignment(SWT.RIGHT);
+		btnShowAssociationsNames.setText("Show associations names");
+		
+		btnShowSourceRole = new Button(container, SWT.CHECK);
+		btnShowSourceRole.setSelection(false);
+		btnShowSourceRole.setAlignment(SWT.RIGHT);
+		btnShowSourceRole.setText("Show source role");
+		
+		btnShowSourceMultiplicity = new Button(container, SWT.CHECK);
+		btnShowSourceMultiplicity.setSelection(false);
+		btnShowSourceMultiplicity.setAlignment(SWT.RIGHT);
+		btnShowSourceMultiplicity.setText("Show source multiplicity");
+		
+		btnShowTargetRole = new Button(container, SWT.CHECK);
+		btnShowTargetRole.setSelection(false);
+		btnShowTargetRole.setAlignment(SWT.RIGHT);
+		btnShowTargetRole.setText("Show target role");
+		
+		btnShowTargetMultiplicity = new Button(container, SWT.CHECK);
+		btnShowTargetMultiplicity.setSelection(false);
+		btnShowTargetMultiplicity.setAlignment(SWT.RIGHT);
+		btnShowTargetMultiplicity.setText("Show target multiplicity");
 		
 		final Label selectRoutingStyle = new Label(container, SWT.RIGHT);
 		selectRoutingStyle.setText("Select routing style:");
@@ -146,22 +164,30 @@ public class IBDCreatorDialog extends Dialog {
 		return goAhead;
 	}
 
-	public boolean getPortLexicographicallyOrder() {
-		return portLexicographicallyOrder;
+	public boolean getShowAssociationsNames() {
+		return showAssociationsNames;
 	}
 	
-	public boolean getShowConnectors() {
-		return showConnectorNames;
-	}
-	
-	public boolean getShowFlowPorts() {
-		return showFlowPorts;
-	}
-
 	public boolean getShowStereotypes() {
 		return showStereotypes;
 	}
+
+	public boolean getShowSourceRole() {
+		return showSourceRole;
+	}
 	
+	public boolean getShowSourceMultiplicity() {
+		return showSourceMultiplicity;
+	}
+	
+	public boolean getShowTargetRole() {
+		return showTargetRole;
+	}
+	
+	public boolean getShowTargetMultiplicity() {
+		return showTargetMultiplicity;
+	}
+
 	public boolean getRectilinearRouting() {
 		return rectilinearRouting;
 	}

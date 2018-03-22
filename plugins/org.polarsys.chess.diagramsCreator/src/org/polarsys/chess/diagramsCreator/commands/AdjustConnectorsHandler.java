@@ -60,7 +60,7 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 	
-		// Parameter reading
+		// Parameters reading
 		final boolean showFlowPorts = (event.getParameter(SHOW_FLOWPORTS) != null && event.getParameter(SHOW_FLOWPORTS).equals("true")) ? true : false;
 		final boolean showConnectors = (event.getParameter(SHOW_CONNECTORS) != null && event.getParameter(SHOW_CONNECTORS).equals("true")) ? true : false;
 		final boolean showStereotypes = (event.getParameter(SHOW_STEREOTYPES) != null && event.getParameter(SHOW_STEREOTYPES).equals("true")) ? true : false;
@@ -95,7 +95,7 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 							if (element instanceof Stereotype && !(((Stereotype) element).getName().equals("FlowPort") ||
 									((Stereotype) element).getName().equals("DelegationConstraint"))) {
 
-								// Hide stereotype labes <<Block, SubSystem, ComponentInstance, etc.>>, but not part and property
+								// Hide stereotype labels <<Block, SubSystem, ComponentInstance, etc.>>, but not part and property
 								((IGraphicalEditPart) editParts[i]).getNotationView().setVisible(false);
 							}
 						}

@@ -242,8 +242,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 							portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(element) + 1);
 							request.setLocation(new Point(portLocationRight));
 						}
-						
-						
 //						if (entityUtil.isInputPort(element)) {
 //							portLocationLeft.y += INCREMENT;
 //							request.setLocation(new Point(portLocationLeft));
