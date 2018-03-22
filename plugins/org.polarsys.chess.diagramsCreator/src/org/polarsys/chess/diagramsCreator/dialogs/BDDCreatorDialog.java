@@ -153,7 +153,7 @@ public class BDDCreatorDialog extends Dialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(500, 230);
+		return new Point(435, 230);
 	}
 
 	/**
