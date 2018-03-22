@@ -221,9 +221,10 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			logger.debug("compView = " + compartmentView);
 
 			// Get the width of the component to set the position of output ports
-			final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) editPart).getNotationView();
-			final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
-			portLocationRight.x += layout.getWidth() + 20;
+//			final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) editPart).getNotationView();
+//			final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
+//			portLocationRight.x = layout.getWidth() + 20;
+			portLocationRight.x = 10000;	// Huge value to avoid ports being not put on the border
 			
 			if (compartmentView != null) {
 				request = new ShowHideElementsRequest(compartmentView, ((OptionalEditPartRepresentation) rep).getSemanticElement());
@@ -241,6 +242,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 							portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(element) + 1);
 							request.setLocation(new Point(portLocationRight));
 						}
+						
+						
 //						if (entityUtil.isInputPort(element)) {
 //							portLocationLeft.y += INCREMENT;
 //							request.setLocation(new Point(portLocationLeft));
