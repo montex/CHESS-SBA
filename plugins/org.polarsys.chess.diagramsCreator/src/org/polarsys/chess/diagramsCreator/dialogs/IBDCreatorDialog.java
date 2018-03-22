@@ -135,7 +135,7 @@ public class IBDCreatorDialog extends Dialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(500, 230);
+		return new Point(485, 230);
 	}
 
 	/**
