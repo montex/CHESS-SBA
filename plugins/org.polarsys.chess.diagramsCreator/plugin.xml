@@ -30,7 +30,7 @@
             </command>
             <command
                   commandId="org.polarsys.chess.diagramsCreator.commands.createAllIBDs"
-                  label="Create the IBD diagrams for all the package components"
+                  label="Create the IBD diagrams for all the package components (raw version)"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
