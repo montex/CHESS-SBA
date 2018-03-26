@@ -17,6 +17,7 @@ import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.LiteralString;
@@ -40,12 +41,12 @@ import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.core.util.uml.UMLUtils;
+import org.polarsys.chess.service.core.model.ChessSystemModel;
 
+import com.google.common.collect.Maps;
 import com.google.inject.Injector;
 
-import eu.fbk.eclipse.standardtools.utils.core.parser.ParseHelper;
-import eu.fbk.eclipse.standardtools.utils.core.utils.FileSystemUtil;
+import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSModelFactory;
 import eu.fbk.tools.editor.basetype.baseType.*;
 import eu.fbk.tools.editor.contract.contract.Assumption;
 import eu.fbk.tools.editor.contract.contract.Contract;
@@ -71,18 +72,37 @@ import eu.fbk.tools.editor.oss.oss.Refinement;
 import eu.fbk.tools.editor.oss.oss.RefinementInstance;
 
 import org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.DataTypes.BoundedSubtype;
+import org.eclipse.papyrus.emf.facet.util.ui.internal.exported.handler.HandlerUtils;
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
 import org.eclipse.papyrus.sysml.service.types.element.SysMLElementTypes;
 import org.eclipse.papyrus.uml.service.types.utils.ElementUtil;
+import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
+import org.eclipse.papyrus.views.modelexplorer.ModelExplorerPage;
+import org.eclipse.papyrus.views.modelexplorer.ModelExplorerPageBookView;
+import org.eclipse.papyrus.views.modelexplorer.ModelExplorerView;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.part.IPage;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.IHandler;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -92,6 +112,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.jface.viewers.IStructuredSelection;
 
 public class ImportOSSFileAction {
 
@@ -101,6 +122,11 @@ public class ImportOSSFileAction {
 	private static final String ASSOCIATION_NAME = "association";
 	private static final String ENUMERATION_NAME = "Enumeration";
 	private static final String SIGNAL_NAME = "Signal";
+
+	private static final String DELETE_COMMAND_ID = "org.eclipse.ui.edit.delete";
+
+	private static final String MODELEXPLORER_VIEW_ID = "org.eclipse.papyrus.views.modelexplorer.modelexplorer";
+
 
 //	private static final String INTEGER_TYPE =	"PrimitiveTypes::Integer";
 //	private static final String REAL_TYPE =		"PrimitiveTypes::Real";	
@@ -130,7 +156,25 @@ public class ImportOSSFileAction {
 //	private static final String MARTE_BOOLEAN_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Boolean";
 //	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
 //	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
-	 
+	
+	private ChessSystemModel chessSystemModel = ChessSystemModel.getInstance();
+	
+	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+	private EntityUtil entityUtil = EntityUtil.getInstance();
+	
+	// Will contain elements being added to the model, big enough
+	private EList<Element> addedElements = new BasicEList<>(1000); 
+	
+	// Stereotype objects needed to customize the elements
+	private Stereotype contractPropertyStereotype;
+	private Stereotype delegationConstraintStereotype;
+	private Stereotype contractRefinementStereotype;
+	private Stereotype flowPortStereotype;
+	private Stereotype contractStereotype;
+	private Stereotype boundedTypeStereotype;
+	private Stereotype blockStereotype;
+	private Stereotype systemStereotype;
+	
 	//TODO use instead method in xText plugin
 	final Injector injector = new OssStandaloneSetup().createInjector();
 	private final ISerializer serializer = injector.getInstance(ISerializer.class);
@@ -153,6 +197,7 @@ public class ImportOSSFileAction {
 
 	/** Logger for messages */
 	private static final Logger logger = Logger.getLogger(ImportOSSFileAction.class);
+	
 
 	/**
 	 * The constructor.
@@ -169,22 +214,6 @@ public class ImportOSSFileAction {
 			sampleView = new ImportOSSFileAction();
 		}
 		return sampleView;
-	}
-	
-	/** 
-	 * Creates a OSS Model.
-	 * @param ossFile a File containing the OCRA model
-	 * @return the OSS object 
-	 * @throws Exception
-	 */
-	//TODO try to reuse existing methods instead
-	private OSS getOssModel(File ossFile) throws Exception, IOException {
-		//FIXME USE EXISTING METHOD//
-		String ossDefinition = FileSystemUtil.getFileContent(ossFile);
-		final ParseHelper<?> parseHelper = injector.getInstance(ParseHelper.class);
-		OSS result = (OSS) parseHelper.parse(ossDefinition);
-
-		return result;
 	}
 	
 	/**
@@ -249,8 +278,9 @@ public class ImportOSSFileAction {
 		logger.debug("\n\n\n");
 
 		Property newUMLProperty = owner.createOwnedAttribute(elementName, elementType);
-		UMLUtils.applyStereotype(newUMLProperty, CONTRACT_PROP);
-
+//		UMLUtils.applyStereotype(newUMLProperty, CONTRACT_PROP);
+		newUMLProperty.applyStereotype(contractPropertyStereotype);
+		
 		logger.debug("\n\nCreated " + elementName + " Property\n\n");
 		return newUMLProperty;
 	}
@@ -304,8 +334,9 @@ public class ImportOSSFileAction {
 		logger.debug("\n\n\n");
 
 		Constraint newUMLConstraint = owner.createOwnedRule(delegationName.toString());
-		UMLUtils.applyStereotype(newUMLConstraint, DELEGATION_CONST);
-
+//		UMLUtils.applyStereotype(newUMLConstraint, DELEGATION_CONST);
+		newUMLConstraint.applyStereotype(delegationConstraintStereotype);
+		
 		LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
 		literalString.setName(DELEGATION_CONSTRAINT_NAME);
 		final String formalPropertyText = createDelegationConstraintText(variable, constraint);
@@ -344,7 +375,7 @@ public class ImportOSSFileAction {
 		final Property umlProperty = component.getOwnedAttribute(contractPropertyName, umlContract);
 				
 		// Return the correct type of object
-		return ContractEntityUtil.getInstance().getContractProperty(umlProperty);
+		return contractEntityUtil.getContractProperty(umlProperty);
 	}
 	
 	/**
@@ -367,7 +398,7 @@ public class ImportOSSFileAction {
 	private Property getUMLComponentInstance(Class owner, String componentName) {
 		
 		for (Property umlProperty : (owner.getAttributes())) {
-			if (umlProperty.getName().equals(componentName) && EntityUtil.getInstance().isComponentInstance(umlProperty)) {
+			if (umlProperty.getName().equals(componentName) && entityUtil.isComponentInstance(umlProperty)) {
 				return umlProperty;
 			}
 		}
@@ -411,8 +442,10 @@ public class ImportOSSFileAction {
 			//TODO create a new class e.g. CHESSElementsUtil and move this method there
 			DataType newUmlDataType = UMLFactory.eINSTANCE.createDataType();
 			Classifier newClass = owner.createNestedClassifier(refinementName, newUmlDataType.eClass());
-			Stereotype stereotype = UMLUtils.applyStereotype(newClass, CONTRACT_REFINEMENT);
-			ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(stereotype);
+//			Stereotype stereotype = UMLUtils.applyStereotype(newClass, CONTRACT_REFINEMENT);
+//			ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(stereotype);
+			newClass.applyStereotype(contractRefinementStereotype);
+			ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(contractRefinementStereotype);
 
 			// Set the correct links for the refinement
 			contractRefinement.setInstance(componentInstance); // The component instance containing the definition
@@ -513,10 +546,12 @@ public class ImportOSSFileAction {
 			
 		// Create a data type to the component view and apply the stereotype
 		Type dataType = pkg.createOwnedType(typeName, UMLPackage.Literals.DATA_TYPE);
-		Stereotype stereotype = UMLUtils.applyStereotype(dataType, BOUNDED_TYPE);
+//		Stereotype stereotype = UMLUtils.applyStereotype(dataType, BOUNDED_TYPE);
+		dataType.applyStereotype(boundedTypeStereotype);
 
 		// Extract the stereotiped type and configure it
-		BoundedSubtype boundedType = (BoundedSubtype) dataType.getStereotypeApplication(stereotype);		
+//		BoundedSubtype boundedType = (BoundedSubtype) dataType.getStereotypeApplication(stereotype);
+		BoundedSubtype boundedType = (BoundedSubtype) dataType.getStereotypeApplication(boundedTypeStereotype);
 		boundedType.setMinValue(String.valueOf(lowerBound));
 		boundedType.setMaxValue(String.valueOf(upperBound));
 		boundedType.setBaseType((DataType) getPrimitiveType("Integer"));
@@ -793,9 +828,11 @@ public class ImportOSSFileAction {
 		umlPort.setName(portName);
 		umlPort.setType(portType);
 		owner.getOwnedPorts().add(umlPort);
-		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+//		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+		umlPort.applyStereotype(flowPortStereotype);
 		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
-		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+//		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(flowPortStereotype);
 		flowPort.setDirection(isInput? FlowDirection.IN: FlowDirection.OUT);
 		
 		// This version is nicer but a little slower
@@ -830,9 +867,11 @@ public class ImportOSSFileAction {
 		umlPort.setName(portName);
 		umlPort.setType(portType);
 		owner.getOwnedPorts().add(umlPort);
-		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+//		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+		umlPort.applyStereotype(flowPortStereotype);
 		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
-		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+//		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(flowPortStereotype);
 		flowPort.setDirection(FlowDirection.INOUT);
 		umlPort.setIsStatic(true);
 		
@@ -850,8 +889,10 @@ public class ImportOSSFileAction {
 	private Class createSystemBlock(Package owner, final String elementName) {
 
 		Class sysBlock = owner.createOwnedClass(elementName, false);
-		UMLUtils.applyStereotype(sysBlock, BLOCK);
-		UMLUtils.applyStereotype(sysBlock, SYSTEM);
+//		UMLUtils.applyStereotype(sysBlock, BLOCK);
+//		UMLUtils.applyStereotype(sysBlock, SYSTEM);
+		sysBlock.applyStereotype(blockStereotype);
+		sysBlock.applyStereotype(systemStereotype);
 		
 		logger.debug("\n\nCreated " + elementName + " System Block\n\n");
 		return sysBlock;
@@ -871,7 +912,8 @@ public class ImportOSSFileAction {
 
 		Class newUmlClass = UMLFactory.eINSTANCE.createClass();
 		Classifier newClass = owner.createNestedClassifier(contractName, newUmlClass.eClass());
-		UMLUtils.applyStereotype(newClass, CONTRACT);
+//		UMLUtils.applyStereotype(newClass, CONTRACT);
+		newClass.applyStereotype(contractStereotype);
 		
 		logger.debug("\n\nCreated " + contractName + " Property\n\n");
 		return (Class) newClass;
@@ -887,8 +929,9 @@ public class ImportOSSFileAction {
 	private Class createBlock(Package owner, final String elementName) {
 
 		Class umlClass = owner.createOwnedClass(elementName, false);
-		UMLUtils.applyStereotype(umlClass, BLOCK);
-
+//		UMLUtils.applyStereotype(umlClass, BLOCK);
+		umlClass.applyStereotype(blockStereotype);
+		
 //		owner.createPackagedElement(elementName, newUMLClass.eClass()); This also works...
 //		owner.getPackagedElements().add(newUMLClass);	// This works too!
 		
@@ -1077,8 +1120,8 @@ public class ImportOSSFileAction {
 					ContractProperty contractProperty = getContractPropertyFromContract(dslTypeToComponent.get(dslParentComponent.getType()), refinedContract);
 					
 					// Alternative version using a library function
-//					Property p = ContractEntityUtil.getInstance().getUmlContractPropertyOfUmlComponentFromContractPropertyType(dslTypeToComponent.get(dslParentComponent.getType()), refinedContract);
-//					ContractProperty cp = ContractEntityUtil.getInstance().getContractProperty(p);
+//					Property p = contractEntityUtil.getUmlContractPropertyOfUmlComponentFromContractPropertyType(dslTypeToComponent.get(dslParentComponent.getType()), refinedContract);
+//					ContractProperty cp = contractEntityUtil.getContractProperty(p);
 
 					// Create a ContractRefinement for each ContractId found
 					final EList<ContractId> contractIds = refinement.getContractIds();					
@@ -1138,6 +1181,22 @@ public class ImportOSSFileAction {
 		// Get all the InterfaceInstances of the Interface
 		final EList<InterfaceInstance> dslIntInstances = dslComponentInterface.getInterfaces();
 
+		// Get all the existing ports of the element
+		EList<?> ports = chessSystemModel.getStaticPorts(dslTypeToComponent.get(dslParentComponent.getType()));
+
+		HashMap<org.eclipse.uml2.uml.Port, Boolean> map = Maps.newHashMapWithExpectedSize(ports.size());
+	
+		System.out.println("ports.size = " + ports.size());
+		for (Object object : ports) {
+			map.put((org.eclipse.uml2.uml.Port) object, null);
+			System.out.println("Sto salvando la port " + object);
+		}
+		
+		
+		//TODO: ho tutte le porte del componente, settate a null. Se alla fine sono ancora a null, le rimuovo (come?)
+		// le metto a true quando nel crearle, le trovo gia' presenti.
+		// se invece ne creo una nuova, la metto anche nella lista changes (unica per il diagramma)
+		
 		// If some InterfaceInstances are present, loop on them
 		if ((dslIntInstances != null) && !dslIntInstances.isEmpty()) {
 			for (InterfaceInstance dslIntInstance : dslIntInstances) {
@@ -1193,8 +1252,8 @@ public class ImportOSSFileAction {
 					Class contract = createContract(dslTypeToComponent.get(dslParentComponent.getType()), dslContract.getName());
 
 					// Add the two Formal Properties
-					ContractEntityUtil.getInstance().saveFormalProperty("Assume", getConstraintText(dslAssumption.getConstraint()), contract);
-					ContractEntityUtil.getInstance().saveFormalProperty("Guarantee", getConstraintText(dslGuarantee.getConstraint()), contract);
+					contractEntityUtil.saveFormalProperty("Assume", getConstraintText(dslAssumption.getConstraint()), contract);
+					contractEntityUtil.saveFormalProperty("Guarantee", getConstraintText(dslGuarantee.getConstraint()), contract);
 
 					// Create a Contract Property
 					String contractPropertyName = createContractPropertyNameFromContract(contract);
@@ -1235,6 +1294,149 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
+	 * Collects the needed stereotypes from the given package.
+	 * @param pkg the package in which to look for the stereotypes
+	 */
+	private void refreshStereotypes(Package pkg) {
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT_PROP)) {
+			if (sub.getQualifiedName().equals(CONTRACT_PROP)) {
+				contractPropertyStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, DELEGATION_CONST)) {
+			if (sub.getQualifiedName().equals(DELEGATION_CONST)) {
+				delegationConstraintStereotype = sub;
+				break;
+			}
+		}
+
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT_REFINEMENT)) {
+			if (sub.getQualifiedName().equals(CONTRACT_REFINEMENT)) {
+				contractRefinementStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, BOUNDED_TYPE)) {
+			if (sub.getQualifiedName().equals(BOUNDED_TYPE)) {
+				boundedTypeStereotype = sub;
+				break;
+			}
+		}
+
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, FLOWPORT)) {
+			if (sub.getQualifiedName().equals(FLOWPORT)) {
+				flowPortStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, BLOCK)) {
+			if (sub.getQualifiedName().equals(BLOCK)) {
+				blockStereotype = sub;
+				break;
+			}
+		}
+
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, SYSTEM)) {
+			if (sub.getQualifiedName().equals(SYSTEM)) {
+				systemStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT)) {
+			if (sub.getQualifiedName().equals(CONTRACT)) {
+				contractStereotype = sub;
+				break;
+			}
+		}
+	}
+	
+	// Needed to bring out a reference from the inner class...
+	ModelExplorerView modelExplorerView;
+	
+	/**
+	 * Returns the ModelExplorerView
+	 * @return
+	 */
+	private ModelExplorerView getModelExplorerView() {
+
+		Display.getDefault().syncExec(new Runnable() {
+
+			public void run() {
+				final IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+
+				// we look for the modelexplorer
+				IViewPart modelexplorer;
+				try {
+					modelexplorer = activeWorkbenchWindow.getActivePage().showView(MODELEXPLORER_VIEW_ID);
+				} catch (PartInitException ex) {
+					ex.printStackTrace(System.out);
+					return;
+				}
+				final ModelExplorerPageBookView view = (ModelExplorerPageBookView) modelexplorer;
+				final ModelExplorerPage page = (ModelExplorerPage) view.getCurrentPage();
+				final IViewPart viewer = page.getViewer();
+				modelExplorerView = (ModelExplorerView) viewer;
+			}
+		});
+		return modelExplorerView;
+	}
+
+	/**
+	 * Returns the handler for the given command
+	 * @param commandId the command
+	 * @return the handler
+	 */
+	private IHandler getActiveHandlerFor(final String commandId) {
+		final ICommandService commandService = 
+				(ICommandService) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(ICommandService.class);
+		commandService.refreshElements(commandId, null);
+		final Command cmd = commandService.getCommand(commandId);
+		return cmd.getHandler();
+	}
+
+	private void deleteElementInTheModel(NamedElement element) throws Exception {
+		
+		// Give the focus to the ModelExplorerView
+		ModelExplorerView modelExplorerView = getModelExplorerView();
+		modelExplorerView.setFocus();
+
+		// Select the requested element
+		List<Object> elements = new ArrayList<Object>();
+		elements.add(element);
+		modelExplorerView.revealSemanticElement(elements);
+
+		IHandler deleteHandler = getActiveHandlerFor(DELETE_COMMAND_ID);
+		deleteHandler.execute(new ExecutionEvent());
+	}
+	
+	/**
+	 * Removes a block from the list
+	 * @param members the list of members
+	 * @param qualifiedElement the qualified name of the block to remove
+	 */
+	private void removeBlock(EList<NamedElement> members, String qualifiedElement) {
+		for (NamedElement namedElement : members) {
+			System.out.println("\nnamedElement = " + namedElement);
+			System.out.println("\tnamedElement.qualif = " + namedElement.getQualifiedName());
+			if (namedElement.getQualifiedName().equals (qualifiedElement)) {
+				System.out.println("\n\nremoving the element");
+				try {
+					deleteElementInTheModel(namedElement);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}				
+				break;
+			}
+		}
+	}	//FIXME: e' piu' efficente cancellare tutti gli elementi assieme... possibile farlo?
+	
+	/**
 	 * Main method to be invoked to parse an OSS file.
 	 * @throws Exception
 	 */
@@ -1242,27 +1444,17 @@ public class ImportOSSFileAction {
 		OSS ocraOssFile;
 		sysView = pkg;	// Set the given package as working package
 
+		// Retrieve the needed stereotypes 
+		refreshStereotypes(sysView);
+		
 		long startTime = System.currentTimeMillis();
 		
 		if (ossFile != null) {
-			ocraOssFile = getOssModel(ossFile);
+			ocraOssFile = OSSModelFactory.getInstance().createOssModel(ossFile);
 		} else {
 			return;
 		}
-			
-		//Retrieve SystemView and ComponentView packages
-//		sysView = getSystemView();
-//		compView = getComponentView();
-				
-		// For the specific WBS example, go inside a particular package
-//		EList<Package> pkgList = sysView.getNestedPackages();
-//		for (Package p : pkgList) {
-//			if (p.getName().equals("PhysicalArchitecture")) {
-//				sysView = p;
-//				break;
-//			}
-//		}
-						
+
 		// Retrieve the SystemComponent
 		SystemComponent dslSystemComponent = ocraOssFile.getSystem();
 		
@@ -1277,6 +1469,21 @@ public class ImportOSSFileAction {
 
 		logger.debug("dslSystemComponent.type = " + dslSystemComponentName);
 
+		// Get all the existing blocks looping on all members
+		EList<NamedElement> members = sysView.getOwnedMembers();
+		HashMap<String, Boolean> blocks = Maps.newHashMapWithExpectedSize(members.size());
+		for (Element member : members) {
+			if (entityUtil.isBlock(member) && !contractEntityUtil.isContract(member)) {
+				blocks.put(((Class) member).getQualifiedName(), null);
+			}
+		}
+		
+		System.out.println("ci sono gia' blocchi: " +  blocks.size());
+		for (String qualifiedName : blocks.keySet()) {
+			System.out.println("block = " + qualifiedName);
+		}
+				
+		// A map used to connect block names to their implementation
 		dslTypeToComponent = new HashMap<String, Class>();
 
 		// Clear the exception before starting the import
@@ -1289,21 +1496,66 @@ public class ImportOSSFileAction {
 			@Override
 			protected void doExecute() {
 
-				// Add the systemComponent to the package
-				Class systemComponent = createSystemBlock(sysView, dslSystemComponent.getType());
+				String blockQualifiedName = pkg.getQualifiedName() + "::" + dslSystemComponentName;			
+				System.out.println("blockQualifiedName = " + blockQualifiedName);
+				
+				Class systemComponent = null;
+				if (!blocks.containsKey(blockQualifiedName)) {
 
+					System.out.println("block not present: " + blockQualifiedName);
+
+					// Add a new systemComponent to the package
+					systemComponent = createSystemBlock(sysView, dslSystemComponent.getType());
+					
+					// Add the component to the list of changes
+					addedElements.add(systemComponent);
+					
+				} else {
+				
+					System.out.println("block already present");
+					
+					// Should retrieve the old one from the package
+					
+					//FIXME: ho bisogno degli eClass da passare, mi faccio degli oggetti pronti?
+					systemComponent = (Class) sysView.getOwnedMember(dslSystemComponentName, false, UMLFactory.eINSTANCE.createClass().eClass());
+					
+					// Set the flag to signal the block is still used
+					blocks.put(blockQualifiedName, Boolean.TRUE);
+				}
+				
 				// Store the systemComponent in a hash with its name
 				dslTypeToComponent.put(dslSystemComponentName, systemComponent);
 
 				// Populate the map and the package with the other Component elements 
 				for (Component dslComponent : ocraOssFile.getComponents()) {
-					Class component = createBlock(sysView, dslComponent.getType());
-					if(dslTypeToComponent.put(dslComponent.getType(), component) != null) {
-						logger.error("Duplicated component type, not added: " + dslComponent.getType());
+					
+					blockQualifiedName = pkg.getQualifiedName() + "::" + dslComponent.getType();
+					
+					Class component = null;
+					if(!blocks.containsKey(blockQualifiedName)) {
+
+						System.out.println("block not present: " + blockQualifiedName);
+
+						// Add a new block to the package
+						component = createBlock(sysView, dslComponent.getType());
+
+						// Add the component to the list of changes
+						addedElements.add(systemComponent);
 					} else {
-						logger.debug("component.type = " + dslComponent.getType());
+					
+						System.out.println("block already present: " + blockQualifiedName);
+						
+						// Retrieve the old one
+						component = (Class) sysView.getOwnedMember(dslComponent.getType(), false, UMLFactory.eINSTANCE.createClass().eClass());
+
+						// Set the flag to signal the block is still used
+						blocks.put(blockQualifiedName, Boolean.TRUE);
 					}
+
+					// Store the component in a hash with its name
+					dslTypeToComponent.put(dslComponent.getType(), component);
 				}
+				// FIXME: questo pezzo e' uguale a quello sopra, unire
 
 				// Now I have created all the Blocks in the package, loop on them, but not getting them from 
 				// the package (it may be polluted with other blocks), but from the OSS model again.
@@ -1329,7 +1581,16 @@ public class ImportOSSFileAction {
 					return;
 				}
 				
+				//TODO; cleanup time, qui devo controllare se ho oggetti dentro la mappa che non sono piu' presenti
+				for (String qualifiedElement : blocks.keySet()) {
+					if (blocks.get(qualifiedElement) == null) {
+						System.out.println("block " + qualifiedElement + " should be removed");
+						removeBlock(members, qualifiedElement);
+					}
+				}
+				
 				logger.debug("Total time = " + (System.currentTimeMillis() - startTime));
+				System.out.println("Total time = " + (System.currentTimeMillis() - startTime));
 			}
 		});
 		
@@ -1339,3 +1600,15 @@ public class ImportOSSFileAction {
 		}
 	}
 }
+
+//TODO: l'idea e' quella di creare delle mappe con elemento e flag a null. Se  alla fine del giro non ho trovato
+//      l'elemento, lo cancello.
+//      Prima di creare un nuovo elemento, controllo se esiste gia' (e setto la flag). In caso contrario lo creo
+//      e salvo il riferimento in una EList di oggetti appositamente creati.
+
+//TODO:	per ogni diagramma, vedo se per ogni componente del diagramma c'e qualcosa dentro changes che andrebbe
+//      visualizzato.
+
+
+
+

@@ -23,6 +23,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.polarsys.chess.OSSImporter.actions.ImportOSSFileAction;
+import org.polarsys.chess.OSSImporter.exceptions.ImportException;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 import org.eclipse.uml2.uml.Element;
@@ -87,10 +88,12 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 				activePage.setEditorAreaVisible(false);
 				try {
 					action.startParsing((Package) umlObject, ossFile);
-				} catch (Exception e) {
+				} catch (ImportException e) {
 					dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, e.getMessage());
 					monitor.done();
-					return;
+					return;					
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 				activePage.setEditorAreaVisible(true);
 				dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, "Import done!");
