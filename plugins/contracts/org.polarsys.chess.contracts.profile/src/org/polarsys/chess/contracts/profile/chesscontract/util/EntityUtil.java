@@ -1209,8 +1209,12 @@ public class EntityUtil {
 
 		EList<Constraint> formalProperties = new BasicEList<Constraint>();
 		
+		logger.debug("getRefinementFormalPropertiesAsConstraintsFromClass: "+component.getName());
+		
 		for(Constraint umlConstraint : ((Class)component).getOwnedRules()){
-		if(isRefinementFormalProperty(umlConstraint)){
+		logger.debug("umlConstraint: "+umlConstraint.getName());
+			if(isRefinementFormalProperty(umlConstraint)){
+			logger.debug("isRefinementFormalProperty");
 			formalProperties.add(umlConstraint);
 		}
 		}
