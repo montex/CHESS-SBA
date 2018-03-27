@@ -1200,7 +1200,8 @@ public class ImportOSSFileAction {
 		System.out.println("ports.size = " + ports.size());
 		for (NamedElement port : ports) {
 			existingPorts.put(port.getQualifiedName(), null);
-			System.out.println("Sto salvando la port " + port.getQualifiedName());
+			System.out.println("Sto salvando la port " + port);
+			System.out.println("\tqualified name = " + port.getQualifiedName());
 		}
 
 		//TODO: ho tutte le porte del componente, settate a null. Se alla fine sono ancora a null, le rimuovo
@@ -1225,70 +1226,108 @@ public class ImportOSSFileAction {
 						System.out.println("parsing port " + dslVariableID.getName());
 						System.out.println("with type " + dslVariableType.toString());
 
-						// The following method doesn't work, type is different!
-//						org.eclipse.uml2.uml.Port port = owner.getOwnedPort(dslVariableID.getName(), t);
-						
-						// Loop on all the ports to see if it is already existing
+						// Version that updates the port
 						org.eclipse.uml2.uml.Port port = null;
 						for (Object object : ports) {
 							final org.eclipse.uml2.uml.Port tmpPort = (org.eclipse.uml2.uml.Port) object;
-							if (tmpPort.getName().equals(dslVariableID.getName()) && 
-									tmpPort.getType().getName().equals(getTypeFromDSLType(dslVariableType).getName())) {
-								System.out.println("\nFound port " + tmpPort.getName());
-								System.out.println("with type " + tmpPort.getType().getName());
+							if (tmpPort.getName().equals(dslVariableID.getName())) {
+								
+								// Port found, update its direction if needed
+								final FlowPort flowPort = (FlowPort) tmpPort.getStereotypeApplication(flowPortStereotype);
+								if (dslVariable instanceof InputPort && flowPort.getDirection() != FlowDirection.IN) {
+									flowPort.setDirection(FlowDirection.IN);
+								} else if (dslVariable instanceof OutputPort && flowPort.getDirection() != FlowDirection.OUT) {
+									flowPort.setDirection(FlowDirection.OUT);
+								}
+
+								// Update its type if needed
+								Type newType = getTypeFromDSLType(dslVariableType);
+								if (!tmpPort.getType().getName().equals(newType.getName())) {
+									tmpPort.setType(newType);
+								}
+
+								// Set the flag to signal the port is still used
+								existingPorts.put(tmpPort.getQualifiedName(), Boolean.TRUE);
 								port = tmpPort;
-								break;	// Port found
+								break;
 							}
 						}
-
-						if (port != null) {
-							if (dslVariable instanceof InputPort) {
-								if (entityUtil.isInputPort(port)) {
-
-									System.out.println("Port already existing");
-
-									// Set the flag to signal the port is still used
-									existingPorts.put(port.getQualifiedName(), Boolean.TRUE);
-									continue;
-								} else {
-
-									System.out.println("port not present: " + port.getName());
-
-									port = createNonStaticPort(owner, dslVariableID, dslVariableType, true);
-
-									// Add the port to the list of changes
-									addedElements.add(port);
-									continue;
-								}
-							} else {
-								if (entityUtil.isOutputPort(port)) {
-
-									System.out.println("Port already existing");
-
-									// Set the flag to signal the port is still used
-									existingPorts.put(port.getQualifiedName(), Boolean.TRUE);
-									continue;
-								} else {
-
-									System.out.println("port not present: " + port.getName());
-
-									port = createNonStaticPort(owner, dslVariableID, dslVariableType, false);
-
-									// Add the port to the list of changes
-									addedElements.add(port);
-									continue;
-								}
-							}
-						} else {
 						
+						if (port == null) {
 							System.out.println("PORT NOT FOUND, CREATING IT");
-							
+
 							if (dslVariable instanceof InputPort) {
 								createNonStaticPort(owner, dslVariableID, dslVariableType, true);
 							} else if (dslVariable instanceof OutputPort) {
 								createNonStaticPort(owner, dslVariableID, dslVariableType, false);
 							}
 						}
+						
+						// The following method doesn't work, type is different!
+//						org.eclipse.uml2.uml.Port port = owner.getOwnedPort(dslVariableID.getName(), t);
+						
+						// Version that replaces the port with a new one
+//						// Loop on all the ports to see if it is already existing
+//						org.eclipse.uml2.uml.Port port = null;
+//						for (Object object : ports) {
+//							final org.eclipse.uml2.uml.Port tmpPort = (org.eclipse.uml2.uml.Port) object;
+//							if (tmpPort.getName().equals(dslVariableID.getName()) && 
+//									tmpPort.getType().getName().equals(getTypeFromDSLType(dslVariableType).getName())) {
+//								System.out.println("\nFound port " + tmpPort.getName());
+//								System.out.println("with type " + tmpPort.getType().getName());
+//								port = tmpPort;
+//								break;	// Port found
+//							}
+//						}
+//
+//						if (port != null) {
+//							if (dslVariable instanceof InputPort) {
+//								if (entityUtil.isInputPort(port)) {
+//
+//									System.out.println("Port already existing");
+//
+//									// Set the flag to signal the port is still used
+//									existingPorts.put(port.getQualifiedName(), Boolean.TRUE);
+//									continue;
+//								} else {
+//
+//									System.out.println("port not present: " + port.getName());
+//
+//									port = createNonStaticPort(owner, dslVariableID, dslVariableType, true);
+//
+//									// Add the port to the list of changes
+//									addedElements.add(port);
+//									continue;
+//								}
+//							} else {
+//								if (entityUtil.isOutputPort(port)) {
+//
+//									System.out.println("Port already existing");
+//
+//									// Set the flag to signal the port is still used
+//									existingPorts.put(port.getQualifiedName(), Boolean.TRUE);
+//									continue;
+//								} else {
+//
+//									System.out.println("port not present: " + port.getName());
+//
+//									port = createNonStaticPort(owner, dslVariableID, dslVariableType, false);
+//
+//									// Add the port to the list of changes
+//									addedElements.add(port);
+//									continue;
+//								}
+//							}
+//						} else {
+//						
+//							System.out.println("PORT NOT FOUND, CREATING IT");
+//							
+//							if (dslVariable instanceof InputPort) {
+//								createNonStaticPort(owner, dslVariableID, dslVariableType, true);
+//							} else if (dslVariable instanceof OutputPort) {
+//								createNonStaticPort(owner, dslVariableID, dslVariableType, false);
+//							}
+//						}
 					} else if (dslVariable instanceof Parameter) {
 						
 						// PARAMETER processing
