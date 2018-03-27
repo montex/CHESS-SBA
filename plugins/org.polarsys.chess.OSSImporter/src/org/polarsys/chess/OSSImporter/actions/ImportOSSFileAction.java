@@ -73,6 +73,7 @@ import eu.fbk.tools.editor.oss.oss.RefinementInstance;
 
 import org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.DataTypes.BoundedSubtype;
 import org.eclipse.papyrus.emf.facet.util.ui.internal.exported.handler.HandlerUtils;
+import org.eclipse.papyrus.sysml.blocks.Block;
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
 import org.eclipse.papyrus.sysml.service.types.element.SysMLElementTypes;
@@ -93,6 +94,7 @@ import org.eclipse.ui.part.IPage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,6 +114,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.equinox.internal.app.AppPersistence;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
 public class ImportOSSFileAction {
@@ -475,6 +478,7 @@ public class ImportOSSFileAction {
 		return package_;
 	}
 
+	//FIXME: protrei farmi una libreria di tipi da cui pescare, senza ricrearli
 	/**
 	 * Returns the primitive type from the standard primitive library.
 	 * @param name the name of the Type
@@ -487,6 +491,7 @@ public class ImportOSSFileAction {
 		
 		if (type != null) {
 			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			logger.debug("Type object'" + type + "' found.");
 			return type;
 		}
 		return null;
@@ -1176,46 +1181,113 @@ public class ImportOSSFileAction {
 	 * @param dslComponentInterface the Interface element to be parsed
 	 * @throws ImportException 
 	 */
+	@SuppressWarnings("unchecked")
 	private void parseInterfaces(AbstractComponent dslParentComponent, Interface dslComponentInterface) throws ImportException {
 
 		// Get all the InterfaceInstances of the Interface
 		final EList<InterfaceInstance> dslIntInstances = dslComponentInterface.getInterfaces();
 
-		// Get all the existing ports of the element
-		EList<?> ports = chessSystemModel.getStaticPorts(dslTypeToComponent.get(dslParentComponent.getType()));
+		Class owner = dslTypeToComponent.get(dslParentComponent.getType());
+		
+		System.out.println("owner = " + owner);
+		
+		// Get all the existing ports of the element, static or not
+		EList<NamedElement> ports = (EList<NamedElement>) chessSystemModel.getNonStaticPorts(owner);
+		ports.addAll((Collection<? extends NamedElement>) chessSystemModel.getStaticPorts(owner));
 
-		HashMap<org.eclipse.uml2.uml.Port, Boolean> map = Maps.newHashMapWithExpectedSize(ports.size());
+		HashMap<String, Boolean> existingPorts = Maps.newHashMapWithExpectedSize(ports.size());
 	
 		System.out.println("ports.size = " + ports.size());
-		for (Object object : ports) {
-			map.put((org.eclipse.uml2.uml.Port) object, null);
-			System.out.println("Sto salvando la port " + object);
+		for (NamedElement port : ports) {
+			existingPorts.put(port.getQualifiedName(), null);
+			System.out.println("Sto salvando la port " + port.getQualifiedName());
 		}
-		
-		
-		//TODO: ho tutte le porte del componente, settate a null. Se alla fine sono ancora a null, le rimuovo (come?)
+
+		//TODO: ho tutte le porte del componente, settate a null. Se alla fine sono ancora a null, le rimuovo
 		// le metto a true quando nel crearle, le trovo gia' presenti.
 		// se invece ne creo una nuova, la metto anche nella lista changes (unica per il diagramma)
-		
+
 		// If some InterfaceInstances are present, loop on them
 		if ((dslIntInstances != null) && !dslIntInstances.isEmpty()) {
 			for (InterfaceInstance dslIntInstance : dslIntInstances) {
 
 				// Process the different types of interfaces
 				if (dslIntInstance != null && dslIntInstance.getVariable() != null) {
-					
+
 					final Variable dslVariable = dslIntInstance.getVariable();
-					
+
 					if (dslVariable instanceof Port) {
-						
+
 						// PORT processing
 						final VariableId dslVariableID = dslVariable.getId();
 						final SimpleType dslVariableType = dslVariable.getType();
+						
+						System.out.println("parsing port " + dslVariableID.getName());
+						System.out.println("with type " + dslVariableType.toString());
 
-						if (dslVariable instanceof InputPort) {
-							createNonStaticPort(dslTypeToComponent.get(dslParentComponent.getType()), dslVariableID, dslVariableType, true);
-						} else if (dslVariable instanceof OutputPort) {
-							createNonStaticPort(dslTypeToComponent.get(dslParentComponent.getType()), dslVariableID, dslVariableType, false);
+						// The following method doesn't work, type is different!
+//						org.eclipse.uml2.uml.Port port = owner.getOwnedPort(dslVariableID.getName(), t);
+						
+						// Loop on all the ports to see if it is already existing
+						org.eclipse.uml2.uml.Port port = null;
+						for (Object object : ports) {
+							final org.eclipse.uml2.uml.Port tmpPort = (org.eclipse.uml2.uml.Port) object;
+							if (tmpPort.getName().equals(dslVariableID.getName()) && 
+									tmpPort.getType().getName().equals(getTypeFromDSLType(dslVariableType).getName())) {
+								System.out.println("\nFound port " + tmpPort.getName());
+								System.out.println("with type " + tmpPort.getType().getName());
+								port = tmpPort;
+								break;	// Port found
+							}
+						}
+
+						if (port != null) {
+							if (dslVariable instanceof InputPort) {
+								if (entityUtil.isInputPort(port)) {
+
+									System.out.println("Port already existing");
+
+									// Set the flag to signal the port is still used
+									existingPorts.put(port.getQualifiedName(), Boolean.TRUE);
+									continue;
+								} else {
+
+									System.out.println("port not present: " + port.getName());
+
+									port = createNonStaticPort(owner, dslVariableID, dslVariableType, true);
+
+									// Add the port to the list of changes
+									addedElements.add(port);
+									continue;
+								}
+							} else {
+								if (entityUtil.isOutputPort(port)) {
+
+									System.out.println("Port already existing");
+
+									// Set the flag to signal the port is still used
+									existingPorts.put(port.getQualifiedName(), Boolean.TRUE);
+									continue;
+								} else {
+
+									System.out.println("port not present: " + port.getName());
+
+									port = createNonStaticPort(owner, dslVariableID, dslVariableType, false);
+
+									// Add the port to the list of changes
+									addedElements.add(port);
+									continue;
+								}
+							}
+						} else {
+						
+							System.out.println("PORT NOT FOUND, CREATING IT");
+							
+							if (dslVariable instanceof InputPort) {
+								createNonStaticPort(owner, dslVariableID, dslVariableType, true);
+							} else if (dslVariable instanceof OutputPort) {
+								createNonStaticPort(owner, dslVariableID, dslVariableType, false);
+							}
 						}
 					} else if (dslVariable instanceof Parameter) {
 						
@@ -1228,7 +1300,34 @@ public class ImportOSSFileAction {
 						if (parameters.size() != 0) {
 							logger.error("Import Error: Cannot handle this type of PARAMETER");
 						} else {
-							createStaticPort(dslTypeToComponent.get(dslParentComponent.getType()), dslVariableID, dslVariableType);
+							
+							// I should check if the port is already present
+							org.eclipse.uml2.uml.Port port = null;
+							for (Object object : ports) {
+								final org.eclipse.uml2.uml.Port tmpPort = (org.eclipse.uml2.uml.Port) object;
+								if (tmpPort.getName().equals(dslVariableID.getName()) && 
+										tmpPort.getType().getName().equals(getTypeFromDSLType(dslVariableType).getName())) {
+									System.out.println("\nFound port " + tmpPort.getName());
+									System.out.println("with type " + tmpPort.getType().getName());
+									port = tmpPort;
+									break;	// Port found
+								}
+							}
+
+							if (port != null) {
+								System.out.println("Port already existing");
+
+								// Set the flag to signal the port is still used
+								existingPorts.put(port.getQualifiedName(), Boolean.TRUE);
+								continue;
+							} else {
+
+								port = createStaticPort(owner, dslVariableID, dslVariableType);
+
+								// Add the port to the list of changes
+								addedElements.add(port);
+								continue;
+							}
 						}
 					} else if (dslVariable instanceof Operation) {
 						
@@ -1249,7 +1348,7 @@ public class ImportOSSFileAction {
 					final Guarantee dslGuarantee = dslContract.getGuarantee();
 
 					// Create an empty Contract
-					Class contract = createContract(dslTypeToComponent.get(dslParentComponent.getType()), dslContract.getName());
+					Class contract = createContract(owner, dslContract.getName());
 
 					// Add the two Formal Properties
 					contractEntityUtil.saveFormalProperty("Assume", getConstraintText(dslAssumption.getConstraint()), contract);
@@ -1257,8 +1356,16 @@ public class ImportOSSFileAction {
 
 					// Create a Contract Property
 					String contractPropertyName = createContractPropertyNameFromContract(contract);
-					createContractProperty(dslTypeToComponent.get(dslParentComponent.getType()), contractPropertyName, (Type) contract);
+					createContractProperty(owner, contractPropertyName, (Type) contract);
 				}
+			}
+		}
+		
+		// Cleanup time
+		for (String qualifiedElement : existingPorts.keySet()) {
+			if (existingPorts.get(qualifiedElement) == null) {
+				System.out.println("port " + qualifiedElement + " should be removed");
+				removeElement(ports, qualifiedElement);
 			}
 		}
 	}
@@ -1420,7 +1527,7 @@ public class ImportOSSFileAction {
 	 * @param members the list of members
 	 * @param qualifiedElement the qualified name of the block to remove
 	 */
-	private void removeBlock(EList<NamedElement> members, String qualifiedElement) {
+	private void removeElement(EList<NamedElement> members, String qualifiedElement) {
 		for (NamedElement namedElement : members) {
 			System.out.println("\nnamedElement = " + namedElement);
 			System.out.println("\tnamedElement.qualif = " + namedElement.getQualifiedName());
@@ -1471,15 +1578,15 @@ public class ImportOSSFileAction {
 
 		// Get all the existing blocks looping on all members
 		EList<NamedElement> members = sysView.getOwnedMembers();
-		HashMap<String, Boolean> blocks = Maps.newHashMapWithExpectedSize(members.size());
+		HashMap<String, Boolean> existingBlocks = Maps.newHashMapWithExpectedSize(members.size());
 		for (Element member : members) {
 			if (entityUtil.isBlock(member) && !contractEntityUtil.isContract(member)) {
-				blocks.put(((Class) member).getQualifiedName(), null);
+				existingBlocks.put(((Class) member).getQualifiedName(), null);
 			}
 		}
 		
-		System.out.println("ci sono gia' blocchi: " +  blocks.size());
-		for (String qualifiedName : blocks.keySet()) {
+		System.out.println("ci sono gia' blocchi: " +  existingBlocks.size());
+		for (String qualifiedName : existingBlocks.keySet()) {
 			System.out.println("block = " + qualifiedName);
 		}
 				
@@ -1500,7 +1607,7 @@ public class ImportOSSFileAction {
 				System.out.println("blockQualifiedName = " + blockQualifiedName);
 				
 				Class systemComponent = null;
-				if (!blocks.containsKey(blockQualifiedName)) {
+				if (!existingBlocks.containsKey(blockQualifiedName)) {
 
 					System.out.println("block not present: " + blockQualifiedName);
 
@@ -1520,7 +1627,7 @@ public class ImportOSSFileAction {
 					systemComponent = (Class) sysView.getOwnedMember(dslSystemComponentName, false, UMLFactory.eINSTANCE.createClass().eClass());
 					
 					// Set the flag to signal the block is still used
-					blocks.put(blockQualifiedName, Boolean.TRUE);
+					existingBlocks.put(blockQualifiedName, Boolean.TRUE);
 				}
 				
 				// Store the systemComponent in a hash with its name
@@ -1532,7 +1639,7 @@ public class ImportOSSFileAction {
 					blockQualifiedName = pkg.getQualifiedName() + "::" + dslComponent.getType();
 					
 					Class component = null;
-					if(!blocks.containsKey(blockQualifiedName)) {
+					if(!existingBlocks.containsKey(blockQualifiedName)) {
 
 						System.out.println("block not present: " + blockQualifiedName);
 
@@ -1549,13 +1656,12 @@ public class ImportOSSFileAction {
 						component = (Class) sysView.getOwnedMember(dslComponent.getType(), false, UMLFactory.eINSTANCE.createClass().eClass());
 
 						// Set the flag to signal the block is still used
-						blocks.put(blockQualifiedName, Boolean.TRUE);
+						existingBlocks.put(blockQualifiedName, Boolean.TRUE);
 					}
 
 					// Store the component in a hash with its name
 					dslTypeToComponent.put(dslComponent.getType(), component);
 				}
-				// FIXME: questo pezzo e' uguale a quello sopra, unire
 
 				// Now I have created all the Blocks in the package, loop on them, but not getting them from 
 				// the package (it may be polluted with other blocks), but from the OSS model again.
@@ -1581,11 +1687,11 @@ public class ImportOSSFileAction {
 					return;
 				}
 				
-				//TODO; cleanup time, qui devo controllare se ho oggetti dentro la mappa che non sono piu' presenti
-				for (String qualifiedElement : blocks.keySet()) {
-					if (blocks.get(qualifiedElement) == null) {
+				// Cleanup time, remove block no more needed
+				for (String qualifiedElement : existingBlocks.keySet()) {
+					if (existingBlocks.get(qualifiedElement) == null) {
 						System.out.println("block " + qualifiedElement + " should be removed");
-						removeBlock(members, qualifiedElement);
+						removeElement(members, qualifiedElement);
 					}
 				}
 				
