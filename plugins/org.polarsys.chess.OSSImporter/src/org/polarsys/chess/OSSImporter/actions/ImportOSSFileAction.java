@@ -31,6 +31,7 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
@@ -39,6 +40,7 @@ import org.eclipse.xtext.serializer.ISerializer;
 import org.polarsys.chess.OSSImporter.exceptions.ImportException;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
+import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
@@ -1195,6 +1197,7 @@ public class ImportOSSFileAction {
 		EList<NamedElement> ports = (EList<NamedElement>) chessSystemModel.getNonStaticPorts(owner);
 		ports.addAll((Collection<? extends NamedElement>) chessSystemModel.getStaticPorts(owner));
 
+		// Prepare the map to mark existing ports 
 		HashMap<String, Boolean> existingPorts = Maps.newHashMapWithExpectedSize(ports.size());
 	
 		System.out.println("ports.size = " + ports.size());
@@ -1204,10 +1207,19 @@ public class ImportOSSFileAction {
 			System.out.println("\tqualified name = " + port.getQualifiedName());
 		}
 
-		//TODO: ho tutte le porte del componente, settate a null. Se alla fine sono ancora a null, le rimuovo
-		// le metto a true quando nel crearle, le trovo gia' presenti.
-		// se invece ne creo una nuova, la metto anche nella lista changes (unica per il diagramma)
-
+		// Get all the existing contract properties
+		EList<ContractProperty> contractProperties = (EList<ContractProperty>) chessSystemModel.getContractsOfComponent(owner);
+		
+//		// Prepare the map to mark existing contracts
+		HashMap<String, Boolean> existingContractProperties = Maps.newHashMapWithExpectedSize(contractProperties.size());
+		
+		System.out.println("contractProperties.size = " + contractProperties.size());
+		for (ContractProperty contractProperty : contractProperties) {
+			existingContractProperties.put(contractProperty.getBase_Property().getQualifiedName(), null);
+			System.out.println("Sto salvando la contract property " + contractProperty);
+			System.out.println("\tqualified name = " + contractProperty.getBase_Property().getQualifiedName());
+		}
+		
 		// If some InterfaceInstances are present, loop on them
 		if ((dslIntInstances != null) && !dslIntInstances.isEmpty()) {
 			for (InterfaceInstance dslIntInstance : dslIntInstances) {
@@ -1266,7 +1278,7 @@ public class ImportOSSFileAction {
 								addedElements.add(createNonStaticPort(owner, dslVariableID, dslVariableType, false));
 							}
 						}
-						
+												
 						// The following method doesn't work, type is different!
 //						org.eclipse.uml2.uml.Port port = owner.getOwnedPort(dslVariableID.getName(), t);
 						
@@ -1390,16 +1402,62 @@ public class ImportOSSFileAction {
 					final Assumption dslAssumption = dslContract.getAssumption();
 					final Guarantee dslGuarantee = dslContract.getGuarantee();
 
-					// Create an empty Contract
-					Class contract = createContract(owner, dslContract.getName());
+					// Retrieve the contract type from the owner, if one
+					Class contract = (Class) owner.getOwnedMember(dslContract.getName(), false, UMLFactory.eINSTANCE.createClass().eClass());
 
-					// Add the two Formal Properties
-					contractEntityUtil.saveFormalProperty("Assume", getConstraintText(dslAssumption.getConstraint()), contract);
-					contractEntityUtil.saveFormalProperty("Guarantee", getConstraintText(dslGuarantee.getConstraint()), contract);
+					if (contract == null) {
+					
+						System.out.println("contract non found, creating one");
+						
+						// Create an empty Contract
+						contract = createContract(owner, dslContract.getName());
+	
+						// Add the two Formal Properties
+						contractEntityUtil.saveFormalProperty("Assume", getConstraintText(dslAssumption.getConstraint()), contract);
+						contractEntityUtil.saveFormalProperty("Guarantee", getConstraintText(dslGuarantee.getConstraint()), contract);
+	
+						// Create a Contract Property
+						String contractPropertyName = createContractPropertyNameFromContract(contract);
+						createContractProperty(owner, contractPropertyName, (Type) contract);
+						
+						addedElements.add(contract);
+					}  else {
 
-					// Create a Contract Property
-					String contractPropertyName = createContractPropertyNameFromContract(contract);
-					createContractProperty(owner, contractPropertyName, (Type) contract);
+						System.out.println("Contract already present");
+
+						// The contract type is already present, update the formal properties if needed
+						final String assumeString = contractEntityUtil.getAssumeStrFromUmlContract(contract);
+						if (getConstraintText(dslAssumption.getConstraint()).equals(assumeString)) {
+							System.out.println("Assume text is the same!");
+						} else {
+							System.out.println("Assume text is NOT the same!");
+							
+							// Change the text of the assume property
+							final FormalProperty assumeFormalProperty = contractEntityUtil.getAssumeFromUmlContract(contract);
+							final ValueSpecification vs = assumeFormalProperty.getBase_Constraint().getSpecification();
+							((LiteralString) vs).setValue(getConstraintText(dslAssumption.getConstraint()));
+							assumeFormalProperty.getBase_Constraint().setSpecification(vs);
+						}
+						
+						final String guaranteeString = contractEntityUtil.getGuaranteeStrFromUmlContract(contract);
+						if (getConstraintText(dslGuarantee.getConstraint()).equals(guaranteeString)) {
+							System.out.println("Guarantee text is the same!");
+						} else {
+							System.out.println("Guarantee text is NOT the same!");
+							
+							// Change the text of the guarantee property
+							final FormalProperty guaranteeFormalProperty = contractEntityUtil.getGuaranteeFromUmlContract(contract);
+							final ValueSpecification vs = guaranteeFormalProperty.getBase_Constraint().getSpecification();
+							((LiteralString) vs).setValue(getConstraintText(dslGuarantee.getConstraint()));
+							guaranteeFormalProperty.getBase_Constraint().setSpecification(vs);
+						}
+						
+						//TODO: Devo marcare la contractproperty corrispondente
+						ContractProperty contractProperty = (ContractProperty) chessSystemModel.getContract(owner, dslContract.getName());
+
+						// Set the flag to signal the port is still used
+						existingContractProperties.put(contractProperty.getBase_Property().getQualifiedName(), Boolean.TRUE);
+					}
 				}
 			}
 		}
@@ -1409,6 +1467,12 @@ public class ImportOSSFileAction {
 			if (existingPorts.get(qualifiedElement) == null) {
 				System.out.println("port " + qualifiedElement + " should be removed");
 				removeElement(ports, qualifiedElement);
+			}
+		}
+		for (String qualifiedElement : existingContractProperties.keySet()) {
+			if (existingContractProperties.get(qualifiedElement) == null) {
+				System.out.println("contractProperty " + qualifiedElement + " should be removed");
+				removeContractProperty(contractProperties, qualifiedElement);
 			}
 		}
 	}
@@ -1564,11 +1628,34 @@ public class ImportOSSFileAction {
 		IHandler deleteHandler = getActiveHandlerFor(DELETE_COMMAND_ID);
 		deleteHandler.execute(new ExecutionEvent());
 	}
+
 	
 	/**
-	 * Removes a block from the list
+	 * Removes a contract property from the list
 	 * @param members the list of members
-	 * @param qualifiedElement the qualified name of the block to remove
+	 * @param qualifiedElement the qualified name of the contract property to remove
+	 */
+	private void removeContractProperty(EList<ContractProperty> members, String qualifiedElement) {
+		for (ContractProperty element : members) {
+			System.out.println("\nnamedElement = " + element);
+			System.out.println("\tnamedElement.qualif = " + element.getBase_Property().getQualifiedName());
+			if (element.getBase_Property().getQualifiedName().equals (qualifiedElement)) {
+				System.out.println("\n\nremoving the element");
+				try {
+					((Element) element.getBase_Property()).destroy();	//TODO: investigate this line!
+//					deleteElementInTheModel(element.getBase_Property());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}				
+				break;
+			}
+		}
+	}	//FIXME: sara' piu' efficente cancellare tutti gli elementi assieme... possibile farlo?
+
+	/**
+	 * Removes an element from the list
+	 * @param members the list of members
+	 * @param qualifiedElement the qualified name of the element to remove
 	 */
 	private void removeElement(EList<NamedElement> members, String qualifiedElement) {
 		for (NamedElement namedElement : members) {
@@ -1577,14 +1664,15 @@ public class ImportOSSFileAction {
 			if (namedElement.getQualifiedName().equals (qualifiedElement)) {
 				System.out.println("\n\nremoving the element");
 				try {
-					deleteElementInTheModel(namedElement);
+					((Element) namedElement).destroy();	//TODO: investigate this line!
+//					deleteElementInTheModel(namedElement);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}				
 				break;
 			}
 		}
-	}	//FIXME: e' piu' efficente cancellare tutti gli elementi assieme... possibile farlo?
+	}	//FIXME: sara' piu' efficente cancellare tutti gli elementi assieme... possibile farlo?
 	
 	/**
 	 * Main method to be invoked to parse an OSS file.
@@ -1621,6 +1709,8 @@ public class ImportOSSFileAction {
 
 		// Get all the existing blocks looping on all members
 		EList<NamedElement> members = sysView.getOwnedMembers();
+		
+		// Prepare the map to mark existing blocks
 		HashMap<String, Boolean> existingBlocks = Maps.newHashMapWithExpectedSize(members.size());
 		for (Element member : members) {
 			if (entityUtil.isBlock(member) && !contractEntityUtil.isContract(member)) {
