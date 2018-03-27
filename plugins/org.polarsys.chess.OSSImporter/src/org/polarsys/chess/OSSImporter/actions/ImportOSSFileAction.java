@@ -1249,17 +1249,21 @@ public class ImportOSSFileAction {
 								// Set the flag to signal the port is still used
 								existingPorts.put(tmpPort.getQualifiedName(), Boolean.TRUE);
 								port = tmpPort;
-								break;
+								
+								// Add the port to the list of changes NOT NEEDED BECAUSE DIAGRAMS ARE AUTO-UPDATING
+//								addedElements.add(port);
+
+								break;	// Port found
 							}
 						}
 						
 						if (port == null) {
-							System.out.println("PORT NOT FOUND, CREATING IT");
+							System.out.println("Port not found, creating it");
 
 							if (dslVariable instanceof InputPort) {
-								createNonStaticPort(owner, dslVariableID, dslVariableType, true);
+								addedElements.add(createNonStaticPort(owner, dslVariableID, dslVariableType, true));
 							} else if (dslVariable instanceof OutputPort) {
-								createNonStaticPort(owner, dslVariableID, dslVariableType, false);
+								addedElements.add(createNonStaticPort(owner, dslVariableID, dslVariableType, false));
 							}
 						}
 						
@@ -1327,6 +1331,8 @@ public class ImportOSSFileAction {
 //							} else if (dslVariable instanceof OutputPort) {
 //								createNonStaticPort(owner, dslVariableID, dslVariableType, false);
 //							}
+//	  			     		// Add the port to the list of changes
+//					    	addedElements.add(port);
 //						}
 					} else if (dslVariable instanceof Parameter) {
 						
@@ -1361,10 +1367,8 @@ public class ImportOSSFileAction {
 								continue;
 							} else {
 
-								port = createStaticPort(owner, dslVariableID, dslVariableType);
-
-								// Add the port to the list of changes
-								addedElements.add(port);
+								// Create the port and mark it
+								addedElements.add(createStaticPort(owner, dslVariableID, dslVariableType));
 								continue;
 							}
 						}
@@ -1624,6 +1628,8 @@ public class ImportOSSFileAction {
 			}
 		}
 		
+		addedElements.clear();
+		
 		System.out.println("ci sono gia' blocchi: " +  existingBlocks.size());
 		for (String qualifiedName : existingBlocks.keySet()) {
 			System.out.println("block = " + qualifiedName);
@@ -1686,7 +1692,7 @@ public class ImportOSSFileAction {
 						component = createBlock(sysView, dslComponent.getType());
 
 						// Add the component to the list of changes
-						addedElements.add(systemComponent);
+						addedElements.add(component);
 					} else {
 					
 						System.out.println("block already present: " + blockQualifiedName);
@@ -1739,6 +1745,11 @@ public class ImportOSSFileAction {
 			}
 		});
 		
+		System.out.println("addedElements size = " + addedElements.size());
+		for (Element element : addedElements) {
+			System.out.println("modified element = " + element);
+		}
+		
 		// Propagate the exception, if any
 		if (importException != null) {
 			throw importException;
@@ -1754,6 +1765,6 @@ public class ImportOSSFileAction {
 //TODO:	per ogni diagramma, vedo se per ogni componente del diagramma c'e qualcosa dentro changes che andrebbe
 //      visualizzato.
 
-
+//TODO: andrebbero rimossi anche i tipi creati, signal, enumeration, boundedsubtype, ecc.
 
 
