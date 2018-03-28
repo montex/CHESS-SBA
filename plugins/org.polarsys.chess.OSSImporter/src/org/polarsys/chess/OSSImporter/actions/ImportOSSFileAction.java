@@ -130,6 +130,8 @@ public class ImportOSSFileAction {
 //	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
 //	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
 	 
+	
+	//TODO the list of Stereotype variables and the refreshStereotypes method should be moved to a new class e.g. StereotypeUtil 
 	// Stereotype objects needed to customize the elements
 	Stereotype contractPropertyStereotype;
 	Stereotype delegationConstraintStereotype;
@@ -141,6 +143,7 @@ public class ImportOSSFileAction {
 	Stereotype systemStereotype;
 	
 	//TODO use instead method in xText plugin
+	//The method is the XTextResourceUtil.getInstance().getOssInjector()
 	final Injector injector = new OssStandaloneSetup().createInjector();
 	private final ISerializer serializer = injector.getInstance(ISerializer.class);
 	private Package sysView = null;
