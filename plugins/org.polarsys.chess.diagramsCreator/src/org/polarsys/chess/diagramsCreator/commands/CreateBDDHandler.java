@@ -25,12 +25,15 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
+/**
+ * This class is a command that is invoked by another command.
+ * It will start the creation of BDD.
+ * @author cristofo
+ *
+ */
 public class CreateBDDHandler extends AbstractHandler {
 	private static final String DIALOG_TITLE =	"BDD creator";
 	
-	public CreateBDDHandler() {
-	}
-
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();

@@ -22,11 +22,17 @@ import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 
+/**
+ * This class is a command that is invoked by another command.
+ * It will start the creation of a single IBD.
+ * @author cristofo
+ *
+ */
 public class CreateIBDSingleHandler extends AbstractHandler {
 	private static final String DIALOG_TITLE =	"Single IBD creator";
 	
-	public CreateIBDSingleHandler() {
-	}
+	/** Boolean flag that indicates whether or not the ports should be displayed in alphabetical order */
+	public static final String SORTED_PORTS = "sortedPorts";
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -34,11 +40,13 @@ public class CreateIBDSingleHandler extends AbstractHandler {
 		final Object umlObject = SelectionUtil.getInstance().getUmlSelectedObject(selection);
 		final ShowIBDElementsAction action = new ShowIBDElementsAction();
 
-		if (umlObject instanceof Class) {
+		// Parameter reading
+		final boolean sortedPorts = (event.getParameter(SORTED_PORTS) != null && event.getParameter(SORTED_PORTS).equals("true")) ? true : false;
 
+		if (umlObject instanceof Class) {
 			try {
 				final Diagram diagram = action.addIBD((Class) umlObject);
-				action.populateDiagram(diagram, umlObject);
+				action.populateDiagram(diagram, umlObject, sortedPorts);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -48,5 +56,4 @@ public class CreateIBDSingleHandler extends AbstractHandler {
 		}
 		return null;
 	}
-
 }
