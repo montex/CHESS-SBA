@@ -96,6 +96,9 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 					return;					
 				} catch (Exception e) {
 					e.printStackTrace();
+					dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, e.toString());
+					monitor.done();
+					return;
 				}
 				
 				// Restore the active page
