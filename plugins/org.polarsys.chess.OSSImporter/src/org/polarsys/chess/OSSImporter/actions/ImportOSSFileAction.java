@@ -43,12 +43,12 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import com.google.inject.Injector;
 
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSModelFactory;
+import eu.fbk.eclipse.standardtools.xtextService.core.utils.XTextResourceUtil;
 import eu.fbk.tools.editor.basetype.baseType.*;
 import eu.fbk.tools.editor.contract.contract.Assumption;
 import eu.fbk.tools.editor.contract.contract.Contract;
 import eu.fbk.tools.editor.contract.contract.Guarantee;
 import eu.fbk.tools.editor.contract.expression.expression.*;
-import eu.fbk.tools.editor.oss.OssStandaloneSetup;
 import eu.fbk.tools.editor.oss.oss.SystemComponent;
 import eu.fbk.tools.editor.oss.oss.Variable;
 import eu.fbk.tools.editor.oss.oss.AbstractComponent;
@@ -142,9 +142,7 @@ public class ImportOSSFileAction {
 	Stereotype blockStereotype;
 	Stereotype systemStereotype;
 	
-	//TODO use instead method in xText plugin
-	//The method is the XTextResourceUtil.getInstance().getOssInjector()
-	final Injector injector = new OssStandaloneSetup().createInjector();
+	final Injector injector = XTextResourceUtil.getInstance().getOssInjector();
 	private final ISerializer serializer = injector.getInstance(ISerializer.class);
 	private Package sysView = null;
 

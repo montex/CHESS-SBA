@@ -15,7 +15,8 @@ Require-Bundle: eu.fbk.eclipse.standardtools.ModelTranslatorToOcra;bundle-versio
  org.polarsys.chess.service;bundle-version="0.11.0",
  org.eclipse.papyrus.infra.gmfdiag.css,
  org.eclipse.papyrus.sysml.diagram.internalblock,
- org.eclipse.papyrus.sysml.service.types;bundle-version="1.2.0"
+ org.eclipse.papyrus.sysml.service.types;bundle-version="1.2.0",
+ eu.fbk.eclipse.standardtools.xtextService
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: com.google.inject,
  eu.fbk.eclipse.standardtools.xtextService.ui.services,

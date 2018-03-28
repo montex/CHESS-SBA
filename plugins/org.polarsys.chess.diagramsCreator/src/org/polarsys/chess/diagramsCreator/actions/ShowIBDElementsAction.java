@@ -260,8 +260,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		return completeCmd;
 	}
 
-	
-	//DOTO add this method to EntityUtils
 	/**
 	 * Returns a list of ports, with direction and sorting as specified.
 	 * @param ports the list of Ports to process
