@@ -171,6 +171,7 @@ public class ImportOSSFileAction {
 	private EList<Element> addedElements = new BasicEList<>(1000); 
 	
 	// Stereotype objects needed to customize the elements
+	//TODO: fare una classe che contiene questi tipi
 	private Stereotype contractPropertyStereotype;
 	private Stereotype delegationConstraintStereotype;
 	private Stereotype contractRefinementStereotype;
@@ -767,6 +768,7 @@ public class ImportOSSFileAction {
 		}
 	}
 	
+	//TODO: It could be an utility class, with ready types and avoiding to get them everytime (primivite types)
 	/** 
 	 * Returns the correct Type given the DSL SimpleType.
 	 * @param dslSimpleType the type from OSS
