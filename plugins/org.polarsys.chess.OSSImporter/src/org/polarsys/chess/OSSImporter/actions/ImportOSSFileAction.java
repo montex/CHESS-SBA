@@ -1041,6 +1041,21 @@ public class ImportOSSFileAction {
 		// Get all the RefinementInstances of the Refinement
 		final EList<RefinementInstance> dslRefInstances = dslComponentRefinement.getRefinements(); 
 
+		final Class owner = dslTypeToComponent.get(dslParentComponent.getType());
+		
+		// Get all the existing component instances of the element
+		EList<Property> componentInstances = (EList<Property>) chessSystemModel.getSubComponentsInstances(owner);
+
+		// Prepare the map to mark existing component instances 
+		HashMap<String, Boolean> existingComponentInstances = Maps.newHashMapWithExpectedSize(componentInstances.size());
+	
+		System.out.println("componentInstances.size = " + componentInstances.size());
+		for (Property componentInstance : componentInstances) {
+			existingComponentInstances.put(componentInstance.getQualifiedName(), null);
+			System.out.println("Sto salvando la componentInstance " + componentInstance);
+			System.out.println("\tqualified name = " + componentInstance.getQualifiedName());
+		}
+		
 		// If some RefinementInstances are present, loop on them
 		if ((dslRefInstances != null) && !dslRefInstances.isEmpty()) {
 			for (RefinementInstance dslRefInstance : dslRefInstances) {
@@ -1055,9 +1070,27 @@ public class ImportOSSFileAction {
 					logger.debug("\tsubcomponent name = " + subName);
 					logger.debug("\tsubcomponent type = " + subType);
 
-					// I should create an Association between the elements and not a Component Instance!
-					createAssociation(dslTypeToComponent.get(dslParentComponent.getType()), subName, (Type) dslTypeToComponent.get(subType)); 
-					
+					// Retrieve the component instance from the owner, if any
+					final Property componentInstance = entityUtil.getSubComponentInstance(owner, subName);
+
+					if (componentInstance == null) {
+						
+						System.out.println("componentInstance non found, creating one");
+						
+						// I should create an Association between the elements and not a Component Instance!
+						addedElements.add(createAssociation(owner, subName, (Type) dslTypeToComponent.get(subType))); 
+					}  else {
+
+						System.out.println("componentInstance already present");
+
+						// The component instance is already present, update its type if needed
+						if (!componentInstance.getType().getName().equals(subType)) {
+							componentInstance.setType(dslTypeToComponent.get(subType));
+						}
+						
+						// Set the flag to signal the componentInstance is still used
+						existingComponentInstances.put(componentInstance.getQualifiedName(), Boolean.TRUE);
+					}
 				} else if (dslRefInstance != null && dslRefInstance.getConnection() != null) {
 					
 					// CONNECTION processing
@@ -1070,7 +1103,7 @@ public class ImportOSSFileAction {
 					if (constraint instanceof PortId) {	//FIXME: there is also ParameterId
 						
 						// Create a connector, but only after I'm sure it isn't a delegation constraint
-						connector = createConnector(dslTypeToComponent.get(dslParentComponent.getType()));
+						connector = createConnector(owner);
 						
 						String portOwner = null;
 						
@@ -1083,11 +1116,11 @@ public class ImportOSSFileAction {
 
 						final String portName = ((PortId) constraint).getName();
 						logger.debug("Creating source end " + portOwner + ":" + portName);
-						createConnectorEnd(dslTypeToComponent.get(dslParentComponent.getType()), connector, portOwner, portName);
+						createConnectorEnd(owner, connector, portOwner, portName);
 					} else if (constraint instanceof Expression) {
 						
 						// Create a delegation constraint, can be a LogicalExpression, IntegerLiteral, AddSubExpression, ...
-						createDelegationConstraint(dslTypeToComponent.get(dslParentComponent.getType()), variable, constraint);
+						createDelegationConstraint(owner, variable, constraint);
 						continue;	// No need to go ahead in the processing
 					} else {
 						
@@ -1110,11 +1143,11 @@ public class ImportOSSFileAction {
 						
 						final String portName = ((PortId) variable).getName();					
 						logger.debug("Creating target end " + portOwner + ":" + portName);
-						createConnectorEnd(dslTypeToComponent.get(dslParentComponent.getType()), connector, portOwner, portName);
+						createConnectorEnd(owner, connector, portOwner, portName);
 					}
 					
 					// At last, add the connector to the owner
-					addConnector(dslTypeToComponent.get(dslParentComponent.getType()), connector);
+					addConnector(owner, connector);
 
 				} else if (dslRefInstance != null && dslRefInstance.getRefinedby() != null) {
 					
@@ -1122,19 +1155,19 @@ public class ImportOSSFileAction {
 					final RefinedBy refinement = dslRefInstance.getRefinedby();
 					final String refinedContract = refinement.getName();
 					
-					logger.debug("\n\n\nContract name = " + refinedContract + " from " + dslTypeToComponent.get(dslParentComponent.getType()).getName());
+					logger.debug("\n\n\nContract name = " + refinedContract + " from " + owner.getName());
 
-					ContractProperty contractProperty = getContractPropertyFromContract(dslTypeToComponent.get(dslParentComponent.getType()), refinedContract);
+					ContractProperty contractProperty = getContractPropertyFromContract(owner, refinedContract);
 					
 					// Alternative version using a library function
-//					Property p = contractEntityUtil.getUmlContractPropertyOfUmlComponentFromContractPropertyType(dslTypeToComponent.get(dslParentComponent.getType()), refinedContract);
+//					Property p = contractEntityUtil.getUmlContractPropertyOfUmlComponentFromContractPropertyType(owner, refinedContract);
 //					ContractProperty cp = contractEntityUtil.getContractProperty(p);
 
 					// Create a ContractRefinement for each ContractId found
 					final EList<ContractId> contractIds = refinement.getContractIds();					
 					for (ContractId contractId : contractIds) {
 						logger.debug("\n\tContractID = " + contractId.getComponentName() +	"." + contractId.getName());	
-						final DataType umlRefinement = createContractRefinement(dslTypeToComponent.get(dslParentComponent.getType()), contractId.getComponentName(), contractId.getName());
+						final DataType umlRefinement = createContractRefinement(owner, contractId.getComponentName(), contractId.getName());
 						addContractRefinementToContractProperty(contractProperty, umlRefinement);
 					}
 				} else if (dslRefInstance != null && dslRefInstance.getFormula() != null) {
@@ -1148,6 +1181,14 @@ public class ImportOSSFileAction {
 					//TODO: implement this
 					logger.error("Import Error: Found a PROP tag, don't know how to handle it!");
 				}
+			}
+		}
+		
+		// Component instances cleanup time, associations will be removed automatically
+		for (String qualifiedElement : existingComponentInstances.keySet()) {
+			if (existingComponentInstances.get(qualifiedElement) == null) {
+				System.out.println("component instance " + qualifiedElement + " should be removed");
+				removeProperty(componentInstances, qualifiedElement);
 			}
 		}
 	}
@@ -1189,16 +1230,16 @@ public class ImportOSSFileAction {
 		// Get all the InterfaceInstances of the Interface
 		final EList<InterfaceInstance> dslIntInstances = dslComponentInterface.getInterfaces();
 
-		Class owner = dslTypeToComponent.get(dslParentComponent.getType());
+		final Class owner = dslTypeToComponent.get(dslParentComponent.getType());
 		
 		System.out.println("owner = " + owner);
 		
 		// Get all the existing ports of the element, static or not
-		EList<NamedElement> ports = (EList<NamedElement>) chessSystemModel.getNonStaticPorts(owner);
+		final EList<NamedElement> ports = (EList<NamedElement>) chessSystemModel.getNonStaticPorts(owner);
 		ports.addAll((Collection<? extends NamedElement>) chessSystemModel.getStaticPorts(owner));
 
 		// Prepare the map to mark existing ports 
-		HashMap<String, Boolean> existingPorts = Maps.newHashMapWithExpectedSize(ports.size());
+		final HashMap<String, Boolean> existingPorts = Maps.newHashMapWithExpectedSize(ports.size());
 	
 		System.out.println("ports.size = " + ports.size());
 		for (NamedElement port : ports) {
@@ -1208,10 +1249,10 @@ public class ImportOSSFileAction {
 		}
 
 		// Get all the existing contract properties
-		EList<ContractProperty> contractProperties = (EList<ContractProperty>) chessSystemModel.getContractsOfComponent(owner);
+		final EList<ContractProperty> contractProperties = (EList<ContractProperty>) chessSystemModel.getContractsOfComponent(owner);
 		
 //		// Prepare the map to mark existing contracts
-		HashMap<String, Boolean> existingContractProperties = Maps.newHashMapWithExpectedSize(contractProperties.size());
+		final HashMap<String, Boolean> existingContractProperties = Maps.newHashMapWithExpectedSize(contractProperties.size());
 		
 		System.out.println("contractProperties.size = " + contractProperties.size());
 		for (ContractProperty contractProperty : contractProperties) {
@@ -1239,6 +1280,7 @@ public class ImportOSSFileAction {
 						System.out.println("with type " + dslVariableType.toString());
 
 						// Version that updates the port
+						// Loop on all the ports to see if it is already existing
 						org.eclipse.uml2.uml.Port port = null;
 						for (Object object : ports) {
 							final org.eclipse.uml2.uml.Port tmpPort = (org.eclipse.uml2.uml.Port) object;
@@ -1253,7 +1295,7 @@ public class ImportOSSFileAction {
 								}
 
 								// Update its type if needed
-								Type newType = getTypeFromDSLType(dslVariableType);
+								final Type newType = getTypeFromDSLType(dslVariableType);
 								if (!tmpPort.getType().getName().equals(newType.getName())) {
 									tmpPort.setType(newType);
 								}
@@ -1353,7 +1395,7 @@ public class ImportOSSFileAction {
 						final SimpleType dslVariableType = dslVariable.getType();
 
 						// Check if there are optional parameters, if yes, it cannot handle them
-						EList<SimpleType> parameters = ((Parameter) dslVariable).getParameters();
+						final EList<SimpleType> parameters = ((Parameter) dslVariable).getParameters();
 						if (parameters.size() != 0) {
 							logger.error("Import Error: Cannot handle this type of PARAMETER");
 						} else {
@@ -1372,7 +1414,7 @@ public class ImportOSSFileAction {
 							}
 
 							if (port != null) {
-								System.out.println("Port already existing");
+								System.out.println("Port already present");
 
 								// Set the flag to signal the port is still used
 								existingPorts.put(port.getQualifiedName(), Boolean.TRUE);
@@ -1402,7 +1444,7 @@ public class ImportOSSFileAction {
 					final Assumption dslAssumption = dslContract.getAssumption();
 					final Guarantee dslGuarantee = dslContract.getGuarantee();
 
-					// Retrieve the contract type from the owner, if one
+					// Retrieve the contract type from the owner, if any
 					Class contract = (Class) owner.getOwnedMember(dslContract.getName(), false, UMLFactory.eINSTANCE.createClass().eClass());
 
 					if (contract == null) {
@@ -1452,23 +1494,24 @@ public class ImportOSSFileAction {
 							guaranteeFormalProperty.getBase_Constraint().setSpecification(vs);
 						}
 						
-						//TODO: Devo marcare la contractproperty corrispondente
-						ContractProperty contractProperty = (ContractProperty) chessSystemModel.getContract(owner, dslContract.getName());
-
-						// Set the flag to signal the port is still used
+						// Set the flag to signal the contractProperty is still used
+						final ContractProperty contractProperty = (ContractProperty) chessSystemModel.getContract(owner, dslContract.getName());
 						existingContractProperties.put(contractProperty.getBase_Property().getQualifiedName(), Boolean.TRUE);
 					}
 				}
 			}
 		}
 		
-		// Cleanup time
+		// Ports cleanup time 
 		for (String qualifiedElement : existingPorts.keySet()) {
 			if (existingPorts.get(qualifiedElement) == null) {
 				System.out.println("port " + qualifiedElement + " should be removed");
 				removeElement(ports, qualifiedElement);
 			}
 		}
+
+		// Contracts cleanup time
+		// ** Contract instances and contract types are removed, but not their formal properties
 		for (String qualifiedElement : existingContractProperties.keySet()) {
 			if (existingContractProperties.get(qualifiedElement) == null) {
 				System.out.println("contractProperty " + qualifiedElement + " should be removed");
@@ -1629,6 +1672,25 @@ public class ImportOSSFileAction {
 		deleteHandler.execute(new ExecutionEvent());
 	}
 
+	/**
+	 * Removes a property from the list
+	 * @param members the list of members
+	 * @param qualifiedElement the qualified name of the  property to remove
+	 */
+	private void removeProperty(EList<Property> members, String qualifiedElement) {
+		for (Property element : members) {
+			if (element.getQualifiedName().equals (qualifiedElement)) {
+				try {
+//					((Element) element).destroy();	//TODO: investigate this line!
+					deleteElementInTheModel(element);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}				
+				break;
+			}
+		}
+	}	//FIXME: sara' piu' efficente cancellare tutti gli elementi assieme... possibile farlo?
+
 	
 	/**
 	 * Removes a contract property from the list
@@ -1637,13 +1699,10 @@ public class ImportOSSFileAction {
 	 */
 	private void removeContractProperty(EList<ContractProperty> members, String qualifiedElement) {
 		for (ContractProperty element : members) {
-			System.out.println("\nnamedElement = " + element);
-			System.out.println("\tnamedElement.qualif = " + element.getBase_Property().getQualifiedName());
 			if (element.getBase_Property().getQualifiedName().equals (qualifiedElement)) {
-				System.out.println("\n\nremoving the element");
 				try {
-					((Element) element.getBase_Property()).destroy();	//TODO: investigate this line!
-//					deleteElementInTheModel(element.getBase_Property());
+//					((Element) element.getBase_Property()).destroy();	//TODO: investigate this line!
+					deleteElementInTheModel(element.getBase_Property());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}				
@@ -1659,13 +1718,10 @@ public class ImportOSSFileAction {
 	 */
 	private void removeElement(EList<NamedElement> members, String qualifiedElement) {
 		for (NamedElement namedElement : members) {
-			System.out.println("\nnamedElement = " + namedElement);
-			System.out.println("\tnamedElement.qualif = " + namedElement.getQualifiedName());
 			if (namedElement.getQualifiedName().equals (qualifiedElement)) {
-				System.out.println("\n\nremoving the element");
 				try {
-					((Element) namedElement).destroy();	//TODO: investigate this line!
-//					deleteElementInTheModel(namedElement);
+//					((Element) namedElement).destroy();	//TODO: investigate this line!
+					deleteElementInTheModel(namedElement);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}				
