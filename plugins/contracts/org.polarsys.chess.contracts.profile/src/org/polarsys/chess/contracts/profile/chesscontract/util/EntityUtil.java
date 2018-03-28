@@ -69,12 +69,6 @@ import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.Vertex;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 
-
-//TODO update the following methods with a check on the elements type (i.e. Property/Class/Port/ecc..):
-//isCompType,isComponentImplementation - Class
-//isFaultyStateMachine - StateMachine
-//isInputPort,isInOutPort,isOutputPort,isFlowPort,isFlowPortMarte - Port
-
 /**
  * Util class that provides methods to manage SysML/CHESS/MARTE objects.
  *
@@ -359,27 +353,30 @@ public class EntityUtil {
 	
 
 	public boolean isInputPort(Element umlPort) {
-		if (getPortDirection(umlPort) == FlowDirection.IN_VALUE) {
-			return true;
-		} else {
-			return false;
-		}
+		return (umlPort instanceof Property && getPortDirection(umlPort) == FlowDirection.IN_VALUE);
+//		if (getPortDirection(umlPort) == FlowDirection.IN_VALUE) {
+//			return true;
+//		} else {
+//			return false;
+//		}
 	}
 
 	public boolean isInOutPort(Element umlPort) {
-		if (getPortDirection(umlPort) == FlowDirection.INOUT_VALUE) {
-			return true;
-		} else {
-			return false;
-		}
+		return (umlPort instanceof Property && getPortDirection(umlPort) == FlowDirection.INOUT_VALUE);
+//		if (getPortDirection(umlPort) == FlowDirection.INOUT_VALUE) {
+//			return true;
+//		} else {
+//			return false;
+//		}
 	}
 
 	public boolean isOutputPort(Element umlPort) {
-		if (getPortDirection(umlPort) == FlowDirection.OUT_VALUE) {
-			return true;
-		} else {
-			return false;
-		}
+		return (umlPort instanceof Property && getPortDirection(umlPort) == FlowDirection.OUT_VALUE);
+//		if (getPortDirection(umlPort) == FlowDirection.OUT_VALUE) {
+//			return true;
+//		} else {
+//			return false;
+//		}
 	}
 
 	public Integer getPortDirection(Element umlPort) {
@@ -460,11 +457,11 @@ public class EntityUtil {
 	}
 
 	private boolean isFlowPort(Element umlElement) {
-		return (UMLUtil.getAppliedStereotype(umlElement, FLOW_Port, false) != null);
+		return (umlElement instanceof Property && UMLUtil.getAppliedStereotype(umlElement, FLOW_Port, false) != null);
 	}
 
 	private boolean isFlowPortMarte(Element umlElement) {
-		return (UMLUtil.getAppliedStereotype(umlElement, FLOW_Port_MARTE, false) != null);
+		return (umlElement instanceof Property && UMLUtil.getAppliedStereotype(umlElement, FLOW_Port_MARTE, false) != null);
 	}
 
 	public void deleteComponentContract(Class clazz) {
@@ -472,7 +469,7 @@ public class EntityUtil {
 	}
 
 	public boolean isComponentImplementation(Element umlElement) {
-		return UMLUtil.getAppliedStereotype(umlElement, COMP_IMPL, false) != null;
+		return (umlElement instanceof Class && UMLUtil.getAppliedStereotype(umlElement, COMP_IMPL, false) != null);
 	}
 
 	// modified method!!
@@ -614,24 +611,23 @@ public class EntityUtil {
 	}
 
 	public boolean isBlock(Element umlClass) {
-		return ((umlClass instanceof Class) && (UMLUtil.getAppliedStereotype(umlClass, BLOCK, false) != null));
+		return (umlClass instanceof Class && UMLUtil.getAppliedStereotype(umlClass, BLOCK, false) != null);
 	}
 
 	public boolean isCompType(Element umlComponent) {
-		return UMLUtil.getAppliedStereotype(umlComponent, COMP_TYPE, false) != null;
+		return (umlComponent instanceof Class && UMLUtil.getAppliedStereotype(umlComponent, COMP_TYPE, false) != null);
 	}
 
 	public boolean isSystem(Element umlElement) {
-		return ((umlElement instanceof Class) && (UMLUtil.getAppliedStereotype(umlElement, SYSTEM, false) != null));
+		return (umlElement instanceof Class && UMLUtil.getAppliedStereotype(umlElement, SYSTEM, false) != null);
 	}
 
 	public boolean isFaultyStateMachine(Element umlElement) {
-		return UMLUtil.getAppliedStereotype(umlElement, FAULTY_STATE_MACHINE, false) != null;
+		return (umlElement instanceof StateMachine && UMLUtil.getAppliedStereotype(umlElement, FAULTY_STATE_MACHINE, false) != null);
 	}
 
 	public boolean isNominalStateMachine(Element umlElement) {
-		return (umlElement instanceof StateMachine)
-				& (UMLUtil.getAppliedStereotype(umlElement, FAULTY_STATE_MACHINE, false) == null);
+		return (umlElement instanceof StateMachine && UMLUtil.getAppliedStereotype(umlElement, FAULTY_STATE_MACHINE, false) == null);
 	}
 
 	public void saveConstraint(final Constraint constraint, final String text) {
