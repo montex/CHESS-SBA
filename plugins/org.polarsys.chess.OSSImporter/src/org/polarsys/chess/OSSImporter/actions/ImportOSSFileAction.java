@@ -49,12 +49,12 @@ import com.google.common.collect.Maps;
 import com.google.inject.Injector;
 
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSModelFactory;
+import eu.fbk.eclipse.standardtools.xtextService.core.utils.XTextResourceUtil;
 import eu.fbk.tools.editor.basetype.baseType.*;
 import eu.fbk.tools.editor.contract.contract.Assumption;
 import eu.fbk.tools.editor.contract.contract.Contract;
 import eu.fbk.tools.editor.contract.contract.Guarantee;
 import eu.fbk.tools.editor.contract.expression.expression.*;
-import eu.fbk.tools.editor.oss.OssStandaloneSetup;
 import eu.fbk.tools.editor.oss.oss.SystemComponent;
 import eu.fbk.tools.editor.oss.oss.Variable;
 import eu.fbk.tools.editor.oss.oss.AbstractComponent;
@@ -74,8 +74,6 @@ import eu.fbk.tools.editor.oss.oss.Refinement;
 import eu.fbk.tools.editor.oss.oss.RefinementInstance;
 
 import org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.DataTypes.BoundedSubtype;
-import org.eclipse.papyrus.emf.facet.util.ui.internal.exported.handler.HandlerUtils;
-import org.eclipse.papyrus.sysml.blocks.Block;
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
 import org.eclipse.papyrus.sysml.service.types.element.SysMLElementTypes;
@@ -85,14 +83,11 @@ import org.eclipse.papyrus.views.modelexplorer.ModelExplorerPage;
 import org.eclipse.papyrus.views.modelexplorer.ModelExplorerPageBookView;
 import org.eclipse.papyrus.views.modelexplorer.ModelExplorerView;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.part.IPage;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -116,8 +111,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.equinox.internal.app.AppPersistence;
-import org.eclipse.jface.viewers.IStructuredSelection;
 
 public class ImportOSSFileAction {
 
@@ -170,8 +163,8 @@ public class ImportOSSFileAction {
 	// Will contain elements being added to the model, big enough
 	private EList<Element> addedElements = new BasicEList<>(1000); 
 	
+	//TODO the list of Stereotype variables and the refreshStereotypes method should be moved to a new class e.g. StereotypeUtil 
 	// Stereotype objects needed to customize the elements
-	//TODO: fare una classe che contiene questi tipi
 	private Stereotype contractPropertyStereotype;
 	private Stereotype delegationConstraintStereotype;
 	private Stereotype contractRefinementStereotype;
@@ -181,8 +174,7 @@ public class ImportOSSFileAction {
 	private Stereotype blockStereotype;
 	private Stereotype systemStereotype;
 	
-	//TODO use instead method in xText plugin
-	final Injector injector = new OssStandaloneSetup().createInjector();
+	final Injector injector = XTextResourceUtil.getInstance().getOssInjector();
 	private final ISerializer serializer = injector.getInstance(ISerializer.class);
 	private Package sysView = null;
 

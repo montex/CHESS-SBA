@@ -122,7 +122,7 @@ public class ContractEntityUtil {
 	}
 
 	public boolean isContract(Element umlElement) {
-		return UMLUtil.getAppliedStereotype(umlElement, Constants.CONTRACT, false) != null;
+		return ((umlElement instanceof Class) && (UMLUtil.getAppliedStereotype(umlElement, Constants.CONTRACT, false) != null));
 	}
 
 	public void applyContractStereotype(Class umlElement) {
@@ -288,7 +288,7 @@ public class ContractEntityUtil {
 	}
 
 	public boolean isFormalProperty(Element umlElement) {
-		return UMLUtil.getAppliedStereotype(umlElement, Constants.FORMAL_PROP, false) != null;
+		return ((umlElement instanceof Constraint) && (UMLUtil.getAppliedStereotype(umlElement, Constants.FORMAL_PROP, false) != null));
 	}
 
 	public void saveFormalProperty(final String guarantee_or_assumption, final String formalPropertyText,
@@ -364,11 +364,11 @@ public class ContractEntityUtil {
 	}
 
 	public boolean isContractProperty(Element umlProperty) {
-		return UMLUtil.getAppliedStereotype(umlProperty, Constants.CONTRACT_PROP, false) != null;
+		return ((umlProperty instanceof Property) && (UMLUtil.getAppliedStereotype(umlProperty, Constants.CONTRACT_PROP, false) != null));
 	}
 
 	public boolean isDelegationConstraints(Element umlProperty) {
-		return UMLUtil.getAppliedStereotype(umlProperty, Constants.DELEGATION_CONST, false) != null;
+		return ((umlProperty instanceof Constraint) && (UMLUtil.getAppliedStereotype(umlProperty, Constants.DELEGATION_CONST, false) != null));
 	}
 
 	public ContractProperty getContractProperty(Property umlContractProperty) {

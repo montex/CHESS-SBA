@@ -15,6 +15,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 
+/**
+ * Class that creates multiple IBDs by calling different handlers. 
+ * It is triggered by the contextual menu item on an entire package.
+ * @author cristofo
+ *
+ */
 public class CreateIBDMultipleCommand extends AbstractJobCommand {
 
 	public CreateIBDMultipleCommand() {

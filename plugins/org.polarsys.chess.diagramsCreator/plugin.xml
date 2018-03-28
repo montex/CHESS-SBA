@@ -30,7 +30,7 @@
             </command>
             <command
                   commandId="org.polarsys.chess.diagramsCreator.commands.createAllIBDs"
-                  label="Create the IBD diagrams for all the package components"
+                  label="Create the IBD diagrams for all the package components (raw version)"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -93,11 +93,96 @@
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateIBDSingleHandler"
             id="org.polarsys.chess.diagramsCreator.commands.createIBDHandler"
             name="Create the IBD diagram handler">
+         <commandParameter
+               id="sortedPorts"
+               name="sortedPorts"
+               optional="true">
+         </commandParameter>
       </command>
       <command
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.CreateIBDMultipleHandler"
             id="org.polarsys.chess.diagramsCreator.commands.createAllIBDsHandler"
             name="Create the IBD diagrams handler">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.AdjustAssociationsHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.adjustAssociationsHandler"
+            name="Adjust associations handler">
+         <commandParameter
+               id="show_stereotypes"
+               name="show_stereotypes"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_associations_names"
+               name="show_associations_names"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_source_role"
+               name="show_source_role"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_source_multiplicity"
+               name="show_source_multiplicity"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_target_role"
+               name="show_target_role"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_target_multiplicity"
+               name="show_target_multiplicity"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="routing_style"
+               name="routing_style"
+               optional="true">
+         </commandParameter>
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.ArrangeHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.arrangeHandler"
+            name="Arrange the graphical elements handler">
+         <commandParameter
+               id="loop_times"
+               name="loop_times"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="process_diagram"
+               name="process_diagram"
+               optional="true">
+         </commandParameter>
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.AdjustConnectorsHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.adjustConnectorsHandler"
+            name="Adjust connectors handler">
+         <commandParameter
+               id="show_flowports"
+               name="show_flowports"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_connectors"
+               name="show_connectors"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_stereotypes"
+               name="show_stereotypes"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="routing_style"
+               name="routing_style"
+               optional="true">
+         </commandParameter>
       </command>
    </extension>
 
