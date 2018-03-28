@@ -69,6 +69,12 @@ import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.Vertex;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 
+
+//TODO update the following methods with a check on the elements type (i.e. Property/Class/Port/ecc..):
+//isCompType,isComponentImplementation - Class
+//isFaultyStateMachine - StateMachine
+//isInputPort,isInOutPort,isOutputPort,isFlowPort,isFlowPortMarte - Port
+
 /**
  * Util class that provides methods to manage SysML/CHESS/MARTE objects.
  *
