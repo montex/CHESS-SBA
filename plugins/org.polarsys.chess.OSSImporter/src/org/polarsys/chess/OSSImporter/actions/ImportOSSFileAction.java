@@ -369,12 +369,12 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
-	 *  Returns the refinement associated to the component.
-	 *  @param owner of the refinement
-	 *  @param refinementName the name of the refinement
-	 *  @return the umlRefinement
+	 *  Returns the contract refinement associated to the component.
+	 *  @param owner of the contract refinement
+	 *  @param refinementName the name of the contract refinement
+	 *  @return the UML contract refinement
 	 */
-	private DataType getUMLRefinement(Class owner, String refinementName) {
+	private DataType getExistingUMLContractRefinement(Class owner, String refinementName) {
 		return (DataType) owner.getNestedClassifier(refinementName);
 	}
 
@@ -421,7 +421,7 @@ public class ImportOSSFileAction {
 		final String refinementName = componentName + "." + contractProperty.getBase_Property().getName();
 		
 		// Check if the refinement is already present
-		final DataType umlRefinement = getUMLRefinement(owner, refinementName);
+		final DataType umlRefinement = getExistingUMLContractRefinement(owner, refinementName);
 		
 		if (umlRefinement != null) {
 			return umlRefinement;
@@ -1217,6 +1217,22 @@ public class ImportOSSFileAction {
 		}
 	}	//FIXME: sara' piu' efficente cancellare tutti gli elementi assieme... possibile farlo?
 
+	/**
+	 * Returns the list of contract refinements associated to a Class
+	 * @param owner the owner Class
+	 * @return the list of contract refinements
+	 */
+	private EList<DataType> getContractRefinementsOfClass(Class owner) {
+		EList<DataType> contractRefinements = new BasicEList<DataType>();
+		
+		for (Classifier classifier : owner.getNestedClassifiers()) {
+			if (classifier instanceof DataType) {
+				contractRefinements.add((DataType) classifier);
+			}
+		}
+		return contractRefinements;
+	}
+	
 	/** 
 	 * Parses the Refinements of the component.
 	 * @param dslParentComponent the AST Component owning the refinement
@@ -1266,6 +1282,18 @@ public class ImportOSSFileAction {
 			mapDelegationContraints.put(delegationConstraint.getQualifiedName(), null);
 			System.out.println("Sto salvando la delegation contraint " + delegationConstraint);
 			System.out.println("\tqualified name = " + delegationConstraint.getQualifiedName());
+		}
+		
+		// Get all the contract refinements of the element
+		EList<DataType> existingContractRefinements = getContractRefinementsOfClass(owner);
+		
+		// Prepare the map to mark existing contract refinements
+		HashMap<String, Boolean> mapContractRefinements = Maps.newHashMapWithExpectedSize(existingContractRefinements.size());
+		System.out.println("\nexistingContractRefinements.size = " + existingContractRefinements.size());
+		for (Classifier contractRefinement : existingContractRefinements) {
+			mapContractRefinements.put(contractRefinement.getQualifiedName(), null);
+			System.out.println("Sto salvando il contract refinement " + contractRefinement);
+			System.out.println("\tqualified name = " + contractRefinement.getQualifiedName());
 		}
 		
 		// If some RefinementInstances are present, loop on them
@@ -1397,13 +1425,62 @@ public class ImportOSSFileAction {
 //					Property p = contractEntityUtil.getUmlContractPropertyOfUmlComponentFromContractPropertyType(owner, refinedContract);
 //					ContractProperty cp = contractEntityUtil.getContractProperty(p);
 
-					// Create a ContractRefinement for each ContractId found
+					//TODO: devo vedere se il refinement e' gia' associato a quella contract property
+					EList<ContractRefinement> contractPropertyRefinements = chessSystemModel.getContractRefinements(contractProperty);
+					
 					final EList<ContractId> contractIds = refinement.getContractIds();					
 					for (ContractId contractId : contractIds) {
-						logger.debug("\n\tContractID = " + contractId.getComponentName() +	"." + contractId.getName());	
+						
+						System.out.println("contractId.name = " + contractId.getName());
+						
+						
+						final Property componentInstance = getUMLComponentInstance(owner, contractId.getComponentName());
+		
+						// Get the component type where the contract property is defined
+						final Class component = (Class) componentInstance.getType();
+
+						
+						
+						final ContractProperty refiningContractProperty = getContractPropertyFromContract(component, contractId.getName());
+						
+						// Compose the correct name of the contract refinement 
+						final String refinementName = contractId.getComponentName() + "." + refiningContractProperty.getBase_Property().getName();
+						
+System.out.println("Name of the refinement to be created = " + refinementName);
+						
+						for (ContractRefinement contractRefinement : contractPropertyRefinements) {
+							if (contractRefinement.getBase_DataType().getName().equals(refinementName)) {
+								System.out.println("refinement already defined for the contract");
+								//TODO marcare lo stato
+								continue;
+								
+								//FIXME: esco dal for, ma dovrei uscire dal for piu' esterno
+							}
+						}
+						System.out.println("refinement not present");
+						// TODO aggiungerlo.
+
 						final DataType umlRefinement = createContractRefinement(owner, contractId.getComponentName(), contractId.getName());
 						addContractRefinementToContractProperty(contractProperty, umlRefinement);
+
+
 					}
+					
+					// SEMBRA CREARE I NUOVI MA VA FATTO UN PO DI TESTING
+					
+					// PERCHE' L'EXPORTER A VOLTE NON PARSA BENE SUBBSCU?
+					
+
+						
+					
+					
+					// Create a ContractRefinement for each ContractId found
+//					final EList<ContractId> contractIds = refinement.getContractIds();					
+//					for (ContractId contractId : contractIds) {
+//						logger.debug("\n\tContractID = " + contractId.getComponentName() +	"." + contractId.getName());	
+//						final DataType umlRefinement = createContractRefinement(owner, contractId.getComponentName(), contractId.getName());
+//						addContractRefinementToContractProperty(contractProperty, umlRefinement);
+//					}
 				} else if (dslRefInstance != null && dslRefInstance.getFormula() != null) {
 					
 					// CONSTRAINT processing
@@ -1426,7 +1503,7 @@ public class ImportOSSFileAction {
 			}
 		}
 		
-		System.out.println("connectors.size FINAL = " + existingConnectors.size());
+		System.out.println("existingConnectors.size FINAL = " + existingConnectors.size());
 		// Connectors cleanup time
 		for (String qualifiedElement : mapConnectors.keySet()) {
 			if (mapConnectors.get(qualifiedElement) == null) {
@@ -1435,7 +1512,7 @@ public class ImportOSSFileAction {
 			}
 		}
 		
-		System.out.println("delegationConstraints.size FINAL = " + existingDelegationConstraints.size());
+		System.out.println("existingDelegationConstraints.size FINAL = " + existingDelegationConstraints.size());
 		// Delegation constraints cleanup time
 		for (String qualifiedElement : mapDelegationContraints.keySet()) {
 			if (mapDelegationContraints.get(qualifiedElement) == null) {
@@ -1443,7 +1520,16 @@ public class ImportOSSFileAction {
 				removeDelegationConstraint(existingDelegationConstraints, qualifiedElement);
 			}
 		}
-		
+
+		System.out.println("existingContractRefinements.size FINAL = " + existingContractRefinements.size());
+		// Contract refinements cleanup time
+		for (String qualifiedElement : mapContractRefinements.keySet()) {
+			if (mapContractRefinements.get(qualifiedElement) == null) {
+				System.out.println("contract refinement " + qualifiedElement + " should be removed");
+//				removeContractRefinement(existingContractRefinements, qualifiedElement);
+			}
+		}
+
 		
 	}
 	
@@ -1763,7 +1849,7 @@ public class ImportOSSFileAction {
 		}
 
 		// Contracts cleanup time
-		// ** Contract instances and contract types are removed, but not their formal properties
+		// ** Contract instances and contract types are removed, but not their formal properties and refinements!
 		for (String qualifiedElement : mapContractProperties.keySet()) {
 			if (mapContractProperties.get(qualifiedElement) == null) {
 				System.out.println("contractProperty " + qualifiedElement + " should be removed");
@@ -2105,6 +2191,6 @@ public class ImportOSSFileAction {
 //TODO:	per ogni diagramma, vedo se per ogni componente del diagramma c'e' qualcosa dentro changes che andrebbe
 //      visualizzato.
 
-//TODO: andrebbero rimossi anche i tipi creati, signal, enumeration, boundedsubtype, ecc.
+//TODO: andrebbero rimossi anche i tipi creati, signal, enumeration, boundedsubtype, formal properties, contractrefinements...
 
 
