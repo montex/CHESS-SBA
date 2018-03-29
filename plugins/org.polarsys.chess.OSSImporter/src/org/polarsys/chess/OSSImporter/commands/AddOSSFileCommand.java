@@ -55,11 +55,13 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 		dialog.setFilterExtensions(new String [] {"*.oss", "*.OSS"});
 		String result = dialog.open();
 		
-		try {
-			ossFile = new File(result);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-			dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, "File not valid!");
+		if (result != null) {
+			try {
+				ossFile = new File(result);
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, "File not valid!");
+			}
 		}
 		return ossFile;
 	}
@@ -76,34 +78,36 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 		if (entityUtil.isSystemViewPackage((Element) umlObject)) {
 			final File ossFile = getOSSFile();
 
-			// Check if there are errors in the OSS file
-			final boolean isValid = RuntimeErrorService.getInstance().showOSSRuntimeErrors(ossFile, modelResource, true, false, monitor);
-			
-			monitor.beginTask("Importing elements from OSS file", 1);
-
-			final ImportOSSFileAction action = ImportOSSFileAction.getInstance();
-
-			if (isValid && action != null) {
+			if (ossFile != null) {
+				// Check if there are errors in the OSS file
+				final boolean isValid = RuntimeErrorService.getInstance().showOSSRuntimeErrors(ossFile, modelResource, true, false, monitor);
 				
-				// Hide the active page in order to avoid popups appearing
-				IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				activePage.setEditorAreaVisible(false);
-				try {
-					action.startParsing((Package) umlObject, ossFile);
-				} catch (ImportException e) {
-					dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, e.getMessage());
-					monitor.done();
-					return;					
-				} catch (Exception e) {
-					e.printStackTrace();
-					dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, e.toString());
-					monitor.done();
-					return;
+				monitor.beginTask("Importing elements from OSS file", 1);
+	
+				final ImportOSSFileAction action = ImportOSSFileAction.getInstance();
+	
+				if (isValid && action != null) {
+					
+					// Hide the active page in order to avoid popups appearing
+					IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					activePage.setEditorAreaVisible(false);
+					try {
+						action.startParsing((Package) umlObject, ossFile);
+					} catch (ImportException e) {
+						dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, e.getMessage());
+						monitor.done();
+						return;					
+					} catch (Exception e) {
+						e.printStackTrace();
+						dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, e.toString());
+						monitor.done();
+						return;
+					}
+					
+					// Restore the active page
+					activePage.setEditorAreaVisible(true);
+					dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, "Import done!");
 				}
-				
-				// Restore the active page
-				activePage.setEditorAreaVisible(true);
-				dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, "Import done!");
 			}
 			monitor.done();
 			return;
