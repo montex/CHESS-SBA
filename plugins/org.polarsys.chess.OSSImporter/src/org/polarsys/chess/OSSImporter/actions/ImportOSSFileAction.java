@@ -1055,9 +1055,6 @@ public class ImportOSSFileAction {
 			return null;
 		}
 
-		System.out.println("\nvariablePortOwner = " + variablePortOwner);
-		System.out.println("variablePortName = " + variablePortName);
-				
 		if (constraint instanceof PortId) {
 			
 			// Get the component name, should be at max one
@@ -1070,9 +1067,6 @@ public class ImportOSSFileAction {
 			return null;
 		}
 		
-		System.out.println("constraintPortOwner = " + constraintPortOwner);
-		System.out.println("constraintPortName = " + constraintPortName);
-		
 		// Loop on all the connectors to find one with same values
 		for (Connector connector : connectors) {
 			final EList<ConnectorEnd> ends = connector.getEnds();
@@ -1080,27 +1074,13 @@ public class ImportOSSFileAction {
 				final Property sourceOwner = ends.get(0).getPartWithPort();	// Should be the owner of the port
 				final org.eclipse.uml2.uml.Port sourcePort = (org.eclipse.uml2.uml.Port) ends.get(0).getRole();	// Should be the port
 				
-				System.out.println("\nchecking connector " + connector.getName());
-				if (sourceOwner != null)
-					System.out.println("\tconnector.sourceOwner = " + sourceOwner.getName());
-				System.out.println("\tconnector.sourcePort = " + sourcePort.getName());
-				
 				if (sourcePort.getName().equals(constraintPortName) && (sourceOwner == null || sourceOwner.getName().equals(constraintPortOwner))) {
 
-					System.out.println("\nfound the same source");
-					
 					// One end is correct, go on with the second
 					final Property targetOwner = ends.get(1).getPartWithPort();	// Should be the owner of the port
 					final org.eclipse.uml2.uml.Port targetPort = (org.eclipse.uml2.uml.Port) ends.get(1).getRole();	// Should be the port
 
-					if (targetOwner != null)
-						System.out.println("\tconnector.targetOwner = " + targetOwner.getName());
-					System.out.println("\tconnector.targetPort = " + targetPort.getName());
-
 					if (targetPort.getName().equals(variablePortName) && (targetOwner == null || targetOwner.getName().equals(variablePortOwner))) {
-						
-						System.out.println("\nfound both ends!");
-						
 						return connector;					
 					}
 				}					
@@ -1120,7 +1100,6 @@ public class ImportOSSFileAction {
 
 		// Text of the delegation constraint
 		final String formalPropertyText = createDelegationConstraintText(variable, constraint);
-		System.out.println("formalPropertyText = " + formalPropertyText);
 		
 		// Loop on all the delegation constraints to find one with same text
 		for (Constraint delegationConstraint : delegationConstraints) {
@@ -1261,11 +1240,8 @@ public class ImportOSSFileAction {
 
 		// Prepare the map to mark existing component instances 
 		HashMap<String, Boolean> mapComponentInstances = Maps.newHashMapWithExpectedSize(existingComponentInstances.size());
-		System.out.println("\nexistingComponentInstances = " + existingComponentInstances.size());
 		for (Property componentInstance : existingComponentInstances) {
 			mapComponentInstances.put(componentInstance.getQualifiedName(), null);
-			System.out.println("Sto salvando la componentInstance " + componentInstance);
-			System.out.println("\tqualified name = " + componentInstance.getQualifiedName());
 		}
 		
 		// Get all the existing connectors of the element
@@ -1275,11 +1251,8 @@ public class ImportOSSFileAction {
 		
 		// Prepare the map to mark existing connectors 
 		HashMap<String, Boolean> mapConnectors = Maps.newHashMapWithExpectedSize(existingConnectors.size());
-		System.out.println("\nexistingConnectors.size = " + existingConnectors.size());
 		for (Connector connector : existingConnectors) {
 			mapConnectors.put(connector.getQualifiedName(), null);
-			System.out.println("Sto salvando il connector " + connector);
-			System.out.println("\tqualified name = " + connector.getQualifiedName());
 		}
 		
 		// Get all the existing delegation contraints of the element
@@ -1287,11 +1260,8 @@ public class ImportOSSFileAction {
 		
 		// Prepare the map to mark existing delegation contraints 
 		HashMap<String, Boolean> mapDelegationContraints = Maps.newHashMapWithExpectedSize(existingDelegationConstraints.size());
-		System.out.println("\nexistingDelegationConstraints.size = " + existingDelegationConstraints.size());
 		for (Constraint delegationConstraint : existingDelegationConstraints) {
 			mapDelegationContraints.put(delegationConstraint.getQualifiedName(), null);
-			System.out.println("Sto salvando la delegation contraint " + delegationConstraint);
-			System.out.println("\tqualified name = " + delegationConstraint.getQualifiedName());
 		}
 		
 		// Get all the contract refinements of the element
@@ -1299,11 +1269,8 @@ public class ImportOSSFileAction {
 		
 		// Prepare the map to mark existing contract refinements
 		HashMap<String, Boolean> mapContractRefinements = Maps.newHashMapWithExpectedSize(existingContractRefinements.size());
-		System.out.println("\nexistingContractRefinements.size = " + existingContractRefinements.size());
 		for (Classifier contractRefinement : existingContractRefinements) {
 			mapContractRefinements.put(contractRefinement.getQualifiedName(), null);
-			System.out.println("Sto salvando il contract refinement " + contractRefinement);
-			System.out.println("\tqualified name = " + contractRefinement.getQualifiedName());
 		}
 		
 		// If some RefinementInstances are present, loop on them
@@ -1325,13 +1292,13 @@ public class ImportOSSFileAction {
 
 					if (componentInstance == null) {
 						
-						System.out.println("componentInstance not found, creating one");
+						logger.debug("componentInstance not found, creating one");
 						
 						// I should create an Association between the elements and not a Component Instance!
 						addedElements.add(createAssociation(owner, subName, (Type) dslTypeToComponent.get(subType))); 
 					}  else {
 
-						System.out.println("componentInstance already present");
+						logger.debug("componentInstance already present");
 
 						// The component instance is already present, update its type if needed
 						if (!componentInstance.getType().getName().equals(subType)) {
@@ -1353,7 +1320,7 @@ public class ImportOSSFileAction {
 					Connector connector = null;
 										
 					if ((connector = getExistingConnector(existingConnectors, variable, constraint)) != null) {
-						System.out.println("connector already present");
+						logger.debug("connector already present");
 						
 						// Set the flag to signal the connector is still used
 						mapConnectors.put(connector.getQualifiedName(), Boolean.TRUE);
@@ -1364,13 +1331,13 @@ public class ImportOSSFileAction {
 						Constraint delegationConstraint = null;
 
 						if ((delegationConstraint = getExistingDelegationConstraint(existingDelegationConstraints, variable, constraint)) != null) {
-							System.out.println("delegation constraint already present");
+							logger.debug("delegation constraint already present");
 
 							// Set the flag to signal the delegation constraint is still used
 							mapDelegationContraints.put(delegationConstraint.getQualifiedName(), Boolean.TRUE);
 							continue;
 						} else {
-							System.out.println("delegation constraint is not present");
+							logger.debug("delegation constraint is not present");
 
 							// Create a delegation constraint, can be a LogicalExpression, IntegerLiteral, AddSubExpression, ...
 							addedElements.add(createDelegationConstraint(owner, variable, constraint));
@@ -1378,7 +1345,7 @@ public class ImportOSSFileAction {
 						}						
 					}
 
-					System.out.println("connector is not present");
+					logger.debug("connector is not present");
 
 					// Create the source end
 					if (constraint instanceof PortId) {	//FIXME: there is also ParameterId
@@ -1458,7 +1425,7 @@ public class ImportOSSFileAction {
 						boolean alreadyLinked = false;
 						for (ContractRefinement contractRefinement : contractPropertyRefinements) {
 							if (contractRefinement.getBase_DataType().getName().equals(refinementName)) {
-								System.out.println("refinement already defined for the contract");
+								logger.debug("refinement already defined for the contract");
 								
 								// Set the flag to signal the contract refinement is still used
 								mapContractRefinements.put(contractRefinement.getBase_DataType().getQualifiedName(), Boolean.TRUE);
@@ -1470,7 +1437,7 @@ public class ImportOSSFileAction {
 						if (alreadyLinked) {
 							continue;	// Go to the next refinement
 						} else {						
-							System.out.println("refinement not present");
+							logger.debug("refinement not present");
 
 							// Create a new refinement and add it to the contract property
 							final DataType umlRefinement = createContractRefinement(owner, contractId.getComponentName(), contractId.getName());
@@ -1480,8 +1447,6 @@ public class ImportOSSFileAction {
 							addedElements.add(umlRefinement);
 						}
 					}
-					
-					// PERCHE' L'EXPORTER A VOLTE NON PARSA BENE SUBBSCU?
 					
 				} else if (dslRefInstance != null && dslRefInstance.getFormula() != null) {
 					
@@ -1500,34 +1465,31 @@ public class ImportOSSFileAction {
 		// Component instances cleanup time, associations will be removed automatically
 		for (String qualifiedElement : mapComponentInstances.keySet()) {
 			if (mapComponentInstances.get(qualifiedElement) == null) {
-				System.out.println("component instance " + qualifiedElement + " should be removed");
+//				System.out.println("component instance " + qualifiedElement + " should be removed");
 				removeProperty(existingComponentInstances, qualifiedElement);
 			}
 		}
 		
-		System.out.println("existingConnectors.size FINAL = " + existingConnectors.size());
 		// Connectors cleanup time
 		for (String qualifiedElement : mapConnectors.keySet()) {
 			if (mapConnectors.get(qualifiedElement) == null) {
-				System.out.println("connector " + qualifiedElement + " should be removed");
+//				System.out.println("connector " + qualifiedElement + " should be removed");
 				removeConnector(existingConnectors, qualifiedElement);
 			}
 		}
 		
-		System.out.println("existingDelegationConstraints.size FINAL = " + existingDelegationConstraints.size());
 		// Delegation constraints cleanup time
 		for (String qualifiedElement : mapDelegationContraints.keySet()) {
 			if (mapDelegationContraints.get(qualifiedElement) == null) {
-				System.out.println("delegation constraint " + qualifiedElement + " should be removed");
+//				System.out.println("delegation constraint " + qualifiedElement + " should be removed");
 				removeDelegationConstraint(existingDelegationConstraints, qualifiedElement);
 			}
 		}
 
-		System.out.println("existingContractRefinements.size FINAL = " + existingContractRefinements.size());
 		// Contract refinements cleanup time
 		for (String qualifiedElement : mapContractRefinements.keySet()) {
 			if (mapContractRefinements.get(qualifiedElement) == null) {
-				System.out.println("contract refinement " + qualifiedElement + " should be removed");
+//				System.out.println("contract refinement " + qualifiedElement + " should be removed");
 				removeContractRefinement(existingContractRefinements, qualifiedElement);
 			}
 		}
@@ -1572,19 +1534,14 @@ public class ImportOSSFileAction {
 
 		final Class owner = dslTypeToComponent.get(dslParentComponent.getType());
 		
-		System.out.println("owner = " + owner);
-		
 		// Get all the existing ports of the element, static or not
 		final EList<NamedElement> existingPorts = (EList<NamedElement>) chessSystemModel.getNonStaticPorts(owner);
 		existingPorts.addAll((Collection<? extends NamedElement>) chessSystemModel.getStaticPorts(owner));
 
 		// Prepare the map to mark existing ports 
 		final HashMap<String, Boolean> mapPorts = Maps.newHashMapWithExpectedSize(existingPorts.size());
-		System.out.println("\nexistingPorts.size = " + existingPorts.size());
 		for (NamedElement port : existingPorts) {
 			mapPorts.put(port.getQualifiedName(), null);
-			System.out.println("Sto salvando la port " + port);
-			System.out.println("\tqualified name = " + port.getQualifiedName());
 		}
 
 		// Get all the existing contract properties
@@ -1592,11 +1549,8 @@ public class ImportOSSFileAction {
 		
 //		// Prepare the map to mark existing contracts
 		final HashMap<String, Boolean> mapContractProperties = Maps.newHashMapWithExpectedSize(existingContractProperties.size());
-		System.out.println("\nexistingContractProperties.size = " + existingContractProperties.size());
 		for (ContractProperty contractProperty : existingContractProperties) {
 			mapContractProperties.put(contractProperty.getBase_Property().getQualifiedName(), null);
-			System.out.println("Sto salvando la contract property " + contractProperty);
-			System.out.println("\tqualified name = " + contractProperty.getBase_Property().getQualifiedName());
 		}
 		
 		// If some InterfaceInstances are present, loop on them
@@ -1614,9 +1568,6 @@ public class ImportOSSFileAction {
 						final VariableId dslVariableID = dslVariable.getId();
 						final SimpleType dslVariableType = dslVariable.getType();
 						
-						System.out.println("parsing port " + dslVariableID.getName());
-						System.out.println("with type " + dslVariableType.toString());
-
 						// Version that updates the port
 						// Loop on all the ports to see if it is already existing
 						org.eclipse.uml2.uml.Port port = null;
@@ -1650,7 +1601,7 @@ public class ImportOSSFileAction {
 						}
 						
 						if (port == null) {
-							System.out.println("Port not found, creating it");
+							logger.debug("Port not found, creating it");
 
 							if (dslVariable instanceof InputPort) {
 								addedElements.add(createNonStaticPort(owner, dslVariableID, dslVariableType, true));
@@ -1744,15 +1695,13 @@ public class ImportOSSFileAction {
 								final org.eclipse.uml2.uml.Port tmpPort = (org.eclipse.uml2.uml.Port) object;
 								if (tmpPort.getName().equals(dslVariableID.getName()) && 
 										tmpPort.getType().getName().equals(getTypeFromDSLType(dslVariableType).getName())) {
-									System.out.println("\nFound port " + tmpPort.getName());
-									System.out.println("with type " + tmpPort.getType().getName());
 									port = tmpPort;
 									break;	// Port found
 								}
 							}
 
 							if (port != null) {
-								System.out.println("Port already present");
+								logger.debug("Port already present");
 
 								// Set the flag to signal the port is still used
 								mapPorts.put(port.getQualifiedName(), Boolean.TRUE);
@@ -1787,7 +1736,7 @@ public class ImportOSSFileAction {
 
 					if (contract == null) {
 					
-						System.out.println("contract non found, creating one");
+						logger.debug("contract non found, creating one");
 						
 						// Create an empty Contract
 						contract = createContract(owner, dslContract.getName());
@@ -1803,14 +1752,12 @@ public class ImportOSSFileAction {
 						addedElements.add(contract);
 					}  else {
 
-						System.out.println("Contract already present");
+						logger.debug("Contract already present");
 
 						// The contract type is already present, update the formal properties if needed
 						final String assumeString = contractEntityUtil.getAssumeStrFromUmlContract(contract);
 						if (getConstraintText(dslAssumption.getConstraint()).equals(assumeString)) {
-							System.out.println("Assume text is the same!");
 						} else {
-							System.out.println("Assume text is NOT the same!");
 							
 							// Change the text of the assume property
 							final FormalProperty assumeFormalProperty = contractEntityUtil.getAssumeFromUmlContract(contract);
@@ -1821,9 +1768,7 @@ public class ImportOSSFileAction {
 						
 						final String guaranteeString = contractEntityUtil.getGuaranteeStrFromUmlContract(contract);
 						if (getConstraintText(dslGuarantee.getConstraint()).equals(guaranteeString)) {
-							System.out.println("Guarantee text is the same!");
 						} else {
-							System.out.println("Guarantee text is NOT the same!");
 							
 							// Change the text of the guarantee property
 							final FormalProperty guaranteeFormalProperty = contractEntityUtil.getGuaranteeFromUmlContract(contract);
@@ -1843,7 +1788,7 @@ public class ImportOSSFileAction {
 		// Ports cleanup time 
 		for (String qualifiedElement : mapPorts.keySet()) {
 			if (mapPorts.get(qualifiedElement) == null) {
-				System.out.println("port " + qualifiedElement + " should be removed");
+//				System.out.println("port " + qualifiedElement + " should be removed");
 				removePort(existingPorts, qualifiedElement);
 			}
 		}
@@ -1852,7 +1797,7 @@ public class ImportOSSFileAction {
 		// ** Contract instances and contract types are removed, but not their formal properties and refinements!
 		for (String qualifiedElement : mapContractProperties.keySet()) {
 			if (mapContractProperties.get(qualifiedElement) == null) {
-				System.out.println("contractProperty " + qualifiedElement + " should be removed");
+//				System.out.println("contractProperty " + qualifiedElement + " should be removed");
 				removeContractProperty(existingContractProperties, qualifiedElement);
 			}
 		}
@@ -2056,11 +2001,6 @@ public class ImportOSSFileAction {
 		
 		addedElements.clear();
 		
-		System.out.println("ci sono gia' blocchi: " +  mapBlocks.size());
-		for (String qualifiedName : mapBlocks.keySet()) {
-			System.out.println("block = " + qualifiedName);
-		}
-				
 		// A map used to connect block names to their implementation
 		dslTypeToComponent = new HashMap<String, Class>();
 
@@ -2075,12 +2015,10 @@ public class ImportOSSFileAction {
 			protected void doExecute() {
 
 				String blockQualifiedName = pkg.getQualifiedName() + "::" + dslSystemComponentName;			
-				System.out.println("blockQualifiedName = " + blockQualifiedName);
-				
 				Class systemComponent = null;
 				if (!mapBlocks.containsKey(blockQualifiedName)) {
 
-					System.out.println("block not present: " + blockQualifiedName);
+					logger.debug("block not present: " + blockQualifiedName);
 
 					// Add a new systemComponent to the package
 					systemComponent = createSystemBlock(sysView, dslSystemComponent.getType());
@@ -2090,11 +2028,9 @@ public class ImportOSSFileAction {
 					
 				} else {
 				
-					System.out.println("block already present");
+					logger.debug("block already present");
 					
 					// Should retrieve the old one from the package
-					
-					//FIXME: ho bisogno degli eClass da passare, mi faccio degli oggetti pronti?
 					systemComponent = (Class) sysView.getOwnedMember(dslSystemComponentName, false, UMLFactory.eINSTANCE.createClass().eClass());
 					
 					// Set the flag to signal the block is still used
@@ -2112,7 +2048,7 @@ public class ImportOSSFileAction {
 					Class component = null;
 					if(!mapBlocks.containsKey(blockQualifiedName)) {
 
-						System.out.println("block not present: " + blockQualifiedName);
+						logger.debug("block not present: " + blockQualifiedName);
 
 						// Add a new block to the package
 						component = createBlock(sysView, dslComponent.getType());
@@ -2121,7 +2057,7 @@ public class ImportOSSFileAction {
 						addedElements.add(component);
 					} else {
 					
-						System.out.println("block already present: " + blockQualifiedName);
+						logger.debug("block already present: " + blockQualifiedName);
 						
 						// Retrieve the old one
 						component = (Class) sysView.getOwnedMember(dslComponent.getType(), false, UMLFactory.eINSTANCE.createClass().eClass());
@@ -2161,19 +2097,20 @@ public class ImportOSSFileAction {
 				// Blocks cleanup time, remove blocks no more needed
 				for (String qualifiedElement : mapBlocks.keySet()) {
 					if (mapBlocks.get(qualifiedElement) == null) {
-						System.out.println("block " + qualifiedElement + " should be removed");
+//						System.out.println("block " + qualifiedElement + " should be removed");
 						removeElement(existingMembers, qualifiedElement);
 					}
 				}
 				
 				logger.debug("Total time = " + (System.currentTimeMillis() - startTime));
-				System.out.println("Total time = " + (System.currentTimeMillis() - startTime));
+//				System.out.println("Total time = " + (System.currentTimeMillis() - startTime));
 			}
 		});
 		
-		System.out.println("addedElements size = " + addedElements.size());
+		// addedElements contains all the elements that have been added or modified 
+		logger.debug("addedElements size = " + addedElements.size());
 		for (Element element : addedElements) {
-			System.out.println("modified element = " + element);
+			logger.debug("modified element = " + element);
 		}
 		
 		// Propagate the exception, if any
@@ -2182,11 +2119,6 @@ public class ImportOSSFileAction {
 		}
 	}
 }
-
-//TODO: l'idea e' quella di creare delle mappe con elemento e flag a null. Se  alla fine del giro non ho trovato
-//      l'elemento, lo cancello.
-//      Prima di creare un nuovo elemento, controllo se esiste gia' (e setto la flag). In caso contrario lo creo
-//      e salvo il riferimento in una EList di oggetti appositamente creati.
 
 //TODO:	per ogni diagramma, vedo se per ogni componente del diagramma c'e' qualcosa dentro changes che andrebbe
 //      visualizzato.
