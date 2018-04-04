@@ -194,7 +194,7 @@ public class ImportOSSFileAction {
 	private Map<String, Class> dslTypeToComponent;
 
 	/** The instance of this class */
-	private static ImportOSSFileAction sampleView;
+	private static ImportOSSFileAction classInstance;
 	
 	/** A possible exception that could happen during parsing */
 	ImportException importException;
@@ -207,10 +207,10 @@ public class ImportOSSFileAction {
 	 * @return the instance of this class
 	 */
 	public static ImportOSSFileAction getInstance() {
-		if (sampleView == null) {
-			sampleView = new ImportOSSFileAction();
+		if (classInstance == null) {
+			classInstance = new ImportOSSFileAction();
 		}
-		return sampleView;
+		return classInstance;
 	}
 	
 	/**

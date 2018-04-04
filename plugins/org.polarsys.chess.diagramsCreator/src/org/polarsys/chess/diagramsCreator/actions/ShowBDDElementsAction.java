@@ -12,9 +12,11 @@ package org.polarsys.chess.diagramsCreator.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
@@ -39,11 +41,15 @@ import org.eclipse.papyrus.infra.emf.utils.ServiceUtilsForResource;
 import org.eclipse.papyrus.infra.gmfdiag.common.utils.ServiceUtilsForEditPart;
 import org.eclipse.papyrus.infra.gmfdiag.css.CSSShapeImpl;
 import org.eclipse.papyrus.sysml.diagram.blockdefinition.BlockDefinitionDiagramCreateCommand;
+import org.eclipse.papyrus.sysml.diagram.common.edit.part.AssociationEditPart;
+import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockEditPart;
 import org.eclipse.papyrus.uml.diagram.common.actions.ShowHideContentsAction;
+import org.eclipse.papyrus.uml.diagram.common.actions.AbstractShowHideAction.EditPartRepresentation;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.LiteralString;
@@ -73,6 +79,22 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	/** Logger for messages */
 	private static final Logger logger = Logger.getLogger(ShowBDDElementsAction.class);
 
+	/** The instance of this class */
+	private static ShowBDDElementsAction classInstance;
+
+	
+	/**
+	 * Gets an instance of the class if already present, or a new one if not.
+	 * @return the instance of this class
+	 */
+	public static ShowBDDElementsAction getInstance() {
+		if (classInstance == null) {
+			classInstance = new ShowBDDElementsAction();
+		}
+		return classInstance;
+	}
+
+	
 	/**
 	 * Tries to show an Element in an EditPart.
 	 * @param elementToShow the Element to show
@@ -93,7 +115,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 
 			if (cmd != null && cmd.canExecute()) {
 				return cmd;
-//				activeEditor.getDiagramEditDomain().getDiagramCommandStack().execute(cmd);
 			}
 		}
 		return null;
@@ -286,9 +307,13 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 			}
 		}
 		
-		// Add the result to the views to create
+		// Add the result to the views to create, but only if not already displayed
 		for (Object element : result) {
-			if (element instanceof EditPartRepresentation) {
+			if (initialSelection.contains(element)) {
+				
+				// we do nothing
+				continue;
+			} else if (element instanceof EditPartRepresentation) {
 				viewsToCreate.add((EditPartRepresentation) element);
 			}
 		}
@@ -390,5 +415,150 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		
 		// Execute the commands
 		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(completeCmd));
+	}
+	
+	/**
+	 * Displays missing elements in the given diagram.
+	 * @param diagramEditPart the diagram editpart
+	 */
+	public void refreshDiagram(IGraphicalEditPart diagramEditPart) {
+		
+		
+		// Get the EditorPart and the active editor
+		IEditorPart editorPart =  PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		IEditorPart activeEditor = ((PapyrusMultiDiagramEditor) editorPart).getActiveEditor();
+		
+		// Get all the EditParts of the diagram
+		final Map<?, ?> elements = diagramEditPart.getViewer().getEditPartRegistry();
+		final Object[] editParts = elements.values().toArray();
+
+		final EList<Class> displayedBlocks = new BasicEList<Class>();
+		final EList<Association> displayedAssociations = new BasicEList<Association>();
+		
+		// Loop on all the editparts to collect the displayed elements
+		for (int i = 0; i < editParts.length; i++) {
+			System.out.println("\neditPart = " + editParts[i]);
+			if (editParts[i] instanceof BlockEditPart) {
+				displayedBlocks.add((Class) ((BlockEditPart) editParts[i]).resolveSemanticElement());
+			} else if (editParts[i] instanceof AssociationEditPart) {
+				displayedAssociations.add((Association) ((AssociationEditPart) editParts[i]).resolveSemanticElement());
+			}
+		}
+
+		for (Class block : displayedBlocks) {
+			System.out.println("displayed block = " + block);
+		}
+		
+		for (Association association : displayedAssociations) {
+			System.out.println("displayed association = " + association);
+		}
+		
+		// The package containing the model
+		final Package pkg = displayedBlocks.get(0).getNearestPackage();
+		System.out.println("Containing package = " + pkg);
+		
+		// Get all the existing elements
+		EList<Element> existingElements = pkg.getOwnedElements();
+		
+		EList<Element> missingBlocks = new BasicEList<Element>();
+		EList<Element> missingAssociations = new BasicEList<Element>();
+		
+		// Loop on the elements to find those not displayed
+		for (Element element : existingElements) {
+			if (entityUtil.isBlock(element) && !contractEntityUtil.isContract(element)) {
+				System.out.println("\nblocco del modello = " + element);
+				
+				if (displayedBlocks.contains(element)) {
+					System.out.println("block already present in diagram");
+				} else {
+					System.out.println("block is not present in diagram");
+					missingBlocks.add(element);
+				}
+			} else if (element instanceof Association) {
+				System.out.println("\nassociazione del modello = " + element);
+				if (displayedAssociations.contains(element)) {
+					System.out.println("association already present in diagram");
+				} else {
+					System.out.println("association is not present in diagram");
+					missingAssociations.add(element);
+				}
+			}
+		}
+
+		CompoundCommand completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
+
+		int index = 0;
+		for (Element element : missingBlocks) {
+			System.out.println("block missing in the diagram = " + element);
+			final Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEditPart, index++);
+			try {
+				if (cmd.canExecute()) {
+					completeCmd.add(cmd);
+				}
+			} catch (Exception e) {
+				System.err.println("Problems in displaying blocks");
+			}
+		}
+
+		// Execute the commands to display blocks
+		if (completeCmd.size() > 0) {
+			completeCmd.execute();
+		}
+		
+		// Resize the new blocks
+		// Ho bisogno delle View dei blocchi appena creati!
+		
+		//FIXME: devo ridimensionare solo i blocchi nuovi!
+		resizeElements(diagramEditPart);
+				
+		// Select all the blocks avoiding contracts and add them to the list to be enriched
+		selectedElements = new ArrayList<IGraphicalEditPart>();
+		List<?> editPartChildren = diagramEditPart.getChildren();
+		for (Object editPartChild : editPartChildren) {
+			Element element = (Element) ((IGraphicalEditPart) editPartChild).resolveSemanticElement();
+			if (entityUtil.isBlock(element) && !contractEntityUtil.isContract(element)) {
+				selectedElements.add((IGraphicalEditPart) editPartChild);
+			}
+		}
+
+		// Call superclass methods to setup the action
+		initAction();
+		buildInitialSelection();
+		
+		// Get a selection with all the possible elements
+		buildSelection();
+
+		// Draw the inner attributes
+		if (selection.size() > 0) {
+
+			// Filter the list to extract only the elements I'm interested in
+			buildShowHideElementsList(selection.toArray());
+
+			// Create the list of commands to display the elements
+			final Command command = getActionCommand();		
+
+			// Execute the commands
+			final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(diagramEditPart.getNotationView());
+			domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+		}
+
+		completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
+		
+		for (Element element : missingAssociations) {
+			System.out.println("association missing in the diagram = " + element);
+			final Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEditPart, 0); 
+			try {
+				if (cmd.canExecute()) {
+					completeCmd.add(cmd);
+				}
+			} catch (Exception e) {
+				System.err.println("Problems in displaying associations");
+			}
+		}
+		
+		// Execute the commands to display associations
+		if (completeCmd.size() > 0) {
+			completeCmd.execute();
+		}		
 	}
 }
