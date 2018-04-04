@@ -66,8 +66,18 @@
             </command>
             <command
                   commandId="org.polarsys.chess.diagramsCreator.commands.refreshBDDHandler"
-                  label="Refresh BDD"
+                  label="Refresh the current BDD diagram"
                   style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.papyrus.sysml.diagram.blockdefinition.edit.part.BlockDefinitionDiagramEditPart">
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
             </command>
          </menu>
       </menuContribution>
