@@ -1202,7 +1202,7 @@ public class ImportOSSFileAction {
 	 * @param members the list of members
 	 * @param qualifiedElement the qualified name of the element to remove
 	 */
-	private void removeElement(EList<NamedElement> members, String qualifiedElement) {
+	private void removeElement(EList<Class> members, String qualifiedElement) {
 		removeNamedElement(members, qualifiedElement);
 	}
 
@@ -1988,17 +1988,20 @@ public class ImportOSSFileAction {
 
 		logger.debug("dslSystemComponent.type = " + dslSystemComponentName);
 
-		// Get all the existing blocks looping on all members
+		// Get all the existing members
 		EList<NamedElement> existingMembers = sysView.getOwnedMembers();
+		EList<Class> existingBlocks = new BasicEList<Class>(existingMembers.size());
 		
 		// Prepare the map to mark existing blocks
 		HashMap<String, Boolean> mapBlocks = Maps.newHashMapWithExpectedSize(existingMembers.size());
 		for (Element member : existingMembers) {
 			if (entityUtil.isBlock(member) && !contractEntityUtil.isContract(member)) {
 				mapBlocks.put(((Class) member).getQualifiedName(), null);
+				existingBlocks.add((Class) member);
 			}
 		}
 		
+		// New elements that will be added to the model
 		addedElements.clear();
 		
 		// A map used to connect block names to their implementation
@@ -2093,12 +2096,12 @@ public class ImportOSSFileAction {
 					importException = e;
 					return;
 				}
-				
+
 				// Blocks cleanup time, remove blocks no more needed
 				for (String qualifiedElement : mapBlocks.keySet()) {
 					if (mapBlocks.get(qualifiedElement) == null) {
 //						System.out.println("block " + qualifiedElement + " should be removed");
-						removeElement(existingMembers, qualifiedElement);
+						removeElement(existingBlocks, qualifiedElement);
 					}
 				}
 				
