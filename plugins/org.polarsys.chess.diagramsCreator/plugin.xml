@@ -64,6 +64,11 @@
                   </iterate>
                </visibleWhen>
             </command>
+            <command
+                  commandId="org.polarsys.chess.diagramsCreator.commands.refreshBDDHandler"
+                  label="Refresh BDD"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -181,6 +186,16 @@
          <commandParameter
                id="routing_style"
                name="routing_style"
+               optional="true">
+         </commandParameter>
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.RefreshBDDHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.refreshBDDHandler"
+            name="Refresh BDD handler">
+         <commandParameter
+               id="addedElements"
+               name="addedElements"
                optional="true">
          </commandParameter>
       </command>
