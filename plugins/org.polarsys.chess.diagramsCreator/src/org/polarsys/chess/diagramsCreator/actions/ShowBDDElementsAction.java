@@ -352,7 +352,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		Package pkg = (Package) diagramEP.resolveSemanticElement();
 		EList<Element> packageChildren = pkg.getOwnedElements();
 		
-		CompoundCommand completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
+		CompoundCommand completeCmd = new CompoundCommand("Show Elements Command");
 
 		// First loop to draw Block elements and contracts
 		for (Element element : packageChildren) {
@@ -402,7 +402,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		
 		// Create a new command, dispose doesn't work...
 //		completeCmd.dispose();
-		completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
+		completeCmd = new CompoundCommand("Show Elements Command");
 
 		// Second loop to draw Associations
 		for (Element element : packageChildren) {
@@ -424,8 +424,8 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	public void refreshDiagram(IGraphicalEditPart diagramEditPart) {
 		
 		// Get the EditorPart and the active editor
-		IEditorPart editorPart =  PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		IEditorPart activeEditor = ((PapyrusMultiDiagramEditor) editorPart).getActiveEditor();
+		final IEditorPart editorPart =  PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		final IEditorPart activeEditor = ((PapyrusMultiDiagramEditor) editorPart).getActiveEditor();
 		
 		// Get all the EditParts of the diagram
 		final Map<?, ?> elements = diagramEditPart.getViewer().getEditPartRegistry();
@@ -436,7 +436,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		
 		// Loop on all the editparts to collect the displayed elements
 		for (int i = 0; i < editParts.length; i++) {
-			System.out.println("\neditPart = " + editParts[i]);
 			if (editParts[i] instanceof BlockEditPart) {
 				displayedBlocks.add((Class) ((BlockEditPart) editParts[i]).resolveSemanticElement());
 			} else if (editParts[i] instanceof AssociationEditPart) {
@@ -444,51 +443,48 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 			}
 		}
 
-		for (Class block : displayedBlocks) {
-			System.out.println("displayed block = " + block);
-		}
-		
-		for (Association association : displayedAssociations) {
-			System.out.println("displayed association = " + association);
-		}
+//		for (Class block : displayedBlocks) {
+//			logger.debug("displayed block = " + block);
+//		}
+//		
+//		for (Association association : displayedAssociations) {
+//			logger.debug("displayed association = " + association);
+//		}
 		
 		// The package containing the model
 		final Package pkg = displayedBlocks.get(0).getNearestPackage();
-		System.out.println("Containing package = " + pkg);
 		
-		// Get all the existing elements
-		EList<Element> existingElements = pkg.getOwnedElements();
+		// All the existing elements in the package
+		final EList<Element> existingElements = pkg.getOwnedElements();
 		
-		EList<Element> missingBlocks = new BasicEList<Element>();
-		EList<Element> missingAssociations = new BasicEList<Element>();
+		// All the blocks and associations that are not displayed
+		final EList<Element> missingBlocks = new BasicEList<Element>();
+		final EList<Element> missingAssociations = new BasicEList<Element>();
 		
 		// Loop on the elements to find those not displayed
 		for (Element element : existingElements) {
-			if (entityUtil.isBlock(element) && !contractEntityUtil.isContract(element)) {
-				System.out.println("\nblocco del modello = " + element);
-				
+			if (entityUtil.isBlock(element) && !contractEntityUtil.isContract(element)) {				
 				if (displayedBlocks.contains(element)) {
-					System.out.println("block already present in diagram");
+					logger.debug("block already present in diagram");
 				} else {
-					System.out.println("block is not present in diagram");
+					logger.debug("block is not present in diagram");
 					missingBlocks.add(element);
 				}
 			} else if (element instanceof Association) {
-				System.out.println("\nassociazione del modello = " + element);
 				if (displayedAssociations.contains(element)) {
-					System.out.println("association already present in diagram");
+					logger.debug("association already present in diagram");
 				} else {
-					System.out.println("association is not present in diagram");
+					logger.debug("association is not present in diagram");
 					missingAssociations.add(element);
 				}
 			}
 		}
 
-		CompoundCommand completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
-
+		// Create a compound command to display missing blocks
+		CompoundCommand completeCmd = new CompoundCommand("Show Blocks Command");
 		int index = 0;
 		for (Element element : missingBlocks) {
-			System.out.println("block missing in the diagram = " + element);
+			logger.debug("block missing in the diagram = " + element);
 			final Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEditPart, index++);
 			try {
 				if (cmd.canExecute()) {
@@ -538,10 +534,10 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 			domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
 		}
 
-		completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
-		
+		// Create a compound command to display missing associations
+		completeCmd = new CompoundCommand("Show Associations Command");	
 		for (Element element : missingAssociations) {
-			System.out.println("association missing in the diagram = " + element);
+			logger.debug("association missing in the diagram = " + element);
 			final Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEditPart, 0); 
 			try {
 				if (cmd.canExecute()) {
