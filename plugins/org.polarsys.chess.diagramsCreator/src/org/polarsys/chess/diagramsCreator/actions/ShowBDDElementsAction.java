@@ -44,7 +44,6 @@ import org.eclipse.papyrus.sysml.diagram.blockdefinition.BlockDefinitionDiagramC
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.AssociationEditPart;
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockEditPart;
 import org.eclipse.papyrus.uml.diagram.common.actions.ShowHideContentsAction;
-import org.eclipse.papyrus.uml.diagram.common.actions.AbstractShowHideAction.EditPartRepresentation;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -206,8 +205,9 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	/**
 	 * Resizes the component blocks.
 	 * @param diagramEP the diagram EditPart
+	 * @param displayedBlocks a list of already displayed blocks, to avoid resizing
 	 */
-	private void resizeElements(IGraphicalEditPart diagramEP) {
+	private void resizeElements(IGraphicalEditPart diagramEP, EList<Class> displayedBlocks) {
 
 		// Get all the views of the diagram and loop on them
 		List<?> childrenView = diagramEP.getNotationView().getChildren();
@@ -222,7 +222,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 					View childView = (View) child;
 					final Element semanticElement = (Element) childView.getElement();
 
-					if (entityUtil.isBlock(semanticElement)) {
+					if (entityUtil.isBlock(semanticElement) && !displayedBlocks.contains(semanticElement)) {
 
 						// Enlarge the component but don't position it, arrange will do it later
 						if (childView instanceof CSSShapeImpl) {
@@ -367,8 +367,8 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(diagram);
 		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(completeCmd));
 
-		// Resize the graphical elements
-		resizeElements(diagramEP);
+		// Resize the graphical elements, passing a void list of blocks to avoid
+		resizeElements(diagramEP, new BasicEList<Class>());
 
 		// Select all the blocks avoiding contracts and add them to the list to be enriched
 		selectedElements = new ArrayList<IGraphicalEditPart>();
@@ -422,7 +422,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	 * @param diagramEditPart the diagram editpart
 	 */
 	public void refreshDiagram(IGraphicalEditPart diagramEditPart) {
-		
 		
 		// Get the EditorPart and the active editor
 		IEditorPart editorPart =  PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
@@ -505,11 +504,8 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 			completeCmd.execute();
 		}
 		
-		// Resize the new blocks
-		// Ho bisogno delle View dei blocchi appena creati!
-		
-		//FIXME: devo ridimensionare solo i blocchi nuovi!
-		resizeElements(diagramEditPart);
+		// Resize the blocks, only if not already displayed
+		resizeElements(diagramEditPart, displayedBlocks);
 				
 		// Select all the blocks avoiding contracts and add them to the list to be enriched
 		selectedElements = new ArrayList<IGraphicalEditPart>();
