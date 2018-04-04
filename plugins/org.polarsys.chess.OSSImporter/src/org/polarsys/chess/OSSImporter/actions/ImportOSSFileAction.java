@@ -167,7 +167,7 @@ public class ImportOSSFileAction {
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 	
 	// Will contain elements being added to the model, big enough
-	private EList<Element> addedElements = new BasicEList<>(1000); 
+	private EList<Element> addedElements = new BasicEList<>(2000); 
 	
 	// Stereotype objects needed to customize the elements
 	private Stereotype contractPropertyStereotype;

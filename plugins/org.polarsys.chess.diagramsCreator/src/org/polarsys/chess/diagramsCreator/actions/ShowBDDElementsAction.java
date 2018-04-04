@@ -100,7 +100,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	}
 
 	/**
-	 * Adds a IBD diagram to the given block.
+	 * Adds a BDD diagram to the given block.
 	 * @param owner the selected block
 	 * @throws Exception
 	 */
@@ -112,7 +112,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		// Get the modelSet
 		final ModelSet modelSet = ServiceUtils.getInstance().getModelSet(servicesRegistry);
 
-		// Create a IBD diagram for the selected owner
+		// Create a BDD diagram for the selected owner
 		final BlockDefinitionDiagramCreateCommand command = new BlockDefinitionDiagramCreateCommand();
 		return command.createDiagram(modelSet, owner, owner.getName() + "_BDD");
 	}
@@ -383,7 +383,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		for (Element element : packageChildren) {
 			if (element instanceof Association) {
 				logger.debug("calling showElementIn for Association = " + element);
-				Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1); 
+				final Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1); 
 				completeCmd.add(cmd);
 			}
 		}
