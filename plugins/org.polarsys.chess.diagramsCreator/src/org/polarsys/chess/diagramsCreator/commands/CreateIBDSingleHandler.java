@@ -46,7 +46,7 @@ public class CreateIBDSingleHandler extends AbstractHandler {
 		if (umlObject instanceof Class) {
 			try {
 				final Diagram diagram = action.addIBD((Class) umlObject);
-				action.populateDiagram(diagram, umlObject, sortedPorts);
+				action.populateDiagram(diagram, sortedPorts);
 
 			} catch (Exception e) {
 				e.printStackTrace();

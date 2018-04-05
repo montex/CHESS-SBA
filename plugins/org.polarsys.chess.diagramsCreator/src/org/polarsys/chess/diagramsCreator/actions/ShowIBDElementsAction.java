@@ -14,9 +14,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
@@ -37,27 +40,36 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.papyrus.commands.wrappers.GEFtoEMFCommandWrapper;
+import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.resource.ModelSet;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
 import org.eclipse.papyrus.infra.core.utils.ServiceUtils;
 import org.eclipse.papyrus.infra.emf.utils.ServiceUtilsForResource;
 import org.eclipse.papyrus.infra.gmfdiag.css.CSSShapeImpl;
+import org.eclipse.papyrus.sysml.diagram.common.edit.part.AssociationEditPart;
+import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockEditPart;
+import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockPropertyCompositeEditPart;
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.FlowPortAffixedNodeEditPart;
 import org.eclipse.papyrus.sysml.diagram.internalblock.InternalBlockDiagramCreateCommand;
 import org.eclipse.papyrus.uml.diagram.common.actions.ShowHideContentsAction;
 import org.eclipse.papyrus.uml.diagram.common.commands.ShowHideElementsRequest;
+import org.eclipse.papyrus.uml.diagram.common.edit.part.ConnectorEditPart;
 import org.eclipse.papyrus.uml.diagram.common.edit.part.PortAffixedNodeEditPart;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
+import org.polarsys.chess.service.core.model.ChessSystemModel;
 
 /**
  * This class creates an Internal Block Diagram and populates it with elements
@@ -91,6 +103,20 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	final ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 
 	private boolean sortedPorts; // Sort the ports in alphabetical order
+
+	/** The instance of this class */
+	private static ShowIBDElementsAction classInstance;
+	
+	/**
+	 * Gets an instance of the class if already present, or a new one if not.
+	 * @return the instance of this class
+	 */
+	public static ShowIBDElementsAction getInstance() {
+		if (classInstance == null) {
+			classInstance = new ShowIBDElementsAction();
+		}
+		return classInstance;
+	}
 
 	/**
 	 * Adds a IBD diagram to the given block.
@@ -141,7 +167,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			// If the element is interesting, add it
 			if(entityUtil.isPort(semanticElement) || 
 					entityUtil.isComponentInstance(semanticElement) || 
-					semanticElement instanceof Connector ||
 					contractEntityUtil.isDelegationConstraints(semanticElement)) {
 				result.add(editPartRepresentation);
 			}
@@ -299,9 +324,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	/**
 	 * Draws the ports on the inner instances.
 	 * @param diagramEP the EditPart of the diagram
-	 * @param umlObject the selected UML object
 	 */
-	private void drawComponentInstancesPorts(IGraphicalEditPart diagramEP, Object umlObject) {
+	private void drawComponentInstancesPorts(IGraphicalEditPart diagramEP) {
 		final CompoundCommand command = new CompoundCommand("Draw Component Instances Ports Commands"); //$NON-NLS-1$
 		Property prop = null;
 		Class propertyType = null;
@@ -368,29 +392,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 						}
 					}
 				}
-//				for (Port port : ports) {
-//					if (compartmentView != null) {
-//						
-//						ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
-//						
-//						logger.debug("req = " + request);
-//						
-//						if (entityUtil.isInputPort(port)) {
-//							portLocationLeft.y += INCREMENT;
-//							request.setLocation(new Point(portLocationLeft));
-//						} else {
-//							portLocationRight.y += INCREMENT;
-//							request.setLocation(new Point(portLocationRight));
-//						}
-//
-//						Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);	// Cannot be the diagram EditPart
-//						logger.debug("cmd = " + cmd);
-//						logger.debug("cmd label = " + cmd.getLabel());
-//						if (cmd != null && cmd.canExecute()) {
-//							((CompoundCommand) command).add(cmd);
-//						}
-//					}
-//				}
 			}
 		}
 
@@ -596,26 +597,24 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			logger.debug("Containing property: " + property.getQualifiedName());
 
 			// Get the comparment view of the element 
-			View compartmentView = (View) elementView.getChildren().get(1);
+			final View compartmentView = (View) elementView.getChildren().get(1);
 
 			// Loop on the contained elements
 			for (Object child : compartmentView.getChildren()) {
 				if (child instanceof CSSShapeImpl) {
-					CSSShapeImpl shape = (CSSShapeImpl) child;
+					final CSSShapeImpl shape = (CSSShapeImpl) child;
 					
 					// Check if the element is a property
 					if (shape.getElement() instanceof Property) {
-						Property propertyImpl = (Property) shape.getElement();
+						final Property propertyImpl = (Property) shape.getElement();
 						if (propertyImpl != null) {
-//							logger.debug("\tpropertyImpl qualifiedName = " + propertyImpl.getQualifiedName());
-
 							if (property.getQualifiedName().equals(propertyImpl.getQualifiedName())) {
 
 								// Found the property containing the port, look inside the children
-								EList<?> shapeChildren = shape.getChildren();
+								final EList<?> shapeChildren = shape.getChildren();
 								
 								for (Object childView : shapeChildren) {
-									IGraphicalEditPart ep = (IGraphicalEditPart) getEditPartFromView((View) childView);
+									final IGraphicalEditPart ep = (IGraphicalEditPart) getEditPartFromView((View) childView);
 									if (ep instanceof FlowPortAffixedNodeEditPart || ep instanceof PortAffixedNodeEditPart) {
 										if (role == ep.resolveSemanticElement()) {
 											logger.debug("\nPort found in part, view = "  + ep);
@@ -728,7 +727,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * @param diagram
 	 * @throws ServiceException 
 	 */
-	public void populateDiagram(Diagram diagram, Object umlObject, boolean sortedPorts) {
+	public void populateDiagram(Diagram diagram, boolean sortedPorts) {
 		
 		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		
@@ -766,7 +765,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			final Command command = getActionCommand();		
 			
 			// Execute the commands
-			final TransactionalEditingDomain domain = this.selectedElements.get(0).getEditingDomain();
+			final TransactionalEditingDomain domain = selectedElements.get(0).getEditingDomain();
 			domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
 			
 			// Resize the graphical elements
@@ -774,10 +773,107 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			
 			// Draw the ports on the inner components
 			// NB: labels are put in the wrong place, but if done in another command they are fine!
-			drawComponentInstancesPorts(diagramEP, umlObject);
+			drawComponentInstancesPorts(diagramEP);
 			
 			// Draw the connectors
 			drawConnectors(selectedElementEP);
 		}
+	}
+	
+	/**
+	 * Displays missing elements in the given diagram.
+	 * @param diagramEditPart the diagram editpart
+	 */
+	public void refreshDiagram(IGraphicalEditPart diagramEditPart) {
+		
+		// Get the EditorPart and the active editor
+		final IEditorPart editorPart =  PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		final IEditorPart activeEditor = ((PapyrusMultiDiagramEditor) editorPart).getActiveEditor();
+		
+		// Get all the EditParts of the diagram
+		final Map<?, ?> elements = diagramEditPart.getViewer().getEditPartRegistry();
+		final Object[] editParts = elements.values().toArray();
+
+		final EList<Property> displayedComponentInstances = new BasicEList<Property>();
+		final EList<Connector> displayedConnectors = new BasicEList<Connector>();
+		final EList<Port> displayedPorts = new BasicEList<Port>();
+		
+		// Loop on all the editparts to collect the displayed elements
+		for (int i = 0; i < editParts.length; i++) {
+			System.out.println("\neditpart = " + editParts[i]);
+			if (editParts[i] instanceof IGraphicalEditPart)
+				System.out.println("editpart element = " + ((IGraphicalEditPart) editParts[i]).resolveSemanticElement());
+			if (editParts[i] instanceof BlockPropertyCompositeEditPart) {
+				displayedComponentInstances.add((Property) ((BlockPropertyCompositeEditPart) editParts[i]).resolveSemanticElement());
+			} else if (editParts[i] instanceof ConnectorEditPart) {
+				displayedConnectors.add((Connector) ((ConnectorEditPart) editParts[i]).resolveSemanticElement());
+			} else if (editParts[i] instanceof FlowPortAffixedNodeEditPart) {
+				displayedPorts.add((Port) ((FlowPortAffixedNodeEditPart) editParts[i]).resolveSemanticElement());
+			}
+		}
+
+		for (Property block : displayedComponentInstances) {
+			logger.debug("displayed block = " + block);
+		}
+
+		for (Connector connector : displayedConnectors) {
+			System.out.println("displayed connector = " + connector);
+		}
+		
+		for (Port port : displayedPorts) {
+			System.out.println("displayed port = " + port);
+		}
+		
+		// The main EditPart 
+		final IGraphicalEditPart selectedElementEP = (IGraphicalEditPart) diagramEditPart.getChildren().get(0);
+		logger.debug("\n\nselectedElement EditPart = " + selectedElementEP + "\n\n");
+		System.out.println("element = " + selectedElementEP.resolveSemanticElement());
+
+		// The main element of the diagram
+		final Class mainElement = (Class) selectedElementEP.resolveSemanticElement();
+		
+		// All the existing connectors of the element
+		final EList<Connector>existingConnectors = mainElement.getOwnedConnectors();
+		
+		// All the existing component instances of the element
+		EList<Property> existingComponentInstances = new BasicEList<Property>(entityUtil.getSubComponentsInstances(mainElement));
+		
+		// All the existing ports
+		final EList<Port> existingPorts = mainElement.getOwnedPorts();
+		
+		// All the elements that are not displayed
+		final EList<Element> missingComponentInstances = new BasicEList<Element>();
+		final EList<Element> missingPorts = new BasicEList<Element>();
+		final EList<Element> missingConnectors = new BasicEList<Element>();
+
+		// Loop on the connectors to find those not displayed
+		for (Connector connector : existingConnectors) {
+			if (displayedConnectors.contains(connector)) {
+				logger.debug("connector already present in diagram");
+			} else {
+				logger.debug("connector is not present in diagram: " + connector);
+				missingConnectors.add(connector);
+			}
+		}
+		
+		// Loop on the ports to find those not displayed
+		for (Port port : existingPorts) {
+			if (displayedPorts.contains(port)) {
+				logger.debug("port already present in diagram");
+			} else {
+				logger.debug("port is not present in diagram: " + port);
+				missingPorts.add(port);
+			}
+		}
+		
+		// Loop on the component instances to find those not displayed
+		for (Property property : existingComponentInstances) {
+			if (displayedComponentInstances.contains(property)) {
+				logger.debug("component instance already present in diagram");
+			} else {
+				logger.debug("component instance is not present in diagram: "  + property);
+				missingComponentInstances.add(property);
+			}
+		}		
 	}
 }

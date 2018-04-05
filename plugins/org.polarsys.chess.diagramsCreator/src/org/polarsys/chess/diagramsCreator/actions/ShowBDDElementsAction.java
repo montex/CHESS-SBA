@@ -80,7 +80,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 
 	/** The instance of this class */
 	private static ShowBDDElementsAction classInstance;
-
 	
 	/**
 	 * Gets an instance of the class if already present, or a new one if not.
@@ -92,7 +91,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		}
 		return classInstance;
 	}
-
 	
 	/**
 	 * Tries to show an Element in an EditPart.
@@ -544,7 +542,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 					completeCmd.add(cmd);
 				}
 			} catch (Exception e) {
-				System.err.println("Problems in displaying associations");
+				logger.error("Problems in displaying associations");
 			}
 		}
 		
