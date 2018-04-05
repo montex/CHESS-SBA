@@ -79,6 +79,21 @@
                   </iterate>
                </visibleWhen>
             </command>
+            <command
+                  commandId="org.polarsys.chess.diagramsCreator.commands.refreshIBDHandler"
+                  label="Refresh the current IBD diagram"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.papyrus.sysml.diagram.internalblock.edit.part.InternalBlockDiagramEditPart">
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -203,11 +218,11 @@
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.RefreshBDDHandler"
             id="org.polarsys.chess.diagramsCreator.commands.refreshBDDHandler"
             name="Refresh BDD handler">
-         <commandParameter
-               id="addedElements"
-               name="addedElements"
-               optional="true">
-         </commandParameter>
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.RefreshIBDHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.refreshIBDHandler"
+            name="Refresh IBD handler">
       </command>
    </extension>
 
