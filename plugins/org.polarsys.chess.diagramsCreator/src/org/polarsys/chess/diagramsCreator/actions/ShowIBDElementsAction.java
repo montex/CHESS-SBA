@@ -52,7 +52,9 @@ import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockEditPart;
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockPropertyCompositeEditPart;
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.FlowPortAffixedNodeEditPart;
 import org.eclipse.papyrus.sysml.diagram.internalblock.InternalBlockDiagramCreateCommand;
+import org.eclipse.papyrus.sysml.diagram.internalblock.edit.part.InternalBlockDiagramEditPart;
 import org.eclipse.papyrus.uml.diagram.common.actions.ShowHideContentsAction;
+import org.eclipse.papyrus.uml.diagram.common.actions.AbstractShowHideAction.EditPartRepresentation;
 import org.eclipse.papyrus.uml.diagram.common.commands.ShowHideElementsRequest;
 import org.eclipse.papyrus.uml.diagram.common.edit.part.ConnectorEditPart;
 import org.eclipse.papyrus.uml.diagram.common.edit.part.PortAffixedNodeEditPart;
@@ -172,9 +174,13 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			}
 		}
 		
-		// Add the result to the views to create
+		// Add the result to the views to create, but only if not already displayed
 		for (Object element : result) {
-			if (element instanceof EditPartRepresentation) {
+			if (initialSelection.contains(element)) {
+				
+				// we do nothing
+				continue;
+			} else if (element instanceof EditPartRepresentation) {
 				viewsToCreate.add((EditPartRepresentation) element);
 			}
 		}
@@ -221,11 +227,12 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 */
 	@Override
 	protected Command getActionCommand() {
-		final CompoundCommand completeCmd = new CompoundCommand("Show/Hide Inherited Elements Command"); //$NON-NLS-1$
+		final CompoundCommand completeCmd = new CompoundCommand("Show/Hide Inherited Elements Command");
 		ShowHideElementsRequest request = null;
 
 		// Initial position of the elements
-		final Point propertyLocation = new Point(500, 20);	
+//		final Point propertyLocation = new Point(500, 20);	
+		final Point propertyLocation = new Point(20, 20);	
 		final Point portLocationLeft = new Point(-10, 20);
 		final Point portLocationRight = new Point(-10, 20);
 		
@@ -267,13 +274,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 							portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(element) + 1);
 							request.setLocation(new Point(portLocationRight));
 						}
-//						if (entityUtil.isInputPort(element)) {
-//							portLocationLeft.y += INCREMENT;
-//							request.setLocation(new Point(portLocationLeft));
-//						} else {
-//							portLocationRight.y += INCREMENT;
-//							request.setLocation(new Point(portLocationRight));
-//						}
 					}
 				}
 				Command cmd = editPart.getCommand(request);
@@ -321,12 +321,35 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		return listPorts;
 	}
 	
+	private void drawAllComponentInstancesPorts(IGraphicalEditPart elementEP) {
+		final CompoundCommand command = new CompoundCommand("Draw Component Instances Ports Commands");
+		
+		// Get the compartment edit part
+		final IGraphicalEditPart compartmentEP = (IGraphicalEditPart) elementEP.getChildren().get(1);
+
+		final List<?>compartmentChildren = compartmentEP.getChildren();
+		for (Object childEP : compartmentChildren) {
+			
+			// Get the UML element associated to the EP
+			final EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
+									
+			if (semanticElement instanceof Property) {
+				command.add(drawComponentInstancePorts((IGraphicalEditPart) childEP));
+			}
+		}
+		
+		// Execute the command
+		final TransactionalEditingDomain domain  = elementEP.getEditingDomain();
+		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+	}
+	
+	
 	/**
 	 * Draws the ports on the inner instances.
 	 * @param diagramEP the EditPart of the diagram
 	 */
 	private void drawComponentInstancesPorts(IGraphicalEditPart diagramEP) {
-		final CompoundCommand command = new CompoundCommand("Draw Component Instances Ports Commands"); //$NON-NLS-1$
+		final CompoundCommand command = new CompoundCommand("Draw Component Instances Ports Commands");
 		Property prop = null;
 		Class propertyType = null;
 		View compartmentView = null;
@@ -343,7 +366,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 
 		final List<?>compartmentChildren = compartmentEP.getChildren();
 		for (Object childEP : compartmentChildren) {
-			logger.debug("child of compartment = " + childEP);
 			
 			// Get the UML element associated to the EP
 			final EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
@@ -384,9 +406,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 							request.setLocation(new Point(portLocationRight));
 						}
 
-						final Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);	// Cannot be the diagram EditPart
-						logger.debug("cmd = " + cmd);
-						logger.debug("cmd label = " + cmd.getLabel());
+						final Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);
 						if (cmd != null && cmd.canExecute()) {
 							((CompoundCommand) command).add(cmd);
 						}
@@ -400,6 +420,62 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
 	}
 
+	/**
+	 * Draws the ports on the given component instance.
+	 * @param diagramEP the EditPart of the component instance
+	 */
+	private CompoundCommand drawComponentInstancePorts(IGraphicalEditPart componentInstanceEP) {
+		final CompoundCommand command = new CompoundCommand("Draw Component Instances Ports Commands");
+		Point portLocationLeft = null;
+		Point portLocationRight = null;
+
+		final EObject semanticElement = componentInstanceEP.resolveSemanticElement();
+		
+		// Get the component element type
+		final Class component = (Class) ((Property) semanticElement).getType(); 
+
+		// Get the compartment view of the property
+		final View compartmentView = componentInstanceEP.getNotationView();
+
+		// Set the initial position of the ports
+		portLocationLeft = new Point(-10, 20);
+		portLocationRight = new Point(-10, 20);
+		
+		// Get the width of the component to set the position of output ports
+		final CSSShapeImpl viewShape = (CSSShapeImpl) componentInstanceEP.getNotationView();
+		final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
+		portLocationRight.x += layout.getWidth() + 20;
+
+		// Get the ports of the property
+		final EList<Port> ports = component.getOwnedPorts();
+		final ArrayList<Port> inputPorts = getPorts(ports, true, sortedPorts);
+		final ArrayList<Port> outputPorts = getPorts(ports, false, sortedPorts);
+
+		// Display the ports
+		for (Port port : ports) {
+			if (compartmentView != null) {
+				final ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
+				if (inputPorts.indexOf(port) != -1) {
+					portLocationLeft.y = 20 + INCREMENT * (inputPorts.indexOf(port) + 1);
+					request.setLocation(new Point(portLocationLeft));
+				} else if (outputPorts.indexOf(port) != -1){
+					portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(port) + 1);
+					request.setLocation(new Point(portLocationRight));
+				}
+
+				final Command cmd = componentInstanceEP.getCommand(request);
+				if (cmd != null && cmd.canExecute()) {
+					((CompoundCommand) command).add(cmd);
+				}
+			}
+		}
+
+		return command;
+//		// Execute the commands
+//		final TransactionalEditingDomain domain  = componentInstanceEP.getEditingDomain();
+//		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+	}
+		
 	/**
 	 * Computes the ideal size for the element, depending on its features.
 	 * @param element the Element to analyze
@@ -530,7 +606,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				}
 
 				// Now I should resize also the inner components
-				final EList<?>compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
+				final EList<?> compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
 				EObject semanticElement = null;
 				int offset = 100;
 
@@ -560,6 +636,52 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		});
 	}
 
+	/**
+	 * Resizes the missing component instances.
+	 * @param mainElementEP the editpart of the main element
+	 * @param missingComponentInstances the list of component instances to resize
+	 */
+	private void resizeMissingComponentInstances(IGraphicalEditPart mainElementEP, EList<Property> missingComponentInstances) {
+
+		// Get the view of the main element
+		final View elementView = mainElementEP.getNotationView();
+		
+		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(elementView);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
+
+				final EList<?> compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
+				EObject semanticElement = null;
+				int offset = INCREMENT;
+
+				// Loop on the children on the compartment view
+				for (Object child : compartmentChildren) {
+
+					// Get the UML element associated to the EP
+					semanticElement = ((View) child).getElement();
+
+					if (semanticElement instanceof Property && missingComponentInstances.contains(semanticElement) ) {			
+						if (child instanceof CSSShapeImpl) {
+							final CSSShapeImpl viewShape = (CSSShapeImpl) child;
+							final Bounds layout = NotationFactory.eINSTANCE.createBounds();
+
+							final int[] size = getSize((Property) semanticElement);
+							layout.setWidth(size[0]);
+							layout.setHeight(size[1]);
+							layout.setX(INCREMENT);
+							layout.setY(offset);
+							offset += INCREMENT;
+
+							viewShape.setLayoutConstraint(layout);
+						}
+					}
+				}
+			}
+		});
+	}
+	
 	/**
 	 * Returns the diagram EditPart.
 	 * @return
@@ -773,11 +895,75 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			
 			// Draw the ports on the inner components
 			// NB: labels are put in the wrong place, but if done in another command they are fine!
-			drawComponentInstancesPorts(diagramEP);
+//			drawComponentInstancesPorts(diagramEP);
+			
+			drawAllComponentInstancesPorts(selectedElementEP);
 			
 			// Draw the connectors
 			drawConnectors(selectedElementEP);
 		}
+	}
+	
+	/**
+	 * Draws the missing ports of the given element, on the lower border.
+	 * @param elementEP the EditPart of the element
+	 * @param missingPorts the Ports to be drawn
+	 */
+	private void drawMissingPorts(IGraphicalEditPart elementEP, EList<Port> missingPorts) {
+		final CompoundCommand command = new CompoundCommand("Draw Missing Ports Commands");
+		
+		// Get the compartment view
+		final View compartmentView = elementEP.getNotationView();
+
+		// Loop on the missing ports and draw them, on the lower border
+		for (Port port : missingPorts) {
+			final ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
+				request.setLocation(new Point(missingPorts.indexOf(port) * INCREMENT, 10000));
+
+			final Command cmd = elementEP.getCommand(request);
+			if (cmd != null && cmd.canExecute()) {
+				((CompoundCommand) command).add(cmd);
+			}
+		}
+
+		// Execute the commands
+		final TransactionalEditingDomain domain  = elementEP.getEditingDomain();
+		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+	}
+	
+	/**
+	 * Returns the edit part associated to the given component instance
+	 * @param owner the editpart of the owner element
+	 * @param componentInstance the component instance to process
+	 * @return the edit part of the given component istance
+	 */
+	private IGraphicalEditPart getComponentInstanceEditPart(IGraphicalEditPart owner, Property componentInstance) {
+		
+		// The list of children edit parts, from the container of the owning element
+		final List<?> compartmentChildrenEP = ((EditPart) owner.getChildren().get(1)).getChildren();
+
+		// Loop on the edit parts to find the right one
+		for (Object childEP : compartmentChildrenEP) {
+			if (childEP instanceof IGraphicalEditPart) {
+				final EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
+				if (semanticElement == componentInstance) {
+					return (IGraphicalEditPart) childEP;
+				}
+			}
+		}
+		return null;
+	}	
+	
+	private void drawMissingComponentsPorts(IGraphicalEditPart mainElementEP, EList<Property> missingComponentInstances) {
+		final CompoundCommand command = new CompoundCommand("Draw Component Instances Ports Commands");
+		
+		for (Property componentInstance : missingComponentInstances) {
+			command.add(drawComponentInstancePorts(getComponentInstanceEditPart(mainElementEP, componentInstance)));
+		}
+		
+		// Execute the command
+		final TransactionalEditingDomain domain  = mainElementEP.getEditingDomain();
+		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
 	}
 	
 	/**
@@ -824,13 +1010,11 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			System.out.println("displayed port = " + port);
 		}
 		
-		// The main EditPart 
-		final IGraphicalEditPart selectedElementEP = (IGraphicalEditPart) diagramEditPart.getChildren().get(0);
-		logger.debug("\n\nselectedElement EditPart = " + selectedElementEP + "\n\n");
-		System.out.println("element = " + selectedElementEP.resolveSemanticElement());
+		// The main element EditPart 
+		final IGraphicalEditPart mainElementEP = (IGraphicalEditPart) diagramEditPart.getChildren().get(0);
 
 		// The main element of the diagram
-		final Class mainElement = (Class) selectedElementEP.resolveSemanticElement();
+		final Class mainElement = (Class) mainElementEP.resolveSemanticElement();
 		
 		// All the existing connectors of the element
 		final EList<Connector>existingConnectors = mainElement.getOwnedConnectors();
@@ -838,41 +1022,94 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		// All the existing component instances of the element
 		EList<Property> existingComponentInstances = new BasicEList<Property>(entityUtil.getSubComponentsInstances(mainElement));
 		
-		// All the existing ports
-		final EList<Port> existingPorts = mainElement.getOwnedPorts();
+		// All the existing ports of the main element
+		final EList<Port> existingMainComponentPorts = mainElement.getOwnedPorts();
 		
-		// All the elements that are not displayed
-		final EList<Element> missingComponentInstances = new BasicEList<Element>();
-		final EList<Element> missingPorts = new BasicEList<Element>();
-		final EList<Element> missingConnectors = new BasicEList<Element>();
-
-		// Loop on the connectors to find those not displayed
-		for (Connector connector : existingConnectors) {
-			if (displayedConnectors.contains(connector)) {
-				logger.debug("connector already present in diagram");
-			} else {
-				logger.debug("connector is not present in diagram: " + connector);
-				missingConnectors.add(connector);
-			}
-		}
-		
-		// Loop on the ports to find those not displayed
-		for (Port port : existingPorts) {
+		// Loop on the ports to find those not displayed and draw them
+		final EList<Port> missingMainComponentPorts = new BasicEList<Port>();
+		for (Port port : existingMainComponentPorts) {
 			if (displayedPorts.contains(port)) {
 				logger.debug("port already present in diagram");
 			} else {
 				logger.debug("port is not present in diagram: " + port);
-				missingPorts.add(port);
+				missingMainComponentPorts.add(port);
 			}
 		}
+		drawMissingPorts(mainElementEP, missingMainComponentPorts);
 		
-		// Loop on the component instances to find those not displayed
+		// Loop on the component instances to find those not displayed and draw them
+		final EList<Property> missingComponentInstances = new BasicEList<Property>();
 		for (Property property : existingComponentInstances) {
 			if (displayedComponentInstances.contains(property)) {
 				logger.debug("component instance already present in diagram");
 			} else {
 				logger.debug("component instance is not present in diagram: "  + property);
 				missingComponentInstances.add(property);
+			}
+		}
+		
+		// Setup the variables to draw the component instances
+		selectedElements = new ArrayList<IGraphicalEditPart>();
+		selectedElements.add(mainElementEP);
+
+		host = diagramEditPart;
+		
+		// Call superclass methods to setup the action
+		initAction();
+		buildInitialSelection();
+		
+		// Get a selection with all the possible elements
+		buildSelection();
+
+		// Draw the missing component instances
+		if (selection.size() > 0) {
+
+			// Filter the list to extract only the elements I'm interested in
+			buildShowHideElementsList(selection.toArray());
+
+			// Create the list of commands to display the component instances
+			final Command command = getActionCommand();		
+
+			// Execute the commands
+			final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(diagramEditPart.getNotationView());
+			domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+		}
+
+		// Resize the missing component instances
+		resizeMissingComponentInstances(mainElementEP, missingComponentInstances);
+		
+		// Draw missing ports on displayed component instances
+		for (Property componentInstance : displayedComponentInstances) {
+			
+			// All the existing ports, from the component instance type (block)
+			Class component = (Class) componentInstance.getType();
+			
+			final EList<Port> existingComponentPorts = component.getOwnedPorts();
+
+			// Loop on the ports to find those not displayed and draw them
+			final EList<Port> missingComponentPorts = new BasicEList<Port>();
+			for (Port port : existingComponentPorts) {
+				if (displayedPorts.contains(port)) {
+					logger.debug("port already present in diagram");
+				} else {
+					logger.debug("port is not present in diagram: " + port);
+					missingComponentPorts.add(port);
+				}
+			}
+			drawMissingPorts(getComponentInstanceEditPart(mainElementEP, componentInstance), missingComponentPorts);
+		}
+		
+		// Draw the ports for the new component instances
+		drawMissingComponentsPorts(mainElementEP, missingComponentInstances);
+
+		// Loop on the connectors to find those not displayed
+		final EList<Element> missingConnectors = new BasicEList<Element>();
+		for (Connector connector : existingConnectors) {
+			if (displayedConnectors.contains(connector)) {
+				logger.debug("connector already present in diagram");
+			} else {
+				logger.debug("connector is not present in diagram: " + connector);
+				missingConnectors.add(connector);
 			}
 		}		
 	}
