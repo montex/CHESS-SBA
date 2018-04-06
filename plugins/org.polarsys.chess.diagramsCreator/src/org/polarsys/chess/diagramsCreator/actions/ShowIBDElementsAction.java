@@ -39,19 +39,23 @@ import org.eclipse.gmf.runtime.notation.Bounds;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.gmf.runtime.notation.impl.LocationImpl;
 import org.eclipse.papyrus.commands.wrappers.GEFtoEMFCommandWrapper;
 import org.eclipse.papyrus.infra.core.resource.ModelSet;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.core.services.ServicesRegistry;
 import org.eclipse.papyrus.infra.core.utils.ServiceUtils;
 import org.eclipse.papyrus.infra.emf.utils.ServiceUtilsForResource;
+import org.eclipse.papyrus.infra.gmfdiag.css.CSSDecorationNodeImpl;
 import org.eclipse.papyrus.infra.gmfdiag.css.CSSShapeImpl;
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockPropertyCompositeEditPart;
+import org.eclipse.papyrus.sysml.diagram.common.edit.part.FlowPortAffixedLabelNameEditPart;
 import org.eclipse.papyrus.sysml.diagram.common.edit.part.FlowPortAffixedNodeEditPart;
 import org.eclipse.papyrus.sysml.diagram.internalblock.InternalBlockDiagramCreateCommand;
 import org.eclipse.papyrus.uml.diagram.common.actions.ShowHideContentsAction;
 import org.eclipse.papyrus.uml.diagram.common.commands.ShowHideElementsRequest;
 import org.eclipse.papyrus.uml.diagram.common.edit.part.ConnectorEditPart;
+import org.eclipse.papyrus.uml.diagram.common.edit.part.PortAffixedLabelNameEditPart;
 import org.eclipse.papyrus.uml.diagram.common.edit.part.PortAffixedNodeEditPart;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -831,6 +835,78 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(compoundCommand));
 	}
 	
+	private void adjustPortLabels(IGraphicalEditPart selectedElementEP) {
+		// Get all the EditParts of the diagram
+		final Map<?, ?> elements = getHost().getViewer().getEditPartRegistry();
+		final Object[] editParts = elements.values().toArray();
+
+		final TransactionalEditingDomain domain = 
+				TransactionUtil.getEditingDomain(((IGraphicalEditPart) selectedElementEP).getNotationView());
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
+
+				// Loop on the edit parts to find interesting elements
+				for (int i = 0; i < editParts.length; i++) {				
+					if (editParts[i] instanceof FlowPortAffixedLabelNameEditPart) {
+						
+						// Label containing the name of the port
+						final FlowPortAffixedLabelNameEditPart editPart = (FlowPortAffixedLabelNameEditPart) editParts[i];
+						final CSSDecorationNodeImpl view = (CSSDecorationNodeImpl) editPart.getNotationView();
+						final LocationImpl layout = (LocationImpl) view.getLayoutConstraint();
+						
+						// Get the port owning the label
+						final Port port = (Port) ((FlowPortAffixedLabelNameEditPart) editParts[i]).resolveSemanticElement();
+						final int textLength = port.getName().length() + port.getType().getName().length();
+
+						// Determine the owner and the direction of port to position the label
+						if (EntityUtil.getInstance().isInputPort(port)) {
+							if(editPart.getParent().getParent() == selectedElementEP) {
+								layout.setX(layout.getX() - 55 - 7 * textLength);
+							} else {
+								layout.setX(layout.getX() + 20);
+							}
+						} else {
+							if(editPart.getParent().getParent() == selectedElementEP) {
+								layout.setX(layout.getX() + 20);
+							} else {
+								layout.setX(layout.getX() - 55 - 7 * textLength);
+							}
+						}
+					} else if (editParts[i] instanceof PortAffixedLabelNameEditPart) {
+						
+						// Label containing the name of the port
+						final PortAffixedLabelNameEditPart editPart = (PortAffixedLabelNameEditPart) editParts[i];
+						final CSSDecorationNodeImpl view = (CSSDecorationNodeImpl) editPart.getNotationView();
+						final LocationImpl layout = (LocationImpl) view.getLayoutConstraint();
+						
+						// Get the port owning the label
+						final Port port = (Port) ((PortAffixedLabelNameEditPart) editParts[i]).resolveSemanticElement();
+						final int textLength = port.getName().length() + port.getType().getName().length();
+
+						// Determine the owner and the direction of port to position the label
+						if (EntityUtil.getInstance().isInputPort(port)) {
+							if(editPart.getParent().getParent() == selectedElementEP) {
+								layout.setX(layout.getX() - 30 - 7 * textLength);
+							} else {
+								layout.setX(layout.getX() + 20);
+							}
+						} else {
+							if(editPart.getParent().getParent() == selectedElementEP) {
+								layout.setX(layout.getX() + 20);
+							} else {
+								layout.setX(layout.getX() - 30 - 7 * textLength);
+							}
+						}
+					}
+				}
+			}
+		});
+
+	}
+	
+	
 	/**
 	 * Fills the diagram with graphical components.
 	 * @param diagram
@@ -882,8 +958,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			
 			// Draw the ports on the inner components
 			// NB: labels are put in the wrong place, but if done in another command they are fine!
-//			drawComponentInstancesPorts(diagramEP);
-			
 			drawAllComponentInstancesPorts(selectedElementEP);
 			
 			// Draw all the connectors
@@ -1054,6 +1128,9 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			}
 		}
 
+		// Sort ports by default
+		this.sortedPorts = true;
+		
 		// Draw the missing ports on the main component
 		drawUpdatedMainComponentPorts(mainElementEP, displayedPorts);
 		
@@ -1106,6 +1183,10 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		
 		// Draw the ports for the new component instances
 		drawMissingComponentsPorts(mainElementEP, missingComponentInstances);
+		
+//		adjustPortLabels(mainElementEP);
+		
+
 
 		// All the existing connectors of the main element
 		final EList<Connector>existingConnectors = mainElement.getOwnedConnectors();

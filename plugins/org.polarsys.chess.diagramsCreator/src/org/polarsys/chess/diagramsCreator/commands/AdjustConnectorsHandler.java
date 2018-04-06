@@ -81,16 +81,9 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 			protected void doExecute() {
 
 				// Loop on the edit parts to find interesting elements
-				for (int i = 0; i < editParts.length; i++) {
-					
-//					System.out.println("\neditpart = " + editParts[i]);
-//					if (editParts[i] instanceof IGraphicalEditPart) { 
-//						System.out.println("\teditpart element = " + ((IGraphicalEditPart) editParts[i]).resolveSemanticElement());
-//					}
-//					
+				for (int i = 0; i < editParts.length; i++) {				
 					if (editParts[i] instanceof AppliedStereotypeEmptyEditPart) {
 						if (!showStereotypes) {
-							
 							final Element element = (Element) ((IGraphicalEditPart) editParts[i]).resolveSemanticElement();
 							if (element instanceof Stereotype && !(((Stereotype) element).getName().equals("FlowPort") ||
 									((Stereotype) element).getName().equals("DelegationConstraint"))) {
