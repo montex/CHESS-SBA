@@ -101,4 +101,26 @@
             name="CHESS">
       </category>
    </extension>
+   <extension
+         point="org.eclipse.papyrus.infra.gmfdiag.css.theme">
+      <themeContribution
+            id="org.polarsys.chess.core.chess_theme">
+         <stylesheet
+               stylesheetPath="theme/chess.css">
+         </stylesheet>
+         <stylesheet
+               stylesheetPath="theme/papyrus_theme.css">
+         </stylesheet>
+         <stylesheet
+               stylesheetPath="theme/uml.css">
+         </stylesheet>
+         <stylesheet
+               stylesheetPath="theme/sysml.css">
+         </stylesheet>
+      </themeContribution>
+      <themeDefinition
+            id="org.polarsys.chess.core.chess_theme"
+            label="CHESS theme">
+      </themeDefinition>
+   </extension>
 </plugin>
