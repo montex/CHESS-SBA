@@ -440,14 +440,6 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 				displayedAssociations.add((Association) ((AssociationEditPart) editParts[i]).resolveSemanticElement());
 			}
 		}
-
-//		for (Class block : displayedBlocks) {
-//			logger.debug("displayed block = " + block);
-//		}
-//		
-//		for (Association association : displayedAssociations) {
-//			logger.debug("displayed association = " + association);
-//		}
 		
 		// The package containing the model
 		final Package pkg = displayedBlocks.get(0).getNearestPackage();
