@@ -205,7 +205,6 @@ public class AdjustConnectorsHandler extends AbstractHandler {
 				}
 			}
 		});
-
 		return null;
 	}
 }
