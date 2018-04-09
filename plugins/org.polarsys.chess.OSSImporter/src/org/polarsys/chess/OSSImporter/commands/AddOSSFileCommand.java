@@ -92,7 +92,10 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 					IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					activePage.setEditorAreaVisible(false);
 					try {
-						action.startParsing((Package) umlObject, ossFile);
+						final StringBuffer importErrors = action.startParsing((Package) umlObject, ossFile);
+						if (importErrors.length() != 0) {
+							dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, importErrors.toString());
+						}
 					} catch (ImportException e) {
 						dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, e.getMessage());
 						monitor.done();
@@ -103,7 +106,7 @@ public class AddOSSFileCommand extends AbstractJobCommand implements IHandler {
 						monitor.done();
 						return;
 					}
-					
+										
 					// Restore the active page
 					activePage.setEditorAreaVisible(true);
 					dialogUtil.showMessage_GenericMessage(DIALOG_TITLE, "Import done!");
