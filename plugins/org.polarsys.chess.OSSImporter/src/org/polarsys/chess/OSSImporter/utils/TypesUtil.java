@@ -47,10 +47,10 @@ import eu.fbk.tools.editor.basetype.baseType.RangeType;
  * @author cristofo
  *
  */
-public class TypeUtil {
+public class TypesUtil {
 
 	// The instance of this class
-	private static TypeUtil classInstance;
+	private static TypesUtil classInstance;
 	
 //	private static final String INTEGER_TYPE =			"PrimitiveTypes::Integer";
 //	private static final String REAL_TYPE =				"PrimitiveTypes::Real";	
@@ -89,7 +89,7 @@ public class TypeUtil {
 	private final Profile chessContractLibrary = (Profile) load(URI.createURI("pathmap://CHESSContract/CHESSContract.profile.uml"));
 
 	// Logger for messages
-	private static final Logger logger = Logger.getLogger(TypeUtil.class);
+	private static final Logger logger = Logger.getLogger(TypesUtil.class);
 
 	// Stereotype objects needed to customize the elements
 	public Stereotype contractPropertyStereotype;
@@ -105,9 +105,9 @@ public class TypeUtil {
 	 * Gets an instance of the class if already present, or a new one if not.
 	 * @return the instance of this class
 	 */
-	public static TypeUtil getInstance() {
+	public static TypesUtil getInstance() {
 		if (classInstance == null) {
-			classInstance = new TypeUtil();
+			classInstance = new TypesUtil();
 		}
 		return classInstance;
 	}
