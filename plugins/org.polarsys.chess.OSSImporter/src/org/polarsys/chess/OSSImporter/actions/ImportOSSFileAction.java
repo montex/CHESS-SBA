@@ -99,6 +99,9 @@ public class ImportOSSFileAction {
 	// Logger for messages
 	private static final Logger logger = Logger.getLogger(ImportOSSFileAction.class);
 	
+	// Error messages during parsing
+	private StringBuffer importErrors;
+	
 	/**
 	 * Gets an instance of the class if already present, or a new one if not.
 	 * @return the instance of this class
@@ -501,12 +504,16 @@ public class ImportOSSFileAction {
 					
 					// CONSTRAINT processing
 					//TODO: implement this
-					logger.error("Import Error: Found a CONSTRAINT tag, don't know how to handle it!");
+					final String message = "Found a CONSTRAINT tag, don't know how to handle it!";
+					logger.error("Import Error: " + message);
+					importErrors.append(message + "\n");
 				} else if (dslRefInstance != null && dslRefInstance.getProp() != null) {
 
 					// PROP processing
 					//TODO: implement this
-					logger.error("Import Error: Found a PROP tag, don't know how to handle it!");
+					final String message = "Found a PROP tag, don't know how to handle it!";
+					logger.error("Import Error: " + message);
+					importErrors.append(message + "\n");
 				}
 			}
 		}
@@ -643,7 +650,9 @@ public class ImportOSSFileAction {
 						// Check if there are optional parameters, if yes, it cannot handle them
 						final EList<SimpleType> parameters = ((Parameter) dslVariable).getParameters();
 						if (parameters.size() != 0) {
-							logger.error("Import Error: Cannot handle this type of PARAMETER");
+							final String message = "Cannot handle this type of PARAMETER, don't know how to handle it!";
+							logger.error("Import Error: " + message);
+							importErrors.append(message + "\n");
 						} else {
 							
 							// I should check if the port is already present
@@ -674,13 +683,17 @@ public class ImportOSSFileAction {
 						
 						// PROVIDED OPERATION processing
 						//TODO: implement this
-						logger.error("Import Error: Found a OPERATION tag, don't know how to handle it!");
+						final String message = "Found a OPERATION tag, don't know how to handle it!";
+						logger.error("Import Error: " + message);
+						importErrors.append(message + "\n");
 					}
 				} else if (dslIntInstance != null && dslIntInstance.getDefine() != null) {
 				
 					// DEFINE processing
 					//TODO: implement this
-					logger.error("Import Error: Found a DEFINE tag, don't know how to handle it!");
+					final String message = "Found a DEFINE tag, don't know how to handle it!";
+					logger.error("Import Error: " + message);
+					importErrors.append(message + "\n");
 				} else if (dslIntInstance != null && dslIntInstance.getContract() != null) {
 					
 					// CONTRACT processing					
@@ -792,9 +805,11 @@ public class ImportOSSFileAction {
 	 * Main method to be invoked to parse an OSS file.
 	 * @throws Exception
 	 */
-	public void startParsing(Package pkg, File ossFile) throws Exception, ImportException, IOException {	
+	public StringBuffer startParsing(Package pkg, File ossFile) throws Exception, ImportException, IOException {	
 		OSS ocraOssFile;
 		sysView = pkg;	// Set the given package as working package
+		
+		importErrors = new StringBuffer();
 
 		// Retrieve the needed stereotypes 
 		typeUtil.refreshStereotypes(sysView);
@@ -804,7 +819,7 @@ public class ImportOSSFileAction {
 		if (ossFile != null) {
 			ocraOssFile = OSSModelFactory.getInstance().createOssModel(ossFile);
 		} else {
-			return;
+			return importErrors;
 		}
 
 		// Retrieve the SystemComponent
@@ -946,11 +961,13 @@ public class ImportOSSFileAction {
 		for (Element element : addedElements) {
 			logger.debug("modified element = " + element);
 		}
-		
+				
 		// Propagate the exception, if any
 		if (importException != null) {
 			throw importException;
 		}
+		
+		return importErrors;
 	}
 }
 

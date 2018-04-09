@@ -297,7 +297,7 @@ public class TypesUtil {
 			intLit = (IntegerLiteral) rangeType.getUpperBound();
 			upperBound = Integer.parseInt(intLit.getValue());
 		} else {
-			logger.error("Import Error: Cannot understand the Bounded type limits! " + rangeType);
+			logger.error("Cannot understand the Bounded type limits! " + rangeType);
 			return type;
 		}
 		

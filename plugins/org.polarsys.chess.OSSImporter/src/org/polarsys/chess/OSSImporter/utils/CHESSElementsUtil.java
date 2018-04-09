@@ -157,7 +157,7 @@ public class CHESSElementsUtil {
 		} else if (dslSimpleType instanceof WordArrayType) {
 			logger.debug("WordArrayType");
 		}
-		logger.error("Import Error: Not able to map the requested DSL type!");
+		logger.error("Not able to map the requested DSL type!");
 		return null;
 	}
 	
