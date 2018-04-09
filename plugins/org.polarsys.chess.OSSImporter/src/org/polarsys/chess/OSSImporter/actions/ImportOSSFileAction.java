@@ -186,22 +186,40 @@ public class ImportOSSFileAction {
 		for (Connector connector : connectors) {
 			final EList<ConnectorEnd> ends = connector.getEnds();
 			if (ends.size() == 2) {
+				
+				// Check the first end
 				final Property sourceOwner = ends.get(0).getPartWithPort();	// Should be the owner of the port
 				final org.eclipse.uml2.uml.Port sourcePort = (org.eclipse.uml2.uml.Port) ends.get(0).getRole();	// Should be the port
-				
-				if (sourcePort.getName().equals(constraintPortName) && (sourceOwner == null || sourceOwner.getName().equals(constraintPortOwner))) {
 
-					// One end is correct, go on with the second
-					final Property targetOwner = ends.get(1).getPartWithPort();	// Should be the owner of the port
-					final org.eclipse.uml2.uml.Port targetPort = (org.eclipse.uml2.uml.Port) ends.get(1).getRole();	// Should be the port
-
-					if (targetPort.getName().equals(variablePortName) && (targetOwner == null || targetOwner.getName().equals(variablePortOwner))) {
-						return connector;					
+				if (sourcePort.getName().equals(constraintPortName)) {
+					if (sourceOwner != null && sourceOwner.getName().equals(constraintPortOwner)) {
+					} else if (sourceOwner == null && constraintPortOwner == null) {
+					} else {
+						continue;					
 					}
-				}					
+				} else {
+					continue;
+				}
+
+				// One end is correct, go on with the second
+				final Property targetOwner = ends.get(1).getPartWithPort();	// Should be the owner of the port
+				final org.eclipse.uml2.uml.Port targetPort = (org.eclipse.uml2.uml.Port) ends.get(1).getRole();	// Should be the port
+
+				if (targetPort.getName().equals(variablePortName)) {
+					if (targetOwner != null && targetOwner.getName().equals(variablePortOwner)) {
+					} else if (targetOwner == null && variablePortOwner == null) {
+					} else {
+						continue;
+					}
+				} else {
+					continue;
+				}
+				
+				// Connector found
+				return connector;
 			}
 		}
-		return null;	
+		return null;
 	}
 	
 	/**
