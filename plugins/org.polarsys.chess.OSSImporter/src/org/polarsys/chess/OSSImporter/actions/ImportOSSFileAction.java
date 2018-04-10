@@ -373,7 +373,7 @@ public class ImportOSSFileAction {
 					logger.debug("connector is not present");
 
 					// Create the source end
-					if (constraint instanceof PortId) {	//FIXME: there is also ParameterId
+					if (constraint instanceof PortId) {
 						
 						// Create a connector, but only after I'm sure it isn't a delegation constraint
 						connector = chessElementsUtils.createConnector(owner);
@@ -404,6 +404,12 @@ public class ImportOSSFileAction {
 						final String portName = ((PortId) variable).getName();					
 						logger.debug("Creating target end " + portOwner + ":" + portName);
 						createConnectorEnd(owner, connector, portOwner, portName);
+					} else if (variable instanceof ParameterId) {
+						
+						// ParameterId not handled
+						final String message = "Found ParameterId, don't know how to handle it!";
+						logger.error("Import Error: " + message);
+						importErrors.append(message + "\n");
 					}
 					
 					// At last, add the connector to the owner
@@ -475,14 +481,12 @@ public class ImportOSSFileAction {
 				} else if (dslRefInstance != null && dslRefInstance.getFormula() != null) {
 					
 					// CONSTRAINT processing
-					//TODO: implement this
 					final String message = "Found a CONSTRAINT tag, don't know how to handle it!";
 					logger.error("Import Error: " + message);
 					importErrors.append(message + "\n");
 				} else if (dslRefInstance != null && dslRefInstance.getProp() != null) {
 
 					// PROP processing
-					//TODO: implement this
 					final String message = "Found a PROP tag, don't know how to handle it!";
 					logger.error("Import Error: " + message);
 					importErrors.append(message + "\n");
@@ -654,7 +658,6 @@ public class ImportOSSFileAction {
 					} else if (dslVariable instanceof Operation) {
 						
 						// PROVIDED OPERATION processing
-						//TODO: implement this
 						final String message = "Found a OPERATION tag, don't know how to handle it!";
 						logger.error("Import Error: " + message);
 						importErrors.append(message + "\n");
@@ -662,7 +665,6 @@ public class ImportOSSFileAction {
 				} else if (dslIntInstance != null && dslIntInstance.getDefine() != null) {
 				
 					// DEFINE processing
-					//TODO: implement this
 					final String message = "Found a DEFINE tag, don't know how to handle it!";
 					logger.error("Import Error: " + message);
 					importErrors.append(message + "\n");
@@ -943,9 +945,4 @@ public class ImportOSSFileAction {
 	}
 }
 
-//TODO:	per ogni diagramma, vedo se per ogni componente del diagramma c'e' qualcosa dentro changes che andrebbe
-//      visualizzato.
-
 //TODO: andrebbero rimossi anche i tipi creati, signal, enumeration, boundedsubtype, formal properties, ...
-
-
