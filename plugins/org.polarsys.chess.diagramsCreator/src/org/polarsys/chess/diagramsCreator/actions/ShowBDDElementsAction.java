@@ -441,6 +441,11 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 			}
 		}
 		
+		// If no blocks are found exit from refresh
+		if (displayedBlocks.size() == 0) {
+			return;
+		}
+		
 		// The package containing the model
 		final Package pkg = displayedBlocks.get(0).getNearestPackage();
 		
