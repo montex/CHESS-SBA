@@ -834,79 +834,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		final TransactionalEditingDomain domain = elementEP.getEditingDomain();
 		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(compoundCommand));
 	}
-	
-	private void adjustPortLabels(IGraphicalEditPart selectedElementEP) {
-		// Get all the EditParts of the diagram
-		final Map<?, ?> elements = getHost().getViewer().getEditPartRegistry();
-		final Object[] editParts = elements.values().toArray();
-
-		final TransactionalEditingDomain domain = 
-				TransactionUtil.getEditingDomain(((IGraphicalEditPart) selectedElementEP).getNotationView());
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-
-				// Loop on the edit parts to find interesting elements
-				for (int i = 0; i < editParts.length; i++) {				
-					if (editParts[i] instanceof FlowPortAffixedLabelNameEditPart) {
-						
-						// Label containing the name of the port
-						final FlowPortAffixedLabelNameEditPart editPart = (FlowPortAffixedLabelNameEditPart) editParts[i];
-						final CSSDecorationNodeImpl view = (CSSDecorationNodeImpl) editPart.getNotationView();
-						final LocationImpl layout = (LocationImpl) view.getLayoutConstraint();
-						
-						// Get the port owning the label
-						final Port port = (Port) ((FlowPortAffixedLabelNameEditPart) editParts[i]).resolveSemanticElement();
-						final int textLength = port.getName().length() + port.getType().getName().length();
-
-						// Determine the owner and the direction of port to position the label
-						if (EntityUtil.getInstance().isInputPort(port)) {
-							if(editPart.getParent().getParent() == selectedElementEP) {
-								layout.setX(layout.getX() - 55 - 7 * textLength);
-							} else {
-								layout.setX(layout.getX() + 20);
-							}
-						} else {
-							if(editPart.getParent().getParent() == selectedElementEP) {
-								layout.setX(layout.getX() + 20);
-							} else {
-								layout.setX(layout.getX() - 55 - 7 * textLength);
-							}
-						}
-					} else if (editParts[i] instanceof PortAffixedLabelNameEditPart) {
-						
-						// Label containing the name of the port
-						final PortAffixedLabelNameEditPart editPart = (PortAffixedLabelNameEditPart) editParts[i];
-						final CSSDecorationNodeImpl view = (CSSDecorationNodeImpl) editPart.getNotationView();
-						final LocationImpl layout = (LocationImpl) view.getLayoutConstraint();
-						
-						// Get the port owning the label
-						final Port port = (Port) ((PortAffixedLabelNameEditPart) editParts[i]).resolveSemanticElement();
-						final int textLength = port.getName().length() + port.getType().getName().length();
-
-						// Determine the owner and the direction of port to position the label
-						if (EntityUtil.getInstance().isInputPort(port)) {
-							if(editPart.getParent().getParent() == selectedElementEP) {
-								layout.setX(layout.getX() - 30 - 7 * textLength);
-							} else {
-								layout.setX(layout.getX() + 20);
-							}
-						} else {
-							if(editPart.getParent().getParent() == selectedElementEP) {
-								layout.setX(layout.getX() + 20);
-							} else {
-								layout.setX(layout.getX() - 30 - 7 * textLength);
-							}
-						}
-					}
-				}
-			}
-		});
-
-	}
-	
-	
+		
 	/**
 	 * Fills the diagram with graphical components.
 	 * @param diagram
@@ -1034,6 +962,57 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	}
 	
 	/**
+	 * Moves up the position of the newly added ports. 
+	 * @param elementEP the editpart of the element
+	 * @param missingPorts the list of ports to adjust
+	 */
+	private void adjustMissingPortsLabels(IGraphicalEditPart elementEP, EList<Port> missingPorts) {
+		
+		// Get all the EditParts of the element
+		final Map<?, ?> elements = elementEP.getViewer().getEditPartRegistry();
+		final Object[] editParts = elements.values().toArray();
+		
+		final TransactionalEditingDomain domain = 
+				TransactionUtil.getEditingDomain(((IGraphicalEditPart) elementEP).getNotationView());
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
+		
+				for (int i = 0; i < editParts.length; i++) {				
+					if (editParts[i] instanceof FlowPortAffixedLabelNameEditPart) {
+
+						// Label containing the name of the port
+						final FlowPortAffixedLabelNameEditPart labelEditPart = (FlowPortAffixedLabelNameEditPart) editParts[i];
+						final CSSDecorationNodeImpl view = (CSSDecorationNodeImpl) labelEditPart.getNotationView();
+						final LocationImpl layout = (LocationImpl) view.getLayoutConstraint();
+
+						// Get the port owning the label
+						final Port port = (Port) ((FlowPortAffixedLabelNameEditPart) editParts[i]).resolveSemanticElement();
+
+						if (missingPorts.contains(port)) {
+							layout.setY(layout.getY() - 20);
+						}
+					} else if (editParts[i] instanceof PortAffixedLabelNameEditPart) {
+						
+						// Label containing the name of the port
+						final PortAffixedLabelNameEditPart editPart = (PortAffixedLabelNameEditPart) editParts[i];
+						final CSSDecorationNodeImpl view = (CSSDecorationNodeImpl) editPart.getNotationView();
+						final LocationImpl layout = (LocationImpl) view.getLayoutConstraint();
+
+						// Get the port owning the label
+						final Port port = (Port) ((PortAffixedLabelNameEditPart) editParts[i]).resolveSemanticElement();
+
+						if (missingPorts.contains(port)) {
+							layout.setY(layout.getY() - 20);
+						}
+					}
+				}
+			}
+		});
+	}
+		
+	/**
 	 * Draws the ports that are missing for the given component instances.
 	 * @param mainElementEP the editpart of the main element
 	 * @param displayedComponentInstances the list of component instances to enrich
@@ -1041,7 +1020,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 */
 	private void drawUpdatedComponentInstancesPorts(IGraphicalEditPart mainElementEP, EList<Property> displayedComponentInstances, EList<Port> displayedPorts) {
 		final CompoundCommand command = new CompoundCommand("Draw Component Instances Ports Commands");
-
+		final EList<Port> totalMissingComponentPorts = new BasicEList<Port>();
+		
 		for (Property componentInstance : displayedComponentInstances) {
 			
 			// All the existing ports, from the component instance type (block)
@@ -1057,18 +1037,24 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				} else {
 					logger.debug("port is not present in diagram: " + port);
 					missingComponentPorts.add(port);
+					totalMissingComponentPorts.add(port);
 				}
 			}
-			command.add(drawMissingPorts(getComponentInstanceEditPart(mainElementEP, componentInstance), missingComponentPorts));
+			if (missingComponentPorts.size() > 0) {
+				command.add(drawMissingPorts(getComponentInstanceEditPart(mainElementEP, componentInstance), missingComponentPorts));
+			}
 		}
 		
 		// Execute the command
 		final TransactionalEditingDomain domain  = mainElementEP.getEditingDomain();
 		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+		
+		// Ajust the labels of the newly created ports
+		adjustMissingPortsLabels(mainElementEP, totalMissingComponentPorts);
 	}
 	
 	/**
-	 * Draws the ports that are missing for the given component.
+	 * Draws the ports that are missing for the given main component.
 	 * @param mainElementEP the editpart of the element
 	 * @param existingMainComponentPorts the list ports already present
 	 * @param displayedPorts the list of ports that are already present on the diagram
@@ -1094,6 +1080,9 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		// Execute the command
 		final TransactionalEditingDomain domain  = mainElementEP.getEditingDomain();
 		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+		
+		// Ajust the labels of the newly created ports
+		adjustMissingPortsLabels(mainElementEP, missingMainComponentPorts);
 	}
 
 	/**
