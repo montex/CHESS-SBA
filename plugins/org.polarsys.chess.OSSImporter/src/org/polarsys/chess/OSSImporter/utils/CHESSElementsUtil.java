@@ -579,7 +579,7 @@ public class CHESSElementsUtil {
 	ModelExplorerView modelExplorerView;
 	
 	/**
-	 * Returns the ModelExplorerView
+	 * Returns the ModelExplorerView.
 	 * @return
 	 */
 	private ModelExplorerView getModelExplorerView() {
@@ -607,7 +607,7 @@ public class CHESSElementsUtil {
 	}
 
 	/**
-	 * Returns the handler for the given command
+	 * Returns the handler for the given command.
 	 * @param commandId the command
 	 * @return the handler
 	 */
@@ -620,7 +620,7 @@ public class CHESSElementsUtil {
 	}
 
 	/**
-	 * Deletes an element from the model
+	 * Deletes an element from the model.
 	 * @param element the element to remove
 	 * @throws Exception
 	 */
@@ -640,7 +640,7 @@ public class CHESSElementsUtil {
 	}
 
 	/**
-	 * Removes a contract property from the list
+	 * Removes a contract property from the list.
 	 * @param members the list of members
 	 * @param qualifiedElement the qualified name of the contract property to remove
 	 */
@@ -660,7 +660,7 @@ public class CHESSElementsUtil {
 	}
 
 	/**
-	 * Removes a named element from the given list
+	 * Removes a named element from the given list.
 	 * @param members the list of members
 	 * @param qualifiedElement the qualified name of the element to remove
 	 */
@@ -681,7 +681,7 @@ public class CHESSElementsUtil {
 	}
 
 	/**
-	 * Removes a property from the list
+	 * Removes a property from the list.
 	 * @param members the list of members
 	 * @param qualifiedElement the qualified name of the  property to remove
 	 */
@@ -690,7 +690,7 @@ public class CHESSElementsUtil {
 	}
 
 	/**
-	 * Removes a property from the list
+	 * Removes a property from the list.
 	 * @param members the list of members
 	 * @param qualifiedElement the qualified name of the  property to remove
 	 */
@@ -699,7 +699,7 @@ public class CHESSElementsUtil {
 	}
 	
 	/**
-	 * Removes a port from the list
+	 * Removes a port from the list.
 	 * @param members the list of members
 	 * @param qualifiedElement the qualified name of the port to remove
 	 */
@@ -708,7 +708,7 @@ public class CHESSElementsUtil {
 	}
 	
 	/**
-	 * Removes a delegation constraint from the list
+	 * Removes a delegation constraint from the list.
 	 * @param members the list of members
 	 * @param qualifiedElement the qualified name of the delegation constraint to remove
 	 */
@@ -717,7 +717,7 @@ public class CHESSElementsUtil {
 	}
 
 	/**
-	 * Removes a contract refinement from the list
+	 * Removes a contract refinement from the list.
 	 * @param members the list of members
 	 * @param qualifiedElement the qualified name of the contract refinement to remove
 	 */
@@ -726,7 +726,7 @@ public class CHESSElementsUtil {
 	}
 
 	/**
-	 * Removes an element from the list
+	 * Removes an element from the list.
 	 * @param members the list of members
 	 * @param qualifiedElement the qualified name of the element to remove
 	 */
