@@ -1,0 +1,54 @@
+/*Add multiplicity to the Port label in all diagrams*/ 
+Port {
+	maskLabel: direction name type multiplicity;
+}
+
+/*Hide stereotype labels in IBD */
+InternalBlockDiagram Label[type=StereotypeLabel]{
+	visible: false;
+}
+
+/*Hide stereotype labels for flowports */
+[appliedStereotypes~=FlowPort] > Label:StereotypeLabel{ 
+	visible:false;
+}
+
+/*Add multiplicity to the subcomponent label in IBD*/ 
+InternalBlockDiagram Property {
+	maskLabel: name type multiplicity;
+}
+
+/*Shows the transition guard instead of "..." */
+Transition > Label {
+bodyCutLength: 5;
+indicateParameters: true;
+}
+Transition { /* for internal transitions */
+bodyCutLength: 5;
+indicateParameters: true;
+}
+
+
+/*Hide the labels sourceMultiplicity and targetMultiplicity of the association*/
+Association > Label:sourceMultiplicity {
+	visible:false;
+} 
+Association > Label:targetMultiplicity {
+	visible:false;
+}
+
+/*Add multiplicity to the association labels*/ 
+Association > Label:sourceRole {
+	maskLabel: name multiplicity;
+} 
+Association > Label:targetRole {
+	maskLabel: name multiplicity;
+}
+ 
+/*Hide the label name of the association*/
+Association > Label:name {
+	visible:false;
+}
+Connector > Label:name {
+	visible:false;
+}
