@@ -66,7 +66,7 @@
             </command>
             <command
                   commandId="org.polarsys.chess.diagramsCreator.commands.refreshBDDHandler"
-                  label="Refresh the current BDD diagram"
+                  label="Update the current BDD diagram"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
@@ -81,7 +81,7 @@
             </command>
             <command
                   commandId="org.polarsys.chess.diagramsCreator.commands.refreshIBDHandler"
-                  label="Refresh the current IBD diagram"
+                  label="Update the current IBD diagram"
                   style="push">
                <visibleWhen
                      checkEnabled="false">
