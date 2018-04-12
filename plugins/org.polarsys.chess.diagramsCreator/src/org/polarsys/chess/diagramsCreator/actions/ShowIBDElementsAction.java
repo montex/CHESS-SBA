@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.draw2d.geometry.Point;
@@ -100,20 +98,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	final ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 
 	private boolean sortedPorts; // Sort the ports in alphabetical order
-
-	/** The instance of this class */
-	private static ShowIBDElementsAction classInstance;
-	
-	/**
-	 * Gets an instance of the class if already present, or a new one if not.
-	 * @return the instance of this class
-	 */
-	public static ShowIBDElementsAction getInstance() {
-		if (classInstance == null) {
-			classInstance = new ShowIBDElementsAction();
-		}
-		return classInstance;
-	}
 
 	/**
 	 * Adds a IBD diagram to the given block.
@@ -269,6 +253,13 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 							portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(element) + 1);
 							request.setLocation(new Point(portLocationRight));
 						}
+//						if (entityUtil.isInputPort(element)) {
+//							portLocationLeft.y += INCREMENT;
+//							request.setLocation(new Point(portLocationLeft));
+//						} else {
+//							portLocationRight.y += INCREMENT;
+//							request.setLocation(new Point(portLocationRight));
+//						}
 					}
 				}
 				Command cmd = editPart.getCommand(request);
@@ -286,6 +277,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * @param inputType true to get input direction, false for the rest
 	 * @param sorted true to get an alphabetically ordered list
 	 * @return the list of requested ports
+
 	 */
 	private ArrayList<Port> getPorts(EList<Port> ports, boolean inputType, boolean sorted) {
 		ArrayList<Port> listPorts = new ArrayList<Port>();
@@ -316,17 +308,29 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		return listPorts;
 	}
 	
-	private void drawAllComponentInstancesPorts(IGraphicalEditPart elementEP) {
-		final CompoundCommand command = new CompoundCommand("Draw Component Instances Ports Commands");
+	/**
+	 * Draws the ports on the inner instances.
+	 * @param diagramEP the EditPart of the diagram
+	 * @param umlObject the selected UML object
+	 */
+	private ArrayList<Port> getPorts(EList<Port> ports, boolean inputType, boolean sorted) {
+		ArrayList<Port> listPorts = new ArrayList<Port>();
+
+		// Get the edit part of the main element, from the diagram edit part
+		final IGraphicalEditPart elementEP = (IGraphicalEditPart) diagramEP.getChildren().get(0);
 		
 		// Get the compartment edit part
 		final IGraphicalEditPart compartmentEP = (IGraphicalEditPart) elementEP.getChildren().get(1);
+		
+		logger.debug("\nCompartment edit part = " + compartmentEP);
 
 		final List<?>compartmentChildren = compartmentEP.getChildren();
 		for (Object childEP : compartmentChildren) {
 			
 			// Get the UML element associated to the EP
 			final EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
+
+			logger.debug("SemanticElement of compartment = " + semanticElement);
 									
 			if (semanticElement instanceof Property) {
 				command.add(drawComponentInstancePorts((IGraphicalEditPart) childEP));
@@ -425,44 +429,63 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		Point portLocationLeft = null;
 		Point portLocationRight = null;
 
-		final EObject semanticElement = componentInstanceEP.resolveSemanticElement();
-		
-		// Get the component element type
-		final Class component = (Class) ((Property) semanticElement).getType(); 
+				// Set the initial position of the ports
+				portLocationLeft = new Point(-10, 20);
+				portLocationRight = new Point(-10, 20);
+				
+				// Get the width of the component to set the position of output ports
+				final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) childEP).getNotationView();
+				final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
+				portLocationRight.x += layout.getWidth() + 20;
 
-		// Get the compartment view of the property
-		final View compartmentView = componentInstanceEP.getNotationView();
+				// Get the ports of the property
+				final EList<Port> ports = propertyType.getOwnedPorts();
+				final ArrayList<Port> inputPorts = getPorts(ports, true, sortedPorts);
+				final ArrayList<Port> outputPorts = getPorts(ports, false, sortedPorts);
 
-		// Set the initial position of the ports
-		portLocationLeft = new Point(-10, 20);
-		portLocationRight = new Point(-10, 20);
-		
-		// Get the width of the component to set the position of output ports
-		final CSSShapeImpl viewShape = (CSSShapeImpl) componentInstanceEP.getNotationView();
-		final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
-		portLocationRight.x += layout.getWidth() + 20;
+				// Display the ports
+				for (Port port : ports) {
+					if (compartmentView != null) {
+						final ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
+						if (inputPorts.indexOf(port) != -1) {
+							portLocationLeft.y = 20 + INCREMENT * (inputPorts.indexOf(port) + 1);
+							request.setLocation(new Point(portLocationLeft));
+						} else if (outputPorts.indexOf(port) != -1){
+							portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(port) + 1);
+							request.setLocation(new Point(portLocationRight));
+						}
 
-		// Get the ports of the property
-		final EList<Port> ports = component.getOwnedPorts();
-		final ArrayList<Port> inputPorts = getPorts(ports, true, sortedPorts);
-		final ArrayList<Port> outputPorts = getPorts(ports, false, sortedPorts);
-
-		// Display the ports
-		for (Port port : ports) {
-			if (compartmentView != null) {
-				final ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
-				if (inputPorts.indexOf(port) != -1) {
-					portLocationLeft.y = 20 + INCREMENT * (inputPorts.indexOf(port) + 1);
-					request.setLocation(new Point(portLocationLeft));
-				} else if (outputPorts.indexOf(port) != -1){
-					portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(port) + 1);
-					request.setLocation(new Point(portLocationRight));
+						final Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);	// Cannot be the diagram EditPart
+						logger.debug("cmd = " + cmd);
+						logger.debug("cmd label = " + cmd.getLabel());
+						if (cmd != null && cmd.canExecute()) {
+							((CompoundCommand) command).add(cmd);
+						}
+					}
 				}
-
-				final Command cmd = componentInstanceEP.getCommand(request);
-				if (cmd != null && cmd.canExecute()) {
-					((CompoundCommand) command).add(cmd);
-				}
+//				for (Port port : ports) {
+//					if (compartmentView != null) {
+//						
+//						ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
+//						
+//						logger.debug("req = " + request);
+//						
+//						if (entityUtil.isInputPort(port)) {
+//							portLocationLeft.y += INCREMENT;
+//							request.setLocation(new Point(portLocationLeft));
+//						} else {
+//							portLocationRight.y += INCREMENT;
+//							request.setLocation(new Point(portLocationRight));
+//						}
+//
+//						Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);	// Cannot be the diagram EditPart
+//						logger.debug("cmd = " + cmd);
+//						logger.debug("cmd label = " + cmd.getLabel());
+//						if (cmd != null && cmd.canExecute()) {
+//							((CompoundCommand) command).add(cmd);
+//						}
+//					}
+//				}
 			}
 		}
 
@@ -472,6 +495,107 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 //		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
 	}
 		
+	/**
+	 * Computes the ideal size for the element, depending on its features.
+	 * @param element the Element to analyze
+	 * @return an array with ideal dimensions
+	 */
+	private int[] getSize(Element element) {
+		int width = 0;
+		int height = 60;
+		final int[] size = new int[2];
+		int inputPorts = 0;
+		int outputPorts = 0;
+		EList<Port> ports;
+		int maxLengthInput = 0;
+		int maxLengthOutput = 0;
+		boolean isMain = false;
+		
+		if (element instanceof Property) {
+			
+			// Subcomponent, get the length of its name
+			Property property = (Property) element;
+//			maxLengthInput = property.getName().length();
+//			maxLengthInput += property.getType().getName().length();
+			
+			// Get the ports of the component
+			ports = ((Class) property.getType()).getOwnedPorts();
+		} else {
+			
+			// Main component
+			isMain = true;
+
+			// Get the ports of the component
+			ports = ((Class) element).getOwnedPorts();
+		}
+		
+		// Count the number of input and output ports and their length
+		for (Port port : ports) {
+			if (entityUtil.isInputPort(port)) {
+				inputPorts++;
+				
+				// Get the text size for enlarging the box
+				int textLength = port.getName().length();
+				textLength += port.getType().getName().length();
+				if (textLength > maxLengthInput) {
+					maxLengthInput = textLength;
+				}
+			} else {
+				outputPorts++;
+				
+				// Get the text size for enlarging the box
+				int textLength = port.getName().length();
+				textLength += port.getType().getName().length();
+				if (textLength > maxLengthOutput) {
+					maxLengthOutput = textLength;
+				}
+			}
+		}
+		
+		// Empirical value for the width of the element
+		width = (int) Math.round(100 + 7.5 * (maxLengthInput + maxLengthOutput));
+		
+		// Compute the height of the element based on number of ports
+		if (inputPorts > outputPorts) {
+			height += INCREMENT * inputPorts;
+		} else {
+			height += INCREMENT * outputPorts;
+		}
+		
+		logger.debug("Element width = " + width);
+		logger.debug("Element height = " + height);
+		
+		// Check box limits
+		if (isMain) {
+			size[0] = MAIN_WIDTH;
+			
+			if (height < MIN_MAIN_HEIGHT) {
+				size[1] = MIN_MAIN_HEIGHT;
+			} else if (height > MAX_MAIN_HEIGHT) {
+				size[1] = MAX_MAIN_HEIGHT;
+			} else {
+				size[1] = height;
+			}
+		} else {
+			if (width < MIN_SUB_WIDTH) {
+				size[0] = MIN_SUB_WIDTH;
+			} else if (width > MAX_SUB_WIDTH) {
+				size[0] = MAX_SUB_WIDTH;
+			} else {
+				size[0] = width;
+			}
+			
+			if (height < MIN_SUB_HEIGHT) {
+				size[1] = MIN_SUB_HEIGHT;
+			} else if (height > MAX_SUB_HEIGHT) {
+				size[1] = MAX_SUB_HEIGHT;
+			} else {
+				size[1] = height;
+			}
+		}
+		return size;
+	}
+
 	/**
 	 * Computes the ideal size for the element, depending on its features.
 	 * @param element the Element to analyze
@@ -602,7 +726,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				}
 
 				// Now I should resize also the inner components
-				final EList<?> compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
+				final EList<?>compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
 				EObject semanticElement = null;
 				int offset = 100;
 
@@ -623,7 +747,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 							layout.setX(offset);
 							layout.setY(200);
 							offset += 250;
-
 							viewShape.setLayoutConstraint(layout);
 						}
 					}
@@ -632,52 +755,6 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		});
 	}
 
-	/**
-	 * Resizes the missing component instances.
-	 * @param mainElementEP the editpart of the main element
-	 * @param missingComponentInstances the list of component instances to resize
-	 */
-	private void resizeMissingComponentInstances(IGraphicalEditPart mainElementEP, EList<Property> missingComponentInstances) {
-
-		// Get the view of the main element
-		final View elementView = mainElementEP.getNotationView();
-		
-		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(elementView);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-
-				final EList<?> compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
-				EObject semanticElement = null;
-				int offset = INCREMENT;
-
-				// Loop on the children on the compartment view
-				for (Object child : compartmentChildren) {
-
-					// Get the UML element associated to the EP
-					semanticElement = ((View) child).getElement();
-
-					if (semanticElement instanceof Property && missingComponentInstances.contains(semanticElement) ) {			
-						if (child instanceof CSSShapeImpl) {
-							final CSSShapeImpl viewShape = (CSSShapeImpl) child;
-							final Bounds layout = NotationFactory.eINSTANCE.createBounds();
-
-							final int[] size = getSize((Property) semanticElement);
-							layout.setWidth(size[0]);
-							layout.setHeight(size[1]);
-							layout.setX(INCREMENT);
-							layout.setY(offset);
-							offset += INCREMENT;
-
-							viewShape.setLayoutConstraint(layout);
-						}
-					}
-				}
-			}
-		});
-	}
-	
 	/**
 	 * Returns the diagram EditPart.
 	 * @return
@@ -840,7 +917,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * @param diagram
 	 * @throws ServiceException 
 	 */
-	public void populateDiagram(Diagram diagram, boolean sortedPorts) {
+
+	public void populateDiagram(Diagram diagram, Object umlObject, boolean sortedPorts) {
 		
 		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		

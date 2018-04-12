@@ -214,16 +214,6 @@
                optional="true">
          </commandParameter>
       </command>
-      <command
-            defaultHandler="org.polarsys.chess.diagramsCreator.commands.RefreshBDDHandler"
-            id="org.polarsys.chess.diagramsCreator.commands.refreshBDDHandler"
-            name="Refresh BDD handler">
-      </command>
-      <command
-            defaultHandler="org.polarsys.chess.diagramsCreator.commands.RefreshIBDHandler"
-            id="org.polarsys.chess.diagramsCreator.commands.refreshIBDHandler"
-            name="Refresh IBD handler">
-      </command>
    </extension>
 
 </plugin>
