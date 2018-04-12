@@ -15,6 +15,7 @@ import java.util.Collection;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gmf.runtime.diagram.ui.OffscreenEditPartFactory;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
@@ -37,6 +38,7 @@ import org.polarsys.chess.diagramsCreator.actions.ShowIBDElementsAction;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Class;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 import eu.fbk.eclipse.standardtools.xtextService.ui.services.RuntimeErrorService;
@@ -137,13 +139,27 @@ public class ImportOSSFileCommand extends AbstractJobCommand implements IHandler
 					
 					boolean showMessage = false;
 					for (Diagram diagram : chessDiagrams) {
+						
+						// Get the package owner of the diagram
+						Package activePackage = null;
+						final EObject diagramElement = diagram.getElement();
+						if (diagramElement instanceof Package) {
+							activePackage = (Package) diagramElement;
+						} else if (diagramElement instanceof Class) {
+							activePackage = ((Class) diagramElement).getPackage();
+						}
+						
+						// Check to see if the diagram is of the same package
+						if (activePackage != umlObject) {
+							continue;
+						}
+						
 						if (diagram.getType().equals(BDD)) {
 
 							// Get the EditPart associated to the diagram and refresh the diagram
 							final IGraphicalEditPart diagramEP = OffscreenEditPartFactory.getInstance().createDiagramEditPart(diagram, shell);
 							ShowBDDElementsAction.getInstance().refreshDiagram(diagramEP);
 							showMessage = true;
-							
 						} else if (diagram.getType().equals(IBD)) {
 
 							// Get the EditPart associated to the diagram and refresh the diagram
