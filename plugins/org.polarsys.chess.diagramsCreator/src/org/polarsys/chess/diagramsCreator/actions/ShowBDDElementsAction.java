@@ -220,7 +220,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 					View childView = (View) child;
 					final Element semanticElement = (Element) childView.getElement();
 
-					if (entityUtil.isBlock(semanticElement) && !displayedBlocks.contains(semanticElement)) {
+					if (entityUtil.isBlock(semanticElement) && !contractEntityUtil.isContract(semanticElement) && !displayedBlocks.contains(semanticElement)) {
 
 						// Enlarge the component but don't position it, arrange will do it later
 						if (childView instanceof CSSShapeImpl) {
@@ -441,14 +441,19 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 			}
 		}
 		
-		// If no blocks are found exit from refresh
-		if (displayedBlocks.size() == 0) {
-			return;
+		// Get the package containing the model
+		final EObject semanticElement = diagramEditPart.resolveSemanticElement();
+		Package pkg = null;
+		if (semanticElement instanceof Package) {
+			pkg = (Package) semanticElement;
+		} else {
+			if (displayedBlocks.size() == 0) {
+				return;
+			} else {
+				pkg = displayedBlocks.get(0).getNearestPackage();
+			}
 		}
-		
-		// The package containing the model
-		final Package pkg = displayedBlocks.get(0).getNearestPackage();
-		
+				
 		// All the existing elements in the package
 		final EList<Element> existingElements = pkg.getOwnedElements();
 		
