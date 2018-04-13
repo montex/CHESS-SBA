@@ -42,7 +42,7 @@ public class CreateBDDHandler extends AbstractHandler {
 
 		if (entityUtil.isSystemViewPackage((Element) umlObject)) {
 			final Package pkg = (Package) umlObject;
-			final ShowBDDElementsAction action = new ShowBDDElementsAction();
+			final ShowBDDElementsAction action = ShowBDDElementsAction.getInstance();
 			
 			try {
 				final Diagram diagram = action.addBDD(pkg);
