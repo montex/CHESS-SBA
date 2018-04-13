@@ -583,48 +583,63 @@ public class ImportOSSFileAction {
 								// Get all the existing parameters of the functionBehavior
 								final EList<org.eclipse.uml2.uml.Parameter> existingFunctionBehaviorParameters = functionBehavior.getOwnedParameters(); 
 								
-								// Prepare the map to mark existing parameters
-								final HashMap<String, Boolean> mapFunctionBehaviorParameters = Maps.newHashMapWithExpectedSize(existingFunctionBehaviorParameters.size());
-								for (org.eclipse.uml2.uml.Parameter parameter : existingFunctionBehaviorParameters) {
-									mapFunctionBehaviorParameters.put(parameter.getQualifiedName(), null);
+								// Stategy here is a little different. Remove all the parameters and add them from scratch
+
+								final EList<org.eclipse.uml2.uml.Parameter> toRemoveFunctionBehaviorParameters = new BasicEList<org.eclipse.uml2.uml.Parameter>(existingFunctionBehaviorParameters);
+
+								// Remove all the existing parameters
+								for (org.eclipse.uml2.uml.Parameter parameter : toRemoveFunctionBehaviorParameters) {
+									chessElementsUtil.removeFunctionBehaviorParameter(existingFunctionBehaviorParameters, parameter.getQualifiedName());
 								}
 
-								org.eclipse.uml2.uml.Parameter parameter = null;
-								
-								// Check the input parameters
+								// Create the input parameters
 								for (SimpleType parameterType : parameters) {
-									if ((parameter = chessElementsUtil.getExistingFunctionBehaviorParameter(existingFunctionBehaviorParameters, parameterType, true)) != null) {
-										mapFunctionBehaviorParameters.put(parameter.getQualifiedName(), Boolean.TRUE);
-										logger.debug("functionBehavior input parameter already present");
-									} else {
-										logger.debug("functionBehavior input parameter is not present");
-										
-										// Create the input parameter
-										chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, parameterType, true);
-									}
+									chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, parameterType, true);
 								}
-									
-								// Check the output parameter
-								if ((parameter = chessElementsUtil.getExistingFunctionBehaviorParameter(existingFunctionBehaviorParameters, dslVariableType, false)) != null) {
-									logger.debug("functionBehavior output parameter already present");
-									mapFunctionBehaviorParameters.put(parameter.getQualifiedName(), Boolean.TRUE);
-								} else {
-									logger.debug("functionBehavior output parameter is not present");
 
-									// Create the output parameter
-									chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, dslVariableType, false);
-								}
-								
-								//FIXME: i parametri non hanno il nome e vengono se hanno il tipo uguale 
-								// vengono salvati allo stesso modo. Figurano poi mancanti quando li marco. 
-								
-								// Parameters cleanup time
-								for (String qualifiedElement : mapFunctionBehaviorParameters.keySet()) {
-									if (mapFunctionBehaviorParameters.get(qualifiedElement) == null) {
-										System.out.println("functionBehaviorParameter " + qualifiedElement + " should be removed");
-										chessElementsUtil.removeFunctionBehaviorParameter(existingFunctionBehaviorParameters, qualifiedElement);
-									}
-								}
+								// Create the output parameter
+								chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, dslVariableType, false);
+
+								// Old code that tries to solve it in a different manner
+//								// Prepare the map to mark existing parameters
+//								final HashMap<String, Boolean> mapFunctionBehaviorParameters = Maps.newHashMapWithExpectedSize(existingFunctionBehaviorParameters.size());
+//								for (org.eclipse.uml2.uml.Parameter parameter : existingFunctionBehaviorParameters) {
+//									mapFunctionBehaviorParameters.put(parameter.getQualifiedName(), null);
+//								}
+//
+//								org.eclipse.uml2.uml.Parameter parameter = null;
+//								
+//								// Check the input parameters
+//								for (SimpleType parameterType : parameters) {
+//									if ((parameter = chessElementsUtil.getExistingFunctionBehaviorParameter(existingFunctionBehaviorParameters, parameterType, true)) != null) {
+//										mapFunctionBehaviorParameters.put(parameter.getQualifiedName(), Boolean.TRUE);
+//										logger.debug("functionBehavior input parameter already present");
+//									} else {
+//										logger.debug("functionBehavior input parameter is not present");
+//										
+//										// Create the input parameter
+//										chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, parameterType, true);
+//									}
+//								}
+//									
+//								// Check the output parameter
+//								if ((parameter = chessElementsUtil.getExistingFunctionBehaviorParameter(existingFunctionBehaviorParameters, dslVariableType, false)) != null) {
+//									logger.debug("functionBehavior output parameter already present");
+//									mapFunctionBehaviorParameters.put(parameter.getQualifiedName(), Boolean.TRUE);
+//								} else {
+//									logger.debug("functionBehavior output parameter is not present");
+//
+//									// Create the output parameter
+//									chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, dslVariableType, false);
+//								}
+//								
+//								// Parameters cleanup time
+//								for (String qualifiedElement : mapFunctionBehaviorParameters.keySet()) {
+//									if (mapFunctionBehaviorParameters.get(qualifiedElement) == null) {
+//										System.out.println("functionBehaviorParameter " + qualifiedElement + " should be removed");
+//										chessElementsUtil.removeFunctionBehaviorParameter(existingFunctionBehaviorParameters, qualifiedElement);
+//									}
+//								}
 								
 								// Set the flag to signal the functionBehavior is still used
 								mapFunctionBehaviors.put(functionBehavior.getQualifiedName(), Boolean.TRUE);
