@@ -249,7 +249,7 @@ public class ImportOSSFileAction {
 		}
 		
 		// Get all the existing delegation contraints of the element
-		EList<Constraint> existingDelegationConstraints = contractEntityUtil.getConstraintsProperties(owner);
+		EList<Constraint> existingDelegationConstraints = entityUtil.getDelegationConstraintsAsUMLConstraints(owner);
 		
 		// Prepare the map to mark existing delegation contraints 
 		HashMap<String, Boolean> mapDelegationContraints = Maps.newHashMapWithExpectedSize(existingDelegationConstraints.size());

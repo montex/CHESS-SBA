@@ -164,7 +164,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			// If the element is interesting, add it
 			if(entityUtil.isPort(semanticElement) || 
 					entityUtil.isComponentInstance(semanticElement) || 
-					contractEntityUtil.isDelegationConstraints(semanticElement)) {
+					entityUtil.isDelegationConstraints(semanticElement)) {
 				result.add(editPartRepresentation);
 			}
 		}

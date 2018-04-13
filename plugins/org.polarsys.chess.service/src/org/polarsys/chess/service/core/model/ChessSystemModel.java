@@ -185,7 +185,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	 */
 	@Override
 	public EList<Constraint> getFormulaConstraints(Object component) {
-		return contractEntityUtil.getConstraintsPropertiesAsUMLConstraints((Element) component);
+		return entityUtil.getDelegationConstraintsAsUMLConstraints((Element) component);
 	}
 
 	/*
