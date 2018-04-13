@@ -394,32 +394,13 @@ return formalPropertyOwner.getOwnedRule(propertyName);
 		return contractProperties;
 	}
 
-	public EList<Constraint> getConstraintsPropertiesAsUMLConstraints(Element umlElement) {
-		EList<Constraint> constraints = new BasicEList<Constraint>();
-
-		if (entityUtil.isBlock(umlElement) || entityUtil.isCompType(umlElement)
-				|| entityUtil.isComponentImplementation(umlElement)) {
-			for (Constraint umlConstraint : ((Class) umlElement).getOwnedRules()) {
-				if (isDelegationConstraints(umlConstraint)) {
-					constraints.add((Constraint) umlConstraint);
-				}
-			}
-		}
-
-		if (entityUtil.isComponentInstance(umlElement)) {
-			constraints.addAll(getConstraintsPropertiesAsUMLConstraints(entityUtil.getUMLType((Property) umlElement)));
-		}
-
-		return constraints;
-	}
+	
 
 	public boolean isContractProperty(Element umlProperty) {
 		return ((umlProperty instanceof Property) && (UMLUtil.getAppliedStereotype(umlProperty, Constants.CONTRACT_PROP, false) != null));
 	}
 
-	public boolean isDelegationConstraints(Element umlProperty) {
-		return ((umlProperty instanceof Constraint) && (UMLUtil.getAppliedStereotype(umlProperty, Constants.DELEGATION_CONST, false) != null));
-	}
+	
 
 	public ContractProperty getContractProperty(Property umlContractProperty) {
 		Stereotype contractPropertyStereotype = UMLUtil.getAppliedStereotype(umlContractProperty,

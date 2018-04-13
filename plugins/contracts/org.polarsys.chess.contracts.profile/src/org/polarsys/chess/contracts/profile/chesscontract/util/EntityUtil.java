@@ -1296,9 +1296,28 @@ public class EntityUtil {
 		return (FormalProperty) umlConstraint.getStereotypeApplication(formalPropertyStereotype);
 	}
 
-	
+	public boolean isDelegationConstraints(Element umlProperty) {
+		return ((umlProperty instanceof Constraint) && (UMLUtil.getAppliedStereotype(umlProperty, Constants.DELEGATION_CONST, false) != null));
+	}
 
-	
+	public EList<Constraint> getDelegationConstraintsAsUMLConstraints(Element umlElement) {
+		EList<Constraint> constraints = new BasicEList<Constraint>();
+
+		if (isBlock(umlElement) || isCompType(umlElement)
+				|| isComponentImplementation(umlElement)) {
+			for (Constraint umlConstraint : ((Class) umlElement).getOwnedRules()) {
+				if (isDelegationConstraints(umlConstraint)) {
+					constraints.add((Constraint) umlConstraint);
+				}
+			}
+		}
+
+		if (isComponentInstance(umlElement)) {
+			constraints.addAll(getDelegationConstraintsAsUMLConstraints(getUMLType((Property) umlElement)));
+		}
+
+		return constraints;
+	}
 
 	
 
