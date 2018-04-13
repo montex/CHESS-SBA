@@ -19,7 +19,7 @@ import org.polarsys.chess.service.gui.utils.SelectionUtil;
  */
 public class ConstraintEditorFilter implements org.eclipse.jface.viewers.IFilter {
 
-	private EntityUtil contractEntityUtil = EntityUtil.getInstance();
+	private EntityUtil entityUtil = EntityUtil.getInstance();
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 
 	@Override
@@ -28,7 +28,7 @@ public class ConstraintEditorFilter implements org.eclipse.jface.viewers.IFilter
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selected);
 
 		if (selectedUmlElement instanceof Constraint) {
-			if (!contractEntityUtil.isFormalProperty((Constraint) selectedUmlElement)) {
+			if (!entityUtil.isFormalProperty((Constraint) selectedUmlElement)) {
 				return true;
 			}
 		}
