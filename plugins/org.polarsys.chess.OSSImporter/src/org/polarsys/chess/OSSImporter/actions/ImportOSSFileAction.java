@@ -171,7 +171,48 @@ public class ImportOSSFileAction {
 			role = portOwner.getOwnedPort(sourcePort, null);
 		}
 
-		return chessElementsUtil.createConnectorEnd(connector, partWithPort, role);
+		if (role != null) {
+			return chessElementsUtil.createConnectorEnd(connector, partWithPort, role);
+		}
+		return null;
+	}
+	
+	/**
+	 * Checks if the given expression refers to a function behavior
+	 * @param owner the owner element
+	 * @param expression the expression defining the function behavior
+	 * @return
+	 */
+	private boolean isFunctionBehavior(Class owner, Expression expression) {
+		if (expression instanceof VariableId) {
+			final VariableId variable = (VariableId) expression;
+
+			String variableOwner = null;
+			Class component = null;
+			
+			// Get the name of the owner of the behavior, if present find the type
+			final EList<String> componentNames = variable.getComponentNames();
+			if (componentNames != null && componentNames.size() != 0) {
+				variableOwner = componentNames.get(0);
+
+				// Retrieve the component instance containing the behavior
+				final Property behaviorOwner = entityUtil.getUMLComponentInstance(owner, variableOwner);
+
+				// Get the component type
+				final String typeName = behaviorOwner.getType().getName();
+
+				// Get the component object containing the definition of the port
+				component = dslTypeToComponent.get(typeName);
+			}
+			
+			if (variableOwner == null) {
+				
+				// I'm the owner of the functionBehavior
+				component = owner;
+			}
+			return (component.getOwnedBehavior(variable.getName()) != null);			
+		}
+		return false;
 	}
 	
 	/** 
@@ -268,14 +309,15 @@ public class ImportOSSFileAction {
 					final VariableId variable = connection.getVariable();
 					final Expression constraint = connection.getConstraint();
 					Connector connector = null;
-										
+					
 					if ((connector = chessElementsUtil.getExistingConnector(existingConnectors, variable, constraint)) != null) {
 						logger.debug("connector already present");
 						
 						// Set the flag to signal the connector is still used
 						mapConnectors.put(connector.getQualifiedName(), Boolean.TRUE);
 						continue;
-					} else if (constraint instanceof Expression && !(constraint instanceof PortId)) {
+					} else if ((constraint instanceof Expression && !(constraint instanceof PortId)) ||
+							(isFunctionBehavior(owner, variable) && isFunctionBehavior(owner, constraint))) {
 						
 						// It could be a delegation constraint, check it
 						Constraint delegationConstraint = null;
@@ -313,7 +355,9 @@ public class ImportOSSFileAction {
 
 						final String portName = ((PortId) constraint).getName();
 						logger.debug("Creating source end " + portOwner + ":" + portName);
-						createConnectorEnd(owner, connector, portOwner, portName);
+						if (createConnectorEnd(owner, connector, portOwner, portName) == null) {
+							continue;
+						}
 					}
 
 					// Create the target end
@@ -328,15 +372,21 @@ public class ImportOSSFileAction {
 						
 						final String portName = ((PortId) variable).getName();					
 						logger.debug("Creating target end " + portOwner + ":" + portName);
-						createConnectorEnd(owner, connector, portOwner, portName);
+						if (createConnectorEnd(owner, connector, portOwner, portName) == null) {
+							continue;
+						}
 					} else if (variable instanceof ParameterId) {
 						
 						// ParameterId not handled
 						final String message = "Found ParameterId, don't know how to handle it!";
 						logger.error("Import Error: " + message);
 						importErrors.append(message + "\n");
+					} else {
+						final String message = "Found " + variable + " don't know how to handle it!";
+						logger.error("Import Error: " + message);
+						importErrors.append(message + "\n");						
 					}
-					
+										
 					// At last, add the connector to the owner
 					chessElementsUtil.addConnector(owner, connector);
 					
