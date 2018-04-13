@@ -309,6 +309,23 @@ public class EntityUtil {
 		return subComponents;
 	}
 
+	/**
+	 * Returns the component instance with the given name.
+	 * @param umlComponent the class owning the instance
+	 * @param componentName the name of the instance
+	 * @return the UML property representing the component instance
+	 */
+	public Property getUMLComponentInstance(Class umlComponent, String componentName) {
+		
+		for (Property umlProperty : (umlComponent.getAttributes())) {
+			if (umlProperty.getName().equals(componentName) && entityUtil.isComponentInstance(umlProperty)) {
+				return umlProperty;
+			}
+		}
+		return null;
+	}
+	
+
 	
 	public String[] getEnumValuesFromComponentPorts(Class umlComponent) {
 		EList<String> enumValuesEList = new BasicEList<String>();

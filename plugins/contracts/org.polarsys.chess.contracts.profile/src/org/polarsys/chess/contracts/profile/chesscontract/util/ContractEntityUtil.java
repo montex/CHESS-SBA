@@ -82,12 +82,12 @@ public class ContractEntityUtil {
 		return contractBody;
 	}
 
-	private FormalProperty getAssumeFromUmlContract(Class umlContract) {
+	public FormalProperty getAssumeFromUmlContract(Class umlContract) {
 		Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, Constants.CONTRACT, false);
 		return (FormalProperty) umlContract.getValue(contractStereotype, "Assume");
 	}
 
-	private FormalProperty getGuaranteeFromUmlContract(Class umlContract) {
+	public FormalProperty getGuaranteeFromUmlContract(Class umlContract) {
 		Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, Constants.CONTRACT, false);
 		return (FormalProperty) umlContract.getValue(contractStereotype, "Guarantee");
 
