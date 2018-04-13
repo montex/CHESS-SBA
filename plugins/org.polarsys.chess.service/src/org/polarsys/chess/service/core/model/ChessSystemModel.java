@@ -447,9 +447,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 					.getUmlContractPropertyOfUmlComponentFromContractPropertyType(compClass, contractName));
 		} else if (
 		// entityUtil.isSystem((Element) component)||
-		(entityUtil.isBlock((Element) component))) {
-			System.out.println("1 component: " + component);
-			System.out.println("1 contractName: " + contractName);
+		(entityUtil.isBlock((Element) component))) {			
 			Property property = contractEntityUtil
 					.getUmlContractPropertyOfUmlComponentFromContractPropertyType((Class) component, contractName);
 			if (property != null) {
@@ -631,17 +629,11 @@ public class ChessSystemModel implements AbstractSystemModel {
 	@Override
 	public boolean isContractInstanceOwnerEqualToComponent(Object contract, Object component) {
 
-		logger.debug("isContractInstanceOwnerEqualToComponent, contractProperty name: "
-				+ ((ContractProperty) contract).getBase_Property().getName());
+		//logger.debug("isContractInstanceOwnerEqualToComponent, contractProperty name: "
+			//	+ ((ContractProperty) contract).getBase_Property().getName());
 
 		Element contractOwner = entityUtil.getOwner(((ContractProperty) contract).getBase_Property());
-
-		logger.debug("contract owner: " + ((Class) contractOwner).getName());
-
 		Element componentType = (((Property) component).getType());
-
-		logger.debug("component type: " + ((Class) componentType).getName());
-
 		return contractOwner == componentType;
 	}
 

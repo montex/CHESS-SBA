@@ -153,7 +153,7 @@ public class EntityUtil {
 				
 			}
 		}
-		logger.debug("getFormalPropertyStr: "+str);
+		//logger.debug("getFormalPropertyStr: "+str);
 		
 		return str;
 	}
@@ -406,10 +406,8 @@ public class EntityUtil {
 	
 
 	private EList<Port> getUMLPortsFromClass(Class umlComponent, int portDirection, boolean isStatic) {
-		System.out.println(umlComponent);
 		EList<Port> ports = new BasicEList<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
-			System.out.println(umlPort);
 			FlowPort fp = getFlowPort(umlPort);
 			if ((fp.getDirection().getValue() == portDirection)&&(umlPort.isStatic()==isStatic) ){
 				ports.add(umlPort);
@@ -1209,12 +1207,8 @@ public class EntityUtil {
 
 		EList<Constraint> formalProperties = new BasicEList<Constraint>();
 		
-		logger.debug("getRefinementFormalPropertiesAsConstraintsFromClass: "+component.getName());
-		
-		for(Constraint umlConstraint : ((Class)component).getOwnedRules()){
-		logger.debug("umlConstraint: "+umlConstraint.getName());
+		for(Constraint umlConstraint : ((Class)component).getOwnedRules()){		
 			if(isRefinementFormalProperty(umlConstraint)){
-			logger.debug("isRefinementFormalProperty");
 			formalProperties.add(umlConstraint);
 		}
 		}
