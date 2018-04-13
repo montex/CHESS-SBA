@@ -34,4 +34,6 @@ Require-Bundle: org.eclipse.core.commands,
  org.eclipse.papyrus.uml.diagram.profile;bundle-version="2.0.0",
  org.eclipse.papyrus.uml.diagram.common,
  org.polarsys.chess.service
-Export-Package: org.polarsys.chess.diagram.ui.utils
+Export-Package: org.polarsys.chess.diagram.ui.docGenerators,
+ org.polarsys.chess.diagram.ui.services,
+ org.polarsys.chess.diagram.ui.utils

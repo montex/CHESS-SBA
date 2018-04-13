@@ -35,6 +35,11 @@ import org.eclipse.papyrus.uml.diagram.menu.actions.LineStyleAction;
 import org.eclipse.papyrus.uml.diagram.stereotype.edition.editpart.AppliedStereotypeEmptyEditPart;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
+/**
+ * This class handles some options to display labels in the diagram.
+ * @author cristofo
+ *
+ */
 public class AdjustAssociationsHandler extends AbstractHandler {
 	
 	/** Boolean flag that indicates whether or not the associations names should be displayed */

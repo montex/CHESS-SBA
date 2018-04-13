@@ -34,7 +34,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.polarsys.chess.OSSImporter.commands.AddOSSFileCommand"
+            defaultHandler="org.polarsys.chess.OSSImporter.commands.ImportOSSFileCommand"
             id="org.polarsys.chess.OSSImporter.commands.AddOSSFile"
             name="Add System View components from .oss file">
       </command>

@@ -64,6 +64,36 @@
                   </iterate>
                </visibleWhen>
             </command>
+            <command
+                  commandId="org.polarsys.chess.diagramsCreator.commands.refreshBDDHandler"
+                  label="Update the current BDD diagram"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.papyrus.sysml.diagram.blockdefinition.edit.part.BlockDefinitionDiagramEditPart">
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.polarsys.chess.diagramsCreator.commands.refreshIBDHandler"
+                  label="Update the current IBD diagram"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.papyrus.sysml.diagram.internalblock.edit.part.InternalBlockDiagramEditPart">
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -183,6 +213,16 @@
                name="routing_style"
                optional="true">
          </commandParameter>
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.RefreshBDDHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.refreshBDDHandler"
+            name="Refresh BDD handler">
+      </command>
+      <command
+            defaultHandler="org.polarsys.chess.diagramsCreator.commands.RefreshIBDHandler"
+            id="org.polarsys.chess.diagramsCreator.commands.refreshIBDHandler"
+            name="Refresh IBD handler">
       </command>
    </extension>
 

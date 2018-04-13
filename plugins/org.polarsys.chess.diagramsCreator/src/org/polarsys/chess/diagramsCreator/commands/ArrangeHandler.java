@@ -29,7 +29,7 @@ import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 /**
  * A class that arranges the graphical elements inside the diagram (via arrange all command) and
- * resizes the main block if requested
+ * resizes the main block if requested. Used for both IBDs and BDD.
  * @author cristofo
  *
  */
