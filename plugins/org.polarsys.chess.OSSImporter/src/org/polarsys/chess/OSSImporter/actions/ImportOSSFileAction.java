@@ -463,6 +463,10 @@ public class ImportOSSFileAction {
 					final String message = "Found a PROP tag, don't know how to handle it!";
 					logger.error("Import Error: " + message);
 					importErrors.append(message + "\n");
+				} else if (dslRefInstance != null) {
+					final String message = "Found a " + dslRefInstance + " tag, don't know how to handle it!";
+					logger.error("Import Error: " + message);
+					importErrors.append(message + "\n");
 				}
 			}
 		}
@@ -727,6 +731,10 @@ public class ImportOSSFileAction {
 						final String message = "Found a OPERATION tag, don't know how to handle it!";
 						logger.error("Import Error: " + message);
 						importErrors.append(message + "\n");
+					} else {
+						final String message = "Found a " + dslVariable + " tag, don't know how to handle it!";
+						logger.error("Import Error: " + message);
+						importErrors.append(message + "\n");						
 					}
 				} else if (dslIntInstance != null && dslIntInstance.getDefine() != null) {
 				
@@ -789,6 +797,10 @@ public class ImportOSSFileAction {
 						final ContractProperty contractProperty = (ContractProperty) chessSystemModel.getContract(owner, dslContract.getName());
 						mapContractProperties.put(contractProperty.getBase_Property().getQualifiedName(), Boolean.TRUE);
 					}
+				} else if (dslIntInstance != null) {
+					final String message = "Found a " + dslIntInstance + " tag, don't know how to handle it!";
+					logger.error("Import Error: " + message);
+					importErrors.append(message + "\n");						
 				}
 			}
 		}
