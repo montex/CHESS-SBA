@@ -93,7 +93,7 @@ public class ContractEntityUtil {
 
 	}
 
-	private Contract getContract(Class umlContract) {
+	public Contract getContract(Class umlContract) {
 		Stereotype contractStereotype = UMLUtil.getAppliedStereotype(umlContract, Constants.CONTRACT, false);
 		return (Contract) umlContract.getStereotypeApplication(contractStereotype);
 	}
@@ -152,7 +152,7 @@ public class ContractEntityUtil {
 		Constraint assumeFormalProperty = createFormalProperty((Namespace) umlContractOwner, propertyName);
 		
 		LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
-		ValueSpecification vs = assumeFormalProperty.createSpecification("ConstaintSpec", null,
+		ValueSpecification vs = assumeFormalProperty.createSpecification("ConstraintSpec", null,
 				newLs.eClass());
 		((LiteralString) vs).setValue("TRUE");
 		assumeFormalProperty.setSpecification(vs);
@@ -255,7 +255,7 @@ public class ContractEntityUtil {
 		contract.setGuarantee(guaranteeFormalProperty);
 	}
 
-	private Constraint createFormalProperty(final Namespace formalPropertyOwner, 
+	public Constraint createFormalProperty(final Namespace formalPropertyOwner, 
 			//Class umlContract,
 			//String prefix_name) {
 			String formalPropertyName) {
@@ -273,7 +273,7 @@ public class ContractEntityUtil {
 				UMLUtils.applyStereotype(umlNewConstraint, Constants.FORMAL_PROP);
 			}
 		});
-return formalPropertyOwner.getOwnedRule(propertyName);
+		return formalPropertyOwner.getOwnedRule(propertyName);
 		//Constraint umlContraint = formalPropertyOwner.getOwnedRule(propertyName);
 		//return entityUtil.getFormalProperty(umlContraint);
 

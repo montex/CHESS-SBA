@@ -47,6 +47,8 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
+import org.eclipse.uml2.uml.ValueSpecification;
+import org.eclipse.uml2.uml.VisibilityKind;
 import org.eclipse.xtext.serializer.ISerializer;
 import org.polarsys.chess.OSSImporter.exceptions.ImportException;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
@@ -74,6 +76,7 @@ import eu.fbk.tools.editor.basetype.baseType.WordArrayType;
 import eu.fbk.tools.editor.basetype.baseType.WordType;
 import eu.fbk.tools.editor.contract.contract.Contract;
 import eu.fbk.tools.editor.contract.expression.expression.VariableId;
+import eu.fbk.tools.editor.oss.oss.Assertion;
 
 /**
  * A class that contains some utility methods to create CHESS elements.
@@ -735,5 +738,52 @@ public class CHESSElementsUtil {
 	}
 
 
+	/**
+	 * Removes a formal property from the list.
+	 * @param members the list of members
+	 * @param qualifiedElement the qualified name of the formal property to remove
+	 */
+	public void removeFormalProperty(EList<Constraint> members, String qualifiedElement) {
+		removeNamedElement(members, qualifiedElement);
+	}
 
+	/**
+	 * Create a public formal property defined by an Assertion
+	 * @param owner the owner of the property
+	 * @param assertion the assertion to create
+	 * @return the newly created formal property
+	 */
+	public Constraint createInterfaceFormalProperty(Class owner, String assertionName, String assertionText) {	
+
+		final Constraint umlConstraint = contractEntityUtil.createFormalProperty(owner, assertionName);
+		final LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
+		final ValueSpecification vs = umlConstraint.createSpecification("ConstraintSpec", null, newLs.eClass());
+		umlConstraint.setSpecification(vs);
+		
+		contractEntityUtil.saveFormalProperty(umlConstraint, assertionText);
+		
+		return umlConstraint;	
+	}
+	
+	/**
+	 * Create a private formal property defined by an Assertion
+	 * @param owner the owner of the property
+	 * @param assertion the assertion to create
+	 * @return the newly created formal property
+	 */
+	public Constraint createRefinementFormalProperty(Class owner, Assertion assertion) {	
+		final String assertionName = assertion.getName();
+		final Expression assertionConstraint = assertion.getConstraint();
+		final String assertionText = getConstraintText(assertionConstraint);
+
+		final Constraint umlConstraint = contractEntityUtil.createFormalProperty(owner, assertionName);
+		final LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
+		final ValueSpecification vs = umlConstraint.createSpecification("ConstraintSpec", null, newLs.eClass());
+		umlConstraint.setSpecification(vs);
+		umlConstraint.setVisibility(VisibilityKind.PRIVATE_LITERAL);
+		
+		contractEntityUtil.saveFormalProperty(umlConstraint, assertionText);
+		
+		return umlConstraint;	
+	}
 }
