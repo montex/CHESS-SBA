@@ -10,11 +10,13 @@
  ******************************************************************************/
 package org.polarsys.chess.OSSImporter.actions;
 
+import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.ConnectableElement;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Package;
@@ -22,6 +24,7 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.ValueSpecification;
+import org.eclipse.xtext.serializer.ISerializer;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Constraint;
@@ -36,7 +39,10 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 
 import com.google.common.collect.Maps;
+import com.google.inject.Injector;
+
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSModelFactory;
+import eu.fbk.eclipse.standardtools.xtextService.core.utils.XTextResourceUtil;
 import eu.fbk.tools.editor.basetype.baseType.*;
 import eu.fbk.tools.editor.contract.contract.Assumption;
 import eu.fbk.tools.editor.contract.contract.Contract;
@@ -63,7 +69,6 @@ import eu.fbk.tools.editor.oss.oss.RefinementInstance;
 
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
-import org.eclipse.papyrus.sysml.util.ElementUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,6 +78,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
@@ -120,86 +126,7 @@ public class ImportOSSFileAction {
 		}
 		return classInstance;
 	}
-	
-	/**
-	 * Returns the Connector with the given ends if present among a list of Connectors
-	 * @param connectors the list of Connectors to scan
-	 * @param variable the first end of the Connector
-	 * @param constraint the second end of the Connector
-	 * @return the Connector, if found
-	 */
-	private Connector getExistingConnector(EList<Connector> connectors, VariableId variable, Expression constraint) {
-
-		// Details of the connector ends
-		String variablePortOwner = null;
-		String variablePortName = null;
-		String constraintPortOwner = null;
-		String constraintPortName = null;
 		
-		if (variable instanceof PortId) {
-			
-			// Get the component name, should be at max one
-			EList<String> componentNames = ((PortId) variable).getComponentNames();
-			if (componentNames != null && componentNames.size() != 0) {
-				variablePortOwner = componentNames.get(0);
-			}
-			variablePortName = ((PortId) variable).getName();					
-		} else {
-			return null;
-		}
-
-		if (constraint instanceof PortId) {
-			
-			// Get the component name, should be at max one
-			EList<String> componentNames = ((PortId) constraint).getComponentNames();
-			if (componentNames != null && componentNames.size() != 0) {
-				constraintPortOwner = componentNames.get(0);
-			}
-			constraintPortName = ((PortId) constraint).getName();
-		} else {
-			return null;
-		}
-		
-		// Loop on all the connectors to find one with same values
-		for (Connector connector : connectors) {
-			final EList<ConnectorEnd> ends = connector.getEnds();
-			if (ends.size() == 2) {
-				
-				// Check the first end
-				final Property sourceOwner = ends.get(0).getPartWithPort();	// Should be the owner of the port
-				final org.eclipse.uml2.uml.Port sourcePort = (org.eclipse.uml2.uml.Port) ends.get(0).getRole();	// Should be the port
-
-				if (sourcePort.getName().equals(constraintPortName)) {
-					if (sourceOwner != null && sourceOwner.getName().equals(constraintPortOwner)) {
-					} else if (sourceOwner == null && constraintPortOwner == null) {
-					} else {
-						continue;					
-					}
-				} else {
-					continue;
-				}
-
-				// One end is correct, go on with the second
-				final Property targetOwner = ends.get(1).getPartWithPort();	// Should be the owner of the port
-				final org.eclipse.uml2.uml.Port targetPort = (org.eclipse.uml2.uml.Port) ends.get(1).getRole();	// Should be the port
-
-				if (targetPort.getName().equals(variablePortName)) {
-					if (targetOwner != null && targetOwner.getName().equals(variablePortOwner)) {
-					} else if (targetOwner == null && variablePortOwner == null) {
-					} else {
-						continue;
-					}
-				} else {
-					continue;
-				}
-				
-				// Connector found
-				return connector;
-			}
-		}
-		return null;
-	}
-	
 	/**
 	 * Returns the list of contract refinements associated to a Class
 	 * @param owner the owner Class
@@ -249,7 +176,62 @@ public class ImportOSSFileAction {
 			role = portOwner.getOwnedPort(sourcePort, null);
 		}
 
-		return chessElementsUtil.createConnectorEnd(connector, partWithPort, role);
+		if (role != null) {
+			return chessElementsUtil.createConnectorEnd(connector, partWithPort, role);
+		}
+		return null;
+	}
+	
+	/**
+	 * Checks if the given expression refers to a function behavior
+	 * @param owner the owner element
+	 * @param expression the expression defining the function behavior
+	 * @return
+	 */
+	private boolean isFunctionBehavior(Class owner, Expression expression) {
+		if (expression instanceof VariableId) {
+			final VariableId variable = (VariableId) expression;
+
+			String variableOwner = null;
+			Class component = null;
+			
+			// Get the name of the owner of the behavior, if present find the type
+			final EList<String> componentNames = variable.getComponentNames();
+			if (componentNames != null && componentNames.size() != 0) {
+				variableOwner = componentNames.get(0);
+
+				// Retrieve the component instance containing the behavior
+				final Property behaviorOwner = entityUtil.getUMLComponentInstance(owner, variableOwner);
+
+				// Get the component type
+				final String typeName = behaviorOwner.getType().getName();
+
+				// Get the component object containing the definition of the port
+				component = dslTypeToComponent.get(typeName);
+			}
+			
+			if (variableOwner == null) {
+				
+				// I'm the owner of the functionBehavior
+				component = owner;
+			}
+			return (component.getOwnedBehavior(variable.getName()) != null);			
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns the first item contained in the tag
+	 * @param tag the tag to be processed
+	 * @return the unknown text
+	 */
+	private String getTextOfTag(EObject tag) {
+		Injector injector = XTextResourceUtil.getInstance().getOssInjector();
+		ISerializer serializer = injector.getInstance(ISerializer.class);
+
+		String text = serializer.serialize(tag);
+		text = text.trim();
+		return(text.split(" ")[0]);
 	}
 	
 	/** 
@@ -304,6 +286,7 @@ public class ImportOSSFileAction {
 		}
 		
 		// Get all the refinement formal properties
+		@SuppressWarnings("unchecked")
 		final EList<Constraint> existingFormalProperties = (EList<Constraint>) chessSystemModel.getRefinementAssertions(owner);
 
 		// Prepare the map to mark existing formal properties
@@ -355,14 +338,15 @@ public class ImportOSSFileAction {
 					final VariableId variable = connection.getVariable();
 					final Expression constraint = connection.getConstraint();
 					Connector connector = null;
-										
-					if ((connector = getExistingConnector(existingConnectors, variable, constraint)) != null) {
+					
+					if ((connector = chessElementsUtil.getExistingConnector(existingConnectors, variable, constraint)) != null) {
 						logger.debug("connector already present");
 						
 						// Set the flag to signal the connector is still used
 						mapConnectors.put(connector.getQualifiedName(), Boolean.TRUE);
 						continue;
-					} else if (constraint instanceof Expression && !(constraint instanceof PortId)) {
+					} else if ((constraint instanceof Expression && !(constraint instanceof PortId)) ||
+							(isFunctionBehavior(owner, variable) && isFunctionBehavior(owner, constraint))) {
 						
 						// It could be a delegation constraint, check it
 						Constraint delegationConstraint = null;
@@ -381,7 +365,7 @@ public class ImportOSSFileAction {
 							continue;
 						}						
 					}
-
+					
 					logger.debug("connector is not present");
 
 					// Create the source end
@@ -400,7 +384,9 @@ public class ImportOSSFileAction {
 
 						final String portName = ((PortId) constraint).getName();
 						logger.debug("Creating source end " + portOwner + ":" + portName);
-						createConnectorEnd(owner, connector, portOwner, portName);
+						if (createConnectorEnd(owner, connector, portOwner, portName) == null) {
+							continue;
+						}
 					}
 
 					// Create the target end
@@ -415,15 +401,21 @@ public class ImportOSSFileAction {
 						
 						final String portName = ((PortId) variable).getName();					
 						logger.debug("Creating target end " + portOwner + ":" + portName);
-						createConnectorEnd(owner, connector, portOwner, portName);
+						if (createConnectorEnd(owner, connector, portOwner, portName) == null) {
+							continue;
+						}
 					} else if (variable instanceof ParameterId) {
 						
 						// ParameterId not handled
 						final String message = "Found ParameterId, don't know how to handle it!";
 						logger.error("Import Error: " + message);
 						importErrors.append(message + "\n");
+					} else {
+						final String message = "Found " + variable + " don't know how to handle it!";
+						logger.error("Import Error: " + message);
+						importErrors.append(message + "\n");						
 					}
-					
+										
 					// At last, add the connector to the owner
 					chessElementsUtil.addConnector(owner, connector);
 					
@@ -536,6 +528,10 @@ public class ImportOSSFileAction {
 							mapFormalProperties.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
 						}
 					}
+				} else if (dslRefInstance != null) {
+					final String message = "Found a " + getTextOfTag(dslRefInstance) + " tag, don't know how to handle it!";
+					logger.error("Import Error: " + message);
+					importErrors.append(message + "\n");
 				}
 			}
 		}
@@ -644,6 +640,15 @@ public class ImportOSSFileAction {
 		for (Constraint formalProperty : existingFormalProperties) {
 			mapFormalProperties.put(formalProperty.getQualifiedName(), null);
 		}
+
+		// Get all the functionBehaviors
+		final EList<Behavior> existingFunctionBehaviors = owner.getOwnedBehaviors();
+		
+		// Prepare the map to mark existing functionBehaviors
+		final HashMap<String, Boolean> mapFunctionBehaviors = Maps.newHashMapWithExpectedSize(existingFunctionBehaviors.size());
+		for (Behavior behavior : existingFunctionBehaviors) {
+			mapFunctionBehaviors.put(behavior.getQualifiedName(), null);
+		}
 		
 		// If some InterfaceInstances are present, loop on them
 		if ((dslIntInstances != null) && !dslIntInstances.isEmpty()) {
@@ -708,15 +713,99 @@ public class ImportOSSFileAction {
 						final VariableId dslVariableID = dslVariable.getId();
 						final SimpleType dslVariableType = dslVariable.getType();
 
-						// Check if there are optional parameters, if yes, it cannot handle them
+						// Check if there are optional parameters to detect how to handle it
 						final EList<SimpleType> parameters = ((Parameter) dslVariable).getParameters();
 						if (parameters.size() != 0) {
-							final String message = "Cannot handle this type of PARAMETER, don't know how to handle it!";
-							logger.error("Import Error: " + message);
-							importErrors.append(message + "\n");
+							
+							// Check if the functionBehavior is already present
+							FunctionBehavior functionBehavior = (FunctionBehavior) owner.getOwnedBehavior(dslVariableID.getName());
+							
+							if (functionBehavior == null) {
+								logger.debug("functionBehavior not found, creating one");
+								
+								// Create an empty functionBehavior
+								functionBehavior = chessElementsUtil.createFunctionBehavior(owner, dslVariableID.getName());
+								
+								// Create the input parameters
+								for (SimpleType parameterType : parameters) {
+									chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, parameterType, true);
+								}
+
+								// Create the output parameter
+								chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, dslVariableType, false);
+																
+								addedElements.add(functionBehavior);
+							} else {
+								logger.debug("functionBehavior already present");
+								
+								// Get all the existing parameters of the functionBehavior
+								final EList<org.eclipse.uml2.uml.Parameter> existingFunctionBehaviorParameters = functionBehavior.getOwnedParameters(); 
+								
+								// Stategy here is a little different. Remove all the parameters and add them from scratch
+
+								final EList<org.eclipse.uml2.uml.Parameter> toRemoveFunctionBehaviorParameters = new BasicEList<org.eclipse.uml2.uml.Parameter>(existingFunctionBehaviorParameters);
+
+								// Remove all the existing parameters
+								for (org.eclipse.uml2.uml.Parameter parameter : toRemoveFunctionBehaviorParameters) {
+									chessElementsUtil.removeFunctionBehaviorParameter(existingFunctionBehaviorParameters, parameter.getQualifiedName());
+								}
+
+								// Create the input parameters
+								for (SimpleType parameterType : parameters) {
+									chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, parameterType, true);
+								}
+
+								// Create the output parameter
+								chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, dslVariableType, false);
+
+								// Old code that tries to solve it in a different manner
+//								// Prepare the map to mark existing parameters
+//								final HashMap<String, Boolean> mapFunctionBehaviorParameters = Maps.newHashMapWithExpectedSize(existingFunctionBehaviorParameters.size());
+//								for (org.eclipse.uml2.uml.Parameter parameter : existingFunctionBehaviorParameters) {
+//									mapFunctionBehaviorParameters.put(parameter.getQualifiedName(), null);
+//								}
+//
+//								org.eclipse.uml2.uml.Parameter parameter = null;
+//								
+//								// Check the input parameters
+//								for (SimpleType parameterType : parameters) {
+//									if ((parameter = chessElementsUtil.getExistingFunctionBehaviorParameter(existingFunctionBehaviorParameters, parameterType, true)) != null) {
+//										mapFunctionBehaviorParameters.put(parameter.getQualifiedName(), Boolean.TRUE);
+//										logger.debug("functionBehavior input parameter already present");
+//									} else {
+//										logger.debug("functionBehavior input parameter is not present");
+//										
+//										// Create the input parameter
+//										chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, parameterType, true);
+//									}
+//								}
+//									
+//								// Check the output parameter
+//								if ((parameter = chessElementsUtil.getExistingFunctionBehaviorParameter(existingFunctionBehaviorParameters, dslVariableType, false)) != null) {
+//									logger.debug("functionBehavior output parameter already present");
+//									mapFunctionBehaviorParameters.put(parameter.getQualifiedName(), Boolean.TRUE);
+//								} else {
+//									logger.debug("functionBehavior output parameter is not present");
+//
+//									// Create the output parameter
+//									chessElementsUtil.createFunctionBehaviorParameter(functionBehavior, dslVariableType, false);
+//								}
+//								
+//								// Parameters cleanup time
+//								for (String qualifiedElement : mapFunctionBehaviorParameters.keySet()) {
+//									if (mapFunctionBehaviorParameters.get(qualifiedElement) == null) {
+//										System.out.println("functionBehaviorParameter " + qualifiedElement + " should be removed");
+//										chessElementsUtil.removeFunctionBehaviorParameter(existingFunctionBehaviorParameters, qualifiedElement);
+//									}
+//								}
+								
+								// Set the flag to signal the functionBehavior is still used
+								mapFunctionBehaviors.put(functionBehavior.getQualifiedName(), Boolean.TRUE);
+							}
 						} else {
 							
-							// I should check if the port is already present
+							// Convert the parameter to a static port
+							// Check if the port is already present
 							org.eclipse.uml2.uml.Port port = null;
 							for (Object object : existingPorts) {
 								final org.eclipse.uml2.uml.Port tmpPort = (org.eclipse.uml2.uml.Port) object;
@@ -746,6 +835,10 @@ public class ImportOSSFileAction {
 						final String message = "Found a OPERATION tag, don't know how to handle it!";
 						logger.error("Import Error: " + message);
 						importErrors.append(message + "\n");
+					} else {
+						final String message = "Found a " + getTextOfTag(dslVariable) + " tag, don't know how to handle it!";
+						logger.error("Import Error: " + message);
+						importErrors.append(message + "\n");						
 					}
 				} else if (dslIntInstance != null && dslIntInstance.getDefine() != null) {
 				
@@ -889,6 +982,10 @@ public class ImportOSSFileAction {
 							mapFormalProperties.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
 						}
 					}
+				} else if (dslIntInstance != null) {
+					final String message = "Found a " + getTextOfTag(dslIntInstance) + " tag, don't know how to handle it!";
+					logger.error("Import Error: " + message);
+					importErrors.append(message + "\n");						
 				}
 			}
 		}
@@ -915,6 +1012,14 @@ public class ImportOSSFileAction {
 			if (mapFormalProperties.get(qualifiedElement) == null) {
 //				System.out.println("formalProperty " + qualifiedElement + " should be removed");
 				chessElementsUtil.removeFormalProperty(existingFormalProperties, qualifiedElement);
+			}
+		}
+
+		// FunctionBehavior cleanup time
+		for (String qualifiedElement : mapFunctionBehaviors.keySet()) {
+			if (mapFunctionBehaviors.get(qualifiedElement) == null) {
+//				System.out.println("functionBehavior " + qualifiedElement + " should be removed");
+				chessElementsUtil.removeFunctionBehavior(existingFunctionBehaviors, qualifiedElement);
 			}
 		}
 	}
