@@ -52,7 +52,8 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
-import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.uml2.uml.ValueSpecification;
+import org.eclipse.uml2.uml.VisibilityKind;
 import org.eclipse.xtext.serializer.ISerializer;
 import org.polarsys.chess.OSSImporter.exceptions.ImportException;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
@@ -81,6 +82,7 @@ import eu.fbk.tools.editor.basetype.baseType.WordType;
 import eu.fbk.tools.editor.contract.contract.Contract;
 import eu.fbk.tools.editor.contract.expression.expression.PortId;
 import eu.fbk.tools.editor.contract.expression.expression.VariableId;
+import eu.fbk.tools.editor.oss.oss.Assertion;
 
 /**
  * A class that contains some utility methods to create CHESS elements.
@@ -866,55 +868,52 @@ public class CHESSElementsUtil {
 			return null;
 		}
 
-		if (constraint instanceof PortId) {
-			
-			// Get the component name, should be at max one
-			EList<String> componentNames = ((PortId) constraint).getComponentNames();
-			if (componentNames != null && componentNames.size() != 0) {
-				constraintPortOwner = componentNames.get(0);
-			}
-			constraintPortName = ((PortId) constraint).getName();
-		} else {
-			return null;
-		}
+	/**
+	 * Removes a formal property from the list.
+	 * @param members the list of members
+	 * @param qualifiedElement the qualified name of the formal property to remove
+	 */
+	public void removeFormalProperty(EList<Constraint> members, String qualifiedElement) {
+		removeNamedElement(members, qualifiedElement);
+	}
+
+	/**
+	 * Create a public formal property defined by an Assertion
+	 * @param owner the owner of the property
+	 * @param assertion the assertion to create
+	 * @return the newly created formal property
+	 */
+	public Constraint createInterfaceFormalProperty(Class owner, String assertionName, String assertionText) {	
+
+		final Constraint umlConstraint = contractEntityUtil.createFormalProperty(owner, assertionName);
+		final LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
+		final ValueSpecification vs = umlConstraint.createSpecification("ConstraintSpec", null, newLs.eClass());
+		umlConstraint.setSpecification(vs);
 		
-		// Loop on all the connectors to find one with same values
-		for (Connector connector : connectors) {
-			final EList<ConnectorEnd> ends = connector.getEnds();
-			if (ends.size() == 2) {
-				
-				// Check the first end
-				final Property sourceOwner = ends.get(0).getPartWithPort();	// Should be the owner of the port
-				final org.eclipse.uml2.uml.Port sourcePort = (org.eclipse.uml2.uml.Port) ends.get(0).getRole();	// Should be the port
+		contractEntityUtil.saveFormalProperty(umlConstraint, assertionText);
+		
+		return umlConstraint;	
+	}
+	
+	/**
+	 * Create a private formal property defined by an Assertion
+	 * @param owner the owner of the property
+	 * @param assertion the assertion to create
+	 * @return the newly created formal property
+	 */
+	public Constraint createRefinementFormalProperty(Class owner, Assertion assertion) {	
+		final String assertionName = assertion.getName();
+		final Expression assertionConstraint = assertion.getConstraint();
+		final String assertionText = getConstraintText(assertionConstraint);
 
-				if (sourcePort.getName().equals(constraintPortName)) {
-					if (sourceOwner != null && sourceOwner.getName().equals(constraintPortOwner)) {
-					} else if (sourceOwner == null && constraintPortOwner == null) {
-					} else {
-						continue;					
-					}
-				} else {
-					continue;
-				}
-
-				// One end is correct, go on with the second
-				final Property targetOwner = ends.get(1).getPartWithPort();	// Should be the owner of the port
-				final org.eclipse.uml2.uml.Port targetPort = (org.eclipse.uml2.uml.Port) ends.get(1).getRole();	// Should be the port
-
-				if (targetPort.getName().equals(variablePortName)) {
-					if (targetOwner != null && targetOwner.getName().equals(variablePortOwner)) {
-					} else if (targetOwner == null && variablePortOwner == null) {
-					} else {
-						continue;
-					}
-				} else {
-					continue;
-				}
-				
-				// Connector found
-				return connector;
-			}
-		}
-		return null;
+		final Constraint umlConstraint = contractEntityUtil.createFormalProperty(owner, assertionName);
+		final LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
+		final ValueSpecification vs = umlConstraint.createSpecification("ConstraintSpec", null, newLs.eClass());
+		umlConstraint.setSpecification(vs);
+		umlConstraint.setVisibility(VisibilityKind.PRIVATE_LITERAL);
+		
+		contractEntityUtil.saveFormalProperty(umlConstraint, assertionText);
+		
+		return umlConstraint;	
 	}
 }
