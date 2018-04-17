@@ -748,9 +748,10 @@ public class CHESSElementsUtil {
 	}
 
 	/**
-	 * Create a public formal property defined by an Assertion
+	 * Create a public formal property 
 	 * @param owner the owner of the property
-	 * @param assertion the assertion to create
+	 * @param assertionName the name of the formal property
+	 * @param assertionText the text of the formal property
 	 * @return the newly created formal property
 	 */
 	public Constraint createInterfaceFormalProperty(Class owner, String assertionName, String assertionText) {	
@@ -768,13 +769,11 @@ public class CHESSElementsUtil {
 	/**
 	 * Create a private formal property defined by an Assertion
 	 * @param owner the owner of the property
-	 * @param assertion the assertion to create
+	 * @param assertionName the name of the formal property
+	 * @param assertionText the text of the formal property
 	 * @return the newly created formal property
 	 */
-	public Constraint createRefinementFormalProperty(Class owner, Assertion assertion) {	
-		final String assertionName = assertion.getName();
-		final Expression assertionConstraint = assertion.getConstraint();
-		final String assertionText = getConstraintText(assertionConstraint);
+	public Constraint createRefinementFormalProperty(Class owner, String assertionName, String assertionText) {
 
 		final Constraint umlConstraint = contractEntityUtil.createFormalProperty(owner, assertionName);
 		final LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
