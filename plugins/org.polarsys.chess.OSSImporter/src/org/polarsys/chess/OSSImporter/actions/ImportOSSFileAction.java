@@ -508,7 +508,7 @@ public class ImportOSSFileAction {
 		// Formal properties cleanup time
 		for (String qualifiedElement : mapFormalProperties.keySet()) {
 			if (mapFormalProperties.get(qualifiedElement) == null) {
-				System.out.println("formalProperty " + qualifiedElement + " should be removed");
+//				System.out.println("formalProperty " + qualifiedElement + " should be removed");
 				chessElementsUtil.removeFormalProperty(existingFormalProperties, qualifiedElement);
 			}
 		}
@@ -525,13 +525,8 @@ public class ImportOSSFileAction {
 		
 		// If the constaint is a formal property, store it
 		for (Constraint constraint : existingFormalProperties) {
-			System.out.println("\nconstraint = " + constraint);
 			final FormalProperty formalProperty = entityUtil.getFormalProperty(constraint);
-			System.out.println("formal property = " + formalProperty);
 			if (formalProperty != null) {
-				
-				System.out.println("storing formal property: " + entityUtil.getFormalPropertyStr(formalProperty));
-				
 				map.put(entityUtil.getFormalPropertyStr(formalProperty), formalProperty);
 			}			
 		}
@@ -813,13 +808,13 @@ public class ImportOSSFileAction {
 						final FormalProperty guarantee = hashFormalProperties.get(chessElementsUtil.getConstraintText(dslGuarantee.getConstraint()));
 						if (guarantee != null) {
 							
-							System.out.println("guarantee already present = " + guarantee);
+							logger.debug("guarantee already present = " + guarantee);
 							
 							// Add the assume formal property
 							contract.setGuarantee(guarantee);
 						} else {
 							
-							System.out.println("guarantee not present");
+							logger.debug("guarantee not present");
 							
 							// Create a new formal property
 							contractEntityUtil.saveFormalProperty("Guarantee", 
@@ -904,7 +899,7 @@ public class ImportOSSFileAction {
 							// If the expression is different, save it, otherwise go on
 							if (!assertionText.equals(formalPropertyText)) {
 								
-								System.out.println("removing fp = " + hashFormalProperties.remove(formalPropertyText, formalProperty));
+								hashFormalProperties.remove(formalPropertyText, formalProperty);
 								contractEntityUtil.saveFormalProperty(umlConstraint, assertionText);
 								
 								hashFormalProperties.put(assertionText, formalProperty);
@@ -938,7 +933,7 @@ public class ImportOSSFileAction {
 		// Formal properties cleanup time
 		for (String qualifiedElement : mapFormalProperties.keySet()) {
 			if (mapFormalProperties.get(qualifiedElement) == null) {
-				System.out.println("formalProperty " + qualifiedElement + " should be removed");
+//				System.out.println("formalProperty " + qualifiedElement + " should be removed");
 				chessElementsUtil.removeFormalProperty(existingFormalProperties, qualifiedElement);
 			}
 		}
