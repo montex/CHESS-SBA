@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
@@ -33,6 +34,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.uml2.uml.AggregationKind;
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.ConnectableElement;
@@ -40,13 +42,17 @@ import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Parameter;
+import org.eclipse.uml2.uml.ParameterDirectionKind;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
+import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.xtext.serializer.ISerializer;
 import org.polarsys.chess.OSSImporter.exceptions.ImportException;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
@@ -73,6 +79,7 @@ import eu.fbk.tools.editor.basetype.baseType.UnsignedWordType;
 import eu.fbk.tools.editor.basetype.baseType.WordArrayType;
 import eu.fbk.tools.editor.basetype.baseType.WordType;
 import eu.fbk.tools.editor.contract.contract.Contract;
+import eu.fbk.tools.editor.contract.expression.expression.PortId;
 import eu.fbk.tools.editor.contract.expression.expression.VariableId;
 
 /**
@@ -96,7 +103,9 @@ public class CHESSElementsUtil {
 	private static final String DELEGATION_CONSTRAINT_NAME = "constraintSpec";
 	private static final String CONNECTOR_NAME = "connector";
 	private static final String ASSOCIATION_NAME = "association";
-
+	private static final String PARAMETER_IN_NAME = "parameterIn";
+	private static final String PARAMETER_OUT_NAME = "parameterOut";
+	
 	private static final String DELETE_COMMAND_ID = "org.eclipse.ui.edit.delete";
 	private static final String MODELEXPLORER_VIEW_ID = "org.eclipse.papyrus.views.modelexplorer.modelexplorer";
 	
@@ -496,7 +505,6 @@ public class CHESSElementsUtil {
 
 		end.setRole(sourcePort);
 		end.setPartWithPort(sourceOwner);
-
 		return end;
 	}
 
@@ -734,6 +742,179 @@ public class CHESSElementsUtil {
 		removeNamedElement(members, qualifiedElement);
 	}
 
+	/**
+	 * Removes a function behavior from the list.
+	 * @param members the list of members
+	 * @param qualifiedElement the qualified name of the function behavior to remove
+	 */
+	public void removeFunctionBehavior(EList<Behavior> members, String qualifiedElement) {
+		removeNamedElement(members, qualifiedElement);
+	}
+	
+	/**
+	 * Removes a FunctionBehavior parameter from the list.
+	 * @param members the list of members
+	 * @param qualifiedElement the qualified name of the function behavior parameter to remove
+	 */
+	public void removeFunctionBehaviorParameter(EList<Parameter> members, String qualifiedElement) {
+		removeNamedElement(members, qualifiedElement);
+	}
+	
+	/**
+	 * Creates an empty FunctionBehavior belonging to the given owner
+	 * @param owner the owner class of the functionBehavior
+	 * @param functionBehaviorName the name of the functionBehavior 
+	 * @return the newly created FunctionBehavior
+	 */
+	public FunctionBehavior createFunctionBehavior(Class owner, String functionBehaviorName) {
+		
+		logger.debug("\n\n\n Creating functionBehavior " + functionBehaviorName + " for owner " + owner);
+		logger.debug("\n\n\n");
 
+		final FunctionBehavior functionBehavior = (FunctionBehavior) owner.createOwnedBehavior(functionBehaviorName, UMLPackage.eINSTANCE.getFunctionBehavior());
+		
+		logger.debug("\n\nCreated " + functionBehaviorName + " FunctionBehavior\n\n");		
+		return functionBehavior;
+	}
+	
+	/**
+	 * Returns the input Parameters of the given FunctionBehavior
+	 * @param owner the FunctionBehavior to analyze
+	 * @return the list of input Parameters
+	 */
+	private EList<Parameter> getOwnedInputParameters(FunctionBehavior owner) {
+		EList<Parameter> inputParameters = new BasicEList<Parameter>();
+		
+		for (Parameter parameter : owner.getOwnedParameters()) {
+			if (parameter.getDirection() == ParameterDirectionKind.IN_LITERAL) {
+				inputParameters.add(parameter);
+			}
+		}
+		return inputParameters;
+	}
+	
+	/**
+	 * Creates a parameter for the given FunctionBehavior
+	 * @param owner the owning FunctionBehavior
+	 * @param type the type of the parameter
+	 * @param isInput the direction of the parameter
+	 * @return the newly created Parameter
+	 */
+	public Parameter createFunctionBehaviorParameter(FunctionBehavior owner, SimpleType type, boolean isInput) {
+		final Type parameterType = getTypeFromDSLType(type, owner.getNearestPackage());
+		
+		// Create the name
+		String parameterName = null;
+		if (isInput) {
+			parameterName = PARAMETER_IN_NAME + (getOwnedInputParameters(owner).size() + 1);	// Incremental name
+		} else {
+			parameterName = PARAMETER_OUT_NAME;	// There could be only one output
+		}
 
+		logger.debug("\n\n\n Creating functionBehaviorParameter " + parameterName + " for owner " + owner);
+		logger.debug("\n\n\n");
+
+		final Parameter parameter = owner.createOwnedParameter(parameterName, parameterType);
+		parameter.setDirection(isInput? ParameterDirectionKind.IN_LITERAL : ParameterDirectionKind.OUT_LITERAL);
+		logger.debug("\n\nCreated " + parameterName + " functionBehaviorParameter\n\n");
+		return parameter;
+	}
+	
+	/**
+	 * Return the Parameter with the given speccs if present among a list of Parameters
+	 * @param parameters the list of Parameters to scan
+	 * @param type the type of the Parameter
+	 * @param isInput the direction of the Parameter
+	 * @return the Parameter, if found
+	 */
+	public Parameter getExistingFunctionBehaviorParameter(EList<Parameter> parameters, SimpleType type, boolean isInput) {
+		for (Parameter parameter : parameters) {
+			if (parameter.getType() == getTypeFromDSLType(type, parameter.getNearestPackage())) {
+				if ((isInput && parameter.getDirection() == ParameterDirectionKind.IN_LITERAL) || 
+						(!isInput && parameter.getDirection() == ParameterDirectionKind.OUT_LITERAL)) {
+					return parameter;
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the Connector with the given ends if present among a list of Connectors
+	 * @param connectors the list of Connectors to scan
+	 * @param variable the first end of the Connector
+	 * @param constraint the second end of the Connector
+	 * @return the Connector, if found
+	 */
+	public Connector getExistingConnector(EList<Connector> connectors, VariableId variable, Expression constraint) {
+
+		// Details of the connector ends
+		String variablePortOwner = null;
+		String variablePortName = null;
+		String constraintPortOwner = null;
+		String constraintPortName = null;
+		
+		if (variable instanceof PortId) {
+			
+			// Get the component name, should be at max one
+			EList<String> componentNames = ((PortId) variable).getComponentNames();
+			if (componentNames != null && componentNames.size() != 0) {
+				variablePortOwner = componentNames.get(0);
+			}
+			variablePortName = ((PortId) variable).getName();					
+		} else {
+			return null;
+		}
+
+		if (constraint instanceof PortId) {
+			
+			// Get the component name, should be at max one
+			EList<String> componentNames = ((PortId) constraint).getComponentNames();
+			if (componentNames != null && componentNames.size() != 0) {
+				constraintPortOwner = componentNames.get(0);
+			}
+			constraintPortName = ((PortId) constraint).getName();
+		} else {
+			return null;
+		}
+		
+		// Loop on all the connectors to find one with same values
+		for (Connector connector : connectors) {
+			final EList<ConnectorEnd> ends = connector.getEnds();
+			if (ends.size() == 2) {
+				
+				// Check the first end
+				final Property sourceOwner = ends.get(0).getPartWithPort();	// Should be the owner of the port
+				final org.eclipse.uml2.uml.Port sourcePort = (org.eclipse.uml2.uml.Port) ends.get(0).getRole();	// Should be the port
+
+				if (sourcePort.getName().equals(constraintPortName)) {
+					if (sourceOwner != null && sourceOwner.getName().equals(constraintPortOwner)) {
+					} else if (sourceOwner == null && constraintPortOwner == null) {
+					} else {
+						continue;					
+					}
+				} else {
+					continue;
+				}
+
+				// One end is correct, go on with the second
+				final Property targetOwner = ends.get(1).getPartWithPort();	// Should be the owner of the port
+				final org.eclipse.uml2.uml.Port targetPort = (org.eclipse.uml2.uml.Port) ends.get(1).getRole();	// Should be the port
+
+				if (targetPort.getName().equals(variablePortName)) {
+					if (targetOwner != null && targetOwner.getName().equals(variablePortOwner)) {
+					} else if (targetOwner == null && variablePortOwner == null) {
+					} else {
+						continue;
+					}
+				} else {
+					continue;
+				}
+				
+				// Connector found
+				return connector;
+			}
+		}
+		return null;
+	}
 }
