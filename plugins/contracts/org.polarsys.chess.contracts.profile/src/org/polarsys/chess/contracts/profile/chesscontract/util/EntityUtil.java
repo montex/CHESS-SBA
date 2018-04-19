@@ -358,10 +358,10 @@ public class EntityUtil {
 	}
 
 	private Set<Port> getUMLPortsFromClass(Class umlComponent, int portDirection, boolean isStatic) {
-		System.out.println(umlComponent);
+//		System.out.println(umlComponent);
 		Set<Port> ports = new HashSet<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
-			System.out.println(umlPort);
+//			System.out.println(umlPort);
 			FlowPort fp = getFlowPort(umlPort);
 			if ((fp.getDirection().getValue() == portDirection)&&(umlPort.isStatic()==isStatic) ){
 				ports.add(umlPort);
@@ -600,6 +600,42 @@ public class EntityUtil {
 		}
 		return false;
 	}
+	
+	public boolean isIntegerParameter(Parameter parameter) {
+		return isIntegerType(parameter.getType());
+	}
+
+	public boolean isRealParameter(Parameter parameter) {
+		return isRealType(parameter.getType());
+	}
+
+	public boolean isBooleanParameter(Parameter parameter) {
+		return isBooleanType(parameter.getType());		
+	}
+	
+	public boolean isDoubleParameter(Parameter parameter) {
+		return (parameter.getType() != null && parameter.getType().getName().compareTo("Double") == 0);
+	}
+	
+	public boolean isContinuousParameter(Parameter parameter) {
+		return (parameter.getType() != null && parameter.getType().getQualifiedName().compareTo(CHESS_CONTINUOUS_TYPE) == 0);
+	}
+	
+	public boolean isRangeParameter(Parameter parameter) {
+		return isRangeType(parameter.getType());
+	}
+	
+	public boolean isEnumerationParameter(Parameter parameter) {
+		return isEnumerationType(parameter.getType());
+	}
+	
+	public boolean isEventParameter(Parameter parameter) {
+		return ((parameter.getType() != null) && (parameter.getType() instanceof Signal));
+	}
+
+	public Set<String> getListValuesForEnumeratorTypeParameter(Parameter parameter) {
+		return getListValuesForEnumeratorType(parameter.getType());
+	}
 
 	public Set<String> getListValuesForEnumeratorType(Property umlProperty) {
 		return getListValuesForEnumeratorType(umlProperty.getType());
@@ -623,7 +659,14 @@ public class EntityUtil {
 			return toArray(enumValuesNames);
 		}
 		return null;
+	}
 
+	public String[] getValuesForEnumeratorTypeParameter(Parameter parameter) {
+		Set<String> enumValuesNames = getListValuesForEnumeratorTypeParameter(parameter);
+		if (enumValuesNames != null) {
+			return toArray(enumValuesNames);
+		}
+		return null;
 	}
 
 	public Element getUMLType(Property umlProperty) {
@@ -1083,6 +1126,24 @@ public class EntityUtil {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Returns the input parameters of the given function behavior
+	 * @param function the function behavior
+	 * @return the input parameters
+	 */
+	public EList<Parameter> getFunctionBehaviorInputParameters(FunctionBehavior function) {
+		final EList<Parameter> inputParameters = new BasicEList<Parameter>();
+				
+		// Loop on all the parameters to find the input ones
+		final EList<Parameter> parameters = function.getOwnedParameters();
+		for (Parameter parameter : parameters) {
+			if (parameter.getDirection() == ParameterDirectionKind.IN_LITERAL) {
+				inputParameters.add(parameter);
+			}
+		}
+		return inputParameters;
 	}
 	
 	/**

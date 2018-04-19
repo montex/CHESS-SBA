@@ -55,14 +55,23 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.getLowerUpperBoundsForRangeType((Port) rangeTypePort);
 	}
 
-	 
+	@Override
+	public String[] getLowerUpperBoundsForRangeTypeParameter(Object rangeTypeParameter) {
+		if (rangeTypeParameter instanceof Parameter) {
+			return entityUtil.getLowerUpperBoundsForRangeType(((Parameter) rangeTypeParameter).getType());
+		}
+		return null;
+	}	 
 	
 	@Override
 	public String[] getValuesForEnumeratorType(Object enumTypePort) {
 		return entityUtil.getValuesForEnumeratorType((Port) enumTypePort);
 	}
 
-
+	@Override
+	public String[] getValuesForEnumeratorTypeParameter(Object enumTypeParameter) {
+		return entityUtil.getValuesForEnumeratorTypeParameter((Parameter) enumTypeParameter);
+	}
 
 	@Override
 	public String getComponentTypeName(Object component) {
@@ -246,6 +255,14 @@ if (entityUtil.isBlock((Element) component)) {
 	public Object getUninterpretedFunctionType(Object function) {
 		if (function instanceof FunctionBehavior) {
 			return entityUtil.getFunctionBehaviorType((FunctionBehavior) function);
+		}
+		return null;
+	}
+	
+	@Override
+	public EList<?>	getUninterpretedFunctionParameters(Object function) {
+		if (function instanceof FunctionBehavior) {
+			return entityUtil.getFunctionBehaviorInputParameters((FunctionBehavior) function);
 		}
 		return null;
 	}
@@ -513,8 +530,8 @@ if (entityUtil.isBlock((Element) component)) {
 		} else if (
 		// entityUtil.isSystem((Element) component)||
 		(entityUtil.isBlock((Element) component))) {
-			System.out.println("1 component: "+component);
-			System.out.println("1 contractName: "+contractName);
+			logger.debug("1 component: "+component);
+			logger.debug("1 contractName: "+contractName);
 			Property property = contractEntityUtil
 			.getUmlContractPropertyOfUmlComponentFromContractPropertyType((Class) component, contractName);
 			if(property!=null){
@@ -916,6 +933,10 @@ Element owner = entityUtil.getOwner((Element)element);
 		if (component instanceof Class) {
 			return ((Class) component).getOwnedBehaviors();
 		}
+		if (component instanceof Property) {
+			final Class type = (Class) ((Property) component).getType(); 
+			return type.getOwnedBehaviors();
+		}
 		return null;
 	}
 
@@ -933,7 +954,9 @@ Element owner = entityUtil.getOwner((Element)element);
 
 	@Override
 	public boolean isBooleanParameter(Object parameter) {
-		// TODO Auto-generated method stub
+		if (parameter instanceof Parameter) {
+			return entityUtil.isBooleanParameter((Parameter) parameter);
+		}
 		return false;
 	}
 
@@ -941,7 +964,9 @@ Element owner = entityUtil.getOwner((Element)element);
 
 	@Override
 	public boolean isContinuousParameter(Object parameter) {
-		// TODO Auto-generated method stub
+		if (parameter instanceof Parameter) {
+			return entityUtil.isContinuousParameter((Parameter) parameter);
+		}
 		return false;
 	}
 
@@ -949,7 +974,9 @@ Element owner = entityUtil.getOwner((Element)element);
 
 	@Override
 	public boolean isDoubleParameter(Object parameter) {
-		// TODO Auto-generated method stub
+		if (parameter instanceof Parameter) {
+			return entityUtil.isDoubleParameter((Parameter) parameter);
+		}
 		return false;
 	}
 
@@ -957,39 +984,48 @@ Element owner = entityUtil.getOwner((Element)element);
 
 	@Override
 	public boolean isRealParameter(Object parameter) {
-		// TODO Auto-generated method stub
+		if (parameter instanceof Parameter) {
+			return entityUtil.isRealParameter((Parameter) parameter);
+		}
 		return false;
 	}
-
 
 
 	@Override
 	public boolean isIntParameter(Object parameter) {
-		// TODO Auto-generated method stub
+		if (parameter instanceof Parameter) {
+			return entityUtil.isIntegerParameter((Parameter) parameter);
+		}
 		return false;
 	}
 
 
 
 	@Override
-	public boolean isRangeParameter(Object port_or_parameter) {
-		// TODO Auto-generated method stub
+	public boolean isRangeParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.isRangeParameter((Parameter) parameter);
+		}
 		return false;
 	}
 
 
 
 	@Override
-	public boolean isEnumParameter(Object port_or_parameter) {
-		// TODO Auto-generated method stub
+	public boolean isEnumParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.isEnumerationParameter((Parameter) parameter);
+		}
 		return false;
 	}
 
 
 
 	@Override
-	public boolean isEventParameter(Object port_or_parameter) {
-		// TODO Auto-generated method stub
+	public boolean isEventParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.isEventParameter((Parameter) parameter);
+		}
 		return false;
 	}
 }
