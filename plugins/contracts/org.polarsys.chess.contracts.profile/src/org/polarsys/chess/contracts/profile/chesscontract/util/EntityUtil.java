@@ -17,6 +17,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Parameter;
+import org.eclipse.uml2.uml.ParameterDirectionKind;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -50,6 +52,7 @@ import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
+import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.OpaqueBehavior;
@@ -1037,7 +1040,60 @@ public class EntityUtil {
 	public String getAttributeName(Property attribute) {
 		return attribute.getName();
 	}
-
+	
+	/**
+	 * Returns the name of the given function behavior
+	 * @param function the function behavior
+	 * @return the requested name
+	 */
+	public String getFunctionBehaviorName(FunctionBehavior function) {
+		return function.getName();
+	}
+	
+	/**
+	 * Returns the name of the given parameter
+	 * @param parameter the parameter
+	 * @return the requested name
+	 */
+	public String getParameterName(Parameter parameter) {
+		return parameter.getName();
+	}
+	
+	/**
+	 * Returns the owner of the given parameter
+	 * @param parameter the parameter
+	 * @return the owner of the parameter
+	 */
+	public Element getParameterOwner(Parameter parameter) {
+		return parameter.getOwner();
+	}
+	
+	/**
+	 * Returns the type of the given function behavior
+	 * @param function the function behavior
+	 * @return the type
+	 */
+	public Object getFunctionBehaviorType(FunctionBehavior function) {
+		
+		// Loop on all the parameters to find the output one. It gives the type to the function
+		final EList<Parameter> parameters = function.getOwnedParameters();
+		for (Parameter parameter : parameters) {
+			if (parameter.getDirection() == ParameterDirectionKind.OUT_LITERAL) {
+				return parameter;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the owner of the given function behavior
+	 * @param function the function behavior
+	 * @return the owner of the function behavior
+	 */
+	public Element getFunctionBehaviorOwner(FunctionBehavior function) {
+		return function.getOwner();
+	}
+	
 	public boolean isTransitionWithNoEvent(Transition transition) {
 		return !((transition.getTriggers() != null) && (transition.getTriggers().size() != 0)
 				&& (transition.getTriggers().get(0).getPorts() != null)

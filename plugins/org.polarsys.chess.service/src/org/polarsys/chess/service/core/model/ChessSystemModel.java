@@ -12,8 +12,6 @@ package org.polarsys.chess.service.core.model;
 
 
 import java.util.List;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -23,7 +21,9 @@ import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
@@ -234,6 +234,56 @@ if (entityUtil.isBlock((Element) component)) {
 		//return ((Property) parameter).getName();
 	}
 
+	@Override
+	public String getUninterpretedFunctionName(Object function) {
+		if (function instanceof FunctionBehavior) {
+			return entityUtil.getFunctionBehaviorName((FunctionBehavior) function);
+		}
+		return null;
+	}
+	
+	@Override
+	public Object getUninterpretedFunctionType(Object function) {
+		if (function instanceof FunctionBehavior) {
+			return entityUtil.getFunctionBehaviorType((FunctionBehavior) function);
+		}
+		return null;
+	}
+	
+	@Override
+	public String getUninterpretedFunctionOwnerName(Object owner) {
+		if (owner instanceof Element) {
+			return entityUtil.getComponentName((Element) owner);
+		}
+		return null;
+	}
+
+	
+	@Override
+	public Object getUninterpretedFunctionOwner(Object function) {
+		if (function instanceof FunctionBehavior) {
+			return entityUtil.getFunctionBehaviorOwner((FunctionBehavior) function);
+		}
+		return null;
+	}
+	
+	@Override
+	public String getUninterpretedFunctionParameterName(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.getParameterName((Parameter) parameter);
+		}
+		return null;
+	}
+	
+	@Override
+	public Object getUninterpretedFunctionParameterOwner(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.getParameterOwner((Parameter) parameter);
+		}
+		return null;
+		
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -859,5 +909,87 @@ Element owner = entityUtil.getOwner((Element)element);
 	@Override
 	public EList<?> getStaticPorts(Object component) {
 		return entityUtil.getUMLPorts((Element)component,true);
+	}
+
+	@Override
+	public EList<?> getUninterpretedFunctions(Object component) {
+		if (component instanceof Class) {
+			return ((Class) component).getOwnedBehaviors();
+		}
+		return null;
+	}
+
+
+
+	@Override
+	public boolean isNullParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return (((Parameter) parameter).getType() == null);
+		}
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isBooleanParameter(Object parameter) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isContinuousParameter(Object parameter) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isDoubleParameter(Object parameter) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isRealParameter(Object parameter) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isIntParameter(Object parameter) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isRangeParameter(Object port_or_parameter) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isEnumParameter(Object port_or_parameter) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isEventParameter(Object port_or_parameter) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
