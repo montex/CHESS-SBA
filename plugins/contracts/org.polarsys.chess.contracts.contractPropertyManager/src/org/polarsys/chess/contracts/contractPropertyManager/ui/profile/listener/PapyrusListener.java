@@ -70,9 +70,9 @@ public class PapyrusListener implements IPapyrusListener {
 
 					if (notification.getNewValue() instanceof ContractProperty) {
 						ContractProperty newContractProperty = (ContractProperty) notification.getNewValue();
-
 						if (newContractProperty.getBase_Property().getType() == null) {
-
+							Property contractProperty = ((ContractProperty) notification.getNewValue()).getBase_Property();
+							
 							Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
 							boolean res = MessageDialog.openQuestion(shell, "Question",
@@ -81,7 +81,7 @@ public class PapyrusListener implements IPapyrusListener {
 							Class contract;
 
 							if (res) {
-								String contractName = newContractProperty.getBase_Property().getName()
+								String contractName = contractProperty.getName()
 										.replace("Property", "") + "Type";
 								// create the class that will be converted as
 								// contract
@@ -94,7 +94,7 @@ public class PapyrusListener implements IPapyrusListener {
 							}
 							// assign to the type of the contractproperty the
 							// contract
-							newContractProperty.getBase_Property().setType((Type) contract);
+							contractProperty.setType((Type) contract);
 						}
 					}
 				}

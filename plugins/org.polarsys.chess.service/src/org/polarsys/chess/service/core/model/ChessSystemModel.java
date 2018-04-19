@@ -10,9 +10,7 @@
  ******************************************************************************/
 package org.polarsys.chess.service.core.model;
 
-
 import java.util.List;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
@@ -46,7 +44,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	}
 
 	private final Logger logger = Logger.getLogger(ChessSystemModel.class);
-	
+
 	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 
@@ -55,25 +53,19 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.getLowerUpperBoundsForRangeType((Port) rangeTypePort);
 	}
 
-	 
-	
 	@Override
 	public String[] getValuesForEnumeratorType(Object enumTypePort) {
 		return entityUtil.getValuesForEnumeratorType((Port) enumTypePort);
 	}
 
-
-
 	@Override
 	public String getComponentTypeName(Object component) {
 
-		if(entityUtil.isBlock((Element) component)) {
-			return entityUtil.getComponentName((Element)component);
+		if (entityUtil.isBlock((Element) component)) {
+			return entityUtil.getComponentName((Element) component);
 		}
 		return null;
 	}
-
-
 
 	@Override
 	public boolean isRangeAttribute(Object port) {
@@ -83,9 +75,8 @@ public class ChessSystemModel implements AbstractSystemModel {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getContractsOfComponent(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getContractsOfComponent(java.lang.Object)
 	 */
 	@Override
 	public EList<?> getContractsOfComponent(Object component) {
@@ -95,14 +86,13 @@ public class ChessSystemModel implements AbstractSystemModel {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getComponentType(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getComponentType(java.lang.Object)
 	 */
 	@Override
 	public String getComponentInstanceTypeName(Object component) {
 
-if (entityUtil.isBlock((Element) component)) {
+		if (entityUtil.isBlock((Element) component)) {
 			return "";
 		}
 
@@ -116,9 +106,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * preCompileOperations(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# preCompileOperations(java.lang.Object)
 	 */
 	@Override
 	public void preCompileOperations(Object component) {
@@ -127,22 +116,20 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getPortName(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getPortName(java.lang.Object)
 	 */
 	@Override
 	public String getPortName(Object port) {
 		// return ((Port)port).getQualifiedName().replaceAll("::", "_");
-		return entityUtil.getPortName((Port)port);
+		return entityUtil.getPortName((Port) port);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getConnectorName(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getConnectorName(java.lang.Object)
 	 */
 	@Override
 	public String getConnectorName(Object connector) {
@@ -155,27 +142,26 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getContractDefinitionsText(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getContractDefinitionsText(java.lang.Object)
 	 */
 	@Override
 	public String getContractDefinitionsText(Object component) throws Exception {
 
-		List<ContractProperty> listCp = null;
+		List<Property> listCp = null;
 		if (entityUtil.isComponentInstance((Element) component)) {
 			Class componentType = (Class) (((Property) component).getType());
-			listCp = contractEntityUtil.getContractProperties(componentType);
+			listCp = contractEntityUtil.getContractPropertiesAsUMLProperties(componentType);
 		} else if ((// entityUtil.isSystem((Element) component)||
 		(entityUtil.isBlock((Element) component)))) {
-			listCp = contractEntityUtil.getContractProperties((Class) component);
+			listCp = contractEntityUtil.getContractPropertiesAsUMLProperties((Class) component);
 		}
 		String definitions = "";
-		if(listCp!=null){
-		for (ContractProperty contractProperty : listCp) {
-			String currContract = contractEntityUtil.convertContractPropertyInStr(contractProperty);
-			definitions = definitions.concat(currContract);
-		}
+		if (listCp != null) {
+			for (Property contractProperty : listCp) {
+				String currContract = contractEntityUtil.convertContractPropertyInStr(contractProperty);
+				definitions = definitions.concat(currContract);
+			}
 		}
 		return definitions;
 	}
@@ -183,9 +169,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getOrcaFormulaConstraintText(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getOrcaFormulaConstraintText(java.lang.Object)
 	 */
 	@Override
 	public String getOrcaFormulaConstraintText(Object formulaConstraint) {
@@ -195,77 +180,72 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getFormulaConstraints(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getFormulaConstraints(java.lang.Object)
 	 */
 	@Override
 	public EList<Constraint> getFormulaConstraints(Object component) {
-		return contractEntityUtil.getConstraintsProperties((Element) component);
+		return entityUtil.getDelegationConstraintsAsUMLConstraints((Element) component);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getInputPorts(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getInputPorts(java.lang.Object)
 	 */
 	@Override
 	public EList<Port> getNonStaticInputPorts(Object component) {
-		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, FlowDirection.IN_VALUE,false));
+		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, FlowDirection.IN_VALUE, false));
 	}
 
 	@Override
 	public EList<?> getNonStaticPorts(Object component) {
-		return entityUtil.getUMLPorts((Element)component,false);
+		return entityUtil.getUMLPorts((Element) component, false);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getParameterName(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getParameterName(java.lang.Object)
 	 */
 	@Override
 	public String getAttributeName(Object parameter) {
-		return entityUtil.getAttributeName((Property)parameter);
-		//return ((Property) parameter).getName();
+		return entityUtil.getAttributeName((Property) parameter);
+		// return ((Property) parameter).getName();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getParameters(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getParameters(java.lang.Object)
 	 */
-	/*@Override
-	public EList<Property> getParameters(Object component) {
-		return null;
-		//return new BasicEList<Property>(entityUtil.getBooleanAttributesExceptPorts((Element) component));
-	}*/
+	/*
+	 * @Override public EList<Property> getParameters(Object component) { return
+	 * null; //return new
+	 * BasicEList<Property>(entityUtil.getBooleanAttributesExceptPorts((Element)
+	 * component)); }
+	 */
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getOutputPorts(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getOutputPorts(java.lang.Object)
 	 */
 	@Override
 	public EList<Port> getNonStaticOutputPorts(Object component) {
 		int direction = FlowDirection.OUT_VALUE;
-		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, direction,false));
+		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, direction, false));
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getGenericPorts(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getGenericPorts(java.lang.Object)
 	 */
 	@Override
 	public EList<Port> getNonStaticGenericPorts(Object component) {
@@ -276,9 +256,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getConnectionSource(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getConnectionSource(java.lang.Object)
 	 */
 	@Override
 	public Object getConnectionSource(Object connection) throws Exception {
@@ -291,25 +270,33 @@ if (entityUtil.isBlock((Element) component)) {
 		Element sourcePort = source.getRole();
 		Element targetPort = target.getRole();
 
-		if(sourcePort == null){
-			throw new Exception("The connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have a source port");
+		if (sourcePort == null) {
+			throw new Exception("The connection '" + ((Connector) connection).getName() + "' of the component '"
+					+ entityUtil.getComponentName(entityUtil.getOwner((Connector) connection))
+					+ "' does not have a source port");
 		}
-		
-		if(targetPort == null){
-			throw new Exception("The connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have a target port");
+
+		if (targetPort == null) {
+			throw new Exception("The connection '" + ((Connector) connection).getName() + "' of the component '"
+					+ entityUtil.getComponentName(entityUtil.getOwner((Connector) connection))
+					+ "' does not have a target port");
 		}
-		
+
 		Integer sourceDir = entityUtil.getPortDirection(sourcePort);
 		Integer targetDir = entityUtil.getPortDirection(targetPort);
 
-		if(sourceDir == null){
-			throw new Exception("The source port of the connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have assiociated a port");
+		if (sourceDir == null) {
+			throw new Exception("The source port of the connection '" + ((Connector) connection).getName()
+					+ "' of the component '" + entityUtil.getComponentName(entityUtil.getOwner((Connector) connection))
+					+ "' does not have assiociated a port");
 		}
-		
-		if(targetDir == null){
-			throw new Exception("The target port of the connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have assiociated a port");
-			}
-		
+
+		if (targetDir == null) {
+			throw new Exception("The target port of the connection '" + ((Connector) connection).getName()
+					+ "' of the component '" + entityUtil.getComponentName(entityUtil.getOwner((Connector) connection))
+					+ "' does not have assiociated a port");
+		}
+
 		if ((sourceOwner == null) && (sourceDir == FlowDirection.IN_VALUE)) {
 			return source;
 		}
@@ -323,16 +310,14 @@ if (entityUtil.isBlock((Element) component)) {
 			return target;
 		}
 
-	
 		return ((Connector) connection).getEnds().get(0);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getConnectionTarget(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getConnectionTarget(java.lang.Object)
 	 */
 	@Override
 	public Object getConnectionTarget(Object connection) throws Exception {
@@ -342,31 +327,36 @@ if (entityUtil.isBlock((Element) component)) {
 		Element sourceOwner = source.getPartWithPort();
 		Element targetOwner = target.getPartWithPort();
 
-	
 		Element sourcePort = source.getRole();
 		Element targetPort = target.getRole();
 
-		if(sourcePort == null){
-			throw new Exception("The connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have a source port");
+		if (sourcePort == null) {
+			throw new Exception("The connection '" + ((Connector) connection).getName() + "' of the component '"
+					+ entityUtil.getComponentName(entityUtil.getOwner((Connector) connection))
+					+ "' does not have a source port");
 		}
-		
-		if(targetPort == null){
-			throw new Exception("The connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have a target port");
+
+		if (targetPort == null) {
+			throw new Exception("The connection '" + ((Connector) connection).getName() + "' of the component '"
+					+ entityUtil.getComponentName(entityUtil.getOwner((Connector) connection))
+					+ "' does not have a target port");
 		}
-		
+
 		Integer sourceDir = entityUtil.getPortDirection(sourcePort);
 		Integer targetDir = entityUtil.getPortDirection(targetPort);
 
-		if(sourceDir == null){
-			throw new Exception("The source port of the connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have assiociated a port");
+		if (sourceDir == null) {
+			throw new Exception("The source port of the connection '" + ((Connector) connection).getName()
+					+ "' of the component '" + entityUtil.getComponentName(entityUtil.getOwner((Connector) connection))
+					+ "' does not have assiociated a port");
 		}
-		
-		if(targetDir == null){
-			throw new Exception("The target port of the connection '"+((Connector) connection).getName()+"' of the component '" +entityUtil.getComponentName(entityUtil.getOwner((Connector)connection))+"' does not have assiociated a port");
-			}
-		
-		
-	
+
+		if (targetDir == null) {
+			throw new Exception("The target port of the connection '" + ((Connector) connection).getName()
+					+ "' of the component '" + entityUtil.getComponentName(entityUtil.getOwner((Connector) connection))
+					+ "' does not have assiociated a port");
+		}
+
 		if ((sourceOwner == null) && (sourceDir == FlowDirection.OUT_VALUE)) {
 			return source;
 		}
@@ -386,9 +376,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getConnectionsPorts(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getConnectionsPorts(java.lang.Object)
 	 */
 	@Override
 	public EList<Connector> getConnectionsPorts(Object component) {
@@ -405,9 +394,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getSourceConnectorOwner(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getSourceConnectorOwner(java.lang.Object)
 	 */
 	@Override
 	public Object getSourceConnectorOwner(Object connector) {
@@ -420,9 +408,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getTargetConnectorOwner(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getTargetConnectorOwner(java.lang.Object)
 	 */
 	@Override
 	public Object getTargetConnectorOwner(Object connector) {
@@ -435,9 +422,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getComponentInstanceName(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getComponentInstanceName(java.lang.Object)
 	 */
 	@Override
 	public String getComponentInstanceName(Object component) {
@@ -450,9 +436,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getContract(java.lang.Object, java.lang.String)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getContract(java.lang.Object, java.lang.String)
 	 */
 	@Override
 	public Object getContract(Object component, String contractName) {
@@ -462,13 +447,11 @@ if (entityUtil.isBlock((Element) component)) {
 					.getUmlContractPropertyOfUmlComponentFromContractPropertyType(compClass, contractName));
 		} else if (
 		// entityUtil.isSystem((Element) component)||
-		(entityUtil.isBlock((Element) component))) {
-			System.out.println("1 component: "+component);
-			System.out.println("1 contractName: "+contractName);
+		(entityUtil.isBlock((Element) component))) {			
 			Property property = contractEntityUtil
-			.getUmlContractPropertyOfUmlComponentFromContractPropertyType((Class) component, contractName);
-			if(property!=null){
-			return contractEntityUtil.getContractProperty(property);
+					.getUmlContractPropertyOfUmlComponentFromContractPropertyType((Class) component, contractName);
+			if (property != null) {
+				return contractEntityUtil.getContractProperty(property);
 			}
 		}
 		return null;
@@ -477,14 +460,12 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getContractName(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getContractName(java.lang.Object)
 	 */
 	@Override
 	public String getContractInstanceName(Object contractProperty) throws Exception {
-		
-		
+
 		if (contractProperty instanceof ContractProperty) {
 			Type contractType = ((ContractProperty) contractProperty).getBase_Property().getType();
 
@@ -503,49 +484,40 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getComponentName(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getComponentName(java.lang.Object)
 	 */
 	@Override
 	public String getComponentName(Object component) {
-		return entityUtil.getComponentName((Element)component);
+		return entityUtil.getComponentName((Element) component);
 	}
 
-	
-	
 	@Override
 	public String getContractQualifiedName(Object contract) {
-		return contractEntityUtil.getContractQualifiedName((Class)contract);
+		return contractEntityUtil.getContractQualifiedName((Class) contract);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getContractRefinements(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getContractRefinements(java.lang.Object)
 	 */
 	@Override
 	public EList<ContractRefinement> getContractRefinements(Object parentContract) {
 		return ((ContractProperty) parentContract).getRefinedBy();
 	}
 
-	
-	
 	@Override
 	public String getContractRefinementName(Object contractRefinement) {
 		return ((ContractRefinement) contractRefinement).getBase_DataType().getName();
 	}
 
-
-
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getComponentOfContractRefinement(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getComponentOfContractRefinement(java.lang.Object)
 	 */
 	@Override
 	public Object getComponentOfContractRefinement(Object contractRefinement) {
@@ -555,9 +527,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getContractOfContractRefinement(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getContractOfContractRefinement(java.lang.Object)
 	 */
 	@Override
 	public Object getContractInstanceOfContractRefinement(Object contractRefinement) {
@@ -567,9 +538,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * isBooleanType(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# isBooleanType(java.lang.Object)
 	 */
 	@Override
 	public boolean isBooleanAttribute(Object port_or_parameter) {
@@ -579,9 +549,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * isDoubleType(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# isDoubleType(java.lang.Object)
 	 */
 	@Override
 	public boolean isDoubleAttribute(Object port_or_parameter) {
@@ -591,21 +560,19 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * isRealType(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# isRealType(java.lang.Object)
 	 */
 	@Override
 	public boolean isRealAttribute(Object port_or_parameter) {
 		return entityUtil.isRealAttribute((Property) port_or_parameter);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * isIntType(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# isIntType(java.lang.Object)
 	 */
 	@Override
 	public boolean isIntAttribute(Object port_or_parameter) {
@@ -615,17 +582,14 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * isContinuousType(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# isContinuousType(java.lang.Object)
 	 */
 	@Override
 	public boolean isContinuousAttribute(Object port_or_parameter) {
 		return entityUtil.isContinuousAttribute((Property) port_or_parameter);
 	}
 
-	
-	
 	@Override
 	public boolean isEnumAttribute(Object port_or_parameter) {
 		return entityUtil.isEnumerationAttribute((Property) port_or_parameter);
@@ -634,9 +598,8 @@ if (entityUtil.isBlock((Element) component)) {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * getSubComponents(java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getSubComponents(java.lang.Object)
 	 */
 	@Override
 	public EList<Property> getSubComponentsInstances(Object component) {
@@ -645,78 +608,64 @@ if (entityUtil.isBlock((Element) component)) {
 		(entityUtil.isBlock((Element) component)))) {
 			return new BasicEList<Property>(entityUtil.getSubComponentsInstances((Class) component));
 		} else if (entityUtil.isComponentInstance((Element) component)) {
-			return new BasicEList<Property>(entityUtil.getSubComponentsInstances((Class) ((Property) component).getType()));
+			return new BasicEList<Property>(
+					entityUtil.getSubComponentsInstances((Class) ((Property) component).getType()));
 		}
 		return null;
+	}
+
+	@Override
+	public EList<?> getSubComponentsInstancesOwner(Object component) {
+		return getSubComponentsInstances(entityUtil.getOwner((Element)component));
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 *eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.ToolToOCRAModel#
-	 * isContractOwnerEqualToComponent(java.lang.Object, java.lang.Object)
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# isContractOwnerEqualToComponent(java.lang.Object,
+	 * java.lang.Object)
 	 */
 	@Override
 	public boolean isContractInstanceOwnerEqualToComponent(Object contract, Object component) {
-		
-		logger.debug("isContractInstanceOwnerEqualToComponent, contractProperty name: "+((ContractProperty) contract).getBase_Property().getName());
-		
-		Element contractOwner = entityUtil
-		.getOwner(((ContractProperty) contract).getBase_Property());
-		
-		logger.debug("contract owner: "+((Class)contractOwner).getName());
-		
+
+		//logger.debug("isContractInstanceOwnerEqualToComponent, contractProperty name: "
+			//	+ ((ContractProperty) contract).getBase_Property().getName());
+
+		Element contractOwner = entityUtil.getOwner(((ContractProperty) contract).getBase_Property());
 		Element componentType = (((Property) component).getType());
-		
-		logger.debug("component type: "+((Class)componentType).getName());
-		
 		return contractOwner == componentType;
 	}
 
-
-
 	@Override
 	public boolean isEventAttribute(Object attribute) {
-		return entityUtil.isEventPortAttribute((Property)attribute);
+		return entityUtil.isEventPortAttribute((Property) attribute);
 	}
-
-
 
 	@Override
 	public String getAttributeOwnerName(Object attribute) {
-		return entityUtil.getComponentName(entityUtil.getOwner((Element)attribute));
+		return entityUtil.getComponentName(entityUtil.getOwner((Element) attribute));
 	}
-
-
 
 	@Override
 	public boolean isNullAttribute(Object attribute) {
-		return (((Property)attribute).getType() == null);
+		return (((Property) attribute).getType() == null);
 	}
-
-
 
 	@Override
 	public boolean isInputPort(Object port) {
-		return entityUtil.isInputPort((Port)port);
+		return entityUtil.isInputPort((Port) port);
 	}
-
-
 
 	@Override
 	public boolean isOutputPort(Object port) {
-		return entityUtil.isOutputPort((Port)port);
+		return entityUtil.isOutputPort((Port) port);
 	}
-
-
 
 	@Override
 	public boolean isInOutPort(Object port) {
-		return entityUtil.isInOutPort((Port)port);
+		return entityUtil.isInOutPort((Port) port);
 	}
-
-
 
 	@Override
 	public boolean isNumberAttribute(Object attribute) {
@@ -724,140 +673,165 @@ if (entityUtil.isBlock((Element) component)) {
 		return false;
 	}
 
-
-
 	@Override
 	public boolean isWordAttribute(Object attribute) {
-		return entityUtil.isStringAttribute((Property)attribute);
-		
+		return entityUtil.isStringAttribute((Property) attribute);
+
 	}
-
-
 
 	@Override
 	public String getVariableName(Object attribute) {
-		return entityUtil.getAttributeName((Property)attribute);
-}
-
-
+		return entityUtil.getAttributeName((Property) attribute);
+	}
 
 	@Override
-	public String getFormalPropertyName(Object formalProperty) {
-		return contractEntityUtil.getFormalPropertyName(formalProperty);
+	public String getInterfaceAssertionQualifiedName(Object formalProperty) {
+		return entityUtil.getConstraintQualifiedName((Constraint)formalProperty);
 	}
 
 	@Override
 	public EList<?> getOwnerNonStaticPorts(Object formalProperty) {
-		
-		Element owner = entityUtil.getOwner((Element)formalProperty);
-		
-		if(!(owner instanceof Class)){
+
+		Element owner = entityUtil.getOwner((Element) formalProperty);
+
+		if (!(owner instanceof Class)) {
 			return null;
 		}
-		//block added to manage formal properties with contract as owner
-		if(contractEntityUtil.isContract(owner)){
-			owner = (Class)entityUtil.getOwner(owner);
+		// block added to manage formal properties with contract as owner
+		if (contractEntityUtil.isContract(owner)) {
+			owner = (Class) entityUtil.getOwner(owner);
 		}
-		return entityUtil.getUMLPorts(owner,false);		
+		return entityUtil.getUMLPorts(owner, false);
 	}
 
-/*	
-	//@Override
-	private Set<?> getOwnerVariables(Object formalProperty) {
-		Element owner = (Element)entityUtil.getOwner((Element)formalProperty);
-		
-		if(!(owner instanceof Class)){
+	/*
+	 * //@Override private Set<?> getOwnerVariables(Object formalProperty) {
+	 * Element owner = (Element)entityUtil.getOwner((Element)formalProperty);
+	 * 
+	 * if(!(owner instanceof Class)){ return null; } //block added to manage
+	 * formal properties with contract as owner
+	 * if(contractEntityUtil.isContract(owner)){ owner =
+	 * (Class)entityUtil.getOwner(owner); } //return
+	 * entityUtil.getAttributes(owner); return null; }
+	 */
+
+	@Override
+	public EList<String> getEnumValuesFromOwnerAttributes(Object formalProperty) {
+		Element owner = (Element) entityUtil.getOwner((Element) formalProperty);
+
+		if (!(owner instanceof Class)) {
 			return null;
 		}
-		//block added to manage formal properties with contract as owner
-		if(contractEntityUtil.isContract(owner)){
-			owner = (Class)entityUtil.getOwner(owner);
+		// block added to manage formal properties with contract as owner
+		if (contractEntityUtil.isContract(owner)) {
+			owner = (Class) entityUtil.getOwner(owner);
 		}
-		//FIXME use instead entityUtil.getStaticPorts
-		//return entityUtil.getAttributes(owner);
-		return null;
-	}*/
-
-	@Override
-	public String[] getEnumValuesFromOwnerAttributes(Object formalProperty) {
-		Element owner = (Element)entityUtil.getOwner((Element)formalProperty);
-		
-		if(!(owner instanceof Class)){
-			return null;
-		}
-		//block added to manage formal properties with contract as owner
-		if(contractEntityUtil.isContract(owner)){
-			owner = (Class)entityUtil.getOwner(owner);
-		}
-		//return entityUtil.getEnumValuesFromComponentPorts(element);	
-		return entityUtil.getEnumValuesFromComponentAttributes((Class)owner);
+		// return entityUtil.getEnumValuesFromComponentPorts(element);
+		return entityUtil.getEnumValuesFromComponentAttributes((Class) owner);
 	}
 
-
-
 	@Override
-	public String[] getSubComponentsName(Object constraint) {
-		return entityUtil.getSubComponentsNameOfConstraintOwner((Constraint)constraint);
+	public String[] getSubComponentsNameOfOwner(Object constraint) {
+		return entityUtil.getSubComponentsNameOfConstraintOwner((Constraint) constraint);
 	}
 
-
-
 	@Override
-	public Object getSubComponent(Object constraint, String subCompName) {
-		return entityUtil.getSubComponentOfConstraintOwner((Constraint)constraint, subCompName);
+	public Object getSubComponentOfOwner(Object constraint, String subCompName) {
+		return entityUtil.getSubComponentOfConstraintOwner((Constraint) constraint, subCompName);
 	}
-
 
 	@Override
 	public String getConstraintQualifiedName(Object constraint) {
-		return entityUtil.getQualifiedName((NamedElement)constraint);
+		return entityUtil.getQualifiedName((NamedElement) constraint);
 	}
-
-
 
 	@Override
 	public String getComponentQualifiedName(Object component) {
-		return entityUtil.getQualifiedName((NamedElement)component);
+		return entityUtil.getQualifiedName((NamedElement) component);
 	}
 
-
-
-	/*@Override
-	public String[] getEnumValuesFromOwnerPorts(Object port_or_parameter) {
-		Element owner = entityUtil.getOwner((Element)port_or_parameter);
-		
-		if(!(owner instanceof Class)){
-			return null;
-		}
-		
-		if(contractEntityUtil.isContract(owner)){
-			owner = (Class)entityUtil.getOwner(owner);
-		}
-		return entityUtil.getEnumValuesFromComponentPorts((Class)owner);	
-	}*/
-
-
+	/*
+	 * @Override public String[] getEnumValuesFromOwnerPorts(Object
+	 * port_or_parameter) { Element owner =
+	 * entityUtil.getOwner((Element)port_or_parameter);
+	 * 
+	 * if(!(owner instanceof Class)){ return null; }
+	 * 
+	 * if(contractEntityUtil.isContract(owner)){ owner =
+	 * (Class)entityUtil.getOwner(owner); } return
+	 * entityUtil.getEnumValuesFromComponentPorts((Class)owner); }
+	 */
 
 	@Override
 	public EList<?> getOwnerStaticPorts(Object element) {
-Element owner = entityUtil.getOwner((Element)element);
-		
-		if(!(owner instanceof Class)){
+		Element owner = entityUtil.getOwner((Element) element);
+
+		if (!(owner instanceof Class)) {
 			return null;
 		}
-		//block added to manage formal properties with contract as owner
-		if(contractEntityUtil.isContract(owner)){
-			owner = (Class)entityUtil.getOwner(owner);
+		// block added to manage formal properties with contract as owner
+		if (contractEntityUtil.isContract(owner)) {
+			owner = (Class) entityUtil.getOwner(owner);
 		}
-		return entityUtil.getUMLPorts(owner,true);	
-		
-		
+		return entityUtil.getUMLPorts(owner, true);
+
 	}
-
-
 
 	@Override
 	public EList<?> getStaticPorts(Object component) {
-		return entityUtil.getUMLPorts((Element)component,true);
+		return entityUtil.getUMLPorts((Element) component, true);
 	}
+
+	@Override
+	public String getInterfaceAssertionBody(Object interfaceAssertion) {
+		return entityUtil.getConstraintBodyStr((Constraint) interfaceAssertion);
+	}
+
+	@Override
+	public EList<?> getInterfaceAssertions(Object component) {
+		return entityUtil.getInterfaceFormalPropertiesAsConstraints((Element) component);
+	}
+
+	@Override
+	public String getInterfaceAssertionName(Object interfaceAssertion) {
+		return entityUtil.getConstraintName((Constraint)interfaceAssertion);
+	}
+
+	@Override
+	public String getRefinementAssertionName(Object refinementAssertion) {
+		return entityUtil.getConstraintName((Constraint)refinementAssertion);
+	}
+
+	@Override
+	public String getRefinementAssertionBody(Object refinementAssertion) {
+		return entityUtil.getConstraintBodyStr((Constraint) refinementAssertion);
+	}
+
+	@Override
+	public EList<?> getRefinementAssertions(Object component) {
+		return entityUtil.getRefinementFormalPropertiesAsConstraints((Element) component);
+	}
+
+	@Override
+	public String getAssertionQualifiedName(Object formalProperty) {
+		return entityUtil.getConstraintQualifiedName((Constraint)formalProperty);
+	}
+
+	@Override
+	public boolean isAssertion(Object constraint) {		
+		return entityUtil.isFormalProperty((Constraint)constraint);
+	}
+
+	@Override
+	public boolean isInterfaceAssertion(Object constraint) {
+		return entityUtil.isInterfaceFormalProperty((Constraint)constraint);
+	}
+
+	@Override
+	public EList<String> getEnumValues(Object component) {
+		return entityUtil.getEnumValuesFromComponentAttributes((Element) component);
+	}
+	
+	
+	
 }

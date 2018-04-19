@@ -24,6 +24,7 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.ValueSpecification;
+import org.eclipse.xtext.serializer.ISerializer;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Constraint;
@@ -38,7 +39,10 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 
 import com.google.common.collect.Maps;
+import com.google.inject.Injector;
+
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSModelFactory;
+import eu.fbk.eclipse.standardtools.xtextService.core.utils.XTextResourceUtil;
 import eu.fbk.tools.editor.basetype.baseType.*;
 import eu.fbk.tools.editor.contract.contract.Assumption;
 import eu.fbk.tools.editor.contract.contract.Contract;
@@ -47,6 +51,7 @@ import eu.fbk.tools.editor.contract.expression.expression.*;
 import eu.fbk.tools.editor.oss.oss.SystemComponent;
 import eu.fbk.tools.editor.oss.oss.Variable;
 import eu.fbk.tools.editor.oss.oss.AbstractComponent;
+import eu.fbk.tools.editor.oss.oss.Assertion;
 import eu.fbk.tools.editor.oss.oss.Component;
 import eu.fbk.tools.editor.oss.oss.Connection;
 import eu.fbk.tools.editor.oss.oss.ContractId;
@@ -64,6 +69,7 @@ import eu.fbk.tools.editor.oss.oss.RefinementInstance;
 
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
@@ -72,6 +78,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
@@ -213,6 +220,20 @@ public class ImportOSSFileAction {
 		return false;
 	}
 	
+	/**
+	 * Returns the first item contained in the tag
+	 * @param tag the tag to be processed
+	 * @return the unknown text
+	 */
+	private String getTextOfTag(EObject tag) {
+		Injector injector = XTextResourceUtil.getInstance().getOssInjector();
+		ISerializer serializer = injector.getInstance(ISerializer.class);
+
+		String text = serializer.serialize(tag);
+		text = text.trim();
+		return(text.split(" ")[0]);
+	}
+	
 	/** 
 	 * Parses the Refinements of the component.
 	 * @param dslParentComponent the AST Component owning the refinement
@@ -247,7 +268,7 @@ public class ImportOSSFileAction {
 		}
 		
 		// Get all the existing delegation contraints of the element
-		EList<Constraint> existingDelegationConstraints = contractEntityUtil.getConstraintsProperties(owner);
+		EList<Constraint> existingDelegationConstraints = entityUtil.getDelegationConstraintsAsUMLConstraints(owner);
 		
 		// Prepare the map to mark existing delegation contraints 
 		HashMap<String, Boolean> mapDelegationContraints = Maps.newHashMapWithExpectedSize(existingDelegationConstraints.size());
@@ -264,6 +285,16 @@ public class ImportOSSFileAction {
 			mapContractRefinements.put(contractRefinement.getQualifiedName(), null);
 		}
 		
+		// Get all the refinement formal properties
+		@SuppressWarnings("unchecked")
+		final EList<Constraint> existingFormalProperties = (EList<Constraint>) chessSystemModel.getRefinementAssertions(owner);
+
+		// Prepare the map to mark existing formal properties
+		final HashMap<String, Boolean> mapFormalProperties = Maps.newHashMapWithExpectedSize(existingFormalProperties.size());
+		for (Constraint formalProperty : existingFormalProperties) {
+			mapFormalProperties.put(formalProperty.getQualifiedName(), null);
+		}
+
 		// If some RefinementInstances are present, loop on them
 		if ((dslRefInstances != null) && !dslRefInstances.isEmpty()) {
 			for (RefinementInstance dslRefInstance : dslRefInstances) {
@@ -463,8 +494,42 @@ public class ImportOSSFileAction {
 					final String message = "Found a PROP tag, don't know how to handle it!";
 					logger.error("Import Error: " + message);
 					importErrors.append(message + "\n");
+				} else if (dslRefInstance != null && dslRefInstance.getAssertion() != null) {
+
+					// ASSERTION processing
+					final Assertion assertion = dslRefInstance.getAssertion();
+					final String assertionName = assertion.getName();
+					final String assertionText = chessElementsUtil.getConstraintText(assertion.getConstraint());
+
+					// Retrieve the formal property from the owner, if any (working on the assertion name)
+					Constraint umlConstraint = owner.getOwnedRule(assertionName);
+
+					if (umlConstraint == null || !entityUtil.isFormalProperty(umlConstraint)) {
+						logger.debug("Formal property non found, creating one");
+						umlConstraint = chessElementsUtil.createRefinementFormalProperty(owner, assertionName, assertionText);
+						
+						// Add the constraint to the list of created elements
+						addedElements.add(umlConstraint);
+					} else {
+						if (entityUtil.isFormalProperty(umlConstraint)) {
+							logger.debug("Formal property already present");
+
+							// Update the formal property if needed
+
+							final FormalProperty formalProperty = entityUtil.getFormalProperty(umlConstraint);						
+							final String formalPropertyText = entityUtil.getFormalPropertyStr(formalProperty);
+							
+							// If the expression is different, save it, otherwise go on
+							if (!assertionText.equals(formalPropertyText)) {
+								contractEntityUtil.saveFormalProperty(umlConstraint, assertionText);
+							}
+							
+							// Set the flag to signal the formal property is still used
+							mapFormalProperties.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
+						}
+					}
 				} else if (dslRefInstance != null) {
-					final String message = "Found a " + dslRefInstance + " tag, don't know how to handle it!";
+					final String message = "Found a " + getTextOfTag(dslRefInstance) + " tag, don't know how to handle it!";
 					logger.error("Import Error: " + message);
 					importErrors.append(message + "\n");
 				}
@@ -502,6 +567,33 @@ public class ImportOSSFileAction {
 				chessElementsUtil.removeContractRefinement(existingContractRefinements, qualifiedElement);
 			}
 		}
+		
+		// Formal properties cleanup time
+		for (String qualifiedElement : mapFormalProperties.keySet()) {
+			if (mapFormalProperties.get(qualifiedElement) == null) {
+//				System.out.println("formalProperty " + qualifiedElement + " should be removed");
+				chessElementsUtil.removeFormalProperty(existingFormalProperties, qualifiedElement);
+			}
+		}
+	}
+	
+	/**
+	 * Creates a map with the formal properties text and the objects
+	 * @param existingFormalProperties the list of constraints of the object
+	 * @return the requested map
+	 */
+	//FIXME: this works only if expressions are different, otherwise they'll be overwritten
+	private HashMap<String, FormalProperty> prepareFormalPropertiesMap(EList<Constraint> existingFormalProperties) {
+		final HashMap<String, FormalProperty> map = Maps.newHashMapWithExpectedSize(existingFormalProperties.size());
+		
+		// If the constaint is a formal property, store it
+		for (Constraint constraint : existingFormalProperties) {
+			final FormalProperty formalProperty = entityUtil.getFormalProperty(constraint);
+			if (formalProperty != null) {
+				map.put(entityUtil.getFormalPropertyStr(formalProperty), formalProperty);
+			}			
+		}
+		return map;
 	}
 	
 	/** 
@@ -537,6 +629,18 @@ public class ImportOSSFileAction {
 			mapContractProperties.put(contractProperty.getBase_Property().getQualifiedName(), null);
 		}
 		
+		// Get all the interface formal properties
+		final EList<Constraint> existingFormalProperties = (EList<Constraint>) chessSystemModel.getInterfaceAssertions(owner);
+
+		// Create an hash map for the existing formal properties
+		final HashMap<String, FormalProperty> hashFormalProperties = prepareFormalPropertiesMap(existingFormalProperties);
+		
+		// Prepare the map to mark existing formal properties
+		final HashMap<String, Boolean> mapFormalProperties = Maps.newHashMapWithExpectedSize(existingFormalProperties.size());
+		for (Constraint formalProperty : existingFormalProperties) {
+			mapFormalProperties.put(formalProperty.getQualifiedName(), null);
+		}
+
 		// Get all the functionBehaviors
 		final EList<Behavior> existingFunctionBehaviors = owner.getOwnedBehaviors();
 		
@@ -732,7 +836,7 @@ public class ImportOSSFileAction {
 						logger.error("Import Error: " + message);
 						importErrors.append(message + "\n");
 					} else {
-						final String message = "Found a " + dslVariable + " tag, don't know how to handle it!";
+						final String message = "Found a " + getTextOfTag(dslVariable) + " tag, don't know how to handle it!";
 						logger.error("Import Error: " + message);
 						importErrors.append(message + "\n");						
 					}
@@ -750,44 +854,84 @@ public class ImportOSSFileAction {
 					final Guarantee dslGuarantee = dslContract.getGuarantee();
 
 					// Retrieve the contract type from the owner, if any
-					Class contract = (Class) owner.getOwnedMember(dslContract.getName(), false, UMLFactory.eINSTANCE.createClass().eClass());
+					Class umlContract = (Class) owner.getOwnedMember(dslContract.getName(), false, UMLFactory.eINSTANCE.createClass().eClass());
 
-					if (contract == null) {
-						logger.debug("contract not found, creating one");
+					if (umlContract == null) {
+						logger.debug("contract non found, creating one");
 						
 						// Create an empty Contract
-						contract = chessElementsUtil.createContract(owner, dslContract.getName());
-	
-						// Add the two Formal Properties
-						contractEntityUtil.saveFormalProperty("Assume", chessElementsUtil.getConstraintText(dslAssumption.getConstraint()), contract);
-						contractEntityUtil.saveFormalProperty("Guarantee", chessElementsUtil.getConstraintText(dslGuarantee.getConstraint()), contract);
+						umlContract = chessElementsUtil.createContract(owner, dslContract.getName());
+						org.polarsys.chess.contracts.profile.chesscontract.Contract contract = contractEntityUtil.getContract(umlContract);
+
+						// Check if the assumption formal property is already defined
+						//FIXME: this works good only if expressions are different
+						final FormalProperty assumption = hashFormalProperties.get(chessElementsUtil.getConstraintText(dslAssumption.getConstraint()));
+						if (assumption != null) {
+							
+							// Add the assume formal property
+							contract.setAssume(assumption);						
+						} else {
+							
+							// Create a new formal property
+							contractEntityUtil.saveFormalProperty("Assume", 
+									chessElementsUtil.getConstraintText(dslAssumption.getConstraint()), umlContract);
+						}
+						
+						// Check if the guarantee formal property is already defined
+						final FormalProperty guarantee = hashFormalProperties.get(chessElementsUtil.getConstraintText(dslGuarantee.getConstraint()));
+						if (guarantee != null) {
+							
+							logger.debug("guarantee already present = " + guarantee);
+							
+							// Add the assume formal property
+							contract.setGuarantee(guarantee);
+						} else {
+							
+							logger.debug("guarantee not present");
+							
+							// Create a new formal property
+							contractEntityUtil.saveFormalProperty("Guarantee", 
+									chessElementsUtil.getConstraintText(dslGuarantee.getConstraint()), umlContract);
+						}						
+						
+//						// Add the two Formal Properties
+//						contractEntityUtil.saveFormalProperty("Assume", chessElementsUtil.getConstraintText(dslAssumption.getConstraint()), umlContract);
+//						contractEntityUtil.saveFormalProperty("Guarantee", chessElementsUtil.getConstraintText(dslGuarantee.getConstraint()), contract);
 	
 						// Create a Contract Property
-						final String contractPropertyName = chessElementsUtil.createContractPropertyNameFromContract(contract);
-						chessElementsUtil.createContractProperty(owner, contractPropertyName, (Type) contract);
+						final String contractPropertyName = chessElementsUtil.createContractPropertyNameFromContract(umlContract);
+						chessElementsUtil.createContractProperty(owner, contractPropertyName, (Type) umlContract);
 						
-						addedElements.add(contract);
+						addedElements.add(umlContract);
 					}  else {
 						logger.debug("Contract already present");
 
 						// The contract type is already present, update the formal properties if needed
-						final String assumeString = contractEntityUtil.getAssumeStrFromUmlContract(contract);
-						if (chessElementsUtil.getConstraintText(dslAssumption.getConstraint()).equals(assumeString)) {
+						final String assumeString = contractEntityUtil.getAssumeStrFromUmlContract(umlContract);
+						final FormalProperty assumeFormalProperty = contractEntityUtil.getAssumeFromUmlContract(umlContract);
+						
+						// The formal property is the same, mark it as still used
+						mapFormalProperties.put(assumeFormalProperty.getBase_Constraint().getQualifiedName(), Boolean.TRUE);							
+						
+						if (chessElementsUtil.getConstraintText(dslAssumption.getConstraint()).equals(assumeString)) {							
 						} else {
 							
 							// Change the text of the assume property
-							final FormalProperty assumeFormalProperty = contractEntityUtil.getAssumeFromUmlContract(contract);
 							final ValueSpecification vs = assumeFormalProperty.getBase_Constraint().getSpecification();
 							((LiteralString) vs).setValue(chessElementsUtil.getConstraintText(dslAssumption.getConstraint()));
 							assumeFormalProperty.getBase_Constraint().setSpecification(vs);
 						}
 						
-						final String guaranteeString = contractEntityUtil.getGuaranteeStrFromUmlContract(contract);
+						final String guaranteeString = contractEntityUtil.getGuaranteeStrFromUmlContract(umlContract);
+						final FormalProperty guaranteeFormalProperty = contractEntityUtil.getGuaranteeFromUmlContract(umlContract);
+						
+						// The formal property is the same, mark it as still used
+						mapFormalProperties.put(guaranteeFormalProperty.getBase_Constraint().getQualifiedName(), Boolean.TRUE);							
+
 						if (chessElementsUtil.getConstraintText(dslGuarantee.getConstraint()).equals(guaranteeString)) {
 						} else {
 							
 							// Change the text of the guarantee property
-							final FormalProperty guaranteeFormalProperty = contractEntityUtil.getGuaranteeFromUmlContract(contract);
 							final ValueSpecification vs = guaranteeFormalProperty.getBase_Constraint().getSpecification();
 							((LiteralString) vs).setValue(chessElementsUtil.getConstraintText(dslGuarantee.getConstraint()));
 							guaranteeFormalProperty.getBase_Constraint().setSpecification(vs);
@@ -797,8 +941,49 @@ public class ImportOSSFileAction {
 						final ContractProperty contractProperty = (ContractProperty) chessSystemModel.getContract(owner, dslContract.getName());
 						mapContractProperties.put(contractProperty.getBase_Property().getQualifiedName(), Boolean.TRUE);
 					}
+				} else if (dslIntInstance != null && dslIntInstance.getAssertion() != null) {
+					
+					// ASSERTION processing
+					final Assertion assertion = dslIntInstance.getAssertion();
+					final String assertionName = assertion.getName();
+					final String assertionText = chessElementsUtil.getConstraintText(assertion.getConstraint());
+					
+					// Retrieve the formal property from the owner, if any (working on the assertion name)
+					Constraint umlConstraint = owner.getOwnedRule(assertionName);
+
+					if (umlConstraint == null || !entityUtil.isFormalProperty(umlConstraint)) {
+						logger.debug("Formal property non found, creating one");
+						umlConstraint = chessElementsUtil.createInterfaceFormalProperty(owner, assertionName, assertionText);
+						
+						// Add the constraint to the list of created elements
+						addedElements.add(umlConstraint);
+						
+						// Add the formal property to the hash
+						hashFormalProperties.put(assertionText, entityUtil.getFormalProperty(umlConstraint));
+					} else {
+						if (entityUtil.isFormalProperty(umlConstraint)) {
+							logger.debug("Formal property already present");
+
+							// Update the formal property if needed
+
+							final FormalProperty formalProperty = entityUtil.getFormalProperty(umlConstraint);						
+							final String formalPropertyText = entityUtil.getFormalPropertyStr(formalProperty);
+							
+							// If the expression is different, save it, otherwise go on
+							if (!assertionText.equals(formalPropertyText)) {
+								
+								hashFormalProperties.remove(formalPropertyText, formalProperty);
+								contractEntityUtil.saveFormalProperty(umlConstraint, assertionText);
+								
+								hashFormalProperties.put(assertionText, formalProperty);
+							}
+							
+							// Set the flag to signal the formal property is still used
+							mapFormalProperties.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
+						}
+					}
 				} else if (dslIntInstance != null) {
-					final String message = "Found a " + dslIntInstance + " tag, don't know how to handle it!";
+					final String message = "Found a " + getTextOfTag(dslIntInstance) + " tag, don't know how to handle it!";
 					logger.error("Import Error: " + message);
 					importErrors.append(message + "\n");						
 				}
@@ -822,10 +1007,18 @@ public class ImportOSSFileAction {
 			}
 		}
 		
+		// Formal properties cleanup time
+		for (String qualifiedElement : mapFormalProperties.keySet()) {
+			if (mapFormalProperties.get(qualifiedElement) == null) {
+//				System.out.println("formalProperty " + qualifiedElement + " should be removed");
+				chessElementsUtil.removeFormalProperty(existingFormalProperties, qualifiedElement);
+			}
+		}
+
 		// FunctionBehavior cleanup time
 		for (String qualifiedElement : mapFunctionBehaviors.keySet()) {
 			if (mapFunctionBehaviors.get(qualifiedElement) == null) {
-				System.out.println("functionBehavior " + qualifiedElement + " should be removed");
+//				System.out.println("functionBehavior " + qualifiedElement + " should be removed");
 				chessElementsUtil.removeFunctionBehavior(existingFunctionBehaviors, qualifiedElement);
 			}
 		}
@@ -1031,4 +1224,4 @@ public class ImportOSSFileAction {
 	}
 }
 
-//TODO: andrebbero rimossi anche i tipi creati, signal, enumeration, boundedsubtype, formal properties, ...
+//TODO: andrebbero rimossi anche i tipi creati, signal, enumeration, boundedsubtype,...
