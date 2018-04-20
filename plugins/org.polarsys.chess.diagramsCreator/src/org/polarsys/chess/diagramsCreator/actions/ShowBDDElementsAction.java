@@ -152,7 +152,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		for (Element child : children) {
 			if (entityUtil.isPort(child) || 
 					contractEntityUtil.isContractProperty(child)||
-					contractEntityUtil.isDelegationConstraints(child)) {
+					entityUtil.isDelegationConstraints(child)) {
 				
 				int textLength = 0;
 				childrenNumber++;
@@ -300,7 +300,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 			if((entityUtil.isPort(semanticElement) && 
 					!(editPartRepresentation.getParentRepresentation() instanceof AffixedChildrenEditPartRepresentation)) || 
 					contractEntityUtil.isContractProperty(semanticElement)||
-					contractEntityUtil.isDelegationConstraints(semanticElement)) {
+					entityUtil.isDelegationConstraints(semanticElement)) {
 				result.add(editPartRepresentation);
 			}
 		}
