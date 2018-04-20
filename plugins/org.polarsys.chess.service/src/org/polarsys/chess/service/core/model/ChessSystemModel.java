@@ -907,8 +907,8 @@ if (entityUtil.isBlock((Element) component)) {
 
 	@Override
 	public EList<?> getOwnerStaticPorts(Object element) {
-Element owner = entityUtil.getOwner((Element)element);
-		
+		Element owner = entityUtil.getOwner((Element)element);
+
 		if(!(owner instanceof Class)){
 			return null;
 		}
@@ -917,8 +917,6 @@ Element owner = entityUtil.getOwner((Element)element);
 			owner = (Class)entityUtil.getOwner(owner);
 		}
 		return entityUtil.getUMLPorts(owner,true);	
-		
-		
 	}
 
 
@@ -927,21 +925,21 @@ Element owner = entityUtil.getOwner((Element)element);
 	public EList<?> getStaticPorts(Object component) {
 		return entityUtil.getUMLPorts((Element)component,true);
 	}
+	
+	
 
 	@Override
 	public EList<?> getUninterpretedFunctions(Object component) {
-		if (component instanceof Class) {
+		if (entityUtil.isBlock((Element) component)) {
 			return ((Class) component).getOwnedBehaviors();
-		}
-		if (component instanceof Property) {
-			final Class type = (Class) ((Property) component).getType(); 
-			return type.getOwnedBehaviors();
+		} else if (entityUtil.isComponentInstance((Element) component)) {
+			return ((Class) ((Property) component).getType()).getOwnedBehaviors();
 		}
 		return null;
 	}
 
-
-
+	
+	
 	@Override
 	public boolean isNullParameter(Object parameter) {
 		if (parameter instanceof Parameter) {
