@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="TreeOutlinePage">
+         <propertyTab
+               afterTab="advanced"
+               category="Editors"
+               id="FunctionBehaviorTab"
+               label="FunctionBehaviorEditor">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections
+            contributorId="TreeOutlinePage">
+         <propertySection
+               class="org.polarsys.chess.functionBehaviors.functionBehaviorEditor.FunctionBehaviorEditorTab"
+               id="FunctionBehaviorEditorSection"
+               tab="FunctionBehaviorTab">
+         </propertySection>
+      </propertySections>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="TreeOutlinePage">
+         <propertyCategory
+               category="Editors">
+         </propertyCategory>
+      </propertyContributor>
+   </extension>
+
+</plugin>
