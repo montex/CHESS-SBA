@@ -9,4 +9,10 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.ui.views.properties.tabbed,
  org.polarsys.chess.contracts.profile,
  org.polarsys.chess.service,
- org.polarsys.chess.contracts.contractEditor
+ org.polarsys.chess.contracts.contractEditor,
+ eu.fbk.eclipse.standardtools.contractEditor.core,
+ org.eclipse.emf.transaction,
+ org.eclipse.papyrus.infra.widgets,
+ org.eclipse.papyrus.uml.tools,
+ eu.fbk.eclipse.standardtools.utils,
+ org.eclipse.papyrus.uml.diagram.composite

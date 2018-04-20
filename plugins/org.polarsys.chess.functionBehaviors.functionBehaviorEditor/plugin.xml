@@ -19,6 +19,7 @@
             contributorId="TreeOutlinePage">
          <propertySection
                class="org.polarsys.chess.functionBehaviors.functionBehaviorEditor.FunctionBehaviorEditorTab"
+               filter="org.polarsys.chess.functionBehaviors.functionBehaviorEditor.FunctionBehaviorEditorFilter"
                id="FunctionBehaviorEditorSection"
                tab="FunctionBehaviorTab">
          </propertySection>
