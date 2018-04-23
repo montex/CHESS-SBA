@@ -14,9 +14,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Parameter;
+import org.eclipse.uml2.uml.ParameterDirectionKind;
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -52,6 +55,7 @@ import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
+import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.OpaqueBehavior;
@@ -241,9 +245,9 @@ public class EntityUtil {
 		return subComponents;
 	}
 	
-	public Element getSubComponentOfConstraintOwner(Constraint constraint, String componentName) {
-		Element element = constraint.getOwner();
-
+	
+	public Element getSubComponent(Element element, String componentName) {
+		
 		for (Property umlProperty : getSubComponentsInstances((Class) element)) {
 			if (umlProperty.getName().compareTo(componentName) == 0) {
 				return getUMLType(umlProperty);
@@ -363,6 +367,9 @@ public class EntityUtil {
 		return subComponentsNames;
 	}
 
+	public String[] getSubComponentsName(Class umlComponent) {
+		return toArray(getSubComponentsNames(umlComponent));
+	}
 	
 
 	public EList<Port> getUMLPorts(Element umlElement, boolean isStaticPort) {
@@ -635,11 +642,21 @@ public class EntityUtil {
 
 	public boolean isContinuousAttribute(Property umlProperty) {
 		if (umlProperty.getType() != null) {
-			return (umlProperty.getType().getQualifiedName().compareTo(CHESS_CONTINUOUS_TYPE) == 0);
+			return isContinuousType(umlProperty.getType());
 		}
 		return false;
 	}
 
+	public boolean isContinuousType(Type type){
+		if (type != null) {
+		return type.getQualifiedName().compareTo(CHESS_CONTINUOUS_TYPE) == 0;
+		}else return false;
+	}
+	
+	public Type getAttributeType(Property umlProperty) {
+		return (umlProperty.getType());
+	}
+	
 	public boolean isEnumerationAttribute(Property umlProperty) {
 		return isEnumerationType(umlProperty.getType());
 	}
@@ -1075,9 +1092,13 @@ public class EntityUtil {
 	}
 
 	public boolean isEventPortAttribute(Property umlProperty) {
-		return ((umlProperty.getType() != null) && (umlProperty.getType() instanceof Signal));
+		return ((umlProperty.getType() != null) && (isEventType(umlProperty.getType())));
 	}
 
+	public boolean isEventType(Type type) {
+		return (type instanceof Signal);
+	}
+	
 	public EList<Port> getTransitionEvents(Transition transition) {
 		if (!isTransitionWithNoEvent(transition)) {
 			return transition.getTriggers().get(0).getPorts();
@@ -1116,7 +1137,7 @@ public class EntityUtil {
 		return false;
 	}
 
-	private boolean isStringType(Type type) {
+	public boolean isStringType(Type type) {
 		if (type != null) {
 			return (type.getQualifiedName().compareTo(STRING_TYPE) == 0);
 		}
@@ -1317,6 +1338,39 @@ public class EntityUtil {
 		}
 
 		return constraints;
+	}
+
+	public EList<?> getUMLFunctionBehaviors(Element umlElement) {
+		if(umlElement instanceof Class){
+		Class umlClass = (Class) umlElement;		
+		return umlClass.getOwnedBehaviors();
+		}
+		return null;
+	}
+
+	public String getUMLFunctionBehaviorName(FunctionBehavior uninterpretedFunction) {		
+		return uninterpretedFunction.getName();
+	}
+
+	public Type getUMLFunctionBehaviorOutputType(FunctionBehavior uninterpretedFunction) {
+		for(Parameter parameter : uninterpretedFunction.getOwnedParameters()){
+			if(parameter.getDirection()==ParameterDirectionKind.OUT_LITERAL){
+				return parameter.getType();
+			}
+		}
+		return null;
+	}
+
+	public List<Type> getUMLFunctionBehaviorInputTypes(FunctionBehavior uninterpretedFunction) {
+		
+		List<Type> inputTypes = new ArrayList<Type>();
+		
+		for(Parameter parameter : uninterpretedFunction.getOwnedParameters()){
+			if(parameter.getDirection()==ParameterDirectionKind.IN_LITERAL){
+				inputTypes.add(parameter.getType());
+			}
+		}
+		return inputTypes;
 	}
 
 	
