@@ -21,6 +21,7 @@ import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
@@ -68,8 +69,8 @@ public class ChessSystemModel implements AbstractSystemModel {
 	}
 
 	@Override
-	public boolean isRangeAttribute(Object port) {
-		return entityUtil.isRangeAttribute((Property) port);
+	public boolean isRangeType(Object type) {
+		return entityUtil.isRangeType((Type)type);
 	}
 
 	/*
@@ -216,18 +217,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 		// return ((Property) parameter).getName();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
-	 * ToolToOCRAModel# getParameters(java.lang.Object)
-	 */
-	/*
-	 * @Override public EList<Property> getParameters(Object component) { return
-	 * null; //return new
-	 * BasicEList<Property>(entityUtil.getBooleanAttributesExceptPorts((Element)
-	 * component)); }
-	 */
+	
 
 	/*
 	 * (non-Javadoc)
@@ -535,66 +525,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return ((ContractRefinement) contractRefinement).getContract();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
-	 * ToolToOCRAModel# isBooleanType(java.lang.Object)
-	 */
-	@Override
-	public boolean isBooleanAttribute(Object port_or_parameter) {
-		return entityUtil.isBooleanAttribute((Property) port_or_parameter);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
-	 * ToolToOCRAModel# isDoubleType(java.lang.Object)
-	 */
-	@Override
-	public boolean isDoubleAttribute(Object port_or_parameter) {
-		return entityUtil.isDoubleAttribute((Property) port_or_parameter);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
-	 * ToolToOCRAModel# isRealType(java.lang.Object)
-	 */
-	@Override
-	public boolean isRealAttribute(Object port_or_parameter) {
-		return entityUtil.isRealAttribute((Property) port_or_parameter);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
-	 * ToolToOCRAModel# isIntType(java.lang.Object)
-	 */
-	@Override
-	public boolean isIntAttribute(Object port_or_parameter) {
-		return entityUtil.isIntegerAttribute((Property) port_or_parameter);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
-	 * ToolToOCRAModel# isContinuousType(java.lang.Object)
-	 */
-	@Override
-	public boolean isContinuousAttribute(Object port_or_parameter) {
-		return entityUtil.isContinuousAttribute((Property) port_or_parameter);
-	}
-
-	@Override
-	public boolean isEnumAttribute(Object port_or_parameter) {
-		return entityUtil.isEnumerationAttribute((Property) port_or_parameter);
-	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -614,10 +545,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return null;
 	}
 
-	@Override
-	public EList<?> getSubComponentsInstancesOwner(Object component) {
-		return getSubComponentsInstances(entityUtil.getOwner((Element)component));
-	}
+	
 
 	/*
 	 * (non-Javadoc)
@@ -637,14 +565,11 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return contractOwner == componentType;
 	}
 
-	@Override
-	public boolean isEventAttribute(Object attribute) {
-		return entityUtil.isEventPortAttribute((Property) attribute);
-	}
+	
 
 	@Override
-	public String getAttributeOwnerName(Object attribute) {
-		return entityUtil.getComponentName(entityUtil.getOwner((Element) attribute));
+	public String getOwnerName(Object element) {
+		return entityUtil.getComponentName(entityUtil.getOwner((Element) element));
 	}
 
 	@Override
@@ -667,17 +592,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.isInOutPort((Port) port);
 	}
 
-	@Override
-	public boolean isNumberAttribute(Object attribute) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public boolean isWordAttribute(Object attribute) {
-		return entityUtil.isStringAttribute((Property) attribute);
-
-	}
 
 	@Override
 	public String getVariableName(Object attribute) {
@@ -689,56 +604,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.getConstraintQualifiedName((Constraint)formalProperty);
 	}
 
-	@Override
-	public EList<?> getOwnerNonStaticPorts(Object formalProperty) {
-
-		Element owner = entityUtil.getOwner((Element) formalProperty);
-
-		if (!(owner instanceof Class)) {
-			return null;
-		}
-		// block added to manage formal properties with contract as owner
-		if (contractEntityUtil.isContract(owner)) {
-			owner = (Class) entityUtil.getOwner(owner);
-		}
-		return entityUtil.getUMLPorts(owner, false);
-	}
-
-	/*
-	 * //@Override private Set<?> getOwnerVariables(Object formalProperty) {
-	 * Element owner = (Element)entityUtil.getOwner((Element)formalProperty);
-	 * 
-	 * if(!(owner instanceof Class)){ return null; } //block added to manage
-	 * formal properties with contract as owner
-	 * if(contractEntityUtil.isContract(owner)){ owner =
-	 * (Class)entityUtil.getOwner(owner); } //return
-	 * entityUtil.getAttributes(owner); return null; }
-	 */
-
-	@Override
-	public EList<String> getEnumValuesFromOwnerAttributes(Object formalProperty) {
-		Element owner = (Element) entityUtil.getOwner((Element) formalProperty);
-
-		if (!(owner instanceof Class)) {
-			return null;
-		}
-		// block added to manage formal properties with contract as owner
-		if (contractEntityUtil.isContract(owner)) {
-			owner = (Class) entityUtil.getOwner(owner);
-		}
-		// return entityUtil.getEnumValuesFromComponentPorts(element);
-		return entityUtil.getEnumValuesFromComponentAttributes((Class) owner);
-	}
-
-	@Override
-	public String[] getSubComponentsNameOfOwner(Object constraint) {
-		return entityUtil.getSubComponentsNameOfConstraintOwner((Constraint) constraint);
-	}
-
-	@Override
-	public Object getSubComponentOfOwner(Object constraint, String subCompName) {
-		return entityUtil.getSubComponentOfConstraintOwner((Constraint) constraint, subCompName);
-	}
+	
 
 	@Override
 	public String getConstraintQualifiedName(Object constraint) {
@@ -750,32 +616,6 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.getQualifiedName((NamedElement) component);
 	}
 
-	/*
-	 * @Override public String[] getEnumValuesFromOwnerPorts(Object
-	 * port_or_parameter) { Element owner =
-	 * entityUtil.getOwner((Element)port_or_parameter);
-	 * 
-	 * if(!(owner instanceof Class)){ return null; }
-	 * 
-	 * if(contractEntityUtil.isContract(owner)){ owner =
-	 * (Class)entityUtil.getOwner(owner); } return
-	 * entityUtil.getEnumValuesFromComponentPorts((Class)owner); }
-	 */
-
-	@Override
-	public EList<?> getOwnerStaticPorts(Object element) {
-		Element owner = entityUtil.getOwner((Element) element);
-
-		if (!(owner instanceof Class)) {
-			return null;
-		}
-		// block added to manage formal properties with contract as owner
-		if (contractEntityUtil.isContract(owner)) {
-			owner = (Class) entityUtil.getOwner(owner);
-		}
-		return entityUtil.getUMLPorts(owner, true);
-
-	}
 
 	@Override
 	public EList<?> getStaticPorts(Object component) {
@@ -830,6 +670,104 @@ public class ChessSystemModel implements AbstractSystemModel {
 	@Override
 	public EList<String> getEnumValues(Object component) {
 		return entityUtil.getEnumValuesFromComponentAttributes((Element) component);
+	}
+
+	@Override
+	public String getUninterpretedFunctionName(Object uninterpretedFunction) {
+		return entityUtil.getUMLFunctionBehaviorName((FunctionBehavior)uninterpretedFunction);
+	}
+
+	
+	@Override
+	public Object getNearestOwnerComponent(Object element) {
+		Element owner = entityUtil.getOwner((Element) element);
+
+		if (!(owner instanceof Class)) {
+			return null;
+		}
+		// block added to manage formal properties with contract as owner
+		if (contractEntityUtil.isContract(owner)) {
+			owner = (Class) entityUtil.getOwner(owner);
+		}
+		
+		return owner;
+	}
+
+	@Override
+	public String[] getSubComponentsName(Object component) {
+		return entityUtil.getSubComponentsName((Class) component);
+	}
+
+	@Override
+	public Object getSubComponent(Object component, String subCompName) {
+		return entityUtil.getSubComponent((Element)component, subCompName);
+	}
+
+	@Override
+	public EList<?> getUninterpretedFunctions(Object component) {
+		return entityUtil.getUMLFunctionBehaviors((Element)component);
+	}
+
+	@Override
+	public EList<String> getEnumValuesFromAttributes(Object component) {
+		return entityUtil.getEnumValuesFromComponentAttributes((Element)component);
+	}
+
+	@Override
+	public Object getAttributeType(Object attribute) {
+		return entityUtil.getAttributeType((Property)attribute);
+	}
+
+	@Override
+	public boolean isBooleanType(Object type) {
+		return entityUtil.isBooleanType((Type)type);
+	}
+
+	@Override
+	public boolean isContinuousType(Object type) {
+		return entityUtil.isContinuousType((Type)type);
+	}
+
+	@Override
+	public boolean isEnumType(Object type) {
+		return entityUtil.isEnumerationType((Type)type);
+	}
+
+	@Override
+	public boolean isEventType(Object type) {
+		return entityUtil.isEventType((Type)type);
+	}
+
+	@Override
+	public boolean isIntType(Object type) {
+		return entityUtil.isIntegerType((Type)type);
+	}
+
+	@Override
+	public boolean isNumberType(Object type) {
+		//return entityUtil.isNumberType((Type)type);
+		return false;
+	}
+
+	@Override
+	public boolean isRealType(Object type) {
+		return entityUtil.isRealType((Type)type);
+	}
+
+	@Override
+	public boolean isWordType(Object type) {
+		//return entityUtil.isWordType((Type)type);
+		return false;
+	}
+
+	@Override
+	public Object getUninterpretedFunctionOutputType(Object uninterpretedFunction) {
+		return entityUtil.getUMLFunctionBehaviorOutputType((FunctionBehavior)uninterpretedFunction);
+	}
+
+	@Override
+	public List<?> getUninterpretedFunctionInputTypes(Object uninterpretedFunction) {
+		return entityUtil.getUMLFunctionBehaviorInputTypes((FunctionBehavior)uninterpretedFunction);
 	}
 	
 	
