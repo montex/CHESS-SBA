@@ -211,17 +211,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.getUMLPorts((Element) component, false);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
-	 * ToolToOCRAModel# getParameterName(java.lang.Object)
-	 */
-/*	@Override
-	public String getAttributeName(Object parameter) {
-		return entityUtil.getAttributeName((Property) parameter);
-		// return ((Property) parameter).getName();
-	}*/
+	
 
 
 	@Override
@@ -256,53 +246,6 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return null;
 	}
 	
-	/*@Override
-	public String getUninterpretedFunctionOwnerName(Object owner) {
-		if (owner instanceof Element) {
-			return entityUtil.getComponentName((Element) owner);
-		}
-		return null;
-	}
-*/
-	
-/*	@Override
-	public Object getUninterpretedFunctionOwner(Object function) {
-		if (function instanceof FunctionBehavior) {
-			return entityUtil.getFunctionBehaviorOwner((FunctionBehavior) function);
-		}
-		return null;
-	}*/
-	
-	/*@Override
-	public String getUninterpretedFunctionParameterName(Object parameter) {
-		if (parameter instanceof Parameter) {
-			return entityUtil.getParameterName((Parameter) parameter);
-		}
-		return null;
-	}
-	
-	@Override
-	public Object getUninterpretedFunctionParameterOwner(Object parameter) {
-		if (parameter instanceof Parameter) {
-			return entityUtil.getParameterOwner((Parameter) parameter);
-		}
-		return null;
-		
-	}*/
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
-	 * ToolToOCRAModel# getParameters(java.lang.Object)
-	 */
-	/*
-	 * @Override public EList<Property> getParameters(Object component) { return
-	 * null; //return new
-	 * BasicEList<Property>(entityUtil.getBooleanAttributesExceptPorts((Element)
-	 * component)); }
-	 */
-
 
 	/*
 	 * (non-Javadoc)
