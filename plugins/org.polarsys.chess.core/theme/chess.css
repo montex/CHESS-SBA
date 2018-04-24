@@ -1,0 +1,45 @@
+Port {
+	maskLabel: direction name type multiplicity;
+}
+
+Transition > Label {
+bodyCutLength: 5;
+indicateParameters: true;
+}
+
+Transition { /* for internal transitions */
+bodyCutLength: 5;
+indicateParameters: true;
+}
+
+Association > Label:sourceMultiplicity {
+	visible:false;
+}
+ 
+Association > Label:targetMultiplicity {
+	visible:false;
+}
+ 
+Association > Label:sourceRole {
+	maskLabel: name multiplicity;
+}
+ 
+Association > Label:targetRole {
+	maskLabel: name multiplicity;
+}
+ 
+Association > Label:name {
+	visible:false;
+}
+
+Connector > Label:name {
+	visible:false;
+}
+
+[appliedStereotypes~=FlowPort] > Label:StereotypeLabel{ 
+	visible:false;
+}
+
+/*Port > Label:Port_StereotypeLabel {
+	visible: false;
+}*/

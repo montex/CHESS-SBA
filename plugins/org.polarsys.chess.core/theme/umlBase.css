@@ -1,0 +1,477 @@
+/*****************************************************************************
+ * Copyright (c) 2015 CEA LIST.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *  Mickaël ADAM (ALL4TEC) mickael.adam@all4tec.net - Generic shape default value implementation. Default symbol implementation.
+ *  Celine JANSSENS (ALL4TEC) celine.janssens@all4tec.net - Bug 471348
+ *
+ *****************************************************************************/
+
+/* Display name in italic when isAbstract=true (bug 464129)*/
+[isAbstract=true] {
+	italic:true;
+}
+
+/*
+ * The Actor element icon is not useful either
+ */
+UseCaseDiagram Actor {
+	elementIcon:false;
+}
+
+TimingDiagram * {
+	gradient:none;
+}
+/*---------- Stereotype Display --------- */
+
+StereotypeComment{
+	visible:false;
+	showTitle:true;
+}
+ 
+Compartment[type=StereotypeCompartment]{
+	visible:false;
+	showTitle:true;
+}
+ 
+Compartment[type=StereotypeBrace]{
+	visible:false;
+}
+
+StereotypeComment Compartment[type=StereotypeBrace]{
+	visible:false;
+}
+ 
+Label[kind=StereotypeLabel]{
+	depth:"none";
+}
+
+/*---------- Default SVG symbols ----------*/
+
+/* Round full */
+StateMachineDiagram Pseudostate[kind="initial"],
+StateMachineDiagram Pseudostate[kind="junction"],
+ActivityDiagram InitialNode,
+InteractionOverviewDiagram InitialNode
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.infra.gmfdiag.common/icons/symbols/round_full.svg";
+}
+
+ActivityDiagram ActivityFinalNode, 
+InteractionOverviewDiagram ActivityFinalNode,
+StateMachineDiagram FinalState
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.infra.gmfdiag.common/icons/symbols/round_with_dot.svg";
+}
+
+ActivityDiagram FlowFinalNode,
+InteractionOverviewDiagram FlowFinalNode
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.infra.gmfdiag.common/icons/symbols/round_with_cross.svg";
+}
+
+ActivityDiagram SendSignalAction
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.infra.gmfdiag.common/icons/symbols/arrow.svg";
+}
+
+ActivityDiagram AcceptEventAction[isTimeEventAction=true]
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.infra.gmfdiag.common/icons/symbols/hourglass.svg";
+	maintainSymbolRatio:true;
+	displayName:true;
+}
+
+ActivityDiagram AcceptEventAction[isTimeEventAction=false]
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.infra.gmfdiag.common/icons/symbols/flag.svg";
+	maintainSymbolRatio:false;
+	displayName:true;
+}
+
+
+StateMachineDiagram Pseudostate[kind="terminate"]
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.infra.gmfdiag.common/icons/symbols/cross.svg";
+}
+
+ActivityDiagram MergeNode,
+ActivityDiagram DecisionNode,
+InteractionOverviewDiagram MergeNode,
+InteractionOverviewDiagram DecisionNode,
+StateMachineDiagram Pseudostate[kind="choice"],
+ClassDiagram Association
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.infra.gmfdiag.common/icons/symbols/diamond.svg";
+}
+
+Actor
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.infra.gmfdiag.common/icons/symbols/actor.svg";
+}
+
+DurationObservation 
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.uml.diagram.common/icons/symbols/durationObservation.svg";
+}
+
+TimeObservation 
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.uml.diagram.common/icons/symbols/timeObservation.svg";
+}
+
+StateMachineDiagram Pseudostate[kind="shallowHistory"]
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.uml.diagram.common/icons/symbols/shallowHistory.svg";
+}
+
+StateMachineDiagram Pseudostate[kind="deepHistory"]
+{
+	svgFile:"platform:/plugin/org.eclipse.papyrus.uml.diagram.common/icons/symbols/deepHistory.svg";
+}
+
+/*---------- Activity Diagram ----------*/
+
+ActivityDiagram MergeNode, 
+ActivityDiagram InitialNode, 
+ActivityDiagram ActivityFinalNode, 
+ActivityDiagram FlowFinalNode, 
+ActivityDiagram DecisionNode, 
+ActivityDiagram SendSignalAction,
+ActivityDiagram AcceptEventAction
+{
+	displayBorder:false;
+	displayName:false;
+	diplayIcon:false;
+	displayTag:false;
+	followSVGSymbol:true;
+	maintainSymbolRatio:true;
+	transparency:100;
+	maxNumberOfSymbol:1;
+	useOriginalColors:false;
+	gradient:none;
+	fillColor:white;
+}
+
+ActivityDiagram MergeNode, 
+ActivityDiagram DecisionNode{
+	maintainSymbolRatio:false;
+}
+
+ActivityDiagram InitialNode{
+	fillColor: black;
+}
+
+/*symbol compartment set to visible */
+ActivityDiagram MergeNode > Compartment[kind="symbol"], 
+ActivityDiagram InitialNode > Compartment[kind="symbol"], 
+ActivityDiagram ActivityFinalNode > Compartment[kind="symbol"], 
+ActivityDiagram FlowFinalNode > Compartment[kind="symbol"], 
+ActivityDiagram MergeNode > Compartment[kind="symbol"], 
+ActivityDiagram SendSignalAction > Compartment[kind="symbol"], 
+ActivityDiagram DecisionNode > Compartment[kind="symbol"], 
+ActivityDiagram AcceptEventAction > Compartment[kind="symbol"]
+{
+    visible:true;
+}
+
+/*External Label set to visible*/
+ActivityDiagram MergeNode > Label, 
+ActivityDiagram InitialNode > Label, 
+ActivityDiagram ActivityFinalNode > Label, 
+ActivityDiagram FlowFinalNode > Label, 
+ActivityDiagram DecisionNode > Label,
+ActivityDiagram ForkNode > Label,
+ActivityDiagram JoinNode > Label
+{
+	 visible:true;
+}
+
+ActivityDiagram SendSignalAction
+{
+	maintainSymbolRatio:false;
+	displayName:true;
+}
+
+ActivityDiagram AcceptEventAction[isTimeEventAction=true]{
+	displayName: false;
+}
+
+ActivityDiagram Activity
+{
+	leftMarginLabel:10;
+	rightMarginLabel:5;
+	topMarginLabel:5;
+	bottomMarginLabel:5;
+}
+
+ActivityDiagram SequenceNode,
+ActivityDiagram ConditionalNode,
+ActivityDiagram ExpansionRegion,
+ActivityDiagram LoopNode,
+ActivityDiagram StructuredActivityNode{
+	textAlignment:left;
+}
+
+ActivityDiagram SequenceNode>Compartment,
+ActivityDiagram ConditionalNode>Compartment,
+ActivityDiagram ExpansionRegion>Compartment,
+ActivityDiagram LoopNode>Compartment,
+ActivityDiagram StructuredActivityNode>Compartment{
+	lineLength:0;
+}
+
+/* For most Activity diagram nodes (e.g. initial, final, fork, decision, ...), 
+ * the element icon is displayed next to the actual object. 
+ * By default, we prevent this. 
+ * 
+ * For standard nodes (OpaqueAction, ...), they are not implemented at all, 
+ * so a global selector will not have side effects (yet). 
+ */
+ActivityDiagram Activity *,InteractionOverviewDiagram Activity * {
+	elementIcon:false; 
+}
+
+/*---------- Class Diagram ----------*/
+ClassDiagram Association
+{
+	displayBorder:false;
+	displayName:false;
+	diplayIcon:false;
+	displayTag:false;
+	followSVGSymbol:true;
+	maintainSymbolRatio:true;
+	transparency:100;
+	displayFloatingLabel:true;
+	maxNumberOfSymbol:1;
+	useOriginalColors:false;
+	gradient:none;
+	fillColor:white;
+}
+
+ClassDiagram  Association > Compartment[kind="symbol"],
+ClassDiagram  DurationObservation > Compartment[kind="symbol"],
+ClassDiagram  TimeObservation > Compartment[kind="symbol"]
+{
+    visible:true;
+}
+
+ClassDiagram Dependency
+{
+	fillColor:Black;
+	gradient:none;
+}
+
+/*---------- UseCase Diagram ----------*/
+UseCaseDiagram UseCase > Compartment {
+	lineLengthRatio:"0.70";
+}
+
+UseCaseDiagram UseCase {
+	topMarginLabel:10;
+	isOval: true;
+}
+
+UseCaseDiagram UseCase > Compartment[kind="points"] 
+{
+	visible:false;
+}
+
+UseCaseDiagram Actor
+{
+	displayBorder:false;
+	displayName:false;
+	diplayIcon:false;
+	displayTag:false;
+	followSVGSymbol:true;
+	maintainSymbolRatio:true;
+	transparency:100;
+	/*displayFloatingLabel:true;*/
+	maxNumberOfSymbol:1;
+	useOriginalColors:false;
+	gradient:none;
+	fillColor:white;
+}
+
+UseCaseDiagram Actor > Compartment[kind="symbol"]
+{
+    visible:true;
+}
+
+/*---------- Communication Diagram ----------*/
+CommunicationDiagram  DurationObservation > Compartment[kind="symbol"],
+CommunicationDiagram  TimeObservation > Compartment[kind="symbol"]
+{
+    visible:true;
+}
+CommunicationDiagram Interaction > Compartment
+{
+	lineLength:0;
+}
+
+/*---------- State Machine Diagram ----------*/
+StateMachineDiagram Pseudostate[kind="initial"],
+StateMachineDiagram Pseudostate[kind="junction"],
+StateMachineDiagram Pseudostate[kind="shallowHistory"],
+StateMachineDiagram Pseudostate[kind="terminate"],
+StateMachineDiagram Pseudostate[kind="deepHistory"],
+StateMachineDiagram Pseudostate[kind="choice"],
+StateMachineDiagram FinalState
+{
+	displayBorder:false;
+	displayName:false;
+	diplayIcon:false;
+	displayTag:false;
+	followSVGSymbol:true;
+	maintainSymbolRatio:true;
+	transparency:100;
+	displayFloatingLabel:true;
+	maxNumberOfSymbol:1;
+	useOriginalColors:false;
+	gradient:none;
+	fillColor:white;
+}
+
+StateMachineDiagram Pseudostate[kind="initial"],
+StateMachineDiagram Pseudostate[kind="junction"]
+{
+	gradient:none;
+	fillColor:black;
+}
+
+StateMachineDiagram Pseudostate[kind="exitPoint"],
+StateMachineDiagram Pseudostate[kind="entryPoint"]
+{
+	isOval: true;
+}
+
+StateMachineDiagram Pseudostate[kind="initial"] > Label,
+StateMachineDiagram Pseudostate[kind="junction"] > Label,
+StateMachineDiagram Pseudostate[kind="shallowHistory"] > Label,
+StateMachineDiagram Pseudostate[kind="terminate"] > Label,
+StateMachineDiagram Pseudostate[kind="deepHistory"] > Label,
+StateMachineDiagram Pseudostate[kind="choice"] > Label,
+StateMachineDiagram FinalState> Label,
+StateMachineDiagram Pseudostate[kind="exitPoint"] > Label,
+StateMachineDiagram Pseudostate[kind="entryPoint"] > Label,
+StateMachineDiagram Pseudostate[kind="join"] > Label,
+StateMachineDiagram Pseudostate[kind="fork"] > Label
+{
+	visible:true;
+	textAlignment:"Left";
+}
+
+StateMachineDiagram Pseudostate[kind="initial"] > Compartment[kind="symbol"],
+StateMachineDiagram Pseudostate[kind="shallowHistory"] > Compartment[kind="symbol"],
+StateMachineDiagram Pseudostate[kind="terminate"] > Compartment[kind="symbol"],
+StateMachineDiagram Pseudostate[kind="deepHistory"] > Compartment[kind="symbol"],
+StateMachineDiagram Pseudostate[kind="choice"] > Compartment[kind="symbol"],
+StateMachineDiagram Pseudostate[kind="junction"] > Compartment[kind="symbol"],
+StateMachineDiagram FinalState > Compartment[kind="symbol"]
+{
+    visible:true;
+}
+
+StateMachineDiagram Pseudostate[kind="choice"]{
+	maintainSymbolRatio:false;
+}
+
+/*---------- Composite Diagram ---------*/
+
+CompositeStructureDiagram Property[aggregation="shared"]{
+	borderStyle: custom;
+}
+
+CompositeStructureDiagram DurationObservation > Compartment[kind="symbol"],
+CompositeStructureDiagram TimeObservation > Compartment[kind="symbol"]{
+    visible:true;
+}
+
+CompositeStructureDiagram DurationObservation > Label,
+CompositeStructureDiagram TimeObservation > Label,
+CompositeStructureDiagram Port > Label{
+    visible:true;
+    textAlignment:"left";
+}
+
+/*Fix of Bug 481701: this permits to hide floating label of collaboration roles which don't have a specific Semantic Element*/
+CompositeStructureDiagram Collaboration > Compartment[kind=internalstructure] > * > Label[kind=FloatingLabel]{
+	visible:false;
+}
+
+CompositeStructureDiagram Port{
+	isPortResizable:true;
+}
+
+/*---------- Interaction Overview Diagram ----------*/
+
+InteractionOverviewDiagram MergeNode, 
+InteractionOverviewDiagram InitialNode, 
+InteractionOverviewDiagram ActivityFinalNode, 
+InteractionOverviewDiagram FlowFinalNode, 
+InteractionOverviewDiagram DecisionNode
+{
+	displayBorder:false;
+	displayName:false;
+	diplayIcon:false;
+	displayTag:false;
+	followSVGSymbol:true;
+	maintainSymbolRatio:true;
+	transparency:100;
+	maxNumberOfSymbol:1;
+	useOriginalColors:false;
+	gradient:none;
+	fillColor:white;
+}
+
+InteractionOverviewDiagram MergeNode, 
+InteractionOverviewDiagram DecisionNode{
+	maintainSymbolRatio:false;
+}
+
+InteractionOverviewDiagram InitialNode{
+	fillColor:black;
+}
+
+/*symbol compartment set to visible */
+InteractionOverviewDiagram MergeNode > Compartment[kind="symbol"], 
+InteractionOverviewDiagram InitialNode > Compartment[kind="symbol"], 
+InteractionOverviewDiagram ActivityFinalNode > Compartment[kind="symbol"], 
+InteractionOverviewDiagram FlowFinalNode > Compartment[kind="symbol"], 
+InteractionOverviewDiagram MergeNode > Compartment[kind="symbol"], 
+InteractionOverviewDiagram DecisionNode > Compartment[kind="symbol"], 
+InteractionOverviewDiagram SendSignalAction > Compartment[kind="symbol"]
+{
+    visible:true;
+}
+
+/*External Label set to visible*/
+InteractionOverviewDiagram MergeNode > Label, 
+InteractionOverviewDiagram InitialNode > Label, 
+InteractionOverviewDiagram ActivityFinalNode > Label, 
+InteractionOverviewDiagram FlowFinalNode > Label, 
+InteractionOverviewDiagram DecisionNode > Label, 
+InteractionOverviewDiagram ForkNode > Label,
+InteractionOverviewDiagram JoinNode > Label
+{
+	 visible:true;
+}
+
+InteractionOverviewDiagram Activity
+{
+	leftMarginLabel:10;
+	rightMarginLabel:5;
+	topMarginLabel:5;
+	bottomMarginLabel:5;
+}
+
+/*---------- Sequence Diagram ----------*/
+
+SequenceDiagram InteractionOperand {
+	borderStyle: dash;
+}
