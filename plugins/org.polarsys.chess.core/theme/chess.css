@@ -28,6 +28,10 @@ bodyCutLength: 5;
 indicateParameters: true;
 }
 
+ /* remove the tag <<part>> on blocks */
+Property {
+    displayTags: false;
+}
 
 /*Hide the labels sourceMultiplicity and targetMultiplicity of the association*/
 Association > Label:sourceMultiplicity {
