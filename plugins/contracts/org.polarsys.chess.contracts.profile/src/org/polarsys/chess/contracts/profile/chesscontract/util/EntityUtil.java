@@ -652,6 +652,8 @@ public class EntityUtil {
 		return false;
 	}
 	
+	//FIXME replace these methods with isIntegerType, etc...
+	
 	public boolean isIntegerParameter(Parameter parameter) {
 		return isIntegerType(parameter.getType());
 	}
@@ -712,6 +714,7 @@ public class EntityUtil {
 		return null;
 	}
 
+	//FIXME remove this method
 	public String[] getValuesForEnumeratorTypeParameter(Parameter parameter) {
 		Set<String> enumValuesNames = getListValuesForEnumeratorTypeParameter(parameter);
 		if (enumValuesNames != null) {
