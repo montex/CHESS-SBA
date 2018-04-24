@@ -33,6 +33,8 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSBlockDefinitionDiagramModel;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramModel;
 import org.polarsys.chess.diagram.ui.services.CHESSDiagramsGeneratorService;
+import org.polarsys.chess.diagramsCreator.actions.ShowBDDElementsAction;
+import org.polarsys.chess.diagramsCreator.actions.ShowIBDElementsAction;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
@@ -52,7 +54,6 @@ public class ImportOSSFileCommand extends AbstractJobCommand implements IHandler
 	private static final String BDD = "BlockDefinition";
 	
 	final DialogUtil dialogUtil = DialogUtil.getInstance();
-	
 	/**
 	 * Constructor.
 	 */
