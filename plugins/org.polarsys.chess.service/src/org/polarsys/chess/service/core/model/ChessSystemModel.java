@@ -23,6 +23,7 @@ import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
@@ -44,20 +45,34 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return chessToOCRAModelRunner;
 	}
 
-	private final Logger logger = Logger.getLogger(ChessSystemModel.class);
+//	private final Logger logger = Logger.getLogger(ChessSystemModel.class);
 
 	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 
 	@Override
-	public String[] getLowerUpperBoundsForRangeType(Object rangeTypePort) {
-		return entityUtil.getLowerUpperBoundsForRangeType((Port) rangeTypePort);
+	public String[] getLowerUpperBoundsForRangeType(Object rangeType) {
+		return entityUtil.getLowerUpperBoundsForRangeType((Type) rangeType);
 	}
+
+	/*@Override
+	public String[] getLowerUpperBoundsForRangeTypeParameter(Object rangeTypeParameter) {
+		if (rangeTypeParameter instanceof Parameter) {
+			return entityUtil.getLowerUpperBoundsForRangeType(((Parameter) rangeTypeParameter).getType());
+		}
+		return null;
+	}	 */
+	
 
 	@Override
 	public String[] getValuesForEnumeratorType(Object enumTypePort) {
-		return entityUtil.getValuesForEnumeratorType((Port) enumTypePort);
+		return entityUtil.getValuesForEnumeratorType((Type) enumTypePort);
 	}
+
+	/*@Override
+	public String[] getValuesForEnumeratorTypeParameter(Object enumType) {
+		return entityUtil.getValuesForEnumeratorType((Type) enumType);
+	}*/
 
 	@Override
 	public String getComponentTypeName(Object component) {
@@ -217,7 +232,78 @@ public class ChessSystemModel implements AbstractSystemModel {
 		// return ((Property) parameter).getName();
 	}
 
+
+	@Override
+	public String getUninterpretedFunctionName(Object function) {
+		if (function instanceof FunctionBehavior) {
+			return entityUtil.getFunctionBehaviorName((FunctionBehavior) function);
+		}
+		return null;
+	}
 	
+	@Override
+	public Object getUninterpretedFunctionType(Object function) {
+		if (function instanceof FunctionBehavior) {
+			return entityUtil.getFunctionBehaviorType((FunctionBehavior) function);
+		}
+		return null;
+	}
+	
+	@Override
+	public EList<?>	getUninterpretedFunctionParameters(Object function) {
+		if (function instanceof FunctionBehavior) {
+			return entityUtil.getFunctionBehaviorInputParameters((FunctionBehavior) function);
+		}
+		return null;
+	}
+	
+	/*@Override
+	public String getUninterpretedFunctionOwnerName(Object owner) {
+		if (owner instanceof Element) {
+			return entityUtil.getComponentName((Element) owner);
+		}
+		return null;
+	}
+*/
+	
+/*	@Override
+	public Object getUninterpretedFunctionOwner(Object function) {
+		if (function instanceof FunctionBehavior) {
+			return entityUtil.getFunctionBehaviorOwner((FunctionBehavior) function);
+		}
+		return null;
+	}*/
+	
+	/*@Override
+	public String getUninterpretedFunctionParameterName(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.getParameterName((Parameter) parameter);
+		}
+		return null;
+	}
+	
+	@Override
+	public Object getUninterpretedFunctionParameterOwner(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.getParameterOwner((Parameter) parameter);
+		}
+		return null;
+		
+	}*/
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.dsl.run.model.
+	 * ToolToOCRAModel# getParameters(java.lang.Object)
+	 */
+	/*
+	 * @Override public EList<Property> getParameters(Object component) { return
+	 * null; //return new
+	 * BasicEList<Property>(entityUtil.getBooleanAttributesExceptPorts((Element)
+	 * component)); }
+	 */
+
 
 	/*
 	 * (non-Javadoc)
@@ -621,7 +707,107 @@ public class ChessSystemModel implements AbstractSystemModel {
 	public EList<?> getStaticPorts(Object component) {
 		return entityUtil.getUMLPorts((Element) component, true);
 	}
+	
 
+/*	@Override
+	public EList<?> getUninterpretedFunctions(Object component) {
+		if (entityUtil.isBlock((Element) component)) {
+			return ((Class) component).getOwnedBehaviors();
+		} else if (entityUtil.isComponentInstance((Element) component)) {
+			return ((Class) ((Property) component).getType()).getOwnedBehaviors();
+		}
+		return null;
+	}*/
+
+	
+	
+	@Override
+	public boolean isNullParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return (((Parameter) parameter).getType() == null);
+		}
+		return false;
+	}
+
+
+
+/*	@Override
+	public boolean isBooleanParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.isBooleanParameter((Parameter) parameter);
+		}
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isContinuousParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.isContinuousParameter((Parameter) parameter);
+		}
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isDoubleParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.isDoubleParameter((Parameter) parameter);
+		}
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isRealParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.isRealParameter((Parameter) parameter);
+		}
+		return false;
+	}
+
+
+	@Override
+	public boolean isIntParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.isIntegerParameter((Parameter) parameter);
+		}
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isRangeParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.isRangeParameter((Parameter) parameter);
+		}
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isEnumParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.isEnumerationParameter((Parameter) parameter);
+		}
+		return false;
+	}
+
+
+
+	@Override
+	public boolean isEventParameter(Object parameter) {
+		if (parameter instanceof Parameter) {
+			return entityUtil.isEventParameter((Parameter) parameter);
+		}
+		return false;
+	}
+*/
 	@Override
 	public String getInterfaceAssertionBody(Object interfaceAssertion) {
 		return entityUtil.getConstraintBodyStr((Constraint) interfaceAssertion);
@@ -672,10 +858,6 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.getEnumValuesFromComponentAttributes((Element) component);
 	}
 
-	@Override
-	public String getUninterpretedFunctionName(Object uninterpretedFunction) {
-		return entityUtil.getUMLFunctionBehaviorName((FunctionBehavior)uninterpretedFunction);
-	}
 
 	
 	@Override
@@ -769,7 +951,23 @@ public class ChessSystemModel implements AbstractSystemModel {
 	public List<?> getUninterpretedFunctionInputTypes(Object uninterpretedFunction) {
 		return entityUtil.getUMLFunctionBehaviorInputTypes((FunctionBehavior)uninterpretedFunction);
 	}
+
+	@Override
+	public Object getParameterType(Object parameter) {
+		return entityUtil.getParameterType((Parameter) parameter);
+	}
+
+	@Override
+	public String getParameterName(Object parameter) {
+		return entityUtil.getParameterName((Parameter) parameter);
+	}
+
+	@Override
+	public Object getUninterpretedFunctionParameterOwner(Object parameter) {
+		return entityUtil.getParameterOwner((Parameter) parameter);
+	}
 	
 	
 	
+
 }

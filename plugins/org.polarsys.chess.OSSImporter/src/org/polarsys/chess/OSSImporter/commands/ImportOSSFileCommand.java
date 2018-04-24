@@ -33,8 +33,6 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSBlockDefinitionDiagramModel;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramModel;
 import org.polarsys.chess.diagram.ui.services.CHESSDiagramsGeneratorService;
-import org.polarsys.chess.diagramsCreator.actions.ShowBDDElementsAction;
-import org.polarsys.chess.diagramsCreator.actions.ShowIBDElementsAction;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
@@ -42,7 +40,6 @@ import org.eclipse.uml2.uml.Class;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 import eu.fbk.eclipse.standardtools.xtextService.ui.services.RuntimeErrorService;
-
 /**
  * Class that starts the parsing of a file in OCRA format.
  * It is triggered by the contextual menu item on an entire package.
