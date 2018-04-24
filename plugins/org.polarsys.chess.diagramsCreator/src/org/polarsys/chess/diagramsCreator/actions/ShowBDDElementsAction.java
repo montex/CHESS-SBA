@@ -406,8 +406,10 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		for (Element element : packageChildren) {
 			if (element instanceof Association) {
 				logger.debug("calling showElementIn for Association = " + element);
-				final Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1); 
-				completeCmd.add(cmd);
+				final Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1);
+				if (cmd.canExecute()) {
+					completeCmd.add(cmd);
+				}
 			}
 		}
 		

@@ -17,6 +17,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Parameter;
+import org.eclipse.uml2.uml.ParameterDirectionKind;
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -52,6 +54,7 @@ import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
+import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.OpaqueBehavior;
@@ -103,7 +106,7 @@ public class EntityUtil {
 
 	private static final String FAULTY_STATE_MACHINE = "CHESS::Dependability::ThreatsPropagation::ErrorModel";
 
-	private static final String ALLOC = "SysML::Allocations::Allocated";
+//	private static final String ALLOC = "SysML::Allocations::Allocated";
 	
 	// not yet used
 	// private static final String STRING_TYPE = "PrimitiveTypes::String";
@@ -404,8 +407,6 @@ public class EntityUtil {
 
 	}
 
-	
-
 	private EList<Port> getUMLPortsFromClass(Class umlComponent, int portDirection, boolean isStatic) {
 		EList<Port> ports = new BasicEList<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
@@ -650,6 +651,44 @@ public class EntityUtil {
 		}
 		return false;
 	}
+	
+	//FIXME replace these methods with isIntegerType, etc...
+	
+	public boolean isIntegerParameter(Parameter parameter) {
+		return isIntegerType(parameter.getType());
+	}
+
+	public boolean isRealParameter(Parameter parameter) {
+		return isRealType(parameter.getType());
+	}
+
+	public boolean isBooleanParameter(Parameter parameter) {
+		return isBooleanType(parameter.getType());		
+	}
+	
+	public boolean isDoubleParameter(Parameter parameter) {
+		return (parameter.getType() != null && parameter.getType().getName().compareTo("Double") == 0);
+	}
+	
+	public boolean isContinuousParameter(Parameter parameter) {
+		return (parameter.getType() != null && parameter.getType().getQualifiedName().compareTo(CHESS_CONTINUOUS_TYPE) == 0);
+	}
+	
+	public boolean isRangeParameter(Parameter parameter) {
+		return isRangeType(parameter.getType());
+	}
+	
+	public boolean isEnumerationParameter(Parameter parameter) {
+		return isEnumerationType(parameter.getType());
+	}
+	
+	public boolean isEventParameter(Parameter parameter) {
+		return ((parameter.getType() != null) && (parameter.getType() instanceof Signal));
+	}
+
+	public Set<String> getListValuesForEnumeratorTypeParameter(Parameter parameter) {
+		return getListValuesForEnumeratorType(parameter.getType());
+	}
 
 	public Set<String> getListValuesForEnumeratorType(Property umlProperty) {
 		return getListValuesForEnumeratorType(umlProperty.getType());
@@ -673,7 +712,15 @@ public class EntityUtil {
 			return toArray(enumValuesNames);
 		}
 		return null;
+	}
 
+	//FIXME remove this method
+	public String[] getValuesForEnumeratorTypeParameter(Parameter parameter) {
+		Set<String> enumValuesNames = getListValuesForEnumeratorTypeParameter(parameter);
+		if (enumValuesNames != null) {
+			return toArray(enumValuesNames);
+		}
+		return null;
 	}
 
 	public Element getUMLType(Property umlProperty) {
@@ -1092,7 +1139,78 @@ public class EntityUtil {
 	public String getAttributeName(Property attribute) {
 		return attribute.getName();
 	}
-
+	
+	/**
+	 * Returns the name of the given function behavior
+	 * @param function the function behavior
+	 * @return the requested name
+	 */
+	public String getFunctionBehaviorName(FunctionBehavior function) {
+		return function.getName();
+	}
+	
+	/**
+	 * Returns the name of the given parameter
+	 * @param parameter the parameter
+	 * @return the requested name
+	 */
+	public String getParameterName(Parameter parameter) {
+		return parameter.getName();
+	}
+	
+	/**
+	 * Returns the owner of the given parameter
+	 * @param parameter the parameter
+	 * @return the owner of the parameter
+	 */
+	public Element getParameterOwner(Parameter parameter) {
+		return parameter.getOwner();
+	}
+	
+	/**
+	 * Returns the type of the given function behavior
+	 * @param function the function behavior
+	 * @return the type
+	 */
+	public Object getFunctionBehaviorType(FunctionBehavior function) {
+		
+		// Loop on all the parameters to find the output one. It gives the type to the function
+		final EList<Parameter> parameters = function.getOwnedParameters();
+		for (Parameter parameter : parameters) {
+			if (parameter.getDirection() == ParameterDirectionKind.OUT_LITERAL) {
+				return parameter;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the input parameters of the given function behavior
+	 * @param function the function behavior
+	 * @return the input parameters
+	 */
+	public EList<Parameter> getFunctionBehaviorInputParameters(FunctionBehavior function) {
+		final EList<Parameter> inputParameters = new BasicEList<Parameter>();
+				
+		// Loop on all the parameters to find the input ones
+		final EList<Parameter> parameters = function.getOwnedParameters();
+		for (Parameter parameter : parameters) {
+			if (parameter.getDirection() == ParameterDirectionKind.IN_LITERAL) {
+				inputParameters.add(parameter);
+			}
+		}
+		return inputParameters;
+	}
+	
+	/**
+	 * Returns the owner of the given function behavior
+	 * @param function the function behavior
+	 * @return the owner of the function behavior
+	 */
+	public Element getFunctionBehaviorOwner(FunctionBehavior function) {
+		return function.getOwner();
+	}
+	
 	public boolean isTransitionWithNoEvent(Transition transition) {
 		return !((transition.getTriggers() != null) && (transition.getTriggers().size() != 0)
 				&& (transition.getTriggers().get(0).getPorts() != null)
