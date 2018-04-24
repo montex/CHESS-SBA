@@ -1424,6 +1424,17 @@ public class EntityUtil {
 		return inputParameters;
 	}
 	
+	public Parameter getUMLFunctionBehaviorOutputParameter(FunctionBehavior function) {
+		// Loop on all the parameters to find the input ones
+		final EList<Parameter> parameters = function.getOwnedParameters();
+		for (Parameter parameter : parameters) {
+			if (parameter.getDirection() == ParameterDirectionKind.OUT_LITERAL) {
+				return(parameter);
+			}
+		}
+		return null;
+	}
+	
 	public Object getParameterType(Parameter parameter) {
 		return parameter.getType();
 	}

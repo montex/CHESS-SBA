@@ -241,9 +241,17 @@ public class ChessSystemModel implements AbstractSystemModel {
 	}*/
 	
 	@Override
-	public EList<?>	getUninterpretedFunctionParameters(Object function) {
+	public EList<?>	getUninterpretedFunctionInputParameters(Object function) {
 		if (function instanceof FunctionBehavior) {
 			return entityUtil.getUMLFunctionBehaviorInputParameters((FunctionBehavior) function);
+		}
+		return null;
+	}
+	@Override
+	public Object getUninterpretedFunctionOutputParameter(Object function) {
+		if (function instanceof FunctionBehavior) {
+			return entityUtil.getUMLFunctionBehaviorOutputParameter((FunctionBehavior) function);
+							  
 		}
 		return null;
 	}
