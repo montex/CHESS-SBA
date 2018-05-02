@@ -1364,14 +1364,28 @@ public class EntityUtil {
 		return constraints;
 	}
 
-	public EList<?> getUMLFunctionBehaviors(Element umlElement) {
+	public EList<FunctionBehavior> getUMLFunctionBehaviors(Element umlElement) {
+		
+		EList<FunctionBehavior> functionBehaviours = null;
+		
+		if (isComponentInstance((Element) umlElement)) {
+			umlElement = ((Property) umlElement).getType();
+		}
+				
 		if(umlElement instanceof Class){
 		Class umlClass = (Class) umlElement;		
-		return umlClass.getOwnedBehaviors();
-		} else if (isComponentInstance((Element) umlElement)) {
-			return ((Class) ((Property) umlElement).getType()).getOwnedBehaviors();
+		EList<Behavior> behaviours = umlClass.getOwnedBehaviors();
+		for(Behavior behavior : behaviours){
+			if(behavior instanceof FunctionBehavior){
+				if(functionBehaviours==null){
+					functionBehaviours = new BasicEList<FunctionBehavior>();
+				}
+				functionBehaviours.add((FunctionBehavior)behavior);
+			}
 		}
-		return null;
+		}
+		
+		return functionBehaviours;
 	}
 	/**
 	 * Returns the name of the given function behavior
@@ -1393,9 +1407,9 @@ public class EntityUtil {
 	}
 	
 	
-	public List<Type> getUMLFunctionBehaviorInputTypes(FunctionBehavior uninterpretedFunction) {
+	public EList<Type> getUMLFunctionBehaviorInputTypes(FunctionBehavior uninterpretedFunction) {
 		
-		List<Type> inputTypes = new ArrayList<Type>();
+		EList<Type> inputTypes = new BasicEList<Type>();
 		
 		for(Parameter parameter : uninterpretedFunction.getOwnedParameters()){
 			if(parameter.getDirection()==ParameterDirectionKind.IN_LITERAL){
