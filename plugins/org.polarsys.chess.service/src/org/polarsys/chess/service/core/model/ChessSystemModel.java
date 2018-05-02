@@ -230,7 +230,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return null;
 	}*/
 	
-	@Override
+/*	@Override
 	public EList<?>	getUninterpretedFunctionInputParameters(Object function) {
 		if (function instanceof FunctionBehavior) {
 			return entityUtil.getUMLFunctionBehaviorInputParameters((FunctionBehavior) function);
@@ -245,7 +245,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 		}
 		return null;
 	}
-	
+	*/
 
 	/*
 	 * (non-Javadoc)
@@ -587,10 +587,10 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.getComponentName(entityUtil.getOwner((Element) element));
 	}
 
-	@Override
+	/*@Override
 	public boolean isNullPort(Object attribute) {
 		return (((Property) attribute).getType() == null);
-	}
+	}*/
 
 	@Override
 	public boolean isInputPort(Object port) {
@@ -630,13 +630,13 @@ public class ChessSystemModel implements AbstractSystemModel {
 	
 
 	
-	@Override
+	/*@Override
 	public boolean isNullFunctionParameter(Object parameter) {
 		if (parameter instanceof Parameter) {
 			return (((Parameter) parameter).getType() == null);
 		}
 		return false;
-	}
+	}*/
 
 
 
@@ -780,11 +780,11 @@ public class ChessSystemModel implements AbstractSystemModel {
 	}
 
 	@Override
-	public List<?> getUninterpretedFunctionInputTypes(Object uninterpretedFunction) {
+	public EList<?> getUninterpretedFunctionInputTypes(Object uninterpretedFunction) {
 		return entityUtil.getUMLFunctionBehaviorInputTypes((FunctionBehavior)uninterpretedFunction);
 	}
 
-	@Override
+	/*@Override
 	public Object getFunctionParameterType(Object parameter) {
 		return entityUtil.getParameterType((Parameter) parameter);
 	}
@@ -798,7 +798,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	public Object getUninterpretedFunctionParameterOwner(Object parameter) {
 		return entityUtil.getParameterOwner((Parameter) parameter);
 	}
-
+*/
 	@Override
 	public boolean isRefinementAssertion(Object formalProperty) {
 		return entityUtil.isRefinementFormalProperty((Element) formalProperty);
