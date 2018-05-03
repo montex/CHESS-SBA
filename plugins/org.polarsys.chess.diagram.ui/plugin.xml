@@ -13,14 +13,6 @@
                label="Document Generation"
                id="org.eclipse.ui.main.menu.CHESS.docGen">
             <command
-                  commandId="org.polarsys.chess.diagram.ui.commands.ExportComponentToImageCommand"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.polarsys.chess.diagram.ui.commands.ExportModelToDocumentCommand"
-                  style="push">
-            </command>
-            <command
                   commandId="org.polarsys.chess.diagram.ui.commands.GenerateDocumentCommand"
                   style="push">
             </command>
@@ -36,14 +28,6 @@
          <menu
                label="Document Generation"
                id="org.eclipse.ui.main.diagramEditorMenu.CHESS.docGen">
-            <command
-                  commandId="org.polarsys.chess.diagram.ui.commands.ExportComponentToImageCommand"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.polarsys.chess.diagram.ui.commands.ExportModelToDocumentCommand"
-                  style="push">
-            </command>
             <command
                   commandId="org.polarsys.chess.diagram.ui.commands.GenerateDocumentCommand"
                   style="push">
