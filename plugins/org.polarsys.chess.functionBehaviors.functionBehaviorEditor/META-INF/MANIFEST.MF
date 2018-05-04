@@ -15,4 +15,6 @@ Require-Bundle: org.eclipse.ui.views.properties.tabbed,
  org.eclipse.papyrus.infra.widgets,
  org.eclipse.papyrus.uml.tools,
  eu.fbk.eclipse.standardtools.utils,
- org.eclipse.papyrus.uml.diagram.composite
+ org.eclipse.papyrus.uml.diagram.composite,
+ org.eclipse.papyrus.infra.properties,
+ org.eclipse.papyrus.views.properties
