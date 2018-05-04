@@ -6,4 +6,10 @@
 		<context contextModel="properties/UML for CHESS.ctx">
       	</context>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.polarsys.chess.functionBehaviors.functionBehaviorEditor.StartupClass">
+      </startup>
+   </extension>
 </plugin>
