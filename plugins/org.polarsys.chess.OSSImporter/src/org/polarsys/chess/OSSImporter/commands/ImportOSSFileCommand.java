@@ -42,7 +42,6 @@ import org.eclipse.uml2.uml.Class;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 import eu.fbk.eclipse.standardtools.xtextService.ui.services.RuntimeErrorService;
-
 /**
  * Class that starts the parsing of a file in OCRA format.
  * It is triggered by the contextual menu item on an entire package.
@@ -55,7 +54,6 @@ public class ImportOSSFileCommand extends AbstractJobCommand implements IHandler
 	private static final String BDD = "BlockDefinition";
 	
 	final DialogUtil dialogUtil = DialogUtil.getInstance();
-	
 	/**
 	 * Constructor.
 	 */

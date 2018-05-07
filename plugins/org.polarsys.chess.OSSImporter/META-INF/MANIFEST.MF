@@ -18,7 +18,6 @@ Require-Bundle: eu.fbk.eclipse.standardtools.ModelTranslatorToOcra;bundle-versio
 <<<<<<< HEAD
  org.eclipse.papyrus.views.modelexplorer,
  eu.fbk.eclipse.standardtools.xtextService,
- org.polarsys.chess.diagramsCreator;bundle-version="1.0.0",
  org.polarsys.chess.diagram.ui,
  eu.fbk.eclipse.standardtools.diagram.ui;bundle-version="1.0.0"
 =======
@@ -26,5 +25,6 @@ Require-Bundle: eu.fbk.eclipse.standardtools.ModelTranslatorToOcra;bundle-versio
 >>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: com.google.inject,
- org.apache.log4j;version="1.2.15"
+ org.apache.log4j;version="1.2.15",
+ org.polarsys.chess.diagramsCreator.actions
 Bundle-Vendor: Fondazione Bruno Kessler
