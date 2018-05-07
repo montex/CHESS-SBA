@@ -1453,6 +1453,23 @@ public class EntityUtil {
 		return parameter.getType();
 	}
 
+	public Integer getComponentInstanceMultiplicity(Element component) {
+		if(isComponentInstance(component)){
+			return getAttributeMultiplicity((Property)component);
+		}
+		return null;
+		
+	}
+
+	public Integer getAttributeMultiplicity(Property attribute) {
+		int upperValue = ((Property) attribute).getUpper();
+		int lowerValue = ((Property) attribute).getLower();
+		if(upperValue==lowerValue){
+			return upperValue;
+		}
+		return null;
+	}
+
 	
 
 	
