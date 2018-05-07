@@ -803,6 +803,16 @@ public class ChessSystemModel implements AbstractSystemModel {
 	public boolean isRefinementAssertion(Object formalProperty) {
 		return entityUtil.isRefinementFormalProperty((Element) formalProperty);
 	}
+
+	@Override
+	public int getComponentInstanceMultiplicity(Object component) {
+		return entityUtil.getComponentInstanceMultiplicity((Element) component);
+	}
+
+	@Override
+	public int getPortMultiplicity(Object port) {
+		return entityUtil.getAttributeMultiplicity((Property) port);
+	}
 	
 	
 	

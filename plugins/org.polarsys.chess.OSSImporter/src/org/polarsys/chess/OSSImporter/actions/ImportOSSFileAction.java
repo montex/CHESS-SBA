@@ -89,6 +89,8 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
  * @author cristofo
  *
  */
+
+//TODO add array of ports
 public class ImportOSSFileAction {
 
 	// The instance of this class
