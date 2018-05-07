@@ -12,7 +12,10 @@ package org.polarsys.chess.diagramsCreator.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Map;
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 
 import org.apache.log4j.Logger;
 import org.eclipse.draw2d.geometry.Point;
@@ -48,7 +51,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.uml2.uml.Association;
+<<<<<<< HEAD
 import org.eclipse.uml2.uml.Class;
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.LiteralString;
@@ -112,6 +118,11 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 
 			if (cmd != null && cmd.canExecute()) {
 				return cmd;
+<<<<<<< HEAD
+=======
+//				activeEditor.getDiagramEditDomain().getDiagramCommandStack().execute(cmd);
+
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 			}
 		}
 		return null;
@@ -152,7 +163,12 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		for (Element child : children) {
 			if (entityUtil.isPort(child) || 
 					contractEntityUtil.isContractProperty(child)||
+<<<<<<< HEAD
 					entityUtil.isDelegationConstraints(child)) {
+=======
+
+					contractEntityUtil.isDelegationConstraints(child)) {
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 				
 				int textLength = 0;
 				childrenNumber++;
@@ -205,7 +221,12 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 	 * @param diagramEP the diagram EditPart
 	 * @param displayedBlocks a list of already displayed blocks, to avoid resizing
 	 */
+<<<<<<< HEAD
 	private void resizeElements(IGraphicalEditPart diagramEP, EList<Class> displayedBlocks) {
+=======
+
+	private void resizeElements(IGraphicalEditPart diagramEP) {
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 
 		// Get all the views of the diagram and loop on them
 		List<?> childrenView = diagramEP.getNotationView().getChildren();
@@ -220,7 +241,11 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 					View childView = (View) child;
 					final Element semanticElement = (Element) childView.getElement();
 
+<<<<<<< HEAD
 					if (entityUtil.isBlock(semanticElement) && !contractEntityUtil.isContract(semanticElement) && !displayedBlocks.contains(semanticElement)) {
+=======
+					if (entityUtil.isBlock(semanticElement)) {
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 
 						// Enlarge the component but don't position it, arrange will do it later
 						if (childView instanceof CSSShapeImpl) {
@@ -350,7 +375,11 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		Package pkg = (Package) diagramEP.resolveSemanticElement();
 		EList<Element> packageChildren = pkg.getOwnedElements();
 		
+<<<<<<< HEAD
 		CompoundCommand completeCmd = new CompoundCommand("Show Elements Command");
+=======
+		CompoundCommand completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 
 		// First loop to draw Block elements and contracts
 		for (Element element : packageChildren) {
@@ -365,8 +394,13 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(diagram);
 		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(completeCmd));
 
+<<<<<<< HEAD
 		// Resize the graphical elements, passing a void list of blocks to avoid
 		resizeElements(diagramEP, new BasicEList<Class>());
+=======
+		// Resize the graphical elements
+		resizeElements(diagramEP);
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 
 		// Select all the blocks avoiding contracts and add them to the list to be enriched
 		selectedElements = new ArrayList<IGraphicalEditPart>();
@@ -400,19 +434,30 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		
 		// Create a new command, dispose doesn't work...
 //		completeCmd.dispose();
+<<<<<<< HEAD
 		completeCmd = new CompoundCommand("Show Elements Command");
+=======
+
+		completeCmd = new CompoundCommand("Show Elements Command"); //$NON-NLS-1$
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 
 		// Second loop to draw Associations
 		for (Element element : packageChildren) {
 			if (element instanceof Association) {
 				logger.debug("calling showElementIn for Association = " + element);
+<<<<<<< HEAD
 				final Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1); 
+=======
+
+				Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1); 
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 				completeCmd.add(cmd);
 			}
 		}
 		
 		// Execute the commands
 		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(completeCmd));
+<<<<<<< HEAD
 	}
 	
 	/**
@@ -552,5 +597,8 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 		if (completeCmd.size() > 0) {
 			completeCmd.execute();
 		}		
+=======
+
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 	}
 }

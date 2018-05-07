@@ -46,8 +46,12 @@ public class CreateIBDSingleHandler extends AbstractHandler {
 		if (umlObject instanceof Class) {
 			try {
 				final Diagram diagram = action.addIBD((Class) umlObject);
+<<<<<<< HEAD
 				action.populateDiagram(diagram, sortedPorts);
 
+=======
+				action.populateDiagram(diagram, umlObject, sortedPorts);
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -111,7 +111,25 @@ public class ContractEntityUtil {
 
 	}
 
+<<<<<<< HEAD
 	
+=======
+	public String getPropertyStr(FormalProperty formalProperty) {
+
+		String str = null;
+		if (formalProperty != null) {
+			if (formalProperty.getBase_Constraint().getSpecification() != null) {
+				if(formalProperty.getBase_Constraint().getSpecification() instanceof LiteralString){
+					str = formalProperty.getBase_Constraint().getSpecification().stringValue();
+				}else if(formalProperty.getBase_Constraint().getSpecification() instanceof OpaqueExpression){
+					str = OpaqueExpressionUtil.getBodyForLanguage((OpaqueExpression)formalProperty.getBase_Constraint().getSpecification(), "OCRA");
+				}
+				
+			}
+		}
+		return str;
+	}
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 
 	public String getGuaranteeStrFromUmlContract(Class umlContract) {
 		FormalProperty guaranteeFormalProperty = getGuaranteeFromUmlContract(umlContract);
@@ -276,7 +294,10 @@ public class ContractEntityUtil {
 		return formalPropertyOwner.getOwnedRule(propertyName);
 		//Constraint umlContraint = formalPropertyOwner.getOwnedRule(propertyName);
 		//return entityUtil.getFormalProperty(umlContraint);
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 	}
 	
 	public void saveFormalProperty(final String guarantee_or_assumption, final String formalPropertyText,

@@ -24,7 +24,10 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.ValueSpecification;
+<<<<<<< HEAD
 import org.eclipse.xtext.serializer.ISerializer;
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Constraint;
@@ -36,9 +39,12 @@ import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
+<<<<<<< HEAD
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 
 import com.google.common.collect.Maps;
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 import com.google.inject.Injector;
 
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSModelFactory;
@@ -66,10 +72,20 @@ import eu.fbk.tools.editor.oss.oss.Operation;
 import eu.fbk.tools.editor.oss.oss.Parameter;
 import eu.fbk.tools.editor.oss.oss.Refinement;
 import eu.fbk.tools.editor.oss.oss.RefinementInstance;
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
 
+<<<<<<< HEAD
+=======
+import org.eclipse.papyrus.sysml.service.types.element.SysMLElementTypes;
+import org.eclipse.papyrus.uml.service.types.utils.ElementUtil;
+import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
+
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
@@ -78,10 +94,15 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+<<<<<<< HEAD
 import org.eclipse.emf.ecore.EObject;
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.equinox.internal.app.AppPersistence;
+import org.eclipse.jface.viewers.IStructuredSelection;
 
 /**
  * This class takes as input a file in OCRA format and creates the equivalent CHESS model.
@@ -102,6 +123,33 @@ public class ImportOSSFileAction {
 	// Will contain elements being added to the model, big enough
 	private final EList<Element> addedElements = new BasicEList<>(2000);	 
 	
+<<<<<<< HEAD
+=======
+	private static final String BLOCK =		"SysML::Blocks::Block";
+	private static final String FLOWPORT =	"SysML::PortAndFlows::FlowPort";
+	
+//	private static final String SUBSYSTEM = "CHESSContract::SubSystem";
+//	public static final String COLLECTIONTYPE = "MARTE::MARTE_Annexes::VSL::DataTypes::CollectionType";
+//	private static final String MARTE_BOOLEAN_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Boolean";
+//	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
+//	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
+	 
+	
+	//TODO the list of Stereotype variables and the refreshStereotypes method should be moved to a new class e.g. StereotypeUtil 
+	// Stereotype objects needed to customize the elements
+	Stereotype contractPropertyStereotype;
+	Stereotype delegationConstraintStereotype;
+	Stereotype contractRefinementStereotype;
+	Stereotype flowPortStereotype;
+	Stereotype contractStereotype;
+	Stereotype boundedTypeStereotype;
+	Stereotype blockStereotype;
+	Stereotype systemStereotype;
+	
+	final Injector injector = XTextResourceUtil.getInstance().getOssInjector();
+	private final ISerializer serializer = injector.getInstance(ISerializer.class);
+
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 	private Package sysView = null;
 
 	// Map the name of the component with the Component object
@@ -124,8 +172,22 @@ public class ImportOSSFileAction {
 		if (classInstance == null) {
 			classInstance = new ImportOSSFileAction();
 		}
+<<<<<<< HEAD
 		return classInstance;
 	}
+=======
+
+		return sampleView;
+	}
+	
+	/**
+	 * Returns the number or defined associations for the given package.
+	 * @param pkg the package to analyze
+	 * @return the number of associations found in package
+	 */
+	private int countPackageAssociations(Package pkg) {
+		int counter = 0;
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 		
 	/**
 	 * Returns the list of contract refinements associated to a Class
@@ -135,12 +197,755 @@ public class ImportOSSFileAction {
 	private EList<DataType> getContractRefinementsOfClass(Class owner) {
 		EList<DataType> contractRefinements = new BasicEList<DataType>();
 		
+<<<<<<< HEAD
 		for (Classifier classifier : owner.getNestedClassifiers()) {
 			if (classifier instanceof DataType) {
 				contractRefinements.add((DataType) classifier);
 			}
 		}
 		return contractRefinements;
+=======
+		// Create the name using an incremental value
+		final String associationName = ASSOCIATION_NAME + (countPackageAssociations(owner.getNearestPackage()) + 1);
+
+		logger.debug("\n\n\n Creating association " + associationName + " for owner " + owner);
+		logger.debug("elementName = " + elementName + " with type " + elementType);
+		logger.debug("\n\n\n");
+	
+		// Create the association and adds it to the owning package
+		final Association association = owner.createAssociation(
+				true, AggregationKind.get(AggregationKind.COMPOSITE), elementName, 1, 1, elementType, 
+				false, AggregationKind.get(AggregationKind.NONE), owner.getName().toLowerCase(), 1, 1);
+
+		association.setName(associationName);
+		
+		// Add SysML Nature on the new Association
+		ElementUtil.addNature(association, SysMLElementTypes.SYSML_NATURE);
+		
+		logger.debug("\n\nCreated " + associationName + " Association\n\n");
+		return association;
+	}
+ 	
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
+	/** 
+	 * Creates and adds a Contract Property to the model.
+	 * @param owner the parent Class
+	 * @param elementName the name of the property to create
+	 * @param elementType the type of the property to create
+	 * @return the created Property
+	 */
+	private Property createContractProperty(Class owner, String elementName, Type elementType) {
+		
+		logger.debug("\n\n\n Creating contract property " + elementName + " for owner " + owner + " with type " + elementType);
+		logger.debug("\n\n\n");
+
+		Property newUMLProperty = owner.createOwnedAttribute(elementName, elementType);
+//		UMLUtils.applyStereotype(newUMLProperty, CONTRACT_PROP);
+		newUMLProperty.applyStereotype(contractPropertyStereotype);
+		
+		logger.debug("\n\nCreated " + elementName + " Property\n\n");
+		return newUMLProperty;
+	}
+	
+	/**
+	 * Creates the Delegation Constraint value.
+	 * @param variable the left part of the expression
+	 * @param constraint the right part of the expression
+	 * @return a string with the expression
+	 */
+	private String createDelegationConstraintText(VariableId variable, Expression constraint) {
+		final StringBuffer delegationText = new StringBuffer();
+
+		EList<String> componentNames = variable.getComponentNames();
+		
+		if (componentNames != null && componentNames.size() != 0) {
+			delegationText.append(componentNames.get(0) + ".");
+		}
+		
+//		if (variable.getComponentName() != null)
+//			delegationText.append(variable.getComponentName() + ".");
+		
+		delegationText.append(variable.getName() + " := " + getConstraintText(constraint));
+		
+		return delegationText.toString();
+	}
+			
+	/** 
+	 * Creates and adds a Delegation Constraint to the model.
+	 * @param owner the parent Class
+	 * @param connection the Connection defining the delegation
+	 * @param variable the target of the connection
+	 * @param constraint the source of the connection
+	 * @return the created delegation constraint 
+	 */
+	private Constraint createDelegationConstraint(Class owner, VariableId variable, Expression constraint) {		
+		final StringBuffer delegationName = new StringBuffer(DELEGATION_PREFIX);
+		
+		EList<String> componentNames = variable.getComponentNames();
+		
+		if (componentNames != null && componentNames.size() != 0) {
+			delegationName.append(componentNames.get(0) + ".");
+		}
+
+//		if (variable.getComponentName() != null)
+//			delegationName.append(variable.getComponentName() + ".");
+
+		delegationName.append(variable.getName());
+		
+		logger.debug("\n\n\n Creating delegation constraint " + delegationName + " for owner " + owner);
+		logger.debug("\n\n\n");
+
+		Constraint newUMLConstraint = owner.createOwnedRule(delegationName.toString());
+//		UMLUtils.applyStereotype(newUMLConstraint, DELEGATION_CONST);
+		newUMLConstraint.applyStereotype(delegationConstraintStereotype);
+		
+		LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
+		literalString.setName(DELEGATION_CONSTRAINT_NAME);
+		final String formalPropertyText = createDelegationConstraintText(variable, constraint);
+		literalString.setValue(formalPropertyText);
+		newUMLConstraint.setSpecification(literalString);
+
+		logger.debug("\n\nCreated " + delegationName + " Delegation Constraint\n\n");
+		return newUMLConstraint;
+	}
+
+	/**
+	 * Returns the contract with the given name.
+	 * @param umlComponent the component containing the contract
+	 * @param contractName the name of the contract
+	 * @return the UML class of the contract
+	 */
+	private Class getUMLContractFromContractName(Class umlComponent, String contractName) {
+		return (Class) umlComponent.getNestedClassifier(contractName);
+	}
+	
+	/** 
+	 * Returns the contract property generated by the given contract name.
+	 * @param component the component containing the contract
+	 * @param contractName the name of the contract
+	 * @return the associated Contract Property
+	 */
+	private ContractProperty getContractPropertyFromContract(Class component, String contractName) {
+		
+		// Get the contract definition from the component
+		final Class umlContract = getUMLContractFromContractName(component, contractName);
+		
+		// Get the contract property name, derived from the contract name
+		final String contractPropertyName = createContractPropertyNameFromContract(umlContract);
+			
+		// Get the contract property from the component, generic type
+		final Property umlProperty = component.getOwnedAttribute(contractPropertyName, umlContract);
+				
+		// Return the correct type of object
+		return ContractEntityUtil.getInstance().getContractProperty(umlProperty);
+	}
+	
+	/**
+	 *  Returns the refinement associated to the component.
+	 *  @param owner of the refinement
+	 *  @param refinementName the name of the refinement
+	 *  @return the umlRefinement
+	 */
+	private DataType getUMLRefinement(Class owner, String refinementName) {
+		return (DataType) owner.getNestedClassifier(refinementName);
+	}
+
+	//TODO move to entityutils class
+	/**
+	 * Returns the component instance with the given name.
+	 * @param owner the class owning the instance
+	 * @param componentName the name of the instance
+	 * @return the UML property representing the component instance
+	 */
+	private Property getUMLComponentInstance(Class owner, String componentName) {
+		
+		for (Property umlProperty : (owner.getAttributes())) {
+			if (umlProperty.getName().equals(componentName) && EntityUtil.getInstance().isComponentInstance(umlProperty)) {
+				return umlProperty;
+			}
+		}
+		return null;
+	}
+	
+	/** 
+	 * Creates a ContractRefinement for the given owner component.
+	 * The refinement should specify the component instance that contains the original contract property
+	 * and the contract property itself 
+	 *  
+	 * @param owner the container of the refinement
+	 * @param componentName the component instance containing the contract property
+	 * @param contractName the type of the contract
+	 * @return the created DataType 
+	 */
+	private DataType createContractRefinement(Class owner, String componentName, String contractName) {
+					
+		final Property componentInstance = getUMLComponentInstance(owner, componentName);
+
+		logger.debug("\n\n\n Creating contract refinement for componentName = " + componentName + " of contract " + contractName);
+		logger.debug("\n\n\n");
+				
+		// Get the component type where the contract property is defined
+		final Class component = (Class) componentInstance.getType();
+		
+		final ContractProperty contractProperty = getContractPropertyFromContract(component, contractName);
+		
+		// Compose the correct name of the contract refinement 
+		final String refinementName = componentName + "." + contractProperty.getBase_Property().getName();
+		
+		// Check if the refinement is already present
+		final DataType umlRefinement = getUMLRefinement(owner, refinementName);
+		
+		if (umlRefinement != null) {
+			return umlRefinement;
+		} else {
+			logger.debug("\n\n Creating contract refinement " + refinementName + " for owner " + owner.getName());
+			logger.debug("\n\n");
+	
+			//TODO create a new class e.g. CHESSElementsUtil and move this method there
+			DataType newUmlDataType = UMLFactory.eINSTANCE.createDataType();
+			Classifier newClass = owner.createNestedClassifier(refinementName, newUmlDataType.eClass());
+//			Stereotype stereotype = UMLUtils.applyStereotype(newClass, CONTRACT_REFINEMENT);
+//			ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(stereotype);
+			newClass.applyStereotype(contractRefinementStereotype);
+			ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(contractRefinementStereotype);
+
+			// Set the correct links for the refinement
+			contractRefinement.setInstance(componentInstance); // The component instance containing the definition
+			contractRefinement.setContract(contractProperty);  // The contract property that refines the contract
+					
+			logger.debug("\n\nCreated " + refinementName + " Contract Refinement\n\n");
+			return (DataType) newClass;
+		}
+	}
+
+	/**
+	 * Loads a package from the given resource.
+	 * @param uri the URI of the resource to load
+	 * @return the retrieved package
+	 */
+	private static Package load(URI uri) {
+		Package package_ = null;
+
+		try {
+			final ResourceSet resourceSet = new ResourceSetImpl();
+			final Resource resource = resourceSet.getResource(uri, true);
+			package_ = (Package) EcoreUtil.getObjectByType(resource.getContents(), UMLPackage.Literals.PACKAGE);
+		} catch (WrappedException we) {
+			logger.error(we.getMessage());
+			System.exit(1);
+		}
+		return package_;
+	}
+
+	/**
+	 * Returns the primitive type from the standard primitive library.
+	 * @param name the name of the Type
+	 * @return the requested primitive type
+	 */
+	private Type getPrimitiveType(String name) {
+		
+		// Get the correct type from the library
+		final Type type = umlLibrary.getOwnedType(name);
+		
+		if (type != null) {
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			return type;
+		}
+		return null;
+	}
+
+//	/**
+//	 * Returns the primitive type from another UML library.
+//	 * @param name the name of the Type
+//	 * @return the requested primitive type
+//	 */
+//	private Type getUMLPrimitiveType(String name) {
+//			
+//		// Get the correct model
+//		final Model umlLibrary = (Model) load(URI.createURI("pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml"));
+//			
+//		// Get the correct type
+//		final Type type = umlLibrary.getOwnedType(name);
+//		
+//		if (type != null) {
+//			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+//			return type;
+//		}
+//		return null;
+//	}
+
+	/**
+	 * Returns the Type Continuous.
+	 * @param name the name of the Type
+	 * @return the requested Type
+	 */
+	private Type getContinuousType(String name) {
+		
+		// The Continuous type is defined here: CHESSContract::DataTypes::Continuous
+		
+		// Get the correct package inside the profile
+		final Package dataTypes = chessContractLibrary.getNestedPackage("DataTypes");
+		
+		// Get the correct type
+		final Type type = dataTypes.getOwnedType(name);
+		
+		if (type != null) {
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			return type;
+		}
+		return null;
+	}
+	
+	/**
+	 * Creates a new BoundedSubType as requested.
+	 * @param pkg the package where to create the Enumeration
+	 * @param typeName the name of the type
+	 * @param lowerBound the lower bound
+	 * @param upperBound the upper bound
+	 * @return the created type
+	 */
+	private Type createBoundedSubType(Package pkg, String typeName, int lowerBound, int upperBound) {
+			
+		// Create a data type to the component view and apply the stereotype
+		Type dataType = pkg.createOwnedType(typeName, UMLPackage.Literals.DATA_TYPE);
+//		Stereotype stereotype = UMLUtils.applyStereotype(dataType, BOUNDED_TYPE);
+		dataType.applyStereotype(boundedTypeStereotype);
+
+		// Extract the stereotiped type and configure it
+//		BoundedSubtype boundedType = (BoundedSubtype) dataType.getStereotypeApplication(stereotype);
+		BoundedSubtype boundedType = (BoundedSubtype) dataType.getStereotypeApplication(boundedTypeStereotype);
+		boundedType.setMinValue(String.valueOf(lowerBound));
+		boundedType.setMaxValue(String.valueOf(upperBound));
+		boundedType.setBaseType((DataType) getPrimitiveType("Integer"));
+//		boundedType.setBaseType((DataType) getUMLPrimitiveType("Integer"));	// Alternative version	
+
+		logger.debug("Type '" + dataType.getQualifiedName() + "' created.");
+		return dataType;
+	}
+	
+	/**
+	 * Returns a BoundedSubType as requested.
+	 * @param rangeType the type containing the specifications 
+	 * @return the requested type
+	 */
+	private Type getBoundedSubType(RangeType rangeType) {
+		
+		Package pkg = sysView;	// Or compView, where to look for and create the type
+		int lowerBound = 0, upperBound = 0;
+		Type type = null; 
+		
+		// Check to see if boundaries are integer values and extract them
+		if (rangeType.getLowerBound() instanceof IntegerLiteral && rangeType.getUpperBound() instanceof IntegerLiteral) {
+			IntegerLiteral intLit = (IntegerLiteral) rangeType.getLowerBound();
+			lowerBound = Integer.parseInt(intLit.getValue());
+			intLit = (IntegerLiteral) rangeType.getUpperBound();
+			upperBound = Integer.parseInt(intLit.getValue());
+		} else {
+			logger.error("Import Error: Cannot understand the Bounded type limits! " + rangeType);
+			return type;
+		}
+		
+		// Generate a suitable type name
+		final String typeName = "BoundedInteger_" + lowerBound + "_" + upperBound; 
+		
+		// Look for that type in the ComponentView
+		type = pkg.getOwnedType(typeName);
+		if (type != null) {
+			
+			// The type has been found in the package, use it
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			return type;
+		} else {
+			return (Type) createBoundedSubType(pkg, typeName, lowerBound, upperBound);
+		}
+	}
+
+	/**
+	 * Retrieves all the Enumerations owned by the package.
+	 * @param pkg the package to be searched
+	 * @return 
+	 */
+	private EList<Enumeration> getEnumerations(Package pkg) {
+		EList<Enumeration> enumerations = new BasicEList<Enumeration>();
+				
+		EList<Type> types = pkg.getOwnedTypes();
+		for (Type type : types) {
+			if (type instanceof Enumeration) {
+				enumerations.add((Enumeration) type);
+			}
+		}
+		return enumerations;
+	}
+	
+	/**
+	 * Returns the list of the values inside a given Enumeration.
+	 * @param enumeration the Enumeration to be analysed
+	 * @return the list of contained values
+	 */
+	private Set<String> getListValuesForEnumeration(Enumeration enumeration) {
+		Set<String> enumValuesNames = new TreeSet<String>();	// Ordered list of values
+//		Set<String> enumValuesNames = new HashSet<String>();	// Original order of values
+		for(EnumerationLiteral enumLit : enumeration.getOwnedLiterals()) {
+			enumValuesNames.add(enumLit.getName());
+		}
+		return enumValuesNames;
+	}
+	
+	/**
+	 * Returns the list of the values inside a given EnumType.
+	 * @param enumType the EnumType to be analysed
+	 * @return the list of contained values
+	 */
+	private Set<String> getListValuesForEnumType(EnumType enumType) {
+		Set<String> enumValuesNames = new TreeSet<String>();	// Ordered set
+		
+		for(EObject object :  enumType.getValues()) {
+			enumValuesNames.add(((Identifier) object).getValue() );
+		}
+		return enumValuesNames;
+	}
+
+	/**
+	 * Looks for a specific enumeration among existing enumerations of the given package.
+	 * @param pkg the package in which look for the Enumeration
+	 * @param enumType the enumeration to match
+	 * @return the enumeration already defined
+	 */
+	private Enumeration getExistingEnumerationForEnumType(Package pkg, EnumType enumType) {
+
+		EList<Enumeration> enumerations = getEnumerations(pkg);
+		
+		if (enumerations.size() > 0) {
+			Set<String> enumValues = getListValuesForEnumType(enumType);
+
+			for (Enumeration enumeration : enumerations) {
+				if (enumValues.equals(getListValuesForEnumeration(enumeration))) {
+					return enumeration;
+				}			
+			}
+		}
+		return null;	
+	}
+	
+	/**
+	 * Creates a new Enumeration as requested.
+	 * @param pkg the package where to create the Enumeration
+	 * @param enumType the type specifying the values
+	 * @return the created Enumeration
+	 */
+	private Enumeration createEnumerationFromEnumType(Package pkg, EnumType enumType) {
+		
+		// Create the name using an incremental value
+		final String enumerationName = ENUMERATION_NAME + (getEnumerations(pkg).size() + 1);
+
+		Enumeration enumeration = pkg.createOwnedEnumeration(enumerationName);
+		Set<String> values = getListValuesForEnumType(enumType);
+		for (String string : values) {
+			enumeration.createOwnedLiteral(string);
+		}				
+
+		logger.debug("Type '" + enumeration.getQualifiedName() + "' created.");
+		return enumeration;
+	}
+	
+	/**
+	 * Returns an Enumeration as requested.
+	 * @param enumType the type containing the specifications 
+	 * @return the requested type
+	 */
+	private Type getEnumerationType(EnumType enumType) {
+		Type type = null;
+		Package pkg = sysView;	// Or compView, where to look for and create the type
+		
+		// Look for existing Enumerations in the package
+		type = getExistingEnumerationForEnumType(pkg, enumType);
+		
+		if (type != null) {
+
+			// The type has been found in the package, use it
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			return type;
+		} else {
+			return createEnumerationFromEnumType(pkg, enumType);
+		}
+	}
+		
+	/**
+	 * Looks for a Signal already defined in the package.
+	 * @param pkg the package in which look for the Signal
+	 * @return the Signal already defined
+	 */
+	private Signal getExistingSignalType(Package pkg) {
+		final EList<Type> types = pkg.getOwnedTypes();
+
+		for (Type type : types) {
+			if (type instanceof Signal) {
+				return (Signal) type;
+			}
+		}
+		return null;
+	}
+
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
+	/**
+	 * Creates a Signal type in the given package.
+	 * @param pkg the package where to create the Enumeration 
+	 * @return the newly created type 
+	 */
+	private Signal createSignalType(Package pkg) {
+		final String signalName = SIGNAL_NAME;
+				
+		Type type = pkg.createOwnedType(signalName, UMLPackage.Literals.SIGNAL);
+		
+		logger.debug("Type '" + type.getQualifiedName() + "' created.");
+		return (Signal) type;
+	}
+	
+	/**
+	 * Returns a Signal as requested (Only a Signal can be defined in the package).
+	 * @return the requested type
+	 */
+	private Type getSignalType() {
+		Type type = null;
+		Package pkg = sysView;	// Or compView, where to look for and create the type
+		
+		// Look for existing Signal Type in the package
+		type = getExistingSignalType(pkg);
+		
+		if (type != null) {
+			
+			// The type has been found in the package, use it
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			return type;
+		} else {
+			return createSignalType(pkg);
+		}
+	}
+	
+	/** 
+	 * Returns the correct Type given the DSL SimpleType.
+	 * @param dslSimpleType the type from OSS
+	 * @return the UML Type
+	 */
+	private Type getTypeFromDSLType(SimpleType dslSimpleType) {
+		
+		if (dslSimpleType instanceof BooleanType) {
+			logger.debug("BooleanType");
+			return getPrimitiveType("Boolean");
+		} else if (dslSimpleType instanceof IntegerType) {
+			logger.debug("IntegerType");
+			return  getPrimitiveType("Integer");
+		} else if (dslSimpleType instanceof RealType) {
+			logger.debug("RealType");
+			return getPrimitiveType("Real");
+		} else if (dslSimpleType instanceof WordType) {
+			logger.debug("WordType");
+		} else if (dslSimpleType instanceof UnsignedWordType) {
+			logger.debug("UnsignedWordType");
+		} else if (dslSimpleType instanceof SignedWordType) {
+			logger.debug("SignedWordType");
+		} else if (dslSimpleType instanceof ContinuousType) {
+			logger.debug("ContinuousType");
+			return getContinuousType("Continuous");
+		} else if (dslSimpleType instanceof EventType) {
+			logger.debug("EventType");
+			return getSignalType();
+		} else if (dslSimpleType instanceof RangeType) {
+			logger.debug("RangeType");
+			return getBoundedSubType((RangeType) dslSimpleType);
+		} else if (dslSimpleType instanceof EnumType) {
+			logger.debug("EnumType");
+			return getEnumerationType((EnumType) dslSimpleType);
+		} else if (dslSimpleType instanceof ArrayType) {
+			logger.debug("ArrayType");
+		} else if (dslSimpleType instanceof IntegerArrayType) {
+			logger.debug("IntegerArrayType");
+		} else if (dslSimpleType instanceof WordArrayType) {
+			logger.debug("WordArrayType");
+		}
+		logger.error("Import Error: Not able to map the requested DSL type!");
+		return null;
+	}
+	
+	/** 
+	 * Creates and adds a non-static Port to the model.
+	 * @param owner the parent Class
+	 * @param elementName the name of the port to create
+	 * @param elementType the type of the port to create
+	 * @param isInput tells the direction of the flow
+	 * @return the created Port
+	 * @throws ImportException 
+	 */
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
+	private org.eclipse.uml2.uml.Port createNonStaticPort(Class owner, VariableId elementName, SimpleType elementType, boolean isInput) throws ImportException {
+		final String portName = elementName.getName();
+		final Type portType = getTypeFromDSLType(elementType);
+		
+		if(portType == null) {
+			throw new ImportException("Not able to map the requested type for port : " + portName);
+//			return null;	// Create the port anyway, without type
+		}
+		
+		org.eclipse.uml2.uml.Port umlPort = UMLFactory.eINSTANCE.createPort();
+		umlPort.setName(portName);
+		umlPort.setType(portType);
+		owner.getOwnedPorts().add(umlPort);
+//		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+		umlPort.applyStereotype(flowPortStereotype);
+		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
+//		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(flowPortStereotype);
+		flowPort.setDirection(isInput? FlowDirection.IN: FlowDirection.OUT);
+		
+		// This version is nicer but a little slower
+//		org.eclipse.uml2.uml.Port umlPort = owner.createOwnedPort(portName, portType);
+//		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+//		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
+//		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+//		flowPort.setDirection(isInput? FlowDirection.IN: FlowDirection.OUT);
+		
+		logger.debug("\n\nCreated " + portName + " Port\n\n");
+		return umlPort;
+	}
+	
+	/** 
+	 * Creates and adds a static Port to the model.
+	 * @param owner the parent Class
+	 * @param elementName the name of the port to create
+	 * @param elementType the type of the port to create
+	 * @return the created Port
+	 * @throws ImportException 
+	 */
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
+	private org.eclipse.uml2.uml.Port createStaticPort(Class owner, VariableId elementName, SimpleType elementType) throws ImportException {
+		final String portName = elementName.getName();
+		final Type portType = getTypeFromDSLType(elementType);
+		
+		if(portType == null) {
+			throw new ImportException("Not able to map the requested type for port : " + portName);
+		}
+		
+		org.eclipse.uml2.uml.Port umlPort = UMLFactory.eINSTANCE.createPort();
+		umlPort.setName(portName);
+		umlPort.setType(portType);
+		owner.getOwnedPorts().add(umlPort);
+//		Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+		umlPort.applyStereotype(flowPortStereotype);
+		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
+//		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(stereotype);
+		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(flowPortStereotype);
+		flowPort.setDirection(FlowDirection.INOUT);
+		umlPort.setIsStatic(true);
+		
+		logger.debug("\n\nCreated " + portName + " Port\n\n");
+		return umlPort;
+	}
+	
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
+	/** 
+	 * Creates a System Block element in the given package.
+	 * @param owner the Package that will contain the element
+	 * @param elementName the name of the new System Block
+	 * @return the created Class
+	 */
+	private Class createSystemBlock(Package owner, final String elementName) {
+
+		Class sysBlock = owner.createOwnedClass(elementName, false);
+//		UMLUtils.applyStereotype(sysBlock, BLOCK);
+//		UMLUtils.applyStereotype(sysBlock, SYSTEM);
+		sysBlock.applyStereotype(blockStereotype);
+		sysBlock.applyStereotype(systemStereotype);
+		
+		logger.debug("\n\nCreated " + elementName + " System Block\n\n");
+		return sysBlock;
+	}
+	
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
+	/** 
+	 * Creates a Contract element.
+	 * @param owner the Class that will contain the element
+	 * @param contractName the name of the new Contract
+	 * @return the newly created Class
+	 */
+	private Class createContract(Class owner, String contractName) {
+
+		logger.debug("\n\n\n Creating contract " + contractName + " for owner " + owner);
+		logger.debug("\n\n\n");
+
+		Class newUmlClass = UMLFactory.eINSTANCE.createClass();
+		Classifier newClass = owner.createNestedClassifier(contractName, newUmlClass.eClass());
+//		UMLUtils.applyStereotype(newClass, CONTRACT);
+		newClass.applyStereotype(contractStereotype);
+		
+		logger.debug("\n\nCreated " + contractName + " Property\n\n");
+		return (Class) newClass;
+	}
+	
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
+	/** 
+	 * Creates a Block element in the given package.
+	 * @param owner the Package that will contain the element
+	 * @param elementName the name of the new Block
+	 * @return the newly created Class
+	 */
+	private Class createBlock(Package owner, final String elementName) {
+
+		Class umlClass = owner.createOwnedClass(elementName, false);
+//		UMLUtils.applyStereotype(umlClass, BLOCK);
+		umlClass.applyStereotype(blockStereotype);
+		
+//		owner.createPackagedElement(elementName, newUMLClass.eClass()); This also works...
+//		owner.getPackagedElements().add(newUMLClass);	// This works too!
+		
+		logger.debug("\n\nCreated " + elementName + " Block\n\n");
+		return umlClass;	// Return the first occurence
+	}
+	
+	/** 
+	 * Adds a contract refinement to a contract property.
+	 * @param contractProperty the property to be enriched
+	 * @param umlRefinement the refinement to add
+	 */
+	private void addContractRefinementToContractProperty(ContractProperty contractProperty, DataType umlRefinement) {
+		final Stereotype stereotype = umlRefinement.getAppliedStereotype(CONTRACT_REFINEMENT);	
+		final ContractRefinement contractRefinement = (ContractRefinement) umlRefinement.getStereotypeApplication(stereotype);
+		
+		// Add the new refinement to the list
+		contractProperty.getRefinedBy().add(contractRefinement);
+	}
+	
+	//TODO create a new class e.g. CHESSElementsUtil and move this method there
+	/**
+	 * Creates a connector, but doesn't add it to the owner.
+	 * @param owner the owner element
+	 * @return the created Connector
+	 */
+	private Connector createConnector(Class owner) {
+		
+		// Create the name using an incremental value
+		final String connectorName = CONNECTOR_NAME + (owner.getOwnedConnectors().size() + 1);
+		
+		logger.debug("\n\n\n Creating connector " + connectorName + " for owner " + owner);
+		logger.debug("\n\n\n");
+
+		Connector connector = UMLFactory.eINSTANCE.createConnector();
+		connector.setName(connectorName);
+		
+		logger.debug("\n\nCreated " + connectorName + " Connector\n\n");
+		return connector;	
+	}
+
+	/**
+	 * Adds a connector to the given element.
+	 * @param owner the owner element
+	 * @param connector the conne
+	 */
+	private void addConnector(Class owner, Connector connector) {
+		
+		// Add the new connector to the list
+		owner.getOwnedConnectors().add(connector);
+
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 	}
 	
 	/**
@@ -175,13 +980,18 @@ public class ImportOSSFileAction {
 			// Get the port and set it
 			role = portOwner.getOwnedPort(sourcePort, null);
 		}
+<<<<<<< HEAD
 
 		if (role != null) {
 			return chessElementsUtil.createConnectorEnd(connector, partWithPort, role);
 		}
 		return null;
+=======
+		return chessElementsUtil.createConnectorEnd(connector, partWithPort, role);
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * Checks if the given expression refers to a function behavior
 	 * @param owner the owner element
@@ -234,6 +1044,8 @@ public class ImportOSSFileAction {
 		return(text.split(" ")[0]);
 	}
 	
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 	/** 
 	 * Parses the Refinements of the component.
 	 * @param dslParentComponent the AST Component owning the refinement
@@ -286,7 +1098,10 @@ public class ImportOSSFileAction {
 		}
 		
 		// Get all the refinement formal properties
+<<<<<<< HEAD
 		@SuppressWarnings("unchecked")
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 		final EList<Constraint> existingFormalProperties = (EList<Constraint>) chessSystemModel.getRefinementAssertions(owner);
 
 		// Prepare the map to mark existing formal properties
@@ -528,10 +1343,13 @@ public class ImportOSSFileAction {
 							mapFormalProperties.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
 						}
 					}
+<<<<<<< HEAD
 				} else if (dslRefInstance != null) {
 					final String message = "Found a " + getTextOfTag(dslRefInstance) + " tag, don't know how to handle it!";
 					logger.error("Import Error: " + message);
 					importErrors.append(message + "\n");
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 				}
 			}
 		}
@@ -628,6 +1446,7 @@ public class ImportOSSFileAction {
 		for (ContractProperty contractProperty : existingContractProperties) {
 			mapContractProperties.put(contractProperty.getBase_Property().getQualifiedName(), null);
 		}
+<<<<<<< HEAD
 		
 		// Get all the interface formal properties
 		final EList<Constraint> existingFormalProperties = (EList<Constraint>) chessSystemModel.getInterfaceAssertions(owner);
@@ -648,6 +1467,18 @@ public class ImportOSSFileAction {
 		final HashMap<String, Boolean> mapFunctionBehaviors = Maps.newHashMapWithExpectedSize(existingFunctionBehaviors.size());
 		for (Behavior behavior : existingFunctionBehaviors) {
 			mapFunctionBehaviors.put(behavior.getQualifiedName(), null);
+=======
+		// Get all the interface formal properties
+		final EList<Constraint> existingFormalProperties = (EList<Constraint>) chessSystemModel.getInterfaceAssertions(owner);
+
+		// Create an hash map for the existing formal properties
+		final HashMap<String, FormalProperty> hashFormalProperties = prepareFormalPropertiesMap(existingFormalProperties);
+		
+		// Prepare the map to mark existing formal properties
+		final HashMap<String, Boolean> mapFormalProperties = Maps.newHashMapWithExpectedSize(existingFormalProperties.size());
+		for (Constraint formalProperty : existingFormalProperties) {
+			mapFormalProperties.put(formalProperty.getQualifiedName(), null);
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 		}
 		
 		// If some InterfaceInstances are present, loop on them
@@ -836,7 +1667,11 @@ public class ImportOSSFileAction {
 						logger.error("Import Error: " + message);
 						importErrors.append(message + "\n");
 					} else {
+<<<<<<< HEAD
 						final String message = "Found a " + getTextOfTag(dslVariable) + " tag, don't know how to handle it!";
+=======
+						final String message = "Found a " + dslVariable + " tag, don't know how to handle it!";
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 						logger.error("Import Error: " + message);
 						importErrors.append(message + "\n");						
 					}
@@ -900,6 +1735,7 @@ public class ImportOSSFileAction {
 	
 						// Create a Contract Property
 						final String contractPropertyName = chessElementsUtil.createContractPropertyNameFromContract(umlContract);
+<<<<<<< HEAD
 						chessElementsUtil.createContractProperty(owner, contractPropertyName, (Type) umlContract);
 						
 						addedElements.add(umlContract);
@@ -986,6 +1822,90 @@ public class ImportOSSFileAction {
 					final String message = "Found a " + getTextOfTag(dslIntInstance) + " tag, don't know how to handle it!";
 					logger.error("Import Error: " + message);
 					importErrors.append(message + "\n");						
+=======
+						chessElementsUtil.createContractProperty(owner, contractPropertyName, (Type) umlContract);				
+						addedElements.add(umlContract);
+					}  else {
+						logger.debug("Contract already present");
+
+						// The contract type is already present, update the formal properties if needed
+
+						final String assumeString = contractEntityUtil.getAssumeStrFromUmlContract(umlContract);
+						final FormalProperty assumeFormalProperty = contractEntityUtil.getAssumeFromUmlContract(umlContract);
+						
+						// The formal property is the same, mark it as still used
+						mapFormalProperties.put(assumeFormalProperty.getBase_Constraint().getQualifiedName(), Boolean.TRUE);							
+						
+						if (chessElementsUtil.getConstraintText(dslAssumption.getConstraint()).equals(assumeString)) {							
+						} else {
+							
+							// Change the text of the assume property
+							final ValueSpecification vs = assumeFormalProperty.getBase_Constraint().getSpecification();
+							((LiteralString) vs).setValue(chessElementsUtil.getConstraintText(dslAssumption.getConstraint()));
+							assumeFormalProperty.getBase_Constraint().setSpecification(vs);
+						}
+						
+						final String guaranteeString = contractEntityUtil.getGuaranteeStrFromUmlContract(umlContract);
+						final FormalProperty guaranteeFormalProperty = contractEntityUtil.getGuaranteeFromUmlContract(umlContract);
+						
+						// The formal property is the same, mark it as still used
+						mapFormalProperties.put(guaranteeFormalProperty.getBase_Constraint().getQualifiedName(), Boolean.TRUE);							
+
+						if (chessElementsUtil.getConstraintText(dslGuarantee.getConstraint()).equals(guaranteeString)) {
+						} else {
+							
+							// Change the text of the guarantee property
+							final ValueSpecification vs = guaranteeFormalProperty.getBase_Constraint().getSpecification();
+							((LiteralString) vs).setValue(chessElementsUtil.getConstraintText(dslGuarantee.getConstraint()));
+							guaranteeFormalProperty.getBase_Constraint().setSpecification(vs);
+						}
+						
+						// Set the flag to signal the contractProperty is still used
+						final ContractProperty contractProperty = (ContractProperty) chessSystemModel.getContract(owner, dslContract.getName());
+						mapContractProperties.put(contractProperty.getBase_Property().getQualifiedName(), Boolean.TRUE);
+					}
+				} else if (dslIntInstance != null && dslIntInstance.getAssertion() != null) {
+					
+					// ASSERTION processing
+					final Assertion assertion = dslIntInstance.getAssertion();
+					final String assertionName = assertion.getName();
+					final String assertionText = chessElementsUtil.getConstraintText(assertion.getConstraint());
+					
+					// Retrieve the formal property from the owner, if any (working on the assertion name)
+					Constraint umlConstraint = owner.getOwnedRule(assertionName);
+
+					if (umlConstraint == null || !entityUtil.isFormalProperty(umlConstraint)) {
+						logger.debug("Formal property non found, creating one");
+						umlConstraint = chessElementsUtil.createInterfaceFormalProperty(owner, assertionName, assertionText);
+						
+						// Add the constraint to the list of created elements
+						addedElements.add(umlConstraint);
+						
+						// Add the formal property to the hash
+						hashFormalProperties.put(assertionText, entityUtil.getFormalProperty(umlConstraint));
+					} else {
+						if (entityUtil.isFormalProperty(umlConstraint)) {
+							logger.debug("Formal property already present");
+
+							// Update the formal property if needed
+
+							final FormalProperty formalProperty = entityUtil.getFormalProperty(umlConstraint);						
+							final String formalPropertyText = entityUtil.getFormalPropertyStr(formalProperty);
+							
+							// If the expression is different, save it, otherwise go on
+							if (!assertionText.equals(formalPropertyText)) {
+								
+								hashFormalProperties.remove(formalPropertyText, formalProperty);
+								contractEntityUtil.saveFormalProperty(umlConstraint, assertionText);
+								
+								hashFormalProperties.put(assertionText, formalProperty);
+							}
+							
+							// Set the flag to signal the formal property is still used
+							mapFormalProperties.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
+						}
+					}
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 				}
 			}
 		}
@@ -1012,6 +1932,7 @@ public class ImportOSSFileAction {
 			if (mapFormalProperties.get(qualifiedElement) == null) {
 //				System.out.println("formalProperty " + qualifiedElement + " should be removed");
 				chessElementsUtil.removeFormalProperty(existingFormalProperties, qualifiedElement);
+<<<<<<< HEAD
 			}
 		}
 
@@ -1020,6 +1941,8 @@ public class ImportOSSFileAction {
 			if (mapFunctionBehaviors.get(qualifiedElement) == null) {
 //				System.out.println("functionBehavior " + qualifiedElement + " should be removed");
 				chessElementsUtil.removeFunctionBehavior(existingFunctionBehaviors, qualifiedElement);
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 			}
 		}
 	}
@@ -1055,6 +1978,69 @@ public class ImportOSSFileAction {
 	}
 	
 	/**
+	 * Collects the needed stereotypes from the given package.
+	 * @param pkg the package in which to look for the stereotypes
+	 */
+	private void refreshStereotypes(Package pkg) {
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT_PROP)) {
+			if (sub.getQualifiedName().equals(CONTRACT_PROP)) {
+				contractPropertyStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, DELEGATION_CONST)) {
+			if (sub.getQualifiedName().equals(DELEGATION_CONST)) {
+				delegationConstraintStereotype = sub;
+				break;
+			}
+		}
+
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT_REFINEMENT)) {
+			if (sub.getQualifiedName().equals(CONTRACT_REFINEMENT)) {
+				contractRefinementStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, BOUNDED_TYPE)) {
+			if (sub.getQualifiedName().equals(BOUNDED_TYPE)) {
+				boundedTypeStereotype = sub;
+				break;
+			}
+		}
+
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, FLOWPORT)) {
+			if (sub.getQualifiedName().equals(FLOWPORT)) {
+				flowPortStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, BLOCK)) {
+			if (sub.getQualifiedName().equals(BLOCK)) {
+				blockStereotype = sub;
+				break;
+			}
+		}
+
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, SYSTEM)) {
+			if (sub.getQualifiedName().equals(SYSTEM)) {
+				systemStereotype = sub;
+				break;
+			}
+		}
+		
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT)) {
+			if (sub.getQualifiedName().equals(CONTRACT)) {
+				contractStereotype = sub;
+				break;
+			}
+		}
+	}
+	
+	/**
 	 * Main method to be invoked to parse an OSS file.
 	 * @throws Exception
 	 */
@@ -1065,7 +2051,12 @@ public class ImportOSSFileAction {
 		importErrors = new StringBuffer();
 
 		// Retrieve the needed stereotypes 
+<<<<<<< HEAD
 		typeUtil.refreshStereotypes(sysView);
+=======
+
+		refreshStereotypes(sysView);
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 		
 		long startTime = System.currentTimeMillis();
 		
@@ -1205,7 +2196,13 @@ public class ImportOSSFileAction {
 				}
 				
 				logger.debug("Total time = " + (System.currentTimeMillis() - startTime));
+<<<<<<< HEAD
 //				System.out.println("Total time = " + (System.currentTimeMillis() - startTime));
+=======
+
+				System.out.println("Total time = " + (System.currentTimeMillis() - startTime));
+
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 			}
 		});
 		

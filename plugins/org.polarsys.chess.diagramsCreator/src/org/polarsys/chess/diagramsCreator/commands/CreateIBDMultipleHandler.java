@@ -50,7 +50,13 @@ public class CreateIBDMultipleHandler extends AbstractHandler {
 				if (entityUtil.isBlock(element) && !contractEntityUtil.isContract(element)) {
 					try {
 						final Diagram diagram = action.addIBD((Class) element);
+<<<<<<< HEAD
 						action.populateDiagram(diagram, true);//FIXME: mettere un parametro
+=======
+
+						action.populateDiagram(diagram, element, true);//FIXME: mettere un parametro
+
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

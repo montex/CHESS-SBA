@@ -14,8 +14,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Map;
 
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.draw2d.geometry.Point;
@@ -101,6 +104,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 
 	private boolean sortedPorts; // Sort the ports in alphabetical order
 
+<<<<<<< HEAD
 	/** The instance of this class */
 	private static ShowIBDElementsAction classInstance;
 	
@@ -115,6 +119,8 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		return classInstance;
 	}
 
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 	/**
 	 * Adds a IBD diagram to the given block.
 	 * @param owner the selected block
@@ -269,6 +275,13 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 							portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(element) + 1);
 							request.setLocation(new Point(portLocationRight));
 						}
+//						if (entityUtil.isInputPort(element)) {
+//							portLocationLeft.y += INCREMENT;
+//							request.setLocation(new Point(portLocationLeft));
+//						} else {
+//							portLocationRight.y += INCREMENT;
+//							request.setLocation(new Point(portLocationRight));
+//						}
 					}
 				}
 				Command cmd = editPart.getCommand(request);
@@ -286,6 +299,9 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * @param inputType true to get input direction, false for the rest
 	 * @param sorted true to get an alphabetically ordered list
 	 * @return the list of requested ports
+<<<<<<< HEAD
+=======
+
 	 */
 	private ArrayList<Port> getPorts(EList<Port> ports, boolean inputType, boolean sorted) {
 		ArrayList<Port> listPorts = new ArrayList<Port>();
@@ -303,6 +319,214 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			}
 		}
 
+		// Sort list in alphabetical order if requested
+		if (sorted) {		
+			Comparator<Port> comparator = new Comparator<Port>() {
+			    @Override
+			    public int compare(Port left, Port right) {
+			        return left.getName().compareToIgnoreCase(right.getName());
+			    }
+			};
+			Collections.sort(listPorts, comparator);
+		}		
+		return listPorts;
+	}
+	
+	/**
+	 * Draws the ports on the inner instances.
+	 * @param diagramEP the EditPart of the diagram
+	 * @param umlObject the selected UML object
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
+	 */
+	private ArrayList<Port> getPorts(EList<Port> ports, boolean inputType, boolean sorted) {
+		ArrayList<Port> listPorts = new ArrayList<Port>();
+
+<<<<<<< HEAD
+		// Fill the list with the requested type
+		for (Port port : ports) {
+			if (inputType) {
+				if (entityUtil.isInputPort(port)) {
+					listPorts.add(port);
+				}
+			} else {
+				if (!entityUtil.isInputPort(port)) {
+					listPorts.add(port);
+=======
+		// Get the edit part of the main element, from the diagram edit part
+		final IGraphicalEditPart elementEP = (IGraphicalEditPart) diagramEP.getChildren().get(0);
+		
+		// Get the compartment edit part
+		final IGraphicalEditPart compartmentEP = (IGraphicalEditPart) elementEP.getChildren().get(1);
+		
+		logger.debug("\nCompartment edit part = " + compartmentEP);
+
+		final List<?>compartmentChildren = compartmentEP.getChildren();
+		for (Object childEP : compartmentChildren) {
+			
+			// Get the UML element associated to the EP
+			final EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
+
+			logger.debug("SemanticElement of compartment = " + semanticElement);
+									
+			if (semanticElement instanceof Property) {
+				command.add(drawComponentInstancePorts((IGraphicalEditPart) childEP));
+			}
+		}
+		
+		// Execute the command
+		final TransactionalEditingDomain domain  = elementEP.getEditingDomain();
+		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+	}
+	
+	
+//	/**
+//	 * Draws the ports on the inner instances.
+//	 * @param diagramEP the EditPart of the diagram
+//	 */
+//	private void drawComponentInstancesPorts(IGraphicalEditPart diagramEP) {
+//		final CompoundCommand command = new CompoundCommand("Draw Component Instances Ports Commands");
+//		Property prop = null;
+//		Class propertyType = null;
+//		View compartmentView = null;
+//		Point portLocationLeft = null;
+//		Point portLocationRight = null;
+//
+//		// Get the edit part of the main element, from the diagram edit part
+//		final IGraphicalEditPart elementEP = (IGraphicalEditPart) diagramEP.getChildren().get(0);
+//		
+//		// Get the compartment edit part
+//		final IGraphicalEditPart compartmentEP = (IGraphicalEditPart) elementEP.getChildren().get(1);
+//		
+//		logger.debug("\nCompartment edit part = " + compartmentEP);
+//
+//		final List<?>compartmentChildren = compartmentEP.getChildren();
+//		for (Object childEP : compartmentChildren) {
+//			
+//			// Get the UML element associated to the EP
+//			final EObject semanticElement = ((IGraphicalEditPart) childEP).resolveSemanticElement();
+//			logger.debug("SemanticElement of compartment = " + semanticElement);
+//									
+//			if (semanticElement instanceof Property) {			
+//			
+//				// Get the element type
+//				prop = (Property) semanticElement;
+//				propertyType = (Class) prop.getType(); 
+//
+//				// Get the compartment view of the property
+//				compartmentView = ((IGraphicalEditPart) childEP).getNotationView();
+//
+//				// Set the initial position of the ports
+//				portLocationLeft = new Point(-10, 20);
+//				portLocationRight = new Point(-10, 20);
+//				
+//				// Get the width of the component to set the position of output ports
+//				final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) childEP).getNotationView();
+//				final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
+//				portLocationRight.x += layout.getWidth() + 20;
+//
+//				// Get the ports of the property
+//				final EList<Port> ports = propertyType.getOwnedPorts();
+//				final ArrayList<Port> inputPorts = getPorts(ports, true, sortedPorts);
+//				final ArrayList<Port> outputPorts = getPorts(ports, false, sortedPorts);
+//
+//				// Display the ports
+//				for (Port port : ports) {
+//					if (compartmentView != null) {
+//						final ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
+//						if (inputPorts.indexOf(port) != -1) {
+//							portLocationLeft.y = 20 + INCREMENT * (inputPorts.indexOf(port) + 1);
+//							request.setLocation(new Point(portLocationLeft));
+//						} else if (outputPorts.indexOf(port) != -1){
+//							portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(port) + 1);
+//							request.setLocation(new Point(portLocationRight));
+//						}
+//
+//						final Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);
+//						if (cmd != null && cmd.canExecute()) {
+//							((CompoundCommand) command).add(cmd);
+//						}
+//					}
+//				}
+//			}
+//		}
+//
+//		// Execute the commands
+//		final TransactionalEditingDomain domain  = elementEP.getEditingDomain();
+//		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+//	}
+
+	/**
+	 * Draws the ports on the given component instance.
+	 * @param diagramEP the EditPart of the component instance
+	 * @return the command to be executed
+	 */
+	private CompoundCommand drawComponentInstancePorts(IGraphicalEditPart componentInstanceEP) {
+		final CompoundCommand command = new CompoundCommand("Draw Component Instances Ports Commands");
+		Point portLocationLeft = null;
+		Point portLocationRight = null;
+
+				// Set the initial position of the ports
+				portLocationLeft = new Point(-10, 20);
+				portLocationRight = new Point(-10, 20);
+				
+				// Get the width of the component to set the position of output ports
+				final CSSShapeImpl viewShape = (CSSShapeImpl) ((IGraphicalEditPart) childEP).getNotationView();
+				final Bounds layout = (Bounds) viewShape.getLayoutConstraint();
+				portLocationRight.x += layout.getWidth() + 20;
+
+				// Get the ports of the property
+				final EList<Port> ports = propertyType.getOwnedPorts();
+				final ArrayList<Port> inputPorts = getPorts(ports, true, sortedPorts);
+				final ArrayList<Port> outputPorts = getPorts(ports, false, sortedPorts);
+
+				// Display the ports
+				for (Port port : ports) {
+					if (compartmentView != null) {
+						final ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
+						if (inputPorts.indexOf(port) != -1) {
+							portLocationLeft.y = 20 + INCREMENT * (inputPorts.indexOf(port) + 1);
+							request.setLocation(new Point(portLocationLeft));
+						} else if (outputPorts.indexOf(port) != -1){
+							portLocationRight.y = 20 + INCREMENT * (outputPorts.indexOf(port) + 1);
+							request.setLocation(new Point(portLocationRight));
+						}
+
+						final Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);	// Cannot be the diagram EditPart
+						logger.debug("cmd = " + cmd);
+						logger.debug("cmd label = " + cmd.getLabel());
+						if (cmd != null && cmd.canExecute()) {
+							((CompoundCommand) command).add(cmd);
+						}
+					}
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
+				}
+//				for (Port port : ports) {
+//					if (compartmentView != null) {
+//						
+//						ShowHideElementsRequest request = new ShowHideElementsRequest(compartmentView, port);
+//						
+//						logger.debug("req = " + request);
+//						
+//						if (entityUtil.isInputPort(port)) {
+//							portLocationLeft.y += INCREMENT;
+//							request.setLocation(new Point(portLocationLeft));
+//						} else {
+//							portLocationRight.y += INCREMENT;
+//							request.setLocation(new Point(portLocationRight));
+//						}
+//
+//						Command cmd = ((IGraphicalEditPart) childEP).getCommand(request);	// Cannot be the diagram EditPart
+//						logger.debug("cmd = " + cmd);
+//						logger.debug("cmd label = " + cmd.getLabel());
+//						if (cmd != null && cmd.canExecute()) {
+//							((CompoundCommand) command).add(cmd);
+//						}
+//					}
+//				}
+			}
+		}
+
+<<<<<<< HEAD
 		// Sort list in alphabetical order if requested
 		if (sorted) {		
 			Comparator<Port> comparator = new Comparator<Port>() {
@@ -472,6 +696,115 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 //		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
 	}
 		
+=======
+		return command;
+//		// Execute the commands
+//		final TransactionalEditingDomain domain  = componentInstanceEP.getEditingDomain();
+//		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+	}
+		
+	/**
+	 * Computes the ideal size for the element, depending on its features.
+	 * @param element the Element to analyze
+	 * @return an array with ideal dimensions
+	 */
+	private int[] getSize(Element element) {
+		int width = 0;
+		int height = 60;
+		final int[] size = new int[2];
+		int inputPorts = 0;
+		int outputPorts = 0;
+		EList<Port> ports;
+		int maxLengthInput = 0;
+		int maxLengthOutput = 0;
+		boolean isMain = false;
+		
+		if (element instanceof Property) {
+			
+			// Subcomponent, get the length of its name
+			Property property = (Property) element;
+//			maxLengthInput = property.getName().length();
+//			maxLengthInput += property.getType().getName().length();
+			
+			// Get the ports of the component
+			ports = ((Class) property.getType()).getOwnedPorts();
+		} else {
+			
+			// Main component
+			isMain = true;
+
+			// Get the ports of the component
+			ports = ((Class) element).getOwnedPorts();
+		}
+		
+		// Count the number of input and output ports and their length
+		for (Port port : ports) {
+			if (entityUtil.isInputPort(port)) {
+				inputPorts++;
+				
+				// Get the text size for enlarging the box
+				int textLength = port.getName().length();
+				textLength += port.getType().getName().length();
+				if (textLength > maxLengthInput) {
+					maxLengthInput = textLength;
+				}
+			} else {
+				outputPorts++;
+				
+				// Get the text size for enlarging the box
+				int textLength = port.getName().length();
+				textLength += port.getType().getName().length();
+				if (textLength > maxLengthOutput) {
+					maxLengthOutput = textLength;
+				}
+			}
+		}
+		
+		// Empirical value for the width of the element
+		width = (int) Math.round(100 + 7.5 * (maxLengthInput + maxLengthOutput));
+		
+		// Compute the height of the element based on number of ports
+		if (inputPorts > outputPorts) {
+			height += INCREMENT * inputPorts;
+		} else {
+			height += INCREMENT * outputPorts;
+		}
+		
+		logger.debug("Element width = " + width);
+		logger.debug("Element height = " + height);
+		
+		// Check box limits
+		if (isMain) {
+			size[0] = MAIN_WIDTH;
+			
+			if (height < MIN_MAIN_HEIGHT) {
+				size[1] = MIN_MAIN_HEIGHT;
+			} else if (height > MAX_MAIN_HEIGHT) {
+				size[1] = MAX_MAIN_HEIGHT;
+			} else {
+				size[1] = height;
+			}
+		} else {
+			if (width < MIN_SUB_WIDTH) {
+				size[0] = MIN_SUB_WIDTH;
+			} else if (width > MAX_SUB_WIDTH) {
+				size[0] = MAX_SUB_WIDTH;
+			} else {
+				size[0] = width;
+			}
+			
+			if (height < MIN_SUB_HEIGHT) {
+				size[1] = MIN_SUB_HEIGHT;
+			} else if (height > MAX_SUB_HEIGHT) {
+				size[1] = MAX_SUB_HEIGHT;
+			} else {
+				size[1] = height;
+			}
+		}
+		return size;
+	}
+
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 	/**
 	 * Computes the ideal size for the element, depending on its features.
 	 * @param element the Element to analyze
@@ -602,7 +935,11 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				}
 
 				// Now I should resize also the inner components
+<<<<<<< HEAD
 				final EList<?> compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
+=======
+				final EList<?>compartmentChildren = ((View) elementView.getChildren().get(1)).getChildren();
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 				EObject semanticElement = null;
 				int offset = 100;
 
@@ -623,13 +960,17 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 							layout.setX(offset);
 							layout.setY(200);
 							offset += 250;
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 							viewShape.setLayoutConstraint(layout);
 						}
 					}
 				}
 			}
 		});
+<<<<<<< HEAD
 	}
 
 	/**
@@ -676,8 +1017,10 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				}
 			}
 		});
+=======
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 	}
-	
+
 	/**
 	 * Returns the diagram EditPart.
 	 * @return
@@ -840,7 +1183,12 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * @param diagram
 	 * @throws ServiceException 
 	 */
+<<<<<<< HEAD
 	public void populateDiagram(Diagram diagram, boolean sortedPorts) {
+=======
+
+	public void populateDiagram(Diagram diagram, Object umlObject, boolean sortedPorts) {
+>>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
 		
 		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		
