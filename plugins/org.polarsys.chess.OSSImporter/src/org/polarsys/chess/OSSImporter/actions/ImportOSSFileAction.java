@@ -42,6 +42,7 @@ import com.google.common.collect.Maps;
 import com.google.inject.Injector;
 
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSModelFactory;
+import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.utils.OSSModelUtil;
 import eu.fbk.eclipse.standardtools.xtextService.core.utils.XTextResourceUtil;
 import eu.fbk.tools.editor.basetype.baseType.*;
 import eu.fbk.tools.editor.contract.contract.Assumption;
@@ -304,7 +305,7 @@ public class ImportOSSFileAction {
 
 					// SUB processing
 					final String subName = dslRefInstance.getSubcomponent().getName();					
-					final String subType = dslRefInstance.getSubcomponent().getType();
+					final String subType = OSSModelUtil.getInstance().getSubComponentTypeName(dslRefInstance.getSubcomponent());
 
 					logger.debug("\tsubcomponent name = " + subName);
 					logger.debug("\tsubcomponent type = " + subType);
