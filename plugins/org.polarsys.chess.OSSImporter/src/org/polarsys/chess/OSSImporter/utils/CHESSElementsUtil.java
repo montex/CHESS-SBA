@@ -65,18 +65,19 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import com.google.inject.Injector;
 
 import eu.fbk.eclipse.standardtools.xtextService.core.utils.XTextResourceUtil;
-import eu.fbk.tools.editor.basetype.baseType.ArrayType;
 import eu.fbk.tools.editor.basetype.baseType.BooleanType;
+import eu.fbk.tools.editor.basetype.baseType.BoundedArrayType;
 import eu.fbk.tools.editor.basetype.baseType.ContinuousType;
 import eu.fbk.tools.editor.basetype.baseType.EnumType;
 import eu.fbk.tools.editor.basetype.baseType.EventType;
 import eu.fbk.tools.editor.basetype.baseType.Expression;
-import eu.fbk.tools.editor.basetype.baseType.IntegerArrayType;
+import eu.fbk.tools.editor.basetype.baseType.FixedSizeArrayType;
 import eu.fbk.tools.editor.basetype.baseType.IntegerType;
 import eu.fbk.tools.editor.basetype.baseType.RangeType;
 import eu.fbk.tools.editor.basetype.baseType.RealType;
 import eu.fbk.tools.editor.basetype.baseType.SignedWordType;
 import eu.fbk.tools.editor.basetype.baseType.SimpleType;
+import eu.fbk.tools.editor.basetype.baseType.UnboundedArrayType;
 import eu.fbk.tools.editor.basetype.baseType.UnsignedWordType;
 import eu.fbk.tools.editor.basetype.baseType.WordArrayType;
 import eu.fbk.tools.editor.basetype.baseType.WordType;
@@ -161,10 +162,12 @@ public class CHESSElementsUtil {
 		} else if (dslSimpleType instanceof EnumType) {
 			logger.debug("EnumType");
 			return typeUtil.getEnumerationType((EnumType) dslSimpleType, pkg);
-		} else if (dslSimpleType instanceof ArrayType) {
-			logger.debug("ArrayType");
-		} else if (dslSimpleType instanceof IntegerArrayType) {
-			logger.debug("IntegerArrayType");
+		} else if (dslSimpleType instanceof FixedSizeArrayType) {
+			logger.debug("FixedSizeArrayType");
+		} else if (dslSimpleType instanceof BoundedArrayType) {
+			logger.debug("BoundedArrayType");
+		} else if (dslSimpleType instanceof UnboundedArrayType) {
+			logger.debug("UnboundedArrayType");
 		} else if (dslSimpleType instanceof WordArrayType) {
 			logger.debug("WordArrayType");
 		}
