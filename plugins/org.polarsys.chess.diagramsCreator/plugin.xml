@@ -214,7 +214,6 @@
                optional="true">
          </commandParameter>
       </command>
-<<<<<<< HEAD
       <command
             defaultHandler="org.polarsys.chess.diagramsCreator.commands.RefreshBDDHandler"
             id="org.polarsys.chess.diagramsCreator.commands.refreshBDDHandler"
@@ -225,8 +224,6 @@
             id="org.polarsys.chess.diagramsCreator.commands.refreshIBDHandler"
             name="Refresh IBD handler">
       </command>
-=======
->>>>>>> branch 'neon' of https://git.polarsys.org/r/chess/chess
    </extension>
 
 </plugin>
