@@ -339,7 +339,7 @@ public class ImportOSSFileAction {
 					// CONNECTION processing
 					final Connection connection = dslRefInstance.getConnection();
 					final VariableId variable = connection.getVariable();
-					final Expression constraint = connection.getConstraint();
+					final Expression constraint = (Expression)connection.getConstraint();
 					Connector connector = null;
 					
 					if ((connector = chessElementsUtil.getExistingConnector(existingConnectors, variable, constraint)) != null) {
