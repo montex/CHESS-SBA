@@ -107,7 +107,8 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		docFormat = parameterDialog.getDocumentFormat();
 		imageExtension = ".svg";
 		if (docFormat.equals("tex")) {
-			imageExtension = ".png";
+//			imageExtension = ".png";	// Not perfect images, some fonts are wrong
+			imageExtension = ".pdf";
 		}
 
 		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
