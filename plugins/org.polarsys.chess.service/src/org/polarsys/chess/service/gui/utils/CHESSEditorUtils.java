@@ -58,6 +58,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
+import org.eclipse.uml2.uml.Profile;
+import org.eclipse.uml2.uml.internal.impl.ProfileImpl;
 import org.polarsys.chess.core.natures.CHESSNature;
 import org.polarsys.chess.core.views.DiagramStatus;
 import org.polarsys.chess.service.internal.Activator;
@@ -321,7 +323,7 @@ public class CHESSEditorUtils {
 					
 					//pageMngr also has a list of diagram coming from the applied profiles; we have to skip these diagrams
 					//TODO use a smart way to identify external diagram in place of the proxy reference
-					if (diag.getElement() != null && diag.getElement().eIsProxy())
+					if ((diag.getElement() != null && diag.getElement().eIsProxy()) || (diag.getElement() != null && diag.getElement() instanceof Profile))
 						continue;
 
 					for (Object view : diag.getChildren()){
@@ -330,7 +332,10 @@ public class CHESSEditorUtils {
 							if (shape.getElement() != null && shape.getElement().eIsProxy()){
 								viewToDelete.add(shape);
 							}
+							
+							
 						}
+						checkNestedOrphanView ((View)view , viewToDelete);
 					}
 					
 					for (Object view : diag.getEdges()){
@@ -358,7 +363,8 @@ public class CHESSEditorUtils {
 						for (CSSDiagramImpl diag : mapDiagramViews.keySet()){
 							for (View view : mapDiagramViews.get(diag)){
 								if (view instanceof CSSShapeImpl){
-									diag.removeChild(view);;
+									//use econtainer in case of nested views (like parts in composite diagrams)
+									((View) view.eContainer()).removeChild(view);
 								}
 								if (view instanceof CSSConnectorImpl){
 									view.setVisible(false);
@@ -377,6 +383,18 @@ public class CHESSEditorUtils {
 		}
 	}
 	
-
+	private static void checkNestedOrphanView(View view, List<View> viewToDelete){
+		CSSShapeImpl shape = null;
+		for (Object childView : view.getChildren()){
+			if (childView instanceof CSSShapeImpl){
+				shape = (CSSShapeImpl) childView;
+				if (shape.getElement() != null && shape.getElement().eIsProxy()){
+					viewToDelete.add(shape);
+				} 
+				
+			}
+			checkNestedOrphanView((View) childView, viewToDelete);
+		}
+	}
 	
 }
