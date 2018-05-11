@@ -1,25 +1,25 @@
-/*******************************************************************************
- *
- *  * Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
-
-
+/**
+ * 
+ *   Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
+ *  
+ *      
+ *   All rights reserved. This program and the accompanying materials
+ *   are made available under the terms of the Eclipse Public License v1.0
+ *   which accompanies this distribution, and is available at
+ *   http://www.eclipse.org/legal/epl-v10.html
+ *  
+ *  
+ */
 package org.polarsys.chess.instance.view;
 
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.incquery.runtime.api.IPatternMatch;
-import org.eclipse.incquery.runtime.api.impl.BasePatternMatch;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import java.util.Objects;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Slot;
+import org.eclipse.viatra.query.runtime.api.IPatternMatch;
+import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 import org.polarsys.chess.instance.view.util.ChildPortSlotsOperationQuerySpecification;
 
 /**
@@ -32,7 +32,7 @@ import org.polarsys.chess.instance.view.util.ChildPortSlotsOperationQuerySpecifi
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
  * @see ChildPortSlotsOperationMatcher
- * @see ChildPortSlotsOperationProcessor
+ *  @see ChildPortSlotsOperationProcessor
  * 
  */
 @SuppressWarnings("all")
@@ -75,16 +75,16 @@ public abstract class ChildPortSlotsOperationMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("slot".equals(parameterName) ) {
-    	this.fSlot = (org.eclipse.uml2.uml.Slot) newValue;
-    	return true;
+        this.fSlot = (Slot) newValue;
+        return true;
     }
     if ("operation".equals(parameterName) ) {
-    	this.fOperation = (org.eclipse.uml2.uml.Operation) newValue;
-    	return true;
+        this.fOperation = (Operation) newValue;
+        return true;
     }
     if ("nameC".equals(parameterName) ) {
-    	this.fNameC = (java.lang.String) newValue;
-    	return true;
+        this.fNameC = (String) newValue;
+        return true;
     }
     return false;
   }
@@ -128,57 +128,43 @@ public abstract class ChildPortSlotsOperationMatch extends BasePatternMatch {
   public String prettyPrint() {
     StringBuilder result = new StringBuilder();
     result.append("\"slot\"=" + prettyPrintValue(fSlot) + ", ");
-    
     result.append("\"operation\"=" + prettyPrintValue(fOperation) + ", ");
-    
-    result.append("\"nameC\"=" + prettyPrintValue(fNameC)
-    );
+    result.append("\"nameC\"=" + prettyPrintValue(fNameC));
     return result.toString();
   }
   
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((fSlot == null) ? 0 : fSlot.hashCode());
-    result = prime * result + ((fOperation == null) ? 0 : fOperation.hashCode());
-    result = prime * result + ((fNameC == null) ? 0 : fNameC.hashCode());
-    return result;
+    return Objects.hash(fSlot, fOperation, fNameC);
   }
   
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
-    	return true;
-    if (!(obj instanceof ChildPortSlotsOperationMatch)) { // this should be infrequent
-    	if (obj == null) {
-    		return false;
-    	}
-    	if (!(obj instanceof IPatternMatch)) {
-    		return false;
-    	}
-    	IPatternMatch otherSig  = (IPatternMatch) obj;
-    	if (!specification().equals(otherSig.specification()))
-    		return false;
-    	return Arrays.deepEquals(toArray(), otherSig.toArray());
+        return true;
+    if (obj == null) {
+        return false;
     }
-    ChildPortSlotsOperationMatch other = (ChildPortSlotsOperationMatch) obj;
-    if (fSlot == null) {if (other.fSlot != null) return false;}
-    else if (!fSlot.equals(other.fSlot)) return false;
-    if (fOperation == null) {if (other.fOperation != null) return false;}
-    else if (!fOperation.equals(other.fOperation)) return false;
-    if (fNameC == null) {if (other.fNameC != null) return false;}
-    else if (!fNameC.equals(other.fNameC)) return false;
-    return true;
+    if ((obj instanceof ChildPortSlotsOperationMatch)) {
+        ChildPortSlotsOperationMatch other = (ChildPortSlotsOperationMatch) obj;
+        return Objects.equals(fSlot, other.fSlot) && Objects.equals(fOperation, other.fOperation) && Objects.equals(fNameC, other.fNameC);
+    } else {
+        // this should be infrequent
+        if (!(obj instanceof IPatternMatch)) {
+            return false;
+        }
+        IPatternMatch otherSig  = (IPatternMatch) obj;
+        return Objects.equals(specification(), otherSig.specification()) && Arrays.deepEquals(toArray(), otherSig.toArray());
+    }
   }
   
   @Override
   public ChildPortSlotsOperationQuerySpecification specification() {
     try {
-    	return ChildPortSlotsOperationQuerySpecification.instance();
-    } catch (IncQueryException ex) {
-     	// This cannot happen, as the match object can only be instantiated if the query specification exists
-     	throw new IllegalStateException (ex);
+        return ChildPortSlotsOperationQuerySpecification.instance();
+    } catch (ViatraQueryException ex) {
+         // This cannot happen, as the match object can only be instantiated if the query specification exists
+         throw new IllegalStateException (ex);
     }
   }
   

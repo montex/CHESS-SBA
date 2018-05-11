@@ -1,20 +1,20 @@
-/*******************************************************************************
- *
- *  * Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
-
+/**
+ * 
+ *   Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
+ *  
+ *      
+ *   All rights reserved. This program and the accompanying materials
+ *   are made available under the terms of the Eclipse Public License v1.0
+ *   which accompanies this distribution, and is available at
+ *   http://www.eclipse.org/legal/epl-v10.html
+ *  
+ *  
+ */
 package org.polarsys.chess.instance.view;
 
-import org.eclipse.incquery.runtime.api.IncQueryEngine;
-import org.eclipse.incquery.runtime.api.impl.BaseGeneratedPatternGroup;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedPatternGroup;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 import org.polarsys.chess.instance.view.ChildCHRTSpecItemMatcher;
 import org.polarsys.chess.instance.view.ChildCHRTSpecMatcher;
 import org.polarsys.chess.instance.view.ChildPortSlotsMatcher;
@@ -41,10 +41,10 @@ import org.polarsys.chess.instance.view.util.SwSystemChild2QuerySpecification;
 import org.polarsys.chess.instance.view.util.SwSystemRootQuerySpecification;
 
 /**
- * A pattern group formed of all patterns defined in view.eiq.
+ * A pattern group formed of all public patterns defined in view.vql.
  * 
- * <p>Use the static instance as any {@link org.eclipse.incquery.runtime.api.IPatternGroup}, to conveniently prepare
- * an EMF-IncQuery engine for matching all patterns originally defined in file view.eiq,
+ * <p>Use the static instance as any {@link org.eclipse.viatra.query.runtime.api.IPatternGroup}, to conveniently prepare
+ * a VIATRA Query engine for matching all patterns originally defined in file view.vql,
  * in order to achieve better performance than one-by-one on-demand matcher initialization.
  * 
  * <p> From package org.polarsys.chess.instance.view, the group contains the definition of the following patterns: <ul>
@@ -60,8 +60,6 @@ import org.polarsys.chess.instance.view.util.SwSystemRootQuerySpecification;
  * <li>childCHRTSpec</li>
  * <li>childPrivCHRTSpecItem</li>
  * <li>childPrivCHRTSpec</li>
- * <li>portHelperWithValue</li>
- * <li>clientServerPortHelperWithInterface</li>
  * </ul>
  * 
  * @see IPatternGroup
@@ -73,19 +71,19 @@ public final class View extends BaseGeneratedPatternGroup {
    * Access the pattern group.
    * 
    * @return the singleton instance of the group
-   * @throws IncQueryException if there was an error loading the generated code of pattern specifications
+   * @throws ViatraQueryException if there was an error loading the generated code of pattern specifications
    * 
    */
-  public static View instance() throws IncQueryException {
+  public static View instance() throws ViatraQueryException {
     if (INSTANCE == null) {
-    	INSTANCE = new View();
+        INSTANCE = new View();
     }
     return INSTANCE;
   }
   
   private static View INSTANCE;
   
-  private View() throws IncQueryException {
+  private View() throws ViatraQueryException {
     querySpecifications.add(SwSystemCHGaResourcePlatformQuerySpecification.instance());
     querySpecifications.add(SwSystemRootQuerySpecification.instance());
     querySpecifications.add(SwSystemChild2ItemQuerySpecification.instance());
@@ -100,99 +98,99 @@ public final class View extends BaseGeneratedPatternGroup {
     querySpecifications.add(ChildPrivCHRTSpecQuerySpecification.instance());
   }
   
-  public SwSystemCHGaResourcePlatformQuerySpecification getSwSystemCHGaResourcePlatform() throws IncQueryException {
+  public SwSystemCHGaResourcePlatformQuerySpecification getSwSystemCHGaResourcePlatform() throws ViatraQueryException {
     return SwSystemCHGaResourcePlatformQuerySpecification.instance();
   }
   
-  public SwSystemCHGaResourcePlatformMatcher getSwSystemCHGaResourcePlatform(final IncQueryEngine engine) throws IncQueryException {
+  public SwSystemCHGaResourcePlatformMatcher getSwSystemCHGaResourcePlatform(final ViatraQueryEngine engine) throws ViatraQueryException {
     return SwSystemCHGaResourcePlatformMatcher.on(engine);
   }
   
-  public SwSystemRootQuerySpecification getSwSystemRoot() throws IncQueryException {
+  public SwSystemRootQuerySpecification getSwSystemRoot() throws ViatraQueryException {
     return SwSystemRootQuerySpecification.instance();
   }
   
-  public SwSystemRootMatcher getSwSystemRoot(final IncQueryEngine engine) throws IncQueryException {
+  public SwSystemRootMatcher getSwSystemRoot(final ViatraQueryEngine engine) throws ViatraQueryException {
     return SwSystemRootMatcher.on(engine);
   }
   
-  public SwSystemChild2ItemQuerySpecification getSwSystemChild2Item() throws IncQueryException {
+  public SwSystemChild2ItemQuerySpecification getSwSystemChild2Item() throws ViatraQueryException {
     return SwSystemChild2ItemQuerySpecification.instance();
   }
   
-  public SwSystemChild2ItemMatcher getSwSystemChild2Item(final IncQueryEngine engine) throws IncQueryException {
+  public SwSystemChild2ItemMatcher getSwSystemChild2Item(final ViatraQueryEngine engine) throws ViatraQueryException {
     return SwSystemChild2ItemMatcher.on(engine);
   }
   
-  public SwSystemChild2QuerySpecification getSwSystemChild2() throws IncQueryException {
+  public SwSystemChild2QuerySpecification getSwSystemChild2() throws ViatraQueryException {
     return SwSystemChild2QuerySpecification.instance();
   }
   
-  public SwSystemChild2Matcher getSwSystemChild2(final IncQueryEngine engine) throws IncQueryException {
+  public SwSystemChild2Matcher getSwSystemChild2(final ViatraQueryEngine engine) throws ViatraQueryException {
     return SwSystemChild2Matcher.on(engine);
   }
   
-  public ChildPortSlotsQuerySpecification getChildPortSlots() throws IncQueryException {
+  public ChildPortSlotsQuerySpecification getChildPortSlots() throws ViatraQueryException {
     return ChildPortSlotsQuerySpecification.instance();
   }
   
-  public ChildPortSlotsMatcher getChildPortSlots(final IncQueryEngine engine) throws IncQueryException {
+  public ChildPortSlotsMatcher getChildPortSlots(final ViatraQueryEngine engine) throws ViatraQueryException {
     return ChildPortSlotsMatcher.on(engine);
   }
   
-  public ChildPrivateOperationsQuerySpecification getChildPrivateOperations() throws IncQueryException {
+  public ChildPrivateOperationsQuerySpecification getChildPrivateOperations() throws ViatraQueryException {
     return ChildPrivateOperationsQuerySpecification.instance();
   }
   
-  public ChildPrivateOperationsMatcher getChildPrivateOperations(final IncQueryEngine engine) throws IncQueryException {
+  public ChildPrivateOperationsMatcher getChildPrivateOperations(final ViatraQueryEngine engine) throws ViatraQueryException {
     return ChildPrivateOperationsMatcher.on(engine);
   }
   
-  public ChildPortSlotsOperationItemQuerySpecification getChildPortSlotsOperationItem() throws IncQueryException {
+  public ChildPortSlotsOperationItemQuerySpecification getChildPortSlotsOperationItem() throws ViatraQueryException {
     return ChildPortSlotsOperationItemQuerySpecification.instance();
   }
   
-  public ChildPortSlotsOperationItemMatcher getChildPortSlotsOperationItem(final IncQueryEngine engine) throws IncQueryException {
+  public ChildPortSlotsOperationItemMatcher getChildPortSlotsOperationItem(final ViatraQueryEngine engine) throws ViatraQueryException {
     return ChildPortSlotsOperationItemMatcher.on(engine);
   }
   
-  public ChildPortSlotsOperationQuerySpecification getChildPortSlotsOperation() throws IncQueryException {
+  public ChildPortSlotsOperationQuerySpecification getChildPortSlotsOperation() throws ViatraQueryException {
     return ChildPortSlotsOperationQuerySpecification.instance();
   }
   
-  public ChildPortSlotsOperationMatcher getChildPortSlotsOperation(final IncQueryEngine engine) throws IncQueryException {
+  public ChildPortSlotsOperationMatcher getChildPortSlotsOperation(final ViatraQueryEngine engine) throws ViatraQueryException {
     return ChildPortSlotsOperationMatcher.on(engine);
   }
   
-  public ChildCHRTSpecItemQuerySpecification getChildCHRTSpecItem() throws IncQueryException {
+  public ChildCHRTSpecItemQuerySpecification getChildCHRTSpecItem() throws ViatraQueryException {
     return ChildCHRTSpecItemQuerySpecification.instance();
   }
   
-  public ChildCHRTSpecItemMatcher getChildCHRTSpecItem(final IncQueryEngine engine) throws IncQueryException {
+  public ChildCHRTSpecItemMatcher getChildCHRTSpecItem(final ViatraQueryEngine engine) throws ViatraQueryException {
     return ChildCHRTSpecItemMatcher.on(engine);
   }
   
-  public ChildCHRTSpecQuerySpecification getChildCHRTSpec() throws IncQueryException {
+  public ChildCHRTSpecQuerySpecification getChildCHRTSpec() throws ViatraQueryException {
     return ChildCHRTSpecQuerySpecification.instance();
   }
   
-  public ChildCHRTSpecMatcher getChildCHRTSpec(final IncQueryEngine engine) throws IncQueryException {
+  public ChildCHRTSpecMatcher getChildCHRTSpec(final ViatraQueryEngine engine) throws ViatraQueryException {
     return ChildCHRTSpecMatcher.on(engine);
   }
   
-  public ChildPrivCHRTSpecItemQuerySpecification getChildPrivCHRTSpecItem() throws IncQueryException {
+  public ChildPrivCHRTSpecItemQuerySpecification getChildPrivCHRTSpecItem() throws ViatraQueryException {
     return ChildPrivCHRTSpecItemQuerySpecification.instance();
   }
   
-  public ChildPrivCHRTSpecItemMatcher getChildPrivCHRTSpecItem(final IncQueryEngine engine) throws IncQueryException {
+  public ChildPrivCHRTSpecItemMatcher getChildPrivCHRTSpecItem(final ViatraQueryEngine engine) throws ViatraQueryException {
     return ChildPrivCHRTSpecItemMatcher.on(engine);
   }
   
-  public ChildPrivCHRTSpecQuerySpecification getChildPrivCHRTSpec() throws IncQueryException {
+  public ChildPrivCHRTSpecQuerySpecification getChildPrivCHRTSpec() throws ViatraQueryException {
     return ChildPrivCHRTSpecQuerySpecification.instance();
   }
   
-  public ChildPrivCHRTSpecMatcher getChildPrivCHRTSpec(final IncQueryEngine engine) throws IncQueryException {
+  public ChildPrivCHRTSpecMatcher getChildPrivCHRTSpec(final ViatraQueryEngine engine) throws ViatraQueryException {
     return ChildPrivCHRTSpecMatcher.on(engine);
   }
 }
