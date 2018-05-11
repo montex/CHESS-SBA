@@ -1,23 +1,24 @@
-/*******************************************************************************
- *
- *  * Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
-
+/**
+ * 
+ *   Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
+ *  
+ *      
+ *   All rights reserved. This program and the accompanying materials
+ *   are made available under the terms of the Eclipse Public License v1.0
+ *   which accompanies this distribution, and is available at
+ *   http://www.eclipse.org/legal/epl-v10.html
+ *  
+ *  
+ */
 package org.polarsys.chess.instance.view;
 
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.incquery.runtime.api.IPatternMatch;
-import org.eclipse.incquery.runtime.api.impl.BasePatternMatch;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import java.util.Objects;
 import org.eclipse.uml2.uml.Comment;
+import org.eclipse.viatra.query.runtime.api.IPatternMatch;
+import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 import org.polarsys.chess.instance.view.util.ChildPrivCHRTSpecItemQuerySpecification;
 
 /**
@@ -30,7 +31,7 @@ import org.polarsys.chess.instance.view.util.ChildPrivCHRTSpecItemQuerySpecifica
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
  * @see ChildPrivCHRTSpecItemMatcher
- * @see ChildPrivCHRTSpecItemProcessor
+ *  @see ChildPrivCHRTSpecItemProcessor
  * 
  */
 @SuppressWarnings("all")
@@ -57,8 +58,8 @@ public abstract class ChildPrivCHRTSpecItemMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("chrtspecComment".equals(parameterName) ) {
-    	this.fChrtspecComment = (org.eclipse.uml2.uml.Comment) newValue;
-    	return true;
+        this.fChrtspecComment = (Comment) newValue;
+        return true;
     }
     return false;
   }
@@ -91,48 +92,42 @@ public abstract class ChildPrivCHRTSpecItemMatch extends BasePatternMatch {
   @Override
   public String prettyPrint() {
     StringBuilder result = new StringBuilder();
-    result.append("\"chrtspecComment\"=" + prettyPrintValue(fChrtspecComment)
-    );
+    result.append("\"chrtspecComment\"=" + prettyPrintValue(fChrtspecComment));
     return result.toString();
   }
   
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((fChrtspecComment == null) ? 0 : fChrtspecComment.hashCode());
-    return result;
+    return Objects.hash(fChrtspecComment);
   }
   
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
-    	return true;
-    if (!(obj instanceof ChildPrivCHRTSpecItemMatch)) { // this should be infrequent
-    	if (obj == null) {
-    		return false;
-    	}
-    	if (!(obj instanceof IPatternMatch)) {
-    		return false;
-    	}
-    	IPatternMatch otherSig  = (IPatternMatch) obj;
-    	if (!specification().equals(otherSig.specification()))
-    		return false;
-    	return Arrays.deepEquals(toArray(), otherSig.toArray());
+        return true;
+    if (obj == null) {
+        return false;
     }
-    ChildPrivCHRTSpecItemMatch other = (ChildPrivCHRTSpecItemMatch) obj;
-    if (fChrtspecComment == null) {if (other.fChrtspecComment != null) return false;}
-    else if (!fChrtspecComment.equals(other.fChrtspecComment)) return false;
-    return true;
+    if ((obj instanceof ChildPrivCHRTSpecItemMatch)) {
+        ChildPrivCHRTSpecItemMatch other = (ChildPrivCHRTSpecItemMatch) obj;
+        return Objects.equals(fChrtspecComment, other.fChrtspecComment);
+    } else {
+        // this should be infrequent
+        if (!(obj instanceof IPatternMatch)) {
+            return false;
+        }
+        IPatternMatch otherSig  = (IPatternMatch) obj;
+        return Objects.equals(specification(), otherSig.specification()) && Arrays.deepEquals(toArray(), otherSig.toArray());
+    }
   }
   
   @Override
   public ChildPrivCHRTSpecItemQuerySpecification specification() {
     try {
-    	return ChildPrivCHRTSpecItemQuerySpecification.instance();
-    } catch (IncQueryException ex) {
-     	// This cannot happen, as the match object can only be instantiated if the query specification exists
-     	throw new IllegalStateException (ex);
+        return ChildPrivCHRTSpecItemQuerySpecification.instance();
+    } catch (ViatraQueryException ex) {
+         // This cannot happen, as the match object can only be instantiated if the query specification exists
+         throw new IllegalStateException (ex);
     }
   }
   

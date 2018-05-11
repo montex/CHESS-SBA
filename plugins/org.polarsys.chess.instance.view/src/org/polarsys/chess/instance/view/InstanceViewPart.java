@@ -18,19 +18,19 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
-import org.eclipse.incquery.runtime.api.IModelConnectorTypeEnum;
-import org.eclipse.incquery.runtime.api.IQuerySpecification;
-import org.eclipse.incquery.runtime.api.IncQueryEngine;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
-import org.eclipse.incquery.tooling.ui.queryexplorer.adapters.EMFModelConnector;
-import org.eclipse.incquery.viewers.runtime.extensions.SelectionHelper;
-import org.eclipse.incquery.viewers.runtime.model.IncQueryViewerDataModel;
-import org.eclipse.incquery.viewers.runtime.model.ViewerDataFilter;
-import org.eclipse.incquery.viewers.runtime.model.ViewerState;
-import org.eclipse.incquery.viewers.runtime.model.ViewerState.ViewerStateFeature;
-import org.eclipse.incquery.viewers.runtime.sources.QueryLabelProvider;
-import org.eclipse.incquery.viewers.runtime.sources.TreeContentProvider;
+//import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
+//import org.eclipse.incquery.runtime.api.IModelConnectorTypeEnum;
+//import org.eclipse.incquery.runtime.api.IQuerySpecification;
+//import org.eclipse.incquery.runtime.api.IncQueryEngine;
+//import org.eclipse.incquery.runtime.exception.IncQueryException;
+//import org.eclipse.incquery.tooling.ui.queryexplorer.adapters.EMFModelConnector;
+//import org.eclipse.incquery.viewers.runtime.extensions.SelectionHelper;
+//import org.eclipse.incquery.viewers.runtime.model.IncQueryViewerDataModel;
+//import org.eclipse.incquery.viewers.runtime.model.ViewerDataFilter;
+//import org.eclipse.incquery.viewers.runtime.model.ViewerState;
+//import org.eclipse.incquery.viewers.runtime.model.ViewerState.ViewerStateFeature;
+//import org.eclipse.incquery.viewers.runtime.sources.QueryLabelProvider;
+//import org.eclipse.incquery.viewers.runtime.sources.TreeContentProvider;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -62,6 +62,21 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.uml2.uml.Slot;
+import org.eclipse.viatra.addon.viewers.runtime.extensions.SelectionHelper;
+import org.eclipse.viatra.addon.viewers.runtime.model.ViatraViewerDataModel;
+import org.eclipse.viatra.addon.viewers.runtime.model.ViewerDataFilter;
+import org.eclipse.viatra.addon.viewers.runtime.model.ViewerDataModel;
+import org.eclipse.viatra.addon.viewers.runtime.model.ViewerState;
+import org.eclipse.viatra.addon.viewers.runtime.model.ViewerState.ViewerStateFeature;
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.api.IModelConnectorTypeEnum;
+import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
+import org.eclipse.viatra.query.runtime.emf.EMFScope;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
+import org.eclipse.viatra.query.tooling.ui.queryexplorer.adapters.EMFModelConnector;
+import org.eclipse.viatra.addon.viewers.runtime.notation.Item;
+import org.eclipse.viatra.addon.viewers.runtime.sources.QueryLabelProvider;
+import org.eclipse.viatra.addon.viewers.runtime.sources.TreeContentProvider;
 import org.polarsys.chess.instance.view.util.ChildCHRTSpecItemQuerySpecification;
 import org.polarsys.chess.instance.view.util.ChildCHRTSpecQuerySpecification;
 import org.polarsys.chess.instance.view.util.ChildPortSlotsOperationItemQuerySpecification;
@@ -88,8 +103,8 @@ public class InstanceViewPart extends ViewPart implements IPartListener2, ISelec
 
 	TreeViewer viewer;
 	SelectionHelper helper = new SelectionHelper();
-	AdvancedIncQueryEngine engine = null;
-	EMFModelConnector modelConnector;
+	AdvancedViatraQueryEngine engine = null;
+	org.eclipse.viatra.query.tooling.ui.queryexplorer.adapters.EMFModelConnector modelConnector;
     IEditorPart editor;
 	ViewerState state;
 	
@@ -108,7 +123,7 @@ public class InstanceViewPart extends ViewPart implements IPartListener2, ISelec
 //				//SelectionChangedEvent event = new SelectionChangedEvent(this, selection);
 //				//fireSelectionChanged(event);
 //				Object first = ((TreeSelection) selection).getFirstElement();
-//				Object umlobj = ((org.eclipse.incquery.viewers.runtime.model.Item)  first).getParamObject();
+//				Object umlobj = ((org.eclipse.incquery.viewers.runtime.model.Item)  first).getParamEObject();
 //				
 //				List list = new ArrayList();
 //				list.add(umlobj);
@@ -131,7 +146,7 @@ public class InstanceViewPart extends ViewPart implements IPartListener2, ISelec
 				//change the current selection from incquery tree item to uml object, so the other views can properly switch their content. this is useful in order to have a tree selection fired, with the current selection and the path in the tree
 				ISelection selection = getSelection();
 				Object first = ((TreeSelection) selection).getFirstElement();
-				Object umlobj = ((org.eclipse.incquery.viewers.runtime.model.Item)  first).getParamObject();
+				Object umlobj = ((Item)  first).getParamEObject();
 				
 				List list = new ArrayList();
 				list.add(umlobj);
@@ -141,7 +156,7 @@ public class InstanceViewPart extends ViewPart implements IPartListener2, ISelec
 			}
 		};
 		viewer.setUseHashlookup(true);  
-        viewer.addSelectionChangedListener(helper.trickyListener);    
+        viewer.addSelectionChangedListener(helper.getTrickyListener());    
         editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
         if(editor != null)
         	loadModel(editor);
@@ -166,7 +181,7 @@ public class InstanceViewPart extends ViewPart implements IPartListener2, ISelec
         	        !viewer.getExpandedState(selectedNode));
         	  //navigate inst as hyperlink (to instance - papyrus bug)
         		try {
-        			EObject umlobj = (EObject) ((org.eclipse.incquery.viewers.runtime.model.Item)  selectedNode).getParamObject();
+        			EObject umlobj = (EObject) ((Item)  selectedNode).getParamEObject();
         			if (umlobj instanceof Slot){
         				//select the defining feature
         				umlobj = ((Slot)umlobj).getDefiningFeature();
@@ -191,36 +206,38 @@ public class InstanceViewPart extends ViewPart implements IPartListener2, ISelec
 	    viewer.getControl().setFocus();	 	
 	}
 
-	protected Collection<IQuerySpecification<?>> getSpecifications() throws IncQueryException {
+	protected Collection<IQuerySpecification<?>> getSpecifications() {
 		Builder<IQuerySpecification<?>> builder = ImmutableSet.<IQuerySpecification<?>>builder();
 		
-		builder.add(SwSystemCHGaResourcePlatformQuerySpecification.instance());
-		builder.add(SwSystemRootQuerySpecification.instance());
-		builder.add(SwSystemChild2ItemQuerySpecification.instance());
-		builder.add(SwSystemChild2QuerySpecification.instance());
-		builder.add(ChildPortSlotsQuerySpecification.instance());
-		builder.add(ChildPortSlotsOperationItemQuerySpecification.instance());
-		builder.add(ChildPortSlotsOperationQuerySpecification.instance());
-		builder.add(ChildCHRTSpecItemQuerySpecification.instance());
-		builder.add(ChildCHRTSpecQuerySpecification.instance());
-		builder.add(ChildPrivCHRTSpecItemQuerySpecification.instance());
-		builder.add(ChildPrivCHRTSpecQuerySpecification.instance());
-		builder.add(ChildPrivateOperationsQuerySpecification.instance());
+		try {
+			builder.add(SwSystemCHGaResourcePlatformQuerySpecification.instance());
+		
+			builder.add(SwSystemRootQuerySpecification.instance());
+			builder.add(SwSystemChild2ItemQuerySpecification.instance());
+			builder.add(SwSystemChild2QuerySpecification.instance());
+			builder.add(ChildPortSlotsQuerySpecification.instance());
+			builder.add(ChildPortSlotsOperationItemQuerySpecification.instance());
+			builder.add(ChildPortSlotsOperationQuerySpecification.instance());
+			builder.add(ChildCHRTSpecItemQuerySpecification.instance());
+			builder.add(ChildCHRTSpecQuerySpecification.instance());
+			builder.add(ChildPrivCHRTSpecItemQuerySpecification.instance());
+			builder.add(ChildPrivCHRTSpecQuerySpecification.instance());
+			builder.add(ChildPrivateOperationsQuerySpecification.instance());
+		} catch (ViatraQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return builder.build();
 	}
 	
 	
-	protected IncQueryEngine getEngine() {
+	protected AdvancedViatraQueryEngine getEngine() {
 		return engine;
 	}
 	
 	protected void engineUpdated() {
-        try {
-        	state = IncQueryViewerDataModel.newViewerState(engine, getSpecifications(), ViewerDataFilter.UNFILTERED, ImmutableSet.of(ViewerStateFeature.CONTAINMENT, ViewerStateFeature.EDGE));
-            bind(viewer, state);            
-        } catch (IncQueryException e) {
-            e.printStackTrace();
-        }
+        state = ViatraViewerDataModel.newViewerState(engine, getSpecifications(), ViewerDataFilter.UNFILTERED, ImmutableSet.of(ViewerStateFeature.CONTAINMENT, ViewerStateFeature.EDGE));
+		bind(viewer, state);
     }
 
 	@SuppressWarnings("deprecation")
@@ -251,8 +268,10 @@ public class InstanceViewPart extends ViewPart implements IPartListener2, ISelec
 		modelConnector.loadModel(IModelConnectorTypeEnum.RESOURCESET);
 		if(modelConnector.getKey() != null) {
 			try {
-				engine = (AdvancedIncQueryEngine) AdvancedIncQueryEngine.on(modelConnector.getKey().getNotifier());
-			} catch (IncQueryException e) {
+				//engine = (AdvancedViatraQueryEngine) AdvancedViatraQueryEngine.on(modelConnector.getKey().getNotifier());
+				EMFScope scope = new EMFScope(modelConnector.getNotifier(IModelConnectorTypeEnum.RESOURCESET));
+				engine = (AdvancedViatraQueryEngine) AdvancedViatraQueryEngine.on(scope);
+			} catch (ViatraQueryException e) {
 				e.printStackTrace();
 			}
 			modelConnector.getKey().setEngine(engine);
@@ -309,7 +328,7 @@ public class InstanceViewPart extends ViewPart implements IPartListener2, ISelec
 
 	@Override
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
-		helper.selectionChangedListeners.add(listener);
+		helper.addSelectionChangedListener(listener);
 		System.out.println(listener.toString());
 	}
 
@@ -320,7 +339,7 @@ public class InstanceViewPart extends ViewPart implements IPartListener2, ISelec
 
 	@Override
 	public void removeSelectionChangedListener(ISelectionChangedListener listener) {
-		helper.selectionChangedListeners.remove(listener);
+		helper.removeSelectionChangedListener(listener);
 	}
 
 	@Override

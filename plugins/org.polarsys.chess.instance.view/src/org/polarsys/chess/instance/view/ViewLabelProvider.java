@@ -13,9 +13,9 @@ package org.polarsys.chess.instance.view;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.incquery.viewers.runtime.model.Item;
-import org.eclipse.incquery.viewers.runtime.model.ViewerState;
-import org.eclipse.incquery.viewers.runtime.sources.QueryLabelProvider;
+
+//import org.eclipse.incquery.viewers.runtime.model.ViewerState;
+
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.papyrus.infra.emf.utils.ServiceUtilsForEObject;
@@ -25,6 +25,9 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.Stereotype;
+import org.eclipse.viatra.addon.viewers.runtime.model.ViewerState;
+import org.eclipse.viatra.addon.viewers.runtime.notation.Item;
+import org.eclipse.viatra.addon.viewers.runtime.sources.QueryLabelProvider;
 
 
 /**
@@ -35,7 +38,8 @@ import org.eclipse.uml2.uml.Stereotype;
 public class ViewLabelProvider extends QueryLabelProvider {
 	
 	public ViewLabelProvider(ViewerState state) {
-		super(state);
+		//TODO Display???
+		super(state, null);
 	}
 
 	/**
@@ -47,7 +51,7 @@ public class ViewLabelProvider extends QueryLabelProvider {
 	public Image getImage(Object element) {
 		if(element instanceof Item) {
 			Item item = (Item) element;
-			Object object = item.getParamObject();
+			Object object = item.getParamEObject();
 			
 			if (object instanceof Slot){
 				object = ((Slot)object).getDefiningFeature();
@@ -86,7 +90,7 @@ public class ViewLabelProvider extends QueryLabelProvider {
 	public String getText(Object element) {
 		if(element instanceof Item) {
 			Item item = (Item) element;
-			Object object = item.getParamObject();
+			Object object = item.getParamEObject();
 			
 			
 			//LabelProviderService service = (LabelProviderService) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(LabelProviderService.class);
