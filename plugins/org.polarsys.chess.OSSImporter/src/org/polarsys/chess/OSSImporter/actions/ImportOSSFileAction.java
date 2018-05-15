@@ -88,6 +88,7 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
  * @author cristofo
  *
  */
+//TODO some of the methods here should be moved to the EST plugins. The methods to move should be the ones that refer to the xtext elements (e.g. eu.fbk.tools.editor.oss.oss.Variable, eu.fbk.tools.editor.oss.oss.AbstractComponent,eu.fbk.tools.editor.oss.oss.Assertion )
 public class ImportOSSFileAction {
 
 	// The instance of this class
