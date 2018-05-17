@@ -70,6 +70,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	private String imageExtension;
 	private String docFormat;
 	private Package activePackage;
+	private boolean goAhead = true;
 
 	/**
 	 * Returns the nearest package containing the diagram.
@@ -96,11 +97,17 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();
 		activePackage = umlSelectedComponent.getNearestPackage();
+
+		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
+			goAhead = false;
+			return;
+		}
 		
 		parameterDialog = exportDialogUtils.getCompiledModelToDocumentDialog();
 		parameterDialog.open();
 
 		if (!parameterDialog.goAhead()) {
+			goAhead = false;
 			return;
 		}
 
@@ -111,15 +118,15 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 			imageExtension = ".pdf";
 		}
 
-		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
-			return;
-		}
-
 	}
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
+		if (!goAhead) {
+			return;
+		}
+		
 		OSS ossModel = ocraTranslatorService.exportRootComponentToOssModel(umlSelectedComponent, isDiscreteTime, monitor);
 
 		Display defaultDisplay = Display.getDefault();
