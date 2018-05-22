@@ -131,14 +131,19 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 
 		Display defaultDisplay = Display.getDefault();
 
-		documentGeneratorService = new DocumentGeneratorServiceFromOssModel(ossModel);
+		documentGeneratorService = new DocumentGeneratorServiceFromOssModel(ossModel, chessToOCRAModelTranslator, activePackage);
 		documentGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, imageExtension,
-				parameterDialog.getShowLeafComponents());
+				parameterDialog.getShowLeafComponents(), parameterDialog.getShowInputPorts(), 
+				parameterDialog.getShowOutputPorts(),parameterDialog.getShowSubComponents(), 
+				parameterDialog.getShowParameters(), parameterDialog.getShowUninterpretedFunctions(),
+				parameterDialog.getShowConnections(), parameterDialog.getShowInterfaceAssertions(), 
+				parameterDialog.getShowRefinementAssertions(), parameterDialog.getShowContracts());
 		DocumentGenerator documentGenerator = documentGeneratorService.createDocumentFile(currentProjectName, docFormat,
 				ossModel.getSystem(), monitor);
 
-		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension,
-				parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout());
+		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension
+				//parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout()
+				);
 
 		defaultDisplay.syncExec(new Runnable() {
 			@Override
