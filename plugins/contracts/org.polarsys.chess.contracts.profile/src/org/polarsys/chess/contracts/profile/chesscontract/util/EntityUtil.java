@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.uml2.uml.Package;
@@ -56,7 +55,9 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.FunctionBehavior;
+import org.eclipse.uml2.uml.LiteralInteger;
 import org.eclipse.uml2.uml.LiteralString;
+import org.eclipse.uml2.uml.LiteralUnlimitedNatural;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.OpaqueBehavior;
 import org.eclipse.uml2.uml.OpaqueExpression;
@@ -72,6 +73,7 @@ import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.Type;
 //import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.Vertex;
 import org.eclipse.uml2.uml.VisibilityKind;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
@@ -1453,7 +1455,7 @@ public class EntityUtil {
 		return parameter.getType();
 	}
 
-	public Integer getComponentInstanceMultiplicity(Element component) {
+	public String[] getComponentInstanceMultiplicity(Element component) {
 		if(isComponentInstance(component)){
 			return getAttributeMultiplicity((Property)component);
 		}
@@ -1461,13 +1463,31 @@ public class EntityUtil {
 		
 	}
 
-	public Integer getAttributeMultiplicity(Property attribute) {
-		int upperValue = ((Property) attribute).getUpper();
-		int lowerValue = ((Property) attribute).getLower();
-		if(upperValue==lowerValue){
-			return upperValue;
+	public String[] getAttributeMultiplicity(Property attribute) {
+		ValueSpecification upperValueSpecification = ((Property) attribute).getUpperValue();
+		ValueSpecification lowerValueSpecification = ((Property) attribute).getLowerValue();
+		
+		String upperValue = "";
+		String lowerValue = "";
+		
+		if(upperValueSpecification instanceof LiteralInteger){
+			upperValue = String.valueOf(((LiteralInteger)upperValueSpecification).getValue());
+		}else if(upperValueSpecification instanceof LiteralUnlimitedNatural){
+			upperValue = String.valueOf(((LiteralUnlimitedNatural)upperValueSpecification).getValue());
+		}else if(upperValueSpecification instanceof LiteralString){
+			upperValue = String.valueOf(((LiteralString)upperValueSpecification).getValue());
 		}
-		return null;
+		
+		if(lowerValueSpecification instanceof LiteralInteger){
+			lowerValue = String.valueOf(((LiteralInteger)lowerValueSpecification).getValue());
+		}else if(lowerValueSpecification instanceof LiteralUnlimitedNatural){
+			lowerValue = String.valueOf(((LiteralUnlimitedNatural)lowerValueSpecification).getValue());
+		}else if(lowerValueSpecification instanceof LiteralString){
+			lowerValue = String.valueOf(((LiteralString)lowerValueSpecification).getValue());
+		}
+		
+		String[] boundaries = {lowerValue,upperValue};
+		return boundaries;
 	}
 
 	
