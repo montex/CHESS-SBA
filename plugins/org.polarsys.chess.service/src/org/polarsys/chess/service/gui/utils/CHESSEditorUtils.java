@@ -307,76 +307,78 @@ public class CHESSEditorUtils {
 		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
 
 		try {
-			ServicesRegistry serviceRegistry = (ServicesRegistry)editor.getAdapter(ServicesRegistry.class);
-			final IPageManager pageMngr = serviceRegistry.getService(IPageManager.class);
-			TransactionalEditingDomain editingDom = (TransactionalEditingDomain) editor.getEditingDomain();
-			List<View> viewToDelete = new ArrayList<View>();
-		
-			final Map<CSSDiagramImpl, List<View>> mapDiagramViews= new HashMap<CSSDiagramImpl, List<View>>();
-			
-			CSSShapeImpl shape = null;
-			CSSConnectorImpl edge = null;
-			for( Object page : pageMngr.allPages()) {
-				if (page instanceof CSSDiagramImpl){
-					CSSDiagramImpl diag = (CSSDiagramImpl) page;
-					viewToDelete = new ArrayList<View>();
-					
-					//pageMngr also has a list of diagram coming from the applied profiles; we have to skip these diagrams
-					//TODO use a smart way to identify external diagram in place of the proxy reference
-					if ((diag.getElement() != null && diag.getElement().eIsProxy()) || (diag.getElement() != null && diag.getElement() instanceof Profile))
-						continue;
+			if(editor != null){
+				ServicesRegistry serviceRegistry = (ServicesRegistry)editor.getAdapter(ServicesRegistry.class);
+				final IPageManager pageMngr = serviceRegistry.getService(IPageManager.class);
+				TransactionalEditingDomain editingDom = (TransactionalEditingDomain) editor.getEditingDomain();
+				List<View> viewToDelete = new ArrayList<View>();
 
-					for (Object view : diag.getChildren()){
-						if (view instanceof CSSShapeImpl){
-							shape = (CSSShapeImpl) view;
-							if (shape.getElement() != null && shape.getElement().eIsProxy()){
-								viewToDelete.add(shape);
+				final Map<CSSDiagramImpl, List<View>> mapDiagramViews= new HashMap<CSSDiagramImpl, List<View>>();
+
+				CSSShapeImpl shape = null;
+				CSSConnectorImpl edge = null;
+				for( Object page : pageMngr.allPages()) {
+					if (page instanceof CSSDiagramImpl){
+						CSSDiagramImpl diag = (CSSDiagramImpl) page;
+						viewToDelete = new ArrayList<View>();
+
+						//pageMngr also has a list of diagram coming from the applied profiles; we have to skip these diagrams
+						//TODO use a smart way to identify external diagram in place of the proxy reference
+						if ((diag.getElement() != null && diag.getElement().eIsProxy()) || (diag.getElement() != null && diag.getElement() instanceof Profile))
+							continue;
+
+						for (Object view : diag.getChildren()){
+							if (view instanceof CSSShapeImpl){
+								shape = (CSSShapeImpl) view;
+								if (shape.getElement() != null && shape.getElement().eIsProxy()){
+									viewToDelete.add(shape);
+								}
+
+
 							}
-							
-							
+							checkNestedOrphanView ((View)view , viewToDelete);
 						}
-						checkNestedOrphanView ((View)view , viewToDelete);
-					}
-					
-					for (Object view : diag.getEdges()){
-						if (view instanceof CSSConnectorImpl){
-							edge = (CSSConnectorImpl) view;
-							if (edge.getElement() != null && edge.getElement().eIsProxy()){
-								viewToDelete.add(edge);
+
+						for (Object view : diag.getEdges()){
+							if (view instanceof CSSConnectorImpl){
+								edge = (CSSConnectorImpl) view;
+								if (edge.getElement() != null && edge.getElement().eIsProxy()){
+									viewToDelete.add(edge);
+								}
 							}
+
 						}
-						
+
+						if (!viewToDelete.isEmpty())
+							mapDiagramViews.put(diag, viewToDelete);
+
 					}
-					
-					if (!viewToDelete.isEmpty())
-						mapDiagramViews.put(diag, viewToDelete);
-						
+
 				}
-			    
-			}
-			
-			if (!mapDiagramViews.isEmpty()) {
-			
-				editingDom.getCommandStack().execute(new RecordingCommand(editingDom) {
-					protected void doExecute() {
-						
-						for (CSSDiagramImpl diag : mapDiagramViews.keySet()){
-							for (View view : mapDiagramViews.get(diag)){
-								if (view instanceof CSSShapeImpl){
-									//use econtainer in case of nested views (like parts in composite diagrams)
-									((View) view.eContainer()).removeChild(view);
+
+				if (!mapDiagramViews.isEmpty()) {
+
+					editingDom.getCommandStack().execute(new RecordingCommand(editingDom) {
+						protected void doExecute() {
+
+							for (CSSDiagramImpl diag : mapDiagramViews.keySet()){
+								for (View view : mapDiagramViews.get(diag)){
+									if (view instanceof CSSShapeImpl){
+										//use econtainer in case of nested views (like parts in composite diagrams)
+										((View) view.eContainer()).removeChild(view);
+									}
+									if (view instanceof CSSConnectorImpl){
+										view.setVisible(false);
+										diag.removeEdge((CSSConnectorImpl)view);
+									}
 								}
-								if (view instanceof CSSConnectorImpl){
-									view.setVisible(false);
-									diag.removeEdge((CSSConnectorImpl)view);
-								}
+
 							}
-						
+
 						}
-						
-					}
-				});
-			
+					});
+
+				}
 			}
 		}catch (Exception e) {
 			Activator.error("Exception while trying to remove orphan views", e);
