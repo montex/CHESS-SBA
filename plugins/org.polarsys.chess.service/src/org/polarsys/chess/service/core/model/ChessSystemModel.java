@@ -805,12 +805,12 @@ public class ChessSystemModel implements AbstractSystemModel {
 	}
 
 	@Override
-	public int getComponentInstanceMultiplicity(Object component) {
+	public String[] getComponentInstanceMultiplicityBoundaries(Object component) {
 		return entityUtil.getComponentInstanceMultiplicity((Element) component);
 	}
 
 	@Override
-	public int getPortMultiplicity(Object port) {
+	public String[] getPortMultiplicityBoundaries(Object port) {
 		return entityUtil.getAttributeMultiplicity((Property) port);
 	}
 	
