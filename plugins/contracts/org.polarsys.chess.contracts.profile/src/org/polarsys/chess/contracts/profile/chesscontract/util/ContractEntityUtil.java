@@ -18,20 +18,23 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.papyrus.uml.tools.utils.OpaqueExpressionUtil;
 import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Constraint;
+import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Namespace;
-import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
+import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.ValueSpecification;
+import org.eclipse.uml2.uml.VisibilityKind;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
+import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.contracts.profile.chesscontract.util.Constants;
@@ -44,9 +47,10 @@ public class ContractEntityUtil {
 
 	private static ContractEntityUtil contractEntityUtilInstance;
 	private EntityUtil entityUtil = EntityUtil.getInstance();
+	private final StereotypeUtil stereotypeUtil = StereotypeUtil.getInstance();
 
 	private static final Logger logger = Logger.getLogger(ContractEntityUtil.class);
-	
+
 	public static ContractEntityUtil getInstance() {
 		if (contractEntityUtilInstance == null) {
 			contractEntityUtilInstance = new ContractEntityUtil();
@@ -56,8 +60,8 @@ public class ContractEntityUtil {
 
 	public String convertContractPropertyInStr(Property contractProperty) throws Exception {
 
-		Property baseProperty = contractProperty; 
-				//contractProperty.getBase_Property();
+		Property baseProperty = contractProperty;
+		// contractProperty.getBase_Property();
 
 		String basePropertyName = baseProperty.getName();
 		Class umlContract = (Class) baseProperty.getType();
@@ -68,12 +72,13 @@ public class ContractEntityUtil {
 		}
 
 		String contractName = umlContract.getName();
-		
-		if(contractName.contains(" ")){
+
+		if (contractName.contains(" ")) {
 			throw new Exception("The name of the contract '" + contractName + "' of '"
-					+ ((Class) entityUtil.getOwner(baseProperty)).getName() + "' has empty spaces. Please remove them from the name.");
+					+ ((Class) entityUtil.getOwner(baseProperty)).getName()
+					+ "' has empty spaces. Please remove them from the name.");
 		}
-		
+
 		String assume = getAssumeStrFromUmlContract(umlContract);
 		String guarantee = getGuaranteeStrFromUmlContract(umlContract);
 
@@ -111,15 +116,14 @@ public class ContractEntityUtil {
 
 	}
 
-	
-
 	public String getGuaranteeStrFromUmlContract(Class umlContract) {
 		FormalProperty guaranteeFormalProperty = getGuaranteeFromUmlContract(umlContract);
 		return entityUtil.getFormalPropertyStr(guaranteeFormalProperty);
 	}
 
 	public boolean isContract(Element umlElement) {
-		return ((umlElement instanceof Class) && (UMLUtil.getAppliedStereotype(umlElement, Constants.CONTRACT, false) != null));
+		return ((umlElement instanceof Class)
+				&& (UMLUtil.getAppliedStereotype(umlElement, Constants.CONTRACT, false) != null));
 	}
 
 	public void applyContractStereotype(Class umlElement) {
@@ -147,21 +151,21 @@ public class ContractEntityUtil {
 	private Constraint createFormalPropertyInContractOwner(String formalPropertyType, Class umlContract) {
 		Element umlContractOwner = entityUtil.getOwner(umlContract);
 		String propertyName = formalPropertyType + "_" + umlContract.getName();
-		
-		//FormalProperty assumeFormalProperty = createFormalProperty((Namespace) umlContractOwner, propertyName);
-		Constraint assumeFormalProperty = createFormalProperty((Namespace) umlContractOwner, propertyName);
-		
+
+		// FormalProperty assumeFormalProperty =
+		// createFormalProperty((Namespace) umlContractOwner, propertyName);
+		Constraint assumeFormalProperty = entityUtil.createFormalProperty((Namespace) umlContractOwner, propertyName);
+
 		LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
-		ValueSpecification vs = assumeFormalProperty.createSpecification("ConstraintSpec", null,
-				newLs.eClass());
+		ValueSpecification vs = assumeFormalProperty.createSpecification("ConstraintSpec", null, newLs.eClass());
 		((LiteralString) vs).setValue("TRUE");
 		assumeFormalProperty.setSpecification(vs);
 
 		return assumeFormalProperty;
 	}
-	
-	//private FormalProperty createFormalProperty
-	
+
+	// private FormalProperty createFormalProperty
+
 	public void createGuaranteeToUmlContract(final Class umlContract) {
 
 		if (entityUtil.getOwner(umlContract) != null) {
@@ -254,32 +258,19 @@ public class ContractEntityUtil {
 		Contract contract = getContract(umlContract);
 		contract.setGuarantee(guaranteeFormalProperty);
 	}
-
-	public Constraint createFormalProperty(final Namespace formalPropertyOwner, 
-			//Class umlContract,
-			//String prefix_name) {
-			String formalPropertyName) {
-
-		//Contract contract = getContract(umlContract);
-		//final String formalPropertyName = prefix_name + "_" + umlContract.getName();
-		final String propertyName = formalPropertyName;
+	/** 
+	 * Adds a contract refinement to a contract property.
+	 * @param contractProperty the property to be enriched
+	 * @param umlRefinement the refinement to add
+	 */
+	public void addContractRefinementToContractProperty(ContractProperty contractProperty, DataType umlRefinement) {
+		final Stereotype stereotype = umlRefinement.getAppliedStereotype(StereotypeUtil.CONTRACT_REFINEMENT);	
+		final ContractRefinement contractRefinement = (ContractRefinement) umlRefinement.getStereotypeApplication(stereotype);
 		
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(formalPropertyOwner);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-				Constraint umlNewConstraint = formalPropertyOwner.createOwnedRule(propertyName);
-				UMLUtils.applyStereotype(umlNewConstraint, Constants.FORMAL_PROP);
-			}
-		});
-		return formalPropertyOwner.getOwnedRule(propertyName);
-		//Constraint umlContraint = formalPropertyOwner.getOwnedRule(propertyName);
-		//return entityUtil.getFormalProperty(umlContraint);
-
+		// Add the new refinement to the list
+		contractProperty.getRefinedBy().add(contractRefinement);
 	}
-	
-	public void saveFormalProperty(final String guarantee_or_assumption, final String formalPropertyText,
+	/*public void saveFormalProperty(final String guarantee_or_assumption, final String formalPropertyText,
 			final Class umlContract) {
 
 		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlContract);
@@ -293,85 +284,82 @@ public class ContractEntityUtil {
 						.getValue(contractStereotype, guarantee_or_assumption);
 
 				if (guarantee_or_assumptionFormalProperty == null) {
-					if (guarantee_or_assumption.compareTo("Guarantee") == 0) {
+					if (guarantee_or_assumption.compareTo(CONTRACT_GUARANTEE) == 0) {
 						createGuaranteeToUmlContract(umlContract);
-					} else if (guarantee_or_assumption.compareTo("Assume") == 0) {
+					} else if (guarantee_or_assumption.compareTo(CONTRACT_ASSUME) == 0) {
 						createAssumptionToUmlContract(umlContract);
 					}
 					guarantee_or_assumptionFormalProperty = (FormalProperty) umlContract.getValue(contractStereotype,
 							guarantee_or_assumption);
 				}
-				saveFormalProperty(guarantee_or_assumptionFormalProperty.getBase_Constraint(), formalPropertyText);
-			}
-		});
-	}
-
-	public void saveFormalProperty(final Constraint umlConstraint, final String formalPropertyText) {
-		
-		logger.debug("saveFormalProperty: "+formalPropertyText);
-		
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlConstraint);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-
-				//Constraint umlConstraint = formalProperty.getBase_Constraint();
-				if(umlConstraint.getSpecification() instanceof LiteralString){
-					//logger.debug("saveFormalProperty LiteralString");
-				LiteralString litString = (LiteralString) umlConstraint.getSpecification();
-				litString.setValue(formalPropertyText);
-				umlConstraint.setSpecification(litString);
-				}else if(umlConstraint.getSpecification() instanceof OpaqueExpression){
-					//logger.debug("saveFormalProperty OpaqueExpression");
-					OpaqueExpression opaqueExpr = (OpaqueExpression) umlConstraint.getSpecification();	
-					//opaqueExpr.getLanguages().
-					setOpaqueExpressionBodyForLanguage(opaqueExpr, "OCRA", formalPropertyText);
-					
-				}
-			}
-		});
-	}
-	
-	/*public void saveFormalProperty(final FormalProperty formalProperty, final String formalPropertyText) {
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(formalProperty);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-
-				Constraint umlConstraint = formalProperty.getBase_Constraint();
-				if(umlConstraint.getSpecification() instanceof LiteralString){
-					logger.debug("saveFormalProperty LiteralString");
-				LiteralString litString = (LiteralString) umlConstraint.getSpecification();
-				litString.setValue(formalPropertyText);
-				umlConstraint.setSpecification(litString);
-				}else if(umlConstraint.getSpecification() instanceof OpaqueExpression){
-					logger.debug("saveFormalProperty OpaqueExpression");
-					OpaqueExpression opaqueExpr = (OpaqueExpression) umlConstraint.getSpecification();	
-					//opaqueExpr.getLanguages().
-					setOpaqueExpressionBodyForLanguage(opaqueExpr, "OCRA", formalPropertyText);
-					
-				}
+				entityUtil.setTextInUMLConstraint(guarantee_or_assumptionFormalProperty.getBase_Constraint(),
+						formalPropertyText);
 			}
 		});
 	}*/
 
-	private void setOpaqueExpressionBodyForLanguage(org.eclipse.uml2.uml.OpaqueExpression opaqueExpression, String language, String body) {
-		// checks both lists by size
-		OpaqueExpressionUtil.checkAndCorrectLists(opaqueExpression);
-		// checks if language exists, if not, creates one
-		if (!opaqueExpression.getLanguages().contains(language)) {
-			opaqueExpression.getLanguages().add(0,language);
-			opaqueExpression.getBodies().add(0,body);
-		} else {
-			// retrieve the index of the given language in the opaque Expression
-			int index = opaqueExpression.getLanguages().indexOf(language);
-			// sets the body at the given index in the list of bodies.
-			opaqueExpression.getBodies().set(index, body);
-		}
+	public void setTextToGuaranteeOrCreateGuarantee(final String formalPropertyText, final Class umlContract) {
+
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlContract);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
+				// rivedere questo codice
+				FormalProperty guaranteeFormalProperty = getGuaranteeFromUmlContract(umlContract);
+
+				if (guaranteeFormalProperty == null) {
+					createGuaranteeToUmlContract(umlContract);
+					guaranteeFormalProperty = getGuaranteeFromUmlContract(umlContract);
+				}
+				entityUtil.setTextInUMLConstraint(guaranteeFormalProperty.getBase_Constraint(), formalPropertyText);
+			}
+		});
 	}
-	
+
+	public void setTextToAssumeOrCreateAssume(final String formalPropertyText, final Class umlContract) {
+
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlContract);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
+				// rivedere questo codice
+				FormalProperty assumptionFormalProperty = getAssumeFromUmlContract(umlContract);
+
+				if (assumptionFormalProperty == null) {
+					createAssumptionToUmlContract(umlContract);
+					assumptionFormalProperty = getAssumeFromUmlContract(umlContract);
+				}
+				entityUtil.setTextInUMLConstraint(assumptionFormalProperty.getBase_Constraint(), formalPropertyText);
+			}
+		});
+	}
+
+	/*
+	 * public void saveFormalProperty(final FormalProperty formalProperty, final
+	 * String formalPropertyText) { TransactionalEditingDomain domain =
+	 * TransactionUtil.getEditingDomain(formalProperty);
+	 * domain.getCommandStack().execute(new RecordingCommand(domain) {
+	 * 
+	 * @Override protected void doExecute() {
+	 * 
+	 * Constraint umlConstraint = formalProperty.getBase_Constraint();
+	 * if(umlConstraint.getSpecification() instanceof LiteralString){
+	 * logger.debug("saveFormalProperty LiteralString"); LiteralString litString
+	 * = (LiteralString) umlConstraint.getSpecification();
+	 * litString.setValue(formalPropertyText);
+	 * umlConstraint.setSpecification(litString); }else
+	 * if(umlConstraint.getSpecification() instanceof OpaqueExpression){
+	 * logger.debug("saveFormalProperty OpaqueExpression"); OpaqueExpression
+	 * opaqueExpr = (OpaqueExpression) umlConstraint.getSpecification();
+	 * //opaqueExpr.getLanguages().
+	 * setOpaqueExpressionBodyForLanguage(opaqueExpr, "OCRA",
+	 * formalPropertyText);
+	 * 
+	 * } } }); }
+	 */
+
 	public EList<ContractProperty> getContractProperties(Class umlComponent) {
 		EList<ContractProperty> contractProperties = new BasicEList<ContractProperty>();
 		for (Property umlProperty : ((Class) umlComponent).getAttributes()) {
@@ -382,7 +370,7 @@ public class ContractEntityUtil {
 
 		return contractProperties;
 	}
-	
+
 	public EList<Property> getContractPropertiesAsUMLProperties(Class umlComponent) {
 		EList<Property> contractProperties = new BasicEList<Property>();
 		for (Property umlProperty : ((Class) umlComponent).getAttributes()) {
@@ -394,18 +382,144 @@ public class ContractEntityUtil {
 		return contractProperties;
 	}
 
-	
-
 	public boolean isContractProperty(Element umlProperty) {
-		return ((umlProperty instanceof Property) && (UMLUtil.getAppliedStereotype(umlProperty, Constants.CONTRACT_PROP, false) != null));
+		return ((umlProperty instanceof Property)
+				&& (UMLUtil.getAppliedStereotype(umlProperty, Constants.CONTRACT_PROP, false) != null));
 	}
-
-	
 
 	public ContractProperty getContractProperty(Property umlContractProperty) {
 		Stereotype contractPropertyStereotype = UMLUtil.getAppliedStereotype(umlContractProperty,
 				Constants.CONTRACT_PROP, false);
 		return (ContractProperty) umlContractProperty.getStereotypeApplication(contractPropertyStereotype);
 	}
+
+	/**
+	 * Creates a Contract element.
+	 * 
+	 * @param owner
+	 *            the Class that will contain the element
+	 * @param contractName
+	 *            the name of the new Contract
+	 * @return the newly created Class
+	 */
+	public Class createContract(Class owner, String contractName) {
+
+		logger.debug("\n\n\n Creating contract " + contractName + " for owner " + owner);
+		logger.debug("\n\n\n");
+
+		Class newUmlClass = UMLFactory.eINSTANCE.createClass();
+		Classifier newClass = owner.createNestedClassifier(contractName, newUmlClass.eClass());
+		newClass.applyStereotype(stereotypeUtil.contractStereotype);
+
+		logger.debug("\n\nCreated " + contractName + " Property\n\n");
+		return (Class) newClass;
+	}
+
+	/**
+	 * Creates and adds a Contract Property to the model.
+	 * 
+	 * @param owner
+	 *            the parent Class
+	 * @param elementName
+	 *            the name of the property to create
+	 * @param elementType
+	 *            the type of the property to create
+	 * @return the created Property
+	 */
+	public Property createContractProperty(Class owner, String elementName, Type elementType) {
+
+		logger.debug("\n\n\n Creating contract property " + elementName + " for owner " + owner + " with type "
+				+ elementType);
+		logger.debug("\n\n\n");
+
+		Property newUMLProperty = owner.createOwnedAttribute(elementName, elementType);
+		newUMLProperty.applyStereotype(stereotypeUtil.contractPropertyStereotype);
+
+		logger.debug("\n\nCreated " + elementName + " Property\n\n");
+		return newUMLProperty;
+	}
+
+	/**
+	 * Create a private formal property
+	 * 
+	 * @param owner
+	 *            the owner of the property
+	 * @param assertionName
+	 *            the name of the formal property
+	 * @param assertionText
+	 *            the text of the formal property
+	 * @return the newly created formal property
+	 */
+	public Constraint createRefinementFormalProperty(Class owner, String assertionName, String assertionText) {
+
+		final Constraint umlConstraint = entityUtil.createFormalProperty(owner, assertionName);
+		final LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
+		final ValueSpecification vs = umlConstraint.createSpecification("ConstraintSpec", null, newLs.eClass());
+		umlConstraint.setSpecification(vs);
+		umlConstraint.setVisibility(VisibilityKind.PRIVATE_LITERAL);
+
+		entityUtil.setTextInUMLConstraint(umlConstraint, assertionText);
+
+		return umlConstraint;
+	}
+
+	
+	/**
+	 * Removes a contract property from the list.
+	 * @param members the list of members
+	 * @param qualifiedElement the qualified name of the contract property to remove
+	 */
+	public void removeContractProperty(EList<ContractProperty> members, String qualifiedElement) {
+		for (ContractProperty element : members) {
+			if (element.getBase_Property().getQualifiedName().equals(qualifiedElement)) {
+				try {
+//					((Element) element.getBase_Property()).destroy();	//TODO: investigate this line!
+					entityUtil.deleteElementInTheModel(element.getBase_Property());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				members.remove(element);
+				break;
+			}
+		}
+	}
+	
+
+	/**
+	 * Removes a contract refinement from the list.
+	 * @param members the list of members
+	 * @param qualifiedElement the qualified name of the contract refinement to remove
+	 */
+	public void removeContractRefinement(EList<DataType> members, String qualifiedElement) {
+		entityUtil.removeNamedElement(members, qualifiedElement);
+	}
+
+
+	
+	public DataType createContractRefinement(String refinementName, Property refiningComponentInstance,ContractProperty refiningContractProperty,Class owner){
+		final DataType newUmlDataType = UMLFactory.eINSTANCE.createDataType();
+		final Classifier newClass = owner.createNestedClassifier(refinementName, newUmlDataType.eClass());
+		newClass.applyStereotype(stereotypeUtil.contractRefinementStereotype);
+		final ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(stereotypeUtil.contractRefinementStereotype);
+
+		// Set the correct links for the refinement
+		contractRefinement.setInstance(refiningComponentInstance); // The component instance containing the definition
+		contractRefinement.setContract(refiningContractProperty);  // The contract property that refines the contract
+				
+		logger.debug("\n\nCreated " + refinementName + " Contract Refinement\n\n");
+		return (DataType) newClass;
+	}
+	
+	/**
+	 *  Returns the contract refinement associated to the component.
+	 *  @param owner of the contract refinement
+	 *  @param refinementName the name of the contract refinement
+	 *  @return the UML contract refinement
+	 */
+	public DataType getExistingUmlContractRefinement(Class owner, String refinementName) {
+		return (DataType) owner.getNestedClassifier(refinementName);
+	}
+
+	
 
 }
