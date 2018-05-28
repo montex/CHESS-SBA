@@ -25,12 +25,12 @@ import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.DataType;
 import org.polarsys.chess.OSSImporter.exceptions.ImportException;
 import org.polarsys.chess.OSSImporter.utils.ChessElementsUtil;
+import org.polarsys.chess.OSSImporter.utils.StereotypeUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.contracts.profile.chesscontract.util.StereotypeUtil;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 
 import com.google.common.collect.Maps;
@@ -470,7 +470,7 @@ public class ImportOSSFileAction {
 				// contract property
 				final DataType umlRefinement = chessElementsUtil.getOrCreateContractRefinement(owner,
 						contractId.getComponentName(), contractId.getName());
-				contractEntityUtil.addContractRefinementToContractProperty(contractProperty, umlRefinement);
+				chessElementsUtil.addContractRefinementToContractProperty(contractProperty, umlRefinement);
 
 				// Store the new refinement
 				addedElements.add(umlRefinement);

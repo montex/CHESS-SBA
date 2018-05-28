@@ -29,7 +29,7 @@ import org.eclipse.uml2.uml.ParameterDirectionKind;
 import org.eclipse.uml2.uml.Type;
 import org.polarsys.chess.OSSImporter.exceptions.ImportException;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
-import org.polarsys.chess.contracts.profile.chesscontract.util.TypeUtil;
+
 import eu.fbk.tools.editor.basetype.baseType.BooleanType;
 import eu.fbk.tools.editor.basetype.baseType.BoundedArrayType;
 import eu.fbk.tools.editor.basetype.baseType.ContinuousType;
