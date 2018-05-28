@@ -12,7 +12,7 @@ package org.polarsys.chess.contracts.profile.chesscontract.util;
 
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.transaction.RecordingCommand;
@@ -20,7 +20,6 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Element;
@@ -28,13 +27,11 @@ import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Namespace;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
-import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.VisibilityKind;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
-import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.contracts.profile.chesscontract.util.Constants;
@@ -47,9 +44,8 @@ public class ContractEntityUtil {
 
 	private static ContractEntityUtil contractEntityUtilInstance;
 	private EntityUtil entityUtil = EntityUtil.getInstance();
-	private final StereotypeUtil stereotypeUtil = StereotypeUtil.getInstance();
-
-	private static final Logger logger = Logger.getLogger(ContractEntityUtil.class);
+	
+	//private static final Logger logger = Logger.getLogger(ContractEntityUtil.class);
 
 	public static ContractEntityUtil getInstance() {
 		if (contractEntityUtilInstance == null) {
@@ -258,18 +254,7 @@ public class ContractEntityUtil {
 		Contract contract = getContract(umlContract);
 		contract.setGuarantee(guaranteeFormalProperty);
 	}
-	/** 
-	 * Adds a contract refinement to a contract property.
-	 * @param contractProperty the property to be enriched
-	 * @param umlRefinement the refinement to add
-	 */
-	public void addContractRefinementToContractProperty(ContractProperty contractProperty, DataType umlRefinement) {
-		final Stereotype stereotype = umlRefinement.getAppliedStereotype(StereotypeUtil.CONTRACT_REFINEMENT);	
-		final ContractRefinement contractRefinement = (ContractRefinement) umlRefinement.getStereotypeApplication(stereotype);
-		
-		// Add the new refinement to the list
-		contractProperty.getRefinedBy().add(contractRefinement);
-	}
+	
 	/*public void saveFormalProperty(final String guarantee_or_assumption, final String formalPropertyText,
 			final Class umlContract) {
 
@@ -393,51 +378,7 @@ public class ContractEntityUtil {
 		return (ContractProperty) umlContractProperty.getStereotypeApplication(contractPropertyStereotype);
 	}
 
-	/**
-	 * Creates a Contract element.
-	 * 
-	 * @param owner
-	 *            the Class that will contain the element
-	 * @param contractName
-	 *            the name of the new Contract
-	 * @return the newly created Class
-	 */
-	public Class createContract(Class owner, String contractName) {
-
-		logger.debug("\n\n\n Creating contract " + contractName + " for owner " + owner);
-		logger.debug("\n\n\n");
-
-		Class newUmlClass = UMLFactory.eINSTANCE.createClass();
-		Classifier newClass = owner.createNestedClassifier(contractName, newUmlClass.eClass());
-		newClass.applyStereotype(stereotypeUtil.contractStereotype);
-
-		logger.debug("\n\nCreated " + contractName + " Property\n\n");
-		return (Class) newClass;
-	}
-
-	/**
-	 * Creates and adds a Contract Property to the model.
-	 * 
-	 * @param owner
-	 *            the parent Class
-	 * @param elementName
-	 *            the name of the property to create
-	 * @param elementType
-	 *            the type of the property to create
-	 * @return the created Property
-	 */
-	public Property createContractProperty(Class owner, String elementName, Type elementType) {
-
-		logger.debug("\n\n\n Creating contract property " + elementName + " for owner " + owner + " with type "
-				+ elementType);
-		logger.debug("\n\n\n");
-
-		Property newUMLProperty = owner.createOwnedAttribute(elementName, elementType);
-		newUMLProperty.applyStereotype(stereotypeUtil.contractPropertyStereotype);
-
-		logger.debug("\n\nCreated " + elementName + " Property\n\n");
-		return newUMLProperty;
-	}
+	
 
 	/**
 	 * Create a private formal property
@@ -496,19 +437,7 @@ public class ContractEntityUtil {
 
 
 	
-	public DataType createContractRefinement(String refinementName, Property refiningComponentInstance,ContractProperty refiningContractProperty,Class owner){
-		final DataType newUmlDataType = UMLFactory.eINSTANCE.createDataType();
-		final Classifier newClass = owner.createNestedClassifier(refinementName, newUmlDataType.eClass());
-		newClass.applyStereotype(stereotypeUtil.contractRefinementStereotype);
-		final ContractRefinement contractRefinement = (ContractRefinement) newClass.getStereotypeApplication(stereotypeUtil.contractRefinementStereotype);
-
-		// Set the correct links for the refinement
-		contractRefinement.setInstance(refiningComponentInstance); // The component instance containing the definition
-		contractRefinement.setContract(refiningContractProperty);  // The contract property that refines the contract
-				
-		logger.debug("\n\nCreated " + refinementName + " Contract Refinement\n\n");
-		return (DataType) newClass;
-	}
+	
 	
 	/**
 	 *  Returns the contract refinement associated to the component.
