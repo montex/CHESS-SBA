@@ -68,7 +68,7 @@ public class AddCHRtSpecHandler extends AbstractHandler {
 			if (!(obj instanceof Item))
 				return null;
 			Item item = (Item) obj;
-			obj = item.getParamObject();
+			obj = item.getParamEObject();
 			if (!(obj instanceof Operation))
 				return null;
 			final Operation op = (Operation) obj;
@@ -77,8 +77,8 @@ public class AddCHRtSpecHandler extends AbstractHandler {
 			if (!(obj instanceof Item))
 				return null;
 			item = (Item) obj;
-			if (item.getParamObject() instanceof Slot){
-				final Slot slot = (Slot) item.getParamObject();
+			if (item.getParamEObject() instanceof Slot){
+				final Slot slot = (Slot) item.getParamEObject();
 				final String occKind = this.getOccKind();
 				//assumption: slot is an instance of Port
 				if (! (slot.getDefiningFeature() instanceof Port))
@@ -109,8 +109,8 @@ public class AddCHRtSpecHandler extends AbstractHandler {
 						
 				});
 			}else
-				if (item.getParamObject() instanceof InstanceSpecification){
-					final InstanceSpecification instance = (InstanceSpecification) item.getParamObject();
+				if (item.getParamEObject() instanceof InstanceSpecification){
+					final InstanceSpecification instance = (InstanceSpecification) item.getParamEObject();
 					final String occKind = this.getOccKind();
 					//assumption: instance is an instance of Component
 					TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(op);
