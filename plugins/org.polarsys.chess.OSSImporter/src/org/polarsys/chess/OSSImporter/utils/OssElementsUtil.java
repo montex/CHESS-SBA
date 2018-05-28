@@ -60,18 +60,17 @@ import eu.fbk.tools.editor.oss.oss.SubComponent;
  * @author cristofo
  *
  */
-public class CHESSElementsUtil {
+public class OssElementsUtil {
 
 	// The instance of this class
-	private static CHESSElementsUtil classInstance;
+	private static OssElementsUtil classInstance;
 
 	private final TypeUtil typeUtil = TypeUtil.getInstance();
-	private final EntityUtil entityUtil = EntityUtil.getInstance();
 
 	// Logger for messages
-	private static final Logger logger = Logger.getLogger(CHESSElementsUtil.class);
+	private static final Logger logger = Logger.getLogger(OssElementsUtil.class);
 
-	private static final String DELEGATION_PREFIX = "Define_";
+	
 
 	// private static final String DELETE_COMMAND_ID =
 	// "org.eclipse.ui.edit.delete";
@@ -86,9 +85,9 @@ public class CHESSElementsUtil {
 	 * 
 	 * @return the instance of this class
 	 */
-	public static CHESSElementsUtil getInstance() {
+	public static OssElementsUtil getInstance() {
 		if (classInstance == null) {
-			classInstance = new CHESSElementsUtil();
+			classInstance = new OssElementsUtil();
 		}
 		return classInstance;
 	}
@@ -102,7 +101,7 @@ public class CHESSElementsUtil {
 	 *            the package where the types could be
 	 * @return the UML Type
 	 */
-	public Type getTypeFromDSLType(EObject dslType, Package pkg) {
+	public Type getOrCreateTypeFromOssType(EObject dslType, Package pkg) {
 
 		if (dslType instanceof BooleanType) {
 			logger.debug("BooleanType");
@@ -133,83 +132,23 @@ public class CHESSElementsUtil {
 			return getOrCreateEnumerationType((EnumType) dslType, pkg);
 		} else if (dslType instanceof FixedSizeArrayType) {
 			logger.debug("FixedSizeArrayType");
-			return getTypeFromDSLType(((FixedSizeArrayType) dslType).getType(), pkg);
+			return getOrCreateTypeFromOssType(((FixedSizeArrayType) dslType).getType(), pkg);
 		} else if (dslType instanceof BoundedArrayType) {
 			logger.debug("BoundedArrayType");
-			return getTypeFromDSLType(((BoundedArrayType) dslType).getType(), pkg);
+			return getOrCreateTypeFromOssType(((BoundedArrayType) dslType).getType(), pkg);
 		} else if (dslType instanceof UnboundedArrayType) {
 			logger.debug("UnboundedArrayType");
-			return getTypeFromDSLType(((UnboundedArrayType) dslType).getType(), pkg);
+			return getOrCreateTypeFromOssType(((UnboundedArrayType) dslType).getType(), pkg);
 		} else if (dslType instanceof WordArrayType) {
 			logger.debug("WordArrayType");
 		} else if (dslType instanceof ParameterizedArrayType) {
-			return getTypeFromDSLType(((ParameterizedArrayType) dslType).getType(), pkg);
+			return getOrCreateTypeFromOssType(((ParameterizedArrayType) dslType).getType(), pkg);
 		}
 		logger.error("Not able to map the requested DSL type!");
 		return null;
 	}
 
-	/**
-	 * Creates and adds a non-static Port to the model.
-	 * 
-	 * @param owner
-	 *            the parent Class
-	 * @param elementName
-	 *            the name of the port to create
-	 * @param elementType
-	 *            the type of the port to create
-	 * @param isInput
-	 *            tells the direction of the flow
-	 * @return the created Port
-	 * @throws ImportException
-	 */
-	public org.eclipse.uml2.uml.Port createNonStaticPort(Class owner, VariableId elementName, EObject elementType,
-			boolean isInput) throws ImportException {
-		final String portName = elementName.getName();
-		final Type portType = getTypeFromDSLType(elementType, owner.getNearestPackage());
-		final String[] multiplicityBounds = getMultiplicityBoundariesFromDSLType(elementType);
-
-		if (portType == null) {
-			throw new ImportException("Not able to map the requested type for port : " + portName);
-			// return null; // Create the port anyway, without type
-		}
-
-		org.eclipse.uml2.uml.Port umlPort = entityUtil.createNonStaticPort(owner, portName, portType,
-				multiplicityBounds, isInput);
-
-		logger.debug("\n\nCreated " + portName + " Port\n\n");
-		return umlPort;
-	}
-
 	
-
-	/**
-	 * Creates and adds a static Port to the model.
-	 * 
-	 * @param owner
-	 *            the parent Class
-	 * @param elementName
-	 *            the name of the port to create
-	 * @param elementType
-	 *            the type of the port to create
-	 * @return the created Port
-	 * @throws ImportException
-	 */
-	public org.eclipse.uml2.uml.Port createStaticPort(Class owner, VariableId elementName, EObject elementType)
-			throws ImportException {
-		final String portName = elementName.getName();
-		final Type portType = getTypeFromDSLType(elementType, owner.getNearestPackage());
-		final String[] multiplicityBounds = getMultiplicityBoundariesFromDSLType(elementType);
-
-		if (portType == null) {
-			throw new ImportException("Not able to map the requested type for port : " + portName);
-		}
-
-		org.eclipse.uml2.uml.Port umlPort = entityUtil.createStaticPort(owner, portName, portType, multiplicityBounds);
-		logger.debug("\n\nCreated " + portName + " Port\n\n");
-
-		return umlPort;
-	}
 
 	/**
 	 * Returns a name for the ContractProperty, deriving it from the Contract
@@ -229,24 +168,8 @@ public class CHESSElementsUtil {
 		}
 	}
 
-	/**
-	 * Returns the number or defined associations for the given package.
-	 * 
-	 * @param pkg
-	 *            the package to analyze
-	 * @return the number of associations found in package
-	 */
-	public int countPackageAssociations(Package pkg) {
-		int counter = 0;
 
-		EList<NamedElement> namedList = pkg.getOwnedMembers();
-		for (NamedElement namedElement : namedList) {
-			if (namedElement instanceof Association) {
-				counter++;
-			}
-		}
-		return counter;
-	}
+	
 
 	/**
 	 * Gets the expression string from the Expression constraint.
@@ -281,168 +204,7 @@ public class CHESSElementsUtil {
 		 */
 	
 
-	/**
-	 * Returns the delegation constraint with the given specs from a list
-	 * 
-	 * @param delegationConstraints
-	 *            the list of delegation constraints to scan
-	 * @param variable
-	 *            variable part
-	 * @param constraint
-	 *            costraint part
-	 * @return the delegation constraint, if found
-	 */
-	public Constraint getExistingDelegationConstraint(EList<Constraint> delegationConstraints, VariableId variable,
-			String constraintText) {
 
-		final String variableName = variable.getName();
-		final EList<String> componentNames = variable.getComponentNames();
-		//String constraintText = getConstraintText(constraint);
-
-		String prefixComponentName = null;
-
-		if (componentNames != null && componentNames.size() != 0) {
-			prefixComponentName = (componentNames.get(0) + ".");
-		}
-
-		// Text of the delegation constraint
-		final String formalPropertyText = entityUtil.createDelegationConstraintText(variableName, prefixComponentName,
-				constraintText);
-
-		// Loop on all the delegation constraints to find one with same text
-		for (Constraint delegationConstraint : delegationConstraints) {
-			final LiteralString specification = (LiteralString) delegationConstraint.getSpecification();
-			if (specification.getValue().equals(formalPropertyText)) {
-				return delegationConstraint;
-			}
-		}
-		return null;
-	}
-	
-	
-
-	/**
-	 * Creates and adds a Delegation Constraint to the model.
-	 * 
-	 * @param owner
-	 *            the parent Class
-	 * @param connection
-	 *            the Connection defining the delegation
-	 * @param variable
-	 *            the target of the connection
-	 * @param constraint
-	 *            the source of the connection
-	 * @return the created delegation constraint
-	 */
-	public Constraint createDelegationConstraint(Class owner, VariableId variable, String constraintText) {
-
-		final String variableName = variable.getName();
-		//String constraintText = getConstraintText(constraint);
-
-		final StringBuffer delegationName = new StringBuffer(DELEGATION_PREFIX);
-		final EList<String> componentNames = variable.getComponentNames();
-
-		String prefixSubComponentName = null;
-		if (componentNames != null && componentNames.size() != 0) {
-			prefixSubComponentName= (componentNames.get(0) + ".");
-			delegationName.append(prefixSubComponentName);
-		}
-
-		delegationName.append(variableName);
-
-		return entityUtil.createDelegationConstraint(owner, delegationName.toString(), variableName, prefixSubComponentName, constraintText);
-	}
-
-	
-
-	/**
-	 * Creates a parameter for the given FunctionBehavior
-	 * 
-	 * @param owner
-	 *            the owning FunctionBehavior
-	 * @param type
-	 *            the type of the parameter
-	 * @param isInput
-	 *            the direction of the parameter
-	 * @return the newly created Parameter
-	 */
-	public Parameter createFunctionBehaviorParameter(FunctionBehavior owner, EObject type, boolean isInput) {
-		final Type parameterType = getTypeFromDSLType(type, owner.getNearestPackage());
-		return entityUtil.createFunctionBehaviorParameter(owner, parameterType, isInput);
-	}
-
-	/**
-	 * Return the Parameter with the given speccs if present among a list of
-	 * Parameters
-	 * 
-	 * @param parameters
-	 *            the list of Parameters to scan
-	 * @param type
-	 *            the type of the Parameter
-	 * @param isInput
-	 *            the direction of the Parameter
-	 * @return the Parameter, if found
-	 */
-	public Parameter getExistingFunctionBehaviorParameter(EList<Parameter> parameters, SimpleType type,
-			boolean isInput) {
-		for (Parameter parameter : parameters) {
-			if (parameter.getType() == getTypeFromDSLType(type, parameter.getNearestPackage())) {
-				if ((isInput && parameter.getDirection() == ParameterDirectionKind.IN_LITERAL)
-						|| (!isInput && parameter.getDirection() == ParameterDirectionKind.OUT_LITERAL)) {
-					return parameter;
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Returns the Connector with the given ends if present among a list of
-	 * Connectors
-	 * 
-	 * @param connectors
-	 *            the list of Connectors to scan
-	 * @param variable
-	 *            the first end of the Connector
-	 * @param constraint
-	 *            the second end of the Connector
-	 * @return the Connector, if found
-	 */
-	public Connector getExistingConnector(EList<Connector> connectors, VariableId variable, Expression constraint) {
-
-		// Details of the connector ends
-		String variablePortOwner = null;
-		String variablePortName = null;
-		String constraintPortOwner = null;
-		String constraintPortName = null;
-
-		if (variable instanceof PortId) {
-
-			// Get the component name, should be at max one
-			EList<String> componentNames = ((PortId) variable).getComponentNames();
-			if (componentNames != null && componentNames.size() != 0) {
-				variablePortOwner = componentNames.get(0);
-			}
-			variablePortName = ((PortId) variable).getName();
-		} else {
-			return null;
-		}
-
-		if (constraint instanceof PortId) {
-
-			// Get the component name, should be at max one
-			EList<String> componentNames = ((PortId) constraint).getComponentNames();
-			if (componentNames != null && componentNames.size() != 0) {
-				constraintPortOwner = componentNames.get(0);
-			}
-			constraintPortName = ((PortId) constraint).getName();
-		} else {
-			return null;
-		}
-
-		return entityUtil.getExistingConnector(connectors, variablePortOwner, variablePortName, constraintPortOwner, constraintPortName);
-	}
-	
 	
 	public String[] getMultiplicityBoundariesFromDSLType(EObject elementType) {
 		// TODO Auto-generated method stub
