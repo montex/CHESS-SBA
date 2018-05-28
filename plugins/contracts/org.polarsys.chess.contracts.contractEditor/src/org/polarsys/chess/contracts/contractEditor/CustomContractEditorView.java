@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.polarsys.chess.contracts.contractEditor;
 
-import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -186,12 +185,12 @@ public class CustomContractEditorView extends ContractEditorView {
 
 	@Override
 	public void guaranteeEditorchanged(Object contract, String textChanged) {
-		contractEntityUtil.saveFormalProperty("Guarantee", textChanged, (Class) contract);
+		contractEntityUtil.setTextToGuaranteeOrCreateGuarantee(textChanged, (Class) contract);
 	}
 
 	@Override
 	public void assumptionEditorchanged(Object contract, String textChanged) {
-		contractEntityUtil.saveFormalProperty("Assume", textChanged, (Class) contract);
+		contractEntityUtil.setTextToAssumeOrCreateAssume(textChanged, (Class) contract);
 	}
 
 	private Constraint selectProperty(Object contract) {

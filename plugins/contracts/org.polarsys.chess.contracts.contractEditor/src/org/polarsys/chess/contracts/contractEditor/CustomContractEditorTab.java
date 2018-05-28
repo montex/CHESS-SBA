@@ -242,7 +242,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 */
 	@Override
 	public void guaranteeEditorchanged(Object contract, String textChanged) {
-		contractEntityUtil.saveFormalProperty("Guarantee", textChanged, (Class) contract);
+		contractEntityUtil.setTextToGuaranteeOrCreateGuarantee(textChanged, (Class) contract);
 	}
 
 	/*
@@ -254,7 +254,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 */
 	@Override
 	public void assumptionEditorchanged(Object contract, String textChanged) {
-		contractEntityUtil.saveFormalProperty("Assume", textChanged, (Class) contract);
+		contractEntityUtil.setTextToAssumeOrCreateAssume(textChanged, (Class) contract);
 	}
 
 	/*
