@@ -27,8 +27,6 @@ public class StartupClass implements IStartup {
 	@Override
 	public void earlyStartup() {
 		
-		System.out.println("earlyStartup invoked");
-		
 		final ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 		
 		List<Context> contexts = new java.util.ArrayList<Context>(configurationManager.getCustomizableContexts());

@@ -70,6 +70,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	private String imageExtension;
 	private String docFormat;
 	private Package activePackage;
+	private boolean goAhead = true;
 
 	/**
 	 * Returns the nearest package containing the diagram.
@@ -96,11 +97,17 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();
 		activePackage = umlSelectedComponent.getNearestPackage();
+
+		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
+			goAhead = false;
+			return;
+		}
 		
 		parameterDialog = exportDialogUtils.getCompiledModelToDocumentDialog();
 		parameterDialog.open();
 
 		if (!parameterDialog.goAhead()) {
+			goAhead = false;
 			return;
 		}
 
@@ -111,27 +118,32 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 			imageExtension = ".pdf";
 		}
 
-		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
-			return;
-		}
-
 	}
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
+		if (!goAhead) {
+			return;
+		}
+		
 		OSS ossModel = ocraTranslatorService.exportRootComponentToOssModel(umlSelectedComponent, isDiscreteTime, monitor);
 
 		Display defaultDisplay = Display.getDefault();
 
-		documentGeneratorService = new DocumentGeneratorServiceFromOssModel(ossModel);
+		documentGeneratorService = new DocumentGeneratorServiceFromOssModel(ossModel, chessToOCRAModelTranslator, activePackage);
 		documentGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, imageExtension,
-				parameterDialog.getShowLeafComponents());
+				parameterDialog.getShowLeafComponents(), parameterDialog.getShowInputPorts(), 
+				parameterDialog.getShowOutputPorts(),parameterDialog.getShowSubComponents(), 
+				parameterDialog.getShowParameters(), parameterDialog.getShowUninterpretedFunctions(),
+				parameterDialog.getShowConnections(), parameterDialog.getShowInterfaceAssertions(), 
+				parameterDialog.getShowRefinementAssertions(), parameterDialog.getShowContracts());
 		DocumentGenerator documentGenerator = documentGeneratorService.createDocumentFile(currentProjectName, docFormat,
 				ossModel.getSystem(), monitor);
 
-		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension,
-				parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout());
+		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension
+				//parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout()
+				);
 
 		defaultDisplay.syncExec(new Runnable() {
 			@Override

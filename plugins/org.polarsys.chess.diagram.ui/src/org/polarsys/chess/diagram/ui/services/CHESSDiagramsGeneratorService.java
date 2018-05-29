@@ -69,8 +69,9 @@ public class CHESSDiagramsGeneratorService {
 	private String directoryName;
 	private String imageExtension;
 
-	public void setParametersBeforeDiagramsGenerator(String directoryName, String imageExtension,
-			boolean showPortLabels, boolean automaticLabelLayout) {
+	public void setParametersBeforeDiagramsGenerator(String directoryName, String imageExtension
+//			,boolean showPortLabels, boolean automaticLabelLayout
+			) {
 
 		this.directoryName = directoryName;
 		this.imageExtension = imageExtension;
