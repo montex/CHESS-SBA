@@ -13,10 +13,10 @@ package org.polarsys.chess.diagramsCreator.layouts;
 import java.util.Collection;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.elk.conn.gmf.GmfLayoutConfigurationStore;
+//import org.eclipse.elk.conn.gmf.GmfLayoutConfigurationStore;
 import org.eclipse.elk.core.service.IDiagramLayoutConnector;
 import org.eclipse.elk.core.service.ILayoutSetup;
-import org.eclipse.elk.core.service.ILayoutConfigurationStore;
+//import org.eclipse.elk.core.service.ILayoutConfigurationStore;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
@@ -32,7 +32,7 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
 
-public class IBDLayoutSetup implements ILayoutSetup{
+public class IBDLayoutSetup implements ILayoutSetup {
 	
 	@Override
 	public boolean supports(Object object) {
@@ -40,17 +40,16 @@ public class IBDLayoutSetup implements ILayoutSetup{
 		if (object instanceof Collection) {
 			Collection<?> collection = (Collection<?>) object;
 			for (Object o : collection) {
-				if (isPapyrusEditPart(o)) {
+				if (isEditPart(o)) {
 					return true;
 				}
 			}
 			return false;
 		}
-
-		return getIBDDiagramEditor(object) != null || isPapyrusEditPart(object);
+		return getIBDDiagramEditor(object) != null || isEditPart(object);
 	}
 
-	protected boolean isPapyrusEditPart(Object o) {
+	protected boolean isEditPart(Object o) {
 		if (o instanceof IGraphicalEditPart) {
 			try {
 				return ServiceUtilsForEditPart.getInstance().getServiceRegistry((IGraphicalEditPart) o) != null;
@@ -73,7 +72,6 @@ public class IBDLayoutSetup implements ILayoutSetup{
 		if (activeEditor instanceof DiagramEditor && activeEditor instanceof InternalBlockDiagramForMultiEditor) {
 			return (DiagramEditor) activeEditor;
 		}
-
 		return null;
 	}
 
@@ -82,20 +80,20 @@ public class IBDLayoutSetup implements ILayoutSetup{
 	 */
 	@Override
 	public Injector createInjector(final Module defaultModule) {
-		return Guice.createInjector(Modules.override(defaultModule).with(new PapyrusLayoutModule()));
+		return Guice.createInjector(Modules.override(defaultModule).with(new IBDLayoutModule()));
 	}
 
 	/**
 	 * Guice module for the generic GMF connector.
 	 */
-	public static class PapyrusLayoutModule implements Module {
+	public static class IBDLayoutModule implements Module {
 
 		@Override
 		public void configure(final Binder binder) {
 			binder.bind(IDiagramLayoutConnector.class).to(IBDDiagramLayoutConnector.class);
-			binder.bind(ILayoutConfigurationStore.Provider.class).to(GmfLayoutConfigurationStore.Provider.class);
+			
+			// Uncomment the following to get the Layout tab
+//			binder.bind(ILayoutConfigurationStore.Provider.class).to(GmfLayoutConfigurationStore.Provider.class);
 		}
-
 	}
-
 }

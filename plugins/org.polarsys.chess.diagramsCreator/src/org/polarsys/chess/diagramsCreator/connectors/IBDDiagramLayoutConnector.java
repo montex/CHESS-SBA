@@ -27,7 +27,8 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public class IBDDiagramLayoutConnector extends GmfDiagramLayoutConnector {
 	
-	private static final double paddingTop = 30, paddingBottom = 50, paddingRight = 50, paddingLeft = 50;
+	private static final double topPad = 30;
+	private static final double sidePad = 50;
 
 	/**
 	 * Adjusts some parameters of the layout.
@@ -54,7 +55,7 @@ public class IBDDiagramLayoutConnector extends GmfDiagramLayoutConnector {
 //			graphElement.setProperty(CoreOptions.EDGE_ROUTING, EdgeRouting.POLYLINE);
 			
 			// Some padding between root element and inner elements
-			graphElement.setProperty(CoreOptions.PADDING, new ElkPadding(paddingTop, paddingRight, paddingBottom, paddingLeft));
+			graphElement.setProperty(CoreOptions.PADDING, new ElkPadding(topPad, sidePad, sidePad, sidePad));
 		
 			// Tries to keep input ports on the left side and output ports on the right side
 			graphElement.setProperty(CoreOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);			

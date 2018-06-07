@@ -56,7 +56,7 @@ public class CreateIBDMultipleHandler extends AbstractHandler {
 				if (entityUtil.isBlock(element) && !contractEntityUtil.isContract(element)) {
 					try {
 						final Diagram diagram = action.addIBD((Class) element);
-						action.populateDiagram(diagram, true);//FIXME: mettere un parametro
+						action.populateDiagram(diagram, false);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

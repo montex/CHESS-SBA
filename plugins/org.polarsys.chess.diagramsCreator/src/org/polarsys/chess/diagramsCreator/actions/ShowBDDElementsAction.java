@@ -59,7 +59,7 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.eclipse.gmf.runtime.diagram.ui.requests.DropObjectsRequest;
 
 /**
- * This class creates a Block Definition Diagram and populates it with elements
+ * This class creates a Block Definition Diagram and populates it with elements.
  * @author cristofo
  *
  */
