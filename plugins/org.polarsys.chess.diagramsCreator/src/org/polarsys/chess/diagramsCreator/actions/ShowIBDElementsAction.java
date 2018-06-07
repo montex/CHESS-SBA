@@ -69,7 +69,7 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUti
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
 /**
- * This class creates an Internal Block Diagram and populates it with elements
+ * This class creates an Internal Block Diagram and populates it with elements.
  * @author cristofo
  *
  */

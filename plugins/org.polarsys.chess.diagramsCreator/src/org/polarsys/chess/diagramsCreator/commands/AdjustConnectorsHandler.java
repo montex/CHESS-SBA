@@ -37,6 +37,12 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
+/**
+ * Class that adjusts some properties of the connectors. 
+ * No more used since the use of ELK and CSS.
+ * @author cristofo
+ *
+ */
 public class AdjustConnectorsHandler extends AbstractHandler {
 
 	/** Boolean flag that indicates whether or not the connectors names should be displayed */
