@@ -25,6 +25,7 @@ import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.DataType;
 import org.polarsys.chess.OSSImporter.exceptions.ImportException;
 import org.polarsys.chess.OSSImporter.utils.ChessElementsUtil;
+import org.polarsys.chess.OSSImporter.utils.OssTypeTranslator;
 import org.polarsys.chess.OSSImporter.utils.StereotypeUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
@@ -41,17 +42,18 @@ import eu.fbk.tools.editor.basetype.baseType.*;
 import eu.fbk.tools.editor.contract.contract.Assumption;
 import eu.fbk.tools.editor.contract.contract.Contract;
 import eu.fbk.tools.editor.contract.contract.Guarantee;
-import eu.fbk.tools.editor.contract.expression.expression.ExtendedExpression;
-import eu.fbk.tools.editor.contract.expression.expression.ParameterId;
-import eu.fbk.tools.editor.contract.expression.expression.PortId;
+import eu.fbk.tools.editor.contract.expression.expression.FullParameterId;
+import eu.fbk.tools.editor.contract.expression.expression.FullPortId;
+import eu.fbk.tools.editor.contract.expression.expression.IterativeCondition;
 import eu.fbk.tools.editor.contract.expression.expression.VariableId;
 import eu.fbk.tools.editor.oss.oss.SystemComponent;
 import eu.fbk.tools.editor.oss.oss.Variable;
 import eu.fbk.tools.editor.oss.oss.AbstractComponent;
 import eu.fbk.tools.editor.oss.oss.Assertion;
+import eu.fbk.tools.editor.oss.oss.ComplexType;
 import eu.fbk.tools.editor.oss.oss.Component;
 import eu.fbk.tools.editor.oss.oss.Connection;
-import eu.fbk.tools.editor.oss.oss.ContractId;
+import eu.fbk.tools.editor.oss.oss.FullContractId;
 import eu.fbk.tools.editor.oss.oss.InputPort;
 import eu.fbk.tools.editor.oss.oss.Interface;
 import eu.fbk.tools.editor.oss.oss.InterfaceInstance;
@@ -77,6 +79,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 
 /**
  * This class takes as input a file in OCRA format and creates the equivalent
@@ -97,10 +100,9 @@ public class ImportOSSFileAction {
 	private final EntityUtil entityUtil = EntityUtil.getInstance();
 	// FIXME think how to manage this class
 	private final StereotypeUtil stereotypeUtil = StereotypeUtil.getInstance();
-	//private final OssElementsUtil ossElementsUtil = OssElementsUtil.getInstance();
 	private final ChessElementsUtil chessElementsUtil = ChessElementsUtil.getInstance();
-	private static OSSModelUtil ossModelUtil = OSSModelUtil.getInstance();
-
+	private OSSModelUtil ossModelUtil = OSSModelUtil.getInstance();
+	private OssTypeTranslator ossTypeTranslator = OssTypeTranslator.getInstance();
 	// Will contain elements being added to the model, big enough
 	private final EList<Element> addedElements = new BasicEList<>(2000);
 
@@ -131,24 +133,6 @@ public class ImportOSSFileAction {
 	}
 
 	/**
-	 * Returns the list of contract refinements associated to a Class
-	 * 
-	 * @param owner
-	 *            the owner Class
-	 * @return the list of contract refinements
-	 */
-	private EList<DataType> getContractRefinementsOfClass(Class owner) {
-		EList<DataType> contractRefinements = new BasicEList<DataType>();
-
-		for (Classifier classifier : owner.getNestedClassifiers()) {
-			if (classifier instanceof DataType) {
-				contractRefinements.add((DataType) classifier);
-			}
-		}
-		return contractRefinements;
-	}
-
-	/**
 	 * Checks if the given expression refers to a function behavior
 	 * 
 	 * @param owner
@@ -161,14 +145,12 @@ public class ImportOSSFileAction {
 		if (expression instanceof VariableId) {
 			final VariableId variable = (VariableId) expression;
 
-			String variableOwner = null;
 			Class component = null;
 
 			// Get the name of the owner of the behavior, if present find the
 			// type
-			final EList<String> componentNames = variable.getComponentNames();
-			if (componentNames != null && componentNames.size() != 0) {
-				variableOwner = componentNames.get(0);
+			String variableOwner = ossModelUtil.getNearestComponentName(variable);
+			if (variableOwner != null) {
 
 				// Retrieve the component instance containing the behavior
 				final Property behaviorOwner = entityUtil.getUMLComponentInstance(owner, variableOwner);
@@ -186,7 +168,7 @@ public class ImportOSSFileAction {
 				// I'm the owner of the functionBehavior
 				component = owner;
 			}
-			return (component.getOwnedBehavior(variable.getName()) != null);
+			return (component.getOwnedBehavior(variable.getValue()) != null);
 		}
 		return false;
 	}
@@ -253,7 +235,7 @@ public class ImportOSSFileAction {
 		}
 
 		// Get all the contract refinements of the element
-		EList<DataType> existingContractRefinements = getContractRefinementsOfClass(owner);
+		EList<DataType> existingContractRefinements = entityUtil.getDataTypes(owner);
 
 		// Prepare the map to mark existing contract refinements
 		HashMap<String, Boolean> mapContractRefinements = Maps
@@ -284,7 +266,7 @@ public class ImportOSSFileAction {
 					parseSubComponent(dslRefInstance.getSubcomponent(), mapComponentInstances, owner);
 
 				} else if (containsConnection(dslRefInstance)) {
-
+					logger.debug("parse connection");
 					parseConnection(dslRefInstance.getConnection(), existingConnectors, existingDelegationConstraints,
 							mapConnectors, mapDelegationContraints, owner);
 
@@ -393,7 +375,7 @@ public class ImportOSSFileAction {
 
 		if (umlConstraint == null || !entityUtil.isFormalProperty(umlConstraint)) {
 			logger.debug("Formal property non found, creating one");
-			addedElements.add(chessElementsUtil.createUmlRefinementFormalProperty(assertionName, assertionText, owner));
+			addedElements.add(contractEntityUtil.createRefinementFormalProperty(owner, assertionName, assertionText));
 		} else {
 			if (entityUtil.isFormalProperty(umlConstraint)) {
 				logger.debug("Formal property already present");
@@ -425,13 +407,13 @@ public class ImportOSSFileAction {
 				.getContractRefinements(contractProperty);
 
 		// Loop on all the refinements to see if they already exist
-		final EList<ContractId> contractIds = refinement.getContractIds();
-		for (ContractId contractId : contractIds) {
+		final EList<FullContractId> contractIds = refinement.getFullContractIds();
+		for (FullContractId contractId : contractIds) {
 
 			// The component instance containing the refining
 			// contract
 			final Property refiningComponentInstance = entityUtil.getUMLComponentInstance(owner,
-					contractId.getComponentName());
+					ossModelUtil.getNearestComponentName(contractId));
 
 			// The component type where the contract property is
 			// defined
@@ -444,7 +426,8 @@ public class ImportOSSFileAction {
 
 			// Compose the name that the contract refinement should
 			// have
-			final String refinementName = contractId.getComponentName() + "." + refiningProperty.getName();
+			final String refinementName = ossModelUtil.getNearestComponentName(contractId) + "."
+					+ refiningProperty.getName();
 
 			// Check to see if the refinement is already linked to
 			// the contract property
@@ -468,9 +451,10 @@ public class ImportOSSFileAction {
 
 				// Create a new refinement and add it to the
 				// contract property
-				final DataType umlRefinement = chessElementsUtil.getOrCreateContractRefinement(owner,
-						contractId.getComponentName(), contractId.getName());
-				chessElementsUtil.addContractRefinementToContractProperty(contractProperty, umlRefinement);
+				final DataType umlRefinement = contractEntityUtil.getOrCreateContractRefinement(owner,
+						ossModelUtil.getNearestComponentName(contractId), contractId.getName(),
+						stereotypeUtil.contractRefinementStereotype);
+				contractEntityUtil.addContractRefinementToContractProperty(contractProperty, umlRefinement);
 
 				// Store the new refinement
 				addedElements.add(umlRefinement);
@@ -486,26 +470,50 @@ public class ImportOSSFileAction {
 		// CONNECTION processing
 		// final Connection connection = dslRefInstance.getConnection();
 		final VariableId variable = connection.getVariable();
-		final ExtendedExpression constraint = (ExtendedExpression) connection.getConstraint();
-		Connector connector = chessElementsUtil.getExistingConnector(existingConnectors, variable, constraint);
+		final Expression constraint = connection.getConstraint();
+		final IterativeCondition iterCondition = connection.getIterativeCondition();
+		if (ossModelUtil.isSimpleConnection(variable, constraint, iterCondition)) {
 
-		if (connector != null) {
-			logger.debug("connector already present");
+			// Details of the connector ends
+			String variablePortOwner = ossModelUtil.getNearestComponentName(variable);
+			String variablePortName = ossModelUtil.getPortName(variable);
+			String constraintPortOwner = ossModelUtil.getNearestComponentName((VariableId) constraint);
+			String constraintPortName = ossModelUtil.getPortName((VariableId) constraint);
 
-			// Set the flag to signal the connector is still used
-			mapConnectors.put(connector.getQualifiedName(), Boolean.TRUE);
-			// continue;
-			return;
+			Connector connector = entityUtil.getExistingConnector(existingConnectors, variablePortOwner,
+					variablePortName, constraintPortOwner, constraintPortName);
+
+			if (connector != null) {
+				logger.debug("connector already present");
+
+				// Set the flag to signal the connector is still used
+				mapConnectors.put(connector.getQualifiedName(), Boolean.TRUE);
+				// continue;
+				return;
+			} else {
+
+				logger.debug("connector is not present");
+				Property partWithPortOfConstraint = getPartWithPort((VariableId) constraint, owner);
+				final Class portOwnerOfConstraint = getPortOwner(partWithPortOfConstraint, owner);
+
+				Property partWithPortOfVariable = getPartWithPort((VariableId) variable, owner);
+				final Class portOwnerOfVariable = getPortOwner(partWithPortOfVariable, owner);
+
+				// Store the new connector
+				addedElements.add(entityUtil.createUmlConnector(constraintPortName, partWithPortOfConstraint,
+						portOwnerOfConstraint, variablePortName, partWithPortOfVariable, portOwnerOfVariable, owner));
+			}
 		} else
 		// It could be a delegation constraint, check it
-		if (isDelegationConstraint(variable,constraint,owner)) {
+		if (isDelegationConstraint(variable, constraint, owner)) {
 
 			Constraint delegationConstraint = null;
 			// String constraintText =
 			// chessElementsUtil.getConstraintText(constraint);
 			String constraintText = ossModelUtil.getOssElementAsString(constraint, true);
-			if ((delegationConstraint = chessElementsUtil.getExistingDelegationConstraint(existingDelegationConstraints,
-					variable, constraintText)) != null) {
+			String variableIdText = ossModelUtil.getOssElementAsString(variable, true);
+			if ((delegationConstraint = entityUtil.getExistingDelegationConstraint(existingDelegationConstraints,
+					variableIdText, constraintText)) != null) {
 				logger.debug("delegation constraint already present");
 
 				// Set the flag to signal the delegation constraint
@@ -515,42 +523,32 @@ public class ImportOSSFileAction {
 				return;
 			} else {
 				logger.debug("delegation constraint is not present");
-
+				logger.debug("variableIdText: " + variableIdText);
+				logger.debug("constraintText: " + constraintText);
 				// Create a delegation constraint, can be a
 				// LogicalExpression, IntegerLiteral,
 				// AddSubExpression, ...
-				addedElements.add(chessElementsUtil.createUmlDelegationConstraint(owner, variable, constraintText));
+				addedElements.add(entityUtil.createDelegationConstraint(owner, variableIdText, constraintText,
+						stereotypeUtil.delegationConstraintStereotype));
 				// continue;
 				return;
 			}
-		} else if (chessElementsUtil.isSimpleConnection(variable, constraint)) {
-
-			logger.debug("connector is not present");
-			final String constraintName = ((PortId) constraint.getExpression()).getName();
-			Property partWithPortOfConstraint = getPartWithPort((PortId) constraint.getExpression(), owner);
-			final Class portOwnerOfConstraint = getPortOwner(partWithPortOfConstraint, owner);
-
-			final String variableName = ((PortId) variable).getName();
-			Property partWithPortOfVariable = getPartWithPort((PortId) variable, owner);
-			final Class portOwnerOfVariable = getPortOwner(partWithPortOfVariable, owner);
-
-			// Store the new connector
-			addedElements.add(chessElementsUtil.createUmlConnector(constraintName, partWithPortOfConstraint,
-					portOwnerOfConstraint, variableName, partWithPortOfVariable, portOwnerOfVariable, owner));
-		} else if ((variable instanceof ParameterId) || (constraint.getExpression() instanceof ParameterId)) {
+		} else if ((variable instanceof FullParameterId) || (constraint instanceof FullParameterId)) {
 			// ParameterId not handled
 			addImportError("Found a connection with a ParameterId, don't know how to handle it!");
 		} else {
+			System.out.println("variable: " + variable);
+			System.out.println("constraint: " + constraint);
 			addImportError("Found a connetion with a" + variable + ", don't know how to handle it!");
 		}
 
 	}
 
-	boolean isDelegationConstraint(VariableId variable,ExtendedExpression constraint,Class owner){
-		return  !(constraint.getExpression() instanceof PortId)
-		|| (isFunctionBehavior(owner, variable) && isFunctionBehavior(owner, constraint.getExpression()));
+	private boolean isDelegationConstraint(VariableId variable, Expression constraint, Class owner) {
+		return !(constraint instanceof FullPortId)
+				|| (isFunctionBehavior(owner, variable) && isFunctionBehavior(owner, constraint));
 	}
-	
+
 	private Class getPortOwner(Property partWithPort, Class owner) {
 		Class portOwner = owner;
 		if (partWithPort != null) {
@@ -565,15 +563,12 @@ public class ImportOSSFileAction {
 		return portOwner;
 	}
 
-	private Property getPartWithPort(PortId constraint, Class owner) {
-		final EList<String> componentNames = (constraint).getComponentNames();
+	private Property getPartWithPort(VariableId portId, Class owner) {
 
 		Property partWithPort = null;
-
-		if (componentNames != null && componentNames.size() != 0) {
-			String portOwnerName = componentNames.get(0);
+		String portOwnerName = ossModelUtil.getNearestComponentName(portId);
+		if (portOwnerName != null) {
 			partWithPort = entityUtil.getUMLComponentInstance(owner, portOwnerName);
-
 		}
 		return partWithPort;
 	}
@@ -583,18 +578,25 @@ public class ImportOSSFileAction {
 
 		// SubComponent subComponent = dslRefInstance.getSubcomponent();
 		// SUB processing
-		final String subName = subComponent.getName();
-		final String subType = ossModelUtil.getSubComponentTypeName(subComponent);
-		final Type subComponentType = (Type) dslTypeToComponent.get(subType);
+		final String subName = ossModelUtil.getSubComponentName(subComponent);
 		logger.debug("\tsubcomponent name = " + subName);
+		// FIXME chekc type...and include multiplicity
+		final String subType = ossModelUtil.getSubComponentTypeName(subComponent);
 		logger.debug("\tsubcomponent type = " + subType);
+
+		String[] mulitplicityBoundaries = ossModelUtil
+				.getMultiplicityBoundariesFromOssSubComponentType(subComponent.getType());
+		logger.debug("\tsubcomponent mulitplicityBoundaries = " + mulitplicityBoundaries[0] + " , "
+				+ mulitplicityBoundaries[1]);
+		final Type subComponentType = (Type) dslTypeToComponent.get(subType);
 
 		// Retrieve the component instance from the owner, if any
 		final Property componentInstance = entityUtil.getSubComponentInstance(owner, subName);
 
 		if (componentInstance == null) {
 			logger.debug("componentInstance not found, creating one");
-			addedElements.add(chessElementsUtil.createUmlAssociation(subName, subComponentType, owner));
+			addedElements
+					.add(entityUtil.createUmlAssociation(subName, subComponentType, mulitplicityBoundaries, owner));
 		} else {
 			logger.debug("componentInstance already present");
 			if (!componentInstance.getType().equals(subComponentType)) {
@@ -602,7 +604,7 @@ public class ImportOSSFileAction {
 				// needs to be redrawn
 				addedElements.add(componentInstance.getAssociation());
 			}
-			chessElementsUtil.updateUmlAssociation(componentInstance, subComponent, subComponentType,
+			chessElementsUtil.updateUmlAssociation(componentInstance, subComponentType, mulitplicityBoundaries,
 					mapComponentInstances);
 		}
 
@@ -649,12 +651,13 @@ public class ImportOSSFileAction {
 		final Class owner = dslTypeToComponent.get(dslParentComponent.getType());
 
 		// Get all the existing ports of the element, static or not
-		final EList<NamedElement> existingPorts = (EList<NamedElement>) chessSystemModel.getNonStaticPorts(owner);
-		existingPorts.addAll((Collection<? extends NamedElement>) chessSystemModel.getStaticPorts(owner));
+		final EList<NamedElement> existingNonStaticPorts = (EList<NamedElement>) chessSystemModel
+				.getNonStaticPorts(owner);
+		existingNonStaticPorts.addAll((Collection<? extends NamedElement>) chessSystemModel.getStaticPorts(owner));
 
 		// Prepare the map to mark existing ports
-		final HashMap<String, Boolean> mapPorts = Maps.newHashMapWithExpectedSize(existingPorts.size());
-		for (NamedElement port : existingPorts) {
+		final HashMap<String, Boolean> mapPorts = Maps.newHashMapWithExpectedSize(existingNonStaticPorts.size());
+		for (NamedElement port : existingNonStaticPorts) {
 			mapPorts.put(port.getQualifiedName(), null);
 		}
 
@@ -704,10 +707,11 @@ public class ImportOSSFileAction {
 					final Variable dslVariable = dslIntInstance.getVariable();
 
 					if (dslVariable instanceof Port) {
-						parsePort(dslVariable, existingPorts, mapPorts, owner);
+						parsePort((Port) dslVariable, existingNonStaticPorts, mapPorts, owner);
 
 					} else if (dslVariable instanceof Parameter) {
-						parseParameter(dslVariable, mapFunctionBehaviors, existingPorts, mapPorts, owner);
+						parseParameter((Parameter) dslVariable, mapFunctionBehaviors, existingNonStaticPorts, mapPorts,
+								owner);
 
 					} else if (dslVariable instanceof Operation) {
 						addImportError("Found a OPERATION tag, don't know how to handle it!");
@@ -731,12 +735,22 @@ public class ImportOSSFileAction {
 			}
 		}
 
+		// Elements cleanup time
+		removeElements(mapPorts, existingNonStaticPorts, mapContractProperties, existingContractProperties,
+				mapFormalProperties, existingFormalProperties, mapFunctionBehaviors, existingFunctionBehaviors);
+
+	}
+
+	private void removeElements(HashMap<String, Boolean> mapPorts, EList<NamedElement> existingNonStaticPorts,
+			HashMap<String, Boolean> mapContractProperties, EList<ContractProperty> existingContractProperties,
+			HashMap<String, Boolean> mapFormalProperties, EList<Constraint> existingFormalProperties,
+			HashMap<String, Boolean> mapFunctionBehaviors, EList<Behavior> existingFunctionBehaviors) {
 		// Ports cleanup time
 		for (String qualifiedElement : mapPorts.keySet()) {
 			if (mapPorts.get(qualifiedElement) == null) {
 				// System.out.println("port " + qualifiedElement + " should be
 				// removed");
-				entityUtil.removePort(existingPorts, qualifiedElement);
+				entityUtil.removePort(existingNonStaticPorts, qualifiedElement);
 			}
 		}
 
@@ -832,8 +846,13 @@ public class ImportOSSFileAction {
 
 		if (umlContract == null) {
 			logger.debug("contract non found, creating one");
-			addedElements.add(chessElementsUtil.createUmlContract(contractName, ossAssumptionText, ossGuaranteeText,
-					hashFormalProperties, owner));
+			umlContract = chessElementsUtil.createUmlContract(contractName, ossAssumptionText, ossGuaranteeText,
+					hashFormalProperties, owner, stereotypeUtil.contractStereotype);
+			// Create a Contract Property
+			final String contractPropertyName = deriveContractPropertyNameFromContract(umlContract);
+			contractEntityUtil.createContractProperty(owner, contractPropertyName, (Type) umlContract,
+					stereotypeUtil.contractPropertyStereotype);
+			addedElements.add(umlContract);
 		} else {
 			logger.debug("Contract already present");
 			chessElementsUtil.updateUmlContract(umlContract, ossAssumptionText, ossGuaranteeText, mapContractProperties,
@@ -842,57 +861,103 @@ public class ImportOSSFileAction {
 
 	}
 
-	private void parsePort(Variable dslVariable, EList<NamedElement> existingPorts, HashMap<String, Boolean> mapPorts,
+	/**
+	 * Returns a name for the ContractProperty, deriving it from the Contract
+	 * type.
+	 * 
+	 * @param contract
+	 *            the contract from which it derives
+	 * @return a derived name, going lowercase
+	 */
+	private String deriveContractPropertyNameFromContract(Class contract) {
+		final String contractName = contract.getName();
+
+		if (contractName.length() > 0) {
+			return contractName.toLowerCase();
+		} else {
+			return ((Contract) contract).getName().toLowerCase();
+		}
+	}
+
+	private void parsePort(Port ossPort, EList<NamedElement> existingPorts, HashMap<String, Boolean> mapPorts,
 			Class owner) throws ImportException {
 		// PORT processing
-		final VariableId dslVariableID = dslVariable.getId();
-		final EObject dslVariableType = ((Port) dslVariable).getType();
-
+		// final VariableId dslVariableID = ossPort.getId();
+		final ComplexType ossPortType = ossPort.getType();
+		String portName = ossModelUtil.getPortName(ossPort);
+		logger.debug("port: " + ossPort);
+		logger.debug("portName: " + portName);
+		Type newPortType = ossTypeTranslator.getOrCreateTypeFromOssComplexType(ossPortType, owner.getNearestPackage());
+		if (newPortType == null) {
+			throw new ImportException("Not able to map the requested type for port : " + portName);
+			// return null; // Create the port anyway, without type
+		}
+		String[] newMultiplicityRange = ossModelUtil.getMultiplicityBoundariesFromOssComplexType(ossPortType);
 		// Version that updates the port
 		// Loop on all the ports to see if it is already existing
-		org.eclipse.uml2.uml.Port port = chessElementsUtil.getExistingUmlPort(dslVariableID.getName(), existingPorts);
+		org.eclipse.uml2.uml.Port port = entityUtil.getExistingUmlPort(portName, existingPorts);
 
 		if (port != null) {
-			chessElementsUtil.updateUmlPort(port, dslVariable, dslVariableType, owner, mapPorts);
+			if (ossPort instanceof InputPort) {
+				chessElementsUtil.updateUmlNonStaticPort(port, ossPort, newPortType, newMultiplicityRange,
+						FlowDirection.IN, stereotypeUtil.flowPortStereotype, mapPorts);
+			} else if (ossPort instanceof OutputPort) {
+				chessElementsUtil.updateUmlNonStaticPort(port, ossPort, newPortType, newMultiplicityRange,
+						FlowDirection.OUT, stereotypeUtil.flowPortStereotype, mapPorts);
+			}
 		} else {
 			logger.debug("Port not found, creating it");
 
-			if (dslVariable instanceof InputPort) {
-				addedElements
-						.add(chessElementsUtil.createUmlNonStaticPort(owner, dslVariableID, dslVariableType, true));
-			} else if (dslVariable instanceof OutputPort) {
-				addedElements
-						.add(chessElementsUtil.createUmlNonStaticPort(owner, dslVariableID, dslVariableType, false));
+			if (ossPort instanceof InputPort) {
+				addedElements.add(entityUtil.createNonStaticPort(owner, portName, newPortType, newMultiplicityRange,
+						true, stereotypeUtil.flowPortStereotype));
+			} else if (ossPort instanceof OutputPort) {
+				addedElements.add(entityUtil.createNonStaticPort(owner, portName, newPortType, newMultiplicityRange,
+						false, stereotypeUtil.flowPortStereotype));
 			}
 		}
 
 	}
 
-	private void parseParameter(Variable dslVariable, HashMap<String, Boolean> mapFunctionBehaviors,
-			EList<NamedElement> existingPorts, HashMap<String, Boolean> mapPorts, Class owner) throws ImportException {
+	private void parseParameter(Parameter dslVariable, HashMap<String, Boolean> mapFunctionBehaviors,
+			EList<NamedElement> existingNonStaticPorts, HashMap<String, Boolean> mapPorts, Class owner)
+			throws ImportException {
 
 		// PARAMETER processing
-		final VariableId dslVariableID = dslVariable.getId();
-		final EObject dslVariableType = (((Parameter) dslVariable).getType());
+		// final FullParameterId ossParameterID =
+		// (FullParameterId)dslVariable.getId();
+		final SimpleType ossParameterType = dslVariable.getType();
 
 		// Check if there are optional parameters to detect how to handle it
-		final EList<SimpleType> parameters = ((Parameter) dslVariable).getParameters();
+		final EList<SimpleType> parameters = dslVariable.getParameters();
 		if (parameters.size() != 0) {
-			parseParameterAsUmlFunctionBehaviour(dslVariableID, dslVariableType, parameters, mapFunctionBehaviors,
-					owner);
+			parseParameterAsUmlFunctionBehaviour(dslVariable.getId(), ossParameterType, parameters,
+					mapFunctionBehaviors, owner);
 		} else {
-			parseParameterAsUmlStaticPort(dslVariableID, dslVariableType, existingPorts, mapPorts, owner);
+			parseParameterAsUmlStaticPort(dslVariable.getId(), ossParameterType, existingNonStaticPorts, mapPorts,
+					owner);
 		}
 
 	}
 
-	private void parseParameterAsUmlStaticPort(VariableId dslVariableID, EObject dslVariableType,
-			EList<NamedElement> existingPorts, HashMap<String, Boolean> mapPorts, Class owner) throws ImportException {
+	private void parseParameterAsUmlStaticPort(String ossParameterName, SimpleType ossParameterType,
+			EList<NamedElement> existingStaticPorts, HashMap<String, Boolean> mapPorts, Class owner)
+			throws ImportException {
 		// Convert the parameter to a static port
 		// Check if the port is already present
-		String ossPortName = dslVariableID.getName();
-		//Type ossPortType = ossElementsUtil.getOrCreateTypeFromOssType(dslVariableType, owner.getNearestPackage());
-		org.eclipse.uml2.uml.Port port = chessElementsUtil.getExistingUmlPort(ossPortName, dslVariableType, existingPorts,owner.getNearestPackage());
+		// String ossParameterName =
+		// ossModelUtil.getParameterName(ossParameterId);
+		final String[] newMultiplicityRange = ossModelUtil.getMultiplicityBoundariesFromOssSimpleType(ossParameterType);
+		Type newParameterType = ossTypeTranslator.getOrCreateTypeFromOssSimpleType(ossParameterType,
+				owner.getNearestPackage());
+		if (newParameterType == null) {
+			throw new ImportException("Not able to map the requested type for port : " + ossParameterName);
+		}
+		// Type ossPortType =
+		// ossElementsUtil.getOrCreateTypeFromOssType(dslVariableType,
+		// owner.getNearestPackage());
+		org.eclipse.uml2.uml.Port staticPort = entityUtil.getExistingUmlPort(ossParameterName,
+				newParameterType.getName(), existingStaticPorts);
 
 		/*
 		 * for (Object object : existingPorts) { final org.eclipse.uml2.uml.Port
@@ -902,36 +967,47 @@ public class ImportOSSFileAction {
 		 * break; // Port found } }
 		 */
 
-		if (port != null) {
+		if (staticPort != null) {
 			logger.debug("Port already present");
-			chessElementsUtil.updateUmlPort(port, dslVariableType, mapPorts);
+			chessElementsUtil.updateUmlStaticPort(staticPort, newMultiplicityRange, mapPorts);
 		} else {
 			// Create the port and mark it
-			addedElements.add(chessElementsUtil.createUmlStaticPort(owner, dslVariableID, dslVariableType));
+			addedElements.add(entityUtil.createStaticPort(owner, ossParameterName, newParameterType,
+					newMultiplicityRange, stereotypeUtil.flowPortStereotype));
 			// continue;
 		}
 
 	}
 
-	private void parseParameterAsUmlFunctionBehaviour(VariableId dslVariableID, EObject dslVariableType,
-			EList<SimpleType> parameters, HashMap<String, Boolean> mapFunctionBehaviors, Class owner) {
+	private void parseParameterAsUmlFunctionBehaviour(String parameterName, SimpleType ossParameterType,
+			EList<SimpleType> parameters, HashMap<String, Boolean> mapFunctionBehaviors, Class owner)
+			throws ImportException {
 
 		// Check if the functionBehavior is already present
-		FunctionBehavior functionBehavior = (FunctionBehavior) owner.getOwnedBehavior(dslVariableID.getName());
+		FunctionBehavior functionBehavior = (FunctionBehavior) owner.getOwnedBehavior(parameterName);
+
+		// final String[] newMultiplicityRange =
+		// ossModelUtil.getMultiplicityBoundariesFromOssSimpleType(ossParameterType);
+		Type newParameterType = ossTypeTranslator.getOrCreateTypeFromOssSimpleType(ossParameterType,
+				owner.getNearestPackage());
+		EList<Type> newParameterTypes = ossTypeTranslator.getOrCreateTypesFromOssSimpleTypes(parameters,
+				owner.getNearestPackage());
+		if (newParameterType == null) {
+			throw new ImportException("Not able to map the requested type for port : " + parameterName);
+		}
 
 		if (functionBehavior == null) {
 			logger.debug("functionBehavior not found, creating one");
 			addedElements.add(
-					chessElementsUtil.createUmlFunctionBehaviour(dslVariableID, dslVariableType, parameters, owner));
+					entityUtil.createUmlFunctionBehaviour(parameterName, newParameterType, newParameterTypes, owner));
 		} else {
 			logger.debug("functionBehavior already present");
-			chessElementsUtil.updateUmlFunctionBehaviour(functionBehavior, dslVariableType, parameters,
+			chessElementsUtil.updateUmlFunctionBehaviour(functionBehavior, newParameterType, newParameterTypes,
 					mapFunctionBehaviors);
 		}
 
 	}
 
-	
 	/*
 	 * private SimpleType getSimpleType(EObject type){ if (type instanceof
 	 * ParameterizedArrayType) { return
@@ -1047,7 +1123,8 @@ public class ImportOSSFileAction {
 					logger.debug("block not present: " + blockQualifiedName);
 
 					// Add a new systemComponent to the package
-					systemComponent = chessElementsUtil.createSystemBlock(sysView, dslSystemComponent.getType());
+					systemComponent = entityUtil.createSystemBlock(sysView, dslSystemComponent.getType(),
+							stereotypeUtil.blockStereotype, stereotypeUtil.systemStereotype);
 
 					// Add the component to the list of changes
 					addedElements.add(systemComponent);
@@ -1078,7 +1155,8 @@ public class ImportOSSFileAction {
 						logger.debug("block not present: " + blockQualifiedName);
 
 						// Add a new block to the package
-						component = chessElementsUtil.createBlock(sysView, dslComponent.getType());
+						component = entityUtil.createBlock(sysView, dslComponent.getType(),
+								stereotypeUtil.blockStereotype);
 
 						// Add the component to the list of changes
 						addedElements.add(component);
