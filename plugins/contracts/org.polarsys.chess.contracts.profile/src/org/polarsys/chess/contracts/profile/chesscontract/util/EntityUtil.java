@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Parameter;
@@ -33,6 +34,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -67,11 +69,13 @@ import org.eclipse.uml2.uml.AggregationKind;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.ConnectableElement;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Constraint;
+import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
@@ -83,6 +87,7 @@ import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.OpaqueBehavior;
 import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.Port;
+import org.eclipse.uml2.uml.Profile;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.PseudostateKind;
@@ -98,6 +103,7 @@ import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.Vertex;
 import org.eclipse.uml2.uml.VisibilityKind;
+import org.eclipse.uml2.uml.resource.UMLResource;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
@@ -110,11 +116,11 @@ public class EntityUtil {
 
 	private static final Logger logger = Logger.getLogger(EntityUtil.class);
 
-	private static final String BLOCK = "SysML::Blocks::Block";
-	private static final String SYSTEM = "CHESSContract::System";
-	private static final String FLOW_Port = "SysML::PortAndFlows::FlowPort";
+	public static final String BLOCK = "SysML::Blocks::Block";
+	public static final String SYSTEM = "CHESSContract::System";
+	public static final String FLOW_Port = "SysML::PortAndFlows::FlowPort";
 	private static final String FLOW_Port_MARTE = "MARTE::MARTE_DesignModel::GCM::FlowPort";
-	private static final String BOUNDED_TYPE = "MARTE::MARTE_Annexes::VSL::DataTypes::BoundedSubtype";
+	public static final String BOUNDED_TYPE = "MARTE::MARTE_Annexes::VSL::DataTypes::BoundedSubtype";
 	private static final String COMP_TYPE = "CHESS::ComponentModel::ComponentType";
 	private static final String COMP_IMPL = "CHESS::ComponentModel::ComponentImplementation";
 	private static final String SYSVIEW = "CHESS::Core::CHESSViews::SystemView";
@@ -129,29 +135,37 @@ public class EntityUtil {
 	private static final String MARTE_BOOLEAN_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Boolean";
 	private static final String MARTE_REAL_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Real";
 	private static final String MARTE_INTEGER_TYPE = "MARTE_Library::MARTE_PrimitivesTypes::Integer";
-
+	private static final String FORMAL_PROP = "CHESSContract::FormalProperty";
 	private static final String FAULTY_STATE_MACHINE = "CHESS::Dependability::ThreatsPropagation::ErrorModel";
+	public static final String DELEGATION_CONST = "CHESSContract::DelegationConstraint";
 
-	// private static final String ALLOC = "SysML::Allocations::Allocated";
+	// default names of created objects
+	private static final String DEFAULT_DELEGATION_PREFIX = "Define_";
+	private static final String DEFAULT_ASSOCIATION_NAME = "association";
+	private static final String DEFAULT_ENUMERATION_NAME = "Enumeration";
+	private static final String DEFAULT_SIGNAL_NAME = "Signal";
+	private static final String DEFAULT_CONNECTOR_NAME = "connector";
+	private static final String DEFAULT_DELEGATION_CONSTRAINT_LITERAL_STRING_NAME = "constraintSpec";
+	private static final String DEFAULT_PARAMETER_IN_NAME = "parameterIn";
+	private static final String DEFAULT_PARAMETER_OUT_NAME = "parameterOut";
+	private static final String DEFAULT_BOUNDEDTYPE_NAME = "BoundedInteger_";
 
-	// not yet used
-	// private static final String STRING_TYPE = "PrimitiveTypes::String";
-	// private static final String UNLIMITED_NAT_TYPE =
-	// "PrimitiveTypes::UnlimitedNatural";
+	// Library for UML primitive types
+	private final Model umlLibrary = (Model) loadPackage(URI.createURI(UMLResource.UML_PRIMITIVE_TYPES_LIBRARY_URI));
 
-	private static final String PARAMETER_IN_NAME = "parameterIn";
-	private static final String PARAMETER_OUT_NAME = "parameterOut";
+	// Library for CHESS types like continuous
+	private final Profile chessContractLibrary = (Profile) loadPackage(
+			URI.createURI("pathmap://CHESSContract/CHESSContract.profile.uml"));
 
-	private static EntityUtil entityUtil;
-	// private final TypeUtil typeUtil = TypeUtil.getInstance();
-	//private final StereotypeUtil stereotypeUtil = StereotypeUtil.getInstance();
-	private static ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+
+	private static EntityUtil entityUtilInstance;
 
 	public static EntityUtil getInstance() {
-		if (entityUtil == null) {
-			entityUtil = new EntityUtil();
+		if (entityUtilInstance == null) {
+			entityUtilInstance = new EntityUtil();
 		}
-		return entityUtil;
+		return entityUtilInstance;
 	}
 
 	public Model loadModel(String projectName, String fileName) {
@@ -165,6 +179,526 @@ public class EntityUtil {
 		return model;
 	}
 
+	/**
+	 * Loads a package from the given resource.
+	 * 
+	 * @param uri
+	 *            the URI of the resource to load
+	 * @return the retrieved package
+	 */
+	private static Package loadPackage(URI uri) {
+		Package package_ = null;
+
+		try {
+			final ResourceSet resourceSet = new ResourceSetImpl();
+			final Resource resource = resourceSet.getResource(uri, true);
+			package_ = (Package) EcoreUtil.getObjectByType(resource.getContents(), UMLPackage.Literals.PACKAGE);
+		} catch (WrappedException we) {
+			logger.error(we.getMessage());
+			System.exit(1);
+		}
+		return package_;
+	}
+
+	/**
+	 * Returns the primitive type from the standard primitive library.
+	 * 
+	 * @param name
+	 *            the name of the Type
+	 * @return the requested primitive type
+	 */
+	public Type getPrimitiveType(String name) {
+
+		// Get the correct type from the library
+		final Type type = umlLibrary.getOwnedType(name);
+
+		if (type != null) {
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			logger.debug("Type object'" + type + "' found.");
+			return type;
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the delegation constraint with the given specs from a list
+	 * 
+	 * @param delegationConstraints
+	 *            the list of delegation constraints to scan
+	 * @param variable
+	 *            variable part
+	 * @param constraint
+	 *            costraint part
+	 * @return the delegation constraint, if found
+	 */
+	public Constraint getExistingDelegationConstraint(EList<Constraint> delegationConstraints, String variableIdText,
+			String constraintText) {
+
+		// Text of the delegation constraint
+		final String formalPropertyText = createDelegationConstraintText(variableIdText, constraintText);
+
+		// Loop on all the delegation constraints to find one with same text
+		for (Constraint delegationConstraint : delegationConstraints) {
+			final LiteralString specification = (LiteralString) delegationConstraint.getSpecification();
+			if (specification.getValue().equals(formalPropertyText)) {
+				return delegationConstraint;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Return the Parameter with the given speccs if present among a list of
+	 * Parameters
+	 * 
+	 * @param parameters
+	 *            the list of Parameters to scan
+	 * @param type
+	 *            the type of the Parameter
+	 * @param isInput
+	 *            the direction of the Parameter
+	 * @return the Parameter, if found
+	 */
+	public Parameter getExistingFunctionBehaviorParameter(EList<Parameter> parameters, Type functionBehaviourType,
+			boolean isInput) {
+		for (Parameter parameter : parameters) {
+			if (parameter.getType() == functionBehaviourType) {
+				if ((isInput && parameter.getDirection() == ParameterDirectionKind.IN_LITERAL)
+						|| (!isInput && parameter.getDirection() == ParameterDirectionKind.OUT_LITERAL)) {
+					return parameter;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the list of contract refinements associated to a Class
+	 * 
+	 * @param owner
+	 *            the owner Class
+	 * @return the list of contract refinements
+	 */
+	public EList<DataType> getDataTypes(Class owner) {
+		EList<DataType> contractRefinements = new BasicEList<DataType>();
+
+		for (Classifier classifier : owner.getNestedClassifiers()) {
+			if (classifier instanceof DataType) {
+				contractRefinements.add((DataType) classifier);
+			}
+		}
+		return contractRefinements;
+	}
+
+	public org.eclipse.uml2.uml.Port getExistingUmlPort(String portName, EList<NamedElement> existingPorts) {
+		for (Object object : existingPorts) {
+			final org.eclipse.uml2.uml.Port tmpPort = (org.eclipse.uml2.uml.Port) object;
+			if (tmpPort.getName().equals(portName)) {
+				return (org.eclipse.uml2.uml.Port) tmpPort;
+			}
+		}
+		return null;
+	}
+
+	public org.eclipse.uml2.uml.Port getExistingUmlPort(String portName, String typeName,
+			EList<NamedElement> existingPorts) {
+		for (Object object : existingPorts) {
+			final org.eclipse.uml2.uml.Port tmpPort = (org.eclipse.uml2.uml.Port) object;
+			if (tmpPort.getName().equals(portName) && tmpPort.getType().getName().equals(typeName)) {
+				return tmpPort;
+				// Port found
+			}
+		}
+		return null;
+	}
+
+	public Stereotype findStereotype(Package pkg, String stereotypeName) {
+
+		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, stereotypeName)) {
+			if (sub.getQualifiedName().equals(stereotypeName)) {
+				return sub;
+			}
+		}
+		return null;
+	}
+
+	public void updateUmlStaticPort(org.eclipse.uml2.uml.Port port, String[] newMultiplicityRange) {
+		final String[] multiplicityRange = getAttributeMultiplicity(port);
+
+		if (equalMultiplicityBoundaries(newMultiplicityRange, multiplicityRange)) {
+			setAttributeMultiplicity(port, newMultiplicityRange);
+		}
+	}
+
+	public void updateUmlNonStaticPort(Port port, Type newType, String[] newMultiplicityRange) {
+		if (!port.getType().getName().equals(newType.getName())) {
+			port.setType(newType);
+		}
+
+		// Update its multiplicity if needed
+		final String[] multiplicityRange = getAttributeMultiplicity(port);
+		if (equalMultiplicityBoundaries(newMultiplicityRange, multiplicityRange)) {
+			setAttributeMultiplicity(port, newMultiplicityRange);
+		}
+
+	}
+
+	public FunctionBehavior createUmlFunctionBehaviour(String functionBehaviourName, Type outputParameterType,
+			EList<Type> inputParametersTypes, Class owner) {
+
+		// Create an empty functionBehavior
+		FunctionBehavior functionBehavior = createFunctionBehavior(owner, functionBehaviourName);
+
+		createUmlFunctionBehaviorParameters(functionBehavior, inputParametersTypes, outputParameterType);
+
+		return functionBehavior;
+
+	}
+
+	public void createUmlFunctionBehaviorParameters(FunctionBehavior functionBehavior, EList<Type> inputParameterstypes,
+			Type outputParameterType) {
+		// Create the input parameters
+		for (Type parameterType : inputParameterstypes) {
+			createFunctionBehaviorParameter(functionBehavior, parameterType, true);
+		}
+
+		// Create the output parameter
+		createFunctionBehaviorParameter(functionBehavior, outputParameterType, false);
+	}
+
+	public Constraint createDelegationConstraint(Class owner, String variableIdText, String constraintText,
+			Stereotype delegationConstraintStereotype) {
+
+		String delegationName = DEFAULT_DELEGATION_PREFIX + variableIdText;
+
+		logger.debug("\n\n\n Creating delegation constraint " + delegationName + " for owner " + owner);
+		logger.debug("\n\n\n");
+
+		final Constraint newUMLConstraint = owner.createOwnedRule(delegationName.toString());
+		newUMLConstraint.applyStereotype(delegationConstraintStereotype);
+
+		final LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
+		literalString.setName(DEFAULT_DELEGATION_CONSTRAINT_LITERAL_STRING_NAME);
+
+		final String formalPropertyText = entityUtilInstance.createDelegationConstraintText(variableIdText,
+				constraintText);
+		literalString.setValue(formalPropertyText);
+		newUMLConstraint.setSpecification(literalString);
+
+		logger.debug("\n\nCreated " + delegationName + " Delegation Constraint\n\n");
+		return newUMLConstraint;
+	}
+
+	public Connector createUmlConnector(String constraintName, Property partWithPortOfConstraint,
+			Class portOwnerOfConstraint, String variableName, Property partWithPortOfVariable,
+			Class portOwnerOfVariable, Class owner) {
+		// Create the source end
+
+		// Create the name using an incremental value
+		final String connectorName = DEFAULT_CONNECTOR_NAME + (owner.getOwnedConnectors().size() + 1);
+		// Create a connector, but only after I'm sure it isn't
+		// a delegation constraint
+		Connector connector = createConnector(connectorName, owner);
+		logger.debug("Creating source end :" + constraintName);
+		ConnectorEnd connectorEndConstraint = createUmlConnectorEnd(connector, constraintName, partWithPortOfConstraint,
+				portOwnerOfConstraint);
+
+		// Create the target end
+		logger.debug("Creating source end :" + variableName);
+		ConnectorEnd connectorEndVariable = createUmlConnectorEnd(connector, variableName, partWithPortOfVariable,
+				portOwnerOfVariable);
+
+		// At last, add the connector to the owner
+		entityUtilInstance.addConnector(owner, connector);
+
+		return connector;
+
+	}
+
+	/**
+	 * Creates a Block element in the given package.
+	 * 
+	 * @param owner
+	 *            the Package that will contain the element
+	 * @param elementName
+	 *            the name of the new Block
+	 * @return the newly created Class
+	 */
+	public Class createBlock(Package owner, final String elementName, Stereotype blockStereotype) {
+
+		Class umlClass = owner.createOwnedClass(elementName, false);
+		umlClass.applyStereotype(blockStereotype);
+
+		// owner.createPackagedElement(elementName, newUMLClass.eClass()); This
+		// also works...
+		// owner.getPackagedElements().add(newUMLClass); // This works too!
+
+		logger.debug("\n\nCreated " + elementName + " Block\n\n");
+		return umlClass; // Return the first occurence
+	}
+
+	public Class createSystemBlock(Package owner, final String elementName, Stereotype blockStereotype,
+			Stereotype sytemblockStereotype) {
+		Class umlClass = createBlock(owner, elementName, blockStereotype);
+		umlClass.applyStereotype(sytemblockStereotype);
+		return umlClass;
+	}
+
+	private ConnectorEnd createUmlConnectorEnd(Connector connector, String sourcePort, Property partWithPort,
+			Class portOwner) {
+
+		// Get the port and set it
+		ConnectableElement role = portOwner.getOwnedPort(sourcePort, null);
+
+		if (role != null) {
+			return entityUtilInstance.createConnectorEnd(connector, partWithPort, role);
+		}
+		return null;
+	}
+
+	/**
+	 * Creates a new BoundedSubType as requested.
+	 * 
+	 * @param pkg
+	 *            the package where to create the Enumeration
+	 * @param typeName
+	 *            the name of the type
+	 * @param lowerBound
+	 *            the lower bound
+	 * @param upperBound
+	 *            the upper bound
+	 * @return the created type
+	 */
+	public Type createBoundedSubType(Package pkg, String typeName, int lowerBound, int upperBound,
+			Stereotype boundedTypeStereotype) {
+
+		// Create a data type to the component view and apply the stereotype
+		final Type dataType = pkg.createOwnedType(typeName, UMLPackage.Literals.DATA_TYPE);
+		// Stereotype stereotype = UMLUtils.applyStereotype(dataType,
+		// BOUNDED_TYPE);
+		dataType.applyStereotype(boundedTypeStereotype);
+
+		// Extract the stereotiped type and configure it
+		// BoundedSubtype boundedType = (BoundedSubtype)
+		// dataType.getStereotypeApplication(stereotype);
+		final BoundedSubtype boundedType = (BoundedSubtype) dataType.getStereotypeApplication(boundedTypeStereotype);
+		boundedType.setMinValue(String.valueOf(lowerBound));
+		boundedType.setMaxValue(String.valueOf(upperBound));
+		boundedType.setBaseType((DataType) getPrimitiveType("Integer"));
+		// boundedType.setBaseType((DataType) getUMLPrimitiveType("Integer"));
+		// // Alternative version
+
+		logger.debug("Type '" + dataType.getQualifiedName() + "' created.");
+		return dataType;
+	}
+
+	/**
+	 * Creates a new Enumeration as requested.
+	 * 
+	 * @param pkg
+	 *            the package where to create the Enumeration
+	 * @param enumType
+	 *            the type specifying the values
+	 * @return the created Enumeration
+	 */
+	public Enumeration createEnumerationFromEnumType(Package pkg, Set<String> enumValues) {
+
+		// Create the name using an incremental value
+		final String enumerationName = DEFAULT_ENUMERATION_NAME + (getEnumerations(pkg).size() + 1);
+
+		final Enumeration enumeration = pkg.createOwnedEnumeration(enumerationName);
+		// final Set<String> values = getListValuesForEnumType(enumType);
+		for (String string : enumValues) {
+			enumeration.createOwnedLiteral(string);
+		}
+
+		logger.debug("Type '" + enumeration.getQualifiedName() + "' created.");
+		return enumeration;
+	}
+
+	/**
+	 * Retrieves all the Enumerations owned by the package.
+	 * 
+	 * @param pkg
+	 *            the package to be searched
+	 * @return
+	 */
+	private EList<Enumeration> getEnumerations(Package pkg) {
+		final EList<Enumeration> enumerations = new BasicEList<Enumeration>();
+
+		final EList<Type> types = pkg.getOwnedTypes();
+		for (Type type : types) {
+			if (type instanceof Enumeration) {
+				enumerations.add((Enumeration) type);
+			}
+		}
+		return enumerations;
+	}
+
+	/**
+	 * Creates a Signal type in the given package.
+	 * 
+	 * @param pkg
+	 *            the package where to create the Enumeration
+	 * @return the newly created type
+	 */
+	public Signal createSignalType(Package pkg) {
+		final String signalName = DEFAULT_SIGNAL_NAME;
+
+		final Type type = pkg.createOwnedType(signalName, UMLPackage.Literals.SIGNAL);
+
+		logger.debug("Type '" + type.getQualifiedName() + "' created.");
+		return (Signal) type;
+	}
+
+	/**
+	 * Looks for a Signal already defined in the package.
+	 * 
+	 * @param pkg
+	 *            the package in which look for the Signal
+	 * @return the Signal already defined
+	 */
+	public Signal getExistingSignalType(Package pkg) {
+		final EList<Type> types = pkg.getOwnedTypes();
+
+		for (Type type : types) {
+			if (type instanceof Signal) {
+				return (Signal) type;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Looks for a specific enumeration among existing enumerations of the given
+	 * package.
+	 * 
+	 * @param pkg
+	 *            the package in which look for the Enumeration
+	 * @param enumType
+	 *            the enumeration to match
+	 * @return the enumeration already defined
+	 */
+	public Enumeration getExistingEnumerationForEnumType(Package pkg, Set<String> enumValues) {
+		final EList<Enumeration> enumerations = getEnumerations(pkg);
+
+		if (enumerations.size() > 0) {
+
+			for (Enumeration enumeration : enumerations) {
+				if (enumValues.equals(getListValuesForEnumeration(enumeration))) {
+					return enumeration;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns a Signal as requested (Only a Signal can be defined in the
+	 * package).
+	 * 
+	 * @param pkg
+	 *            the package where to look for or create the new type
+	 * @return the requested type
+	 */
+	public Type getOrCreateSignalType(Package pkg) {
+
+		// Look for existing Signal Type in the package
+		final Type type = getExistingSignalType(pkg);
+
+		if (type != null) {
+
+			// The type has been found in the package, use it
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			return type;
+		} else {
+			return createSignalType(pkg);
+		}
+	}
+
+	public Type getOrCreateEnumerationType(Set<String> enumValues, Package pkg) {
+
+		// Look for existing Enumerations in the package
+		final Type type = getExistingEnumerationForEnumType(pkg, enumValues);
+
+		if (type != null) {
+
+			// The type has been found in the package, use it
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			return type;
+		} else {
+			return createEnumerationFromEnumType(pkg, enumValues);
+		}
+	}
+
+	public Type getOrCreateBoundedSubType(Integer[] boundaries, Package pkg, Stereotype boundedTypeStereotype) {
+
+		int lowerBound = boundaries[0];
+		int upperBound = boundaries[1];
+		// Generate a suitable type name
+		final String typeName = DEFAULT_BOUNDEDTYPE_NAME + lowerBound + "_" + upperBound;
+
+		return getOrCreateBoundedSubType(typeName, pkg, lowerBound, upperBound, boundedTypeStereotype);
+	}
+
+	public Type getOrCreateBoundedSubType(String typeName, Package pkg, int lowerBound, int upperBound,
+			Stereotype boundedTypeStereotype) {
+		// Look for that type in the ComponentView
+		Type type = pkg.getOwnedType(typeName);
+		if (type != null) {
+
+			// The type has been found in the package, use it
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			return type;
+		} else {
+			return (Type) createBoundedSubType(pkg, typeName, lowerBound, upperBound, boundedTypeStereotype);
+		}
+	}
+
+	/**
+	 * Returns the Type Continuous.
+	 * 
+	 * @param name
+	 *            the name of the Type
+	 * @return the requested Type
+	 */
+	public Type getContinuousType(String name) {
+
+		// The Continuous type is defined here:
+		// CHESSContract::DataTypes::Continuous
+		// Get the correct package inside the profile
+		final Package dataTypes = chessContractLibrary.getNestedPackage("DataTypes");
+
+		// Get the correct type
+		final Type type = dataTypes.getOwnedType(name);
+
+		if (type != null) {
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			return type;
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the list of the values inside a given Enumeration.
+	 * 
+	 * @param enumeration
+	 *            the Enumeration to be analysed
+	 * @return the list of contained values
+	 */
+	private Set<String> getListValuesForEnumeration(Enumeration enumeration) {
+		final Set<String> enumValuesNames = new TreeSet<String>(); // Ordered
+																	// list of
+																	// values
+		// Set<String> enumValuesNames = new HashSet<String>(); // Original
+		// order of values
+
+		for (EnumerationLiteral enumLit : enumeration.getOwnedLiterals()) {
+			enumValuesNames.add(enumLit.getName());
+		}
+		return enumValuesNames;
+	}
+
 	public String getFormalPropertyStr(FormalProperty formalProperty) {
 
 		String str = null;
@@ -172,6 +706,35 @@ public class EntityUtil {
 			str = getConstraintBodyStr(formalProperty.getBase_Constraint());
 		}
 		return str;
+	}
+
+	public void updateUmlAssociation(Property componentInstance, Type type, String[] ossSubComponentMultiplicity) {
+		// The component instance is already present, update its
+		// type if needed
+		if (!componentInstance.getType().equals(type)) {
+			componentInstance.setType(type);
+
+			// Add the association to the list of changes, it
+			// needs to be redrawn
+			// addedElements.add(componentInstance.getAssociation());
+		}
+
+		String[] componentInstanceMultiplicity = (getComponentInstanceMultiplicity(componentInstance));
+
+		if (!equalMultiplicityBoundaries(componentInstanceMultiplicity, ossSubComponentMultiplicity)) {
+			setAttributeMultiplicity(componentInstance, ossSubComponentMultiplicity);
+		}
+
+	}
+
+	public void updateUmlConstraint(Constraint umlConstraint, String updatedText) {
+		final String formalPropertyText = getConstraintBodyStr(umlConstraint);
+
+		// If the expression is different, save it,
+		// otherwise go on
+		if (!updatedText.equals(formalPropertyText)) {
+			setTextInUMLConstraint(umlConstraint, updatedText);
+		}
 	}
 
 	public String getConstraintBodyStr(Constraint formalProperty) {
@@ -205,6 +768,9 @@ public class EntityUtil {
 	public Property getSubComponentInstance(Class owner, String componentName) {
 
 		for (Property umlProperty : (owner.getAttributes())) {
+			// FIXME remove println
+			System.out.println("umlProperty: " + umlProperty);
+			System.out.println("umlProperty.getname: " + umlProperty.getName());
 			if (umlProperty.getName().equals(componentName)
 					&& EntityUtil.getInstance().isComponentInstance(umlProperty)) {
 				return umlProperty;
@@ -222,7 +788,7 @@ public class EntityUtil {
 						.getObjectsByType(iterator2Collection(allElements), UMLPackage.eINSTANCE.getClass_());
 
 				for (Class c : classes) {
-					if (entityUtil.isSystem(c)) {
+					if (isSystem(c)) {
 						return c.eResource().getURIFragment(c);
 					}
 				}
@@ -358,7 +924,7 @@ public class EntityUtil {
 	public Property getUMLComponentInstance(Class umlComponent, String componentName) {
 
 		for (Property umlProperty : (umlComponent.getAttributes())) {
-			if (umlProperty.getName().equals(componentName) && entityUtil.isComponentInstance(umlProperty)) {
+			if (umlProperty.getName().equals(componentName) && isComponentInstance(umlProperty)) {
 				return umlProperty;
 			}
 		}
@@ -1331,7 +1897,7 @@ public class EntityUtil {
 
 	public boolean isFormalProperty(Element umlConstraint) {
 		if (umlConstraint instanceof Constraint) {
-			return UMLUtil.getAppliedStereotype(umlConstraint, Constants.FORMAL_PROP, false) != null;
+			return UMLUtil.getAppliedStereotype(umlConstraint, FORMAL_PROP, false) != null;
 		}
 		return false;
 	}
@@ -1361,13 +1927,13 @@ public class EntityUtil {
 	}
 
 	public FormalProperty getFormalProperty(Constraint umlConstraint) {
-		Stereotype formalPropertyStereotype = UMLUtil.getAppliedStereotype(umlConstraint, Constants.FORMAL_PROP, false);
+		Stereotype formalPropertyStereotype = UMLUtil.getAppliedStereotype(umlConstraint, FORMAL_PROP, false);
 		return (FormalProperty) umlConstraint.getStereotypeApplication(formalPropertyStereotype);
 	}
 
 	public boolean isDelegationConstraints(Element umlProperty) {
 		return ((umlProperty instanceof Constraint)
-				&& (UMLUtil.getAppliedStereotype(umlProperty, Constants.DELEGATION_CONST, false) != null));
+				&& (UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) != null));
 	}
 
 	public EList<Constraint> getDelegationConstraintsAsUMLConstraints(Element umlElement) {
@@ -1582,12 +2148,7 @@ public class EntityUtil {
 		return parameter;
 	}
 
-	
-
-	public Constraint createFormalProperty(final Namespace formalPropertyOwner,
-			// Class umlContract,
-			// String prefix_name) {
-			String formalPropertyName) {
+	public Constraint createFormalProperty(final Namespace formalPropertyOwner, String formalPropertyName) {
 
 		// Contract contract = getContract(umlContract);
 		// final String formalPropertyName = prefix_name + "_" +
@@ -1600,13 +2161,10 @@ public class EntityUtil {
 			@Override
 			protected void doExecute() {
 				Constraint umlNewConstraint = formalPropertyOwner.createOwnedRule(propertyName);
-				UMLUtils.applyStereotype(umlNewConstraint, Constants.FORMAL_PROP);
+				UMLUtils.applyStereotype(umlNewConstraint, FORMAL_PROP);
 			}
 		});
 		return formalPropertyOwner.getOwnedRule(propertyName);
-		// Constraint umlContraint =
-		// formalPropertyOwner.getOwnedRule(propertyName);
-		// return entityUtil.getFormalProperty(umlContraint);
 
 	}
 
@@ -1654,94 +2212,129 @@ public class EntityUtil {
 		// Create the name
 		String parameterName = null;
 		if (isInput) {
-			parameterName = PARAMETER_IN_NAME + (getOwnedInputParameters(owner).size() + 1); // Incremental
-																										// name
+			parameterName = DEFAULT_PARAMETER_IN_NAME + (getOwnedInputParameters(owner).size() + 1); // Incremental
+			// name
 		} else {
-			parameterName = PARAMETER_OUT_NAME; // There could be only one
-												// output
+			parameterName = DEFAULT_PARAMETER_OUT_NAME; // There could be only
+														// one
+			// output
 		}
 
 		return createFunctionBehaviorParameter(owner, parameterName, parameterType, isInput);
 	}
 
-	
-	public String createDelegationConstraintText(String variableName, String prefixComponentName,
-			String constraintText) {
-//FIXME qui errore
-		final StringBuffer delegationText = new StringBuffer();
-		if (prefixComponentName != null) {
-			delegationText.append(prefixComponentName + ".");
-		}
+	public org.eclipse.uml2.uml.Port createNonStaticPort(Class owner, String portName, Type portType,
+			String[] multiplicityBounds, boolean isInput, Stereotype flowportStereotype) {
+		org.eclipse.uml2.uml.Port umlPort = UMLFactory.eINSTANCE.createPort();
+		umlPort.setName(portName);
+		umlPort.setType(portType);
+		owner.getOwnedPorts().add(umlPort);
+		umlPort.applyStereotype(flowportStereotype);
+		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
+		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(flowportStereotype);
+		flowPort.setDirection(isInput ? FlowDirection.IN : FlowDirection.OUT);
 
-		delegationText.append(variableName + " := " + constraintText);
+		setAttributeMultiplicity(umlPort, multiplicityBounds);
+
+		// This version is nicer but a little slower
+		// org.eclipse.uml2.uml.Port umlPort = owner.createOwnedPort(portName,
+		// portType);
+		// Stereotype stereotype = UMLUtils.applyStereotype(umlPort, FLOWPORT);
+		// umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
+		// FlowPort flowPort = (FlowPort)
+		// umlPort.getStereotypeApplication(stereotype);
+		// flowPort.setDirection(isInput? FlowDirection.IN: FlowDirection.OUT);
+		logger.debug("\n\nCreated " + portName + " Port\n\n");
+		return umlPort;
+	}
+
+	public org.eclipse.uml2.uml.Port createStaticPort(Class owner, String portName, Type portType,
+			String[] multiplicityBounds, Stereotype flowPortStereotype) {
+
+		org.eclipse.uml2.uml.Port umlPort = UMLFactory.eINSTANCE.createPort();
+		umlPort.setName(portName);
+		umlPort.setType(portType);
+		owner.getOwnedPorts().add(umlPort);
+		umlPort.applyStereotype(flowPortStereotype);
+		umlPort.setAggregation(AggregationKind.get(AggregationKind.COMPOSITE));
+		FlowPort flowPort = (FlowPort) umlPort.getStereotypeApplication(flowPortStereotype);
+		flowPort.setDirection(FlowDirection.INOUT);
+		umlPort.setIsStatic(true);
+
+		setAttributeMultiplicity(umlPort, multiplicityBounds);
+
+		return umlPort;
+	}
+
+	public String createDelegationConstraintText(String variableIdTextName, String constraintText) {
+
+		final StringBuffer delegationText = new StringBuffer();
+
+		delegationText.append(variableIdTextName + " := " + constraintText);
 		return delegationText.toString();
 	}
-	
-	
-	
+
 	public Connector getExistingConnector(EList<Connector> connectors, String variablePortOwner,
-			String variablePortName,
-			String constraintPortOwner,
-			String constraintPortName) {
+			String variablePortName, String constraintPortOwner, String constraintPortName) {
 
-				
-				// Loop on all the connectors to find one with same values
-				for (Connector connector : connectors) {
-					final EList<ConnectorEnd> ends = connector.getEnds();
-					if (ends.size() == 2) {
+		// Loop on all the connectors to find one with same values
+		for (Connector connector : connectors) {
+			final EList<ConnectorEnd> ends = connector.getEnds();
+			if (ends.size() == 2) {
 
-						// Check the first end
-						final Property sourceOwner = ends.get(0).getPartWithPort(); // Should
-																					// be
-																					// the
-																					// owner
-																					// of
-																					// the
-																					// port
-						final org.eclipse.uml2.uml.Port sourcePort = (org.eclipse.uml2.uml.Port) ends.get(0).getRole(); // Should
-																														// be
-																														// the
-																														// port
+				// Check the first end
+				final Property sourceOwner = ends.get(0).getPartWithPort(); // Should
+																			// be
+																			// the
+																			// owner
+																			// of
+																			// the
+																			// port
+				final org.eclipse.uml2.uml.Port sourcePort = (org.eclipse.uml2.uml.Port) ends.get(0).getRole(); // Should
+																												// be
+																												// the
+																												// port
 
-						if (sourcePort.getName().equals(constraintPortName)) {
-							if (sourceOwner != null && sourceOwner.getName().equals(constraintPortOwner)) {
-							} else if (sourceOwner == null && constraintPortOwner == null) {
-							} else {
-								continue;
-							}
-						} else {
-							continue;
-						}
-
-						// One end is correct, go on with the second
-						final Property targetOwner = ends.get(1).getPartWithPort(); // Should
-																					// be
-																					// the
-																					// owner
-																					// of
-																					// the
-																					// port
-						final org.eclipse.uml2.uml.Port targetPort = (org.eclipse.uml2.uml.Port) ends.get(1).getRole(); // Should
-																														// be
-																														// the
-																														// port
-
-						if (targetPort.getName().equals(variablePortName)) {
-							if (targetOwner != null && targetOwner.getName().equals(variablePortOwner)) {
-							} else if (targetOwner == null && variablePortOwner == null) {
-							} else {
-								continue;
-							}
-						} else {
-							continue;
-						}
-
-						// Connector found
-						return connector;
+				if (sourcePort.getName().equals(constraintPortName)) {
+					if (sourceOwner != null && sourceOwner.getName().equals(constraintPortOwner)) {
+					} else if (sourceOwner == null && constraintPortOwner == null) {
+					} else {
+						continue;
 					}
+				} else {
+					continue;
 				}
-				return null;
+
+				// One end is correct, go on with the second
+				final Property targetOwner = ends.get(1).getPartWithPort(); // Should
+																			// be
+																			// the
+																			// owner
+																			// of
+																			// the
+																			// port
+				final org.eclipse.uml2.uml.Port targetPort = (org.eclipse.uml2.uml.Port) ends.get(1).getRole(); // Should
+																												// be
+																												// the
+																												// port
+
+				if (targetPort.getName().equals(variablePortName)) {
+					if (targetOwner != null && targetOwner.getName().equals(variablePortOwner)) {
+					} else if (targetOwner == null && variablePortOwner == null) {
+					} else {
+						continue;
+					}
+				} else {
+					continue;
+				}
+
+				// Connector found
+				return connector;
 			}
+		}
+		return null;
+	}
+
 	/**
 	 * Create a public formal property
 	 * 
@@ -1988,40 +2581,108 @@ public class EntityUtil {
 		removeNamedElement(members, qualifiedElement);
 	}
 
+	public Association createUmlAssociation(String subComponentName, Type type, String[] multiplicity, Class owner) {
+
+		final String associationName = DEFAULT_ASSOCIATION_NAME
+				+ (countPackageAssociations(owner.getNearestPackage()) + 1);
+		// I should create an Association between the elements
+		// and not a Component Instance!
+
+		return createAssociation(owner, associationName, subComponentName, type, multiplicity);
+
+	}
+
 	/**
-	 * Creates an association between the given owner and element. It will also create the relative
-	 * component instance inside the owner element.
-	 * @param owner the parent Class
-	 * @param elementName the name of the end element
-	 * @param elementType the type of the end element
+	 * Returns the number or defined associations for the given package.
+	 * 
+	 * @param pkg
+	 *            the package to analyze
+	 * @return the number of associations found in package
+	 */
+	private int countPackageAssociations(Package pkg) {
+		int counter = 0;
+
+		EList<NamedElement> namedList = pkg.getOwnedMembers();
+		for (NamedElement namedElement : namedList) {
+			if (namedElement instanceof Association) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	/**
+	 * Creates an association between the given owner and element. It will also
+	 * create the relative component instance inside the owner element.
+	 * 
+	 * @param owner
+	 *            the parent Class
+	 * @param elementName
+	 *            the name of the end element
+	 * @param elementType
+	 *            the type of the end element
 	 * @return the created Association
 	 */
-	public Association createAssociation(Class owner,  String associationName,String elementName, Type elementType) {
-		
+	public Association createAssociation(Class owner, String associationName, String elementName, Type elementType,
+			String[] multiplicity) {
+
 		// Create the name using an incremental value
-		//final String associationName = ASSOCIATION_NAME + (countPackageAssociations(owner.getNearestPackage()) + 1);
+		// final String associationName = ASSOCIATION_NAME +
+		// (countPackageAssociations(owner.getNearestPackage()) + 1);
 
 		logger.debug("\n\n\n Creating association " + associationName + " for owner " + owner);
-		logger.debug("elementName = " + elementName + " with type " + elementType);
+		logger.debug("elementName = " + elementName + " with type " + elementType.getName() + " [" + multiplicity[0]
+				+ "," + multiplicity[1] + "]");
 		logger.debug("\n\n\n");
-	
-		// Create the association and adds it to the owning package
-		final Association association = owner.createAssociation(
-				true, AggregationKind.get(AggregationKind.COMPOSITE), elementName, 1, 1, elementType, 
-				false, AggregationKind.get(AggregationKind.NONE), owner.getName().toLowerCase(), 1, 1);
 
-		//TODO add multiplicity
-		
+		// Create the association and adds it to the owning package
+		final Association association = owner.createAssociation(true, AggregationKind.get(AggregationKind.COMPOSITE),
+				elementName, 1, 1, elementType, false, AggregationKind.get(AggregationKind.NONE),
+				owner.getName().toLowerCase(), 1, 1);
+
+		// TODO add multiplicity
+		for (Property att : association.getAttributes()) {
+			logger.debug("att: " + att);
+		}
 		association.setName(associationName);
-		
+
+		if (!isOneInstance(multiplicity)) {
+			Property subComponentInstance = getSubComponentInstance(owner, elementName);
+			setAttributeMultiplicity(subComponentInstance, multiplicity);
+		}
 		// Add SysML Nature on the new Association
 		ElementUtil.addNature(association, SysMLElementTypes.SYSML_NATURE);
-		
+
+		for (Property att : association.getAttributes()) {
+			logger.debug("att2: " + att);
+		}
+
 		logger.debug("\n\nCreated " + associationName + " Association\n\n");
 		return association;
 	}
-	
-	
+
+	private boolean isOneInstance(String[] multiplicityBoundariesAsExpressons) {
+		return ((multiplicityBoundariesAsExpressons[0] == "") && (multiplicityBoundariesAsExpressons[1] == ""))
+				|| (isEqualToOne(multiplicityBoundariesAsExpressons[0])
+						&& isEqualToOne(multiplicityBoundariesAsExpressons[1]));
+	}
+
+	private boolean isEqualToOne(String expression) {
+		return isInteger(expression) && (Integer.valueOf(expression) == 1);
+	}
+
+	public static boolean isInteger(String s) {
+		try {
+			Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			return false;
+		} catch (NullPointerException e) {
+			return false;
+		}
+		// only got here if we didn't return false
+		return true;
+	}
+
 	/**
 	 * Removes a delegation constraint from the list.
 	 * 
@@ -2035,174 +2696,23 @@ public class EntityUtil {
 	}
 
 	public boolean equalMultiplicityBoundaries(String[] newMultiplicityRange, String[] multiplicityRange) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void setAttributeMultiplicity(String[] newMultiplicityRange) {
-		// TODO Auto-generated method stub
+		return (newMultiplicityRange[0].equals(multiplicityRange[0])
+				&& newMultiplicityRange[1].equals(multiplicityRange[1]));
 
 	}
 
-	/*
-	 * UNUSED METHODS
-	 * 
-	 * 
-	 * public String[] getValuesForEnumeratorTypeParameter(Parameter parameter)
-	 * { Set<String> enumValuesNames =
-	 * getListValuesForEnumeratorTypeParameter(parameter); if (enumValuesNames
-	 * != null) { return toArray(enumValuesNames); } return null; } public
-	 * boolean isIntegerParameter(Parameter parameter) { return
-	 * isIntegerType(parameter.getType()); }
-	 * 
-	 * public boolean isRealParameter(Parameter parameter) { return
-	 * isRealType(parameter.getType()); }
-	 * 
-	 * public boolean isBooleanParameter(Parameter parameter) { return
-	 * isBooleanType(parameter.getType()); }
-	 * 
-	 * public boolean isDoubleParameter(Parameter parameter) { return
-	 * (parameter.getType() != null &&
-	 * parameter.getType().getName().compareTo("Double") == 0); }
-	 * 
-	 * public boolean isContinuousParameter(Parameter parameter) { return
-	 * (parameter.getType() != null &&
-	 * parameter.getType().getQualifiedName().compareTo(CHESS_CONTINUOUS_TYPE)
-	 * == 0); }
-	 * 
-	 * public boolean isRangeParameter(Parameter parameter) { return
-	 * isRangeType(parameter.getType()); }
-	 * 
-	 * public boolean isEnumerationParameter(Parameter parameter) { return
-	 * isEnumerationType(parameter.getType()); }
-	 * 
-	 * public boolean isEventParameter(Parameter parameter) { return
-	 * ((parameter.getType() != null) && (parameter.getType() instanceof
-	 * Signal)); }
-	 * 
-	 * public Set<String> getListValuesForEnumeratorTypeParameter(Parameter
-	 * parameter) { return getListValuesForEnumeratorType(parameter.getType());
-	 * }
-	 */
+	public void setAttributeMultiplicity(Property property, String[] newMultiplicityRange) {
+		logger.debug("setAttributeMultiplicity of " + property.getName());
+		logger.debug("newMultiplicityRange of: " + newMultiplicityRange[0] + " - " + newMultiplicityRange[1]);
 
-	/*
-	 * public Set<String> getListValuesForEnumeratorType(Property umlProperty) {
-	 * return getListValuesForEnumeratorType(umlProperty.getType()); } private
-	 * Set<Property> getBooleanAttributesExceptPorts(Element umlElement) {
-	 * Set<Property> booleanAttributes = new HashSet<Property>(); for (Property
-	 * umlProperty : getBooleanAttributes(umlElement)) { if
-	 * (!isPort(umlProperty)) { booleanAttributes.add(umlProperty); } } return
-	 * booleanAttributes; }
-	 * 
-	 * 
-	 * private Set<String> getBooleanAttributesNames(Element umlElement) {
-	 * 
-	 * Set<String> booleanAttributesNames = new HashSet<String>(); for (Property
-	 * umlProperty : getBooleanAttributes(umlElement)) {
-	 * booleanAttributesNames.add(umlProperty.getName()); } return
-	 * booleanAttributesNames; }
-	 * 
-	 * private Set<String> getAttributesNamesExceptsPorts(Element umlElement) {
-	 * Set<String> booleanAttributesNames = new HashSet<String>(); for (Property
-	 * umlProperty : getAttributesExceptPorts(umlElement,null)) {
-	 * booleanAttributesNames.add(umlProperty.getName()); } return
-	 * booleanAttributesNames; }
-	 * 
-	 * 
-	 * 
-	 * private Set<Property> getBooleanAttributes(Element umlElement) {
-	 * Set<Property> booleanAttributes = new HashSet<Property>();
-	 * 
-	 * if (isBlock(umlElement) || (isCompType(umlElement) ||
-	 * (isComponentImplementation(umlElement)))) { Class umlClass = (Class)
-	 * umlElement; EList<Property> attributes = umlClass.getOwnedAttributes();
-	 * for (Property umlProperty : attributes) { if
-	 * (isBooleanAttribute(umlProperty)) { booleanAttributes.add(umlProperty); }
-	 * } }
-	 * 
-	 * if (isComponentInstance(umlElement)) {
-	 * booleanAttributes.addAll(getBooleanAttributes(getUMLType((Property)
-	 * umlElement))); } return booleanAttributes; }
-	 * 
-	 * 
-	 * private Set<String> getBooleanAttributesNamesExceptsPorts(Element
-	 * umlElement) { Set<String> booleanAttributesNames = new HashSet<String>();
-	 * for (Property umlProperty : getBooleanAttributesExceptPorts(umlElement))
-	 * { booleanAttributesNames.add(umlProperty.getName()); } return
-	 * booleanAttributesNames; }
-	 * 
-	 * private Set<Property> getRealAttributes(Element umlElement) {
-	 * Set<Property> realAttributes = new HashSet<Property>();
-	 * 
-	 * if (isBlock(umlElement) || (isCompType(umlElement) ||
-	 * (isComponentImplementation(umlElement)))) { Class umlClass = (Class)
-	 * umlElement; EList<Property> attributes = umlClass.getOwnedAttributes();
-	 * for (Property umlProperty : attributes) { if
-	 * (isRealAttribute(umlProperty)) { realAttributes.add(umlProperty); } } }
-	 * 
-	 * if (isComponentInstance(umlElement)) {
-	 * realAttributes.addAll(getRealAttributes(getUMLType((Property)
-	 * umlElement))); } return realAttributes; }
-	 * 
-	 * private Set<Property> getContinuousAttributes(Element umlElement) {
-	 * Set<Property> continuousAttributes = new HashSet<Property>();
-	 * 
-	 * if (isBlock(umlElement) || (isCompType(umlElement) ||
-	 * (isComponentImplementation(umlElement)))) { Class umlClass = (Class)
-	 * umlElement; EList<Property> attributes = umlClass.getOwnedAttributes();
-	 * for (Property umlProperty : attributes) { if
-	 * (isContinuousAttribute(umlProperty)) {
-	 * continuousAttributes.add(umlProperty); } } }
-	 * 
-	 * if (isComponentInstance(umlElement)) {
-	 * continuousAttributes.addAll(getContinuousAttributes(getUMLType((Property)
-	 * umlElement))); } return continuousAttributes; }
-	 * 
-	 * private Set<Property> getDoubleAttributes(Element umlElement) {
-	 * Set<Property> doubleAttributes = new HashSet<Property>();
-	 * 
-	 * if (isBlock(umlElement) || (isCompType(umlElement) ||
-	 * (isComponentImplementation(umlElement)))) { Class umlClass = (Class)
-	 * umlElement; EList<Property> attributes = umlClass.getOwnedAttributes();
-	 * for (Property umlProperty : attributes) { if
-	 * (isDoubleAttribute(umlProperty)) { doubleAttributes.add(umlProperty); } }
-	 * }
-	 * 
-	 * if (isComponentInstance(umlElement)) {
-	 * doubleAttributes.addAll(getDoubleAttributes(getUMLType((Property)
-	 * umlElement))); } return doubleAttributes; }
-	 * 
-	 * private Set<Property> getEnumerationAttributes(Element umlElement) {
-	 * Set<Property> enumAttributes = new HashSet<Property>();
-	 * 
-	 * if (isBlock(umlElement) || (isCompType(umlElement) ||
-	 * (isComponentImplementation(umlElement)))) { Class umlClass = (Class)
-	 * umlElement; EList<Property> attributes = umlClass.getOwnedAttributes();
-	 * for (Property umlProperty : attributes) { if
-	 * (isEnumerationAttribute(umlProperty)) { enumAttributes.add(umlProperty);
-	 * } } }
-	 * 
-	 * if (isComponentInstance(umlElement)) {
-	 * enumAttributes.addAll(getEnumerationAttributes(getUMLType((Property)
-	 * umlElement))); } return enumAttributes; }
-	 * 
-	 * private Set<Property> getRangeAttributes(Element umlElement) {
-	 * Set<Property> rangeAttributes = new HashSet<Property>();
-	 * 
-	 * if (isBlock(umlElement) || (isCompType(umlElement) ||
-	 * (isComponentImplementation(umlElement)))) { Class umlClass = (Class)
-	 * umlElement; EList<Property> attributes = umlClass.getOwnedAttributes();
-	 * for (Property umlProperty : attributes) { if
-	 * (isRangeAttribute(umlProperty)) { rangeAttributes.add(umlProperty); } } }
-	 * 
-	 * if (isComponentInstance(umlElement)) {
-	 * rangeAttributes.addAll(getRangeAttributes(getUMLType((Property)
-	 * umlElement))); } return rangeAttributes; }
-	 * 
-	 * private String[] getOwnerAttributesNames(Class contract) {
-	 * 
-	 * Set<String> attrArr =
-	 * getAttributesNamesExceptsPorts(contract.getOwner()); return
-	 * toArray(attrArr); }
-	 */
+		LiteralString lowerBound = UMLFactory.eINSTANCE.createLiteralString();
+		lowerBound.setValue(newMultiplicityRange[0]);
+		property.setLowerValue(lowerBound);
+
+		LiteralString upperBound = UMLFactory.eINSTANCE.createLiteralString();
+		upperBound.setValue(newMultiplicityRange[1]);
+		property.setUpperValue(upperBound);
+
+	}
+
 }
