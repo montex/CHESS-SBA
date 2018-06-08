@@ -1,56 +1,26 @@
 package org.polarsys.chess.OSSImporter.utils;
 
-import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
+
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Stereotype;
+import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
+import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
 public class StereotypeUtil {
 
-//	private static final String INTEGER_TYPE =			"PrimitiveTypes::Integer";
-//	private static final String REAL_TYPE =				"PrimitiveTypes::Real";	
-//	private static final String BOOLEAN_TYPE =			"PrimitiveTypes::Boolean";
 	
-	public static final String CONTRACT =				"CHESSContract::Contract";
-	public static final String CONTRACT_PROP =			"CHESSContract::ContractProperty";
-	public static final String DELEGATION_CONST =		"CHESSContract::DelegationConstraint";
-	public static final String CONTRACT_REFINEMENT =	"CHESSContract::ContractRefinement";
-	public static final String SYSTEM =					"CHESSContract::System";
-//	private static final String SUBSYSTEM = 			"CHESSContract::SubSystem";
-//	private static final String COMPINST =				"CHESSContract::ComponentInstance";
-//	private static final String FORMAL_PROP =			"CHESSContract::FormalProperty";
-//	private static final String CHESS_CONTINUOUS_TYPE = "CHESSContract::DataTypes::Continuous";
-
-//	private static final String SYSVIEW =				"CHESS::Core::CHESSViews::SystemView";
-//	private static final String COMPVIEW =				"CHESS::Core::CHESSViews::ComponentView";
-//	private static final String CHESS =					"CHESS::Core::CHESS";
-	
-	public static final String BLOCK =					"SysML::Blocks::Block";
-	public static final String FLOWPORT =				"SysML::PortAndFlows::FlowPort";
-	
-	public static final String BOUNDED_TYPE = 			"MARTE::MARTE_Annexes::VSL::DataTypes::BoundedSubtype";
-//	public static final String COLLECTIONTYPE = 		"MARTE::MARTE_Annexes::VSL::DataTypes::CollectionType";
-//	private static final String MARTE_BOOLEAN_TYPE = 	"MARTE_Library::MARTE_PrimitivesTypes::Boolean";
-//	private static final String MARTE_REAL_TYPE = 		"MARTE_Library::MARTE_PrimitivesTypes::Real";
-//	private static final String MARTE_INTEGER_TYPE = 	"MARTE_Library::MARTE_PrimitivesTypes::Integer";
-	
-	public static final String ENUMERATION_NAME = 		"Enumeration";
-	public static final String SIGNAL_NAME = 			"Signal";
-	
-	
-	
-	
-	 private static StereotypeUtil stereotypeUtil =
+	 private static StereotypeUtil stereotypeUtilInstance =
 			 StereotypeUtil.getInstance();
 
 			public static StereotypeUtil getInstance() {
-				if (stereotypeUtil == null) {
-					stereotypeUtil = new StereotypeUtil();
+				if (stereotypeUtilInstance == null) {
+					stereotypeUtilInstance = new StereotypeUtil();
 				}
-				return stereotypeUtil;
+				return stereotypeUtilInstance;
 			}
 	
 	
-	
+			private final EntityUtil entityUtil = EntityUtil.getInstance();
 	
 	
 	// Stereotype objects needed to customize the elements
@@ -65,7 +35,7 @@ public class StereotypeUtil {
 	
 		
 		
-		
+	
 		
 	/**
 	 * Collects the needed stereotypes from the given package.
@@ -73,61 +43,15 @@ public class StereotypeUtil {
 	 */
 	public void refreshStereotypes(Package pkg) {
 		
-		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT_PROP)) {
-			if (sub.getQualifiedName().equals(CONTRACT_PROP)) {
-				contractPropertyStereotype = sub;
-				break;
-			}
-		}
-		
-		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, DELEGATION_CONST)) {
-			if (sub.getQualifiedName().equals(DELEGATION_CONST)) {
-				delegationConstraintStereotype = sub;
-				break;
-			}
-		}
-
-		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT_REFINEMENT)) {
-			if (sub.getQualifiedName().equals(CONTRACT_REFINEMENT)) {
-				contractRefinementStereotype = sub;
-				break;
-			}
-		}
-		
-		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, BOUNDED_TYPE)) {
-			if (sub.getQualifiedName().equals(BOUNDED_TYPE)) {
-				boundedTypeStereotype = sub;
-				break;
-			}
-		}
-
-		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, FLOWPORT)) {
-			if (sub.getQualifiedName().equals(FLOWPORT)) {
-				flowPortStereotype = sub;
-				break;
-			}
-		}
-		
-		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, BLOCK)) {
-			if (sub.getQualifiedName().equals(BLOCK)) {
-				blockStereotype = sub;
-				break;
-			}
-		}
-
-		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, SYSTEM)) {
-			if (sub.getQualifiedName().equals(SYSTEM)) {
-				systemStereotype = sub;
-				break;
-			}
-		}
-		
-		for (Stereotype sub : UMLUtil.findSubstereotypes(pkg, CONTRACT)) {
-			if (sub.getQualifiedName().equals(CONTRACT)) {
-				contractStereotype = sub;
-				break;
-			}
-		}
+				contractPropertyStereotype = entityUtil.findStereotype(pkg, ContractEntityUtil.CONTRACT_PROP);
+				delegationConstraintStereotype = entityUtil.findStereotype(pkg, EntityUtil.DELEGATION_CONST);
+				contractRefinementStereotype = entityUtil.findStereotype(pkg, ContractEntityUtil.CONTRACT_REFINEMENT);
+				boundedTypeStereotype = entityUtil.findStereotype(pkg, EntityUtil.BOUNDED_TYPE);
+				flowPortStereotype = entityUtil.findStereotype(pkg, EntityUtil.FLOW_Port);
+				blockStereotype = entityUtil.findStereotype(pkg, EntityUtil.BLOCK);
+				systemStereotype = entityUtil.findStereotype(pkg, EntityUtil.SYSTEM);
+				contractStereotype = entityUtil.findStereotype(pkg, ContractEntityUtil.CONTRACT);
+	
 	}
 	
 }
