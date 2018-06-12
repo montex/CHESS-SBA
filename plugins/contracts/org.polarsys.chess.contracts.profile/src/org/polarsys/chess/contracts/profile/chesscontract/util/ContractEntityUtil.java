@@ -266,7 +266,7 @@ public class ContractEntityUtil {
 
 				@Override
 				protected void doExecute() {
-					Constraint assumeFormalProperty = createFormalPropertyInContractOwner("Assumption", umlContract);
+					Constraint assumeFormalProperty = createFormalPropertyInContract("Assumption", umlContract);
 					Contract contract = getContract(umlContract);
 					contract.setAssume(entityUtil.getFormalProperty(assumeFormalProperty));
 				}
@@ -275,13 +275,14 @@ public class ContractEntityUtil {
 		}
 	}
 
-	private Constraint createFormalPropertyInContractOwner(String formalPropertyType, Class umlContract) {
-		Element umlContractOwner = entityUtil.getOwner(umlContract);
+	private Constraint createFormalPropertyInContract(String formalPropertyType, Class umlContract) {
 		String propertyName = formalPropertyType + "_" + umlContract.getName();
+
 
 		// FormalProperty assumeFormalProperty =
 		// createFormalProperty((Namespace) umlContractOwner, propertyName);
-		Constraint assumeFormalProperty = entityUtil.createFormalProperty((Namespace) umlContractOwner, propertyName);
+		Constraint assumeFormalProperty = entityUtil.createFormalProperty((Namespace) umlContract, propertyName);
+
 
 		LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
 		ValueSpecification vs = assumeFormalProperty.createSpecification("ConstraintSpec", null, newLs.eClass());
@@ -302,7 +303,7 @@ public class ContractEntityUtil {
 
 				@Override
 				protected void doExecute() {
-					Constraint guaranteeFormalProperty = createFormalPropertyInContractOwner("Guarantee", umlContract);
+					Constraint guaranteeFormalProperty = createFormalPropertyInContract("Guarantee", umlContract);
 					Contract contract = getContract(umlContract);
 					contract.setGuarantee(entityUtil.getFormalProperty(guaranteeFormalProperty));
 				}

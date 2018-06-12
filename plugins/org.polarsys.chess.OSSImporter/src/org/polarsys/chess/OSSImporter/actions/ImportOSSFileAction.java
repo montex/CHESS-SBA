@@ -88,8 +88,6 @@ import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
  * @author cristofo
  *
  */
-
-// TODO add array of ports and subcomponents
 public class ImportOSSFileAction {
 
 	// The instance of this class

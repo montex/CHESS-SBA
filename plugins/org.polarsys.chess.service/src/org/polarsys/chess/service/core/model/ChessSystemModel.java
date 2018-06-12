@@ -12,7 +12,6 @@ package org.polarsys.chess.service.core.model;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
@@ -23,10 +22,11 @@ import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
+import org.eclipse.uml2.uml.UMLFactory;
+import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
@@ -804,6 +804,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.isRefinementFormalProperty((Element) formalProperty);
 	}
 
+
 	@Override
 	public String[] getComponentInstanceMultiplicityBoundaries(Object component) {
 		return entityUtil.getComponentInstanceMultiplicity((Element) component);
@@ -816,5 +817,27 @@ public class ChessSystemModel implements AbstractSystemModel {
 	
 	
 	
+
+
+	/**
+	 * Returns the type of the given port, as string.
+	 */
+	@Override
+	public String getPortTypeAsStringName(Object activePackage, String componentName, String portName) {
+		
+		if (activePackage instanceof Package) {
+			final Package pkg = (Package) activePackage;
+			
+			// Get the component with the given name
+			final Class element = (Class) pkg.getOwnedMember(componentName, false, UMLFactory.eINSTANCE.createClass().eClass());
+			
+			// Get the port
+			final Port port = element.getOwnedPort(portName, null);
+			
+			return port.getType().getName();
+		}
+		
+		return null;
+	}
 
 }

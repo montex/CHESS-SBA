@@ -16,11 +16,13 @@ import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSBlockDefinitionDiagramModel;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramModel;
 import org.polarsys.chess.diagram.ui.services.CHESSDiagramsGeneratorService;
@@ -67,7 +69,26 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	private Collection<Diagram> chessDiagrams;
 	private String imageExtension;
 	private String docFormat;
+	private Package activePackage;
+	private boolean goAhead = true;
 
+	/**
+	 * Returns the nearest package containing the diagram.
+	 * @param diagram the Diagram
+	 * @return the containing Package
+	 */
+	private Package getDiagramPackage(Diagram diagram) {
+		Package diagramPackage = null;
+		
+		final EObject diagramElement = diagram.getElement();
+		if (diagramElement instanceof Package) {
+			diagramPackage = (Package) diagramElement;
+		} else if (diagramElement instanceof Class) {
+			diagramPackage = ((Class) diagramElement).getNearestPackage();
+		}
+		return diagramPackage;
+	}
+	
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
@@ -75,22 +96,26 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		outputDirectoryName = dialogUtils.getDirectoryNameFromDialog();
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();
+		activePackage = umlSelectedComponent.getNearestPackage();
 
+		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
+			goAhead = false;
+			return;
+		}
+		
 		parameterDialog = exportDialogUtils.getCompiledModelToDocumentDialog();
 		parameterDialog.open();
 
 		if (!parameterDialog.goAhead()) {
+			goAhead = false;
 			return;
 		}
 
 		docFormat = parameterDialog.getDocumentFormat();
 		imageExtension = ".svg";
 		if (docFormat.equals("tex")) {
-			imageExtension = ".png";
-		}
-
-		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
-			return;
+//			imageExtension = ".png";	// Not perfect images, some fonts are wrong
+			imageExtension = ".pdf";
 		}
 
 	}
@@ -98,18 +123,27 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
+		if (!goAhead) {
+			return;
+		}
+		
 		OSS ossModel = ocraTranslatorService.exportRootComponentToOssModel(umlSelectedComponent, isDiscreteTime, monitor);
 
 		Display defaultDisplay = Display.getDefault();
 
-		documentGeneratorService = new DocumentGeneratorServiceFromOssModel(ossModel);
+		documentGeneratorService = new DocumentGeneratorServiceFromOssModel(ossModel, chessToOCRAModelTranslator, activePackage);
 		documentGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, imageExtension,
-				parameterDialog.getShowLeafComponents());
+				parameterDialog.getShowLeafComponents(), parameterDialog.getShowInputPorts(), 
+				parameterDialog.getShowOutputPorts(),parameterDialog.getShowSubComponents(), 
+				parameterDialog.getShowParameters(), parameterDialog.getShowUninterpretedFunctions(),
+				parameterDialog.getShowConnections(), parameterDialog.getShowInterfaceAssertions(), 
+				parameterDialog.getShowRefinementAssertions(), parameterDialog.getShowContracts());
 		DocumentGenerator documentGenerator = documentGeneratorService.createDocumentFile(currentProjectName, docFormat,
 				ossModel.getSystem(), monitor);
 
-		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension,
-				parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout());
+		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension
+				//parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout()
+				);
 
 		defaultDisplay.syncExec(new Runnable() {
 			@Override
@@ -117,12 +151,13 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 				Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 				Set<DiagramDescriptor> diagramDescriptors = new HashSet<DiagramDescriptor>();
 				for (Diagram diagram : chessDiagrams) {
-					// chessDiagramsGeneratorService.createDiagram(diagram,
-					// monitor);
-					DiagramDescriptor dd = chessDiagramsGeneratorService.createDiagramWithDescriptor(diagram, shell,
-							monitor);
-					if (dd != null) {
-						diagramDescriptors.add(dd);
+					if (getDiagramPackage(diagram) == activePackage) {
+						// chessDiagramsGeneratorService.createDiagram(diagram, monitor);
+						DiagramDescriptor dd = chessDiagramsGeneratorService.createDiagramWithDescriptor(diagram, shell,
+								monitor);
+						if (dd != null) {
+							diagramDescriptors.add(dd);
+						}
 					}
 				}
 				documentGeneratorService.addDiagramDescriptors(diagramDescriptors, documentGenerator);
