@@ -45,7 +45,7 @@ public class PapyrusListener implements IPapyrusListener {
 			if ((window != null) && (window.getActivePage() != null)) {
 				modelExplorerViewPart = window.getActivePage().findView(CustomHierarchicalView.View_ID);
 
-				if (modelExplorerViewPart != null) {
+				if (modelExplorerViewPart != null && modelExplorerViewPart instanceof HierarchicalView) {
 
 					UmlModel modelID = UmlUtils.getUmlModel();
 
@@ -56,8 +56,6 @@ public class PapyrusListener implements IPapyrusListener {
 					}
 				}
 			}
-
 		}
 	}
-
 }
