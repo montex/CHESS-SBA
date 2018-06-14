@@ -141,23 +141,21 @@ public class EntityUtil {
 
 	// default names of created objects
 	private static final String DEFAULT_DELEGATION_PREFIX = "Define_";
+	private static final String DEFAULT_PAR_ASSUMPTION_PREFIX = "ParamAssumption_";
 	private static final String DEFAULT_ASSOCIATION_NAME = "association";
 	private static final String DEFAULT_ENUMERATION_NAME = "Enumeration";
 	private static final String DEFAULT_SIGNAL_NAME = "Signal";
 	private static final String DEFAULT_CONNECTOR_NAME = "connector";
 	private static final String DEFAULT_DELEGATION_CONSTRAINT_LITERAL_STRING_NAME = "constraintSpec";
+	private static final String DEFAULT_PAR_ASSUMPTION_LITERAL_STRING_NAME = "constraintSpec";
 	private static final String DEFAULT_PARAMETER_IN_NAME = "parameterIn";
 	private static final String DEFAULT_PARAMETER_OUT_NAME = "parameterOut";
 	private static final String DEFAULT_BOUNDEDTYPE_NAME = "BoundedInteger_";
 
 	// Library for UML primitive types
-	private final Model umlLibrary = (Model) loadPackage(URI.createURI(UMLResource.UML_PRIMITIVE_TYPES_LIBRARY_URI));
-
+	private Model umlLibrary = null;
 	// Library for CHESS types like continuous
-	private final Profile chessContractLibrary = (Profile) loadPackage(
-			URI.createURI("pathmap://CHESSContract/CHESSContract.profile.uml"));
-
-	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
+	private Profile chessContractLibrary = null;
 
 	private static EntityUtil entityUtilInstance;
 
@@ -186,7 +184,7 @@ public class EntityUtil {
 	 *            the URI of the resource to load
 	 * @return the retrieved package
 	 */
-	private static Package loadPackage(URI uri) {
+	public Package loadPackage(URI uri) {
 		Package package_ = null;
 
 		try {
@@ -201,6 +199,33 @@ public class EntityUtil {
 	}
 
 	/**
+	 * Returns the Type Continuous.
+	 * 
+	 * @return the requested Type
+	 */
+	public Type getContinuousType() {
+
+		if (chessContractLibrary == null) {
+			chessContractLibrary = (Profile) loadPackage(
+					URI.createURI("pathmap://CHESSContract/CHESSContract.profile.uml"));
+		}
+
+		// The Continuous type is defined here:
+		// CHESSContract::DataTypes::Continuous
+		// Get the correct package inside the profile
+		final Package dataTypes = chessContractLibrary.getNestedPackage("DataTypes");
+
+		// Get the correct type
+		final Type type = dataTypes.getOwnedType("Continuous");
+
+		if (type != null) {
+			logger.debug("Type '" + type.getQualifiedName() + "' found.");
+			return type;
+		}
+		return null;
+	}
+
+	/**
 	 * Returns the primitive type from the standard primitive library.
 	 * 
 	 * @param name
@@ -208,6 +233,10 @@ public class EntityUtil {
 	 * @return the requested primitive type
 	 */
 	public Type getPrimitiveType(String name) {
+
+		if (umlLibrary == null) {
+			umlLibrary = (Model) loadPackage(URI.createURI(UMLResource.UML_PRIMITIVE_TYPES_LIBRARY_URI));
+		}
 
 		// Get the correct type from the library
 		final Type type = umlLibrary.getOwnedType(name);
@@ -232,10 +261,10 @@ public class EntityUtil {
 	 * @return the delegation constraint, if found
 	 */
 	public Constraint getExistingDelegationConstraint(EList<Constraint> delegationConstraints, String variableIdText,
-			String constraintText) {
+			String constraintText, String iterConditionText) {
 
 		// Text of the delegation constraint
-		final String formalPropertyText = createDelegationConstraintText(variableIdText, constraintText);
+		final String formalPropertyText = createDelegationConstraintText(variableIdText, constraintText,iterConditionText);
 
 		// Loop on all the delegation constraints to find one with same text
 		for (Constraint delegationConstraint : delegationConstraints) {
@@ -366,7 +395,7 @@ public class EntityUtil {
 		createFunctionBehaviorParameter(functionBehavior, outputParameterType, false);
 	}
 
-	public Constraint createDelegationConstraint(Class owner, String variableIdText, String constraintText,
+	public Constraint createDelegationConstraint(Class owner, String variableIdText, String constraintText,String iterConditionText,
 			Stereotype delegationConstraintStereotype) {
 
 		String delegationName = DEFAULT_DELEGATION_PREFIX + variableIdText;
@@ -380,8 +409,8 @@ public class EntityUtil {
 		final LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
 		literalString.setName(DEFAULT_DELEGATION_CONSTRAINT_LITERAL_STRING_NAME);
 
-		final String formalPropertyText = entityUtilInstance.createDelegationConstraintText(variableIdText,
-				constraintText);
+		final String formalPropertyText = createDelegationConstraintText(variableIdText,
+				constraintText,iterConditionText);
 		literalString.setValue(formalPropertyText);
 		newUMLConstraint.setSpecification(literalString);
 
@@ -656,30 +685,6 @@ public class EntityUtil {
 	}
 
 	/**
-	 * Returns the Type Continuous.
-	 * 
-	 * @param name
-	 *            the name of the Type
-	 * @return the requested Type
-	 */
-	public Type getContinuousType(String name) {
-
-		// The Continuous type is defined here:
-		// CHESSContract::DataTypes::Continuous
-		// Get the correct package inside the profile
-		final Package dataTypes = chessContractLibrary.getNestedPackage("DataTypes");
-
-		// Get the correct type
-		final Type type = dataTypes.getOwnedType(name);
-
-		if (type != null) {
-			logger.debug("Type '" + type.getQualifiedName() + "' found.");
-			return type;
-		}
-		return null;
-	}
-
-	/**
 	 * Returns the list of the values inside a given Enumeration.
 	 * 
 	 * @param enumeration
@@ -708,7 +713,7 @@ public class EntityUtil {
 		return str;
 	}
 
-	public void updateUmlAssociation(Property componentInstance, Type type, String[] ossSubComponentMultiplicity) {
+	public void updateUmlAssociation(Property componentInstance, Type type, String[] ossSubComponentMultiplicity) throws Exception {
 		// The component instance is already present, update its
 		// type if needed
 		if (!componentInstance.getType().equals(type)) {
@@ -719,7 +724,7 @@ public class EntityUtil {
 			// addedElements.add(componentInstance.getAssociation());
 		}
 
-		String[] componentInstanceMultiplicity = (getComponentInstanceMultiplicity(componentInstance));
+		String[] componentInstanceMultiplicity = getComponentInstanceMultiplicity(componentInstance);
 
 		if (!equalMultiplicityBoundaries(componentInstanceMultiplicity, ossSubComponentMultiplicity)) {
 			setAttributeMultiplicity(componentInstance, ossSubComponentMultiplicity);
@@ -1155,7 +1160,7 @@ public class EntityUtil {
 			return false;
 		}
 
-		if (contractEntityUtil.isContractProperty(property)) {
+		if (ContractEntityUtil.getInstance().isContractProperty(property)) {
 			return false;
 		}
 
@@ -2045,39 +2050,55 @@ public class EntityUtil {
 		return parameter.getType();
 	}
 
-	public String[] getComponentInstanceMultiplicity(Element component) {
+	public String[] getComponentInstanceMultiplicity(Property component) throws Exception {
 		if (isComponentInstance(component)) {
-			return getAttributeMultiplicity((Property) component);
+			return getAttributeMultiplicity(component);
 		}
-		return null;
+
+throw new Exception(""+component.getName()+" is not a component instance");
 
 	}
 
 	public String[] getAttributeMultiplicity(Property attribute) {
+		logger.debug("getAttributeMultiplicity");
+
 		ValueSpecification upperValueSpecification = ((Property) attribute).getUpperValue();
 		ValueSpecification lowerValueSpecification = ((Property) attribute).getLowerValue();
 
-		String upperValue = "";
-		String lowerValue = "";
-
-		if (upperValueSpecification instanceof LiteralInteger) {
-			upperValue = String.valueOf(((LiteralInteger) upperValueSpecification).getValue());
-		} else if (upperValueSpecification instanceof LiteralUnlimitedNatural) {
-			upperValue = String.valueOf(((LiteralUnlimitedNatural) upperValueSpecification).getValue());
-		} else if (upperValueSpecification instanceof LiteralString) {
-			upperValue = String.valueOf(((LiteralString) upperValueSpecification).getValue());
-		}
-
-		if (lowerValueSpecification instanceof LiteralInteger) {
-			lowerValue = String.valueOf(((LiteralInteger) lowerValueSpecification).getValue());
-		} else if (lowerValueSpecification instanceof LiteralUnlimitedNatural) {
-			lowerValue = String.valueOf(((LiteralUnlimitedNatural) lowerValueSpecification).getValue());
-		} else if (lowerValueSpecification instanceof LiteralString) {
-			lowerValue = String.valueOf(((LiteralString) lowerValueSpecification).getValue());
-		}
+		String upperValue = getValueSpecificationValue(upperValueSpecification);
+		String lowerValue = getValueSpecificationValue(lowerValueSpecification);
 
 		String[] boundaries = { lowerValue, upperValue };
 		return boundaries;
+	}
+
+	public String getValueSpecificationValue(ValueSpecification valueSpecification) {
+
+		String strValue = null;
+		Object value = null;
+		if (valueSpecification instanceof LiteralInteger) {
+			logger.debug("instanceof LiteralInteger");
+			value = ((LiteralInteger) valueSpecification).getValue();
+
+		} else if (valueSpecification instanceof LiteralUnlimitedNatural) {
+			logger.debug("instanceof LiteralUnlimitedNatural");
+			value = ((LiteralUnlimitedNatural) valueSpecification).getValue();
+
+		} else if (valueSpecification instanceof LiteralString) {
+			logger.debug("instanceof LiteralString");
+			value = ((LiteralString) valueSpecification).getValue();
+		}
+
+		logger.debug("value: " + value);
+
+		strValue = String.valueOf(value);
+
+		if (strValue == "null") {
+			strValue = null;
+		}
+
+		logger.debug("getValueSpecificationValue: " + strValue);
+		return strValue;
 	}
 
 	/**
@@ -2266,11 +2287,14 @@ public class EntityUtil {
 		return umlPort;
 	}
 
-	public String createDelegationConstraintText(String variableIdTextName, String constraintText) {
+	public String createDelegationConstraintText(String variableIdTextName, String constraintText, String iterConditionText) {
 
 		final StringBuffer delegationText = new StringBuffer();
 
 		delegationText.append(variableIdTextName + " := " + constraintText);
+		if(iterConditionText!=null){
+			delegationText.append(" "+iterConditionText);	
+		}
 		return delegationText.toString();
 	}
 
@@ -2696,15 +2720,17 @@ public class EntityUtil {
 	}
 
 	public boolean equalMultiplicityBoundaries(String[] newMultiplicityRange, String[] multiplicityRange) {
-		return (newMultiplicityRange[0].equals(multiplicityRange[0])
-				&& newMultiplicityRange[1].equals(multiplicityRange[1]));
+		return (equals(newMultiplicityRange[0],multiplicityRange[0])
+				&& equals(newMultiplicityRange[1],multiplicityRange[1]));
 
 	}
 
+	private boolean equals(String text1,String text2){
+		return ((text1==text2)&&(text2==null))||(text1.equals(text2));
+	}
+	
 	public void setAttributeMultiplicity(Property property, String[] newMultiplicityRange) {
-		logger.debug("setAttributeMultiplicity of " + property.getName());
-		logger.debug("newMultiplicityRange of: " + newMultiplicityRange[0] + " - " + newMultiplicityRange[1]);
-
+		
 		LiteralString lowerBound = UMLFactory.eINSTANCE.createLiteralString();
 		lowerBound.setValue(newMultiplicityRange[0]);
 		property.setLowerValue(lowerBound);
@@ -2714,5 +2740,61 @@ public class EntityUtil {
 		property.setUpperValue(upperBound);
 
 	}
+
+	public EList<Constraint> getParameterAssumptionsAsConstraintsUml(Element umlElement) {
+		EList<Constraint> constraints = new BasicEList<Constraint>();
+
+		if (isBlock(umlElement) || isCompType(umlElement) || isComponentImplementation(umlElement)) {
+			for (Constraint umlConstraint : ((Class)umlElement).getOwnedRules()) {
+				if (isParameterAssumption(umlConstraint)) {
+					constraints.add((Constraint) umlConstraint);
+				}
+			}
+		}
+
+		if (isComponentInstance(umlElement)) {
+			constraints.addAll(getParameterAssumptionsAsConstraintsUml(getUMLType((Property) umlElement)));
+		}
+		
+		return constraints;
+	}
+
+	public boolean isParameterAssumption(Element umlProperty) {
+		return ((umlProperty instanceof Constraint)
+				&& (UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) == null));
+	}
+
+	public Element createUmlConstraint(Class owner, String parameterAssumptionsText) {
+		int numParameterAssumptions = getParameterAssumptionsAsConstraintsUml(owner).size();
+		String parameterAssumptionsName = DEFAULT_PAR_ASSUMPTION_PREFIX + numParameterAssumptions;
+
+		logger.debug("\n\n\n Creating constraint " + parameterAssumptionsName + " for owner " + owner);
+		logger.debug("\n\n\n");
+
+		final Constraint newUMLConstraint = owner.createOwnedRule(parameterAssumptionsName);		
+		final LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
+		literalString.setName(DEFAULT_PAR_ASSUMPTION_LITERAL_STRING_NAME);		
+		literalString.setValue(parameterAssumptionsText);
+		newUMLConstraint.setSpecification(literalString);
+
+		logger.debug("\n\nCreated " + parameterAssumptionsName + " Constraint\n\n");
+		return newUMLConstraint;
+	}
+
+	public Constraint getUmlConstraintFromText(String parameterAssumptionsText, Class owner) {
+		for (Constraint umlConstraint : ((Class)owner).getOwnedRules()) {
+			if (isParameterAssumption(umlConstraint)&&getConstraintBodyStr(umlConstraint).equals(parameterAssumptionsText)) {
+				return umlConstraint;
+			}
+		}
+		return null;
+	}
+
+	public void removeParameterAssumptions(EList<Constraint> members, String qualifiedElement) {
+		removeNamedElement(members, qualifiedElement);
+		
+	}
+	
+	
 
 }
