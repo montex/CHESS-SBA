@@ -42,7 +42,7 @@ public class ChessElementsUtil {
 	}
 
 	public void updateUmlFunctionBehaviour(FunctionBehavior functionBehavior, Type dslVariableType,
-			EList<Type> parameters, HashMap<String, Boolean> mapFunctionBehaviors) {
+			EList<Type> parameters, HashMap<String, Boolean> mapFunctionBehaviorsToKeep) {
 
 		// Get all the existing parameters of the functionBehavior
 		final EList<org.eclipse.uml2.uml.Parameter> existingFunctionBehaviorParameters = functionBehavior
@@ -124,25 +124,25 @@ public class ChessElementsUtil {
 		// }
 
 		// Set the flag to signal the functionBehavior is still used
-		mapFunctionBehaviors.put(functionBehavior.getQualifiedName(), Boolean.TRUE);
+		mapFunctionBehaviorsToKeep.put(functionBehavior.getQualifiedName(), Boolean.TRUE);
 
 	}
 
 	// checked methods
 	public void updateUmlStaticPort(org.eclipse.uml2.uml.Port port, String[] newMultiplicityRange,
-			HashMap<String, Boolean> mapPorts) {
+			HashMap<String, Boolean> mapPortsToKeep) {
 
 		// Update its multiplicity if needed
 		entityUtil.updateUmlStaticPort(port, newMultiplicityRange);
 		// Set the flag to signal the port is still used
-		mapPorts.put(port.getQualifiedName(), Boolean.TRUE);
+		mapPortsToKeep.put(port.getQualifiedName(), Boolean.TRUE);
 		// continue;
 
 	}
 
 	public void updateUmlNonStaticPort(org.eclipse.uml2.uml.Port port, eu.fbk.tools.editor.oss.oss.Port ossPort,
 			Type newType, String[] newMultiplicityRange, FlowDirection portDirection, Stereotype flowPortStereotype,
-			HashMap<String, Boolean> mapPorts) {
+			HashMap<String, Boolean> mapPortsToKeep) {
 
 		// Port found, update its direction if needed
 		final FlowPort flowPort = (FlowPort) port.getStereotypeApplication(flowPortStereotype);
@@ -152,7 +152,7 @@ public class ChessElementsUtil {
 		// Update its type if needed
 		entityUtil.updateUmlNonStaticPort(port, newType, newMultiplicityRange);
 		// Set the flag to signal the port is still used
-		mapPorts.put(port.getQualifiedName(), Boolean.TRUE);
+		mapPortsToKeep.put(port.getQualifiedName(), Boolean.TRUE);
 
 		// Add the port to the list of changes NOT NEEDED BECAUSE
 		// DIAGRAMS ARE AUTO-UPDATING
@@ -161,19 +161,19 @@ public class ChessElementsUtil {
 	}
 
 	public void updateUmlRefinementFormalProperty(Constraint umlConstraint, String updatedText,
-			HashMap<String, Boolean> mapFormalProperties) {
+			HashMap<String, Boolean> mapFormalPropertiesToKeep) {
 
 		// Update the formal property if needed
 		entityUtil.updateUmlConstraint(umlConstraint, updatedText);
 
 		// Set the flag to signal the formal property is
 		// still used
-		mapFormalProperties.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
+		mapFormalPropertiesToKeep.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
 
 	}
 
 	public void updateUmlFormalProperty(Constraint umlConstraint, String assertionText,
-			HashMap<String, FormalProperty> hashFormalProperties, HashMap<String, Boolean> mapFormalProperties) {
+			HashMap<String, FormalProperty> hashFormalProperties, HashMap<String, Boolean> mapFormalPropertiesToKeep) {
 
 		// Update the formal property if needed
 		final String formalPropertyText = entityUtil.getConstraintBodyStr(umlConstraint);
@@ -191,12 +191,12 @@ public class ChessElementsUtil {
 
 		// Set the flag to signal the formal property is
 		// still used
-		mapFormalProperties.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
+		mapFormalPropertiesToKeep.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
 
 	}
 
 	public void updateUmlContract(Class umlContract, String ossAssumptionText, String ossGuaranteeText,
-			HashMap<String, Boolean> mapContractProperties, HashMap<String, Boolean> mapFormalProperties, Class owner) {
+			HashMap<String, Boolean> mapContractPropertiesToKeep, HashMap<String, Boolean> mapFormalPropertiesToKeep, Class owner) {
 
 		// The contract type is already present, update the
 		// formal properties if needed
@@ -204,7 +204,7 @@ public class ChessElementsUtil {
 		Constraint assumeFormalPropertyConstraint = contractEntityUtil.getAssumeFromUmlContract(umlContract)
 				.getBase_Constraint();
 
-		mapFormalProperties.put(assumeFormalPropertyConstraint.getQualifiedName(), Boolean.TRUE);
+		mapFormalPropertiesToKeep.put(assumeFormalPropertyConstraint.getQualifiedName(), Boolean.TRUE);
 		entityUtil.updateUmlConstraint(assumeFormalPropertyConstraint, ossAssumptionText);
 
 		Constraint guaranteeFormalPropertyConstraint = contractEntityUtil.getGuaranteeFromUmlContract(umlContract)
@@ -212,7 +212,7 @@ public class ChessElementsUtil {
 
 		// The formal property is the same, mark it as still
 		// used
-		mapFormalProperties.put(guaranteeFormalPropertyConstraint.getQualifiedName(), Boolean.TRUE);
+		mapFormalPropertiesToKeep.put(guaranteeFormalPropertyConstraint.getQualifiedName(), Boolean.TRUE);
 		entityUtil.updateUmlConstraint(guaranteeFormalPropertyConstraint, ossGuaranteeText);
 
 		// Set the flag to signal the contractProperty is still
@@ -220,18 +220,18 @@ public class ChessElementsUtil {
 		final ContractProperty contractProperty = (ContractProperty) chessSystemModel.getContract(owner,
 				// dslContract.getName() should be the same
 				umlContract.getName());
-		mapContractProperties.put(contractProperty.getBase_Property().getQualifiedName(), Boolean.TRUE);
+		mapContractPropertiesToKeep.put(contractProperty.getBase_Property().getQualifiedName(), Boolean.TRUE);
 
 	}
 
 	public void updateUmlAssociation(Property componentInstance, Type type, String[] ossSubComponentMultiplicity,
-			HashMap<String, Boolean> mapComponentInstances) {
+			HashMap<String, Boolean> mapComponentInstancesToKeep) throws Exception {
 
 		entityUtil.updateUmlAssociation(componentInstance, type, ossSubComponentMultiplicity);
 
 		// Set the flag to signal the componentInstance is still
 		// used
-		mapComponentInstances.put(componentInstance.getQualifiedName(), Boolean.TRUE);
+		mapComponentInstancesToKeep.put(componentInstance.getQualifiedName(), Boolean.TRUE);
 
 	}
 

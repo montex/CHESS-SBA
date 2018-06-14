@@ -82,7 +82,7 @@ public class OssTypeTranslator {
 			logger.debug("SignedWordType");
 		} else if (dslType instanceof ContinuousType) {
 			logger.debug("ContinuousType");
-			return entityUtil.getContinuousType("Continuous");
+			return entityUtil.getContinuousType();
 		} else if (dslType instanceof EventType) {
 			logger.debug("EventType");
 			return entityUtil.getOrCreateSignalType(pkg);
