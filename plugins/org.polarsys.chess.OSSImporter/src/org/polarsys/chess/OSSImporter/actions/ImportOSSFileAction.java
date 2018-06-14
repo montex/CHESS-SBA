@@ -63,12 +63,12 @@ import eu.fbk.tools.editor.oss.oss.Port;
 import eu.fbk.tools.editor.oss.oss.RefinedBy;
 import eu.fbk.tools.editor.oss.oss.Operation;
 import eu.fbk.tools.editor.oss.oss.Parameter;
+import eu.fbk.tools.editor.oss.oss.ParameterAssumptions;
 import eu.fbk.tools.editor.oss.oss.Refinement;
 import eu.fbk.tools.editor.oss.oss.RefinementInstance;
 import eu.fbk.tools.editor.oss.oss.SubComponent;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -189,7 +189,7 @@ public class ImportOSSFileAction {
 	 *            the AST Component owning the refinement
 	 * @param dslComponentRefinement
 	 *            the Refinement element to be parsed
-	 * @throws ImportException
+	 * @throws Exception
 	 */
 	private void parseRefinements(AbstractComponent dslParentComponent, Refinement dslComponentRefinement)
 			throws ImportException {
@@ -204,10 +204,10 @@ public class ImportOSSFileAction {
 				.getSubComponentsInstances(owner);
 
 		// Prepare the map to mark existing component instances
-		HashMap<String, Boolean> mapComponentInstances = Maps
+		HashMap<String, Boolean> mapComponentInstancesToKeep = Maps
 				.newHashMapWithExpectedSize(existingComponentInstances.size());
 		for (Property componentInstance : existingComponentInstances) {
-			mapComponentInstances.put(componentInstance.getQualifiedName(), null);
+			mapComponentInstancesToKeep.put(componentInstance.getQualifiedName(), null);
 		}
 
 		// Get all the existing connectors of the element
@@ -217,29 +217,29 @@ public class ImportOSSFileAction {
 		// EList<Connector> connectors = owner.getOwnedConnectors();
 
 		// Prepare the map to mark existing connectors
-		HashMap<String, Boolean> mapConnectors = Maps.newHashMapWithExpectedSize(existingConnectors.size());
+		HashMap<String, Boolean> mapConnectorsToKeep = Maps.newHashMapWithExpectedSize(existingConnectors.size());
 		for (Connector connector : existingConnectors) {
-			mapConnectors.put(connector.getQualifiedName(), null);
+			mapConnectorsToKeep.put(connector.getQualifiedName(), null);
 		}
 
 		// Get all the existing delegation contraints of the element
 		EList<Constraint> existingDelegationConstraints = entityUtil.getDelegationConstraintsAsUMLConstraints(owner);
 
 		// Prepare the map to mark existing delegation contraints
-		HashMap<String, Boolean> mapDelegationContraints = Maps
+		HashMap<String, Boolean> mapDelegationContraintsToKeep = Maps
 				.newHashMapWithExpectedSize(existingDelegationConstraints.size());
 		for (Constraint delegationConstraint : existingDelegationConstraints) {
-			mapDelegationContraints.put(delegationConstraint.getQualifiedName(), null);
+			mapDelegationContraintsToKeep.put(delegationConstraint.getQualifiedName(), null);
 		}
 
 		// Get all the contract refinements of the element
 		EList<DataType> existingContractRefinements = entityUtil.getDataTypes(owner);
 
 		// Prepare the map to mark existing contract refinements
-		HashMap<String, Boolean> mapContractRefinements = Maps
+		HashMap<String, Boolean> mapContractRefinementsToKeep = Maps
 				.newHashMapWithExpectedSize(existingContractRefinements.size());
 		for (Classifier contractRefinement : existingContractRefinements) {
-			mapContractRefinements.put(contractRefinement.getQualifiedName(), null);
+			mapContractRefinementsToKeep.put(contractRefinement.getQualifiedName(), null);
 		}
 
 		// Get all the refinement formal properties
@@ -248,10 +248,10 @@ public class ImportOSSFileAction {
 				.getRefinementAssertions(owner);
 
 		// Prepare the map to mark existing formal properties
-		final HashMap<String, Boolean> mapFormalProperties = Maps
+		final HashMap<String, Boolean> mapFormalPropertiesToKeep = Maps
 				.newHashMapWithExpectedSize(existingFormalProperties.size());
 		for (Constraint formalProperty : existingFormalProperties) {
-			mapFormalProperties.put(formalProperty.getQualifiedName(), null);
+			mapFormalPropertiesToKeep.put(formalProperty.getQualifiedName(), null);
 		}
 
 		// If some RefinementInstances are present, loop on them
@@ -261,16 +261,16 @@ public class ImportOSSFileAction {
 				// Process the different types of refinements
 				if (containsSubComponent(dslRefInstance)) {
 
-					parseSubComponent(dslRefInstance.getSubcomponent(), mapComponentInstances, owner);
+					parseSubComponent(dslRefInstance.getSubcomponent(), mapComponentInstancesToKeep, owner);
 
 				} else if (containsConnection(dslRefInstance)) {
 					logger.debug("parse connection");
 					parseConnection(dslRefInstance.getConnection(), existingConnectors, existingDelegationConstraints,
-							mapConnectors, mapDelegationContraints, owner);
+							mapConnectorsToKeep, mapDelegationContraintsToKeep, owner);
 
 				} else if (containsRefinedBy(dslRefInstance)) {
 
-					parseRefinedBy(dslRefInstance.getRefinedby(), mapContractRefinements, owner);
+					parseRefinedBy(dslRefInstance.getRefinedby(), mapContractRefinementsToKeep, owner);
 
 				} else if (containsFormula(dslRefInstance)) {
 
@@ -281,17 +281,29 @@ public class ImportOSSFileAction {
 					// PROP processing
 					addImportError("Found a PROP tag, don't know how to handle it!");
 				} else if (containsAssertion(dslRefInstance)) {
-					parseRefinementAssertion(dslRefInstance.getAssertion(), mapFormalProperties, owner);
+					parseRefinementAssertion(dslRefInstance.getAssertion(), mapFormalPropertiesToKeep, owner);
 				} else if (dslRefInstance != null) {
 					addImportError("Found a " + getTextOfTag(dslRefInstance) + " tag, don't know how to handle it!");
 				}
 			}
 		}
 
+		removeUnusedRefinementElements(mapComponentInstancesToKeep, existingComponentInstances, mapConnectorsToKeep,
+				existingConnectors, mapDelegationContraintsToKeep, existingDelegationConstraints,
+				mapContractRefinementsToKeep, existingContractRefinements, mapFormalPropertiesToKeep,
+				existingFormalProperties);
+	}
+
+	private void removeUnusedRefinementElements(HashMap<String, Boolean> mapComponentInstancesToKeep,
+			EList<Property> existingComponentInstances, HashMap<String, Boolean> mapConnectorsToKeep,
+			EList<Connector> existingConnectors, HashMap<String, Boolean> mapDelegationContraintsToKeep,
+			EList<Constraint> existingDelegationConstraints, HashMap<String, Boolean> mapContractRefinementsToKeep,
+			EList<DataType> existingContractRefinements, HashMap<String, Boolean> mapFormalPropertiesToKeep,
+			EList<Constraint> existingFormalProperties) {
 		// Component instances cleanup time, associations will be removed
 		// automatically
-		for (String qualifiedElement : mapComponentInstances.keySet()) {
-			if (mapComponentInstances.get(qualifiedElement) == null) {
+		for (String qualifiedElement : mapComponentInstancesToKeep.keySet()) {
+			if (mapComponentInstancesToKeep.get(qualifiedElement) == null) {
 				// System.out.println("component instance " + qualifiedElement +
 				// " should be removed");
 				entityUtil.removeProperty(existingComponentInstances, qualifiedElement);
@@ -299,8 +311,8 @@ public class ImportOSSFileAction {
 		}
 
 		// Connectors cleanup time
-		for (String qualifiedElement : mapConnectors.keySet()) {
-			if (mapConnectors.get(qualifiedElement) == null) {
+		for (String qualifiedElement : mapConnectorsToKeep.keySet()) {
+			if (mapConnectorsToKeep.get(qualifiedElement) == null) {
 				// System.out.println("connector " + qualifiedElement + " should
 				// be removed");
 				entityUtil.removeConnector(existingConnectors, qualifiedElement);
@@ -308,8 +320,8 @@ public class ImportOSSFileAction {
 		}
 
 		// Delegation constraints cleanup time
-		for (String qualifiedElement : mapDelegationContraints.keySet()) {
-			if (mapDelegationContraints.get(qualifiedElement) == null) {
+		for (String qualifiedElement : mapDelegationContraintsToKeep.keySet()) {
+			if (mapDelegationContraintsToKeep.get(qualifiedElement) == null) {
 				// System.out.println("delegation constraint " +
 				// qualifiedElement + " should be removed");
 				entityUtil.removeDelegationConstraint(existingDelegationConstraints, qualifiedElement);
@@ -317,8 +329,8 @@ public class ImportOSSFileAction {
 		}
 
 		// Contract refinements cleanup time
-		for (String qualifiedElement : mapContractRefinements.keySet()) {
-			if (mapContractRefinements.get(qualifiedElement) == null) {
+		for (String qualifiedElement : mapContractRefinementsToKeep.keySet()) {
+			if (mapContractRefinementsToKeep.get(qualifiedElement) == null) {
 				// System.out.println("contract refinement " + qualifiedElement
 				// + " should be removed");
 				contractEntityUtil.removeContractRefinement(existingContractRefinements, qualifiedElement);
@@ -326,13 +338,14 @@ public class ImportOSSFileAction {
 		}
 
 		// Formal properties cleanup time
-		for (String qualifiedElement : mapFormalProperties.keySet()) {
-			if (mapFormalProperties.get(qualifiedElement) == null) {
+		for (String qualifiedElement : mapFormalPropertiesToKeep.keySet()) {
+			if (mapFormalPropertiesToKeep.get(qualifiedElement) == null) {
 				// System.out.println("formalProperty " + qualifiedElement + "
 				// should be removed");
 				entityUtil.removeFormalProperty(existingFormalProperties, qualifiedElement);
 			}
 		}
+
 	}
 
 	private boolean containsAssertion(RefinementInstance dslRefInstance) {
@@ -359,7 +372,7 @@ public class ImportOSSFileAction {
 		return dslRefInstance != null && dslRefInstance.getSubcomponent() != null;
 	}
 
-	private void parseRefinementAssertion(Assertion assertion, HashMap<String, Boolean> mapFormalProperties,
+	private void parseRefinementAssertion(Assertion assertion, HashMap<String, Boolean> mapFormalPropertiesToKeep,
 			Class owner) {
 
 		// ASSERTION processing
@@ -377,13 +390,15 @@ public class ImportOSSFileAction {
 		} else {
 			if (entityUtil.isFormalProperty(umlConstraint)) {
 				logger.debug("Formal property already present");
-				chessElementsUtil.updateUmlRefinementFormalProperty(umlConstraint, assertionText, mapFormalProperties);
+				chessElementsUtil.updateUmlRefinementFormalProperty(umlConstraint, assertionText,
+						mapFormalPropertiesToKeep);
 			}
 		}
 
 	}
 
-	private void parseRefinedBy(RefinedBy refinement, HashMap<String, Boolean> mapContractRefinements, Class owner) {
+	private void parseRefinedBy(RefinedBy refinement, HashMap<String, Boolean> mapContractRefinementsToKeep,
+			Class owner) {
 
 		// REFINEDBY processing
 		// final RefinedBy refinement = dslRefInstance.getRefinedby();
@@ -417,6 +432,9 @@ public class ImportOSSFileAction {
 			// defined
 			final Class refiningComponent = (Class) refiningComponentInstance.getType();
 
+			logger.debug("refiningComponent: " + refiningComponent);
+			logger.debug("contractId.getName(): " + contractId.getName());
+
 			// The refining contract property
 			final Property refiningProperty = contractEntityUtil
 					.getUmlContractPropertyOfUmlComponentFromContractPropertyType(refiningComponent,
@@ -436,7 +454,8 @@ public class ImportOSSFileAction {
 
 					// Set the flag to signal the contract
 					// refinement is still used
-					mapContractRefinements.put(contractRefinement.getBase_DataType().getQualifiedName(), Boolean.TRUE);
+					mapContractRefinementsToKeep.put(contractRefinement.getBase_DataType().getQualifiedName(),
+							Boolean.TRUE);
 					alreadyLinked = true;
 					break;
 				}
@@ -463,14 +482,14 @@ public class ImportOSSFileAction {
 
 	private void parseConnection(Connection connection, EList<Connector> existingConnectors,
 			EList<Constraint> existingDelegationConstraints, HashMap<String, Boolean> mapConnectors,
-			HashMap<String, Boolean> mapDelegationContraints, Class owner) {
+			HashMap<String, Boolean> mapDelegationContraintsToKeep, Class owner) {
 
 		// CONNECTION processing
 		// final Connection connection = dslRefInstance.getConnection();
 		final VariableId variable = connection.getVariable();
 		final Expression constraint = connection.getConstraint();
 		final IterativeCondition iterCondition = connection.getIterativeCondition();
-		if (ossModelUtil.isSimpleConnection(variable, constraint, iterCondition)) {
+		if (ossModelUtil.isSimplePortToPortConnection(variable, constraint, iterCondition)) {
 
 			// Details of the connector ends
 			String variablePortOwner = ossModelUtil.getNearestComponentName(variable);
@@ -510,24 +529,29 @@ public class ImportOSSFileAction {
 			// chessElementsUtil.getConstraintText(constraint);
 			String constraintText = ossModelUtil.getOssElementAsString(constraint, true);
 			String variableIdText = ossModelUtil.getOssElementAsString(variable, true);
+			String iterConditionText = null;
+			if (iterCondition != null) {
+				iterConditionText = ossModelUtil.getOssElementAsString(iterCondition, true);
+			}
 			if ((delegationConstraint = entityUtil.getExistingDelegationConstraint(existingDelegationConstraints,
-					variableIdText, constraintText)) != null) {
+					variableIdText, iterConditionText, constraintText)) != null) {
 				logger.debug("delegation constraint already present");
 
 				// Set the flag to signal the delegation constraint
 				// is still used
-				mapDelegationContraints.put(delegationConstraint.getQualifiedName(), Boolean.TRUE);
+				mapDelegationContraintsToKeep.put(delegationConstraint.getQualifiedName(), Boolean.TRUE);
 				// continue;
 				return;
 			} else {
 				logger.debug("delegation constraint is not present");
 				logger.debug("variableIdText: " + variableIdText);
 				logger.debug("constraintText: " + constraintText);
+				logger.debug("iterConditionText: " + iterConditionText);
 				// Create a delegation constraint, can be a
 				// LogicalExpression, IntegerLiteral,
 				// AddSubExpression, ...
 				addedElements.add(entityUtil.createDelegationConstraint(owner, variableIdText, constraintText,
-						stereotypeUtil.delegationConstraintStereotype));
+						iterConditionText, stereotypeUtil.delegationConstraintStereotype));
 				// continue;
 				return;
 			}
@@ -543,7 +567,8 @@ public class ImportOSSFileAction {
 	}
 
 	private boolean isDelegationConstraint(VariableId variable, Expression constraint, Class owner) {
-		return !(constraint instanceof FullPortId)
+		return !(constraint instanceof FullPortId) || (ossModelUtil.isVariableWithArray((FullPortId) constraint))
+				|| !(variable instanceof FullPortId) || (ossModelUtil.isVariableWithArray((FullPortId) variable))
 				|| (isFunctionBehavior(owner, variable) && isFunctionBehavior(owner, constraint));
 	}
 
@@ -571,8 +596,8 @@ public class ImportOSSFileAction {
 		return partWithPort;
 	}
 
-	private void parseSubComponent(SubComponent subComponent, HashMap<String, Boolean> mapComponentInstances,
-			Class owner) {
+	private void parseSubComponent(SubComponent subComponent, HashMap<String, Boolean> mapComponentInstancesToKeep,
+			Class owner) throws ImportException {
 
 		// SubComponent subComponent = dslRefInstance.getSubcomponent();
 		// SUB processing
@@ -602,8 +627,12 @@ public class ImportOSSFileAction {
 				// needs to be redrawn
 				addedElements.add(componentInstance.getAssociation());
 			}
-			chessElementsUtil.updateUmlAssociation(componentInstance, subComponentType, mulitplicityBoundaries,
-					mapComponentInstances);
+			try {
+				chessElementsUtil.updateUmlAssociation(componentInstance, subComponentType, mulitplicityBoundaries,
+						mapComponentInstancesToKeep);
+			} catch (Exception e) {
+				throw new ImportException(e.getMessage());
+			}
 		}
 
 	}
@@ -620,7 +649,7 @@ public class ImportOSSFileAction {
 	private HashMap<String, FormalProperty> prepareFormalPropertiesMap(EList<Constraint> existingFormalProperties) {
 		final HashMap<String, FormalProperty> map = Maps.newHashMapWithExpectedSize(existingFormalProperties.size());
 
-		// If the constaint is a formal property, store it
+		// If the constraint is a formal property, store it
 		for (Constraint constraint : existingFormalProperties) {
 			final FormalProperty formalProperty = entityUtil.getFormalProperty(constraint);
 			if (formalProperty != null) {
@@ -654,9 +683,9 @@ public class ImportOSSFileAction {
 		existingNonStaticPorts.addAll((Collection<? extends NamedElement>) chessSystemModel.getStaticPorts(owner));
 
 		// Prepare the map to mark existing ports
-		final HashMap<String, Boolean> mapPorts = Maps.newHashMapWithExpectedSize(existingNonStaticPorts.size());
+		final HashMap<String, Boolean> mapPortsToKeep = Maps.newHashMapWithExpectedSize(existingNonStaticPorts.size());
 		for (NamedElement port : existingNonStaticPorts) {
-			mapPorts.put(port.getQualifiedName(), null);
+			mapPortsToKeep.put(port.getQualifiedName(), null);
 		}
 
 		// Get all the existing contract properties
@@ -664,10 +693,10 @@ public class ImportOSSFileAction {
 				.getContractsOfComponent(owner);
 
 		// Prepare the map to mark existing contracts
-		final HashMap<String, Boolean> mapContractProperties = Maps
+		final HashMap<String, Boolean> mapContractPropertiesToKeep = Maps
 				.newHashMapWithExpectedSize(existingContractProperties.size());
 		for (ContractProperty contractProperty : existingContractProperties) {
-			mapContractProperties.put(contractProperty.getBase_Property().getQualifiedName(), null);
+			mapContractPropertiesToKeep.put(contractProperty.getBase_Property().getQualifiedName(), null);
 		}
 
 		// Get all the interface formal properties
@@ -679,20 +708,31 @@ public class ImportOSSFileAction {
 				existingFormalProperties);
 
 		// Prepare the map to mark existing formal properties
-		final HashMap<String, Boolean> mapFormalProperties = Maps
+		final HashMap<String, Boolean> mapFormalPropertiesToKeep = Maps
 				.newHashMapWithExpectedSize(existingFormalProperties.size());
 		for (Constraint formalProperty : existingFormalProperties) {
-			mapFormalProperties.put(formalProperty.getQualifiedName(), null);
+			mapFormalPropertiesToKeep.put(formalProperty.getQualifiedName(), null);
+		}
+
+		// Get all the parameter assumptions
+		final EList<Constraint> existingParameterAssumptions = (EList<Constraint>) chessSystemModel
+				.getParameterAssumptions(owner);
+
+		// Prepare the map to mark existing parameter assumptions
+		final HashMap<String, Boolean> mapParameterAssumptionsToKeep = Maps
+				.newHashMapWithExpectedSize(existingParameterAssumptions.size());
+		for (Constraint parameterAssumptions : existingParameterAssumptions) {
+			mapParameterAssumptionsToKeep.put(parameterAssumptions.getQualifiedName(), null);
 		}
 
 		// Get all the functionBehaviors
 		final EList<Behavior> existingFunctionBehaviors = owner.getOwnedBehaviors();
 
 		// Prepare the map to mark existing functionBehaviors
-		final HashMap<String, Boolean> mapFunctionBehaviors = Maps
+		final HashMap<String, Boolean> mapFunctionBehaviorsToKeep = Maps
 				.newHashMapWithExpectedSize(existingFunctionBehaviors.size());
 		for (Behavior behavior : existingFunctionBehaviors) {
-			mapFunctionBehaviors.put(behavior.getQualifiedName(), null);
+			mapFunctionBehaviorsToKeep.put(behavior.getQualifiedName(), null);
 		}
 
 		// If some InterfaceInstances are present, loop on them
@@ -705,11 +745,11 @@ public class ImportOSSFileAction {
 					final Variable dslVariable = dslIntInstance.getVariable();
 
 					if (dslVariable instanceof Port) {
-						parsePort((Port) dslVariable, existingNonStaticPorts, mapPorts, owner);
+						parsePort((Port) dslVariable, existingNonStaticPorts, mapPortsToKeep, owner);
 
 					} else if (dslVariable instanceof Parameter) {
-						parseParameter((Parameter) dslVariable, mapFunctionBehaviors, existingNonStaticPorts, mapPorts,
-								owner);
+						parseParameter((Parameter) dslVariable, mapFunctionBehaviorsToKeep, existingNonStaticPorts,
+								mapPortsToKeep, owner);
 
 					} else if (dslVariable instanceof Operation) {
 						addImportError("Found a OPERATION tag, don't know how to handle it!");
@@ -722,11 +762,16 @@ public class ImportOSSFileAction {
 					addImportError("Found a DEFINE tag, don't know how to handle it!");
 				} else if (containsContract(dslIntInstance)) {
 					// CONTRACT processing
-					parseContract(dslIntInstance.getContract(), hashFormalProperties, mapFormalProperties,
-							mapContractProperties, owner);
+					parseContract(dslIntInstance.getContract(), hashFormalProperties, mapFormalPropertiesToKeep,
+							mapContractPropertiesToKeep, owner);
 				} else if (containsAssertion(dslIntInstance)) {
 					// ASSERTION processing
-					parseAssertion(dslIntInstance.getAssertion(), hashFormalProperties, mapFormalProperties, owner);
+					parseAssertion(dslIntInstance.getAssertion(), hashFormalProperties, mapFormalPropertiesToKeep,
+							owner);
+				} else if (containsParameterAssumptions(dslIntInstance)) {
+					// ASSERTION processing
+					parseParameterAssumptions(dslIntInstance.getParameterAssumptions(), mapParameterAssumptionsToKeep,
+							owner);
 				} else if (dslIntInstance != null) {
 					addImportError("Found a " + getTextOfTag(dslIntInstance) + " tag, don't know how to handle it!");
 				}
@@ -734,18 +779,50 @@ public class ImportOSSFileAction {
 		}
 
 		// Elements cleanup time
-		removeElements(mapPorts, existingNonStaticPorts, mapContractProperties, existingContractProperties,
-				mapFormalProperties, existingFormalProperties, mapFunctionBehaviors, existingFunctionBehaviors);
+		removeUnusedInterfaceElements(mapPortsToKeep, existingNonStaticPorts, mapContractPropertiesToKeep,
+				existingContractProperties, mapFormalPropertiesToKeep, existingFormalProperties,
+				mapParameterAssumptionsToKeep, existingParameterAssumptions, mapFunctionBehaviorsToKeep,
+				existingFunctionBehaviors);
 
 	}
 
-	private void removeElements(HashMap<String, Boolean> mapPorts, EList<NamedElement> existingNonStaticPorts,
-			HashMap<String, Boolean> mapContractProperties, EList<ContractProperty> existingContractProperties,
-			HashMap<String, Boolean> mapFormalProperties, EList<Constraint> existingFormalProperties,
-			HashMap<String, Boolean> mapFunctionBehaviors, EList<Behavior> existingFunctionBehaviors) {
+	private void parseParameterAssumptions(ParameterAssumptions parameterAssumptions,
+			HashMap<String, Boolean> mapParameterAssumptionsToKeep, Class owner) {
+
+		final String parameterAssumptionsText = ossModelUtil.getOssElementAsString(parameterAssumptions.getConstraint(),
+				true);
+
+		// Retrieve the constraint from the owner, if any
+		// (working on the constraint text)
+		Constraint umlConstraint = entityUtil.getUmlConstraintFromText(parameterAssumptionsText, owner);
+
+		if (umlConstraint == null || !entityUtil.isParameterAssumption(umlConstraint)) {
+			logger.debug("Parameter assumptions non found, creating one");
+			addedElements.add(entityUtil.createUmlConstraint(owner, parameterAssumptionsText));
+		} else {
+			if (entityUtil.isParameterAssumption(umlConstraint)) {
+				logger.debug("Parameter assumptions already present");
+				// Set the flag to signal the Parameter Assumptions is
+				// still used
+				mapParameterAssumptionsToKeep.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
+			}
+		}
+
+	}
+
+	private boolean containsParameterAssumptions(InterfaceInstance dslIntInstance) {
+		return dslIntInstance != null && dslIntInstance.getParameterAssumptions() != null;
+	}
+
+	private void removeUnusedInterfaceElements(HashMap<String, Boolean> mapPortsToKeep,
+			EList<NamedElement> existingNonStaticPorts, HashMap<String, Boolean> mapContractPropertiesToKeep,
+			EList<ContractProperty> existingContractProperties, HashMap<String, Boolean> mapFormalPropertiesToKeep,
+			EList<Constraint> existingFormalProperties, HashMap<String, Boolean> mapParameterAssumptionsToKeep,
+			EList<Constraint> existingParameterAssumptions, HashMap<String, Boolean> mapFunctionBehaviorsToKeep,
+			EList<Behavior> existingFunctionBehaviors) {
 		// Ports cleanup time
-		for (String qualifiedElement : mapPorts.keySet()) {
-			if (mapPorts.get(qualifiedElement) == null) {
+		for (String qualifiedElement : mapPortsToKeep.keySet()) {
+			if (mapPortsToKeep.get(qualifiedElement) == null) {
 				// System.out.println("port " + qualifiedElement + " should be
 				// removed");
 				entityUtil.removePort(existingNonStaticPorts, qualifiedElement);
@@ -755,8 +832,8 @@ public class ImportOSSFileAction {
 		// Contracts cleanup time
 		// ** Contract instances and contract types are removed, but not their
 		// formal properties and refinements!
-		for (String qualifiedElement : mapContractProperties.keySet()) {
-			if (mapContractProperties.get(qualifiedElement) == null) {
+		for (String qualifiedElement : mapContractPropertiesToKeep.keySet()) {
+			if (mapContractPropertiesToKeep.get(qualifiedElement) == null) {
 				// System.out.println("contractProperty " + qualifiedElement + "
 				// should be removed");
 				contractEntityUtil.removeContractProperty(existingContractProperties, qualifiedElement);
@@ -764,17 +841,26 @@ public class ImportOSSFileAction {
 		}
 
 		// Formal properties cleanup time
-		for (String qualifiedElement : mapFormalProperties.keySet()) {
-			if (mapFormalProperties.get(qualifiedElement) == null) {
+		for (String qualifiedElement : mapFormalPropertiesToKeep.keySet()) {
+			if (mapFormalPropertiesToKeep.get(qualifiedElement) == null) {
 				// System.out.println("formalProperty " + qualifiedElement + "
 				// should be removed");
 				entityUtil.removeFormalProperty(existingFormalProperties, qualifiedElement);
 			}
 		}
 
+		// Parameter Assumptions cleanup time
+		for (String qualifiedElement : mapParameterAssumptionsToKeep.keySet()) {
+			if (mapParameterAssumptionsToKeep.get(qualifiedElement) == null) {
+				// System.out.println("formalProperty " + qualifiedElement + "
+				// should be removed");
+				entityUtil.removeParameterAssumptions(existingParameterAssumptions, qualifiedElement);
+			}
+		}
+
 		// FunctionBehavior cleanup time
-		for (String qualifiedElement : mapFunctionBehaviors.keySet()) {
-			if (mapFunctionBehaviors.get(qualifiedElement) == null) {
+		for (String qualifiedElement : mapFunctionBehaviorsToKeep.keySet()) {
+			if (mapFunctionBehaviorsToKeep.get(qualifiedElement) == null) {
 				// System.out.println("functionBehavior " + qualifiedElement + "
 				// should be removed");
 				entityUtil.removeFunctionBehavior(existingFunctionBehaviors, qualifiedElement);
@@ -830,7 +916,8 @@ public class ImportOSSFileAction {
 	}
 
 	private void parseContract(Contract dslContract, HashMap<String, FormalProperty> hashFormalProperties,
-			HashMap<String, Boolean> mapFormalProperties, HashMap<String, Boolean> mapContractProperties, Class owner) {
+			HashMap<String, Boolean> mapFormalPropertiesToKeep, HashMap<String, Boolean> mapContractPropertiesToKeep,
+			Class owner) {
 		// parseContract();
 		// final Contract dslContract = dslIntInstance.getContract();
 		final Assumption dslAssumption = dslContract.getAssumption();
@@ -853,8 +940,8 @@ public class ImportOSSFileAction {
 			addedElements.add(umlContract);
 		} else {
 			logger.debug("Contract already present");
-			chessElementsUtil.updateUmlContract(umlContract, ossAssumptionText, ossGuaranteeText, mapContractProperties,
-					mapFormalProperties, owner);
+			chessElementsUtil.updateUmlContract(umlContract, ossAssumptionText, ossGuaranteeText,
+					mapContractPropertiesToKeep, mapFormalPropertiesToKeep, owner);
 		}
 
 	}
@@ -877,7 +964,7 @@ public class ImportOSSFileAction {
 		}
 	}
 
-	private void parsePort(Port ossPort, EList<NamedElement> existingPorts, HashMap<String, Boolean> mapPorts,
+	private void parsePort(Port ossPort, EList<NamedElement> existingPorts, HashMap<String, Boolean> mapPortsToKeep,
 			Class owner) throws ImportException {
 		// PORT processing
 		// final VariableId dslVariableID = ossPort.getId();
@@ -898,10 +985,10 @@ public class ImportOSSFileAction {
 		if (port != null) {
 			if (ossPort instanceof InputPort) {
 				chessElementsUtil.updateUmlNonStaticPort(port, ossPort, newPortType, newMultiplicityRange,
-						FlowDirection.IN, stereotypeUtil.flowPortStereotype, mapPorts);
+						FlowDirection.IN, stereotypeUtil.flowPortStereotype, mapPortsToKeep);
 			} else if (ossPort instanceof OutputPort) {
 				chessElementsUtil.updateUmlNonStaticPort(port, ossPort, newPortType, newMultiplicityRange,
-						FlowDirection.OUT, stereotypeUtil.flowPortStereotype, mapPorts);
+						FlowDirection.OUT, stereotypeUtil.flowPortStereotype, mapPortsToKeep);
 			}
 		} else {
 			logger.debug("Port not found, creating it");
@@ -917,8 +1004,8 @@ public class ImportOSSFileAction {
 
 	}
 
-	private void parseParameter(Parameter dslVariable, HashMap<String, Boolean> mapFunctionBehaviors,
-			EList<NamedElement> existingNonStaticPorts, HashMap<String, Boolean> mapPorts, Class owner)
+	private void parseParameter(Parameter dslVariable, HashMap<String, Boolean> mapFunctionBehaviorsToKeep,
+			EList<NamedElement> existingNonStaticPorts, HashMap<String, Boolean> mapPortsToKeep, Class owner)
 			throws ImportException {
 
 		// PARAMETER processing
@@ -930,16 +1017,16 @@ public class ImportOSSFileAction {
 		final EList<SimpleType> parameters = dslVariable.getParameters();
 		if (parameters.size() != 0) {
 			parseParameterAsUmlFunctionBehaviour(dslVariable.getId(), ossParameterType, parameters,
-					mapFunctionBehaviors, owner);
+					mapFunctionBehaviorsToKeep, owner);
 		} else {
-			parseParameterAsUmlStaticPort(dslVariable.getId(), ossParameterType, existingNonStaticPorts, mapPorts,
+			parseParameterAsUmlStaticPort(dslVariable.getId(), ossParameterType, existingNonStaticPorts, mapPortsToKeep,
 					owner);
 		}
 
 	}
 
 	private void parseParameterAsUmlStaticPort(String ossParameterName, SimpleType ossParameterType,
-			EList<NamedElement> existingStaticPorts, HashMap<String, Boolean> mapPorts, Class owner)
+			EList<NamedElement> existingStaticPorts, HashMap<String, Boolean> mapPortsToKeep, Class owner)
 			throws ImportException {
 		// Convert the parameter to a static port
 		// Check if the port is already present
@@ -967,7 +1054,7 @@ public class ImportOSSFileAction {
 
 		if (staticPort != null) {
 			logger.debug("Port already present");
-			chessElementsUtil.updateUmlStaticPort(staticPort, newMultiplicityRange, mapPorts);
+			chessElementsUtil.updateUmlStaticPort(staticPort, newMultiplicityRange, mapPortsToKeep);
 		} else {
 			// Create the port and mark it
 			addedElements.add(entityUtil.createStaticPort(owner, ossParameterName, newParameterType,
@@ -978,7 +1065,7 @@ public class ImportOSSFileAction {
 	}
 
 	private void parseParameterAsUmlFunctionBehaviour(String parameterName, SimpleType ossParameterType,
-			EList<SimpleType> parameters, HashMap<String, Boolean> mapFunctionBehaviors, Class owner)
+			EList<SimpleType> parameters, HashMap<String, Boolean> mapFunctionBehaviorsToKeep, Class owner)
 			throws ImportException {
 
 		// Check if the functionBehavior is already present
@@ -1001,7 +1088,7 @@ public class ImportOSSFileAction {
 		} else {
 			logger.debug("functionBehavior already present");
 			chessElementsUtil.updateUmlFunctionBehaviour(functionBehavior, newParameterType, newParameterTypes,
-					mapFunctionBehaviors);
+					mapFunctionBehaviorsToKeep);
 		}
 
 	}
@@ -1036,7 +1123,7 @@ public class ImportOSSFileAction {
 	 * 
 	 * @param dslParentComponent
 	 *            the element in the tree
-	 * @throws ImportException
+	 * @throws Exception
 	 */
 	private void parseComponentRefinements(AbstractComponent dslParentComponent) throws ImportException {
 
@@ -1054,7 +1141,7 @@ public class ImportOSSFileAction {
 	 * 
 	 * @throws Exception
 	 */
-	public StringBuffer startParsing(Package pkg, File ossFile) throws Exception, ImportException, IOException {
+	public StringBuffer startParsing(Package pkg, File ossFile) throws Exception {
 		OSS ocraOssFile;
 		sysView = pkg; // Set the given package as working package
 
