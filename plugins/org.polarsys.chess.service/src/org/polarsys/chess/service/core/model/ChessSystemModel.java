@@ -806,8 +806,8 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 
 	@Override
-	public String[] getComponentInstanceMultiplicityBoundaries(Object component) {
-		return entityUtil.getComponentInstanceMultiplicity((Element) component);
+	public String[] getComponentInstanceMultiplicityBoundaries(Object component) throws Exception{
+		return entityUtil.getComponentInstanceMultiplicity((Property) component);
 	}
 
 	@Override
@@ -838,6 +838,22 @@ public class ChessSystemModel implements AbstractSystemModel {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public EList<?> getParameterAssumptions(Object component) {
+		
+		return entityUtil.getParameterAssumptionsAsConstraintsUml((Element) component);
+	}
+
+	@Override
+	public String getParameterAssumptionsBody(Object parameterAssumption) {
+		return entityUtil.getConstraintBodyStr((Constraint) parameterAssumption);
+	}
+
+	@Override
+	public boolean isParameterAssumptions(Object element) {
+		return entityUtil.isParameterAssumption((Element)element);
 	}
 
 }
