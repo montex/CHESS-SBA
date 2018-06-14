@@ -35,6 +35,9 @@ public class CustomPropertyEditorTab extends PropertyEditorTab {
 			if (getSystemModel().isAssertion(umlConstraint)) {
 				return umlConstraint;
 			}
+			if (getSystemModel().isParameterAssumptions(umlConstraint)) {
+				return umlConstraint;
+			}
 		}
 
 		return null;
