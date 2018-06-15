@@ -490,7 +490,7 @@ public class ImportOSSFileAction {
 		final Expression constraint = connection.getConstraint();
 		final IterativeCondition iterCondition = connection.getIterativeCondition();
 		if (ossModelUtil.isSimplePortToPortConnection(variable, constraint, iterCondition)) {
-
+logger.debug("isSimplePortToPortConnection");
 			// Details of the connector ends
 			String variablePortOwner = ossModelUtil.getNearestComponentName(variable);
 			String variablePortName = ossModelUtil.getPortName(variable);
@@ -523,7 +523,7 @@ public class ImportOSSFileAction {
 		} else
 		// It could be a delegation constraint, check it
 		if (isDelegationConstraint(variable, constraint, owner)) {
-
+			logger.debug("isDelegationConstraint");
 			Constraint delegationConstraint = null;
 			// String constraintText =
 			// chessElementsUtil.getConstraintText(constraint);
@@ -609,7 +609,7 @@ public class ImportOSSFileAction {
 
 		String[] mulitplicityBoundaries = ossModelUtil
 				.getMultiplicityBoundariesFromOssSubComponentType(subComponent.getType());
-		logger.debug("\tsubcomponent mulitplicityBoundaries = " + mulitplicityBoundaries[0] + " , "
+		logger.debug("\tsubcomponent multiplicityBoundaries = " + mulitplicityBoundaries[0] + " , "
 				+ mulitplicityBoundaries[1]);
 		final Type subComponentType = (Type) dslTypeToComponent.get(subType);
 
