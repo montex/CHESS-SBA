@@ -264,7 +264,8 @@ public class EntityUtil {
 			String constraintText, String iterConditionText) {
 
 		// Text of the delegation constraint
-		final String formalPropertyText = createDelegationConstraintText(variableIdText, constraintText,iterConditionText);
+		final String formalPropertyText = createDelegationConstraintText(variableIdText, constraintText,
+				iterConditionText);
 
 		// Loop on all the delegation constraints to find one with same text
 		for (Constraint delegationConstraint : delegationConstraints) {
@@ -354,7 +355,8 @@ public class EntityUtil {
 	public void updateUmlStaticPort(org.eclipse.uml2.uml.Port port, String[] newMultiplicityRange) {
 		final String[] multiplicityRange = getAttributeMultiplicity(port);
 
-		if (equalMultiplicityBoundaries(newMultiplicityRange, multiplicityRange)) {
+		// Update its multiplicity if needed
+		if (!equalMultiplicityBoundaries(newMultiplicityRange, multiplicityRange)) {
 			setAttributeMultiplicity(port, newMultiplicityRange);
 		}
 	}
@@ -366,7 +368,7 @@ public class EntityUtil {
 
 		// Update its multiplicity if needed
 		final String[] multiplicityRange = getAttributeMultiplicity(port);
-		if (equalMultiplicityBoundaries(newMultiplicityRange, multiplicityRange)) {
+		if (!equalMultiplicityBoundaries(newMultiplicityRange, multiplicityRange)) {
 			setAttributeMultiplicity(port, newMultiplicityRange);
 		}
 
@@ -395,8 +397,8 @@ public class EntityUtil {
 		createFunctionBehaviorParameter(functionBehavior, outputParameterType, false);
 	}
 
-	public Constraint createDelegationConstraint(Class owner, String variableIdText, String constraintText,String iterConditionText,
-			Stereotype delegationConstraintStereotype) {
+	public Constraint createDelegationConstraint(Class owner, String variableIdText, String constraintText,
+			String iterConditionText, Stereotype delegationConstraintStereotype) {
 
 		String delegationName = DEFAULT_DELEGATION_PREFIX + variableIdText;
 
@@ -409,8 +411,8 @@ public class EntityUtil {
 		final LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
 		literalString.setName(DEFAULT_DELEGATION_CONSTRAINT_LITERAL_STRING_NAME);
 
-		final String formalPropertyText = createDelegationConstraintText(variableIdText,
-				constraintText,iterConditionText);
+		final String formalPropertyText = createDelegationConstraintText(variableIdText, constraintText,
+				iterConditionText);
 		literalString.setValue(formalPropertyText);
 		newUMLConstraint.setSpecification(literalString);
 
@@ -432,13 +434,11 @@ public class EntityUtil {
 		logger.debug("\n\n\n");
 		Connector connector = createConnector(connectorName);
 		logger.debug("Creating source end :" + constraintName);
-		createUmlConnectorEnd(connector, constraintName, partWithPortOfConstraint,
-				portOwnerOfConstraint);
+		createUmlConnectorEnd(connector, constraintName, partWithPortOfConstraint, portOwnerOfConstraint);
 
 		// Create the target end
 		logger.debug("Creating source end :" + variableName);
-		createUmlConnectorEnd(connector, variableName, partWithPortOfVariable,
-				portOwnerOfVariable);
+		createUmlConnectorEnd(connector, variableName, partWithPortOfVariable, portOwnerOfVariable);
 
 		// At last, add the connector to the owner
 		entityUtilInstance.addConnector(owner, connector);
@@ -716,7 +716,8 @@ public class EntityUtil {
 		return str;
 	}
 
-	public void updateUmlAssociation(Property componentInstance, Type type, String[] ossSubComponentMultiplicity) throws Exception {
+	public void updateUmlAssociation(Property componentInstance, Type type, String[] ossSubComponentMultiplicity)
+			throws Exception {
 		// The component instance is already present, update its
 		// type if needed
 		if (!componentInstance.getType().equals(type)) {
@@ -774,7 +775,7 @@ public class EntityUtil {
 	 * @return the UML property representing the component instance
 	 */
 	public Property getSubComponentInstance(Class owner, String componentName) {
-logger.debug("getSubComponentInstance");
+		logger.debug("getSubComponentInstance");
 		for (Property umlProperty : (owner.getAttributes())) {
 			// FIXME remove println
 			logger.debug("umlProperty: " + umlProperty);
@@ -2058,7 +2059,7 @@ logger.debug("getSubComponentInstance");
 			return getAttributeMultiplicity(component);
 		}
 
-throw new Exception(""+component.getName()+" is not a component instance");
+		throw new Exception("" + component.getName() + " is not a component instance");
 
 	}
 
@@ -2283,13 +2284,14 @@ throw new Exception(""+component.getName()+" is not a component instance");
 		return umlPort;
 	}
 
-	public String createDelegationConstraintText(String variableIdTextName, String constraintText, String iterConditionText) {
+	public String createDelegationConstraintText(String variableIdTextName, String constraintText,
+			String iterConditionText) {
 
 		final StringBuffer delegationText = new StringBuffer();
 
 		delegationText.append(variableIdTextName + " := " + constraintText);
-		if(iterConditionText!=null){
-			delegationText.append(" "+iterConditionText);	
+		if (iterConditionText != null) {
+			delegationText.append(" " + iterConditionText);
 		}
 		return delegationText.toString();
 	}
@@ -2646,41 +2648,38 @@ throw new Exception(""+component.getName()+" is not a component instance");
 	public Association createAssociation(Class owner, String associationName, String elementName, Type elementType,
 			String[] multiplicity) {
 		logger.debug("createAssociation");
-		
+
 		logger.debug("\n\n\n Creating association " + associationName + " for owner " + owner);
 		logger.debug("elementName = " + elementName + " with type " + elementType.getName() + " [" + multiplicity[0]
 				+ "," + multiplicity[1] + "]");
 		logger.debug("\n\n\n");
 
 		org.eclipse.uml2.uml.Package package_ = owner.getNearestPackage();
-		Association association = (Association) package_.createOwnedType(null,
-				UMLPackage.Literals.ASSOCIATION);
-       Property subComponentInstance = buildAssociationEndInternal(association, 
-        		 elementName, elementType, null,true,  
-        		 (AggregationKind) AggregationKind.get(AggregationKind.COMPOSITE)); 
-         buildAssociationEndInternal(association, 
-        		 owner.getName().toLowerCase(), owner,null,false,  
-                 (AggregationKind) AggregationKind.get(AggregationKind.NONE)); 
-         if (associationName != null) { 
-             association.setName(associationName); 
-         } 
-         
-         owner.getOwnedAttributes().add(subComponentInstance);
-       
-		
-	
+		Association association = (Association) package_.createOwnedType(null, UMLPackage.Literals.ASSOCIATION);
+		Property subComponentInstance = buildAssociationEndInternal(association, elementName, elementType, null, true,
+				(AggregationKind) AggregationKind.get(AggregationKind.COMPOSITE));
+		buildAssociationEndInternal(association, owner.getName().toLowerCase(), owner, null, false,
+				(AggregationKind) AggregationKind.get(AggregationKind.NONE));
+		if (associationName != null) {
+			association.setName(associationName);
+		}
+
+		owner.getOwnedAttributes().add(subComponentInstance);
+
 		// Create the association and adds it to the owning package
-         // the method owner.createAssociation does not allow to set multiplicity equal to null
-	/*	final Association association = owner.createAssociation(
-				true, AggregationKind.get(AggregationKind.COMPOSITE),
-				elementName, 1, 1, elementType, 
-				false, AggregationKind.get(AggregationKind.NONE),
-				owner.getName().toLowerCase(), 1, 1);
-		association.setName(associationName);*/
+		// the method owner.createAssociation does not allow to set multiplicity
+		// equal to null
+		/*
+		 * final Association association = owner.createAssociation( true,
+		 * AggregationKind.get(AggregationKind.COMPOSITE), elementName, 1, 1,
+		 * elementType, false, AggregationKind.get(AggregationKind.NONE),
+		 * owner.getName().toLowerCase(), 1, 1);
+		 * association.setName(associationName);
+		 */
 		logger.debug("createAssociation done");
-	
+
 		if (!isOneInstance(multiplicity)) {
-			logger.debug("!isOneInstance" );
+			logger.debug("!isOneInstance");
 			setAttributeMultiplicity(subComponentInstance, multiplicity);
 		}
 		// Add SysML Nature on the new Association
@@ -2690,91 +2689,74 @@ throw new Exception(""+component.getName()+" is not a component instance");
 		return association;
 	}
 
-/*	public static Association createAssociation(Type type,
-			boolean end1IsNavigable, AggregationKind end1Aggregation,
-			String end1Name, int end1Lower, int end1Upper, Type end1Type,
-			boolean end2IsNavigable, AggregationKind end2Aggregation,
-			String end2Name, int end2Lower, int end2Upper) {
-		org.eclipse.uml2.uml.Package package_ = type.getNearestPackage();
-		if (package_ == null) {
-			throw new IllegalStateException();
+	/*
+	 * public static Association createAssociation(Type type, boolean
+	 * end1IsNavigable, AggregationKind end1Aggregation, String end1Name, int
+	 * end1Lower, int end1Upper, Type end1Type, boolean end2IsNavigable,
+	 * AggregationKind end2Aggregation, String end2Name, int end2Lower, int
+	 * end2Upper) { org.eclipse.uml2.uml.Package package_ =
+	 * type.getNearestPackage(); if (package_ == null) { throw new
+	 * IllegalStateException(); } if (end1Aggregation == null) { throw new
+	 * IllegalArgumentException(String.valueOf(end1Aggregation)); } if
+	 * (end2Aggregation == null) { throw new
+	 * IllegalArgumentException(String.valueOf(end2Aggregation)); } Association
+	 * association = (Association) package_.createOwnedType(null,
+	 * UMLPackage.Literals.ASSOCIATION); createAssociationEnd(type, association,
+	 * end1IsNavigable, end1Aggregation, end1Name, end1Lower, end1Upper,
+	 * end1Type); createAssociationEnd(end1Type, association, end2IsNavigable,
+	 * end2Aggregation, end2Name, end2Lower, end2Upper, type); return
+	 * association; }
+	 * 
+	 * protected static Property createAssociationEnd(Class type, Association
+	 * association, boolean isNavigable, AggregationKind aggregation, String
+	 * name, int lower, int upper, Type endType) { EList<Property>
+	 * ownedAttributes = type.getOwnedAttributes(); Property associationEnd =
+	 * type.createOwnedProperty(ownedAttributes == null || !isNavigable ?
+	 * association : type, name, endType, lower, upper);
+	 * associationEnd.setAggregation(aggregation); if (isNavigable) { if
+	 * (ownedAttributes == null) {
+	 * association.getNavigableOwnedEnds().add(associationEnd); } else {
+	 * association.getMemberEnds().add(associationEnd); } } return
+	 * associationEnd; }
+	 */
+
+	private Property buildAssociationEndInternal(final Association assoc, final String name, final Type type,
+			final Integer[] multi, final Boolean navigable, final AggregationKind aggregation) {
+		// The attribute 'targetScope' of an AssociationEnd in UML1.x is no
+		// longer supported in UML2.x
+
+		Property property = UMLFactory.eINSTANCE.createProperty();
+		property.setType((Type) type);
+		property.setAssociation((Association) assoc);
+		if (name != null) {
+			property.setName(name);
 		}
-		if (end1Aggregation == null) {
-			throw new IllegalArgumentException(String.valueOf(end1Aggregation));
-		}
-		if (end2Aggregation == null) {
-			throw new IllegalArgumentException(String.valueOf(end2Aggregation));
-		}
-		Association association = (Association) package_.createOwnedType(null,
-			UMLPackage.Literals.ASSOCIATION);
-		createAssociationEnd(type, association, end1IsNavigable,
-			end1Aggregation, end1Name, end1Lower, end1Upper, end1Type);
-		createAssociationEnd(end1Type, association, end2IsNavigable,
-			end2Aggregation, end2Name, end2Lower, end2Upper, type);
-		return association;
-	}
-	
-	protected static Property createAssociationEnd(Class type,
-			Association association, boolean isNavigable,
-			AggregationKind aggregation, String name, int lower, int upper,
-			Type endType) {
-		EList<Property> ownedAttributes = type.getOwnedAttributes();
-		Property associationEnd = type.createOwnedProperty(ownedAttributes == null
-			|| !isNavigable
-			? association
-			: type, name, endType, lower, upper);
-		associationEnd.setAggregation(aggregation);
-		if (isNavigable) {
-			if (ownedAttributes == null) {
-				association.getNavigableOwnedEnds().add(associationEnd);
-			} else {
-				association.getMemberEnds().add(associationEnd);
+		if (navigable != null) {
+			property.setIsNavigable(navigable);
+			if (!(Boolean) navigable) {
+				((Association) assoc).getOwnedEnds().add(property);
 			}
 		}
-		return associationEnd;
+		if (aggregation != null) {
+			property.setAggregation((AggregationKind) aggregation);
+		}
+
+		if (multi != null) {
+			if (multi[0] != null) {
+				property.setLower(multi[0]);
+			}
+			if (multi[1] != null) {
+				property.setUpper(multi[1]);
+			}
+		}
+
+		return property;
 	}
-*/
-	
-	 private Property buildAssociationEndInternal(final Association assoc, 
-	            final String name, final Type type, 
-	            final Integer[] multi, 
-	            final Boolean navigable,
-	            final AggregationKind aggregation) { 
-	        // The attribute 'targetScope' of an AssociationEnd in UML1.x is no 
-	        // longer supported in UML2.x 
-	 
-	        Property property = UMLFactory.eINSTANCE.createProperty();  
-	        property.setType((Type) type); 
-	        property.setAssociation((Association) assoc); 
-	        if (name != null) { 
-	            property.setName(name); 
-	        } 
-	        if (navigable != null) { 
-	            property.setIsNavigable(navigable); 
-	            if (!(Boolean) navigable) { 
-	                ((Association) assoc).getOwnedEnds().add(property); 
-	            } 
-	        } 
-	        if (aggregation != null) { 
-	            property.setAggregation((AggregationKind) aggregation); 
-	        } 
-	        
-	        if (multi != null) { 
-	            if (multi[0] != null) { 
-	                property.setLower(multi[0]); 
-	            } 
-	            if (multi[1] != null) { 
-	                property.setUpper(multi[1]); 
-	            } 
-	        } 
-	       
-	        return property; 
-	    } 
-	
+
 	private boolean isOneInstance(String[] multiplicityBoundariesAsExpressons) {
-		logger.debug("isOneInstance" );
-		return (((multiplicityBoundariesAsExpressons[0]==null)&&(multiplicityBoundariesAsExpressons[1]==null))||
-				(multiplicityBoundariesAsExpressons[0] == "") && (multiplicityBoundariesAsExpressons[1] == ""))
+		logger.debug("isOneInstance");
+		return (((multiplicityBoundariesAsExpressons[0] == null) && (multiplicityBoundariesAsExpressons[1] == null))
+				|| (multiplicityBoundariesAsExpressons[0] == "") && (multiplicityBoundariesAsExpressons[1] == ""))
 				|| (isEqualToOne(multiplicityBoundariesAsExpressons[0])
 						&& isEqualToOne(multiplicityBoundariesAsExpressons[1]));
 	}
@@ -2808,37 +2790,37 @@ throw new Exception(""+component.getName()+" is not a component instance");
 	}
 
 	public boolean equalMultiplicityBoundaries(String[] newMultiplicityRange, String[] multiplicityRange) {
-		return (equals(newMultiplicityRange[0],multiplicityRange[0])
-				&& equals(newMultiplicityRange[1],multiplicityRange[1]));
+		return (equals(newMultiplicityRange[0], multiplicityRange[0])
+				&& equals(newMultiplicityRange[1], multiplicityRange[1]));
 
 	}
 
-	private boolean equals(String text1,String text2){
-		return ((text1==text2)&&(text2==null))||(text1.equals(text2));
+	private boolean equals(String text1, String text2) {
+		return ((text1 == text2) && (text2 == null)) || (text1.equals(text2));
 	}
-	
+
 	public void setAttributeMultiplicity(Property property, String[] newMultiplicityRange) {
-		
-		if(newMultiplicityRange[0]!=null){		
-		property.setLowerValue(createLiteralStringWithValue(newMultiplicityRange[0]));
+
+		if (newMultiplicityRange[0] != null) {
+			property.setLowerValue(createLiteralStringWithValue(newMultiplicityRange[0]));
 		}
-		
-		if(newMultiplicityRange[1]!=null){	
-		property.setUpperValue(createLiteralStringWithValue(newMultiplicityRange[1]));
+
+		if (newMultiplicityRange[1] != null) {
+			property.setUpperValue(createLiteralStringWithValue(newMultiplicityRange[1]));
 		}
 	}
 
-	private LiteralString createLiteralStringWithValue(String value){
+	private LiteralString createLiteralStringWithValue(String value) {
 		LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
 		literalString.setValue(value);
 		return literalString;
 	}
-	
+
 	public EList<Constraint> getParameterAssumptionsAsConstraintsUml(Element umlElement) {
 		EList<Constraint> constraints = new BasicEList<Constraint>();
 
 		if (isBlock(umlElement) || isCompType(umlElement) || isComponentImplementation(umlElement)) {
-			for (Constraint umlConstraint : ((Class)umlElement).getOwnedRules()) {
+			for (Constraint umlConstraint : ((Class) umlElement).getOwnedRules()) {
 				if (isParameterAssumption(umlConstraint)) {
 					constraints.add((Constraint) umlConstraint);
 				}
@@ -2848,7 +2830,7 @@ throw new Exception(""+component.getName()+" is not a component instance");
 		if (isComponentInstance(umlElement)) {
 			constraints.addAll(getParameterAssumptionsAsConstraintsUml(getUMLType((Property) umlElement)));
 		}
-		
+
 		return constraints;
 	}
 
@@ -2864,9 +2846,9 @@ throw new Exception(""+component.getName()+" is not a component instance");
 		logger.debug("\n\n\n Creating constraint " + parameterAssumptionsName + " for owner " + owner);
 		logger.debug("\n\n\n");
 
-		final Constraint newUMLConstraint = owner.createOwnedRule(parameterAssumptionsName);		
+		final Constraint newUMLConstraint = owner.createOwnedRule(parameterAssumptionsName);
 		final LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
-		literalString.setName(DEFAULT_PAR_ASSUMPTION_LITERAL_STRING_NAME);		
+		literalString.setName(DEFAULT_PAR_ASSUMPTION_LITERAL_STRING_NAME);
 		literalString.setValue(parameterAssumptionsText);
 		newUMLConstraint.setSpecification(literalString);
 
@@ -2875,8 +2857,9 @@ throw new Exception(""+component.getName()+" is not a component instance");
 	}
 
 	public Constraint getUmlConstraintFromText(String parameterAssumptionsText, Class owner) {
-		for (Constraint umlConstraint : ((Class)owner).getOwnedRules()) {
-			if (isParameterAssumption(umlConstraint)&&getConstraintBodyStr(umlConstraint).equals(parameterAssumptionsText)) {
+		for (Constraint umlConstraint : ((Class) owner).getOwnedRules()) {
+			if (isParameterAssumption(umlConstraint)
+					&& getConstraintBodyStr(umlConstraint).equals(parameterAssumptionsText)) {
 				return umlConstraint;
 			}
 		}
@@ -2885,9 +2868,7 @@ throw new Exception(""+component.getName()+" is not a component instance");
 
 	public void removeParameterAssumptions(EList<Constraint> members, String qualifiedElement) {
 		removeNamedElement(members, qualifiedElement);
-		
+
 	}
-	
-	
 
 }
