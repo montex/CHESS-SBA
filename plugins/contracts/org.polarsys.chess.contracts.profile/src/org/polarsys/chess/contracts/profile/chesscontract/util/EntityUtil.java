@@ -427,14 +427,17 @@ public class EntityUtil {
 		final String connectorName = DEFAULT_CONNECTOR_NAME + (owner.getOwnedConnectors().size() + 1);
 		// Create a connector, but only after I'm sure it isn't
 		// a delegation constraint
-		Connector connector = createConnector(connectorName, owner);
+
+		logger.debug("\n\n\n Creating connector " + connectorName + " for owner " + owner);
+		logger.debug("\n\n\n");
+		Connector connector = createConnector(connectorName);
 		logger.debug("Creating source end :" + constraintName);
-		ConnectorEnd connectorEndConstraint = createUmlConnectorEnd(connector, constraintName, partWithPortOfConstraint,
+		createUmlConnectorEnd(connector, constraintName, partWithPortOfConstraint,
 				portOwnerOfConstraint);
 
 		// Create the target end
 		logger.debug("Creating source end :" + variableName);
-		ConnectorEnd connectorEndVariable = createUmlConnectorEnd(connector, variableName, partWithPortOfVariable,
+		createUmlConnectorEnd(connector, variableName, partWithPortOfVariable,
 				portOwnerOfVariable);
 
 		// At last, add the connector to the owner
@@ -2122,14 +2125,7 @@ throw new Exception(""+component.getName()+" is not a component instance");
 	 *            the owner element
 	 * @return the created Connector
 	 */
-	public Connector createConnector(String connectorName, Class owner) {
-
-		// Create the name using an incremental value
-		// final String connectorName = CONNECTOR_NAME +
-		// (owner.getOwnedConnectors().size() + 1);
-
-		logger.debug("\n\n\n Creating connector " + connectorName + " for owner " + owner);
-		logger.debug("\n\n\n");
+	public Connector createConnector(String connectorName) {
 
 		Connector connector = UMLFactory.eINSTANCE.createConnector();
 		connector.setName(connectorName);
@@ -2649,28 +2645,42 @@ throw new Exception(""+component.getName()+" is not a component instance");
 	 */
 	public Association createAssociation(Class owner, String associationName, String elementName, Type elementType,
 			String[] multiplicity) {
-
-		// Create the name using an incremental value
-		// final String associationName = ASSOCIATION_NAME +
-		// (countPackageAssociations(owner.getNearestPackage()) + 1);
-
+		logger.debug("createAssociation");
+		
 		logger.debug("\n\n\n Creating association " + associationName + " for owner " + owner);
 		logger.debug("elementName = " + elementName + " with type " + elementType.getName() + " [" + multiplicity[0]
 				+ "," + multiplicity[1] + "]");
 		logger.debug("\n\n\n");
 
-		logger.debug("createAssociation");
-		// Create the association and adds it to the owning package
-		final Association association = owner.createAssociation(true, AggregationKind.get(AggregationKind.COMPOSITE),
-				elementName, 1, 1, elementType, false, AggregationKind.get(AggregationKind.NONE),
-				owner.getName().toLowerCase(), 1, 1);
-		logger.debug("createAssociation done");
+		org.eclipse.uml2.uml.Package package_ = owner.getNearestPackage();
+		Association association = (Association) package_.createOwnedType(null,
+				UMLPackage.Literals.ASSOCIATION);
+       Property subComponentInstance = buildAssociationEndInternal(association, 
+        		 elementName, elementType, null,true,  
+        		 (AggregationKind) AggregationKind.get(AggregationKind.COMPOSITE)); 
+         buildAssociationEndInternal(association, 
+        		 owner.getName().toLowerCase(), owner,null,false,  
+                 (AggregationKind) AggregationKind.get(AggregationKind.NONE)); 
+         if (associationName != null) { 
+             association.setName(associationName); 
+         } 
+         
+         owner.getOwnedAttributes().add(subComponentInstance);
+       
 		
-		association.setName(associationName);
-
+	
+		// Create the association and adds it to the owning package
+         // the method owner.createAssociation does not allow to set multiplicity equal to null
+	/*	final Association association = owner.createAssociation(
+				true, AggregationKind.get(AggregationKind.COMPOSITE),
+				elementName, 1, 1, elementType, 
+				false, AggregationKind.get(AggregationKind.NONE),
+				owner.getName().toLowerCase(), 1, 1);
+		association.setName(associationName);*/
+		logger.debug("createAssociation done");
+	
 		if (!isOneInstance(multiplicity)) {
 			logger.debug("!isOneInstance" );
-			Property subComponentInstance = getSubComponentInstance(owner, elementName);
 			setAttributeMultiplicity(subComponentInstance, multiplicity);
 		}
 		// Add SysML Nature on the new Association
@@ -2680,6 +2690,87 @@ throw new Exception(""+component.getName()+" is not a component instance");
 		return association;
 	}
 
+/*	public static Association createAssociation(Type type,
+			boolean end1IsNavigable, AggregationKind end1Aggregation,
+			String end1Name, int end1Lower, int end1Upper, Type end1Type,
+			boolean end2IsNavigable, AggregationKind end2Aggregation,
+			String end2Name, int end2Lower, int end2Upper) {
+		org.eclipse.uml2.uml.Package package_ = type.getNearestPackage();
+		if (package_ == null) {
+			throw new IllegalStateException();
+		}
+		if (end1Aggregation == null) {
+			throw new IllegalArgumentException(String.valueOf(end1Aggregation));
+		}
+		if (end2Aggregation == null) {
+			throw new IllegalArgumentException(String.valueOf(end2Aggregation));
+		}
+		Association association = (Association) package_.createOwnedType(null,
+			UMLPackage.Literals.ASSOCIATION);
+		createAssociationEnd(type, association, end1IsNavigable,
+			end1Aggregation, end1Name, end1Lower, end1Upper, end1Type);
+		createAssociationEnd(end1Type, association, end2IsNavigable,
+			end2Aggregation, end2Name, end2Lower, end2Upper, type);
+		return association;
+	}
+	
+	protected static Property createAssociationEnd(Class type,
+			Association association, boolean isNavigable,
+			AggregationKind aggregation, String name, int lower, int upper,
+			Type endType) {
+		EList<Property> ownedAttributes = type.getOwnedAttributes();
+		Property associationEnd = type.createOwnedProperty(ownedAttributes == null
+			|| !isNavigable
+			? association
+			: type, name, endType, lower, upper);
+		associationEnd.setAggregation(aggregation);
+		if (isNavigable) {
+			if (ownedAttributes == null) {
+				association.getNavigableOwnedEnds().add(associationEnd);
+			} else {
+				association.getMemberEnds().add(associationEnd);
+			}
+		}
+		return associationEnd;
+	}
+*/
+	
+	 private Property buildAssociationEndInternal(final Association assoc, 
+	            final String name, final Type type, 
+	            final Integer[] multi, 
+	            final Boolean navigable,
+	            final AggregationKind aggregation) { 
+	        // The attribute 'targetScope' of an AssociationEnd in UML1.x is no 
+	        // longer supported in UML2.x 
+	 
+	        Property property = UMLFactory.eINSTANCE.createProperty();  
+	        property.setType((Type) type); 
+	        property.setAssociation((Association) assoc); 
+	        if (name != null) { 
+	            property.setName(name); 
+	        } 
+	        if (navigable != null) { 
+	            property.setIsNavigable(navigable); 
+	            if (!(Boolean) navigable) { 
+	                ((Association) assoc).getOwnedEnds().add(property); 
+	            } 
+	        } 
+	        if (aggregation != null) { 
+	            property.setAggregation((AggregationKind) aggregation); 
+	        } 
+	        
+	        if (multi != null) { 
+	            if (multi[0] != null) { 
+	                property.setLower(multi[0]); 
+	            } 
+	            if (multi[1] != null) { 
+	                property.setUpper(multi[1]); 
+	            } 
+	        } 
+	       
+	        return property; 
+	    } 
+	
 	private boolean isOneInstance(String[] multiplicityBoundariesAsExpressons) {
 		logger.debug("isOneInstance" );
 		return (((multiplicityBoundariesAsExpressons[0]==null)&&(multiplicityBoundariesAsExpressons[1]==null))||
