@@ -771,11 +771,11 @@ public class EntityUtil {
 	 * @return the UML property representing the component instance
 	 */
 	public Property getSubComponentInstance(Class owner, String componentName) {
-
+logger.debug("getSubComponentInstance");
 		for (Property umlProperty : (owner.getAttributes())) {
 			// FIXME remove println
-			System.out.println("umlProperty: " + umlProperty);
-			System.out.println("umlProperty.getname: " + umlProperty.getName());
+			logger.debug("umlProperty: " + umlProperty);
+			logger.debug("umlProperty.getname: " + umlProperty.getName());
 			if (umlProperty.getName().equals(componentName)
 					&& EntityUtil.getInstance().isComponentInstance(umlProperty)) {
 				return umlProperty;
@@ -2659,34 +2659,31 @@ throw new Exception(""+component.getName()+" is not a component instance");
 				+ "," + multiplicity[1] + "]");
 		logger.debug("\n\n\n");
 
+		logger.debug("createAssociation");
 		// Create the association and adds it to the owning package
 		final Association association = owner.createAssociation(true, AggregationKind.get(AggregationKind.COMPOSITE),
 				elementName, 1, 1, elementType, false, AggregationKind.get(AggregationKind.NONE),
 				owner.getName().toLowerCase(), 1, 1);
-
-		// TODO add multiplicity
-		for (Property att : association.getAttributes()) {
-			logger.debug("att: " + att);
-		}
+		logger.debug("createAssociation done");
+		
 		association.setName(associationName);
 
 		if (!isOneInstance(multiplicity)) {
+			logger.debug("!isOneInstance" );
 			Property subComponentInstance = getSubComponentInstance(owner, elementName);
 			setAttributeMultiplicity(subComponentInstance, multiplicity);
 		}
 		// Add SysML Nature on the new Association
 		ElementUtil.addNature(association, SysMLElementTypes.SYSML_NATURE);
 
-		for (Property att : association.getAttributes()) {
-			logger.debug("att2: " + att);
-		}
-
 		logger.debug("\n\nCreated " + associationName + " Association\n\n");
 		return association;
 	}
 
 	private boolean isOneInstance(String[] multiplicityBoundariesAsExpressons) {
-		return ((multiplicityBoundariesAsExpressons[0] == "") && (multiplicityBoundariesAsExpressons[1] == ""))
+		logger.debug("isOneInstance" );
+		return (((multiplicityBoundariesAsExpressons[0]==null)&&(multiplicityBoundariesAsExpressons[1]==null))||
+				(multiplicityBoundariesAsExpressons[0] == "") && (multiplicityBoundariesAsExpressons[1] == ""))
 				|| (isEqualToOne(multiplicityBoundariesAsExpressons[0])
 						&& isEqualToOne(multiplicityBoundariesAsExpressons[1]));
 	}
@@ -2731,16 +2728,21 @@ throw new Exception(""+component.getName()+" is not a component instance");
 	
 	public void setAttributeMultiplicity(Property property, String[] newMultiplicityRange) {
 		
-		LiteralString lowerBound = UMLFactory.eINSTANCE.createLiteralString();
-		lowerBound.setValue(newMultiplicityRange[0]);
-		property.setLowerValue(lowerBound);
-
-		LiteralString upperBound = UMLFactory.eINSTANCE.createLiteralString();
-		upperBound.setValue(newMultiplicityRange[1]);
-		property.setUpperValue(upperBound);
-
+		if(newMultiplicityRange[0]!=null){		
+		property.setLowerValue(createLiteralStringWithValue(newMultiplicityRange[0]));
+		}
+		
+		if(newMultiplicityRange[1]!=null){	
+		property.setUpperValue(createLiteralStringWithValue(newMultiplicityRange[1]));
+		}
 	}
 
+	private LiteralString createLiteralStringWithValue(String value){
+		LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
+		literalString.setValue(value);
+		return literalString;
+	}
+	
 	public EList<Constraint> getParameterAssumptionsAsConstraintsUml(Element umlElement) {
 		EList<Constraint> constraints = new BasicEList<Constraint>();
 
