@@ -513,7 +513,10 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				
 				// Get the text size for enlarging the box
 				int textLength = port.getName().length();
-				textLength += port.getType().getName().length();
+				
+				// If port type is not defined, add some space for <Undefined>
+				textLength += (port.getType() != null) ? port.getType().getName().length() : 11;
+				
 				if (textLength > maxLengthInput) {
 					maxLengthInput = textLength;
 				}
@@ -522,7 +525,10 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				
 				// Get the text size for enlarging the box
 				int textLength = port.getName().length();
-				textLength += port.getType().getName().length();
+				
+				// If port type is not defined, add some space for <Undefined>
+				textLength += (port.getType() != null) ? port.getType().getName().length() : 11;
+
 				if (textLength > maxLengthOutput) {
 					maxLengthOutput = textLength;
 				}
