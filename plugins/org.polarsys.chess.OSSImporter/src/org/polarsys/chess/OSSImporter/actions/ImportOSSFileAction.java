@@ -147,26 +147,26 @@ public class ImportOSSFileAction {
 
 			// Get the name of the owner of the behavior, if present find the
 			// type
-			String variableOwner = ossModelUtil.getNearestComponentName(variable);
-			if (variableOwner != null) {
-
+			String variableOwnerName = ossModelUtil.getNearestComponentName(variable);
+			if (variableOwnerName != null) {
+				
 				// Retrieve the component instance containing the behavior
-				final Property behaviorOwner = entityUtil.getUMLComponentInstance(owner, variableOwner);
+				final Property behaviorOwner = entityUtil.getUMLComponentInstance(owner, variableOwnerName);
 
 				// Get the component type
 				final String typeName = behaviorOwner.getType().getName();
-
+				
 				// Get the component object containing the definition of the
 				// port
 				component = dslTypeToComponent.get(typeName);
 			}
 
-			if (variableOwner == null) {
-
+			if (variableOwnerName == null) {
+				
 				// I'm the owner of the functionBehavior
 				component = owner;
 			}
-			return (component.getOwnedBehavior(variable.getValue()) != null);
+			return (component.getOwnedBehavior(variable.getName()) != null);
 		}
 		return false;
 	}
@@ -489,14 +489,15 @@ public class ImportOSSFileAction {
 		final VariableId variable = connection.getVariable();
 		final Expression constraint = connection.getConstraint();
 		final IterativeCondition iterCondition = connection.getIterativeCondition();
-		if (ossModelUtil.isSimplePortToPortConnection(variable, constraint, iterCondition)) {
-logger.debug("isSimplePortToPortConnection");
+		if (ossModelUtil.isConnectionWithNoArray(variable, constraint, iterCondition)
+				&& !isFunctionBehavior(owner, variable) && !isFunctionBehavior(owner, constraint)) {
+
 			// Details of the connector ends
 			String variablePortOwner = ossModelUtil.getNearestComponentName(variable);
 			String variablePortName = ossModelUtil.getPortName(variable);
 			String constraintPortOwner = ossModelUtil.getNearestComponentName((VariableId) constraint);
 			String constraintPortName = ossModelUtil.getPortName((VariableId) constraint);
-
+	
 			Connector connector = entityUtil.getExistingConnector(existingConnectors, variablePortOwner,
 					variablePortName, constraintPortOwner, constraintPortName);
 
