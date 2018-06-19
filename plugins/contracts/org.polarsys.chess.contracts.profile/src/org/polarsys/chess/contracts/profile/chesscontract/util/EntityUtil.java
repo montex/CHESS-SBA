@@ -84,6 +84,7 @@ import org.eclipse.uml2.uml.LiteralInteger;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.LiteralUnlimitedNatural;
 import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.MultiplicityElement;
 import org.eclipse.uml2.uml.OpaqueBehavior;
 import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.Port;
@@ -374,27 +375,27 @@ public class EntityUtil {
 
 	}
 
-	public FunctionBehavior createUmlFunctionBehaviour(String functionBehaviourName, Type outputParameterType,
-			EList<Type> inputParametersTypes, Class owner) {
+	public FunctionBehavior createUmlFunctionBehaviour(String functionBehaviourName,
+			EList<Type> inputTypes,EList<String[]> inputMultiplicities, Type outputType,String[] outputMultiplicity, Class owner) {
 
 		// Create an empty functionBehavior
 		FunctionBehavior functionBehavior = createFunctionBehavior(owner, functionBehaviourName);
 
-		createUmlFunctionBehaviorParameters(functionBehavior, inputParametersTypes, outputParameterType);
+		createUmlFunctionBehaviorParameters(functionBehavior, inputTypes, inputMultiplicities,outputType,outputMultiplicity);
 
 		return functionBehavior;
 
 	}
 
-	public void createUmlFunctionBehaviorParameters(FunctionBehavior functionBehavior, EList<Type> inputParameterstypes,
-			Type outputParameterType) {
+	public void createUmlFunctionBehaviorParameters(FunctionBehavior functionBehavior, EList<Type> inputTypes,EList<String[]> inputMultiplicities,
+			Type outputType,String[] outputMultiplicity) {
 		// Create the input parameters
-		for (Type parameterType : inputParameterstypes) {
+		for (Type parameterType : inputTypes) {
 			createFunctionBehaviorParameter(functionBehavior, parameterType, true);
 		}
 
 		// Create the output parameter
-		createFunctionBehaviorParameter(functionBehavior, outputParameterType, false);
+		createFunctionBehaviorParameter(functionBehavior, outputType, false);
 	}
 
 	public Constraint createDelegationConstraint(Class owner, String variableIdText, String constraintText,
@@ -2063,7 +2064,7 @@ public class EntityUtil {
 
 	}
 
-	public String[] getAttributeMultiplicity(Property attribute) {
+	public String[] getAttributeMultiplicity(MultiplicityElement attribute) {
 		logger.debug("getAttributeMultiplicity");
 
 		ValueSpecification upperValueSpecification = ((Property) attribute).getUpperValue();
@@ -2869,6 +2870,26 @@ public class EntityUtil {
 	public void removeParameterAssumptions(EList<Constraint> members, String qualifiedElement) {
 		removeNamedElement(members, qualifiedElement);
 
+	}
+
+	public String[] getUmlFunctionBehaviorOutputMultiplicity(FunctionBehavior uninterpretedFunction) {
+		for (Parameter parameter : uninterpretedFunction.getOwnedParameters()) {
+			if (parameter.getDirection() == ParameterDirectionKind.OUT_LITERAL) {
+				return getAttributeMultiplicity(parameter);
+			}
+		}
+		return null;
+	}
+
+	public EList<String[]> getUmlFunctionBehaviorInputMultiplicities(FunctionBehavior uninterpretedFunction) {
+		EList<String[]> inputMultiplicities = new BasicEList<String[]>();
+
+		for (Parameter parameter : uninterpretedFunction.getOwnedParameters()) {
+			if (parameter.getDirection() == ParameterDirectionKind.IN_LITERAL) {
+				inputMultiplicities.add(getAttributeMultiplicity(parameter));
+			}
+		}
+		return inputMultiplicities;
 	}
 
 }

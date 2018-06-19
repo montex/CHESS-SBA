@@ -1005,36 +1005,36 @@ public class ImportOSSFileAction {
 
 	}
 
-	private void parseParameter(Parameter dslVariable, HashMap<String, Boolean> mapFunctionBehaviorsToKeep,
+	private void parseParameter(Parameter ossParameter, HashMap<String, Boolean> mapFunctionBehaviorsToKeep,
 			EList<NamedElement> existingNonStaticPorts, HashMap<String, Boolean> mapPortsToKeep, Class owner)
 			throws ImportException {
 
 		// PARAMETER processing
 		// final FullParameterId ossParameterID =
 		// (FullParameterId)dslVariable.getId();
-		final SimpleType ossParameterType = dslVariable.getType();
+		final ComplexType ossOutputType = ossParameter.getType();
 
 		// Check if there are optional parameters to detect how to handle it
-		final EList<SimpleType> parameters = dslVariable.getParameters();
-		if (parameters.size() != 0) {
-			parseParameterAsUmlFunctionBehaviour(dslVariable.getId(), ossParameterType, parameters,
+		final EList<ComplexType> ossInputTypes = ossParameter.getParameters();
+		if (ossInputTypes.size() != 0) {
+			parseParameterAsUmlFunctionBehaviour(ossParameter.getId(), ossOutputType, ossInputTypes,
 					mapFunctionBehaviorsToKeep, owner);
 		} else {
-			parseParameterAsUmlStaticPort(dslVariable.getId(), ossParameterType, existingNonStaticPorts, mapPortsToKeep,
+			parseParameterAsUmlStaticPort(ossParameter.getId(), ossOutputType, existingNonStaticPorts, mapPortsToKeep,
 					owner);
 		}
 
 	}
 
-	private void parseParameterAsUmlStaticPort(String ossParameterName, SimpleType ossParameterType,
+	private void parseParameterAsUmlStaticPort(String ossParameterName, ComplexType ossParameterType,
 			EList<NamedElement> existingStaticPorts, HashMap<String, Boolean> mapPortsToKeep, Class owner)
 			throws ImportException {
 		// Convert the parameter to a static port
 		// Check if the port is already present
 		// String ossParameterName =
 		// ossModelUtil.getParameterName(ossParameterId);
-		final String[] newMultiplicityRange = ossModelUtil.getMultiplicityBoundariesFromOssSimpleType(ossParameterType);
-		Type newParameterType = ossTypeTranslator.getOrCreateTypeFromOssSimpleType(ossParameterType,
+		final String[] newMultiplicityRange = ossModelUtil.getMultiplicityBoundariesFromOssComplexType(ossParameterType);
+		Type newParameterType = ossTypeTranslator.getOrCreateTypeFromOssComplexType(ossParameterType,
 				owner.getNearestPackage());
 		if (newParameterType == null) {
 			throw new ImportException("Not able to map the requested type for port : " + ossParameterName);
@@ -1065,30 +1065,36 @@ public class ImportOSSFileAction {
 
 	}
 
-	private void parseParameterAsUmlFunctionBehaviour(String parameterName, SimpleType ossParameterType,
-			EList<SimpleType> parameters, HashMap<String, Boolean> mapFunctionBehaviorsToKeep, Class owner)
+	private void parseParameterAsUmlFunctionBehaviour(String parameterName, ComplexType ossOutputType,
+			EList<ComplexType> ossInputTypes, HashMap<String, Boolean> mapFunctionBehaviorsToKeep, Class owner)
 			throws ImportException {
 
 		// Check if the functionBehavior is already present
 		FunctionBehavior functionBehavior = (FunctionBehavior) owner.getOwnedBehavior(parameterName);
 
-		// final String[] newMultiplicityRange =
-		// ossModelUtil.getMultiplicityBoundariesFromOssSimpleType(ossParameterType);
-		Type newParameterType = ossTypeTranslator.getOrCreateTypeFromOssSimpleType(ossParameterType,
+		
+		Type newOutputType = ossTypeTranslator.getOrCreateTypeFromOssComplexType(ossOutputType,
 				owner.getNearestPackage());
-		EList<Type> newParameterTypes = ossTypeTranslator.getOrCreateTypesFromOssSimpleTypes(parameters,
+		 final String[] newMultiplicity =
+				 ossModelUtil.getMultiplicityBoundariesFromOssComplexType(ossOutputType);
+		
+		EList<Type> newInputTypes = ossTypeTranslator.getOrCreateTypesFromOssComplexTypes(ossInputTypes,
 				owner.getNearestPackage());
-		if (newParameterType == null) {
+		 final EList<String[]> newMultiplicities =
+				 ossModelUtil.getMultiplicityBoundariesFromOssComplexTypes(ossInputTypes);
+		
+		
+		if (newOutputType == null) {
 			throw new ImportException("Not able to map the requested type for port : " + parameterName);
 		}
 
 		if (functionBehavior == null) {
 			logger.debug("functionBehavior not found, creating one");
 			addedElements.add(
-					entityUtil.createUmlFunctionBehaviour(parameterName, newParameterType, newParameterTypes, owner));
+					entityUtil.createUmlFunctionBehaviour(parameterName, newInputTypes,newMultiplicities,newOutputType,newMultiplicity , owner));
 		} else {
 			logger.debug("functionBehavior already present");
-			chessElementsUtil.updateUmlFunctionBehaviour(functionBehavior, newParameterType, newParameterTypes,
+			chessElementsUtil.updateUmlFunctionBehaviour(functionBehavior, newInputTypes, newMultiplicities,newOutputType, newMultiplicity,
 					mapFunctionBehaviorsToKeep);
 		}
 

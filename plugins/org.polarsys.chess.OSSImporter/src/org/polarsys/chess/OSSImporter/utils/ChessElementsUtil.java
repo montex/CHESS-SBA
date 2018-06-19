@@ -41,8 +41,8 @@ public class ChessElementsUtil {
 		return chessElementsUtilInstance;
 	}
 
-	public void updateUmlFunctionBehaviour(FunctionBehavior functionBehavior, Type dslVariableType,
-			EList<Type> parameters, HashMap<String, Boolean> mapFunctionBehaviorsToKeep) {
+	public void updateUmlFunctionBehaviour(FunctionBehavior functionBehavior, EList<Type> inputTypes,EList<String[]> inputMultiplicities,
+			Type outputType,String[] outputMultiplicity, HashMap<String, Boolean> mapFunctionBehaviorsToKeep) {
 
 		// Get all the existing parameters of the functionBehavior
 		final EList<org.eclipse.uml2.uml.Parameter> existingFunctionBehaviorParameters = functionBehavior
@@ -59,8 +59,8 @@ public class ChessElementsUtil {
 			entityUtil.removeFunctionBehaviorParameter(existingFunctionBehaviorParameters,
 					parameter.getQualifiedName());
 		}
-
-		entityUtil.createUmlFunctionBehaviorParameters(functionBehavior, parameters, dslVariableType);
+		entityUtil.createUmlFunctionBehaviorParameters(functionBehavior, inputTypes, inputMultiplicities, outputType, outputMultiplicity);
+		
 
 		// Old code that tries to solve it in a different manner
 		// // Prepare the map to mark existing parameters

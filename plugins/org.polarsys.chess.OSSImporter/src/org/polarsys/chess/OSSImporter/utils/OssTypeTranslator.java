@@ -120,4 +120,13 @@ public class OssTypeTranslator {
 		return types;
 	}
 
+	public EList<Type> getOrCreateTypesFromOssComplexTypes(EList<ComplexType> parameters, Package nearestPackage) {
+		EList<Type> types = new BasicEList<Type>();
+
+		for (ComplexType parameterType : parameters) {
+			types.add(getOrCreateTypeFromOssComplexType(parameterType, nearestPackage));
+		}
+		return types;
+	}
+
 }
