@@ -465,11 +465,12 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				}
 			}
 		}
-
-		return command;
-//		// Execute the commands
-//		final TransactionalEditingDomain domain  = componentInstanceEP.getEditingDomain();
-//		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+		
+		if (command.canExecute()) {
+			return command;
+		} else {
+			return null;
+		}
 	}
 		
 	/**
