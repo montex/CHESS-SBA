@@ -856,4 +856,14 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.isParameterAssumption((Element)element);
 	}
 
+	@Override
+	public String[] getUninterpretedFunctionOutputMultiplicity(Object uninterpretedFunction) {
+		return entityUtil.getUmlFunctionBehaviorOutputMultiplicity((FunctionBehavior) uninterpretedFunction);
+	}
+
+	@Override
+	public EList<String[]> getUninterpretedFunctionInputMultiplicities(Object uninterpretedFunction) {
+		return entityUtil.getUmlFunctionBehaviorInputMultiplicities((FunctionBehavior) uninterpretedFunction);
+	}
+
 }
