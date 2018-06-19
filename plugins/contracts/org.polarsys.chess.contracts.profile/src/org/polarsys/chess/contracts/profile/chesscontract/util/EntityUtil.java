@@ -375,20 +375,21 @@ public class EntityUtil {
 
 	}
 
-	public FunctionBehavior createUmlFunctionBehaviour(String functionBehaviourName,
-			EList<Type> inputTypes,EList<String[]> inputMultiplicities, Type outputType,String[] outputMultiplicity, Class owner) {
+	public FunctionBehavior createUmlFunctionBehaviour(String functionBehaviourName, EList<Type> inputTypes,
+			EList<String[]> inputMultiplicities, Type outputType, String[] outputMultiplicity, Class owner) {
 
 		// Create an empty functionBehavior
 		FunctionBehavior functionBehavior = createFunctionBehavior(owner, functionBehaviourName);
 
-		createUmlFunctionBehaviorParameters(functionBehavior, inputTypes, inputMultiplicities,outputType,outputMultiplicity);
+		createUmlFunctionBehaviorParameters(functionBehavior, inputTypes, inputMultiplicities, outputType,
+				outputMultiplicity);
 
 		return functionBehavior;
 
 	}
 
-	public void createUmlFunctionBehaviorParameters(FunctionBehavior functionBehavior, EList<Type> inputTypes,EList<String[]> inputMultiplicities,
-			Type outputType,String[] outputMultiplicity) {
+	public void createUmlFunctionBehaviorParameters(FunctionBehavior functionBehavior, EList<Type> inputTypes,
+			EList<String[]> inputMultiplicities, Type outputType, String[] outputMultiplicity) {
 		// Create the input parameters
 		for (Type parameterType : inputTypes) {
 			createFunctionBehaviorParameter(functionBehavior, parameterType, true);
@@ -717,12 +718,12 @@ public class EntityUtil {
 		return str;
 	}
 
-	public void updateUmlAssociation(Property componentInstance, Type type, String[] ossSubComponentMultiplicity)
+	public void updateUmlAssociation(Property componentInstance, Type newType, String[] newMultiplicity)
 			throws Exception {
 		// The component instance is already present, update its
 		// type if needed
-		if (!componentInstance.getType().equals(type)) {
-			componentInstance.setType(type);
+		if (!componentInstance.getType().equals(newType)) {
+			componentInstance.setType(newType);
 
 			// Add the association to the list of changes, it
 			// needs to be redrawn
@@ -731,8 +732,8 @@ public class EntityUtil {
 
 		String[] componentInstanceMultiplicity = getComponentInstanceMultiplicity(componentInstance);
 
-		if (!equalMultiplicityBoundaries(componentInstanceMultiplicity, ossSubComponentMultiplicity)) {
-			setAttributeMultiplicity(componentInstance, ossSubComponentMultiplicity);
+		if (!equalMultiplicityBoundaries(componentInstanceMultiplicity, newMultiplicity)) {
+			setAttributeMultiplicity(componentInstance, newMultiplicity);
 		}
 
 	}
@@ -2791,17 +2792,23 @@ public class EntityUtil {
 	}
 
 	public boolean equalMultiplicityBoundaries(String[] newMultiplicityRange, String[] multiplicityRange) {
-		return (equals(newMultiplicityRange[0], multiplicityRange[0])
-				&& equals(newMultiplicityRange[1], multiplicityRange[1]));
+		logger.debug("equalMultiplicityBoundaries [0]: "+newMultiplicityRange[0]+" "+ multiplicityRange[0]);
+		logger.debug("equalMultiplicityBoundaries [1]: "+newMultiplicityRange[1]+" "+ multiplicityRange[1]);
+		boolean equalLowerValue = equals(newMultiplicityRange[0], multiplicityRange[0]);
+		boolean equalUpperValue = equals(newMultiplicityRange[1], multiplicityRange[1]);
+		logger.debug(equalLowerValue+" - "+equalUpperValue);
+		return (equalLowerValue	&& equalUpperValue);
 
 	}
 
 	private boolean equals(String text1, String text2) {
-		return ((text1 == text2) && (text2 == null)) || (text1.equals(text2));
+		logger.debug("(text1 == text2): "+(text1 == text2) );
+		//logger.debug("text1.equals(text2): "+text1.equals(text2) );
+		return ((text1 == text2) && (text2 == null)) || ((text1 != null)&&(text2 != null)&&text1.equals(text2));
 	}
 
 	public void setAttributeMultiplicity(Property property, String[] newMultiplicityRange) {
-
+		logger.debug("setAttributeMultiplicity: " + newMultiplicityRange[0] + " " + newMultiplicityRange[1]);
 		if (newMultiplicityRange[0] != null) {
 			property.setLowerValue(createLiteralStringWithValue(newMultiplicityRange[0]));
 		}

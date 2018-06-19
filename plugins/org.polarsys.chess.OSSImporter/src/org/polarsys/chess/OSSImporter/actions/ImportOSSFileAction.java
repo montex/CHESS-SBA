@@ -632,7 +632,12 @@ public class ImportOSSFileAction {
 				chessElementsUtil.updateUmlAssociation(componentInstance, subComponentType, mulitplicityBoundaries,
 						mapComponentInstancesToKeep);
 			} catch (Exception e) {
+				if(e.getMessage()!=null){
 				throw new ImportException(e.getMessage());
+				}else{
+					e.printStackTrace();
+					throw new ImportException(e.toString());						
+				}
 			}
 		}
 
