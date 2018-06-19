@@ -2811,15 +2811,19 @@ public class EntityUtil {
 		logger.debug("setAttributeMultiplicity: " + newMultiplicityRange[0] + " " + newMultiplicityRange[1]);
 		if (newMultiplicityRange[0] != null) {
 			property.setLowerValue(createLiteralStringWithValue(newMultiplicityRange[0]));
+		}else{
+			property.setLowerValue(null);
 		}
 
 		if (newMultiplicityRange[1] != null) {
 			property.setUpperValue(createLiteralStringWithValue(newMultiplicityRange[1]));
+		}else{
+			property.setUpperValue(null);
 		}
 	}
 
-	private LiteralString createLiteralStringWithValue(String value) {
-		LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
+	private LiteralString createLiteralStringWithValue(String value) {		
+		LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();		
 		literalString.setValue(value);
 		return literalString;
 	}
