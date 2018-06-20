@@ -151,7 +151,7 @@ public class ImportOSSFileAction {
 			if (variableOwnerName != null) {
 				
 				// Retrieve the component instance containing the behavior
-				final Property behaviorOwner = entityUtil.getUMLComponentInstance(owner, variableOwnerName);
+				final Property behaviorOwner = entityUtil.getUmlComponentInstance(owner, variableOwnerName);
 
 				// Get the component type
 				final String typeName = behaviorOwner.getType().getName();
@@ -425,7 +425,7 @@ public class ImportOSSFileAction {
 
 			// The component instance containing the refining
 			// contract
-			final Property refiningComponentInstance = entityUtil.getUMLComponentInstance(owner,
+			final Property refiningComponentInstance = entityUtil.getUmlComponentInstance(owner,
 					ossModelUtil.getNearestComponentName(contractId));
 
 			// The component type where the contract property is
@@ -592,7 +592,7 @@ public class ImportOSSFileAction {
 		Property partWithPort = null;
 		String portOwnerName = ossModelUtil.getNearestComponentName(portId);
 		if (portOwnerName != null) {
-			partWithPort = entityUtil.getUMLComponentInstance(owner, portOwnerName);
+			partWithPort = entityUtil.getUmlComponentInstance(owner, portOwnerName);
 		}
 		return partWithPort;
 	}

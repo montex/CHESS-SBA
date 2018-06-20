@@ -203,12 +203,12 @@ public class ChessSystemModel implements AbstractSystemModel {
 	 */
 	@Override
 	public EList<Port> getNonStaticInputPorts(Object component) {
-		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, FlowDirection.IN_VALUE, false));
+		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, FlowDirection.IN_VALUE, false));
 	}
 
 	@Override
 	public EList<?> getNonStaticPorts(Object component) {
-		return entityUtil.getUMLPorts((Element) component, false);
+		return entityUtil.getUmlPorts((Element) component, false);
 	}
 
 	
@@ -217,7 +217,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	@Override
 	public String getUninterpretedFunctionName(Object function) {
 		if (function instanceof FunctionBehavior) {
-			return entityUtil.getUMLFunctionBehaviorName((FunctionBehavior) function);
+			return entityUtil.getUmlFunctionBehaviorName((FunctionBehavior) function);
 		}
 		return null;
 	}
@@ -256,7 +256,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	@Override
 	public EList<Port> getNonStaticOutputPorts(Object component) {
 		int direction = FlowDirection.OUT_VALUE;
-		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, direction, false));
+		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, direction, false));
 	}
 
 	/*
@@ -268,7 +268,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	@Override
 	public EList<Port> getNonStaticGenericPorts(Object component) {
 		int direction = FlowDirection.INOUT_VALUE;
-		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, direction, false));
+		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, direction, false));
 	}
 
 	/*
@@ -625,7 +625,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 	@Override
 	public EList<?> getStaticPorts(Object component) {
-		return entityUtil.getUMLPorts((Element) component, true);
+		return entityUtil.getUmlPorts((Element) component, true);
 	}
 	
 
@@ -719,7 +719,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 	@Override
 	public EList<?> getUninterpretedFunctions(Object component) {
-		return entityUtil.getUMLFunctionBehaviors((Element)component);
+		return entityUtil.getUmlFunctionBehaviors((Element)component);
 	}
 
 	@Override
@@ -776,12 +776,12 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 	@Override
 	public Object getUninterpretedFunctionOutputType(Object uninterpretedFunction) {
-		return entityUtil.getUMLFunctionBehaviorOutputType((FunctionBehavior)uninterpretedFunction);
+		return entityUtil.getUmlFunctionBehaviorOutputType((FunctionBehavior)uninterpretedFunction);
 	}
 
 	@Override
 	public EList<?> getUninterpretedFunctionInputTypes(Object uninterpretedFunction) {
-		return entityUtil.getUMLFunctionBehaviorInputTypes((FunctionBehavior)uninterpretedFunction);
+		return entityUtil.getUmlFunctionBehaviorInputTypes((FunctionBehavior)uninterpretedFunction);
 	}
 
 	/*@Override

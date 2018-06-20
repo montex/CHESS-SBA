@@ -834,7 +834,7 @@ public class EntityUtil {
 
 	}
 
-	public String getUMLElementName(String projectName, String fileModelPath, String elementID) throws Exception {
+	public String getUmlElementName(String projectName, String fileModelPath, String elementID) throws Exception {
 
 		Model model = loadModel(projectName, fileModelPath);
 
@@ -852,7 +852,7 @@ public class EntityUtil {
 		EList<Element> subComponents = new BasicEList<Element>();
 
 		for (Property umlProperty : getSubComponentsInstances((Class) element)) {
-			subComponents.add(getUMLType(umlProperty));
+			subComponents.add(getUmlType(umlProperty));
 		}
 
 		return subComponents;
@@ -862,7 +862,7 @@ public class EntityUtil {
 
 		for (Property umlProperty : getSubComponentsInstances((Class) element)) {
 			if (umlProperty.getName().compareTo(componentName) == 0) {
-				return getUMLType(umlProperty);
+				return getUmlType(umlProperty);
 			}
 		}
 
@@ -934,7 +934,7 @@ public class EntityUtil {
 	 *            the name of the instance
 	 * @return the UML property representing the component instance
 	 */
-	public Property getUMLComponentInstance(Class umlComponent, String componentName) {
+	public Property getUmlComponentInstance(Class umlComponent, String componentName) {
 
 		for (Property umlProperty : (umlComponent.getAttributes())) {
 			if (umlProperty.getName().equals(componentName) && isComponentInstance(umlProperty)) {
@@ -947,7 +947,7 @@ public class EntityUtil {
 	public String[] getEnumValuesFromComponentPorts(Class umlComponent) {
 		EList<String> enumValuesEList = new BasicEList<String>();
 
-		for (Port port : getUMLPortsFromClass(umlComponent)) {
+		for (Port port : getUmlPortsFromClass(umlComponent)) {
 			if (isEnumerationAttribute(port)) {
 				Set<String> currValues = getListValuesForEnumeratorType(port.getType());
 				enumValuesEList.addAll(currValues);
@@ -984,21 +984,21 @@ public class EntityUtil {
 		return toArray(getSubComponentsNames(umlComponent));
 	}
 
-	public EList<Port> getUMLPorts(Element umlElement, boolean isStaticPort) {
+	public EList<Port> getUmlPorts(Element umlElement, boolean isStaticPort) {
 		EList<Port> portsArr = new BasicEList<Port>();
 		if (isBlock(umlElement) || isCompType(umlElement) || isComponentImplementation(umlElement)) {
-			portsArr.addAll(getUMLPortsFromClass((Class) umlElement, isStaticPort));
+			portsArr.addAll(getUmlPortsFromClass((Class) umlElement, isStaticPort));
 		}
 
 		if (isComponentInstance(umlElement)) {
-			portsArr.addAll(getUMLPortsFromProperty((Property) umlElement, isStaticPort));
+			portsArr.addAll(getUmlPortsFromProperty((Property) umlElement, isStaticPort));
 		}
 		return portsArr;
 
 	}
 
-	private EList<Port> getUMLPortsFromProperty(Property umlElement, boolean isStaticPort) {
-		return getUMLPortsFromClass((Class) getUMLType((Property) umlElement), isStaticPort);
+	private EList<Port> getUmlPortsFromProperty(Property umlElement, boolean isStaticPort) {
+		return getUmlPortsFromClass((Class) getUmlType((Property) umlElement), isStaticPort);
 	}
 
 	/*
@@ -1008,24 +1008,24 @@ public class EntityUtil {
 	 * umlElement),portDirection,isStaticPort); }
 	 */
 
-	public EList<Port> getUMLPorts(Element umlElement, int portDirection, boolean isStaticPort) {
+	public EList<Port> getUmlPorts(Element umlElement, int portDirection, boolean isStaticPort) {
 		EList<Port> portsArr = new BasicEList<Port>();
 		if (isBlock(umlElement)) {
-			portsArr.addAll(getUMLPortsFromClass((Class) umlElement, portDirection, isStaticPort));
+			portsArr.addAll(getUmlPortsFromClass((Class) umlElement, portDirection, isStaticPort));
 		}
 
 		if (isCompType(umlElement) || (isComponentImplementation(umlElement))) {
-			portsArr.addAll(getUMLPortsFromComponent((Component) umlElement, portDirection, isStaticPort));
+			portsArr.addAll(getUmlPortsFromComponent((Component) umlElement, portDirection, isStaticPort));
 		}
 
 		if (isComponentInstance(umlElement)) {
-			portsArr.addAll(getUMLPorts(getUMLType((Property) umlElement), portDirection, isStaticPort));
+			portsArr.addAll(getUmlPorts(getUmlType((Property) umlElement), portDirection, isStaticPort));
 		}
 		return portsArr;
 
 	}
 
-	private EList<Port> getUMLPortsFromClass(Class umlComponent, int portDirection, boolean isStatic) {
+	private EList<Port> getUmlPortsFromClass(Class umlComponent, int portDirection, boolean isStatic) {
 		EList<Port> ports = new BasicEList<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
 			FlowPort fp = getFlowPort(umlPort);
@@ -1074,7 +1074,7 @@ public class EntityUtil {
 		}
 	}
 
-	private Set<Port> getUMLPortsFromComponent(Component umlComponent, int portDirection, boolean isStaticPort) {
+	private Set<Port> getUmlPortsFromComponent(Component umlComponent, int portDirection, boolean isStaticPort) {
 		Set<Port> ports = new HashSet<Port>();
 
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
@@ -1086,7 +1086,7 @@ public class EntityUtil {
 		return ports;
 	}
 
-	private EList<Port> getUMLPortsFromClass(Class umlComponent, boolean isStaticPort) {
+	private EList<Port> getUmlPortsFromClass(Class umlComponent, boolean isStaticPort) {
 		EList<Port> ports = new BasicEList<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
 			if (umlPort.isStatic() == isStaticPort) {
@@ -1096,7 +1096,7 @@ public class EntityUtil {
 		return ports;
 	}
 
-	private Set<Port> getUMLPortsFromClass(Class umlComponent) {
+	private Set<Port> getUmlPortsFromClass(Class umlComponent) {
 		Set<Port> ports = new HashSet<Port>();
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
 			ports.add(umlPort);
@@ -1298,7 +1298,7 @@ public class EntityUtil {
 		return null;
 	}
 
-	public Element getUMLType(Property umlProperty) {
+	public Element getUmlType(Property umlProperty) {
 		return ((Element) umlProperty.getType());
 	}
 
@@ -1350,7 +1350,7 @@ public class EntityUtil {
 	public String[] getPortsNames(Element umlElement, int portDirection, boolean isStaticPort) {
 		EList<String> portsNames = new BasicEList<String>();
 
-		for (Port umlPort : getUMLPorts(umlElement, portDirection, isStaticPort)) {
+		for (Port umlPort : getUmlPorts(umlElement, portDirection, isStaticPort)) {
 			portsNames.add(umlPort.getName());
 		}
 
@@ -1382,7 +1382,7 @@ public class EntityUtil {
 		Set<Property> simpleAttributes = new HashSet<Property>();
 
 		if (isComponentInstance(umlElement)) {
-			umlElement = getUMLType((Property) umlElement);
+			umlElement = getUmlType((Property) umlElement);
 		}
 
 		if (isBlock(umlElement) || (isCompType(umlElement) || (isComponentImplementation(umlElement)))) {
@@ -1431,7 +1431,7 @@ public class EntityUtil {
 		}
 
 		if (isComponentInstance(umlElement)) {
-			integerAttributes.addAll(getIntegerAttributes(getUMLType((Property) umlElement)));
+			integerAttributes.addAll(getIntegerAttributes(getUmlType((Property) umlElement)));
 		}
 		return integerAttributes;
 	}
@@ -1675,7 +1675,7 @@ public class EntityUtil {
 		EList<Port> eventPorts = new BasicEList<Port>();
 
 		if (isComponentInstance(umlElement)) {
-			umlElement = getUMLType((Property) umlElement);
+			umlElement = getUmlType((Property) umlElement);
 		}
 
 		if (isBlock(umlElement) || (isCompType(umlElement) || (isComponentImplementation(umlElement)))) {
@@ -1742,7 +1742,7 @@ public class EntityUtil {
 	 *            the function behavior
 	 * @return the owner of the function behavior
 	 */
-	public Element getUMLFunctionBehaviorOwner(FunctionBehavior function) {
+	public Element getUmlFunctionBehaviorOwner(FunctionBehavior function) {
 		return function.getOwner();
 	}
 
@@ -1776,25 +1776,25 @@ public class EntityUtil {
 		return false;
 	}
 
-	public Collection<? extends Port> getUMLPortsExceptEvents(Element umlElement, int portDirection) {
+	public Collection<? extends Port> getUmlPortsExceptEvents(Element umlElement, int portDirection) {
 
 		if (isComponentInstance(umlElement)) {
-			umlElement = getUMLType((Property) umlElement);
+			umlElement = getUmlType((Property) umlElement);
 		}
 
 		Set<Port> portsArr = new HashSet<Port>();
 		if (isBlock(umlElement)) {
-			portsArr.addAll(getUMLPortsExceptEventsFromClass((Class) umlElement, portDirection));
+			portsArr.addAll(getUmlPortsExceptEventsFromClass((Class) umlElement, portDirection));
 		}
 
 		if (isCompType(umlElement) || (isComponentImplementation(umlElement))) {
-			portsArr.addAll(getUMLPortsExceptEventsFromComponent((Component) umlElement, portDirection));
+			portsArr.addAll(getUmlPortsExceptEventsFromComponent((Component) umlElement, portDirection));
 		}
 
 		return portsArr;
 	}
 
-	private Collection<? extends Port> getUMLPortsExceptEventsFromComponent(Component umlComponent, int portDirection) {
+	private Collection<? extends Port> getUmlPortsExceptEventsFromComponent(Component umlComponent, int portDirection) {
 		Set<Port> ports = new HashSet<Port>();
 
 		for (Port umlPort : umlComponent.getOwnedPorts()) {
@@ -1806,7 +1806,7 @@ public class EntityUtil {
 		return ports;
 	}
 
-	private Collection<? extends Port> getUMLPortsExceptEventsFromClass(Class umlElement, int portDirection) {
+	private Collection<? extends Port> getUmlPortsExceptEventsFromClass(Class umlElement, int portDirection) {
 		Set<Port> ports = new HashSet<Port>();
 		for (Port umlPort : umlElement.getOwnedPorts()) {
 			FlowPort fp = getFlowPort(umlPort);
@@ -1944,7 +1944,7 @@ public class EntityUtil {
 		return (FormalProperty) umlConstraint.getStereotypeApplication(formalPropertyStereotype);
 	}
 
-	public boolean isDelegationConstraints(Element umlProperty) {
+	public boolean isDelegationConstraint(Element umlProperty) {
 		return ((umlProperty instanceof Constraint)
 				&& (UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) != null));
 	}
@@ -1954,20 +1954,20 @@ public class EntityUtil {
 
 		if (isBlock(umlElement) || isCompType(umlElement) || isComponentImplementation(umlElement)) {
 			for (Constraint umlConstraint : ((Class) umlElement).getOwnedRules()) {
-				if (isDelegationConstraints(umlConstraint)) {
+				if (isDelegationConstraint(umlConstraint)) {
 					constraints.add((Constraint) umlConstraint);
 				}
 			}
 		}
 
 		if (isComponentInstance(umlElement)) {
-			constraints.addAll(getDelegationConstraintsAsUMLConstraints(getUMLType((Property) umlElement)));
+			constraints.addAll(getDelegationConstraintsAsUMLConstraints(getUmlType((Property) umlElement)));
 		}
 
 		return constraints;
 	}
 
-	public EList<FunctionBehavior> getUMLFunctionBehaviors(Element umlElement) {
+	public EList<FunctionBehavior> getUmlFunctionBehaviors(Element umlElement) {
 
 		EList<FunctionBehavior> functionBehaviours = null;
 
@@ -1998,11 +1998,11 @@ public class EntityUtil {
 	 *            the function behavior
 	 * @return the requested name
 	 */
-	public String getUMLFunctionBehaviorName(FunctionBehavior uninterpretedFunction) {
+	public String getUmlFunctionBehaviorName(FunctionBehavior uninterpretedFunction) {
 		return uninterpretedFunction.getName();
 	}
 
-	public Type getUMLFunctionBehaviorOutputType(FunctionBehavior uninterpretedFunction) {
+	public Type getUmlFunctionBehaviorOutputType(FunctionBehavior uninterpretedFunction) {
 		for (Parameter parameter : uninterpretedFunction.getOwnedParameters()) {
 			if (parameter.getDirection() == ParameterDirectionKind.OUT_LITERAL) {
 				return parameter.getType();
@@ -2011,7 +2011,7 @@ public class EntityUtil {
 		return null;
 	}
 
-	public EList<Type> getUMLFunctionBehaviorInputTypes(FunctionBehavior uninterpretedFunction) {
+	public EList<Type> getUmlFunctionBehaviorInputTypes(FunctionBehavior uninterpretedFunction) {
 
 		EList<Type> inputTypes = new BasicEList<Type>();
 
@@ -2030,7 +2030,7 @@ public class EntityUtil {
 	 *            the function behavior
 	 * @return the input parameters
 	 */
-	public EList<Parameter> getUMLFunctionBehaviorInputParameters(FunctionBehavior function) {
+	public EList<Parameter> getUmlFunctionBehaviorInputParameters(FunctionBehavior function) {
 		final EList<Parameter> inputParameters = new BasicEList<Parameter>();
 
 		// Loop on all the parameters to find the input ones
@@ -2043,7 +2043,7 @@ public class EntityUtil {
 		return inputParameters;
 	}
 
-	public Parameter getUMLFunctionBehaviorOutputParameter(FunctionBehavior function) {
+	public Parameter getUmlFunctionBehaviorOutputParameter(FunctionBehavior function) {
 		// Loop on all the parameters to find the input ones
 		final EList<Parameter> parameters = function.getOwnedParameters();
 		for (Parameter parameter : parameters) {
@@ -2845,7 +2845,7 @@ public class EntityUtil {
 		}
 
 		if (isComponentInstance(umlElement)) {
-			constraints.addAll(getParameterAssumptionsAsConstraintsUml(getUMLType((Property) umlElement)));
+			constraints.addAll(getParameterAssumptionsAsConstraintsUml(getUmlType((Property) umlElement)));
 		}
 
 		return constraints;

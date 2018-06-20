@@ -82,7 +82,7 @@ public class ContractEntityUtil {
 		logger.debug("\n\n\n");
 
 		// The component instance containing the refining contract
-		final Property refiningComponentInstance = entityUtil.getUMLComponentInstance(owner, componentName);
+		final Property refiningComponentInstance = entityUtil.getUmlComponentInstance(owner, componentName);
 
 		// The component type where the contract property is defined
 		final Class refiningComponent = (Class) refiningComponentInstance.getType();

@@ -25,7 +25,7 @@ public class PropertyEditorFilter implements org.eclipse.jface.viewers.IFilter {
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selection);
 
 		if (selectedUmlElement instanceof Constraint) {
-			if (!entityUtil.isDelegationConstraints((Constraint) selectedUmlElement)) {
+			if (!entityUtil.isDelegationConstraint((Constraint) selectedUmlElement)) {
 				return true;
 			}
 		}

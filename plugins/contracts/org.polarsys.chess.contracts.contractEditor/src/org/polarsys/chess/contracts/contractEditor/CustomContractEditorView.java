@@ -72,7 +72,7 @@ public class CustomContractEditorView extends ContractEditorView {
 
 		if (selectedUmlElement instanceof Property) {
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
-				Element classType = entityUtil.getUMLType((Property) selectedUmlElement);
+				Element classType = entityUtil.getUmlType((Property) selectedUmlElement);
 				if (!contractEntityUtil.isContract(classType)) {
 					return classType;
 				}
@@ -93,11 +93,11 @@ public class CustomContractEditorView extends ContractEditorView {
 
 		if (selectedUmlElement instanceof Property) {
 			if (contractEntityUtil.isContractProperty((Property) selectedUmlElement)) {
-				return entityUtil.getUMLType((Property) selectedUmlElement);
+				return entityUtil.getUmlType((Property) selectedUmlElement);
 			}
 
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
-				Element classType = entityUtil.getUMLType((Property) selectedUmlElement);
+				Element classType = entityUtil.getUmlType((Property) selectedUmlElement);
 				if (contractEntityUtil.isContract(classType)) {
 					return classType;
 				}

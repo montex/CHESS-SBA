@@ -28,7 +28,7 @@ public class ConstraintEditorFilter implements org.eclipse.jface.viewers.IFilter
 		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selected);
 
 		if (selectedUmlElement instanceof Constraint) {
-			if (entityUtil.isDelegationConstraints((Constraint) selectedUmlElement)) {
+			if (entityUtil.isDelegationConstraint((Constraint) selectedUmlElement)) {
 				return true;
 			}
 		}
