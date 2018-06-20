@@ -6,7 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *  
  * Contributors:
- *     Luca Cristoforetti - initial API and implementation
+ *   Alberto Debiasi - initial API and implementation
+ *   Luca Cristoforetti - initial API and implementation
  ******************************************************************************/
 package org.polarsys.chess.diagramsCreator.commands;
 

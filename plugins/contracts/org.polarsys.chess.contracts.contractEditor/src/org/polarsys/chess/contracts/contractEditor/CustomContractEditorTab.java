@@ -76,7 +76,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 
 		if (selectedUmlElement instanceof Property) {
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
-				Element umlClass = entityUtil.getUMLType((Property) selectedUmlElement);
+				Element umlClass = entityUtil.getUmlType((Property) selectedUmlElement);
 
 				if (!contractEntityUtil.isContract(umlClass)) {
 					return umlClass;
@@ -105,11 +105,11 @@ public class CustomContractEditorTab extends ContractEditorTab {
 
 		if (selectedUmlElement instanceof Property) {
 			if (contractEntityUtil.isContractProperty((Property) selectedUmlElement)) {
-				return entityUtil.getUMLType((Property) selectedUmlElement);
+				return entityUtil.getUmlType((Property) selectedUmlElement);
 			}
 
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
-				Element classType = entityUtil.getUMLType((Property) selectedUmlElement);
+				Element classType = entityUtil.getUmlType((Property) selectedUmlElement);
 				if (contractEntityUtil.isContract(classType)) {
 					return classType;
 				}
@@ -242,7 +242,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 */
 	@Override
 	public void guaranteeEditorchanged(Object contract, String textChanged) {
-		contractEntityUtil.saveFormalProperty("Guarantee", textChanged, (Class) contract);
+		contractEntityUtil.setTextToGuaranteeOrCreateGuarantee(textChanged, (Class) contract);
 	}
 
 	/*
@@ -254,7 +254,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 */
 	@Override
 	public void assumptionEditorchanged(Object contract, String textChanged) {
-		contractEntityUtil.saveFormalProperty("Assume", textChanged, (Class) contract);
+		contractEntityUtil.setTextToAssumeOrCreateAssume(textChanged, (Class) contract);
 	}
 
 	/*

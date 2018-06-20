@@ -13,7 +13,6 @@ package org.polarsys.chess.properties.propertyEditor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.uml2.uml.Constraint;
-import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
@@ -23,7 +22,6 @@ import eu.fbk.eclipse.standardtools.utils.core.model.AbstractSystemModel;
 
 public class CustomPropertyEditorTab extends PropertyEditorTab {
 
-	private ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 	private EntityUtil entityUtil = EntityUtil.getInstance();
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 
@@ -35,6 +33,9 @@ public class CustomPropertyEditorTab extends PropertyEditorTab {
 		if (selectedUmlElement instanceof Constraint) {
 			Constraint umlConstraint = (Constraint) selectedUmlElement;
 			if (getSystemModel().isAssertion(umlConstraint)) {
+				return umlConstraint;
+			}
+			if (getSystemModel().isParameterAssumptions(umlConstraint)) {
 				return umlConstraint;
 			}
 		}
@@ -51,7 +52,7 @@ public class CustomPropertyEditorTab extends PropertyEditorTab {
 	@Override
 	public void propertyEditorchanged(Object property, String textChanged) {
 		
-		contractEntityUtil.saveFormalProperty((Constraint) property, textChanged);
+		entityUtil.setTextInUMLConstraint((Constraint) property, textChanged);
 	}
 
 	public String getStrFromProperty(Object property) {
