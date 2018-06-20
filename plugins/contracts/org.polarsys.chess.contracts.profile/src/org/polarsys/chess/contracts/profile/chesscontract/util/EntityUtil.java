@@ -142,7 +142,7 @@ public class EntityUtil {
 
 	// default names of created objects
 	private static final String DEFAULT_DELEGATION_PREFIX = "Define_";
-	private static final String DEFAULT_PAR_ASSUMPTION_PREFIX = "ParamAssumption_";
+	private static final String DEFAULT_PAR_ASSUMPTION_PREFIX = "ParamAssumption";
 	private static final String DEFAULT_ASSOCIATION_NAME = "association";
 	private static final String DEFAULT_ENUMERATION_NAME = "Enumeration";
 	private static final String DEFAULT_SIGNAL_NAME = "Signal";
@@ -2858,7 +2858,7 @@ public class EntityUtil {
 
 	public Element createUmlConstraint(Class owner, String parameterAssumptionsText) {
 		int numParameterAssumptions = getParameterAssumptionsAsConstraintsUml(owner).size();
-		String parameterAssumptionsName = DEFAULT_PAR_ASSUMPTION_PREFIX + numParameterAssumptions;
+		String parameterAssumptionsName = DEFAULT_PAR_ASSUMPTION_PREFIX + (numParameterAssumptions+1);
 
 		logger.debug("\n\n\n Creating constraint " + parameterAssumptionsName + " for owner " + owner);
 		logger.debug("\n\n\n");
