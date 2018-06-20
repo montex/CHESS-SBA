@@ -203,12 +203,12 @@ public class ChessSystemModel implements AbstractSystemModel {
 	 */
 	@Override
 	public EList<Port> getNonStaticInputPorts(Object component) {
-		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, FlowDirection.IN_VALUE, false));
+		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, FlowDirection.IN_VALUE, false));
 	}
 
 	@Override
 	public EList<?> getNonStaticPorts(Object component) {
-		return entityUtil.getUMLPorts((Element) component, false);
+		return entityUtil.getUmlPorts((Element) component, false);
 	}
 
 	
@@ -217,7 +217,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	@Override
 	public String getUninterpretedFunctionName(Object function) {
 		if (function instanceof FunctionBehavior) {
-			return entityUtil.getUMLFunctionBehaviorName((FunctionBehavior) function);
+			return entityUtil.getUmlFunctionBehaviorName((FunctionBehavior) function);
 		}
 		return null;
 	}
@@ -256,7 +256,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	@Override
 	public EList<Port> getNonStaticOutputPorts(Object component) {
 		int direction = FlowDirection.OUT_VALUE;
-		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, direction, false));
+		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, direction, false));
 	}
 
 	/*
@@ -268,7 +268,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	@Override
 	public EList<Port> getNonStaticGenericPorts(Object component) {
 		int direction = FlowDirection.INOUT_VALUE;
-		return new BasicEList<Port>(entityUtil.getUMLPorts((Element) component, direction, false));
+		return new BasicEList<Port>(entityUtil.getUmlPorts((Element) component, direction, false));
 	}
 
 	/*
@@ -625,7 +625,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 	@Override
 	public EList<?> getStaticPorts(Object component) {
-		return entityUtil.getUMLPorts((Element) component, true);
+		return entityUtil.getUmlPorts((Element) component, true);
 	}
 	
 
@@ -719,7 +719,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 	@Override
 	public EList<?> getUninterpretedFunctions(Object component) {
-		return entityUtil.getUMLFunctionBehaviors((Element)component);
+		return entityUtil.getUmlFunctionBehaviors((Element)component);
 	}
 
 	@Override
@@ -776,12 +776,12 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 	@Override
 	public Object getUninterpretedFunctionOutputType(Object uninterpretedFunction) {
-		return entityUtil.getUMLFunctionBehaviorOutputType((FunctionBehavior)uninterpretedFunction);
+		return entityUtil.getUmlFunctionBehaviorOutputType((FunctionBehavior)uninterpretedFunction);
 	}
 
 	@Override
 	public EList<?> getUninterpretedFunctionInputTypes(Object uninterpretedFunction) {
-		return entityUtil.getUMLFunctionBehaviorInputTypes((FunctionBehavior)uninterpretedFunction);
+		return entityUtil.getUmlFunctionBehaviorInputTypes((FunctionBehavior)uninterpretedFunction);
 	}
 
 	/*@Override
@@ -804,6 +804,21 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return entityUtil.isRefinementFormalProperty((Element) formalProperty);
 	}
 
+
+	@Override
+	public String[] getComponentInstanceMultiplicityBoundaries(Object component) throws Exception{
+		return entityUtil.getComponentInstanceMultiplicity((Property) component);
+	}
+
+	@Override
+	public String[] getPortMultiplicityBoundaries(Object port) {
+		return entityUtil.getAttributeMultiplicity((Property) port);
+	}
+	
+	
+	
+
+
 	/**
 	 * Returns the type of the given port, as string.
 	 */
@@ -824,4 +839,31 @@ public class ChessSystemModel implements AbstractSystemModel {
 		
 		return null;
 	}
+
+	@Override
+	public EList<?> getParameterAssumptions(Object component) {
+		
+		return entityUtil.getParameterAssumptionsAsConstraintsUml((Element) component);
+	}
+
+	@Override
+	public String getParameterAssumptionsBody(Object parameterAssumption) {
+		return entityUtil.getConstraintBodyStr((Constraint) parameterAssumption);
+	}
+
+	@Override
+	public boolean isParameterAssumptions(Object element) {
+		return entityUtil.isParameterAssumption((Element)element);
+	}
+
+	@Override
+	public String[] getUninterpretedFunctionOutputMultiplicity(Object uninterpretedFunction) {
+		return entityUtil.getUmlFunctionBehaviorOutputMultiplicity((FunctionBehavior) uninterpretedFunction);
+	}
+
+	@Override
+	public EList<String[]> getUninterpretedFunctionInputMultiplicities(Object uninterpretedFunction) {
+		return entityUtil.getUmlFunctionBehaviorInputMultiplicities((FunctionBehavior) uninterpretedFunction);
+	}
+
 }

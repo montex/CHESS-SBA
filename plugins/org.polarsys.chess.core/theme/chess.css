@@ -3,6 +3,11 @@ Port {
 	maskLabel: direction name type multiplicity;
 }
 
+/*Add multiplicity to the Port label in InternalBlockDiagram*/ 
+InternalBlockDiagram Port > Label{
+	maskLabel: direction name type multiplicity;
+}
+
 /*Hide stereotype labels in IBD */
 InternalBlockDiagram Label[type=StereotypeLabel]{
 	visible: false;
