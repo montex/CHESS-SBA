@@ -391,12 +391,14 @@ public class EntityUtil {
 	public void createUmlFunctionBehaviorParameters(FunctionBehavior functionBehavior, EList<Type> inputTypes,
 			EList<String[]> inputMultiplicities, Type outputType, String[] outputMultiplicity) {
 		// Create the input parameters
-		for (Type parameterType : inputTypes) {
-			createFunctionBehaviorParameter(functionBehavior, parameterType, true);
+		for (int i=0; i<inputTypes.size(); i++) {
+			Type parameterType = inputTypes.get(i);
+			String[] parameterMultiplicity = inputMultiplicities.get(i);
+			createFunctionBehaviorParameter(functionBehavior, parameterType,parameterMultiplicity, true);
 		}
 
 		// Create the output parameter
-		createFunctionBehaviorParameter(functionBehavior, outputType, false);
+		createFunctionBehaviorParameter(functionBehavior, outputType, outputMultiplicity,false);
 	}
 
 	public Constraint createDelegationConstraint(Class owner, String variableIdText, String constraintText,
@@ -2156,7 +2158,7 @@ public class EntityUtil {
 		return end;
 	}
 
-	public Parameter createFunctionBehaviorParameter(FunctionBehavior owner, String parameterName, Type parameterType,
+	public Parameter createFunctionBehaviorParameter(FunctionBehavior owner, String parameterName, Type parameterType,String[] multiplicity,
 			boolean isInput) {
 
 		logger.debug("\n\n\n Creating functionBehaviorParameter " + parameterName + " for owner " + owner);
@@ -2164,6 +2166,9 @@ public class EntityUtil {
 
 		final Parameter parameter = owner.createOwnedParameter(parameterName, parameterType);
 		parameter.setDirection(isInput ? ParameterDirectionKind.IN_LITERAL : ParameterDirectionKind.OUT_LITERAL);
+		
+		setAttributeMultiplicity(parameter, multiplicity);
+		
 		logger.debug("\n\nCreated " + parameterName + " functionBehaviorParameter\n\n");
 		return parameter;
 	}
@@ -2227,7 +2232,7 @@ public class EntityUtil {
 		return inputParameters;
 	}
 
-	public Parameter createFunctionBehaviorParameter(FunctionBehavior owner, Type parameterType, boolean isInput) {
+	public Parameter createFunctionBehaviorParameter(FunctionBehavior owner, Type parameterType, String[] multiplicity, boolean isInput) {
 
 		// Create the name
 		String parameterName = null;
@@ -2240,7 +2245,7 @@ public class EntityUtil {
 			// output
 		}
 
-		return createFunctionBehaviorParameter(owner, parameterName, parameterType, isInput);
+		return createFunctionBehaviorParameter(owner, parameterName, parameterType, multiplicity, isInput);
 	}
 
 	public org.eclipse.uml2.uml.Port createNonStaticPort(Class owner, String portName, Type portType,
@@ -2807,7 +2812,7 @@ public class EntityUtil {
 		return ((text1 == text2) && (text2 == null)) || ((text1 != null)&&(text2 != null)&&text1.equals(text2));
 	}
 
-	public void setAttributeMultiplicity(Property property, String[] newMultiplicityRange) {
+	public void setAttributeMultiplicity(MultiplicityElement property, String[] newMultiplicityRange) {
 		logger.debug("setAttributeMultiplicity: " + newMultiplicityRange[0] + " " + newMultiplicityRange[1]);
 		if (newMultiplicityRange[0] != null) {
 			property.setLowerValue(createLiteralStringWithValue(newMultiplicityRange[0]));
