@@ -2070,8 +2070,8 @@ public class EntityUtil {
 	public String[] getAttributeMultiplicity(MultiplicityElement attribute) {
 		logger.debug("getAttributeMultiplicity");
 
-		ValueSpecification upperValueSpecification = ((Property) attribute).getUpperValue();
-		ValueSpecification lowerValueSpecification = ((Property) attribute).getLowerValue();
+		ValueSpecification upperValueSpecification = attribute.getUpperValue();
+		ValueSpecification lowerValueSpecification = attribute.getLowerValue();
 
 		String upperValue = getValueSpecificationValue(upperValueSpecification);
 		String lowerValue = getValueSpecificationValue(lowerValueSpecification);
