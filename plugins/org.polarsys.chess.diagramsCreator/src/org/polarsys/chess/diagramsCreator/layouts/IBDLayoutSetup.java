@@ -13,8 +13,10 @@ package org.polarsys.chess.diagramsCreator.layouts;
 import java.util.Collection;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.elk.conn.gmf.GmfLayoutConfigurationStore;
 //import org.eclipse.elk.conn.gmf.GmfLayoutConfigurationStore;
 import org.eclipse.elk.core.service.IDiagramLayoutConnector;
+import org.eclipse.elk.core.service.ILayoutConfigurationStore;
 import org.eclipse.elk.core.service.ILayoutSetup;
 //import org.eclipse.elk.core.service.ILayoutConfigurationStore;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
@@ -93,7 +95,7 @@ public class IBDLayoutSetup implements ILayoutSetup {
 			binder.bind(IDiagramLayoutConnector.class).to(IBDDiagramLayoutConnector.class);
 			
 			// Uncomment the following to get the Layout tab
-//			binder.bind(ILayoutConfigurationStore.Provider.class).to(GmfLayoutConfigurationStore.Provider.class);
+			binder.bind(ILayoutConfigurationStore.Provider.class).to(GmfLayoutConfigurationStore.Provider.class);
 		}
 	}
 }
