@@ -225,5 +225,16 @@
             name="Refresh IBD handler">
       </command>
    </extension>
+   <extension
+         point="org.eclipse.elk.core.service.layoutConnectors">
+      <setup
+            class="org.polarsys.chess.diagramsCreator.layouts.BDDLayoutSetup"
+            priority="10">
+      </setup>
+      <setup
+            class="org.polarsys.chess.diagramsCreator.layouts.IBDLayoutSetup"
+            priority="11">
+      </setup>
+   </extension>
 
 </plugin>

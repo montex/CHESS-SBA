@@ -69,7 +69,7 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUti
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
 /**
- * This class creates an Internal Block Diagram and populates it with elements
+ * This class creates an Internal Block Diagram and populates it with elements.
  * @author cristofo
  *
  */
@@ -465,11 +465,12 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				}
 			}
 		}
-
-		return command;
-//		// Execute the commands
-//		final TransactionalEditingDomain domain  = componentInstanceEP.getEditingDomain();
-//		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+		
+		if (command.canExecute()) {
+			return command;
+		} else {
+			return null;
+		}
 	}
 		
 	/**
@@ -513,7 +514,10 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				
 				// Get the text size for enlarging the box
 				int textLength = port.getName().length();
-				textLength += port.getType().getName().length();
+				
+				// If port type is not defined, add some space for <Undefined>
+				textLength += (port.getType() != null) ? port.getType().getName().length() : 11;
+				
 				if (textLength > maxLengthInput) {
 					maxLengthInput = textLength;
 				}
@@ -522,7 +526,10 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				
 				// Get the text size for enlarging the box
 				int textLength = port.getName().length();
-				textLength += port.getType().getName().length();
+				
+				// If port type is not defined, add some space for <Undefined>
+				textLength += (port.getType() != null) ? port.getType().getName().length() : 11;
+
 				if (textLength > maxLengthOutput) {
 					maxLengthOutput = textLength;
 				}

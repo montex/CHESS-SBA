@@ -37,6 +37,7 @@ import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 /**
  * This class handles some options to display labels in the diagram.
+ * No more used since ELK and CSS.
  * @author cristofo
  *
  */

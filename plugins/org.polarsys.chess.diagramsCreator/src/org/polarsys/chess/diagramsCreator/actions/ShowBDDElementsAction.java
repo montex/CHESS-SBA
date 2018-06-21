@@ -59,7 +59,7 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.eclipse.gmf.runtime.diagram.ui.requests.DropObjectsRequest;
 
 /**
- * This class creates a Block Definition Diagram and populates it with elements
+ * This class creates a Block Definition Diagram and populates it with elements.
  * @author cristofo
  *
  */
@@ -407,7 +407,7 @@ public class ShowBDDElementsAction extends ShowHideContentsAction {
 			if (element instanceof Association) {
 				logger.debug("calling showElementIn for Association = " + element);
 				final Command cmd = showElementIn(element, (DiagramEditor) activeEditor, diagramEP, 1);
-				if (cmd.canExecute()) {
+				if (cmd != null && cmd.canExecute()) {
 					completeCmd.add(cmd);
 				}
 			}
