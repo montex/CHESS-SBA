@@ -2853,7 +2853,9 @@ public class EntityUtil {
 
 	public boolean isParameterAssumption(Element umlProperty) {
 		return ((umlProperty instanceof Constraint)
-				&& (UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) == null));
+				&& (UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) == null)
+				&& (UMLUtil.getAppliedStereotype(umlProperty, FORMAL_PROP, false) == null)
+				);
 	}
 
 	public Element createUmlConstraint(Class owner, String parameterAssumptionsText) {
