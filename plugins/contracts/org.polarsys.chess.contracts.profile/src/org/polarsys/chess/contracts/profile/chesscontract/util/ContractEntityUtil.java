@@ -206,9 +206,13 @@ public class ContractEntityUtil {
 					+ "' has empty spaces. Please remove them from the name.");
 		}
 
-		String assume = getAssumeStrFromUmlContract(umlContract);
+//		String assume = getAssumeStrFromUmlContract(umlContract);
+//		String guarantee = getGuaranteeStrFromUmlContract(umlContract);
+
+		String assume = getAssumeFormalPropertyStrFromUmlContract(umlContract);
 		String guarantee = getGuaranteeStrFromUmlContract(umlContract);
 
+		
 		String contractBody = "CONTRACT " + contractName + " assume : " + assume + " ; guarantee : " + guarantee + " ;";
 
 		return contractBody;
@@ -237,17 +241,72 @@ public class ContractEntityUtil {
 		return null;
 	}
 
+	/**
+	 * Returns a string representing the expression of the assume of a contract.
+	 * @param umlContract the UML contract 			
+	 * @return the formal property as string
+	 */
 	public String getAssumeStrFromUmlContract(Class umlContract) {
 		FormalProperty assumeFormalProperty = getAssumeFromUmlContract(umlContract);
 		return entityUtil.getFormalPropertyStr(assumeFormalProperty);
-
 	}
 
+	/**
+	 * Returns the assume formal property of a contract. If it is an assertion
+	 * defined in the block, returns its name, otherwise returns the expression.
+	 * @param umlContract the UML contract 			
+	 * @return the formal property as string
+	 */
+	public String getAssumeFormalPropertyStrFromUmlContract(Class umlContract) {
+		FormalProperty assumeFormalProperty = getAssumeFromUmlContract(umlContract);
+		
+		if (assumeFormalProperty == null) {
+			System.out.println("sono null");
+			return null;
+		} else if (assumeFormalProperty.getBase_Constraint().getOwner() == umlContract) {
+			System.out.println("sono figlia di umlContract = " + umlContract);
+			System.out.println("e mi chiamo " + assumeFormalProperty.getBase_Constraint().getName());
+			return entityUtil.getFormalPropertyStr(assumeFormalProperty);
+		} else {
+			System.out.println("sono figlia di owner = " + assumeFormalProperty.getBase_Constraint().getOwner());
+			System.out.println("e mi chiamo " + assumeFormalProperty.getBase_Constraint().getName());
+			return assumeFormalProperty.getBase_Constraint().getName();
+		}
+	}
+	
+	/**
+	 * Returns a string representing the expression of the guarantee of a contract.
+	 * @param umlContract the UML contract 			
+	 * @return the formal property as string
+	 */
 	public String getGuaranteeStrFromUmlContract(Class umlContract) {
 		FormalProperty guaranteeFormalProperty = getGuaranteeFromUmlContract(umlContract);
 		return entityUtil.getFormalPropertyStr(guaranteeFormalProperty);
 	}
 
+	/**
+	 * Returns the guarantee formal property of a contract. If it is an assertion
+	 * defined in the block, returns its name, otherwise returns the expression.
+	 * @param umlContract the UML contract 			
+	 * @return the formal property as string
+	 */
+	public String getGuaranteeFormalPropertyStrFromUmlContract(Class umlContract) {
+		FormalProperty guaranteeFormalProperty = getGuaranteeFromUmlContract(umlContract);
+		
+		if (guaranteeFormalProperty == null) {
+			System.out.println("sono null");
+			return null;
+		} else if (guaranteeFormalProperty.getBase_Constraint().getOwner() == umlContract) {
+			System.out.println("sono figlia di umlContract = " + umlContract);
+			System.out.println("e mi chiamo " + guaranteeFormalProperty.getBase_Constraint().getName());
+			return entityUtil.getFormalPropertyStr(guaranteeFormalProperty);
+		} else {
+			System.out.println("sono figlia di owner = " + guaranteeFormalProperty.getBase_Constraint().getOwner());
+			System.out.println("e mi chiamo " + guaranteeFormalProperty.getBase_Constraint().getName());
+			return guaranteeFormalProperty.getBase_Constraint().getName();
+		}
+	}
+	
 	public boolean isContract(Element umlElement) {
 		return ((umlElement instanceof Class)
 				&& (UMLUtil.getAppliedStereotype(umlElement, CONTRACT, false) != null));
