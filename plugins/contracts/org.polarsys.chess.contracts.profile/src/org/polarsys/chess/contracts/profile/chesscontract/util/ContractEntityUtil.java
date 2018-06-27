@@ -210,7 +210,7 @@ public class ContractEntityUtil {
 //		String guarantee = getGuaranteeStrFromUmlContract(umlContract);
 
 		String assume = getAssumeFormalPropertyStrFromUmlContract(umlContract);
-		String guarantee = getGuaranteeStrFromUmlContract(umlContract);
+		String guarantee = getGuaranteeFormalPropertyStrFromUmlContract(umlContract);
 
 		
 		String contractBody = "CONTRACT " + contractName + " assume : " + assume + " ; guarantee : " + guarantee + " ;";
@@ -261,15 +261,10 @@ public class ContractEntityUtil {
 		FormalProperty assumeFormalProperty = getAssumeFromUmlContract(umlContract);
 		
 		if (assumeFormalProperty == null) {
-			System.out.println("sono null");
 			return null;
 		} else if (assumeFormalProperty.getBase_Constraint().getOwner() == umlContract) {
-			System.out.println("sono figlia di umlContract = " + umlContract);
-			System.out.println("e mi chiamo " + assumeFormalProperty.getBase_Constraint().getName());
 			return entityUtil.getFormalPropertyStr(assumeFormalProperty);
 		} else {
-			System.out.println("sono figlia di owner = " + assumeFormalProperty.getBase_Constraint().getOwner());
-			System.out.println("e mi chiamo " + assumeFormalProperty.getBase_Constraint().getName());
 			return assumeFormalProperty.getBase_Constraint().getName();
 		}
 	}
@@ -294,15 +289,10 @@ public class ContractEntityUtil {
 		FormalProperty guaranteeFormalProperty = getGuaranteeFromUmlContract(umlContract);
 		
 		if (guaranteeFormalProperty == null) {
-			System.out.println("sono null");
 			return null;
 		} else if (guaranteeFormalProperty.getBase_Constraint().getOwner() == umlContract) {
-			System.out.println("sono figlia di umlContract = " + umlContract);
-			System.out.println("e mi chiamo " + guaranteeFormalProperty.getBase_Constraint().getName());
 			return entityUtil.getFormalPropertyStr(guaranteeFormalProperty);
 		} else {
-			System.out.println("sono figlia di owner = " + guaranteeFormalProperty.getBase_Constraint().getOwner());
-			System.out.println("e mi chiamo " + guaranteeFormalProperty.getBase_Constraint().getName());
 			return guaranteeFormalProperty.getBase_Constraint().getName();
 		}
 	}
