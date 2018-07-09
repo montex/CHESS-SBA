@@ -29,6 +29,7 @@ import org.eclipse.uml2.uml.Profile;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
@@ -278,6 +279,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
 	 * #getAssumeStrFromContract(java.lang.Object)
 	 */
+	@Override
 	public String getAssumeStrFromContract(Object contract) {
 		return (contractEntityUtil.getAssumeStrFromUmlContract((Class) contract));
 	}
@@ -287,10 +289,49 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 * 
 	 * @see
 	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
+	 * #getAssumeQualifiedNameFromContract(java.lang.Object)
+	 */
+	@Override
+	public String getAssumeQualifiedNameFromContract(Object contract) {
+		FormalProperty assumeFormalProperty = contractEntityUtil.getAssumeFromUmlContract((Class) contract);
+		
+		if (assumeFormalProperty != null) {
+			return assumeFormalProperty.getBase_Constraint().getQualifiedName();
+		}
+		else {
+			return "no Assume defined";
+		}
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
 	 * #getGuaranteeStrFromContract(java.lang.Object)
 	 */
+	@Override
 	public String getGuaranteeStrFromContract(Object contract) {
 		return (contractEntityUtil.getGuaranteeStrFromUmlContract((Class) contract));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
+	 * #getGuaranteeQualifiedNameFromContract(java.lang.Object)
+	 */
+	@Override
+	public String getGuaranteeQualifiedNameFromContract(Object contract) {
+		FormalProperty guaranteeFormalProperty = contractEntityUtil.getGuaranteeFromUmlContract((Class) contract);
+		
+		if (guaranteeFormalProperty != null) {
+			return guaranteeFormalProperty.getBase_Constraint().getQualifiedName();
+		}
+		else {
+			return "no Guarantee defined";
+		}
 	}
 
 	/*
