@@ -136,7 +136,6 @@ public class ChessElementsUtil {
 
 		// Set the flag to signal the functionBehavior is still used
 		mapFunctionBehaviorsToKeep.put(functionBehavior.getQualifiedName(), Boolean.TRUE);
-
 	}
 
 	// checked methods
@@ -148,7 +147,6 @@ public class ChessElementsUtil {
 		// Set the flag to signal the port is still used
 		mapPortsToKeep.put(port.getQualifiedName(), Boolean.TRUE);
 		// continue;
-
 	}
 
 	public void updateUmlNonStaticPort(org.eclipse.uml2.uml.Port port, eu.fbk.tools.editor.oss.oss.Port ossPort,
@@ -168,7 +166,6 @@ public class ChessElementsUtil {
 		// Add the port to the list of changes NOT NEEDED BECAUSE
 		// DIAGRAMS ARE AUTO-UPDATING
 		// addedElements.add(port);
-
 	}
 
 	public void updateUmlRefinementFormalProperty(Constraint umlConstraint, String updatedText,
@@ -180,7 +177,6 @@ public class ChessElementsUtil {
 		// Set the flag to signal the formal property is
 		// still used
 		mapFormalPropertiesToKeep.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
-
 	}
 
 	public void updateUmlFormalProperty(Constraint umlConstraint, String assertionText,
@@ -189,50 +185,105 @@ public class ChessElementsUtil {
 		// Update the formal property if needed
 		final String formalPropertyText = entityUtil.getConstraintBodyStr(umlConstraint);
 
-		// If the expression is different, save it,
-		// otherwise go on
+		// If the expression is different, save it, otherwise go on
 		if (!assertionText.equals(formalPropertyText)) {
-
-			final FormalProperty formalProperty = entityUtil.getFormalProperty(umlConstraint);
-			hashFormalProperties.remove(formalPropertyText, formalProperty);
 			entityUtil.setTextInUMLConstraint(umlConstraint, assertionText);
-
-			hashFormalProperties.put(assertionText, formalProperty);
 		}
 
-		// Set the flag to signal the formal property is
-		// still used
+		// Set the flag to signal the formal property is still used
 		mapFormalPropertiesToKeep.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
-
 	}
 
 	public void updateUmlContract(Class umlContract, String ossAssumptionText, String ossGuaranteeText,
-			HashMap<String, Boolean> mapContractPropertiesToKeep, HashMap<String, Boolean> mapFormalPropertiesToKeep, Class owner) {
+			HashMap<String, FormalProperty> hashFormalProperties, HashMap<String, Boolean> mapContractPropertiesToKeep, 
+			HashMap<String, Boolean> mapFormalPropertiesToKeep, Class owner) {
 
-		// The contract type is already present, update the
-		// formal properties if needed
+		final org.polarsys.chess.contracts.profile.chesscontract.Contract contract = 
+				contractEntityUtil.getContract(umlContract);		
+		final FormalProperty contractAssumption = contract.getAssume();
+		final FormalProperty contractGuarantee = contract.getGuarantee();
 
-		Constraint assumeFormalPropertyConstraint = contractEntityUtil.getAssumeFromUmlContract(umlContract)
-				.getBase_Constraint();
+		// Check if the assumption formal property is already present in the hash
+		final FormalProperty hashAssumption = hashFormalProperties.get(ossAssumptionText);
+		if (hashAssumption != null) {
+			logger.debug("assumption already present in the hash = " + hashAssumption);
 
-		mapFormalPropertiesToKeep.put(assumeFormalPropertyConstraint.getQualifiedName(), Boolean.TRUE);
-		entityUtil.updateUmlConstraint(assumeFormalPropertyConstraint, ossAssumptionText);
+			// Check if the assumption is different from the one already set
+			if (hashAssumption != contractAssumption) {
+				
+				// Check if the current assumption is child of the contract. If so, it can be removed
+				if (contractAssumption.getBase_Constraint().getOwner() == contract.getBase_Class()) {			
+				
+					// The old assumption needs to be removed from the contract
+					final EList<Constraint> fpList = new BasicEList<Constraint>();
+					fpList.add(contractAssumption.getBase_Constraint());
+					entityUtil.removeFormalProperty(fpList, contractAssumption.getBase_Constraint().getQualifiedName());
+				}
+								
+				// Set the new assumption
+				contract.setAssume(hashAssumption);
+			}
+		} else {
+			logger.debug("assumption not present in the hash");
+			
+			// Check if the current assumption is child of the contract. If so, it can be edited
+			if (contractAssumption.getBase_Constraint().getOwner() == contract.getBase_Class()) {
+			
+				// The assumption is the same, update it if needed				
+				entityUtil.updateUmlConstraint(contractAssumption.getBase_Constraint(), ossAssumptionText);
+			} else {
+				
+				// The assumption is a block formal property, cannot be modified or removed
+				// A new one has to be created
+				contractEntityUtil.createAssumptionToUmlContract(umlContract);
+				final FormalProperty assumptionFormalProperty = contractEntityUtil.getAssumeFromUmlContract(umlContract);
+				entityUtil.setTextInUMLConstraint(assumptionFormalProperty.getBase_Constraint(), ossAssumptionText);
+			}			
+		}
+		
+		// Check if the guarantee formal property is already present in the hash
+		final FormalProperty hashGuarantee = hashFormalProperties.get(ossGuaranteeText);
+		if (hashGuarantee != null) {
+			logger.debug("guarantee already present in the hash = " + hashGuarantee);
 
-		Constraint guaranteeFormalPropertyConstraint = contractEntityUtil.getGuaranteeFromUmlContract(umlContract)
-				.getBase_Constraint();
+			// Check if the guarantee is different from the one already set
+			if (hashGuarantee != contractGuarantee) {
+				
+				// Check if the current guarantee is child of the contract. If so, it can be removed
+				if (contractGuarantee.getBase_Constraint().getOwner() == contract.getBase_Class()) {			
+				
+					// The old guarantee needs to be removed from the contract
+					final EList<Constraint> fpList = new BasicEList<Constraint>();
+					fpList.add(contractGuarantee.getBase_Constraint());
+					entityUtil.removeFormalProperty(fpList, contractGuarantee.getBase_Constraint().getQualifiedName());
+				}
+								
+				// Set the new guarantee
+				contract.setGuarantee(hashGuarantee);
+			}
+		} else {
+			logger.debug("guarantee not present in the hash");
+			
+			// Check if the current guarantee is child of the contract. If so, it can be edited
+			if (contractGuarantee.getBase_Constraint().getOwner() == contract.getBase_Class()) {
+			
+				// The guarantee is the same, update it if needed
+				entityUtil.updateUmlConstraint(contractGuarantee.getBase_Constraint(), ossGuaranteeText);
+			} else {
+				
+				// The guarantee is a block formal property, cannot be modified or removed
+				// A new one has to be created
+				contractEntityUtil.createGuaranteeToUmlContract(umlContract);
+				final FormalProperty guaranteeFormalProperty = contractEntityUtil.getGuaranteeFromUmlContract(umlContract);
+				entityUtil.setTextInUMLConstraint(guaranteeFormalProperty.getBase_Constraint(), ossGuaranteeText);
+			}			
+		}
 
-		// The formal property is the same, mark it as still
-		// used
-		mapFormalPropertiesToKeep.put(guaranteeFormalPropertyConstraint.getQualifiedName(), Boolean.TRUE);
-		entityUtil.updateUmlConstraint(guaranteeFormalPropertyConstraint, ossGuaranteeText);
-
-		// Set the flag to signal the contractProperty is still
-		// used
+		// Set the flag to signal the contractProperty is still used
 		final ContractProperty contractProperty = (ContractProperty) chessSystemModel.getContract(owner,
 				// dslContract.getName() should be the same
 				umlContract.getName());
 		mapContractPropertiesToKeep.put(contractProperty.getBase_Property().getQualifiedName(), Boolean.TRUE);
-
 	}
 
 	public void updateUmlAssociation(Property componentInstance, Type type, String[] ossSubComponentMultiplicity,
@@ -240,10 +291,8 @@ public class ChessElementsUtil {
 
 		entityUtil.updateUmlAssociation(componentInstance, type, ossSubComponentMultiplicity);
 
-		// Set the flag to signal the componentInstance is still
-		// used
+		// Set the flag to signal the componentInstance is still used
 		mapComponentInstancesToKeep.put(componentInstance.getQualifiedName(), Boolean.TRUE);
-
 	}
 
 	public Constraint createUmlInterfaceFormalProperty(String assertionName, String assertionText,
@@ -252,8 +301,7 @@ public class ChessElementsUtil {
 		Constraint umlConstraint = entityUtil.createInterfaceFormalProperty(owner, assertionName, assertionText);
 
 		// Add the formal property to the hash
-		hashFormalProperties.put(assertionText, entityUtil.getFormalProperty(umlConstraint));
-
+		hashFormalProperties.put(assertionName, entityUtil.getFormalProperty(umlConstraint));
 		return umlConstraint;
 	}
 
@@ -262,37 +310,36 @@ public class ChessElementsUtil {
 
 		// Create an empty Contract
 		Class umlContract = contractEntityUtil.createContract(owner, contractName, contractStereotype);
-		org.polarsys.chess.contracts.profile.chesscontract.Contract contract = contractEntityUtil
-				.getContract(umlContract);
+		org.polarsys.chess.contracts.profile.chesscontract.Contract contract = 
+				contractEntityUtil.getContract(umlContract);
 
-		// Check if the assumption formal property is already
-		// defined
-		// FIXME: this works good only if expressions are
-		// different
+		// Check if the assumption formal property is already defined
 		final FormalProperty assumption = hashFormalProperties.get(ossAssumptionText);
 		if (assumption != null) {
+			logger.debug("assumption already present = " + assumption);
+
 			// Add the assume formal property
 			contract.setAssume(assumption);
 		} else {
+			logger.debug("assumption not present");
+
 			// Create a new formal property
 			contractEntityUtil.setTextToAssumeOrCreateAssume(ossAssumptionText, umlContract);
 		}
 
-		// Check if the guarantee formal property is already
-		// defined
+		// Check if the guarantee formal property is already defined
 		final FormalProperty guarantee = hashFormalProperties.get(ossGuaranteeText);
 		if (guarantee != null) {
 			logger.debug("guarantee already present = " + guarantee);
+
 			// Add the assume formal property
 			contract.setGuarantee(guarantee);
 		} else {
 			logger.debug("guarantee not present");
+
 			// Create a new formal property
 			contractEntityUtil.setTextToGuaranteeOrCreateGuarantee(ossGuaranteeText, umlContract);
 		}
-
 		return umlContract;
-
 	}
-
 }

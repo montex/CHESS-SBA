@@ -96,11 +96,13 @@ public class ImportOSSFileAction {
 	private final ChessSystemModel chessSystemModel = ChessSystemModel.getInstance();
 	private final ContractEntityUtil contractEntityUtil = ContractEntityUtil.getInstance();
 	private final EntityUtil entityUtil = EntityUtil.getInstance();
+
 	// FIXME think how to manage this class
 	private final StereotypeUtil stereotypeUtil = StereotypeUtil.getInstance();
 	private final ChessElementsUtil chessElementsUtil = ChessElementsUtil.getInstance();
 	private OSSModelUtil ossModelUtil = OSSModelUtil.getInstance();
 	private OssTypeTranslator ossTypeTranslator = OssTypeTranslator.getInstance();
+
 	// Will contain elements being added to the model, big enough
 	private final EList<Element> addedElements = new BasicEList<>(2000);
 
@@ -300,6 +302,7 @@ public class ImportOSSFileAction {
 			EList<Constraint> existingDelegationConstraints, HashMap<String, Boolean> mapContractRefinementsToKeep,
 			EList<DataType> existingContractRefinements, HashMap<String, Boolean> mapFormalPropertiesToKeep,
 			EList<Constraint> existingFormalProperties) {
+		
 		// Component instances cleanup time, associations will be removed
 		// automatically
 		for (String qualifiedElement : mapComponentInstancesToKeep.keySet()) {
@@ -345,7 +348,6 @@ public class ImportOSSFileAction {
 				entityUtil.removeFormalProperty(existingFormalProperties, qualifiedElement);
 			}
 		}
-
 	}
 
 	private boolean containsAssertion(RefinementInstance dslRefInstance) {
@@ -560,8 +562,8 @@ public class ImportOSSFileAction {
 			// ParameterId not handled
 			addImportError("Found a connection with a ParameterId, don't know how to handle it!");
 		} else {
-			System.out.println("variable: " + variable);
-			System.out.println("constraint: " + constraint);
+//			System.out.println("variable: " + variable);
+//			System.out.println("constraint: " + constraint);
 			addImportError("Found a connetion with a" + variable + ", don't know how to handle it!");
 		}
 
@@ -604,7 +606,8 @@ public class ImportOSSFileAction {
 		// SUB processing
 		final String subName = ossModelUtil.getSubComponentName(subComponent);
 		logger.debug("\tsubcomponent name = " + subName);
-		// FIXME chekc type...and include multiplicity
+
+		// FIXME check type...and include multiplicity
 		final String subType = ossModelUtil.getSubComponentTypeName(subComponent);
 		logger.debug("\tsubcomponent type = " + subType);
 
@@ -640,18 +643,15 @@ public class ImportOSSFileAction {
 				}
 			}
 		}
-
 	}
 
 	/**
-	 * Creates a map with the formal properties text and the objects
+	 * Creates a map with the formal properties names and the objects
 	 * 
 	 * @param existingFormalProperties
 	 *            the list of constraints of the object
 	 * @return the requested map
 	 */
-	// FIXME: this works only if expressions are different, otherwise they'll be
-	// overwritten
 	private HashMap<String, FormalProperty> prepareFormalPropertiesMap(EList<Constraint> existingFormalProperties) {
 		final HashMap<String, FormalProperty> map = Maps.newHashMapWithExpectedSize(existingFormalProperties.size());
 
@@ -659,7 +659,7 @@ public class ImportOSSFileAction {
 		for (Constraint constraint : existingFormalProperties) {
 			final FormalProperty formalProperty = entityUtil.getFormalProperty(constraint);
 			if (formalProperty != null) {
-				map.put(entityUtil.getFormalPropertyStr(formalProperty), formalProperty);
+				map.put(formalProperty.getBase_Constraint().getName(), formalProperty);
 			}
 		}
 		return map;
@@ -684,8 +684,8 @@ public class ImportOSSFileAction {
 		final Class owner = dslTypeToComponent.get(dslParentComponent.getType());
 
 		// Get all the existing ports of the element, static or not
-		final EList<NamedElement> existingNonStaticPorts = (EList<NamedElement>) chessSystemModel
-				.getNonStaticPorts(owner);
+		final EList<NamedElement> existingNonStaticPorts = 
+				(EList<NamedElement>) chessSystemModel.getNonStaticPorts(owner);
 		existingNonStaticPorts.addAll((Collection<? extends NamedElement>) chessSystemModel.getStaticPorts(owner));
 
 		// Prepare the map to mark existing ports
@@ -695,8 +695,8 @@ public class ImportOSSFileAction {
 		}
 
 		// Get all the existing contract properties
-		final EList<ContractProperty> existingContractProperties = (EList<ContractProperty>) chessSystemModel
-				.getContractsOfComponent(owner);
+		final EList<ContractProperty> existingContractProperties = 
+				(EList<ContractProperty>) chessSystemModel.getContractsOfComponent(owner);
 
 		// Prepare the map to mark existing contracts
 		final HashMap<String, Boolean> mapContractPropertiesToKeep = Maps
@@ -706,27 +706,26 @@ public class ImportOSSFileAction {
 		}
 
 		// Get all the interface formal properties
-		final EList<Constraint> existingFormalProperties = (EList<Constraint>) chessSystemModel
-				.getInterfaceAssertions(owner);
+		final EList<Constraint> existingFormalProperties = 
+				(EList<Constraint>) chessSystemModel.getInterfaceAssertions(owner);
 
 		// Create an hash map for the existing formal properties
-		final HashMap<String, FormalProperty> hashFormalProperties = prepareFormalPropertiesMap(
-				existingFormalProperties);
+		final HashMap<String, FormalProperty> hashFormalProperties = prepareFormalPropertiesMap(existingFormalProperties);
 
 		// Prepare the map to mark existing formal properties
-		final HashMap<String, Boolean> mapFormalPropertiesToKeep = Maps
-				.newHashMapWithExpectedSize(existingFormalProperties.size());
+		final HashMap<String, Boolean> mapFormalPropertiesToKeep = 
+				Maps.newHashMapWithExpectedSize(existingFormalProperties.size());
 		for (Constraint formalProperty : existingFormalProperties) {
 			mapFormalPropertiesToKeep.put(formalProperty.getQualifiedName(), null);
 		}
 
 		// Get all the parameter assumptions
-		final EList<Constraint> existingParameterAssumptions = (EList<Constraint>) chessSystemModel
-				.getParameterAssumptions(owner);
+		final EList<Constraint> existingParameterAssumptions = 
+				(EList<Constraint>) chessSystemModel.getParameterAssumptions(owner);
 
 		// Prepare the map to mark existing parameter assumptions
-		final HashMap<String, Boolean> mapParameterAssumptionsToKeep = Maps
-				.newHashMapWithExpectedSize(existingParameterAssumptions.size());
+		final HashMap<String, Boolean> mapParameterAssumptionsToKeep = 
+				Maps.newHashMapWithExpectedSize(existingParameterAssumptions.size());
 		for (Constraint parameterAssumptions : existingParameterAssumptions) {
 			mapParameterAssumptionsToKeep.put(parameterAssumptions.getQualifiedName(), null);
 		}
@@ -735,8 +734,8 @@ public class ImportOSSFileAction {
 		final EList<Behavior> existingFunctionBehaviors = owner.getOwnedBehaviors();
 
 		// Prepare the map to mark existing functionBehaviors
-		final HashMap<String, Boolean> mapFunctionBehaviorsToKeep = Maps
-				.newHashMapWithExpectedSize(existingFunctionBehaviors.size());
+		final HashMap<String, Boolean> mapFunctionBehaviorsToKeep = 
+				Maps.newHashMapWithExpectedSize(existingFunctionBehaviors.size());
 		for (Behavior behavior : existingFunctionBehaviors) {
 			mapFunctionBehaviorsToKeep.put(behavior.getQualifiedName(), null);
 		}
@@ -767,15 +766,18 @@ public class ImportOSSFileAction {
 					// DEFINE processing
 					addImportError("Found a DEFINE tag, don't know how to handle it!");
 				} else if (containsContract(dslIntInstance)) {
+
 					// CONTRACT processing
 					parseContract(dslIntInstance.getContract(), hashFormalProperties, mapFormalPropertiesToKeep,
 							mapContractPropertiesToKeep, owner);
 				} else if (containsAssertion(dslIntInstance)) {
+
 					// ASSERTION processing
-					parseAssertion(dslIntInstance.getAssertion(), hashFormalProperties, mapFormalPropertiesToKeep,
+					parseInterfaceAssertion(dslIntInstance.getAssertion(), hashFormalProperties, mapFormalPropertiesToKeep,
 							owner);
 				} else if (containsParameterAssumptions(dslIntInstance)) {
-					// ASSERTION processing
+
+					// PARAMETER ASSUMPTIONS processing
 					parseParameterAssumptions(dslIntInstance.getParameterAssumptions(), mapParameterAssumptionsToKeep,
 							owner);
 				} else if (dslIntInstance != null) {
@@ -789,14 +791,12 @@ public class ImportOSSFileAction {
 				existingContractProperties, mapFormalPropertiesToKeep, existingFormalProperties,
 				mapParameterAssumptionsToKeep, existingParameterAssumptions, mapFunctionBehaviorsToKeep,
 				existingFunctionBehaviors);
-
 	}
 
 	private void parseParameterAssumptions(ParameterAssumptions parameterAssumptions,
 			HashMap<String, Boolean> mapParameterAssumptionsToKeep, Class owner) {
 
-		final String parameterAssumptionsText = ossModelUtil.getOssElementAsString(parameterAssumptions.getConstraint(),
-				true);
+		final String parameterAssumptionsText = ossModelUtil.getOssElementAsString(parameterAssumptions.getConstraint(), true);
 
 		// Retrieve the constraint from the owner, if any
 		// (working on the constraint text)
@@ -813,7 +813,6 @@ public class ImportOSSFileAction {
 				mapParameterAssumptionsToKeep.put(umlConstraint.getQualifiedName(), Boolean.TRUE);
 			}
 		}
-
 	}
 
 	private boolean containsParameterAssumptions(InterfaceInstance dslIntInstance) {
@@ -826,6 +825,7 @@ public class ImportOSSFileAction {
 			EList<Constraint> existingFormalProperties, HashMap<String, Boolean> mapParameterAssumptionsToKeep,
 			EList<Constraint> existingParameterAssumptions, HashMap<String, Boolean> mapFunctionBehaviorsToKeep,
 			EList<Behavior> existingFunctionBehaviors) {
+		
 		// Ports cleanup time
 		for (String qualifiedElement : mapPortsToKeep.keySet()) {
 			if (mapPortsToKeep.get(qualifiedElement) == null) {
@@ -878,7 +878,6 @@ public class ImportOSSFileAction {
 		// PROVIDED OPERATION processing
 		logger.error("Import Error: " + message);
 		importErrors.append(message + "\n");
-
 	}
 
 	private boolean containsAssertion(InterfaceInstance dslIntInstance) {
@@ -897,8 +896,8 @@ public class ImportOSSFileAction {
 		return dslIntInstance != null && dslIntInstance.getVariable() != null;
 	}
 
-	private void parseAssertion(Assertion assertion, HashMap<String, FormalProperty> hashFormalProperties,
-			HashMap<String, Boolean> mapFormalProperties, Class owner) {
+	private void parseInterfaceAssertion(Assertion assertion, HashMap<String, FormalProperty> hashFormalProperties,
+			HashMap<String, Boolean> mapFormalPropertiesToKeep, Class owner) {
 
 		final String assertionName = assertion.getName();
 		final String assertionText = ossModelUtil.getOssElementAsString(assertion.getConstraint(), true);
@@ -915,30 +914,31 @@ public class ImportOSSFileAction {
 			if (entityUtil.isFormalProperty(umlConstraint)) {
 				logger.debug("Formal property already present");
 				chessElementsUtil.updateUmlFormalProperty(umlConstraint, assertionText, hashFormalProperties,
-						mapFormalProperties);
+						mapFormalPropertiesToKeep);
 			}
 		}
-
 	}
 
 	private void parseContract(Contract dslContract, HashMap<String, FormalProperty> hashFormalProperties,
 			HashMap<String, Boolean> mapFormalPropertiesToKeep, HashMap<String, Boolean> mapContractPropertiesToKeep,
 			Class owner) {
+		
 		// parseContract();
 		// final Contract dslContract = dslIntInstance.getContract();
 		final Assumption dslAssumption = dslContract.getAssumption();
 		final Guarantee dslGuarantee = dslContract.getGuarantee();
-		String ossAssumptionText = ossModelUtil.getOssElementAsString(dslAssumption.getConstraint(), true);
-		String ossGuaranteeText = ossModelUtil.getOssElementAsString(dslGuarantee.getConstraint(), true);
+		final String ossAssumptionText = ossModelUtil.getOssElementAsString(dslAssumption.getConstraint(), true);
+		final String ossGuaranteeText = ossModelUtil.getOssElementAsString(dslGuarantee.getConstraint(), true);
 		final String contractName = dslContract.getName();
+				
 		// Retrieve the contract type from the owner, if any
-		Class umlContract = (Class) owner.getOwnedMember(contractName, false,
-				UMLFactory.eINSTANCE.createClass().eClass());
+		Class umlContract = (Class) owner.getOwnedMember(contractName, false, UMLFactory.eINSTANCE.createClass().eClass());
 
 		if (umlContract == null) {
-			logger.debug("contract non found, creating one");
+			logger.debug("contract not found, creating one");
 			umlContract = chessElementsUtil.createUmlContract(contractName, ossAssumptionText, ossGuaranteeText,
 					hashFormalProperties, owner, stereotypeUtil.contractStereotype);
+			
 			// Create a Contract Property
 			final String contractPropertyName = deriveContractPropertyNameFromContract(umlContract);
 			contractEntityUtil.createContractProperty(owner, contractPropertyName, (Type) umlContract,
@@ -946,10 +946,9 @@ public class ImportOSSFileAction {
 			addedElements.add(umlContract);
 		} else {
 			logger.debug("Contract already present");
-			chessElementsUtil.updateUmlContract(umlContract, ossAssumptionText, ossGuaranteeText,
+			chessElementsUtil.updateUmlContract(umlContract, ossAssumptionText, ossGuaranteeText, hashFormalProperties,
 					mapContractPropertiesToKeep, mapFormalPropertiesToKeep, owner);
 		}
-
 	}
 
 	/**
@@ -1007,7 +1006,6 @@ public class ImportOSSFileAction {
 						false, stereotypeUtil.flowPortStereotype));
 			}
 		}
-
 	}
 
 	private void parseParameter(Parameter ossParameter, HashMap<String, Boolean> mapFunctionBehaviorsToKeep,
@@ -1028,7 +1026,6 @@ public class ImportOSSFileAction {
 			parseParameterAsUmlStaticPort(ossParameter.getId(), ossOutputType, existingNonStaticPorts, mapPortsToKeep,
 					owner);
 		}
-
 	}
 
 	private void parseParameterAsUmlStaticPort(String ossParameterName, ComplexType ossParameterType,
@@ -1067,7 +1064,6 @@ public class ImportOSSFileAction {
 					newMultiplicityRange, stereotypeUtil.flowPortStereotype));
 			// continue;
 		}
-
 	}
 
 	private void parseParameterAsUmlFunctionBehaviour(String parameterName, ComplexType ossOutputType,
@@ -1102,7 +1098,6 @@ public class ImportOSSFileAction {
 			chessElementsUtil.updateUmlFunctionBehaviour(functionBehavior, newInputTypes, newMultiplicities,newOutputType, newMultiplicity,
 					mapFunctionBehaviorsToKeep);
 		}
-
 	}
 
 	/*
@@ -1330,5 +1325,4 @@ public class ImportOSSFileAction {
 	}
 }
 
-// TODO: andrebbero rimossi anche i tipi creati, signal, enumeration,
-// boundedsubtype,...
+// TODO: andrebbero rimossi anche i tipi creati, signal, enumeration, boundedsubtype,...
