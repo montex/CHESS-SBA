@@ -16,17 +16,17 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.papyrus.sysml.diagram.common.edit.part.BlockCompositeEditPart;
-import org.eclipse.papyrus.sysml.diagram.internalblock.edit.part.InternalBlockDiagramEditPart;
-import org.eclipse.papyrus.sysml.diagram.blockdefinition.edit.part.BlockDefinitionDiagramEditPart;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gef.RootEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.OffscreenEditPartFactory;
+import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
+import org.eclipse.gmf.runtime.diagram.ui.image.ImageFileFormat;
+import org.eclipse.gmf.runtime.diagram.ui.render.util.CopyToImageUtil;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.papyrus.infra.gmfdiag.common.model.NotationModel;
 import org.eclipse.papyrus.infra.gmfdiag.common.model.NotationUtils;
@@ -34,8 +34,8 @@ import org.eclipse.papyrus.infra.gmfdiag.common.utils.DiagramUtils;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.uml2.uml.Class;
 import eu.fbk.eclipse.standardtools.diagram.DiagramDescriptor;
-import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.BlockDefinitionDiagramGeneratorService;
-import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.InternalBlockDiagramGeneratorService;
+//import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.BlockDefinitionDiagramGeneratorService;
+//import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.InternalBlockDiagramGeneratorService;
 import eu.fbk.eclipse.standardtools.diagram.ui.model.AbstractBlockDefinitionDiagramModel;
 import eu.fbk.eclipse.standardtools.diagram.ui.model.AbstractInternalBlockDiagramModel;
 
@@ -59,23 +59,24 @@ public class CHESSDiagramsGeneratorService {
 	public CHESSDiagramsGeneratorService(AbstractInternalBlockDiagramModel ibdModel,
 			AbstractBlockDefinitionDiagramModel bddModel) {
 		super();
-		ibdGeneratorService = InternalBlockDiagramGeneratorService.getInstance(ibdModel);
-		bddGeneratorService = BlockDefinitionDiagramGeneratorService.getInstance(bddModel);
+//		ibdGeneratorService = InternalBlockDiagramGeneratorService.getInstance(ibdModel);
+//		bddGeneratorService = BlockDefinitionDiagramGeneratorService.getInstance(bddModel);
 	}
 
-	private InternalBlockDiagramGeneratorService ibdGeneratorService;
-	private BlockDefinitionDiagramGeneratorService bddGeneratorService;
+//	private InternalBlockDiagramGeneratorService ibdGeneratorService;
+//	private BlockDefinitionDiagramGeneratorService bddGeneratorService;
 
 	private String directoryName;
 	private String imageExtension;
 
-	public void setParametersBeforeDiagramsGenerator(String directoryName, String imageExtension,
-			boolean showPortLabels, boolean automaticLabelLayout) {
+	public void setParametersBeforeDiagramsGenerator(String directoryName, String imageExtension
+//			,boolean showPortLabels, boolean automaticLabelLayout
+			) {
 
 		this.directoryName = directoryName;
 		this.imageExtension = imageExtension;
 
-		ibdGeneratorService.setParametersBeforeDiagramGenerator(showPortLabels, automaticLabelLayout);
+//		ibdGeneratorService.setParametersBeforeDiagramGenerator(showPortLabels, automaticLabelLayout);
 
 	}
 
@@ -92,41 +93,47 @@ public class CHESSDiagramsGeneratorService {
 			diagramName = diagram.getName();
 		}
 
+		final CopyToImageUtil copyImageUtil = new CopyToImageUtil();
+		final String saveFilePath = getComponentImageFilePath(diagramName);
+		final Path imagePath = new Path(saveFilePath);
 		try {
-
-			createDiagram(diagram, diagramName, shell, monitor);
-
+			if (saveFilePath.endsWith("svg")) {
+				copyImageUtil.copyToImage(diagram, imagePath, ImageFileFormat.SVG, new NullProgressMonitor(), PreferencesHint.USE_DEFAULTS);
+			} else if  (saveFilePath.endsWith("pdf")) {
+				copyImageUtil.copyToImage(diagram, imagePath, ImageFileFormat.PDF, new NullProgressMonitor(), PreferencesHint.USE_DEFAULTS);
+			}
 			return createDiagramDescriptor(diagramName, ownerName, hasComponentOwner);
-		} catch (NullPointerException e) {
+		} catch (CoreException e) {
 			logger.error("Unable to create diagram " + diagramName);
 		}
 		return null;
+//		createDiagram(diagram, diagramName, shell, monitor);
 	}
 
-	private void createDiagram(Diagram diagram, String diagramName, Shell shell, IProgressMonitor monitor) {
-
-		logger.debug("diagram name: " + diagram.getName());
-		logger.debug("diagram type: " + diagram.getType());
-
-		EditPart editPart = OffscreenEditPartFactory.getInstance().createDiagramEditPart(diagram, shell);
-
-		RootEditPart root = editPart.getRoot();
-
-		if (isInternalBlockDiagram(diagram)) {
-			InternalBlockDiagramEditPart idb = (InternalBlockDiagramEditPart) root.getChildren().get(0);
-			BlockCompositeEditPart graphicalComponent = (BlockCompositeEditPart) idb.getChildren().get(0);
-
-			ibdGeneratorService.createDiagramFile(getComponentImageFilePath(diagramName), graphicalComponent, monitor);
-		} else if (isBlockDefinitionDiagram(diagram)) {
-			BlockDefinitionDiagramEditPart bdd = (BlockDefinitionDiagramEditPart) root.getChildren().get(0);
-			// for(Object o : bdd.getChildren()){
-			// System.out.println("o: "+o);
-			// }
-
-			bddGeneratorService.createDiagramFile(getComponentImageFilePath(diagramName), bdd, monitor);
-
-		}
-	}
+//	private void createDiagram(Diagram diagram, String diagramName, Shell shell, IProgressMonitor monitor) {
+//
+//		logger.debug("diagram name: " + diagram.getName());
+//		logger.debug("diagram type: " + diagram.getType());
+//
+//		EditPart editPart = OffscreenEditPartFactory.getInstance().createDiagramEditPart(diagram, shell);
+//
+//		RootEditPart root = editPart.getRoot();
+//
+//		if (isInternalBlockDiagram(diagram)) {
+//			InternalBlockDiagramEditPart idb = (InternalBlockDiagramEditPart) root.getChildren().get(0);
+//			BlockCompositeEditPart graphicalComponent = (BlockCompositeEditPart) idb.getChildren().get(0);
+//
+//			ibdGeneratorService.createDiagramFile(getComponentImageFilePath(diagramName), graphicalComponent, monitor);
+//		} else if (isBlockDefinitionDiagram(diagram)) {
+//			BlockDefinitionDiagramEditPart bdd = (BlockDefinitionDiagramEditPart) root.getChildren().get(0);
+//			// for(Object o : bdd.getChildren()){
+//			// System.out.println("o: "+o);
+//			// }
+//
+//			bddGeneratorService.createDiagramFile(getComponentImageFilePath(diagramName), bdd, monitor);
+//
+//		}
+//	}
 
 	private DiagramDescriptor createDiagramDescriptor(String diagramName, String ownerName, boolean hasComponentOwner) {
 		String saveFilePath = getComponentImageFilePath(diagramName);

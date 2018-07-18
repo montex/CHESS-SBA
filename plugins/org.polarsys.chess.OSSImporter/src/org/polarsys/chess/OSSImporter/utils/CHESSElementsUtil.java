@@ -408,7 +408,7 @@ public class CHESSElementsUtil {
 	}
 			
 	/**
-	 * Returns the delegation constraint with the given specs from a list
+	 * Returns the delegation constraint with the given specs from a list.
 	 * @param delegationConstraints the list of delegation constraints to scan
 	 * @param variable variable part
 	 * @param constraint costraint part
@@ -772,7 +772,7 @@ public class CHESSElementsUtil {
 	}
 
 	/**
-	 * Creates an empty FunctionBehavior belonging to the given owner
+	 * Creates an empty FunctionBehavior belonging to the given owner.
 	 * @param owner the owner class of the functionBehavior
 	 * @param functionBehaviorName the name of the functionBehavior 
 	 * @return the newly created FunctionBehavior
@@ -789,7 +789,7 @@ public class CHESSElementsUtil {
 	}
 	
 	/**
-	 * Returns the input Parameters of the given FunctionBehavior
+	 * Returns the input Parameters of the given FunctionBehavior.
 	 * @param owner the FunctionBehavior to analyze
 	 * @return the list of input Parameters
 	 */
@@ -805,7 +805,7 @@ public class CHESSElementsUtil {
 	}
 	
 	/**
-	 * Creates a parameter for the given FunctionBehavior
+	 * Creates a parameter for the given FunctionBehavior.
 	 * @param owner the owning FunctionBehavior
 	 * @param type the type of the parameter
 	 * @param isInput the direction of the parameter
@@ -832,7 +832,7 @@ public class CHESSElementsUtil {
 	}
 
 	/**
-	 * Create a public formal property 
+	 * Creates a public formal property .
 	 * @param owner the owner of the property
 	 * @param assertionName the name of the formal property
 	 * @param assertionText the text of the formal property
@@ -851,7 +851,7 @@ public class CHESSElementsUtil {
 	}
 	
 	/**
-	 * Create a private formal property
+	 * Creates a private formal property.
 	 * @param owner the owner of the property
 	 * @param assertionName the name of the formal property
 	 * @param assertionText the text of the formal property
@@ -871,7 +871,7 @@ public class CHESSElementsUtil {
 	}
 	
 	/**
-	 * Return the Parameter with the given speccs if present among a list of Parameters
+	 * Returns the Parameter with the given speccs if present among a list of Parameters.
 	 * @param parameters the list of Parameters to scan
 	 * @param type the type of the Parameter
 	 * @param isInput the direction of the Parameter
@@ -890,7 +890,7 @@ public class CHESSElementsUtil {
 	}
 	
 	/**
-	 * Returns the Connector with the given ends if present among a list of Connectors
+	 * Returns the Connector with the given ends if present among a list of Connectors.
 	 * @param connectors the list of Connectors to scan
 	 * @param variable the first end of the Connector
 	 * @param constraint the second end of the Connector
