@@ -177,6 +177,7 @@ public class UtilitiesLibrary {
 	}
 
 	private static Port getPortByName(List<Port> list, String portName) {
+		portName = portName.trim();
 		for(Port port : list) {
 			if (port.getName().equals(portName)) {
 				return port;
