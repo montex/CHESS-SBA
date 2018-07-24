@@ -492,7 +492,7 @@ public class ContractEntityUtil {
 					createGuaranteeToUmlContract(umlContract);
 					guaranteeFormalProperty = getGuaranteeFromUmlContract(umlContract);
 				}
-				entityUtil.setTextInUMLConstraint(guaranteeFormalProperty.getBase_Constraint(), formalPropertyText);
+				entityUtil.setTextInUMLConstraint(guaranteeFormalProperty.getBase_Constraint(), formalPropertyText, "OCRA");
 			}
 		});
 	}
@@ -511,7 +511,7 @@ public class ContractEntityUtil {
 					createAssumptionToUmlContract(umlContract);
 					assumptionFormalProperty = getAssumeFromUmlContract(umlContract);
 				}
-				entityUtil.setTextInUMLConstraint(assumptionFormalProperty.getBase_Constraint(), formalPropertyText);
+				entityUtil.setTextInUMLConstraint(assumptionFormalProperty.getBase_Constraint(), formalPropertyText, "OCRA");
 			}
 		});
 	}
@@ -575,29 +575,7 @@ public class ContractEntityUtil {
 
 	
 
-	/**
-	 * Create a private formal property
-	 * 
-	 * @param owner
-	 *            the owner of the property
-	 * @param assertionName
-	 *            the name of the formal property
-	 * @param assertionText
-	 *            the text of the formal property
-	 * @return the newly created formal property
-	 */
-	public Constraint createRefinementFormalProperty(Class owner, String assertionName, String assertionText) {
-
-		final Constraint umlConstraint = entityUtil.createFormalProperty(owner, assertionName);
-		final LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
-		final ValueSpecification vs = umlConstraint.createSpecification("ConstraintSpec", null, newLs.eClass());
-		umlConstraint.setSpecification(vs);
-		umlConstraint.setVisibility(VisibilityKind.PRIVATE_LITERAL);
-
-		entityUtil.setTextInUMLConstraint(umlConstraint, assertionText);
-
-		return umlConstraint;
-	}
+	
 
 	
 	/**

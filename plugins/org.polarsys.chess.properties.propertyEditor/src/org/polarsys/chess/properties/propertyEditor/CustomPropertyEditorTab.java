@@ -52,7 +52,7 @@ public class CustomPropertyEditorTab extends PropertyEditorTab {
 	@Override
 	public void propertyEditorchanged(Object property, String textChanged) {
 		
-		entityUtil.setTextInUMLConstraint((Constraint) property, textChanged);
+		entityUtil.setTextInUMLConstraint((Constraint) property, textChanged, "OCRA");
 	}
 
 	public String getStrFromProperty(Object property) {

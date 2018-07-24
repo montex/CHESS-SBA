@@ -388,7 +388,7 @@ public class ImportOSSFileAction {
 
 		if (umlConstraint == null || !entityUtil.isFormalProperty(umlConstraint)) {
 			logger.debug("Formal property non found, creating one");
-			addedElements.add(contractEntityUtil.createRefinementFormalProperty(owner, assertionName, assertionText));
+			addedElements.add(entityUtil.createRefinementFormalProperty(owner, assertionName, assertionText));
 		} else {
 			if (entityUtil.isFormalProperty(umlConstraint)) {
 				logger.debug("Formal property already present");

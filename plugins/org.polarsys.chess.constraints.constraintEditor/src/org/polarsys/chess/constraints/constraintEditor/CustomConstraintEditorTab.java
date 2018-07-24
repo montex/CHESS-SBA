@@ -66,7 +66,7 @@ public class CustomConstraintEditorTab extends ConstraintEditorTab {
 	 */
 	@Override
 	public void constraintEditorchanged(Object constraint, String textChanged) {
-		entityUtil.saveConstraint(((Constraint) constraint), textChanged);
+		entityUtil.setTextInUMLConstraint((Constraint) constraint, textChanged, "OCRA");
 	}
 
 	/*
