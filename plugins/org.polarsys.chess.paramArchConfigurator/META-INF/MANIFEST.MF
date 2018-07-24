@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ParamArchConfigurator
+Bundle-SymbolicName: org.polarsys.chess.paramArchConfigurator;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.ui,
+ eu.fbk.eclipse.standardtools.utils,
+ eu.fbk.eclipse.standardtools.ExecOcraCommands,
+ org.polarsys.chess.service,
+ org.eclipse.uml2.uml;bundle-version="5.2.3",
+ org.eclipse.equinox.registry,
+ org.eclipse.xtext.common.types.ui,
+ eu.fbk.tools.editor.contract.expression,
+ org.eclipse.emf.emfstore.common
+Import-Package: org.eclipse.emf.ecore.resource

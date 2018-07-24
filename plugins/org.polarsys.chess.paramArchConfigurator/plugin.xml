@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu.CHESS.basicOperation">
+         <command
+               commandId="org.polarsys.chess.paramArchConfigurator.commands.InstantiateParamArchAsOssFileCommand"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.polarsys.chess.modelexplorerpopupmenu.id">
+         <menu
+               id="org.eclipse.ui.main.diagramEditorMenu.CHESS.basicOperations"
+               label="Basic Operations">
+            <command
+                  commandId="org.polarsys.chess.paramArchConfigurator.commands.InstantiateParamArchAsOssFileCommand"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.polarsys.chess.paramArchConfigurator.commands.InstantiateParamArchAsOssFileCommand"
+            id="org.polarsys.chess.paramArchConfigurator.commands.InstantiateParamArchAsOssFileCommand"
+            name="Instantiate the parameterized architecture as .oss file">
+      </command>
+   </extension>
+
+</plugin>
