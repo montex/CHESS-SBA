@@ -58,6 +58,8 @@
           propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//ContractRefinement/Contract"/>
       <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
           propertySortChoices="true" ecoreFeature="ecore:EReference chesscontract.ecore#//ContractRefinement/instanceSpec"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ContractRefinement/UpperIndexOfInstance"/>
+      <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chesscontract.ecore#//ContractRefinement/LowerIndexOfInstance"/>
     </genClasses>
     <genClasses xsi:type="genmodel:GenClass" ecoreClass="chesscontract.ecore#//FormalProperty">
       <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"

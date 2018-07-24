@@ -18,7 +18,6 @@ import org.polarsys.chess.contracts.profile.chesscontract.SubSystem;
 public class SubSystemImpl extends BlockImpl implements SubSystem {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected SubSystemImpl() {
@@ -27,7 +26,6 @@ public class SubSystemImpl extends BlockImpl implements SubSystem {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override

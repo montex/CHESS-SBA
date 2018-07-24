@@ -12,16 +12,15 @@ import org.eclipse.emf.common.util.Enumerator;
  * <!-- begin-user-doc --> A representation of the literals of the enumeration
  * '<em><b>Req Risks</b></em>', and utility methods for working with them. <!--
  * end-user-doc -->
- * 
  * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesPackage#getReqRisks()
  * @model
  * @generated
  */
 public enum ReqRisks implements Enumerator {
 	/**
-	 * The '<em><b>High</b></em>' literal object. <!-- begin-user-doc --> <!--
+	 * The '<em><b>High</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @see #HIGH_VALUE
 	 * @generated
 	 * @ordered
@@ -29,9 +28,9 @@ public enum ReqRisks implements Enumerator {
 	HIGH(0, "High", "High"),
 
 	/**
-	 * The '<em><b>Medium</b></em>' literal object. <!-- begin-user-doc --> <!--
+	 * The '<em><b>Medium</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @see #MEDIUM_VALUE
 	 * @generated
 	 * @ordered
@@ -39,9 +38,9 @@ public enum ReqRisks implements Enumerator {
 	MEDIUM(1, "Medium", "Medium"),
 
 	/**
-	 * The '<em><b>Low</b></em>' literal object. <!-- begin-user-doc --> <!--
+	 * The '<em><b>Low</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @see #LOW_VALUE
 	 * @generated
 	 * @ordered
@@ -49,13 +48,13 @@ public enum ReqRisks implements Enumerator {
 	LOW(2, "Low", "Low");
 
 	/**
-	 * The '<em><b>High</b></em>' literal value. <!-- begin-user-doc -->
+	 * The '<em><b>High</b></em>' literal value.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of '<em><b>High</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #HIGH
 	 * @model name="High"
 	 * @generated
@@ -64,13 +63,13 @@ public enum ReqRisks implements Enumerator {
 	public static final int HIGH_VALUE = 0;
 
 	/**
-	 * The '<em><b>Medium</b></em>' literal value. <!-- begin-user-doc -->
+	 * The '<em><b>Medium</b></em>' literal value.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of '<em><b>Medium</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #MEDIUM
 	 * @model name="Medium"
 	 * @generated
@@ -79,13 +78,13 @@ public enum ReqRisks implements Enumerator {
 	public static final int MEDIUM_VALUE = 1;
 
 	/**
-	 * The '<em><b>Low</b></em>' literal value. <!-- begin-user-doc -->
+	 * The '<em><b>Low</b></em>' literal value.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of '<em><b>Low</b></em>' literal object isn't clear, there
 	 * really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #LOW
 	 * @model name="Low"
 	 * @generated
@@ -99,22 +98,23 @@ public enum ReqRisks implements Enumerator {
 	 * 
 	 * @generated
 	 */
-	private static final ReqRisks[] VALUES_ARRAY = new ReqRisks[] { HIGH, MEDIUM, LOW, };
+	private static final ReqRisks[] VALUES_ARRAY = new ReqRisks[] {
+			HIGH,
+			MEDIUM,
+			LOW,
+		};
 
 	/**
-	 * A public read-only list of all the '<em><b>Req Risks</b></em>'
-	 * enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * A public read-only list of all the '<em><b>Req Risks</b></em>' enumerators.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static final List<ReqRisks> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
-	 * Returns the '<em><b>Req Risks</b></em>' literal with the specified
-	 * literal value. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param literal
-	 *            the literal.
+	 * Returns the '<em><b>Req Risks</b></em>' literal with the specified literal value.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param literal the literal.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
@@ -131,9 +131,7 @@ public enum ReqRisks implements Enumerator {
 	/**
 	 * Returns the '<em><b>Req Risks</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param name
-	 *            the name.
+	 * @param name the name.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
@@ -148,51 +146,43 @@ public enum ReqRisks implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>Req Risks</b></em>' literal with the specified
-	 * integer value. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param value
-	 *            the integer value.
+	 * Returns the '<em><b>Req Risks</b></em>' literal with the specified integer value.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param value the integer value.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static ReqRisks get(int value) {
 		switch (value) {
-		case HIGH_VALUE:
-			return HIGH;
-		case MEDIUM_VALUE:
-			return MEDIUM;
-		case LOW_VALUE:
-			return LOW;
+			case HIGH_VALUE: return HIGH;
+			case MEDIUM_VALUE: return MEDIUM;
+			case LOW_VALUE: return LOW;
 		}
 		return null;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private final int value;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private final String name;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private final String literal;
 
 	/**
-	 * Only this class can construct instances. <!-- begin-user-doc --> <!--
+	 * Only this class can construct instances.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private ReqRisks(int value, String name, String literal) {
@@ -203,35 +193,31 @@ public enum ReqRisks implements Enumerator {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public int getValue() {
-		return value;
+	  return value;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getName() {
-		return name;
+	  return name;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getLiteral() {
-		return literal;
+	  return literal;
 	}
 
 	/**
-	 * Returns the literal value of the enumerator, which is its string
-	 * representation. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the literal value of the enumerator, which is its string representation.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

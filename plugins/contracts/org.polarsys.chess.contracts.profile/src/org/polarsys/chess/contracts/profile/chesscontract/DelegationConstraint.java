@@ -14,8 +14,7 @@ import org.eclipse.uml2.uml.Constraint;
  * The following features are supported:
  * </p>
  * <ul>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint#getBase_Constraint
- * <em>Base Constraint</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint#getBase_Constraint <em>Base Constraint</em>}</li>
  * </ul>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getDelegationConstraint()
@@ -31,7 +30,6 @@ public interface DelegationConstraint extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the value of the '<em>Base Constraint</em>' reference.
 	 * @see #setBase_Constraint(Constraint)
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getDelegationConstraint_Base_Constraint()
@@ -41,13 +39,10 @@ public interface DelegationConstraint extends EObject {
 	Constraint getBase_Constraint();
 
 	/**
-	 * Sets the value of the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint#getBase_Constraint
-	 * <em>Base Constraint</em>}' reference. <!-- begin-user-doc --> <!--
+	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint#getBase_Constraint <em>Base Constraint</em>}' reference.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Base Constraint</em>' reference.
+	 * @param value the new value of the '<em>Base Constraint</em>' reference.
 	 * @see #getBase_Constraint()
 	 * @generated
 	 */
