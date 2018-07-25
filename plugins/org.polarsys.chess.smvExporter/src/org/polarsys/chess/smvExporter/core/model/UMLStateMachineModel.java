@@ -182,6 +182,11 @@ public class UMLStateMachineModel implements AbstractStateMachineModel {
 	}
 
 	@Override
+	public boolean isInputPort(Object port) {
+		return entityUtil.isPort((Element) port) && entityUtil.isInputPort((Element) port);
+	}
+
+	@Override
 	public String[] getLowHighIntervalType(Object type) {
 		return entityUtil.getLowerUpperBoundsForRangeType((Type) type);
 	}
