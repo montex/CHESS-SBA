@@ -45,6 +45,7 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 	private String smvMapFilepath;
 	private String smvFilePath;
 	private String resultFilePath;
+	private String ossFilePath;
 
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
@@ -53,7 +54,8 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(true);
 		showPopups = false;
 		usexTextValidation=true;
-		smvMapFilepath = ocraDirectoryUtil.getSmvMapFilePath();
+		ossFilePath = ocraDirectoryUtil.getOSSFilePath();
+		smvMapFilepath = nuXmvDirectoryUtil.getSmvMapFilePath();
 		smvFilePath = nuXmvDirectoryUtil.getSmvFileDirectory();
 		resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath(umlSelectedComponent.getName());
 	}
@@ -64,7 +66,8 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 		HashMap<String, String> smvPathComponentNameMap = smvExportService.exportSmv(umlSelectedComponent, showPopups,
 				smvFilePath, monitor);
 		ocraExecService.executeCheckCompositeContractImplementation(umlSelectedComponent, umlSelectedResource,
-				smvPathComponentNameMap, isDiscreteTime, usexTextValidation,showPopups, smvMapFilepath, resultFilePath, monitor);
+				smvPathComponentNameMap, isDiscreteTime, usexTextValidation,showPopups, 
+				ossFilePath, smvMapFilepath, resultFilePath, monitor);
 
 	}
 
