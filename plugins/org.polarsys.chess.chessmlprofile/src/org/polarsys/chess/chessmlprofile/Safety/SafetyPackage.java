@@ -218,6 +218,34 @@ public interface SafetyPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Safety.impl.HazardImpl <em>Hazard</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Safety.impl.HazardImpl
+	 * @see org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl#getHazard()
+	 * @generated
+	 */
+	int HAZARD = 3;
+
+	/**
+	 * The feature id for the '<em><b>Base Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HAZARD__BASE_CLASS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Hazard</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HAZARD_FEATURE_COUNT = 1;
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Safety.CriticalitySpecification <em>Criticality Specification</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -248,6 +276,27 @@ public interface SafetyPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCriticalitySpecification_CriticalityLevel();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Safety.Hazard <em>Hazard</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Hazard</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Safety.Hazard
+	 * @generated
+	 */
+	EClass getHazard();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Safety.Hazard#getBase_Class <em>Base Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Class</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Safety.Hazard#getBase_Class()
+	 * @see #getHazard()
+	 * @generated
+	 */
+	EReference getHazard_Base_Class();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Safety.CriticalityLevel <em>Criticality Level</em>}'.
@@ -365,6 +414,24 @@ public interface SafetyPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CRITICALITY_SPECIFICATION__CRITICALITY_LEVEL = eINSTANCE.getCriticalitySpecification_CriticalityLevel();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Safety.impl.HazardImpl <em>Hazard</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Safety.impl.HazardImpl
+		 * @see org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl#getHazard()
+		 * @generated
+		 */
+		EClass HAZARD = eINSTANCE.getHazard();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Class</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference HAZARD__BASE_CLASS = eINSTANCE.getHazard_Base_Class();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Safety.impl.CriticalityLevelImpl <em>Criticality Level</em>}' class.

@@ -25,12 +25,12 @@ import org.eclipse.uml2.uml.Constraint;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Safety.CriticalityLevel#getBase_Constraint <em>Base Constraint</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Safety.CriticalityLevel#getIsHigherThan <em>Is Higher Than</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Safety.CriticalityLevel#getMapsTo <em>Maps To</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Safety.SafetyPackage#getCriticalityLevel()
  * @model

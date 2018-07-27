@@ -28,12 +28,12 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedData
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.impl.FaultTolerantImpl#getBase_Component <em>Base Component</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.impl.FaultTolerantImpl#getScheme <em>Scheme</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.impl.FaultTolerantImpl#getSchemeAttrs <em>Scheme Attrs</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

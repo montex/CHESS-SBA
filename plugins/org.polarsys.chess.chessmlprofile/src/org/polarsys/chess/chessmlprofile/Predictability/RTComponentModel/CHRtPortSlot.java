@@ -30,12 +30,12 @@ import org.eclipse.uml2.uml.Slot;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot#getBase_Slot <em>Base Slot</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot#getCH_RtSpecification <em>CH Rt Specification</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage#getCHRtPortSlot()
  * @model

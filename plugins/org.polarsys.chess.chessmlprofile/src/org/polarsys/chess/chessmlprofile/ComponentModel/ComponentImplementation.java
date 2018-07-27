@@ -24,13 +24,13 @@ import org.eclipse.uml2.uml.Component;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation#getBase_Component <em>Base Component</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation#getLanguage <em>Language</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation#getOS <em>OS</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.ComponentImplementation#getSourceCodeLocation <em>Source Code Location</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage#getComponentImplementation()
  * @model

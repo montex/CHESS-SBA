@@ -31,7 +31,6 @@ import org.eclipse.papyrus.MARTE.MARTE_Foundations.NFPs.NFPsPackage;
  * <!-- end-user-doc -->
  * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationFactory
  * @model kind="package"
- *        annotation="http://www.eclipse.org/uml2/2.0.0/UML originalName='ThreatsPopagation'"
  * @generated
  */
 public interface ThreatsPropagationPackage extends EPackage {
@@ -868,6 +867,161 @@ public interface ThreatsPropagationPackage extends EPackage {
 	int FAULT_HANDLING_FEATURE_COUNT = 4;
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.AttackImpl <em>Attack</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.AttackImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getAttack()
+	 * @generated
+	 */
+	int ATTACK = 17;
+
+	/**
+	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACK__BASE_TRANSITION = INTERNAL_PROPAGATION__BASE_TRANSITION;
+
+	/**
+	 * The feature id for the '<em><b>External Faults</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACK__EXTERNAL_FAULTS = INTERNAL_PROPAGATION__EXTERNAL_FAULTS;
+
+	/**
+	 * The feature id for the '<em><b>Delay</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACK__DELAY = INTERNAL_PROPAGATION__DELAY;
+
+	/**
+	 * The feature id for the '<em><b>Weight</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACK__WEIGHT = INTERNAL_PROPAGATION__WEIGHT;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACK__KIND = INTERNAL_PROPAGATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Severity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACK__SEVERITY = INTERNAL_PROPAGATION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Likelihood</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACK__LIKELIHOOD = INTERNAL_PROPAGATION_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Vulnerability</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACK__VULNERABILITY = INTERNAL_PROPAGATION_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Threat</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACK__THREAT = INTERNAL_PROPAGATION_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Attack</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACK_FEATURE_COUNT = INTERNAL_PROPAGATION_FEATURE_COUNT + 5;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.VulnerabilityImpl <em>Vulnerability</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.VulnerabilityImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getVulnerability()
+	 * @generated
+	 */
+	int VULNERABILITY = 18;
+
+	/**
+	 * The feature id for the '<em><b>Occurrence</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VULNERABILITY__OCCURRENCE = INTERNAL_FAULT__OCCURRENCE;
+
+	/**
+	 * The feature id for the '<em><b>Base Transition</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VULNERABILITY__BASE_TRANSITION = INTERNAL_FAULT__BASE_TRANSITION;
+
+	/**
+	 * The feature id for the '<em><b>Weight</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VULNERABILITY__WEIGHT = INTERNAL_FAULT__WEIGHT;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VULNERABILITY__KIND = INTERNAL_FAULT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Vulnerability</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VULNERABILITY_FEATURE_COUNT = INTERNAL_FAULT_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorModelImpl <em>Error Model</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -875,7 +1029,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getErrorModel()
 	 * @generated
 	 */
-	int ERROR_MODEL = 17;
+	int ERROR_MODEL = 19;
 
 	/**
 	 * The feature id for the '<em><b>Base State Machine</b></em>' reference.
@@ -903,7 +1057,7 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getRecoveryKind()
 	 * @generated
 	 */
-	int RECOVERY_KIND = 18;
+	int RECOVERY_KIND = 20;
 
 
 	/**
@@ -1164,6 +1318,92 @@ public interface ThreatsPropagationPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getFaultHandling_Weight();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack <em>Attack</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attack</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack
+	 * @generated
+	 */
+	EClass getAttack();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack#getKind <em>Kind</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Kind</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack#getKind()
+	 * @see #getAttack()
+	 * @generated
+	 */
+	EAttribute getAttack_Kind();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack#getSeverity <em>Severity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Severity</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack#getSeverity()
+	 * @see #getAttack()
+	 * @generated
+	 */
+	EAttribute getAttack_Severity();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack#getLikelihood <em>Likelihood</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Likelihood</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack#getLikelihood()
+	 * @see #getAttack()
+	 * @generated
+	 */
+	EAttribute getAttack_Likelihood();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack#getVulnerability <em>Vulnerability</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Vulnerability</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack#getVulnerability()
+	 * @see #getAttack()
+	 * @generated
+	 */
+	EReference getAttack_Vulnerability();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack#getThreat <em>Threat</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Threat</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack#getThreat()
+	 * @see #getAttack()
+	 * @generated
+	 */
+	EAttribute getAttack_Threat();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Vulnerability <em>Vulnerability</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Vulnerability</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Vulnerability
+	 * @generated
+	 */
+	EClass getVulnerability();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Vulnerability#getKind <em>Kind</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Kind</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Vulnerability#getKind()
+	 * @see #getVulnerability()
+	 * @generated
+	 */
+	EAttribute getVulnerability_Kind();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorModel <em>Error Model</em>}'.
@@ -1781,6 +2021,74 @@ public interface ThreatsPropagationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute FAULT_HANDLING__WEIGHT = eINSTANCE.getFaultHandling_Weight();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.AttackImpl <em>Attack</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.AttackImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getAttack()
+		 * @generated
+		 */
+		EClass ATTACK = eINSTANCE.getAttack();
+
+		/**
+		 * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTACK__KIND = eINSTANCE.getAttack_Kind();
+
+		/**
+		 * The meta object literal for the '<em><b>Severity</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTACK__SEVERITY = eINSTANCE.getAttack_Severity();
+
+		/**
+		 * The meta object literal for the '<em><b>Likelihood</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTACK__LIKELIHOOD = eINSTANCE.getAttack_Likelihood();
+
+		/**
+		 * The meta object literal for the '<em><b>Vulnerability</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ATTACK__VULNERABILITY = eINSTANCE.getAttack_Vulnerability();
+
+		/**
+		 * The meta object literal for the '<em><b>Threat</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTACK__THREAT = eINSTANCE.getAttack_Threat();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.VulnerabilityImpl <em>Vulnerability</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.VulnerabilityImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl#getVulnerability()
+		 * @generated
+		 */
+		EClass VULNERABILITY = eINSTANCE.getVulnerability();
+
+		/**
+		 * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VULNERABILITY__KIND = eINSTANCE.getVulnerability_Kind();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorModelImpl <em>Error Model</em>}' class.

@@ -21,12 +21,12 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnal
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.SBAInitialConditionsImpl#getBase_Class <em>Base Class</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.SBAInitialConditionsImpl#getTargetInstance <em>Target Instance</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.SBAInitialConditionsImpl#getSetup <em>Setup</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

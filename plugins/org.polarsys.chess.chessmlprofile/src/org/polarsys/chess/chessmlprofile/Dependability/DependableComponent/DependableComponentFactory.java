@@ -58,6 +58,15 @@ public interface DependableComponentFactory extends EFactory {
 	DependableComponent createDependableComponent();
 
 	/**
+	 * Returns a new object of class '<em>Threat</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Threat</em>'.
+	 * @generated
+	 */
+	Threat createThreat();
+
+	/**
 	 * Returns a new object of class '<em>Error Model Behavior</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

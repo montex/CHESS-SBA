@@ -38,6 +38,7 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTCompo
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl#getPartWithPort <em>Part With Port</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl#getWCET <em>WCET</em>}</li>
@@ -57,7 +58,6 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTCompo
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl#getBlockT <em>Block T</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtSpecificationImpl#getOperationReqForSporadicOcc <em>Operation Req For Sporadic Occ</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

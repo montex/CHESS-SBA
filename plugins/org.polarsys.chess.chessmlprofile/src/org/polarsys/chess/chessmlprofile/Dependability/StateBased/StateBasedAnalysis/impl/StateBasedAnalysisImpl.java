@@ -32,6 +32,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnal
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisImpl#getMeasure <em>Measure</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisImpl#getMeasureEvaluationResult <em>Measure Evaluation Result</em>}</li>
@@ -41,7 +42,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnal
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisImpl#getTargetPort <em>Target Port</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedAnalysis.impl.StateBasedAnalysisImpl#getInitialConditions <em>Initial Conditions</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

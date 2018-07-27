@@ -13,12 +13,12 @@ import org.eclipse.uml2.uml.Comment;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#isMonitoring <em>Monitoring</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#isVerification <em>Verification</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTimeSupport#getBase_Comment <em>Base Comment</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage#getRunTimeSupport()
  * @model
