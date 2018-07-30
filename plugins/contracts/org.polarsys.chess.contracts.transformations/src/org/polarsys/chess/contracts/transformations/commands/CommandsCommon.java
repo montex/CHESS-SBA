@@ -79,7 +79,7 @@ public class CommandsCommon {
 	public static final String TEMP_FOLD = "Temp";
 	public static final int NUM_SUB_TASKS = 4;
 	
-	public static enum CommandEnum {REFINEMENT, IMPLEMENTATION, FTA, VALIDPROP}
+	public static enum CommandEnum {REFINEMENT, IMPLEMENTATION, FTA, FEI, VALIDPROP}
 	
 	public static void TransformationJob(final Shell activeShell, final IEditorPart editor, final List<String> args, final CommandEnum commandType, final String blockName, final String ftaCondition){
 		
@@ -97,7 +97,7 @@ public class CommandsCommon {
 				IProject project = inputfile.getProject();
 				IFolder folder = null;
 				IFolder tempFolder = null;
-				if(commandType == CommandEnum.FTA){
+				if(commandType == CommandEnum.FTA || commandType == CommandEnum.FEI){
 					folder = project.getFolder(XSAP_FOLD);
 					
 				}else{
@@ -115,7 +115,7 @@ public class CommandsCommon {
 					if (!files.exists()){
 						files.create(true, true, null);
 					}
-					if(commandType == CommandEnum.FTA){
+					if(commandType == CommandEnum.FTA || commandType == CommandEnum.FEI){
 						tempFolder = folder.getFolder(TEMP_FOLD);
 						if(tempFolder.exists()){
 							tempFolder.delete(true, null);;
@@ -130,7 +130,7 @@ public class CommandsCommon {
 				
 				String resultFile = results.getLocation().toString();
 				String tempFiles = null;
-				if(commandType == CommandEnum.FTA){
+				if(commandType == CommandEnum.FTA || commandType == CommandEnum.FEI){
 					tempFiles = tempFolder.getLocation().toString();
 				}
 				ToolIntegration checker = new ToolIntegration(activeShell, resultFile, tempFiles);
@@ -200,6 +200,21 @@ public class CommandsCommon {
 						smvLocation = smvLocation + SMV_EXT;
 						feiLocation = feiLocation + FEI_EXT;
 						monitor.subTask("calling xSAP");
+						checker.FTA(smvLocation, feiLocation, ftaCondition);
+						monitor.worked(1);
+						break;
+					case FEI:
+						systemName = args.get(0).substring(args.get(0).lastIndexOf("::")+2);
+						monitor.subTask("transforming uml model... (Fault Extensions)");
+						GenerateFaultExtensions genFei = new GenerateFaultExtensions(modelURI, target, args);
+						genFei.doGenerate(null);
+						smvLocation = target + File.separator + args.get(2);
+						feiLocation = smvLocation;
+						smvLocation = smvLocation + SMV_EXT;
+						feiLocation = feiLocation + FEI_EXT;
+						
+						//TODO: le linee seguenti andranno eliminate
+						monitor.subTask("calling xSAP");						
 						checker.FTA(smvLocation, feiLocation, ftaCondition);
 						monitor.worked(1);
 						break;
