@@ -525,7 +525,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 	 * ToolToOCRAModel# getComponentOfContractRefinement(java.lang.Object)
 	 */
 	@Override
-	public Object getComponentOfContractRefinement(Object contractRefinement) {
+	public Object getComponentInstanceOfContractRefinement(Object contractRefinement) {
 		return ((ContractRefinement) contractRefinement).getInstance();
 	}
 
@@ -864,6 +864,13 @@ public class ChessSystemModel implements AbstractSystemModel {
 	@Override
 	public EList<String[]> getUninterpretedFunctionInputMultiplicities(Object uninterpretedFunction) {
 		return entityUtil.getUmlFunctionBehaviorInputMultiplicities((FunctionBehavior) uninterpretedFunction);
+	}
+
+	@Override
+	public String[] getComponentInstanceRangeOfContractRefinement(Object contractRefinement) {
+		String lower =  ((ContractRefinement) contractRefinement).getLowerIndexOfInstance();
+		String upper =  ((ContractRefinement) contractRefinement).getUpperIndexOfInstance();
+		return new String[]{lower,upper};
 	}
 
 }
