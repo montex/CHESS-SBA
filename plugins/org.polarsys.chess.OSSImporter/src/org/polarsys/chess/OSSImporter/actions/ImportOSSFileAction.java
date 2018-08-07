@@ -38,6 +38,7 @@ import com.google.common.collect.Maps;
 
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSModelFactory;
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.utils.OSSModelUtil;
+import eu.fbk.eclipse.standardtools.utils.core.utils.StringArrayUtil;
 import eu.fbk.tools.editor.basetype.baseType.*;
 import eu.fbk.tools.editor.contract.contract.Assumption;
 import eu.fbk.tools.editor.contract.contract.Contract;
@@ -54,6 +55,7 @@ import eu.fbk.tools.editor.oss.oss.ComplexType;
 import eu.fbk.tools.editor.oss.oss.Component;
 import eu.fbk.tools.editor.oss.oss.Connection;
 import eu.fbk.tools.editor.oss.oss.FullContractId;
+import eu.fbk.tools.editor.oss.oss.FullContractIdList;
 import eu.fbk.tools.editor.oss.oss.InputPort;
 import eu.fbk.tools.editor.oss.oss.Interface;
 import eu.fbk.tools.editor.oss.oss.InterfaceInstance;
@@ -422,13 +424,24 @@ public class ImportOSSFileAction {
 				.getContractRefinements(contractProperty);
 
 		// Loop on all the refinements to see if they already exist
-		final EList<FullContractId> contractIds = refinement.getFullContractIds();
-		for (FullContractId contractId : contractIds) {
-
+		final EList<FullContractIdList> contractIds = refinement.getFullContractIds();
+		for (FullContractIdList contractId : contractIds) {
+			
+			String componentInstanceName = ossModelUtil.getNearestComponentInstanceNameFromFullContractIdList(contractId);
+			String[] componentInstanceRange = ossModelUtil.getNearestComponentInstanceRangeFromFullContractIdList(contractId);
+			String componentInstanceIndex = ossModelUtil.getNearestComponentInstanceIndexFromFullContractIdList(contractId);
+			
+			String refinementNameOptSuffix = "";
+			if(!StringArrayUtil.isUndefined(componentInstanceRange)){
+				refinementNameOptSuffix=refinementNameOptSuffix.concat("."+componentInstanceRange[0]+"."+componentInstanceRange[1]);
+			}else if(componentInstanceIndex!=null){
+				refinementNameOptSuffix=refinementNameOptSuffix.concat("."+componentInstanceIndex);
+			}
+			
 			// The component instance containing the refining
 			// contract
 			final Property refiningComponentInstance = entityUtil.getUmlComponentInstance(owner,
-					ossModelUtil.getNearestComponentName(contractId));
+					componentInstanceName);
 
 			// The component type where the contract property is
 			// defined
@@ -438,14 +451,14 @@ public class ImportOSSFileAction {
 			logger.debug("contractId.getName(): " + contractId.getName());
 
 			// The refining contract property
-			final Property refiningProperty = contractEntityUtil
+			final Property refiningContractProperty = contractEntityUtil
 					.getUmlContractPropertyOfUmlComponentFromContractPropertyType(refiningComponent,
 							contractId.getName());
 
 			// Compose the name that the contract refinement should
 			// have
-			final String refinementName = ossModelUtil.getNearestComponentName(contractId) + "."
-					+ refiningProperty.getName();
+			final String refinementName = componentInstanceName + "." 
+					+ refiningContractProperty.getName()+refinementNameOptSuffix;
 
 			// Check to see if the refinement is already linked to
 			// the contract property
@@ -471,7 +484,7 @@ public class ImportOSSFileAction {
 				// Create a new refinement and add it to the
 				// contract property
 				final DataType umlRefinement = contractEntityUtil.getOrCreateContractRefinement(owner,
-						ossModelUtil.getNearestComponentName(contractId), contractId.getName(),
+						componentInstanceName, componentInstanceRange,componentInstanceIndex,contractId.getName(),
 						stereotypeUtil.contractRefinementStereotype);
 				contractEntityUtil.addContractRefinementToContractProperty(contractProperty, umlRefinement);
 
