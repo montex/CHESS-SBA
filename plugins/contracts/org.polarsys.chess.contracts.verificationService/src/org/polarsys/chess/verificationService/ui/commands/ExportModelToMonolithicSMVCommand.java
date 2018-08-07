@@ -13,6 +13,7 @@ package org.polarsys.chess.verificationService.ui.commands;
 import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -69,7 +70,7 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 		} catch (NoComponentException e) {
 			process = false;
 			DialogUtil.getInstance().showMessage_ExceptionError(e);
-			return;
+			throw new ExecutionException(e.getMessage());
 		}
 	
 		final Package pkg = umlSelectedComponent.getNearestPackage();
