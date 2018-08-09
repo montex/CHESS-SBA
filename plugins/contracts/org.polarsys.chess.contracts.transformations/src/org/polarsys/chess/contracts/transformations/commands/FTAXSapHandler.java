@@ -10,18 +10,23 @@
  ******************************************************************************/
 package org.polarsys.chess.contracts.transformations.commands;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.window.Window;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Model;
@@ -29,8 +34,6 @@ import org.polarsys.chess.contracts.transformations.commands.CommandsCommon.Comm
 import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAAnalysisCtxDialog;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
-
-import com.google.common.util.concurrent.ExecutionError;
 
 import eu.fbk.eclipse.standardTools.XSapExecService.services.XSapExecService;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
@@ -44,6 +47,65 @@ public class FTAXSapHandler extends AbstractHandler {
 	private static String MONOLITHIC_SMV_COMMAND = "org.polarsys.chess.verificationService.commands.ExportModelToSMVCommand";
 	private String systemQN;
 	private String ftaCond;
+	
+	/**
+	 * Computes the folder for xSAP material.
+	 * @param editor the active editor
+	 * @return
+	 */
+	private IFolder computeXSapFolder(IEditorPart editor) {
+		final IFileEditorInput input = (IFileEditorInput) editor.getEditorInput();
+		final IFile inputfile = input.getFile();		
+		final IProject project = inputfile.getProject();
+		IFolder folder = project.getFolder(CommandsCommon.XSAP_FOLD);
+		return folder;
+	}
+	
+	/**
+	 * Computes the absolute file name for the fault tree.
+	 * @param editor the active editor
+	 * @param systemName the name of the system block
+	 * @return
+	 */
+	private String computeFtFileName(IEditorPart editor, String systemName) {
+		final IFolder folder = computeXSapFolder(editor);
+		final IFolder tempFolder = folder.getFolder(CommandsCommon.TEMP_FOLD);
+		final String tempFiles = tempFolder.getLocation().toString();
+		final String fileName = tempFiles + File.separator + "extended_model_" + systemName + "ft.xml";
+		return fileName;
+	}
+	
+	/**
+	 * Computes the target folder for files.
+	 * @param editor the active editor
+	 * @return
+	 */
+	private String computeFileTargetFolder(IEditorPart editor) {
+		final IFolder folder = computeXSapFolder(editor);
+		final IFolder files = folder.getFolder(CommandsCommon.FILES_FOLD);	
+		final File target = files.getLocation().toFile();
+		return target.toString(); 
+	}
+	
+	/**
+	 * Computes the absolute file name of the SMV file.
+	 * @param editor the active editor
+	 * @param modelSystemName the model name
+	 * @return
+	 */
+	private String computeSmvFileName(IEditorPart editor, String modelSystemName) {
+		return computeFileTargetFolder(editor) + File.separator + modelSystemName + CommandsCommon.SMV_EXT;
+	}
+	
+	/**
+	 * Computes the absolute file name of the FEI file.
+	 * @param editor the active editor
+	 * @param modelSystemName the model name
+	 * @return
+	 */
+	private String computeFeiFileName(IEditorPart editor, String modelSystemName) {
+		return computeFileTargetFolder(editor) + File.separator + modelSystemName + CommandsCommon.FEI_EXT;
+	}
 	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
@@ -99,22 +161,21 @@ public class FTAXSapHandler extends AbstractHandler {
 		String systemName = systemQN.substring(systemQN.lastIndexOf("::")+2);
 		args.add(systemName);
 		args.add(filename+"_"+systemName);//used by the transformation as file name
+		
 		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
+		
+		// Call EST commands
+		final XSapExecService xSapExecService = XSapExecService.getInstance();
+		
+		xSapExecService.extendModel(computeSmvFileName(editor, args.get(2)), computeFeiFileName(editor, args.get(2)));
 
+		xSapExecService.computeFt();
 		
+		xSapExecService.computeFmea();
 		
-		
-		
-		
-		// Call SDE commands
-		
-		XSapExecService xSapExecService = XSapExecService.getInstance();
-		
-		xSapExecService.extendModel();
-		xSapExecService.computeFT();
-		
-		
+			
 		// Visualize FTA
+		xSapExecService.showFT(computeFtFileName(editor, systemName));
 		
 		return null;
 	}

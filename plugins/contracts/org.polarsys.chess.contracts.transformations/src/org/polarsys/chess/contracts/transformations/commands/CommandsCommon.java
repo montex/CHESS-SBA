@@ -99,7 +99,6 @@ public class CommandsCommon {
 				IFolder tempFolder = null;
 				if(commandType == CommandEnum.FTA || commandType == CommandEnum.FEI){
 					folder = project.getFolder(XSAP_FOLD);
-					
 				}else{
 					folder = project.getFolder(OCRA_FOLD);
 				}
@@ -118,7 +117,7 @@ public class CommandsCommon {
 					if(commandType == CommandEnum.FTA || commandType == CommandEnum.FEI){
 						tempFolder = folder.getFolder(TEMP_FOLD);
 						if(tempFolder.exists()){
-							tempFolder.delete(true, null);;
+							tempFolder.delete(true, null);
 						}
 						tempFolder.create(true, true, null);
 					}
