@@ -24,7 +24,20 @@
     <handler class="org.polarsys.chess.instance.view.AddPeriodicCHRtSpecHandler" commandId="org.polarsys.chess.chess.instance.view.command.addperiodicchrtspec"/>
     <handler class="org.polarsys.chess.instance.view.AddSporadicCHRtSpecHandler" commandId="org.polarsys.chess.chess.instance.view.command.addsporadicchrtspec"/>
   </extension>
-  <extension id="org.polarsys.chess.instance.view.View" point="org.eclipse.incquery.runtime.queryspecification">
-    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.polarsys.chess.instance.view.View" id="org.polarsys.chess.instance.view.View"/>
+  <extension id="org.polarsys.chess.instance.view.View" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:org.polarsys.chess.instance.view.View" id="org.polarsys.chess.instance.view.View">
+      <query-specification fqn="org.polarsys.chess.instance.view.swSystemCHGaResourcePlatform"/>
+      <query-specification fqn="org.polarsys.chess.instance.view.swSystemRoot"/>
+      <query-specification fqn="org.polarsys.chess.instance.view.swSystemChild2Item"/>
+      <query-specification fqn="org.polarsys.chess.instance.view.swSystemChild2"/>
+      <query-specification fqn="org.polarsys.chess.instance.view.childPortSlots"/>
+      <query-specification fqn="org.polarsys.chess.instance.view.childPrivateOperations"/>
+      <query-specification fqn="org.polarsys.chess.instance.view.childPortSlotsOperationItem"/>
+      <query-specification fqn="org.polarsys.chess.instance.view.childPortSlotsOperation"/>
+      <query-specification fqn="org.polarsys.chess.instance.view.childCHRTSpecItem"/>
+      <query-specification fqn="org.polarsys.chess.instance.view.childCHRTSpec"/>
+      <query-specification fqn="org.polarsys.chess.instance.view.childPrivCHRTSpecItem"/>
+      <query-specification fqn="org.polarsys.chess.instance.view.childPrivCHRTSpec"/>
+    </group>
   </extension>
 </plugin>

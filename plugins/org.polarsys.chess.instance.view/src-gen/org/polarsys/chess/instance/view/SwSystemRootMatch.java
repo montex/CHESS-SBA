@@ -1,23 +1,24 @@
-/*******************************************************************************
- *
- *  * Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
-
+/**
+ * 
+ *   Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
+ *  
+ *      
+ *   All rights reserved. This program and the accompanying materials
+ *   are made available under the terms of the Eclipse Public License v1.0
+ *   which accompanies this distribution, and is available at
+ *   http://www.eclipse.org/legal/epl-v10.html
+ *  
+ *  
+ */
 package org.polarsys.chess.instance.view;
 
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.incquery.runtime.api.IPatternMatch;
-import org.eclipse.incquery.runtime.api.impl.BasePatternMatch;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import java.util.Objects;
 import org.eclipse.uml2.uml.InstanceSpecification;
+import org.eclipse.viatra.query.runtime.api.IPatternMatch;
+import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 import org.polarsys.chess.instance.view.util.SwSystemRootQuerySpecification;
 
 /**
@@ -30,7 +31,7 @@ import org.polarsys.chess.instance.view.util.SwSystemRootQuerySpecification;
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
  * @see SwSystemRootMatcher
- * @see SwSystemRootProcessor
+ *  @see SwSystemRootProcessor
  * 
  */
 @SuppressWarnings("all")
@@ -73,16 +74,16 @@ public abstract class SwSystemRootMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("root".equals(parameterName) ) {
-    	this.fRoot = (org.eclipse.uml2.uml.InstanceSpecification) newValue;
-    	return true;
+        this.fRoot = (InstanceSpecification) newValue;
+        return true;
     }
     if ("instSpec".equals(parameterName) ) {
-    	this.fInstSpec = (org.eclipse.uml2.uml.Package) newValue;
-    	return true;
+        this.fInstSpec = (org.eclipse.uml2.uml.Package) newValue;
+        return true;
     }
     if ("name".equals(parameterName) ) {
-    	this.fName = (java.lang.String) newValue;
-    	return true;
+        this.fName = (String) newValue;
+        return true;
     }
     return false;
   }
@@ -126,57 +127,43 @@ public abstract class SwSystemRootMatch extends BasePatternMatch {
   public String prettyPrint() {
     StringBuilder result = new StringBuilder();
     result.append("\"root\"=" + prettyPrintValue(fRoot) + ", ");
-    
     result.append("\"instSpec\"=" + prettyPrintValue(fInstSpec) + ", ");
-    
-    result.append("\"name\"=" + prettyPrintValue(fName)
-    );
+    result.append("\"name\"=" + prettyPrintValue(fName));
     return result.toString();
   }
   
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((fRoot == null) ? 0 : fRoot.hashCode());
-    result = prime * result + ((fInstSpec == null) ? 0 : fInstSpec.hashCode());
-    result = prime * result + ((fName == null) ? 0 : fName.hashCode());
-    return result;
+    return Objects.hash(fRoot, fInstSpec, fName);
   }
   
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
-    	return true;
-    if (!(obj instanceof SwSystemRootMatch)) { // this should be infrequent
-    	if (obj == null) {
-    		return false;
-    	}
-    	if (!(obj instanceof IPatternMatch)) {
-    		return false;
-    	}
-    	IPatternMatch otherSig  = (IPatternMatch) obj;
-    	if (!specification().equals(otherSig.specification()))
-    		return false;
-    	return Arrays.deepEquals(toArray(), otherSig.toArray());
+        return true;
+    if (obj == null) {
+        return false;
     }
-    SwSystemRootMatch other = (SwSystemRootMatch) obj;
-    if (fRoot == null) {if (other.fRoot != null) return false;}
-    else if (!fRoot.equals(other.fRoot)) return false;
-    if (fInstSpec == null) {if (other.fInstSpec != null) return false;}
-    else if (!fInstSpec.equals(other.fInstSpec)) return false;
-    if (fName == null) {if (other.fName != null) return false;}
-    else if (!fName.equals(other.fName)) return false;
-    return true;
+    if ((obj instanceof SwSystemRootMatch)) {
+        SwSystemRootMatch other = (SwSystemRootMatch) obj;
+        return Objects.equals(fRoot, other.fRoot) && Objects.equals(fInstSpec, other.fInstSpec) && Objects.equals(fName, other.fName);
+    } else {
+        // this should be infrequent
+        if (!(obj instanceof IPatternMatch)) {
+            return false;
+        }
+        IPatternMatch otherSig  = (IPatternMatch) obj;
+        return Objects.equals(specification(), otherSig.specification()) && Arrays.deepEquals(toArray(), otherSig.toArray());
+    }
   }
   
   @Override
   public SwSystemRootQuerySpecification specification() {
     try {
-    	return SwSystemRootQuerySpecification.instance();
-    } catch (IncQueryException ex) {
-     	// This cannot happen, as the match object can only be instantiated if the query specification exists
-     	throw new IllegalStateException (ex);
+        return SwSystemRootQuerySpecification.instance();
+    } catch (ViatraQueryException ex) {
+         // This cannot happen, as the match object can only be instantiated if the query specification exists
+         throw new IllegalStateException (ex);
     }
   }
   

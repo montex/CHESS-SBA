@@ -100,7 +100,7 @@ public class ResourceListener extends ResourceSetListenerExtra {
 
 		boolean executeModelParser = true;
 		if (!ds.isUserAction()){
-			System.out.println("SUPER USER ACTIONS");
+//			System.out.println("SUPER USER ACTIONS");
 			executeModelParser = false;
 		}
 		//ds.setUserAction(true);
@@ -113,20 +113,20 @@ public class ResourceListener extends ResourceSetListenerExtra {
 				if (isNotationElement(notifier))
 					continue;
 				
-				System.out.println("ACTION "+i+" OF "+list.size()+": "+notif);	
-				System.out.println("TYPE: " + NotificationManager.printEventType(notification));
-				System.out.println("NOTIFIER: " + notifier);
-				System.out.println("FEATURE: " + notification.getFeature());
-				if (notification.getEventType()==Notification.REMOVE)
-					System.out.println("OLDVALUE: " + notification.getOldValue());
-				else if (notification.getEventType()==Notification.ADD)
-					System.out.println("NEWVALUE: " + notification.getNewValue());
-				else {
-					System.out.println("OLDVALUE: " + notification.getOldValue());
-					System.out.println("NEWVALUE: " + notification.getNewValue());
-				}
-				
-				System.out.println("SUPERUSER: " + !executeModelParser);
+//				System.out.println("ACTION "+i+" OF "+list.size()+": "+notif);	
+//				System.out.println("TYPE: " + NotificationManager.printEventType(notification));
+//				System.out.println("NOTIFIER: " + notifier);
+//				System.out.println("FEATURE: " + notification.getFeature());
+//				if (notification.getEventType()==Notification.REMOVE)
+//					System.out.println("OLDVALUE: " + notification.getOldValue());
+//				else if (notification.getEventType()==Notification.ADD)
+//					System.out.println("NEWVALUE: " + notification.getNewValue());
+//				else {
+//					System.out.println("OLDVALUE: " + notification.getOldValue());
+//					System.out.println("NEWVALUE: " + notification.getNewValue());
+//				}
+//				
+//				System.out.println("SUPERUSER: " + !executeModelParser);
 				if (!allowedNotifier(notifier)){
 					continue;
 				}

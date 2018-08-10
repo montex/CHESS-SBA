@@ -39,6 +39,7 @@ import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
 import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.m2m.qvt.oml.TransformationExecutor;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
+import org.eclipse.swt.widgets.Display;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.fla.launch.Activator;
 import org.polarsys.chess.fla.flamm.FlammPackage;
@@ -128,16 +129,21 @@ public class QVToTransformation {
 		if (isTargetChessModel) {
 			try {
          	final ModelExtent finalOutput = output;
-				TransactionalEditingDomain editingDomain = diagramEditPart.getEditingDomain();
-				editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
-	            protected void doExecute() {
-	      			ExecutionDiagnostic result = executor.execute(context, input, finalOutput);
-	      			if(result.getSeverity() != Diagnostic.OK) {
-	      				// turn the result diagnostic into status and send it to error log			
-	      				IStatus status = BasicDiagnostic.toIStatus(result);
-	      				Activator.getDefault().getLog().log(status);
-	      			}
-	            }
+				
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						TransactionalEditingDomain editingDomain = diagramEditPart.getEditingDomain();
+						editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+							protected void doExecute() {
+								ExecutionDiagnostic result = executor.execute(context, input, finalOutput);
+								if(result.getSeverity() != Diagnostic.OK) {
+									// turn the result diagnostic into status and send it to error log			
+									IStatus status = BasicDiagnostic.toIStatus(result);
+									Activator.getDefault().getLog().log(status);
+								}
+							}
+						});
+					}
 				});
 			} catch (Exception e) {
 				e.printStackTrace();
