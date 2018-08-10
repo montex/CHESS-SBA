@@ -54,7 +54,6 @@ import eu.fbk.tools.editor.oss.oss.Assertion;
 import eu.fbk.tools.editor.oss.oss.ComplexType;
 import eu.fbk.tools.editor.oss.oss.Component;
 import eu.fbk.tools.editor.oss.oss.Connection;
-import eu.fbk.tools.editor.oss.oss.FullContractId;
 import eu.fbk.tools.editor.oss.oss.FullContractIdList;
 import eu.fbk.tools.editor.oss.oss.InputPort;
 import eu.fbk.tools.editor.oss.oss.Interface;
@@ -433,7 +432,7 @@ public class ImportOSSFileAction {
 			
 			String refinementNameOptSuffix = "";
 			if(!StringArrayUtil.isUndefined(componentInstanceRange)){
-				refinementNameOptSuffix=refinementNameOptSuffix.concat("."+componentInstanceRange[0]+"."+componentInstanceRange[1]);
+				refinementNameOptSuffix=refinementNameOptSuffix.concat("."+componentInstanceRange[0]+"_"+componentInstanceRange[1]);
 			}else if(componentInstanceIndex!=null){
 				refinementNameOptSuffix=refinementNameOptSuffix.concat("."+componentInstanceIndex);
 			}
@@ -620,7 +619,6 @@ public class ImportOSSFileAction {
 		final String subName = ossModelUtil.getSubComponentName(subComponent);
 		logger.debug("\tsubcomponent name = " + subName);
 
-		// FIXME check type...and include multiplicity
 		final String subType = ossModelUtil.getSubComponentTypeName(subComponent);
 		logger.debug("\tsubcomponent type = " + subType);
 
