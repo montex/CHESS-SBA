@@ -64,14 +64,56 @@ public class FTAXSapHandler extends AbstractHandler {
 	/**
 	 * Computes the absolute file name for the fault tree.
 	 * @param editor the active editor
-	 * @param systemName the name of the system block
+	 * @param modelSystemName the model name
 	 * @return
 	 */
-	private String computeFtFileName(IEditorPart editor, String systemName) {
+	private String computeFtFileName(IEditorPart editor, String modelSystemName) {
 		final IFolder folder = computeXSapFolder(editor);
 		final IFolder tempFolder = folder.getFolder(CommandsCommon.TEMP_FOLD);
 		final String tempFiles = tempFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + "extended_model_" + systemName + "ft.xml";
+		final String fileName = tempFiles + File.separator + "extended_" + modelSystemName + "ft.xml";
+		return fileName;
+	}
+
+	/**
+	 * Computes the absolute file name for the FMEA table.
+	 * @param editor the active editor
+	 * @param modelSystemName the model name
+	 * @return
+	 */
+	private String computeFmeaFileName(IEditorPart editor, String modelSystemName) {
+		final IFolder folder = computeXSapFolder(editor);
+		final IFolder tempFolder = folder.getFolder(CommandsCommon.TEMP_FOLD);
+		final String tempFiles = tempFolder.getLocation().toString();
+		final String fileName = tempFiles + File.separator + modelSystemName + "_fmea_table.xml";
+		return fileName;
+	}
+
+	/**
+	 * Computes the absolute file name for the extended SMV.
+	 * @param editor the active editor
+	 * @param modelSystemName the model name
+	 * @return
+	 */
+	private String computeExtendedSmvFileName(IEditorPart editor, String modelSystemName) {
+		final IFolder folder = computeXSapFolder(editor);
+		final IFolder tempFolder = folder.getFolder(CommandsCommon.TEMP_FOLD);
+		final String tempFiles = tempFolder.getLocation().toString();
+		final String fileName = tempFiles + File.separator + "extended_" + modelSystemName + CommandsCommon.SMV_EXT;
+		return fileName;
+	}
+	
+	/**
+	 * Computes the absolute file name for the fms.
+	 * @param editor the active editor
+	 * @param modelSystemName the model name
+	 * @return
+	 */
+	private String computeFmsFileName(IEditorPart editor, String modelSystemName) {
+		final IFolder folder = computeXSapFolder(editor);
+		final IFolder tempFolder = folder.getFolder(CommandsCommon.TEMP_FOLD);
+		final String tempFiles = tempFolder.getLocation().toString();
+		final String fileName = tempFiles + File.separator + "fms_" + modelSystemName + ".xml";
 		return fileName;
 	}
 	
@@ -82,13 +124,13 @@ public class FTAXSapHandler extends AbstractHandler {
 	 */
 	private String computeFileTargetFolder(IEditorPart editor) {
 		final IFolder folder = computeXSapFolder(editor);
-		final IFolder files = folder.getFolder(CommandsCommon.FILES_FOLD);	
+		final IFolder files = folder.getFolder(CommandsCommon.FILES_FOLD);
 		final File target = files.getLocation().toFile();
 		return target.toString(); 
 	}
 	
 	/**
-	 * Computes the absolute file name of the SMV file.
+	 * Computes the absolute file name of the SMV.
 	 * @param editor the active editor
 	 * @param modelSystemName the model name
 	 * @return
@@ -98,7 +140,7 @@ public class FTAXSapHandler extends AbstractHandler {
 	}
 	
 	/**
-	 * Computes the absolute file name of the FEI file.
+	 * Computes the absolute file name of the FEI.
 	 * @param editor the active editor
 	 * @param modelSystemName the model name
 	 * @return
@@ -116,6 +158,8 @@ public class FTAXSapHandler extends AbstractHandler {
 //		  - Compute_model sara' un comando di SDE
 //		  - Visualize_FTA riutilizzare quello esistente
 
+		
+		//FIXME: devo sistemare il nome del file, cosi non va bene! Magari glielo passo come parametro
 
 		// Generate a monolithic SMV file
 		final CommandBuilder modelCheckingCommand;
@@ -161,21 +205,42 @@ public class FTAXSapHandler extends AbstractHandler {
 		String systemName = systemQN.substring(systemQN.lastIndexOf("::")+2);
 		args.add(systemName);
 		args.add(filename+"_"+systemName);//used by the transformation as file name
-		
-		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
+
+//FIXME commentato per test
+//		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
 		
 		// Call EST commands
 		final XSapExecService xSapExecService = XSapExecService.getInstance();
 		
-		xSapExecService.extendModel(computeSmvFileName(editor, args.get(2)), computeFeiFileName(editor, args.get(2)));
+		final String modelName = args.get(2);
+		final String smvFileName = computeSmvFileName(editor, modelName);
+		final String feiFileName = computeFeiFileName(editor, modelName);
+		final String extendedSmvFileName = computeExtendedSmvFileName(editor, modelName);
+		final String fmsFileName = computeFmsFileName(editor, modelName);
+		final String ftFileName = computeFtFileName(editor, modelName);
+		final String fmeaFileName = computeFmeaFileName(editor, modelName);
+		
+		
+//		System.out.println("smvFileName = " + smvFileName);
+//		System.out.println("feiFileName = " + feiFileName);
+//		System.out.println("extendedSmvFileName = " + extendedSmvFileName);
+//		System.out.println("fmsFileName = " + fmsFileName);
+//		System.out.println("ftFileName = " + ftFileName);
+		
+	
+		//FIXME: non funziona al momento, manca la parte Python
+//		xSapExecService.extendModel(smvFileName, feiFileName, fmsFileName, extendedSmvFileName);
 
-		xSapExecService.computeFt();
-		
-		xSapExecService.computeFmea();
-		
+		xSapExecService.computeFt(extendedSmvFileName, fmsFileName, ftaCond, ftFileName);		
 			
-		// Visualize FTA
-		xSapExecService.showFT(computeFtFileName(editor, systemName));
+		//FIXME: parte troppo presto, prima di finire la generazione dei file... ma non era sequenziale?
+		xSapExecService.showFt(ftFileName);
+
+		//TODO: questo comando necessita' di un handler differente...
+		//FIXME: mi ritorna il formato XML, andava quello .txt?
+//		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, ftaCond, fmeaFileName);
+		
+
 		
 		return null;
 	}

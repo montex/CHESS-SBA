@@ -53,6 +53,12 @@
             id="org.polarsys.chess.contracts.transformations.validProp.id"
             name="Validate Properties">
       </command>
+      <command
+            categoryId="org.polarsys.chess.contracts.category"
+            defaultHandler="org.polarsys.chess.contracts.transformations.commands.FTAXSapHandler"
+            id="org.polarsys.chess.contracts.transformations.ftaxsap.id"
+            name="FTA xSAP">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -146,6 +152,28 @@
                            </with>
                         </or>
                      </visibleWhen>
+                </command>
+                <command
+                      commandId="org.polarsys.chess.contracts.transformations.ftaxsap.id"
+                      label="FTA with xSAP"
+                      style="push">
+                   <visibleWhen
+                         checkEnabled="false">
+                      <or>
+                         <with
+                               variable="activeEditorId">
+                            <equals
+                                  value="org.eclipse.uml2.uml.editor.presentation.UMLEditorID">
+                            </equals>
+                         </with>
+                         <with
+                               variable="activeEditorInput">
+                            <adapt
+                                  type="org.eclipse.core.resources.IResource">
+                            </adapt>
+                         </with>
+                      </or>
+                   </visibleWhen>
                 </command>
           	 </menu>
           </menu>

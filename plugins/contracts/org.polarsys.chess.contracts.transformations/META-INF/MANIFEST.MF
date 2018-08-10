@@ -37,7 +37,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.swt,
  org.polarsys.chess.core,
  org.eclipse.papyrus.infra.widgets.toolbox,
- org.eclipse.papyrus.emf.facet.custom.metamodel
+ org.eclipse.papyrus.emf.facet.custom.metamodel,
+ eu.fbk.eclipse.standardTools.XSapExecService
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true
@@ -45,7 +46,8 @@ Export-Package: org.polarsys.chess.contracts.transformations,
  org.polarsys.chess.contracts.transformations.main,
  org.polarsys.chess.contracts.transformations.service
 Bundle-ClassPath: .
-Import-Package: org.eclipse.m2m.internal.qvt.oml.emf.util,
+Import-Package: eu.fbk.eclipse.standardtools.utils.ui.utils,
+ org.eclipse.m2m.internal.qvt.oml.emf.util,
  org.eclipse.papyrus.commands.wrappers,
  org.eclipse.papyrus.infra.services.markerlistener.util,
  org.eclipse.papyrus.infra.services.validation,
