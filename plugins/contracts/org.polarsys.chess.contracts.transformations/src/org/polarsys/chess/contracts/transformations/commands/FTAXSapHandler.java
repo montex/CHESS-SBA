@@ -45,6 +45,7 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
  */
 public class FTAXSapHandler extends AbstractHandler {
 	private static String MONOLITHIC_SMV_COMMAND = "org.polarsys.chess.verificationService.commands.ExportModelToSMVCommand";
+	private static String FILE_NAME_PARAM = "file_name";
 	private String systemQN;
 	private String ftaCond;
 	
@@ -159,20 +160,6 @@ public class FTAXSapHandler extends AbstractHandler {
 //		  - Visualize_FTA riutilizzare quello esistente
 
 		
-		//FIXME: devo sistemare il nome del file, cosi non va bene! Magari glielo passo come parametro
-
-		// Generate a monolithic SMV file
-		final CommandBuilder modelCheckingCommand;
-		try {
-			modelCheckingCommand = CommandBuilder.build(MONOLITHIC_SMV_COMMAND);
-			modelCheckingCommand.execute();
-		} catch (ExecutionException e) {
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	
 		// Generate the FEI file and call xSAP analysis
 		final IEditorPart editor = HandlerUtil.getActiveEditor(event);
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
@@ -209,9 +196,6 @@ public class FTAXSapHandler extends AbstractHandler {
 //FIXME commentato per test
 //		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
 		
-		// Call EST commands
-		final XSapExecService xSapExecService = XSapExecService.getInstance();
-		
 		final String modelName = args.get(2);
 		final String smvFileName = computeSmvFileName(editor, modelName);
 		final String feiFileName = computeFeiFileName(editor, modelName);
@@ -219,6 +203,23 @@ public class FTAXSapHandler extends AbstractHandler {
 		final String fmsFileName = computeFmsFileName(editor, modelName);
 		final String ftFileName = computeFtFileName(editor, modelName);
 		final String fmeaFileName = computeFmeaFileName(editor, modelName);
+
+		
+		// Generate a monolithic SMV file
+		final CommandBuilder modelCheckingCommand;
+		try {
+			modelCheckingCommand = CommandBuilder.build(MONOLITHIC_SMV_COMMAND);
+			modelCheckingCommand.setParameter(FILE_NAME_PARAM, smvFileName);
+			modelCheckingCommand.execute();
+		} catch (ExecutionException e) {
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+			
+		// Call EST commands
+		final XSapExecService xSapExecService = XSapExecService.getInstance();
 		
 		
 //		System.out.println("smvFileName = " + smvFileName);
@@ -228,6 +229,9 @@ public class FTAXSapHandler extends AbstractHandler {
 //		System.out.println("ftFileName = " + ftFileName);
 		
 	
+		//FIXME: i comandi partono troppo presto, non trovano ancora i file fatti!
+		
+		
 		//FIXME: non funziona al momento, manca la parte Python
 //		xSapExecService.extendModel(smvFileName, feiFileName, fmsFileName, extendedSmvFileName);
 

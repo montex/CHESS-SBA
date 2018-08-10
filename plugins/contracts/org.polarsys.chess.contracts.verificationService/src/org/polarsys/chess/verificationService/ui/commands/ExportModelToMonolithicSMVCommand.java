@@ -68,7 +68,6 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 		try {
 			umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		} catch (NoComponentException e) {
-			process = false;
 			DialogUtil.getInstance().showMessage_ExceptionError(e);
 			throw new ExecutionException(e.getMessage());
 		}
@@ -81,15 +80,18 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 		
 		for (Element element : list) {
 			if(EntityUtil.getInstance().isSystem(element)) {
-				logger.debug("System component found: " + element);
+				logger.debug("System block found: " + element);
 				umlSelectedComponent = (Class) element;
 				break;
 			}
 		}
 		
 		if (umlSelectedComponent == null) {
-			process = false;
-			return;
+			logger.debug("System block not found, aborting.");			
+			final ExecutionException e = 
+					new ExecutionException("The model does not have a <<System>> block. Please add one.");
+			DialogUtil.getInstance().showMessage_ExceptionError(e);
+			throw e;
 		}
 		
 		isDiscreteTime = true;
