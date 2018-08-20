@@ -328,6 +328,11 @@
             defaultHandler="org.polarsys.chess.verificationService.ui.commands.ExportModelToMonolithicSMVCommand"
             id="org.polarsys.chess.verificationService.commands.ExportModelToSMVCommand"
             name="Export model as monolithic SMV file">
+         <commandParameter
+               id="file_name"
+               name="FileName"
+               optional="true">
+         </commandParameter>
       </command>
    </extension> 
 </plugin>

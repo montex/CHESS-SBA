@@ -193,7 +193,7 @@ public class FTAXSapHandler extends AbstractHandler {
 		args.add(systemName);
 		args.add(filename+"_"+systemName);//used by the transformation as file name
 
-//FIXME commentato per test
+//FIXME commentato per test, il file generato non e' corretto
 //		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
 		
 		final String modelName = args.get(2);
@@ -217,7 +217,7 @@ public class FTAXSapHandler extends AbstractHandler {
 			e.printStackTrace();
 			return null;
 		}
-			
+		
 		// Call EST commands
 		final XSapExecService xSapExecService = XSapExecService.getInstance();
 		
@@ -228,24 +228,17 @@ public class FTAXSapHandler extends AbstractHandler {
 //		System.out.println("fmsFileName = " + fmsFileName);
 //		System.out.println("ftFileName = " + ftFileName);
 		
-	
-		//FIXME: i comandi partono troppo presto, non trovano ancora i file fatti!
-		
-		
 		//FIXME: non funziona al momento, manca la parte Python
 //		xSapExecService.extendModel(smvFileName, feiFileName, fmsFileName, extendedSmvFileName);
 
 		xSapExecService.computeFt(extendedSmvFileName, fmsFileName, ftaCond, ftFileName);		
-			
-		//FIXME: parte troppo presto, prima di finire la generazione dei file... ma non era sequenziale?
+
 		xSapExecService.showFt(ftFileName);
 
 		//TODO: questo comando necessita' di un handler differente...
 		//FIXME: mi ritorna il formato XML, andava quello .txt?
 //		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, ftaCond, fmeaFileName);
-		
-
-		
+			
 		return null;
 	}
 }

@@ -33,7 +33,7 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
 
 /**
- * Command that generates a monolithic SMV file.
+ * Command that generates a monolithic SMV file for the active package.
  * @author cristofo
  *
  */
@@ -56,7 +56,6 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 	private String smvMapFilepath;
 	private Resource umlSelectedResource;
 	private String ossFilePath;
-	private Boolean process;
 
 	public ExportModelToMonolithicSMVCommand() {
 		super("Monolithic SMV file generation");
@@ -96,28 +95,32 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 		
 		isDiscreteTime = true;
 		smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
-		monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(umlSelectedComponent.getName());
+		
+		// If specified, set the given file name, otherwise compute it
+		monolithicSMVFilePath = event.getParameter("file_name");
+
+		if( monolithicSMVFilePath == null ) {
+			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(umlSelectedComponent.getName());
+		}
 		smvMapFilepath = nuXmvDirectoryUtil.getSmvMapFilePath();
 		ossFilePath = ocraDirectoryUtil.getOSSFilePath();
 		umlSelectedResource = umlSelectedComponent.eResource();
 		showPopups = false;
 		usexTextValidation = true;
-		process = true;
+
+		// Commands cannot be executed in the execJobCommand() method, they need to be synchronous
+		logger.debug("exportSmv");
+		HashMap<String, String> smvPathComponentNameMap = smvExportService.exportSmv(umlSelectedComponent,
+				showPopups, smvFileDirectory, monitor);
+
+		logger.debug("createMonolithicSMV");
+		ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
+				isDiscreteTime, usexTextValidation, showPopups, ossFilePath, smvMapFilepath, 
+				monolithicSMVFilePath, isProgrExec, monitor);
+		logger.debug("createMonolithicSMV done");		
 	}
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-
-		if (process) {
-			logger.debug("exportSmv");
-			HashMap<String, String> smvPathComponentNameMap = smvExportService.exportSmv(umlSelectedComponent,
-					showPopups, smvFileDirectory, monitor);
-
-			logger.debug("createMonolithicSMV");
-			ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
-					isDiscreteTime, usexTextValidation, showPopups, ossFilePath, smvMapFilepath, 
-					monolithicSMVFilePath, isProgrExec, monitor);
-			logger.debug("createMonolithicSMV done");
-		}
 	}
 }
