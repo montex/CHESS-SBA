@@ -27,6 +27,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Model;
 import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAAnalysisCtxDialog;
 import org.polarsys.chess.contracts.transformations.utils.FileNamesUtil;
+import org.polarsys.chess.contracts.transformations.utils.FMEAGenerationDialogUtil;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
@@ -34,11 +35,11 @@ import eu.fbk.eclipse.standardTools.XSapExecService.services.XSapExecService;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 
 /**
- * This class permits the generation of FTA using the xSAP tool.
+ * This class permits the generation of FMEA using the xSAP tool.
  * @author cristofo
  *
  */
-public class FTAXSapHandler extends AbstractHandler {
+public class FMEAXSapHandler extends AbstractHandler {
 	private String systemQN;
 	private String ftaCond;
 	
@@ -110,7 +111,7 @@ public class FTAXSapHandler extends AbstractHandler {
 		final String feiFileName = fileNamesService.computeFeiFileName(editor, modelName);
 		final String extendedSmvFileName = fileNamesService.computeExtendedSmvFileName(editor, modelName);
 		final String fmsFileName = fileNamesService.computeFmsFileName(editor, modelName);
-		final String ftFileName = fileNamesService.computeFtFileName(editor, modelName);
+		final String fmeaFileName = fileNamesService.computeFmeaFileName(editor, modelName);
 		
 		// Generate a monolithic SMV file
 		if (!createMonolithicSMVFile(smvFileName)){
@@ -123,10 +124,12 @@ public class FTAXSapHandler extends AbstractHandler {
 		//FIXME: non funziona al momento, manca la parte Python
 //		xSapExecService.extendModel(smvFileName, feiFileName, fmsFileName, extendedSmvFileName);
 
-		xSapExecService.computeFt(extendedSmvFileName, fmsFileName, ftaCond, ftFileName);		
-
-		xSapExecService.showFt(ftFileName);
-
+		//FIXME: mi ritorna il formato XML, andava quello .txt?
+		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, ftaCond, fmeaFileName);
+			
+		FMEAGenerationDialogUtil fmeaGenerationDialogUtil = FMEAGenerationDialogUtil.getInstance();
+		
+		fmeaGenerationDialogUtil.showMessage_FmeaGenerationDone(fmeaFileName);
 		return null;
 	}
 }
