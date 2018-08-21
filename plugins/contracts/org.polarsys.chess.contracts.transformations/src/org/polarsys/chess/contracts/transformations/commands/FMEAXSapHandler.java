@@ -48,15 +48,15 @@ public class FMEAXSapHandler extends AbstractHandler {
 	 * @param smvFileName the name of the generated file
 	 * @return false if errors occurred, true otherwise
 	 */
-	private Boolean createMonolithicSMVFile(String smvFileName) {		
-		final String monolithicSmvCommand = "org.polarsys.chess.verificationService.commands.ExportModelToSMVCommand";
+	private Boolean createMonolithicSmvFile(String smvFileName) {		
+		final String monolithicSmvCommand = "org.polarsys.chess.smvExport.commands.ExportModelToSMVCommand";
 		final String fileNameParam = "file_name";
-		final CommandBuilder modelCheckingCommand;
+		final CommandBuilder monolithicSmv;
 		
 		try {
-			modelCheckingCommand = CommandBuilder.build(monolithicSmvCommand);
-			modelCheckingCommand.setParameter(fileNameParam, smvFileName);
-			modelCheckingCommand.execute();
+			monolithicSmv = CommandBuilder.build(monolithicSmvCommand);
+			monolithicSmv.setParameter(fileNameParam, smvFileName);
+			monolithicSmv.execute();
 		} catch (ExecutionException e) {
 			return false;
 		} catch (Exception e) {
@@ -114,7 +114,7 @@ public class FMEAXSapHandler extends AbstractHandler {
 		final String fmeaFileName = fileNamesService.computeFmeaFileName(editor, modelName);
 		
 		// Generate a monolithic SMV file
-		if (!createMonolithicSMVFile(smvFileName)){
+		if (!createMonolithicSmvFile(smvFileName)){
 			return null;
 		};
 		
@@ -128,6 +128,8 @@ public class FMEAXSapHandler extends AbstractHandler {
 		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, ftaCond, fmeaFileName);
 			
 		FMEAGenerationDialogUtil fmeaGenerationDialogUtil = FMEAGenerationDialogUtil.getInstance();
+		
+		//TODO: il risultato va visualizzato in una tabella!
 		
 		fmeaGenerationDialogUtil.showMessage_FmeaGenerationDone(fmeaFileName);
 		return null;

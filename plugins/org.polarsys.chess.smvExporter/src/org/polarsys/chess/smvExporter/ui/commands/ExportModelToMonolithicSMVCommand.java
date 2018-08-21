@@ -8,7 +8,7 @@
  * Contributors:
  *     Luca Cristoforetti - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.verificationService.ui.commands;
+package org.polarsys.chess.smvExporter.ui.commands;
 
 import java.util.HashMap;
 import org.apache.log4j.Logger;
@@ -17,6 +17,8 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
@@ -48,6 +50,7 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 	private OCRAExecService ocraExecService = OCRAExecService.getInstance(ChessSystemModel.getInstance());
 	private boolean isProgrExec;
 	private Class umlSelectedComponent;
+	private Package pkg;
 	private boolean showPopups;
 	private boolean usexTextValidation;
 	private String smvFileDirectory;
@@ -61,17 +64,46 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 		super("Monolithic SMV file generation");
 	}
 	
+	/**
+	 * Returns the selected package, if any.
+	 * @param event the event
+	 * @return the selected package
+	 * @throws NoComponentException
+	 */
+	private Package getPackageFromSelectedObject(ExecutionEvent event) throws NoComponentException {
+		
+		ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
+
+		logger.debug("current selection: " + selection);
+
+		Object selectedUmlElement = selectionUtil.getUmlSelectedObject(selection);
+		
+		logger.debug("selectedUmlElement: "+selectedUmlElement);
+		
+		if (selectedUmlElement instanceof Package) {
+			return (Package) selectedUmlElement;
+		}
+		
+		throw new NoComponentException();	
+	}
+
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		
 		try {
 			umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		} catch (NoComponentException e) {
-			DialogUtil.getInstance().showMessage_ExceptionError(e);
-			throw new ExecutionException(e.getMessage());
+			try {
+				pkg = getPackageFromSelectedObject(event);
+			} catch (NoComponentException ex) {
+				DialogUtil.getInstance().showMessage_ExceptionError(ex);
+				throw new ExecutionException(ex.getMessage());
+			}
 		}
 	
-		final Package pkg = umlSelectedComponent.getNearestPackage();
+		if (pkg == null) {
+			pkg = umlSelectedComponent.getNearestPackage();
+		}
 		
 		umlSelectedComponent = null;
 		
@@ -117,7 +149,9 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 		ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
 				isDiscreteTime, usexTextValidation, showPopups, ossFilePath, smvMapFilepath, 
 				monolithicSMVFilePath, isProgrExec, monitor);
-		logger.debug("createMonolithicSMV done");		
+		logger.debug("createMonolithicSMV done");
+		
+		//TODO: aggiungere un messaggio opzionale di export finito
 	}
 
 	@Override

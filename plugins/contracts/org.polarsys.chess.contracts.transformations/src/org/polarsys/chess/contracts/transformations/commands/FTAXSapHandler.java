@@ -42,20 +42,21 @@ public class FTAXSapHandler extends AbstractHandler {
 	private String systemQN;
 	private String ftaCond;
 	
+	//TODO: spostare questo comando in un service, dentro SVMExporter?
 	/**
 	 * Creates a monolithic SMV file for the active package.
 	 * @param smvFileName the name of the generated file
 	 * @return false if errors occurred, true otherwise
 	 */
-	private Boolean createMonolithicSMVFile(String smvFileName) {		
-		final String monolithicSmvCommand = "org.polarsys.chess.verificationService.commands.ExportModelToSMVCommand";
+	private Boolean createMonolithicSmvFile(String smvFileName) {		
+		final String monolithicSmvCommand = "org.polarsys.chess.smvExport.commands.ExportModelToSMVCommand";
 		final String fileNameParam = "file_name";
-		final CommandBuilder modelCheckingCommand;
+		final CommandBuilder monolithicSmv;
 		
 		try {
-			modelCheckingCommand = CommandBuilder.build(monolithicSmvCommand);
-			modelCheckingCommand.setParameter(fileNameParam, smvFileName);
-			modelCheckingCommand.execute();
+			monolithicSmv = CommandBuilder.build(monolithicSmvCommand);
+			monolithicSmv.setParameter(fileNameParam, smvFileName);
+			monolithicSmv.execute();
 		} catch (ExecutionException e) {
 			return false;
 		} catch (Exception e) {
@@ -113,7 +114,7 @@ public class FTAXSapHandler extends AbstractHandler {
 		final String ftFileName = fileNamesService.computeFtFileName(editor, modelName);
 		
 		// Generate a monolithic SMV file
-		if (!createMonolithicSMVFile(smvFileName)){
+		if (!createMonolithicSmvFile(smvFileName)){
 			return null;
 		};
 		

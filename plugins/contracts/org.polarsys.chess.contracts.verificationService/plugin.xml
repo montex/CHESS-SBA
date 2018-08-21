@@ -119,11 +119,6 @@
                         commandId="org.polarsys.chess.verificationService.commands.ExportModelToFileCommand"
                         style="push">
                   </command>
-                  <command
-                        commandId="org.polarsys.chess.verificationService.commands.ExportModelToSMVCommand"
-                        label="Export model to a monolithic SMV file"
-                        style="push">
-                  </command>
                </menu>
                <menu
                      id="org.eclipse.ui.main.menu.CHESS.validation"
@@ -323,16 +318,6 @@
             defaultHandler="org.polarsys.chess.verificationService.ui.commands.CheckValidationAssertionPropertyCommand"
             id="org.polarsys.chess.verificationService.ui.commands.CheckValidationAssertionPropertyCommand"
             name="Check Validation on Properties on selected component">
-      </command>
-      <command
-            defaultHandler="org.polarsys.chess.verificationService.ui.commands.ExportModelToMonolithicSMVCommand"
-            id="org.polarsys.chess.verificationService.commands.ExportModelToSMVCommand"
-            name="Export model as monolithic SMV file">
-         <commandParameter
-               id="file_name"
-               name="FileName"
-               optional="true">
-         </commandParameter>
       </command>
    </extension> 
 </plugin>
