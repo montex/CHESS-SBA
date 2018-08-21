@@ -92,7 +92,7 @@ public class ContractEntityUtil {
 		// The instance of the refining contract
 		// final ContractProperty refiningContractProperty =
 		// getContractPropertyFromContract(refiningComponent, contractName);
-		final Property umlContractProperty = getUmlContractPropertyOfUmlComponentFromContractPropertyType(refiningComponent, contractName);
+		final Property umlContractProperty = getPropertyOfUmlComponentWithContractPropertyType(refiningComponent, contractName);
 		final ContractProperty refiningContractProperty = getContractProperty(umlContractProperty);
 
 		String refinementNameOptSuffix = "";
@@ -405,7 +405,7 @@ public class ContractEntityUtil {
 
 	}
 
-	public Property getUmlContractPropertyOfUmlComponentFromContractPropertyType(Class umlComponent,
+	public Property getPropertyOfUmlComponentWithContractPropertyType(Class umlComponent,
 			String contractPropertyType) {
 
 		EList<Property> attributes = umlComponent.getAttributes();
@@ -425,6 +425,14 @@ public class ContractEntityUtil {
 			return null;
 		}
 		return umlContractProperty;
+	}
+	
+	
+	public ContractProperty getUmlContractPropertyOfUmlComponentFromContractPropertyType(Class umlComponent,
+			String contractPropertyType) {
+		Property umlProperty = getPropertyOfUmlComponentWithContractPropertyType(umlComponent, contractPropertyType);
+	return getContractProperty(umlProperty);
+	
 	}
 
 	public Property getUmlContractPropertyOfUmlComponent(Class umlComponent, String contractPropertyName) {
