@@ -74,6 +74,10 @@ public class SetContractRefinementDialog extends Dialog {
 
 			String[] range = EntityUtil.getInstance().getAttributeMultiplicity(subComponentInstance);
 
+			if((range[0]!=null)&&(range[1]!=null)&&(range[0].compareTo(range[1])!=0)){
+				throw new Exception("The mulitplicity of the subcomponent "+subComponentInstance.getName()+" should not be a range. Please set a unique value for the upper and lower ranges.");		
+			}
+			
 			for (ContractProperty contractProperty : ContractEntityUtil.getInstance()
 					.getContractProperties((Class) subComponentInstance.getType())) {
 
@@ -167,7 +171,12 @@ public class SetContractRefinementDialog extends Dialog {
 			String rangeStr = "";
 
 			if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
-				rangeStr = "[" + contractRefinement.getLower() + ".." + contractRefinement.getUpper() + "]";
+				if(contractRefinement.getUpper().compareTo(contractRefinement.getLower())==0){
+					rangeStr = "[" + 1 + ".." + contractRefinement.getUpper() + "]";
+				}else{
+					rangeStr = "[" + contractRefinement.getLower() + ".." + contractRefinement.getUpper() + "]";
+				}
+				
 			}
 
 			TableItem contractName = new TableItem(table, SWT.NONE);
@@ -185,7 +194,12 @@ public class SetContractRefinementDialog extends Dialog {
 			Text relectedRange = new Text(table, SWT.LEFT);
 			rangeTexts.add(relectedRange);
 			if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
-				relectedRange.setText(contractRefinement.getLower() + ".." + contractRefinement.getUpper());
+				if(contractRefinement.getUpper().compareTo(contractRefinement.getLower())==0){					
+					relectedRange.setText(1 + ".." + contractRefinement.getUpper());
+				}else{
+					relectedRange.setText(contractRefinement.getLower() + ".." + contractRefinement.getUpper());	
+				}
+				
 			} else {
 				relectedRange.setEnabled(false);
 			}
