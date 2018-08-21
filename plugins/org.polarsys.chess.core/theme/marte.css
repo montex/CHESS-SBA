@@ -1,0 +1,46 @@
+Port > Compartment[kind="symbol"] {
+    visible:true;
+}
+
+Port[appliedStereotypes~="MARTE::MARTE_DesignModel::GCM::ClientServerPort"][kind=provided]{
+	elementIcon:true;
+    shadow:true;
+    bold : true;
+    elementIcon:true;
+    displayStereotypes: true;
+    followSVGSymbol: true;
+    svgFile: "platform:/plugin/org.polarsys.chess.core/resources/circle.svg";
+    
+    fontColor: green;
+    
+    maskLabel: name;
+}
+
+Port[appliedStereotypes~="MARTE::MARTE_DesignModel::GCM::ClientServerPort"][kind=required]{
+	elementIcon:true;
+    shadow:true;
+    bold : true;
+    elementIcon:true;
+    displayStereotypes: true;
+    followSVGSymbol: true;
+    svgFile: "platform:/plugin/org.polarsys.chess.core/resources/socket.svg";
+    fontColor: red;
+    
+    maskLabel: name;
+}
+
+
+
+Port > Compartment[kind="symbol"] {
+    visible:true;
+}
+
+/*Add multiplicity to the subcomponent label in IBD*/ 
+CompositeStructureDiagram Property > label {
+	maskLabel: name type;
+}
+
+
+ClassDiagram Class > Compartment[kind="nestedClassifier"]{
+	visible: false;
+}

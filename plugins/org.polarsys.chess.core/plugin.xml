@@ -117,6 +117,9 @@
          <stylesheet
                stylesheetPath="theme/sysml.css">
          </stylesheet>
+         <stylesheet
+               stylesheetPath="theme/marte.css">
+         </stylesheet>
       </themeContribution>
       <themeDefinition
             id="org.polarsys.chess.core.chess_theme"

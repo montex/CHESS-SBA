@@ -40,6 +40,7 @@ import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtInterpretedTransforma
 import org.eclipse.m2m.internal.qvt.oml.runtime.project.QvtTransformation;
 import org.eclipse.m2m.qvt.oml.ExecutionContext;
 import org.eclipse.m2m.qvt.oml.ExecutionContextImpl;
+import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
 import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.m2m.qvt.oml.TransformationExecutor;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
@@ -162,10 +163,6 @@ public class QVToTransformation {
 			throw new CoreException(status);
 		}
 	
-	
-		
-		//EvaluationMonitor execMonitor = createMonitor();
-		
 		ExecutionContextImpl context = (ExecutionContextImpl) QvtLaunchUtil.createContext(instance);
 			
 		OutputStreamWriter s = new OutputStreamWriter(
@@ -175,21 +172,8 @@ public class QVToTransformation {
 		
 		subMonitor.newChild(30);
 		
-	
+		QvtLaunchUtil.doLaunch(qvtTransformation,instance, context);
 		
-		// Refer to an existing transformation via URI
-		URI transformationURI = URI.createURI(transURI);
-		// create executor for the given transformation
-		TransformationExecutor executor = new TransformationExecutor(transformationURI);
-		
-		// create the input extent with its initial contents
-		//ModelExtent input = new BasicModelExtent(inObjects);
-		
-		executor.execute(context);
-		
-		
-//		QvtLaunchConfigurationDelegateBase.doLaunch(qvtTransformation,
-//				instance, context);
 		subMonitor.newChild(60);
 		qvtTransformation.cleanup();
 	}
