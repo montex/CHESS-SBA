@@ -449,12 +449,12 @@ public class ChessSystemModel implements AbstractSystemModel {
 		if (entityUtil.isComponentInstance((Element) component)) {
 			Class compClass = ((Class) ((Property) component).getType());
 			return contractEntityUtil.getContractProperty(contractEntityUtil
-					.getUmlContractPropertyOfUmlComponentFromContractPropertyType(compClass, contractName));
+					.getPropertyOfUmlComponentWithContractPropertyType(compClass, contractName));
 		} else if (
 		// entityUtil.isSystem((Element) component)||
 		(entityUtil.isBlock((Element) component))) {			
 			Property property = contractEntityUtil
-					.getUmlContractPropertyOfUmlComponentFromContractPropertyType((Class) component, contractName);
+					.getPropertyOfUmlComponentWithContractPropertyType((Class) component, contractName);
 			if (property != null) {
 				return contractEntityUtil.getContractProperty(property);
 			}
