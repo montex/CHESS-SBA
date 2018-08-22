@@ -27,6 +27,7 @@ import org.polarsys.chess.service.core.exceptions.NoComponentException;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 import org.polarsys.chess.smvExporter.ui.services.SmvExportServiceUI;
+import org.polarsys.chess.smvExporter.ui.utils.SMVGenerationDialogUtil;
 
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService;
 import eu.fbk.eclipse.standardtools.nuXmvService.ui.utils.NuXmvDirectoryUtil;
@@ -40,25 +41,8 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
  *
  */
 public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
-
 	private static final Logger logger = Logger.getLogger(ExportModelToMonolithicSMVCommand.class);
-
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
-	private SmvExportServiceUI smvExportService = SmvExportServiceUI.getInstance();
-	private static NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
-	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
-	private OCRAExecService ocraExecService = OCRAExecService.getInstance(ChessSystemModel.getInstance());
-	private boolean isProgrExec;
-	private Class umlSelectedComponent;
-	private Package pkg;
-	private boolean showPopups;
-	private boolean usexTextValidation;
-	private String smvFileDirectory;
-	private boolean isDiscreteTime;
-	private String monolithicSMVFilePath;
-	private String smvMapFilepath;
-	private Resource umlSelectedResource;
-	private String ossFilePath;
 
 	public ExportModelToMonolithicSMVCommand() {
 		super("Monolithic SMV file generation");
@@ -89,7 +73,14 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
+		final SmvExportServiceUI smvExportService = SmvExportServiceUI.getInstance();
+		final NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
+		final OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
+		final OCRAExecService ocraExecService = OCRAExecService.getInstance(ChessSystemModel.getInstance());
+		Class umlSelectedComponent = null;
+		Package pkg = null;
 		
+		// Try to get the package containing the active element
 		try {
 			umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
 		} catch (NoComponentException e) {
@@ -100,15 +91,13 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 				throw new ExecutionException(ex.getMessage());
 			}
 		}
-	
 		if (pkg == null) {
 			pkg = umlSelectedComponent.getNearestPackage();
 		}
 		
+		// Try to find the system block
 		umlSelectedComponent = null;
-		
-		final EList<Element> list = pkg.getOwnedElements();
-		
+		final EList<Element> list = pkg.getOwnedElements();		
 		for (Element element : list) {
 			if(EntityUtil.getInstance().isSystem(element)) {
 				logger.debug("System block found: " + element);
@@ -116,7 +105,6 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 				break;
 			}
 		}
-		
 		if (umlSelectedComponent == null) {
 			logger.debug("System block not found, aborting.");			
 			final ExecutionException e = 
@@ -125,20 +113,21 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 			throw e;
 		}
 		
-		isDiscreteTime = true;
-		smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
+		final boolean isDiscreteTime = true;
+		final String smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
 		
 		// If specified, set the given file name, otherwise compute it
-		monolithicSMVFilePath = event.getParameter("file_name");
+		String monolithicSMVFilePath = event.getParameter("file_name");
 
 		if( monolithicSMVFilePath == null ) {
 			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(umlSelectedComponent.getName());
 		}
-		smvMapFilepath = nuXmvDirectoryUtil.getSmvMapFilePath();
-		ossFilePath = ocraDirectoryUtil.getOSSFilePath();
-		umlSelectedResource = umlSelectedComponent.eResource();
-		showPopups = false;
-		usexTextValidation = true;
+		final String smvMapFilepath = nuXmvDirectoryUtil.getSmvMapFilePath();
+		final String ossFilePath = ocraDirectoryUtil.getOSSFilePath();
+		final Resource umlSelectedResource = umlSelectedComponent.eResource();
+		final boolean showPopups = false;
+		final boolean usexTextValidation = true;
+		final boolean isProgrExec = false;
 
 		// Commands cannot be executed in the execJobCommand() method, they need to be synchronous
 		logger.debug("exportSmv");
@@ -151,7 +140,12 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 				monolithicSMVFilePath, isProgrExec, monitor);
 		logger.debug("createMonolithicSMV done");
 		
-		//TODO: aggiungere un messaggio opzionale di export finito
+		// If requested, show a message at the end of the file generation
+		final String showPopup = event.getParameter("show_popup");
+		if (showPopup != null && showPopup.equals("true")) {
+			SMVGenerationDialogUtil smvGenerationDialogUtil = SMVGenerationDialogUtil.getInstance(); 
+			smvGenerationDialogUtil.showMessage_SmvGenerationDone(monolithicSMVFilePath);
+		}
 	}
 
 	@Override
