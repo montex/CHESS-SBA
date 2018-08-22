@@ -15,7 +15,7 @@
 
 package org.polarsys.chess.contracts.integration;
 
-import org.eclipse.jface.preference.IPreferenceStore;
+
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 

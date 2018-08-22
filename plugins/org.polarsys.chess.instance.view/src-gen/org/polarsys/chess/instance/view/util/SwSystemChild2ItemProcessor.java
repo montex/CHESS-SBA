@@ -1,19 +1,19 @@
-/*******************************************************************************
- *
- *  * Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
-
+/**
+ * 
+ *   Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
+ *  
+ *      
+ *   All rights reserved. This program and the accompanying materials
+ *   are made available under the terms of the Eclipse Public License v1.0
+ *   which accompanies this distribution, and is available at
+ *   http://www.eclipse.org/legal/epl-v10.html
+ *  
+ *  
+ */
 package org.polarsys.chess.instance.view.util;
 
-import org.eclipse.incquery.runtime.api.IMatchProcessor;
 import org.eclipse.uml2.uml.InstanceSpecification;
+import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
 import org.polarsys.chess.instance.view.SwSystemChild2ItemMatch;
 
 /**

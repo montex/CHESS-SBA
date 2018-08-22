@@ -12,19 +12,17 @@ import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Concerns;
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Formal
  * Property</b></em>'. <!-- end-user-doc -->
  *
- * <!-- begin-model-doc --> a property to be used as assumption or guarantee of
- * a given contract <!-- end-model-doc -->
+ * <!-- begin-model-doc -->
+ * a property to be used as assumption or guarantee of a given contract
+ * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getBase_Constraint
- * <em>Base Constraint</em>}</li>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getFormalize
- * <em>Formalize</em>}</li>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getConcern
- * <em>Concern</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getBase_Constraint <em>Base Constraint</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getFormalize <em>Formalize</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getConcern <em>Concern</em>}</li>
  * </ul>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getFormalProperty()
@@ -40,7 +38,6 @@ public interface FormalProperty extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the value of the '<em>Base Constraint</em>' reference.
 	 * @see #setBase_Constraint(Constraint)
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getFormalProperty_Base_Constraint()
@@ -50,13 +47,10 @@ public interface FormalProperty extends EObject {
 	Constraint getBase_Constraint();
 
 	/**
-	 * Sets the value of the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getBase_Constraint
-	 * <em>Base Constraint</em>}' reference. <!-- begin-user-doc --> <!--
+	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.FormalProperty#getBase_Constraint <em>Base Constraint</em>}' reference.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Base Constraint</em>' reference.
+	 * @param value the new value of the '<em>Base Constraint</em>' reference.
 	 * @see #getBase_Constraint()
 	 * @generated
 	 */
@@ -81,16 +75,14 @@ public interface FormalProperty extends EObject {
 	EList<Requirement> getFormalize();
 
 	/**
-	 * Returns the value of the '<em><b>Concern</b></em>' attribute. The
-	 * literals are from the enumeration
-	 * {@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Concerns}.
+	 * Returns the value of the '<em><b>Concern</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Concerns}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Concern</em>' attribute isn't clear, there
 	 * really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the value of the '<em>Concern</em>' attribute.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Concerns
 	 * @see #setConcern(Concerns)

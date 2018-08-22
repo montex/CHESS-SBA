@@ -31,12 +31,13 @@ import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.ValueSpecification;
-import org.eclipse.uml2.uml.VisibilityKind;
 import org.polarsys.chess.contracts.profile.chesscontract.Contract;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.core.util.uml.UMLUtils;
+
+import eu.fbk.eclipse.standardtools.utils.core.utils.StringArrayUtil;
 
 /**
  * Util class that provides methods to manage contracts.
@@ -69,20 +70,21 @@ public class ContractEntityUtil {
 	 * 
 	 * @param owner
 	 *            the container of the refinement
-	 * @param componentName
+	 * @param componentInstanceName
 	 *            the component instance containing the contract property
 	 * @param contractName
 	 *            the type of the contract
 	 * @return the created DataType
 	 */
-	public DataType getOrCreateContractRefinement(Class owner, String componentName, String contractName,Stereotype contractRefinementStereotype) {
+	public DataType getOrCreateContractRefinement(Class owner, String componentInstanceName, String[] componentInstanceRange, String componentInstanceIndex, String contractName,Stereotype contractRefinementStereotype) {
 
-		logger.debug("\n\n\n Creating contract refinement for componentName = " + componentName + " of contract "
+		logger.debug("\n\n\n Creating contract refinement for componentName = " + componentInstanceName + " of contract "
 				+ contractName);
+		
 		logger.debug("\n\n\n");
 
 		// The component instance containing the refining contract
-		final Property refiningComponentInstance = entityUtil.getUmlComponentInstance(owner, componentName);
+		final Property refiningComponentInstance = entityUtil.getUmlComponentInstance(owner, componentInstanceName);
 
 		// The component type where the contract property is defined
 		final Class refiningComponent = (Class) refiningComponentInstance.getType();
@@ -90,12 +92,24 @@ public class ContractEntityUtil {
 		// The instance of the refining contract
 		// final ContractProperty refiningContractProperty =
 		// getContractPropertyFromContract(refiningComponent, contractName);
-		final Property umlContractProperty = getUmlContractPropertyOfUmlComponentFromContractPropertyType(refiningComponent, contractName);
+		final Property umlContractProperty = getPropertyOfUmlComponentWithContractPropertyType(refiningComponent, contractName);
 		final ContractProperty refiningContractProperty = getContractProperty(umlContractProperty);
 
+		String refinementNameOptSuffix = "";
+		
+		if(!StringArrayUtil.isUndefined(componentInstanceRange)){
+			logger.debug("!isUndefined"+componentInstanceRange[0]+" - "+componentInstanceRange[1]);
+			refinementNameOptSuffix=refinementNameOptSuffix.concat("."+componentInstanceRange[0]+"."+componentInstanceRange[1]);
+		}else if(componentInstanceIndex!=null){
+			logger.debug("componentInstanceIndex: "+componentInstanceIndex);
+			refinementNameOptSuffix=refinementNameOptSuffix.concat("."+componentInstanceIndex);
+		}
+		
 		// Compose the correct name of the contract refinement
-		final String refinementName = componentName + "." + umlContractProperty.getName();
+				final String refinementName = componentInstanceName + "." + umlContractProperty.getName()+refinementNameOptSuffix;
 
+				
+		
 		// Check if the refinement is already present
 		final DataType umlRefinement = getExistingUmlContractRefinement(owner, refinementName);
 
@@ -105,7 +119,7 @@ public class ContractEntityUtil {
 			logger.debug("\n\n Creating contract refinement " + refinementName + " for owner " + owner.getName());
 			logger.debug("\n\n");
 
-			return createContractRefinement(refinementName, refiningComponentInstance, refiningContractProperty, owner,contractRefinementStereotype);
+			return createContractRefinement(refinementName, refiningComponentInstance, componentInstanceRange,componentInstanceIndex, refiningContractProperty, owner,contractRefinementStereotype);
 
 		}
 
@@ -157,7 +171,7 @@ public class ContractEntityUtil {
 		return newUMLProperty;
 	}
 	
-	private DataType createContractRefinement(String refinementName, Property refiningComponentInstance,
+	private DataType createContractRefinement(String refinementName, Property refiningComponentInstance,String[] refiningComponentInstanceRange,String refiningComponentInstanceIndex,
 			ContractProperty refiningContractProperty, Class owner, Stereotype contractRefinementStereotype) {
 		final DataType newUmlDataType = UMLFactory.eINSTANCE.createDataType();
 		final Classifier newClass = owner.createNestedClassifier(refinementName, newUmlDataType.eClass());
@@ -180,6 +194,15 @@ public class ContractEntityUtil {
 																	// the
 																	// contract
 
+		if(refiningComponentInstanceRange!=null){
+		contractRefinement.setLowerIndexOfInstance(refiningComponentInstanceRange[0]);
+		contractRefinement.setUpperIndexOfInstance(refiningComponentInstanceRange[1]);
+		}else if(refiningComponentInstanceIndex !=null){
+			contractRefinement.setLowerIndexOfInstance(refiningComponentInstanceIndex);
+			contractRefinement.setUpperIndexOfInstance(refiningComponentInstanceIndex);	
+		}
+		
+		
 		logger.debug("\n\nCreated " + refinementName + " Contract Refinement\n\n");
 		return (DataType) newClass;
 	}
@@ -382,7 +405,7 @@ public class ContractEntityUtil {
 
 	}
 
-	public Property getUmlContractPropertyOfUmlComponentFromContractPropertyType(Class umlComponent,
+	public Property getPropertyOfUmlComponentWithContractPropertyType(Class umlComponent,
 			String contractPropertyType) {
 
 		EList<Property> attributes = umlComponent.getAttributes();
@@ -402,6 +425,14 @@ public class ContractEntityUtil {
 			return null;
 		}
 		return umlContractProperty;
+	}
+	
+	
+	public ContractProperty getUmlContractPropertyOfUmlComponentFromContractPropertyType(Class umlComponent,
+			String contractPropertyType) {
+		Property umlProperty = getPropertyOfUmlComponentWithContractPropertyType(umlComponent, contractPropertyType);
+	return getContractProperty(umlProperty);
+	
 	}
 
 	public Property getUmlContractPropertyOfUmlComponent(Class umlComponent, String contractPropertyName) {
@@ -492,7 +523,7 @@ public class ContractEntityUtil {
 					createGuaranteeToUmlContract(umlContract);
 					guaranteeFormalProperty = getGuaranteeFromUmlContract(umlContract);
 				}
-				entityUtil.setTextInUMLConstraint(guaranteeFormalProperty.getBase_Constraint(), formalPropertyText);
+				entityUtil.setTextInUMLConstraint(guaranteeFormalProperty.getBase_Constraint(), formalPropertyText, "OCRA");
 			}
 		});
 	}
@@ -511,7 +542,7 @@ public class ContractEntityUtil {
 					createAssumptionToUmlContract(umlContract);
 					assumptionFormalProperty = getAssumeFromUmlContract(umlContract);
 				}
-				entityUtil.setTextInUMLConstraint(assumptionFormalProperty.getBase_Constraint(), formalPropertyText);
+				entityUtil.setTextInUMLConstraint(assumptionFormalProperty.getBase_Constraint(), formalPropertyText, "OCRA");
 			}
 		});
 	}
@@ -575,29 +606,7 @@ public class ContractEntityUtil {
 
 	
 
-	/**
-	 * Create a private formal property
-	 * 
-	 * @param owner
-	 *            the owner of the property
-	 * @param assertionName
-	 *            the name of the formal property
-	 * @param assertionText
-	 *            the text of the formal property
-	 * @return the newly created formal property
-	 */
-	public Constraint createRefinementFormalProperty(Class owner, String assertionName, String assertionText) {
-
-		final Constraint umlConstraint = entityUtil.createFormalProperty(owner, assertionName);
-		final LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
-		final ValueSpecification vs = umlConstraint.createSpecification("ConstraintSpec", null, newLs.eClass());
-		umlConstraint.setSpecification(vs);
-		umlConstraint.setVisibility(VisibilityKind.PRIVATE_LITERAL);
-
-		entityUtil.setTextInUMLConstraint(umlConstraint, assertionText);
-
-		return umlConstraint;
-	}
+	
 
 	
 	/**

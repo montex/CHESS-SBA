@@ -16,4 +16,3 @@ Require-Bundle: org.eclipse.papyrus.infra.gmfdiag.common,
  org.polarsys.chess.core,
  org.eclipse.papyrus.cdo.core
 Import-Package: org.apache.log4j
-Export-Package: org.polarsys.chess.smvExporter.ui.services

@@ -1,31 +1,29 @@
-/*******************************************************************************
- *
- *  * Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
-
-
+/**
+ * 
+ *   Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
+ *  
+ *      
+ *   All rights reserved. This program and the accompanying materials
+ *   are made available under the terms of the Eclipse Public License v1.0
+ *   which accompanies this distribution, and is available at
+ *   http://www.eclipse.org/legal/epl-v10.html
+ *  
+ *  
+ */
 package org.polarsys.chess.instance.view;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.incquery.runtime.api.IMatchProcessor;
-import org.eclipse.incquery.runtime.api.IQuerySpecification;
-import org.eclipse.incquery.runtime.api.IncQueryEngine;
-import org.eclipse.incquery.runtime.api.impl.BaseMatcher;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
-import org.eclipse.incquery.runtime.matchers.tuple.Tuple;
-import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil;
 import org.eclipse.uml2.uml.Operation;
+import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
+import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.api.impl.BaseMatcher;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
+import org.eclipse.viatra.query.runtime.matchers.tuple.Tuple;
+import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
 import org.polarsys.chess.instance.view.ChildPortSlotsOperationItemMatch;
 import org.polarsys.chess.instance.view.util.ChildPortSlotsOperationItemQuerySpecification;
 
@@ -33,8 +31,8 @@ import org.polarsys.chess.instance.view.util.ChildPortSlotsOperationItemQuerySpe
  * Generated pattern matcher API of the org.polarsys.chess.instance.view.childPortSlotsOperationItem pattern,
  * providing pattern-specific query methods.
  * 
- * <p>Use the pattern matcher on a given model via {@link #on(IncQueryEngine)},
- * e.g. in conjunction with {@link IncQueryEngine#on(Notifier)}.
+ * <p>Use the pattern matcher on a given model via {@link #on(ViatraQueryEngine)},
+ * e.g. in conjunction with {@link ViatraQueryEngine#on(Notifier)}.
  * 
  * <p>Matches of the pattern will be represented as {@link ChildPortSlotsOperationItemMatch}.
  * 
@@ -47,65 +45,55 @@ import org.polarsys.chess.instance.view.util.ChildPortSlotsOperationItemQuerySpe
  * </pre></code>
  * 
  * @see ChildPortSlotsOperationItemMatch
- * @see ChildPortSlotsOperationItemProcessor
+ *  @see ChildPortSlotsOperationItemProcessor
  * @see ChildPortSlotsOperationItemQuerySpecification
  * 
  */
 @SuppressWarnings("all")
 public class ChildPortSlotsOperationItemMatcher extends BaseMatcher<ChildPortSlotsOperationItemMatch> {
   /**
-   * Initializes the pattern matcher within an existing EMF-IncQuery engine.
+   * Initializes the pattern matcher within an existing VIATRA Query engine.
    * If the pattern matcher is already constructed in the engine, only a light-weight reference is returned.
    * The match set will be incrementally refreshed upon updates.
-   * @param engine the existing EMF-IncQuery engine in which this matcher will be created.
-   * @throws IncQueryException if an error occurs during pattern matcher creation
+   * @param engine the existing VIATRA Query engine in which this matcher will be created.
+   * @throws ViatraQueryException if an error occurs during pattern matcher creation
    * 
    */
-  public static ChildPortSlotsOperationItemMatcher on(final IncQueryEngine engine) throws IncQueryException {
+  public static ChildPortSlotsOperationItemMatcher on(final ViatraQueryEngine engine) throws ViatraQueryException {
     // check if matcher already exists
     ChildPortSlotsOperationItemMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-    	matcher = new ChildPortSlotsOperationItemMatcher(engine);
-    	// do not have to "put" it into engine.matchers, reportMatcherInitialized() will take care of it
+        matcher = (ChildPortSlotsOperationItemMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
+  }
+  
+  /**
+   * @throws ViatraQueryException if an error occurs during pattern matcher creation
+   * @return an initialized matcher
+   * @noreference This method is for internal matcher initialization by the framework, do not call it manually.
+   * 
+   */
+  public static ChildPortSlotsOperationItemMatcher create() throws ViatraQueryException {
+    return new ChildPortSlotsOperationItemMatcher();
   }
   
   private final static int POSITION_OPERATION = 0;
   
   private final static int POSITION_NAMEC = 1;
   
-  private final static Logger LOGGER = IncQueryLoggingUtil.getLogger(ChildPortSlotsOperationItemMatcher.class);
+  private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(ChildPortSlotsOperationItemMatcher.class);
   
   /**
-   * Initializes the pattern matcher over a given EMF model root (recommended: Resource or ResourceSet).
-   * If a pattern matcher is already constructed with the same root, only a light-weight reference is returned.
-   * The scope of pattern matching will be the given EMF model root and below (see FAQ for more precise definition).
-   * The match set will be incrementally refreshed upon updates from this scope.
-   * <p>The matcher will be created within the managed {@link IncQueryEngine} belonging to the EMF model root, so
-   * multiple matchers will reuse the same engine and benefit from increased performance and reduced memory footprint.
-   * @param emfRoot the root of the EMF containment hierarchy where the pattern matcher will operate. Recommended: Resource or ResourceSet.
-   * @throws IncQueryException if an error occurs during pattern matcher creation
-   * @deprecated use {@link #on(IncQueryEngine)} instead, e.g. in conjunction with {@link IncQueryEngine#on(Notifier)}
-   * 
-   */
-  @Deprecated
-  public ChildPortSlotsOperationItemMatcher(final Notifier emfRoot) throws IncQueryException {
-    this(IncQueryEngine.on(emfRoot));
-  }
-  
-  /**
-   * Initializes the pattern matcher within an existing EMF-IncQuery engine.
+   * Initializes the pattern matcher within an existing VIATRA Query engine.
    * If the pattern matcher is already constructed in the engine, only a light-weight reference is returned.
    * The match set will be incrementally refreshed upon updates.
-   * @param engine the existing EMF-IncQuery engine in which this matcher will be created.
-   * @throws IncQueryException if an error occurs during pattern matcher creation
-   * @deprecated use {@link #on(IncQueryEngine)} instead
+   * @param engine the existing VIATRA Query engine in which this matcher will be created.
+   * @throws ViatraQueryException if an error occurs during pattern matcher creation
    * 
    */
-  @Deprecated
-  public ChildPortSlotsOperationItemMatcher(final IncQueryEngine engine) throws IncQueryException {
-    super(engine, querySpecification());
+  private ChildPortSlotsOperationItemMatcher() throws ViatraQueryException {
+    super(querySpecification());
   }
   
   /**
@@ -193,7 +181,7 @@ public class ChildPortSlotsOperationItemMatcher extends BaseMatcher<ChildPortSlo
   
   /**
    * Retrieve the set of values that occur in matches for operation.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   protected Set<Operation> rawAccumulateAllValuesOfoperation(final Object[] parameters) {
@@ -204,7 +192,7 @@ public class ChildPortSlotsOperationItemMatcher extends BaseMatcher<ChildPortSlo
   
   /**
    * Retrieve the set of values that occur in matches for operation.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Operation> getAllValuesOfoperation() {
@@ -213,7 +201,7 @@ public class ChildPortSlotsOperationItemMatcher extends BaseMatcher<ChildPortSlo
   
   /**
    * Retrieve the set of values that occur in matches for operation.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Operation> getAllValuesOfoperation(final ChildPortSlotsOperationItemMatch partialMatch) {
@@ -222,7 +210,7 @@ public class ChildPortSlotsOperationItemMatcher extends BaseMatcher<ChildPortSlo
   
   /**
    * Retrieve the set of values that occur in matches for operation.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Operation> getAllValuesOfoperation(final String pNameC) {
@@ -234,7 +222,7 @@ public class ChildPortSlotsOperationItemMatcher extends BaseMatcher<ChildPortSlo
   
   /**
    * Retrieve the set of values that occur in matches for nameC.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   protected Set<String> rawAccumulateAllValuesOfnameC(final Object[] parameters) {
@@ -245,7 +233,7 @@ public class ChildPortSlotsOperationItemMatcher extends BaseMatcher<ChildPortSlo
   
   /**
    * Retrieve the set of values that occur in matches for nameC.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<String> getAllValuesOfnameC() {
@@ -254,7 +242,7 @@ public class ChildPortSlotsOperationItemMatcher extends BaseMatcher<ChildPortSlo
   
   /**
    * Retrieve the set of values that occur in matches for nameC.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<String> getAllValuesOfnameC(final ChildPortSlotsOperationItemMatch partialMatch) {
@@ -263,7 +251,7 @@ public class ChildPortSlotsOperationItemMatcher extends BaseMatcher<ChildPortSlo
   
   /**
    * Retrieve the set of values that occur in matches for nameC.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<String> getAllValuesOfnameC(final Operation pOperation) {
@@ -276,39 +264,39 @@ public class ChildPortSlotsOperationItemMatcher extends BaseMatcher<ChildPortSlo
   @Override
   protected ChildPortSlotsOperationItemMatch tupleToMatch(final Tuple t) {
     try {
-    	return ChildPortSlotsOperationItemMatch.newMatch((org.eclipse.uml2.uml.Operation) t.get(POSITION_OPERATION), (java.lang.String) t.get(POSITION_NAMEC));
+        return ChildPortSlotsOperationItemMatch.newMatch((Operation) t.get(POSITION_OPERATION), (String) t.get(POSITION_NAMEC));
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in tuple not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in tuple not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected ChildPortSlotsOperationItemMatch arrayToMatch(final Object[] match) {
     try {
-    	return ChildPortSlotsOperationItemMatch.newMatch((org.eclipse.uml2.uml.Operation) match[POSITION_OPERATION], (java.lang.String) match[POSITION_NAMEC]);
+        return ChildPortSlotsOperationItemMatch.newMatch((Operation) match[POSITION_OPERATION], (String) match[POSITION_NAMEC]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected ChildPortSlotsOperationItemMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return ChildPortSlotsOperationItemMatch.newMutableMatch((org.eclipse.uml2.uml.Operation) match[POSITION_OPERATION], (java.lang.String) match[POSITION_NAMEC]);
+        return ChildPortSlotsOperationItemMatch.newMutableMatch((Operation) match[POSITION_OPERATION], (String) match[POSITION_NAMEC]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   
   /**
    * @return the singleton instance of the query specification of this pattern
-   * @throws IncQueryException if the pattern definition could not be loaded
+   * @throws ViatraQueryException if the pattern definition could not be loaded
    * 
    */
-  public static IQuerySpecification<ChildPortSlotsOperationItemMatcher> querySpecification() throws IncQueryException {
+  public static IQuerySpecification<ChildPortSlotsOperationItemMatcher> querySpecification() throws ViatraQueryException {
     return ChildPortSlotsOperationItemQuerySpecification.instance();
   }
 }

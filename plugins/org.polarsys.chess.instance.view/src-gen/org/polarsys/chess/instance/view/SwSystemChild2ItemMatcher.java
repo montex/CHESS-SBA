@@ -1,30 +1,29 @@
-/*******************************************************************************
- *
- *  * Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
-
+/**
+ * 
+ *   Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
+ *  
+ *      
+ *   All rights reserved. This program and the accompanying materials
+ *   are made available under the terms of the Eclipse Public License v1.0
+ *   which accompanies this distribution, and is available at
+ *   http://www.eclipse.org/legal/epl-v10.html
+ *  
+ *  
+ */
 package org.polarsys.chess.instance.view;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.incquery.runtime.api.IMatchProcessor;
-import org.eclipse.incquery.runtime.api.IQuerySpecification;
-import org.eclipse.incquery.runtime.api.IncQueryEngine;
-import org.eclipse.incquery.runtime.api.impl.BaseMatcher;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
-import org.eclipse.incquery.runtime.matchers.tuple.Tuple;
-import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil;
 import org.eclipse.uml2.uml.InstanceSpecification;
+import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
+import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.api.impl.BaseMatcher;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
+import org.eclipse.viatra.query.runtime.matchers.tuple.Tuple;
+import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
 import org.polarsys.chess.instance.view.SwSystemChild2ItemMatch;
 import org.polarsys.chess.instance.view.util.SwSystemChild2ItemQuerySpecification;
 
@@ -32,8 +31,8 @@ import org.polarsys.chess.instance.view.util.SwSystemChild2ItemQuerySpecificatio
  * Generated pattern matcher API of the org.polarsys.chess.instance.view.swSystemChild2Item pattern,
  * providing pattern-specific query methods.
  * 
- * <p>Use the pattern matcher on a given model via {@link #on(IncQueryEngine)},
- * e.g. in conjunction with {@link IncQueryEngine#on(Notifier)}.
+ * <p>Use the pattern matcher on a given model via {@link #on(ViatraQueryEngine)},
+ * e.g. in conjunction with {@link ViatraQueryEngine#on(Notifier)}.
  * 
  * <p>Matches of the pattern will be represented as {@link SwSystemChild2ItemMatch}.
  * 
@@ -54,65 +53,55 @@ import org.polarsys.chess.instance.view.util.SwSystemChild2ItemQuerySpecificatio
  * </pre></code>
  * 
  * @see SwSystemChild2ItemMatch
- * @see SwSystemChild2ItemProcessor
+ *  @see SwSystemChild2ItemProcessor
  * @see SwSystemChild2ItemQuerySpecification
  * 
  */
 @SuppressWarnings("all")
 public class SwSystemChild2ItemMatcher extends BaseMatcher<SwSystemChild2ItemMatch> {
   /**
-   * Initializes the pattern matcher within an existing EMF-IncQuery engine.
+   * Initializes the pattern matcher within an existing VIATRA Query engine.
    * If the pattern matcher is already constructed in the engine, only a light-weight reference is returned.
    * The match set will be incrementally refreshed upon updates.
-   * @param engine the existing EMF-IncQuery engine in which this matcher will be created.
-   * @throws IncQueryException if an error occurs during pattern matcher creation
+   * @param engine the existing VIATRA Query engine in which this matcher will be created.
+   * @throws ViatraQueryException if an error occurs during pattern matcher creation
    * 
    */
-  public static SwSystemChild2ItemMatcher on(final IncQueryEngine engine) throws IncQueryException {
+  public static SwSystemChild2ItemMatcher on(final ViatraQueryEngine engine) throws ViatraQueryException {
     // check if matcher already exists
     SwSystemChild2ItemMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-    	matcher = new SwSystemChild2ItemMatcher(engine);
-    	// do not have to "put" it into engine.matchers, reportMatcherInitialized() will take care of it
+        matcher = (SwSystemChild2ItemMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
+  }
+  
+  /**
+   * @throws ViatraQueryException if an error occurs during pattern matcher creation
+   * @return an initialized matcher
+   * @noreference This method is for internal matcher initialization by the framework, do not call it manually.
+   * 
+   */
+  public static SwSystemChild2ItemMatcher create() throws ViatraQueryException {
+    return new SwSystemChild2ItemMatcher();
   }
   
   private final static int POSITION_CHILD = 0;
   
   private final static int POSITION_NAME = 1;
   
-  private final static Logger LOGGER = IncQueryLoggingUtil.getLogger(SwSystemChild2ItemMatcher.class);
+  private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(SwSystemChild2ItemMatcher.class);
   
   /**
-   * Initializes the pattern matcher over a given EMF model root (recommended: Resource or ResourceSet).
-   * If a pattern matcher is already constructed with the same root, only a light-weight reference is returned.
-   * The scope of pattern matching will be the given EMF model root and below (see FAQ for more precise definition).
-   * The match set will be incrementally refreshed upon updates from this scope.
-   * <p>The matcher will be created within the managed {@link IncQueryEngine} belonging to the EMF model root, so
-   * multiple matchers will reuse the same engine and benefit from increased performance and reduced memory footprint.
-   * @param emfRoot the root of the EMF containment hierarchy where the pattern matcher will operate. Recommended: Resource or ResourceSet.
-   * @throws IncQueryException if an error occurs during pattern matcher creation
-   * @deprecated use {@link #on(IncQueryEngine)} instead, e.g. in conjunction with {@link IncQueryEngine#on(Notifier)}
-   * 
-   */
-  @Deprecated
-  public SwSystemChild2ItemMatcher(final Notifier emfRoot) throws IncQueryException {
-    this(IncQueryEngine.on(emfRoot));
-  }
-  
-  /**
-   * Initializes the pattern matcher within an existing EMF-IncQuery engine.
+   * Initializes the pattern matcher within an existing VIATRA Query engine.
    * If the pattern matcher is already constructed in the engine, only a light-weight reference is returned.
    * The match set will be incrementally refreshed upon updates.
-   * @param engine the existing EMF-IncQuery engine in which this matcher will be created.
-   * @throws IncQueryException if an error occurs during pattern matcher creation
-   * @deprecated use {@link #on(IncQueryEngine)} instead
+   * @param engine the existing VIATRA Query engine in which this matcher will be created.
+   * @throws ViatraQueryException if an error occurs during pattern matcher creation
    * 
    */
-  @Deprecated
-  public SwSystemChild2ItemMatcher(final IncQueryEngine engine) throws IncQueryException {
-    super(engine, querySpecification());
+  private SwSystemChild2ItemMatcher() throws ViatraQueryException {
+    super(querySpecification());
   }
   
   /**
@@ -200,7 +189,7 @@ public class SwSystemChild2ItemMatcher extends BaseMatcher<SwSystemChild2ItemMat
   
   /**
    * Retrieve the set of values that occur in matches for child.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   protected Set<InstanceSpecification> rawAccumulateAllValuesOfchild(final Object[] parameters) {
@@ -211,7 +200,7 @@ public class SwSystemChild2ItemMatcher extends BaseMatcher<SwSystemChild2ItemMat
   
   /**
    * Retrieve the set of values that occur in matches for child.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<InstanceSpecification> getAllValuesOfchild() {
@@ -220,7 +209,7 @@ public class SwSystemChild2ItemMatcher extends BaseMatcher<SwSystemChild2ItemMat
   
   /**
    * Retrieve the set of values that occur in matches for child.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<InstanceSpecification> getAllValuesOfchild(final SwSystemChild2ItemMatch partialMatch) {
@@ -229,7 +218,7 @@ public class SwSystemChild2ItemMatcher extends BaseMatcher<SwSystemChild2ItemMat
   
   /**
    * Retrieve the set of values that occur in matches for child.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<InstanceSpecification> getAllValuesOfchild(final String pName) {
@@ -241,7 +230,7 @@ public class SwSystemChild2ItemMatcher extends BaseMatcher<SwSystemChild2ItemMat
   
   /**
    * Retrieve the set of values that occur in matches for name.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   protected Set<String> rawAccumulateAllValuesOfname(final Object[] parameters) {
@@ -252,7 +241,7 @@ public class SwSystemChild2ItemMatcher extends BaseMatcher<SwSystemChild2ItemMat
   
   /**
    * Retrieve the set of values that occur in matches for name.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<String> getAllValuesOfname() {
@@ -261,7 +250,7 @@ public class SwSystemChild2ItemMatcher extends BaseMatcher<SwSystemChild2ItemMat
   
   /**
    * Retrieve the set of values that occur in matches for name.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<String> getAllValuesOfname(final SwSystemChild2ItemMatch partialMatch) {
@@ -270,7 +259,7 @@ public class SwSystemChild2ItemMatcher extends BaseMatcher<SwSystemChild2ItemMat
   
   /**
    * Retrieve the set of values that occur in matches for name.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<String> getAllValuesOfname(final InstanceSpecification pChild) {
@@ -283,39 +272,39 @@ public class SwSystemChild2ItemMatcher extends BaseMatcher<SwSystemChild2ItemMat
   @Override
   protected SwSystemChild2ItemMatch tupleToMatch(final Tuple t) {
     try {
-    	return SwSystemChild2ItemMatch.newMatch((org.eclipse.uml2.uml.InstanceSpecification) t.get(POSITION_CHILD), (java.lang.String) t.get(POSITION_NAME));
+        return SwSystemChild2ItemMatch.newMatch((InstanceSpecification) t.get(POSITION_CHILD), (String) t.get(POSITION_NAME));
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in tuple not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in tuple not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected SwSystemChild2ItemMatch arrayToMatch(final Object[] match) {
     try {
-    	return SwSystemChild2ItemMatch.newMatch((org.eclipse.uml2.uml.InstanceSpecification) match[POSITION_CHILD], (java.lang.String) match[POSITION_NAME]);
+        return SwSystemChild2ItemMatch.newMatch((InstanceSpecification) match[POSITION_CHILD], (String) match[POSITION_NAME]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected SwSystemChild2ItemMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return SwSystemChild2ItemMatch.newMutableMatch((org.eclipse.uml2.uml.InstanceSpecification) match[POSITION_CHILD], (java.lang.String) match[POSITION_NAME]);
+        return SwSystemChild2ItemMatch.newMutableMatch((InstanceSpecification) match[POSITION_CHILD], (String) match[POSITION_NAME]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   
   /**
    * @return the singleton instance of the query specification of this pattern
-   * @throws IncQueryException if the pattern definition could not be loaded
+   * @throws ViatraQueryException if the pattern definition could not be loaded
    * 
    */
-  public static IQuerySpecification<SwSystemChild2ItemMatcher> querySpecification() throws IncQueryException {
+  public static IQuerySpecification<SwSystemChild2ItemMatcher> querySpecification() throws ViatraQueryException {
     return SwSystemChild2ItemQuerySpecification.instance();
   }
 }
