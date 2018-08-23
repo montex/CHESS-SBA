@@ -79,10 +79,7 @@ public class SetContractRefinementDialog extends Dialog {
 	}
 
 	private void populateRefineList() throws Exception {
-
-		System.out.println("populateRefineList");
-
-		refineList.clear();
+refineList.clear();
 		for (Property subComponentInstance : EntityUtil.getInstance().getSubComponentsInstances(ownerClass)) {
 
 			String[] range = EntityUtil.getInstance().getAttributeMultiplicity(subComponentInstance);
@@ -98,8 +95,6 @@ public class SetContractRefinementDialog extends Dialog {
 				if (!contractProperty.getContractType().equals(ContractTypes.STRONG))
 					continue;
 
-				System.out.println("refineList.add: " + subComponentInstance.getName() + " - "
-						+ contractProperty.getBase_Property().getName() + " - " + range[0] + " - " + range[1]);
 				refineList.add(new ContractRefinementObj(subComponentInstance.getName(),
 						contractProperty.getBase_Property().getName(), range[0], range[1]));
 
@@ -156,7 +151,7 @@ public class SetContractRefinementDialog extends Dialog {
 		columnContracts = new TableColumn(table, SWT.FILL);
 		columnRanges = new TableColumn(table, SWT.FILL);
 
-		int minWidth = 0;
+		int minWidth = 20;
 
 		int index = 0;
 		for (ContractRefinementObj contractRefinement : refineList) {
@@ -203,10 +198,8 @@ public class SetContractRefinementDialog extends Dialog {
 			updateGUIExistingRefiningContracts(checkButton, contractRefinement, selectedRange);
 
 			if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
-				System.out.println("range text empty: -" + selectedRange.getText() + "-");
 				if (selectedRange.getText().compareTo("") == 0) {
 					String rangeStrToEdit = contractRefinement.getRangeStr(false);
-					System.out.println("rangeStrToEdit: " + rangeStrToEdit);
 					selectedRange.setText(rangeStrToEdit);
 				}
 			} else {
@@ -232,39 +225,48 @@ public class SetContractRefinementDialog extends Dialog {
 
 		composite.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
-				org.eclipse.swt.graphics.Rectangle area = composite.getClientArea();
-				Point preferredSize = table.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-				int width = area.width - 2 * table.getBorderWidth();
-				if (preferredSize.y > area.height + table.getHeaderHeight()) {
-					// Subtract the scrollbar width from the total column width
-					// if a vertical scrollbar will be required
-					Point vBarSize = table.getVerticalBar().getSize();
-					width -= vBarSize.x;
-				}
-				Point oldSize = table.getSize();
-				if (oldSize.x > area.width) {
-					// table is getting smaller so make the columns
-					// smaller first and then resize the table to
-					// match the client area width
-					columnContracts.setWidth(width / 2);
-					columnRanges.setWidth(width - columnContracts.getWidth());
-					table.setSize(area.width, area.height);
-				} else {
-					// table is getting bigger so make the table
-					// bigger first and then make the columns wider
-					// to match the client area width
-					table.setSize(area.width, area.height);
-					columnContracts.setWidth(width / 2);
-					columnRanges.setWidth(width - columnContracts.getWidth());
-				}
-
-				tableLabel.setSize(area.width, area.height);
+				refreshTableSize();
 			}
 		});
 
+		composite.redraw();
+	
 		return parent;
 	}
 
+	private void refreshTableSize(){
+
+		org.eclipse.swt.graphics.Rectangle area = composite.getClientArea();
+		Point preferredSize = table.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		int width = area.width - 2 * table.getBorderWidth();
+		if (preferredSize.y > area.height + table.getHeaderHeight()) {
+			// Subtract the scrollbar width from the total column width
+			// if a vertical scrollbar will be required
+			Point vBarSize = table.getVerticalBar().getSize();
+			width -= vBarSize.x;
+		}
+		Point oldSize = table.getSize();
+		if (oldSize.x > area.width) {
+			// table is getting smaller so make the columns
+			// smaller first and then resize the table to
+			// match the client area width
+			columnContracts.setWidth(width /3 * 2);
+			columnRanges.setWidth(width - columnContracts.getWidth());
+			table.setSize(area.width, area.height);
+		} else {
+			// table is getting bigger so make the table
+			// bigger first and then make the columns wider
+			// to match the client area width
+			table.setSize(area.width, area.height);
+			columnContracts.setWidth(width /3 * 2);
+			columnRanges.setWidth(width - columnContracts.getWidth());
+		}
+
+		tableLabel.setSize(area.width, area.height);
+	
+	}
+	
+	
 	private void updateGUIExistingRefiningContracts(Button checkButton, ContractRefinementObj contractRefinement,
 			Text selectedRange) {
 
