@@ -198,8 +198,11 @@ public class SetContractRefinementDialog extends Dialog {
 			updateGUIExistingRefiningContracts(checkButton, contractRefinement, selectedRange);
 
 			if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
-				if (selectedRange.getText() == "") {
-					selectedRange.setText(contractRefinement.getRangeStr(false));
+				System.out.println("range text empty: -"+selectedRange.getText()+"-");
+				if (selectedRange.getText().compareTo("")==0) {
+					String rangeStrToEdit = contractRefinement.getRangeStr(false);
+					System.out.println("rangeStrToEdit: "+rangeStrToEdit);
+					selectedRange.setText(rangeStrToEdit);
 				}
 			} else {
 				selectedRange.setEnabled(false);
