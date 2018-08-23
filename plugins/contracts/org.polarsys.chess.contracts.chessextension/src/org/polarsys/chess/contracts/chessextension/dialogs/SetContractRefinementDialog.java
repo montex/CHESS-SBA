@@ -406,6 +406,8 @@ public class SetContractRefinementDialog extends Dialog {
 
 		public String getRangeStr(boolean withBrackets) {
 
+			System.out.println("in getRangeStr. lower upper: "+lower+" , "+upper);
+			
 			String res;
 			if (getLower() != null && getUpper() != null) {
 				if (getUpper().compareTo(getLower()) == 0) {
