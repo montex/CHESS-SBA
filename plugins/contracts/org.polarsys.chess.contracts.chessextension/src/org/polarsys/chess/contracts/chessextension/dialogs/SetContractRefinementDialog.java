@@ -121,6 +121,7 @@ refineList.clear();
 	public void populateRefineListAndCreateDialog() throws Exception {
 		populateRefineList();
 		super.create();
+		composite.redraw();
 	}
 
 	@Override
@@ -133,8 +134,8 @@ refineList.clear();
 
 		layout.horizontalSpacing = 4;
 		layout.verticalSpacing = 4;
-		layout.marginBottom = 5;
-		layout.marginTop = 5;
+		layout.marginBottom = 20;
+		layout.marginTop = 20;
 
 		parent.setLayout(layout);
 		// parent.setLayoutData(new GridData(SWT.FILL, SWT.NON, true, true));
@@ -146,13 +147,14 @@ refineList.clear();
 		table = new Table(parent, SWT.NO_SCROLL | SWT.FULL_SELECTION);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		columnCheckBoxes = new TableColumn(table, SWT.FILL);
 		columnContracts = new TableColumn(table, SWT.FILL);
 		columnRanges = new TableColumn(table, SWT.FILL);
 
-		int minWidth = 20;
+		int minWidth = 10;
+		int minHeight= 10;
 
 		int index = 0;
 		for (ContractRefinementObj contractRefinement : refineList) {
@@ -189,9 +191,12 @@ refineList.clear();
 
 			TableEditor editor = new TableEditor(table);
 			minWidth = Math.max(size.x, minWidth);
+			minHeight = Math.max(size.y, minHeight);
 			editor.minimumWidth = minWidth;			
-			editor.minimumHeight = size.y;
+			editor.minimumHeight = minHeight;
 			editor.horizontalAlignment = SWT.LEFT;
+			editor.grabHorizontal = true;
+			editor.grabVertical = true;
 			editor.setEditor(checkButton, contractName, 0);
 
 			Text selectedRange = new Text(table, SWT.LEFT);
@@ -208,10 +213,11 @@ refineList.clear();
 			}
 
 			editor = new TableEditor(table);
-			editor.minimumHeight = size.y;
+			editor.minimumHeight = minHeight;
 			editor.minimumWidth = 100;
 			editor.horizontalAlignment = SWT.LEFT;
 			editor.grabHorizontal = true;
+			editor.grabVertical = true;
 			editor.setEditor(selectedRange, contractName, 2);
 
 		}
@@ -236,7 +242,7 @@ refineList.clear();
 	}
 
 	private void refreshTableSize(){
-
+System.out.println("refreshTableSize");
 		org.eclipse.swt.graphics.Rectangle area = composite.getClientArea();
 		Point preferredSize = table.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		int width = area.width - 2 * table.getBorderWidth();
@@ -263,7 +269,6 @@ refineList.clear();
 			columnRanges.setWidth(width - columnContracts.getWidth());
 		}
 
-		tableLabel.setSize(area.width, area.height);
 	
 	}
 	
