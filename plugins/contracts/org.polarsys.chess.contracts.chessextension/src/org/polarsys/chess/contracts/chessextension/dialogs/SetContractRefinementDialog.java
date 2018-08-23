@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.ControlAdapter;
@@ -187,8 +188,8 @@ refineList.clear();
 					contractRefinement.getSubComponentName() + rangeStr + "." + contractRefinement.getContractName());
 
 			TableEditor editor = new TableEditor(table);
-			editor.minimumWidth = size.x;
 			minWidth = Math.max(size.x, minWidth);
+			editor.minimumWidth = minWidth;			
 			editor.minimumHeight = size.y;
 			editor.horizontalAlignment = SWT.LEFT;
 			editor.setEditor(checkButton, contractName, 0);
@@ -309,6 +310,28 @@ refineList.clear();
 		return true;
 	}
 
+	@Override
+	protected Control createButtonBar(Composite parent) {
+		Composite composite = new Composite(parent, SWT.NONE);
+		// create a layout with spacing and margins appropriate for the font
+		// size.
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 0; // this is incremented by createButton
+		layout.makeColumnsEqualWidth = true;
+		layout.marginWidth = convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_MARGIN);
+		layout.marginHeight = convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_MARGIN);
+		layout.horizontalSpacing = convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING);
+		layout.verticalSpacing = convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_SPACING);
+		composite.setLayout(layout);
+		GridData data = new GridData(SWT.END,SWT.END,true,true);
+		composite.setLayoutData(data);
+		composite.setFont(parent.getFont());
+
+		// Add the buttons to the button bar.
+		createButtonsForButtonBar(composite);
+		return composite;
+	}
+	
 	@Override
 	protected void okPressed() {
 
