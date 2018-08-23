@@ -17,7 +17,6 @@
 
 package org.polarsys.chess.contracts.chessextension.dialogs;
 
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -80,6 +79,9 @@ public class SetContractRefinementDialog extends Dialog {
 	}
 
 	private void populateRefineList() throws Exception {
+
+		System.out.println("populateRefineList");
+
 		refineList.clear();
 		for (Property subComponentInstance : EntityUtil.getInstance().getSubComponentsInstances(ownerClass)) {
 
@@ -95,6 +97,9 @@ public class SetContractRefinementDialog extends Dialog {
 
 				if (!contractProperty.getContractType().equals(ContractTypes.STRONG))
 					continue;
+
+				System.out.println("refineList.add: " + subComponentInstance.getName() + " - "
+						+ contractProperty.getBase_Property().getName() + " - " + range[0] + " - " + range[1]);
 				refineList.add(new ContractRefinementObj(subComponentInstance.getName(),
 						contractProperty.getBase_Property().getName(), range[0], range[1]));
 
@@ -136,21 +141,21 @@ public class SetContractRefinementDialog extends Dialog {
 		layout.marginTop = 5;
 
 		parent.setLayout(layout);
-		//parent.setLayoutData(new GridData(SWT.FILL, SWT.NON, true, true));
-		
+		// parent.setLayoutData(new GridData(SWT.FILL, SWT.NON, true, true));
+
 		tableLabel = new Label(parent, SWT.NONE);
 		tableLabel.setText("Select Refinements:");
 		tableLabel.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
-		
+
 		table = new Table(parent, SWT.NO_SCROLL | SWT.FULL_SELECTION);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
-		
+
 		columnCheckBoxes = new TableColumn(table, SWT.FILL);
 		columnContracts = new TableColumn(table, SWT.FILL);
 		columnRanges = new TableColumn(table, SWT.FILL);
-		
+
 		int minWidth = 0;
 
 		int index = 0;
@@ -198,10 +203,10 @@ public class SetContractRefinementDialog extends Dialog {
 			updateGUIExistingRefiningContracts(checkButton, contractRefinement, selectedRange);
 
 			if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
-				System.out.println("range text empty: -"+selectedRange.getText()+"-");
-				if (selectedRange.getText().compareTo("")==0) {
+				System.out.println("range text empty: -" + selectedRange.getText() + "-");
+				if (selectedRange.getText().compareTo("") == 0) {
 					String rangeStrToEdit = contractRefinement.getRangeStr(false);
-					System.out.println("rangeStrToEdit: "+rangeStrToEdit);
+					System.out.println("rangeStrToEdit: " + rangeStrToEdit);
 					selectedRange.setText(rangeStrToEdit);
 				}
 			} else {
@@ -216,7 +221,7 @@ public class SetContractRefinementDialog extends Dialog {
 			editor.setEditor(selectedRange, contractName, 2);
 
 		}
-				
+
 		columnCheckBoxes.pack();
 		columnContracts.setText("contract");
 		columnContracts.pack();
@@ -263,8 +268,8 @@ public class SetContractRefinementDialog extends Dialog {
 	private void updateGUIExistingRefiningContracts(Button checkButton, ContractRefinementObj contractRefinement,
 			Text selectedRange) {
 
-		System.out.println("in updateGUIExistingRefiningContracts: "+selectedRange.getText());
-		
+		System.out.println("in updateGUIExistingRefiningContracts: " + selectedRange.getText());
+
 		for (ContractRefinement contractRef : refinedByList) {
 
 			if ((contractRef.getInstance().getName().compareTo(contractRefinement.getSubComponentName()) == 0)
@@ -276,8 +281,10 @@ public class SetContractRefinementDialog extends Dialog {
 				selectedContractRefinementIndexes.add(selectedIndex);
 
 				if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
-					System.out.println("ranges != null: "+selectedRange.getText());
-					if (selectedRange.getText().compareTo("")!=0) {
+					System.out.println("ranges != null. selectedRange.getText(): -" + selectedRange.getText() + "-");
+					if (selectedRange.getText().compareTo("") != 0) {
+						System.out.println("selectedRange.getText().compareTo(\"\")!=0. selectedRange.getText(): -"
+								+ selectedRange.getText() + "-");
 						selectedRange.setText(selectedRange.getText() + ",");
 					}
 					selectedRange.setText(selectedRange.getText() + contractRef.getLowerIndexOfInstance() + ".."
