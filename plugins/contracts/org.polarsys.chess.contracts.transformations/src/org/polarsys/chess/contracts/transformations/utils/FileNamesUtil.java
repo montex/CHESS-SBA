@@ -51,13 +51,14 @@ public class FileNamesUtil {
 	 * Computes the absolute file name for the fault tree.
 	 * @param editor the active editor
 	 * @param modelSystemName the model name
+	 * @param index an index to differentiate the generated file
 	 * @return
 	 */
-	public String computeFtFileName(IEditorPart editor, String modelSystemName) {
+	public String computeFtFileName(IEditorPart editor, String modelSystemName, int index) {
 		final IFolder folder = computeXSapFolder(editor);
 		final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
 		final String tempFiles = resFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + "extended_" + modelSystemName + "_ft.xml";
+		final String fileName = tempFiles + File.separator + "extended_" + modelSystemName + "_c" + index + "_ft.xml";
 		return fileName;
 	}
 

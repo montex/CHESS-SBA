@@ -16,6 +16,7 @@ package org.polarsys.chess.contracts.transformations.dialogs;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaAnalysisContext;
@@ -57,7 +58,14 @@ public class SelectFTAAnalysisCtxDialog extends Dialog {
 				for (GaAnalysisContext ctx : contextList) {
 					
 					if (ctx.getBase_NamedElement().getQualifiedName().equals(selectedCtx)){
-						ftaConditionText.setText(ctx.getContext().get(0));
+						
+						// Put all the possible conditions in a single line
+						final StringJoiner joiner = new StringJoiner(", ");
+						for (String  context : ctx.getContext()) {
+							joiner.add(context);
+						}
+						ftaConditionText.setText(joiner.toString());
+//						ftaConditionText.setText(ctx.getContext().get(0));
 						CHGaResourcePlatform plat = (CHGaResourcePlatform) ctx.getPlatform().get(0);
 						rootSystemText.setText(plat.getBase_Classifier().getQualifiedName());
 					}

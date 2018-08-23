@@ -12,6 +12,7 @@ package org.polarsys.chess.contracts.transformations.commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -64,6 +65,19 @@ public class FMEAXSapHandler extends AbstractHandler {
 			return false;
 		}
 		return true;		
+	}
+	
+	/**
+	 * Returns the string of expressions, formatted as requested by xSAP.
+	 * @param conditions the string of conditions as reported to the user
+	 * @return
+	 */
+	private String processConditions(String conditions) {
+		StringJoiner arguments = new StringJoiner(" ");
+		for (String condition : ftaCond.split(", ")) {
+			arguments.add("\"" + condition + "\"");
+		}
+		return arguments.toString();
 	}
 	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -124,8 +138,7 @@ public class FMEAXSapHandler extends AbstractHandler {
 		//FIXME: non funziona al momento, manca la parte Python
 //		xSapExecService.extendModel(smvFileName, feiFileName, fmsFileName, extendedSmvFileName);
 
-		//FIXME: mi ritorna il formato XML, andava quello .txt?
-		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, ftaCond, fmeaFileName);
+		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, processConditions(ftaCond), fmeaFileName);
 			
 		FMEAGenerationDialogUtil fmeaGenerationDialogUtil = FMEAGenerationDialogUtil.getInstance();
 		

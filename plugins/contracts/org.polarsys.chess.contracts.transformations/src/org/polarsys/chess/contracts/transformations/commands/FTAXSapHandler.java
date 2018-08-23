@@ -111,7 +111,7 @@ public class FTAXSapHandler extends AbstractHandler {
 		final String feiFileName = fileNamesService.computeFeiFileName(editor, modelName);
 		final String extendedSmvFileName = fileNamesService.computeExtendedSmvFileName(editor, modelName);
 		final String fmsFileName = fileNamesService.computeFmsFileName(editor, modelName);
-		final String ftFileName = fileNamesService.computeFtFileName(editor, modelName);
+//		final String ftFileName = fileNamesService.computeFtFileName(editor, modelName);
 		
 		// Generate a monolithic SMV file
 		if (!createMonolithicSmvFile(smvFileName)){
@@ -123,10 +123,14 @@ public class FTAXSapHandler extends AbstractHandler {
 		
 		//FIXME: non funziona al momento, manca la parte Python
 //		xSapExecService.extendModel(smvFileName, feiFileName, fmsFileName, extendedSmvFileName);
-
-		xSapExecService.computeFt(extendedSmvFileName, fmsFileName, ftaCond, ftFileName);		
-
-		xSapExecService.showFt(ftFileName);
+		
+		// Compute the FTA for each condition requested
+		int index = 0;
+		for (String condition : ftaCond.split(", ")) {
+			final String ftFileName = fileNamesService.computeFtFileName(editor, modelName, ++index);
+			xSapExecService.computeFt(extendedSmvFileName, fmsFileName, condition, ftFileName);
+			xSapExecService.showFt(ftFileName);
+		}
 
 		return null;
 	}
