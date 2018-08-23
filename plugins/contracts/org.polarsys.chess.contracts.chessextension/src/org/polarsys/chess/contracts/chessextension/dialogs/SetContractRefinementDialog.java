@@ -194,7 +194,7 @@ refineList.clear();
 			minHeight = Math.max(size.y, minHeight);
 			editor.minimumWidth = minWidth;			
 			editor.minimumHeight = minHeight;
-			editor.horizontalAlignment = SWT.LEFT;
+			editor.horizontalAlignment = SWT.CENTER;
 			editor.grabHorizontal = true;
 			editor.grabVertical = true;
 			editor.setEditor(checkButton, contractName, 0);
@@ -222,6 +222,7 @@ refineList.clear();
 
 		}
 
+		columnCheckBoxes.setText("    ");
 		columnCheckBoxes.pack();
 		columnContracts.setText("contract");
 		columnContracts.pack();
