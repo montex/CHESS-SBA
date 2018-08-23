@@ -17,6 +17,7 @@
 
 package org.polarsys.chess.contracts.chessextension.dialogs;
 
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,9 +26,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -63,9 +67,11 @@ public class SetContractRefinementDialog extends Dialog {
 	private EList<ContractRefinement> refinedByList;
 
 	Table table;
+	Label tableLabel;
 	TableColumn columnCheckBoxes;
 	TableColumn columnContracts;
 	TableColumn columnRanges;
+	Composite composite;
 
 	public SetContractRefinementDialog(Shell shell, Class ownerClass, EList<ContractRefinement> refineList) {
 		super(shell);
@@ -119,6 +125,7 @@ public class SetContractRefinementDialog extends Dialog {
 	@Override
 	protected Control createDialogArea(Composite parent) {
 
+		composite = parent;
 		rangeTexts.clear();
 
 		GridLayout layout = new GridLayout(1, true);
@@ -129,14 +136,21 @@ public class SetContractRefinementDialog extends Dialog {
 		layout.marginTop = 5;
 
 		parent.setLayout(layout);
-		new Label(parent, SWT.NONE).setText("Select Refinements:");
-
-		table = new Table(parent, SWT.BORDER);
+		//parent.setLayoutData(new GridData(SWT.FILL, SWT.NON, true, true));
+		
+		tableLabel = new Label(parent, SWT.NONE);
+		tableLabel.setText("Select Refinements:");
+		tableLabel.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
+		
+		table = new Table(parent, SWT.NO_SCROLL | SWT.FULL_SELECTION);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		columnCheckBoxes = new TableColumn(table, SWT.NONE);
-		columnContracts = new TableColumn(table, SWT.NONE);
-		columnRanges = new TableColumn(table, SWT.NONE);
+		table.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
+		
+		columnCheckBoxes = new TableColumn(table, SWT.FILL);
+		columnContracts = new TableColumn(table, SWT.FILL);
+		columnRanges = new TableColumn(table, SWT.FILL);
+		
 		int minWidth = 0;
 
 		int index = 0;
@@ -149,7 +163,6 @@ public class SetContractRefinementDialog extends Dialog {
 				@Override
 				public void widgetSelected(SelectionEvent event) {
 					Button btn = (Button) event.getSource();
-					System.out.println("btn.getSelection(): " + btn.getSelection());
 
 					int selectedIndex = (Integer) (btn.getData());
 
@@ -167,42 +180,40 @@ public class SetContractRefinementDialog extends Dialog {
 			index++;
 			Point size = checkButton.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 
-			TableEditor editor = new TableEditor(table);
-			editor.minimumWidth = size.x;
-			minWidth = Math.max(size.x, minWidth);
-			editor.minimumHeight = size.y;
-			editor.horizontalAlignment = SWT.LEFT;
-			editor.verticalAlignment = SWT.CENTER;
-
 			String rangeStr = contractRefinement.getRangeStr(true);
 
 			TableItem contractName = new TableItem(table, SWT.NONE);
 			contractName.setText(1,
 					contractRefinement.getSubComponentName() + rangeStr + "." + contractRefinement.getContractName());
 
+			TableEditor editor = new TableEditor(table);
+			editor.minimumWidth = size.x;
+			minWidth = Math.max(size.x, minWidth);
+			editor.minimumHeight = size.y;
+			editor.horizontalAlignment = SWT.LEFT;
 			editor.setEditor(checkButton, contractName, 0);
 
-			editor = new TableEditor(table);
-			editor.minimumHeight = size.y;
-			editor.minimumWidth = 50;
-			editor.horizontalAlignment = SWT.LEFT;
-			editor.verticalAlignment = SWT.CENTER;
-
 			Text selectedRange = new Text(table, SWT.LEFT);
-			rangeTexts.add(selectedRange);			
-			updateGUIExistingRefiningContracts(checkButton, contractRefinement,selectedRange);
-			
+			rangeTexts.add(selectedRange);
+			updateGUIExistingRefiningContracts(checkButton, contractRefinement, selectedRange);
+
 			if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
-				if(selectedRange.getText() == ""){
-				selectedRange.setText(contractRefinement.getRangeStr(false));
+				if (selectedRange.getText() == "") {
+					selectedRange.setText(contractRefinement.getRangeStr(false));
 				}
 			} else {
 				selectedRange.setEnabled(false);
 			}
 
+			editor = new TableEditor(table);
+			editor.minimumHeight = size.y;
+			editor.minimumWidth = 100;
+			editor.horizontalAlignment = SWT.LEFT;
+			editor.grabHorizontal = true;
 			editor.setEditor(selectedRange, contractName, 2);
 
 		}
+				
 		columnCheckBoxes.pack();
 		columnContracts.setText("contract");
 		columnContracts.pack();
@@ -211,14 +222,46 @@ public class SetContractRefinementDialog extends Dialog {
 		columnRanges.pack();
 		columnRanges.setWidth(columnRanges.getWidth() + minWidth);
 
+		composite.addControlListener(new ControlAdapter() {
+			public void controlResized(ControlEvent e) {
+				org.eclipse.swt.graphics.Rectangle area = composite.getClientArea();
+				Point preferredSize = table.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				int width = area.width - 2 * table.getBorderWidth();
+				if (preferredSize.y > area.height + table.getHeaderHeight()) {
+					// Subtract the scrollbar width from the total column width
+					// if a vertical scrollbar will be required
+					Point vBarSize = table.getVerticalBar().getSize();
+					width -= vBarSize.x;
+				}
+				Point oldSize = table.getSize();
+				if (oldSize.x > area.width) {
+					// table is getting smaller so make the columns
+					// smaller first and then resize the table to
+					// match the client area width
+					columnContracts.setWidth(width / 2);
+					columnRanges.setWidth(width - columnContracts.getWidth());
+					table.setSize(area.width, area.height);
+				} else {
+					// table is getting bigger so make the table
+					// bigger first and then make the columns wider
+					// to match the client area width
+					table.setSize(area.width, area.height);
+					columnContracts.setWidth(width / 2);
+					columnRanges.setWidth(width - columnContracts.getWidth());
+				}
+
+				tableLabel.setSize(area.width, area.height);
+			}
+		});
+
 		return parent;
 	}
 
-	private void updateGUIExistingRefiningContracts(Button checkButton, ContractRefinementObj contractRefinement,Text selectedRange) {
-		
+	private void updateGUIExistingRefiningContracts(Button checkButton, ContractRefinementObj contractRefinement,
+			Text selectedRange) {
+
 		for (ContractRefinement contractRef : refinedByList) {
 
-			
 			if ((contractRef.getInstance().getName().compareTo(contractRefinement.getSubComponentName()) == 0)
 					&& (contractRef.getContract().getBase_Property().getName()
 							.compareTo(contractRefinement.getContractName()) == 0)) {
@@ -226,12 +269,13 @@ public class SetContractRefinementDialog extends Dialog {
 				checkButton.setSelection(true);
 				int selectedIndex = (Integer) (checkButton.getData());
 				selectedContractRefinementIndexes.add(selectedIndex);
-				
-				if(contractRefinement.getLower() != null && contractRefinement.getUpper() != null){
-					if(selectedRange.getText()!=""){
-						selectedRange.setText(selectedRange.getText()+",");	
+
+				if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
+					if (selectedRange.getText() != "") {
+						selectedRange.setText(selectedRange.getText() + ",");
 					}
-					selectedRange.setText(selectedRange.getText()+contractRef.getLowerIndexOfInstance()+".."+contractRef.getUpperIndexOfInstance());
+					selectedRange.setText(selectedRange.getText() + contractRef.getLowerIndexOfInstance() + ".."
+							+ contractRef.getUpperIndexOfInstance());
 				}
 			}
 
@@ -247,7 +291,7 @@ public class SetContractRefinementDialog extends Dialog {
 
 	@Override
 	protected boolean isResizable() {
-		return false;
+		return true;
 	}
 
 	@Override
