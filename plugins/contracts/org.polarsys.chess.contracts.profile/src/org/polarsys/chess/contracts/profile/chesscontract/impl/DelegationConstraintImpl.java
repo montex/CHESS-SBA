@@ -22,8 +22,7 @@ import org.polarsys.chess.contracts.profile.chesscontract.DelegationConstraint;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.DelegationConstraintImpl#getBase_Constraint
- * <em>Base Constraint</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.DelegationConstraintImpl#getBase_Constraint <em>Base Constraint</em>}</li>
  * </ul>
  *
  * @generated
@@ -42,7 +41,6 @@ public class DelegationConstraintImpl extends MinimalEObjectImpl.Container imple
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected DelegationConstraintImpl() {
@@ -51,7 +49,6 @@ public class DelegationConstraintImpl extends MinimalEObjectImpl.Container imple
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -61,18 +58,15 @@ public class DelegationConstraintImpl extends MinimalEObjectImpl.Container imple
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Constraint getBase_Constraint() {
 		if (base_Constraint != null && base_Constraint.eIsProxy()) {
-			InternalEObject oldBase_Constraint = (InternalEObject) base_Constraint;
-			base_Constraint = (Constraint) eResolveProxy(oldBase_Constraint);
+			InternalEObject oldBase_Constraint = (InternalEObject)base_Constraint;
+			base_Constraint = (Constraint)eResolveProxy(oldBase_Constraint);
 			if (base_Constraint != oldBase_Constraint) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-							CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT, oldBase_Constraint,
-							base_Constraint));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT, oldBase_Constraint, base_Constraint));
 			}
 		}
 		return base_Constraint;
@@ -80,7 +74,6 @@ public class DelegationConstraintImpl extends MinimalEObjectImpl.Container imple
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Constraint basicGetBase_Constraint() {
@@ -89,73 +82,66 @@ public class DelegationConstraintImpl extends MinimalEObjectImpl.Container imple
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setBase_Constraint(Constraint newBase_Constraint) {
 		Constraint oldBase_Constraint = base_Constraint;
 		base_Constraint = newBase_Constraint;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT, oldBase_Constraint, base_Constraint));
+			eNotify(new ENotificationImpl(this, Notification.SET, CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT, oldBase_Constraint, base_Constraint));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT:
-			if (resolve)
-				return getBase_Constraint();
-			return basicGetBase_Constraint();
+			case CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT:
+				if (resolve) return getBase_Constraint();
+				return basicGetBase_Constraint();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT:
-			setBase_Constraint((Constraint) newValue);
-			return;
+			case CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT:
+				setBase_Constraint((Constraint)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT:
-			setBase_Constraint((Constraint) null);
-			return;
+			case CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT:
+				setBase_Constraint((Constraint)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT:
-			return base_Constraint != null;
+			case CHESSContractPackage.DELEGATION_CONSTRAINT__BASE_CONSTRAINT:
+				return base_Constraint != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -12,22 +12,21 @@ import org.eclipse.uml2.uml.Property;
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Contract
  * Refinement</b></em>'. <!-- end-user-doc -->
  *
- * <!-- begin-model-doc --> to specify contract refinement for a given contract
- * instance. Instance and instanceSpec attribute are mutually exclusive <!--
- * end-model-doc -->
+ * <!-- begin-model-doc -->
+ * to specify contract refinement for a given contract instance. 
+ * Instance and instanceSpec attribute are mutually exclusive
+ * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getBase_DataType
- * <em>Base Data Type</em>}</li>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getInstance
- * <em>Instance</em>}</li>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getContract
- * <em>Contract</em>}</li>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getInstanceSpec
- * <em>Instance Spec</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getBase_DataType <em>Base Data Type</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getInstance <em>Instance</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getContract <em>Contract</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getInstanceSpec <em>Instance Spec</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getUpperIndexOfInstance <em>Upper Index Of Instance</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getLowerIndexOfInstance <em>Lower Index Of Instance</em>}</li>
  * </ul>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContractRefinement()
@@ -53,13 +52,10 @@ public interface ContractRefinement extends EObject {
 	DataType getBase_DataType();
 
 	/**
-	 * Sets the value of the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getBase_DataType
-	 * <em>Base Data Type</em>}' reference. <!-- begin-user-doc --> <!--
+	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getBase_DataType <em>Base Data Type</em>}' reference.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Base Data Type</em>' reference.
+	 * @param value the new value of the '<em>Base Data Type</em>' reference.
 	 * @see #getBase_DataType()
 	 * @generated
 	 */
@@ -143,16 +139,65 @@ public interface ContractRefinement extends EObject {
 	InstanceSpecification getInstanceSpec();
 
 	/**
-	 * Sets the value of the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getInstanceSpec
-	 * <em>Instance Spec</em>}' reference. <!-- begin-user-doc --> <!--
+	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getInstanceSpec <em>Instance Spec</em>}' reference.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Instance Spec</em>' reference.
+	 * @param value the new value of the '<em>Instance Spec</em>' reference.
 	 * @see #getInstanceSpec()
 	 * @generated
 	 */
 	void setInstanceSpec(InstanceSpecification value);
+
+	/**
+	 * Returns the value of the '<em><b>Upper Index Of Instance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Upper Index Of Instance</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Upper Index Of Instance</em>' attribute.
+	 * @see #setUpperIndexOfInstance(String)
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContractRefinement_UpperIndexOfInstance()
+	 * @model dataType="org.eclipse.uml2.types.String" required="true" ordered="false"
+	 * @generated
+	 */
+	String getUpperIndexOfInstance();
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getUpperIndexOfInstance <em>Upper Index Of Instance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Upper Index Of Instance</em>' attribute.
+	 * @see #getUpperIndexOfInstance()
+	 * @generated
+	 */
+	void setUpperIndexOfInstance(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Lower Index Of Instance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Lower Index Of Instance</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Lower Index Of Instance</em>' attribute.
+	 * @see #setLowerIndexOfInstance(String)
+	 * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getContractRefinement_LowerIndexOfInstance()
+	 * @model dataType="org.eclipse.uml2.types.String" required="true" ordered="false"
+	 * @generated
+	 */
+	String getLowerIndexOfInstance();
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement#getLowerIndexOfInstance <em>Lower Index Of Instance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Lower Index Of Instance</em>' attribute.
+	 * @see #getLowerIndexOfInstance()
+	 * @generated
+	 */
+	void setLowerIndexOfInstance(String value);
 
 } // ContractRefinement

@@ -18,7 +18,6 @@ import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesPac
 public class ContinuousImpl extends MinimalEObjectImpl.Container implements Continuous {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected ContinuousImpl() {
@@ -27,7 +26,6 @@ public class ContinuousImpl extends MinimalEObjectImpl.Container implements Cont
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override

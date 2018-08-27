@@ -15,7 +15,6 @@
 
 package org.polarsys.chess.contracts.chessextension.listeners;
 
-
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.sasheditor.editor.IPage;
@@ -33,31 +32,26 @@ public class SelectionListener extends SelectionListenerExtra {
 
 	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-		
+
 		// lazy association
 		if (diagramStatus == null)
-			
-		diagramStatus = CHESSEditorUtils.getDiagramStatus(getRegistry());
-			
+			diagramStatus = CHESSEditorUtils.getDiagramStatus(getRegistry());
+
 		diagramStatus.setUserAction(true);
 		if (part instanceof PropertySheet) {
-			part = ((PropertySheet) part).getSite().getWorkbenchWindow()
-					.getActivePage().getActiveEditor();
+			part = ((PropertySheet) part).getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
 		}
-		if (part instanceof PapyrusMultiDiagramEditor && CHESSEditorUtils.isCHESSProject((IEditorPart)part)) {
+		if (part instanceof PapyrusMultiDiagramEditor && CHESSEditorUtils.isCHESSProject((IEditorPart) part)) {
 			// listens to sash page change events in the editor
 			PapyrusMultiDiagramEditor editor = (PapyrusMultiDiagramEditor) part;
-			
-			IPage newPage = (editor).getISashWindowsContainer()
-					.getActiveSashWindowsPage();
-			
+
+			IPage newPage = (editor).getISashWindowsContainer().getActiveSashWindowsPage();
+
 			// enable/disable palettes
-			
 			PaletteManager.setPaletteVisibility(editor, diagramStatus);
-			
-		} 
-		
+
+		}
+
 	}
-	
-	
+
 }

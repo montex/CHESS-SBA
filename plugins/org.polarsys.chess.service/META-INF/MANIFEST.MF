@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.papyrus.cdo.core;bundle-version="1.2.0",
  org.eclipse.papyrus.uml.tools,
  eu.fbk.eclipse.standardtools.utils,
- org.polarsys.chess.contracts.profile
+ org.polarsys.chess.contracts.profile,
+ eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.polarsys.chess.service.core.exceptions,
  org.polarsys.chess.service.core.model,

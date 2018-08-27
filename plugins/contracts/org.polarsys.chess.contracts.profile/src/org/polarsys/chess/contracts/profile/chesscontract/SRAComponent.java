@@ -12,8 +12,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.SRAComponent#getBase_Class
- * <em>Base Class</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.SRAComponent#getBase_Class <em>Base Class</em>}</li>
  * </ul>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage#getSRAComponent()
@@ -39,13 +38,10 @@ public interface SRAComponent extends EObject {
 	org.eclipse.uml2.uml.Class getBase_Class();
 
 	/**
-	 * Sets the value of the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.SRAComponent#getBase_Class
-	 * <em>Base Class</em>}' reference. <!-- begin-user-doc --> <!--
+	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.SRAComponent#getBase_Class <em>Base Class</em>}' reference.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Base Class</em>' reference.
+	 * @param value the new value of the '<em>Base Class</em>' reference.
 	 * @see #getBase_Class()
 	 * @generated
 	 */

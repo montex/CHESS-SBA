@@ -253,6 +253,14 @@
           <element xmi:type="uml:Property" href="CHESSContract.profile.uml#_00wwgG4PEeeSVLWy6DYUDQ"/>
           <layoutConstraint xmi:type="notation:Location" xmi:id="_01H84W4PEeeSVLWy6DYUDQ"/>
         </children>
+        <children xmi:type="notation:Shape" xmi:id="_zd6-EI9REeig0qoZi229IA" type="Property_ClassAttributeLabel">
+          <element xmi:type="uml:Property" href="CHESSContract.profile.uml#_zdVvQI9REeig0qoZi229IA"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_zd6-EY9REeig0qoZi229IA"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_0OvXAI9REeig0qoZi229IA" type="Property_ClassAttributeLabel">
+          <element xmi:type="uml:Property" href="CHESSContract.profile.uml#_0OXjkI9REeig0qoZi229IA"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_0OvXAY9REeig0qoZi229IA"/>
+        </children>
         <styles xmi:type="notation:TitleStyle" xmi:id="_EX9DSKA1EeKdpNE52fDl9w"/>
         <styles xmi:type="notation:SortingStyle" xmi:id="_EX9DSaA1EeKdpNE52fDl9w"/>
         <styles xmi:type="notation:FilteringStyle" xmi:id="_EX9DSqA1EeKdpNE52fDl9w"/>

@@ -306,6 +306,10 @@ public class CHESSEditorUtils {
 	public static void cleanAllDiagrams(){
 		final PapyrusMultiDiagramEditor editor = CHESSEditorUtils.getCHESSEditor();
 
+		if(editor==null){
+			return;
+		}
+		
 		try {
 			if(editor != null){
 				ServicesRegistry serviceRegistry = (ServicesRegistry)editor.getAdapter(ServicesRegistry.class);

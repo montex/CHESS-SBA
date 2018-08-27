@@ -16,7 +16,6 @@ package org.polarsys.chess.contracts.chessextension.propertytab;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -135,7 +134,7 @@ public class BlockPropertyCompositeEditPartSection extends AbstractPropertySecti
 		strongTable.setLayoutData(gd);
 	}
 	
-	@SuppressWarnings("rawtypes")
+	
 	@Override
 	public void setInput(IWorkbenchPart part, ISelection selection) {
 		super.setInput(part, selection);
