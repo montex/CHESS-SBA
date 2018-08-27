@@ -20,12 +20,18 @@ package org.polarsys.chess.contracts.chessextension.dialogs;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -41,6 +47,7 @@ import org.eclipse.uml2.uml.Property;
 import org.polarsys.chess.contracts.chessextension.popup.actions.SetContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.ComponentInstance;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
+import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
@@ -57,32 +64,38 @@ public class SetContractRefinementDialog extends Dialog {
 
 	private ArrayList<ContractRefinementObj> selectedContractRefinementObjs;
 	private ArrayList<Text> rangeTexts = new ArrayList<Text>();
+	private EList<ContractRefinement> refinedByList;
 
 	Table table;
+	Label tableLabel;
 	TableColumn columnCheckBoxes;
 	TableColumn columnContracts;
 	TableColumn columnRanges;
+	Composite composite;
 
-	public SetContractRefinementDialog(Shell shell, Class ownerClass) {
+	public SetContractRefinementDialog(Shell shell, Class ownerClass, EList<ContractRefinement> refineList) {
 		super(shell);
 		this.ownerClass = ownerClass;
+		this.refinedByList = refineList;
 	}
 
-	private void populateRefineList() throws Exception{
+	private void populateRefineList() throws Exception {
 		refineList.clear();
 		for (Property subComponentInstance : EntityUtil.getInstance().getSubComponentsInstances(ownerClass)) {
 
 			String[] range = EntityUtil.getInstance().getAttributeMultiplicity(subComponentInstance);
 
-			if((range[0]!=null)&&(range[1]!=null)&&(range[0].compareTo(range[1])!=0)){
-				throw new Exception("The mulitplicity of the subcomponent "+subComponentInstance.getName()+" should not be a range. Please set a unique value for the upper and lower ranges.");		
+			if ((range[0] != null) && (range[1] != null) && (range[0].compareTo(range[1]) != 0)) {
+				throw new Exception("The multiplicity of the subcomponent " + subComponentInstance.getName()
+						+ " should not be a range. Please set a unique value for the upper and lower ranges.");
 			}
-			
+
 			for (ContractProperty contractProperty : ContractEntityUtil.getInstance()
 					.getContractProperties((Class) subComponentInstance.getType())) {
 
 				if (!contractProperty.getContractType().equals(ContractTypes.STRONG))
 					continue;
+
 				refineList.add(new ContractRefinementObj(subComponentInstance.getName(),
 						contractProperty.getBase_Property().getName(), range[0], range[1]));
 
@@ -99,40 +112,42 @@ public class SetContractRefinementDialog extends Dialog {
 				}
 			}
 		}
-		
-		if(refineList.size()==0){			
-				throw new Exception("No refining contracts available in the sub-components");			
+
+		if (refineList.size() == 0) {
+			throw new Exception("No refining contracts available in the sub-components");
 		}
 	}
-	
-	
-	public void populateRefineListAndCreateDialog() throws Exception {		
-			populateRefineList();
-			super.create();						
+
+	public void populateRefineListAndCreateDialog() throws Exception {
+		populateRefineList();
+		super.create();
+		composite.redraw();
 	}
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
 
+		composite = parent;
 		rangeTexts.clear();
-	
+
 		GridLayout layout = new GridLayout(1, true);
 
-		layout.horizontalSpacing = 4;
-		layout.verticalSpacing = 4;
-		layout.marginBottom = 5;
-		layout.marginTop = 5;
-
 		parent.setLayout(layout);
-		new Label(parent, SWT.NONE).setText("Select Refinements:");
-	
-		table = new Table(parent, SWT.BORDER);
+		
+		tableLabel = new Label(parent, SWT.NONE);
+		tableLabel.setText("Select Refinements:");
+		tableLabel.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
+
+		table = new Table(parent, SWT.NO_SCROLL | SWT.FULL_SELECTION);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		columnCheckBoxes = new TableColumn(table, SWT.NONE);
-		columnContracts = new TableColumn(table, SWT.NONE);
-		columnRanges = new TableColumn(table, SWT.NONE);
-		int minWidth = 0;
+
+		columnCheckBoxes = new TableColumn(table, SWT.FILL);
+		columnContracts = new TableColumn(table, SWT.FILL);
+		columnRanges = new TableColumn(table, SWT.FILL);
+
+		final int minCheckSize = 26;
+		final int minRangeSize = 60;
 
 		int index = 0;
 		for (ContractRefinementObj contractRefinement : refineList) {
@@ -144,7 +159,6 @@ public class SetContractRefinementDialog extends Dialog {
 				@Override
 				public void widgetSelected(SelectionEvent event) {
 					Button btn = (Button) event.getSource();
-					System.out.println(btn.getSelection());
 
 					int selectedIndex = (Integer) (btn.getData());
 
@@ -158,63 +172,97 @@ public class SetContractRefinementDialog extends Dialog {
 
 			checkButton.pack();
 			checkButton.setData(index);
+
 			index++;
-			Point size = checkButton.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 
-			TableEditor editor = new TableEditor(table);
-			editor.minimumWidth = size.x;
-			minWidth = Math.max(size.x, minWidth);
-			editor.minimumHeight = size.y;
-			editor.horizontalAlignment = SWT.LEFT;
-			editor.verticalAlignment = SWT.CENTER;
-
-			String rangeStr = "";
-
-			if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
-				if(contractRefinement.getUpper().compareTo(contractRefinement.getLower())==0){
-					rangeStr = "[" + 1 + ".." + contractRefinement.getUpper() + "]";
-				}else{
-					rangeStr = "[" + contractRefinement.getLower() + ".." + contractRefinement.getUpper() + "]";
-				}
-				
-			}
+			String rangeStr = contractRefinement.getRangeStr(true);
 
 			TableItem contractName = new TableItem(table, SWT.NONE);
 			contractName.setText(1,
 					contractRefinement.getSubComponentName() + rangeStr + "." + contractRefinement.getContractName());
 
+			TableEditor editor = new TableEditor(table);
+			editor.horizontalAlignment = SWT.CENTER;
+			editor.grabHorizontal = true;
+			editor.grabVertical = true;
 			editor.setEditor(checkButton, contractName, 0);
 
-			editor = new TableEditor(table);
-			editor.minimumHeight = size.y;
-			editor.minimumWidth = 50;
-			editor.horizontalAlignment = SWT.LEFT;
-			editor.verticalAlignment = SWT.CENTER;
+			Text selectedRange = new Text(table, SWT.LEFT);
+			rangeTexts.add(selectedRange);
+			updateGUIExistingRefiningContracts(checkButton, contractRefinement, selectedRange);
 
-			Text relectedRange = new Text(table, SWT.LEFT);
-			rangeTexts.add(relectedRange);
 			if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
-				if(contractRefinement.getUpper().compareTo(contractRefinement.getLower())==0){					
-					relectedRange.setText(1 + ".." + contractRefinement.getUpper());
-				}else{
-					relectedRange.setText(contractRefinement.getLower() + ".." + contractRefinement.getUpper());	
+				if (selectedRange.getText().compareTo("") == 0) {
+					String rangeStrToEdit = contractRefinement.getRangeStr(false);
+					selectedRange.setText(rangeStrToEdit);
 				}
-				
 			} else {
-				relectedRange.setEnabled(false);
+				selectedRange.setEnabled(false);
 			}
-			editor.setEditor(relectedRange, contractName, 2);
+
+			editor = new TableEditor(table);
+			editor.minimumWidth = 100;
+			editor.horizontalAlignment = SWT.LEFT;
+			editor.grabHorizontal = true;
+			editor.grabVertical = true;
+			editor.setEditor(selectedRange, contractName, 2);
 
 		}
+		
 		columnCheckBoxes.pack();
+		columnCheckBoxes.setWidth(Math.max(columnCheckBoxes.getWidth(), minCheckSize));
 		columnContracts.setText("contract");
 		columnContracts.pack();
-		columnContracts.setWidth(columnContracts.getWidth() + minWidth);
 		columnRanges.setText("range");
 		columnRanges.pack();
-		columnRanges.setWidth(columnRanges.getWidth() + minWidth);
+		columnRanges.setWidth(Math.max(columnRanges.getWidth(), minRangeSize));
+
+		final float columnRatio = (float) columnContracts.getWidth() / columnRanges.getWidth();
+		
+		composite.addControlListener(new ControlAdapter() {
+			public void controlResized(ControlEvent e) {
+				refreshTableSize(columnRatio);
+			}
+		});
+		
+		GridData tableGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		tableGridData.heightHint = table.getItemHeight() * (table.getItemCount() + 1) + 10;
+		table.setLayoutData(tableGridData);
+		composite.redraw();
 
 		return parent;
+	}
+
+	private void refreshTableSize(float columnRatio){
+		org.eclipse.swt.graphics.Rectangle area = composite.getClientArea();
+
+		if (area.width != table.getSize().x) {
+			columnRanges.setWidth(Math.round((area.width - columnCheckBoxes.getWidth()) / (columnRatio + 1)));
+			columnContracts.setWidth(area.width - columnCheckBoxes.getWidth() - columnRanges.getWidth());
+		}
+	}
+	
+	private void updateGUIExistingRefiningContracts(Button checkButton, ContractRefinementObj contractRefinement,
+			Text selectedRange) {
+
+		for (ContractRefinement contractRef : refinedByList) {
+
+			if ((contractRef.getInstance().getName().compareTo(contractRefinement.getSubComponentName()) == 0)
+					&& (contractRef.getContract().getBase_Property().getName()
+							.compareTo(contractRefinement.getContractName()) == 0)) {
+				checkButton.setSelection(true);
+				int selectedIndex = (Integer) (checkButton.getData());
+				selectedContractRefinementIndexes.add(selectedIndex);
+
+				if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
+					if (selectedRange.getText().compareTo("") != 0) {
+						selectedRange.setText(selectedRange.getText() + ",");
+					}
+					selectedRange.setText(selectedRange.getText() + contractRef.getLowerIndexOfInstance() + ".."
+							+ contractRef.getUpperIndexOfInstance());
+				}
+			}
+		}
 	}
 
 	@Override
@@ -225,9 +273,31 @@ public class SetContractRefinementDialog extends Dialog {
 
 	@Override
 	protected boolean isResizable() {
-		return false;
+		return true;
 	}
 
+	@Override
+	protected Control createButtonBar(Composite parent) {
+		Composite composite = new Composite(parent, SWT.NONE);
+		// create a layout with spacing and margins appropriate for the font
+		// size.
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 0; // this is incremented by createButton
+		layout.makeColumnsEqualWidth = true;
+		layout.marginWidth = convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_MARGIN);
+		layout.marginHeight = convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_MARGIN);
+		layout.horizontalSpacing = convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING);
+		layout.verticalSpacing = convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_SPACING);
+		composite.setLayout(layout);
+		GridData data = new GridData(SWT.END,SWT.END,true,false);
+		composite.setLayoutData(data);
+		composite.setFont(parent.getFont());
+
+		// Add the buttons to the button bar.
+		createButtonsForButtonBar(composite);
+		return composite;
+	}
+	
 	@Override
 	protected void okPressed() {
 
@@ -257,7 +327,7 @@ public class SetContractRefinementDialog extends Dialog {
 
 		}
 
-			super.okPressed();
+		super.okPressed();
 	}
 
 	private String[][] extractRanges(String text) throws Exception {
@@ -271,12 +341,11 @@ public class SetContractRefinementDialog extends Dialog {
 		String[][] res = new String[ranges.length][2];
 
 		for (int i = 0; i < ranges.length; i++) {
-			System.out.println("ranges[" + i + "]= " + ranges[i]);
 			String[] uppLowRange = ranges[i].split("\\.\\.");
 			if (uppLowRange.length != 2) {
 				throw new Exception(RANGE_EXCEPTION);
 			}
-		
+
 			res[i][0] = uppLowRange[0];
 			res[i][1] = uppLowRange[1];
 		}
@@ -286,8 +355,6 @@ public class SetContractRefinementDialog extends Dialog {
 	public ArrayList<ContractRefinementObj> getSelected() {
 		return selectedContractRefinementObjs;
 	}
-
-
 
 	public class ContractRefinementObj {
 		String subComponentName;
@@ -325,6 +392,26 @@ public class SetContractRefinementDialog extends Dialog {
 				optRange = lower + "_" + upper + ".";
 			}
 			return subComponentName + "." + optRange + contractName;
+		}
+
+		public String getRangeStr(boolean withBrackets) {
+			String res;
+			if (getLower() != null && getUpper() != null) {
+				if (getUpper().compareTo(getLower()) == 0) {
+					res = 1 + ".." + getUpper();
+				} else {
+					res = getLower() + ".." + getUpper();
+				}
+
+				if (withBrackets) {
+					return "[" + res + "]";
+				} else {
+					return res;
+				}
+
+			}
+
+			return "";
 		}
 
 	}

@@ -71,18 +71,21 @@ public class SetContractRefinement implements IObjectActionDelegate {
 				if (contrPropStereo == null) {
 					throw new Exception("Select the ContractProperty element to set the contract refinement");
 				}
-				Object temp = contrProp.getValue(contrPropStereo, "RefinedBy");
-				if (temp instanceof EList<?>) {
+				Object refinedByList = contrProp.getValue(contrPropStereo, "RefinedBy");
+				if (refinedByList instanceof EList<?>) {
 					@SuppressWarnings("unchecked")
-					final EList<ContractRefinement> refineList = (EList<ContractRefinement>) temp;
+					final EList<ContractRefinement> refineList = (EList<ContractRefinement>) refinedByList;
+					
 					final Class ownerClass = (Class) contrProp.getOwner();
-					final SetContractRefinementDialog dialog = new SetContractRefinementDialog(shell, ownerClass);
+					final SetContractRefinementDialog dialog = new SetContractRefinementDialog(shell, ownerClass,refineList);
 					dialog.populateRefineListAndCreateDialog();
 					if (dialog.open() == Window.OK) {
+						editdomain.getCommandStack().execute(new RecordingCommand(editdomain) {
+							protected void doExecute() {	
+						refineList.clear();
+						
 						if ((dialog.getSelected() != null)) {
-
-							editdomain.getCommandStack().execute(new RecordingCommand(editdomain) {
-								protected void doExecute() {
+													
 									for (SetContractRefinementDialog.ContractRefinementObj currContractRefinementObj : dialog
 											.getSelected()) {
 
@@ -118,6 +121,7 @@ public class SetContractRefinement implements IObjectActionDelegate {
 
 									}
 								}
+						}
 							});
 						}
 					}
@@ -125,7 +129,7 @@ public class SetContractRefinement implements IObjectActionDelegate {
 				} else {
 					// do nothing
 				}
-			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			DialogUtil.getInstance().showMessage_ExceptionError(e);
