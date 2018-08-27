@@ -21,6 +21,10 @@
                   commandId="org.polarsys.chess.paramArchConfigurator.commands.InstantiateParamArchAsOssFileCommand"
                   style="push">
             </command>
+            <command
+                  commandId="org.polarsys.chess.paramArchConfigurator.commands.InstantiateArchitecture"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -31,6 +35,14 @@
             id="org.polarsys.chess.paramArchConfigurator.commands.InstantiateParamArchAsOssFileCommand"
             name="Instantiate the parameterized architecture as .oss file">
       </command>
+      <command
+            defaultHandler="org.polarsys.chess.paramArchConfigurator.commands.InstantiateArchitectureViaWizard"
+            id="org.polarsys.chess.paramArchConfigurator.commands.InstantiateArchitecture"
+            name="Instantiate the parameterized architecture">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
    </extension>
 
 </plugin>
