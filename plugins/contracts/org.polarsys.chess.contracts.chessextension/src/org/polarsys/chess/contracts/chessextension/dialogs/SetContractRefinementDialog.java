@@ -80,7 +80,7 @@ public class SetContractRefinementDialog extends Dialog {
 	}
 
 	private void populateRefineList() throws Exception {
-refineList.clear();
+		refineList.clear();
 		for (Property subComponentInstance : EntityUtil.getInstance().getSubComponentsInstances(ownerClass)) {
 
 			String[] range = EntityUtil.getInstance().getAttributeMultiplicity(subComponentInstance);
@@ -132,14 +132,8 @@ refineList.clear();
 
 		GridLayout layout = new GridLayout(1, true);
 
-		layout.horizontalSpacing = 4;
-		layout.verticalSpacing = 4;
-		layout.marginBottom = 20;
-		layout.marginTop = 20;
-
 		parent.setLayout(layout);
-		// parent.setLayoutData(new GridData(SWT.FILL, SWT.NON, true, true));
-
+		
 		tableLabel = new Label(parent, SWT.NONE);
 		tableLabel.setText("Select Refinements:");
 		tableLabel.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
@@ -147,14 +141,13 @@ refineList.clear();
 		table = new Table(parent, SWT.NO_SCROLL | SWT.FULL_SELECTION);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		columnCheckBoxes = new TableColumn(table, SWT.FILL);
 		columnContracts = new TableColumn(table, SWT.FILL);
 		columnRanges = new TableColumn(table, SWT.FILL);
 
-		int minWidth = 10;
-		int minHeight= 10;
+		final int minCheckSize = 26;
+		final int minRangeSize = 60;
 
 		int index = 0;
 		for (ContractRefinementObj contractRefinement : refineList) {
@@ -181,7 +174,6 @@ refineList.clear();
 			checkButton.setData(index);
 
 			index++;
-			Point size = checkButton.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 
 			String rangeStr = contractRefinement.getRangeStr(true);
 
@@ -190,10 +182,6 @@ refineList.clear();
 					contractRefinement.getSubComponentName() + rangeStr + "." + contractRefinement.getContractName());
 
 			TableEditor editor = new TableEditor(table);
-			minWidth = Math.max(size.x, minWidth);
-			minHeight = Math.max(size.y, minHeight);
-			editor.minimumWidth = minWidth;			
-			editor.minimumHeight = minHeight;
 			editor.horizontalAlignment = SWT.CENTER;
 			editor.grabHorizontal = true;
 			editor.grabVertical = true;
@@ -213,7 +201,6 @@ refineList.clear();
 			}
 
 			editor = new TableEditor(table);
-			editor.minimumHeight = minHeight;
 			editor.minimumWidth = 100;
 			editor.horizontalAlignment = SWT.LEFT;
 			editor.grabHorizontal = true;
@@ -221,88 +208,61 @@ refineList.clear();
 			editor.setEditor(selectedRange, contractName, 2);
 
 		}
-
-		columnCheckBoxes.setText("    ");
+		
 		columnCheckBoxes.pack();
+		columnCheckBoxes.setWidth(Math.max(columnCheckBoxes.getWidth(), minCheckSize));
 		columnContracts.setText("contract");
 		columnContracts.pack();
-		columnContracts.setWidth(columnContracts.getWidth() + minWidth);
 		columnRanges.setText("range");
 		columnRanges.pack();
-		columnRanges.setWidth(columnRanges.getWidth() + minWidth);
+		columnRanges.setWidth(Math.max(columnRanges.getWidth(), minRangeSize));
 
+		final float columnRatio = (float) columnContracts.getWidth() / columnRanges.getWidth();
+		
 		composite.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
-				refreshTableSize();
+				refreshTableSize(columnRatio);
 			}
 		});
-
+		
+		GridData tableGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		tableGridData.heightHint = table.getItemHeight() * (table.getItemCount() + 1) + 10;
+		table.setLayoutData(tableGridData);
 		composite.redraw();
-	
+
 		return parent;
 	}
 
-	private void refreshTableSize(){
-System.out.println("refreshTableSize");
+	private void refreshTableSize(float columnRatio){
 		org.eclipse.swt.graphics.Rectangle area = composite.getClientArea();
-		Point preferredSize = table.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		int width = area.width - 2 * table.getBorderWidth();
-		if (preferredSize.y > area.height + table.getHeaderHeight()) {
-			// Subtract the scrollbar width from the total column width
-			// if a vertical scrollbar will be required
-			Point vBarSize = table.getVerticalBar().getSize();
-			width -= vBarSize.x;
-		}
-		Point oldSize = table.getSize();
-		if (oldSize.x > area.width) {
-			// table is getting smaller so make the columns
-			// smaller first and then resize the table to
-			// match the client area width
-			columnContracts.setWidth(width /3 * 2);
-			columnRanges.setWidth(width - columnContracts.getWidth());
-			table.setSize(area.width, area.height);
-		} else {
-			// table is getting bigger so make the table
-			// bigger first and then make the columns wider
-			// to match the client area width
-			table.setSize(area.width, area.height);
-			columnContracts.setWidth(width /3 * 2);
-			columnRanges.setWidth(width - columnContracts.getWidth());
-		}
 
-	
+		if (area.width != table.getSize().x) {
+			columnRanges.setWidth(Math.round((area.width - columnCheckBoxes.getWidth()) / (columnRatio + 1)));
+			columnContracts.setWidth(area.width - columnCheckBoxes.getWidth() - columnRanges.getWidth());
+		}
 	}
-	
 	
 	private void updateGUIExistingRefiningContracts(Button checkButton, ContractRefinementObj contractRefinement,
 			Text selectedRange) {
-
-		System.out.println("in updateGUIExistingRefiningContracts: " + selectedRange.getText());
 
 		for (ContractRefinement contractRef : refinedByList) {
 
 			if ((contractRef.getInstance().getName().compareTo(contractRefinement.getSubComponentName()) == 0)
 					&& (contractRef.getContract().getBase_Property().getName()
 							.compareTo(contractRefinement.getContractName()) == 0)) {
-				System.out.println("setEnabled");
 				checkButton.setSelection(true);
 				int selectedIndex = (Integer) (checkButton.getData());
 				selectedContractRefinementIndexes.add(selectedIndex);
 
 				if (contractRefinement.getLower() != null && contractRefinement.getUpper() != null) {
-					System.out.println("ranges != null. selectedRange.getText(): -" + selectedRange.getText() + "-");
 					if (selectedRange.getText().compareTo("") != 0) {
-						System.out.println("selectedRange.getText().compareTo(\"\")!=0. selectedRange.getText(): -"
-								+ selectedRange.getText() + "-");
 						selectedRange.setText(selectedRange.getText() + ",");
 					}
 					selectedRange.setText(selectedRange.getText() + contractRef.getLowerIndexOfInstance() + ".."
 							+ contractRef.getUpperIndexOfInstance());
 				}
 			}
-
 		}
-
 	}
 
 	@Override
@@ -329,7 +289,7 @@ System.out.println("refreshTableSize");
 		layout.horizontalSpacing = convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING);
 		layout.verticalSpacing = convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_SPACING);
 		composite.setLayout(layout);
-		GridData data = new GridData(SWT.END,SWT.END,true,true);
+		GridData data = new GridData(SWT.END,SWT.END,true,false);
 		composite.setLayoutData(data);
 		composite.setFont(parent.getFont());
 
@@ -381,7 +341,6 @@ System.out.println("refreshTableSize");
 		String[][] res = new String[ranges.length][2];
 
 		for (int i = 0; i < ranges.length; i++) {
-			System.out.println("ranges[" + i + "]= " + ranges[i]);
 			String[] uppLowRange = ranges[i].split("\\.\\.");
 			if (uppLowRange.length != 2) {
 				throw new Exception(RANGE_EXCEPTION);
@@ -436,9 +395,6 @@ System.out.println("refreshTableSize");
 		}
 
 		public String getRangeStr(boolean withBrackets) {
-
-			System.out.println("in getRangeStr. lower upper: "+lower+" , "+upper);
-			
 			String res;
 			if (getLower() != null && getUpper() != null) {
 				if (getUpper().compareTo(getLower()) == 0) {
