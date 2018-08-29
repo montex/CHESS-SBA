@@ -1147,6 +1147,12 @@ Instance and instanceSpec attribute are mutually exclusive</body>
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_J8hNYG4QEeeSVLWy6DYUDQ"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_J8q-YG4QEeeSVLWy6DYUDQ" value="1"/>
       </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_zdVvQI9REeig0qoZi229IA" name="UpperIndexOfInstance">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_0OXjkI9REeig0qoZi229IA" name="LowerIndexOfInstance">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Extension" xmi:id="_HvPIIKA1EeKdpNE52fDl9w" name="E_ContractRefinement_DataType1" memberEnd="_HvPIIaA1EeKdpNE52fDl9w _HvOhEKA1EeKdpNE52fDl9w">
       <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_HvPIIaA1EeKdpNE52fDl9w" name="extension_ContractRefinement" type="_EXS78KA1EeKdpNE52fDl9w" aggregation="composite" association="_HvPIIKA1EeKdpNE52fDl9w"/>

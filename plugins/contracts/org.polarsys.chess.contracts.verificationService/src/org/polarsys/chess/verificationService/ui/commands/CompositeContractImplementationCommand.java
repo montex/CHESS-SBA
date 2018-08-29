@@ -16,10 +16,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.uml2.uml.Class;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
+import org.polarsys.chess.service.core.model.UMLStateMachineModel;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
-import org.polarsys.chess.smvExporter.ui.services.SmvExportServiceUI;
 
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService;
+import eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv.ui.services.SmvExportServiceUI;
 import eu.fbk.eclipse.standardtools.nuXmvService.ui.utils.NuXmvDirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
@@ -29,7 +30,7 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 
 	private OCRAExecService ocraExecService = OCRAExecService.getInstance(ChessSystemModel.getInstance());
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
-	private SmvExportServiceUI smvExportService = SmvExportServiceUI.getInstance();
+	private SmvExportServiceUI smvExportService = SmvExportServiceUI.getInstance(ChessSystemModel.getInstance(), UMLStateMachineModel.getInstance());
 	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
 	private NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 

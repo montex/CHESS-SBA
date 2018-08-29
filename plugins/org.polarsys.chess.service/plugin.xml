@@ -426,5 +426,78 @@
          </toolbar>
       </menuContribution>
    </extension>-->
-
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <commonFilter
+            activeByDefault="false"
+            description="Fliters out all the UML Abstraction elements from the Model Explorer"
+            id="org.polarsys.chess.service.filters.abstraction"
+            name="All Abstraction"
+            visibleInUI="true">
+         <filterExpression>
+            <adapt
+              type="org.eclipse.emf.ecore.EObject">
+                <instanceof
+                	value="org.eclipse.uml2.uml.Abstraction">
+           		</instanceof>
+            </adapt>
+         </filterExpression>
+      </commonFilter>
+      <commonFilter
+            activeByDefault="false"
+            description="Fliters out all the UML Association elements from the Model Explorer"
+            id="org.polarsys.chess.service.filters.association"
+            name="All Associations"
+            visibleInUI="true">
+         <filterExpression>
+            <adapt
+              type="org.eclipse.emf.ecore.EObject">
+                <instanceof
+                	value="org.eclipse.uml2.uml.Association">
+           		</instanceof>
+            </adapt>
+         </filterExpression>
+      </commonFilter>
+      <commonFilter
+            activeByDefault="false"
+            description="Fliters out all the UML Dependency elements from the Model Explorer"
+            id="org.polarsys.chess.service.filters.dependency"
+            name="All Dependencies"
+            visibleInUI="true">
+         <filterExpression>
+            <adapt
+              type="org.eclipse.emf.ecore.EObject">
+                <instanceof
+                	value="org.eclipse.uml2.uml.Dependency">
+           		</instanceof>
+            </adapt>
+         </filterExpression>
+      </commonFilter>
+      <commonFilter
+            activeByDefault="false"
+            description="Fliters out all the UML Relationship elements from the Model Explorer"
+            id="org.polarsys.chess.service.filters.all"
+            name="All Relationships"
+            visibleInUI="true">
+         <filterExpression>
+            <adapt
+              type="org.eclipse.emf.ecore.EObject">
+                <instanceof
+                	value="org.eclipse.uml2.uml.Relationship">
+           		</instanceof>
+            </adapt>
+         </filterExpression>
+      </commonFilter>
+   </extension>
+      <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerContentBinding
+            viewerId="org.eclipse.papyrus.views.modelexplorer.modelexplorer">
+         <includes>
+            <contentExtension
+                  pattern="org.polarsys.chess.service.filters.*">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
 </plugin>

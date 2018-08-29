@@ -59,7 +59,7 @@ public class PaletteManager {
 		try {
 					
 			IEditorPart ep = editor.getActiveEditor();
-			if (ep == null)
+			if ((ep == null)||(ep.getSite() == null)||(ep.getSite().getSelectionProvider() == null))
 				return;
 			ISelection selection = ep.getSite().getSelectionProvider().getSelection();
 			List<Object> selections = lookupSelectedElements(selection);

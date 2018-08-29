@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Composite
-	xmlns:ppel="clr-namespace:org.eclipse.papyrus.views.properties.widgets.layout"
-	xmlns:ppe="clr-namespace:org.eclipse.papyrus.views.properties.widgets"
-	xmlns:x="http://www.eclipse.org/xwt" xmlns:j="clr-namespace:java.lang"
-	xmlns="http://www.eclipse.org/xwt/presentation">
+<Composite xmlns="http://www.eclipse.org/xwt/presentation"
+	xmlns:j="clr-namespace:java.lang" xmlns:ppe="clr-namespace:org.eclipse.papyrus.infra.properties.ui.widgets"
+	xmlns:ppel="clr-namespace:org.eclipse.papyrus.infra.properties.ui.widgets.layout"
+	xmlns:x="http://www.eclipse.org/xwt">
 	<Composite.layout>
 		<ppel:PropertiesLayout></ppel:PropertiesLayout>
 	</Composite.layout>
@@ -15,14 +14,5 @@
 			property="CHESS:Dependability:DependableComponent:Propagation:prob"></ppe:ReferenceDialog>
 		<ppe:ReferenceDialog input="{Binding}"
 			property="CHESS:Dependability:DependableComponent:Propagation:delay"></ppe:ReferenceDialog>
-		<ppe:ReferenceDialog input="{Binding}"
-			property="CHESS:Dependability:DependableComponent:Propagation:weight"></ppe:ReferenceDialog>
-	</Composite>
-	<Composite>
-		<Composite.layout>
-			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
-		</Composite.layout>
-		<ppe:MultiString input="{Binding}"
-			property="CHESS:Dependability:DependableComponent:Propagation:transfFunct"></ppe:MultiString>
 	</Composite>
 </Composite>

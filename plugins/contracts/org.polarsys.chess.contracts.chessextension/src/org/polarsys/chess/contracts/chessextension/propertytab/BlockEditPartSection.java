@@ -258,7 +258,7 @@ public class BlockEditPartSection extends AbstractPropertySection{
 				
 	}
 
-	@SuppressWarnings({ "rawtypes" })
+	
 	@Override
 	public void setInput(IWorkbenchPart part, ISelection selection) {
 		super.setInput(part, selection);

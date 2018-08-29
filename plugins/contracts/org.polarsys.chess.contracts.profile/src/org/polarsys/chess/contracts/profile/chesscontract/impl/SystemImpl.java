@@ -17,7 +17,6 @@ import org.polarsys.chess.contracts.profile.chesscontract.CHESSContractPackage;
 public class SystemImpl extends BlockImpl implements org.polarsys.chess.contracts.profile.chesscontract.System {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected SystemImpl() {
@@ -26,7 +25,6 @@ public class SystemImpl extends BlockImpl implements org.polarsys.chess.contract
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override

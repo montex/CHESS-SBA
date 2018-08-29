@@ -1,22 +1,23 @@
-/*******************************************************************************
- *
- *  * Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
-
+/**
+ * 
+ *   Copyright (c) 2016 Budapest University of Technology and Economics, Intecs
+ *  
+ *      
+ *   All rights reserved. This program and the accompanying materials
+ *   are made available under the terms of the Eclipse Public License v1.0
+ *   which accompanies this distribution, and is available at
+ *   http://www.eclipse.org/legal/epl-v10.html
+ *  
+ *  
+ */
 package org.polarsys.chess.instance.view;
 
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.incquery.runtime.api.IPatternMatch;
-import org.eclipse.incquery.runtime.api.impl.BasePatternMatch;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import java.util.Objects;
+import org.eclipse.viatra.query.runtime.api.IPatternMatch;
+import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 import org.polarsys.chess.instance.view.util.SwSystemCHGaResourcePlatformQuerySpecification;
 
 /**
@@ -29,7 +30,7 @@ import org.polarsys.chess.instance.view.util.SwSystemCHGaResourcePlatformQuerySp
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
  * @see SwSystemCHGaResourcePlatformMatcher
- * @see SwSystemCHGaResourcePlatformProcessor
+ *  @see SwSystemCHGaResourcePlatformProcessor
  * 
  */
 @SuppressWarnings("all")
@@ -56,8 +57,8 @@ public abstract class SwSystemCHGaResourcePlatformMatch extends BasePatternMatch
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("instSpec".equals(parameterName) ) {
-    	this.fInstSpec = (org.eclipse.uml2.uml.Package) newValue;
-    	return true;
+        this.fInstSpec = (org.eclipse.uml2.uml.Package) newValue;
+        return true;
     }
     return false;
   }
@@ -90,48 +91,42 @@ public abstract class SwSystemCHGaResourcePlatformMatch extends BasePatternMatch
   @Override
   public String prettyPrint() {
     StringBuilder result = new StringBuilder();
-    result.append("\"instSpec\"=" + prettyPrintValue(fInstSpec)
-    );
+    result.append("\"instSpec\"=" + prettyPrintValue(fInstSpec));
     return result.toString();
   }
   
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((fInstSpec == null) ? 0 : fInstSpec.hashCode());
-    return result;
+    return Objects.hash(fInstSpec);
   }
   
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
-    	return true;
-    if (!(obj instanceof SwSystemCHGaResourcePlatformMatch)) { // this should be infrequent
-    	if (obj == null) {
-    		return false;
-    	}
-    	if (!(obj instanceof IPatternMatch)) {
-    		return false;
-    	}
-    	IPatternMatch otherSig  = (IPatternMatch) obj;
-    	if (!specification().equals(otherSig.specification()))
-    		return false;
-    	return Arrays.deepEquals(toArray(), otherSig.toArray());
+        return true;
+    if (obj == null) {
+        return false;
     }
-    SwSystemCHGaResourcePlatformMatch other = (SwSystemCHGaResourcePlatformMatch) obj;
-    if (fInstSpec == null) {if (other.fInstSpec != null) return false;}
-    else if (!fInstSpec.equals(other.fInstSpec)) return false;
-    return true;
+    if ((obj instanceof SwSystemCHGaResourcePlatformMatch)) {
+        SwSystemCHGaResourcePlatformMatch other = (SwSystemCHGaResourcePlatformMatch) obj;
+        return Objects.equals(fInstSpec, other.fInstSpec);
+    } else {
+        // this should be infrequent
+        if (!(obj instanceof IPatternMatch)) {
+            return false;
+        }
+        IPatternMatch otherSig  = (IPatternMatch) obj;
+        return Objects.equals(specification(), otherSig.specification()) && Arrays.deepEquals(toArray(), otherSig.toArray());
+    }
   }
   
   @Override
   public SwSystemCHGaResourcePlatformQuerySpecification specification() {
     try {
-    	return SwSystemCHGaResourcePlatformQuerySpecification.instance();
-    } catch (IncQueryException ex) {
-     	// This cannot happen, as the match object can only be instantiated if the query specification exists
-     	throw new IllegalStateException (ex);
+        return SwSystemCHGaResourcePlatformQuerySpecification.instance();
+    } catch (ViatraQueryException ex) {
+         // This cannot happen, as the match object can only be instantiated if the query specification exists
+         throw new IllegalStateException (ex);
     }
   }
   

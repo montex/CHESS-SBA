@@ -172,7 +172,7 @@ public class ChessElementsUtil {
 			HashMap<String, Boolean> mapFormalPropertiesToKeep) {
 
 		// Update the formal property if needed
-		entityUtil.updateUmlConstraint(umlConstraint, updatedText);
+		entityUtil.updateUmlConstraint(umlConstraint, updatedText, "OCRA");
 
 		// Set the flag to signal the formal property is
 		// still used
@@ -187,7 +187,7 @@ public class ChessElementsUtil {
 
 		// If the expression is different, save it, otherwise go on
 		if (!assertionText.equals(formalPropertyText)) {
-			entityUtil.setTextInUMLConstraint(umlConstraint, assertionText);
+			entityUtil.setTextInUMLConstraint(umlConstraint, assertionText, "OCRA");
 		}
 
 		// Set the flag to signal the formal property is still used
@@ -230,14 +230,14 @@ public class ChessElementsUtil {
 			if (contractAssumption.getBase_Constraint().getOwner() == contract.getBase_Class()) {
 			
 				// The assumption is the same, update it if needed				
-				entityUtil.updateUmlConstraint(contractAssumption.getBase_Constraint(), ossAssumptionText);
+				entityUtil.updateUmlConstraint(contractAssumption.getBase_Constraint(), ossAssumptionText, "OCRA");
 			} else {
 				
 				// The assumption is a block formal property, cannot be modified or removed
 				// A new one has to be created
 				contractEntityUtil.createAssumptionToUmlContract(umlContract);
 				final FormalProperty assumptionFormalProperty = contractEntityUtil.getAssumeFromUmlContract(umlContract);
-				entityUtil.setTextInUMLConstraint(assumptionFormalProperty.getBase_Constraint(), ossAssumptionText);
+				entityUtil.setTextInUMLConstraint(assumptionFormalProperty.getBase_Constraint(), ossAssumptionText, "OCRA");
 			}			
 		}
 		
@@ -268,14 +268,14 @@ public class ChessElementsUtil {
 			if (contractGuarantee.getBase_Constraint().getOwner() == contract.getBase_Class()) {
 			
 				// The guarantee is the same, update it if needed
-				entityUtil.updateUmlConstraint(contractGuarantee.getBase_Constraint(), ossGuaranteeText);
+				entityUtil.updateUmlConstraint(contractGuarantee.getBase_Constraint(), ossGuaranteeText, "OCRA");
 			} else {
 				
 				// The guarantee is a block formal property, cannot be modified or removed
 				// A new one has to be created
 				contractEntityUtil.createGuaranteeToUmlContract(umlContract);
 				final FormalProperty guaranteeFormalProperty = contractEntityUtil.getGuaranteeFromUmlContract(umlContract);
-				entityUtil.setTextInUMLConstraint(guaranteeFormalProperty.getBase_Constraint(), ossGuaranteeText);
+				entityUtil.setTextInUMLConstraint(guaranteeFormalProperty.getBase_Constraint(), ossGuaranteeText, "OCRA");
 			}			
 		}
 

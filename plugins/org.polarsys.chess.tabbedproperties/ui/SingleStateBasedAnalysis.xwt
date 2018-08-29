@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Composite
-	xmlns:ppel="clr-namespace:org.eclipse.papyrus.views.properties.widgets.layout"
-	xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt"
-	xmlns:ppe="clr-namespace:org.eclipse.papyrus.views.properties.widgets"
-	xmlns:j="clr-namespace:java.lang">
+<Composite xmlns="http://www.eclipse.org/xwt/presentation"
+	xmlns:j="clr-namespace:java.lang" xmlns:ppe="clr-namespace:org.eclipse.papyrus.infra.properties.ui.widgets"
+	xmlns:ppel="clr-namespace:org.eclipse.papyrus.infra.properties.ui.widgets.layout"
+	xmlns:x="http://www.eclipse.org/xwt">
 	<Composite.layout>
 		<ppel:PropertiesLayout></ppel:PropertiesLayout>
 	</Composite.layout>
@@ -30,10 +29,18 @@
 			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
 		</Composite.layout>
 		<ppe:MultiReference input="{Binding}"
+			property="MARTE:MARTE_Foundations:CoreElements:Configuration:mode"></ppe:MultiReference>
+		<ppe:MultiReference input="{Binding}"
 			property="CHESS:Dependability:StateBased:StateBasedAnalysis:StateBasedAnalysis:targetDepComponent"></ppe:MultiReference>
 		<ppe:MultiReference input="{Binding}"
 			property="CHESS:Dependability:StateBased:StateBasedAnalysis:StateBasedAnalysis:targetPort"></ppe:MultiReference>
 		<ppe:MultiReference input="{Binding}"
 			property="CHESS:Dependability:StateBased:StateBasedAnalysis:StateBasedAnalysis:initialConditions"></ppe:MultiReference>
+		<ppe:MultiReference input="{Binding}"
+			property="MARTE:MARTE_AnalysisModel:GQAM:GaAnalysisContext:context"></ppe:MultiReference>
+		<ppe:MultiReference input="{Binding}"
+			property="MARTE:MARTE_AnalysisModel:GQAM:GaAnalysisContext:workload"></ppe:MultiReference>
+		<ppe:MultiReference input="{Binding}"
+			property="MARTE:MARTE_AnalysisModel:GQAM:GaAnalysisContext:platform"></ppe:MultiReference>
 	</Composite>
 </Composite>

@@ -15,14 +15,16 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.uml2.uml.Class;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
+import org.polarsys.chess.service.core.model.UMLStateMachineModel;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
-import org.polarsys.chess.smvExporter.ui.services.SmvExportServiceUI;
 
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService;
+import eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv.ui.services.SmvExportServiceUI;
 import eu.fbk.eclipse.standardtools.nuXmvService.ui.services.NuXmvExecService;
 import eu.fbk.eclipse.standardtools.nuXmvService.ui.utils.NuXmvDirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
@@ -38,7 +40,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 	private static final Logger logger = Logger.getLogger(ModelCheckingCommand.class);
 
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
-	private SmvExportServiceUI smvExportService = SmvExportServiceUI.getInstance();
+	private SmvExportServiceUI smvExportService = SmvExportServiceUI.getInstance(ChessSystemModel.getInstance(), UMLStateMachineModel.getInstance());
 	private NuXmvExecService nuXmvExecService = NuXmvExecService.getInstance();
 	private static NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 	private OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
@@ -113,7 +115,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 		// CommandBuilder.build("org.polarsys.chess.verificationService.commands.TestCommand2");
 		// checkContractImplementation.execute();
 
-		if (smvExportService.isLeafComponent(umlSelectedComponent)) {
+		if (isLeafComponent(umlSelectedComponent)) {
 			generatedSmvFilePath = smvExportService.exportSingleSmv(umlSelectedComponent, showPopups, smvFileDirectory,
 					monitor);
 		} else {
@@ -136,4 +138,10 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 		logger.debug("executeModelChecking done");
 	}
 
+	
+	
+	private boolean isLeafComponent(Class umlSelectedComponent) {
+		EList<org.eclipse.uml2.uml.Property> subComponents = ChessSystemModel.getInstance().getSubComponentsInstances(umlSelectedComponent);
+		return ((subComponents == null) || (subComponents.size() == 0));
+	}
 }

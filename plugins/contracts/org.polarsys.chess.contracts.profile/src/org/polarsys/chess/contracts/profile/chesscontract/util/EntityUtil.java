@@ -740,13 +740,13 @@ public class EntityUtil {
 
 	}
 
-	public void updateUmlConstraint(Constraint umlConstraint, String updatedText) {
+	public void updateUmlConstraint(Constraint umlConstraint, String updatedText, String language) {
 		final String formalPropertyText = getConstraintBodyStr(umlConstraint);
 
 		// If the expression is different, save it,
 		// otherwise go on
 		if (!updatedText.equals(formalPropertyText)) {
-			setTextInUMLConstraint(umlConstraint, updatedText);
+			setTextInUMLConstraint(umlConstraint, updatedText,language);
 		}
 	}
 
@@ -1324,7 +1324,7 @@ public class EntityUtil {
 				&& UMLUtil.getAppliedStereotype(umlElement, FAULTY_STATE_MACHINE, false) == null);
 	}
 
-	public void saveConstraint(final Constraint constraint, final String text) {
+	/*public void saveConstraint(final Constraint constraint, final String text) {
 
 		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(constraint);
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
@@ -1337,7 +1337,7 @@ public class EntityUtil {
 				constraint.setSpecification(litString);
 			}
 		});
-	}
+	}*/
 
 	public Element getOwner(Element umlElement) {
 		return umlElement.getOwner();
@@ -2382,39 +2382,80 @@ public class EntityUtil {
 		final ValueSpecification vs = umlConstraint.createSpecification("ConstraintSpec", null, newLs.eClass());
 		umlConstraint.setSpecification(vs);
 
-		setTextInUMLConstraint(umlConstraint, assertionText);
+		setLiteralStringTextInUMLConstraint(umlConstraint, assertionText);
 
 		return umlConstraint;
 	}
 
-	public void setTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText) {
+	/**
+	 * Create a private formal property
+	 * 
+	 * @param owner
+	 *            the owner of the property
+	 * @param assertionName
+	 *            the name of the formal property
+	 * @param assertionText
+	 *            the text of the formal property
+	 * @return the newly created formal property
+	 */
+	public Constraint createRefinementFormalProperty(Class owner, String assertionName, String assertionText) {
+
+		final Constraint umlConstraint = createFormalProperty(owner, assertionName);
+		final LiteralString newLs = UMLFactory.eINSTANCE.createLiteralString();
+		final ValueSpecification vs = umlConstraint.createSpecification("ConstraintSpec", null, newLs.eClass());
+		umlConstraint.setSpecification(vs);
+		umlConstraint.setVisibility(VisibilityKind.PRIVATE_LITERAL);
+
+		setLiteralStringTextInUMLConstraint(umlConstraint, assertionText);
+
+		return umlConstraint;
+	}
+	
+	public void setTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText, final String language) {
 
 		logger.debug("saveFormalProperty: " + formalPropertyText);
-
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlConstraint);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-
 				// Constraint umlConstraint =
 				// formalProperty.getBase_Constraint();
 				if (umlConstraint.getSpecification() instanceof LiteralString) {
-					// logger.debug("saveFormalProperty LiteralString");
-					LiteralString litString = (LiteralString) umlConstraint.getSpecification();
-					litString.setValue(formalPropertyText);
-					umlConstraint.setSpecification(litString);
+					setLiteralStringTextInUMLConstraint(umlConstraint, formalPropertyText);
 				} else if (umlConstraint.getSpecification() instanceof OpaqueExpression) {
-					// logger.debug("saveFormalProperty OpaqueExpression");
-					OpaqueExpression opaqueExpr = (OpaqueExpression) umlConstraint.getSpecification();
-					// opaqueExpr.getLanguages().
-					setOpaqueExpressionBodyForLanguage(opaqueExpr, "OCRA", formalPropertyText);
+					setOpaqueExpressionTextInUMLConstraint(umlConstraint, formalPropertyText, language);
 
 				}
-			}
-		});
 	}
 
+	
+	
+	public void setLiteralStringTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlConstraint);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+		@Override
+		protected void doExecute() {
+		if (umlConstraint.getSpecification() instanceof LiteralString) {
+		LiteralString litString = (LiteralString) umlConstraint.getSpecification();
+		litString.setValue(formalPropertyText);
+		umlConstraint.setSpecification(litString);
+		}
+		}
+		});
+	}
+	
+	private void setOpaqueExpressionTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText, final String language) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlConstraint);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+		@Override
+		protected void doExecute() {
+			if (umlConstraint.getSpecification() instanceof OpaqueExpression) {
+				// logger.debug("saveFormalProperty OpaqueExpression");
+				OpaqueExpression opaqueExpr = (OpaqueExpression) umlConstraint.getSpecification();
+				// opaqueExpr.getLanguages().
+				setOpaqueExpressionBodyForLanguage(opaqueExpr, language, formalPropertyText);
+
+			}
+		}
+		});
+	}
+	
 	private void setOpaqueExpressionBodyForLanguage(org.eclipse.uml2.uml.OpaqueExpression opaqueExpression,
 			String language, String body) {
 		// checks both lists by size

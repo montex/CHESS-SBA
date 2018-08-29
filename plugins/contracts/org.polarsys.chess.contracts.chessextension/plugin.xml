@@ -35,6 +35,20 @@
          </action>
      
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.polarsys.chess.modelexplorerpopupmenu.id?after=additions">
+         <menu
+               icon="icons/CHESSicon.gif"
+               id="org.polarsys.chess.contracts.chessextension.menu2"
+               label="Contract">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action class="org.polarsys.chess.contracts.chessextension.popup.actions.SetContractRefinement" enablesFor="1" id="org.polarsys.chess.contracts.chessextension.newAction" label="Set Contract Refinement" menubarPath="org.polarsys.chess.contracts.chessextension.menu2/group1">
+         </action>
+      </menuContribution>
 
    </extension>   
       
@@ -55,14 +69,26 @@
          <action class="org.polarsys.chess.contracts.chessextension.popup.actions.SetContractRefinement" enablesFor="1" id="org.polarsys.chess.contracts.chessextension.newAction" label="Set Contract Refinement" menubarPath="org.polarsys.chess.contracts.chessextension.menu1/group1">
          </action>
       </objectContribution>
-      <objectContribution id="org.polarsys.chess.contracts.chessextension.contribution2" objectClass="org.eclipse.papyrus.uml.diagram.clazz.edit.parts.PropertyForComponentEditPart">
+      <objectContribution id="org.polarsys.chess.contracts.chessextension.contribution3" objectClass="org.eclipse.papyrus.uml.diagram.clazz.edit.parts.PropertyForComponentEditPart">
          <menu id="org.polarsys.chess.contracts.chessextension.menu1" label="Contract" path="additions">
             <separator name="group1">
             </separator>
          </menu>
          <action class="org.polarsys.chess.contracts.chessextension.popup.actions.SetContractRefinement" enablesFor="1" id="org.polarsys.chess.contracts.chessextension.newAction" label="Set Contract Refinement" menubarPath="org.polarsys.chess.contracts.chessextension.menu1/group1">
          </action>
-      </objectContribution>
+      </objectContribution> 
+      <objectContribution id="org.polarsys.chess.contracts.chessextension.contribution4" objectClass="org.eclipse.papyrus.emf.facet.custom.metamodel.v0_2_0.internal.treeproxy.EObjectTreeElement">
+         <menu
+               icon="icons/CHESSicon.gif"
+               id="org.polarsys.chess.contracts.chessextension.menu2"
+               label="Contract"
+               path="additions2">
+            <separator name="group1">
+            </separator>
+         </menu>
+         <action class="org.polarsys.chess.contracts.chessextension.popup.actions.SetContractRefinement" enablesFor="1" id="org.polarsys.chess.contracts.chessextension.newAction" label="Set Contract Refinement" menubarPath="org.polarsys.chess.contracts.chessextension.menu2/group1">
+         </action>
+      </objectContribution> 
    </extension>
    <extension point="org.eclipse.papyrus.infra.core.modelListener">
       <listener name="org.polarsys.chess.contracts.chessextension.listener1" realization="org.polarsys.chess.contracts.chessextension.listeners.PapyrusModelListener">

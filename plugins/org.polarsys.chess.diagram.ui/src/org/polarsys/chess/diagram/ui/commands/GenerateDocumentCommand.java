@@ -138,7 +138,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 				parameterDialog.getShowParameters(), parameterDialog.getShowUninterpretedFunctions(),
 				parameterDialog.getShowConnections(), parameterDialog.getShowInterfaceAssertions(), 
 				parameterDialog.getShowRefinementAssertions(), parameterDialog.getShowContracts(),
-				parameterDialog.getShowParameterAssumptions());
+				parameterDialog.getShowContractRefinements(),parameterDialog.getShowParameterAssumptions());
 		DocumentGenerator documentGenerator = documentGeneratorService.createDocumentFile(currentProjectName, docFormat,
 				ossModel.getSystem(), monitor);
 

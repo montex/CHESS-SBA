@@ -355,6 +355,8 @@
                  <perm st="SimpleStochasticBehavior" owner="true" write="true" visible="true"/>    
                  
                  <perm st="RunTimeSupport" owner="true" write="true" visible="true"/> 
+                 
+                 <perm st="CHRtSpecification" owner="true" write="true" visible="true"/> 
             </diagram>
             
             <diagram name="Activity">

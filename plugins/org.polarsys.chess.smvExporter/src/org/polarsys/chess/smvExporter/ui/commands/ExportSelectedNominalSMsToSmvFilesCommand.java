@@ -12,10 +12,12 @@ package org.polarsys.chess.smvExporter.ui.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.polarsys.chess.service.core.model.ChessSystemModel;
+import org.polarsys.chess.service.core.model.UMLStateMachineModel;
 import org.polarsys.chess.service.gui.utils.DialogUtils;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
-import org.polarsys.chess.smvExporter.ui.services.SmvExportServiceUI;
 
+import eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv.ui.services.SmvExportServiceUI;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 
 import org.eclipse.uml2.uml.Class;
@@ -24,7 +26,7 @@ public class ExportSelectedNominalSMsToSmvFilesCommand extends AbstractJobComman
 
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
 	private DialogUtils dialogUtils = DialogUtils.getInstance();
-	private SmvExportServiceUI smvExportServiceUI = SmvExportServiceUI.getInstance();
+	private SmvExportServiceUI smvExportServiceUI = SmvExportServiceUI.getInstance(ChessSystemModel.getInstance(),UMLStateMachineModel.getInstance());
 
 	public ExportSelectedNominalSMsToSmvFilesCommand() {
 		super("Export Nominal State Machines To .smv Files");

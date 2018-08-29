@@ -17,7 +17,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.incquery.viewers.runtime.model.Item;
+//import org.eclipse.incquery.viewers.runtime.model.Item;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
@@ -30,6 +30,7 @@ import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.UMLFactory;
+import org.eclipse.viatra.addon.viewers.runtime.notation.Item;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtPortSlot;
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification;
 import org.polarsys.chess.chessmlprofile.util.Constants;
@@ -67,7 +68,7 @@ public class AddCHRtSpecHandler extends AbstractHandler {
 			if (!(obj instanceof Item))
 				return null;
 			Item item = (Item) obj;
-			obj = item.getParamObject();
+			obj = item.getParamEObject();
 			if (!(obj instanceof Operation))
 				return null;
 			final Operation op = (Operation) obj;
@@ -76,8 +77,8 @@ public class AddCHRtSpecHandler extends AbstractHandler {
 			if (!(obj instanceof Item))
 				return null;
 			item = (Item) obj;
-			if (item.getParamObject() instanceof Slot){
-				final Slot slot = (Slot) item.getParamObject();
+			if (item.getParamEObject() instanceof Slot){
+				final Slot slot = (Slot) item.getParamEObject();
 				final String occKind = this.getOccKind();
 				//assumption: slot is an instance of Port
 				if (! (slot.getDefiningFeature() instanceof Port))
@@ -108,8 +109,8 @@ public class AddCHRtSpecHandler extends AbstractHandler {
 						
 				});
 			}else
-				if (item.getParamObject() instanceof InstanceSpecification){
-					final InstanceSpecification instance = (InstanceSpecification) item.getParamObject();
+				if (item.getParamEObject() instanceof InstanceSpecification){
+					final InstanceSpecification instance = (InstanceSpecification) item.getParamEObject();
 					final String occKind = this.getOccKind();
 					//assumption: instance is an instance of Component
 					TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(op);

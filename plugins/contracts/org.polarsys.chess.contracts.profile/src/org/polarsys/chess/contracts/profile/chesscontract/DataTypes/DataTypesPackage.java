@@ -18,48 +18,44 @@ import org.eclipse.emf.ecore.EPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
  * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesFactory
  * @model kind="package"
  * @generated
  */
 public interface DataTypesPackage extends EPackage {
 	/**
-	 * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The package name.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNAME = "DataTypes";
 
 	/**
-	 * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The package namespace URI.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNS_URI = "http:///CHESSContract/DataTypes.ecore";
 
 	/**
-	 * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The package namespace name.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	String eNS_PREFIX = "CHESSContract.DataTypes";
 
 	/**
-	 * The singleton instance of the package. <!-- begin-user-doc --> <!--
+	 * The singleton instance of the package.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	DataTypesPackage eINSTANCE = org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl
-			.init();
+	DataTypesPackage eINSTANCE = org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl.init();
 
 	/**
-	 * The meta object id for the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.OthelloConstraintImpl
-	 * <em>Othello Constraint</em>}' class. <!-- begin-user-doc --> <!--
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.OthelloConstraintImpl <em>Othello Constraint</em>}' class.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.OthelloConstraintImpl
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getOthelloConstraint()
 	 * @generated
@@ -76,9 +72,8 @@ public interface DataTypesPackage extends EPackage {
 	int OTHELLO_CONSTRAINT__EXPRESSION = 0;
 
 	/**
-	 * The number of structural features of the '<em>Othello Constraint</em>'
-	 * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The number of structural features of the '<em>Othello Constraint</em>' class.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -108,7 +103,6 @@ public interface DataTypesPackage extends EPackage {
 	/**
 	 * The number of structural features of the '<em>Continuous</em>' class.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -136,10 +130,8 @@ public interface DataTypesPackage extends EPackage {
 	int REQ_STATUSES = 2;
 
 	/**
-	 * The meta object id for the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqTypes
-	 * <em>Req Types</em>}' enum. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqTypes <em>Req Types</em>}' enum.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqTypes
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getReqTypes()
 	 * @generated
@@ -171,10 +163,8 @@ public interface DataTypesPackage extends EPackage {
 	int REQ_MATURITIES = 5;
 
 	/**
-	 * The meta object id for the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqRisks
-	 * <em>Req Risks</em>}' enum. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqRisks <em>Req Risks</em>}' enum.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqRisks
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getReqRisks()
 	 * @generated
@@ -182,10 +172,8 @@ public interface DataTypesPackage extends EPackage {
 	int REQ_RISKS = 6;
 
 	/**
-	 * The meta object id for the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Languages
-	 * <em>Languages</em>}' enum. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Languages <em>Languages</em>}' enum.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Languages
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getLanguages()
 	 * @generated
@@ -193,11 +181,9 @@ public interface DataTypesPackage extends EPackage {
 	int LANGUAGES = 7;
 
 	/**
-	 * The meta object id for the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus
-	 * <em>Contract Status</em>}' enum. <!-- begin-user-doc --> <!--
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus <em>Contract Status</em>}' enum.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getContractStatus()
 	 * @generated
@@ -205,10 +191,8 @@ public interface DataTypesPackage extends EPackage {
 	int CONTRACT_STATUS = 8;
 
 	/**
-	 * The meta object id for the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Concerns
-	 * <em>Concerns</em>}' enum. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * The meta object id for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Concerns <em>Concerns</em>}' enum.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Concerns
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getConcerns()
 	 * @generated
@@ -240,10 +224,8 @@ public interface DataTypesPackage extends EPackage {
 	EClass getOthelloConstraint();
 
 	/**
-	 * Returns the meta object for the attribute
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.OthelloConstraint#getExpression
-	 * <em>Expression</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.OthelloConstraint#getExpression <em>Expression</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Expression</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.OthelloConstraint#getExpression()
 	 * @see #getOthelloConstraint()
@@ -252,10 +234,8 @@ public interface DataTypesPackage extends EPackage {
 	EAttribute getOthelloConstraint_Expression();
 
 	/**
-	 * Returns the meta object for class
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Continuous
-	 * <em>Continuous</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the meta object for class '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Continuous <em>Continuous</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Continuous</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Continuous
 	 * @generated
@@ -263,10 +243,8 @@ public interface DataTypesPackage extends EPackage {
 	EClass getContinuous();
 
 	/**
-	 * Returns the meta object for enum
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqStatuses
-	 * <em>Req Statuses</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the meta object for enum '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqStatuses <em>Req Statuses</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Req Statuses</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqStatuses
 	 * @generated
@@ -274,10 +252,8 @@ public interface DataTypesPackage extends EPackage {
 	EEnum getReqStatuses();
 
 	/**
-	 * Returns the meta object for enum
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqTypes
-	 * <em>Req Types</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the meta object for enum '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqTypes <em>Req Types</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Req Types</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqTypes
 	 * @generated
@@ -285,10 +261,8 @@ public interface DataTypesPackage extends EPackage {
 	EEnum getReqTypes();
 
 	/**
-	 * Returns the meta object for enum
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqPriorities
-	 * <em>Req Priorities</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the meta object for enum '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqPriorities <em>Req Priorities</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Req Priorities</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqPriorities
 	 * @generated
@@ -296,10 +270,8 @@ public interface DataTypesPackage extends EPackage {
 	EEnum getReqPriorities();
 
 	/**
-	 * Returns the meta object for enum
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqMaturities
-	 * <em>Req Maturities</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the meta object for enum '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqMaturities <em>Req Maturities</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Req Maturities</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqMaturities
 	 * @generated
@@ -307,10 +279,8 @@ public interface DataTypesPackage extends EPackage {
 	EEnum getReqMaturities();
 
 	/**
-	 * Returns the meta object for enum
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqRisks
-	 * <em>Req Risks</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the meta object for enum '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqRisks <em>Req Risks</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Req Risks</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqRisks
 	 * @generated
@@ -318,10 +288,8 @@ public interface DataTypesPackage extends EPackage {
 	EEnum getReqRisks();
 
 	/**
-	 * Returns the meta object for enum
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Languages
-	 * <em>Languages</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the meta object for enum '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Languages <em>Languages</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Languages</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Languages
 	 * @generated
@@ -329,10 +297,8 @@ public interface DataTypesPackage extends EPackage {
 	EEnum getLanguages();
 
 	/**
-	 * Returns the meta object for enum
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus
-	 * <em>Contract Status</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the meta object for enum '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus <em>Contract Status</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Contract Status</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus
 	 * @generated
@@ -340,10 +306,8 @@ public interface DataTypesPackage extends EPackage {
 	EEnum getContractStatus();
 
 	/**
-	 * Returns the meta object for enum
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Concerns
-	 * <em>Concerns</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the meta object for enum '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Concerns <em>Concerns</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Concerns</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.Concerns
 	 * @generated
@@ -351,10 +315,8 @@ public interface DataTypesPackage extends EPackage {
 	EEnum getConcerns();
 
 	/**
-	 * Returns the meta object for enum
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes
-	 * <em>Contract Types</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the meta object for enum '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes <em>Contract Types</em>}'.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Contract Types</em>'.
 	 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes
 	 * @generated
@@ -381,16 +343,13 @@ public interface DataTypesPackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the
-		 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.OthelloConstraintImpl
-		 * <em>Othello Constraint</em>}' class. <!-- begin-user-doc --> <!--
+		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.OthelloConstraintImpl <em>Othello Constraint</em>}' class.
+		 * <!-- begin-user-doc --> <!--
 		 * end-user-doc -->
-		 * 
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.OthelloConstraintImpl
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getOthelloConstraint()
 		 * @generated
@@ -398,19 +357,16 @@ public interface DataTypesPackage extends EPackage {
 		EClass OTHELLO_CONSTRAINT = eINSTANCE.getOthelloConstraint();
 
 		/**
-		 * The meta object literal for the '<em><b>Expression</b></em>'
-		 * attribute feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-		 * 
+		 * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute OTHELLO_CONSTRAINT__EXPRESSION = eINSTANCE.getOthelloConstraint_Expression();
 
 		/**
-		 * The meta object literal for the
-		 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.ContinuousImpl
-		 * <em>Continuous</em>}' class. <!-- begin-user-doc --> <!--
+		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.ContinuousImpl <em>Continuous</em>}' class.
+		 * <!-- begin-user-doc --> <!--
 		 * end-user-doc -->
-		 * 
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.ContinuousImpl
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getContinuous()
 		 * @generated
@@ -418,11 +374,9 @@ public interface DataTypesPackage extends EPackage {
 		EClass CONTINUOUS = eINSTANCE.getContinuous();
 
 		/**
-		 * The meta object literal for the
-		 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqStatuses
-		 * <em>Req Statuses</em>}' enum. <!-- begin-user-doc --> <!--
+		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqStatuses <em>Req Statuses</em>}' enum.
+		 * <!-- begin-user-doc --> <!--
 		 * end-user-doc -->
-		 * 
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqStatuses
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getReqStatuses()
 		 * @generated
@@ -442,11 +396,9 @@ public interface DataTypesPackage extends EPackage {
 		EEnum REQ_TYPES = eINSTANCE.getReqTypes();
 
 		/**
-		 * The meta object literal for the
-		 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqPriorities
-		 * <em>Req Priorities</em>}' enum. <!-- begin-user-doc --> <!--
+		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqPriorities <em>Req Priorities</em>}' enum.
+		 * <!-- begin-user-doc --> <!--
 		 * end-user-doc -->
-		 * 
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqPriorities
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getReqPriorities()
 		 * @generated
@@ -454,11 +406,9 @@ public interface DataTypesPackage extends EPackage {
 		EEnum REQ_PRIORITIES = eINSTANCE.getReqPriorities();
 
 		/**
-		 * The meta object literal for the
-		 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqMaturities
-		 * <em>Req Maturities</em>}' enum. <!-- begin-user-doc --> <!--
+		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqMaturities <em>Req Maturities</em>}' enum.
+		 * <!-- begin-user-doc --> <!--
 		 * end-user-doc -->
-		 * 
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ReqMaturities
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getReqMaturities()
 		 * @generated
@@ -490,11 +440,9 @@ public interface DataTypesPackage extends EPackage {
 		EEnum LANGUAGES = eINSTANCE.getLanguages();
 
 		/**
-		 * The meta object literal for the
-		 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus
-		 * <em>Contract Status</em>}' enum. <!-- begin-user-doc --> <!--
+		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus <em>Contract Status</em>}' enum.
+		 * <!-- begin-user-doc --> <!--
 		 * end-user-doc -->
-		 * 
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractStatus
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getContractStatus()
 		 * @generated
@@ -514,11 +462,9 @@ public interface DataTypesPackage extends EPackage {
 		EEnum CONCERNS = eINSTANCE.getConcerns();
 
 		/**
-		 * The meta object literal for the
-		 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes
-		 * <em>Contract Types</em>}' enum. <!-- begin-user-doc --> <!--
+		 * The meta object literal for the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes <em>Contract Types</em>}' enum.
+		 * <!-- begin-user-doc --> <!--
 		 * end-user-doc -->
-		 * 
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.ContractTypes
 		 * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.impl.DataTypesPackageImpl#getContractTypes()
 		 * @generated

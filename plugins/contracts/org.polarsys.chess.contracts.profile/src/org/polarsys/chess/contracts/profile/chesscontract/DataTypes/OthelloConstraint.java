@@ -12,8 +12,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.OthelloConstraint#getExpression
- * <em>Expression</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.OthelloConstraint#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesPackage#getOthelloConstraint()
@@ -40,13 +39,10 @@ public interface OthelloConstraint extends EObject {
 	String getExpression();
 
 	/**
-	 * Sets the value of the
-	 * '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.OthelloConstraint#getExpression
-	 * <em>Expression</em>}' attribute. <!-- begin-user-doc --> <!--
+	 * Sets the value of the '{@link org.polarsys.chess.contracts.profile.chesscontract.DataTypes.OthelloConstraint#getExpression <em>Expression</em>}' attribute.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
-	 * @param value
-	 *            the new value of the '<em>Expression</em>' attribute.
+	 * @param value the new value of the '<em>Expression</em>' attribute.
 	 * @see #getExpression()
 	 * @generated
 	 */

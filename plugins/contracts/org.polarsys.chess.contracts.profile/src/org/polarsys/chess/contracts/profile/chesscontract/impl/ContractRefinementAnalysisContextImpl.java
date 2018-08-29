@@ -20,8 +20,7 @@ import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnal
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementAnalysisContextImpl#isCheckAllWeakContracts
- * <em>Check All Weak Contracts</em>}</li>
+ *   <li>{@link org.polarsys.chess.contracts.profile.chesscontract.impl.ContractRefinementAnalysisContextImpl#isCheckAllWeakContracts <em>Check All Weak Contracts</em>}</li>
  * </ul>
  *
  * @generated
@@ -29,10 +28,9 @@ import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinementAnal
 public class ContractRefinementAnalysisContextImpl extends GaAnalysisContextImpl
 		implements ContractRefinementAnalysisContext {
 	/**
-	 * The default value of the '{@link #isCheckAllWeakContracts() <em>Check All
-	 * Weak Contracts</em>}' attribute. <!-- begin-user-doc --> <!--
+	 * The default value of the '{@link #isCheckAllWeakContracts() <em>Check All Weak Contracts</em>}' attribute.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @see #isCheckAllWeakContracts()
 	 * @generated
 	 * @ordered
@@ -40,10 +38,9 @@ public class ContractRefinementAnalysisContextImpl extends GaAnalysisContextImpl
 	protected static final boolean CHECK_ALL_WEAK_CONTRACTS_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isCheckAllWeakContracts() <em>Check All
-	 * Weak Contracts</em>}' attribute. <!-- begin-user-doc --> <!--
+	 * The cached value of the '{@link #isCheckAllWeakContracts() <em>Check All Weak Contracts</em>}' attribute.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @see #isCheckAllWeakContracts()
 	 * @generated
 	 * @ordered
@@ -52,7 +49,6 @@ public class ContractRefinementAnalysisContextImpl extends GaAnalysisContextImpl
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected ContractRefinementAnalysisContextImpl() {
@@ -61,7 +57,6 @@ public class ContractRefinementAnalysisContextImpl extends GaAnalysisContextImpl
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -71,7 +66,6 @@ public class ContractRefinementAnalysisContextImpl extends GaAnalysisContextImpl
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public boolean isCheckAllWeakContracts() {
@@ -80,85 +74,76 @@ public class ContractRefinementAnalysisContextImpl extends GaAnalysisContextImpl
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setCheckAllWeakContracts(boolean newCheckAllWeakContracts) {
 		boolean oldCheckAllWeakContracts = checkAllWeakContracts;
 		checkAllWeakContracts = newCheckAllWeakContracts;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS,
-					oldCheckAllWeakContracts, checkAllWeakContracts));
+			eNotify(new ENotificationImpl(this, Notification.SET, CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS, oldCheckAllWeakContracts, checkAllWeakContracts));
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS:
-			return isCheckAllWeakContracts();
+			case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS:
+				return isCheckAllWeakContracts();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS:
-			setCheckAllWeakContracts((Boolean) newValue);
-			return;
+			case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS:
+				setCheckAllWeakContracts((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS:
-			setCheckAllWeakContracts(CHECK_ALL_WEAK_CONTRACTS_EDEFAULT);
-			return;
+			case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS:
+				setCheckAllWeakContracts(CHECK_ALL_WEAK_CONTRACTS_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS:
-			return checkAllWeakContracts != CHECK_ALL_WEAK_CONTRACTS_EDEFAULT;
+			case CHESSContractPackage.CONTRACT_REFINEMENT_ANALYSIS_CONTEXT__CHECK_ALL_WEAK_CONTRACTS:
+				return checkAllWeakContracts != CHECK_ALL_WEAK_CONTRACTS_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (checkAllWeakContracts: ");

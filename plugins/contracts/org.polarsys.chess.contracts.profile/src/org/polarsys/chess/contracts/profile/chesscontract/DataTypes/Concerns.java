@@ -12,16 +12,15 @@ import org.eclipse.emf.common.util.Enumerator;
  * <!-- begin-user-doc --> A representation of the literals of the enumeration
  * '<em><b>Concerns</b></em>', and utility methods for working with them. <!--
  * end-user-doc -->
- * 
  * @see org.polarsys.chess.contracts.profile.chesscontract.DataTypes.DataTypesPackage#getConcerns()
  * @model
  * @generated
  */
 public enum Concerns implements Enumerator {
 	/**
-	 * The '<em><b>Unspecified</b></em>' literal object. <!-- begin-user-doc -->
+	 * The '<em><b>Unspecified</b></em>' literal object.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #UNSPECIFIED_VALUE
 	 * @generated
 	 * @ordered
@@ -29,9 +28,9 @@ public enum Concerns implements Enumerator {
 	UNSPECIFIED(0, "unspecified", "unspecified"),
 
 	/**
-	 * The '<em><b>Safety</b></em>' literal object. <!-- begin-user-doc --> <!--
+	 * The '<em><b>Safety</b></em>' literal object.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @see #SAFETY_VALUE
 	 * @generated
 	 * @ordered
@@ -39,9 +38,9 @@ public enum Concerns implements Enumerator {
 	SAFETY(1, "safety", "safety"),
 
 	/**
-	 * The '<em><b>Security</b></em>' literal object. <!-- begin-user-doc -->
+	 * The '<em><b>Security</b></em>' literal object.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #SECURITY_VALUE
 	 * @generated
 	 * @ordered
@@ -49,9 +48,9 @@ public enum Concerns implements Enumerator {
 	SECURITY(2, "security", "security"),
 
 	/**
-	 * The '<em><b>Performance</b></em>' literal object. <!-- begin-user-doc -->
+	 * The '<em><b>Performance</b></em>' literal object.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #PERFORMANCE_VALUE
 	 * @generated
 	 * @ordered
@@ -59,13 +58,13 @@ public enum Concerns implements Enumerator {
 	PERFORMANCE(3, "performance", "performance");
 
 	/**
-	 * The '<em><b>Unspecified</b></em>' literal value. <!-- begin-user-doc -->
+	 * The '<em><b>Unspecified</b></em>' literal value.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of '<em><b>Unspecified</b></em>' literal object isn't
 	 * clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #UNSPECIFIED
 	 * @model name="unspecified"
 	 * @generated
@@ -74,13 +73,13 @@ public enum Concerns implements Enumerator {
 	public static final int UNSPECIFIED_VALUE = 0;
 
 	/**
-	 * The '<em><b>Safety</b></em>' literal value. <!-- begin-user-doc -->
+	 * The '<em><b>Safety</b></em>' literal value.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of '<em><b>Safety</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #SAFETY
 	 * @model name="safety"
 	 * @generated
@@ -89,13 +88,13 @@ public enum Concerns implements Enumerator {
 	public static final int SAFETY_VALUE = 1;
 
 	/**
-	 * The '<em><b>Security</b></em>' literal value. <!-- begin-user-doc -->
+	 * The '<em><b>Security</b></em>' literal value.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of '<em><b>Security</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #SECURITY
 	 * @model name="security"
 	 * @generated
@@ -104,13 +103,13 @@ public enum Concerns implements Enumerator {
 	public static final int SECURITY_VALUE = 2;
 
 	/**
-	 * The '<em><b>Performance</b></em>' literal value. <!-- begin-user-doc -->
+	 * The '<em><b>Performance</b></em>' literal value.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of '<em><b>Performance</b></em>' literal object isn't
 	 * clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #PERFORMANCE
 	 * @model name="performance"
 	 * @generated
@@ -124,22 +123,24 @@ public enum Concerns implements Enumerator {
 	 * 
 	 * @generated
 	 */
-	private static final Concerns[] VALUES_ARRAY = new Concerns[] { UNSPECIFIED, SAFETY, SECURITY, PERFORMANCE, };
+	private static final Concerns[] VALUES_ARRAY = new Concerns[] {
+			UNSPECIFIED,
+			SAFETY,
+			SECURITY,
+			PERFORMANCE,
+		};
 
 	/**
-	 * A public read-only list of all the '<em><b>Concerns</b></em>'
-	 * enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * A public read-only list of all the '<em><b>Concerns</b></em>' enumerators.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public static final List<Concerns> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
-	 * Returns the '<em><b>Concerns</b></em>' literal with the specified literal
-	 * value. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param literal
-	 *            the literal.
+	 * Returns the '<em><b>Concerns</b></em>' literal with the specified literal value.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param literal the literal.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
@@ -156,9 +157,7 @@ public enum Concerns implements Enumerator {
 	/**
 	 * Returns the '<em><b>Concerns</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param name
-	 *            the name.
+	 * @param name the name.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
@@ -173,53 +172,44 @@ public enum Concerns implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>Concerns</b></em>' literal with the specified integer
-	 * value. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @param value
-	 *            the integer value.
+	 * Returns the '<em><b>Concerns</b></em>' literal with the specified integer value.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @param value the integer value.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Concerns get(int value) {
 		switch (value) {
-		case UNSPECIFIED_VALUE:
-			return UNSPECIFIED;
-		case SAFETY_VALUE:
-			return SAFETY;
-		case SECURITY_VALUE:
-			return SECURITY;
-		case PERFORMANCE_VALUE:
-			return PERFORMANCE;
+			case UNSPECIFIED_VALUE: return UNSPECIFIED;
+			case SAFETY_VALUE: return SAFETY;
+			case SECURITY_VALUE: return SECURITY;
+			case PERFORMANCE_VALUE: return PERFORMANCE;
 		}
 		return null;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private final int value;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private final String name;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private final String literal;
 
 	/**
-	 * Only this class can construct instances. <!-- begin-user-doc --> <!--
+	 * Only this class can construct instances.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private Concerns(int value, String name, String literal) {
@@ -230,35 +220,31 @@ public enum Concerns implements Enumerator {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public int getValue() {
-		return value;
+	  return value;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getName() {
-		return name;
+	  return name;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getLiteral() {
-		return literal;
+	  return literal;
 	}
 
 	/**
-	 * Returns the literal value of the enumerator, which is its string
-	 * representation. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * Returns the literal value of the enumerator, which is its string representation.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
