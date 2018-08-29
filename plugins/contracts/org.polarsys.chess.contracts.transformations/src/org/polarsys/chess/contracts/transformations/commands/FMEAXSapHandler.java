@@ -26,14 +26,14 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Model;
+import org.polarsys.chess.contracts.transformations.commands.CommandsCommon.CommandEnum;
 import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAAnalysisCtxDialog;
 import org.polarsys.chess.contracts.transformations.utils.FileNamesUtil;
-import org.polarsys.chess.contracts.transformations.utils.FMEAGenerationDialogUtil;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
+import org.polarsys.chess.smvExporter.ui.services.CHESSSmvExporterService;
 
 import eu.fbk.eclipse.standardTools.XSapExecService.services.XSapExecService;
-import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 
 /**
  * This class permits the generation of FMEA using the xSAP tool.
@@ -43,29 +43,6 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 public class FMEAXSapHandler extends AbstractHandler {
 	private String systemQN;
 	private String ftaCond;
-	
-	/**
-	 * Creates a monolithic SMV file for the active package.
-	 * @param smvFileName the name of the generated file
-	 * @return false if errors occurred, true otherwise
-	 */
-	private Boolean createMonolithicSmvFile(String smvFileName) {		
-		final String monolithicSmvCommand = "org.polarsys.chess.smvExport.commands.ExportModelToSMVCommand";
-		final String fileNameParam = "file_name";
-		final CommandBuilder monolithicSmv;
-		
-		try {
-			monolithicSmv = CommandBuilder.build(monolithicSmvCommand);
-			monolithicSmv.setParameter(fileNameParam, smvFileName);
-			monolithicSmv.execute();
-		} catch (ExecutionException e) {
-			return false;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;		
-	}
 	
 	/**
 	 * Returns the string of expressions, formatted as requested by xSAP.
@@ -115,7 +92,7 @@ public class FMEAXSapHandler extends AbstractHandler {
 		args.add(systemName);
 		args.add(filename+"_"+systemName);//used by the transformation as file name
 
-//FIXME commentato per test, il file generato non e' corretto
+//FIXME commentato per test, il file generato non e' corretto (binds...)
 //		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
 		
 		final FileNamesUtil fileNamesService = FileNamesUtil.getInstance();
@@ -128,7 +105,8 @@ public class FMEAXSapHandler extends AbstractHandler {
 		final String fmeaFileName = fileNamesService.computeFmeaFileName(editor, modelName);
 		
 		// Generate a monolithic SMV file
-		if (!createMonolithicSmvFile(smvFileName)){
+		final CHESSSmvExporterService smvExporterService = CHESSSmvExporterService.getInstance();
+		if (!smvExporterService.createMonolithicSmvFile(smvFileName)){
 			return null;
 		};
 		
@@ -138,13 +116,8 @@ public class FMEAXSapHandler extends AbstractHandler {
 		//FIXME: non funziona al momento, manca la parte Python
 //		xSapExecService.extendModel(smvFileName, feiFileName, fmsFileName, extendedSmvFileName);
 
-		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, processConditions(ftaCond), fmeaFileName);
-			
-		FMEAGenerationDialogUtil fmeaGenerationDialogUtil = FMEAGenerationDialogUtil.getInstance();
-		
-		//TODO: il risultato va visualizzato in una tabella!
-		
-		fmeaGenerationDialogUtil.showMessage_FmeaGenerationDone(fmeaFileName);
+		// Compute FMEA and show results in a dedicated view
+		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, processConditions(ftaCond), fmeaFileName);		
 		return null;
 	}
 }
