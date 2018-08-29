@@ -25,6 +25,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Model;
+import org.polarsys.chess.contracts.transformations.commands.CommandsCommon.CommandEnum;
 import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAAnalysisCtxDialog;
 import org.polarsys.chess.contracts.transformations.utils.FileNamesUtil;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
@@ -42,13 +43,13 @@ public class FTAXSapHandler extends AbstractHandler {
 	private String systemQN;
 	private String ftaCond;
 	
-	//TODO: spostare questo comando in un service, dentro SVMExporter?
+	//TODO: spostare questo metodo in un service, dentro SVMExporter?
 	/**
 	 * Creates a monolithic SMV file for the active package.
 	 * @param smvFileName the name of the generated file
 	 * @return false if errors occurred, true otherwise
 	 */
-	private Boolean createMonolithicSmvFile(String smvFileName) {		
+	private boolean createMonolithicSmvFile(String smvFileName) {		
 		final String monolithicSmvCommand = "org.polarsys.chess.smvExport.commands.ExportModelToSMVCommand";
 		final String fileNameParam = "file_name";
 		final CommandBuilder monolithicSmv;
@@ -101,7 +102,7 @@ public class FTAXSapHandler extends AbstractHandler {
 		args.add(systemName);
 		args.add(filename+"_"+systemName);//used by the transformation as file name
 
-//FIXME commentato per test, il file generato non e' corretto
+//FIXME commentato per test, il file generato non e' corretto (binds...)
 //		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
 		
 		final FileNamesUtil fileNamesService = FileNamesUtil.getInstance();

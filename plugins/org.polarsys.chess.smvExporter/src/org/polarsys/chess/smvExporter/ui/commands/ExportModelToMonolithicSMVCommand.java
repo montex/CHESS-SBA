@@ -25,11 +25,12 @@ import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.core.exceptions.NoComponentException;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
+import org.polarsys.chess.service.core.model.UMLStateMachineModel;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
-import org.polarsys.chess.smvExporter.ui.services.SmvExportServiceUI;
 import org.polarsys.chess.smvExporter.ui.utils.SMVGenerationDialogUtil;
 
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService;
+import eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv.ui.services.SmvExportServiceUI;
 import eu.fbk.eclipse.standardtools.nuXmvService.ui.utils.NuXmvDirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
@@ -73,7 +74,7 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-		final SmvExportServiceUI smvExportService = SmvExportServiceUI.getInstance();
+		final SmvExportServiceUI smvExportServiceUI = SmvExportServiceUI.getInstance(ChessSystemModel.getInstance(),UMLStateMachineModel.getInstance());
 		final NuXmvDirectoryUtil nuXmvDirectoryUtil = NuXmvDirectoryUtil.getInstance();
 		final OCRADirectoryUtil ocraDirectoryUtil = OCRADirectoryUtil.getInstance();
 		final OCRAExecService ocraExecService = OCRAExecService.getInstance(ChessSystemModel.getInstance());
@@ -131,7 +132,7 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 
 		// Commands cannot be executed in the execJobCommand() method, they need to be synchronous
 		logger.debug("exportSmv");
-		HashMap<String, String> smvPathComponentNameMap = smvExportService.exportSmv(umlSelectedComponent,
+		HashMap<String, String> smvPathComponentNameMap = smvExportServiceUI.exportSmv(umlSelectedComponent,
 				showPopups, smvFileDirectory, monitor);
 
 		logger.debug("createMonolithicSMV");
