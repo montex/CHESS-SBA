@@ -30,9 +30,9 @@ import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAAnalysisCtx
 import org.polarsys.chess.contracts.transformations.utils.FileNamesUtil;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
+import org.polarsys.chess.smvExporter.ui.services.CHESSSmvExporterService;
 
 import eu.fbk.eclipse.standardTools.XSapExecService.services.XSapExecService;
-import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 
 /**
  * This class permits the generation of FTA using the xSAP tool.
@@ -42,30 +42,6 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 public class FTAXSapHandler extends AbstractHandler {
 	private String systemQN;
 	private String ftaCond;
-	
-	//TODO: spostare questo metodo in un service, dentro SVMExporter?
-	/**
-	 * Creates a monolithic SMV file for the active package.
-	 * @param smvFileName the name of the generated file
-	 * @return false if errors occurred, true otherwise
-	 */
-	private boolean createMonolithicSmvFile(String smvFileName) {		
-		final String monolithicSmvCommand = "org.polarsys.chess.smvExport.commands.ExportModelToSMVCommand";
-		final String fileNameParam = "file_name";
-		final CommandBuilder monolithicSmv;
-		
-		try {
-			monolithicSmv = CommandBuilder.build(monolithicSmvCommand);
-			monolithicSmv.setParameter(fileNameParam, smvFileName);
-			monolithicSmv.execute();
-		} catch (ExecutionException e) {
-			return false;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;		
-	}
 	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
@@ -115,7 +91,8 @@ public class FTAXSapHandler extends AbstractHandler {
 //		final String ftFileName = fileNamesService.computeFtFileName(editor, modelName);
 		
 		// Generate a monolithic SMV file
-		if (!createMonolithicSmvFile(smvFileName)){
+		final CHESSSmvExporterService smvExporterService = CHESSSmvExporterService.getInstance();
+		if (!smvExporterService.createMonolithicSmvFile(smvFileName)){
 			return null;
 		};
 		

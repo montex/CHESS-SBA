@@ -38,7 +38,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.polarsys.chess.core,
  org.eclipse.papyrus.infra.widgets.toolbox,
  org.eclipse.papyrus.emf.facet.custom.metamodel,
- eu.fbk.eclipse.standardTools.XSapExecService
+ eu.fbk.eclipse.standardTools.XSapExecService,
+ org.polarsys.chess.smvExporter
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true
