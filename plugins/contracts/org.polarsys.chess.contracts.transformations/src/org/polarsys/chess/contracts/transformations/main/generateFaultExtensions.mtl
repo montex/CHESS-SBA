@@ -99,7 +99,7 @@
 															  or fault.getAppliedStereotype(ExternalFaultQN)->notEmpty())] 
               <local_dynamics_model name="Permanent" desc="">
                 <events>
-                  <event type="output" name="failure" connected="yes" binds="[tr.name/]"/>
+                  <event type="output" name="failure" connected="no"/>
                 </events>
               </local_dynamics_model>
 			  [/let]
