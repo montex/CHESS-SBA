@@ -29,6 +29,7 @@ import org.eclipse.uml2.uml.Profile;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
@@ -76,7 +77,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 
 		if (selectedUmlElement instanceof Property) {
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
-				Element umlClass = entityUtil.getUMLType((Property) selectedUmlElement);
+				Element umlClass = entityUtil.getUmlType((Property) selectedUmlElement);
 
 				if (!contractEntityUtil.isContract(umlClass)) {
 					return umlClass;
@@ -105,11 +106,11 @@ public class CustomContractEditorTab extends ContractEditorTab {
 
 		if (selectedUmlElement instanceof Property) {
 			if (contractEntityUtil.isContractProperty((Property) selectedUmlElement)) {
-				return entityUtil.getUMLType((Property) selectedUmlElement);
+				return entityUtil.getUmlType((Property) selectedUmlElement);
 			}
 
 			if (entityUtil.isComponentInstance((Property) selectedUmlElement)) {
-				Element classType = entityUtil.getUMLType((Property) selectedUmlElement);
+				Element classType = entityUtil.getUmlType((Property) selectedUmlElement);
 				if (contractEntityUtil.isContract(classType)) {
 					return classType;
 				}
@@ -242,7 +243,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 */
 	@Override
 	public void guaranteeEditorchanged(Object contract, String textChanged) {
-		contractEntityUtil.saveFormalProperty("Guarantee", textChanged, (Class) contract);
+		contractEntityUtil.setTextToGuaranteeOrCreateGuarantee(textChanged, (Class) contract);
 	}
 
 	/*
@@ -254,7 +255,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 */
 	@Override
 	public void assumptionEditorchanged(Object contract, String textChanged) {
-		contractEntityUtil.saveFormalProperty("Assume", textChanged, (Class) contract);
+		contractEntityUtil.setTextToAssumeOrCreateAssume(textChanged, (Class) contract);
 	}
 
 	/*
@@ -278,6 +279,7 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
 	 * #getAssumeStrFromContract(java.lang.Object)
 	 */
+	@Override
 	public String getAssumeStrFromContract(Object contract) {
 		return (contractEntityUtil.getAssumeStrFromUmlContract((Class) contract));
 	}
@@ -287,10 +289,49 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 * 
 	 * @see
 	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
+	 * #getAssumeQualifiedNameFromContract(java.lang.Object)
+	 */
+	@Override
+	public String getAssumeQualifiedNameFromContract(Object contract) {
+		FormalProperty assumeFormalProperty = contractEntityUtil.getAssumeFromUmlContract((Class) contract);
+		
+		if (assumeFormalProperty != null) {
+			return assumeFormalProperty.getBase_Constraint().getQualifiedName();
+		}
+		else {
+			return "no Assume defined";
+		}
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
 	 * #getGuaranteeStrFromContract(java.lang.Object)
 	 */
+	@Override
 	public String getGuaranteeStrFromContract(Object contract) {
 		return (contractEntityUtil.getGuaranteeStrFromUmlContract((Class) contract));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * eu.fbk.eclipse.standardtools.contractEditor.propertyTab.ContractEditorTab
+	 * #getGuaranteeQualifiedNameFromContract(java.lang.Object)
+	 */
+	@Override
+	public String getGuaranteeQualifiedNameFromContract(Object contract) {
+		FormalProperty guaranteeFormalProperty = contractEntityUtil.getGuaranteeFromUmlContract((Class) contract);
+		
+		if (guaranteeFormalProperty != null) {
+			return guaranteeFormalProperty.getBase_Constraint().getQualifiedName();
+		}
+		else {
+			return "no Guarantee defined";
+		}
 	}
 
 	/*

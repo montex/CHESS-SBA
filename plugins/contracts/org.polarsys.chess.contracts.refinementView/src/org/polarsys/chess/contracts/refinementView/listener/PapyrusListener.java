@@ -38,7 +38,7 @@ public class PapyrusListener implements IPapyrusListener {
 			if ((window != null) && (window.getActivePage() != null)) {
 				modelExplorerViewPart = window.getActivePage().findView(CustomRefinementView.View_ID);
 
-				if (modelExplorerViewPart != null) {
+				if ((modelExplorerViewPart != null)&&(modelExplorerViewPart instanceof CustomRefinementView)) {
 					CustomRefinementView view = (CustomRefinementView) modelExplorerViewPart;
 					view.updateView();
 				}

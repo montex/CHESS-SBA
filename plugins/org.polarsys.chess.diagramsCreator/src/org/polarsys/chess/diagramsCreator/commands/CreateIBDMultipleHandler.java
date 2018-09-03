@@ -27,6 +27,12 @@ import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 
+/**
+ * This class is a command that is invoked by another command.
+ * It will start the creation of all the IBDs.
+ * @author cristofo
+ *
+ */
 public class CreateIBDMultipleHandler extends AbstractHandler {
 	private static final String DIALOG_TITLE =	"Multiple IBD creator";
 
@@ -50,7 +56,7 @@ public class CreateIBDMultipleHandler extends AbstractHandler {
 				if (entityUtil.isBlock(element) && !contractEntityUtil.isContract(element)) {
 					try {
 						final Diagram diagram = action.addIBD((Class) element);
-						action.populateDiagram(diagram, true);//FIXME: mettere un parametro
+						action.populateDiagram(diagram, false);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Combo;
 
 /**
  * This class dispays a dialog to set some parameters for the IBD creation.
+ * No more used since CSS.
  * @author cristofo
  *
  */

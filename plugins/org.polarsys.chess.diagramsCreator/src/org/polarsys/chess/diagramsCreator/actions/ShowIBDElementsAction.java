@@ -69,7 +69,7 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUti
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 
 /**
- * This class creates an Internal Block Diagram and populates it with elements
+ * This class creates an Internal Block Diagram and populates it with elements.
  * @author cristofo
  *
  */
@@ -164,7 +164,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 			// If the element is interesting, add it
 			if(entityUtil.isPort(semanticElement) || 
 					entityUtil.isComponentInstance(semanticElement) || 
-					entityUtil.isDelegationConstraints(semanticElement)) {
+					entityUtil.isDelegationConstraint(semanticElement)) {
 				result.add(editPartRepresentation);
 			}
 		}
@@ -465,11 +465,12 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				}
 			}
 		}
-
-		return command;
-//		// Execute the commands
-//		final TransactionalEditingDomain domain  = componentInstanceEP.getEditingDomain();
-//		domain.getCommandStack().execute(new GEFtoEMFCommandWrapper(command));
+		
+		if (command.canExecute()) {
+			return command;
+		} else {
+			return null;
+		}
 	}
 		
 	/**
@@ -513,7 +514,10 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				
 				// Get the text size for enlarging the box
 				int textLength = port.getName().length();
-				textLength += port.getType().getName().length();
+				
+				// If port type is not defined, add some space for <Undefined>
+				textLength += (port.getType() != null) ? port.getType().getName().length() : 11;
+				
 				if (textLength > maxLengthInput) {
 					maxLengthInput = textLength;
 				}
@@ -522,7 +526,10 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 				
 				// Get the text size for enlarging the box
 				int textLength = port.getName().length();
-				textLength += port.getType().getName().length();
+				
+				// If port type is not defined, add some space for <Undefined>
+				textLength += (port.getType() != null) ? port.getType().getName().length() : 11;
+
 				if (textLength > maxLengthOutput) {
 					maxLengthOutput = textLength;
 				}
@@ -682,7 +689,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * Returns the diagram EditPart.
 	 * @return
 	 */
-	private EditPart getHost() {
+	public EditPart getHost() {
 		return host;
 	}
 	
@@ -801,7 +808,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * @param elementEP the EditPart of the element to browse
 	 * @param connectors the list of connectors to draw
 	 */
-	private void drawConnectors(IGraphicalEditPart elementEP, EList<Connector> connectors) {
+	public void drawConnectors(IGraphicalEditPart elementEP, EList<Connector> connectors) {
 		final View elementView = elementEP.getNotationView();
 		final CompoundCommand compoundCommand = new CompoundCommand("Restore A Related Link");
 
@@ -848,7 +855,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		final IGraphicalEditPart diagramEP = OffscreenEditPartFactory.getInstance().createDiagramEditPart(diagram, shell);
 		
 		// Store the EditPart
-		host = diagramEP;
+		setHost(diagramEP);
 
 		this.sortedPorts = sortedPorts;
 		
@@ -893,6 +900,11 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		}
 	}
 	
+	public void setHost(IGraphicalEditPart diagramEP) {
+		this.host = diagramEP;
+		
+	}
+
 	/**
 	 * Draws the missing ports of the given element, on the lower border.
 	 * @param elementEP the EditPart of the element
