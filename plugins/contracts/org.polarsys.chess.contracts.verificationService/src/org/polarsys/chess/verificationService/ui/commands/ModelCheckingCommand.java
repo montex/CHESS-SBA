@@ -110,6 +110,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
 		String generatedSmvFilePath;
+		final boolean internalExecution = true;
 
 		// CommandBuilder checkContractImplementation =
 		// CommandBuilder.build("org.polarsys.chess.verificationService.commands.TestCommand2");
@@ -125,7 +126,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 			logger.debug("createMonolithicSMV");
 			ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
 					isDiscreteTime, usexTextValidation,showPopups, ossFilePath, smvMapFilepath, 
-					monolithicSMVFilePath, isProgrExec,monitor);
+					monolithicSMVFilePath, isProgrExec, internalExecution, monitor);
 
 			generatedSmvFilePath = monolithicSMVFilePath;
 			logger.debug("createMonolithicSMV done");

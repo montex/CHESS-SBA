@@ -33,6 +33,7 @@ import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 import org.polarsys.chess.smvExporter.ui.services.CHESSSmvExporterService;
 
 import eu.fbk.eclipse.standardTools.XSapExecService.services.XSapExecService;
+import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 
 /**
  * This class permits the generation of FTA using the xSAP tool.
@@ -71,24 +72,23 @@ public class FTAXSapHandler extends AbstractHandler {
 			e.printStackTrace();
 			return null;
 		}
-			
+		
 		List<String> args = new ArrayList<String>();
 		args.add(systemQN);
 		String systemName = systemQN.substring(systemQN.lastIndexOf("::")+2);
 		args.add(systemName);
 		args.add(filename+"_"+systemName);//used by the transformation as file name
 
-//FIXME commentato per test, il file generato non e' corretto (binds...)
-//		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
+		// Generate the FEI file
+		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
 		
-		final FileNamesUtil fileNamesService = FileNamesUtil.getInstance();
+		final FileNamesUtil fileNamesUtil = FileNamesUtil.getInstance();
 		
 		final String modelName = args.get(2);
-		final String smvFileName = fileNamesService.computeSmvFileName(editor, modelName);
-		final String feiFileName = fileNamesService.computeFeiFileName(editor, modelName);
-		final String extendedSmvFileName = fileNamesService.computeExtendedSmvFileName(editor, modelName);
-		final String fmsFileName = fileNamesService.computeFmsFileName(editor, modelName);
-//		final String ftFileName = fileNamesService.computeFtFileName(editor, modelName);
+		final String smvFileName = fileNamesUtil.computeSmvFileName(editor, modelName);
+		final String feiFileName = fileNamesUtil.computeFeiFileName(editor, modelName);
+		final String extendedSmvFileName = fileNamesUtil.computeExtendedSmvFileName(editor, modelName);
+		final String fmsFileName = fileNamesUtil.computeFmsFileName(editor, modelName);
 		
 		// Generate a monolithic SMV file
 		final CHESSSmvExporterService smvExporterService = CHESSSmvExporterService.getInstance();
@@ -99,17 +99,19 @@ public class FTAXSapHandler extends AbstractHandler {
 		// Call EST commands
 		final XSapExecService xSapExecService = XSapExecService.getInstance();
 		
-		//FIXME: non funziona al momento, manca la parte Python
-//		xSapExecService.extendModel(smvFileName, feiFileName, fmsFileName, extendedSmvFileName);
+		//FIXME: non funziona al momento, manca la parte Python e genera un file vuoto
+//		if (!xSapExecService.extendModel(smvFileName, feiFileName, fmsFileName, extendedSmvFileName)) {
+//			return null;
+//		}
 		
-		// Compute the FTA for each condition requested
+		// Compute and display the FTA for each condition requested
 		int index = 0;
 		for (String condition : ftaCond.split(", ")) {
-			final String ftFileName = fileNamesService.computeFtFileName(editor, modelName, ++index);
-			xSapExecService.computeFt(extendedSmvFileName, fmsFileName, condition, ftFileName);
-			xSapExecService.showFt(ftFileName);
+			final String ftFileName = fileNamesUtil.computeFtFileName(editor, modelName, ++index);
+			if (!xSapExecService.computeFt(extendedSmvFileName, fmsFileName, condition, ftFileName)) {
+				return null;
+			}		
 		}
-
 		return null;
 	}
 }

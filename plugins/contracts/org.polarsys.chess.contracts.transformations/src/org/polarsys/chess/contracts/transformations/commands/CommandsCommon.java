@@ -117,9 +117,10 @@ public class CommandsCommon {
 					if(commandType == CommandEnum.FTA || commandType == CommandEnum.FEI){
 						tempFolder = folder.getFolder(TEMP_FOLD);
 						if(tempFolder.exists()){
-							tempFolder.delete(true, null);
+//							tempFolder.delete(true, null);
+						} else {
+							tempFolder.create(true, true, null);
 						}
-						tempFolder.create(true, true, null);
 					}
 					
 				} catch (CoreException e) {
@@ -211,11 +212,6 @@ public class CommandsCommon {
 						feiLocation = smvLocation;
 						smvLocation = smvLocation + SMV_EXT;
 						feiLocation = feiLocation + FEI_EXT;
-						
-						//TODO: le linee seguenti andranno eliminate
-						monitor.subTask("calling xSAP");						
-						checker.FTA(smvLocation, feiLocation, ftaCondition);
-						monitor.worked(1);
 						break;
 
 					default:

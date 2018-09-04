@@ -129,6 +129,7 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 		final boolean showPopups = false;
 		final boolean usexTextValidation = true;
 		final boolean isProgrExec = false;
+		final boolean internalExecution = true;
 
 		// Commands cannot be executed in the execJobCommand() method, they need to be synchronous
 		logger.debug("exportSmv");
@@ -136,10 +137,13 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 				showPopups, smvFileDirectory, monitor);
 
 		logger.debug("createMonolithicSMV");
-		ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
+		if (!ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
 				isDiscreteTime, usexTextValidation, showPopups, ossFilePath, smvMapFilepath, 
-				monolithicSMVFilePath, isProgrExec, monitor);
-		logger.debug("createMonolithicSMV done");
+				monolithicSMVFilePath, isProgrExec, internalExecution, monitor)) {
+			final ExecutionException e = new ExecutionException("createMonolithicSMV command failed.");
+			DialogUtil.getInstance().showMessage_ExceptionError(e);
+			throw e;
+		}
 		
 		// If requested, show a message at the end of the file generation
 		final String showPopup = event.getParameter("show_popup");

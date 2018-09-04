@@ -92,17 +92,17 @@ public class FMEAXSapHandler extends AbstractHandler {
 		args.add(systemName);
 		args.add(filename+"_"+systemName);//used by the transformation as file name
 
-//FIXME commentato per test, il file generato non e' corretto (binds...)
-//		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
+		// Generate the FEI file
+		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
 		
-		final FileNamesUtil fileNamesService = FileNamesUtil.getInstance();
+		final FileNamesUtil fileNamesUtil = FileNamesUtil.getInstance();
 		
 		final String modelName = args.get(2);
-		final String smvFileName = fileNamesService.computeSmvFileName(editor, modelName);
-		final String feiFileName = fileNamesService.computeFeiFileName(editor, modelName);
-		final String extendedSmvFileName = fileNamesService.computeExtendedSmvFileName(editor, modelName);
-		final String fmsFileName = fileNamesService.computeFmsFileName(editor, modelName);
-		final String fmeaFileName = fileNamesService.computeFmeaFileName(editor, modelName);
+		final String smvFileName = fileNamesUtil.computeSmvFileName(editor, modelName);
+		final String feiFileName = fileNamesUtil.computeFeiFileName(editor, modelName);
+		final String extendedSmvFileName = fileNamesUtil.computeExtendedSmvFileName(editor, modelName);
+		final String fmsFileName = fileNamesUtil.computeFmsFileName(editor, modelName);
+		final String fmeaFileName = fileNamesUtil.computeFmeaFileName(editor, modelName);
 		
 		// Generate a monolithic SMV file
 		final CHESSSmvExporterService smvExporterService = CHESSSmvExporterService.getInstance();
@@ -113,8 +113,10 @@ public class FMEAXSapHandler extends AbstractHandler {
 		// Call EST commands
 		final XSapExecService xSapExecService = XSapExecService.getInstance();
 		
-		//FIXME: non funziona al momento, manca la parte Python
-//		xSapExecService.extendModel(smvFileName, feiFileName, fmsFileName, extendedSmvFileName);
+		//FIXME: non funziona al momento, manca la parte Python e genera un file vuoto
+//		if (!xSapExecService.extendModel(smvFileName, feiFileName, fmsFileName, extendedSmvFileName)) {
+//			return null;
+//		}
 
 		// Compute FMEA and show results in a dedicated view
 		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, processConditions(ftaCond), fmeaFileName);		
