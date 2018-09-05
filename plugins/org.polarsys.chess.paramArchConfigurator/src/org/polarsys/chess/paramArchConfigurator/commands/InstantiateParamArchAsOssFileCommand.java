@@ -19,6 +19,8 @@ import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
 import eu.fbk.tools.editor.contract.expression.validation.ProposalProvider.VariableType;
 
+
+//command not used.
 public class InstantiateParamArchAsOssFileCommand extends AbstractJobCommand {
 
 	private OCRAExecService ocraExecService = OCRAExecService.getInstance(ChessSystemModel.getInstance());
@@ -51,14 +53,14 @@ public class InstantiateParamArchAsOssFileCommand extends AbstractJobCommand {
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(false);
 		showPopups = false;
 		usexTextValidation=true;
-		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
-		resultFilePath = ocraDirectoryUtil.getCommandInstantiateParamArchResultPath(umlSelectedComponent.getName());
+		ossFilepath = ocraDirectoryUtil.getOSSDirPath();
+		resultFilePath = ocraDirectoryUtil.getCommandInstantiateParamArchResultPath(umlSelectedComponent.getName(),1);
 	}
 
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-		ocraExecService.executeInstantiateParamArch(umlSelectedComponent, umlSelectedResource, isDiscreteTime,
-				usexTextValidation,showPopups, ossFilepath, resultFilePath, monitor);
+	//	ocraExecService.executeInstantiateParamArch(umlSelectedComponent, umlSelectedResource, isDiscreteTime,
+		//		usexTextValidation,showPopups, ossFilepath, resultFilePath, monitor);
 	}
 
 	

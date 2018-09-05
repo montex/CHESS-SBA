@@ -12,5 +12,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.equinox.registry,
  org.eclipse.xtext.common.types.ui,
  eu.fbk.tools.editor.contract.expression,
- org.eclipse.emf.emfstore.common
-Import-Package: org.eclipse.emf.ecore.resource
+ org.eclipse.emf.emfstore.common,
+ eu.fbk.eclipse.standardtools.ModelTranslatorToOcra,
+ org.eclipse.papyrus.uml.tools,
+ org.polarsys.chess.contracts.profile
+Import-Package: org.apache.commons.lang3.tuple,
+ org.apache.log4j;version="1.2.15",
+ org.eclipse.draw2d.geometry,
+ org.eclipse.emf.ecore.resource

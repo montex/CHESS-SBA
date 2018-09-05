@@ -6,10 +6,6 @@
       <menuContribution
             allPopups="false"
             locationURI="menu:org.eclipse.ui.main.menu.CHESS.basicOperation">
-         <command
-               commandId="org.polarsys.chess.paramArchConfigurator.commands.InstantiateParamArchAsOssFileCommand"
-               style="push">
-         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -17,10 +13,6 @@
          <menu
                id="org.eclipse.ui.main.diagramEditorMenu.CHESS.basicOperations"
                label="Basic Operations">
-            <command
-                  commandId="org.polarsys.chess.paramArchConfigurator.commands.InstantiateParamArchAsOssFileCommand"
-                  style="push">
-            </command>
             <command
                   commandId="org.polarsys.chess.paramArchConfigurator.commands.InstantiateArchitecture"
                   style="push">

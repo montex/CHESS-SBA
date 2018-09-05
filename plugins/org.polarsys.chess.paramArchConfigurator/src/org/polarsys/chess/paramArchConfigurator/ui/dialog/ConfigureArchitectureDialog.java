@@ -20,20 +20,14 @@
 package org.polarsys.chess.paramArchConfigurator.ui.dialog;
 
 import java.util.ArrayList;
-
-import javax.swing.JScrollPane;
-
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -81,44 +75,10 @@ public class ConfigureArchitectureDialog extends Dialog {
 		final Composite container = (Composite) super.createDialogArea(parent);
 		this.getShell().setText("Configure Parameterized Architecture");
 
-		/*
-		 * final Label lblOutputFormat = new Label(container, SWT.NONE);
-		 * lblOutputFormat.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER,
-		 * false, false, 1, 1));
-		 * lblOutputFormat.setText("Parameters to Configure");
-		 */
-
-		// comboFormat = new Combo(container, SWT.NONE | SWT.READ_ONLY);
-		// comboFormat.setItems(DocumentGenerator.DocumentType.getValuesAsStringArray());
-
-		/*
-		 * final GridData gd_combo = new GridData(SWT.LEFT, SWT.CENTER, true,
-		 * false, 1, 1); //gd_combo.widthHint = 195;
-		 * comboFormat.setLayoutData(gd_combo); comboFormat.select(0);
-		 */
-
-		// btnShowPortLabels = new Button(container, SWT.CHECK);
-		// btnShowPortLabels.setSelection(true);
-		// btnShowPortLabels.setAlignment(SWT.RIGHT);
-		// btnShowPortLabels.setText("Show port labels");
-		// btnShowPortLabels.setToolTipText("Show the port labels");
-		//
-		// btnAutomaticPortLabelLayout = new Button(container, SWT.CHECK);
-		// btnAutomaticPortLabelLayout.setSelection(true);
-		// btnAutomaticPortLabelLayout.setAlignment(SWT.RIGHT);
-		// btnAutomaticPortLabelLayout.setText("Automatic port label layout");
-		// btnAutomaticPortLabelLayout.setToolTipText(
-		// "Set automatically the port label orientation basing on the port and
-		// connection positions");
-
 		ScrolledComposite sc = new ScrolledComposite(container, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		sc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Composite containerConfigParams = new Composite(sc, SWT.NONE);
-		// containerConfigParams.setLayout(new FillLayout(SWT.VERTICAL));
-
-		// final Composite containerConfigParams = new Composite(container,
-		// SWT.NONE);
 
 		final GridLayout gl = new GridLayout();
 		gl.numColumns = 3;
@@ -132,23 +92,17 @@ public class ConfigureArchitectureDialog extends Dialog {
 
 			Label paramNameLabel = new Label(containerConfigParams, SWT.CHECK);
 			paramNameLabel.setAlignment(SWT.RIGHT);
-			paramNameLabel.setText(configParam.getFullName()+": "+configParam.getType().name());
+			paramNameLabel.setText(configParam.getFullName() + ": " + configParam.getType().name());
 			paramNameLabel.setToolTipText("Name of the parameter and its type");
 			paramNameLabel.setLayoutData(gdName);
-
-			/*Label paramTypeLabel = new Label(containerConfigParams, SWT.CHECK);
-			paramTypeLabel.setAlignment(SWT.LEFT);
-			paramTypeLabel.setText(configParam.getType().name());
-			paramTypeLabel.setToolTipText("Type of the parameter");
-			paramTypeLabel.setLayoutData(gd);*/
 
 			if (configParam.getPermittedValues() == null) {
 				Text paramLabelText = new Text(containerConfigParams, SWT.CHECK);
 				paramLabelText.setToolTipText("Value of the parameter");
 				paramLabelText.setLayoutData(gdValue);
 				VerifyListener verListener;
-				if((verListener=configParam.getVerifyListener())!=null){
-				paramLabelText.addVerifyListener(verListener);
+				if ((verListener = configParam.getVerifyListener()) != null) {
+					paramLabelText.addVerifyListener(verListener);
 				}
 			} else {
 				Combo paramCombo = new Combo(containerConfigParams, SWT.NONE | SWT.READ_ONLY);
@@ -188,6 +142,4 @@ public class ConfigureArchitectureDialog extends Dialog {
 		return goAhead;
 	}
 
-	
-	
 }
