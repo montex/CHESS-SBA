@@ -8,7 +8,7 @@
  * Contributors:
  *     Luca Cristoforetti - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.OSSImporter.actions;
+package org.polarsys.chess.OSSImporter.core.actions;
 
 import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.Class;
@@ -23,16 +23,17 @@ import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.DataType;
-import org.polarsys.chess.OSSImporter.exceptions.ImportException;
-import org.polarsys.chess.OSSImporter.utils.ChessElementsUtil;
-import org.polarsys.chess.OSSImporter.utils.OssTypeTranslator;
-import org.polarsys.chess.OSSImporter.utils.StereotypeUtil;
+import org.polarsys.chess.OSSImporter.core.exceptions.ImportException;
+import org.polarsys.chess.OSSImporter.core.utils.ChessElementsUtil;
+import org.polarsys.chess.OSSImporter.core.utils.OssTypeTranslator;
+import org.polarsys.chess.OSSImporter.core.utils.StereotypeUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.ContractRefinement;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.contracts.profile.chesscontract.util.ContractEntityUtil;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
+import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
 import com.google.common.collect.Maps;
 
@@ -77,6 +78,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
@@ -1162,6 +1164,9 @@ public class ImportOSSFileAction {
 	 * @throws Exception
 	 */
 	public StringBuffer startParsing(Package pkg, File ossFile) throws Exception {
+		
+		logger.debug("pkg: "+pkg);
+		
 		OSS ocraOssFile;
 		sysView = pkg; // Set the given package as working package
 
@@ -1216,7 +1221,10 @@ public class ImportOSSFileAction {
 		importException = null;
 
 		// Start a transaction to modify the package content
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(pkg);
+		Resource modelRes = SelectionUtil.getInstance().getSelectedModelResource();
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(modelRes);
+		logger.debug("pkg.eResource(): "+pkg.eResource());
+		logger.debug("pkg.eResource().getResourceSet(): "+pkg.eResource().getResourceSet());
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
 
 			@Override
@@ -1304,7 +1312,7 @@ public class ImportOSSFileAction {
 					}
 				} catch (ImportException e) {
 					importException = e;
-					return;
+					//return;
 				}
 
 				// Blocks cleanup time, remove blocks no more needed
@@ -1320,7 +1328,8 @@ public class ImportOSSFileAction {
 				// System.out.println("Total time = " +
 				// (System.currentTimeMillis() - startTime));
 			}
-		});
+		}
+);
 
 		// addedElements contains all the elements that have been added or
 		// modified
