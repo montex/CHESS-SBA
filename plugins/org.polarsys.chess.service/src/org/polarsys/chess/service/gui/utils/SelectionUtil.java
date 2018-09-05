@@ -56,6 +56,11 @@ public class SelectionUtil {
 		return selectionUtil;
 	}
 
+	public Object getUmlSelectedObject(ExecutionEvent event) {
+		ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
+		return getUmlSelectedObject(selection);
+	}
+	
 	public Object getUmlSelectedObject(Object selection) {
 
 		Object selectedObject = selection;
@@ -133,12 +138,18 @@ public class SelectionUtil {
 	}
 
 	public Resource getSelectedModelResource() {
-		UmlModel umlModel = UmlUtils.getUmlModel();
+		UmlModel umlModel = getSelectedUmlModel();
+		return getSelectedModelResource(umlModel);
+	}
+
+	public UmlModel getSelectedUmlModel() {
+		return UmlUtils.getUmlModel();
+	}
+	
+	public Resource getSelectedModelResource(UmlModel umlModel) {		
 		if (umlModel != null) {
 			return umlModel.getResource();
 		}
 		return null;
 	}
-
-	
 }
