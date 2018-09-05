@@ -170,7 +170,13 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 */
 	@Override
 	public void createAssumption(Object contract) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(contract);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
 		contractEntityUtil.createAssumptionToUmlContract((Class) contract);
+			}});
 	}
 
 	/*
@@ -207,7 +213,13 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 */
 	@Override
 	public void createGuarantee(Object contract) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(contract);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
 		contractEntityUtil.createGuaranteeToUmlContract((Class) contract);
+			}});
 	}
 
 	/*
@@ -243,8 +255,15 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 */
 	@Override
 	public void guaranteeEditorchanged(Object contract, String textChanged) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(contract);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
 		contractEntityUtil.setTextToGuaranteeOrCreateGuarantee(textChanged, (Class) contract);
-	}
+			}
+		});
+			}
 
 	/*
 	 * (non-Javadoc)
@@ -255,7 +274,14 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 */
 	@Override
 	public void assumptionEditorchanged(Object contract, String textChanged) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(contract);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
 		contractEntityUtil.setTextToAssumeOrCreateAssume(textChanged, (Class) contract);
+			}
+		});
 	}
 
 	/*
@@ -343,7 +369,13 @@ public class CustomContractEditorTab extends ContractEditorTab {
 	 */
 	@Override
 	public void createContractProperty(Object component, String propertyName) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(component);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
 		contractEntityUtil.createContractPropertyToUmlComponent((Class) component, propertyName);
+			}});
 	}
 
 	/**

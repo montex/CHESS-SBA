@@ -11,6 +11,9 @@
 package org.polarsys.chess.constraints.constraintEditor;
 
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.uml2.uml.Constraint;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
@@ -66,7 +69,12 @@ public class CustomConstraintEditorTab extends ConstraintEditorTab {
 	 */
 	@Override
 	public void constraintEditorchanged(Object constraint, String textChanged) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(constraint);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+		@Override
+		protected void doExecute() {
 		entityUtil.setTextInUMLConstraint((Constraint) constraint, textChanged, "OCRA");
+		}});
 	}
 
 	/*
