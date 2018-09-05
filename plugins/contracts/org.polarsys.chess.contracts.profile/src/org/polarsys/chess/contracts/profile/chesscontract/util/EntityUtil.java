@@ -451,6 +451,10 @@ public class EntityUtil {
 
 	}
 
+	public Package createPackage(Package owner, final String elementName){
+		return owner.createNestedPackage(elementName);
+	}
+	
 	/**
 	 * Creates a Block element in the given package.
 	 * 
@@ -810,14 +814,14 @@ public class EntityUtil {
 		throw new Exception("Element does not exist.");
 	}
 
-	public EObject getElement(String projectName, String fileModelPath, String elementID) throws Exception {
+	public EObject getElement(String projectName, String umlFileModelName, String elementID) throws Exception {
 
-		Model model = loadModel(projectName, fileModelPath);
+		Model model = loadModel(projectName, umlFileModelName);
 		return getElement(model, elementID);
 
 	}
 
-	public EObject getElement(Model model, String elementID) throws Exception {
+	public EObject getElement(Model model, String elementURI) throws Exception {
 
 		if (model != null) {
 			/*
@@ -826,7 +830,7 @@ public class EntityUtil {
 			 * logger.debug("URI  fragment: "+allElements.next().eResource().
 			 * getURI().fragment()); }
 			 */
-			EObject umlElement = model.eResource().getEObject(elementID.trim());
+			EObject umlElement = model.eResource().getEObject(elementURI.trim());
 			return umlElement;
 		}
 
@@ -2180,15 +2184,15 @@ public class EntityUtil {
 		// umlContract.getName();
 		final String propertyName = formalPropertyName;
 
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(formalPropertyOwner);
+	/*	TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(formalPropertyOwner);
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
 
 			@Override
-			protected void doExecute() {
+			protected void doExecute() {*/
 				Constraint umlNewConstraint = formalPropertyOwner.createOwnedRule(propertyName);
 				UMLUtils.applyStereotype(umlNewConstraint, FORMAL_PROP);
-			}
-		});
+			/*}
+		});*/
 		return formalPropertyOwner.getOwnedRule(propertyName);
 
 	}
@@ -2427,24 +2431,24 @@ public class EntityUtil {
 	
 	
 	public void setLiteralStringTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText) {
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlConstraint);
+		/*TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlConstraint);
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
 		@Override
-		protected void doExecute() {
+		protected void doExecute() {*/
 		if (umlConstraint.getSpecification() instanceof LiteralString) {
 		LiteralString litString = (LiteralString) umlConstraint.getSpecification();
 		litString.setValue(formalPropertyText);
 		umlConstraint.setSpecification(litString);
 		}
-		}
-		});
+		/*}
+		});*/
 	}
 	
 	private void setOpaqueExpressionTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText, final String language) {
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlConstraint);
+		/*TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlConstraint);
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
 		@Override
-		protected void doExecute() {
+		protected void doExecute() {*/
 			if (umlConstraint.getSpecification() instanceof OpaqueExpression) {
 				// logger.debug("saveFormalProperty OpaqueExpression");
 				OpaqueExpression opaqueExpr = (OpaqueExpression) umlConstraint.getSpecification();
@@ -2452,8 +2456,8 @@ public class EntityUtil {
 				setOpaqueExpressionBodyForLanguage(opaqueExpr, language, formalPropertyText);
 
 			}
-		}
-		});
+		/*}
+		});*/
 	}
 	
 	private void setOpaqueExpressionBodyForLanguage(org.eclipse.uml2.uml.OpaqueExpression opaqueExpression,

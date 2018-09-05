@@ -332,18 +332,18 @@ public class ContractEntityUtil {
 	public void createAssumptionToUmlContract(final Class umlContract) {
 
 		if (entityUtil.getOwner(umlContract) != null) {
-
+/*
 			TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlContract);
 			domain.getCommandStack().execute(new RecordingCommand(domain) {
 
 				@Override
 				protected void doExecute() {
-					Constraint assumeFormalProperty = createFormalPropertyInContract("Assumption", umlContract);
+		*/			Constraint assumeFormalProperty = createFormalPropertyInContract("Assumption", umlContract);
 					Contract contract = getContract(umlContract);
 					contract.setAssume(entityUtil.getFormalProperty(assumeFormalProperty));
-				}
+		/*		}
 			});
-
+*/
 		}
 	}
 
@@ -370,32 +370,32 @@ public class ContractEntityUtil {
 
 		if (entityUtil.getOwner(umlContract) != null) {
 
-			TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlContract);
+	/*		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlContract);
 			domain.getCommandStack().execute(new RecordingCommand(domain) {
 
 				@Override
-				protected void doExecute() {
+				protected void doExecute() {*/
 					Constraint guaranteeFormalProperty = createFormalPropertyInContract("Guarantee", umlContract);
 					Contract contract = getContract(umlContract);
 					contract.setGuarantee(entityUtil.getFormalProperty(guaranteeFormalProperty));
-				}
-			});
+				/*}
+			});*/
 		}
 	}
 
 	public void createContractPropertyToUmlComponent(final Class umlComponent, final String propertyName) {
 
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlComponent);
+	/*	TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlComponent);
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
 
 			@Override
-			protected void doExecute() {
+			protected void doExecute() {*/
 				Property newUmlProperty = umlComponent.createOwnedAttribute(propertyName, null);
 				UMLUtils.applyStereotype(newUmlProperty, CONTRACT_PROP);
-
+/*
 			}
 		});
-
+*/
 	}
 
 	public Class getUmlContract(Class umlComponent, String extContractPropertyName) {
@@ -511,11 +511,11 @@ public class ContractEntityUtil {
 	
 	public void setTextToGuaranteeOrCreateGuarantee(final String formalPropertyText, final Class umlContract) {
 
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlContract);
+	/*	TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlContract);
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
 
 			@Override
-			protected void doExecute() {
+			protected void doExecute() {*/
 				// rivedere questo codice
 				FormalProperty guaranteeFormalProperty = getGuaranteeFromUmlContract(umlContract);
 
@@ -524,17 +524,17 @@ public class ContractEntityUtil {
 					guaranteeFormalProperty = getGuaranteeFromUmlContract(umlContract);
 				}
 				entityUtil.setTextInUMLConstraint(guaranteeFormalProperty.getBase_Constraint(), formalPropertyText, "OCRA");
-			}
-		});
+			/*}
+		});*/
 	}
 
 	public void setTextToAssumeOrCreateAssume(final String formalPropertyText, final Class umlContract) {
 
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlContract);
+	/*	TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlContract.getModel());
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
 
 			@Override
-			protected void doExecute() {
+			protected void doExecute() {*/
 				// rivedere questo codice
 				FormalProperty assumptionFormalProperty = getAssumeFromUmlContract(umlContract);
 
@@ -543,8 +543,8 @@ public class ContractEntityUtil {
 					assumptionFormalProperty = getAssumeFromUmlContract(umlContract);
 				}
 				entityUtil.setTextInUMLConstraint(assumptionFormalProperty.getBase_Constraint(), formalPropertyText, "OCRA");
-			}
-		});
+	/*		}
+		});*/
 	}
 
 	/*
