@@ -73,7 +73,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 			smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
 			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(umlSelectedComponent.getName());
 			resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(umlSelectedComponent.getName());
-			smvMapFilepath = ocraDirectoryUtil.getSmvMapFilePath();
+			smvMapFilepath = ocraDirectoryUtil.getSmvMapDirPath();
 		} else {
 			String elementURI = event.getParameter("elementURI");
 			String projectName = event.getParameter("projectName");
@@ -92,7 +92,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 			smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory(projectPath);
 			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(projectPath,
 					umlSelectedComponent.getName());
-			smvMapFilepath = ocraDirectoryUtil.getSmvMapFilePath(projectPath);
+			smvMapFilepath = ocraDirectoryUtil.getSmvMapDirPath(projectPath);
 			//resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(projectPath, umlSelectedComponent.getName());
 
 		}
