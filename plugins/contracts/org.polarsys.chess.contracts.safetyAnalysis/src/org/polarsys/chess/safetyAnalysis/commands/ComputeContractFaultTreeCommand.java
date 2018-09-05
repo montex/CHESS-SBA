@@ -53,7 +53,7 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 		 isDiscreteTime = MessageTimeModelDialog.openQuestion(true);
 		 showPopups = false;
 		 usexTextValidation=true;
-		 ossFilepath = ocraDirectoryUtil.getOSSFilePath();
+		 ossFilepath = ocraDirectoryUtil.getOSSDirPath();
 		 resultFilePath = ocraDirectoryUtil.getCommandFaultTreeGenResultPath(umlSelectedComponent.getName());
 	}
 
