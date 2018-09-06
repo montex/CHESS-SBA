@@ -25,6 +25,7 @@ import org.polarsys.chess.contracts.transformations.commands.CommandsCommon;
  *
  */
 public class FileNamesUtil {
+	private static final String XML_EXT = ".xml";
 	private static FileNamesUtil fileNamesUtil;
 
 	public static FileNamesUtil getInstance() {
@@ -58,7 +59,8 @@ public class FileNamesUtil {
 		final IFolder folder = computeXSapFolder(editor);
 		final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
 		final String tempFiles = resFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + "extended_" + modelSystemName + "_c" + index + "_ft.xml";
+		final String fileName = tempFiles + File.separator + "extended_" + 
+				modelSystemName + "_c" + index + "_ft" + XML_EXT;
 		return fileName;
 	}
 
@@ -72,7 +74,7 @@ public class FileNamesUtil {
 		final IFolder folder = computeXSapFolder(editor);
 		final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
 		final String tempFiles = resFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + modelSystemName + "_fmea_table.xml";
+		final String fileName = tempFiles + File.separator + modelSystemName + "_fmea_table" + XML_EXT;
 		return fileName;
 	}
 
@@ -91,6 +93,20 @@ public class FileNamesUtil {
 	}
 	
 	/**
+	 * Computes the absolute file name for the expanded FEI.
+	 * @param editor the active editor
+	 * @param modelSystemName the model name
+	 * @return
+	 */
+	public String computeExpandedFeiFileName(IEditorPart editor, String modelSystemName) {
+		final IFolder folder = computeXSapFolder(editor);
+		final IFolder tempFolder = folder.getFolder(CommandsCommon.TEMP_FOLD);
+		final String tempFiles = tempFolder.getLocation().toString();
+		final String fileName = tempFiles + File.separator + "expanded_" + modelSystemName + XML_EXT;
+		return fileName;
+	}
+	
+	/**
 	 * Computes the absolute file name for the fms.
 	 * @param editor the active editor
 	 * @param modelSystemName the model name
@@ -100,7 +116,7 @@ public class FileNamesUtil {
 		final IFolder folder = computeXSapFolder(editor);
 		final IFolder tempFolder = folder.getFolder(CommandsCommon.TEMP_FOLD);
 		final String tempFiles = tempFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + "fms_" + modelSystemName + ".xml";
+		final String fileName = tempFiles + File.separator + "fms_" + modelSystemName + XML_EXT;
 		return fileName;
 	}
 	
