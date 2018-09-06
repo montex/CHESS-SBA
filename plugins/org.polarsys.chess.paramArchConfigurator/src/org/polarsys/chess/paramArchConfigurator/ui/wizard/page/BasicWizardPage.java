@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (C) 2018 Fondazione Bruno Kessler.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *  
+ * Contributors:
+ *   Alberto Debiasi - initial API and implementation
+ ******************************************************************************/
 package org.polarsys.chess.paramArchConfigurator.ui.wizard.page;
 
 import java.util.ArrayList;
@@ -63,7 +73,7 @@ public class BasicWizardPage extends WizardPage {
 		scrolledContent.setLayoutData(gd);
 
 		if (prevParametersList.size() == 0) {
-			Label tableLabel = new Label(scrolledContent, SWT.BORDER);
+			Label tableLabel = new Label(scrolledContent, SWT.NONE);
 			tableLabel.setText("No parameter is already assigned.");
 		} else {
 			int numIterations = 1;

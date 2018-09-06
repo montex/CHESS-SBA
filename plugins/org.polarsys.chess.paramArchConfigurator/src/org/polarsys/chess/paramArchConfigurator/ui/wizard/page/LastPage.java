@@ -1,7 +1,19 @@
+/*******************************************************************************
+ * Copyright (C) 2018 Fondazione Bruno Kessler.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *  
+ * Contributors:
+ *   Alberto Debiasi - initial API and implementation
+ ******************************************************************************/
 package org.polarsys.chess.paramArchConfigurator.ui.wizard.page;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import org.apache.commons.io.FilenameUtils;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.papyrus.uml.tools.providers.UMLContentProvider;
 import org.eclipse.papyrus.uml.tools.providers.UMLLabelProvider;
@@ -92,7 +104,7 @@ public class LastPage extends BasicWizardPage {
 	}
 	
 	public String getNestedPackageName(){
-		return newOssFile.getName();
+		return FilenameUtils.removeExtension(newOssFile.getName());
 	}
 	
 	public File getOSSFile(){

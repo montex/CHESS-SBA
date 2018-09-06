@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (C) 2018 Fondazione Bruno Kessler.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *  
+ * Contributors:
+ *   Alberto Debiasi - initial API and implementation
+ ******************************************************************************/
 package org.polarsys.chess.paramArchConfigurator.ui.wizard.page;
 
 import java.io.File;
@@ -98,7 +108,7 @@ public class AssignValuesPage extends BasicWizardPage {
 				AssignValuesPage nextPage = new AssignValuesPage(originalOssFileName, selectedElement,newOssFile, newParametersList,
 						allParametersList, currNumInstatiation + 1, isDiscreteTime, monitor, this.getWizard());
 				return nextPage;
-			} else {
+			} else {				
 				LastPage lastPage = new LastPage(selectedElement,newOssFile,allParametersList);
 				lastPage.setWizard(this.getWizard());
 				return lastPage;
