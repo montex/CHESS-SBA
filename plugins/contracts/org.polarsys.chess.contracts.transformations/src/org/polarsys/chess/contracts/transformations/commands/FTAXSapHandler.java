@@ -31,7 +31,7 @@ public class FTAXSapHandler extends AbstractXSapHandler {
 		int index = 0;
 		for (String condition : ftaCond.split(", ")) {
 			final String ftFileName = fileNamesUtil.computeFtFileName(editor, modelName, ++index);
-			if (!xSapExecService.computeFt(extendedSmvFileName, fmsFileName, condition, ftFileName)) {
+			if (!xSapExecService.computeFt(extendedSmvFileName, fmsFileName, condition, ftFileName, false)) {
 				return null;
 			}		
 		}

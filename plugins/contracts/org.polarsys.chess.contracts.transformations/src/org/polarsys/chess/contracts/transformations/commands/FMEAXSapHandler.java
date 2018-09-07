@@ -43,7 +43,8 @@ public class FMEAXSapHandler extends AbstractXSapHandler {
 		}
 			
 		// Compute FMEA and show results in a dedicated view
-		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, processConditions(ftaCond), fmeaFileName);		
+		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, processConditions(ftaCond), 
+				fmeaFileName, true);		
 		return null;
 	}
 }
