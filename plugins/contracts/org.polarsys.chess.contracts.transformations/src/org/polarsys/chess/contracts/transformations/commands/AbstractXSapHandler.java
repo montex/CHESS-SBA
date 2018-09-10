@@ -26,7 +26,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Model;
 import org.polarsys.chess.contracts.transformations.commands.CommandsCommon.CommandEnum;
-import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAAnalysisCtxDialog;
+import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAFMEAAnalysisCtxDialog;
 import org.polarsys.chess.contracts.transformations.utils.FileNamesUtil;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
@@ -70,7 +70,7 @@ public abstract class AbstractXSapHandler extends AbstractHandler {
 			final PapyrusMultiDiagramEditor editorPapyrus = CHESSEditorUtils.getCHESSEditor();
 			final Resource res = ResourceUtils.getUMLResource(editorPapyrus.getServicesRegistry());
 			final Model model = ResourceUtils.getModel(res);
-			final SelectFTAAnalysisCtxDialog dialog = new SelectFTAAnalysisCtxDialog(activeShell, model);
+			final SelectFTAFMEAAnalysisCtxDialog dialog = new SelectFTAFMEAAnalysisCtxDialog(activeShell, model);
 			fileName = model.getName();
 			dialog.create();
 			if (dialog.open() == Window.OK) {
@@ -113,7 +113,9 @@ public abstract class AbstractXSapHandler extends AbstractHandler {
 	protected boolean prepareExpandedFiles(ExecutionEvent event) throws ExecutionException {
 				
 		// Prepare the file names for all the commands
-		computeFileNames(event);
+		if (!computeFileNames(event)) {
+			return false;
+		}
 		
 		// Generate the FEI file
 		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
@@ -122,7 +124,7 @@ public abstract class AbstractXSapHandler extends AbstractHandler {
 		final CHESSSmvExporterService smvExporterService = CHESSSmvExporterService.getInstance();
 		if (!smvExporterService.createMonolithicSmvFile(smvFileName)){
 			return false;
-		};
+		}
 		
 		// FIXME: al momento il comando non esiste
 		// Expand the FEI file
