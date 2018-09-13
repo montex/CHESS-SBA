@@ -19,10 +19,10 @@ import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.OrganizationUnitImpl#getBase_Class <em>Base Class</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -21,13 +21,13 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FaultHandlingImpl#getBase_Transition <em>Base Transition</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FaultHandlingImpl#getDelay <em>Delay</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FaultHandlingImpl#getSuccessProbability <em>Success Probability</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.FaultHandlingImpl#getWeight <em>Weight</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

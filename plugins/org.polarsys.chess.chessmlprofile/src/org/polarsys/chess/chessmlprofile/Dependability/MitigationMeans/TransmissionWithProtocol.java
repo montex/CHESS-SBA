@@ -22,12 +22,12 @@ import org.eclipse.uml2.uml.Connector;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.TransmissionWithProtocol#getBase_Connector <em>Base Connector</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.TransmissionWithProtocol#getCRC <em>CRC</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.TransmissionWithProtocol#isUseSeqID <em>Use Seq ID</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.MitigationMeansPackage#getTransmissionWithProtocol()
  * @model

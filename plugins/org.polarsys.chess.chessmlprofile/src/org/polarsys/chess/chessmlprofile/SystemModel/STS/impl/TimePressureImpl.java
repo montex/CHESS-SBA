@@ -21,8 +21,6 @@ import org.polarsys.chess.chessmlprofile.SystemModel.STS.TimePressure;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Time Pressure</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

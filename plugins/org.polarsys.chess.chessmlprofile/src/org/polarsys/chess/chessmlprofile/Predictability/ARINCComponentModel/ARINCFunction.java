@@ -17,13 +17,13 @@ import org.eclipse.uml2.uml.Type;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCFunction#getBase_Operation <em>Base Operation</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCFunction#getBase_Comment <em>Base Comment</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCFunction#getFollowedBy <em>Followed By</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCFunction#getRateDivider <em>Rate Divider</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage#getARINCFunction()
  * @model

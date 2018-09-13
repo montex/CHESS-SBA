@@ -28,10 +28,10 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.PSMView;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.PSMViewImpl#getBase_Package <em>Base Package</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

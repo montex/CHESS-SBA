@@ -22,11 +22,11 @@ import org.eclipse.uml2.uml.Component;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.Adjudicator#getBase_Component <em>Base Component</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.Adjudicator#getCoverage <em>Coverage</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.FaultTolerancePackage#getAdjudicator()
  * @model

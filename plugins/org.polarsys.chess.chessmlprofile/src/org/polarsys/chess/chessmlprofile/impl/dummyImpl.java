@@ -20,8 +20,6 @@ import org.polarsys.chess.chessmlprofile.dummy;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>dummy</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

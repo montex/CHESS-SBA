@@ -130,6 +130,12 @@
         <children>
           <emfPageIdentifier href="CHESS.profile.notation#_TDLlAOnjEeWA_dLIUfgPeA"/>
         </children>
+        <children>
+          <emfPageIdentifier href="CHESS.profile.notation#_QraOELc1EeiAgOtQQtqqmg"/>
+        </children>
+        <children>
+          <emfPageIdentifier href="CHESS.profile.notation#_3OelYMF0Ed--atLXXafOiQ"/>
+        </children>
       </children>
     </windows>
   </sashModel>

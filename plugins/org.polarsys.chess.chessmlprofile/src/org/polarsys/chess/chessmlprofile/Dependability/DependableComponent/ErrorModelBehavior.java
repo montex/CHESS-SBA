@@ -24,6 +24,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorM
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getErrorModel <em>Error Model</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Class <em>Base Class</em>}</li>
@@ -31,7 +32,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorM
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Property <em>Base Property</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior#getBase_Connector <em>Base Connector</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getErrorModelBehavior()
  * @model

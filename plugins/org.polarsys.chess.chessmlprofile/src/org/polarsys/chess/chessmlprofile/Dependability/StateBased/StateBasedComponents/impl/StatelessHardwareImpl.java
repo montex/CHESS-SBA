@@ -26,12 +26,12 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComp
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessHardwareImpl#getProbPermFault <em>Prob Perm Fault</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessHardwareImpl#getRepairDelay <em>Repair Delay</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StatelessHardwareImpl#getFaultOcc <em>Fault Occ</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

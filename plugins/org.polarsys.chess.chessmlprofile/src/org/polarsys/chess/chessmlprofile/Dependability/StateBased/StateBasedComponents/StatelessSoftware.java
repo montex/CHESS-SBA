@@ -24,10 +24,10 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Depen
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StatelessSoftware#getFaultOcc <em>Fault Occ</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.StateBasedComponentsPackage#getStatelessSoftware()
  * @model

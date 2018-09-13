@@ -38,11 +38,11 @@ import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Safety.impl.CriticalityInterfaceSpecificationImpl#getBase_Constraint <em>Base Constraint</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Safety.impl.CriticalityInterfaceSpecificationImpl#getAcceptedCriticalityForClients <em>Accepted Criticality For Clients</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

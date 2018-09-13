@@ -30,13 +30,13 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentImplementationImpl#getBase_Component <em>Base Component</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentImplementationImpl#getLanguage <em>Language</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentImplementationImpl#getOS <em>OS</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentImplementationImpl#getSourceCodeLocation <em>Source Code Location</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

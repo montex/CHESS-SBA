@@ -31,7 +31,6 @@ import org.eclipse.papyrus.MARTE.MARTE_Foundations.NFPs.NFPsPackage;
  * <!-- end-user-doc -->
  * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationFactory
  * @model kind="package"
- *        annotation="http://www.eclipse.org/uml2/2.0.0/UML originalName='ThreatsPopagation'"
  * @generated
  */
 public interface ThreatsPropagationPackage extends EPackage {

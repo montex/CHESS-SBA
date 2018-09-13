@@ -20,12 +20,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView#getBase_Package <em>Base Package</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView#getRtanalysisview <em>Rtanalysisview</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.AnalysisView#getDepanalysisview <em>Depanalysisview</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Core.CHESSViews.CHESSViewsPackage#getAnalysisView()
  * @model

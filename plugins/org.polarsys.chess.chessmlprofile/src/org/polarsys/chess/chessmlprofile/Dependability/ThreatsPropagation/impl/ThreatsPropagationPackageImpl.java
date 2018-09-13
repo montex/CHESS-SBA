@@ -75,6 +75,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.StuckA
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatState;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationFactory;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
+import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.ParameterizedArchitecturePackage;
+import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitecturePackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
@@ -306,6 +308,7 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
+		ParameterizedArchitecturePackageImpl theParameterizedArchitecturePackage = (ParameterizedArchitecturePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) instanceof ParameterizedArchitecturePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) : ParameterizedArchitecturePackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theThreatsPropagationPackage.createPackageContents();
@@ -327,6 +330,7 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
 		theSafetyPackage.createPackageContents();
+		theParameterizedArchitecturePackage.createPackageContents();
 
 		// Initialize created meta-data
 		theThreatsPropagationPackage.initializePackageContents();
@@ -348,6 +352,7 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
 		theSafetyPackage.initializePackageContents();
+		theParameterizedArchitecturePackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theThreatsPropagationPackage.freeze();
@@ -1140,26 +1145,6 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		addEEnumLiteral(recoveryKindEEnum, RecoveryKind.COMPENSATION);
 		addEEnumLiteral(recoveryKindEEnum, RecoveryKind.ERROR_DETECTION);
 		addEEnumLiteral(recoveryKindEEnum, RecoveryKind.RECONFIGURATION);
-
-		// Create annotations
-		// http://www.eclipse.org/uml2/2.0.0/UML
-		createUMLAnnotations();
-	}
-
-	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/uml2/2.0.0/UML</b>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void createUMLAnnotations() {
-		String source = "http://www.eclipse.org/uml2/2.0.0/UML";	
-		addAnnotation
-		  (this, 
-		   source, 
-		   new String[] {
-			 "originalName", "ThreatsPopagation"
-		   });
 	}
 
 } //ThreatsPropagationPackageImpl

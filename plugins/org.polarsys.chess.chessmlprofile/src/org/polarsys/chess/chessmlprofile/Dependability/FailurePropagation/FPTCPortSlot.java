@@ -28,12 +28,12 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot#getFPTCSpecification <em>FPTC Specification</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot#getBase_Slot <em>Base Slot</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCPortSlot#getFailure <em>Failure</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFPTCPortSlot()
  * @model

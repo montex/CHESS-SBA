@@ -14,12 +14,12 @@ import org.eclipse.uml2.uml.Operation;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCProcess#getBase_Operation <em>Base Operation</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCProcess#getBase_Comment <em>Base Comment</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCProcess#getOperationsGroups <em>Operations Groups</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage#getARINCProcess()
  * @model

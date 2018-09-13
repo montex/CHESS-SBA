@@ -25,10 +25,10 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.RTAnalysisView;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.RTAnalysisViewImpl#getBase_Package <em>Base Package</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

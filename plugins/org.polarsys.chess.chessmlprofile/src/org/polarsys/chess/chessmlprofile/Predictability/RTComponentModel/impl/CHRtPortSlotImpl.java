@@ -32,12 +32,12 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTCompo
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtPortSlotImpl#getBase_Slot <em>Base Slot</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtPortSlotImpl#getCH_RtSpecification <em>CH Rt Specification</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.CHRtPortSlotImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

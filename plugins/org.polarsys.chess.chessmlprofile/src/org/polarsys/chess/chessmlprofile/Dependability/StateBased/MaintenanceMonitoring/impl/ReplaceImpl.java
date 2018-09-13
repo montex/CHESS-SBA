@@ -31,11 +31,11 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMon
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.ReplaceImpl#getTargets <em>Targets</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.ReplaceImpl#getReplacement <em>Replacement</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

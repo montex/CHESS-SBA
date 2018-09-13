@@ -34,6 +34,7 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.SystemView;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getBase_Model <em>Base Model</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getAnalysisView <em>Analysis View</em>}</li>
@@ -44,7 +45,6 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.SystemView;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getPsmView <em>Psm View</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHESSImpl#getDomain <em>Domain</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

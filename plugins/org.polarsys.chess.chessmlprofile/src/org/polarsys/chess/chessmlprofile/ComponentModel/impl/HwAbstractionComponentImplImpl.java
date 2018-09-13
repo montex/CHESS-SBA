@@ -22,11 +22,11 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.HwAbstractionComponentIm
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.HwAbstractionComponentImplImpl#getHwRes <em>Hw Res</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.HwAbstractionComponentImplImpl#getBase_Component <em>Base Component</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

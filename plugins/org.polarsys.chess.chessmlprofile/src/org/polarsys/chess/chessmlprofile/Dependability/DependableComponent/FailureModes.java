@@ -22,13 +22,13 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSp
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getBase_Slot <em>Base Slot</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getBase_Port <em>Base Port</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getFailureMode <em>Failure Mode</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getFPTCSpecification <em>FPTC Specification</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getFailureModes()
  * @model

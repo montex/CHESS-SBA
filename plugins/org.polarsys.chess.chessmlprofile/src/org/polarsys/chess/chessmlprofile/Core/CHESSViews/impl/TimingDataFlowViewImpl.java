@@ -25,10 +25,10 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.TimingDataFlowView;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.TimingDataFlowViewImpl#getBase_Package <em>Base Package</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

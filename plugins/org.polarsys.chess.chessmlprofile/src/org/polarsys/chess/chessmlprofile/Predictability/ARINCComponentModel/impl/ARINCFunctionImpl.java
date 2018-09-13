@@ -30,13 +30,13 @@ import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARIN
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCFunctionImpl#getBase_Operation <em>Base Operation</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCFunctionImpl#getBase_Comment <em>Base Comment</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCFunctionImpl#getFollowedBy <em>Followed By</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCFunctionImpl#getRateDivider <em>Rate Divider</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

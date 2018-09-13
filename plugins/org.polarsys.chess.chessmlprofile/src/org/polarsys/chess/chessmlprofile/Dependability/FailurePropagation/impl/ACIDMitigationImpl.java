@@ -30,6 +30,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.ACIDMitigationImpl#getBase_Comment <em>Base Comment</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.ACIDMitigationImpl#getA <em>A</em>}</li>
@@ -37,7 +38,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.ACIDMitigationImpl#getI <em>I</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.ACIDMitigationImpl#getD <em>D</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

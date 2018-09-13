@@ -28,10 +28,10 @@ import org.polarsys.chess.chessmlprofile.SystemModel.STS.Technological;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.impl.TechnologicalImpl#getBase_Class <em>Base Class</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

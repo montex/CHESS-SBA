@@ -32,13 +32,13 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorM
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentImpl#getBase_Component <em>Base Component</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentImpl#getErrorModel <em>Error Model</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentImpl#getBase_Property <em>Base Property</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

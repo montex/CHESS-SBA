@@ -25,10 +25,10 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.SystemView;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.SystemViewImpl#getBase_Package <em>Base Package</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

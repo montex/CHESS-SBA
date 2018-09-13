@@ -21,12 +21,12 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RunTime
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RunTimeSupportImpl#isMonitoring <em>Monitoring</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RunTimeSupportImpl#isVerification <em>Verification</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RunTimeSupportImpl#getBase_Comment <em>Base Comment</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

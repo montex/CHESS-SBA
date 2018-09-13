@@ -29,6 +29,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Failu
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeImpl#getBase_Class <em>Base Class</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeImpl#getDescription <em>Description</em>}</li>
@@ -37,7 +38,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Failu
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeImpl#getControllability <em>Controllability</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModeImpl#getLikelihood <em>Likelihood</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

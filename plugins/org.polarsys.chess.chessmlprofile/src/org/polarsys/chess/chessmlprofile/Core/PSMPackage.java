@@ -22,11 +22,11 @@ import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.SAM.SaAnalysisContext;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.PSMPackage#getBase_Package <em>Base Package</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.PSMPackage#getAnalysisContext <em>Analysis Context</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Core.CorePackage#getPSMPackage()
  * @model

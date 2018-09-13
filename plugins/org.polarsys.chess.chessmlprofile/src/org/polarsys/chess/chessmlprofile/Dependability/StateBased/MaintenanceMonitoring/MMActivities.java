@@ -25,6 +25,7 @@ import org.eclipse.uml2.uml.Activity;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.MMActivities#getBase_Activity <em>Base Activity</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.MMActivities#getWhen <em>When</em>}</li>
@@ -35,7 +36,6 @@ import org.eclipse.uml2.uml.Activity;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.MMActivities#getOnFailedCompletion <em>On Failed Completion</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.MMActivities#getBase_Action <em>Base Action</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.MaintenanceMonitoringPackage#getMMActivities()
  * @model

@@ -26,10 +26,10 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentType;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.ComponentTypeImpl#getBase_Component <em>Base Component</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

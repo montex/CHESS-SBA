@@ -30,11 +30,11 @@ import org.polarsys.chess.chessmlprofile.Core.PSMPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.PSMPackageImpl#getBase_Package <em>Base Package</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.PSMPackageImpl#getAnalysisContext <em>Analysis Context</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

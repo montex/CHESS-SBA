@@ -27,6 +27,7 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.SystemView;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getBase_Model <em>Base Model</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getAnalysisView <em>Analysis View</em>}</li>
@@ -37,7 +38,6 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.SystemView;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getPsmView <em>Psm View</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESS#getDomain <em>Domain</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Core.CorePackage#getCHESS()
  * @model

@@ -20,10 +20,10 @@ import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARIN
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentImplImpl#getBase_Component <em>Base Component</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

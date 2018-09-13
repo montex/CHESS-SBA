@@ -26,11 +26,11 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.impl.AdjudicatorImpl#getBase_Component <em>Base Component</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.FaultTolerance.impl.AdjudicatorImpl#getCoverage <em>Coverage</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

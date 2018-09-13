@@ -24,6 +24,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLABehaviorImpl#getBase_Constraint <em>Base Constraint</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLABehaviorImpl#getBase_Class <em>Base Class</em>}</li>
@@ -32,7 +33,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLABehaviorImpl#getBase_Property <em>Base Property</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FLABehaviorImpl#getBase_Connector <em>Base Connector</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
