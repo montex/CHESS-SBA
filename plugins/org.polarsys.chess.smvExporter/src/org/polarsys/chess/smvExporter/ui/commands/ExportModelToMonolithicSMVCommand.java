@@ -33,6 +33,7 @@ import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService
 import eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv.ui.services.SmvExportServiceUI;
 import eu.fbk.eclipse.standardtools.nuXmvService.ui.utils.NuXmvDirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
+import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
 
@@ -114,7 +115,9 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 			throw e;
 		}
 		
-		final boolean isDiscreteTime = true;
+		// Make the user aware that the time model can be only discrete
+		final boolean isDiscreteTime = MessageTimeModelDialog.openQuestion(true);
+		
 		final String smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
 		
 		// If specified, set the given file name, otherwise compute it
