@@ -68,8 +68,8 @@ public class ParameterizedArchitectureAdapterFactory extends AdapterFactoryImpl 
 	protected ParameterizedArchitectureSwitch<Adapter> modelSwitch =
 		new ParameterizedArchitectureSwitch<Adapter>() {
 			@Override
-			public Adapter caseInstantiatedBy(InstantiatedBy object) {
-				return createInstantiatedByAdapter();
+			public Adapter caseInstantiatedArchitecture(InstantiatedArchitecture object) {
+				return createInstantiatedArchitectureAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -92,16 +92,16 @@ public class ParameterizedArchitectureAdapterFactory extends AdapterFactoryImpl 
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedBy <em>Instantiated By</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture <em>Instantiated Architecture</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedBy
+	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture
 	 * @generated
 	 */
-	public Adapter createInstantiatedByAdapter() {
+	public Adapter createInstantiatedArchitectureAdapter() {
 		return null;
 	}
 

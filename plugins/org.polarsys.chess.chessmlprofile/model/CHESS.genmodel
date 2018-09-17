@@ -761,10 +761,12 @@
     <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="ParameterizedArchitecture"
         basePackage="org.polarsys.chess.chessmlprofile" disposableProviderFactory="true"
         ecorePackage="chessmlprofile.ecore#//ParameterizedArchitecture">
-      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//ParameterizedArchitecture/InstantiatedBy">
-        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ParameterizedArchitecture/InstantiatedBy/ParameterList"/>
+      <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//ParameterizedArchitecture/InstantiatedArchitecture">
+        <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//ParameterizedArchitecture/InstantiatedArchitecture/ParameterList"/>
         <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
-            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ParameterizedArchitecture/InstantiatedBy/base_Dependency"/>
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ParameterizedArchitecture/InstantiatedArchitecture/base_Property"/>
+        <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+            propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ParameterizedArchitecture/InstantiatedArchitecture/InstantiatedRootComponent"/>
       </genClasses>
     </nestedGenPackages>
   </genPackages>

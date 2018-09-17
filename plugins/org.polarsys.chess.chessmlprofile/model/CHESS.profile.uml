@@ -9194,18 +9194,23 @@ In case of base Comment, its usage is the same of the CHRTSpecification.</body>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_Es50sLc1EeiAgOtQQtqqmg" name="ParameterizedArchitecture">
-      <packagedElement xmi:type="uml:Stereotype" xmi:id="_SYR_kLc1EeiAgOtQQtqqmg" name="InstantiatedBy">
+      <packagedElement xmi:type="uml:Stereotype" xmi:id="_SYR_kLc1EeiAgOtQQtqqmg" name="InstantiatedArchitecture">
         <ownedAttribute xmi:type="uml:Property" xmi:id="_Y2eyELc1EeiAgOtQQtqqmg" name="ParameterList">
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_gD_hoLc1EeiAgOtQQtqqmg"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_gEGPULc1EeiAgOtQQtqqmg" value="*"/>
         </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_SZww0Lc2EeiAgOtQQtqqmg" name="base_Dependency" association="_SZu7oLc2EeiAgOtQQtqqmg">
-          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Dependency"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_iPocEbpREeidmJkKBCehew" name="base_Property" association="_iPkKoLpREeidmJkKBCehew">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_kTgYULpREeidmJkKBCehew" name="InstantiatedRootComponent">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8g0Q4LpREeidmJkKBCehew"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8hBsQLpREeidmJkKBCehew" value="1"/>
         </ownedAttribute>
       </packagedElement>
-      <packagedElement xmi:type="uml:Extension" xmi:id="_SZu7oLc2EeiAgOtQQtqqmg" name="E_InstantiatedBy_Dependency1" memberEnd="_SZwJwLc2EeiAgOtQQtqqmg _SZww0Lc2EeiAgOtQQtqqmg">
-        <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_SZwJwLc2EeiAgOtQQtqqmg" name="extension_InstantiatedBy" type="_SYR_kLc1EeiAgOtQQtqqmg" aggregation="composite" association="_SZu7oLc2EeiAgOtQQtqqmg"/>
+      <packagedElement xmi:type="uml:Extension" xmi:id="_iPkKoLpREeidmJkKBCehew" name="E_InstantiatedArchitecture_Property1" memberEnd="_iPocELpREeidmJkKBCehew _iPocEbpREeidmJkKBCehew">
+        <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_iPocELpREeidmJkKBCehew" name="extension_InstantiatedArchitecture" type="_SYR_kLc1EeiAgOtQQtqqmg" aggregation="composite" association="_iPkKoLpREeidmJkKBCehew"/>
       </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_4nGdAFt2EeCB9JyGkIbTqQ">

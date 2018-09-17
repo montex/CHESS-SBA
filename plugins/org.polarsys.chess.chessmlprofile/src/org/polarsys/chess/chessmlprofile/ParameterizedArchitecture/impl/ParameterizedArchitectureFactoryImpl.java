@@ -56,7 +56,7 @@ public class ParameterizedArchitectureFactoryImpl extends EFactoryImpl implement
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case ParameterizedArchitecturePackage.INSTANTIATED_BY: return createInstantiatedBy();
+			case ParameterizedArchitecturePackage.INSTANTIATED_ARCHITECTURE: return createInstantiatedArchitecture();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -67,9 +67,9 @@ public class ParameterizedArchitectureFactoryImpl extends EFactoryImpl implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public InstantiatedBy createInstantiatedBy() {
-		InstantiatedByImpl instantiatedBy = new InstantiatedByImpl();
-		return instantiatedBy;
+	public InstantiatedArchitecture createInstantiatedArchitecture() {
+		InstantiatedArchitectureImpl instantiatedArchitecture = new InstantiatedArchitectureImpl();
+		return instantiatedArchitecture;
 	}
 
 	/**

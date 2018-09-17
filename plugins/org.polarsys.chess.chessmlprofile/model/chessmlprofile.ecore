@@ -899,11 +899,13 @@
   </eSubpackages>
   <eSubpackages name="ParameterizedArchitecture" nsURI="http:///CHESS/ParameterizedArchitecture.ecore"
       nsPrefix="CHESS.ParameterizedArchitecture">
-    <eClassifiers xsi:type="ecore:EClass" name="InstantiatedBy">
+    <eClassifiers xsi:type="ecore:EClass" name="InstantiatedArchitecture">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="ParameterList" ordered="false"
           upperBound="-1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="base_Dependency" ordered="false"
-          lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Dependency"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="base_Property" ordered="false"
+          lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="InstantiatedRootComponent"
+          ordered="false" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
     </eClassifiers>
   </eSubpackages>
 </ecore:EPackage>

@@ -22,13 +22,13 @@ public interface ParameterizedArchitectureFactory extends EFactory {
 	ParameterizedArchitectureFactory eINSTANCE = org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitectureFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Instantiated By</em>'.
+	 * Returns a new object of class '<em>Instantiated Architecture</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Instantiated By</em>'.
+	 * @return a new object of class '<em>Instantiated Architecture</em>'.
 	 * @generated
 	 */
-	InstantiatedBy createInstantiatedBy();
+	InstantiatedArchitecture createInstantiatedArchitecture();
 
 	/**
 	 * Returns the package supported by this factory.

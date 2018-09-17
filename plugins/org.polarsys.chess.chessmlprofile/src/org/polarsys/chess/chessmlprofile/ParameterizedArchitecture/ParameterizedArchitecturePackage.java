@@ -56,14 +56,14 @@ public interface ParameterizedArchitecturePackage extends EPackage {
 	ParameterizedArchitecturePackage eINSTANCE = org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitecturePackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.InstantiatedByImpl <em>Instantiated By</em>}' class.
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.InstantiatedArchitectureImpl <em>Instantiated Architecture</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.InstantiatedByImpl
-	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitecturePackageImpl#getInstantiatedBy()
+	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.InstantiatedArchitectureImpl
+	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitecturePackageImpl#getInstantiatedArchitecture()
 	 * @generated
 	 */
-	int INSTANTIATED_BY = 0;
+	int INSTANTIATED_ARCHITECTURE = 0;
 
 	/**
 	 * The feature id for the '<em><b>Parameter List</b></em>' attribute list.
@@ -72,58 +72,78 @@ public interface ParameterizedArchitecturePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INSTANTIATED_BY__PARAMETER_LIST = 0;
+	int INSTANTIATED_ARCHITECTURE__PARAMETER_LIST = 0;
 
 	/**
-	 * The feature id for the '<em><b>Base Dependency</b></em>' reference.
+	 * The feature id for the '<em><b>Base Property</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INSTANTIATED_BY__BASE_DEPENDENCY = 1;
+	int INSTANTIATED_ARCHITECTURE__BASE_PROPERTY = 1;
 
 	/**
-	 * The number of structural features of the '<em>Instantiated By</em>' class.
+	 * The feature id for the '<em><b>Instantiated Root Component</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INSTANTIATED_BY_FEATURE_COUNT = 2;
-
+	int INSTANTIATED_ARCHITECTURE__INSTANTIATED_ROOT_COMPONENT = 2;
 
 	/**
-	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedBy <em>Instantiated By</em>}'.
+	 * The number of structural features of the '<em>Instantiated Architecture</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Instantiated By</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedBy
 	 * @generated
+	 * @ordered
 	 */
-	EClass getInstantiatedBy();
+	int INSTANTIATED_ARCHITECTURE_FEATURE_COUNT = 3;
+
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedBy#getParameterList <em>Parameter List</em>}'.
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture <em>Instantiated Architecture</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Instantiated Architecture</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture
+	 * @generated
+	 */
+	EClass getInstantiatedArchitecture();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture#getParameterList <em>Parameter List</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Parameter List</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedBy#getParameterList()
-	 * @see #getInstantiatedBy()
+	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture#getParameterList()
+	 * @see #getInstantiatedArchitecture()
 	 * @generated
 	 */
-	EAttribute getInstantiatedBy_ParameterList();
+	EAttribute getInstantiatedArchitecture_ParameterList();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedBy#getBase_Dependency <em>Base Dependency</em>}'.
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture#getBase_Property <em>Base Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Base Dependency</em>'.
-	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedBy#getBase_Dependency()
-	 * @see #getInstantiatedBy()
+	 * @return the meta object for the reference '<em>Base Property</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture#getBase_Property()
+	 * @see #getInstantiatedArchitecture()
 	 * @generated
 	 */
-	EReference getInstantiatedBy_Base_Dependency();
+	EReference getInstantiatedArchitecture_Base_Property();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture#getInstantiatedRootComponent <em>Instantiated Root Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Instantiated Root Component</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture#getInstantiatedRootComponent()
+	 * @see #getInstantiatedArchitecture()
+	 * @generated
+	 */
+	EReference getInstantiatedArchitecture_InstantiatedRootComponent();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -148,14 +168,14 @@ public interface ParameterizedArchitecturePackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.InstantiatedByImpl <em>Instantiated By</em>}' class.
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.InstantiatedArchitectureImpl <em>Instantiated Architecture</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.InstantiatedByImpl
-		 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitecturePackageImpl#getInstantiatedBy()
+		 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.InstantiatedArchitectureImpl
+		 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitecturePackageImpl#getInstantiatedArchitecture()
 		 * @generated
 		 */
-		EClass INSTANTIATED_BY = eINSTANCE.getInstantiatedBy();
+		EClass INSTANTIATED_ARCHITECTURE = eINSTANCE.getInstantiatedArchitecture();
 
 		/**
 		 * The meta object literal for the '<em><b>Parameter List</b></em>' attribute list feature.
@@ -163,15 +183,23 @@ public interface ParameterizedArchitecturePackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute INSTANTIATED_BY__PARAMETER_LIST = eINSTANCE.getInstantiatedBy_ParameterList();
+		EAttribute INSTANTIATED_ARCHITECTURE__PARAMETER_LIST = eINSTANCE.getInstantiatedArchitecture_ParameterList();
 
 		/**
-		 * The meta object literal for the '<em><b>Base Dependency</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Base Property</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference INSTANTIATED_BY__BASE_DEPENDENCY = eINSTANCE.getInstantiatedBy_Base_Dependency();
+		EReference INSTANTIATED_ARCHITECTURE__BASE_PROPERTY = eINSTANCE.getInstantiatedArchitecture_Base_Property();
+
+		/**
+		 * The meta object literal for the '<em><b>Instantiated Root Component</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INSTANTIATED_ARCHITECTURE__INSTANTIATED_ROOT_COMPONENT = eINSTANCE.getInstantiatedArchitecture_InstantiatedRootComponent();
 
 	}
 

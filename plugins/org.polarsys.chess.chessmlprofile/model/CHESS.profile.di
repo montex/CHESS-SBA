@@ -68,27 +68,6 @@
     <windows>
       <children xsi:type="di:TabFolder">
         <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_9U2J4DQ3EeC0ueejuetpgA"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_VFbVEDQ2EeC0ueejuetpgA"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_q0aMYL86Ed-TL8tpOyViyA"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_rATocL88Ed-TL8tpOyViyA"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_a_r58L87Ed-TL8tpOyViyA"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_Z-N5EL8_Ed-TL8tpOyViyA"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_Z4j-MLzoEd-yoLyJo0JlOg"/>
-        </children>
-        <children>
           <emfPageIdentifier href="CHESS.profile.notation#_wtNJYDQ2EeC0ueejuetpgA"/>
         </children>
         <children>
@@ -111,9 +90,6 @@
         </children>
         <children>
           <emfPageIdentifier href="CHESS.profile.notation#_T56zMFiJEeG7ipvuc3Lqcg"/>
-        </children>
-        <children>
-          <emfPageIdentifier href="CHESS.profile.notation#_iv4ggG2REd-OHNNfvuYr9g"/>
         </children>
         <children>
           <emfPageIdentifier href="CHESS.profile.notation#_OTob0KbSEeSHP5PnCeTneg"/>

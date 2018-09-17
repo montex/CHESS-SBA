@@ -66,9 +66,9 @@ public class ParameterizedArchitectureSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case ParameterizedArchitecturePackage.INSTANTIATED_BY: {
-				InstantiatedBy instantiatedBy = (InstantiatedBy)theEObject;
-				T result = caseInstantiatedBy(instantiatedBy);
+			case ParameterizedArchitecturePackage.INSTANTIATED_ARCHITECTURE: {
+				InstantiatedArchitecture instantiatedArchitecture = (InstantiatedArchitecture)theEObject;
+				T result = caseInstantiatedArchitecture(instantiatedArchitecture);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -77,17 +77,17 @@ public class ParameterizedArchitectureSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Instantiated By</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Instantiated Architecture</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Instantiated By</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Instantiated Architecture</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseInstantiatedBy(InstantiatedBy object) {
+	public T caseInstantiatedArchitecture(InstantiatedArchitecture object) {
 		return null;
 	}
 
