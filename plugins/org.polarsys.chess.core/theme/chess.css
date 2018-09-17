@@ -8,8 +8,18 @@ InternalBlockDiagram Port > Label{
 	maskLabel: direction name type multiplicity;
 }
 
-/*Hide stereotype labels in IBD */
+/*Show stereotype labels in IBD */
 InternalBlockDiagram Label[type=StereotypeLabel]{
+	visible: true;
+}
+
+/*Hide the Block stereotype label in IBD */
+InternalBlockDiagram Label[stereotype="SysML::Blocks::Block"]{
+	visible: false;
+}
+
+/*Hide the System stereotype label in IBD */
+InternalBlockDiagram Label[stereotype="CHESSContract::System"]{
 	visible: false;
 }
 
@@ -61,3 +71,24 @@ Association > Label:name {
 Connector > Label:name {
 	visible:false;
 }
+
+/* Show the StuckAt compartment in state machine diagrams */
+StateMachineDiagram Compartment[stereotype="CHESS::Dependability::ThreatsPropagation::StuckAt"]{
+	visible:true;
+}
+
+/* Show the ErrorState compartment in state machine diagrams */
+StateMachineDiagram Compartment[stereotype="CHESS::Dependability::ThreatsPropagation::ErrorState"]{
+	visible:true;
+}
+
+/* Hide the unit property of the ErrorState compartment in state machine diagrams */
+StateMachineDiagram Compartment[stereotype="CHESS::Dependability::ThreatsPropagation::ErrorState"]>[property="unit"]{
+	visible:false;
+}
+
+/* Hide compartments in brace section of state machine diagrams */
+StateMachineDiagram Compartment[type=StereotypeBrace]{
+	visible:false;
+}
+
