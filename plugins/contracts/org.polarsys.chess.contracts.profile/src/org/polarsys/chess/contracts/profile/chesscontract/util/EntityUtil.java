@@ -43,9 +43,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Namespace;
 //import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.transaction.RecordingCommand;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.papyrus.MARTE.MARTE_Annexes.VSL.DataTypes.BoundedSubtype;
 import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
 import org.eclipse.papyrus.sysml.portandflows.FlowPort;
@@ -70,12 +67,14 @@ import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.ConnectableElement;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
@@ -105,6 +104,7 @@ import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.Vertex;
 import org.eclipse.uml2.uml.VisibilityKind;
 import org.eclipse.uml2.uml.resource.UMLResource;
+import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture;
 import org.polarsys.chess.contracts.profile.chesscontract.FormalProperty;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.core.util.uml.UMLUtils;
@@ -126,6 +126,8 @@ public class EntityUtil {
 	private static final String COMP_IMPL = "CHESS::ComponentModel::ComponentImplementation";
 	private static final String SYSVIEW = "CHESS::Core::CHESSViews::SystemView";
 
+	public static final String INSTANTIATED_ARCHITECTURE = "CHESS::ParameterizedArchitecture::InstantiatedArchitecture";
+	
 	private static final String INTEGER_TYPE = "PrimitiveTypes::Integer";
 	private static final String STRING_TYPE = "PrimitiveTypes::String";
 	private static final String REAL_TYPE = "PrimitiveTypes::Real";
@@ -453,6 +455,37 @@ public class EntityUtil {
 
 	public Package createPackage(Package owner, final String elementName){
 		return owner.createNestedPackage(elementName);
+	}
+	
+	public Comment createComment(Package owner, String content){
+		Comment comment = owner.createOwnedComment();
+		comment.setBody(content);
+		return comment;
+	}
+	
+	public Dependency createDependency(Package owner,  NamedElement supplierElement, NamedElement clientElement){
+		Dependency dependency =  owner.createDependency(supplierElement);
+		dependency.getClients().add(clientElement);
+		return dependency;
+	}
+	
+	public Property createInstantiatedArchitecture(Class paramRootComponent, Class instantiatedRootComponent, ArrayList<String> parameters){
+		
+		int numInstantiatedArchitecures = getInstantiatedArchitecureElements(paramRootComponent).size();
+		
+		Property property =  paramRootComponent.createOwnedAttribute("InstantiateArc_"+(numInstantiatedArchitecures+1),null);
+		UMLUtils.applyStereotype(property, INSTANTIATED_ARCHITECTURE);		
+		InstantiatedArchitecture instantiatedArchitecture = getInstantiatedArchitecture(property);
+		if(instantiatedRootComponent!=null){
+			instantiatedArchitecture.setInstantiatedRootComponent(instantiatedRootComponent);
+			}
+		instantiatedArchitecture.getParameterList().addAll(parameters);
+		return property;
+	}
+	
+	public InstantiatedArchitecture getInstantiatedArchitecture(Property umlProperty) {
+		Stereotype instantiatedArchitectureStereotype = UMLUtil.getAppliedStereotype(umlProperty, INSTANTIATED_ARCHITECTURE, false);
+		return (InstantiatedArchitecture) umlProperty.getStereotypeApplication(instantiatedArchitectureStereotype);
 	}
 	
 	/**
@@ -919,6 +952,16 @@ public class EntityUtil {
 		return null;
 	}
 
+	public Set<Property> getInstantiatedArchitecureElements(Class umlComponent){
+		Set<Property> instantiatedArchitecureList = new HashSet<Property>();
+		for (Property umlProperty : ((Class) umlComponent).getAttributes()) {
+			if (isInstantiatedArchitecuture(umlProperty)) {
+				instantiatedArchitecureList.add(umlProperty);
+			}
+		}
+		return instantiatedArchitecureList;
+	}
+	
 	public Set<Property> getSubComponentsInstances(Class umlComponent) {
 		Set<Property> subComponents = new HashSet<Property>();
 		for (Property umlProperty : ((Class) umlComponent).getAttributes()) {
@@ -1158,6 +1201,10 @@ public class EntityUtil {
 		return (umlElement instanceof Class && UMLUtil.getAppliedStereotype(umlElement, COMP_IMPL, false) != null);
 	}
 
+	public boolean isInstantiatedArchitecuture(Element umlElement) {
+		return (umlElement instanceof Property && UMLUtil.getAppliedStereotype(umlElement, INSTANTIATED_ARCHITECTURE, false) != null);
+	}
+	
 	// modified method!!
 	public boolean isComponentInstance(Element umlProperty) {
 		// return UMLUtil.getAppliedStereotype(umlProperty, COMP_INST, false) !=
@@ -1176,6 +1223,10 @@ public class EntityUtil {
 			return false;
 		}
 
+		if (isInstantiatedArchitecuture(property)) {
+			return false;
+		}
+		
 		Element owner = (getOwner(umlProperty));
 		Association association = property.getAssociation();
 		int associationEndsSize = association.getEndTypes().size();
