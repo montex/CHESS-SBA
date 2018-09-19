@@ -84,7 +84,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl;
 
 import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture;
-import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedBy;
 import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.ParameterizedArchitectureFactory;
 import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.ParameterizedArchitecturePackage;
 
