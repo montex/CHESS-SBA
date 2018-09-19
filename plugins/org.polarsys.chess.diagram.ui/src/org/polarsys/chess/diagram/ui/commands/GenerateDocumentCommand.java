@@ -138,9 +138,12 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 				parameterDialog.getShowParameters(), parameterDialog.getShowUninterpretedFunctions(),
 				parameterDialog.getShowConnections(), parameterDialog.getShowInterfaceAssertions(), 
 				parameterDialog.getShowRefinementAssertions(), parameterDialog.getShowContracts(),
-				parameterDialog.getShowContractRefinements(),parameterDialog.getShowParameterAssumptions());
+				parameterDialog.getShowContractRefinements(),parameterDialog.getShowParameterAssumptions(),
+				parameterDialog.getShowDiagrams(), parameterDialog.getShowLocalAttributes());
 		DocumentGenerator documentGenerator = documentGeneratorService.createDocumentFile(currentProjectName, docFormat,
 				ossModel.getSystem(), monitor);
+		
+		documentGeneratorService.addLocalAttributeDescriptors(umlSelectedComponent, documentGenerator);
 
 		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension
 				//parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout()
@@ -165,7 +168,5 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 				documentGeneratorService.generateDocument(documentGenerator);
 			}
 		});
-
 	}
-
 }

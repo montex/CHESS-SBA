@@ -498,6 +498,16 @@ public class ChessSystemModel implements AbstractSystemModel {
 	}
 
 	@Override
+	public Object getComponentType(Object component) {
+		if (entityUtil.isComponentInstance((Element) component)) {
+			return entityUtil.getUmlType((Property) component);
+		} else if (component instanceof Class) {
+			return component;
+		}
+		return null;
+	}
+
+	@Override
 	public String getContractQualifiedName(Object contract) {
 		return contractEntityUtil.getContractQualifiedName((Class) contract);
 	}
@@ -561,7 +571,6 @@ public class ChessSystemModel implements AbstractSystemModel {
 	}
 
 	
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -853,7 +862,7 @@ public class ChessSystemModel implements AbstractSystemModel {
 
 	@Override
 	public boolean isParameterAssumptions(Object element) {
-		return entityUtil.isParameterAssumption((Element)element);
+		return entityUtil.isParameterAssumption((Element) element);
 	}
 
 	@Override
@@ -873,4 +882,18 @@ public class ChessSystemModel implements AbstractSystemModel {
 		return new String[]{lower,upper};
 	}
 
+	@Override
+	public EList<?> getLocalAttributes(Object component) {
+		return entityUtil.getLocalProperties((Element) component);
+	}
+	
+	@Override
+	public String getLocalAttributeName(Object attribute) {
+		return entityUtil.getLocalPropertyName((Property) attribute);
+	}
+
+	@Override
+	public String getLocalAttributeType(Object attribute) {
+		return entityUtil.getLocalPropertyType((Property) attribute);
+	}
 }
