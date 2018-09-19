@@ -11,6 +11,12 @@
 package org.polarsys.chess.paramArchConfigurator.commands;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -18,6 +24,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
+import org.eclipse.core.internal.utils.FileUtil;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.transaction.RecordingCommand;
@@ -34,6 +41,7 @@ import org.polarsys.chess.paramArchConfigurator.ui.wizard.InstantiateArchWizard;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
+import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService;
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.ui.services.OSSTranslatorServiceUI;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
@@ -62,20 +70,109 @@ public class InstantiateArchitectureViaWizard extends AbstractJobCommand {
 
 		if (ossFile != null) {
 			shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-			InstantiateArchWizard myWizard = new InstantiateArchWizard(ossFile, umlSelectedComponent, isDiscreteTime, monitor);
+			InstantiateArchWizard myWizard = new InstantiateArchWizard(ossFile, umlSelectedComponent, isDiscreteTime,
+					monitor);
 			WizardDialog wizardDialog = new WizardDialog(shell, myWizard);
 			if (wizardDialog.open() == Window.OK) {
-				System.out.println("Ok pressed");
-				Package selectedPackage = myWizard.getSelectedPackage();
-				boolean createNestedPackage = myWizard.createNestedPackage();
-				String nestedPackageName = myWizard.getNestedPackageName();
-				File finalOssFile = myWizard.getOSSFile();
+				logger.debug("Ok pressed");
 
-				executeOSSimport(selectedPackage, createNestedPackage, nestedPackageName, finalOssFile);
+				boolean importArch = myWizard.importArch();
+				File paramsListFile = myWizard.getParamsListFile();
+				logger.debug("paramsListFile: " + paramsListFile);
+
+				if (importArch) {
+					File finalOssFile = myWizard.getOSSFile();
+					Package selectedPackage = myWizard.getSelectedPackage();
+					boolean createNestedPackage = myWizard.createNestedPackage();
+					String nestedPackageName = myWizard.getNestedPackageName();
+					preparePackage(umlSelectedComponent, selectedPackage, createNestedPackage, nestedPackageName,
+							paramsListFile);
+					executeOSSimport(selectedPackage, createNestedPackage, nestedPackageName, finalOssFile);
+					storeInstantiationInfo(umlSelectedComponent, selectedPackage, nestedPackageName, paramsListFile);
+				} else {
+					storeInstantiationInfo(umlSelectedComponent, null, null, paramsListFile);
+				}
 			} else {
-				System.out.println("Cancel pressed");
+				logger.debug("Cancel pressed");
 			}
 		}
+	}
+
+	private boolean preparePackage(Class umlSelectedComponent, Package selectedPackage, boolean createNestedPackage,
+			String nestedPackageName, File paramListFile) {
+
+		Resource modelRes = SelectionUtil.getInstance().getSelectedModelResource();
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(modelRes);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
+
+				Package updSelectedPackage;
+				if (createNestedPackage) {
+					// String nestedPackageName = nestedPackageName;
+					updSelectedPackage = EntityUtil.getInstance().createPackage(selectedPackage, nestedPackageName);
+				} else {
+					updSelectedPackage = selectedPackage;
+				}
+
+				try {
+					EntityUtil.getInstance().createComment(updSelectedPackage,
+							"Architecture created instantiating the parameterized architecture with root component "
+									+ umlSelectedComponent.getQualifiedName()
+									+ " using the following parameters values: \n"
+									+ readFile(paramListFile.getPath(), Charset.forName("UTF-8")));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+
+		return true;
+
+	}
+
+	static String readFile(String path, Charset encoding) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return new String(encoded, encoding);
+	}
+
+	private void storeInstantiationInfo(Class umlSelectedComponent, Package selectedPackage, String nestedPackageName,
+			File paramsListFile) {
+
+		Resource modelRes = SelectionUtil.getInstance().getSelectedModelResource();
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(modelRes);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
+
+				Class instantiatedRootComponent = null;
+				if (selectedPackage != null) {
+					Package nestedPackage;
+					if (nestedPackageName != null) {
+						nestedPackage = selectedPackage.getNestedPackage(nestedPackageName);
+					} else {
+						nestedPackage = selectedPackage;
+					}
+					logger.debug("selectedPackage: " + nestedPackage);
+					instantiatedRootComponent = (Class) nestedPackage.getOwnedMember(umlSelectedComponent.getName());
+					logger.debug("instantiatedRootComponent: " + instantiatedRootComponent);
+				}
+
+				try {
+					ArrayList<String> params = OCRAExecService.getInstance(ChessSystemModel.getInstance())
+							.parseParametersFileAsArray(paramsListFile);
+					EntityUtil.getInstance().createInstantiatedArchitecture(umlSelectedComponent,
+							instantiatedRootComponent, params);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+
 	}
 
 	@Override
@@ -96,7 +193,7 @@ public class InstantiateArchitectureViaWizard extends AbstractJobCommand {
 				Package updSelectedPackage;
 				if (createNestedPackage) {
 					// String nestedPackageName = nestedPackageName;
-					updSelectedPackage = EntityUtil.getInstance().createPackage(selectedPackage, nestedPackageName);
+					updSelectedPackage = selectedPackage.getNestedPackage(nestedPackageName);
 				} else {
 					updSelectedPackage = selectedPackage;
 				}
