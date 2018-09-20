@@ -17,18 +17,19 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSp
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * allows to decorate a port\instance with information regarding the failureModes possibly affecting the port\instance itself
+ * allows to decorate a port\instance with information regarding the failureModes/threats possibly affecting the port\instance itself
+ * if applied at the same time on the same entity, than each FailureMode referred by Threats.failureMode must be referred also by FailureModes.failureMode
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getBase_Slot <em>Base Slot</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getBase_Port <em>Base Port</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getFailureMode <em>Failure Mode</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes#getFPTCSpecification <em>FPTC Specification</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getFailureModes()
  * @model

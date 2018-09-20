@@ -12,6 +12,7 @@
 package org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
@@ -65,10 +66,49 @@ public class DependableComponentFactoryImpl extends EFactoryImpl implements Depe
 			case DependableComponentPackage.FAILURE_MODES: return createFailureModes();
 			case DependableComponentPackage.DEPENDABLE_COMPONENT: return createDependableComponent();
 			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR: return createErrorModelBehavior();
+			case DependableComponentPackage.THREAT: return createThreat();
 			case DependableComponentPackage.PROPAGATION: return createPropagation();
 			case DependableComponentPackage.FAILURE_MODE: return createFailureMode();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+			case DependableComponentPackage.ATTACK_TYPE:
+				return createAttackTypeFromString(eDataType, initialValue);
+			case DependableComponentPackage.VULNERABILITY_TYPE:
+				return createVulnerabilityTypeFromString(eDataType, initialValue);
+			case DependableComponentPackage.THREAT_TYPE:
+				return createThreatTypeFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+			case DependableComponentPackage.ATTACK_TYPE:
+				return convertAttackTypeToString(eDataType, instanceValue);
+			case DependableComponentPackage.VULNERABILITY_TYPE:
+				return convertVulnerabilityTypeToString(eDataType, instanceValue);
+			case DependableComponentPackage.THREAT_TYPE:
+				return convertThreatTypeToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -97,9 +137,79 @@ public class DependableComponentFactoryImpl extends EFactoryImpl implements Depe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public AttackType createAttackTypeFromString(EDataType eDataType, String initialValue) {
+		AttackType result = AttackType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertAttackTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public VulnerabilityType createVulnerabilityTypeFromString(EDataType eDataType, String initialValue) {
+		VulnerabilityType result = VulnerabilityType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertVulnerabilityTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ThreatType createThreatTypeFromString(EDataType eDataType, String initialValue) {
+		ThreatType result = ThreatType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertThreatTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DependableComponent createDependableComponent() {
 		DependableComponentImpl dependableComponent = new DependableComponentImpl();
 		return dependableComponent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Threat createThreat() {
+		ThreatImpl threat = new ThreatImpl();
+		return threat;
 	}
 
 	/**

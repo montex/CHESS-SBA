@@ -21,11 +21,11 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Depen
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FA#getFi4fa <em>Fi4fa</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FI4FA#getBase_Connector <em>Base Connector</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFI4FA()
  * @model

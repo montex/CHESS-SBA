@@ -25,6 +25,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDMitigation#getBase_Comment <em>Base Comment</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDMitigation#getA <em>A</em>}</li>
@@ -32,7 +33,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDMitigation#getI <em>I</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDMitigation#getD <em>D</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getACIDMitigation()
  * @model annotation="http://www.eclipse.org/uml2/2.0.0/UML originalName='ACIDMitigation '"

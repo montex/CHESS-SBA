@@ -69,6 +69,7 @@ public class SafetyFactoryImpl extends EFactoryImpl implements SafetyFactory {
 			case SafetyPackage.CRITICALITY_INTERFACE_SPECIFICATION: return createCriticalityInterfaceSpecification();
 			case SafetyPackage.CRITICALITY_LEVEL: return createCriticalityLevel();
 			case SafetyPackage.CRITICALITY_SPECIFICATION: return createCriticalitySpecification();
+			case SafetyPackage.HAZARD: return createHazard();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -92,6 +93,16 @@ public class SafetyFactoryImpl extends EFactoryImpl implements SafetyFactory {
 	public CriticalitySpecification createCriticalitySpecification() {
 		CriticalitySpecificationImpl criticalitySpecification = new CriticalitySpecificationImpl();
 		return criticalitySpecification;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Hazard createHazard() {
+		HazardImpl hazard = new HazardImpl();
+		return hazard;
 	}
 
 	/**

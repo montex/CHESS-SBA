@@ -27,11 +27,11 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.TimingDataFlowView;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.ExtraFunctionalViewImpl#getBase_Package <em>Base Package</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.ExtraFunctionalViewImpl#getTimingdataflowview <em>Timingdataflowview</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

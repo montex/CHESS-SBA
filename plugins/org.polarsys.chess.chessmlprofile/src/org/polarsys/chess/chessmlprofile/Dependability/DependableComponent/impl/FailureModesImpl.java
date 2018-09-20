@@ -31,13 +31,13 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSp
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModesImpl#getBase_Slot <em>Base Slot</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModesImpl#getBase_Port <em>Base Port</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModesImpl#getFailureMode <em>Failure Mode</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.FailureModesImpl#getFPTCSpecification <em>FPTC Specification</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

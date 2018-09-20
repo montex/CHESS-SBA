@@ -8,11 +8,12 @@
 			<aspectTool 
 				description="Create an Initial node" 
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/InitialNode.gif"
-				id="createInitialnode1CreationTool_1309342089771" name="Initial node" refToolId="createInitialnode1CreationTool"/>
-			<aspectTool description="Create a Call Operation Action node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/CallOperationAction.gif" id="createCallOperationAction12CreationTool_1309342114350" name="Call Operation Action" refToolId="createCallOperationAction3CreationTool"/>
-			<aspectTool description="Create a Decision node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/DecisionNode.gif" id="createDecisionnode4CreationTool_1309342122851" name="Decision node" refToolId="createDecisionnode4CreationTool"/>
-			<aspectTool description="Create an Activity final node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/ActivityFinalNode.gif" id="createActivityfinal2CreationTool_1309342729356" name="Activity final" refToolId="createActivityfinal2CreationTool"/>
-			<aspectTool description="Create a Control Flow" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/ControlFlow.gif" id="createControlFlow1CreationTool_1309342738936" name="Control Flow" refToolId="createControlFlow1CreationTool"/>
+				id="createInitialnode1CreationTool_1309342089771" name="Initial node" refToolId="activity.nodes.controlnodes.initialnode"/>
+			<!--aspectTool description="Create a Call Operation Action node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/CallOperationAction.gif" id="createCallOperationAction12CreationTool_1309342114350" name="Call Operation Action" refToolId="activity.nodes.invocationactions.calloperationaction"/-->
+			<aspectTool description="Create an Call Behavior Action node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/CallBehaviorAction.gif" id="activity.nodes.invocationactions.callbehavioraction_1529310283143" name="Call Behavior Action" refToolId="activity.nodes.invocationactions.callbehavioraction"/>
+			<aspectTool description="Create a Decision node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/DecisionNode.gif" id="createDecisionnode4CreationTool_1309342122851" name="Decision node" refToolId="activity.nodes.controlnodes.decisionnode""/>
+			<aspectTool description="Create an Activity final node" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/ActivityFinalNode.gif" id="createActivityfinal2CreationTool_1309342729356" name="Activity final" refToolId="activity.nodes.controlnodes.activityfinal"/>
+			<aspectTool description="Create a Control Flow" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/ControlFlow.gif" id="createControlFlow1CreationTool_1309342738936" name="Control Flow" refToolId="activity.edges.controlflow"/>
 		</drawer>
 	</content>
 </paletteDefinition>

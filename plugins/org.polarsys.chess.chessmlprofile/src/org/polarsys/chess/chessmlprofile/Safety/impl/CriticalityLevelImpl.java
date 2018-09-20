@@ -37,12 +37,12 @@ import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Safety.impl.CriticalityLevelImpl#getBase_Constraint <em>Base Constraint</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Safety.impl.CriticalityLevelImpl#getIsHigherThan <em>Is Higher Than</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Safety.impl.CriticalityLevelImpl#getMapsTo <em>Maps To</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
