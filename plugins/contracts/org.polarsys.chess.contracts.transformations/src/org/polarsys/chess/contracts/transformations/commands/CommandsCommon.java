@@ -104,7 +104,10 @@ public class CommandsCommon {
 				}
 				IFolder results = folder.getFolder(RES_FOLD);
 				IFolder files = folder.getFolder(FILES_FOLD);
+				
 				try {
+					project.refreshLocal(IResource.DEPTH_INFINITE, null);
+
 					if (!folder.exists()){
 						folder.create(true, true, null);
 					}
@@ -117,10 +120,9 @@ public class CommandsCommon {
 					if(commandType == CommandEnum.FTA || commandType == CommandEnum.FEI){
 						tempFolder = folder.getFolder(TEMP_FOLD);
 						if(tempFolder.exists()){
-//							tempFolder.delete(true, null);
-						} else {
-							tempFolder.create(true, true, null);
+							tempFolder.delete(true, null);;
 						}
+						tempFolder.create(true, true, null);
 					}
 					
 				} catch (CoreException e) {

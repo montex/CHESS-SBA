@@ -19,12 +19,18 @@
                   <iterate
                         ifEmpty="false"
                         operator="and">
-                     <adapt
+                    <adapt
                            type="org.eclipse.emf.ecore.EObject">
                         <instanceof
                               value="org.eclipse.uml2.uml.Package">
                         </instanceof>
-                     </adapt>
+                    </adapt>
+                    <with
+                     	variable="activeMenuSelection">
+                  		<count
+                        	value="1">
+                  		</count>
+               		</with>                     
                   </iterate>
                </visibleWhen>
             </command>
