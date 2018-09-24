@@ -126,11 +126,10 @@ public abstract class AbstractXSapHandler extends AbstractHandler {
 			return false;
 		}
 		
-		// FIXME: al momento il comando non esiste
 		// Expand the FEI file
-//		if(!xSapExecService.expandFaultExtensions(feiFileName, expandedFeiFileName, true)) {
-//			return false;
-//		}
+		if(!xSapExecService.expandFaultExtensions(feiFileName, expandedFeiFileName, true)) {
+			return false;
+		}
 		
 		// Extend the SMV model
 		if (!xSapExecService.extendModel(smvFileName, expandedFeiFileName, fmsFileName, extendedSmvFileName, true)) {
