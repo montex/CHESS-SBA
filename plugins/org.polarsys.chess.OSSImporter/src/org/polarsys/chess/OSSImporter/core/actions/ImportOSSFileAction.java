@@ -46,9 +46,10 @@ import eu.fbk.tools.editor.contract.contract.Contract;
 import eu.fbk.tools.editor.contract.contract.Guarantee;
 import eu.fbk.tools.editor.contract.expression.expression.FullParameterId;
 import eu.fbk.tools.editor.contract.expression.expression.FullPortId;
-import eu.fbk.tools.editor.contract.expression.expression.VariableId;
+import eu.fbk.tools.editor.contract.expression.expression.FullVariableId;
 import eu.fbk.tools.editor.oss.oss.SystemComponent;
 import eu.fbk.tools.editor.oss.oss.Variable;
+import eu.fbk.tools.editor.oss.validation.ModelUtil;
 import eu.fbk.tools.editor.oss.oss.AbstractComponent;
 import eu.fbk.tools.editor.oss.oss.Assertion;
 import eu.fbk.tools.editor.oss.oss.ComplexType;
@@ -145,8 +146,8 @@ public class ImportOSSFileAction {
 	 * @return
 	 */
 	private boolean isFunctionBehavior(Class owner, Expression expression) {
-		if (expression instanceof VariableId) {
-			final VariableId variable = (VariableId) expression;
+		if (expression instanceof FullVariableId) {
+			final FullVariableId variable = (FullVariableId) expression;
 
 			Class component = null;
 
@@ -171,7 +172,7 @@ public class ImportOSSFileAction {
 				// I'm the owner of the functionBehavior
 				component = owner;
 			}
-			return (component.getOwnedBehavior(variable.getName()) != null);
+			return (component.getOwnedBehavior(variable.getId().getName()) != null);
 		}
 		return false;
 	}
@@ -503,7 +504,7 @@ public class ImportOSSFileAction {
 
 		// CONNECTION processing
 		// final Connection connection = dslRefInstance.getConnection();
-		final VariableId variable = connection.getVariable();
+		final FullVariableId variable = connection.getVariable();
 		final Expression constraint = connection.getConstraint();
 		final IterativeCondition iterCondition = connection.getIterativeCondition();
 		if (ossModelUtil.isConnectionWithNoArray(variable, constraint, iterCondition)
@@ -511,9 +512,9 @@ public class ImportOSSFileAction {
 
 			// Details of the connector ends
 			String variablePortOwner = ossModelUtil.getNearestComponentName(variable);
-			String variablePortName = ossModelUtil.getPortName(variable);
-			String constraintPortOwner = ossModelUtil.getNearestComponentName((VariableId) constraint);
-			String constraintPortName = ossModelUtil.getPortName((VariableId) constraint);
+			String variablePortName = ModelUtil.getVariableIdAsStr(variable.getId());
+			String constraintPortOwner = ossModelUtil.getNearestComponentName((FullVariableId) constraint);
+			String constraintPortName = ossModelUtil.getPortName((FullVariableId) constraint);
 
 			Connector connector = entityUtil.getExistingConnector(existingConnectors, variablePortOwner,
 					variablePortName, constraintPortOwner, constraintPortName);
@@ -528,10 +529,10 @@ public class ImportOSSFileAction {
 			} else {
 
 				logger.debug("connector is not present");
-				Property partWithPortOfConstraint = getPartWithPort((VariableId) constraint, owner);
+				Property partWithPortOfConstraint = getPartWithPort((FullVariableId) constraint, owner);
 				final Class portOwnerOfConstraint = getPortOwner(partWithPortOfConstraint, owner);
 
-				Property partWithPortOfVariable = getPartWithPort((VariableId) variable, owner);
+				Property partWithPortOfVariable = getPartWithPort((FullVariableId) variable, owner);
 				final Class portOwnerOfVariable = getPortOwner(partWithPortOfVariable, owner);
 
 				// Store the new connector
@@ -584,7 +585,7 @@ public class ImportOSSFileAction {
 
 	}
 
-	private boolean isDelegationConstraint(VariableId variable, Expression constraint, Class owner) {
+	private boolean isDelegationConstraint(FullVariableId variable, Expression constraint, Class owner) {
 		return !(constraint instanceof FullPortId) || (ossModelUtil.isVariableWithArray((FullPortId) constraint))
 				|| !(variable instanceof FullPortId) || (ossModelUtil.isVariableWithArray((FullPortId) variable))
 				|| (isFunctionBehavior(owner, variable) && isFunctionBehavior(owner, constraint));
@@ -604,7 +605,7 @@ public class ImportOSSFileAction {
 		return portOwner;
 	}
 
-	private Property getPartWithPort(VariableId portId, Class owner) {
+	private Property getPartWithPort(FullVariableId portId, Class owner) {
 
 		Property partWithPort = null;
 		String portOwnerName = ossModelUtil.getNearestComponentName(portId);
@@ -991,7 +992,7 @@ public class ImportOSSFileAction {
 		// PORT processing
 		// final VariableId dslVariableID = ossPort.getId();
 		final ComplexType ossPortType = ossPort.getType();
-		String portName = ossModelUtil.getPortName(ossPort);
+		String portName = ossModelUtil.getPortName(ossPort.getId());
 		logger.debug("port: " + ossPort);
 		logger.debug("portName: " + portName);
 		Type newPortType = ossTypeTranslator.getOrCreateTypeFromOssComplexType(ossPortType, owner.getNearestPackage());
@@ -1036,11 +1037,12 @@ public class ImportOSSFileAction {
 
 		// Check if there are optional parameters to detect how to handle it
 		final EList<ComplexType> ossInputTypes = ossParameter.getParameters();
+		String parameterName = ModelUtil.getVariableIdAsStr(ossParameter.getId());
 		if (ossInputTypes.size() != 0) {
-			parseParameterAsUmlFunctionBehaviour(ossParameter.getId(), ossOutputType, ossInputTypes,
+			parseParameterAsUmlFunctionBehaviour(parameterName, ossOutputType, ossInputTypes,
 					mapFunctionBehaviorsToKeep, owner);
 		} else {
-			parseParameterAsUmlStaticPort(ossParameter.getId(), ossOutputType, existingNonStaticPorts, mapPortsToKeep,
+			parseParameterAsUmlStaticPort(parameterName, ossOutputType, existingNonStaticPorts, mapPortsToKeep,
 					owner);
 		}
 	}

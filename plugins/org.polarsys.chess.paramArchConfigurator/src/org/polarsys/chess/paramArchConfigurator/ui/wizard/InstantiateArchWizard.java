@@ -81,9 +81,9 @@ public class InstantiateArchWizard extends Wizard {
 				Map<String, Map<String, String>> existingParametersLists = getExistingParametersLists(selectedElement);
 
 				String currentDate = getCurrentDateAsStr();
-				String prefixName = FilenameUtils.removeExtension(ossFile.getName());
+				String prefixName = FilenameUtils.removeExtension(ossFile.getName())
 				// TODO uncomment when OCRA commands will be ready
-				// +"_"+currentDate;
+				 +"_"+currentDate;
 				one = new AssignValuesPage(true, prefixName, selectedElement, ossFile, null, null,
 						existingParametersLists, parametersList, new ArrayList<ArrayList<String>>(), 1, isDiscrete,
 						monitor, this);
