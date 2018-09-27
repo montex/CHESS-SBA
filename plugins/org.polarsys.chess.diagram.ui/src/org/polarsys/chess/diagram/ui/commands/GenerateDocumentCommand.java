@@ -70,7 +70,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	private String imageExtension;
 	private String docFormat;
 	private Package activePackage;
-	private boolean goAhead = true;
+	private boolean goAhead;
 
 	/**
 	 * Returns the nearest package containing the diagram.
@@ -97,6 +97,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();
 		activePackage = umlSelectedComponent.getNearestPackage();
+		goAhead = true;
 
 		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
 			goAhead = false;
