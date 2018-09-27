@@ -3042,4 +3042,33 @@ public class EntityUtil {
 		}
 		return null;
 	}
+	
+	/**
+	 * Returns the System component of the given package, if any.
+	 * @param pkg the package containing the architecture
+	 * @return the System component, or null if any or more than one are found
+	 */
+	public Class getSystemComponent(Package pkg) {
+		boolean found = false;
+		Element systemElement = null;
+		
+		if (pkg != null) {
+			final EList<Element> ownedElements = pkg.getOwnedElements();		
+			for (Element element : ownedElements) {
+				if(isSystem(element)) {
+					if (!found) {
+						systemElement = element;
+						found = true;
+					} else {
+						return null;
+					}
+				}
+			}
+		}
+		if (found) {
+			return (Class) systemElement;
+		} else {
+			return null;
+		}
+	}
 }

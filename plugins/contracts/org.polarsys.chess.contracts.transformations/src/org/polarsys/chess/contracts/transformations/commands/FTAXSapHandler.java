@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.polarsys.chess.contracts.transformations.commands;
 
+import org.eclipse.uml2.uml.Class;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
@@ -21,19 +23,34 @@ import org.eclipse.core.commands.ExecutionException;
 public class FTAXSapHandler extends AbstractXSapHandler {
 	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-
+		final String storeResultParam = "store_result";
+		
+		// Get the root component of the package
+		//FIXME: potrebbe diventare inutile se metto l'analysis context...
+		final Class systemComponent = analysisResultUtil.getSystemComponentFromEvent(event);
+		
 		// Compute all the required files for the analysis
 		if (!prepareExpandedFiles(event)) {
 			return null;
 		}
-		
+
+		final boolean storeResult = (event.getParameter(storeResultParam) != null && 
+				event.getParameter(storeResultParam).equals("true")) ? true : false;
+
 		// Compute and display the FTA for each condition requested
 		int index = 0;
 		for (String condition : ftaCond.split(", ")) {
-			final String ftFileName = fileNamesUtil.computeFtFileName(editor, modelName, ++index);
+			final String ftFileName = fileNamesUtil.computeFtFileName(editor, modelName, ++index, storeResult);
 			if (!xSapExecService.computeFt(extendedSmvFileName, fmsFileName, condition, ftFileName, false)) {
 				return null;
-			}		
+			}
+			
+			// FIXME: ftaCond potrebbe diventare inutile se metto l'analysis context...
+			
+			// If requested, store the data
+			if (storeResult) {
+				analysisResultUtil.storeResult("FTA", ftaCond, ftFileName, systemComponent, analysisContext);
+			}
 		}
 		return null;
 	}

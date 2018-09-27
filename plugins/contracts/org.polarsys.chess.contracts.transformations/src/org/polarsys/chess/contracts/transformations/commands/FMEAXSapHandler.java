@@ -14,6 +14,7 @@ import java.util.StringJoiner;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.uml2.uml.Class;
 
 /**
  * This command permits the execution of FMEA using the xSAP tool.
@@ -36,15 +37,31 @@ public class FMEAXSapHandler extends AbstractXSapHandler {
 	}
 	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		final String storeResultParam = "store_result";
+		
+		// Get the root component of the package
+		//FIXME: potrebbe diventare inutile se metto l'analysis context...
+		final Class systemComponent = analysisResultUtil.getSystemComponentFromEvent(event);
+		
 
 		// Compute all the required files for the analysis
 		if (!prepareExpandedFiles(event)) {
 			return null;
 		}
 			
+		final boolean storeResult = (event.getParameter(storeResultParam) != null && 
+				event.getParameter(storeResultParam).equals("true")) ? true : false;
+
+		final String fmeaFileName = fileNamesUtil.computeFmeaFileName(editor, modelName, storeResult);
+		
 		// Compute FMEA and show results in a dedicated view
 		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, processConditions(ftaCond), 
-				fmeaFileName, false);		
+				fmeaFileName, false);
+		
+		// If requested, store the data
+		if (storeResult) {
+			analysisResultUtil.storeResult("FMEA", ftaCond, fmeaFileName, systemComponent, analysisContext);
+		}
 		return null;
 	}
 }

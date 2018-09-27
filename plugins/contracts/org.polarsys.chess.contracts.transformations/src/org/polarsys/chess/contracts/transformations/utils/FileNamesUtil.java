@@ -11,6 +11,8 @@
 package org.polarsys.chess.contracts.transformations.utils;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -49,18 +51,40 @@ public class FileNamesUtil {
 	}
 	
 	/**
+	 * Gives the current date and time formatted in a certain way.
+	 * @return the string representing the current date and time
+	 */
+	private String getDate() {
+		final String pattern = "yyyy-MM-dd-HH-mm-ss";
+		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		return simpleDateFormat.format(new Date());
+	}
+	
+	/**
 	 * Computes the absolute file name for the fault tree.
 	 * @param editor the active editor
 	 * @param modelSystemName the model name
 	 * @param index an index to differentiate the generated file
 	 * @return
 	 */
-	public String computeFtFileName(IEditorPart editor, String modelSystemName, int index) {
-		final IFolder folder = computeXSapFolder(editor);
-		final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
-		final String tempFiles = resFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + "extended_" + 
-				modelSystemName + "_c" + index + "_ft" + XML_EXT;
+	public String computeFtFileName(IEditorPart editor, String modelSystemName, 
+			int index, boolean storeResult) {
+		final String resPath;
+		final String fileName;
+		
+		if (storeResult) {
+			resPath = AnalysisResultUtil.getInstance().getResultDir();
+			fileName = resPath + File.separator + "extended_" + 
+					modelSystemName + "_c" + index + "_ft_" + getDate() + XML_EXT;
+
+		} else {
+			final IFolder folder = computeXSapFolder(editor);
+			final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
+			resPath = resFolder.getLocation().toString();
+			fileName = resPath + File.separator + "extended_" + 
+					modelSystemName + "_c" + index + "_ft" + XML_EXT;
+			
+		}
 		return fileName;
 	}
 
@@ -70,11 +94,21 @@ public class FileNamesUtil {
 	 * @param modelSystemName the model name
 	 * @return
 	 */
-	public String computeFmeaFileName(IEditorPart editor, String modelSystemName) {
-		final IFolder folder = computeXSapFolder(editor);
-		final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
-		final String tempFiles = resFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + modelSystemName + "_fmea_table" + XML_EXT;
+	public String computeFmeaFileName(IEditorPart editor, String modelSystemName, boolean storeResult) {
+		final String resPath;
+		final String fileName;
+		
+		if (storeResult) {
+			resPath = AnalysisResultUtil.getInstance().getResultDir();
+			fileName = resPath + File.separator + modelSystemName + 
+					"_fmea_table_" + getDate() + XML_EXT;			
+		} else {
+			final IFolder folder = computeXSapFolder(editor);
+			final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
+			resPath = resFolder.getLocation().toString();
+			fileName = resPath + File.separator + modelSystemName + 
+					"_fmea_table" + XML_EXT;			
+		}
 		return fileName;
 	}
 

@@ -58,12 +58,22 @@
             defaultHandler="org.polarsys.chess.contracts.transformations.commands.FTAXSapHandler"
             id="org.polarsys.chess.contracts.transformations.ftaxsap.id"
             name="FTA xSAP">
+         <commandParameter
+               id="store_result"
+               name="storeResult"
+               optional="true">
+         </commandParameter>
       </command>
       <command
             categoryId="org.polarsys.chess.contracts.category"
             defaultHandler="org.polarsys.chess.contracts.transformations.commands.FMEAXSapHandler"
             id="org.polarsys.chess.contracts.transformations.fmeaxsap.id"
             name="FMEA xSAP">
+         <commandParameter
+               id="store_result"
+               name="storeResult"
+               optional="true">
+         </commandParameter>
       </command>
    </extension>
    <extension
@@ -189,5 +199,76 @@
           	 </menu>
           </menu>
 	</menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.polarsys.chess.modelexplorerpopupmenu.id?after=org.eclipse.ui.main.diagramEditorMenu.CHESS.safetyCase">
+         <menu
+               id="org.polarsys.chess.modelexplorerpopupmenu.packageverification.id"
+               label="Architecture Verification">
+            <command
+                  commandId="org.polarsys.chess.contracts.transformations.ftaxsap.id"
+                  label="Fault Tree Analysis (FTA)"
+                  style="push">
+               <parameter
+                     name="store_result"
+                     value="true">
+               </parameter>
+            </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.emf.ecore.EObject">
+                     <instanceof
+                           value="org.eclipse.uml2.uml.Package">
+                     </instanceof>
+                  </adapt>
+                    <with
+                     	variable="activeMenuSelection">
+                  		<count
+                        	value="1">
+                  		</count>
+               		</with>                     
+               </iterate>
+            </visibleWhen>
+            <command
+                  commandId="org.polarsys.chess.contracts.transformations.fmeaxsap.id"
+                  label=" Failure Mode and Effect Analysis (FMEA)"
+                  style="push">
+               <parameter
+                     name="store_result"
+                     value="true">
+               </parameter>
+            </command>
+            <command
+                  commandId="eu.fbk.tools.adapter.ui.commands.ShowVVResultCommand"
+                  label="Show result FMEA"
+                  style="push">
+               <parameter
+                     name="function_name"
+                     value="xsap_compute_fmea_table">
+               </parameter>
+               <parameter
+                     name="result_file"
+                     value="/hardmnt/nemesis0/data/cristofo/git/CHESS_SystemArchitectureProjects/Battery_Luca_Multistate/NuSMV3-XSAP/Results/model_BatterySystem_fmea_table.xml">
+               </parameter>
+            </command>
+            <command
+                  commandId="eu.fbk.tools.adapter.ui.commands.ShowVVResultCommand"
+                  label="Show result FTA"
+                  style="push">
+               <parameter
+                     name="function_name"
+                     value="xsap_compute_fault_tree">
+               </parameter>
+               <parameter
+                     name="result_file"
+                     value="/hardmnt/nemesis0/data/cristofo/git/CHESS_SystemArchitectureProjects/Battery_Luca_Multistate/NuSMV3-XSAP/Results/extended_model_BatterySystem_c1_ft.xml">
+               </parameter>
+            </command>
+         </menu>
+      </menuContribution>
    </extension>
 </plugin>
