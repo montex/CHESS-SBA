@@ -49,7 +49,6 @@ import eu.fbk.tools.editor.contract.expression.expression.FullPortId;
 import eu.fbk.tools.editor.contract.expression.expression.FullVariableId;
 import eu.fbk.tools.editor.oss.oss.SystemComponent;
 import eu.fbk.tools.editor.oss.oss.Variable;
-import eu.fbk.tools.editor.oss.validation.ModelUtil;
 import eu.fbk.tools.editor.oss.oss.AbstractComponent;
 import eu.fbk.tools.editor.oss.oss.Assertion;
 import eu.fbk.tools.editor.oss.oss.ComplexType;
@@ -94,6 +93,8 @@ import org.eclipse.papyrus.sysml.portandflows.FlowDirection;
  */
 public class ImportOSSFileAction {
 
+	
+	private static boolean validateSerializedElements = false;
 	// The instance of this class
 	private static ImportOSSFileAction classInstance;
 
@@ -185,7 +186,7 @@ public class ImportOSSFileAction {
 	 * @return the unknown text
 	 */
 	private String getTextOfTag(EObject tag) {
-		return (ossModelUtil.getOssElementAsString(tag, true).split(" ")[0]);
+		return (ossModelUtil.getOssElementAsString(tag, validateSerializedElements, true).split(" ")[0]);
 	}
 
 	/**
@@ -384,7 +385,7 @@ public class ImportOSSFileAction {
 		// ASSERTION processing
 		// final Assertion assertion = dslRefInstance.getAssertion();
 		final String assertionName = assertion.getName();
-		final String assertionText = ossModelUtil.getOssElementAsString(assertion.getConstraint(), true);
+		final String assertionText = ossModelUtil.getExpressionAsString(assertion.getConstraint(), validateSerializedElements);
 
 		// Retrieve the formal property from the owner, if any
 		// (working on the assertion name)
@@ -426,11 +427,11 @@ public class ImportOSSFileAction {
 		for (FullContractIdList refiningContractId : refiningContractIds) {
 
 			String componentInstanceName = ossModelUtil
-					.getNearestComponentInstanceNameFromFullContractIdList(refiningContractId);
+					.getNearestComponentInstanceNameFromFullContractId(refiningContractId);
 			String[] componentInstanceRange = ossModelUtil
-					.getNearestComponentInstanceRangeFromFullContractIdList(refiningContractId);
+					.getNearestComponentInstanceRangeFromFullContractId(refiningContractId,validateSerializedElements);
 			String componentInstanceIndex = ossModelUtil
-					.getNearestComponentInstanceIndexFromFullContractIdList(refiningContractId);
+					.getNearestComponentInstanceIndexFromFullContractId(refiningContractId,validateSerializedElements);
 
 			String refinementNameOptSuffix = "";
 			if (!StringArrayUtil.isUndefined(componentInstanceRange)) {
@@ -512,9 +513,9 @@ public class ImportOSSFileAction {
 
 			// Details of the connector ends
 			String variablePortOwner = ossModelUtil.getNearestComponentName(variable);
-			String variablePortName = ModelUtil.getVariableIdAsStr(variable.getId());
+			String variablePortName = ossModelUtil.getVariableIdAsString(variable.getId(),validateSerializedElements);
 			String constraintPortOwner = ossModelUtil.getNearestComponentName((FullVariableId) constraint);
-			String constraintPortName = ossModelUtil.getPortName((FullVariableId) constraint);
+			String constraintPortName = ossModelUtil.getVariableIdAsString(((FullVariableId) constraint).getId(), validateSerializedElements);
 
 			Connector connector = entityUtil.getExistingConnector(existingConnectors, variablePortOwner,
 					variablePortName, constraintPortOwner, constraintPortName);
@@ -541,16 +542,16 @@ public class ImportOSSFileAction {
 			}
 		} else
 		// It could be a delegation constraint, check it
-		if (isDelegationConstraint(variable, constraint, owner)) {
-			logger.debug("isDelegationConstraint");
+		if (isDelegationConstraint(variable, constraint,iterCondition, owner)) {
+			logger.debug("isDelegationConstraint: "+ossModelUtil.getOssElementAsString(connection, validateSerializedElements, true));
 			Constraint delegationConstraint = null;
 			// String constraintText =
 			// chessElementsUtil.getConstraintText(constraint);
-			String constraintText = ossModelUtil.getOssElementAsString(constraint, true);
-			String variableIdText = ossModelUtil.getOssElementAsString(variable, true);
+			String constraintText = ossModelUtil.getExpressionAsString(constraint, validateSerializedElements);
+			String variableIdText = ossModelUtil.getFullVariableIdAsString(variable, validateSerializedElements);
 			String iterConditionText = null;
 			if (iterCondition != null) {
-				iterConditionText = ossModelUtil.getOssElementAsString(iterCondition, true);
+				iterConditionText = ossModelUtil.getIterativeConditionAsString(iterCondition, validateSerializedElements);
 			}
 			if ((delegationConstraint = entityUtil.getExistingDelegationConstraint(existingDelegationConstraints,
 					variableIdText, iterConditionText, constraintText)) != null) {
@@ -580,15 +581,20 @@ public class ImportOSSFileAction {
 		} else {
 			// System.out.println("variable: " + variable);
 			// System.out.println("constraint: " + constraint);
-			addImportError("Found a connetion with a" + variable + ", don't know how to handle it!");
+			addImportError("Found the connetion: " + getTextOfTag(connection) + ", don't know how to handle it!");
 		}
 
 	}
 
-	private boolean isDelegationConstraint(FullVariableId variable, Expression constraint, Class owner) {
-		return !(constraint instanceof FullPortId) || (ossModelUtil.isVariableWithArray((FullPortId) constraint))
-				|| !(variable instanceof FullPortId) || (ossModelUtil.isVariableWithArray((FullPortId) variable))
-				|| (isFunctionBehavior(owner, variable) && isFunctionBehavior(owner, constraint));
+	private boolean isDelegationConstraint(FullVariableId variable, Expression constraint,IterativeCondition iterCondition, Class owner) {
+	logger.debug("isDelegationConstraint constraint: "+constraint);
+	logger.debug("constraint instanceof FullVariableId: "+(constraint instanceof FullVariableId));
+		return !(constraint instanceof FullVariableId) || 
+				(ossModelUtil.isVariableWithArray((FullVariableId) constraint))	|| 
+				!(variable instanceof FullVariableId) || 
+				(ossModelUtil.isVariableWithArray((FullVariableId) variable))|| 
+				(isFunctionBehavior(owner, variable) && isFunctionBehavior(owner, constraint)) ||
+				(iterCondition!=null);
 	}
 
 	private Class getPortOwner(Property partWithPort, Class owner) {
@@ -620,14 +626,14 @@ public class ImportOSSFileAction {
 
 		// SubComponent subComponent = dslRefInstance.getSubcomponent();
 		// SUB processing
-		final String subName = ossModelUtil.getSubComponentName(subComponent);
+		final String subName = ossModelUtil.getSubComponentName(subComponent, validateSerializedElements);
 		logger.debug("\tsubcomponent name = " + subName);
 
 		final String subType = ossModelUtil.getSubComponentTypeName(subComponent);
 		logger.debug("\tsubcomponent type = " + subType);
 
 		String[] mulitplicityBoundaries = ossModelUtil
-				.getMultiplicityBoundariesFromOssSubComponentType(subComponent.getType());
+				.getMultiplicityBoundariesFromOssSubComponentType(subComponent.getType(),validateSerializedElements);
 		logger.debug("\tsubcomponent multiplicityBoundaries = " + mulitplicityBoundaries[0] + " , "
 				+ mulitplicityBoundaries[1]);
 		final Type subComponentType = (Type) dslTypeToComponent.get(subType);
@@ -812,8 +818,8 @@ public class ImportOSSFileAction {
 	private void parseParameterAssumptions(ParameterAssumptions parameterAssumptions,
 			HashMap<String, Boolean> mapParameterAssumptionsToKeep, Class owner) {
 
-		final String parameterAssumptionsText = ossModelUtil.getOssElementAsString(parameterAssumptions.getConstraint(),
-				true);
+		final String parameterAssumptionsText = ossModelUtil.getExpressionAsString(parameterAssumptions.getConstraint(),
+				validateSerializedElements);
 
 		// Retrieve the constraint from the owner, if any
 		// (working on the constraint text)
@@ -917,7 +923,7 @@ public class ImportOSSFileAction {
 			HashMap<String, Boolean> mapFormalPropertiesToKeep, Class owner) {
 
 		final String assertionName = assertion.getName();
-		final String assertionText = ossModelUtil.getOssElementAsString(assertion.getConstraint(), true);
+		final String assertionText = ossModelUtil.getExpressionAsString(assertion.getConstraint(), validateSerializedElements);
 
 		// Retrieve the formal property from the owner, if any
 		// (working on the assertion name)
@@ -944,8 +950,8 @@ public class ImportOSSFileAction {
 		// final Contract dslContract = dslIntInstance.getContract();
 		final Assumption dslAssumption = dslContract.getAssumption();
 		final Guarantee dslGuarantee = dslContract.getGuarantee();
-		final String ossAssumptionText = ossModelUtil.getOssElementAsString(dslAssumption.getConstraint(), true);
-		final String ossGuaranteeText = ossModelUtil.getOssElementAsString(dslGuarantee.getConstraint(), true);
+		final String ossAssumptionText = ossModelUtil.getExpressionAsString(dslAssumption.getConstraint(), validateSerializedElements);
+		final String ossGuaranteeText = ossModelUtil.getExpressionAsString(dslGuarantee.getConstraint(), validateSerializedElements);
 		final String contractName = dslContract.getName();
 
 		// Retrieve the contract type from the owner, if any
@@ -992,7 +998,7 @@ public class ImportOSSFileAction {
 		// PORT processing
 		// final VariableId dslVariableID = ossPort.getId();
 		final ComplexType ossPortType = ossPort.getType();
-		String portName = ossModelUtil.getPortName(ossPort.getId());
+		String portName = ossModelUtil.getPortName(ossPort,validateSerializedElements);
 		logger.debug("port: " + ossPort);
 		logger.debug("portName: " + portName);
 		Type newPortType = ossTypeTranslator.getOrCreateTypeFromOssComplexType(ossPortType, owner.getNearestPackage());
@@ -1000,7 +1006,7 @@ public class ImportOSSFileAction {
 			throw new ImportException("Not able to map the requested type for port : " + portName);
 			// return null; // Create the port anyway, without type
 		}
-		String[] newMultiplicityRange = ossModelUtil.getMultiplicityBoundariesFromOssComplexType(ossPortType);
+		String[] newMultiplicityRange = ossModelUtil.getMultiplicityBoundariesFromOssComplexType(ossPortType,validateSerializedElements);
 		// Version that updates the port
 		// Loop on all the ports to see if it is already existing
 		org.eclipse.uml2.uml.Port port = entityUtil.getExistingUmlPort(portName, existingPorts);
@@ -1037,7 +1043,7 @@ public class ImportOSSFileAction {
 
 		// Check if there are optional parameters to detect how to handle it
 		final EList<ComplexType> ossInputTypes = ossParameter.getParameters();
-		String parameterName = ModelUtil.getVariableIdAsStr(ossParameter.getId());
+		String parameterName = ossModelUtil.getVariableIdAsString(ossParameter.getId(),validateSerializedElements);
 		if (ossInputTypes.size() != 0) {
 			parseParameterAsUmlFunctionBehaviour(parameterName, ossOutputType, ossInputTypes,
 					mapFunctionBehaviorsToKeep, owner);
@@ -1055,7 +1061,7 @@ public class ImportOSSFileAction {
 		// String ossParameterName =
 		// ossModelUtil.getParameterName(ossParameterId);
 		final String[] newMultiplicityRange = ossModelUtil
-				.getMultiplicityBoundariesFromOssComplexType(ossParameterType);
+				.getMultiplicityBoundariesFromOssComplexType(ossParameterType,validateSerializedElements);
 		Type newParameterType = ossTypeTranslator.getOrCreateTypeFromOssComplexType(ossParameterType,
 				owner.getNearestPackage());
 		if (newParameterType == null) {
@@ -1095,12 +1101,12 @@ public class ImportOSSFileAction {
 
 		Type newOutputType = ossTypeTranslator.getOrCreateTypeFromOssComplexType(ossOutputType,
 				owner.getNearestPackage());
-		final String[] newMultiplicity = ossModelUtil.getMultiplicityBoundariesFromOssComplexType(ossOutputType);
+		final String[] newMultiplicity = ossModelUtil.getMultiplicityBoundariesFromOssComplexType(ossOutputType,validateSerializedElements);
 
 		EList<Type> newInputTypes = ossTypeTranslator.getOrCreateTypesFromOssComplexTypes(ossInputTypes,
 				owner.getNearestPackage());
 		final EList<String[]> newMultiplicities = ossModelUtil
-				.getMultiplicityBoundariesFromOssComplexTypes(ossInputTypes);
+				.getMultiplicityBoundariesFromOssComplexTypes(ossInputTypes,validateSerializedElements);
 
 		if (newOutputType == null) {
 			throw new ImportException("Not able to map the requested type for port : " + parameterName);
