@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *     Alberto Debiasi - initial API and implementation
+ *     Luca Cristoforetti - added some functionalities
  ******************************************************************************/
 package org.polarsys.chess.diagram.ui.commands;
 
@@ -26,6 +27,7 @@ import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSBlockDefinitionDiagramModel;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramModel;
 import org.polarsys.chess.diagram.ui.services.CHESSDiagramsGeneratorService;
+import org.polarsys.chess.diagram.ui.services.ResultsGeneratorService;
 import org.polarsys.chess.diagram.ui.utils.ExportDialogUtils;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.polarsys.chess.service.gui.utils.DialogUtils;
@@ -118,7 +120,6 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 //			imageExtension = ".png";	// Not perfect images, some fonts are wrong
 			imageExtension = ".pdf";
 		}
-
 	}
 
 	@Override
@@ -146,6 +147,13 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		
 		documentGeneratorService.addLocalAttributeDescriptors(umlSelectedComponent, documentGenerator);
 
+		//TODO: leggere da dialogo utente
+		boolean showAnalysisResults = true;
+
+		final ResultsGeneratorService resultsGeneratorService = new ResultsGeneratorService();
+		resultsGeneratorService.setParametersBeforeDocumentGeneration(showAnalysisResults);
+		resultsGeneratorService.addResultsDescriptors(umlSelectedComponent, activePackage, documentGenerator);
+				
 		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension
 				//parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout()
 				);

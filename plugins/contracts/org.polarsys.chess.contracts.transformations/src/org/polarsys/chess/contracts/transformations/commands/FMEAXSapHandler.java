@@ -15,6 +15,7 @@ import java.util.StringJoiner;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.uml2.uml.Class;
+import org.polarsys.chess.contracts.transformations.utils.AnalysisResultUtil;
 
 /**
  * This command permits the execution of FMEA using the xSAP tool.
@@ -30,7 +31,7 @@ public class FMEAXSapHandler extends AbstractXSapHandler {
 	 */
 	private String processConditions(String conditions) {
 		StringJoiner arguments = new StringJoiner(" ");
-		for (String condition : ftaCond.split(", ")) {
+		for (String condition : ftaFmeaCond.split(", ")) {
 			arguments.add("\"" + condition + "\"");
 		}
 		return arguments.toString();
@@ -55,12 +56,13 @@ public class FMEAXSapHandler extends AbstractXSapHandler {
 		final String fmeaFileName = fileNamesUtil.computeFmeaFileName(editor, modelName, storeResult);
 		
 		// Compute FMEA and show results in a dedicated view
-		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, processConditions(ftaCond), 
+		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, processConditions(ftaFmeaCond), 
 				fmeaFileName, false);
 		
 		// If requested, store the data
 		if (storeResult) {
-			analysisResultUtil.storeResult("FMEA", ftaCond, fmeaFileName, systemComponent, analysisContext);
+			analysisResultUtil.storeResult(AnalysisResultUtil.FMEA_ANALYSIS, ftaFmeaCond, 
+					fmeaFileName, systemComponent, analysisContext);
 		}
 		return null;
 	}

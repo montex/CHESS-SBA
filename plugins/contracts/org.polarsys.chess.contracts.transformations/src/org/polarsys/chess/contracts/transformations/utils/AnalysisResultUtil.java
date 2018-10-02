@@ -18,6 +18,7 @@ import java.util.Iterator;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -32,6 +33,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.UMLPackage;
@@ -51,9 +53,12 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.ErrorsDialogUtil;
  */
 public class AnalysisResultUtil {
 	private static final String RESULT_ELEMENT = "CHESS::Dependability::DependableComponent::ResultElement";
+	private static final String ANALYSIS_VIEW = "CHESS::Core::CHESSViews::AnalysisView";
 	private static final String DEPENDABILITY_ANALYSIS_VIEW = "CHESS::Core::CHESSViews::DependabilityAnalysisView";
-	private static final String RESULTS_FILE_PATH = File.separator+"VerificationResults";
-
+	private static final String RESULTS_FILE_PATH = File.separator + "VerificationResults";
+	public static final String FMEA_ANALYSIS = "FMEA";
+	public static final String FTA_ANALYSIS = "FTA";
+	
 	private static AnalysisResultUtil packageUtilInstance;
 	private final EntityUtil entityUtil = EntityUtil.getInstance();
 	private final ErrorsDialogUtil errorsDialogUtil = ErrorsDialogUtil.getInstance();
@@ -86,8 +91,8 @@ public class AnalysisResultUtil {
 	}
 	
 	/**
-	 * Returns the requested view.
-	 * @return
+	 * Returns the requested view, starting from the UML model.
+	 * @return the requested view
 	 */
 	public Package getDependabilityView() {
 		final UmlModel umlModel = UmlUtils.getUmlModel();
@@ -108,27 +113,75 @@ public class AnalysisResultUtil {
 		errorsDialogUtil.showMessage_GenericError("Error: DependabilityView not found!");
 		return null;
 	}
-	
+		
+	/**
+	 * Returns the requested view starting from the given package.
+	 * @param pkg the package from which go up and find the wiew
+	 * @return the requested view
+	 */
+	public Package getDependabilityViewFromPackage(Package pkg) {
+		
+		final Model model = pkg.getModel();
+		
+		// Get the list of first level packages
+		EList<Package> modelPackages = model.getNestedPackages();
+		
+		Package analysisView = null;
+		for (Package modelPackage : modelPackages) {
+			if(modelPackage.getAppliedStereotype(ANALYSIS_VIEW) != null) {
+				analysisView = modelPackage;
+				break;
+			}			
+		}
+		
+		if (analysisView == null) {
+			return null;
+		}
+		
+		//FIXME: qui va indicata la mia view se presente, oppure creata...
+		
+		// Get the list of second level packages
+		modelPackages = analysisView.getNestedPackages();
+		
+		for (Package modelPackage : modelPackages) {
+			if(modelPackage.getAppliedStereotype(DEPENDABILITY_ANALYSIS_VIEW) != null) {
+				return modelPackage;
+			}			
+		}
+		return null;
+	}
+		
 	/**
 	 * Applies the ResultElement stereotype to the given element.
 	 * 
 	 * @param element  the element
 	 * @return  the stereotype applied
 	 */
-	public Stereotype applyResultElementStereotype(Component element) {
+	private Stereotype applyResultElementStereotype(Component element) {
 		return UMLUtils.applyStereotype(element, RESULT_ELEMENT);
 	}
 	
 	/**
+	 * Returns the ResultElement application from a given UML element.
+	 * @param element the element containing the appplication, if any
+	 * @return the application of the stereotype
+	 */
+	public ResultElement getResultElementFromUmlElement(Element element) {	
+		final Stereotype appliedStereotype = element.getAppliedStereotype(RESULT_ELEMENT);
+		return (ResultElement) element.getStereotypeApplication(appliedStereotype);
+	}
+	
+	/**
 	 * Creates a ResultElement and store the given result.
-	 * @param name the name of the analysis
+	 * @param type the type of the analysis
 	 * @param conditions the specified conditions
 	 * @param filePath the path of the result file 
 	 * @param rootComponent the root component of the architecture
+	 * @param contextAnalysis the context analysis used to run the check
 	 * @return true if succeded
 	 */
-	public boolean storeResult(final String name, final String conditions, 
-			final String filePath, final Class rootComponent, final GaAnalysisContext contextAnalysis) {
+	public boolean storeResult(final String type, final String conditions, final String filePath, 
+			final Class rootComponent, final GaAnalysisContext contextAnalysis) {
 			
 		// Select the correct view where to store the result
 		final Package pkg = getDependabilityView();
@@ -153,23 +206,25 @@ public class AnalysisResultUtil {
 						false, UMLPackage.eINSTANCE.getPackage(), true);
 				
 				// Check if the result is already present in the package
-				final Element element = dependabilityPackage.getPackagedElement(name);			
+				final Element element = dependabilityPackage.getPackagedElement(type);			
 				if (element != null && element instanceof Component && 
 						(element.getAppliedStereotype(RESULT_ELEMENT) != null)) {
 					
 					// There is an element with the same name, check to see if it is possible to reuse it
-					final Stereotype appliedStereotype = element.getAppliedStereotype(RESULT_ELEMENT);
-					final ResultElement resultElement = 
-							(ResultElement) element.getStereotypeApplication(appliedStereotype);
-					
-					if (resultElement.getName().equals(name) && resultElement.getRoot() == rootComponent) {
+					final ResultElement resultElement = getResultElementFromUmlElement(element);				
+					if (resultElement.getType().equals(type) && resultElement.getRoot() == rootComponent) {
 						if (resultElement.getConditions() != null && 
 								resultElement.getConditions().equals(conditions)) {
 							
 							// Same analysis, can be updated with the new values
 							resultElement.setDate(new Date().toString());
 							resultElement.setValid(true);
+							
+							// Remove the result file from disk and set the new one
+							File resultFile = new File(resultElement.getFile());
+							resultFile.delete();
 							resultElement.setFile(filePath);
+							
 							return;
 						}
 					}
@@ -177,12 +232,12 @@ public class AnalysisResultUtil {
 					
 				// Create a new result element
 				final Component umlComponent = (Component) dependabilityPackage.createPackagedElement(
-						name, UMLPackage.eINSTANCE.getComponent());
+						type, UMLPackage.eINSTANCE.getComponent());
 				final Stereotype appliedStereotype = applyResultElementStereotype(umlComponent);
 				final ResultElement resultElement = 
 						(ResultElement) umlComponent.getStereotypeApplication(appliedStereotype);
 
-				resultElement.setName(name);
+				resultElement.setType(type);
 				resultElement.setDate(new Date().toString());
 				resultElement.setConditions(conditions);
 				resultElement.setValid(true);
@@ -199,7 +254,7 @@ public class AnalysisResultUtil {
 	 * @param event the event
 	 * @return the selected package
 	 */
-	private Package getPackageFromSelectedObject(ExecutionEvent event) {	
+	private Package getPackageFromSelectedObject(ExecutionEvent event) {
 		final ISelection selection = 
 				HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
 		final Object selectedUmlElement = SelectionUtil.getInstance().getUmlSelectedObject(selection);
@@ -207,7 +262,7 @@ public class AnalysisResultUtil {
 		if (selectedUmlElement instanceof Package) {
 			return (Package) selectedUmlElement;
 		}
-		return null;		
+		return null;
 	}
 	
 	/**
@@ -259,8 +314,6 @@ public class AnalysisResultUtil {
 	        theFile.mkdirs();
 	        return filePath;
 		} catch (Exception e) {
-			
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

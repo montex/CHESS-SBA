@@ -48,7 +48,7 @@ public abstract class AbstractXSapHandler extends AbstractHandler {
 	private String smvFileName;
 	private String feiFileName;
 	private String expandedFeiFileName;
-	protected String ftaCond;
+	protected String ftaFmeaCond;
 	protected String modelName;
 	protected IEditorPart editor;
 	protected String extendedSmvFileName;
@@ -78,9 +78,9 @@ public abstract class AbstractXSapHandler extends AbstractHandler {
 			dialog.create();
 			if (dialog.open() == Window.OK) {
 				systemQN = dialog.getSystem();
-				ftaCond = dialog.getFtaCondition();
+				ftaFmeaCond = dialog.getFtaCondition();
 				analysisContext = dialog.getAnalysisContext();
-				if(systemQN == null || systemQN.isEmpty() || ftaCond == null || ftaCond.isEmpty()) {
+				if(systemQN == null || systemQN.isEmpty() || ftaFmeaCond == null || ftaFmeaCond.isEmpty()) {
 					return false;
 				}
 			}else {
@@ -121,7 +121,7 @@ public abstract class AbstractXSapHandler extends AbstractHandler {
 		}
 		
 		// Generate the FEI file
-		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
+		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaFmeaCond);
 		
 		// Generate the monolithic SMV file
 		final CHESSSmvExporterService smvExporterService = CHESSSmvExporterService.getInstance();
