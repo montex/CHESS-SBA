@@ -58,6 +58,7 @@ public class AnalysisResultUtil {
 	private static final String RESULTS_FILE_PATH = File.separator + "VerificationResults";
 	public static final String FMEA_ANALYSIS = "FMEA";
 	public static final String FTA_ANALYSIS = "FTA";
+	public static final String CONTRACT_BASED_FTA_ANALYSIS = "CONTRACT_FTA";
 	
 	private static AnalysisResultUtil packageUtilInstance;
 	private final EntityUtil entityUtil = EntityUtil.getInstance();
@@ -183,8 +184,9 @@ public class AnalysisResultUtil {
 	public boolean storeResult(final String type, final String conditions, final String filePath, 
 			final Class rootComponent, final GaAnalysisContext contextAnalysis) {
 			
+		final Package activePackage = rootComponent.getNearestPackage();
 		// Select the correct view where to store the result
-		final Package pkg = getDependabilityView();
+		final Package pkg = getDependabilityViewFromPackage(activePackage);
 		
 		if (pkg == null) {
 			return false;

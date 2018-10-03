@@ -23,8 +23,10 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 
 import eu.fbk.eclipse.standardtools.diagram.ContainerDescriptor;
+import eu.fbk.eclipse.standardtools.diagram.ContractFtaResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.DocumentGenerator;
 import eu.fbk.eclipse.standardtools.diagram.FmeaResultDescriptor;
+import eu.fbk.eclipse.standardtools.diagram.FtaResultDescriptor;
 import eu.fbk.tools.adapter.xsap.ComputeFmeaTableResultBuilder;
 import eu.fbk.tools.adapter.xsap.table.FmeaTable;
 import eu.fbk.tools.adapter.xsap.table.FmeaTable.Row;
@@ -58,9 +60,6 @@ public class ResultsGeneratorService {
 		final File fmeaFile = new File(fmeaFileName);
 		final ComputeFmeaTableResultBuilder resultBuilder = new ComputeFmeaTableResultBuilder();
 		final FmeaTable fmeaTable = resultBuilder.unmarshalResult(fmeaFile);
-
-		System.out.println("fmeaTable = " + fmeaTable);
-
 		if( fmeaTable == null || fmeaTable.getRow() == null || fmeaTable.getRow().isEmpty() ) {
 			System.out.println("Internal error while unmarshalling the result. For more info see the console");
 			return null;
@@ -77,6 +76,43 @@ public class ResultsGeneratorService {
 		}
 				
 		return fmeaResultDescriptor;
+	}
+	
+	/**
+	 * Creates a FtaResultDescriptor from the given ResultElement.
+	 * @param resultElement the element containing the data
+	 * @return the newly created descriptor
+	 */
+	private FtaResultDescriptor createFtaResultDescriptor(ResultElement resultElement) {
+		FtaResultDescriptor ftaResultDescriptor = new FtaResultDescriptor();
+		
+		ftaResultDescriptor.conditions = resultElement.getConditions();
+		ftaResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
+		
+		//TODO: qui va messo il path dell'immagine.
+		// ho solo il nome del file di partenza, devo trovare l'EMFTA corrispondente, ecc.
+		// Devo esportare l'immagine qui...
+		ftaResultDescriptor.url = "image.gif";
+		
+		return ftaResultDescriptor;
+	}
+	
+	/**
+	 * Creates a FtaResultDescriptor from the given ResultElement.
+	 * @param resultElement the element containing the data
+	 * @return the newly created descriptor
+	 */
+	private ContractFtaResultDescriptor createContractFtaResultDescriptor(ResultElement resultElement) {
+		ContractFtaResultDescriptor contractFtaResultDescriptor = new ContractFtaResultDescriptor();
+		
+		contractFtaResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
+		
+		//TODO: qui va messo il path dell'immagine.
+		// ho solo il nome del file di partenza, devo trovare l'EMFTA corrispondente, ecc.
+		// Devo esportare l'immagine qui...
+		contractFtaResultDescriptor.url = "image.gif";
+		
+		return contractFtaResultDescriptor;
 	}
 	
 	/**
@@ -113,18 +149,22 @@ public class ResultsGeneratorService {
 		final EList<NamedElement> members = resultsPackage.getOwnedMembers();
 		for (NamedElement namedElement : members) {
 			final ResultElement resultElement = analysisResultUtil.getResultElementFromUmlElement(namedElement);
+			final ContainerDescriptor rootContainer = documentGenerator.getRootContainerDescriptor();
 
 			if (resultElement != null) {
 				final String resultType = resultElement.getType();
 
 				if (resultType.equals(AnalysisResultUtil.FMEA_ANALYSIS)) {
-
 					final FmeaResultDescriptor fmeaResultDescriptor = createFmeaResultDescriptor(resultElement);				
-					final ContainerDescriptor rootContainer = documentGenerator.getContainerDescriptor();
 					rootContainer.fmeaResultDescriptors.add(fmeaResultDescriptor);
 					
 				} else if (resultType.equals(AnalysisResultUtil.FTA_ANALYSIS)) {
-					//TODO: implementare...
+					final FtaResultDescriptor ftaResultDescriptor = createFtaResultDescriptor(resultElement);
+					rootContainer.ftaResultDescriptors.add(ftaResultDescriptor);
+				} else if (resultType.equals(AnalysisResultUtil.CONTRACT_BASED_FTA_ANALYSIS)) {
+					final ContractFtaResultDescriptor contractFtaResultDescriptor = 
+							createContractFtaResultDescriptor(resultElement);					
+					rootContainer.contractFtaResultDescriptors.add(contractFtaResultDescriptor);
 				}
 				//TODO: implementare anche gli altri casi...
 			}

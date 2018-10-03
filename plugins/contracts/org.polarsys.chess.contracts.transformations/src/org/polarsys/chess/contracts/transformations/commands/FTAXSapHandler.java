@@ -14,15 +14,6 @@ import org.eclipse.uml2.uml.Class;
 import org.polarsys.chess.contracts.transformations.utils.AnalysisResultUtil;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.gmf.runtime.diagram.ui.image.ImageFileFormat;
-import org.eclipse.sirius.business.api.query.DViewQuery;
-import org.eclipse.sirius.business.api.session.Session;
-import org.eclipse.sirius.business.api.session.factory.SessionFactory;
-import org.eclipse.sirius.ui.business.api.dialect.ExportFormat;
-import org.eclipse.sirius.ui.business.api.dialect.ExportFormat.ExportDocumentFormat;
-import org.eclipse.sirius.viewpoint.DRepresentation;
 
 /**
  * This command permits the execution of FTA using the xSAP tool.

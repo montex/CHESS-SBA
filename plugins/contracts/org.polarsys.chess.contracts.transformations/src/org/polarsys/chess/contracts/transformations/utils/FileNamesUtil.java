@@ -14,6 +14,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.eclipse.uml2.uml.Class;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -75,7 +76,7 @@ public class FileNamesUtil {
 		if (storeResult) {
 			resPath = AnalysisResultUtil.getInstance().getResultDir();
 			fileName = resPath + File.separator + "extended_" + 
-					modelSystemName + "_c" + index + "_ft_" + getDate() + XML_EXT;
+					modelSystemName + "_c" + index + AnalysisResultUtil.FTA_ANALYSIS + getDate() + XML_EXT;
 
 		} else {
 			final IFolder folder = computeXSapFolder(editor);
@@ -101,7 +102,7 @@ public class FileNamesUtil {
 		if (storeResult) {
 			resPath = AnalysisResultUtil.getInstance().getResultDir();
 			fileName = resPath + File.separator + modelSystemName + 
-					"_fmea_table_" + getDate() + XML_EXT;			
+					AnalysisResultUtil.FMEA_ANALYSIS + getDate() + XML_EXT;			
 		} else {
 			final IFolder folder = computeXSapFolder(editor);
 			final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
@@ -184,5 +185,26 @@ public class FileNamesUtil {
 	 */
 	public String computeFeiFileName(IEditorPart editor, String modelSystemName) {
 		return computeFileTargetFolder(editor) + File.separator + modelSystemName + CommandsCommon.FEI_EXT;
+	}
+
+	/**
+	 * Returns the qualified name of the given component, as string.
+	 * @param component the component
+	 * @return the qualified name with replaced colons
+	 */
+	private String computeQualifiedName(Class component) {
+		String name = component.getQualifiedName();
+		return name.replace("::", "_");
+	}
+	
+	/**
+	 * Computes the file name for the Contract-based fault tree analysis.
+	 * @param systemComponent the root component of the analysis
+	 * @return
+	 */
+	public String computeContractFaultTreeFileName(Class systemComponent) {
+		final String resPath = AnalysisResultUtil.getInstance().getResultDir();
+		return resPath + File.separator + computeQualifiedName(systemComponent) + "_" +
+				AnalysisResultUtil.CONTRACT_BASED_FTA_ANALYSIS + "_" + getDate() + XML_EXT;			
 	}
 }

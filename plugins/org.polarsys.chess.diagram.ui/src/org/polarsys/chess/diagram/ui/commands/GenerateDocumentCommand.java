@@ -24,11 +24,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Package;
+import org.polarsys.chess.contracts.transformations.utils.AnalysisResultUtil;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSBlockDefinitionDiagramModel;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramModel;
 import org.polarsys.chess.diagram.ui.services.CHESSDiagramsGeneratorService;
 import org.polarsys.chess.diagram.ui.services.ResultsGeneratorService;
 import org.polarsys.chess.diagram.ui.utils.ExportDialogUtils;
+import org.polarsys.chess.service.core.exceptions.NoComponentException;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.polarsys.chess.service.gui.utils.DialogUtils;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
@@ -93,12 +95,22 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
+//		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
+
+		// The user could select a component or a package containing an architecture
+		// In the latter case, extract the system component from that package
+		try {
+			umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
+		} catch (NoComponentException e) {
+			umlSelectedComponent = AnalysisResultUtil.getInstance().getSystemComponentFromEvent(event);
+		}
+		
+		activePackage = umlSelectedComponent.getNearestPackage();
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(false);
 		outputDirectoryName = dialogUtils.getDirectoryNameFromDialog();
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();
-		activePackage = umlSelectedComponent.getNearestPackage();
+		
 		goAhead = true;
 
 		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
