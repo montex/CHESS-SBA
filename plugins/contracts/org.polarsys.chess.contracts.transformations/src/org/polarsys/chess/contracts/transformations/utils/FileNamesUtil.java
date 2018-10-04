@@ -76,7 +76,8 @@ public class FileNamesUtil {
 		if (storeResult) {
 			resPath = AnalysisResultUtil.getInstance().getResultDir();
 			fileName = resPath + File.separator + "extended_" + 
-					modelSystemName + "_c" + index + AnalysisResultUtil.FTA_ANALYSIS + getDate() + XML_EXT;
+					modelSystemName + "_" + AnalysisResultUtil.FTA_ANALYSIS + 
+					"_c" + index + "_" + getDate() + XML_EXT;
 
 		} else {
 			final IFolder folder = computeXSapFolder(editor);
@@ -101,8 +102,8 @@ public class FileNamesUtil {
 		
 		if (storeResult) {
 			resPath = AnalysisResultUtil.getInstance().getResultDir();
-			fileName = resPath + File.separator + modelSystemName + 
-					AnalysisResultUtil.FMEA_ANALYSIS + getDate() + XML_EXT;			
+			fileName = resPath + File.separator + modelSystemName + "_" +
+					AnalysisResultUtil.FMEA_ANALYSIS + "_" + getDate() + XML_EXT;			
 		} else {
 			final IFolder folder = computeXSapFolder(editor);
 			final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);

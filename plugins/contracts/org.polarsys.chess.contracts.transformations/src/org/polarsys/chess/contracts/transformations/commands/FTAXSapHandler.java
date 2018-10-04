@@ -53,27 +53,6 @@ public class FTAXSapHandler extends AbstractXSapHandler {
 						ftFileName, systemComponent, analysisContext);
 			}
 		}
-		
-//		// Get session from an absolute path (not in a workspace)
-//        URI sessionResourceURI = URI.createFileURI("D:/folder/representations.aird");
-//        Session session = SessionFactory.INSTANCE.createSession(sessionResourceURI, new NullProgressMonitor());
-//        session.open(new NullProgressMonitor());
-//        // Get the expected representation (here the first of the first DView)
-//        DViewQuery query = new DViewQuery(session.getOwnedViews().iterator().next());
-//        DRepresentation representation = query.getLoadedRepresentations().get(0);
-//        // Export it as SVG image
-//        ImageFileFormat f;
-//        
-//        ExportFormat exportFormat = new ExportFormat(ExportDocumentFormat.NONE, f);
-//        DialectUIManager.INSTANCE.export(representation, session, new Path("D:/folder/image.svg"), exportFormat,
-//                new NullProgressMonitor());
-//		
-		
-		
-		
-		
-		
-		
 		return null;
 	}
 }

@@ -18,9 +18,34 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.contracts.transformations.utils.AnalysisResultUtil;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.sirius.business.api.dialect.DialectManager;
+import org.eclipse.sirius.business.api.session.Session;
+import org.eclipse.sirius.business.api.session.factory.SessionFactory;
+import org.eclipse.sirius.ui.business.api.dialect.DialectUIManager;
+import org.eclipse.sirius.ui.business.api.dialect.ExportFormat;
+import org.eclipse.sirius.ui.business.api.dialect.ExportFormat.ExportDocumentFormat;
+import org.eclipse.sirius.ui.business.api.session.IEditingSession;
+import org.eclipse.sirius.ui.business.api.session.SessionUIManager;
+import org.eclipse.sirius.ui.tools.api.actions.export.SizeTooLargeException;
+import org.eclipse.sirius.viewpoint.DRepresentation;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.sirius.common.tools.api.resource.ImageFileFormat;
 
 import eu.fbk.eclipse.standardtools.diagram.ContainerDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.ContractFtaResultDescriptor;
@@ -39,8 +64,10 @@ import eu.fbk.tools.adapter.xsap.table.FmeaTable.Row;
 public class ResultsGeneratorService {
 	private AnalysisResultUtil analysisResultUtil = AnalysisResultUtil.getInstance();
 	private boolean showAnalysisResults;
+	private String outputDirectoryName;
 	
-	public void setParametersBeforeDocumentGeneration(boolean showAnalysisResults) {
+	public void setParametersBeforeDocumentGeneration(String outputDirectoryName, boolean showAnalysisResults) {
+		this.outputDirectoryName = outputDirectoryName;
 		this.showAnalysisResults = showAnalysisResults;
 	}
 	
@@ -78,6 +105,82 @@ public class ResultsGeneratorService {
 		return fmeaResultDescriptor;
 	}
 	
+	private String getEmftaFile(String fullPath) {
+		String emftaFile = fullPath.substring(fullPath.lastIndexOf("/") + 1, fullPath.length());
+		
+		return emftaFile + ".emfta";
+	}
+	
+	/**
+	 * Returns the full path of the current opened project.
+	 * @return
+	 */
+	private String getCurrentPath() {
+		final IWorkbench iworkbench = PlatformUI.getWorkbench();
+		final IWorkbenchWindow iworkbenchwindow = iworkbench.getActiveWorkbenchWindow();
+		final IWorkbenchPage iworkbenchpage = iworkbenchwindow.getActivePage();
+		final IEditorPart ieditorpart = iworkbenchpage.getActiveEditor();
+		final IFileEditorInput input = (IFileEditorInput) ieditorpart.getEditorInput();
+		final IFile inputfile = input.getFile();
+		final IProject project = inputfile.getProject();
+
+		System.out.println("current path = " + project.getLocation().toString());
+		
+		return project.getLocation().toString();
+	}
+	
+	/**
+	 * Exports the Sirius diagram on disk, in the same position as other diagrams.
+	 * @param diagramPath the name of the .emfta diagram
+	 * @return the path of the exported image
+	 */
+	private String exportSiriusDiagramToFile(String diagramPath) {
+		
+		// Save the active sessions, if any. Otherwise fresh diagrams won't be present in the file
+		final Collection<IEditingSession> s = SessionUIManager.INSTANCE.getUISessions();
+		for (IEditingSession iEditingSession : s) {
+			final Session openSession = iEditingSession.getSession();
+			openSession.save(new NullProgressMonitor());
+		}
+		
+		final URI sessionResourceURI = URI.createFileURI(getCurrentPath() + File.separator + "representations.aird");
+		Session session = null;
+		try {
+			session = SessionFactory.INSTANCE.createSession(sessionResourceURI, new NullProgressMonitor());
+		} catch (CoreException e) {
+			return null;
+		}
+		session.open(new NullProgressMonitor());
+		
+		// Get all the representations containing the requested diagram
+		final String diagramName = getEmftaFile(diagramPath);
+		final List<DRepresentation> myRepresentations = new ArrayList<DRepresentation>();
+		final Collection<DRepresentation> allRepresentations = DialectManager.INSTANCE.getAllRepresentations(session);
+		for (DRepresentation dRepresentation : allRepresentations) {
+			if (dRepresentation.getName().equals(diagramName)) {
+				System.out.println("\nfound the requested representation: " + diagramName);
+				myRepresentations.add(dRepresentation);
+			}
+		}
+		
+		if (myRepresentations.size() != 0) {
+			
+			final String fileName = outputDirectoryName + File.separator + diagramName + ".svg";
+		
+			// Export the first representation as SVG image
+			ExportFormat exportFormat = new ExportFormat(ExportDocumentFormat.NONE, ImageFileFormat.SVG);
+			try {
+				//			representation = myRepresentations.get(1);
+				DialectUIManager.INSTANCE.export(myRepresentations.get(0), session, new Path(fileName),
+						exportFormat, new NullProgressMonitor());
+			} catch (SizeTooLargeException e) {
+				return null;
+			}
+			return fileName;
+		}
+		return "notFound.gif";
+	}
+	
 	/**
 	 * Creates a FtaResultDescriptor from the given ResultElement.
 	 * @param resultElement the element containing the data
@@ -88,12 +191,9 @@ public class ResultsGeneratorService {
 		
 		ftaResultDescriptor.conditions = resultElement.getConditions();
 		ftaResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
-		
-		//TODO: qui va messo il path dell'immagine.
-		// ho solo il nome del file di partenza, devo trovare l'EMFTA corrispondente, ecc.
-		// Devo esportare l'immagine qui...
-		ftaResultDescriptor.url = "image.gif";
-		
+		ftaResultDescriptor.url = "notFound.gif";	// Will be updated later
+		ftaResultDescriptor.url = exportSiriusDiagramToFile(resultElement.getFile());
+
 		return ftaResultDescriptor;
 	}
 	
@@ -106,11 +206,7 @@ public class ResultsGeneratorService {
 		ContractFtaResultDescriptor contractFtaResultDescriptor = new ContractFtaResultDescriptor();
 		
 		contractFtaResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
-		
-		//TODO: qui va messo il path dell'immagine.
-		// ho solo il nome del file di partenza, devo trovare l'EMFTA corrispondente, ecc.
-		// Devo esportare l'immagine qui...
-		contractFtaResultDescriptor.url = "image.gif";
+		contractFtaResultDescriptor.url = exportSiriusDiagramToFile(resultElement.getFile());
 		
 		return contractFtaResultDescriptor;
 	}

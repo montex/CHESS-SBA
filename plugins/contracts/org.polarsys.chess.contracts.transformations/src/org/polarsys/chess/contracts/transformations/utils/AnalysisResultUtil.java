@@ -35,6 +35,7 @@ import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.Stereotype;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement;
@@ -208,26 +209,31 @@ public class AnalysisResultUtil {
 						false, UMLPackage.eINSTANCE.getPackage(), true);
 				
 				// Check if the result is already present in the package
-				final Element element = dependabilityPackage.getPackagedElement(type);			
-				if (element != null && element instanceof Component && 
-						(element.getAppliedStereotype(RESULT_ELEMENT) != null)) {
+				
+				EList<PackageableElement> packageableElements = dependabilityPackage.getPackagedElements();
+				for (PackageableElement packageableElement : packageableElements) {
 					
-					// There is an element with the same name, check to see if it is possible to reuse it
-					final ResultElement resultElement = getResultElementFromUmlElement(element);				
-					if (resultElement.getType().equals(type) && resultElement.getRoot() == rootComponent) {
-						if (resultElement.getConditions() != null && 
-								resultElement.getConditions().equals(conditions)) {
-							
-							// Same analysis, can be updated with the new values
-							resultElement.setDate(new Date().toString());
-							resultElement.setValid(true);
-							
-							// Remove the result file from disk and set the new one
-							File resultFile = new File(resultElement.getFile());
-							resultFile.delete();
-							resultElement.setFile(filePath);
-							
-							return;
+					if (packageableElement != null && packageableElement instanceof Component && 
+							(packageableElement.getAppliedStereotype(RESULT_ELEMENT) != null)) {
+
+						// There is an element with the same name, check to see if it is possible to reuse it
+						final ResultElement resultElement = getResultElementFromUmlElement(packageableElement);				
+						if (resultElement.getType().equals(type) && resultElement.getRoot() == rootComponent) {
+							if ((resultElement.getConditions() == null && conditions == null) || 
+									(resultElement.getConditions() != null && 
+									resultElement.getConditions().equals(conditions))) {
+
+								// Same analysis, can be updated with the new values
+								resultElement.setDate(new Date().toString());
+								resultElement.setValid(true);
+
+								// Remove the result file from disk and set the new one
+								File resultFile = new File(resultElement.getFile());
+								resultFile.delete();
+								resultElement.setFile(filePath);
+
+								return;
+							}
 						}
 					}
 				}

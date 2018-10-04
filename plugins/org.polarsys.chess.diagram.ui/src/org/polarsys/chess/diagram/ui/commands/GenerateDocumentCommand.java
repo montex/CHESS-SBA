@@ -132,15 +132,9 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 //			imageExtension = ".png";	// Not perfect images, some fonts are wrong
 			imageExtension = ".pdf";
 		}
-	}
-
-	@Override
-	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-
-		if (!goAhead) {
-			return;
-		}
 		
+		// All the code below was in the execJobCommand(), but since it now modifies the model,
+		// I have to put it here otherwise an Invalid Thread Access exception will rise
 		OSS ossModel = ocraTranslatorService.exportRootComponentToOssModel(umlSelectedComponent, isDiscreteTime, monitor);
 
 		Display defaultDisplay = Display.getDefault();
@@ -163,7 +157,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		boolean showAnalysisResults = true;
 
 		final ResultsGeneratorService resultsGeneratorService = new ResultsGeneratorService();
-		resultsGeneratorService.setParametersBeforeDocumentGeneration(showAnalysisResults);
+		resultsGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, showAnalysisResults);
 		resultsGeneratorService.addResultsDescriptors(umlSelectedComponent, activePackage, documentGenerator);
 				
 		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension
@@ -189,5 +183,65 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 				documentGeneratorService.generateDocument(documentGenerator);
 			}
 		});
+
+		
+		
+	}
+
+	@Override
+	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
+
+		if (!goAhead) {
+			return;
+		}
+		
+//		OSS ossModel = ocraTranslatorService.exportRootComponentToOssModel(umlSelectedComponent, isDiscreteTime, monitor);
+//
+//		Display defaultDisplay = Display.getDefault();
+//
+//		documentGeneratorService = new DocumentGeneratorServiceFromOssModel(ossModel, chessToOCRAModelTranslator, activePackage);
+//		documentGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, imageExtension,
+//				parameterDialog.getShowLeafComponents(), parameterDialog.getShowInputPorts(), 
+//				parameterDialog.getShowOutputPorts(),parameterDialog.getShowSubComponents(), 
+//				parameterDialog.getShowParameters(), parameterDialog.getShowUninterpretedFunctions(),
+//				parameterDialog.getShowConnections(), parameterDialog.getShowInterfaceAssertions(), 
+//				parameterDialog.getShowRefinementAssertions(), parameterDialog.getShowContracts(),
+//				parameterDialog.getShowContractRefinements(),parameterDialog.getShowParameterAssumptions(),
+//				parameterDialog.getShowDiagrams(), parameterDialog.getShowLocalAttributes());
+//		DocumentGenerator documentGenerator = documentGeneratorService.createDocumentFile(currentProjectName, docFormat,
+//				ossModel.getSystem(), monitor);
+//		
+//		documentGeneratorService.addLocalAttributeDescriptors(umlSelectedComponent, documentGenerator);
+//
+//		//TODO: leggere da dialogo utente
+//		boolean showAnalysisResults = true;
+//
+//		final ResultsGeneratorService resultsGeneratorService = new ResultsGeneratorService();
+//		resultsGeneratorService.setParametersBeforeDocumentGeneration(showAnalysisResults);
+//		resultsGeneratorService.addResultsDescriptors(umlSelectedComponent, activePackage, documentGenerator);
+//				
+//		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension
+//				//parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout()
+//				);
+//
+//		defaultDisplay.syncExec(new Runnable() {
+//			@Override
+//			public void run() {
+//				Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+//				Set<DiagramDescriptor> diagramDescriptors = new HashSet<DiagramDescriptor>();
+//				for (Diagram diagram : chessDiagrams) {
+//					if (getDiagramPackage(diagram) == activePackage) {
+//						// chessDiagramsGeneratorService.createDiagram(diagram, monitor);
+//						DiagramDescriptor dd = chessDiagramsGeneratorService.createDiagramWithDescriptor(diagram, shell,
+//								monitor);
+//						if (dd != null) {
+//							diagramDescriptors.add(dd);
+//						}
+//					}
+//				}
+//				documentGeneratorService.addDiagramDescriptors(diagramDescriptors, documentGenerator);
+//				documentGeneratorService.generateDocument(documentGenerator);
+//			}
+//		});
 	}
 }
