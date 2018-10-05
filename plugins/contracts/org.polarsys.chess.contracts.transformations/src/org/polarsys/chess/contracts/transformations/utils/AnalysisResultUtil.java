@@ -60,6 +60,7 @@ public class AnalysisResultUtil {
 	public static final String FMEA_ANALYSIS = "FMEA";
 	public static final String FTA_ANALYSIS = "FTA";
 	public static final String CONTRACT_BASED_FTA_ANALYSIS = "CONTRACT_FTA";
+	public static final String CONTRACT_REFINEMENT_ANALYSIS = "CONTRACT_REF";
 	
 	private static AnalysisResultUtil packageUtilInstance;
 	private final EntityUtil entityUtil = EntityUtil.getInstance();

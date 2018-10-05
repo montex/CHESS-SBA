@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -49,9 +50,14 @@ import org.eclipse.sirius.common.tools.api.resource.ImageFileFormat;
 
 import eu.fbk.eclipse.standardtools.diagram.ContainerDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.ContractFtaResultDescriptor;
+import eu.fbk.eclipse.standardtools.diagram.ContractRefinementResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.DocumentGenerator;
 import eu.fbk.eclipse.standardtools.diagram.FmeaResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.FtaResultDescriptor;
+import eu.fbk.tools.adapter.ocra.CheckContractResultBuilder;
+import eu.fbk.tools.adapter.ocra.OcraOutput;
+import eu.fbk.tools.adapter.results.ContractCheckResult;
+import eu.fbk.tools.adapter.results.ModelCheckResult;
 import eu.fbk.tools.adapter.xsap.ComputeFmeaTableResultBuilder;
 import eu.fbk.tools.adapter.xsap.table.FmeaTable;
 import eu.fbk.tools.adapter.xsap.table.FmeaTable.Row;
@@ -62,6 +68,7 @@ import eu.fbk.tools.adapter.xsap.table.FmeaTable.Row;
  *
  */
 public class ResultsGeneratorService {
+	private static final Logger logger = Logger.getLogger(EntityUtil.class);
 	private AnalysisResultUtil analysisResultUtil = AnalysisResultUtil.getInstance();
 	private boolean showAnalysisResults;
 	private String outputDirectoryName;
@@ -77,18 +84,17 @@ public class ResultsGeneratorService {
 	 * @return the newly created descriptor
 	 */
 	private FmeaResultDescriptor createFmeaResultDescriptor(ResultElement resultElement) {
-		FmeaResultDescriptor fmeaResultDescriptor = new FmeaResultDescriptor();
+		final FmeaResultDescriptor fmeaResultDescriptor = new FmeaResultDescriptor();
 		
 		fmeaResultDescriptor.conditions = resultElement.getConditions();
 		fmeaResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
 		
 		// Read the result file and parse the table
-		final String fmeaFileName = resultElement.getFile();
-		final File fmeaFile = new File(fmeaFileName);
+		final File fmeaFile = new File(resultElement.getFile());
 		final ComputeFmeaTableResultBuilder resultBuilder = new ComputeFmeaTableResultBuilder();
 		final FmeaTable fmeaTable = resultBuilder.unmarshalResult(fmeaFile);
 		if( fmeaTable == null || fmeaTable.getRow() == null || fmeaTable.getRow().isEmpty() ) {
-			System.out.println("Internal error while unmarshalling the result. For more info see the console");
+			logger.debug("Internal error while unmarshalling the result. For more info see the console");
 			return null;
 		}
 
@@ -103,6 +109,53 @@ public class ResultsGeneratorService {
 		}
 				
 		return fmeaResultDescriptor;
+	}
+	
+	private ContractRefinementResultDescriptor createContractRefinementResultDescriptor(ResultElement resultElement) {
+		final ContractRefinementResultDescriptor contractRefinementResultDescriptor = 
+				new ContractRefinementResultDescriptor();
+		
+		contractRefinementResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
+		
+		final File resultFile = new File(resultElement.getFile());
+		final CheckContractResultBuilder resultBuilder = new CheckContractResultBuilder();
+		final OcraOutput ocraOutput = resultBuilder.unmarshalResult(resultFile);
+		if(ocraOutput == null || ocraOutput.getOcraResult() == null || ocraOutput.getOcraResult().isEmpty()) {
+			logger.debug("Error while unmarshalling the result. For more info see the console");
+			return null;
+		}
+
+		final ModelCheckResult contractCheckResult = resultBuilder.buildResult(ocraOutput);
+		if(contractCheckResult == null) {
+			logger.debug("Internal error while building the result. For more info see the console");
+			return null;
+		}
+
+		final List<ContractCheckResult> contractCheckResults = contractCheckResult.getContractCheckResults();
+		for (ContractCheckResult result : contractCheckResults) {
+			final String[] line = new String[2];
+			line[0] = "[" + result.getComponentType() + "] " + result.getContractName();
+			line[1] = result.getFailed()? "NOT OK": "Success";
+			contractRefinementResultDescriptor.lines.add(line);
+
+//			System.out.println("\nresult.getCheckType() = " + result.getCheckType());
+//			System.out.println("result.getComponentName() = " + result.getComponentName());
+//			System.out.println("result.getComponentType() = " + result.getComponentType());
+//			System.out.println("result.getContractName() = " + result.getContractName());
+//
+//			System.out.println("result.getFailed() = " + result.getFailed());
+//
+//			EList<CheckResult> checkResults = result.getCheckResults();
+//			for (CheckResult checkResult : checkResults) {
+//				checkResult.getContractName();
+//				System.out.println("\tcheckResult.getContractName() = " + checkResult.getContractName());
+//				System.out.println("\tcheckResult.getProofType() = " + checkResult.getProofType());
+//				System.out.println("\tcheckResult.getValue() = " + checkResult.getValue());
+//			}
+
+		}
+
+		return contractRefinementResultDescriptor;
 	}
 	
 	private String getEmftaFile(String fullPath) {
@@ -124,7 +177,7 @@ public class ResultsGeneratorService {
 		final IFile inputfile = input.getFile();
 		final IProject project = inputfile.getProject();
 
-		System.out.println("current path = " + project.getLocation().toString());
+		logger.debug("current path = " + project.getLocation().toString());
 		
 		return project.getLocation().toString();
 	}
@@ -158,7 +211,7 @@ public class ResultsGeneratorService {
 		final Collection<DRepresentation> allRepresentations = DialectManager.INSTANCE.getAllRepresentations(session);
 		for (DRepresentation dRepresentation : allRepresentations) {
 			if (dRepresentation.getName().equals(diagramName)) {
-				System.out.println("\nfound the requested representation: " + diagramName);
+				logger.debug("\nfound the requested representation: " + diagramName);
 				myRepresentations.add(dRepresentation);
 			}
 		}
@@ -187,7 +240,7 @@ public class ResultsGeneratorService {
 	 * @return the newly created descriptor
 	 */
 	private FtaResultDescriptor createFtaResultDescriptor(ResultElement resultElement) {
-		FtaResultDescriptor ftaResultDescriptor = new FtaResultDescriptor();
+		final FtaResultDescriptor ftaResultDescriptor = new FtaResultDescriptor();
 		
 		ftaResultDescriptor.conditions = resultElement.getConditions();
 		ftaResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
@@ -203,7 +256,7 @@ public class ResultsGeneratorService {
 	 * @return the newly created descriptor
 	 */
 	private ContractFtaResultDescriptor createContractFtaResultDescriptor(ResultElement resultElement) {
-		ContractFtaResultDescriptor contractFtaResultDescriptor = new ContractFtaResultDescriptor();
+		final ContractFtaResultDescriptor contractFtaResultDescriptor = new ContractFtaResultDescriptor();
 		
 		contractFtaResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
 		contractFtaResultDescriptor.url = exportSiriusDiagramToFile(resultElement.getFile());
@@ -222,7 +275,7 @@ public class ResultsGeneratorService {
 		
 		// Check if the selected component is the system component. If not, don't add the result section
 		if (selectedComponent != EntityUtil.getInstance().getSystemComponent(activePackage)) {
-			System.out.println("The selected element is not the System element, results section won't be created");
+			logger.debug("The selected element is not the System element, results section won't be created");
 			return;
 		}
 		
@@ -261,6 +314,10 @@ public class ResultsGeneratorService {
 					final ContractFtaResultDescriptor contractFtaResultDescriptor = 
 							createContractFtaResultDescriptor(resultElement);					
 					rootContainer.contractFtaResultDescriptors.add(contractFtaResultDescriptor);
+				} else if (resultType.equals(AnalysisResultUtil.CONTRACT_REFINEMENT_ANALYSIS)) {
+					final ContractRefinementResultDescriptor contractRefinementResultDescriptor = 
+							createContractRefinementResultDescriptor(resultElement);					
+					rootContainer.contractRefinementResultDescriptors.add(contractRefinementResultDescriptor);
 				}
 				//TODO: implementare anche gli altri casi...
 			}

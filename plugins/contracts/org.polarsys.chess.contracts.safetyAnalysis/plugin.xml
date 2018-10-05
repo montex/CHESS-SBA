@@ -68,6 +68,7 @@
                label="Architecture Verification">
             <command
                   commandId="org.polarsys.chess.safetyAnalysis.commands.ComputeContractFaultTreeCommand"
+                  icon="icons/fault-tree.png"
                   label="Contract-based Safety Analysis"
                   style="push">
                <parameter

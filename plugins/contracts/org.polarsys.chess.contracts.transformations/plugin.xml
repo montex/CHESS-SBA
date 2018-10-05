@@ -207,6 +207,7 @@
                label="Architecture Verification">
             <command
                   commandId="org.polarsys.chess.contracts.transformations.ftaxsap.id"
+                  icon="icons/fault-tree.png"
                   label="Fault Tree Analysis (FTA)"
                   style="push">
                <parameter
@@ -235,6 +236,7 @@
             </visibleWhen>
             <command
                   commandId="org.polarsys.chess.contracts.transformations.fmeaxsap.id"
+                  icon="icons/table.png"
                   label=" Failure Mode and Effect Analysis (FMEA)"
                   style="push">
                <parameter
