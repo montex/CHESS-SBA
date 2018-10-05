@@ -353,7 +353,7 @@ public class MARTEProfileManager {
 		applyNFPProfileTo(currentModel);
 		
 		applySAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.ANALYSIS_VIEW).getNestedPackage(currentModel.getName() + CHESSProfileManager.RT_ANALYSIS_VIEW));
-		applyGQAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.ANALYSIS_VIEW).getNestedPackage(currentModel.getName() + CHESSProfileManager.RT_ANALYSIS_VIEW));
+		applyGQAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.ANALYSIS_VIEW));
 		
 		applySAMProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.PSM_VIEW));
 		applySwConcurrencyProfileTo(currentModel.getNestedPackage(currentModel.getName() + CHESSProfileManager.PSM_VIEW));
