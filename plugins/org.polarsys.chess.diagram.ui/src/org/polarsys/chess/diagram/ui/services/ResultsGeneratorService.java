@@ -140,10 +140,12 @@ public class ResultsGeneratorService {
 
 		final List<ContractCheckResult> contractCheckResults = contractCheckResult.getContractCheckResults();
 		for (ContractCheckResult result : contractCheckResults) {
-			final String[] line = new String[2];
-			line[0] = "[" + result.getComponentType() + "] " + result.getContractName();
-			line[1] = result.getFailed()? "NOT OK": "Success";
-			contractRefinementResultDescriptor.lines.add(line);
+			if (result.getCheckType().equals("ocra_check_refinement")) {
+				final String[] line = new String[2];
+				line[0] = "[" + result.getComponentType() + "] " + result.getContractName();
+				line[1] = result.getFailed()? "NOT OK": "Success";
+				contractRefinementResultDescriptor.lines.add(line);
+			}
 
 //			System.out.println("\nresult.getCheckType() = " + result.getCheckType());
 //			System.out.println("result.getComponentName() = " + result.getComponentName());
@@ -192,10 +194,29 @@ public class ResultsGeneratorService {
 
 		final List<ContractCheckResult> contractCheckResults = contractCheckResult.getContractCheckResults();
 		for (ContractCheckResult result : contractCheckResults) {
-			final String[] line = new String[2];
-			line[0] = "[" + result.getComponentType() + "] " + result.getContractName();
-			line[1] = result.getFailed()? "NOT OK": "Success";
-			contractImplementationResultDescriptor.lines.add(line);
+			if (result.getCheckType().equals("ocra_check_refinement") || 
+					result.getCheckType().equals("ocra_check_implementation")) {
+
+				final String[] line = new String[2];
+				line[0] = "[" + result.getComponentType() + "] " + result.getContractName();
+				line[1] = result.getFailed()? "NOT OK": "Success";
+				contractImplementationResultDescriptor.lines.add(line);
+
+//				System.out.println("\nresult.getCheckType() = " + result.getCheckType());
+//				System.out.println("result.getComponentName() = " + result.getComponentName());
+//				System.out.println("result.getComponentType() = " + result.getComponentType());
+//				System.out.println("result.getContractName() = " + result.getContractName());
+//
+//				System.out.println("result.getFailed() = " + result.getFailed());
+//
+//				EList<CheckResult> checkResults = result.getCheckResults();
+//				for (CheckResult checkResult : checkResults) {
+//					checkResult.getContractName();
+//					System.out.println("\tcheckResult.getContractName() = " + checkResult.getContractName());
+//					System.out.println("\tcheckResult.getProofType() = " + checkResult.getProofType());
+//					System.out.println("\tcheckResult.getValue() = " + checkResult.getValue());
+//				}
+			}
 		}
 
 		return contractImplementationResultDescriptor;
@@ -344,6 +365,7 @@ public class ResultsGeneratorService {
 		}
 		
 		final EList<NamedElement> members = resultsPackage.getOwnedMembers();
+		boolean isRefinementPresent = false;
 		for (NamedElement namedElement : members) {
 			final ResultElement resultElement = analysisResultUtil.getResultElementFromUmlElement(namedElement);
 			final ContainerDescriptor rootContainer = documentGenerator.getRootContainerDescriptor();
@@ -364,12 +386,22 @@ public class ResultsGeneratorService {
 					rootContainer.contractFtaResultDescriptors.add(contractFtaResultDescriptor);
 				} else if (resultType.equals(AnalysisResultUtil.CONTRACT_REFINEMENT_ANALYSIS)) {
 					final ContractRefinementResultDescriptor contractRefinementResultDescriptor = 
-							createContractRefinementResultDescriptor(resultElement);					
+							createContractRefinementResultDescriptor(resultElement);
+					rootContainer.contractRefinementResultDescriptors.clear(); // There can be only one of this kind
 					rootContainer.contractRefinementResultDescriptors.add(contractRefinementResultDescriptor);
+					isRefinementPresent = true;
 				} else if (resultType.equals(AnalysisResultUtil.CONTRACT_IMPLEMENTATION_ANALYSIS)) {
 					final ContractImplementationResultDescriptor contractImplementationResultDescriptor = 
 							createContractImplementationResultDescriptor(resultElement);					
 					rootContainer.contractImplementationResultDescriptors.add(contractImplementationResultDescriptor);
+
+					// If no refinement has been seen so far, compute if from the composite implementation
+					if (!isRefinementPresent) {
+						final ContractRefinementResultDescriptor contractRefinementResultDescriptor = 
+								createContractRefinementResultDescriptor(resultElement);
+						rootContainer.contractRefinementResultDescriptors.clear(); // There can be only one of this kind
+						rootContainer.contractRefinementResultDescriptors.add(contractRefinementResultDescriptor);						
+					}
 				}
 				//TODO: implementare anche gli altri casi...
 			}
