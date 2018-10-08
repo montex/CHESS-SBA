@@ -219,4 +219,15 @@ public class FileNamesUtil {
 		return resPath + File.separator + computeQualifiedName(systemComponent) + "_" +
 				AnalysisResultUtil.CONTRACT_REFINEMENT_ANALYSIS + "_" + getDate() + XML_EXT;					
 	}
+
+	/**
+	 * Computes the file name for the Composite Contract Implementation analysis.
+	 * @param systemComponent the root component of the analysis
+	 * @return
+	 */
+	public String computeContractImplementationFileName(Class systemComponent) {
+		final String resPath = AnalysisResultUtil.getInstance().getResultDir();
+		return resPath + File.separator + computeQualifiedName(systemComponent) + "_" +
+				AnalysisResultUtil.CONTRACT_IMPLEMENTATION_ANALYSIS + "_" + getDate() + XML_EXT;					
+	}
 }

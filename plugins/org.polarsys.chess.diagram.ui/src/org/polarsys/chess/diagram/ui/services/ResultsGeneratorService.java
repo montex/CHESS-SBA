@@ -50,11 +50,13 @@ import org.eclipse.sirius.common.tools.api.resource.ImageFileFormat;
 
 import eu.fbk.eclipse.standardtools.diagram.ContainerDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.ContractFtaResultDescriptor;
+import eu.fbk.eclipse.standardtools.diagram.ContractImplementationResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.ContractRefinementResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.DocumentGenerator;
 import eu.fbk.eclipse.standardtools.diagram.FmeaResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.FtaResultDescriptor;
 import eu.fbk.tools.adapter.ocra.CheckContractResultBuilder;
+import eu.fbk.tools.adapter.results.CheckResult;
 import eu.fbk.tools.adapter.ocra.OcraOutput;
 import eu.fbk.tools.adapter.results.ContractCheckResult;
 import eu.fbk.tools.adapter.results.ModelCheckResult;
@@ -111,6 +113,11 @@ public class ResultsGeneratorService {
 		return fmeaResultDescriptor;
 	}
 	
+	/**
+	 * Creates a ContractRefinementResultDescriptor from the given ResultElement.
+	 * @param resultElement the element containing the data
+	 * @return the newly created descriptor
+	 */
 	private ContractRefinementResultDescriptor createContractRefinementResultDescriptor(ResultElement resultElement) {
 		final ContractRefinementResultDescriptor contractRefinementResultDescriptor = 
 				new ContractRefinementResultDescriptor();
@@ -158,6 +165,47 @@ public class ResultsGeneratorService {
 		return contractRefinementResultDescriptor;
 	}
 	
+	/**
+	 * Creates a ContractImplementationResultDescriptor from the given ResultElement.
+	 * @param resultElement the element containing the data
+	 * @return the newly created descriptor
+	 */
+	private ContractImplementationResultDescriptor createContractImplementationResultDescriptor(ResultElement resultElement) {
+		final ContractImplementationResultDescriptor contractImplementationResultDescriptor = 
+				new ContractImplementationResultDescriptor();
+		
+		contractImplementationResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
+		
+		final File resultFile = new File(resultElement.getFile());
+		final CheckContractResultBuilder resultBuilder = new CheckContractResultBuilder();
+		final OcraOutput ocraOutput = resultBuilder.unmarshalResult(resultFile);
+		if(ocraOutput == null || ocraOutput.getOcraResult() == null || ocraOutput.getOcraResult().isEmpty()) {
+			logger.debug("Error while unmarshalling the result. For more info see the console");
+			return null;
+		}
+
+		final ModelCheckResult contractCheckResult = resultBuilder.buildResult(ocraOutput);
+		if(contractCheckResult == null) {
+			logger.debug("Internal error while building the result. For more info see the console");
+			return null;
+		}
+
+		final List<ContractCheckResult> contractCheckResults = contractCheckResult.getContractCheckResults();
+		for (ContractCheckResult result : contractCheckResults) {
+			final String[] line = new String[2];
+			line[0] = "[" + result.getComponentType() + "] " + result.getContractName();
+			line[1] = result.getFailed()? "NOT OK": "Success";
+			contractImplementationResultDescriptor.lines.add(line);
+		}
+
+		return contractImplementationResultDescriptor;
+	}
+	
+	/**
+	 * Computes the EMFTA name from the given XML file.
+	 * @param fullPath the full name of the XML file
+	 * @return the name of the corresponding EMFTA file
+	 */
 	private String getEmftaFile(String fullPath) {
 		String emftaFile = fullPath.substring(fullPath.lastIndexOf("/") + 1, fullPath.length());
 		
@@ -318,6 +366,10 @@ public class ResultsGeneratorService {
 					final ContractRefinementResultDescriptor contractRefinementResultDescriptor = 
 							createContractRefinementResultDescriptor(resultElement);					
 					rootContainer.contractRefinementResultDescriptors.add(contractRefinementResultDescriptor);
+				} else if (resultType.equals(AnalysisResultUtil.CONTRACT_IMPLEMENTATION_ANALYSIS)) {
+					final ContractImplementationResultDescriptor contractImplementationResultDescriptor = 
+							createContractImplementationResultDescriptor(resultElement);					
+					rootContainer.contractImplementationResultDescriptors.add(contractImplementationResultDescriptor);
 				}
 				//TODO: implementare anche gli altri casi...
 			}

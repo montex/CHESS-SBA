@@ -17,6 +17,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.uml2.uml.Class;
 import org.polarsys.chess.contracts.transformations.utils.AnalysisResultUtil;
 
+import eu.fbk.tools.adapter.xsap.ComputeFaultTree;
+import eu.fbk.tools.adapter.xsap.ComputeFmeaTable;
+
 /**
  * This command permits the execution of FMEA using the xSAP tool.
  * @author cristofo
@@ -56,13 +59,17 @@ public class FMEAXSapHandler extends AbstractXSapHandler {
 		final String fmeaFileName = fileNamesUtil.computeFmeaFileName(editor, modelName, storeResult);
 		
 		// Compute FMEA and show results in a dedicated view
-		xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, processConditions(ftaFmeaCond), 
-				fmeaFileName, false);
-		
-		// If requested, store the data
-		if (storeResult) {
-			analysisResultUtil.storeResult(AnalysisResultUtil.FMEA_ANALYSIS, ftaFmeaCond, 
-					fmeaFileName, systemComponent, analysisContext);
+		if (xSapExecService.computeFmea(extendedSmvFileName, fmsFileName, processConditions(ftaFmeaCond), 
+				fmeaFileName, true)) {
+			
+			// If requested, store the result
+			if (storeResult) {
+				analysisResultUtil.storeResult(AnalysisResultUtil.FMEA_ANALYSIS, ftaFmeaCond, 
+						fmeaFileName, systemComponent, analysisContext);
+			}
+
+			// Visualize the result
+			analysisResultUtil.showResult(ComputeFmeaTable.FUNCTION_NAME, fmeaFileName);
 		}
 		return null;
 	}

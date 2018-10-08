@@ -19,6 +19,9 @@ import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
+import eu.fbk.tools.adapter.ocra.CheckContractCompositeImplementation;
+import eu.fbk.tools.adapter.ocra.CheckContractRefinement;
+
 import org.polarsys.chess.contracts.transformations.utils.AnalysisResultUtil;
 import org.polarsys.chess.contracts.transformations.utils.FileNamesUtil;
 import org.polarsys.chess.service.core.exceptions.NoComponentException;
@@ -76,11 +79,16 @@ public class ContractRefinementCommand extends AbstractJobCommand {
 
 		// If requested to store the data, execute the command here, cannot be called later
 		if (storeResult) {
-			ocraExecService.executeCheckContractRefinement(umlSelectedComponent, umlSelectedResource, isDiscreteTime,
-					usexTextValidation,showPopups, ossFilepath, resultFilePath, monitor);
+			if(ocraExecService.executeCheckContractRefinement(umlSelectedComponent, umlSelectedResource, isDiscreteTime,
+					usexTextValidation,showPopups, ossFilepath, resultFilePath, monitor, true)) {
 
-			analysisResultUtil.storeResult(AnalysisResultUtil.CONTRACT_REFINEMENT_ANALYSIS, null, 
-					resultFilePath, umlSelectedComponent, null);
+				// Store the result
+				analysisResultUtil.storeResult(AnalysisResultUtil.CONTRACT_REFINEMENT_ANALYSIS, null, 
+						resultFilePath, umlSelectedComponent, null);
+
+				// Visualize the result
+				analysisResultUtil.showResult(CheckContractRefinement.FUNCTION_NAME, resultFilePath);
+			}
 		}
 	}
 
@@ -89,7 +97,7 @@ public class ContractRefinementCommand extends AbstractJobCommand {
 
 		if (!storeResult) {
 			ocraExecService.executeCheckContractRefinement(umlSelectedComponent, umlSelectedResource, isDiscreteTime,
-					usexTextValidation,showPopups, ossFilepath, resultFilePath, monitor);
+					usexTextValidation,showPopups, ossFilepath, resultFilePath, monitor, false);
 		}
 	}
 }

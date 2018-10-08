@@ -18,6 +18,9 @@ import java.util.Iterator;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.NotEnabledException;
+import org.eclipse.core.commands.NotHandledException;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -43,6 +46,7 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.core.util.uml.UMLUtils;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 
+import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.ErrorsDialogUtil;
@@ -61,6 +65,7 @@ public class AnalysisResultUtil {
 	public static final String FTA_ANALYSIS = "FTA";
 	public static final String CONTRACT_BASED_FTA_ANALYSIS = "CONTRACT_FTA";
 	public static final String CONTRACT_REFINEMENT_ANALYSIS = "CONTRACT_REF";
+	public static final String CONTRACT_IMPLEMENTATION_ANALYSIS = "CONTRACT_IMPL";
 	
 	private static AnalysisResultUtil packageUtilInstance;
 	private final EntityUtil entityUtil = EntityUtil.getInstance();
@@ -326,5 +331,22 @@ public class AnalysisResultUtil {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void showResult(String functionName, String fileName) {
+		final String commandId = "eu.fbk.tools.adapter.ui.commands.ShowVVResultCommand";
+		final String functionNameParam = "function_name";
+		final String fileNameParam = "result_file";
+		
+		CommandBuilder computeFaultTree;
+		try {
+			computeFaultTree = CommandBuilder.build(commandId);
+			computeFaultTree.setParameter(functionNameParam, functionName);
+			computeFaultTree.setParameter(fileNameParam, fileName);
+			computeFaultTree.execute();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

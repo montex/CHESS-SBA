@@ -244,32 +244,6 @@
                      value="true">
                </parameter>
             </command>
-            <command
-                  commandId="eu.fbk.tools.adapter.ui.commands.ShowVVResultCommand"
-                  label="Show result FMEA"
-                  style="push">
-               <parameter
-                     name="function_name"
-                     value="xsap_compute_fmea_table">
-               </parameter>
-               <parameter
-                     name="result_file"
-                     value="/hardmnt/nemesis0/data/cristofo/git/CHESS_SystemArchitectureProjects/Battery_Luca_Multistate/NuSMV3-XSAP/Results/model_BatterySystem_fmea_table.xml">
-               </parameter>
-            </command>
-            <command
-                  commandId="eu.fbk.tools.adapter.ui.commands.ShowVVResultCommand"
-                  label="Show result FTA"
-                  style="push">
-               <parameter
-                     name="function_name"
-                     value="xsap_compute_fault_tree">
-               </parameter>
-               <parameter
-                     name="result_file"
-                     value="/hardmnt/nemesis0/data/cristofo/git/CHESS_SystemArchitectureProjects/Battery_Luca_Multistate/NuSMV3-XSAP/Results/extended_model_BatterySystem_c1_ft.xml">
-               </parameter>
-            </command>
          </menu>
       </menuContribution>
    </extension>

@@ -24,7 +24,9 @@ import org.polarsys.chess.service.gui.utils.SelectionUtil;
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
+import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
+import eu.fbk.tools.adapter.ocra.ComputeContractFaultTree;
 
 /**
  * 
@@ -81,11 +83,16 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 
 		// If requested to store the data, execute the command here, cannot be called later
 		if (storeResult) {
-			ocraExecService.executeComputeFaultTree(umlSelectedComponent, umlSelectedResource, isDiscreteTime, 
-					usexTextValidation, showPopups, ossFilepath, resultFilePath, monitor);
-
-			analysisResultUtil.storeResult(AnalysisResultUtil.CONTRACT_BASED_FTA_ANALYSIS, null, 
-					resultFilePath, umlSelectedComponent, null);
+			if (ocraExecService.executeComputeFaultTree(umlSelectedComponent, umlSelectedResource, isDiscreteTime, 
+					usexTextValidation, showPopups, ossFilepath, resultFilePath, monitor, true)) {
+				
+				// Store the result
+				analysisResultUtil.storeResult(AnalysisResultUtil.CONTRACT_BASED_FTA_ANALYSIS, null, 
+						resultFilePath, umlSelectedComponent, null);
+				
+				// Visualize the result
+				analysisResultUtil.showResult(ComputeContractFaultTree.FUNCTION_NAME, resultFilePath);
+			}
 		}
 	}
 
@@ -94,7 +101,7 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 
 		if (!storeResult) {
 			ocraExecService.executeComputeFaultTree(umlSelectedComponent, umlSelectedResource, isDiscreteTime, 
-					usexTextValidation, showPopups, ossFilepath, resultFilePath, monitor);
+					usexTextValidation, showPopups, ossFilepath, resultFilePath, monitor, false);
 		}
 	}
 }
