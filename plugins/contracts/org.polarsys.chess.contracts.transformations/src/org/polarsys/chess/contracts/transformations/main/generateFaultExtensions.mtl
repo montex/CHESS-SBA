@@ -45,15 +45,15 @@
         <fault_model name="[errorModel.name/]">
           <fault_modes>
           [for (errorState : State | errorModel.region.subvertex->filter(State)->select(error : State | error.getAppliedStereotype(ErrorQN)->notEmpty()))]
-            <fault_mode enabled="yes">
+			[let errorStereo : Stereotype = errorState.getAppliedStereotype(ErrorQN)]
+            <fault_mode enabled="yes" probability="[errorState.getValue(errorStereo, 'probability')/]">
               <user_info>
                 <name>[errorState.name/]</name>
                 <desc></desc>
               </user_info>
-			  [let errorStereo : Stereotype = errorState.getAppliedStereotype(ErrorQN)]
 			  [if (errorState.getAppliedStereotype(StuckAtQN)->notEmpty())]	
  			  [let stuckAtStereo : Stereotype = errorState.getAppliedStereotype(StuckAtQN)]
-              <effects_model name="StuckAtByReference_D" probability="" desc="">
+              <effects_model name="StuckAtByReference_D" desc="">
                 <values>
                   <input reads="term" value="[errorState.getValue(stuckAtStereo, 'value')/]"/>
 				  [let prop : Property = errorState.getValue(stuckAtStereo, 'property').oclAsType(Property)]				 
@@ -64,7 +64,7 @@
 			  [/let]
 			  [elseif (errorState.getAppliedStereotype(InvertedQN)->notEmpty())]
 			  [let invertedStereo : Stereotype = errorState.getAppliedStereotype(InvertedQN)]
-			  <effects_model name="Inverted" probability="" desc="">
+			  <effects_model name="Inverted" desc="">
                 <values>
 				  [let prop : Property = errorState.getValue(invertedStereo, 'property').oclAsType(Property)]				 
                   <output writes="varout" reads="input" binds="[prop.name/]" type="[getType(prop.type)/]"/>
@@ -74,7 +74,7 @@
 			  [/let]
 			  [elseif (errorState.getAppliedStereotype(StuckAtFixedQN)->notEmpty())]
 			  [let stuckAtFixedStereo : Stereotype = errorState.getAppliedStereotype(InvertedQN)]
-			  <effects_model name="StuckAtFixed" probability="" desc="">
+			  <effects_model name="StuckAtFixed" desc="">
                 <values>
 				  [let prop : Property = errorState.getValue(stuckAtFixedStereo, 'property').oclAsType(Property)]				 
                   <output writes="varout" reads="input" binds="[prop.name/]" type="[getType(prop.type)/]"/>
@@ -84,7 +84,7 @@
 			  [/let]
 			  [elseif (errorState.getAppliedStereotype(RampDownQN)->notEmpty())]
 			  [let rampDownStereo : Stereotype = errorState.getAppliedStereotype(InvertedQN)]
-			  <effects_model name="RampDown" probability="" desc="">
+			  <effects_model name="RampDown" desc="">
                 <values>
 				  <input reads="decr" value="[errorState.getValue(rampDownStereo, 'decr')/]"/>
                   <input reads="end_value" value="[errorState.getValue(rampDownStereo, 'endValue')/]"/>
@@ -99,7 +99,7 @@
 															  or fault.getAppliedStereotype(ExternalFaultQN)->notEmpty())] 
               <local_dynamics_model name="Permanent" desc="">
                 <events>
-                  <event type="output" name="failure" connected="yes" binds="[tr.name/]"/>
+                  <event type="output" name="failure" connected="no"/>
                 </events>
               </local_dynamics_model>
 			  [/let]

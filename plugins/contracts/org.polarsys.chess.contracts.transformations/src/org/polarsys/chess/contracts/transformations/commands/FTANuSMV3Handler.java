@@ -30,7 +30,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Model;
 import org.polarsys.chess.contracts.transformations.commands.CommandsCommon.CommandEnum;
-import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAAnalysisCtxDialog;
+import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAFMEAAnalysisCtxDialog;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 
@@ -51,7 +51,7 @@ public class FTANuSMV3Handler extends AbstractHandler {
 			Resource res = ResourceUtils.getUMLResource(editorPapyrus.getServicesRegistry());
 			Model model = ResourceUtils.getModel(res);
 			filename = model.getName();
-			SelectFTAAnalysisCtxDialog dialog = new SelectFTAAnalysisCtxDialog(activeShell, model);
+			SelectFTAFMEAAnalysisCtxDialog dialog = new SelectFTAFMEAAnalysisCtxDialog(activeShell, model);
 			dialog.create();
 			if (dialog.open() == Window.OK) {
 				systemQN = dialog.getSystem();

@@ -25,6 +25,12 @@
                               value="org.eclipse.uml2.uml.Class">
                         </instanceof>
                      </adapt>
+                    <with
+                     	variable="activeMenuSelection">
+                  		<count
+                        	value="1">
+                  		</count>
+               		</with>                     
                   </iterate>
                </visibleWhen>
             </command>
@@ -43,6 +49,12 @@
                               value="org.eclipse.uml2.uml.Package">
                         </instanceof>
                      </adapt>
+                    <with
+                     	variable="activeMenuSelection">
+                  		<count
+                        	value="1">
+                  		</count>
+               		</with>                     
                   </iterate>
                </visibleWhen>
             </command>
@@ -61,6 +73,12 @@
                               value="org.eclipse.uml2.uml.Package">
                         </instanceof>
                      </adapt>
+                    <with
+                     	variable="activeMenuSelection">
+                  		<count
+                        	value="1">
+                  		</count>
+               		</with>                     
                   </iterate>
                </visibleWhen>
             </command>
