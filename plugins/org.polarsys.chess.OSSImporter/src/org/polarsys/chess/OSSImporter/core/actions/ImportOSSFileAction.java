@@ -45,7 +45,6 @@ import eu.fbk.tools.editor.contract.contract.Assumption;
 import eu.fbk.tools.editor.contract.contract.Contract;
 import eu.fbk.tools.editor.contract.contract.Guarantee;
 import eu.fbk.tools.editor.contract.expression.expression.FullParameterId;
-import eu.fbk.tools.editor.contract.expression.expression.FullPortId;
 import eu.fbk.tools.editor.contract.expression.expression.FullVariableId;
 import eu.fbk.tools.editor.oss.oss.SystemComponent;
 import eu.fbk.tools.editor.oss.oss.Variable;
@@ -145,8 +144,9 @@ public class ImportOSSFileAction {
 	 * @param expression
 	 *            the expression defining the function behavior
 	 * @return
+	 * @throws Exception 
 	 */
-	private boolean isFunctionBehavior(Class owner, Expression expression) {
+	private boolean isFunctionBehavior(Class owner, Expression expression) throws ImportException {
 		if (expression instanceof FullVariableId) {
 			final FullVariableId variable = (FullVariableId) expression;
 
@@ -160,12 +160,16 @@ public class ImportOSSFileAction {
 				// Retrieve the component instance containing the behavior
 				final Property behaviorOwner = entityUtil.getUmlComponentInstance(owner, variableOwnerName);
 
+				if(behaviorOwner.getType()!=null){
 				// Get the component type
 				final String typeName = behaviorOwner.getType().getName();
 
 				// Get the component object containing the definition of the
 				// port
 				component = dslTypeToComponent.get(typeName);
+				}else{
+					throw new ImportException(variableOwnerName+" has no type");
+				}
 			}
 
 			if (variableOwnerName == null) {
@@ -501,7 +505,7 @@ public class ImportOSSFileAction {
 
 	private void parseConnection(Connection connection, EList<Connector> existingConnectors,
 			EList<Constraint> existingDelegationConstraints, HashMap<String, Boolean> mapConnectors,
-			HashMap<String, Boolean> mapDelegationContraintsToKeep, Class owner) {
+			HashMap<String, Boolean> mapDelegationContraintsToKeep, Class owner) throws ImportException {
 
 		// CONNECTION processing
 		// final Connection connection = dslRefInstance.getConnection();
@@ -586,7 +590,7 @@ public class ImportOSSFileAction {
 
 	}
 
-	private boolean isDelegationConstraint(FullVariableId variable, Expression constraint,IterativeCondition iterCondition, Class owner) {
+	private boolean isDelegationConstraint(FullVariableId variable, Expression constraint,IterativeCondition iterCondition, Class owner) throws ImportException {
 	logger.debug("isDelegationConstraint constraint: "+constraint);
 	logger.debug("constraint instanceof FullVariableId: "+(constraint instanceof FullVariableId));
 		return !(constraint instanceof FullVariableId) || 
