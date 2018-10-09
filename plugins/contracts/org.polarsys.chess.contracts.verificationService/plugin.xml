@@ -138,6 +138,16 @@
                       value="true">
                 </parameter>
              </command>
+             <command
+                   commandId="org.polarsys.chess.verificationService.ui.commands.CheckValidationAssertionPropertyCommand"
+                   icon="icons/contract_verification.png"
+                   label="Check Validation on Properties"
+                   style="push">
+                <parameter
+                      name="store_result"
+                      value="true">
+                </parameter>
+             </command>
 	         </menu>
             </menuContribution>
             <menuContribution
@@ -371,6 +381,11 @@
             defaultHandler="org.polarsys.chess.verificationService.ui.commands.CheckValidationAssertionPropertyCommand"
             id="org.polarsys.chess.verificationService.ui.commands.CheckValidationAssertionPropertyCommand"
             name="Check Validation on Properties on selected component">
+         <commandParameter
+               id="store_result"
+               name="storeResult"
+               optional="true">
+         </commandParameter>
       </command>
    </extension> 
 </plugin>

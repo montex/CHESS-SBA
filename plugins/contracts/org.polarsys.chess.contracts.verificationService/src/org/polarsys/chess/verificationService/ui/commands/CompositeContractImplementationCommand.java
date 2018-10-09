@@ -29,7 +29,6 @@ import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
 import eu.fbk.tools.adapter.ocra.CheckContractCompositeImplementation;
-import eu.fbk.tools.adapter.ocra.ComputeContractFaultTree;
 
 public class CompositeContractImplementationCommand extends AbstractJobCommand {
 

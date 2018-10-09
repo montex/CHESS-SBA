@@ -55,10 +55,12 @@ import eu.fbk.eclipse.standardtools.diagram.ContractRefinementResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.DocumentGenerator;
 import eu.fbk.eclipse.standardtools.diagram.FmeaResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.FtaResultDescriptor;
+import eu.fbk.eclipse.standardtools.diagram.PropertyValidationResultDescriptor;
 import eu.fbk.tools.adapter.ocra.CheckContractResultBuilder;
 import eu.fbk.tools.adapter.results.CheckResult;
 import eu.fbk.tools.adapter.ocra.OcraOutput;
 import eu.fbk.tools.adapter.results.ContractCheckResult;
+import eu.fbk.tools.adapter.results.ContractPropertyValidationResult;
 import eu.fbk.tools.adapter.results.ModelCheckResult;
 import eu.fbk.tools.adapter.xsap.ComputeFmeaTableResultBuilder;
 import eu.fbk.tools.adapter.xsap.table.FmeaTable;
@@ -161,7 +163,6 @@ public class ResultsGeneratorService {
 //				System.out.println("\tcheckResult.getProofType() = " + checkResult.getProofType());
 //				System.out.println("\tcheckResult.getValue() = " + checkResult.getValue());
 //			}
-
 		}
 
 		return contractRefinementResultDescriptor;
@@ -220,6 +221,60 @@ public class ResultsGeneratorService {
 		}
 
 		return contractImplementationResultDescriptor;
+	}
+	
+	/**
+	 * Creates a PropertyValidationResultDescriptor from the given ResultElement.
+	 * @param resultElement the element containing the data
+	 * @return the newly created descriptor
+	 */
+	private PropertyValidationResultDescriptor createPropertyValidationResultDescriptor(ResultElement resultElement) {
+		final PropertyValidationResultDescriptor propertyValidationResultDescriptor = 
+				new PropertyValidationResultDescriptor();
+		
+		propertyValidationResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
+		
+		final File resultFile = new File(resultElement.getFile());
+		final CheckContractResultBuilder resultBuilder = new CheckContractResultBuilder();
+		final OcraOutput ocraOutput = resultBuilder.unmarshalResult(resultFile);
+		if(ocraOutput == null || ocraOutput.getOcraResult() == null || ocraOutput.getOcraResult().isEmpty()) {
+			logger.debug("Error while unmarshalling the result. For more info see the console");
+			return null;
+		}
+
+		final ModelCheckResult contractCheckResult = resultBuilder.buildResult(ocraOutput);
+		if(contractCheckResult == null) {
+			logger.debug("Internal error while building the result. For more info see the console");
+			return null;
+		}
+
+		final List<ContractPropertyValidationResult> propertyValidationResults = 
+				contractCheckResult.getPropertyValidationResults();
+		for (ContractPropertyValidationResult result : propertyValidationResults) {
+			if (result.getCheckType().equals("ocra_check_validation_prop")) {
+//				final String[] line = new String[2];
+//				line[0] = "[" + result.getComponentType() + "] " + result.getContractName();
+//				line[1] = result.getFailed()? "NOT OK": "Success";
+//				propertyValidationResultDescriptor.lines.add(line);
+			}
+
+			System.out.println("\nresult.getCheckType() = " + result.getCheckType());
+			System.out.println("result.getModelName() = " + result.getModelName());
+			System.out.println("result.getName() = " + result.getName());
+
+			System.out.println("result.getFailed() = " + result.getFailed());
+
+			EList<CheckResult> checkResults = result.getCheckResults();
+			for (CheckResult checkResult : checkResults) {
+				checkResult.getContractName();
+				System.out.println("\tcheckResult.getContractName() = " + checkResult.getContractName());
+				System.out.println("\tcheckResult.getProofType() = " + checkResult.getProofType());
+				System.out.println("\tcheckResult.getValue() = " + checkResult.getValue());
+			}
+
+		}
+
+		return propertyValidationResultDescriptor;
 	}
 	
 	/**
@@ -402,6 +457,10 @@ public class ResultsGeneratorService {
 						rootContainer.contractRefinementResultDescriptors.clear(); // There can be only one of this kind
 						rootContainer.contractRefinementResultDescriptors.add(contractRefinementResultDescriptor);						
 					}
+				} else if (resultType.equals(AnalysisResultUtil.PROPERTY_VALIDATION_ANALYSIS)) {
+					final PropertyValidationResultDescriptor propertyValidationResultDescriptor = 
+							createPropertyValidationResultDescriptor(resultElement);					
+					rootContainer.propertyValidationResultDescriptors.add(propertyValidationResultDescriptor);
 				}
 				//TODO: implementare anche gli altri casi...
 			}
