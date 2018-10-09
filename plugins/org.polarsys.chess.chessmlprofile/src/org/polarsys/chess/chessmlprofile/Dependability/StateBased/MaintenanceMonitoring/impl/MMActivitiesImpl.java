@@ -31,6 +31,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMon
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.MMActivitiesImpl#getBase_Activity <em>Base Activity</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.MMActivitiesImpl#getWhen <em>When</em>}</li>
@@ -41,7 +42,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMon
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.MMActivitiesImpl#getOnFailedCompletion <em>On Failed Completion</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.impl.MMActivitiesImpl#getBase_Action <em>Base Action</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

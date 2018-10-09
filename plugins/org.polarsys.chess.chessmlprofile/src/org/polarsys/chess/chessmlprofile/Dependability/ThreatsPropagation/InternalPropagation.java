@@ -23,13 +23,13 @@ import org.eclipse.uml2.uml.Transition;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalPropagation#getBase_Transition <em>Base Transition</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalPropagation#getExternalFaults <em>External Faults</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalPropagation#getDelay <em>Delay</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalPropagation#getWeight <em>Weight</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage#getInternalPropagation()
  * @model

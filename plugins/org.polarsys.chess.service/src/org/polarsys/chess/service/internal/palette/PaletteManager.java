@@ -248,9 +248,11 @@ public class PaletteManager {
 		
 		if (viewName.equals(CHESSProfileManager.DEPENDABILITY_ANALYSIS_VIEW)){
 			if (diagramName.equals(ViewDiagramAssociations.classDiagram)){
-				paletteDrawer.setVisible(true);
-				if (paletteId.compareTo("DepAnalysisViewDrawer__1317300165546")!=0)
+				//paletteDrawer.setVisible(true);
+				if (paletteId.compareTo("DepAnalysisViewDrawer__1317300165546")!=0 && !paletteId.startsWith("chess"))
 					paletteDrawer.setVisible(false);
+				else
+					paletteDrawer.setVisible(true);
 			}
 		}
 		

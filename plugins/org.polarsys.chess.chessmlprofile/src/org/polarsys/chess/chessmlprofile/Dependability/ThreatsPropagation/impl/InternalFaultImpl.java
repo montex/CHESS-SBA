@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.State;
 import org.eclipse.uml2.uml.Transition;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
 
@@ -28,12 +29,12 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalFaultImpl#getOccurrence <em>Occurrence</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalFaultImpl#getBase_Transition <em>Base Transition</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.InternalFaultImpl#getWeight <em>Weight</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

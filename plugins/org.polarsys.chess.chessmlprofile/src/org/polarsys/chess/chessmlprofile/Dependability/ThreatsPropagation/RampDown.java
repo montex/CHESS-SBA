@@ -23,13 +23,13 @@ import org.eclipse.uml2.uml.State;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RampDown#getBase_State <em>Base State</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RampDown#getProperty <em>Property</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RampDown#getDecr <em>Decr</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.RampDown#getEndValue <em>End Value</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage#getRampDown()
  * @model

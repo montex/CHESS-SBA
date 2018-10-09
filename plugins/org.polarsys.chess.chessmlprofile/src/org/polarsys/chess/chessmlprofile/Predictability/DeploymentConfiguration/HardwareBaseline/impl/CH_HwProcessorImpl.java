@@ -28,10 +28,10 @@ import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.impl.CH_HwProcessorImpl#getUtilization <em>Utilization</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

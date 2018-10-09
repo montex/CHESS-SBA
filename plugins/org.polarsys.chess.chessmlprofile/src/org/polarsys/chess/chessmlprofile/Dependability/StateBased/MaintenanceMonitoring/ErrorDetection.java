@@ -20,11 +20,11 @@ import org.eclipse.uml2.uml.Property;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.ErrorDetection#getTargets <em>Targets</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.ErrorDetection#getCorrectionProbability <em>Correction Probability</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.StateBased.MaintenanceMonitoring.MaintenanceMonitoringPackage#getErrorDetection()
  * @model

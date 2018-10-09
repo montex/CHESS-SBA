@@ -26,12 +26,12 @@ import org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.Transmiss
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.impl.TransmissionWithProtocolImpl#getBase_Connector <em>Base Connector</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.impl.TransmissionWithProtocolImpl#getCRC <em>CRC</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.MitigationMeans.impl.TransmissionWithProtocolImpl#isUseSeqID <em>Use Seq ID</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

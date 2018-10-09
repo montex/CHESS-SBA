@@ -26,8 +26,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Normal Output</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

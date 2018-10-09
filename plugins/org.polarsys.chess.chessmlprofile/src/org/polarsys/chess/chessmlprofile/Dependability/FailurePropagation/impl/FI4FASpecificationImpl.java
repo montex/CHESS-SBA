@@ -19,8 +19,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>FI4FA Specification</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

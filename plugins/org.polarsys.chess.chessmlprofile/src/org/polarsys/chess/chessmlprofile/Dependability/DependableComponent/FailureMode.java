@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#getBase_Class <em>Base Class</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#getDescription <em>Description</em>}</li>
@@ -33,7 +34,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#getControllability <em>Controllability</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode#getLikelihood <em>Likelihood</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage#getFailureMode()
  * @model

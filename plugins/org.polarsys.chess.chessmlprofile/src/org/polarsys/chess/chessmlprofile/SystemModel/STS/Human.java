@@ -24,10 +24,10 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.SystemModel.STS.Human#getBase_Class <em>Base Class</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage#getHuman()
  * @model

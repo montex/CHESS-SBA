@@ -30,6 +30,7 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.FunctionalPartitionImpl#getUtilization <em>Utilization</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.FunctionalPartitionImpl#getBase_Component <em>Base Component</em>}</li>
@@ -37,7 +38,6 @@ import org.polarsys.chess.chessmlprofile.ComponentModel.FunctionalPartition;
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.FunctionalPartitionImpl#getMIF <em>MIF</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.ComponentModel.impl.FunctionalPartitionImpl#getSchedulingTable <em>Scheduling Table</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

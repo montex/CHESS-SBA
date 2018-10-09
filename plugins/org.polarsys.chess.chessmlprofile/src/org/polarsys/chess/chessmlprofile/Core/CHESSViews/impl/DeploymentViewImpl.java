@@ -31,11 +31,11 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.DeploymentView;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.DeploymentViewImpl#getBase_Package <em>Base Package</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.DeploymentViewImpl#getAssignList <em>Assign List</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -25,6 +25,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDAvoidable#getA <em>A</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDAvoidable#getC <em>C</em>}</li>
@@ -32,7 +33,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDAvoidable#getI <em>I</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.ACIDAvoidable#getD <em>D</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getACIDAvoidable()
  * @model

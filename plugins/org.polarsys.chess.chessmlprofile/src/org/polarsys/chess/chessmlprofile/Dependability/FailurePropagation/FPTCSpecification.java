@@ -30,13 +30,13 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification#getBase_Comment <em>Base Comment</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification#getFailure <em>Failure</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification#getPartWithPort <em>Part With Port</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSpecification#getFailureMode <em>Failure Mode</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFPTCSpecification()
  * @model

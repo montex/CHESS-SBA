@@ -28,12 +28,12 @@ import org.polarsys.chess.chessmlprofile.Core.CHESSViews.RTAnalysisView;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.AnalysisViewImpl#getBase_Package <em>Base Package</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.AnalysisViewImpl#getRtanalysisview <em>Rtanalysisview</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.AnalysisViewImpl#getDepanalysisview <em>Depanalysisview</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
