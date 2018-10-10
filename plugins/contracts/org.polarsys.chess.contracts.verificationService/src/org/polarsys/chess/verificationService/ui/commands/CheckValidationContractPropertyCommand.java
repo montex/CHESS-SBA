@@ -61,7 +61,7 @@ public class CheckValidationContractPropertyCommand extends AbstractJobCommand {
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
 		ocraExecService.executeValidationContractProperty(umlSelectedComponent, umlSelectedResource, isDiscreteTime, usexTextValidation,showPopups,
-				ossFilepath, resultFilePath, monitor);
+				ossFilepath, resultFilePath, monitor, false);
 
 	}
 

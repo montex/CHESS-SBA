@@ -169,33 +169,6 @@
                         </or>
                      </visibleWhen>
                 </command>
-                <command
-                      commandId="org.polarsys.chess.contracts.transformations.ftaxsap.id"
-                      label="FTA with xSAP"
-                      style="push">
-                   <visibleWhen
-                         checkEnabled="false">
-                      <or>
-                         <with
-                               variable="activeEditorId">
-                            <equals
-                                  value="org.eclipse.uml2.uml.editor.presentation.UMLEditorID">
-                            </equals>
-                         </with>
-                         <with
-                               variable="activeEditorInput">
-                            <adapt
-                                  type="org.eclipse.core.resources.IResource">
-                            </adapt>
-                         </with>
-                      </or>
-                   </visibleWhen>
-                </command>
-                <command
-                      commandId="org.polarsys.chess.contracts.transformations.fmeaxsap.id"
-                      label="FMEA with xSAP"
-                      style="push">
-                </command>
           	 </menu>
           </menu>
 	</menuContribution>
