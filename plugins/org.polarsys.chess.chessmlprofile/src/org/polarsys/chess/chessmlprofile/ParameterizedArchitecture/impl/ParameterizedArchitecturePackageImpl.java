@@ -1,17 +1,8 @@
-/*******************************************************************************
- *  * Copyright (c) 2015 University of Padova, Intecs
- *  *
- *  *    
- *  * All rights reserved. This program and the accompanying materials
- *  * are made available under the terms of the Eclipse Public License v1.0
- *  * which accompanies this distribution, and is available at
- *  * http://www.eclipse.org/legal/epl-v10.html
- *  *
- *******************************************************************************/
 /**
  */
-package org.polarsys.chess.chessmlprofile.Safety.impl;
+package org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -36,6 +27,8 @@ import org.eclipse.papyrus.MARTE_Library.TimeLibrary.TimeLibraryPackage;
 
 import org.eclipse.papyrus.MARTE_Library.TimeTypesLibrary.TimeTypesLibraryPackage;
 
+import org.eclipse.uml2.types.TypesPackage;
+
 import org.eclipse.uml2.uml.UMLPackage;
 
 import org.polarsys.chess.chessmlprofile.ComponentModel.ComponentModelPackage;
@@ -50,11 +43,9 @@ import org.polarsys.chess.chessmlprofile.Core.CorePackage;
 
 import org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl;
 
-
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
 
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl;
-
 
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.FailurePropagationDataTypesPackage;
 
@@ -92,9 +83,12 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
 
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl;
 
+import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.InstantiatedArchitecture;
+import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.ParameterizedArchitectureFactory;
 import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.ParameterizedArchitecturePackage;
-import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitecturePackageImpl;
+
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
+
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
 
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
@@ -103,18 +97,11 @@ import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.
 
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage;
 
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTDataTypes.RTDataTypesPackage;
-
-import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTDataTypes.impl.RTDataTypesPackageImpl;
-
 import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RTComponentModelPackageImpl;
 
-import org.polarsys.chess.chessmlprofile.Safety.CriticalityInterfaceSpecification;
-import org.polarsys.chess.chessmlprofile.Safety.CriticalityLevel;
-import org.polarsys.chess.chessmlprofile.Safety.CriticalitySpecification;
-import org.polarsys.chess.chessmlprofile.Safety.Hazard;
-import org.polarsys.chess.chessmlprofile.Safety.SafetyFactory;
 import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
+
+import org.polarsys.chess.chessmlprofile.Safety.impl.SafetyPackageImpl;
 
 import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
 
@@ -130,34 +117,13 @@ import org.polarsys.chess.chessmlprofile.impl.chessmlprofilePackageImpl;
  * <!-- end-user-doc -->
  * @generated
  */
-public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
+public class ParameterizedArchitecturePackageImpl extends EPackageImpl implements ParameterizedArchitecturePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass criticalityInterfaceSpecificationEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass criticalitySpecificationEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass hazardEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass criticalityLevelEClass = null;
+	private EClass instantiatedArchitectureEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -170,12 +136,12 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.polarsys.chess.chessmlprofile.Safety.SafetyPackage#eNS_URI
+	 * @see org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.ParameterizedArchitecturePackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private SafetyPackageImpl() {
-		super(eNS_URI, SafetyFactory.eINSTANCE);
+	private ParameterizedArchitecturePackageImpl() {
+		super(eNS_URI, ParameterizedArchitectureFactory.eINSTANCE);
 	}
 
 	/**
@@ -188,7 +154,7 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
-	 * <p>This method is used to initialize {@link SafetyPackage#eINSTANCE} when that field is accessed.
+	 * <p>This method is used to initialize {@link ParameterizedArchitecturePackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -197,11 +163,11 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static SafetyPackage init() {
-		if (isInited) return (SafetyPackage)EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI);
+	public static ParameterizedArchitecturePackage init() {
+		if (isInited) return (ParameterizedArchitecturePackage)EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI);
 
 		// Obtain or create and register package
-		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new SafetyPackageImpl());
+		ParameterizedArchitecturePackageImpl theParameterizedArchitecturePackage = (ParameterizedArchitecturePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ParameterizedArchitecturePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ParameterizedArchitecturePackageImpl());
 
 		isInited = true;
 
@@ -236,10 +202,10 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		ARINCComponentModelPackageImpl theARINCComponentModelPackage = (ARINCComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) instanceof ARINCComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) : ARINCComponentModelPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
-		ParameterizedArchitecturePackageImpl theParameterizedArchitecturePackage = (ParameterizedArchitecturePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) instanceof ParameterizedArchitecturePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) : ParameterizedArchitecturePackage.eINSTANCE);
+		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
 
 		// Create package meta-data objects
-		theSafetyPackage.createPackageContents();
+		theParameterizedArchitecturePackage.createPackageContents();
 		thechessmlprofilePackage.createPackageContents();
 		theCorePackage.createPackageContents();
 		theCHESSViewsPackage.createPackageContents();
@@ -258,10 +224,10 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		theARINCComponentModelPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
-		theParameterizedArchitecturePackage.createPackageContents();
+		theSafetyPackage.createPackageContents();
 
 		// Initialize created meta-data
-		theSafetyPackage.initializePackageContents();
+		theParameterizedArchitecturePackage.initializePackageContents();
 		thechessmlprofilePackage.initializePackageContents();
 		theCorePackage.initializePackageContents();
 		theCHESSViewsPackage.initializePackageContents();
@@ -280,15 +246,15 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		theARINCComponentModelPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
-		theParameterizedArchitecturePackage.initializePackageContents();
+		theSafetyPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
-		theSafetyPackage.freeze();
+		theParameterizedArchitecturePackage.freeze();
 
   
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(SafetyPackage.eNS_URI, theSafetyPackage);
-		return theSafetyPackage;
+		EPackage.Registry.INSTANCE.put(ParameterizedArchitecturePackage.eNS_URI, theParameterizedArchitecturePackage);
+		return theParameterizedArchitecturePackage;
 	}
 
 	/**
@@ -296,8 +262,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getCriticalityInterfaceSpecification() {
-		return criticalityInterfaceSpecificationEClass;
+	public EClass getInstantiatedArchitecture() {
+		return instantiatedArchitectureEClass;
 	}
 
 	/**
@@ -305,8 +271,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCriticalityInterfaceSpecification_Base_Constraint() {
-		return (EReference)criticalityInterfaceSpecificationEClass.getEStructuralFeatures().get(0);
+	public EAttribute getInstantiatedArchitecture_ParameterList() {
+		return (EAttribute)instantiatedArchitectureEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -314,8 +280,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCriticalityInterfaceSpecification_AcceptedCriticalityForClients() {
-		return (EReference)criticalityInterfaceSpecificationEClass.getEStructuralFeatures().get(1);
+	public EReference getInstantiatedArchitecture_Base_Property() {
+		return (EReference)instantiatedArchitectureEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -323,8 +289,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getCriticalitySpecification() {
-		return criticalitySpecificationEClass;
+	public EReference getInstantiatedArchitecture_InstantiatedRootComponent() {
+		return (EReference)instantiatedArchitectureEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -332,80 +298,8 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCriticalitySpecification_Base_Constraint() {
-		return (EReference)criticalitySpecificationEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getCriticalitySpecification_CriticalityLevel() {
-		return (EReference)criticalitySpecificationEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getHazard() {
-		return hazardEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getHazard_Base_Class() {
-		return (EReference)hazardEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getCriticalityLevel() {
-		return criticalityLevelEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getCriticalityLevel_Base_Constraint() {
-		return (EReference)criticalityLevelEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getCriticalityLevel_IsHigherThan() {
-		return (EReference)criticalityLevelEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getCriticalityLevel_MapsTo() {
-		return (EReference)criticalityLevelEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public SafetyFactory getSafetyFactory() {
-		return (SafetyFactory)getEFactoryInstance();
+	public ParameterizedArchitectureFactory getParameterizedArchitectureFactory() {
+		return (ParameterizedArchitectureFactory)getEFactoryInstance();
 	}
 
 	/**
@@ -427,21 +321,10 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		criticalityInterfaceSpecificationEClass = createEClass(CRITICALITY_INTERFACE_SPECIFICATION);
-		createEReference(criticalityInterfaceSpecificationEClass, CRITICALITY_INTERFACE_SPECIFICATION__BASE_CONSTRAINT);
-		createEReference(criticalityInterfaceSpecificationEClass, CRITICALITY_INTERFACE_SPECIFICATION__ACCEPTED_CRITICALITY_FOR_CLIENTS);
-
-		criticalityLevelEClass = createEClass(CRITICALITY_LEVEL);
-		createEReference(criticalityLevelEClass, CRITICALITY_LEVEL__BASE_CONSTRAINT);
-		createEReference(criticalityLevelEClass, CRITICALITY_LEVEL__IS_HIGHER_THAN);
-		createEReference(criticalityLevelEClass, CRITICALITY_LEVEL__MAPS_TO);
-
-		criticalitySpecificationEClass = createEClass(CRITICALITY_SPECIFICATION);
-		createEReference(criticalitySpecificationEClass, CRITICALITY_SPECIFICATION__BASE_CONSTRAINT);
-		createEReference(criticalitySpecificationEClass, CRITICALITY_SPECIFICATION__CRITICALITY_LEVEL);
-
-		hazardEClass = createEClass(HAZARD);
-		createEReference(hazardEClass, HAZARD__BASE_CLASS);
+		instantiatedArchitectureEClass = createEClass(INSTANTIATED_ARCHITECTURE);
+		createEAttribute(instantiatedArchitectureEClass, INSTANTIATED_ARCHITECTURE__PARAMETER_LIST);
+		createEReference(instantiatedArchitectureEClass, INSTANTIATED_ARCHITECTURE__BASE_PROPERTY);
+		createEReference(instantiatedArchitectureEClass, INSTANTIATED_ARCHITECTURE__INSTANTIATED_ROOT_COMPONENT);
 	}
 
 	/**
@@ -468,6 +351,7 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
+		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 
 		// Create type parameters
@@ -477,21 +361,10 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		// Add supertypes to classes
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(criticalityInterfaceSpecificationEClass, CriticalityInterfaceSpecification.class, "CriticalityInterfaceSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCriticalityInterfaceSpecification_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, CriticalityInterfaceSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getCriticalityInterfaceSpecification_AcceptedCriticalityForClients(), this.getCriticalityLevel(), null, "acceptedCriticalityForClients", null, 0, -1, CriticalityInterfaceSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(criticalityLevelEClass, CriticalityLevel.class, "CriticalityLevel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCriticalityLevel_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, CriticalityLevel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getCriticalityLevel_IsHigherThan(), this.getCriticalityLevel(), null, "isHigherThan", null, 0, -1, CriticalityLevel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getCriticalityLevel_MapsTo(), this.getCriticalityLevel(), null, "mapsTo", null, 0, -1, CriticalityLevel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(criticalitySpecificationEClass, CriticalitySpecification.class, "CriticalitySpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCriticalitySpecification_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, CriticalitySpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getCriticalitySpecification_CriticalityLevel(), this.getCriticalityLevel(), null, "criticalityLevel", null, 1, 1, CriticalitySpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		initEClass(hazardEClass, Hazard.class, "Hazard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getHazard_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, Hazard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEClass(instantiatedArchitectureEClass, InstantiatedArchitecture.class, "InstantiatedArchitecture", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getInstantiatedArchitecture_ParameterList(), theTypesPackage.getString(), "ParameterList", null, 0, -1, InstantiatedArchitecture.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getInstantiatedArchitecture_Base_Property(), theUMLPackage.getProperty(), null, "base_Property", null, 1, 1, InstantiatedArchitecture.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getInstantiatedArchitecture_InstantiatedRootComponent(), theUMLPackage.getClass_(), null, "InstantiatedRootComponent", null, 0, 1, InstantiatedArchitecture.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
-} //SafetyPackageImpl
+} //ParameterizedArchitecturePackageImpl
