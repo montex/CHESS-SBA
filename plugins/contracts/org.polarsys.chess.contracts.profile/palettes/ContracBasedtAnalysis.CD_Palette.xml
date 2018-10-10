@@ -2,12 +2,12 @@
 <paletteDefinition>
 	<content>
 		<drawer iconpath="platform:/plugin/org.polarsys.chess.core/resources/CHESSicon.gif"
-			id="DepAnalysisViewDrawer__1317300165546"
-			name="DependabilityAnalysis">
+			id="chess.drawer.contractBasedAnalysis"
+			name="ContractBasedAnalysis">
 			
 			<aspectTool description="Create an element with a stereotype"
 				iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Component.gif"
-				id="clazz.tool.component_1316779916487_1317300377613" name="ContractRefinementAnalysis"
+				id="chess.tool.contractrefinementanalysis" name="ContractRefinementAnalysis"
 				refToolId="clazz.tool.component">
 				<postAction id="org.eclipse.papyrus.applystereotypeactionprovider">
 					<stereotypesToApply>
