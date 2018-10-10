@@ -29,12 +29,12 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComp
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StochasticFailureBehaviourImpl#getFailureDistribution <em>Failure Distribution</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StochasticFailureBehaviourImpl#getRepairDistribution <em>Repair Distribution</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.StochasticFailureBehaviourImpl#getModes <em>Modes</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

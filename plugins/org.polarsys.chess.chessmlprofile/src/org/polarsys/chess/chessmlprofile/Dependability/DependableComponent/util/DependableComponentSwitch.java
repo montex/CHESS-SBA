@@ -57,7 +57,7 @@ public class DependableComponentSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
@@ -91,6 +91,12 @@ public class DependableComponentSwitch<T> extends Switch<T> {
 			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR: {
 				ErrorModelBehavior errorModelBehavior = (ErrorModelBehavior)theEObject;
 				T result = caseErrorModelBehavior(errorModelBehavior);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case DependableComponentPackage.THREAT: {
+				Threat threat = (Threat)theEObject;
+				T result = caseThreat(threat);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -152,6 +158,21 @@ public class DependableComponentSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDependableComponent(DependableComponent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Threat</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Threat</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseThreat(Threat object) {
 		return null;
 	}
 

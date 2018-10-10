@@ -95,6 +95,8 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 			case ThreatsPropagationPackage.ERROR_DETECTION: return createErrorDetection();
 			case ThreatsPropagationPackage.ERROR_HANDLING: return createErrorHandling();
 			case ThreatsPropagationPackage.FAULT_HANDLING: return createFaultHandling();
+			case ThreatsPropagationPackage.ATTACK: return createAttack();
+			case ThreatsPropagationPackage.VULNERABILITY: return createVulnerability();
 			case ThreatsPropagationPackage.ERROR_MODEL: return createErrorModel();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -179,6 +181,26 @@ public class ThreatsPropagationFactoryImpl extends EFactoryImpl implements Threa
 	public FaultHandling createFaultHandling() {
 		FaultHandlingImpl faultHandling = new FaultHandlingImpl();
 		return faultHandling;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Attack createAttack() {
+		AttackImpl attack = new AttackImpl();
+		return attack;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Vulnerability createVulnerability() {
+		VulnerabilityImpl vulnerability = new VulnerabilityImpl();
+		return vulnerability;
 	}
 
 	/**

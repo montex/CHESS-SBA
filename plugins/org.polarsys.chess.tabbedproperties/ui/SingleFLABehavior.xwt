@@ -2,7 +2,8 @@
 <Composite xmlns="http://www.eclipse.org/xwt/presentation"
 	xmlns:j="clr-namespace:java.lang" xmlns:ppe="clr-namespace:org.eclipse.papyrus.infra.properties.ui.widgets"
 	xmlns:ppel="clr-namespace:org.eclipse.papyrus.infra.properties.ui.widgets.layout"
-	xmlns:x="http://www.eclipse.org/xwt">
+	xmlns:x="http://www.eclipse.org/xwt"
+	xmlns:chess="clr-namespace:org.polarsys.chess.tabbedproperties.widgets">
 	<Composite.layout>
 		<ppel:PropertiesLayout></ppel:PropertiesLayout>
 	</Composite.layout>
@@ -10,7 +11,8 @@
 		<Composite.layout>
 			<ppel:PropertiesLayout numColumns="1"></ppel:PropertiesLayout>
 		</Composite.layout>
-		<ppe:ReferenceDialog input="{Binding}"
-			property="CHESS:Dependability:FailurePropagation:FLABehavior:fptc"></ppe:ReferenceDialog>
+		<!--ppe:ReferenceDialog input="{Binding}"
+			property="CHESS:Dependability:FailurePropagation:FLABehavior:fptc"></ppe:ReferenceDialog-->
+		<chess:FLAReferenceDialog input="{Binding}" property="CHESS:Dependability:FailurePropagation:FLABehavior:fptc"></chess:FLAReferenceDialog>
 	</Composite>
 </Composite>

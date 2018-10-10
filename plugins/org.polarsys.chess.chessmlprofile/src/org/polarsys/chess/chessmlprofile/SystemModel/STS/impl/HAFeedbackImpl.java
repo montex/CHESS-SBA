@@ -11,8 +11,6 @@ import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>HA Feedback</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

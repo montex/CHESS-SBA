@@ -110,6 +110,7 @@ import org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.impl.RT
 import org.polarsys.chess.chessmlprofile.Safety.CriticalityInterfaceSpecification;
 import org.polarsys.chess.chessmlprofile.Safety.CriticalityLevel;
 import org.polarsys.chess.chessmlprofile.Safety.CriticalitySpecification;
+import org.polarsys.chess.chessmlprofile.Safety.Hazard;
 import org.polarsys.chess.chessmlprofile.Safety.SafetyFactory;
 import org.polarsys.chess.chessmlprofile.Safety.SafetyPackage;
 
@@ -141,6 +142,13 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * @generated
 	 */
 	private EClass criticalitySpecificationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass hazardEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -337,6 +345,24 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getHazard() {
+		return hazardEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getHazard_Base_Class() {
+		return (EReference)hazardEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCriticalityLevel() {
 		return criticalityLevelEClass;
 	}
@@ -408,6 +434,9 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		criticalitySpecificationEClass = createEClass(CRITICALITY_SPECIFICATION);
 		createEReference(criticalitySpecificationEClass, CRITICALITY_SPECIFICATION__BASE_CONSTRAINT);
 		createEReference(criticalitySpecificationEClass, CRITICALITY_SPECIFICATION__CRITICALITY_LEVEL);
+
+		hazardEClass = createEClass(HAZARD);
+		createEReference(hazardEClass, HAZARD__BASE_CLASS);
 	}
 
 	/**
@@ -455,6 +484,9 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		initEClass(criticalitySpecificationEClass, CriticalitySpecification.class, "CriticalitySpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCriticalitySpecification_Base_Constraint(), theUMLPackage.getConstraint(), null, "base_Constraint", null, 1, 1, CriticalitySpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCriticalitySpecification_CriticalityLevel(), this.getCriticalityLevel(), null, "criticalityLevel", null, 1, 1, CriticalitySpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(hazardEClass, Hazard.class, "Hazard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getHazard_Base_Class(), theUMLPackage.getClass_(), null, "base_Class", null, 1, 1, Hazard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 	}
 
 } //SafetyPackageImpl

@@ -13,6 +13,7 @@ package org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -34,6 +35,7 @@ import org.polarsys.chess.chessmlprofile.Core.CorePackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.CHESSViewsPackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESSViews.impl.CHESSViewsPackageImpl;
 import org.polarsys.chess.chessmlprofile.Core.impl.CorePackageImpl;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.AttackType;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentFactory;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponentPackage;
@@ -41,6 +43,9 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Error
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ThreatType;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.FailurePropagationDataTypesPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationDataTypes.impl.FailurePropagationDataTypesPackageImpl;
@@ -99,7 +104,35 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EEnum attackTypeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum vulnerabilityTypeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum threatTypeEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass dependableComponentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass threatEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -357,6 +390,33 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getAttackType() {
+		return attackTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getVulnerabilityType() {
+		return vulnerabilityTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getThreatType() {
+		return threatTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDependableComponent() {
 		return dependableComponentEClass;
 	}
@@ -395,6 +455,51 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 */
 	public EReference getDependableComponent_Base_InstanceSpecification() {
 		return (EReference)dependableComponentEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getThreat() {
+		return threatEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getThreat_Failuremode() {
+		return (EReference)threatEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getThreat_Base_Port() {
+		return (EReference)threatEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getThreat_Base_Slot() {
+		return (EReference)threatEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getThreat_Kind() {
+		return (EAttribute)threatEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -552,6 +657,12 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		createEReference(errorModelBehaviorEClass, ERROR_MODEL_BEHAVIOR__BASE_PROPERTY);
 		createEReference(errorModelBehaviorEClass, ERROR_MODEL_BEHAVIOR__BASE_CONNECTOR);
 
+		threatEClass = createEClass(THREAT);
+		createEReference(threatEClass, THREAT__FAILUREMODE);
+		createEReference(threatEClass, THREAT__BASE_PORT);
+		createEReference(threatEClass, THREAT__BASE_SLOT);
+		createEAttribute(threatEClass, THREAT__KIND);
+
 		propagationEClass = createEClass(PROPAGATION);
 		createEAttribute(propagationEClass, PROPAGATION__PROB);
 		createEAttribute(propagationEClass, PROPAGATION__DELAY);
@@ -566,6 +677,11 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		createEAttribute(failureModeEClass, FAILURE_MODE__EXPOSURE);
 		createEAttribute(failureModeEClass, FAILURE_MODE__CONTROLLABILITY);
 		createEAttribute(failureModeEClass, FAILURE_MODE__LIKELIHOOD);
+
+		// Create enums
+		attackTypeEEnum = createEEnum(ATTACK_TYPE);
+		vulnerabilityTypeEEnum = createEEnum(VULNERABILITY_TYPE);
+		threatTypeEEnum = createEEnum(THREAT_TYPE);
 	}
 
 	/**
@@ -624,6 +740,12 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		initEReference(getErrorModelBehavior_Base_Property(), theUMLPackage.getProperty(), null, "base_Property", null, 1, 1, ErrorModelBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getErrorModelBehavior_Base_Connector(), theUMLPackage.getConnector(), null, "base_Connector", null, 1, 1, ErrorModelBehavior.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
+		initEClass(threatEClass, Threat.class, "Threat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getThreat_Failuremode(), this.getFailureMode(), null, "failuremode", null, 1, -1, Threat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getThreat_Base_Port(), theUMLPackage.getPort(), null, "base_Port", null, 1, 1, Threat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getThreat_Base_Slot(), theUMLPackage.getSlot(), null, "base_Slot", null, 1, 1, Threat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getThreat_Kind(), this.getThreatType(), "kind", null, 1, 1, Threat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
 		initEClass(propagationEClass, Propagation.class, "Propagation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPropagation_Prob(), theBasicNFP_TypesPackage.getNFP_Real(), "prob", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getPropagation_Delay(), theBasicNFP_TypesPackage.getNFP_Duration(), "delay", null, 0, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -638,6 +760,23 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		initEAttribute(getFailureMode_Exposure(), theTypesPackage.getString(), "exposure", null, 0, 1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getFailureMode_Controllability(), theTypesPackage.getString(), "controllability", null, 0, 1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getFailureMode_Likelihood(), theTypesPackage.getString(), "likelihood", null, 0, 1, FailureMode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(attackTypeEEnum, AttackType.class, "AttackType");
+		addEEnumLiteral(attackTypeEEnum, AttackType.MASQUERADE_ATTACK);
+		addEEnumLiteral(attackTypeEEnum, AttackType.DENIAL_OF_SERVICE_ATTACK);
+		addEEnumLiteral(attackTypeEEnum, AttackType.BRUTE_FORCE_ATTACK);
+		addEEnumLiteral(attackTypeEEnum, AttackType.DATA_SPOOFING_ATTACK);
+
+		initEEnum(vulnerabilityTypeEEnum, VulnerabilityType.class, "VulnerabilityType");
+		addEEnumLiteral(vulnerabilityTypeEEnum, VulnerabilityType.MISSING_DATA_INTEGRITY_SCHEMES);
+		addEEnumLiteral(vulnerabilityTypeEEnum, VulnerabilityType.INADEQUATE_ENCRYPTION_STRENGTH);
+		addEEnumLiteral(vulnerabilityTypeEEnum, VulnerabilityType.RESOURCE_ALLOCATION_WITHOUT_LIMITS);
+
+		initEEnum(threatTypeEEnum, ThreatType.class, "ThreatType");
+		addEEnumLiteral(threatTypeEEnum, ThreatType.UNAUTHORIZED_ACCESS_OF_SERVICE);
+		addEEnumLiteral(threatTypeEEnum, ThreatType.UNAUTHORIZED_MODIFICATION_OF_SERVICE);
+		addEEnumLiteral(threatTypeEEnum, ThreatType.UNAUTHORIZED_DENIAL_OF_SERVICE);
 
 		// Create annotations
 		// http://www.eclipse.org/uml2/2.0.0/UML

@@ -13,6 +13,7 @@ package org.polarsys.chess.chessmlprofile.Dependability.DependableComponent;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -127,7 +128,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getFailureMode()
 	 * @generated
 	 */
-	int FAILURE_MODE = 4;
+	int FAILURE_MODE = 5;
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes <em>Failure Modes</em>}'.
@@ -240,6 +241,16 @@ public interface DependableComponentPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ThreatImpl <em>Threat</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ThreatImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getThreat()
+	 * @generated
+	 */
+	int THREAT = 3;
+
+	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl <em>Error Model Behavior</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -304,6 +315,51 @@ public interface DependableComponentPackage extends EPackage {
 	int ERROR_MODEL_BEHAVIOR_FEATURE_COUNT = 5;
 
 	/**
+	 * The feature id for the '<em><b>Failuremode</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THREAT__FAILUREMODE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Base Port</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THREAT__BASE_PORT = 1;
+
+	/**
+	 * The feature id for the '<em><b>Base Slot</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THREAT__BASE_SLOT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THREAT__KIND = 3;
+
+	/**
+	 * The number of structural features of the '<em>Threat</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THREAT_FEATURE_COUNT = 4;
+
+	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl <em>Propagation</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -311,7 +367,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getPropagation()
 	 * @generated
 	 */
-	int PROPAGATION = 3;
+	int PROPAGATION = 4;
 
 	/**
 	 * The feature id for the '<em><b>Prob</b></em>' attribute.
@@ -432,6 +488,36 @@ public interface DependableComponentPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.AttackType <em>Attack Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.AttackType
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getAttackType()
+	 * @generated
+	 */
+	int ATTACK_TYPE = 6;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType <em>Vulnerability Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getVulnerabilityType()
+	 * @generated
+	 */
+	int VULNERABILITY_TYPE = 7;
+
+	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ThreatType <em>Threat Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ThreatType
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getThreatType()
+	 * @generated
+	 */
+	int THREAT_TYPE = 8;
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode <em>Failure Mode</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -508,6 +594,36 @@ public interface DependableComponentPackage extends EPackage {
 	EAttribute getFailureMode_Likelihood();
 
 	/**
+	 * Returns the meta object for enum '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.AttackType <em>Attack Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Attack Type</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.AttackType
+	 * @generated
+	 */
+	EEnum getAttackType();
+
+	/**
+	 * Returns the meta object for enum '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType <em>Vulnerability Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Vulnerability Type</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType
+	 * @generated
+	 */
+	EEnum getVulnerabilityType();
+
+	/**
+	 * Returns the meta object for enum '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ThreatType <em>Threat Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Threat Type</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ThreatType
+	 * @generated
+	 */
+	EEnum getThreatType();
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.DependableComponent <em>Dependable Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -560,6 +676,60 @@ public interface DependableComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDependableComponent_Base_InstanceSpecification();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat <em>Threat</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Threat</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat
+	 * @generated
+	 */
+	EClass getThreat();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat#getFailuremode <em>Failuremode</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Failuremode</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat#getFailuremode()
+	 * @see #getThreat()
+	 * @generated
+	 */
+	EReference getThreat_Failuremode();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat#getBase_Port <em>Base Port</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Port</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat#getBase_Port()
+	 * @see #getThreat()
+	 * @generated
+	 */
+	EReference getThreat_Base_Port();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat#getBase_Slot <em>Base Slot</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Slot</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat#getBase_Slot()
+	 * @see #getThreat()
+	 * @generated
+	 */
+	EReference getThreat_Base_Slot();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat#getKind <em>Kind</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Kind</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat#getKind()
+	 * @see #getThreat()
+	 * @generated
+	 */
+	EAttribute getThreat_Kind();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior <em>Error Model Behavior</em>}'.
@@ -814,6 +984,36 @@ public interface DependableComponentPackage extends EPackage {
 		EAttribute FAILURE_MODE__LIKELIHOOD = eINSTANCE.getFailureMode_Likelihood();
 
 		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.AttackType <em>Attack Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.AttackType
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getAttackType()
+		 * @generated
+		 */
+		EEnum ATTACK_TYPE = eINSTANCE.getAttackType();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType <em>Vulnerability Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getVulnerabilityType()
+		 * @generated
+		 */
+		EEnum VULNERABILITY_TYPE = eINSTANCE.getVulnerabilityType();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ThreatType <em>Threat Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ThreatType
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getThreatType()
+		 * @generated
+		 */
+		EEnum THREAT_TYPE = eINSTANCE.getThreatType();
+
+		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentImpl <em>Dependable Component</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -854,6 +1054,48 @@ public interface DependableComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DEPENDABLE_COMPONENT__BASE_INSTANCE_SPECIFICATION = eINSTANCE.getDependableComponent_Base_InstanceSpecification();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ThreatImpl <em>Threat</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ThreatImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getThreat()
+		 * @generated
+		 */
+		EClass THREAT = eINSTANCE.getThreat();
+
+		/**
+		 * The meta object literal for the '<em><b>Failuremode</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference THREAT__FAILUREMODE = eINSTANCE.getThreat_Failuremode();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Port</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference THREAT__BASE_PORT = eINSTANCE.getThreat_Base_Port();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Slot</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference THREAT__BASE_SLOT = eINSTANCE.getThreat_Base_Slot();
+
+		/**
+		 * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute THREAT__KIND = eINSTANCE.getThreat_Kind();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl <em>Error Model Behavior</em>}' class.

@@ -11,8 +11,6 @@ import org.polarsys.chess.chessmlprofile.SystemModel.STS.STSPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>OU Process Management</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

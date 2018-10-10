@@ -31,11 +31,11 @@ import org.eclipse.uml2.uml.Constraint;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Safety.CriticalityInterfaceSpecification#getBase_Constraint <em>Base Constraint</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Safety.CriticalityInterfaceSpecification#getAcceptedCriticalityForClients <em>Accepted Criticality For Clients</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Safety.SafetyPackage#getCriticalityInterfaceSpecification()
  * @model
