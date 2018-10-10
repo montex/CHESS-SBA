@@ -15,12 +15,10 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Package;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.service.core.exceptions.NoComponentException;
@@ -45,6 +43,8 @@ import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
 public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 	private static final Logger logger = Logger.getLogger(ExportModelToMonolithicSMVCommand.class);
 	private SelectionUtil selectionUtil = SelectionUtil.getInstance();
+	private DialogUtil dialogUtil = DialogUtil.getInstance();
+	private EntityUtil entityUtil = EntityUtil.getInstance();
 
 	public ExportModelToMonolithicSMVCommand() {
 		super("Monolithic SMV file generation");
@@ -89,7 +89,7 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 			try {
 				pkg = getPackageFromSelectedObject(event);
 			} catch (NoComponentException ex) {
-				DialogUtil.getInstance().showMessage_ExceptionError(ex);
+				dialogUtil.showMessage_ExceptionError(ex);
 				throw new ExecutionException(ex.getMessage());
 			}
 		}
@@ -97,21 +97,21 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 			pkg = umlSelectedComponent.getNearestPackage();
 		}
 		
-		// Try to find the system block
-		umlSelectedComponent = null;
-		final EList<Element> list = pkg.getOwnedElements();		
-		for (Element element : list) {
-			if(EntityUtil.getInstance().isSystem(element)) {
-				logger.debug("System block found: " + element);
-				umlSelectedComponent = (Class) element;
-				break;
-			}
+		if (!entityUtil.isSystemViewPackage(pkg)) {
+			logger.debug("Wrong model package, aborting.");			
+			final ExecutionException e = 
+					new ExecutionException("Please select a package from <<SystemView>>");
+			dialogUtil.showMessage_ExceptionError(e);
+			throw e;
 		}
+		
+		// Try to find the system block
+		umlSelectedComponent = entityUtil.getSystemComponent(pkg);
 		if (umlSelectedComponent == null) {
 			logger.debug("System block not found, aborting.");			
 			final ExecutionException e = 
-					new ExecutionException("The model does not have a <<System>> block. Please add one.");
-			DialogUtil.getInstance().showMessage_ExceptionError(e);
+					new ExecutionException("The package does not have a <<System>> block or it has more than one. Please check.");
+			dialogUtil.showMessage_ExceptionError(e);
 			throw e;
 		}
 		

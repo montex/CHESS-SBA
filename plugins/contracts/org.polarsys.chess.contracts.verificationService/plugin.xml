@@ -96,6 +96,59 @@
                         style="push">
                   </command>
                </menu>
+	         <menu
+	               id="org.polarsys.chess.modelexplorerpopupmenu.packageverification.id"
+	               label="Architecture Verification">
+	            <command
+	                  commandId="org.polarsys.chess.verificationService.commands.ContractRefinementCommand"
+	                  icon="icons/contract_verification.png"
+	                  label="Check Contract Refinements"
+	                  style="push">
+	               <parameter
+	                     name="store_result"
+	                     value="true">
+	               </parameter>
+	            </command>
+	            <visibleWhen
+	                  checkEnabled="false">
+	               <iterate
+	                     ifEmpty="false"
+	                     operator="and">
+	                  <adapt
+	                        type="org.eclipse.emf.ecore.EObject">
+	                     <instanceof
+	                           value="org.eclipse.uml2.uml.Package">
+	                     </instanceof>
+	                  </adapt>
+	                    <with
+	                     	variable="activeMenuSelection">
+	                  		<count
+	                        	value="1">
+	                  		</count>
+	               		</with>                     
+	               </iterate>
+	            </visibleWhen>
+             <command
+                   commandId="org.polarsys.chess.verificationService.commands.CompositeContractImplementationCommand"
+                   icon="icons/contract_verification.png"
+                   label="Check Composite Contract Implementation"
+                   style="push">
+                <parameter
+                      name="store_result"
+                      value="true">
+                </parameter>
+             </command>
+             <command
+                   commandId="org.polarsys.chess.verificationService.ui.commands.CheckValidationAssertionPropertyCommand"
+                   icon="icons/contract_verification.png"
+                   label="Check Validation on Properties"
+                   style="push">
+                <parameter
+                      name="store_result"
+                      value="true">
+                </parameter>
+             </command>
+	         </menu>
             </menuContribution>
             <menuContribution
                   allPopups="false"
@@ -205,6 +258,11 @@
             defaultHandler="org.polarsys.chess.verificationService.ui.commands.ContractRefinementCommand"
             id="org.polarsys.chess.verificationService.commands.ContractRefinementCommand"
             name="Check Contract Refinement on selected component">
+         <commandParameter
+               id="store_result"
+               name="storeResult"
+               optional="true">
+         </commandParameter>
       </command>
       <command
             defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.RuntimeErrorsOnOSSFileCommand"
@@ -308,6 +366,11 @@
             defaultHandler="org.polarsys.chess.verificationService.ui.commands.CompositeContractImplementationCommand"
             id="org.polarsys.chess.verificationService.commands.CompositeContractImplementationCommand"
             name="Check Composite Contract Implementation on selected component">
+         <commandParameter
+               id="store_result"
+               name="storeResult"
+               optional="true">
+         </commandParameter>
       </command>
       <command
             defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.RuntimeErrorsOnSMVFileCommand"
@@ -318,6 +381,11 @@
             defaultHandler="org.polarsys.chess.verificationService.ui.commands.CheckValidationAssertionPropertyCommand"
             id="org.polarsys.chess.verificationService.ui.commands.CheckValidationAssertionPropertyCommand"
             name="Check Validation on Properties on selected component">
+         <commandParameter
+               id="store_result"
+               name="storeResult"
+               optional="true">
+         </commandParameter>
       </command>
    </extension> 
 </plugin>

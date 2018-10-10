@@ -18,6 +18,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.window.Window;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaAnalysisContext;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.papyrus.infra.core.services.ServiceException;
 import org.eclipse.swt.widgets.Shell;
@@ -27,6 +28,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.uml2.uml.Model;
 import org.polarsys.chess.contracts.transformations.commands.CommandsCommon.CommandEnum;
 import org.polarsys.chess.contracts.transformations.dialogs.SelectFTAFMEAAnalysisCtxDialog;
+import org.polarsys.chess.contracts.transformations.utils.AnalysisResultUtil;
 import org.polarsys.chess.contracts.transformations.utils.FileNamesUtil;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
 import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
@@ -46,15 +48,16 @@ public abstract class AbstractXSapHandler extends AbstractHandler {
 	private String smvFileName;
 	private String feiFileName;
 	private String expandedFeiFileName;
-	protected String ftaCond;
+	protected String ftaFmeaCond;
 	protected String modelName;
 	protected IEditorPart editor;
 	protected String extendedSmvFileName;
 	protected String fmsFileName;
-	protected String fmeaFileName;
+	protected GaAnalysisContext analysisContext;
 	protected final FileNamesUtil fileNamesUtil = FileNamesUtil.getInstance();
 	protected final XSapExecService xSapExecService = XSapExecService.getInstance();
-			
+	protected final AnalysisResultUtil analysisResultUtil = AnalysisResultUtil.getInstance();
+	
 	/**
 	 * Computes all the file names for the commands.
 	 * @throws ExecutionException 
@@ -75,8 +78,9 @@ public abstract class AbstractXSapHandler extends AbstractHandler {
 			dialog.create();
 			if (dialog.open() == Window.OK) {
 				systemQN = dialog.getSystem();
-				ftaCond = dialog.getFtaCondition();
-				if(systemQN == null || systemQN.isEmpty() || ftaCond == null || ftaCond.isEmpty()) {
+				ftaFmeaCond = dialog.getFtaCondition();
+				analysisContext = dialog.getAnalysisContext();
+				if(systemQN == null || systemQN.isEmpty() || ftaFmeaCond == null || ftaFmeaCond.isEmpty()) {
 					return false;
 				}
 			}else {
@@ -99,7 +103,6 @@ public abstract class AbstractXSapHandler extends AbstractHandler {
 		expandedFeiFileName = fileNamesUtil.computeExpandedFeiFileName(editor, modelName);
 		extendedSmvFileName = fileNamesUtil.computeExtendedSmvFileName(editor, modelName);
 		fmsFileName = fileNamesUtil.computeFmsFileName(editor, modelName);
-		fmeaFileName = fileNamesUtil.computeFmeaFileName(editor, modelName);
 		
 		return true;
 	}
@@ -118,7 +121,7 @@ public abstract class AbstractXSapHandler extends AbstractHandler {
 		}
 		
 		// Generate the FEI file
-		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaCond);
+		CommandsCommon.TransformationJob(activeShell, editor, args, CommandEnum.FEI, null, ftaFmeaCond);
 		
 		// Generate the monolithic SMV file
 		final CHESSSmvExporterService smvExporterService = CHESSSmvExporterService.getInstance();

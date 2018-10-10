@@ -21,7 +21,9 @@ Require-Bundle: org.eclipse.core.resources,
  org.polarsys.chess.smvExporter,
  org.polarsys.chess.service,
  eu.fbk.eclipse.standardtools.xtextService,
- eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv
+ eu.fbk.eclipse.standardtools.StateMachineTranslatorToSmv,
+ org.polarsys.chess.contracts.transformations,
+ eu.fbk.tools.adapter.core
 Import-Package: eu.fbk.eclipse.standardtools.nuXmvService.ui.dialogs,
  eu.fbk.eclipse.standardtools.nuXmvService.ui.services,
  eu.fbk.eclipse.standardtools.nuXmvService.ui.utils,

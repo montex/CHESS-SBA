@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.TreeSet;
 
 import org.eclipse.uml2.uml.Package;
@@ -818,7 +819,6 @@ public class EntityUtil {
 	public Property getSubComponentInstance(Class owner, String componentName) {
 		logger.debug("getSubComponentInstance");
 		for (Property umlProperty : (owner.getAttributes())) {
-			// FIXME remove println
 			logger.debug("umlProperty: " + umlProperty);
 			logger.debug("umlProperty.getname: " + umlProperty.getName());
 			if (umlProperty.getName().equals(componentName)
@@ -3023,4 +3023,107 @@ public class EntityUtil {
 		return inputMultiplicities;
 	}
 
+	/**
+	 * Returns the properties of the component that are only local to it.
+	 * @param component
+	 * @return
+	 */
+	public EList<Property> getLocalProperties(Element component) {
+		final EList<Property> localProperties = new BasicEList<Property>();
+
+		if (isComponentInstance(component)) {
+			component = getUmlType((Property) component);
+		}
+
+		if (isBlock(component) || (isCompType(component) || (isComponentImplementation(component)))) {
+			final Class umlClass = (Class) component;
+			final EList<Property> attributes = umlClass.getOwnedAttributes();
+			for (final Property umlProperty : attributes) {
+				if (umlProperty != null && !isComponentInstance(umlProperty) && !isPort(umlProperty) &&
+						!ContractEntityUtil.getInstance().isContractProperty(umlProperty)) {
+					localProperties.add(umlProperty);
+				}
+			}
+		}
+		return localProperties;
+	}
+	
+	/**
+	 * Returns the name of a local property.
+	 * @param property the property 
+	 * @return the property name
+	 */
+	public String getLocalPropertyName(Property property) {
+		if (property != null) {
+			return property.getName();
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the list of enumerations as a single string.
+	 * @param enumeration the enumeration
+	 * @return the list of values
+	 */
+	private String getEnumTypeValuesAsStr(Enumeration enumeration) {	
+		final StringJoiner enumValues = new StringJoiner(", ", "[", "]");
+
+		for (final String value: getListValuesForEnumeratorType(enumeration)) {
+			enumValues.add(value);
+		}		
+		return enumValues.toString();		
+	}
+
+	/**
+	 * Returns the type of a local property, taking care of range and enumerations.
+	 * @param property the property 
+	 * @return the property type
+	 */
+	public String getLocalPropertyType(Property property) {
+		if (property != null) {
+			final Type propertyType = property.getType();
+
+			if (propertyType != null) {
+				if(isRangeType(propertyType)) {
+					String[] range = getLowerUpperBoundsForRangeType(propertyType);
+					return propertyType.getName() + " - Range [" + range[0] + " .. " + range[1] + "]"; 
+				} else if (isEnumerationType(propertyType)) {					
+					
+					return propertyType.getName() + " - Enum " + getEnumTypeValuesAsStr((Enumeration) propertyType); 	
+				} else {
+					return propertyType.getName();
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the System component of the given package, if any.
+	 * @param pkg the package containing the architecture
+	 * @return the System component, or null if any or more than one are found
+	 */
+	public Class getSystemComponent(Package pkg) {
+		boolean found = false;
+		Element systemElement = null;
+		
+		if (pkg != null) {
+			final EList<Element> ownedElements = pkg.getOwnedElements();		
+			for (Element element : ownedElements) {
+				if(isSystem(element)) {
+					if (!found) {
+						systemElement = element;
+						found = true;
+					} else {
+						return null;
+					}
+				}
+			}
+		}
+		if (found) {
+			return (Class) systemElement;
+		} else {
+			return null;
+		}
+	}
 }

@@ -63,6 +63,39 @@
                   style="push">
             </command>
          </menu>
+         <menu
+               id="org.polarsys.chess.modelexplorerpopupmenu.packageverification.id"
+               label="Architecture Verification">
+            <command
+                  commandId="org.polarsys.chess.safetyAnalysis.commands.ComputeContractFaultTreeCommand"
+                  icon="icons/fault-tree.png"
+                  label="Contract-based Safety Analysis"
+                  style="push">
+               <parameter
+                     name="store_result"
+                     value="true">
+               </parameter>
+            </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.emf.ecore.EObject">
+                     <instanceof
+                           value="org.eclipse.uml2.uml.Package">
+                     </instanceof>
+                  </adapt>
+                    <with
+                     	variable="activeMenuSelection">
+                  		<count
+                        	value="1">
+                  		</count>
+               		</with>                     
+               </iterate>
+            </visibleWhen>
+         </menu>
       </menuContribution>          
           </extension>
  <extension
@@ -71,6 +104,11 @@
             defaultHandler="org.polarsys.chess.safetyAnalysis.commands.ComputeContractFaultTreeCommand"
             id="org.polarsys.chess.safetyAnalysis.commands.ComputeContractFaultTreeCommand"
             name="Contract-based Safety Analysis on selected component">
+         <commandParameter
+               id="store_result"
+               name="storeResult"
+               optional="true">
+         </commandParameter>
       </command>
       <command
             defaultHandler="org.polarsys.chess.safetyAnalysis.commands.debug.ComputeContractFaultTreeOnFileCommand"

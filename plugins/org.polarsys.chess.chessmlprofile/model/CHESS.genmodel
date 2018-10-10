@@ -812,6 +812,7 @@
             propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Safety/Hazard/base_Class"/>
       </genClasses>
     </nestedGenPackages>
+<<<<<<< HEAD
     <nestedGenPackages xsi:type="genmodel:GenPackage" prefix="ParameterizedArchitecture"
         basePackage="org.polarsys.chess.chessmlprofile" disposableProviderFactory="true"
         ecorePackage="chessmlprofile.ecore#//ParameterizedArchitecture">
@@ -823,5 +824,7 @@
             propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//ParameterizedArchitecture/InstantiatedArchitecture/InstantiatedRootComponent"/>
       </genClasses>
     </nestedGenPackages>
+=======
+>>>>>>> refs/heads/122-store-view-and-include-in-the-reports-the-verification-results
   </genPackages>
 </genmodel:GenModel>

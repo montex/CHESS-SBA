@@ -11,7 +11,10 @@ Require-Bundle: org.eclipse.core.commands,
  eu.fbk.eclipse.standardtools.utils;bundle-version="1.0.0",
  eu.fbk.eclipse.standardtools.ExecOcraCommands,
  org.polarsys.chess.contracts.verificationService;bundle-version="1.0.0",
- org.polarsys.chess.service
+ org.polarsys.chess.service,
+ org.polarsys.chess.contracts.transformations,
+ org.eclipse.papyrus.marte.static.profile;bundle-version="1.2.0",
+ eu.fbk.tools.adapter.core
 Bundle-Vendor: Fondazione Bruno Kessler
 Import-Package: org.eclipse.core.runtime,
  org.polarsys.chess.service.gui.utils
