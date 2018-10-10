@@ -54,6 +54,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComp
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.StateBasedDataTypesPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.impl.StateBasedDataTypesPackageImpl;
 
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DegradedState;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.DepEvent;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ErrorDetection;
@@ -75,8 +76,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.StuckA
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatState;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationFactory;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
-import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.ParameterizedArchitecturePackage;
-import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitecturePackageImpl;
+import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Vulnerability;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
@@ -132,6 +132,20 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 * @generated
 	 */
 	private EClass faultHandlingEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attackEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass vulnerabilityEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -308,7 +322,6 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
-		ParameterizedArchitecturePackageImpl theParameterizedArchitecturePackage = (ParameterizedArchitecturePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) instanceof ParameterizedArchitecturePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) : ParameterizedArchitecturePackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theThreatsPropagationPackage.createPackageContents();
@@ -330,7 +343,6 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
 		theSafetyPackage.createPackageContents();
-		theParameterizedArchitecturePackage.createPackageContents();
 
 		// Initialize created meta-data
 		theThreatsPropagationPackage.initializePackageContents();
@@ -352,7 +364,6 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
 		theSafetyPackage.initializePackageContents();
-		theParameterizedArchitecturePackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theThreatsPropagationPackage.freeze();
@@ -577,6 +588,78 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 	 */
 	public EAttribute getFaultHandling_Weight() {
 		return (EAttribute)faultHandlingEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAttack() {
+		return attackEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttack_Kind() {
+		return (EAttribute)attackEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttack_Severity() {
+		return (EAttribute)attackEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttack_Likelihood() {
+		return (EAttribute)attackEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAttack_Vulnerability() {
+		return (EReference)attackEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttack_Threat() {
+		return (EAttribute)attackEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getVulnerability() {
+		return vulnerabilityEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVulnerability_Kind() {
+		return (EAttribute)vulnerabilityEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1015,6 +1098,16 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		createEAttribute(faultHandlingEClass, FAULT_HANDLING__SUCCESS_PROBABILITY);
 		createEAttribute(faultHandlingEClass, FAULT_HANDLING__WEIGHT);
 
+		attackEClass = createEClass(ATTACK);
+		createEAttribute(attackEClass, ATTACK__KIND);
+		createEAttribute(attackEClass, ATTACK__SEVERITY);
+		createEAttribute(attackEClass, ATTACK__LIKELIHOOD);
+		createEReference(attackEClass, ATTACK__VULNERABILITY);
+		createEAttribute(attackEClass, ATTACK__THREAT);
+
+		vulnerabilityEClass = createEClass(VULNERABILITY);
+		createEAttribute(vulnerabilityEClass, VULNERABILITY__KIND);
+
 		errorModelEClass = createEClass(ERROR_MODEL);
 		createEReference(errorModelEClass, ERROR_MODEL__BASE_STATE_MACHINE);
 
@@ -1049,6 +1142,7 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
+		DependableComponentPackage theDependableComponentPackage = (DependableComponentPackage)EPackage.Registry.INSTANCE.getEPackage(DependableComponentPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -1059,6 +1153,8 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		errorStateEClass.getESuperTypes().add(this.getThreatState());
 		normalInputEClass.getESuperTypes().add(this.getDepEvent());
 		normalOutputEClass.getESuperTypes().add(this.getDepEvent());
+		attackEClass.getESuperTypes().add(this.getInternalPropagation());
+		vulnerabilityEClass.getESuperTypes().add(this.getInternalFault());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(degradedStateEClass, DegradedState.class, "DegradedState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1135,6 +1231,16 @@ public class ThreatsPropagationPackageImpl extends EPackageImpl implements Threa
 		initEAttribute(getFaultHandling_Delay(), theBasicNFP_TypesPackage.getNFP_Real(), "delay", null, 0, 1, FaultHandling.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getFaultHandling_SuccessProbability(), theBasicNFP_TypesPackage.getNFP_Real(), "successProbability", null, 0, 1, FaultHandling.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getFaultHandling_Weight(), theBasicNFP_TypesPackage.getNFP_Real(), "weight", null, 0, 1, FaultHandling.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(attackEClass, Attack.class, "Attack", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAttack_Kind(), theDependableComponentPackage.getAttackType(), "kind", null, 1, 1, Attack.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getAttack_Severity(), theTypesPackage.getString(), "severity", null, 1, 1, Attack.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getAttack_Likelihood(), theTypesPackage.getString(), "likelihood", null, 1, 1, Attack.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getAttack_Vulnerability(), this.getVulnerability(), null, "vulnerability", null, 1, 1, Attack.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getAttack_Threat(), theDependableComponentPackage.getThreatType(), "threat", null, 1, 1, Attack.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(vulnerabilityEClass, Vulnerability.class, "Vulnerability", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getVulnerability_Kind(), theDependableComponentPackage.getVulnerabilityType(), "kind", null, 1, 1, Vulnerability.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(errorModelEClass, ErrorModel.class, "ErrorModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getErrorModel_Base_StateMachine(), theUMLPackage.getStateMachine(), null, "base_StateMachine", null, 1, 1, ErrorModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);

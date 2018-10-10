@@ -193,6 +193,20 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ThreatsPropagationPackage.ATTACK: {
+				Attack attack = (Attack)theEObject;
+				T result = caseAttack(attack);
+				if (result == null) result = caseInternalPropagation(attack);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ThreatsPropagationPackage.VULNERABILITY: {
+				Vulnerability vulnerability = (Vulnerability)theEObject;
+				T result = caseVulnerability(vulnerability);
+				if (result == null) result = caseInternalFault(vulnerability);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ThreatsPropagationPackage.ERROR_MODEL: {
 				ErrorModel errorModel = (ErrorModel)theEObject;
 				T result = caseErrorModel(errorModel);
@@ -275,6 +289,36 @@ public class ThreatsPropagationSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseFaultHandling(FaultHandling object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Attack</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Attack</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAttack(Attack object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Vulnerability</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Vulnerability</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVulnerability(Vulnerability object) {
 		return null;
 	}
 

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.State;
 import org.eclipse.uml2.uml.Transition;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType;
 
 /**
  * <!-- begin-user-doc -->

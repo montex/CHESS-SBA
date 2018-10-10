@@ -38,6 +38,9 @@
 					</stereotypesToApply>
 				</postAction>
 			</aspectTool>
+			
+			<aspectTool description="Create new Constraint" iconpath="platform:/plugin/org.eclipse.uml2.uml.edit/icons/full/obj16/Constraint.gif" id="clazz.tool.constraint_1538745224801" name="Constraint" refToolId="clazz.tool.constraint"/>
+			
 		</drawer>
 
 	</content>

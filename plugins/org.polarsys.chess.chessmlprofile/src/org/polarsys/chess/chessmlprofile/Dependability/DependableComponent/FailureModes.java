@@ -17,7 +17,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FPTCSp
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * allows to decorate a port\instance with information regarding the failureModes possibly affecting the port\instance itself
+ * allows to decorate a port\instance with information regarding the failureModes/threats possibly affecting the port\instance itself
+ * if applied at the same time on the same entity, than each FailureMode referred by Threats.failureMode must be referred also by FailureModes.failureMode
  * <!-- end-model-doc -->
  *
  * <p>

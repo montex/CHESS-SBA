@@ -50,6 +50,15 @@ public interface SafetyFactory extends EFactory {
 	CriticalitySpecification createCriticalitySpecification();
 
 	/**
+	 * Returns a new object of class '<em>Hazard</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Hazard</em>'.
+	 * @generated
+	 */
+	Hazard createHazard();
+
+	/**
 	 * Returns a new object of class '<em>Criticality Level</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

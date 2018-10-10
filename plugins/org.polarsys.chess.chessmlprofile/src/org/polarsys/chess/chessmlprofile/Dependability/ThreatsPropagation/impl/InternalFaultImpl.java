@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.State;
 import org.eclipse.uml2.uml.Transition;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.InternalFault;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
 
