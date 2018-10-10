@@ -16,6 +16,7 @@ package org.polarsys.chess.contracts.transformations.dialogs;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GaAnalysisContext;
@@ -35,7 +36,7 @@ import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Stereotype;
 import org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform;
 
-public class SelectFTAAnalysisCtxDialog extends Dialog {
+public class SelectFTAFMEAAnalysisCtxDialog extends Dialog {
 	
 	private static final String FTAANALYSIS = "MARTE::MARTE_AnalysisModel::GQAM::GaAnalysisContext";
 	private Combo chooseAnalysisCtxField;
@@ -47,7 +48,7 @@ public class SelectFTAAnalysisCtxDialog extends Dialog {
 	private List<GaAnalysisContext> contextList;
 	private ModifyListener modAnalysisCtxListener;
 
-	public SelectFTAAnalysisCtxDialog(Shell shell, Model model) {
+	public SelectFTAFMEAAnalysisCtxDialog(Shell shell, Model model) {
 		super(shell);
 		this.model = model;
 		
@@ -57,7 +58,14 @@ public class SelectFTAAnalysisCtxDialog extends Dialog {
 				for (GaAnalysisContext ctx : contextList) {
 					
 					if (ctx.getBase_NamedElement().getQualifiedName().equals(selectedCtx)){
-						ftaConditionText.setText(ctx.getContext().get(0));
+						
+						// Put all the possible conditions in a single line
+						final StringJoiner joiner = new StringJoiner(", ");
+						for (String  context : ctx.getContext()) {
+							joiner.add(context);
+						}
+						ftaConditionText.setText(joiner.toString());
+//						ftaConditionText.setText(ctx.getContext().get(0));
 						CHGaResourcePlatform plat = (CHGaResourcePlatform) ctx.getPlatform().get(0);
 						rootSystemText.setText(plat.getBase_Classifier().getQualifiedName());
 					}
@@ -106,7 +114,7 @@ public class SelectFTAAnalysisCtxDialog extends Dialog {
 		rootSystemText.setText("");
 		rootSystemText.setLayoutData(gridData);
 		
-		new Label(parent, SWT.NONE).setText("FTA condition:");
+		new Label(parent, SWT.NONE).setText("FTA/FMEA condition:");
 		
 		gridData = new GridData(GridData.FILL_HORIZONTAL);
 		ftaConditionText = new StyledText(parent, SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER);
@@ -120,7 +128,7 @@ public class SelectFTAAnalysisCtxDialog extends Dialog {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText("Select Analysis Context for FTA analysis");
+		shell.setText("Select Analysis Context for FTA/FMEA analysis");
 	}
 	
 	@Override

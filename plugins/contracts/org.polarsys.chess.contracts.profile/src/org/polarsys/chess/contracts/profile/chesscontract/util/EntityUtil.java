@@ -2893,10 +2893,27 @@ public class EntityUtil {
 	}
 
 	public boolean isParameterAssumption(Element umlProperty) {
-		return ((umlProperty instanceof Constraint)
-				&& (UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) == null)
-				&& (UMLUtil.getAppliedStereotype(umlProperty, FORMAL_PROP, false) == null)
-				);
+		
+		if (umlProperty instanceof Constraint) {
+			if ((UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) == null) &&
+					(UMLUtil.getAppliedStereotype(umlProperty, FORMAL_PROP, false) == null)) {
+				if (((Constraint) umlProperty).getSpecification() != null) {
+					if (((Constraint) umlProperty).getSpecification() instanceof LiteralString) {
+						return true;
+					} else if (((Constraint) umlProperty).getSpecification() instanceof OpaqueExpression &&
+							!OpaqueExpressionUtil.getBodyForLanguage((OpaqueExpression) ((Constraint) umlProperty).getSpecification(), "OCRA").equals("")) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+				
+//		return ((umlProperty instanceof Constraint)
+//				&& (UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) == null)
+//				&& (UMLUtil.getAppliedStereotype(umlProperty, FORMAL_PROP, false) == null)
+//				);
 	}
 
 	public Element createUmlConstraint(Class owner, String parameterAssumptionsText) {

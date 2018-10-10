@@ -13,12 +13,36 @@
             id="org.polarsys.chess.smvExport.commands.ExportSelectedNominalSMsToSmvFilesCommand"
             name="Export state machines of selected component or its sub-components as .smv files">
       </command>
+      <command
+            defaultHandler="org.polarsys.chess.smvExporter.ui.commands.ExportModelToMonolithicSMVCommand"
+            id="org.polarsys.chess.smvExport.commands.ExportModelToSMVCommand"
+            name="Export model as monolithic SMV file">
+         <commandParameter
+               id="file_name"
+               name="FileName"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="show_popup"
+               name="showPopup"
+               optional="true">
+         </commandParameter>
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
             locationURI="menu:org.eclipse.ui.main.menu.CHESS.basicOperation">
+	     <command
+			   commandId="org.polarsys.chess.smvExport.commands.ExportModelToSMVCommand"
+			   label="Export model to a monolithic SMV file"
+			   style="push">
+         <parameter
+               name="show_popup"
+               value="true">
+         </parameter>
+    	 </command>
          <command
                commandId="org.polarsys.chess.smvExport.commands.ExportNominalSMsToSmvFilesCommand"
                style="push">
@@ -33,6 +57,27 @@
             <command
                   commandId="org.polarsys.chess.smvExport.commands.ExportSelectedNominalSMsToSmvFilesCommand"
                   style="push">
+            </command>
+            <command
+                  commandId="org.polarsys.chess.smvExport.commands.ExportModelToSMVCommand"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.emf.ecore.EObject">
+                        <instanceof
+                              value="org.eclipse.uml2.uml.Package">
+                        </instanceof>
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
+               <parameter
+                     name="show_popup"
+                     value="true">
+               </parameter>
             </command>
          </menu>
       </menuContribution>

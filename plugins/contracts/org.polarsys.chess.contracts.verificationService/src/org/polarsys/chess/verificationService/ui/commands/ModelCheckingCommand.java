@@ -61,6 +61,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 	private String resultFilePath;
 	private String smvMapFilepath;
 	private Resource umlSelectedResource;
+	private String ossFilePath;
 
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
@@ -73,7 +74,8 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 			smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
 			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(umlSelectedComponent.getName());
 			resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(umlSelectedComponent.getName());
-			smvMapFilepath = ocraDirectoryUtil.getSmvMapFilePath();
+			smvMapFilepath = nuXmvDirectoryUtil.getSmvMapFilePath();
+			ossFilePath = ocraDirectoryUtil.getOSSFilePath();
 		} else {
 			String elementURI = event.getParameter("elementURI");
 			String projectName = event.getParameter("projectName");
@@ -92,7 +94,8 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 			smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory(projectPath);
 			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(projectPath,
 					umlSelectedComponent.getName());
-			smvMapFilepath = ocraDirectoryUtil.getSmvMapFilePath(projectPath);
+			smvMapFilepath = nuXmvDirectoryUtil.getSmvMapFilePath(projectPath);
+			ossFilePath = ocraDirectoryUtil.getOSSFilePath(projectPath);
 			//resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(projectPath, umlSelectedComponent.getName());
 
 		}
@@ -107,6 +110,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
 		String generatedSmvFilePath;
+		final boolean internalExecution = true;
 
 		// CommandBuilder checkContractImplementation =
 		// CommandBuilder.build("org.polarsys.chess.verificationService.commands.TestCommand2");
@@ -121,7 +125,8 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 					showPopups, smvFileDirectory, monitor);
 			logger.debug("createMonolithicSMV");
 			ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
-					isDiscreteTime, usexTextValidation,showPopups, smvMapFilepath, monolithicSMVFilePath, isProgrExec,monitor);
+					isDiscreteTime, usexTextValidation,showPopups, ossFilePath, smvMapFilepath, 
+					monolithicSMVFilePath, isProgrExec, internalExecution, monitor);
 
 			generatedSmvFilePath = monolithicSMVFilePath;
 			logger.debug("createMonolithicSMV done");
