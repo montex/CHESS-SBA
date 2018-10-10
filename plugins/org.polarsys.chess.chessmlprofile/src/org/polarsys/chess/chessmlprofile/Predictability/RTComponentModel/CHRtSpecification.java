@@ -46,6 +46,7 @@ import org.eclipse.uml2.uml.Type;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getPartWithPort <em>Part With Port</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getWCET <em>WCET</em>}</li>
@@ -65,7 +66,6 @@ import org.eclipse.uml2.uml.Type;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getBlockT <em>Block T</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.CHRtSpecification#getOperationReqForSporadicOcc <em>Operation Req For Sporadic Occ</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Predictability.RTComponentModel.RTComponentModelPackage#getCHRtSpecification()
  * @model

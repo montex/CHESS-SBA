@@ -76,6 +76,24 @@ public interface ThreatsPropagationFactory extends EFactory {
 	FaultHandling createFaultHandling();
 
 	/**
+	 * Returns a new object of class '<em>Attack</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Attack</em>'.
+	 * @generated
+	 */
+	Attack createAttack();
+
+	/**
+	 * Returns a new object of class '<em>Vulnerability</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Vulnerability</em>'.
+	 * @generated
+	 */
+	Vulnerability createVulnerability();
+
+	/**
 	 * Returns a new object of class '<em>Error Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

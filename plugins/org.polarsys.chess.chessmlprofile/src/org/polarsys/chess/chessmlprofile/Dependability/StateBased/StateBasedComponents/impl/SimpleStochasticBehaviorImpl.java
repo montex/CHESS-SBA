@@ -23,6 +23,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComp
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.SimpleStochasticBehaviorImpl#getBase_Class <em>Base Class</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.SimpleStochasticBehaviorImpl#getBase_Connector <em>Base Connector</em>}</li>
@@ -32,7 +33,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComp
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.SimpleStochasticBehaviorImpl#getFailureModesDistribution <em>Failure Modes Distribution</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedComponents.impl.SimpleStochasticBehaviorImpl#getBase_Property <em>Base Property</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -23,6 +23,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propa
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getProb <em>Prob</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getDelay <em>Delay</em>}</li>
@@ -30,7 +31,6 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propa
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl#getBase_Comment <em>Base Comment</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

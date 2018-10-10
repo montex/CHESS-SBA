@@ -157,6 +157,14 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 				return createFaultHandlingAdapter();
 			}
 			@Override
+			public Adapter caseAttack(Attack object) {
+				return createAttackAdapter();
+			}
+			@Override
+			public Adapter caseVulnerability(Vulnerability object) {
+				return createVulnerabilityAdapter();
+			}
+			@Override
 			public Adapter caseErrorModel(ErrorModel object) {
 				return createErrorModelAdapter();
 			}
@@ -247,6 +255,34 @@ public class ThreatsPropagationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createFaultHandlingAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack <em>Attack</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Attack
+	 * @generated
+	 */
+	public Adapter createAttackAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Vulnerability <em>Vulnerability</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Vulnerability
+	 * @generated
+	 */
+	public Adapter createVulnerabilityAdapter() {
 		return null;
 	}
 

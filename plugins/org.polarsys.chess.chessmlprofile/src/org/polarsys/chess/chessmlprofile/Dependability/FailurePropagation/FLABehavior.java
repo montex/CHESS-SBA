@@ -20,6 +20,7 @@ import org.eclipse.uml2.uml.Property;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Constraint <em>Base Constraint</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Class <em>Base Class</em>}</li>
@@ -28,7 +29,6 @@ import org.eclipse.uml2.uml.Property;
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Property <em>Base Property</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FLABehavior#getBase_Connector <em>Base Connector</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.FailurePropagationPackage#getFLABehavior()
  * @model

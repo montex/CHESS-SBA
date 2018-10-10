@@ -26,11 +26,11 @@ import org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.Failur
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FI4FAImpl#getFi4fa <em>Fi4fa</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.FailurePropagation.impl.FI4FAImpl#getBase_Connector <em>Base Connector</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

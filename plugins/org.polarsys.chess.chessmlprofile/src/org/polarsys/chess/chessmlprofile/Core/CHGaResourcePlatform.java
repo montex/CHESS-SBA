@@ -22,11 +22,11 @@ import org.eclipse.uml2.uml.InstanceSpecification;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHGaResourcePlatform#getBase_Package <em>Base Package</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Core.CorePackage#getCHGaResourcePlatform()
  * @model

@@ -26,11 +26,11 @@ import org.polarsys.chess.chessmlprofile.Core.CorePackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHGaResourcePlatformImpl#getBase_InstanceSpecification <em>Base Instance Specification</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.impl.CHGaResourcePlatformImpl#getBase_Package <em>Base Package</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -23,11 +23,11 @@ import org.eclipse.papyrus.MARTE.MARTE_Foundations.Alloc.Assign;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.DeploymentView#getBase_Package <em>Base Package</em>}</li>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Core.CHESSViews.DeploymentView#getAssignList <em>Assign List</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.chessmlprofile.Core.CHESSViews.CHESSViewsPackage#getDeploymentView()
  * @model

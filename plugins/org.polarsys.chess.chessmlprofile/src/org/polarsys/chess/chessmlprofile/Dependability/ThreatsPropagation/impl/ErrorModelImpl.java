@@ -26,10 +26,10 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ErrorModelImpl#getBase_StateMachine <em>Base State Machine</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

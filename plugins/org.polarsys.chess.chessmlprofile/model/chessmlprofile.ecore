@@ -102,7 +102,7 @@
         nsPrefix="FailurePropagation">
       <eClassifiers xsi:type="ecore:EClass" name="FPTCSpecification">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="this allows to work with FPTC at instance level by using composite diagrams. It allows to decorate ports of the parts.&#xD;&#xA;attribute 'failure' is deprecated, use 'failureModes'"/>
+          <details key="documentation" value="this allows to work with FPTC at instance level by using composite diagrams. It allows to decorate ports of the parts.&#xA;attribute 'failure' is deprecated, use 'failureModes'"/>
         </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Comment" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Comment"/>
@@ -254,7 +254,7 @@
         nsPrefix="DependableComponent">
       <eClassifiers xsi:type="ecore:EClass" name="FailureModes">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="allows to decorate a port\instance with information regarding the failureModes possibly affecting the port\instance itself"/>
+          <details key="documentation" value="allows to decorate a port\instance with information regarding the failureModes/threats possibly affecting the port\instance itself&#xA;if applied at the same time on the same entity, than each FailureMode referred by Threats.failureMode must be referred also by FailureModes.failureMode"/>
         </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Slot" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Slot"/>
@@ -278,6 +278,22 @@
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_InstanceSpecification"
             ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//InstanceSpecification"/>
       </eClassifiers>
+      <eClassifiers xsi:type="ecore:EEnum" name="AttackType">
+        <eLiterals name="masqueradeAttack"/>
+        <eLiterals name="denialOfServiceAttack" value="1"/>
+        <eLiterals name="bruteForceAttack" value="2"/>
+        <eLiterals name="dataSpoofingAttack" value="3"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EEnum" name="VulnerabilityType">
+        <eLiterals name="missingDataIntegritySchemes"/>
+        <eLiterals name="inadequateEncryptionStrength" value="1"/>
+        <eLiterals name="resourceAllocationWithoutLimits" value="2"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EEnum" name="ThreatType">
+        <eLiterals name="unauthorizedAccessOfService"/>
+        <eLiterals name="unauthorizedModificationOfService" value="1"/>
+        <eLiterals name="unauthorizedDenialOfService" value="2"/>
+      </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="ErrorModelBehavior">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="This stereotype is used to attach a user defined error model to an architectural element. It replaces the DependableComponent.&#xD;&#xA;See also FLABehavior and SimpleStochasticBehavior."/>
@@ -292,6 +308,40 @@
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_Connector" ordered="false"
             lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Connector"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Threat">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="if applied at the same time on the same entity, than each FailureMode referred by Threats.failureMode must be referred also by FailureModes.failureMode"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="failuremode" ordered="false"
+            lowerBound="1" upperBound="-1" eType="#//Dependability/DependableComponent/FailureMode"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Port" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Port"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Slot" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Slot"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" ordered="false"
+            lowerBound="1" eType="#//Dependability/DependableComponent/ThreatType"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ResultElement">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="This stereotype is used to &#xA;store the result of a V&amp;V check."/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false"
+            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" ordered="false"
+            lowerBound="1" eType="ecore:EDataType ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//MARTE_PrimitivesTypes/DateTime"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="conditions" ordered="false"
+            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="valid" ordered="false"
+            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//Boolean"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" ordered="false"
+            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="root" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="contextAnalysis" ordered="false"
+            lowerBound="1" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE.ecore#//MARTE_AnalysisModel/GQAM/GaAnalysisContext"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="base_Component" ordered="false"
+            lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Component"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="Propagation">
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="prob" ordered="false"
@@ -329,9 +379,6 @@
     </eSubpackages>
     <eSubpackages name="ThreatsPropagation" nsURI="http://CHESS/Dependability/ThreatsPropagation"
         nsPrefix="ThreatsPropagation">
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="ThreatsPopagation"/>
-      </eAnnotations>
       <eClassifiers xsi:type="ecore:EClass" name="DegradedState" eSuperTypes="#//Dependability/ThreatsPropagation/ThreatState">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="New Dep profile"/>
@@ -456,6 +503,22 @@
             ordered="false" eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" ordered="false"
             eType="ecore:EClass ../../org.eclipse.papyrus.marte.static.profile/resources/MARTE_Library.ecore#//BasicNFP_Types/NFP_Real"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Attack" eSuperTypes="#//Dependability/ThreatsPropagation/InternalPropagation">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" ordered="false"
+            lowerBound="1" eType="#//Dependability/DependableComponent/AttackType"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="severity" ordered="false"
+            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="likelihood" ordered="false"
+            lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.uml2.types/model/Types.ecore#//String"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="vulnerability" ordered="false"
+            lowerBound="1" eType="#//Dependability/ThreatsPropagation/Vulnerability"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="threat" ordered="false"
+            lowerBound="1" eType="#//Dependability/DependableComponent/ThreatType"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Vulnerability" eSuperTypes="#//Dependability/ThreatsPropagation/InternalFault">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" ordered="false"
+            lowerBound="1" eType="#//Dependability/DependableComponent/VulnerabilityType"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="ErrorModel">
         <eStructuralFeatures xsi:type="ecore:EReference" name="base_StateMachine"
@@ -700,7 +763,7 @@
         nsPrefix="RTComponentModel">
       <eClassifiers xsi:type="ecore:EClass" name="CHRtSpecification">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="The following attributes are deprecated:&#xD;&#xA;-respT&#xD;&#xA;-blockT&#xD;&#xA;operationReqForSporadicOcc: the list of operations that need to be invoked to allow the sporadic occurrence of the &quot;context&quot; operation.&#xD;&#xA;&#xD;&#xA;Constraints:&#xD;&#xA;Only for sporadic occurrence kind.&#xD;&#xA;The operations in the list must be owned by the Component which owns the 'context' operation.&#xD;&#xA;If the list is not empty the &quot;context&quot; operation must have private visibility and it cannot be invoked directly by other operations.&#xD;&#xA;If the list is empty the &quot;context&quot; operation must be invoked directly by other operations.&#xD;&#xA;&#xD;&#xA;CHRtSpecification extends MARTE RtSpecification"/>
+          <details key="documentation" value="The following attributes are deprecated:&#xD;&#xA;-respT&#xD;&#xA;-blockT&#xA;operationReqForSporadicOcc: the list of operations that need to be invoked to allow the sporadic occurrence of the &quot;context&quot; operation.&#xD;&#xA;&#xD;&#xA;Constraints:&#xD;&#xA;Only for sporadic occurrence kind.&#xD;&#xA;The operations in the list must be owned by the Component which owns the 'context' operation.&#xD;&#xA;If the list is not empty the &quot;context&quot; operation must have private visibility and it cannot be invoked directly by other operations.&#xD;&#xA;If the list is empty the &quot;context&quot; operation must be invoked directly by other operations.&#xD;&#xA;&#xA;CHRtSpecification extends MARTE RtSpecification"/>
         </eAnnotations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="partWithPort" ordered="false"
             unique="false" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Property"/>
@@ -898,6 +961,10 @@
           lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Constraint"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="criticalityLevel" ordered="false"
           lowerBound="1" eType="#//Safety/CriticalityLevel"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Hazard">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="base_Class" ordered="false"
+          lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore#//Class"/>
     </eClassifiers>
   </eSubpackages>
 </ecore:EPackage>
