@@ -65,11 +65,8 @@ public class ContractRefinementCommand extends AbstractJobCommand {
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(false);
 		showPopups = false;
 		usexTextValidation=true;
-<<<<<<< HEAD
+
 		ossFilepath = ocraDirectoryUtil.getOSSDirPath();
-		resultFilePath = ocraDirectoryUtil.getCommandCheckRefinementResultPath(umlSelectedComponent.getName());
-=======
-		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 //		resultFilePath = ocraDirectoryUtil.getCommandCheckRefinementResultPath(umlSelectedComponent.getName());
 
 		storeResult = (event.getParameter(storeResultParam) != null && 
@@ -94,7 +91,6 @@ public class ContractRefinementCommand extends AbstractJobCommand {
 				analysisResultUtil.showResult(CheckContractRefinement.FUNCTION_NAME, resultFilePath);
 			}
 		}
->>>>>>> refs/heads/122-store-view-and-include-in-the-reports-the-verification-results
 	}
 
 	@Override

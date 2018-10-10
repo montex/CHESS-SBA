@@ -70,14 +70,7 @@ public class FileNamesUtil {
 	 * @param index an index to differentiate the generated file
 	 * @return
 	 */
-<<<<<<< HEAD
-	public String computeFtFileName(IEditorPart editor, String modelSystemName, int index) {
-		final IFolder folder = computeXSapFolder(editor);
-		final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
-		final String tempFiles = resFolder.getLocation().toString();
-		final String fileName = tempFiles +"/" + "extended_" + 
-				modelSystemName + "_c" + index + "_ft" + XML_EXT;
-=======
+
 	public String computeFtFileName(IEditorPart editor, String modelSystemName, 
 			int index, boolean storeResult) {
 		final String resPath;
@@ -85,7 +78,7 @@ public class FileNamesUtil {
 		
 		if (storeResult) {
 			resPath = AnalysisResultUtil.getInstance().getResultDir();
-			fileName = resPath + File.separator + "extended_" + 
+			fileName = resPath + "/" + "extended_" + 
 					modelSystemName + "_" + AnalysisResultUtil.FTA_ANALYSIS + 
 					"_c" + index + "_" + getDate() + XML_EXT;
 
@@ -93,11 +86,10 @@ public class FileNamesUtil {
 			final IFolder folder = computeXSapFolder(editor);
 			final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
 			resPath = resFolder.getLocation().toString();
-			fileName = resPath + File.separator + "extended_" + 
+			fileName = resPath + "/" + "extended_" + 
 					modelSystemName + "_c" + index + "_ft" + XML_EXT;
 			
 		}
->>>>>>> refs/heads/122-store-view-and-include-in-the-reports-the-verification-results
 		return fileName;
 	}
 
@@ -107,29 +99,22 @@ public class FileNamesUtil {
 	 * @param modelSystemName the model name
 	 * @return
 	 */
-<<<<<<< HEAD
-	public String computeFmeaFileName(IEditorPart editor, String modelSystemName) {
-		final IFolder folder = computeXSapFolder(editor);
-		final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
-		final String tempFiles = resFolder.getLocation().toString();
-		final String fileName = tempFiles + "/" + modelSystemName + "_fmea_table" + XML_EXT;
-=======
+
 	public String computeFmeaFileName(IEditorPart editor, String modelSystemName, boolean storeResult) {
 		final String resPath;
 		final String fileName;
 		
 		if (storeResult) {
 			resPath = AnalysisResultUtil.getInstance().getResultDir();
-			fileName = resPath + File.separator + modelSystemName + "_" +
+			fileName = resPath + "/" + modelSystemName + "_" +
 					AnalysisResultUtil.FMEA_ANALYSIS + "_" + getDate() + XML_EXT;			
 		} else {
 			final IFolder folder = computeXSapFolder(editor);
 			final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
 			resPath = resFolder.getLocation().toString();
-			fileName = resPath + File.separator + modelSystemName + 
+			fileName = resPath + "/" + modelSystemName + 
 					"_fmea_table" + XML_EXT;			
 		}
->>>>>>> refs/heads/122-store-view-and-include-in-the-reports-the-verification-results
 		return fileName;
 	}
 

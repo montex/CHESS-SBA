@@ -92,8 +92,7 @@ StateMachineDiagram Compartment[type=StereotypeBrace]{
 	visible:false;
 }
 
-<<<<<<< HEAD
-=======
+
 /* Show the GaAnalysisContext compartment in class diagrams */
 ClassDiagram Compartment[stereotype="MARTE::MARTE_AnalysisModel::GQAM::GaAnalysisContext"]{
 	visible:true;
@@ -104,4 +103,3 @@ ClassDiagram Compartment[type=StereotypeBrace]{
 	visible:false;
 }
 
->>>>>>> refs/heads/122-store-view-and-include-in-the-reports-the-verification-results

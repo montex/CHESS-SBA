@@ -56,15 +56,7 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 	public void execPreJobOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
 		final String storeResultParam = "store_result";
 		
-<<<<<<< HEAD
-		 umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
-		 umlSelectedResource = umlSelectedComponent.eResource();
-		 isDiscreteTime = MessageTimeModelDialog.openQuestion(true);
-		 showPopups = false;
-		 usexTextValidation=true;
-		 ossFilepath = ocraDirectoryUtil.getOSSDirPath();
-		 resultFilePath = ocraDirectoryUtil.getCommandFaultTreeGenResultPath(umlSelectedComponent.getName());
-=======
+
 		// The user could select a component or a package containing an architecture
 		// In the latter case, extract the system component from that package
 		try {
@@ -78,7 +70,7 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(true);
 		showPopups = false;
 		usexTextValidation = true;
-		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
+		ossFilepath = ocraDirectoryUtil.getOSSDirPath();
 //		resultFilePath = ocraDirectoryUtil.getCommandFaultTreeGenResultPath(umlSelectedComponent.getName());
 
 		storeResult = (event.getParameter(storeResultParam) != null && 
@@ -103,7 +95,6 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 				analysisResultUtil.showResult(ComputeContractFaultTree.FUNCTION_NAME, resultFilePath);
 			}
 		}
->>>>>>> refs/heads/122-store-view-and-include-in-the-reports-the-verification-results
 	}
 
 	@Override

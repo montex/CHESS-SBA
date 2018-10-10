@@ -51,14 +51,10 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 	private String smvMapDirPath;
 	private String smvFilePath;
 	private String resultFilePath;
-<<<<<<< HEAD
-	private String ossDirPath;
 
-=======
-	private String ossFilePath;
+	private String ossDirPath;
 	private boolean storeResult;
 	
->>>>>>> refs/heads/122-store-view-and-include-in-the-reports-the-verification-results
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		final String storeResultParam = "store_result";
@@ -95,7 +91,7 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 					smvFilePath, monitor);
 			if (ocraExecService.executeCheckCompositeContractImplementation(umlSelectedComponent, umlSelectedResource,
 					smvPathComponentNameMap, isDiscreteTime, usexTextValidation,showPopups, 
-					ossFilePath, smvMapFilepath, resultFilePath, monitor, true)) {
+					ossDirPath, smvMapDirPath, resultFilePath, monitor, true)) {
 				
 				// Store the result
 				analysisResultUtil.storeResult(AnalysisResultUtil.CONTRACT_IMPLEMENTATION_ANALYSIS, null, 
@@ -110,21 +106,13 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
-<<<<<<< HEAD
-		HashMap<String, String> smvPathComponentNameMap = smvExportService.exportSmv(umlSelectedComponent, showPopups,
-				smvFilePath, monitor);
-		ocraExecService.executeCheckCompositeContractImplementation(umlSelectedComponent, umlSelectedResource,
-				smvPathComponentNameMap, isDiscreteTime, usexTextValidation,showPopups, 
-				ossDirPath, smvMapDirPath, resultFilePath, monitor);
 
-=======
 		if (!storeResult) {
 			HashMap<String, String> smvPathComponentNameMap = smvExportService.exportSmv(umlSelectedComponent, showPopups,
 					smvFilePath, monitor);
 			ocraExecService.executeCheckCompositeContractImplementation(umlSelectedComponent, umlSelectedResource,
 					smvPathComponentNameMap, isDiscreteTime, usexTextValidation,showPopups, 
-					ossFilePath, smvMapFilepath, resultFilePath, monitor, false);
+					ossDirPath, smvMapDirPath, resultFilePath, monitor, false);
 		}
->>>>>>> refs/heads/122-store-view-and-include-in-the-reports-the-verification-results
 	}
 }

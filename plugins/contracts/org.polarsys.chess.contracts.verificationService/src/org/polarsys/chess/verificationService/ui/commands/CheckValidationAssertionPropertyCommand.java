@@ -67,15 +67,11 @@ public class CheckValidationAssertionPropertyCommand extends AbstractJobCommand 
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(false);
 		showPopups = false;
 		usexTextValidation=true;
-<<<<<<< HEAD
+
 		ossFilepath = ocraDirectoryUtil.getOSSDirPath();
-		resultFilePath = ocraDirectoryUtil.getCommandCheckPropertyResultPath(umlSelectedComponent.getName());
-=======
-		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
 		
 		storeResult = (event.getParameter(storeResultParam) != null && 
 				event.getParameter(storeResultParam).equals("true")) ? true : false;
->>>>>>> refs/heads/122-store-view-and-include-in-the-reports-the-verification-results
 
 		if (storeResult) {
 			resultFilePath = FileNamesUtil.getInstance().computePropertyValidationFileName(umlSelectedComponent);
