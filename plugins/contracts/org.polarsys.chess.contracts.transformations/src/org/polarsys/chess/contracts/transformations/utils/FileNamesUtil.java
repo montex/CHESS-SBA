@@ -24,6 +24,8 @@ import org.polarsys.chess.contracts.transformations.commands.CommandsCommon;
  * @author cristofo
  *
  */
+
+//Replaced File.separator with "/" because the URI object does not support the backslash "\" (that is returned by File.separator for Windows platforms).
 public class FileNamesUtil {
 	private static final String XML_EXT = ".xml";
 	private static FileNamesUtil fileNamesUtil;
@@ -59,7 +61,7 @@ public class FileNamesUtil {
 		final IFolder folder = computeXSapFolder(editor);
 		final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
 		final String tempFiles = resFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + "extended_" + 
+		final String fileName = tempFiles +"/" + "extended_" + 
 				modelSystemName + "_c" + index + "_ft" + XML_EXT;
 		return fileName;
 	}
@@ -74,7 +76,7 @@ public class FileNamesUtil {
 		final IFolder folder = computeXSapFolder(editor);
 		final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
 		final String tempFiles = resFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + modelSystemName + "_fmea_table" + XML_EXT;
+		final String fileName = tempFiles + "/" + modelSystemName + "_fmea_table" + XML_EXT;
 		return fileName;
 	}
 
@@ -88,7 +90,7 @@ public class FileNamesUtil {
 		final IFolder folder = computeXSapFolder(editor);
 		final IFolder tempFolder = folder.getFolder(CommandsCommon.TEMP_FOLD);
 		final String tempFiles = tempFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + "extended_" + modelSystemName + CommandsCommon.SMV_EXT;
+		final String fileName = tempFiles + "/" + "extended_" + modelSystemName + CommandsCommon.SMV_EXT;
 		return fileName;
 	}
 	
@@ -102,7 +104,7 @@ public class FileNamesUtil {
 		final IFolder folder = computeXSapFolder(editor);
 		final IFolder tempFolder = folder.getFolder(CommandsCommon.TEMP_FOLD);
 		final String tempFiles = tempFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + "expanded_" + modelSystemName + XML_EXT;
+		final String fileName = tempFiles + "/" + "expanded_" + modelSystemName + XML_EXT;
 		return fileName;
 	}
 	
@@ -116,7 +118,7 @@ public class FileNamesUtil {
 		final IFolder folder = computeXSapFolder(editor);
 		final IFolder tempFolder = folder.getFolder(CommandsCommon.TEMP_FOLD);
 		final String tempFiles = tempFolder.getLocation().toString();
-		final String fileName = tempFiles + File.separator + "fms_" + modelSystemName + XML_EXT;
+		final String fileName = tempFiles + "/" + "fms_" + modelSystemName + XML_EXT;
 		return fileName;
 	}
 	
@@ -139,7 +141,7 @@ public class FileNamesUtil {
 	 * @return
 	 */
 	public String computeSmvFileName(IEditorPart editor, String modelSystemName) {
-		return computeFileTargetFolder(editor) + File.separator + modelSystemName + CommandsCommon.SMV_EXT;
+		return computeFileTargetFolder(editor) + "/" + modelSystemName + CommandsCommon.SMV_EXT;
 	}
 	
 	/**
@@ -149,6 +151,6 @@ public class FileNamesUtil {
 	 * @return
 	 */
 	public String computeFeiFileName(IEditorPart editor, String modelSystemName) {
-		return computeFileTargetFolder(editor) + File.separator + modelSystemName + CommandsCommon.FEI_EXT;
+		return computeFileTargetFolder(editor) + "/" + modelSystemName + CommandsCommon.FEI_EXT;
 	}
 }
