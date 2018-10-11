@@ -18,9 +18,6 @@ import java.util.Iterator;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.NotEnabledException;
-import org.eclipse.core.commands.NotHandledException;
-import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -106,8 +103,6 @@ public class AnalysisResultUtil {
 	public Package getDependabilityView() {
 		final UmlModel umlModel = UmlUtils.getUmlModel();
 		
-		//FIXME: qui va indicata la mia view se presente, oppure creata...
-		
 		final TreeIterator<EObject> allElements = umlModel.getResource().getAllContents();
 		if (allElements != null) {
 			final Collection<Package> packages = EcoreUtil.getObjectsByType(iterator2Collection(allElements), 
@@ -119,7 +114,7 @@ public class AnalysisResultUtil {
 				}
 			}
 		}
-		errorsDialogUtil.showMessage_GenericError("Error: DependabilityView not found!");
+		errorsDialogUtil.showMessage_GenericError("Error: DependabilityAnalysisView not found!");
 		return null;
 	}
 		
@@ -146,8 +141,6 @@ public class AnalysisResultUtil {
 		if (analysisView == null) {
 			return null;
 		}
-		
-		//FIXME: qui va indicata la mia view se presente, oppure creata...
 		
 		// Get the list of second level packages
 		modelPackages = analysisView.getNestedPackages();
@@ -193,6 +186,7 @@ public class AnalysisResultUtil {
 			final Class rootComponent, final GaAnalysisContext contextAnalysis) {
 			
 		final Package activePackage = rootComponent.getNearestPackage();
+
 		// Select the correct view where to store the result
 		final Package pkg = getDependabilityViewFromPackage(activePackage);
 		
@@ -314,6 +308,7 @@ public class AnalysisResultUtil {
 			return DirectoryUtil.getInstance().getCurrentProjectDir() + RESULTS_FILE_PATH;
 		} catch (Exception e) {
 			dialogUtil.showMessage_ExceptionError(e);
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -326,14 +321,23 @@ public class AnalysisResultUtil {
 		try {
 			final String filePath = getResultDir();
 			final File theFile = new File(filePath); 
-	        theFile.mkdirs();
+	        if (!theFile.mkdirs()) {
+	        	errorsDialogUtil.showMessage_GenericError("Cannot create results directory: " + filePath);
+	        	return null;
+	        }
 	        return filePath;
 		} catch (Exception e) {
+			dialogUtil.showMessage_ExceptionError(e);
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
+	/**
+	 * Shows the result of the given function, reading data from the given file.
+	 * @param functionName the name of the function used to obtain the result
+	 * @param fileName the file containing the data to visualize
+	 */
 	public void showResult(String functionName, String fileName) {
 		final String commandId = "eu.fbk.tools.adapter.ui.commands.ShowVVResultCommand";
 		final String functionNameParam = "function_name";
@@ -346,7 +350,6 @@ public class AnalysisResultUtil {
 			computeFaultTree.setParameter(fileNameParam, fileName);
 			computeFaultTree.execute();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
