@@ -128,7 +128,7 @@ public class EntityUtil {
 	private static final String SYSVIEW = "CHESS::Core::CHESSViews::SystemView";
 
 	public static final String INSTANTIATED_ARCHITECTURE = "CHESS::ParameterizedArchitecture::InstantiatedArchitecture";
-	
+
 	private static final String INTEGER_TYPE = "PrimitiveTypes::Integer";
 	private static final String STRING_TYPE = "PrimitiveTypes::String";
 	private static final String REAL_TYPE = "PrimitiveTypes::Real";
@@ -394,14 +394,14 @@ public class EntityUtil {
 	public void createUmlFunctionBehaviorParameters(FunctionBehavior functionBehavior, EList<Type> inputTypes,
 			EList<String[]> inputMultiplicities, Type outputType, String[] outputMultiplicity) {
 		// Create the input parameters
-		for (int i=0; i<inputTypes.size(); i++) {
+		for (int i = 0; i < inputTypes.size(); i++) {
 			Type parameterType = inputTypes.get(i);
 			String[] parameterMultiplicity = inputMultiplicities.get(i);
-			createFunctionBehaviorParameter(functionBehavior, parameterType,parameterMultiplicity, true);
+			createFunctionBehaviorParameter(functionBehavior, parameterType, parameterMultiplicity, true);
 		}
 
 		// Create the output parameter
-		createFunctionBehaviorParameter(functionBehavior, outputType, outputMultiplicity,false);
+		createFunctionBehaviorParameter(functionBehavior, outputType, outputMultiplicity, false);
 	}
 
 	public Constraint createDelegationConstraint(Class owner, String variableIdText, String constraintText,
@@ -454,41 +454,44 @@ public class EntityUtil {
 
 	}
 
-	public Package createPackage(Package owner, final String elementName){
+	public Package createPackage(Package owner, final String elementName) {
 		return owner.createNestedPackage(elementName);
 	}
-	
-	public Comment createComment(Package owner, String content){
+
+	public Comment createComment(Package owner, String content) {
 		Comment comment = owner.createOwnedComment();
 		comment.setBody(content);
 		return comment;
 	}
-	
-	public Dependency createDependency(Package owner,  NamedElement supplierElement, NamedElement clientElement){
-		Dependency dependency =  owner.createDependency(supplierElement);
+
+	public Dependency createDependency(Package owner, NamedElement supplierElement, NamedElement clientElement) {
+		Dependency dependency = owner.createDependency(supplierElement);
 		dependency.getClients().add(clientElement);
 		return dependency;
 	}
-	
-	public Property createInstantiatedArchitecture(Class paramRootComponent, Class instantiatedRootComponent, ArrayList<String> parameters){
-		
+
+	public Property createInstantiatedArchitecture(Class paramRootComponent, Class instantiatedRootComponent,
+			ArrayList<String> parameters) {
+
 		int numInstantiatedArchitecures = getInstantiatedArchitecureElements(paramRootComponent).size();
-		
-		Property property =  paramRootComponent.createOwnedAttribute("InstantiateArc_"+(numInstantiatedArchitecures+1),null);
-		UMLUtils.applyStereotype(property, INSTANTIATED_ARCHITECTURE);		
+
+		Property property = paramRootComponent
+				.createOwnedAttribute("InstantiateArc_" + (numInstantiatedArchitecures + 1), null);
+		UMLUtils.applyStereotype(property, INSTANTIATED_ARCHITECTURE);
 		InstantiatedArchitecture instantiatedArchitecture = getInstantiatedArchitecture(property);
-		if(instantiatedRootComponent!=null){
+		if (instantiatedRootComponent != null) {
 			instantiatedArchitecture.setInstantiatedRootComponent(instantiatedRootComponent);
-			}
+		}
 		instantiatedArchitecture.getParameterList().addAll(parameters);
 		return property;
 	}
-	
+
 	public InstantiatedArchitecture getInstantiatedArchitecture(Property umlProperty) {
-		Stereotype instantiatedArchitectureStereotype = UMLUtil.getAppliedStereotype(umlProperty, INSTANTIATED_ARCHITECTURE, false);
+		Stereotype instantiatedArchitectureStereotype = UMLUtil.getAppliedStereotype(umlProperty,
+				INSTANTIATED_ARCHITECTURE, false);
 		return (InstantiatedArchitecture) umlProperty.getStereotypeApplication(instantiatedArchitectureStereotype);
 	}
-	
+
 	/**
 	 * Creates a Block element in the given package.
 	 * 
@@ -784,7 +787,7 @@ public class EntityUtil {
 		// If the expression is different, save it,
 		// otherwise go on
 		if (!updatedText.equals(formalPropertyText)) {
-			setTextInUMLConstraint(umlConstraint, updatedText,language);
+			setTextInUMLConstraint(umlConstraint, updatedText, language);
 		}
 	}
 
@@ -952,7 +955,7 @@ public class EntityUtil {
 		return null;
 	}
 
-	public Set<Property> getInstantiatedArchitecureElements(Class umlComponent){
+	public Set<Property> getInstantiatedArchitecureElements(Class umlComponent) {
 		Set<Property> instantiatedArchitecureList = new HashSet<Property>();
 		for (Property umlProperty : ((Class) umlComponent).getAttributes()) {
 			if (isInstantiatedArchitecuture(umlProperty)) {
@@ -961,7 +964,7 @@ public class EntityUtil {
 		}
 		return instantiatedArchitecureList;
 	}
-	
+
 	public Set<Property> getSubComponentsInstances(Class umlComponent) {
 		Set<Property> subComponents = new HashSet<Property>();
 		for (Property umlProperty : ((Class) umlComponent).getAttributes()) {
@@ -1007,13 +1010,34 @@ public class EntityUtil {
 	public EList<String> getEnumValuesFromComponentAttributes(Element umlComponent) {
 		EList<String> enumValuesEList = new BasicEList<String>();
 
-		for (Property property : getSupportedAttributes(umlComponent, null)) {
-			if (isEnumerationAttribute(property)) {
-				Set<String> currValues = getListValuesForEnumeratorType(property.getType());
-				enumValuesEList.addAll(currValues);
-			}
+		if (isComponentInstance(umlComponent)) {
+			umlComponent = getUmlType((Property) umlComponent);
 		}
 
+		if (isBlock(umlComponent) || (isCompType(umlComponent) || (isComponentImplementation(umlComponent)))) {
+			Class umlClass = (Class) umlComponent;
+			
+			
+			for (Property umlProperty : umlClass.getOwnedAttributes()) {				
+				
+					if (isEnumerationAttribute(umlProperty)) {
+						Set<String> currValues = getListValuesForEnumeratorType(umlProperty.getType());
+						enumValuesEList.addAll(currValues);
+					}
+				}
+			
+			for(FunctionBehavior functionBehavior : getUmlFunctionBehaviors(umlClass)){
+				for(Parameter parameter : functionBehavior.inputParameters()){
+					Set<String> currValues = getListValuesForEnumeratorType(parameter.getType());
+					enumValuesEList.addAll(currValues);
+				}
+				for(Parameter parameter : functionBehavior.outputParameters()){
+					Set<String> currValues = getListValuesForEnumeratorType(parameter.getType());
+					enumValuesEList.addAll(currValues);
+				}
+			}
+		}
+		
 		return enumValuesEList;
 		// return toArray(enumValuesEList);
 	}
@@ -1202,9 +1226,10 @@ public class EntityUtil {
 	}
 
 	public boolean isInstantiatedArchitecuture(Element umlElement) {
-		return (umlElement instanceof Property && UMLUtil.getAppliedStereotype(umlElement, INSTANTIATED_ARCHITECTURE, false) != null);
+		return (umlElement instanceof Property
+				&& UMLUtil.getAppliedStereotype(umlElement, INSTANTIATED_ARCHITECTURE, false) != null);
 	}
-	
+
 	// modified method!!
 	public boolean isComponentInstance(Element umlProperty) {
 		// return UMLUtil.getAppliedStereotype(umlProperty, COMP_INST, false) !=
@@ -1226,7 +1251,7 @@ public class EntityUtil {
 		if (isInstantiatedArchitecuture(property)) {
 			return false;
 		}
-		
+
 		Element owner = (getOwner(umlProperty));
 		Association association = property.getAssociation();
 		int associationEndsSize = association.getEndTypes().size();
@@ -1379,20 +1404,19 @@ public class EntityUtil {
 				&& UMLUtil.getAppliedStereotype(umlElement, FAULTY_STATE_MACHINE, false) == null);
 	}
 
-	/*public void saveConstraint(final Constraint constraint, final String text) {
-
-		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(constraint);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {
-
-				LiteralString litString = (LiteralString) constraint.getSpecification();
-				litString.setValue(text);
-				constraint.setSpecification(litString);
-			}
-		});
-	}*/
+	/*
+	 * public void saveConstraint(final Constraint constraint, final String
+	 * text) {
+	 * 
+	 * TransactionalEditingDomain domain =
+	 * TransactionUtil.getEditingDomain(constraint);
+	 * domain.getCommandStack().execute(new RecordingCommand(domain) {
+	 * 
+	 * @Override protected void doExecute() {
+	 * 
+	 * LiteralString litString = (LiteralString) constraint.getSpecification();
+	 * litString.setValue(text); constraint.setSpecification(litString); } }); }
+	 */
 
 	public Element getOwner(Element umlElement) {
 		return umlElement.getOwner();
@@ -2213,17 +2237,17 @@ public class EntityUtil {
 		return end;
 	}
 
-	public Parameter createFunctionBehaviorParameter(FunctionBehavior owner, String parameterName, Type parameterType,String[] multiplicity,
-			boolean isInput) {
+	public Parameter createFunctionBehaviorParameter(FunctionBehavior owner, String parameterName, Type parameterType,
+			String[] multiplicity, boolean isInput) {
 
 		logger.debug("\n\n\n Creating functionBehaviorParameter " + parameterName + " for owner " + owner);
 		logger.debug("\n\n\n");
 
 		final Parameter parameter = owner.createOwnedParameter(parameterName, parameterType);
 		parameter.setDirection(isInput ? ParameterDirectionKind.IN_LITERAL : ParameterDirectionKind.OUT_LITERAL);
-		
+
 		setAttributeMultiplicity(parameter, multiplicity);
-		
+
 		logger.debug("\n\nCreated " + parameterName + " functionBehaviorParameter\n\n");
 		return parameter;
 	}
@@ -2235,15 +2259,18 @@ public class EntityUtil {
 		// umlContract.getName();
 		final String propertyName = formalPropertyName;
 
-	/*	TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(formalPropertyOwner);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-
-			@Override
-			protected void doExecute() {*/
-				Constraint umlNewConstraint = formalPropertyOwner.createOwnedRule(propertyName);
-				UMLUtils.applyStereotype(umlNewConstraint, FORMAL_PROP);
-			/*}
-		});*/
+		/*
+		 * TransactionalEditingDomain domain =
+		 * TransactionUtil.getEditingDomain(formalPropertyOwner);
+		 * domain.getCommandStack().execute(new RecordingCommand(domain) {
+		 * 
+		 * @Override protected void doExecute() {
+		 */
+		Constraint umlNewConstraint = formalPropertyOwner.createOwnedRule(propertyName);
+		UMLUtils.applyStereotype(umlNewConstraint, FORMAL_PROP);
+		/*
+		 * } });
+		 */
 		return formalPropertyOwner.getOwnedRule(propertyName);
 
 	}
@@ -2287,7 +2314,8 @@ public class EntityUtil {
 		return inputParameters;
 	}
 
-	public Parameter createFunctionBehaviorParameter(FunctionBehavior owner, Type parameterType, String[] multiplicity, boolean isInput) {
+	public Parameter createFunctionBehaviorParameter(FunctionBehavior owner, Type parameterType, String[] multiplicity,
+			boolean isInput) {
 
 		// Create the name
 		String parameterName = null;
@@ -2465,52 +2493,60 @@ public class EntityUtil {
 
 		return umlConstraint;
 	}
-	
-	public void setTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText, final String language) {
+
+	public void setTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText,
+			final String language) {
 
 		logger.debug("saveFormalProperty: " + formalPropertyText);
-				// Constraint umlConstraint =
-				// formalProperty.getBase_Constraint();
-				if (umlConstraint.getSpecification() instanceof LiteralString) {
-					setLiteralStringTextInUMLConstraint(umlConstraint, formalPropertyText);
-				} else if (umlConstraint.getSpecification() instanceof OpaqueExpression) {
-					setOpaqueExpressionTextInUMLConstraint(umlConstraint, formalPropertyText, language);
-
-				}
-	}
-
-	
-	
-	public void setLiteralStringTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText) {
-		/*TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlConstraint);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-		@Override
-		protected void doExecute() {*/
+		// Constraint umlConstraint =
+		// formalProperty.getBase_Constraint();
 		if (umlConstraint.getSpecification() instanceof LiteralString) {
-		LiteralString litString = (LiteralString) umlConstraint.getSpecification();
-		litString.setValue(formalPropertyText);
-		umlConstraint.setSpecification(litString);
-		}
-		/*}
-		});*/
-	}
-	
-	private void setOpaqueExpressionTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText, final String language) {
-		/*TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(umlConstraint);
-		domain.getCommandStack().execute(new RecordingCommand(domain) {
-		@Override
-		protected void doExecute() {*/
-			if (umlConstraint.getSpecification() instanceof OpaqueExpression) {
-				// logger.debug("saveFormalProperty OpaqueExpression");
-				OpaqueExpression opaqueExpr = (OpaqueExpression) umlConstraint.getSpecification();
-				// opaqueExpr.getLanguages().
-				setOpaqueExpressionBodyForLanguage(opaqueExpr, language, formalPropertyText);
+			setLiteralStringTextInUMLConstraint(umlConstraint, formalPropertyText);
+		} else if (umlConstraint.getSpecification() instanceof OpaqueExpression) {
+			setOpaqueExpressionTextInUMLConstraint(umlConstraint, formalPropertyText, language);
 
-			}
-		/*}
-		});*/
+		}
 	}
-	
+
+	public void setLiteralStringTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText) {
+		/*
+		 * TransactionalEditingDomain domain =
+		 * TransactionUtil.getEditingDomain(umlConstraint);
+		 * domain.getCommandStack().execute(new RecordingCommand(domain) {
+		 * 
+		 * @Override protected void doExecute() {
+		 */
+		if (umlConstraint.getSpecification() instanceof LiteralString) {
+			LiteralString litString = (LiteralString) umlConstraint.getSpecification();
+			litString.setValue(formalPropertyText);
+			umlConstraint.setSpecification(litString);
+		}
+		/*
+		 * } });
+		 */
+	}
+
+	private void setOpaqueExpressionTextInUMLConstraint(final Constraint umlConstraint, final String formalPropertyText,
+			final String language) {
+		/*
+		 * TransactionalEditingDomain domain =
+		 * TransactionUtil.getEditingDomain(umlConstraint);
+		 * domain.getCommandStack().execute(new RecordingCommand(domain) {
+		 * 
+		 * @Override protected void doExecute() {
+		 */
+		if (umlConstraint.getSpecification() instanceof OpaqueExpression) {
+			// logger.debug("saveFormalProperty OpaqueExpression");
+			OpaqueExpression opaqueExpr = (OpaqueExpression) umlConstraint.getSpecification();
+			// opaqueExpr.getLanguages().
+			setOpaqueExpressionBodyForLanguage(opaqueExpr, language, formalPropertyText);
+
+		}
+		/*
+		 * } });
+		 */
+	}
+
 	private void setOpaqueExpressionBodyForLanguage(org.eclipse.uml2.uml.OpaqueExpression opaqueExpression,
 			String language, String body) {
 		// checks both lists by size
@@ -2893,38 +2929,38 @@ public class EntityUtil {
 	}
 
 	public boolean equalMultiplicityBoundaries(String[] newMultiplicityRange, String[] multiplicityRange) {
-		logger.debug("equalMultiplicityBoundaries [0]: "+newMultiplicityRange[0]+" "+ multiplicityRange[0]);
-		logger.debug("equalMultiplicityBoundaries [1]: "+newMultiplicityRange[1]+" "+ multiplicityRange[1]);
+		logger.debug("equalMultiplicityBoundaries [0]: " + newMultiplicityRange[0] + " " + multiplicityRange[0]);
+		logger.debug("equalMultiplicityBoundaries [1]: " + newMultiplicityRange[1] + " " + multiplicityRange[1]);
 		boolean equalLowerValue = equals(newMultiplicityRange[0], multiplicityRange[0]);
 		boolean equalUpperValue = equals(newMultiplicityRange[1], multiplicityRange[1]);
-		logger.debug(equalLowerValue+" - "+equalUpperValue);
-		return (equalLowerValue	&& equalUpperValue);
+		logger.debug(equalLowerValue + " - " + equalUpperValue);
+		return (equalLowerValue && equalUpperValue);
 
 	}
 
 	private boolean equals(String text1, String text2) {
-		logger.debug("(text1 == text2): "+(text1 == text2) );
-		//logger.debug("text1.equals(text2): "+text1.equals(text2) );
-		return ((text1 == text2) && (text2 == null)) || ((text1 != null)&&(text2 != null)&&text1.equals(text2));
+		logger.debug("(text1 == text2): " + (text1 == text2));
+		// logger.debug("text1.equals(text2): "+text1.equals(text2) );
+		return ((text1 == text2) && (text2 == null)) || ((text1 != null) && (text2 != null) && text1.equals(text2));
 	}
 
 	public void setAttributeMultiplicity(MultiplicityElement property, String[] newMultiplicityRange) {
 		logger.debug("setAttributeMultiplicity: " + newMultiplicityRange[0] + " " + newMultiplicityRange[1]);
 		if (newMultiplicityRange[0] != null) {
 			property.setLowerValue(createLiteralStringWithValue(newMultiplicityRange[0]));
-		}else{
+		} else {
 			property.setLowerValue(null);
 		}
 
 		if (newMultiplicityRange[1] != null) {
 			property.setUpperValue(createLiteralStringWithValue(newMultiplicityRange[1]));
-		}else{
+		} else {
 			property.setUpperValue(null);
 		}
 	}
 
-	private LiteralString createLiteralStringWithValue(String value) {		
-		LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();		
+	private LiteralString createLiteralStringWithValue(String value) {
+		LiteralString literalString = UMLFactory.eINSTANCE.createLiteralString();
 		literalString.setValue(value);
 		return literalString;
 	}
@@ -2948,32 +2984,37 @@ public class EntityUtil {
 	}
 
 	public boolean isParameterAssumption(Element umlProperty) {
-		
+
 		if (umlProperty instanceof Constraint) {
-			if ((UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) == null) &&
-					(UMLUtil.getAppliedStereotype(umlProperty, FORMAL_PROP, false) == null)) {
+			if ((UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) == null)
+					&& (UMLUtil.getAppliedStereotype(umlProperty, FORMAL_PROP, false) == null)) {
 				if (((Constraint) umlProperty).getSpecification() != null) {
 					if (((Constraint) umlProperty).getSpecification() instanceof LiteralString) {
 						return true;
-					} else if (((Constraint) umlProperty).getSpecification() instanceof OpaqueExpression &&
-							!OpaqueExpressionUtil.getBodyForLanguage((OpaqueExpression) ((Constraint) umlProperty).getSpecification(), "OCRA").equals("")) {
+					} else if (((Constraint) umlProperty).getSpecification() instanceof OpaqueExpression
+							&& !OpaqueExpressionUtil
+									.getBodyForLanguage(
+											(OpaqueExpression) ((Constraint) umlProperty).getSpecification(), "OCRA")
+									.equals("")) {
 						return true;
 					}
 				}
 			}
 		}
-		
+
 		return false;
-				
-//		return ((umlProperty instanceof Constraint)
-//				&& (UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST, false) == null)
-//				&& (UMLUtil.getAppliedStereotype(umlProperty, FORMAL_PROP, false) == null)
-//				);
+
+		// return ((umlProperty instanceof Constraint)
+		// && (UMLUtil.getAppliedStereotype(umlProperty, DELEGATION_CONST,
+		// false) == null)
+		// && (UMLUtil.getAppliedStereotype(umlProperty, FORMAL_PROP, false) ==
+		// null)
+		// );
 	}
 
 	public Element createUmlConstraint(Class owner, String parameterAssumptionsText) {
 		int numParameterAssumptions = getParameterAssumptionsAsConstraintsUml(owner).size();
-		String parameterAssumptionsName = DEFAULT_PAR_ASSUMPTION_PREFIX + (numParameterAssumptions+1);
+		String parameterAssumptionsName = DEFAULT_PAR_ASSUMPTION_PREFIX + (numParameterAssumptions + 1);
 
 		logger.debug("\n\n\n Creating constraint " + parameterAssumptionsName + " for owner " + owner);
 		logger.debug("\n\n\n");
@@ -3025,6 +3066,7 @@ public class EntityUtil {
 
 	/**
 	 * Returns the properties of the component that are only local to it.
+	 * 
 	 * @param component
 	 * @return
 	 */
@@ -3039,18 +3081,20 @@ public class EntityUtil {
 			final Class umlClass = (Class) component;
 			final EList<Property> attributes = umlClass.getOwnedAttributes();
 			for (final Property umlProperty : attributes) {
-				if (umlProperty != null && !isComponentInstance(umlProperty) && !isPort(umlProperty) &&
-						!ContractEntityUtil.getInstance().isContractProperty(umlProperty)) {
+				if (umlProperty != null && !isComponentInstance(umlProperty) && !isPort(umlProperty)
+						&& !ContractEntityUtil.getInstance().isContractProperty(umlProperty)) {
 					localProperties.add(umlProperty);
 				}
 			}
 		}
 		return localProperties;
 	}
-	
+
 	/**
 	 * Returns the name of a local property.
-	 * @param property the property 
+	 * 
+	 * @param property
+	 *            the property
 	 * @return the property name
 	 */
 	public String getLocalPropertyName(Property property) {
@@ -3059,24 +3103,29 @@ public class EntityUtil {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns the list of enumerations as a single string.
-	 * @param enumeration the enumeration
+	 * 
+	 * @param enumeration
+	 *            the enumeration
 	 * @return the list of values
 	 */
-	private String getEnumTypeValuesAsStr(Enumeration enumeration) {	
+	private String getEnumTypeValuesAsStr(Enumeration enumeration) {
 		final StringJoiner enumValues = new StringJoiner(", ", "[", "]");
 
-		for (final String value: getListValuesForEnumeratorType(enumeration)) {
+		for (final String value : getListValuesForEnumeratorType(enumeration)) {
 			enumValues.add(value);
-		}		
-		return enumValues.toString();		
+		}
+		return enumValues.toString();
 	}
 
 	/**
-	 * Returns the type of a local property, taking care of range and enumerations.
-	 * @param property the property 
+	 * Returns the type of a local property, taking care of range and
+	 * enumerations.
+	 * 
+	 * @param property
+	 *            the property
 	 * @return the property type
 	 */
 	public String getLocalPropertyType(Property property) {
@@ -3084,12 +3133,12 @@ public class EntityUtil {
 			final Type propertyType = property.getType();
 
 			if (propertyType != null) {
-				if(isRangeType(propertyType)) {
+				if (isRangeType(propertyType)) {
 					String[] range = getLowerUpperBoundsForRangeType(propertyType);
-					return propertyType.getName() + " - Range [" + range[0] + " .. " + range[1] + "]"; 
-				} else if (isEnumerationType(propertyType)) {					
-					
-					return propertyType.getName() + " - Enum " + getEnumTypeValuesAsStr((Enumeration) propertyType); 	
+					return propertyType.getName() + " - Range [" + range[0] + " .. " + range[1] + "]";
+				} else if (isEnumerationType(propertyType)) {
+
+					return propertyType.getName() + " - Enum " + getEnumTypeValuesAsStr((Enumeration) propertyType);
 				} else {
 					return propertyType.getName();
 				}
@@ -3097,20 +3146,22 @@ public class EntityUtil {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns the System component of the given package, if any.
-	 * @param pkg the package containing the architecture
+	 * 
+	 * @param pkg
+	 *            the package containing the architecture
 	 * @return the System component, or null if any or more than one are found
 	 */
 	public Class getSystemComponent(Package pkg) {
 		boolean found = false;
 		Element systemElement = null;
-		
+
 		if (pkg != null) {
-			final EList<Element> ownedElements = pkg.getOwnedElements();		
+			final EList<Element> ownedElements = pkg.getOwnedElements();
 			for (Element element : ownedElements) {
-				if(isSystem(element)) {
+				if (isSystem(element)) {
 					if (!found) {
 						systemElement = element;
 						found = true;

@@ -295,7 +295,7 @@ public class ResultsGeneratorService {
 	 * @return the name of the corresponding EMFTA file
 	 */
 	private String getEmftaFile(String fullPath) {
-		String emftaFile = fullPath.substring(fullPath.lastIndexOf("/") + 1, fullPath.length());
+		String emftaFile = fullPath.substring(fullPath.lastIndexOf(File.separator) + 1, fullPath.length());
 		
 		return emftaFile + ".emfta";
 	}
