@@ -18,9 +18,6 @@ import java.util.Iterator;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.NotEnabledException;
-import org.eclipse.core.commands.NotHandledException;
-import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -73,13 +70,6 @@ public class AnalysisResultUtil {
 	private final ErrorsDialogUtil errorsDialogUtil = ErrorsDialogUtil.getInstance();
 	private final DialogUtil dialogUtil = DialogUtil.getInstance();
 		
-	/**
-	 * Creates the directory structure. 
-	 */
-	public AnalysisResultUtil() {
-		createResultDir();
-	}
-
 	public static AnalysisResultUtil getInstance() {
 		if (packageUtilInstance == null) {
 			packageUtilInstance = new AnalysisResultUtil();
@@ -106,8 +96,6 @@ public class AnalysisResultUtil {
 	public Package getDependabilityView() {
 		final UmlModel umlModel = UmlUtils.getUmlModel();
 		
-		//FIXME: qui va indicata la mia view se presente, oppure creata...
-		
 		final TreeIterator<EObject> allElements = umlModel.getResource().getAllContents();
 		if (allElements != null) {
 			final Collection<Package> packages = EcoreUtil.getObjectsByType(iterator2Collection(allElements), 
@@ -119,7 +107,7 @@ public class AnalysisResultUtil {
 				}
 			}
 		}
-		errorsDialogUtil.showMessage_GenericError("Error: DependabilityView not found!");
+		errorsDialogUtil.showMessage_GenericError("Error: DependabilityAnalysisView not found!");
 		return null;
 	}
 		
@@ -146,8 +134,6 @@ public class AnalysisResultUtil {
 		if (analysisView == null) {
 			return null;
 		}
-		
-		//FIXME: qui va indicata la mia view se presente, oppure creata...
 		
 		// Get the list of second level packages
 		modelPackages = analysisView.getNestedPackages();
@@ -193,6 +179,7 @@ public class AnalysisResultUtil {
 			final Class rootComponent, final GaAnalysisContext contextAnalysis) {
 			
 		final Package activePackage = rootComponent.getNearestPackage();
+
 		// Select the correct view where to store the result
 		final Package pkg = getDependabilityViewFromPackage(activePackage);
 		
@@ -306,34 +293,58 @@ public class AnalysisResultUtil {
 	}
 	
 	/**
-	 * Returns the directory where validation result files are stored.
-	 * @return the string containing the directory
+	 * Computes the name for the results directory.
+	 * @return the name that the directory should have
 	 */
-	public String getResultDir() {
+	private String computeResultDir() {
 		try {
 			return DirectoryUtil.getInstance().getCurrentProjectDir() + RESULTS_FILE_PATH;
 		} catch (Exception e) {
 			dialogUtil.showMessage_ExceptionError(e);
+			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	/**
+	 * Returns the directory where validation result files are stored.
+	 * If the directory is not present, it will be created.
+	 * @return the string containing the directory
+	 */
+	public String getResultDir() {
+		final String resultDir = computeResultDir();
+		final File directory = new File(resultDir);
+		if (!directory.exists()) {
+			return createResultDir(resultDir);
+		} else {
+			return resultDir;
+		}
 	}
 	
 	/**
 	 * Creates the directory where to store validation results.
 	 * @return the string containing the directory
 	 */
-	private String createResultDir() {
+	private String createResultDir(String dirName) {
 		try {
-			final String filePath = getResultDir();
-			final File theFile = new File(filePath); 
-	        theFile.mkdirs();
-	        return filePath;
+			final File directory = new File(dirName); 
+	        if (!directory.mkdirs()) {
+	        	errorsDialogUtil.showMessage_GenericError("Cannot create results directory: " + dirName);
+	        	return null;
+	        }
+	        return dirName;
 		} catch (Exception e) {
+			dialogUtil.showMessage_ExceptionError(e);
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
+	/**
+	 * Shows the result of the given function, reading data from the given file.
+	 * @param functionName the name of the function used to obtain the result
+	 * @param fileName the file containing the data to visualize
+	 */
 	public void showResult(String functionName, String fileName) {
 		final String commandId = "eu.fbk.tools.adapter.ui.commands.ShowVVResultCommand";
 		final String functionNameParam = "function_name";
@@ -346,7 +357,6 @@ public class AnalysisResultUtil {
 			computeFaultTree.setParameter(fileNameParam, fileName);
 			computeFaultTree.execute();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -234,6 +234,15 @@ public class ResultsGeneratorService {
 		
 		propertyValidationResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
 		
+		final String conditions = resultElement.getConditions();
+		final int separatorIndex = conditions.indexOf('#');
+		if (separatorIndex > 0) {
+			propertyValidationResultDescriptor.validationType = conditions.substring(0, separatorIndex);
+			propertyValidationResultDescriptor.conditions = conditions.substring(separatorIndex + 1, conditions.length());
+		} else {
+			propertyValidationResultDescriptor.validationType = conditions;
+		}
+		
 		final File resultFile = new File(resultElement.getFile());
 		final CheckContractResultBuilder resultBuilder = new CheckContractResultBuilder();
 		final OcraOutput ocraOutput = resultBuilder.unmarshalResult(resultFile);
@@ -251,11 +260,14 @@ public class ResultsGeneratorService {
 		final List<ContractPropertyValidationResult> propertyValidationResults = 
 				contractCheckResult.getPropertyValidationResults();
 		for (ContractPropertyValidationResult result : propertyValidationResults) {
-			if (result.getCheckType().equals("ocra_check_validation_prop")) {
-//				final String[] line = new String[2];
-//				line[0] = "[" + result.getComponentType() + "] " + result.getContractName();
-//				line[1] = result.getFailed()? "NOT OK": "Success";
-//				propertyValidationResultDescriptor.lines.add(line);
+			if (result.getCheckType().contains("ocra_check_validation_prop")) {
+				final EList<CheckResult> checkResults = result.getCheckResults();
+				if (checkResults.size() > 0) {
+					final String[] line = new String[2];
+					line[0] = "[" + result.getName() + "] ";
+					line[1] = checkResults.get(0).getValue();
+					propertyValidationResultDescriptor.lines.add(line);
+				}
 			}
 
 			System.out.println("\nresult.getCheckType() = " + result.getCheckType());
@@ -353,7 +365,7 @@ public class ResultsGeneratorService {
 			} catch (SizeTooLargeException e) {
 				return null;
 			}
-			return fileName;
+			return diagramName + ".svg";	// Return the file name without path
 		}
 		return "notFound.gif";
 	}
