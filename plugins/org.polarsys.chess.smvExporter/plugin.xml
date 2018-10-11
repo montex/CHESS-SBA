@@ -60,6 +60,7 @@
             </command>
             <command
                   commandId="org.polarsys.chess.smvExport.commands.ExportModelToSMVCommand"
+                  label="Export model to a monolithic SMV file"
                   style="push">
                <visibleWhen
                      checkEnabled="false">

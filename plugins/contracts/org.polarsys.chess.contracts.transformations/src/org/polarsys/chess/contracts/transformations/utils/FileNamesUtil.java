@@ -30,6 +30,7 @@ import org.polarsys.chess.contracts.transformations.commands.CommandsCommon;
 public class FileNamesUtil {
 	private static final String XML_EXT = ".xml";
 	private static FileNamesUtil fileNamesUtil;
+	private final AnalysisResultUtil analysisResultUtil = AnalysisResultUtil.getInstance();
 
 	public static FileNamesUtil getInstance() {
 		if (fileNamesUtil == null) {
@@ -74,7 +75,7 @@ public class FileNamesUtil {
 		final String fileName;
 		
 		if (storeResult) {
-			resPath = AnalysisResultUtil.getInstance().getResultDir();
+			resPath = analysisResultUtil.getResultDir();
 			fileName = resPath + File.separator + "extended_" + 
 					modelSystemName + "_" + AnalysisResultUtil.FTA_ANALYSIS + 
 					"_c" + index + "_" + getDate() + XML_EXT;
@@ -101,7 +102,7 @@ public class FileNamesUtil {
 		final String fileName;
 		
 		if (storeResult) {
-			resPath = AnalysisResultUtil.getInstance().getResultDir();
+			resPath = analysisResultUtil.getResultDir();
 			fileName = resPath + File.separator + modelSystemName + "_" +
 					AnalysisResultUtil.FMEA_ANALYSIS + "_" + getDate() + XML_EXT;			
 		} else {
@@ -204,7 +205,7 @@ public class FileNamesUtil {
 	 * @return
 	 */
 	public String computeContractFaultTreeFileName(Class systemComponent) {
-		final String resPath = AnalysisResultUtil.getInstance().getResultDir();
+		final String resPath = analysisResultUtil.getResultDir();
 		return resPath + File.separator + computeQualifiedName(systemComponent) + "_" +
 				AnalysisResultUtil.CONTRACT_BASED_FTA_ANALYSIS + "_" + getDate() + XML_EXT;			
 	}
@@ -215,7 +216,7 @@ public class FileNamesUtil {
 	 * @return
 	 */
 	public String computeContractRefinementFileName(Class systemComponent) {
-		final String resPath = AnalysisResultUtil.getInstance().getResultDir();
+		final String resPath = analysisResultUtil.getResultDir();
 		return resPath + File.separator + computeQualifiedName(systemComponent) + "_" +
 				AnalysisResultUtil.CONTRACT_REFINEMENT_ANALYSIS + "_" + getDate() + XML_EXT;					
 	}
@@ -226,7 +227,7 @@ public class FileNamesUtil {
 	 * @return
 	 */
 	public String computeContractImplementationFileName(Class systemComponent) {
-		final String resPath = AnalysisResultUtil.getInstance().getResultDir();
+		final String resPath = analysisResultUtil.getResultDir();
 		return resPath + File.separator + computeQualifiedName(systemComponent) + "_" +
 				AnalysisResultUtil.CONTRACT_IMPLEMENTATION_ANALYSIS + "_" + getDate() + XML_EXT;					
 	}
@@ -237,7 +238,7 @@ public class FileNamesUtil {
 	 * @return
 	 */
 	public String computePropertyValidationFileName(Class systemComponent) {
-		final String resPath = AnalysisResultUtil.getInstance().getResultDir();
+		final String resPath = analysisResultUtil.getResultDir();
 		return resPath + File.separator + computeQualifiedName(systemComponent) + "_" +
 				AnalysisResultUtil.PROPERTY_VALIDATION_ANALYSIS + "_" + getDate() + XML_EXT;					
 	}

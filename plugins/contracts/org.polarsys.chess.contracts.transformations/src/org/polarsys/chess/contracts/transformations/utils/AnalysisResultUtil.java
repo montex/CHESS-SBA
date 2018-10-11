@@ -70,13 +70,6 @@ public class AnalysisResultUtil {
 	private final ErrorsDialogUtil errorsDialogUtil = ErrorsDialogUtil.getInstance();
 	private final DialogUtil dialogUtil = DialogUtil.getInstance();
 		
-	/**
-	 * Creates the directory structure. 
-	 */
-	public AnalysisResultUtil() {
-		createResultDir();
-	}
-
 	public static AnalysisResultUtil getInstance() {
 		if (packageUtilInstance == null) {
 			packageUtilInstance = new AnalysisResultUtil();
@@ -300,10 +293,10 @@ public class AnalysisResultUtil {
 	}
 	
 	/**
-	 * Returns the directory where validation result files are stored.
-	 * @return the string containing the directory
+	 * Computes the name for the results directory.
+	 * @return the name that the directory should have
 	 */
-	public String getResultDir() {
+	private String computeResultDir() {
 		try {
 			return DirectoryUtil.getInstance().getCurrentProjectDir() + RESULTS_FILE_PATH;
 		} catch (Exception e) {
@@ -314,18 +307,32 @@ public class AnalysisResultUtil {
 	}
 	
 	/**
+	 * Returns the directory where validation result files are stored.
+	 * If the directory is not present, it will be created.
+	 * @return the string containing the directory
+	 */
+	public String getResultDir() {
+		final String resultDir = computeResultDir();
+		final File directory = new File(resultDir);
+		if (!directory.exists()) {
+			return createResultDir(resultDir);
+		} else {
+			return resultDir;
+		}
+	}
+	
+	/**
 	 * Creates the directory where to store validation results.
 	 * @return the string containing the directory
 	 */
-	private String createResultDir() {
+	private String createResultDir(String dirName) {
 		try {
-			final String filePath = getResultDir();
-			final File theFile = new File(filePath); 
-	        if (!theFile.mkdirs()) {
-	        	errorsDialogUtil.showMessage_GenericError("Cannot create results directory: " + filePath);
+			final File directory = new File(dirName); 
+	        if (!directory.mkdirs()) {
+	        	errorsDialogUtil.showMessage_GenericError("Cannot create results directory: " + dirName);
 	        	return null;
 	        }
-	        return filePath;
+	        return dirName;
 		} catch (Exception e) {
 			dialogUtil.showMessage_ExceptionError(e);
 			e.printStackTrace();
