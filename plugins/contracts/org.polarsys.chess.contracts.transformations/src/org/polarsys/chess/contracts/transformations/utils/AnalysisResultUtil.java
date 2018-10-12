@@ -238,14 +238,15 @@ public class AnalysisResultUtil {
 				final Stereotype appliedStereotype = applyResultElementStereotype(umlComponent);
 				final ResultElement resultElement = 
 						(ResultElement) umlComponent.getStereotypeApplication(appliedStereotype);
-
-				resultElement.setType(type);
-				resultElement.setDate(new Date().toString());
-				resultElement.setConditions(conditions);
-				resultElement.setValid(true);
-				resultElement.setFile(filePath);
-				resultElement.setRoot(rootComponent);
-				resultElement.setContextAnalysis(contextAnalysis);
+				if (resultElement != null) {
+					resultElement.setType(type);
+					resultElement.setDate(new Date().toString());
+					resultElement.setConditions(conditions);
+					resultElement.setValid(true);
+					resultElement.setFile(filePath);
+					resultElement.setRoot(rootComponent);
+					resultElement.setContextAnalysis(contextAnalysis);
+				} 
 			}
 		});
 		return true;
