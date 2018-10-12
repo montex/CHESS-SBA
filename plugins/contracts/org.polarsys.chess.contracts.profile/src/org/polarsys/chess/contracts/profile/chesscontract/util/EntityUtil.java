@@ -967,9 +967,12 @@ public class EntityUtil {
 
 	public Set<Property> getSubComponentsInstances(Class umlComponent) {
 		Set<Property> subComponents = new HashSet<Property>();
-		for (Property umlProperty : ((Class) umlComponent).getAttributes()) {
-			if (isComponentInstance(umlProperty)) {
-				subComponents.add(umlProperty);
+		EList<Property> umlProperties = ((Class) umlComponent).getAttributes();
+		if (umlProperties != null) {
+			for (Property umlProperty : umlProperties) {
+				if (isComponentInstance(umlProperty)) {
+					subComponents.add(umlProperty);
+				}
 			}
 		}
 		return subComponents;
@@ -1016,28 +1019,30 @@ public class EntityUtil {
 
 		if (isBlock(umlComponent) || (isCompType(umlComponent) || (isComponentImplementation(umlComponent)))) {
 			Class umlClass = (Class) umlComponent;
-			
-			
-			for (Property umlProperty : umlClass.getOwnedAttributes()) {				
-				
-					if (isEnumerationAttribute(umlProperty)) {
-						Set<String> currValues = getListValuesForEnumeratorType(umlProperty.getType());
-						enumValuesEList.addAll(currValues);
-					}
-				}
-			
-			for(FunctionBehavior functionBehavior : getUmlFunctionBehaviors(umlClass)){
-				for(Parameter parameter : functionBehavior.inputParameters()){
-					Set<String> currValues = getListValuesForEnumeratorType(parameter.getType());
-					enumValuesEList.addAll(currValues);
-				}
-				for(Parameter parameter : functionBehavior.outputParameters()){
-					Set<String> currValues = getListValuesForEnumeratorType(parameter.getType());
+
+			for (Property umlProperty : umlClass.getOwnedAttributes()) {
+
+				if (isEnumerationAttribute(umlProperty)) {
+					Set<String> currValues = getListValuesForEnumeratorType(umlProperty.getType());
 					enumValuesEList.addAll(currValues);
 				}
 			}
+
+			EList<FunctionBehavior> functionBehaviors = getUmlFunctionBehaviors(umlClass);
+			if (functionBehaviors != null) {
+				for (FunctionBehavior functionBehavior : functionBehaviors) {
+					for (Parameter parameter : functionBehavior.inputParameters()) {
+						Set<String> currValues = getListValuesForEnumeratorType(parameter.getType());
+						enumValuesEList.addAll(currValues);
+					}
+					for (Parameter parameter : functionBehavior.outputParameters()) {
+						Set<String> currValues = getListValuesForEnumeratorType(parameter.getType());
+						enumValuesEList.addAll(currValues);
+					}
+				}
+			}
 		}
-		
+
 		return enumValuesEList;
 		// return toArray(enumValuesEList);
 	}
