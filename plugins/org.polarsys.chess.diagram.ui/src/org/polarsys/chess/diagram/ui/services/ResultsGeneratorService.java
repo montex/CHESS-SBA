@@ -234,14 +234,9 @@ public class ResultsGeneratorService {
 		
 		propertyValidationResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
 		
-		final String conditions = resultElement.getConditions();
-		
+		// Parse the string containing the analysis details
+		final String conditions = resultElement.getConditions();	
 		final String[] partials = conditions.split("#");
-		
-		for (String string : partials) {
-			System.out.println("partial = " + string);	
-		}
-		
 		propertyValidationResultDescriptor.validationType = partials[0];
 		if (partials.length > 1) {
 			propertyValidationResultDescriptor.selectedComponent = partials[1];
@@ -284,26 +279,23 @@ public class ResultsGeneratorService {
 						line[1] = "Unknown";
 					} else {
 						line[1] = checkValue;
-					}
-					
+					}					
 					propertyValidationResultDescriptor.lines.add(line);
 				}
 			}
-
-			System.out.println("\nresult.getCheckType() = " + result.getCheckType());
-			System.out.println("result.getModelName() = " + result.getModelName());
-			System.out.println("result.getName() = " + result.getName());
-
-			System.out.println("result.getFailed() = " + result.getFailed());
-
-			EList<CheckResult> checkResults = result.getCheckResults();
-			for (CheckResult checkResult : checkResults) {
-				checkResult.getContractName();
-				System.out.println("\tcheckResult.getContractName() = " + checkResult.getContractName());
-				System.out.println("\tcheckResult.getProofType() = " + checkResult.getProofType());
-				System.out.println("\tcheckResult.getValue() = " + checkResult.getValue());
-			}
-
+//			System.out.println("\nresult.getCheckType() = " + result.getCheckType());
+//			System.out.println("result.getModelName() = " + result.getModelName());
+//			System.out.println("result.getName() = " + result.getName());
+//
+//			System.out.println("result.getFailed() = " + result.getFailed());
+//
+//			EList<CheckResult> checkResults = result.getCheckResults();
+//			for (CheckResult checkResult : checkResults) {
+//				checkResult.getContractName();
+//				System.out.println("\tcheckResult.getContractName() = " + checkResult.getContractName());
+//				System.out.println("\tcheckResult.getProofType() = " + checkResult.getProofType());
+//				System.out.println("\tcheckResult.getValue() = " + checkResult.getValue());
+//			}
 		}
 
 		return propertyValidationResultDescriptor;
@@ -494,6 +486,10 @@ public class ResultsGeneratorService {
 					final PropertyValidationResultDescriptor propertyValidationResultDescriptor = 
 							createPropertyValidationResultDescriptor(resultElement);					
 					rootContainer.propertyValidationResultDescriptors.add(propertyValidationResultDescriptor);
+				} else if (resultType.equals(AnalysisResultUtil.CONTRACT_PROPERTY_VALIDATION_ANALYSIS)) {
+					final PropertyValidationResultDescriptor contractPropertyValidationResultDescriptor = 
+							createPropertyValidationResultDescriptor(resultElement);					
+					rootContainer.contractPropertyValidationResultDescriptors.add(contractPropertyValidationResultDescriptor);
 				}
 				//TODO: implementare anche gli altri casi...
 			}
