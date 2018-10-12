@@ -148,6 +148,16 @@
                       value="true">
                 </parameter>
              </command>
+             <command
+                   commandId="org.polarsys.chess.verificationService.commands.CheckValidationPropertyCommand2"
+                   icon="icons/contract_verification.png"
+                   label="Check Validation on Assumption/Guarantee Properties"
+                   style="push">
+                <parameter
+                      name="store_result"
+                      value="true">
+                </parameter>
+             </command>
 	         </menu>
             </menuContribution>
             <menuContribution
@@ -356,6 +366,11 @@
             defaultHandler="org.polarsys.chess.verificationService.ui.commands.CheckValidationContractPropertyCommand"
             id="org.polarsys.chess.verificationService.commands.CheckValidationPropertyCommand2"
             name="Check Validation on Assumption/Guarantee Properties on selected component">
+         <commandParameter
+               id="store_result"
+               name="storeResult"
+               optional="true">
+         </commandParameter>
       </command>
       <command
             defaultHandler="org.polarsys.chess.verificationService.ui.commands.debug.CheckValidationPropertyOnFileCommand"

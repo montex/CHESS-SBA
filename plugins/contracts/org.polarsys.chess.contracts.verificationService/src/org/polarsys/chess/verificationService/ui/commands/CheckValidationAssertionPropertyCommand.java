@@ -82,12 +82,13 @@ public class CheckValidationAssertionPropertyCommand extends AbstractJobCommand 
 		// If requested to store the data, execute the command here, cannot be called later
 		if (storeResult) {
 			String[] conditions = new String[1]; // It will be filled by the method
-			if(ocraExecService.executeValidationAssertionProperty(umlSelectedComponent, umlSelectedResource, isDiscreteTime, usexTextValidation,showPopups,
-					ossFilepath, resultFilePath, monitor, true, conditions)) {
+			if(ocraExecService.executeValidationAssertionProperty(umlSelectedComponent, umlSelectedResource, 
+					isDiscreteTime, usexTextValidation,showPopups, ossFilepath, resultFilePath, 
+					monitor, true, conditions)) {
 				
 				// Store the result
-				analysisResultUtil.storeResult(AnalysisResultUtil.PROPERTY_VALIDATION_ANALYSIS, conditions[0], 
-						resultFilePath, umlSelectedComponent, null);
+				analysisResultUtil.storeResult(AnalysisResultUtil.PROPERTY_VALIDATION_ANALYSIS, 
+						conditions[0], resultFilePath, umlSelectedComponent, null);
 				
 				// Visualize the result
 				analysisResultUtil.showResult(CheckValidationProperty.FUNCTION_NAME, resultFilePath);
@@ -99,8 +100,8 @@ public class CheckValidationAssertionPropertyCommand extends AbstractJobCommand 
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
 		if (!storeResult) {
-			ocraExecService.executeValidationAssertionProperty(umlSelectedComponent, umlSelectedResource, isDiscreteTime, usexTextValidation,showPopups,
-					ossFilepath, resultFilePath, monitor, false, null);
+			ocraExecService.executeValidationAssertionProperty(umlSelectedComponent, umlSelectedResource, isDiscreteTime, 
+					usexTextValidation, showPopups, ossFilepath, resultFilePath, monitor, false, null);
 		}
 	}
 }

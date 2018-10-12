@@ -24,7 +24,6 @@ import org.polarsys.chess.service.gui.utils.SelectionUtil;
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService;
 import eu.fbk.eclipse.standardtools.utils.ui.commands.AbstractJobCommand;
 import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
-import eu.fbk.eclipse.standardtools.utils.ui.utils.CommandBuilder;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
 import eu.fbk.tools.adapter.ocra.ComputeContractFaultTree;
 

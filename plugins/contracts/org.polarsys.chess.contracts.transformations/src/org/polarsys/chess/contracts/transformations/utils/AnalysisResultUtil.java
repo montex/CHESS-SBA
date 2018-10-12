@@ -63,7 +63,8 @@ public class AnalysisResultUtil {
 	public static final String CONTRACT_BASED_FTA_ANALYSIS = "CONTRACT_FTA";
 	public static final String CONTRACT_REFINEMENT_ANALYSIS = "CONTRACT_REF";
 	public static final String CONTRACT_IMPLEMENTATION_ANALYSIS = "CONTRACT_IMPL";
-	public static final String PROPERTY_VALIDATION_ANALYSIS = "PROP_VALIDATION";
+	public static final String PROPERTY_VALIDATION_ANALYSIS = "PROP_VAL";
+	public static final String CONTRACT_PROPERTY_VALIDATION_ANALYSIS = "CONT_PROP_VAL";
 	
 	private static AnalysisResultUtil packageUtilInstance;
 	private final EntityUtil entityUtil = EntityUtil.getInstance();
@@ -238,14 +239,15 @@ public class AnalysisResultUtil {
 				final Stereotype appliedStereotype = applyResultElementStereotype(umlComponent);
 				final ResultElement resultElement = 
 						(ResultElement) umlComponent.getStereotypeApplication(appliedStereotype);
-
-				resultElement.setType(type);
-				resultElement.setDate(new Date().toString());
-				resultElement.setConditions(conditions);
-				resultElement.setValid(true);
-				resultElement.setFile(filePath);
-				resultElement.setRoot(rootComponent);
-				resultElement.setContextAnalysis(contextAnalysis);
+				if (resultElement != null) {
+					resultElement.setType(type);
+					resultElement.setDate(new Date().toString());
+					resultElement.setConditions(conditions);
+					resultElement.setValid(true);
+					resultElement.setFile(filePath);
+					resultElement.setRoot(rootComponent);
+					resultElement.setContextAnalysis(contextAnalysis);
+				} 
 			}
 		});
 		return true;

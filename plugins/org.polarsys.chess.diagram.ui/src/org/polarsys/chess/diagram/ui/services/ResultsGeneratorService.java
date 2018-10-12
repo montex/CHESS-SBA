@@ -234,15 +234,20 @@ public class ResultsGeneratorService {
 		
 		propertyValidationResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
 		
-		final String conditions = resultElement.getConditions();
-		final int separatorIndex = conditions.indexOf('#');
-		if (separatorIndex > 0) {
-			propertyValidationResultDescriptor.validationType = conditions.substring(0, separatorIndex);
-			propertyValidationResultDescriptor.conditions = conditions.substring(separatorIndex + 1, conditions.length());
-		} else {
-			propertyValidationResultDescriptor.validationType = conditions;
+		// Parse the string containing the analysis details
+		final String conditions = resultElement.getConditions();	
+		final String[] partials = conditions.split("#");
+		propertyValidationResultDescriptor.validationType = partials[0];
+		if (partials.length > 1) {
+			propertyValidationResultDescriptor.selectedComponent = partials[1];
 		}
-		
+		if (partials.length > 2) {
+			propertyValidationResultDescriptor.selectedProperties = partials[2].replace(",", ", ");
+		}
+		if (partials.length > 3) {
+			propertyValidationResultDescriptor.conditions = partials[3];
+		}
+				
 		final File resultFile = new File(resultElement.getFile());
 		final CheckContractResultBuilder resultBuilder = new CheckContractResultBuilder();
 		final OcraOutput ocraOutput = resultBuilder.unmarshalResult(resultFile);
@@ -264,26 +269,33 @@ public class ResultsGeneratorService {
 				final EList<CheckResult> checkResults = result.getCheckResults();
 				if (checkResults.size() > 0) {
 					final String[] line = new String[2];
-					line[0] = "[" + result.getName() + "] ";
-					line[1] = checkResults.get(0).getValue();
+					line[0] = "[" + result.getName() + "]";
+					final String checkValue = checkResults.get(0).getValue();
+					if (checkValue.equals("OK")) {
+						line[1] = "Success";
+					} else if (checkValue.equals("NOT_OK")) {
+						line[1] = "NOT OK";
+					} else if (checkValue.equals("UNKNOWN")) {
+						line[1] = "Unknown";
+					} else {
+						line[1] = checkValue;
+					}					
 					propertyValidationResultDescriptor.lines.add(line);
 				}
 			}
-
-			System.out.println("\nresult.getCheckType() = " + result.getCheckType());
-			System.out.println("result.getModelName() = " + result.getModelName());
-			System.out.println("result.getName() = " + result.getName());
-
-			System.out.println("result.getFailed() = " + result.getFailed());
-
-			EList<CheckResult> checkResults = result.getCheckResults();
-			for (CheckResult checkResult : checkResults) {
-				checkResult.getContractName();
-				System.out.println("\tcheckResult.getContractName() = " + checkResult.getContractName());
-				System.out.println("\tcheckResult.getProofType() = " + checkResult.getProofType());
-				System.out.println("\tcheckResult.getValue() = " + checkResult.getValue());
-			}
-
+//			System.out.println("\nresult.getCheckType() = " + result.getCheckType());
+//			System.out.println("result.getModelName() = " + result.getModelName());
+//			System.out.println("result.getName() = " + result.getName());
+//
+//			System.out.println("result.getFailed() = " + result.getFailed());
+//
+//			EList<CheckResult> checkResults = result.getCheckResults();
+//			for (CheckResult checkResult : checkResults) {
+//				checkResult.getContractName();
+//				System.out.println("\tcheckResult.getContractName() = " + checkResult.getContractName());
+//				System.out.println("\tcheckResult.getProofType() = " + checkResult.getProofType());
+//				System.out.println("\tcheckResult.getValue() = " + checkResult.getValue());
+//			}
 		}
 
 		return propertyValidationResultDescriptor;
@@ -426,6 +438,7 @@ public class ResultsGeneratorService {
 		}
 		
 		// Get the correct package containing the results
+		//FIXME: qui va messo il package con qualified name
 		final Package resultsPackage = dependabilityView.getNestedPackage(activePackage.getName());
 		if (resultsPackage == null) {
 			return;
@@ -473,6 +486,10 @@ public class ResultsGeneratorService {
 					final PropertyValidationResultDescriptor propertyValidationResultDescriptor = 
 							createPropertyValidationResultDescriptor(resultElement);					
 					rootContainer.propertyValidationResultDescriptors.add(propertyValidationResultDescriptor);
+				} else if (resultType.equals(AnalysisResultUtil.CONTRACT_PROPERTY_VALIDATION_ANALYSIS)) {
+					final PropertyValidationResultDescriptor contractPropertyValidationResultDescriptor = 
+							createPropertyValidationResultDescriptor(resultElement);					
+					rootContainer.contractPropertyValidationResultDescriptors.add(contractPropertyValidationResultDescriptor);
 				}
 				//TODO: implementare anche gli altri casi...
 			}

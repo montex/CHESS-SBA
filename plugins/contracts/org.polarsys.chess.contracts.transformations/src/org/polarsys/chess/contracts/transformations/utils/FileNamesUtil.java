@@ -284,4 +284,15 @@ public class FileNamesUtil {
 		return resPath + File.separator + computeQualifiedName(systemComponent) + "_"
 				+ AnalysisResultUtil.PROPERTY_VALIDATION_ANALYSIS + "_" + getDate() + XML_EXT;
 	}
+
+	/**
+	 * Computes the file name for the Contract Property Validation analysis.
+	 * @param systemComponent the root component of the analysis
+	 * @return
+	 */
+	public String computeContractPropertyValidationFileName(Class systemComponent) {
+		final String resPath = analysisResultUtil.getResultDir();
+		return resPath + File.separator + computeQualifiedName(systemComponent) + "_" +
+				AnalysisResultUtil.CONTRACT_PROPERTY_VALIDATION_ANALYSIS + "_" + getDate() + XML_EXT;					
+	}
 }
