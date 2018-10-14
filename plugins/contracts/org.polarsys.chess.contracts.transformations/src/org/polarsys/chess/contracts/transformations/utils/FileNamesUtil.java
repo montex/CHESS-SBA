@@ -88,14 +88,14 @@ public class FileNamesUtil {
 		if (storeResult) {
 
 			resPath = analysisResultUtil.getResultDir();
-			fileName = resPath + "/" + "extended_" + modelSystemName + "_" + AnalysisResultUtil.FTA_ANALYSIS + "_c"
+			fileName = resPath + File.separator + "extended_" + modelSystemName + "_" + AnalysisResultUtil.FTA_ANALYSIS + "_c"
 					+ index + "_" + getDate() + XML_EXT;
 
 		} else {
 			final IFolder folder = computeXSapFolder(editor);
 			final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
 			resPath = resFolder.getLocation().toString();
-			fileName = resPath + "/" + "extended_" + modelSystemName + "_c" + index + "_ft" + XML_EXT;
+			fileName = resPath + File.separator + "extended_" + modelSystemName + "_c" + index + "_ft" + XML_EXT;
 
 		}
 		return fileName;
@@ -118,13 +118,13 @@ public class FileNamesUtil {
 		if (storeResult) {
 
 			resPath = analysisResultUtil.getResultDir();
-			fileName = resPath + "/" + modelSystemName + "_" + AnalysisResultUtil.FMEA_ANALYSIS + "_" + getDate()
+			fileName = resPath + File.separator + modelSystemName + "_" + AnalysisResultUtil.FMEA_ANALYSIS + "_" + getDate()
 					+ XML_EXT;
 		} else {
 			final IFolder folder = computeXSapFolder(editor);
 			final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
 			resPath = resFolder.getLocation().toString();
-			fileName = resPath + "/" + modelSystemName + "_fmea_table" + XML_EXT;
+			fileName = resPath + File.separator + modelSystemName + "_fmea_table" + XML_EXT;
 		}
 		return fileName;
 	}
