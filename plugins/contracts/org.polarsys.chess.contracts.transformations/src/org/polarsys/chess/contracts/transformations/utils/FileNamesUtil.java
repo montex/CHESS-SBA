@@ -80,7 +80,6 @@ public class FileNamesUtil {
 	 *            an index to differentiate the generated file
 	 * @return
 	 */
-
 	public String computeFtFileName(IEditorPart editor, String modelSystemName, int index, boolean storeResult) {
 		final String resPath;
 		final String fileName;
@@ -88,9 +87,9 @@ public class FileNamesUtil {
 		if (storeResult) {
 
 			resPath = analysisResultUtil.getResultDir();
-			fileName = resPath + File.separator + "extended_" + modelSystemName + "_" + AnalysisResultUtil.FTA_ANALYSIS + "_c"
-					+ index + "_" + getDate() + XML_EXT;
 
+			fileName = resPath + File.separator + "extended_" + modelSystemName + "_" + AnalysisResultUtil.FTA_ANALYSIS
+					+ "_c" + index + "_" + getDate() + XML_EXT;
 		} else {
 			final IFolder folder = computeXSapFolder(editor);
 			final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
@@ -118,8 +117,9 @@ public class FileNamesUtil {
 		if (storeResult) {
 
 			resPath = analysisResultUtil.getResultDir();
-			fileName = resPath + File.separator + modelSystemName + "_" + AnalysisResultUtil.FMEA_ANALYSIS + "_" + getDate()
-					+ XML_EXT;
+
+			fileName = resPath + File.separator + modelSystemName + "_" + AnalysisResultUtil.FMEA_ANALYSIS + "_"
+					+ getDate() + XML_EXT;
 		} else {
 			final IFolder folder = computeXSapFolder(editor);
 			final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
@@ -287,12 +287,14 @@ public class FileNamesUtil {
 
 	/**
 	 * Computes the file name for the Contract Property Validation analysis.
-	 * @param systemComponent the root component of the analysis
+	 * 
+	 * @param systemComponent
+	 *            the root component of the analysis
 	 * @return
 	 */
 	public String computeContractPropertyValidationFileName(Class systemComponent) {
 		final String resPath = analysisResultUtil.getResultDir();
-		return resPath + File.separator + computeQualifiedName(systemComponent) + "_" +
-				AnalysisResultUtil.CONTRACT_PROPERTY_VALIDATION_ANALYSIS + "_" + getDate() + XML_EXT;					
+		return resPath + File.separator + computeQualifiedName(systemComponent) + "_"
+				+ AnalysisResultUtil.CONTRACT_PROPERTY_VALIDATION_ANALYSIS + "_" + getDate() + XML_EXT;
 	}
 }

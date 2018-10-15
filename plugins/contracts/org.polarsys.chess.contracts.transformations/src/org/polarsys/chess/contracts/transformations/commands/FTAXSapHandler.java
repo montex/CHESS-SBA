@@ -50,7 +50,7 @@ public class FTAXSapHandler extends AbstractXSapHandler {
 
 				// If requested, store the result
 				if (storeResult) {
-					analysisResultUtil.storeResult(AnalysisResultUtil.FTA_ANALYSIS, ftaFmeaCond, 
+					analysisResultUtil.storeResult(AnalysisResultUtil.FTA_ANALYSIS, condition, 
 							ftFileName, systemComponent, analysisContext);
 				}
 				

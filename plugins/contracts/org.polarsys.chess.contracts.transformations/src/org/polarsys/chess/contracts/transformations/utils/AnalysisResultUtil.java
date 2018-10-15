@@ -65,6 +65,7 @@ public class AnalysisResultUtil {
 	public static final String CONTRACT_IMPLEMENTATION_ANALYSIS = "CONTRACT_IMPL";
 	public static final String PROPERTY_VALIDATION_ANALYSIS = "PROP_VAL";
 	public static final String CONTRACT_PROPERTY_VALIDATION_ANALYSIS = "CONT_PROP_VAL";
+	public static final String MODEL_CHECKING_ANALYSIS = "MODEL_CHECK";
 	
 	private static AnalysisResultUtil packageUtilInstance;
 	private final EntityUtil entityUtil = EntityUtil.getInstance();
@@ -158,6 +159,15 @@ public class AnalysisResultUtil {
 	}
 	
 	/**
+	 * Returns the local path of the given absolute path.
+	 * @param filePath the absolute file path
+	 * @return the local path
+	 */
+	private String getLocalPath(String filePath) {
+		return filePath.substring(filePath.indexOf(RESULTS_FILE_PATH) + 1, filePath.length());		
+	}
+	
+	/**
 	 * Returns the ResultElement application from a given UML element.
 	 * @param element the element containing the appplication, if any
 	 * @return the application of the stereotype
@@ -165,6 +175,17 @@ public class AnalysisResultUtil {
 	public ResultElement getResultElementFromUmlElement(Element element) {	
 		final Stereotype appliedStereotype = element.getAppliedStereotype(RESULT_ELEMENT);
 		return (ResultElement) element.getStereotypeApplication(appliedStereotype);
+	}
+	
+	/**
+	 * Return a kind of qualified name for the given package.
+	 * @param pkg the package
+	 * @return the qualified name, without "model" and "::" replaced by "_"
+	 */
+	public String getPackageName(Package pkg) {
+		String name = pkg.getQualifiedName();
+		name = name.substring(name.indexOf("::") + 2);
+		return name.replace("::", "_");
 	}
 	
 	/**
@@ -195,16 +216,15 @@ public class AnalysisResultUtil {
 			@Override
 			protected void doExecute() {
 
-				// FIXME: qui andrebbe fatta una struttura gerarchica come nella SystemView
-				// al momento la fa flat
-				
 				// Get the correct package, or create it if needed
-				final String componentPackageName = rootComponent.getNearestPackage().getName();
+				final String componentPackageName = getPackageName(rootComponent.getNearestPackage());
 				Package dependabilityPackage = pkg.getNestedPackage(componentPackageName, 
 						false, UMLPackage.eINSTANCE.getPackage(), true);
 				
-				// Check if the result is already present in the package
+				// Compute the local path to store in the result
+				final String localFilePath = getLocalPath(filePath);
 				
+				// Check if the result is already present in the package
 				EList<PackageableElement> packageableElements = dependabilityPackage.getPackagedElements();
 				for (PackageableElement packageableElement : packageableElements) {
 					
@@ -223,10 +243,16 @@ public class AnalysisResultUtil {
 								resultElement.setValid(true);
 
 								// Remove the result file from disk and set the new one
-								File resultFile = new File(resultElement.getFile());
-								resultFile.delete();
-								resultElement.setFile(filePath);
-
+								File resultFile;
+								try {
+									resultFile = new File(DirectoryUtil.getInstance().getCurrentProjectDir() + 
+											File.separator + resultElement.getFile());
+									resultFile.delete();
+								} catch (Exception e) {
+									dialogUtil.showMessage_ExceptionError(e);
+									e.printStackTrace();
+								}
+								resultElement.setFile(localFilePath);
 								return;
 							}
 						}
@@ -243,8 +269,8 @@ public class AnalysisResultUtil {
 					resultElement.setType(type);
 					resultElement.setDate(new Date().toString());
 					resultElement.setConditions(conditions);
-					resultElement.setValid(true);
-					resultElement.setFile(filePath);
+					resultElement.setValid(true);				
+					resultElement.setFile(localFilePath);
 					resultElement.setRoot(rootComponent);
 					resultElement.setContextAnalysis(contextAnalysis);
 				} 
