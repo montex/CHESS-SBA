@@ -18,6 +18,7 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.contracts.transformations.utils.AnalysisResultUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -56,6 +57,8 @@ import eu.fbk.eclipse.standardtools.diagram.DocumentGenerator;
 import eu.fbk.eclipse.standardtools.diagram.FmeaResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.FtaResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.PropertyValidationResultDescriptor;
+import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
+import eu.fbk.eclipse.standardtools.utils.ui.utils.DirectoryUtil;
 import eu.fbk.tools.adapter.ocra.CheckContractResultBuilder;
 import eu.fbk.tools.adapter.results.CheckResult;
 import eu.fbk.tools.adapter.ocra.OcraOutput;
@@ -74,6 +77,7 @@ import eu.fbk.tools.adapter.xsap.table.FmeaTable.Row;
 public class ResultsGeneratorService {
 	private static final Logger logger = Logger.getLogger(EntityUtil.class);
 	private AnalysisResultUtil analysisResultUtil = AnalysisResultUtil.getInstance();
+	private DialogUtil dialogUtil = DialogUtil.getInstance();
 	private boolean showAnalysisResults;
 	private String outputDirectoryName;
 	
@@ -94,9 +98,18 @@ public class ResultsGeneratorService {
 		fmeaResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
 		
 		// Read the result file and parse the table
-		final File fmeaFile = new File(resultElement.getFile());
+		final File resultFile;
+		try {
+			resultFile = new File(DirectoryUtil.getInstance().getCurrentProjectDir() + 
+					File.separator + resultElement.getFile());
+		} catch (Exception e) {
+			dialogUtil.showMessage_ExceptionError(e);
+			e.printStackTrace();
+			return null;
+		}
+		
 		final ComputeFmeaTableResultBuilder resultBuilder = new ComputeFmeaTableResultBuilder();
-		final FmeaTable fmeaTable = resultBuilder.unmarshalResult(fmeaFile);
+		final FmeaTable fmeaTable = resultBuilder.unmarshalResult(resultFile);
 		if( fmeaTable == null || fmeaTable.getRow() == null || fmeaTable.getRow().isEmpty() ) {
 			logger.debug("Internal error while unmarshalling the result. For more info see the console");
 			return null;
@@ -126,7 +139,16 @@ public class ResultsGeneratorService {
 		
 		contractRefinementResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
 		
-		final File resultFile = new File(resultElement.getFile());
+		final File resultFile;
+		try {
+			resultFile = new File(DirectoryUtil.getInstance().getCurrentProjectDir() + 
+					File.separator + resultElement.getFile());
+		} catch (Exception e) {
+			dialogUtil.showMessage_ExceptionError(e);
+			e.printStackTrace();
+			return null;
+		}
+
 		final CheckContractResultBuilder resultBuilder = new CheckContractResultBuilder();
 		final OcraOutput ocraOutput = resultBuilder.unmarshalResult(resultFile);
 		if(ocraOutput == null || ocraOutput.getOcraResult() == null || ocraOutput.getOcraResult().isEmpty()) {
@@ -179,7 +201,16 @@ public class ResultsGeneratorService {
 		
 		contractImplementationResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
 		
-		final File resultFile = new File(resultElement.getFile());
+		final File resultFile;
+		try {
+			resultFile = new File(DirectoryUtil.getInstance().getCurrentProjectDir() + 
+					File.separator + resultElement.getFile());
+		} catch (Exception e) {
+			dialogUtil.showMessage_ExceptionError(e);
+			e.printStackTrace();
+			return null;
+		}
+
 		final CheckContractResultBuilder resultBuilder = new CheckContractResultBuilder();
 		final OcraOutput ocraOutput = resultBuilder.unmarshalResult(resultFile);
 		if(ocraOutput == null || ocraOutput.getOcraResult() == null || ocraOutput.getOcraResult().isEmpty()) {
@@ -248,7 +279,15 @@ public class ResultsGeneratorService {
 			propertyValidationResultDescriptor.conditions = partials[3];
 		}
 				
-		final File resultFile = new File(resultElement.getFile());
+		final File resultFile;
+		try {
+			resultFile = new File(DirectoryUtil.getInstance().getCurrentProjectDir() + 
+					File.separator + resultElement.getFile());
+		} catch (Exception e) {
+			dialogUtil.showMessage_ExceptionError(e);
+			e.printStackTrace();
+			return null;
+		}
 		final CheckContractResultBuilder resultBuilder = new CheckContractResultBuilder();
 		final OcraOutput ocraOutput = resultBuilder.unmarshalResult(resultFile);
 		if(ocraOutput == null || ocraOutput.getOcraResult() == null || ocraOutput.getOcraResult().isEmpty()) {
@@ -438,12 +477,12 @@ public class ResultsGeneratorService {
 		}
 		
 		// Get the correct package containing the results
-		//FIXME: qui va messo il package con qualified name
-		final Package resultsPackage = dependabilityView.getNestedPackage(activePackage.getName());
+//		final Package resultsPackage = dependabilityView.getNestedPackage(activePackage.getName());
+		final Package resultsPackage = dependabilityView.getNestedPackage(analysisResultUtil.getPackageName(activePackage));
 		if (resultsPackage == null) {
 			return;
 		}
-		
+				
 		final EList<NamedElement> members = resultsPackage.getOwnedMembers();
 		boolean isRefinementPresent = false;
 		for (NamedElement namedElement : members) {
