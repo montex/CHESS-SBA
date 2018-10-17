@@ -18,7 +18,6 @@ import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
 import org.polarsys.chess.contracts.transformations.utils.AnalysisResultUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -56,9 +55,12 @@ import eu.fbk.eclipse.standardtools.diagram.ContractRefinementResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.DocumentGenerator;
 import eu.fbk.eclipse.standardtools.diagram.FmeaResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.FtaResultDescriptor;
+import eu.fbk.eclipse.standardtools.diagram.ModelCheckingResultDescriptor;
 import eu.fbk.eclipse.standardtools.diagram.PropertyValidationResultDescriptor;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DirectoryUtil;
+import eu.fbk.tools.adapter.nusmv.CounterExample;
+import eu.fbk.tools.adapter.nuxmv.CheckBehaviourResultBuilder;
 import eu.fbk.tools.adapter.ocra.CheckContractResultBuilder;
 import eu.fbk.tools.adapter.results.CheckResult;
 import eu.fbk.tools.adapter.ocra.OcraOutput;
@@ -341,6 +343,60 @@ public class ResultsGeneratorService {
 	}
 	
 	/**
+	 * Creates a ModelCheckingResultDescriptor from the given ResultElement.
+	 * @param resultElement the element containing the data
+	 * @return the newly created descriptor
+	 */
+	private ModelCheckingResultDescriptor createModelCheckingResultDescriptor(ResultElement resultElement) {
+		final ModelCheckingResultDescriptor modelCheckingResultDescriptor = 
+				new ModelCheckingResultDescriptor();
+		
+		modelCheckingResultDescriptor.rootClass = EntityUtil.getInstance().getName(resultElement.getRoot());
+
+		// Parse the string containing the analysis details
+		final String conditions = resultElement.getConditions();	
+		final String[] partials = conditions.split("#");
+		modelCheckingResultDescriptor.checkType = partials[0];
+		if (partials.length > 1) {
+			modelCheckingResultDescriptor.conditions = partials[1];
+		}
+		
+		final File resultFile;
+		try {
+			resultFile = new File(DirectoryUtil.getInstance().getCurrentProjectDir() + 
+					File.separator + resultElement.getFile());
+		} catch (Exception e) {
+			dialogUtil.showMessage_ExceptionError(e);
+			e.printStackTrace();
+			return null;
+		}
+
+		//FIXME: the handling of the results here is not safe. I assume that if no result
+		// file is present, there are no counterexamples and the model check is successful.
+		// This behavior could change in future releases.
+		
+		// If there is no result file, the analysis was successful
+		if (!resultFile.exists()) {
+			modelCheckingResultDescriptor.result = "Success";
+			return modelCheckingResultDescriptor;
+		}
+		
+		// Try to parse the result, if there is a counterexample, the model is not ok
+		final CheckBehaviourResultBuilder resultBuilder = new CheckBehaviourResultBuilder();
+		if(resultFile != null && resultFile.exists()) {
+			final CounterExample counterExample = resultBuilder.unmarshalResult(resultFile);
+			if(counterExample == null || counterExample.getDesc() == null || 
+					counterExample.getId() == null || counterExample.getNode() == null) {
+				logger.debug("Internal error while processing the result. For more info see the console");
+				return null;
+			}
+			modelCheckingResultDescriptor.result = "NOT OK";
+			return modelCheckingResultDescriptor;
+		}
+		return null;
+	}
+
+	/**
 	 * Computes the EMFTA name from the given XML file.
 	 * @param fullPath the full name of the XML file
 	 * @return the name of the corresponding EMFTA file
@@ -529,8 +585,11 @@ public class ResultsGeneratorService {
 					final PropertyValidationResultDescriptor contractPropertyValidationResultDescriptor = 
 							createPropertyValidationResultDescriptor(resultElement);					
 					rootContainer.contractPropertyValidationResultDescriptors.add(contractPropertyValidationResultDescriptor);
+				} else if (resultType.equals(AnalysisResultUtil.MODEL_CHECKING_ANALYSIS)) {
+					final ModelCheckingResultDescriptor modelCheckingResultDescriptor = 
+							createModelCheckingResultDescriptor(resultElement);					
+					rootContainer.modelCheckingResultDescriptors.add(modelCheckingResultDescriptor);
 				}
-				//TODO: implementare anche gli altri casi...
 			}
 		}
 	}

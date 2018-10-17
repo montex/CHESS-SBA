@@ -293,4 +293,17 @@ public class FileNamesUtil {
 		return resPath + File.separator + computeQualifiedName(systemComponent) + "_"
 				+ AnalysisResultUtil.CONTRACT_PROPERTY_VALIDATION_ANALYSIS + "_" + getDate() + XML_EXT;
 	}
+
+	/**
+	 * Computes the file name for the Model Checking analysis.
+	 * 
+	 * @param systemComponent
+	 *            the root component of the analysis
+	 * @return
+	 */
+	public String computeModelCheckingFileName(Class systemComponent) {
+		final String resPath = analysisResultUtil.getResultDir();
+		return resPath + File.separator + computeQualifiedName(systemComponent) + "_"
+				+ AnalysisResultUtil.MODEL_CHECKING_ANALYSIS + "_" + getDate() + XML_EXT;
+	}
 }
