@@ -153,11 +153,11 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 		
 		documentGeneratorService.addLocalAttributeDescriptors(umlSelectedComponent, documentGenerator);
 
-		//TODO: leggere da dialogo utente
+		//TODO: this could be read from the parameterDialog
 		boolean showAnalysisResults = true;
 
 		final ResultsGeneratorService resultsGeneratorService = new ResultsGeneratorService();
-		resultsGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, showAnalysisResults);
+		resultsGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, showAnalysisResults, imageExtension);
 		resultsGeneratorService.addResultsDescriptors(umlSelectedComponent, activePackage, documentGenerator);
 				
 		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension
@@ -213,7 +213,6 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 //		
 //		documentGeneratorService.addLocalAttributeDescriptors(umlSelectedComponent, documentGenerator);
 //
-//		//TODO: leggere da dialogo utente
 //		boolean showAnalysisResults = true;
 //
 //		final ResultsGeneratorService resultsGeneratorService = new ResultsGeneratorService();

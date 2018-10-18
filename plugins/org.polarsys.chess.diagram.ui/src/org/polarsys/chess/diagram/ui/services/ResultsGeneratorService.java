@@ -82,10 +82,13 @@ public class ResultsGeneratorService {
 	private DialogUtil dialogUtil = DialogUtil.getInstance();
 	private boolean showAnalysisResults;
 	private String outputDirectoryName;
+	private String imageExtension;
 	
-	public void setParametersBeforeDocumentGeneration(String outputDirectoryName, boolean showAnalysisResults) {
+	public void setParametersBeforeDocumentGeneration(String outputDirectoryName, boolean showAnalysisResults,
+			String imageExtension) {
 		this.outputDirectoryName = outputDirectoryName;
 		this.showAnalysisResults = showAnalysisResults;
+		this.imageExtension = imageExtension;
 	}
 	
 	/**
@@ -426,6 +429,15 @@ public class ResultsGeneratorService {
 	}
 	
 	/**
+	 * Removes the extension from a file name, from the first dot onward.
+	 * @param fileName the name to process
+	 * @return the processed file name
+	 */
+	private String removeExtension(String fileName) {
+		return fileName.substring(0, fileName.indexOf("."));
+	}
+	
+	/**
 	 * Exports the Sirius diagram on disk, in the same position as other diagrams.
 	 * @param diagramPath the name of the .emfta diagram
 	 * @return the path of the exported image
@@ -461,10 +473,18 @@ public class ResultsGeneratorService {
 		
 		if (myRepresentations.size() != 0) {
 			
-			final String fileName = outputDirectoryName + File.separator + diagramName + ".svg";
+			// PDF images are not handled, so export them in PNG
+			String fileName = outputDirectoryName + File.separator + removeExtension(diagramName);
+			final String extension = imageExtension.equals(".svg") ? imageExtension : ".png";
+			fileName += extension;			
 		
 			// Export the first representation as SVG image
-			ExportFormat exportFormat = new ExportFormat(ExportDocumentFormat.NONE, ImageFileFormat.SVG);
+			ExportFormat exportFormat = null;
+			if (extension.equals(".svg")) {
+				exportFormat = new ExportFormat(ExportDocumentFormat.NONE, ImageFileFormat.SVG);
+			} else {
+				exportFormat = new ExportFormat(ExportDocumentFormat.NONE, ImageFileFormat.PNG);
+			}
 			try {
 				//			representation = myRepresentations.get(1);
 				DialectUIManager.INSTANCE.export(myRepresentations.get(0), session, new Path(fileName),
@@ -472,7 +492,7 @@ public class ResultsGeneratorService {
 			} catch (SizeTooLargeException e) {
 				return null;
 			}
-			return diagramName + ".svg";	// Return the file name without path
+			return removeExtension(diagramName) + extension;	// Return the file name without path
 		}
 		return "notFound.gif";
 	}
@@ -533,7 +553,6 @@ public class ResultsGeneratorService {
 		}
 		
 		// Get the correct package containing the results
-//		final Package resultsPackage = dependabilityView.getNestedPackage(activePackage.getName());
 		final Package resultsPackage = dependabilityView.getNestedPackage(analysisResultUtil.getPackageName(activePackage));
 		if (resultsPackage == null) {
 			return;
