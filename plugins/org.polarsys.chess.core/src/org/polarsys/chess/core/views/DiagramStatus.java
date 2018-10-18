@@ -481,7 +481,7 @@ public class DiagramStatus {
 
 		currentDesignView.currentDiagram = ViewDiagramAssociations.ANYDIAGRAM;
 
-		if (actualView != null && !InternalViewUtils.getViewName(actualView).equals(InternalViewUtils.getViewName(newActualView)))
+		if (actualView != null && newActualView != null && !InternalViewUtils.getViewName(actualView).equals(InternalViewUtils.getViewName(newActualView)))
 			disableAllToggles();
 
 		actualView = newActualView;

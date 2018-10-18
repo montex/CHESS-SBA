@@ -689,7 +689,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * Returns the diagram EditPart.
 	 * @return
 	 */
-	private EditPart getHost() {
+	public EditPart getHost() {
 		return host;
 	}
 	
@@ -808,7 +808,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 	 * @param elementEP the EditPart of the element to browse
 	 * @param connectors the list of connectors to draw
 	 */
-	private void drawConnectors(IGraphicalEditPart elementEP, EList<Connector> connectors) {
+	public void drawConnectors(IGraphicalEditPart elementEP, EList<Connector> connectors) {
 		final View elementView = elementEP.getNotationView();
 		final CompoundCommand compoundCommand = new CompoundCommand("Restore A Related Link");
 
@@ -855,7 +855,7 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		final IGraphicalEditPart diagramEP = OffscreenEditPartFactory.getInstance().createDiagramEditPart(diagram, shell);
 		
 		// Store the EditPart
-		host = diagramEP;
+		setHost(diagramEP);
 
 		this.sortedPorts = sortedPorts;
 		
@@ -900,6 +900,11 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		}
 	}
 	
+	public void setHost(IGraphicalEditPart diagramEP) {
+		this.host = diagramEP;
+		
+	}
+
 	/**
 	 * Draws the missing ports of the given element, on the lower border.
 	 * @param elementEP the EditPart of the element
@@ -1202,5 +1207,3 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		drawConnectors(mainElementEP, missingConnectors);
 	}
 }
-
-//TODO: devo sistemare la posizione delle porte, label, ecc.
