@@ -92,7 +92,6 @@ StateMachineDiagram Compartment[type=StereotypeBrace]{
 	visible:false;
 }
 
-
 /* Show the GaAnalysisContext compartment in class diagrams */
 ClassDiagram Compartment[stereotype="MARTE::MARTE_AnalysisModel::GQAM::GaAnalysisContext"]{
 	visible:true;
@@ -102,4 +101,3 @@ ClassDiagram Compartment[stereotype="MARTE::MARTE_AnalysisModel::GQAM::GaAnalysi
 ClassDiagram Compartment[type=StereotypeBrace]{
 	visible:false;
 }
-

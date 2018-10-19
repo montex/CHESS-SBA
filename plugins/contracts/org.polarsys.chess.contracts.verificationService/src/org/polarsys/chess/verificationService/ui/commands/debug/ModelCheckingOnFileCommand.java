@@ -67,7 +67,8 @@ public class ModelCheckingOnFileCommand extends AbstractJobCommand {
 
 			File smvFile = nuXmvDialogUtil.getSmvFileFromFileDialog(nuXmvDirectoryUtil.getSmvFileDirectory());
 			String resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(smvFile.getName());
-			nuXmvService.modelCheckingCommand(smvFile.getPath(), property, alg_type, check_type, resultFilePath,isProgrExec);
+			nuXmvService.modelCheckingCommand(smvFile.getPath(), property, alg_type, check_type, 
+					resultFilePath, isProgrExec, false);
 		}
 
 	}

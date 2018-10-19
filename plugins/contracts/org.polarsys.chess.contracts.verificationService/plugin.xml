@@ -158,6 +158,16 @@
                       value="true">
                 </parameter>
              </command>
+             <command
+                   commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
+                   icon="icons/contract_verification.png"
+                   label="Model check"
+                   style="push">
+                <parameter
+                      name="store_result"
+                      value="true">
+                </parameter>
+             </command>
 	         </menu>
             </menuContribution>
             <menuContribution
@@ -353,6 +363,11 @@
          <commandParameter
                id="resultFilePath"
                name="resultFilePath"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="store_result"
+               name="storeResult"
                optional="true">
          </commandParameter>
          

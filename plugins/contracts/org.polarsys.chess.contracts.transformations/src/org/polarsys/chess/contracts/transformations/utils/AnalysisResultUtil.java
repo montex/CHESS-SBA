@@ -130,10 +130,12 @@ public class AnalysisResultUtil {
 			if(modelPackage.getAppliedStereotype(ANALYSIS_VIEW) != null) {
 				analysisView = modelPackage;
 				break;
-			}			
+			}
 		}
 		
 		if (analysisView == null) {
+			errorsDialogUtil.showMessage_GenericError("No <<AnalysisView>> view found. "
+					+ "Cannot read or store analyses results.");
 			return null;
 		}
 		
@@ -145,6 +147,8 @@ public class AnalysisResultUtil {
 				return modelPackage;
 			}			
 		}
+		errorsDialogUtil.showMessage_GenericError("No <<DependabilityAnalysisView>> view found. "
+				+ "Cannot read or store analyses results.");
 		return null;
 	}
 		
@@ -203,14 +207,13 @@ public class AnalysisResultUtil {
 		final Package activePackage = rootComponent.getNearestPackage();
 
 		// Select the correct view where to store the result
-		final Package pkg = getDependabilityViewFromPackage(activePackage);
-		
-		if (pkg == null) {
+		final Package dependabilityView = getDependabilityViewFromPackage(activePackage);
+		if (dependabilityView == null) {
 			return false;
 		}
 
 		// Start a transaction to modify the package content
-		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(pkg);
+		final TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(dependabilityView);
 		domain.getCommandStack().execute(new RecordingCommand(domain) {
 
 			@Override
@@ -218,7 +221,7 @@ public class AnalysisResultUtil {
 
 				// Get the correct package, or create it if needed
 				final String componentPackageName = getPackageName(rootComponent.getNearestPackage());
-				Package dependabilityPackage = pkg.getNestedPackage(componentPackageName, 
+				Package dependabilityPackage = dependabilityView.getNestedPackage(componentPackageName, 
 						false, UMLPackage.eINSTANCE.getPackage(), true);
 				
 				// Compute the local path to store in the result
@@ -263,6 +266,11 @@ public class AnalysisResultUtil {
 				final Component umlComponent = (Component) dependabilityPackage.createPackagedElement(
 						type, UMLPackage.eINSTANCE.getComponent());
 				final Stereotype appliedStereotype = applyResultElementStereotype(umlComponent);
+				if (appliedStereotype == null) {
+					errorsDialogUtil.showMessage_GenericError("Cannot apply the <<ResultError>> stereotype. " +
+							"Is the CHESS model up to date?");
+					return;
+				}
 				final ResultElement resultElement = 
 						(ResultElement) umlComponent.getStereotypeApplication(appliedStereotype);
 				if (resultElement != null) {

@@ -1207,5 +1207,3 @@ public class ShowIBDElementsAction extends ShowHideContentsAction {
 		drawConnectors(mainElementEP, missingConnectors);
 	}
 }
-
-//TODO: devo sistemare la posizione delle porte, label, ecc.
