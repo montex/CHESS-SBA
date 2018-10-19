@@ -41,7 +41,7 @@ Require-Bundle: org.eclipse.core.commands,
  org.eclipse.emf.mwe.core,
  org.eclipse.sirius,
  org.eclipse.sirius.ui,
- org.eclipse.sirius.common;bundle-version="4.1.3",
+ org.eclipse.sirius.common,
  org.eclipse.core.resources
 Export-Package: org.polarsys.chess.diagram.ui.docGenerators,
  org.polarsys.chess.diagram.ui.services,
