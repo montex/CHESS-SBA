@@ -4136,6 +4136,10 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
         <ownedComment xmi:type="uml:Comment" xmi:id="_Ite8wI_6Eei_FpVxgbKIWA" annotatedElement="_DBxD0DHsEeWt8Ovv2G_EJg _4BcSsI_4Eei_FpVxgbKIWA">
           <body>if applied at the same time on the same entity, than each FailureMode referred by Threats.failureMode must be referred also by FailureModes.failureMode</body>
         </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_f5pbQMxcEeid4ZRCJNswAA" annotatedElement="_z0oYcMxbEeid4ZRCJNswAA">
+          <body>This stereotype is used to 
+store the result of a V&amp;V check.</body>
+        </ownedComment>
         <elementImport xmi:type="uml:ElementImport" xmi:id="_1TXcMDQ2EeC0ueejuetpgA" alias="Component">
           <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
         </elementImport>
@@ -4376,6 +4380,35 @@ See also FLABehavior and SimpleStochasticBehavior.</body>
         </packagedElement>
         <packagedElement xmi:type="uml:Extension" xmi:id="_Pb_RkI_5Eei_FpVxgbKIWA" name="E_Threat_Slot1" memberEnd="_PcFYMI_5Eei_FpVxgbKIWA _PcFYMY_5Eei_FpVxgbKIWA">
           <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_PcFYMI_5Eei_FpVxgbKIWA" name="extension_Threat" type="_4BcSsI_4Eei_FpVxgbKIWA" aggregation="composite" association="_Pb_RkI_5Eei_FpVxgbKIWA"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Stereotype" xmi:id="_z0oYcMxbEeid4ZRCJNswAA" name="ResultElement">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_39-zcMxbEeid4ZRCJNswAA" name="type">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_7jgIoMxbEeid4ZRCJNswAA" name="date">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://Papyrus_PROFILES/MARTE_Library.library.uml#_sexkYAnxEdy9WM11hWri2g"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_-B758MxbEeid4ZRCJNswAA" name="conditions">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_Bme-wMxcEeid4ZRCJNswAA" name="valid">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_E-7hQMxcEeid4ZRCJNswAA" name="file">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_Go8MAMxcEeid4ZRCJNswAA" name="root">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_Lhq1gMxcEeid4ZRCJNswAA" name="contextAnalysis">
+            <type xmi:type="uml:Stereotype" href="pathmap://Papyrus_PROFILES/MARTE.profile.uml#_9gc2ABKfEdyaWJN1BYon3A"/>
+          </ownedAttribute>
+          <ownedAttribute xmi:type="uml:Property" xmi:id="_e1vHMMxcEeid4ZRCJNswAA" name="base_Component" association="_e1sq8MxcEeid4ZRCJNswAA">
+            <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Component"/>
+          </ownedAttribute>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Extension" xmi:id="_e1sq8MxcEeid4ZRCJNswAA" name="E_ResultElement_Component1" memberEnd="_e1ugIMxcEeid4ZRCJNswAA _e1vHMMxcEeid4ZRCJNswAA">
+          <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_e1ugIMxcEeid4ZRCJNswAA" name="extension_ResultElement" type="_z0oYcMxbEeid4ZRCJNswAA" aggregation="composite" association="_e1sq8MxcEeid4ZRCJNswAA"/>
         </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Profile" xmi:id="_5g4wEDQ3EeC0ueejuetpgA" name="ThreatsPropagation" URI="http://CHESS/Dependability/ThreatsPropagation" metaclassReference="_AGLpEDQ4EeC0ueejuetpgA _EsXKADQ4EeC0ueejuetpgA _YOEPEDQ4EeC0ueejuetpgA _T6fIcMvmEeSajLw6mg2A8Q _-JLxoM2NEeSrt5YehnIlig">

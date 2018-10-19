@@ -47,6 +47,7 @@ public class SelectFTAFMEAAnalysisCtxDialog extends Dialog {
 	private String ftaCondition;
 	private List<GaAnalysisContext> contextList;
 	private ModifyListener modAnalysisCtxListener;
+	private GaAnalysisContext analysisContext;
 
 	public SelectFTAFMEAAnalysisCtxDialog(Shell shell, Model model) {
 		super(shell);
@@ -68,6 +69,7 @@ public class SelectFTAFMEAAnalysisCtxDialog extends Dialog {
 //						ftaConditionText.setText(ctx.getContext().get(0));
 						CHGaResourcePlatform plat = (CHGaResourcePlatform) ctx.getPlatform().get(0);
 						rootSystemText.setText(plat.getBase_Classifier().getQualifiedName());
+						setAnalysisContext(ctx);
 					}
 					/*
 					if(ctx.getPlatform().size() > 0){
@@ -168,5 +170,13 @@ public class SelectFTAFMEAAnalysisCtxDialog extends Dialog {
 			}
 		}
 		return result;
+	}
+
+	public GaAnalysisContext getAnalysisContext() {
+		return analysisContext;
+	}
+
+	public void setAnalysisContext(GaAnalysisContext analysisContext) {
+		this.analysisContext = analysisContext;
 	}
 }

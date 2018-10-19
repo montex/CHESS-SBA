@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *     Alberto Debiasi - initial API and implementation
+ *     Luca Cristoforetti - added some functionalities
  ******************************************************************************/
 package org.polarsys.chess.diagram.ui.commands;
 
@@ -23,10 +24,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Package;
+import org.polarsys.chess.contracts.transformations.utils.AnalysisResultUtil;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSBlockDefinitionDiagramModel;
 import org.polarsys.chess.diagram.ui.docGenerators.CHESSInternalBlockDiagramModel;
 import org.polarsys.chess.diagram.ui.services.CHESSDiagramsGeneratorService;
+import org.polarsys.chess.diagram.ui.services.ResultsGeneratorService;
 import org.polarsys.chess.diagram.ui.utils.ExportDialogUtils;
+import org.polarsys.chess.service.core.exceptions.NoComponentException;
 import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.polarsys.chess.service.gui.utils.DialogUtils;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
@@ -70,7 +74,7 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	private String imageExtension;
 	private String docFormat;
 	private Package activePackage;
-	private boolean goAhead = true;
+	private boolean goAhead;
 
 	/**
 	 * Returns the nearest package containing the diagram.
@@ -91,12 +95,23 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 	
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
+//		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
+
+		// The user could select a component or a package containing an architecture
+		// In the latter case, extract the system component from that package
+		try {
+			umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
+		} catch (NoComponentException e) {
+			umlSelectedComponent = AnalysisResultUtil.getInstance().getSystemComponentFromEvent(event);
+		}
+		
+		activePackage = umlSelectedComponent.getNearestPackage();
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(false);
 		outputDirectoryName = dialogUtils.getDirectoryNameFromDialog();
 		currentProjectName = directoryUtils.getCurrentProjectName();
 		chessDiagrams = chessDiagramsGeneratorService.getDiagrams();
-		activePackage = umlSelectedComponent.getNearestPackage();
+		
+		goAhead = true;
 
 		if ((outputDirectoryName == null) || outputDirectoryName.isEmpty()) {
 			goAhead = false;
@@ -117,16 +132,9 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 //			imageExtension = ".png";	// Not perfect images, some fonts are wrong
 			imageExtension = ".pdf";
 		}
-
-	}
-
-	@Override
-	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
-
-		if (!goAhead) {
-			return;
-		}
 		
+		// All the code below was in the execJobCommand(), but since it now modifies the model,
+		// I have to put it here otherwise an Invalid Thread Access exception will rise
 		OSS ossModel = ocraTranslatorService.exportRootComponentToOssModel(umlSelectedComponent, isDiscreteTime, monitor);
 
 		Display defaultDisplay = Display.getDefault();
@@ -138,10 +146,20 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 				parameterDialog.getShowParameters(), parameterDialog.getShowUninterpretedFunctions(),
 				parameterDialog.getShowConnections(), parameterDialog.getShowInterfaceAssertions(), 
 				parameterDialog.getShowRefinementAssertions(), parameterDialog.getShowContracts(),
-				parameterDialog.getShowContractRefinements(),parameterDialog.getShowParameterAssumptions());
+				parameterDialog.getShowContractRefinements(),parameterDialog.getShowParameterAssumptions(),
+				parameterDialog.getShowDiagrams(), parameterDialog.getShowLocalAttributes());
 		DocumentGenerator documentGenerator = documentGeneratorService.createDocumentFile(currentProjectName, docFormat,
 				ossModel.getSystem(), monitor);
+		
+		documentGeneratorService.addLocalAttributeDescriptors(umlSelectedComponent, documentGenerator);
 
+		//TODO: this could be read from the parameterDialog
+		boolean showAnalysisResults = true;
+
+		final ResultsGeneratorService resultsGeneratorService = new ResultsGeneratorService();
+		resultsGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, showAnalysisResults, imageExtension);
+		resultsGeneratorService.addResultsDescriptors(umlSelectedComponent, activePackage, documentGenerator);
+				
 		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension
 				//parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout()
 				);
@@ -166,6 +184,63 @@ public class GenerateDocumentCommand extends AbstractJobCommand {
 			}
 		});
 
+		
+		
 	}
 
+	@Override
+	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
+
+		if (!goAhead) {
+			return;
+		}
+		
+//		OSS ossModel = ocraTranslatorService.exportRootComponentToOssModel(umlSelectedComponent, isDiscreteTime, monitor);
+//
+//		Display defaultDisplay = Display.getDefault();
+//
+//		documentGeneratorService = new DocumentGeneratorServiceFromOssModel(ossModel, chessToOCRAModelTranslator, activePackage);
+//		documentGeneratorService.setParametersBeforeDocumentGeneration(outputDirectoryName, imageExtension,
+//				parameterDialog.getShowLeafComponents(), parameterDialog.getShowInputPorts(), 
+//				parameterDialog.getShowOutputPorts(),parameterDialog.getShowSubComponents(), 
+//				parameterDialog.getShowParameters(), parameterDialog.getShowUninterpretedFunctions(),
+//				parameterDialog.getShowConnections(), parameterDialog.getShowInterfaceAssertions(), 
+//				parameterDialog.getShowRefinementAssertions(), parameterDialog.getShowContracts(),
+//				parameterDialog.getShowContractRefinements(),parameterDialog.getShowParameterAssumptions(),
+//				parameterDialog.getShowDiagrams(), parameterDialog.getShowLocalAttributes());
+//		DocumentGenerator documentGenerator = documentGeneratorService.createDocumentFile(currentProjectName, docFormat,
+//				ossModel.getSystem(), monitor);
+//		
+//		documentGeneratorService.addLocalAttributeDescriptors(umlSelectedComponent, documentGenerator);
+//
+//		boolean showAnalysisResults = true;
+//
+//		final ResultsGeneratorService resultsGeneratorService = new ResultsGeneratorService();
+//		resultsGeneratorService.setParametersBeforeDocumentGeneration(showAnalysisResults);
+//		resultsGeneratorService.addResultsDescriptors(umlSelectedComponent, activePackage, documentGenerator);
+//				
+//		chessDiagramsGeneratorService.setParametersBeforeDiagramsGenerator(outputDirectoryName, imageExtension
+//				//parameterDialog.getShowPortLabels(), parameterDialog.getAutomaticPortLabelLayout()
+//				);
+//
+//		defaultDisplay.syncExec(new Runnable() {
+//			@Override
+//			public void run() {
+//				Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+//				Set<DiagramDescriptor> diagramDescriptors = new HashSet<DiagramDescriptor>();
+//				for (Diagram diagram : chessDiagrams) {
+//					if (getDiagramPackage(diagram) == activePackage) {
+//						// chessDiagramsGeneratorService.createDiagram(diagram, monitor);
+//						DiagramDescriptor dd = chessDiagramsGeneratorService.createDiagramWithDescriptor(diagram, shell,
+//								monitor);
+//						if (dd != null) {
+//							diagramDescriptors.add(dd);
+//						}
+//					}
+//				}
+//				documentGeneratorService.addDiagramDescriptors(diagramDescriptors, documentGenerator);
+//				documentGeneratorService.generateDocument(documentGenerator);
+//			}
+//		});
+	}
 }

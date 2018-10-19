@@ -313,6 +313,19 @@
               propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/Threat/base_Slot"/>
           <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/Threat/kind"/>
         </genClasses>
+        <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/DependableComponent/ResultElement">
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/ResultElement/type"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/ResultElement/date"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/ResultElement/conditions"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/ResultElement/valid"/>
+          <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/ResultElement/file"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/ResultElement/root"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/ResultElement/contextAnalysis"/>
+          <genFeatures xsi:type="genmodel:GenFeature" notify="false" createChild="false"
+              propertySortChoices="true" ecoreFeature="ecore:EReference chessmlprofile.ecore#//Dependability/DependableComponent/ResultElement/base_Component"/>
+        </genClasses>
         <genClasses xsi:type="genmodel:GenClass" ecoreClass="chessmlprofile.ecore#//Dependability/DependableComponent/Propagation">
           <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/prob"/>
           <genFeatures xsi:type="genmodel:GenFeature" createChild="false" ecoreFeature="ecore:EAttribute chessmlprofile.ecore#//Dependability/DependableComponent/Propagation/delay"/>

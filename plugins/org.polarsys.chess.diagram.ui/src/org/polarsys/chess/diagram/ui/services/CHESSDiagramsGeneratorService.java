@@ -31,8 +31,11 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.papyrus.infra.gmfdiag.common.model.NotationModel;
 import org.eclipse.papyrus.infra.gmfdiag.common.model.NotationUtils;
 import org.eclipse.papyrus.infra.gmfdiag.common.utils.DiagramUtils;
+import org.eclipse.papyrus.uml.tools.utils.UMLUtil;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.StateMachine;
+
 import eu.fbk.eclipse.standardtools.diagram.DiagramDescriptor;
 //import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.BlockDefinitionDiagramGeneratorService;
 //import eu.fbk.eclipse.standardtools.diagram.ui.docGenerators.InternalBlockDiagramGeneratorService;
@@ -45,6 +48,8 @@ public class CHESSDiagramsGeneratorService {
 
 	final private static String IBD = "InternalBlock";
 	final private static String BDD = "BlockDefinition";
+	final private static String STMD = "PapyrusUMLStateMachineDiagram";
+	final private static String ERROR_MODEL = "CHESS::Dependability::ThreatsPropagation::ErrorModel";
 
 	private static final Logger logger = Logger.getLogger(CHESSDiagramsGeneratorService.class);
 
@@ -85,12 +90,32 @@ public class CHESSDiagramsGeneratorService {
 		String diagramName = "";
 		String ownerName = null;
 		boolean hasComponentOwner = true;
+		int weight = 0;
+		
 		if (diagramOwner instanceof Class) {
-			ownerName = ((Class) diagramOwner).getName();
-			diagramName = ownerName + "_" + diagram.getName();
+			if (diagramOwner instanceof StateMachine) {
+				ownerName = ((Class)((StateMachine) diagramOwner).getOwner()).getName();
+				diagramName = ownerName + "_" + diagram.getName();
+			} else {
+				ownerName = ((Class) diagramOwner).getName();
+				diagramName = ownerName + "_" + diagram.getName();
+			}
 		} else {
 			hasComponentOwner = false;
 			diagramName = diagram.getName();
+		}
+
+		// Give a weight to the diagrams to have them sorted in the document
+		if (isBlockDefinitionDiagram(diagram)) {
+			weight = 1;
+		} else if (isInternalBlockDiagram(diagram)) {
+			weight = 2;
+		} else if (isStateMachineDiagram(diagram)) {
+			if (UMLUtil.getAppliedStereotype((Class) diagramOwner, ERROR_MODEL, true) != null) {
+				weight = 4;
+			} else {
+				weight = 3;
+			}
 		}
 
 		final CopyToImageUtil copyImageUtil = new CopyToImageUtil();
@@ -102,7 +127,7 @@ public class CHESSDiagramsGeneratorService {
 			} else if  (saveFilePath.endsWith("pdf")) {
 				copyImageUtil.copyToImage(diagram, imagePath, ImageFileFormat.PDF, new NullProgressMonitor(), PreferencesHint.USE_DEFAULTS);
 			}
-			return createDiagramDescriptor(diagramName, ownerName, hasComponentOwner);
+			return createDiagramDescriptor(diagramName, ownerName, hasComponentOwner, weight);
 		} catch (CoreException e) {
 			logger.error("Unable to create diagram " + diagramName);
 		}
@@ -135,16 +160,18 @@ public class CHESSDiagramsGeneratorService {
 //		}
 //	}
 
-	private DiagramDescriptor createDiagramDescriptor(String diagramName, String ownerName, boolean hasComponentOwner) {
+	private DiagramDescriptor createDiagramDescriptor(String diagramName, String ownerName, 
+			boolean hasComponentOwner, int weight) {
 		String saveFilePath = getComponentImageFilePath(diagramName);
 		logger.debug("saveFilePath: " + saveFilePath);
 		final DiagramDescriptor diagramDescriptor = // diagramGeneratorService.
-				createDiagramDescriptorWithImageFileUrl(diagramName, saveFilePath, ownerName, hasComponentOwner);
+				createDiagramDescriptorWithImageFileUrl(diagramName, saveFilePath, ownerName, 
+						hasComponentOwner, weight);
 		return diagramDescriptor;
 	}
 
 	private DiagramDescriptor createDiagramDescriptorWithImageFileUrl(String diagramName, String saveFilePath,
-			String owner, boolean hasComponentOwner) {
+			String owner, boolean hasComponentOwner, int weight) {
 		DiagramDescriptor diagramDescriptor = new DiagramDescriptor();
 		diagramDescriptor.name = diagramName;
 		diagramDescriptor.hasComponentOwner = hasComponentOwner;
@@ -159,14 +186,15 @@ public class CHESSDiagramsGeneratorService {
 		}
 
 		diagramDescriptor.url = FilenameUtils.getName(diagramFileName);
-
+		diagramDescriptor.weight = weight;
+		
 		return diagramDescriptor;
 	}
 
 	public Collection<Diagram> getDiagrams() {
 
 		NotationModel notationModel = NotationUtils.getNotationModel();
-		Set<Diagram> diagrams = getIBD_BDD_Diagrams(notationModel.getResources());
+		Set<Diagram> diagrams = getChessDiagrams(notationModel.getResources());
 		System.out.println("diagrams");
 		for (Diagram c : diagrams) {
 			System.out.println(c);
@@ -190,8 +218,7 @@ public class CHESSDiagramsGeneratorService {
 		return diagrams;
 	}
 
-	private Set<Diagram> getIBD_BDD_Diagrams(Set<Resource> resources) {
-
+	private Set<Diagram> getChessDiagrams(Set<Resource> resources) {
 		Set<Diagram> diagrams = new HashSet<Diagram>();
 
 		for (Resource current : resources) {
@@ -200,7 +227,9 @@ public class CHESSDiagramsGeneratorService {
 					Diagram diagram = (Diagram) element;
 					System.out.println("diagram type: " + diagram.getType());
 
-					if (isBlockDefinitionDiagram(diagram) || isInternalBlockDiagram(diagram)) {
+					if (isBlockDefinitionDiagram(diagram) || 
+							isInternalBlockDiagram(diagram) ||
+							isStateMachineDiagram(diagram)) {
 						diagrams.add((Diagram) element);
 					}
 				}
@@ -219,6 +248,13 @@ public class CHESSDiagramsGeneratorService {
 
 	private boolean isInternalBlockDiagram(Diagram diagram) {
 		if (diagram.getType().compareTo(IBD) == 0) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isStateMachineDiagram(Diagram diagram) {
+		if (diagram.getType().compareTo(STMD) == 0) {
 			return true;
 		}
 		return false;

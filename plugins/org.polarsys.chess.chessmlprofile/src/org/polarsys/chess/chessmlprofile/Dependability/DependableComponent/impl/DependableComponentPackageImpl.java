@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.papyrus.MARTE.MARTEPackage;
+import org.eclipse.papyrus.MARTE.MARTE_AnalysisModel.GQAM.GQAMPackage;
 import org.eclipse.papyrus.MARTE_Library.BasicNFP_Types.BasicNFP_TypesPackage;
 import org.eclipse.papyrus.MARTE_Library.GRM_BasicTypes.GRM_BasicTypesPackage;
 import org.eclipse.papyrus.MARTE_Library.MARTE_DataTypes.MARTE_DataTypesPackage;
@@ -43,6 +44,7 @@ import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Error
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Propagation;
+import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.Threat;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ThreatType;
 import org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType;
@@ -133,6 +135,13 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 * @generated
 	 */
 	private EClass threatEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass resultElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -507,6 +516,87 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getResultElement() {
+		return resultElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getResultElement_Type() {
+		return (EAttribute)resultElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getResultElement_Date() {
+		return (EAttribute)resultElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getResultElement_Conditions() {
+		return (EAttribute)resultElementEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getResultElement_Valid() {
+		return (EAttribute)resultElementEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getResultElement_File() {
+		return (EAttribute)resultElementEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getResultElement_Root() {
+		return (EReference)resultElementEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getResultElement_ContextAnalysis() {
+		return (EReference)resultElementEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getResultElement_Base_Component() {
+		return (EReference)resultElementEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getErrorModelBehavior() {
 		return errorModelBehaviorEClass;
 	}
@@ -663,6 +753,16 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		createEReference(threatEClass, THREAT__BASE_SLOT);
 		createEAttribute(threatEClass, THREAT__KIND);
 
+		resultElementEClass = createEClass(RESULT_ELEMENT);
+		createEAttribute(resultElementEClass, RESULT_ELEMENT__TYPE);
+		createEAttribute(resultElementEClass, RESULT_ELEMENT__DATE);
+		createEAttribute(resultElementEClass, RESULT_ELEMENT__CONDITIONS);
+		createEAttribute(resultElementEClass, RESULT_ELEMENT__VALID);
+		createEAttribute(resultElementEClass, RESULT_ELEMENT__FILE);
+		createEReference(resultElementEClass, RESULT_ELEMENT__ROOT);
+		createEReference(resultElementEClass, RESULT_ELEMENT__CONTEXT_ANALYSIS);
+		createEReference(resultElementEClass, RESULT_ELEMENT__BASE_COMPONENT);
+
 		propagationEClass = createEClass(PROPAGATION);
 		createEAttribute(propagationEClass, PROPAGATION__PROB);
 		createEAttribute(propagationEClass, PROPAGATION__DELAY);
@@ -711,8 +811,10 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		UMLPackage theUMLPackage = (UMLPackage)EPackage.Registry.INSTANCE.getEPackage(UMLPackage.eNS_URI);
 		FailurePropagationPackage theFailurePropagationPackage = (FailurePropagationPackage)EPackage.Registry.INSTANCE.getEPackage(FailurePropagationPackage.eNS_URI);
 		ThreatsPropagationPackage theThreatsPropagationPackage = (ThreatsPropagationPackage)EPackage.Registry.INSTANCE.getEPackage(ThreatsPropagationPackage.eNS_URI);
-		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 		TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
+		MARTE_PrimitivesTypesPackage theMARTE_PrimitivesTypesPackage = (MARTE_PrimitivesTypesPackage)EPackage.Registry.INSTANCE.getEPackage(MARTE_PrimitivesTypesPackage.eNS_URI);
+		GQAMPackage theGQAMPackage = (GQAMPackage)EPackage.Registry.INSTANCE.getEPackage(GQAMPackage.eNS_URI);
+		BasicNFP_TypesPackage theBasicNFP_TypesPackage = (BasicNFP_TypesPackage)EPackage.Registry.INSTANCE.getEPackage(BasicNFP_TypesPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -745,6 +847,16 @@ public class DependableComponentPackageImpl extends EPackageImpl implements Depe
 		initEReference(getThreat_Base_Port(), theUMLPackage.getPort(), null, "base_Port", null, 1, 1, Threat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getThreat_Base_Slot(), theUMLPackage.getSlot(), null, "base_Slot", null, 1, 1, Threat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getThreat_Kind(), this.getThreatType(), "kind", null, 1, 1, Threat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(resultElementEClass, ResultElement.class, "ResultElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getResultElement_Type(), theTypesPackage.getString(), "type", null, 1, 1, ResultElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getResultElement_Date(), theMARTE_PrimitivesTypesPackage.getDateTime(), "date", null, 1, 1, ResultElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getResultElement_Conditions(), theTypesPackage.getString(), "conditions", null, 1, 1, ResultElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getResultElement_Valid(), theTypesPackage.getBoolean(), "valid", null, 1, 1, ResultElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEAttribute(getResultElement_File(), theTypesPackage.getString(), "file", null, 1, 1, ResultElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getResultElement_Root(), theUMLPackage.getClass_(), null, "root", null, 1, 1, ResultElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getResultElement_ContextAnalysis(), theGQAMPackage.getGaAnalysisContext(), null, "contextAnalysis", null, 1, 1, ResultElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getResultElement_Base_Component(), theUMLPackage.getComponent(), null, "base_Component", null, 1, 1, ResultElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(propagationEClass, Propagation.class, "Propagation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPropagation_Prob(), theBasicNFP_TypesPackage.getNFP_Real(), "prob", null, 1, 1, Propagation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);

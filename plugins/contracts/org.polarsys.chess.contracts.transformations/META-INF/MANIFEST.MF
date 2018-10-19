@@ -39,13 +39,19 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.papyrus.infra.widgets.toolbox,
  org.eclipse.papyrus.emf.facet.custom.metamodel,
  eu.fbk.eclipse.standardTools.XSapExecService,
- org.polarsys.chess.smvExporter
+ org.polarsys.chess.smvExporter,
+ org.eclipse.papyrus.uml.tools,
+ org.eclipse.sirius,
+ org.eclipse.sirius.ui,
+ org.eclipse.gmf.runtime.diagram.ui,
+ eu.fbk.tools.adapter.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true
 Export-Package: org.polarsys.chess.contracts.transformations,
  org.polarsys.chess.contracts.transformations.main,
- org.polarsys.chess.contracts.transformations.service
+ org.polarsys.chess.contracts.transformations.service,
+ org.polarsys.chess.contracts.transformations.utils
 Bundle-ClassPath: .
 Import-Package: eu.fbk.eclipse.standardtools.utils.ui.utils,
  org.eclipse.m2m.internal.qvt.oml.emf.util,

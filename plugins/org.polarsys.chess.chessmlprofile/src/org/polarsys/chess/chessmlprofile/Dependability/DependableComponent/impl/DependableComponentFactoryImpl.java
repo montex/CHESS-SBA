@@ -67,6 +67,7 @@ public class DependableComponentFactoryImpl extends EFactoryImpl implements Depe
 			case DependableComponentPackage.DEPENDABLE_COMPONENT: return createDependableComponent();
 			case DependableComponentPackage.ERROR_MODEL_BEHAVIOR: return createErrorModelBehavior();
 			case DependableComponentPackage.THREAT: return createThreat();
+			case DependableComponentPackage.RESULT_ELEMENT: return createResultElement();
 			case DependableComponentPackage.PROPAGATION: return createPropagation();
 			case DependableComponentPackage.FAILURE_MODE: return createFailureMode();
 			default:
@@ -210,6 +211,16 @@ public class DependableComponentFactoryImpl extends EFactoryImpl implements Depe
 	public Threat createThreat() {
 		ThreatImpl threat = new ThreatImpl();
 		return threat;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ResultElement createResultElement() {
+		ResultElementImpl resultElement = new ResultElementImpl();
+		return resultElement;
 	}
 
 	/**

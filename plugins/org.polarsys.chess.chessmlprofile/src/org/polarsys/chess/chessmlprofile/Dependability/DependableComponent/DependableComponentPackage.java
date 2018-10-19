@@ -128,7 +128,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getFailureMode()
 	 * @generated
 	 */
-	int FAILURE_MODE = 5;
+	int FAILURE_MODE = 6;
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureModes <em>Failure Modes</em>}'.
@@ -360,6 +360,97 @@ public interface DependableComponentPackage extends EPackage {
 	int THREAT_FEATURE_COUNT = 4;
 
 	/**
+	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ResultElementImpl <em>Result Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ResultElementImpl
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getResultElement()
+	 * @generated
+	 */
+	int RESULT_ELEMENT = 4;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_ELEMENT__TYPE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Date</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_ELEMENT__DATE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Conditions</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_ELEMENT__CONDITIONS = 2;
+
+	/**
+	 * The feature id for the '<em><b>Valid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_ELEMENT__VALID = 3;
+
+	/**
+	 * The feature id for the '<em><b>File</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_ELEMENT__FILE = 4;
+
+	/**
+	 * The feature id for the '<em><b>Root</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_ELEMENT__ROOT = 5;
+
+	/**
+	 * The feature id for the '<em><b>Context Analysis</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_ELEMENT__CONTEXT_ANALYSIS = 6;
+
+	/**
+	 * The feature id for the '<em><b>Base Component</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_ELEMENT__BASE_COMPONENT = 7;
+
+	/**
+	 * The number of structural features of the '<em>Result Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_ELEMENT_FEATURE_COUNT = 8;
+
+	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.PropagationImpl <em>Propagation</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -367,7 +458,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getPropagation()
 	 * @generated
 	 */
-	int PROPAGATION = 4;
+	int PROPAGATION = 5;
 
 	/**
 	 * The feature id for the '<em><b>Prob</b></em>' attribute.
@@ -495,7 +586,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getAttackType()
 	 * @generated
 	 */
-	int ATTACK_TYPE = 6;
+	int ATTACK_TYPE = 7;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.VulnerabilityType <em>Vulnerability Type</em>}' enum.
@@ -505,7 +596,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getVulnerabilityType()
 	 * @generated
 	 */
-	int VULNERABILITY_TYPE = 7;
+	int VULNERABILITY_TYPE = 8;
 
 	/**
 	 * The meta object id for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ThreatType <em>Threat Type</em>}' enum.
@@ -515,7 +606,7 @@ public interface DependableComponentPackage extends EPackage {
 	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getThreatType()
 	 * @generated
 	 */
-	int THREAT_TYPE = 8;
+	int THREAT_TYPE = 9;
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.FailureMode <em>Failure Mode</em>}'.
@@ -730,6 +821,104 @@ public interface DependableComponentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getThreat_Kind();
+
+	/**
+	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement <em>Result Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Result Element</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement
+	 * @generated
+	 */
+	EClass getResultElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getType()
+	 * @see #getResultElement()
+	 * @generated
+	 */
+	EAttribute getResultElement_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getDate <em>Date</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Date</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getDate()
+	 * @see #getResultElement()
+	 * @generated
+	 */
+	EAttribute getResultElement_Date();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getConditions <em>Conditions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Conditions</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getConditions()
+	 * @see #getResultElement()
+	 * @generated
+	 */
+	EAttribute getResultElement_Conditions();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#isValid <em>Valid</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Valid</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#isValid()
+	 * @see #getResultElement()
+	 * @generated
+	 */
+	EAttribute getResultElement_Valid();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getFile <em>File</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>File</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getFile()
+	 * @see #getResultElement()
+	 * @generated
+	 */
+	EAttribute getResultElement_File();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getRoot <em>Root</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Root</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getRoot()
+	 * @see #getResultElement()
+	 * @generated
+	 */
+	EReference getResultElement_Root();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getContextAnalysis <em>Context Analysis</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Context Analysis</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getContextAnalysis()
+	 * @see #getResultElement()
+	 * @generated
+	 */
+	EReference getResultElement_ContextAnalysis();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getBase_Component <em>Base Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Base Component</em>'.
+	 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ResultElement#getBase_Component()
+	 * @see #getResultElement()
+	 * @generated
+	 */
+	EReference getResultElement_Base_Component();
 
 	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.ErrorModelBehavior <em>Error Model Behavior</em>}'.
@@ -1096,6 +1285,80 @@ public interface DependableComponentPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute THREAT__KIND = eINSTANCE.getThreat_Kind();
+
+		/**
+		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ResultElementImpl <em>Result Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ResultElementImpl
+		 * @see org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.DependableComponentPackageImpl#getResultElement()
+		 * @generated
+		 */
+		EClass RESULT_ELEMENT = eINSTANCE.getResultElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESULT_ELEMENT__TYPE = eINSTANCE.getResultElement_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Date</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESULT_ELEMENT__DATE = eINSTANCE.getResultElement_Date();
+
+		/**
+		 * The meta object literal for the '<em><b>Conditions</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESULT_ELEMENT__CONDITIONS = eINSTANCE.getResultElement_Conditions();
+
+		/**
+		 * The meta object literal for the '<em><b>Valid</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESULT_ELEMENT__VALID = eINSTANCE.getResultElement_Valid();
+
+		/**
+		 * The meta object literal for the '<em><b>File</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESULT_ELEMENT__FILE = eINSTANCE.getResultElement_File();
+
+		/**
+		 * The meta object literal for the '<em><b>Root</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RESULT_ELEMENT__ROOT = eINSTANCE.getResultElement_Root();
+
+		/**
+		 * The meta object literal for the '<em><b>Context Analysis</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RESULT_ELEMENT__CONTEXT_ANALYSIS = eINSTANCE.getResultElement_ContextAnalysis();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Component</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RESULT_ELEMENT__BASE_COMPONENT = eINSTANCE.getResultElement_Base_Component();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.chessmlprofile.Dependability.DependableComponent.impl.ErrorModelBehaviorImpl <em>Error Model Behavior</em>}' class.
