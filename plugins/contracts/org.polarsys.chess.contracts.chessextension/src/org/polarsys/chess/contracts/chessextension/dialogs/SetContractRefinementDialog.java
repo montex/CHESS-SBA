@@ -398,7 +398,7 @@ public class SetContractRefinementDialog extends Dialog {
 			String res;
 			if (getLower() != null && getUpper() != null) {
 				if (getUpper().compareTo(getLower()) == 0) {
-					res = 1 + ".." + getUpper();
+					res = 0 + ".." + "("+getUpper()+"- 1)";
 				} else {
 					res = getLower() + ".." + getUpper();
 				}
