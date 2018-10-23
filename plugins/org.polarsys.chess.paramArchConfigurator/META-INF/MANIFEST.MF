@@ -21,3 +21,4 @@ Import-Package: org.apache.commons.lang3.tuple,
  org.eclipse.draw2d.geometry,
  org.eclipse.emf.ecore.resource,
  org.polarsys.chess.chessmlprofile.ParameterizedArchitecture
+Bundle-Vendor: Fondazione Bruno Kessler

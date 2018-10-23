@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: TradeoffAnalysis
+Bundle-SymbolicName: org.polarsys.chess.tradeoffAnalysis;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Fondazione Bruno Kessler
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.ui,
+ eu.fbk.eclipse.standardtools.utils,
+ org.eclipse.core.runtime,
+ org.eclipse.uml2.uml,
+ org.polarsys.chess.contracts.profile,
+ org.eclipse.emf.common,
+ eu.fbk.eclipse.standardtools.ExecOcraCommands,
+ org.polarsys.chess.service,
+ eu.fbk.eclipse.standardtools.ModelTranslatorToOcra,
+ org.polarsys.chess.chessmlprofile,
+ eu.fbk.eclipse.standardtools.diagram
+Import-Package: org.polarsys.chess.service.gui.utils
