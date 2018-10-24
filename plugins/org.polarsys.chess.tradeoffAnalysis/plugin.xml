@@ -40,5 +40,16 @@
             name="Trade-off Analysis">
       </command>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="org.polarsys.chess.tradeoffAnalysis.views.TradeoffView"
+            icon="icons/t2.png"
+            id="org.polarsys.chess.tradeoffAnalysis.views.TradeoffView"
+            name="TradeoffView"
+            restorable="true">
+      </view>
+   </extension>
 
 </plugin>

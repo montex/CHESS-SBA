@@ -414,8 +414,8 @@ public class ContractEntityUtil {
 		boolean found = false;
 		while (itAttributes.hasNext() && !found) {
 			Property umlProperty = (Property) itAttributes.next();
-
-			if (umlProperty.getType().getName().equals(contractPropertyType)
+			
+			if (umlProperty.getType() != null && umlProperty.getType().getName().equals(contractPropertyType)
 					&& umlProperty.getAppliedStereotype(CONTRACT_PROP) != null) {
 				found = true;
 				umlContractProperty = umlProperty;

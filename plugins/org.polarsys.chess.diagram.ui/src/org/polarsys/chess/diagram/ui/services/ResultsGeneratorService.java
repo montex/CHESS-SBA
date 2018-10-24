@@ -77,7 +77,7 @@ import eu.fbk.tools.adapter.xsap.table.FmeaTable.Row;
  *
  */
 public class ResultsGeneratorService {
-	private static final Logger logger = Logger.getLogger(EntityUtil.class);
+	private static final Logger logger = Logger.getLogger(ResultsGeneratorService.class);
 	private AnalysisResultUtil analysisResultUtil = AnalysisResultUtil.getInstance();
 	private DialogUtil dialogUtil = DialogUtil.getInstance();
 	private boolean showAnalysisResults;

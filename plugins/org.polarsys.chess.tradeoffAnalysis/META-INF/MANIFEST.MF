@@ -15,5 +15,9 @@ Require-Bundle: org.eclipse.ui,
  org.polarsys.chess.service,
  eu.fbk.eclipse.standardtools.ModelTranslatorToOcra,
  org.polarsys.chess.chessmlprofile,
- eu.fbk.eclipse.standardtools.diagram
+ eu.fbk.eclipse.standardtools.diagram,
+ org.eclipse.ui.workbench,
+ org.eclipse.jface,
+ eu.fbk.tools.adapter.core,
+ org.apache.log4j
 Import-Package: org.polarsys.chess.service.gui.utils

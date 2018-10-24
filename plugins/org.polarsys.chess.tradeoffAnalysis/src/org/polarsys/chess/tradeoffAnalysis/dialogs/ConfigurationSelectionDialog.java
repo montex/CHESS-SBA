@@ -35,6 +35,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * A dialog that permits to select the type of check to compare and the configurations
  * that should be considered.
+ *
  * @author cristofo
  *
  */
