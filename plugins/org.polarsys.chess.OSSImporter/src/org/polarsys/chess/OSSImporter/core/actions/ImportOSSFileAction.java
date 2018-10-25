@@ -145,45 +145,38 @@ public class ImportOSSFileAction {
 	 * @return
 	 * @throws Exception
 	 */
-	/*private boolean isFunctionBehavior(Class owner, Expression expression) throws ImportException {
-		// TODO modify this method:
-		// e.g. String variableOwnerName =
-		// ossModelUtil.getNearestComponentName(variable); does not work if
-		// variable has as name something like this: name[0]
-		if (expression instanceof FullVariableId) {
-			final FullVariableId variable = (FullVariableId) expression;
-
-			Class component = null;
-
-			// Get the name of the owner of the behavior, if present find the
-			// type
-			String variableOwnerName = ossModelUtil.getNearestComponentName(variable);
-			if (variableOwnerName != null) {
-
-				// Retrieve the component instance containing the behavior
-				final Property behaviorOwner = entityUtil.getUmlComponentInstance(owner, variableOwnerName);
-
-				if (behaviorOwner.getType() != null) {
-					// Get the component type
-					final String typeName = behaviorOwner.getType().getName();
-
-					// Get the component object containing the definition of the
-					// port
-					component = dslTypeToComponent.get(typeName);
-				} else {
-					throw new ImportException(variableOwnerName + " has no type");
-				}
-			}
-
-			if (variableOwnerName == null) {
-
-				// I'm the owner of the functionBehavior
-				component = owner;
-			}
-			return (component.getOwnedBehavior(variable.getId().getName()) != null);
-		}
-		return false;
-	}*/
+	/*
+	 * private boolean isFunctionBehavior(Class owner, Expression expression)
+	 * throws ImportException { // TODO modify this method: // e.g. String
+	 * variableOwnerName = // ossModelUtil.getNearestComponentName(variable);
+	 * does not work if // variable has as name something like this: name[0] if
+	 * (expression instanceof FullVariableId) { final FullVariableId variable =
+	 * (FullVariableId) expression;
+	 * 
+	 * Class component = null;
+	 * 
+	 * // Get the name of the owner of the behavior, if present find the // type
+	 * String variableOwnerName =
+	 * ossModelUtil.getNearestComponentName(variable); if (variableOwnerName !=
+	 * null) {
+	 * 
+	 * // Retrieve the component instance containing the behavior final Property
+	 * behaviorOwner = entityUtil.getUmlComponentInstance(owner,
+	 * variableOwnerName);
+	 * 
+	 * if (behaviorOwner.getType() != null) { // Get the component type final
+	 * String typeName = behaviorOwner.getType().getName();
+	 * 
+	 * // Get the component object containing the definition of the // port
+	 * component = dslTypeToComponent.get(typeName); } else { throw new
+	 * ImportException(variableOwnerName + " has no type"); } }
+	 * 
+	 * if (variableOwnerName == null) {
+	 * 
+	 * // I'm the owner of the functionBehavior component = owner; } return
+	 * (component.getOwnedBehavior(variable.getId().getName()) != null); }
+	 * return false; }
+	 */
 
 	/**
 	 * Returns the first item contained in the tag
@@ -511,11 +504,6 @@ public class ImportOSSFileAction {
 			EList<Constraint> existingDelegationConstraints, HashMap<String, Boolean> mapConnectors,
 			HashMap<String, Boolean> mapDelegationContraintsToKeep, Class owner) throws ImportException {
 
-		// boolean isConnectionWithNoArray = false;
-		// boolean isEnumValue = false;
-
-		// CONNECTION processing
-		// final Connection connection = dslRefInstance.getConnection();
 		final FullVariableId variable = connection.getVariable();
 		final Expression constraint = connection.getConstraint();
 		final IterativeCondition iterCondition = connection.getIterativeCondition();
@@ -537,46 +525,20 @@ public class ImportOSSFileAction {
 			constraintPortName = ossModelUtil.getVariableIdAsString(((FullVariableId) constraint).getId(),
 					validateSerializedElements);
 
-			// partWithPortOfConstraint = getPartWithPort((FullVariableId)
-			// constraint, owner);
-
-			componentInstanceNameOfConstraint = ossModelUtil.getNearestComponentName((FullVariableId) constraint);
-			if (componentInstanceNameOfConstraint != null) {
-				componentInstanceOfConstraint = entityUtil.getUmlComponentInstance(owner,
-						componentInstanceNameOfConstraint);
-			}
-			if (componentInstanceOfConstraint == null) {
-				componentInstanceNameOfConstraint = ossModelUtil.getNearestComponentId((FullVariableId) constraint);
-				componentInstanceOfConstraint = entityUtil.getUmlComponentInstance(owner,
-						componentInstanceNameOfConstraint);
-			}
+			componentInstanceNameOfConstraint = ossModelUtil.getNearestComponentId((FullVariableId) constraint);
+			componentInstanceOfConstraint = entityUtil.getUmlComponentInstance(owner,
+					componentInstanceNameOfConstraint);
 
 			componentTypeOfConstraint = getPortOwner(componentInstanceOfConstraint, owner);
-			componentInstanceNameOfVariable = ossModelUtil.getNearestComponentName((FullVariableId) variable);
-			if (componentInstanceNameOfVariable != null) {
-				componentInstanceOfVariable = entityUtil.getUmlComponentInstance(owner,
-						componentInstanceNameOfVariable);
-			}
-			if (componentInstanceOfVariable == null) {
-				componentInstanceNameOfVariable = ossModelUtil.getNearestComponentId((FullVariableId) variable);
-				componentInstanceOfVariable = entityUtil.getUmlComponentInstance(owner,
-						componentInstanceNameOfVariable);
-			}
 
-			// partWithPortOfVariable = getPartWithPort((FullVariableId)
-			// variable, owner);
+			componentInstanceNameOfVariable = ossModelUtil.getNearestComponentId((FullVariableId) variable);
+			componentInstanceOfVariable = entityUtil.getUmlComponentInstance(owner, componentInstanceNameOfVariable);
+
 			componentTypeOfVariable = getPortOwner(componentInstanceOfVariable, owner);
 		}
 
 		if (connectorEndsExists(componentTypeOfConstraint, constraintPortName, componentTypeOfVariable,
-				variablePortName)
-		// && !isFunctionBehavior(owner, variable) && !isFunctionBehavior(owner,
-		// constraint)
-		) {
-
-			// isConnectionWithNoArray = true;
-			//String variablePortOwner = ossModelUtil.getNearestComponentName(variable);
-			//String constraintPortOwner = ossModelUtil.getNearestComponentName((FullVariableId) constraint);
+				variablePortName)) {
 
 			Connector connector = entityUtil.getExistingConnector(existingConnectors, componentInstanceNameOfVariable,
 					variablePortName, componentInstanceNameOfConstraint, constraintPortName);
@@ -596,15 +558,8 @@ public class ImportOSSFileAction {
 				addedElements.add(entityUtil.createUmlConnector(constraintPortName, componentInstanceOfConstraint,
 						componentTypeOfConstraint, variablePortName, componentInstanceOfVariable,
 						componentTypeOfVariable, owner));
-				// }
 			}
-		}
-		// if (!isConnectionWithNoArray || isEnumValue)
-		else {
-			// It could be a delegation constraint, check it
-			// if (// isEnumValue ||
-			// isDelegationConstraint(variable, constraint, iterCondition,
-			// owner))
+		} else {
 			{
 				logger.debug("isDelegationConstraint: "
 						+ ossModelUtil.getOssElementAsString(connection, validateSerializedElements, true));
@@ -657,6 +612,11 @@ public class ImportOSSFileAction {
 
 	private boolean connectorEndsExists(Class portOwnerOfConstraint, String constraintPortName,
 			Class portOwnerOfVariable, String variablePortName) {
+
+		logger.debug("portOwnerOfConstraint: " + portOwnerOfConstraint.getName());
+		logger.debug("constraintPortName: " + constraintPortName);
+		logger.debug("portOwnerOfVariable: " + portOwnerOfVariable.getName());
+		logger.debug("variablePortName: " + variablePortName);
 
 		return (portOwnerOfConstraint != null) && (constraintPortName != null) && (portOwnerOfVariable != null)
 				&& (variablePortName != null) && (portOwnerOfConstraint.getOwnedPort(constraintPortName, null) != null)
