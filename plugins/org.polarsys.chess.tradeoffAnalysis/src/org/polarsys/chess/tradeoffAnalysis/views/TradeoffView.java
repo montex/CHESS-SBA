@@ -150,7 +150,7 @@ public class TradeoffView extends ViewPart {
 
 		switch (colNumber) {
 		case 0:
-			column.setWidth(150);	// Configurations name
+			column.setWidth(200);	// Configurations name
 			break;
 		case 1:
 			column.setWidth(0);		// Hidden field for analysis name

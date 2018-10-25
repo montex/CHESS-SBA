@@ -245,7 +245,7 @@ public class TradeoffCommand extends AbstractJobCommand {
 					
 					// Prepare the names of the fixed columns
 					final List<String> labels = new ArrayList<String>();
-					labels.add("");	// The upper-left entry is empty
+					labels.add(configurationSelectionDialog.getCheckType());
 					labels.add("");	// Hidden field used to store analysis type
 					labels.add("");	// Hidden field used to store file path
 
