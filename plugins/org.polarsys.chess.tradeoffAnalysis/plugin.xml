@@ -45,9 +45,9 @@
       <view
             allowMultiple="false"
             class="org.polarsys.chess.tradeoffAnalysis.views.TradeoffView"
-            icon="icons/tradeoff.png"
+            icon="icons/trade-off.png"
             id="org.polarsys.chess.tradeoffAnalysis.views.TradeoffView"
-            name="TradeoffView"
+            name="Trade-off"
             restorable="true">
       </view>
    </extension>
