@@ -10,25 +10,29 @@
  ******************************************************************************/
 package org.polarsys.chess.tradeoffAnalysis.views;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.part.ViewPart;
-import org.polarsys.chess.tradeoffAnalysis.commands.TradeoffCommand.Row;
+import org.polarsys.chess.contracts.transformations.utils.AnalysisResultUtil;
+
+import eu.fbk.tools.adapter.ocra.CheckContractRefinement;
 
 /**
  * A View that contains a table used to show trade-off results of a certain analysis.
@@ -49,7 +53,21 @@ public class TradeoffView extends ViewPart {
 		parent.setLayout(layout);
 		createViewer(parent);
 	}
+	
+	/**
+	 * Shows the detailed result displaying the result file in a different view.
+	 * @param row the clicked row
+	 */
+	private void displayResult(Row row) {
+		if (row.getAnalysisName() != null && row.getResultFilePath() != null) {
+			AnalysisResultUtil.getInstance().showResult(CheckContractRefinement.FUNCTION_NAME, row.getResultFilePath());
+		}
+	}
 
+	/**
+	 * Creates the table viewer.
+	 * @param parent the Composite parent
+	 */
 	private void createViewer(Composite parent) {
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 
@@ -69,52 +87,28 @@ public class TradeoffView extends ViewPart {
 		gridData.horizontalAlignment = GridData.FILL;
 		viewer.getControl().setLayoutData(gridData);
 		
-		table.addListener(SWT.MouseDoubleClick, new Listener(){
-			@Override
-	        public void handleEvent(Event event){
-	            Point pt = new Point(event.x, event.y);
-	            TableItem item = table.getItem(pt);
-	            if(item != null) {
-	                for (int col = 0; col < table.getColumnCount(); col++) {
-	                    Rectangle rect = item.getBounds(col);
-	                    if (rect.contains(pt)) {
-	                        System.out.println("item clicked.");
-	                        System.out.println("column is " + col);
-	                    }
-	                }
+		// Add a listener to show the detailed results
+	    viewer.addDoubleClickListener(new IDoubleClickListener() {
+	        @Override
+	        public void doubleClick(DoubleClickEvent event) {
+	            final IStructuredSelection selection = (IStructuredSelection)event.getSelection();
+	            if( selection == null ) {
+	            	return;
+	            }
+
+	            final Object row = selection.getFirstElement();
+	            if (row instanceof Row) {
+	            	displayResult((Row) row);
 	            }
 	        }
 	    });
-		
-		
-		table.addListener(SWT.MouseDown, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-				Rectangle clientArea = table.getClientArea();
-				Point pt = new Point(event.x, event.y);
-				int index = table.getTopIndex();
-				while (index < table.getItemCount()) {
-					boolean visible = false;
-					TableItem item = table.getItem(index);
-					for (int i = 0; i < table.getColumnCount(); i++) {
-						Rectangle rect = item.getBounds(i);
-						if (rect.contains(pt)) {
-							System.out.println("Item " + index + "-" + i);
-						}
-						if (!visible && rect.intersects(clientArea)) {
-							visible = true;
-						}
-					}
-					if (!visible)
-						return;
-					index++;
-				}
-			}
-		});
-
 	}
 	
+	/**
+	 * Creates the columns given the labels.
+	 * @param viewer the TableViewer
+	 * @param labels the list of labels for the columns
+	 */
 	public void createColumns(TableViewer viewer, List<String> labels) {
 
 		// Remove the existing columns, if any
@@ -127,26 +121,51 @@ public class TradeoffView extends ViewPart {
 		createColumns(parent, viewer, labels);
 	}
 	
+	/**
+	 * Creates the columns given the labels.
+	 * @param parent the parent Composite
+	 * @param viewer the TableViewer
+	 * @param labels the list of labels for the columns
+	 */
 	private void createColumns(final Composite parent, final TableViewer viewer, List<String> labels) {
-
-		int index = 0;	// Counter for the columns
+		int columnNumber = 0;	// Counter for the columns
 		
 		for (String label : labels) {
-			final TableViewerColumn col = createTableViewerColumn(viewer, label, 150, index);		
-			col.setLabelProvider(new IndexedColumnLabelProvider(index++));
+			final TableViewerColumn col = createTableViewerColumn(viewer, label, columnNumber);		
+			col.setLabelProvider(new IndexedColumnLabelProvider(columnNumber++));
 		}
 	}
 
-	private TableViewerColumn createTableViewerColumn(TableViewer viewer, String title, 
-			int bound, final int colNumber) {
+	/**
+	 * Creates a column given its label.
+	 * @param viewer the TableViewer
+	 * @param label the name of the column
+	 * @param colNumber the number of the column
+	 * @return
+	 */
+	private TableViewerColumn createTableViewerColumn(TableViewer viewer, String label, final int colNumber) {
 		final TableViewerColumn viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
 		final TableColumn column = viewerColumn.getColumn();
 
-		column.setText(title);
-		column.setWidth(bound);
+		column.setText(label);
+
+		switch (colNumber) {
+		case 0:
+			column.setWidth(150);	// Configurations name
+			break;
+		case 1:
+			column.setWidth(0);		// Hidden field for analysis name
+			break;
+		case 2:
+			column.setWidth(0);		// Hidden field for file name
+			break;
+		default:
+			column.setWidth(200);	// Contracts name
+			break;
+		}
+		
 		column.setResizable(true);
 		column.setMoveable(true);
-		//column.addSelectionListener(getSelectionAdapter(column, colNumber));
 		return viewerColumn;
 	}
 
@@ -160,30 +179,108 @@ public class TradeoffView extends ViewPart {
 
 	/**
 	 * This is a new provider that returns different contents based on
-	 * the columns index.
+	 * the columns number.
 	 * 
 	 * @author cristofo
 	 *
 	 */
 	private class IndexedColumnLabelProvider extends ColumnLabelProvider {
-		private int index;
+		private int columnNumber;
+		Color redColor;
+		Color greenColor;
 
-		public IndexedColumnLabelProvider(int index) {
-			this.index = index;
+		/**
+		 * Creates a provider for the column and stores its number.
+		 * @param columnNumber the number of the column
+		 */
+		public IndexedColumnLabelProvider(int columnNumber) {
+			super();
+			this.columnNumber = columnNumber;
+			greenColor = Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN);
+		    redColor = Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED);
+		}
+		
+		@Override
+		public Color getForeground(Object element) {
+			final Row request = (Row) element;
+			if (columnNumber > 2) {
+				if (request.getResults().get(columnNumber - 3).equals("Success")) {
+					return greenColor;
+				} else if (request.getResults().get(columnNumber - 3).equals("NOT OK")) {
+					return redColor;
+				}
+			}
+			return super.getForeground(element);
 		}
 
 		@Override
 		public String getText(Object element) {
-			Row request = (Row) element;
-			if (index == 0) {
-				return request.getContractName();
-			} else if (index == 1) {
-				return request.getConcerns();
-			} else if (index > 1){			
-				return request.getResults().get(index - 2).getCheckResult();
+			final Row request = (Row) element;
+			if (columnNumber == 0) {
+				return request.getRowName();
+			} else if (columnNumber == 1) {
+				return request.getAnalysisName();
+			} else if (columnNumber == 2) {
+				return request.getResultFilePath();
+			} else if (columnNumber > 2){			
+				return request.getResults().get(columnNumber - 3);
 			} else {
 				return null;
 			}
 		}
 	}
+	
+	/**
+	 * Class that represent a single line of the table.
+	 * 
+	 * @author cristofo
+	 *
+	 */
+	public static class Row {
+		private String rowName;
+		private String analysisName;
+		private String resultFilePath;
+		private List<String> results;
+
+		/**
+		 * Constructs a new row with the given name (leftmost column).
+		 * @param rowName the name of the row
+		 */
+		public Row(String rowName) {
+			this.rowName = rowName;
+			results = new ArrayList<String>();
+		}
+		
+		public String getRowName() {
+			return rowName;
+		}
+
+		public void setRowName(String rowName) {
+			this.rowName = rowName;
+		}
+
+		public String getAnalysisName() {
+			return analysisName;
+		}
+
+		public void setAnalysisName(String analysisName) {
+			this.analysisName = analysisName;
+		}
+
+		public String getResultFilePath() {
+			return resultFilePath;
+		}
+
+		public void setResultFilePath(String resultFilePath) {
+			this.resultFilePath = resultFilePath;
+		}
+
+		public void addResult(String result) {
+			results.add(result);
+		}
+		
+		public List<String> getResults() {
+			return results;
+		}
+	}	
 }

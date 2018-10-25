@@ -34,6 +34,7 @@ import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.polarsys.chess.service.gui.utils.SelectionUtil;
 import org.polarsys.chess.tradeoffAnalysis.dialogs.ConfigurationSelectionDialog;
 import org.polarsys.chess.tradeoffAnalysis.views.TradeoffView;
+import org.polarsys.chess.tradeoffAnalysis.views.TradeoffView.Row;
 
 import eu.fbk.eclipse.standardtools.ExecOcraCommands.ui.services.OCRAExecService;
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.ui.services.OSSTranslatorServiceUI;
@@ -42,9 +43,9 @@ import eu.fbk.eclipse.standardtools.utils.ui.dialogs.MessageTimeModelDialog;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.DialogUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.ErrorsDialogUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.OCRADirectoryUtil;
+import eu.fbk.tools.adapter.ocra.CheckContractRefinement;
 import eu.fbk.tools.adapter.ocra.CheckContractResultBuilder;
 import eu.fbk.tools.adapter.ocra.OcraOutput;
-import eu.fbk.tools.adapter.results.CheckResult;
 import eu.fbk.tools.adapter.results.ContractCheckResult;
 import eu.fbk.tools.adapter.results.ModelCheckResult;
 
@@ -69,6 +70,7 @@ public class TradeoffCommand extends AbstractJobCommand {
 	private EList<InstantiatedArchitecture> configurations;
 	private boolean isDiscreteTime;
 	private File ossFile;
+	
 	public TradeoffCommand() {
 		super("Trade-off Analysis");
 	}
@@ -123,10 +125,7 @@ public class TradeoffCommand extends AbstractJobCommand {
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(false);
 		
 		// Generate the OSS file for the parametrized architecture
-		ossFile = exportArchitectureAsOssFile(isDiscreteTime, event, monitor);
-		
-//		workbench = PlatformUI.getWorkbench();
-//		activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+		ossFile = exportArchitectureAsOssFile(isDiscreteTime, event, monitor);		
 	}
 
 	/**
@@ -144,7 +143,7 @@ public class TradeoffCommand extends AbstractJobCommand {
 	}
 	
 	/**
-	 * Navigates the given component to the specified contract and retrieve the concens it addresses.
+	 * Navigates the given component to the specified contract and retrieves the concerns it addresses.
 	 * @param umlSelectedComponent the component to navigate
 	 * @param contractName the name of the contract to analyse
 	 * @return the concerns addressed
@@ -170,28 +169,21 @@ public class TradeoffCommand extends AbstractJobCommand {
 				}
 			}
 		}
-		
 		return concerns;
 	}
 	
 	/**
-	 * Takes the result of an analysis an creates an entry for the table.
+	 * Takes the result of an analysis an creates an entry row for the table.
+	 * @param index the number of configuration being parsed
 	 * @param analysisResult the analysis result
-	 * @param rows the results set
+	 * @param rows the row being populated
+	 * @param labels the list of column labels to be populated
+	 * @param concernsRow the concerns row to be populated
 	 */
-	private void processResult(AnalysisResult analysisResult, List<Row> rows) {
-		
-		
-		// devo trovare il component type che e' uguale alla mia root e controllare quei contratti
-		// dove prendo la root, o meglio il tipo di root?
-		//umlSelectedComponent! devo poi navigarla e cercare i tipi di contratto
-		
-		
-		umlSelectedComponent.getName();
-		
-		
-		System.out.println("File to open = " + analysisResult.getResultFilePath());
-		
+	private void processResult(int index, AnalysisResult analysisResult, Row row, 
+			List<String> labels, Row concernsRow) {
+				
+		// Open the file containing the results
 		final File resultFile;
 		try {
 			resultFile = new File(analysisResult.getResultFilePath());
@@ -201,6 +193,7 @@ public class TradeoffCommand extends AbstractJobCommand {
 			return;
 		}
 
+		// Parse the results file
 		final CheckContractResultBuilder resultBuilder = new CheckContractResultBuilder();
 		final OcraOutput ocraOutput = resultBuilder.unmarshalResult(resultFile);
 		if(ocraOutput == null || ocraOutput.getOcraResult() == null || ocraOutput.getOcraResult().isEmpty()) {
@@ -221,68 +214,65 @@ public class TradeoffCommand extends AbstractJobCommand {
 				// Check only the contracts of the root component
 				if(result.getComponentType().equals(umlSelectedComponent.getName())) {
 					String contractName = result.getContractName();
-					String checkResult = result.getFailed()? "NOT OK": "Success";
 					
-					// Ho i dati del contratto, lo devo cercare nella root per trovare i concerns
-					final String concerns = getConcerns(umlSelectedComponent, contractName);
-					// lo devo cercare in rows per aggiornarlo
+					// If the configuration is the first, populate also labels and concerns
+					if (index == 0) {
+						labels.add(contractName);
+						concernsRow.addResult(getConcerns(umlSelectedComponent, contractName));
+					}
 					
-					System.out.println("\ncontract = " + contractName);
-					System.out.println("checkResult = " + checkResult);
-					System.out.println("concerns = " + concerns);					
-					
+					// Store the result of the check;
+					final String checkResult = result.getFailed()? "NOT OK": "Success";					
+					row.addResult(checkResult);
 				}
 			}
 		}	
 	}
-	
-	private void displayResult(List<AnalysisResult> results) {
-		
-		//TODO: qui ho coppie con nome della config e file XML
-		// i nomi delle colonne li genero passando tutti i risultati e tenendomi nome conf + colonna iniziale
-		// per ogni config devo parsare il file ed estrarre il nome dei contratti top-level e il loro valore
-		// il nome dei contratti genera una nuova riga, a cui aggiungo poi un campo successivo con il valore
-		// ad ogni configurazione devo andare ad arricchire tale elemento. L'elemento deve avere il risultato 
-		// ed anche il file di riferimento
-		
-		
-		final Display display = PlatformUI.getWorkbench().getDisplay();
-		display.asyncExec(() -> {
 
+	/**
+	 * Fills the table view with the given results.
+	 * @param results the results of the analyses
+	 */
+	private void displayResult(List<AnalysisResult> results) {
+		final Display display = PlatformUI.getWorkbench().getDisplay();
+		
+		display.asyncExec(() -> {
 			try {
 				final TradeoffView viewPart = (TradeoffView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().
 						getActivePage().showView(TradeoffView.ID, null, IWorkbenchPage.VIEW_VISIBLE);
 
 				if (viewPart != null) {
 					
-					// Compute the names of the columns
+					// Prepare the names of the fixed columns
 					final List<String> labels = new ArrayList<String>();
-					labels.add("Top-level contract");	// The first column name
-					labels.add("Concerns");	// The second column name
+					labels.add("");	// The upper-left entry is empty
+					labels.add("");	// Hidden field used to store analysis type
+					labels.add("");	// Hidden field used to store file path
+
+					// The rows for the table
+					final List<Row> rows = new ArrayList<Row>();
+					
+					// First row is for concerns, will be completed later
+					final Row concernsRow = new Row("Concerns");
+					rows.add(concernsRow);
+					
+					int index = 0;
 					for (AnalysisResult analysisResult : results) {
-						labels.add(analysisResult.getConfigurationName());
+						
+						// Create a row foreach analysis
+						final Row configuration = new Row(analysisResult.getConfigurationName());
+						rows.add(configuration);
+						configuration.setAnalysisName(checkType);
+						configuration.setResultFilePath(analysisResult.getResultFilePath());
+						
+						processResult(index++, analysisResult, configuration, labels, concernsRow);
+						
 					}
 					
 					// Create the columns names for the table
 					viewPart.createColumns(viewPart.getViewer(), labels);
-					
-					//TODO: qui devo creare la mia struttura di righe
-					final List<Row> rows = new ArrayList<Row>();
-					
-					for (AnalysisResult analysisResult : results) {
-						//TODO: per ogni config parso il file, estraggo un contratto top level alla volta
-						// cerco una row con quel contratto ed aggiungo il mio valore
-						// se non lo trovo, creo la riga (e devo trovare anche i concern)
-						processResult(analysisResult, rows);
-					}
-					
-					Row row = new Row("contratto1");
-					SingleResult result = new SingleResult("OK", "pippo");
-					row.addResult(result);
-					result = new SingleResult("NOT OK", "pippo");
-					row.addResult(result);
-					rows.add(row);
-					
+
+					// Check to see if everything is fine
 					final TableViewer tableViewer = viewPart.getViewer();
 					final IContentProvider provider = tableViewer.getContentProvider();
 					if (provider == null) {
@@ -307,7 +297,7 @@ public class TradeoffCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
-		if (!configurationSelectionDialog.goAhead()) {
+		if (!configurationSelectionDialog.goAhead() || ossFile == null) {
 			return;
 		}
 		
@@ -316,6 +306,9 @@ public class TradeoffCommand extends AbstractJobCommand {
 		
 		if (configurations.size() > 0) {
 			if (checkType.equals(ConfigurationSelectionDialog.CHECK_CONTRACT_REFINEMENT)) {
+				
+				// Change the type to the actual function name used
+				checkType = CheckContractRefinement.FUNCTION_NAME;
 				for (InstantiatedArchitecture configuration : configurations) {
 
 					final ArrayList<String> parametersList = 
@@ -341,7 +334,6 @@ public class TradeoffCommand extends AbstractJobCommand {
 						results.add(result);
 					}
 				}
-				
 				displayResult(results);
 			}
 		}
@@ -377,80 +369,4 @@ public class TradeoffCommand extends AbstractJobCommand {
 			this.resultFilePath = resultFilePath;
 		}
 	}
-	
-	/**
-	 * This class containts the result of an analysis and its result file.
-	 * 
-	 * @author cristofo
-	 *
-	 */
-	public class SingleResult {
-		private String checkResult;
-		private String resultFileName;
-		
-		public SingleResult(String checkResult, String resultFileName) {
-			this.checkResult = checkResult;
-			this.resultFileName = resultFileName;
-		}
-		
-		public String getCheckResult() {
-			return checkResult;
-		}
-		
-		public void setCheckResult(String checkResult) {
-			this.checkResult = checkResult;
-		}
-		
-		public String getResultFileName() {
-			return resultFileName;
-		}
-		
-		public void setResultFileName(String resultFileName) {
-			this.resultFileName = resultFileName;
-		}		
-	}
-	
-	/**
-	 * Class that represent a single line of the table.
-	 * 
-	 * @author cristofo
-	 *
-	 */
-	public class Row {
-		private String contractName;
-		private String concerns;
-		private List<SingleResult> results;
-		
-		public Row(String contractName) {
-			this.contractName = contractName;
-			results = new ArrayList<SingleResult>();
-		}
-		
-		public List<SingleResult> getResults() {
-			return results;
-		}
-		
-		public void addResult(SingleResult result) {
-			results.add(result);
-		}
-		
-		public String getContractName() {
-			return contractName;
-		}
-		
-		public void setContractName(String contractName) {
-			this.contractName = contractName;
-		}
-
-		public String getConcerns() {
-			return concerns;
-		}
-
-		public void setConcerns(String concerns) {
-			
-			//TODO: qui vanno estratti i concern e settati
-			this.concerns = concerns;
-		}
-	}
 }
-

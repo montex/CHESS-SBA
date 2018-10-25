@@ -19,5 +19,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.workbench,
  org.eclipse.jface,
  eu.fbk.tools.adapter.core,
- org.apache.log4j
+ org.apache.log4j,
+ org.polarsys.chess.contracts.transformations
 Import-Package: org.polarsys.chess.service.gui.utils

@@ -20,6 +20,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -44,7 +46,7 @@ public class ConfigurationSelectionDialog extends Dialog {
 	private Combo checkType;
 	private String selectedCheckType;
 	private Table configurationsTable;
-	EList<InstantiatedArchitecture> selectedConfigurations;
+	private EList<InstantiatedArchitecture> selectedConfigurations;
 	private Class rootComponent;
 	private boolean goAhead;
 
@@ -80,14 +82,12 @@ public class ConfigurationSelectionDialog extends Dialog {
 				}
 			}
 		}
-
 		goAhead = true;
-
 		super.okPressed();
 	}
 	
 	/**
-	 * Look for configurations that could be selected and populate the table.
+	 * Looks for configurations that could be selected and populate the table.
 	 * @param configurationsTable the table to be populated
 	 * @param rootComponent the root component where to look for configurations
 	 */
@@ -125,11 +125,34 @@ public class ConfigurationSelectionDialog extends Dialog {
 		labelConfigurations.setText("Available Configurations");
 
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		configurationsTable = new Table(validationContainer, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		configurationsTable.setLayoutData(gridData);
 		gridData.heightHint = 240;
-				
+		configurationsTable = new Table(validationContainer, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		configurationsTable.setLayoutData(gridData);		
 		populateConfigurationsTable(configurationsTable, rootComponent);
+		configurationsTable.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				// Enable the OK button only if two or more items are selected
+				int checked = 0;
+				final TableItem[] tableItems = configurationsTable.getItems();
+				for(TableItem item : tableItems) {
+					if(item.getChecked()) {
+						checked++;
+					}
+				}
+				if (checked > 1) {
+					getButton(IDialogConstants.OK_ID).setEnabled(true);
+				} else {
+					getButton(IDialogConstants.OK_ID).setEnabled(false);
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
 		
 		return container;
 	}
@@ -138,6 +161,9 @@ public class ConfigurationSelectionDialog extends Dialog {
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		
+		// Start with the OK button disabled, it will be enabled only if two or mode configurations are selected
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
 	}
 
 	@Override
@@ -148,7 +174,6 @@ public class ConfigurationSelectionDialog extends Dialog {
 	@Override
 	protected void cancelPressed() {
 		goAhead = false;
-
 		super.cancelPressed();
 	}
 
