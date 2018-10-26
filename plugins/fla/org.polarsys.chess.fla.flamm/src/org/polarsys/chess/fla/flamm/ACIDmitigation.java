@@ -29,13 +29,13 @@ import org.polarsys.chess.fla.flamm.FailureTypes.I_mitigation;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.fla.flamm.ACIDmitigation#getA <em>A</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.ACIDmitigation#getC <em>C</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.ACIDmitigation#getI <em>I</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.ACIDmitigation#getD <em>D</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.fla.flamm.FlammPackage#getACIDmitigation()
  * @model kind="class"

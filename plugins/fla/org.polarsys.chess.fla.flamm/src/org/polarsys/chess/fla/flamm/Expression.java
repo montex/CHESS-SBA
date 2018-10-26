@@ -32,11 +32,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.fla.flamm.Expression#getPort <em>Port</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Expression#getFailures <em>Failures</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.fla.flamm.FlammPackage#getExpression()
  * @model kind="class"

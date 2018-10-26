@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:FailureTypes="http://www.polarsys.org/chess/fla/flamm/FailureTypes" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:flamm="http://www.polarsys.org/chess/fla/flamm" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ecore:nsPrefix="flamm" ecore:package="org.polarsys.chess.fla.flamm" targetNamespace="http://www.polarsys.org/chess/fla/flamm">
+  <xsd:import namespace="http://www.polarsys.org/chess/fla/flamm/FailureTypes" schemaLocation="flamm.FailureTypes.xsd"/>
+  <xsd:import namespace="http://www.eclipse.org/emf/2002/Ecore" schemaLocation="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.xsd"/>
+  <xsd:element ecore:ignore="true" name="NamedElement" type="flamm:NamedElement"/>
+  <xsd:element ecore:ignore="true" name="FlaBehaviour" type="flamm:FlaBehaviour"/>
+  <xsd:element ecore:ignore="true" name="Component" type="flamm:Component"/>
+  <xsd:element ecore:ignore="true" name="CompositeComponent" type="flamm:CompositeComponent"/>
+  <xsd:element ecore:ignore="true" name="SimpleComponent" type="flamm:SimpleComponent"/>
+  <xsd:element ecore:ignore="true" name="Port" type="flamm:Port"/>
+  <xsd:element ecore:ignore="true" name="Connection" type="flamm:Connection"/>
+  <xsd:element ecore:ignore="true" name="Rule" type="flamm:Rule"/>
+  <xsd:element ecore:ignore="true" name="Expression" type="flamm:Expression"/>
+  <xsd:element ecore:ignore="true" name="Failure" type="flamm:Failure"/>
+  <xsd:element ecore:ignore="true" name="ACIDavoidable" type="flamm:ACIDavoidable"/>
+  <xsd:element ecore:ignore="true" name="ACIDmitigation" type="flamm:ACIDmitigation"/>
+  <xsd:complexType name="NamedElement">
+    <xsd:attribute name="id" type="ecore:EString" use="required"/>
+    <xsd:attribute name="name" type="ecore:EString" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType abstract="true" ecore:interface="true" name="FlaBehaviour">
+    <xsd:annotation>
+      <xsd:appinfo ecore:key="operations" source="http://www.eclipse.org/emf/2002/Ecore">
+        <operation name="propagateFailures"/>
+        <operation name="initialize">
+          <parameter lowerBound="1" name="initNoFailure" type="ecore:EBoolean"/>
+        </operation>
+      </xsd:appinfo>
+    </xsd:annotation>
+  </xsd:complexType>
+  <xsd:complexType abstract="true" ecore:implements="flamm:FlaBehaviour" name="Component">
+    <xsd:complexContent>
+      <xsd:extension base="flamm:NamedElement">
+        <xsd:sequence>
+          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="inputPorts" type="flamm:Port"/>
+          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="outputPorts" type="flamm:Port"/>
+        </xsd:sequence>
+        <xsd:attribute ecore:opposite="components" ecore:reference="flamm:CompositeComponent" name="parent" type="xsd:anyURI"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="CompositeComponent">
+    <xsd:complexContent>
+      <xsd:extension base="flamm:Component">
+        <xsd:sequence>
+          <xsd:element ecore:opposite="parent" ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="components" type="flamm:Component"/>
+          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="connections" type="flamm:Connection"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="SimpleComponent">
+    <xsd:complexContent>
+      <xsd:extension base="flamm:Component">
+        <xsd:sequence>
+          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="rules" type="flamm:Rule"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Port">
+    <xsd:annotation>
+      <xsd:appinfo ecore:key="operations" source="http://www.eclipse.org/emf/2002/Ecore">
+        <operation name="propagateFailures"/>
+        <operation name="initialize"/>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="flamm:NamedElement">
+        <xsd:sequence>
+          <xsd:element ecore:ordered="false" ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="failures" type="flamm:Failure"/>
+          <xsd:element ecore:ordered="false" ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="newFailures" type="flamm:Failure"/>
+        </xsd:sequence>
+        <xsd:attribute ecore:reference="flamm:Port" name="connectedPorts">
+          <xsd:simpleType>
+            <xsd:list itemType="xsd:anyURI"/>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute ecore:reference="flamm:Component" name="owner" type="xsd:anyURI" use="required"/>
+        <xsd:attribute ecore:opposite="to" ecore:reference="flamm:Connection" name="incomingConnections" type="xsd:anyURI" use="required"/>
+        <xsd:attribute ecore:opposite="from" ecore:reference="flamm:Connection" name="outgoingConnections" type="xsd:anyURI" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Connection">
+    <xsd:complexContent>
+      <xsd:extension base="flamm:FlaBehaviour">
+        <xsd:attribute ecore:opposite="outgoingConnections" ecore:reference="flamm:Port" name="from" type="xsd:anyURI" use="required"/>
+        <xsd:attribute ecore:opposite="incomingConnections" ecore:reference="flamm:Port" name="to" type="xsd:anyURI" use="required"/>
+        <xsd:attribute ecore:reference="flamm:Rule" name="rules">
+          <xsd:simpleType>
+            <xsd:list itemType="xsd:anyURI"/>
+          </xsd:simpleType>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Rule">
+    <xsd:sequence>
+      <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="inputExpression" type="flamm:Expression"/>
+      <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="outputExpression" type="flamm:Expression"/>
+    </xsd:sequence>
+    <xsd:attribute default="-1" ecore:changeable="false" ecore:lowerBound="1" ecore:transient="true" ecore:unsettable="false" name="specificity" type="ecore:EInt"/>
+  </xsd:complexType>
+  <xsd:complexType name="Expression">
+    <xsd:sequence>
+      <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="failures" type="flamm:Failure"/>
+    </xsd:sequence>
+    <xsd:attribute ecore:reference="flamm:Port" name="port" type="xsd:anyURI" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="Failure">
+    <xsd:sequence>
+      <xsd:element ecore:resolveProxies="true" minOccurs="0" name="acidAvoidable" type="flamm:ACIDavoidable"/>
+      <xsd:element ecore:resolveProxies="true" minOccurs="0" name="acidMitigation" type="flamm:ACIDmitigation"/>
+    </xsd:sequence>
+    <xsd:attribute ecore:unsettable="false" name="type" type="FailureTypes:FailureType" use="required"/>
+    <xsd:attribute name="id" type="ecore:EString"/>
+    <xsd:attribute ecore:reference="flamm:Failure" name="previousFailures">
+      <xsd:simpleType>
+        <xsd:list itemType="xsd:anyURI"/>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+  <xsd:complexType name="ACIDavoidable">
+    <xsd:attribute ecore:unsettable="false" name="a" type="FailureTypes:A_avoidable"/>
+    <xsd:attribute ecore:unsettable="false" name="c" type="FailureTypes:C_avoidable"/>
+    <xsd:attribute ecore:unsettable="false" name="i" type="FailureTypes:I_avoidable"/>
+    <xsd:attribute ecore:unsettable="false" name="d" type="FailureTypes:D_avoidable"/>
+  </xsd:complexType>
+  <xsd:complexType name="ACIDmitigation">
+    <xsd:attribute ecore:unsettable="false" name="a" type="FailureTypes:A_mitigation"/>
+    <xsd:attribute ecore:unsettable="false" name="c" type="FailureTypes:C_mitigation"/>
+    <xsd:attribute ecore:unsettable="false" name="i" type="FailureTypes:I_mitigation"/>
+    <xsd:attribute ecore:unsettable="false" name="d" type="FailureTypes:D_mitigation"/>
+  </xsd:complexType>
+</xsd:schema>

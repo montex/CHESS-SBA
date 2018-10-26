@@ -26,11 +26,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.fla.flamm.NamedElement#getId <em>Id</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.NamedElement#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.fla.flamm.FlammPackage#getNamedElement()
  * @model kind="class"

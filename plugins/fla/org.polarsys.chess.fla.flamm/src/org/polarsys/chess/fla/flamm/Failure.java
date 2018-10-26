@@ -33,14 +33,17 @@ import org.polarsys.chess.fla.flamm.FailureTypes.FailureType;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.fla.flamm.Failure#getType <em>Type</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Failure#getId <em>Id</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Failure#getAcidAvoidable <em>Acid Avoidable</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Failure#getAcidMitigation <em>Acid Mitigation</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Failure#getPreviousFailures <em>Previous Failures</em>}</li>
+ *   <li>{@link org.polarsys.chess.fla.flamm.Failure#getSpecialization <em>Specialization</em>}</li>
+ *   <li>{@link org.polarsys.chess.fla.flamm.Failure#getVulnerability <em>Vulnerability</em>}</li>
+ *   <li>{@link org.polarsys.chess.fla.flamm.Failure#getAttack <em>Attack</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.fla.flamm.FlammPackage#getFailure()
  * @model kind="class"
@@ -124,6 +127,66 @@ public class Failure extends MinimalEObjectImpl.Container implements EObject {
 	 * @ordered
 	 */
 	protected EList<Failure> previousFailures;
+
+	/**
+	 * The default value of the '{@link #getSpecialization() <em>Specialization</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSpecialization()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String SPECIALIZATION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getSpecialization() <em>Specialization</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSpecialization()
+	 * @generated
+	 * @ordered
+	 */
+	protected String specialization = SPECIALIZATION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getVulnerability() <em>Vulnerability</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVulnerability()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String VULNERABILITY_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getVulnerability() <em>Vulnerability</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVulnerability()
+	 * @generated
+	 * @ordered
+	 */
+	protected String vulnerability = VULNERABILITY_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getAttack() <em>Attack</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAttack()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ATTACK_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getAttack() <em>Attack</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAttack()
+	 * @generated
+	 * @ordered
+	 */
+	protected String attack = ATTACK_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -383,6 +446,105 @@ public class Failure extends MinimalEObjectImpl.Container implements EObject {
 		return previousFailures;
 	}
 	
+	/**
+	 * Returns the value of the '<em><b>Specialization</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Specialization</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Specialization</em>' attribute.
+	 * @see #setSpecialization(String)
+	 * @see org.polarsys.chess.fla.flamm.FlammPackage#getFailure_Specialization()
+	 * @model
+	 * @generated
+	 */
+	public String getSpecialization() {
+		return specialization;
+	}
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.fla.flamm.Failure#getSpecialization <em>Specialization</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Specialization</em>' attribute.
+	 * @see #getSpecialization()
+	 * @generated
+	 */
+	public void setSpecialization(String newSpecialization) {
+		String oldSpecialization = specialization;
+		specialization = newSpecialization;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FlammPackage.FAILURE__SPECIALIZATION, oldSpecialization, specialization));
+	}
+
+	/**
+	 * Returns the value of the '<em><b>Vulnerability</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Vulnerability</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Vulnerability</em>' attribute.
+	 * @see #setVulnerability(String)
+	 * @see org.polarsys.chess.fla.flamm.FlammPackage#getFailure_Vulnerability()
+	 * @model
+	 * @generated
+	 */
+	public String getVulnerability() {
+		return vulnerability;
+	}
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.fla.flamm.Failure#getVulnerability <em>Vulnerability</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Vulnerability</em>' attribute.
+	 * @see #getVulnerability()
+	 * @generated
+	 */
+	public void setVulnerability(String newVulnerability) {
+		String oldVulnerability = vulnerability;
+		vulnerability = newVulnerability;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FlammPackage.FAILURE__VULNERABILITY, oldVulnerability, vulnerability));
+	}
+
+	/**
+	 * Returns the value of the '<em><b>Attack</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Attack</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Attack</em>' attribute.
+	 * @see #setAttack(String)
+	 * @see org.polarsys.chess.fla.flamm.FlammPackage#getFailure_Attack()
+	 * @model
+	 * @generated
+	 */
+	public String getAttack() {
+		return attack;
+	}
+
+	/**
+	 * Sets the value of the '{@link org.polarsys.chess.fla.flamm.Failure#getAttack <em>Attack</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Attack</em>' attribute.
+	 * @see #getAttack()
+	 * @generated
+	 */
+	public void setAttack(String newAttack) {
+		String oldAttack = attack;
+		attack = newAttack;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FlammPackage.FAILURE__ATTACK, oldAttack, attack));
+	}
+
 	public void addPreviousFailure(Failure previousFailure) {
 		if (!getPreviousFailures().contains(previousFailure)) {
 			getPreviousFailures().add(previousFailure);
@@ -461,6 +623,12 @@ public class Failure extends MinimalEObjectImpl.Container implements EObject {
 				return getAcidMitigation();
 			case FlammPackage.FAILURE__PREVIOUS_FAILURES:
 				return getPreviousFailures();
+			case FlammPackage.FAILURE__SPECIALIZATION:
+				return getSpecialization();
+			case FlammPackage.FAILURE__VULNERABILITY:
+				return getVulnerability();
+			case FlammPackage.FAILURE__ATTACK:
+				return getAttack();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -490,6 +658,15 @@ public class Failure extends MinimalEObjectImpl.Container implements EObject {
 				getPreviousFailures().clear();
 				getPreviousFailures().addAll((Collection<? extends Failure>)newValue);
 				return;
+			case FlammPackage.FAILURE__SPECIALIZATION:
+				setSpecialization((String)newValue);
+				return;
+			case FlammPackage.FAILURE__VULNERABILITY:
+				setVulnerability((String)newValue);
+				return;
+			case FlammPackage.FAILURE__ATTACK:
+				setAttack((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -517,6 +694,15 @@ public class Failure extends MinimalEObjectImpl.Container implements EObject {
 			case FlammPackage.FAILURE__PREVIOUS_FAILURES:
 				getPreviousFailures().clear();
 				return;
+			case FlammPackage.FAILURE__SPECIALIZATION:
+				setSpecialization(SPECIALIZATION_EDEFAULT);
+				return;
+			case FlammPackage.FAILURE__VULNERABILITY:
+				setVulnerability(VULNERABILITY_EDEFAULT);
+				return;
+			case FlammPackage.FAILURE__ATTACK:
+				setAttack(ATTACK_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -539,6 +725,12 @@ public class Failure extends MinimalEObjectImpl.Container implements EObject {
 				return acidMitigation != null;
 			case FlammPackage.FAILURE__PREVIOUS_FAILURES:
 				return previousFailures != null && !previousFailures.isEmpty();
+			case FlammPackage.FAILURE__SPECIALIZATION:
+				return SPECIALIZATION_EDEFAULT == null ? specialization != null : !SPECIALIZATION_EDEFAULT.equals(specialization);
+			case FlammPackage.FAILURE__VULNERABILITY:
+				return VULNERABILITY_EDEFAULT == null ? vulnerability != null : !VULNERABILITY_EDEFAULT.equals(vulnerability);
+			case FlammPackage.FAILURE__ATTACK:
+				return ATTACK_EDEFAULT == null ? attack != null : !ATTACK_EDEFAULT.equals(attack);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -557,6 +749,12 @@ public class Failure extends MinimalEObjectImpl.Container implements EObject {
 		result.append(type);
 		result.append(", id: ");
 		result.append(id);
+		result.append(", specialization: ");
+		result.append(specialization);
+		result.append(", vulnerability: ");
+		result.append(vulnerability);
+		result.append(", attack: ");
+		result.append(attack);
 		result.append(')');
 		return result.toString();
 	}

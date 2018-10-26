@@ -35,12 +35,12 @@ import org.polarsys.chess.fla.flamm.analysis.FlaSystem;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.fla.flamm.Rule#getInputExpression <em>Input Expression</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Rule#getOutputExpression <em>Output Expression</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Rule#getSpecificity <em>Specificity</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.fla.flamm.FlammPackage#getRule()
  * @model kind="class"

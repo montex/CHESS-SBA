@@ -1,0 +1,96 @@
+/*******************************************************************************
+ * Copyright (c) 2018, MDH 
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *  
+ *   Contributors:
+ *   Zulqarnain Haider
+ *   Initial API and implementation and/or initial documentation
+ *******************************************************************************/
+/**
+ */
+
+
+import org.polarsys.chess.fla.transformations.utilities.blackboxlibrary;
+//import org.polarsys.chess.fla.transformations.utilities;
+
+import PortUtilities;
+import CommonUtilities;
+
+modeltype Chess uses chessmlprofile('http://CHESS');
+modeltype ChessFailurePropagation uses 'http://CHESS/Dependability/FailurePropagation';
+modeltype ChessFailureTypes uses 'http:///CHESS/Dependability/FailurePropagation/FailurePropagationDataTypes.ecore';
+modeltype ChessCore uses 'http://CHESS/Core';
+
+//....
+modeltype ChessDependability uses 'http://CHESS/Dependability/DependableComponent';
+modeltype ChessThreatPropagation uses 'http://CHESS/Dependability/ThreatsPropagation';
+
+modeltype FLA uses flamm('http://www.polarsys.org/chess/fla/flamm');
+
+modeltype UML uses 'http://www.eclipse.org/uml2/5.0.0/UML';
+modeltype MARTE uses "http://www.eclipse.org/papyrus/GCM/1";
+modeltype SySML uses "http://www.eclipse.org/papyrus/0.7.0/SysML/PortAndFlows";
+
+
+transformation Chess2FlaMMSpecialization(in source : Chess, inout target : FLA);
+
+// Qualified names of stereotypes
+property FAILURE_PROPAGATION_STEREOTYPE = "CHESS::Dependability::FailurePropagation::FailurePropagationAnalysis";
+property FPTC_SPECIFICATION_STEREOTYPE = "CHESS::Dependability::FailurePropagation::FPTCSpecification";
+property FPTC_RULE_STEREOTYPE = "CHESS::Dependability::FailurePropagation::FPTC";
+property FLA_BEHAVIOUR_SPECIFICATION = "CHESS::Dependability::FailurePropagation::FLABehavior";
+property ERROR_BEHAVIOUR_SPECIFICATION= "CHESS::Dependability::DependableComponent::ErrorModelBehavior";
+property FAILURE_STEREOTYPE= "CHESS::Dependability::ThreatsPropagation::Failure";
+property VULNERABILITY_STEREOTYPE= "CHESS::Dependability::ThreatsPropagation::Vulnerability";
+property ATTACK_STEREOTYPE= "CHESS::Dependability::ThreatsPropagation::Attack";
+
+// Platform selected by user
+configuration property selectedPlatformQName : String;
+
+property chessRootComponent : Class;
+property flaRootComponent : FLA::Component;
+
+main() {
+	//get the root component of generated FLAMM it will act as a target... 
+	this.flaRootComponent := target.rootObjects()![FLA::Component];
+	//get the root component of chess from the instspec and it will act as a source
+	var selectedInstSpec : Package = source.rootObjects()![Model].findElementByQualifiedName(selectedPlatformQName).oclAsType(Package);
+	this.chessRootComponent := selectedInstSpec.ownedElement[InstanceSpecification]->
+		selectOne(name = selectedInstSpec.name.substringBefore("_instSpec")).classifier![Class];
+	this.flaRootComponent->oclAsType(CompositeComponent).components.selectStereotypedChessComponent();
+}
+
+
+query FLA::Component::selectStereotypedChessComponent(){
+//For each FLA component we find the chess component and see if it has an errormodel and extract that information
+var umlProp := this.chessRootComponent.oclAsType(Class).ownedElement[Property]->selectOne(getTransformationId()= self.id);
+	if(umlProp.type.isStereotyped(ERROR_BEHAVIOUR_SPECIFICATION))
+	{
+		var errModelBehavior:= umlProp.type.getStereotypeApplication(ERROR_BEHAVIOUR_SPECIFICATION).oclAsType(ErrorModelBehavior);
+		var bSMachine: UML::StateMachine := errModelBehavior.errorModel->asSequence()->first().base_StateMachine;
+		var failureTR:= bSMachine.ownedElement->asSequence()->first().ownedElement[Transition]->selectOne(t| t.isStereotyped(FAILURE_STEREOTYPE));
+		var attackTR := bSMachine.ownedElement->asSequence()->first().ownedElement[Transition]->selectOne(t| t.isStereotyped(ATTACK_STEREOTYPE));
+		var vulnerableTR :=bSMachine.ownedElement->asSequence()->first().ownedElement[Transition]->selectOne(t| t.isStereotyped(VULNERABILITY_STEREOTYPE));
+		var fmode:= failureTR.getStereotypeValue(FAILURE_STEREOTYPE, "mode").toString();
+		var vulKind:= vulnerableTR.getStereotypeValue(VULNERABILITY_STEREOTYPE, "kind");
+		var attKind:= attackTR.getStereotypeValue(ATTACK_STEREOTYPE, "kind");
+		var attThreat:= attackTR.getStereotypeValue(ATTACK_STEREOTYPE, "threat");
+		var fPSeq:= fmode.trim().tokenize(".").trim();
+		self.outputPorts->selectOne(p| "[" + p.name  = fPSeq->at(1) ).failures->selectOne(f| f.id + "]" =fPSeq->at(2))->assignValue(
+			attThreat->asSequence()->first().toString(), vulKind->asSequence()->first().toString(),attKind->asSequence()->first().toString() );
+	};
+}
+
+// This assigns the specialization values to a specific failure on a specific port
+query FLA::Failure::assignValue(specialization : String, vulnerability : String, attack: String) {
+	var failure : FLA::Failure = self.oclAsType(FLA::Failure);
+	failure.specialization:= specialization;
+	failure.vulnerability:=vulnerability;
+	failure.attack:= attack;
+	}

@@ -29,13 +29,13 @@ import org.polarsys.chess.fla.flamm.FailureTypes.I_avoidable;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.fla.flamm.ACIDavoidable#getA <em>A</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.ACIDavoidable#getC <em>C</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.ACIDavoidable#getI <em>I</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.ACIDavoidable#getD <em>D</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.fla.flamm.FlammPackage#getACIDavoidable()
  * @model kind="class"

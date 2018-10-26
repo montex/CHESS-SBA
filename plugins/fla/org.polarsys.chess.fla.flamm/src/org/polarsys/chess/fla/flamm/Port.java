@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.fla.flamm.Port#getConnectedPorts <em>Connected Ports</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Port#getFailures <em>Failures</em>}</li>
@@ -40,7 +41,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.polarsys.chess.fla.flamm.Port#getIncomingConnections <em>Incoming Connections</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Port#getOutgoingConnections <em>Outgoing Connections</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.fla.flamm.FlammPackage#getPort()
  * @model kind="class"

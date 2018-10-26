@@ -35,12 +35,12 @@ import org.polarsys.chess.fla.flamm.analysis.FlaSystem;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.fla.flamm.Component#getInputPorts <em>Input Ports</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Component#getOutputPorts <em>Output Ports</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Component#getParent <em>Parent</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.fla.flamm.FlammPackage#getComponent()
  * @model kind="class" abstract="true"

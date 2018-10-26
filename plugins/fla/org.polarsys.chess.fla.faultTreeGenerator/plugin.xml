@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Automatic FTA Generator"
+            id="ftaGenerator.commands.category">
+      </category>
+      <command
+            name="Generate FTA"
+            categoryId="ftaGenerator.commands.category"
+            id="ftaGenerator.commands.generateFTA">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="ftaGenerator.commands.generateFTA"
+            class="org.polarsys.chess.fla.faultTreeGenerator.handlers.FTAHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="ftaGenerator.commands.generateFTA"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="ftaGenerator.toolbars.sampleToolbar">
+            <command
+                  commandId="ftaGenerator.commands.generateFTA"
+                  icon="icons/sample.gif"
+                  tooltip="Say hello world"
+                  id="ftaGenerator.toolbars.generateFTA">
+            </command>
+         </toolbar>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="org.polarsys.chess.mainMenu"
+               label="CHESS">
+            <menu
+                  id="chess.menu.analysis.id"
+                  label="Analysis">
+               <menu
+                     id="chess.menu.analysis.dependability.id"
+                     label="Dependability">
+                  <command
+                        commandId="ftaGenerator.commands.generateFTA"
+                        label="Generate FT via Concerto-FLA"
+                        style="push">
+                  </command>
+               </menu>
+            </menu>
+         </menu>
+         <menu
+               label="MyfavouriteMenu">
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>
