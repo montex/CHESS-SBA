@@ -134,8 +134,11 @@ public class InstantiateArchWizard extends Wizard {
 	public boolean canFinish() {
 		if (getContainer().getCurrentPage() instanceof AssignValuesPage)
 			return false;
-		else
-			return true;
+		else if (getContainer().getCurrentPage() instanceof LastPage){
+			return getContainer().getCurrentPage().isPageComplete();
+		}
+	
+	return false;
 	}
 
 	public Package getSelectedPackage() {
@@ -164,13 +167,18 @@ public class InstantiateArchWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
+		
 		seletedPackage = ((LastPage) getContainer().getCurrentPage()).getSelectedPackage();
 		createNestedPackage = ((LastPage) getContainer().getCurrentPage()).createNestedPackage();
 		nestedPackageName = ((LastPage) getContainer().getCurrentPage()).getNestedPackageName();
-		importArch = ((LastPage) getContainer().getCurrentPage()).ImportArchitecture();
+		importArch = ((LastPage) getContainer().getCurrentPage()).importArchitecture();
 		finalOssFile = ((LastPage) getContainer().getCurrentPage()).getOSSFile();
 		finalParamListFile = ((LastPage) getContainer().getCurrentPage()).getParamListFile();
-		return true;
+if(!importArch||seletedPackage!=null){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 }
