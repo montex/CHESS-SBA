@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+   	<extension
+			point="org.eclipse.emf.ecore.uri_mapping">
+		<mapping
+			source="pathmap://PATTERNS_PROFILE/"
+			target="platform:/plugin/org.polarsys.chess.patterns.profile/model/"/>
+	</extension>
+	
+	    <extension point="org.eclipse.papyrus.uml.extensionpoints.UMLProfile">
+      <profile
+            description="UML profile to Design Pattern"
+            name="CHESS Design Pattern"
+            path="pathmap://PATTERNS_PROFILE/patterns.profile.uml"
+            provider="Intecs">
+      </profile>
+   </extension>
+   
+   <extension point="org.eclipse.uml2.uml.generated_package">
+      <profile
+         location="pathmap://PATTERNS_PROFILE/patterns.profile.uml#_m463UL2yEeisCpaGu1QjzQ"
+      	 uri="http:///PatternsProfile.ecore">		
+      </profile>
+   </extension>
+
+<!--
+-->
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated patterns.profile -->
+      <package
+            uri="http:///PatternsProfile.ecore"
+            class="org.polarsys.chess.patterns.profile.PatternsProfile.PatternsProfilePackage"
+            genModel="model/patterns.profile.genmodel"/>
+   </extension>
+
+</plugin>
