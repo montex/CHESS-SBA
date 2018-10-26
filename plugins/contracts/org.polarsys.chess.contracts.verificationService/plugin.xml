@@ -161,7 +161,7 @@
              <command
                    commandId="org.polarsys.chess.verificationService.commands.ModelCheckingCommand2"
                    icon="icons/contract_verification.png"
-                   label="Model check"
+                   label="Model Checking"
                    style="push">
                 <parameter
                       name="store_result"

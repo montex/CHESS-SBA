@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.polarsys.chess.modelexplorerpopupmenu.id">
+         <command
+               commandId="org.polarsys.chess.tradeoffAnalysis.tradeoffAnalysis"
+               label="Trade-off Analysis"
+               style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                    <adapt
+                           type="org.eclipse.emf.ecore.EObject">
+                        <instanceof
+                              value="org.eclipse.uml2.uml.Class">
+                        </instanceof>
+                    </adapt>
+                    <with
+                     	variable="activeMenuSelection">
+                  		<count
+                        	value="1">
+                  		</count>
+               		</with>                     
+                  </iterate>
+               </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.polarsys.chess.tradeoffAnalysis.commands.TradeoffCommand"
+            id="org.polarsys.chess.tradeoffAnalysis.tradeoffAnalysis"
+            name="Trade-off Analysis">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="org.polarsys.chess.tradeoffAnalysis.views.TradeoffView"
+            icon="icons/tradeoff.png"
+            id="org.polarsys.chess.tradeoffAnalysis.views.TradeoffView"
+            name="Trade-off"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>
