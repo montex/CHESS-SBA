@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Ecore="http://www.eclipse.org/uml2/schemas/Ecore/5" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/uml2/schemas/Ecore/5 pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA">
+  <uml:Profile xmi:id="_m463UL2yEeisCpaGu1QjzQ" name="PatternsProfile" URI="http:///PatternsProfile.ecore" metaclassReference="_2VLbgL_XEei9j9co-2g6MA __Ndq0L_XEei9j9co-2g6MA _Lue7YL_YEei9j9co-2g6MA _guFV0MyREeiAsN2uNVKxaw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_kCLIwL_YEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_PPQi4MruEeicjpiWO-bqyA" name="PatternsProfile" nsURI="http:///PatternsProfile.ecore" nsPrefix="PatternsProfile">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PPS_IcruEeicjpiWO-bqyA" source="PapyrusVersion">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_PPS_IsruEeicjpiWO-bqyA" key="Version" value="0.0.4"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_PPS_I8ruEeicjpiWO-bqyA" key="Comment" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_PPS_JMruEeicjpiWO-bqyA" key="Copyright" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_PPS_JcruEeicjpiWO-bqyA" key="Date" value="2018-10-08"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_PPS_JsruEeicjpiWO-bqyA" key="Author" value=""/>
+        </eAnnotations>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_PPQi4cruEeicjpiWO-bqyA" name="Pattern">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PPQi4sruEeicjpiWO-bqyA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eppTUL2zEeisCpaGu1QjzQ"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_PPQi48ruEeicjpiWO-bqyA" name="base_Collaboration" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Collaboration"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PPQi5cruEeicjpiWO-bqyA" name="patternName" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PPQi58ruEeicjpiWO-bqyA" name="otherNames" ordered="false" upperBound="-1">
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PPQi6cruEeicjpiWO-bqyA" name="intent" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PPQi68ruEeicjpiWO-bqyA" name="problem" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PPQi7cruEeicjpiWO-bqyA" name="solution" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PPQi78ruEeicjpiWO-bqyA" name="consequences" ordered="false" upperBound="-1">
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PPQi8cruEeicjpiWO-bqyA" name="implementation" ordered="false" upperBound="-1">
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PPQi88ruEeicjpiWO-bqyA" name="patternAssumptions" ordered="false" upperBound="-1">
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_PPQi9cruEeicjpiWO-bqyA" name="patternGuarantees" ordered="false" upperBound="-1">
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+      </contents>
+      <contents xmi:type="ecore:EPackage" xmi:id="_xxluwML8EeiWZJFFrRwfqg" name="PatternsProfile" nsURI="http:///PatternsProfile.ecore" nsPrefix="PatternsProfile">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_xxpZIML8EeiWZJFFrRwfqg" source="PapyrusVersion">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_xxpZIcL8EeiWZJFFrRwfqg" key="Version" value="0.0.3"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_xxpZIsL8EeiWZJFFrRwfqg" key="Comment" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_xxpZI8L8EeiWZJFFrRwfqg" key="Copyright" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_xxpZJML8EeiWZJFFrRwfqg" key="Date" value="2018-09-28"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_xxpZJcL8EeiWZJFFrRwfqg" key="Author" value=""/>
+        </eAnnotations>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_xxluwcL8EeiWZJFFrRwfqg" name="Pattern">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_xxluwsL8EeiWZJFFrRwfqg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eppTUL2zEeisCpaGu1QjzQ"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_xxluw8L8EeiWZJFFrRwfqg" name="base_Collaboration" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Collaboration"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_xxluxcL8EeiWZJFFrRwfqg" name="description" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//String"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_xxlux8L8EeiWZJFFrRwfqg" name="PatternApplication">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_xxluyML8EeiWZJFFrRwfqg" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_xxluycL8EeiWZJFFrRwfqg" name="base_CollaborationUse" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//CollaborationUse"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+      </contents>
+      <contents xmi:type="ecore:EPackage" xmi:id="_wabPIL_pEei9j9co-2g6MA" name="PatternsProfile" nsURI="http:///schemas/PatternsProfile/_waaoEL_pEei9j9co-2g6MA/1" nsPrefix="PatternsProfile">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_wadEUr_pEei9j9co-2g6MA" source="PapyrusVersion">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_wadEU7_pEei9j9co-2g6MA" key="Version" value="0.0.2"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_wadEVL_pEei9j9co-2g6MA" key="Comment" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_wadEVb_pEei9j9co-2g6MA" key="Copyright" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_wadEVr_pEei9j9co-2g6MA" key="Date" value="2018-09-24"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_wadEV7_pEei9j9co-2g6MA" key="Author" value=""/>
+        </eAnnotations>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_wabPIb_pEei9j9co-2g6MA" name="Pattern">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_wabPIr_pEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eppTUL2zEeisCpaGu1QjzQ"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_wabPI7_pEei9j9co-2g6MA" name="base_Collaboration" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Collaboration"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_wabPJb_pEei9j9co-2g6MA" name="intent" ordered="false" lowerBound="1" eType="_wabPLb_pEei9j9co-2g6MA"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_wabPJ7_pEei9j9co-2g6MA" name="applicability" ordered="false" lowerBound="1" eType="_wabPMb_pEei9j9co-2g6MA"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_wabPKb_pEei9j9co-2g6MA" name="problem" ordered="false" lowerBound="1" eType="_wabPNb_pEei9j9co-2g6MA"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_wabPK7_pEei9j9co-2g6MA" name="solution" ordered="false" lowerBound="1" eType="_wabPOb_pEei9j9co-2g6MA"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_wabPLb_pEei9j9co-2g6MA" name="Intent">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_wabPLr_pEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_wabPL7_pEei9j9co-2g6MA" name="base_Comment" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Comment"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_wabPMb_pEei9j9co-2g6MA" name="Applicability">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_wabPMr_pEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_wabPM7_pEei9j9co-2g6MA" name="base_Comment" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Comment"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_wabPNb_pEei9j9co-2g6MA" name="Problem">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_wabPNr_pEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_wabPN7_pEei9j9co-2g6MA" name="base_Comment" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Comment"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_wabPOb_pEei9j9co-2g6MA" name="Solution">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_wabPOr_pEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_wabPO7_pEei9j9co-2g6MA" name="base_Comment" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Comment"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_wabPPb_pEei9j9co-2g6MA" name="PatternApplication">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_wabPPr_pEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_wabPP7_pEei9j9co-2g6MA" name="base_CollaborationUse" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//CollaborationUse"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+      </contents>
+      <contents xmi:type="ecore:EPackage" xmi:id="_kCLv0L_YEei9j9co-2g6MA" name="PatternsProfile" nsURI="http:///schemas/PatternsProfile/_kCIsgL_YEei9j9co-2g6MA/0" nsPrefix="PatternsProfile">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_kCOzJL_YEei9j9co-2g6MA" source="PapyrusVersion">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_kCOzJb_YEei9j9co-2g6MA" key="Version" value="0.0.1"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_kCOzJr_YEei9j9co-2g6MA" key="Comment" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_kCOzJ7_YEei9j9co-2g6MA" key="Copyright" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_kCOzKL_YEei9j9co-2g6MA" key="Date" value="2018-09-24"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_kCOzKb_YEei9j9co-2g6MA" key="Author" value=""/>
+        </eAnnotations>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_kCLv0b_YEei9j9co-2g6MA" name="Pattern">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_kCLv0r_YEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eppTUL2zEeisCpaGu1QjzQ"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_kCLv07_YEei9j9co-2g6MA" name="base_Collaboration" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Collaboration"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_kCLv1b_YEei9j9co-2g6MA" name="PatternApplication">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_kCLv1r_YEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_kCLv17_YEei9j9co-2g6MA" name="base_CollaborationUse" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//CollaborationUse"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_kCLv2b_YEei9j9co-2g6MA" name="Applicability">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_kCLv2r_YEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_kCLv27_YEei9j9co-2g6MA" name="base_Comment" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Comment"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_kCLv3b_YEei9j9co-2g6MA" name="Solution">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_kCLv3r_YEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_kCLv37_YEei9j9co-2g6MA" name="base_Comment" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Comment"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_kCLv4b_YEei9j9co-2g6MA" name="Intent">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_kCLv4r_YEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_kCLv47_YEei9j9co-2g6MA" name="base_Comment" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Comment"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_kCLv5b_YEei9j9co-2g6MA" name="Problem">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_kCLv5r_YEei9j9co-2g6MA" source="http://www.eclipse.org/uml2/2.0.0/UML"/>
+          <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_kCLv57_YEei9j9co-2g6MA" name="base_Comment" ordered="false" lowerBound="1">
+            <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Comment"/>
+          </eStructuralFeatures>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_2VLbgL_XEei9j9co-2g6MA" alias="Collaboration">
+      <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Collaboration"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="__Ndq0L_XEei9j9co-2g6MA" alias="CollaborationUse">
+      <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#CollaborationUse"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_Lue7YL_YEei9j9co-2g6MA" alias="Comment">
+      <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Comment"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_guFV0MyREeiAsN2uNVKxaw" alias="NamedElement">
+      <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#NamedElement"/>
+    </elementImport>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_eppTUL2zEeisCpaGu1QjzQ" name="Pattern">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_7iWrAL_XEei9j9co-2g6MA" name="base_Collaboration" association="_7iQkYL_XEei9j9co-2g6MA">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Collaboration"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_iKSKUL_pEei9j9co-2g6MA" name="patternName">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_ZApr0MrrEeicjpiWO-bqyA" name="otherNames">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cyN48MrrEeicjpiWO-bqyA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cye-sMrrEeicjpiWO-bqyA" value="*"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_zxM9MMrrEeicjpiWO-bqyA" name="intent">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_0k5D8MrrEeicjpiWO-bqyA" name="problem">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_0_NBYMrrEeicjpiWO-bqyA" name="solution" visibility="public">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_3WtEQMrrEeicjpiWO-bqyA" name="consequences">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_36k7cMrtEeicjpiWO-bqyA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_36rCEMrtEeicjpiWO-bqyA" value="*"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_3trZ0MrrEeicjpiWO-bqyA" name="implementation">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_K16O8MrsEeicjpiWO-bqyA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_K2A8oMrsEeicjpiWO-bqyA" value="*"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_4DdckMrrEeicjpiWO-bqyA" name="patternAssumptions">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Le3sYMrsEeicjpiWO-bqyA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Le9L8MrsEeicjpiWO-bqyA" value="*"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_435KMMrrEeicjpiWO-bqyA" name="patternGuarantees">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_M_2W8MrsEeicjpiWO-bqyA"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_M_6oYMrsEeicjpiWO-bqyA" value="*"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_3I7Y0MutEeiHE9ErYBR4yw" name="preview">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Extension" xmi:id="_7iQkYL_XEei9j9co-2g6MA" name="E_Pattern_Collaboration1" memberEnd="_7iWD8L_XEei9j9co-2g6MA _7iWrAL_XEei9j9co-2g6MA">
+      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_7iWD8L_XEei9j9co-2g6MA" name="extension_Pattern" type="_eppTUL2zEeisCpaGu1QjzQ" aggregation="composite" association="_7iQkYL_XEei9j9co-2g6MA"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_jEi24MyREeiAsN2uNVKxaw" name="PatternApplication">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nigP8MyREeiAsN2uNVKxaw" name="appliedPattern">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_zIIPQMyREeiAsN2uNVKxaw" name="base_CollaborationUse" association="_zID90MyREeiAsN2uNVKxaw">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#CollaborationUse"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_jcA7sMyREeiAsN2uNVKxaw" name="PatternRole">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_58bNkMyREeiAsN2uNVKxaw" name="base_NamedElement" association="_58Z_cMyREeiAsN2uNVKxaw">
+        <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#NamedElement"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_H3T0EMySEeiAsN2uNVKxaw" name="appliedPattern">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_StEcsMySEeiAsN2uNVKxaw" name="mappedRole">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Extension" xmi:id="_zID90MyREeiAsN2uNVKxaw" name="E_PatternApplication_CollaborationUse1" memberEnd="_zIHBIMyREeiAsN2uNVKxaw _zIIPQMyREeiAsN2uNVKxaw">
+      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_zIHBIMyREeiAsN2uNVKxaw" name="extension_PatternApplication" type="_jEi24MyREeiAsN2uNVKxaw" aggregation="composite" association="_zID90MyREeiAsN2uNVKxaw"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Extension" xmi:id="_58Z_cMyREeiAsN2uNVKxaw" name="E_PatternRole_NamedElement1" memberEnd="_58amgMyREeiAsN2uNVKxaw _58bNkMyREeiAsN2uNVKxaw">
+      <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_58amgMyREeiAsN2uNVKxaw" name="extension_PatternRole" type="_jcA7sMyREeiAsN2uNVKxaw" aggregation="composite" association="_58Z_cMyREeiAsN2uNVKxaw"/>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_ORonIMGlEeihBan_zoU1Vw">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ORrqcMGlEeihBan_zoU1Vw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_PROFILES/Ecore.profile.uml#_0"/>
+    </profileApplication>
+  </uml:Profile>
+  <Ecore:EPackage xmi:id="_PI7bgMGlEeihBan_zoU1Vw" base_Package="_m463UL2yEeisCpaGu1QjzQ"/>
+</xmi:XMI>

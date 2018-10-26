@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.papyrus.uml.diagram.wizards.newModelStorageProviders">
+      <provider
+            class="org.polarsys.chess.cdo.providers.CHESSCDONewModelStorageProvider"
+            name="CHESS CDO Storage Provider">
+         <enablement>
+            <iterate>
+               <or>
+                  <adapt
+                        type="org.eclipse.emf.ecore.EObject">
+                     <test
+                           property="org.eclipse.papyrus.cdo.core.isCDOObject">
+                     </test>
+                  </adapt>
+                  <adapt
+                        type="org.eclipse.emf.cdo.eresource.CDOResourceNode">
+                  </adapt>
+                  <adapt
+                        type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
+                  </adapt>
+               </or>
+            </iterate>
+         </enablement>
+      </provider>
+   </extension>
+
+  <extension point="org.eclipse.ui.navigator.navigatorContent">
+         <commonWizard
+               associatedExtensionId="org.eclipse.emf.cdo.explorer.ui.CDOCheckouts"
+               type="new"
+               wizardId="org.polarsys.chess.cdo.wizards.createmodel">
+            <enablement>
+              <or>
+                <and>
+                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                  <test property="org.eclipse.emf.cdo.explorer.checkout.canContainResources" value="true"/>
+                </and>
+                <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+              </or>
+           </enablement>
+         </commonWizard>
+  </extension>
+  
+  <extension point="org.eclipse.ui.newWizards">
+    <wizard
+         category="it.unipd.chess.wizards.category"
+         class="org.polarsys.chess.cdo.wizards.InitCDOModelWizard"
+         finalPerspective="org.eclipse.papyrus.infra.core.perspective"
+         icon="icons/CHESSicon.gif"
+         id="org.polarsys.chess.cdo.wizards.createmodel"
+         name="CHESS Model (CDO)">
+   </wizard>
+  </extension>
+  
+    <!-- import/export from/to CDO in CHESS Menu -->
+  <extension point="org.eclipse.ui.menus">
+  	<menuContribution
+    	allPopups="false"
+        locationURI="menu:org.eclipse.ui.main.menu">
+ 		<menu
+        	id="org.polarsys.chess.mainMenu"
+            label="CHESS"
+            mnemonic="E">
+            <menu
+            	id="org.polarsys.chess.mainMenu.cdo"
+            	label="CDO">
+				<command
+					commandId="org.polarsys.chess.cdo.import"
+			    	label="Import from CDO"
+			    	style="push">
+			  	</command>
+			  	<command
+					commandId="org.polarsys.chess.cdo.export"
+			    	label="Export to CDO"
+			    	style="push">
+			  	</command>
+          	</menu>
+      	</menu>
+	</menuContribution>
+  </extension>
+  <extension point="org.eclipse.ui.handlers">
+     <handler
+           class="org.polarsys.chess.cdo.handlers.CDOImportHandler"
+           commandId="org.polarsys.chess.cdo.import">
+     </handler>
+      <handler
+           class="org.polarsys.chess.cdo.handlers.CDOExportHandler"
+           commandId="org.polarsys.chess.cdo.export">
+     </handler>
+  </extension>
+  <extension point="org.eclipse.ui.commands">
+      <command
+            id="org.polarsys.chess.cdo.import"
+            name="CDO-Import">
+      </command>
+      <command
+            id="org.polarsys.chess.cdo.export"
+            name="CDO-Export">
+      </command>
+  </extension>
+    <!-- END import/export from/to CDO in CHESS Menu -->
+</plugin>
