@@ -64,7 +64,8 @@ public class ContractRefinementCommand extends AbstractJobCommand {
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(false);
 		showPopups = false;
 		usexTextValidation=true;
-		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
+
+		ossFilepath = ocraDirectoryUtil.getOSSDirPath();
 //		resultFilePath = ocraDirectoryUtil.getCommandCheckRefinementResultPath(umlSelectedComponent.getName());
 
 		storeResult = (event.getParameter(storeResultParam) != null && 

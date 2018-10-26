@@ -56,7 +56,7 @@ public class ContractImplementationCommand extends AbstractJobCommand {
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(true);
 		showPopups = false;
 		usexTextValidation=true;
-		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
+		ossFilepath = ocraDirectoryUtil.getOSSDirPath();
 		smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
 		resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath(umlSelectedComponent.getName());
 	}

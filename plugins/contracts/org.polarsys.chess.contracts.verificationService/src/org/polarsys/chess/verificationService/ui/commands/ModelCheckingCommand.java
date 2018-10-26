@@ -64,9 +64,9 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 	private boolean isDiscreteTime;
 	private String monolithicSMVFilePath;
 	private String resultFilePath;
-	private String smvMapFilepath;
+	private String smvMapDirPath;
 	private Resource umlSelectedResource;
-	private String ossFilePath;
+	private String ossDirPath;
 	private boolean storeResult;
 
 	@Override
@@ -89,8 +89,10 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 			smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory();
 			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(umlSelectedComponent.getName());
 			resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(umlSelectedComponent.getName());
-			smvMapFilepath = nuXmvDirectoryUtil.getSmvMapFilePath();
-			ossFilePath = ocraDirectoryUtil.getOSSFilePath();
+
+			smvMapDirPath = nuXmvDirectoryUtil.getSmvFileDirectory();
+			ossDirPath = ocraDirectoryUtil.getOSSDirPath();
+
 
 			umlSelectedResource = umlSelectedComponent.eResource();
 			showPopups = false;
@@ -120,7 +122,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 							showPopups, smvFileDirectory, monitor);
 					logger.debug("createMonolithicSMV");
 					ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
-							isDiscreteTime, usexTextValidation,showPopups, ossFilePath, smvMapFilepath, 
+							isDiscreteTime, usexTextValidation,showPopups, ossDirPath, smvMapDirPath, 
 							monolithicSMVFilePath, isProgrExec, internalExecution, monitor);
 
 					generatedSmvFilePath = monolithicSMVFilePath;
@@ -139,6 +141,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 					analysisResultUtil.showResult(CheckModel.FUNCTION_NAME, resultFilePath);
 				}
 			}
+
 		} else {
 			String elementURI = event.getParameter("elementURI");
 			String projectName = event.getParameter("projectName");
@@ -157,8 +160,9 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 			smvFileDirectory = nuXmvDirectoryUtil.getSmvFileDirectory(projectPath);
 			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(projectPath,
 					umlSelectedComponent.getName());
-			smvMapFilepath = nuXmvDirectoryUtil.getSmvMapFilePath(projectPath);
-			ossFilePath = ocraDirectoryUtil.getOSSFilePath(projectPath);
+
+			smvMapDirPath = nuXmvDirectoryUtil.getSmvFileDirectory(projectPath);
+			ossDirPath = ocraDirectoryUtil.getOSSDirPath(projectPath);
 			//resultFilePath = nuXmvDirectoryUtil.getModelCheckingResultPath(projectPath, umlSelectedComponent.getName());
 		}
 
@@ -187,7 +191,7 @@ public class ModelCheckingCommand extends AbstractJobCommand {
 						showPopups, smvFileDirectory, monitor);
 				logger.debug("createMonolithicSMV");
 				ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
-						isDiscreteTime, usexTextValidation,showPopups, ossFilePath, smvMapFilepath, 
+						isDiscreteTime, usexTextValidation,showPopups, ossDirPath, smvMapDirPath, 
 						monolithicSMVFilePath, isProgrExec, internalExecution, monitor);
 
 				generatedSmvFilePath = monolithicSMVFilePath;

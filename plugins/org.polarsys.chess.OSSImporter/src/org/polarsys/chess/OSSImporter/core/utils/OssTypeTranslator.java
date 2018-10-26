@@ -9,7 +9,7 @@
  *   Alberto Debiasi - initial API and implementation
  *   Luca Cristoforetti - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.OSSImporter.utils;
+package org.polarsys.chess.OSSImporter.core.utils;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;

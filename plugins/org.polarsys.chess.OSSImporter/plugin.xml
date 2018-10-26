@@ -43,6 +43,16 @@
             defaultHandler="org.polarsys.chess.OSSImporter.commands.ImportOSSFileCommand"
             id="org.polarsys.chess.OSSImporter.commands.AddOSSFile"
             name="Add System View components from .oss file">
+         <commandParameter
+               id="packageURI"
+               name="packageURI"
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="ossFilePath"
+               name="ossFilePath"
+               optional="true">
+         </commandParameter>
       </command>
    </extension>
 

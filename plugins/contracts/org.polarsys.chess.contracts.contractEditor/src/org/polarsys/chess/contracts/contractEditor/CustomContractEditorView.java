@@ -141,7 +141,13 @@ public class CustomContractEditorView extends ContractEditorView {
 
 	@Override
 	public void createAssumption(Object contract) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(contract);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
 		contractEntityUtil.createAssumptionToUmlContract((Class) contract);
+			}});
 	}
 
 	@Override
@@ -163,7 +169,13 @@ public class CustomContractEditorView extends ContractEditorView {
 
 	@Override
 	public void createGuarantee(Object contract) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(contract);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
 		contractEntityUtil.createGuaranteeToUmlContract((Class) contract);
+			}});
 	}
 
 	@Override
@@ -185,12 +197,26 @@ public class CustomContractEditorView extends ContractEditorView {
 
 	@Override
 	public void guaranteeEditorchanged(Object contract, String textChanged) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(contract);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
 		contractEntityUtil.setTextToGuaranteeOrCreateGuarantee(textChanged, (Class) contract);
+			}
+		});
 	}
 
 	@Override
 	public void assumptionEditorchanged(Object contract, String textChanged) {
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(contract);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+
+			@Override
+			protected void doExecute() {
 		contractEntityUtil.setTextToAssumeOrCreateAssume(textChanged, (Class) contract);
+			}
+		});
 	}
 
 	private Constraint selectProperty(Object contract) {

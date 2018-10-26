@@ -55,6 +55,7 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 	public void execPreJobOperations(ExecutionEvent event,IProgressMonitor monitor) throws Exception {
 		final String storeResultParam = "store_result";
 		
+
 		// The user could select a component or a package containing an architecture
 		// In the latter case, extract the system component from that package
 		try {
@@ -68,7 +69,7 @@ public class ComputeContractFaultTreeCommand extends AbstractJobCommand {
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(true);
 		showPopups = false;
 		usexTextValidation = true;
-		ossFilepath = ocraDirectoryUtil.getOSSFilePath();
+		ossFilepath = ocraDirectoryUtil.getOSSDirPath();
 //		resultFilePath = ocraDirectoryUtil.getCommandFaultTreeGenResultPath(umlSelectedComponent.getName());
 
 		storeResult = (event.getParameter(storeResultParam) != null && 

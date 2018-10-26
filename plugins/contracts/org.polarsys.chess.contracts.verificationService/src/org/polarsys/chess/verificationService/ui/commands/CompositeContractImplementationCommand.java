@@ -48,10 +48,11 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 	private boolean isDiscreteTime;
 	private boolean showPopups;
 	private boolean usexTextValidation;
-	private String smvMapFilepath;
+	private String smvMapDirPath;
 	private String smvFilePath;
 	private String resultFilePath;
-	private String ossFilePath;
+
+	private String ossDirPath;
 	private boolean storeResult;
 	
 	@Override
@@ -70,8 +71,8 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 		isDiscreteTime = MessageTimeModelDialog.openQuestion(true);
 		showPopups = false;
 		usexTextValidation=true;
-		ossFilePath = ocraDirectoryUtil.getOSSFilePath();
-		smvMapFilepath = nuXmvDirectoryUtil.getSmvMapFilePath();
+		ossDirPath = ocraDirectoryUtil.getOSSDirPath();
+		smvMapDirPath = nuXmvDirectoryUtil.getSmvFileDirectory();
 		smvFilePath = nuXmvDirectoryUtil.getSmvFileDirectory();
 //		resultFilePath = ocraDirectoryUtil.getCommandCheckImplementationResultPath(umlSelectedComponent.getName());
 
@@ -90,7 +91,7 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 					smvFilePath, monitor);
 			if (ocraExecService.executeCheckCompositeContractImplementation(umlSelectedComponent, umlSelectedResource,
 					smvPathComponentNameMap, isDiscreteTime, usexTextValidation,showPopups, 
-					ossFilePath, smvMapFilepath, resultFilePath, monitor, true)) {
+					ossDirPath, smvMapDirPath, resultFilePath, monitor, true)) {
 				
 				// Store the result
 				analysisResultUtil.storeResult(AnalysisResultUtil.CONTRACT_IMPLEMENTATION_ANALYSIS, null, 
@@ -105,12 +106,13 @@ public class CompositeContractImplementationCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
+
 		if (!storeResult) {
 			HashMap<String, String> smvPathComponentNameMap = smvExportService.exportSmv(umlSelectedComponent, showPopups,
 					smvFilePath, monitor);
 			ocraExecService.executeCheckCompositeContractImplementation(umlSelectedComponent, umlSelectedResource,
 					smvPathComponentNameMap, isDiscreteTime, usexTextValidation,showPopups, 
-					ossFilePath, smvMapFilepath, resultFilePath, monitor, false);
+					ossDirPath, smvMapDirPath, resultFilePath, monitor, false);
 		}
 	}
 }
