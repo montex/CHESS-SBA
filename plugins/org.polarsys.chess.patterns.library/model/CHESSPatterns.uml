@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Blocks="http://www.eclipse.org/papyrus/0.7.0/SysML/Blocks" xmlns:PatternsProfile="http:///PatternsProfile.ecore" xmlns:PortAndFlows="http://www.eclipse.org/papyrus/0.7.0/SysML/PortAndFlows" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/papyrus/0.7.0/SysML/Blocks http://www.eclipse.org/papyrus/0.7.0/SysML#//blocks http://www.eclipse.org/papyrus/0.7.0/SysML/PortAndFlows http://www.eclipse.org/papyrus/0.7.0/SysML#//portandflows">
+  <uml:Model xmi:id="_7i-i8LvuEeifftqsmW9AvA" name="CHESSPatterns">
+    <packagedElement xmi:type="uml:Package" xmi:id="_FjnE8LvwEeifftqsmW9AvA" name="TMR">
+      <packagedElement xmi:type="uml:Collaboration" xmi:id="_9J1PMLvyEeifftqsmW9AvA" name="TMRPattern" visibility="public" collaborationRole="_UtjYMLvzEeifftqsmW9AvA _XURi0LvzEeifftqsmW9AvA _nK_VILv5EeifftqsmW9AvA _nXankLv5EeifftqsmW9AvA">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_UtjYMLvzEeifftqsmW9AvA" name="channel1" type="_wNZRILv2EeifftqsmW9AvA">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_h7EToLv5EeifftqsmW9AvA" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_h7LBULv5EeifftqsmW9AvA" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_nK_VILv5EeifftqsmW9AvA" name="channel2" type="_wNZRILv2EeifftqsmW9AvA">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nK_VIbv5EeifftqsmW9AvA" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nK_VIrv5EeifftqsmW9AvA" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_nXankLv5EeifftqsmW9AvA" name="channel3" type="_wNZRILv2EeifftqsmW9AvA">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nXankbv5EeifftqsmW9AvA" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nXankrv5EeifftqsmW9AvA" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_XURi0LvzEeifftqsmW9AvA" name="voter" type="_x1jhwLv2EeifftqsmW9AvA"/>
+        <ownedConnector xmi:type="uml:Connector" xmi:id="_Qw2N4Lv6EeifftqsmW9AvA" name="Connector1">
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_Qw7tcLv6EeifftqsmW9AvA" partWithPort="_UtjYMLvzEeifftqsmW9AvA" role="_9XDHoLv5EeifftqsmW9AvA"/>
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_Qw8UgLv6EeifftqsmW9AvA" partWithPort="_XURi0LvzEeifftqsmW9AvA" role="_eTLKcLv6EeifftqsmW9AvA"/>
+        </ownedConnector>
+        <ownedConnector xmi:type="uml:Connector" xmi:id="_RbMLYLv6EeifftqsmW9AvA" name="Connector2">
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_RbMycLv6EeifftqsmW9AvA" partWithPort="_nK_VILv5EeifftqsmW9AvA" role="_9XDHoLv5EeifftqsmW9AvA"/>
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_RbNZgLv6EeifftqsmW9AvA" partWithPort="_XURi0LvzEeifftqsmW9AvA" role="_M5HHULv6EeifftqsmW9AvA"/>
+        </ownedConnector>
+        <ownedConnector xmi:type="uml:Connector" xmi:id="_SQpzwLv6EeifftqsmW9AvA" name="Connector3">
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_SQqa0Lv6EeifftqsmW9AvA" partWithPort="_nXankLv5EeifftqsmW9AvA" role="_9XDHoLv5EeifftqsmW9AvA"/>
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_SQrB4Lv6EeifftqsmW9AvA" partWithPort="_XURi0LvzEeifftqsmW9AvA" role="_efiygLv6EeifftqsmW9AvA"/>
+        </ownedConnector>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_kT8MULv1EeifftqsmW9AvA" name="TMRTypes">
+        <packagedElement xmi:type="uml:Class" xmi:id="_wNZRILv2EeifftqsmW9AvA" name="Channel">
+          <ownedAttribute xmi:type="uml:Port" xmi:id="_9XDHoLv5EeifftqsmW9AvA" name="channel_out" aggregation="composite"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_x1jhwLv2EeifftqsmW9AvA" name="Voter">
+          <ownedAttribute xmi:type="uml:Port" xmi:id="_M5HHULv6EeifftqsmW9AvA" name="voter_in2" aggregation="composite"/>
+          <ownedAttribute xmi:type="uml:Port" xmi:id="_eTLKcLv6EeifftqsmW9AvA" name="voter_in1" aggregation="composite"/>
+          <ownedAttribute xmi:type="uml:Port" xmi:id="_efiygLv6EeifftqsmW9AvA" name="voter_in3" aggregation="composite"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_Z9ArsMvCEeid6c5J8m41ew" name="Monitor_Actuator">
+      <packagedElement xmi:type="uml:Collaboration" xmi:id="_dKGSwMvCEeid6c5J8m41ew" name="MAPattern" collaborationRole="_QTQ7gMvIEeiG7qFbiuwNbA _QtCtcMvIEeiG7qFbiuwNbA">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_zsgZoMvLEeiG7qFbiuwNbA" annotatedElement="_A5X5AMvLEeiG7qFbiuwNbA _E4JbsMvLEeiG7qFbiuwNbA">
+          <body>Connect
+input ports
+to sensors</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_49FicMvLEeiG7qFbiuwNbA" annotatedElement="_Rnz3IMvJEeiG7qFbiuwNbA _pQAQcMvJEeiG7qFbiuwNbA">
+          <body>Connect
+output ports
+to actuator</body>
+        </ownedComment>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_QTQ7gMvIEeiG7qFbiuwNbA" name="actuationChannel" type="_yiX7EMvGEeiG7qFbiuwNbA"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_QtCtcMvIEeiG7qFbiuwNbA" name="monitoringChannel" type="_tksgIMvGEeiG7qFbiuwNbA"/>
+        <ownedConnector xmi:type="uml:Connector" xmi:id="_pHXm8MvLEeiG7qFbiuwNbA" name="shutdown_signal">
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_pHZcIMvLEeiG7qFbiuwNbA" partWithPort="_QTQ7gMvIEeiG7qFbiuwNbA" role="_dJp3wMvLEeiG7qFbiuwNbA"/>
+          <end xmi:type="uml:ConnectorEnd" xmi:id="_pHaDMMvLEeiG7qFbiuwNbA" partWithPort="_QtCtcMvIEeiG7qFbiuwNbA" role="_d4G5MMvLEeiG7qFbiuwNbA"/>
+        </ownedConnector>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_vwBIMMvGEeiG7qFbiuwNbA" name="MaTypes">
+        <packagedElement xmi:type="uml:Class" xmi:id="_tksgIMvGEeiG7qFbiuwNbA" name="MonitoringChannel">
+          <ownedAttribute xmi:type="uml:Port" xmi:id="_pQAQcMvJEeiG7qFbiuwNbA" name="command_feedback" aggregation="composite"/>
+          <ownedAttribute xmi:type="uml:Port" xmi:id="_E4JbsMvLEeiG7qFbiuwNbA" name="input_sensor" aggregation="composite"/>
+          <ownedAttribute xmi:type="uml:Port" xmi:id="_d4G5MMvLEeiG7qFbiuwNbA" name="EnableActuator" aggregation="composite"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_yiX7EMvGEeiG7qFbiuwNbA" name="ActuationChannel">
+          <ownedAttribute xmi:type="uml:Port" xmi:id="_Rnz3IMvJEeiG7qFbiuwNbA" name="control_signal" aggregation="composite"/>
+          <ownedAttribute xmi:type="uml:Port" xmi:id="_A5X5AMvLEeiG7qFbiuwNbA" name="input_sensor" aggregation="composite"/>
+          <ownedAttribute xmi:type="uml:Port" xmi:id="_dJp3wMvLEeiG7qFbiuwNbA" name="EnableActuator" aggregation="composite"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_PppeMMiQEei_s-5HMfypxQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Ppz2QMiQEei_s-5HMfypxQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_TZ_nULU5EduiKqCzJMWbGw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_PqM30MiQEei_s-5HMfypxQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PqNe4MiQEei_s-5HMfypxQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//modelelements"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_Gx8MgLX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_PqOtAMiQEei_s-5HMfypxQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PqPUEMiQEei_s-5HMfypxQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//blocks"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_fSw28LX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_PqQiMMiQEei_s-5HMfypxQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PqRJQMiQEei_s-5HMfypxQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//portandflows"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_rpx28LX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_PqSXYMiQEei_s-5HMfypxQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PqS-cMiQEei_s-5HMfypxQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//constraints"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_5WYJ0LX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_PqTlgMiQEei_s-5HMfypxQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PqUMkMiQEei_s-5HMfypxQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//activities"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_C2zXMLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_PqVasMiQEei_s-5HMfypxQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PqWBwMiQEei_s-5HMfypxQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//allocations"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_NxdG4LX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_PqX28MiQEei_s-5HMfypxQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PqYeAMiQEei_s-5HMfypxQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//requirements"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_OOJC4LX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_PqZsIMiQEei_s-5HMfypxQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PqZsIciQEei_s-5HMfypxQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//interactions"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_meOioLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_Pqa6QMiQEei_s-5HMfypxQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PqbhUMiQEei_s-5HMfypxQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//statemachines"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_nAF5kLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_PqcvcMiQEei_s-5HMfypxQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PqdWgMiQEei_s-5HMfypxQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//usecases"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_neZmMLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_800U8Mr6EeiLW6SPf5ZepA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_807CoMr6EeiLW6SPf5ZepA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http:///PatternsProfile.ecore#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://PATTERNS_PROFILE/patterns.profile.uml#_m463UL2yEeisCpaGu1QjzQ"/>
+    </profileApplication>
+  </uml:Model>
+  <Blocks:Block xmi:id="_h034gMiQEei_s-5HMfypxQ" base_Class="_x1jhwLv2EeifftqsmW9AvA"/>
+  <Blocks:Block xmi:id="_ivzPsMiQEei_s-5HMfypxQ" base_Class="_wNZRILv2EeifftqsmW9AvA"/>
+  <PortAndFlows:FlowPort xmi:id="_FmIUYMicEei_s-5HMfypxQ" base_Port="_9XDHoLv5EeifftqsmW9AvA" direction="out"/>
+  <PortAndFlows:FlowPort xmi:id="_IhLJMMicEei_s-5HMfypxQ" base_Port="_eTLKcLv6EeifftqsmW9AvA" direction="in"/>
+  <PortAndFlows:FlowPort xmi:id="_JgfRIMicEei_s-5HMfypxQ" base_Port="_M5HHULv6EeifftqsmW9AvA" direction="in"/>
+  <PortAndFlows:FlowPort xmi:id="_RH_1EMicEei_s-5HMfypxQ" base_Port="_efiygLv6EeifftqsmW9AvA" direction="in"/>
+  <PatternsProfile:Pattern xmi:id="_wNqPIMMCEeiWhYTXGuWkkg" base_Collaboration="_9J1PMLvyEeifftqsmW9AvA" patternName="Triple Modular Redundancy Pattern (TMR)" intent="Developing an embedded system with no fail-safe-state in a situation that includes high random failure rate and no limitation on redundancy, with the purpose of improving safety and reliability of the system." problem="How to deal with random faults and single-point of failure in order to increase the safety and reliability of the system without losing the input data in the&#xA;presence of faults." solution="This pattern contains three identical modules or channels&#xA;operate in parallel. This structure is used to prevent the failure of a single component, which may lead to a complete system failure. If a single fault occurs in one channel then the other two channels will continue to work correctly and produce the correct actuation control signals.&#xA;The voter plays a main role in this pattern by applying the voting policy to take the majority from the results which represents the correct actual result.&#xA;This pattern does not identify the type or the reason of the fault; it just determines the module that contains a fault without correcting the fault itself." preview="org.polarsys.chess.patterns.library/preview/TMRPattern.png">
+    <otherNames>2-oo-3 Redundancy Pattern</otherNames>
+    <otherNames>Homogeneous Triplex Pattern</otherNames>
+    <consequences>The main drawback for this pattern is that it is not appropriate for systematic faults handling. In this case the three channels are identical and have the same possible fault, and the system will continue to work producing
+invalid data</consequences>
+    <consequences>To deal with single-point of failure in the input sensor, it is possible to use three separate sensors. This option might lead to a problem, especially for different sensors with different speed of responses</consequences>
+    <implementation>To implement this pattern, the designer should replicate the channel which includes the replication of the hardware as well as software.</implementation>
+    <implementation>With respect to the sensor, there are two options either to use a common single sensor for the three channels which may become a source for a single-point-failure, or to use three separate sensors one for each channel,
+which will increase the recurring cost</implementation>
+    <implementation>If the outputs from the three channels are binary and identical without any deviation, then the voting can be implemented as bit-by-bit comparator that checks for a common output between two channels or more</implementation>
+    <implementation>If the three modules consist of different hardware components, then there might be a divergence between the correct outputs. So, the designer should determine a tolerance value δ, such that the two outputs A and B
+will be considered as identical as long as |A − B| &lt; δ</implementation>
+    <patternAssumptions>The voter is a simple component that is carefull designed with reliability ~ 1</patternAssumptions>
+    <patternGuarantees>R = 3Rchannel^2 - 2Rchannel^3</patternGuarantees>
+  </PatternsProfile:Pattern>
+  <PatternsProfile:Pattern xmi:id="_fgjMwMvCEeid6c5J8m41ew" base_Collaboration="_dKGSwMvCEeid6c5J8m41ew" patternName="Monitor-Actuator Pattern" intent="" problem="" solution="" preview="org.polarsys.chess.patterns.library/preview/MAPattern.png"/>
+  <PortAndFlows:FlowPort xmi:id="_afEywMvJEeiG7qFbiuwNbA" base_Port="_Rnz3IMvJEeiG7qFbiuwNbA" direction="out"/>
+  <PortAndFlows:FlowPort xmi:id="_pQA3gMvJEeiG7qFbiuwNbA" base_Port="_pQAQcMvJEeiG7qFbiuwNbA" direction="out"/>
+  <PortAndFlows:FlowPort xmi:id="_Hk0dUMvLEeiG7qFbiuwNbA" base_Port="_E4JbsMvLEeiG7qFbiuwNbA" direction="in"/>
+  <PortAndFlows:FlowPort xmi:id="_IMqgcMvLEeiG7qFbiuwNbA" base_Port="_A5X5AMvLEeiG7qFbiuwNbA" direction="in"/>
+  <Blocks:Block xmi:id="_MphGQMvLEeiG7qFbiuwNbA" base_Class="_yiX7EMvGEeiG7qFbiuwNbA"/>
+  <Blocks:Block xmi:id="_NZd8gMvLEeiG7qFbiuwNbA" base_Class="_tksgIMvGEeiG7qFbiuwNbA"/>
+  <PortAndFlows:FlowPort xmi:id="_txGq0MvOEeiFVYS8koh7VQ" base_Port="_d4G5MMvLEeiG7qFbiuwNbA" direction="out"/>
+  <PortAndFlows:FlowPort xmi:id="_wOZMoMvOEeiFVYS8koh7VQ" base_Port="_dJp3wMvLEeiG7qFbiuwNbA" direction="in"/>
+</xmi:XMI>

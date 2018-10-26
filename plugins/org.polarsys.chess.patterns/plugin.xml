@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension
+	      point="org.eclipse.ui.commands">
+	      <command
+            id="org.polarsys.chess.patterns.commands.apply.id"
+         	categoryId="org.polarsys.chess.commands.category"
+        	description="Select and Apply a Design Pattern"
+        	name="Select and Apply a Design Pattern">
+	      </command>
+	</extension>
+
+	<extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.polarsys.chess.patterns.commands.ApplyDesignPatternCommand"
+            commandId="org.polarsys.chess.patterns.commands.apply.id">
+      </handler>
+   </extension>
+
+	<extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.polarsys.chess.modelexplorerpopupmenu.id">
+         <menu
+               id="org.polarsys.chess.patterns.id"
+               label="Design Patterns">
+            <command
+                  commandId="org.polarsys.chess.patterns.commands.apply.id"
+                  label="Select and Apply a Design Pattern"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.emf.ecore.EObject">
+                        <instanceof
+                              value="org.eclipse.uml2.uml.Class">
+                        </instanceof>
+                     </adapt>
+                  </iterate>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>    
+
+</plugin>

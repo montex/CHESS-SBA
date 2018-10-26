@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecore.uri_mapping">
+      <mapping
+            source="pathmap://CHESS_DESIGN_PATTERNS/"
+            target="platform:/plugin/org.polarsys.chess.patterns.library/model/">
+      </mapping>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLLibrary">
+      <library
+            iconpath="platform:/plugin/org.polarsys.chess.service/icons/CHESSicon.gif"
+            name="CHESS Design Patterns"
+            path="pathmap://CHESS_DESIGN_PATTERNS/CHESSPatterns.uml"
+            provider="Intecs">
+      </library>
+   </extension>
+
+</plugin>
