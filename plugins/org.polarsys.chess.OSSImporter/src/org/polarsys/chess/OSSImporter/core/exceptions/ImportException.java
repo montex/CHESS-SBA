@@ -8,7 +8,7 @@
  * Contributors:
  *     Luca Cristoforetti - initial API and implementation
  ******************************************************************************/
-package org.polarsys.chess.OSSImporter.exceptions;
+package org.polarsys.chess.OSSImporter.core.exceptions;
 
 /**
  * An exception that could arise during the import.

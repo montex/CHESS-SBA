@@ -89,6 +89,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
 
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl;
 
+import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.ParameterizedArchitecturePackage;
+import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitecturePackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
@@ -388,6 +390,7 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		ARINCComponentModelPackageImpl theARINCComponentModelPackage = (ARINCComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) instanceof ARINCComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) : ARINCComponentModelPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
+		ParameterizedArchitecturePackageImpl theParameterizedArchitecturePackage = (ParameterizedArchitecturePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) instanceof ParameterizedArchitecturePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) : ParameterizedArchitecturePackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theSTSPackage.createPackageContents();
@@ -409,6 +412,7 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		theARINCComponentModelPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
 		theSafetyPackage.createPackageContents();
+		theParameterizedArchitecturePackage.createPackageContents();
 
 		// Initialize created meta-data
 		theSTSPackage.initializePackageContents();
@@ -430,6 +434,7 @@ public class STSPackageImpl extends EPackageImpl implements STSPackage {
 		theARINCComponentModelPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
 		theSafetyPackage.initializePackageContents();
+		theParameterizedArchitecturePackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theSTSPackage.freeze();

@@ -85,10 +85,11 @@ public class FileNamesUtil {
 		final String fileName;
 
 		if (storeResult) {
+
 			resPath = analysisResultUtil.getResultDir();
+
 			fileName = resPath + File.separator + "extended_" + modelSystemName + "_" + AnalysisResultUtil.FTA_ANALYSIS
 					+ "_c" + index + "_" + getDate() + XML_EXT;
-
 		} else {
 			final IFolder folder = computeXSapFolder(editor);
 			final IFolder resFolder = folder.getFolder(CommandsCommon.RES_FOLD);
@@ -113,7 +114,9 @@ public class FileNamesUtil {
 		final String fileName;
 
 		if (storeResult) {
+
 			resPath = analysisResultUtil.getResultDir();
+
 			fileName = resPath + File.separator + modelSystemName + "_" + AnalysisResultUtil.FMEA_ANALYSIS + "_"
 					+ getDate() + XML_EXT;
 		} else {

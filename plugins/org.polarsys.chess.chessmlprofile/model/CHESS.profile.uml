@@ -9297,6 +9297,26 @@ In case of base Comment, its usage is the same of the CHRTSpecification.</body>
         <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_SG2HkI_0Eei_FpVxgbKIWA" name="extension_Hazard" type="_4exhMI_zEei_FpVxgbKIWA" aggregation="composite" association="_SGYNgI_0Eei_FpVxgbKIWA"/>
       </packagedElement>
     </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_RL274MyCEeikFNSMhHHwbQ" name="ParameterizedArchitecture">
+      <packagedElement xmi:type="uml:Stereotype" xmi:id="_RL274cyCEeikFNSMhHHwbQ" name="InstantiatedArchitecture">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_RL274syCEeikFNSMhHHwbQ" name="ParameterList">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RL2748yCEeikFNSMhHHwbQ"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RL275MyCEeikFNSMhHHwbQ" value="*"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_RL275cyCEeikFNSMhHHwbQ" name="base_Property" association="_RL276cyCEeikFNSMhHHwbQ">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_RL275syCEeikFNSMhHHwbQ" name="InstantiatedRootComponent">
+          <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RL2758yCEeikFNSMhHHwbQ"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RL276MyCEeikFNSMhHHwbQ" value="1"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Extension" xmi:id="_RL276cyCEeikFNSMhHHwbQ" name="E_InstantiatedArchitecture_Property1" memberEnd="_RL276syCEeikFNSMhHHwbQ _RL275cyCEeikFNSMhHHwbQ">
+        <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_RL276syCEeikFNSMhHHwbQ" name="extension_InstantiatedArchitecture" type="_RL274cyCEeikFNSMhHHwbQ" aggregation="composite" association="_RL276cyCEeikFNSMhHHwbQ"/>
+      </packagedElement>
+    </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_4nGdAFt2EeCB9JyGkIbTqQ">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_4nHEEFt2EeCB9JyGkIbTqQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA"/>

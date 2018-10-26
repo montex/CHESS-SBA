@@ -92,6 +92,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.Threat
 
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl;
 
+import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.ParameterizedArchitecturePackage;
+import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitecturePackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
 
@@ -234,6 +236,7 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		ARINCComponentModelPackageImpl theARINCComponentModelPackage = (ARINCComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) instanceof ARINCComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ARINCComponentModelPackage.eNS_URI) : ARINCComponentModelPackage.eINSTANCE);
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
+		ParameterizedArchitecturePackageImpl theParameterizedArchitecturePackage = (ParameterizedArchitecturePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) instanceof ParameterizedArchitecturePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) : ParameterizedArchitecturePackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theSafetyPackage.createPackageContents();
@@ -255,6 +258,7 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		theARINCComponentModelPackage.createPackageContents();
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
+		theParameterizedArchitecturePackage.createPackageContents();
 
 		// Initialize created meta-data
 		theSafetyPackage.initializePackageContents();
@@ -276,6 +280,7 @@ public class SafetyPackageImpl extends EPackageImpl implements SafetyPackage {
 		theARINCComponentModelPackage.initializePackageContents();
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
+		theParameterizedArchitecturePackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theSafetyPackage.freeze();

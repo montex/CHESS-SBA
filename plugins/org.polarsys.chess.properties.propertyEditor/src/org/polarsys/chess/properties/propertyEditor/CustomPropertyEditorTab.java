@@ -11,6 +11,9 @@
 package org.polarsys.chess.properties.propertyEditor;
 
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.uml2.uml.Constraint;
 import org.polarsys.chess.contracts.profile.chesscontract.util.EntityUtil;
@@ -51,8 +54,12 @@ public class CustomPropertyEditorTab extends PropertyEditorTab {
 
 	@Override
 	public void propertyEditorchanged(Object property, String textChanged) {
-		
+		TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(property);
+		domain.getCommandStack().execute(new RecordingCommand(domain) {
+		@Override
+		protected void doExecute() {
 		entityUtil.setTextInUMLConstraint((Constraint) property, textChanged, "OCRA");
+		}});
 	}
 
 	public String getStrFromProperty(Object property) {

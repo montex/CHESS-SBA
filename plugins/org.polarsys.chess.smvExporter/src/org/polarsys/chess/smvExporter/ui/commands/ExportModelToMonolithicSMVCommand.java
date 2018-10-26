@@ -126,8 +126,8 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 		if( monolithicSMVFilePath == null ) {
 			monolithicSMVFilePath = nuXmvDirectoryUtil.getMonolithicSMVFilePath(umlSelectedComponent.getName());
 		}
-		final String smvMapFilepath = nuXmvDirectoryUtil.getSmvMapFilePath();
-		final String ossFilePath = ocraDirectoryUtil.getOSSFilePath();
+		final String smvMapDirPath = nuXmvDirectoryUtil.getSmvFileDirectory();
+		final String ossDirPath = ocraDirectoryUtil.getOSSDirPath();
 		final Resource umlSelectedResource = umlSelectedComponent.eResource();
 		final boolean showPopups = false;
 		final boolean usexTextValidation = true;
@@ -141,7 +141,7 @@ public class ExportModelToMonolithicSMVCommand extends AbstractJobCommand {
 
 		logger.debug("createMonolithicSMV");
 		if (!ocraExecService.createMonolithicSMV(umlSelectedComponent, umlSelectedResource, smvPathComponentNameMap,
-				isDiscreteTime, usexTextValidation, showPopups, ossFilePath, smvMapFilepath, 
+				isDiscreteTime, usexTextValidation, showPopups, ossDirPath, smvMapDirPath, 
 				monolithicSMVFilePath, isProgrExec, internalExecution, monitor)) {
 			final ExecutionException e = new ExecutionException("createMonolithicSMV command failed.");
 			DialogUtil.getInstance().showMessage_ExceptionError(e);

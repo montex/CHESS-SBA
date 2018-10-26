@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="generate" name="org.polarsys.chess.contracts.transformations">
-    <property name="ECLIPSE_HOME" value="../../../../../../Tools/eclipse"/>
-    <property name="ECLIPSE_WORKSPACE" value="../../../../../../../../home/cristofo/workspace"/>
+    <property name="ECLIPSE_HOME" value="../../../../../.."/>
+    <property name="ECLIPSE_WORKSPACE" value="../../../../../../workspace"/>
 
     <!-- The classpath with only the dependencies used by the project -->
     <path id="org.polarsys.chess.contracts.transformations.libraryclasspath">
@@ -9,14 +9,17 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.core.runtime_3.12.0.v20160606-1342.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/javax.inject_1.0.0.v20091030.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.osgi_3.11.3.v20170209-1843.jar"/>
+        <pathelement location="${ECLIPSE_WORKSPACE}//.metadata/.plugins/org.eclipse.pde.core/.bundle_pool/plugins/org.eclipse.equinox.transforms.hook_1.1.0.v20131021-1933.jar"/>
+        <pathelement location="${ECLIPSE_WORKSPACE}//.metadata/.plugins/org.eclipse.pde.core/.bundle_pool/plugins/org.eclipse.equinox.weaving.hook_1.1.200.v20150730-1648.jar"/>
+        <pathelement location="${ECLIPSE_WORKSPACE}//.metadata/.plugins/org.eclipse.pde.core/.bundle_pool/plugins/org.eclipse.equinox.region_1.3.2.v20170118-1930.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.osgi.compatibility.state_1.0.200.v20160504-1419.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.wst.jsdt.nashorn.extension_1.0.2.v201610280128.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.equinox.common_3.8.0.v20160509-1230.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.core.jobs_3.8.0.v20160509-0411.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.equinox.registry_3.6.100.v20160223-2218.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.equinox.preferences_3.6.1.v20160815-1406.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.core.contenttype_3.5.100.v20160418-1621.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.equinox.app_1.3.400.v20150715-1528.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.uml2.uml_5.2.3.v20170227-0935.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.ecore_2.12.0.v20160420-0247.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.common_2.12.0.v20160420-0247.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.ecore.xmi_2.12.0.v20160420-0247.jar"/>
@@ -36,7 +39,7 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.codegen_2.11.0.v20160526-0356.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.ui_3.108.1.v20160929-1045.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.swt_3.105.3.v20170228-0512.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.swt.gtk.linux.x86_64_3.105.3.v20170228-0512.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.swt.win32.win32.x86_64_3.105.3.v20170228-0512.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.jface_3.12.2.v20170113-2113.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.core.commands_3.8.1.v20161221-1651.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.ui.workbench_3.108.3.v20170216-1539.jar"/>
@@ -89,6 +92,35 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.emf.facet.custom.metamodel_1.2.0.201703080851.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.emf.facet.efacet.metamodel_1.2.0.201703080851.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.emf.facet.util.emf.catalog_1.2.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.uml.tools_2.0.2.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.infra.emf_2.1.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.gmf.runtime.emf.type.core_1.9.0.201606071959.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.emf.facet.custom.core_2.0.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.emf.facet.efacet.core_2.0.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.emf.facet.efacet.catalog_1.2.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.emf.facet.util.emf.core_1.2.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.emf.facet.efacet_1.2.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.infra.services.edit.ui_2.0.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.infra.services.edit_2.0.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.infra.ui.emf_1.2.1.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.databinding_1.3.0.v20160526-0356.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.core.databinding.property_1.6.0.v20160427-0852.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.emf.facet.custom.ui_2.0.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.emf.facet.query.java.core_2.0.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.emf.facet.util.ui_1.2.0.201703080851.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.sirius_4.0.0.201605311157.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.sirius.ui_4.0.0.201605311157.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.ecore.edit_2.9.0.v20160526-0356.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.gmf.runtime.diagram.ui_1.8.0.201606071959.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.gef_3.11.0.201606061308.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.gmf.runtime.emf.ui_1.7.0.201606071959.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.gmf.runtime.common.ui.action_1.7.0.201606071959.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.gmf.runtime.common.ui.services.action_1.7.0.201606071959.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.gmf.runtime.common.ui.services_1.9.0.201606071959.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.gmf.runtime.gef.ui_1.7.0.201606071959.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.gmf.runtime.draw2d.ui_1.9.0.201606071959.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.gmf.runtime.notation_1.8.0.201606071631.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.gmf.runtime.diagram.core_1.7.0.201606071959.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.m2m.qvt.oml.emf.util_3.6.0.v20160606-1156.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.infra.gmfdiag.commands_2.0.0.201703080851.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.papyrus.views.modelexplorer_2.1.0.201703080851.jar"/>

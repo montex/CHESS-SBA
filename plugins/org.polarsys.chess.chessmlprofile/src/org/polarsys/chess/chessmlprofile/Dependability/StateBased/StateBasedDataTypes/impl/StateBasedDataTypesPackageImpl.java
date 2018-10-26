@@ -64,6 +64,8 @@ import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedData
 import org.polarsys.chess.chessmlprofile.Dependability.StateBased.StateBasedDataTypes.SteadyState;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.ThreatsPropagationPackage;
 import org.polarsys.chess.chessmlprofile.Dependability.ThreatsPropagation.impl.ThreatsPropagationPackageImpl;
+import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.ParameterizedArchitecturePackage;
+import org.polarsys.chess.chessmlprofile.ParameterizedArchitecture.impl.ParameterizedArchitecturePackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.ARINCComponentModelPackage;
 import org.polarsys.chess.chessmlprofile.Predictability.ARINCComponentModel.impl.ARINCComponentModelPackageImpl;
 import org.polarsys.chess.chessmlprofile.Predictability.DeploymentConfiguration.HardwareBaseline.HardwareBaselinePackage;
@@ -240,6 +242,7 @@ public class StateBasedDataTypesPackageImpl extends EPackageImpl implements Stat
 		ComponentModelPackageImpl theComponentModelPackage = (ComponentModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) instanceof ComponentModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ComponentModelPackage.eNS_URI) : ComponentModelPackage.eINSTANCE);
 		STSPackageImpl theSTSPackage = (STSPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) instanceof STSPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(STSPackage.eNS_URI) : STSPackage.eINSTANCE);
 		SafetyPackageImpl theSafetyPackage = (SafetyPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) instanceof SafetyPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SafetyPackage.eNS_URI) : SafetyPackage.eINSTANCE);
+		ParameterizedArchitecturePackageImpl theParameterizedArchitecturePackage = (ParameterizedArchitecturePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) instanceof ParameterizedArchitecturePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ParameterizedArchitecturePackage.eNS_URI) : ParameterizedArchitecturePackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theStateBasedDataTypesPackage.createPackageContents();
@@ -261,6 +264,7 @@ public class StateBasedDataTypesPackageImpl extends EPackageImpl implements Stat
 		theComponentModelPackage.createPackageContents();
 		theSTSPackage.createPackageContents();
 		theSafetyPackage.createPackageContents();
+		theParameterizedArchitecturePackage.createPackageContents();
 
 		// Initialize created meta-data
 		theStateBasedDataTypesPackage.initializePackageContents();
@@ -282,6 +286,7 @@ public class StateBasedDataTypesPackageImpl extends EPackageImpl implements Stat
 		theComponentModelPackage.initializePackageContents();
 		theSTSPackage.initializePackageContents();
 		theSafetyPackage.initializePackageContents();
+		theParameterizedArchitecturePackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theStateBasedDataTypesPackage.freeze();
