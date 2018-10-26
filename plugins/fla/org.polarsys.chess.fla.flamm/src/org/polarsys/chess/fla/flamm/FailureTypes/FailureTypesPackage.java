@@ -48,7 +48,7 @@ public class FailureTypesPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final String eNS_URI = "http://polarsys.org/chess/fla/flamm/FailureTypes";
+	public static final String eNS_URI = "http://www.polarsys.org/chess/fla/flamm/FailureTypes";
 
 	/**
 	 * The package namespace name.

@@ -116,7 +116,10 @@ public class FlaAnalysisRunner implements IRunnableWithProgress{
 			backpropagateAnalysisResults(this.analyzedSystem, monitor);
 			createOutputXmlFile(this.analyzedSystem, monitor);
 			monitor.worked(1);
-
+			//Sigon_ZQ
+			monitor.subTask("Specializing the results...");
+			specializeAnalysisResults(monitor);
+			//Sigoff_ZQ
 			Thread.sleep(1000);
 		} catch (TransformationException e) {
 			printlnToCHESSConsole("*** Error running FLA transformation ***");
@@ -190,6 +193,26 @@ public class FlaAnalysisRunner implements IRunnableWithProgress{
 		}
 	}
 	
+	
+	//Sigon_ZQ
+	
+	protected void specializeAnalysisResults(IProgressMonitor monitor)
+	{
+		try{
+		runSpecializeAnalysisTransformation(monitor);
+		} catch(Exception e){
+			e.printStackTrace();
+			
+		}
+}
+	
+	protected void runSpecializeAnalysisTransformation(IProgressMonitor monitor) {
+		QVToTransformation transformation = new QVToTransformation();
+		transformation.performChess2FlaMMSpecialization(chessResource, flaResource, monitor, rootComponentQualifiedName + "_instSpec");
+		
+	}
+	
+	//Sigoff_ZQ
 	protected void runInput2FlaTransformation(IProgressMonitor monitor) throws TransformationException{
 		FlammPackage.eINSTANCE.getClass();
 		ResourceSet resourceSet = new ResourceSetImpl();

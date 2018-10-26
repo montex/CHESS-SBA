@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:FailureTypes="http://www.polarsys.org/chess/fla/flamm/FailureTypes" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ecore:nsPrefix="FailureTypes" ecore:package="org.polarsys.chess.fla.flamm.FailureTypes" targetNamespace="http://www.polarsys.org/chess/fla/flamm/FailureTypes">
+  <xsd:simpleType name="FailureType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="noFailure"/>
+      <xsd:enumeration value="failure"/>
+      <xsd:enumeration value="variable"/>
+      <xsd:enumeration value="wildcard"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType ecore:name="A_avoidable" name="A_avoidable">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unspecified"/>
+      <xsd:enumeration value="incompletion"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType ecore:name="C_avoidable" name="C_avoidable">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unspecified"/>
+      <xsd:enumeration value="inconsistency"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType ecore:name="I_avoidable" name="I_avoidable">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unspecified"/>
+      <xsd:enumeration value="interference"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType ecore:name="D_avoidable" name="D_avoidable">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unspecified"/>
+      <xsd:enumeration value="impermanence"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType ecore:name="A_mitigation" name="A_mitigation">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unspecified"/>
+      <xsd:enumeration value="all_or_nothing"/>
+      <xsd:enumeration value="all_or_compensation"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType ecore:name="C_mitigation" name="C_mitigation">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unspecified"/>
+      <xsd:enumeration value="full_consistency"/>
+      <xsd:enumeration value="range_violation_allowed"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType ecore:name="I_mitigation" name="I_mitigation">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unspecified"/>
+      <xsd:enumeration value="portable_level"/>
+      <xsd:enumeration value="serializable"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType ecore:name="D_mitigation" name="D_mitigation">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unspecified"/>
+      <xsd:enumeration value="no_loss"/>
+      <xsd:enumeration value="partial_loss_allowed"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

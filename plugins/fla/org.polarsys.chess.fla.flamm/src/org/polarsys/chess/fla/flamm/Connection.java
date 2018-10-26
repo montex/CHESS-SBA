@@ -37,12 +37,12 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.fla.flamm.Connection#getFrom <em>From</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Connection#getTo <em>To</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.Connection#getRules <em>Rules</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.fla.flamm.FlammPackage#getConnection()
  * @model kind="class"

@@ -39,7 +39,6 @@ import org.eclipse.m2m.qvt.oml.ExecutionDiagnostic;
 import org.eclipse.m2m.qvt.oml.ModelExtent;
 import org.eclipse.m2m.qvt.oml.TransformationExecutor;
 import org.eclipse.m2m.qvt.oml.util.WriterLog;
-import org.eclipse.swt.widgets.Display;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.fla.launch.Activator;
 import org.polarsys.chess.fla.flamm.FlammPackage;
@@ -52,7 +51,9 @@ public class QVToTransformation {
 	private static final String FLAMM2FLAXML = "platform:/plugin/org.polarsys.chess.fla.transformations/transforms/FlaMM2FlaXML.qvto";
 	private static final String FLAXML2FLAMM = "platform:/plugin/org.polarsys.chess.fla.transformations/transforms/FlaXML2FlaMM.qvto";
 	private static final String FLAMM2CHESS = "platform:/plugin/org.polarsys.chess.fla.transformations/transforms/FlaMM2Chess_BackPropagation.qvto";
-	
+	//Sigon_ZQ
+	private static final String CHESS2FLAMMSPECIALIZATION= "platform:/plugin/org.polarsys.chess.fla.transformations/transforms/Chess2FLAMMSpecialization.qvto";
+	//Sigoff_ZQ
 	boolean isChessUserAction;
 	private DiagramEditPart diagramEditPart = null;
 	private Resource sourceResource;
@@ -103,6 +104,23 @@ public class QVToTransformation {
 		performTransformation(FLAMM2CHESS);
 	}
 	
+	
+	//Sigon_ZQ
+	public void performChess2FlaMMSpecialization(
+			Resource chessResource, Resource flaResource, IProgressMonitor monitor, String selectedElement) {
+		this.sourceResource = chessResource;
+		this.targetResource = flaResource;
+		this.monitor = monitor;
+		this.selectedElement = selectedElement;
+		this.createNewModel = false;
+		this.isTargetChessModel = false;
+		System.out.println("I am here, where I could call the Transformation easily");
+		performTransformation(CHESS2FLAMMSPECIALIZATION);
+		System.out.println("I am done doing that");
+	}
+	//Sigoff_ZQ
+	
+	
 	private void performTransformation(String transformationPath) {
 		URI transformationURI = URI.createURI(transformationPath);
 		final TransformationExecutor executor = new TransformationExecutor(transformationURI );
@@ -129,28 +147,24 @@ public class QVToTransformation {
 		if (isTargetChessModel) {
 			try {
          	final ModelExtent finalOutput = output;
-				
-				Display.getDefault().syncExec(new Runnable() {
-					public void run() {
-						TransactionalEditingDomain editingDomain = diagramEditPart.getEditingDomain();
-						editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
-							protected void doExecute() {
-								ExecutionDiagnostic result = executor.execute(context, input, finalOutput);
-								if(result.getSeverity() != Diagnostic.OK) {
-									// turn the result diagnostic into status and send it to error log			
-									IStatus status = BasicDiagnostic.toIStatus(result);
-									Activator.getDefault().getLog().log(status);
-								}
-							}
-						});
-					}
+				TransactionalEditingDomain editingDomain = diagramEditPart.getEditingDomain();
+				editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
+	            protected void doExecute() {
+	      			ExecutionDiagnostic result = executor.execute(context, input, finalOutput);
+	      			if(result.getSeverity() != Diagnostic.OK) {
+	      				// turn the result diagnostic into status and send it to error log			
+	      				IStatus status = BasicDiagnostic.toIStatus(result);
+	      				Activator.getDefault().getLog().log(status);
+	      			}
+	            }
 				});
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {
+			System.out.println("Everything is setup, lets execute it");
 			ExecutionDiagnostic result = executor.execute(context, input, output);
-
+			System.out.println("It has been executed");
 			if(result.getSeverity() == Diagnostic.OK) {
 				// the output objects got captured in the output extent
 				final List<EObject> outObjects = output.getContents();

@@ -1,0 +1,244 @@
+/*******************************************************************************
+ * Copyright (c) 2018, MDH 
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *  
+ *   Contributors:
+ *   Enrique Zornoza Moreno, Zulqarnain Haider
+ *   Initial API and implementation and/or initial documentation
+ *******************************************************************************/
+/**
+ */
+
+
+pre{
+	"Running transformation".println();
+	var mapping : Sequence ;
+	var ftas : Sequence ;
+	var parents : Sequence;
+	var events : Sequence;
+	var portNames : Sequence;
+	mapping = flamm!Port.allInstances();
+	
+	for(port in mapping){
+		if(port.owner.parent.isUndefined()and port.owner.outputPorts.contains(port)){
+			for(f in port.failures){
+				if(f.id.contains("noFailure") = false){
+					var fta = new emfta!FTAModel;
+					fta.name = f.id + " failure of " + port.name + " in " + port.owner.name;
+					ftas.add(fta);
+				}
+			}
+		}
+	}
+}
+
+rule outputOfComposite2FTA
+	transform p : flamm!Port
+	to e : emfta!Event{
+	
+	guard : p.owner.parent.isUndefined() and p.owner.outputPorts.contains(p)
+	
+	
+	p.name.println();
+	var firstelement : Boolean = true;
+	for(f in p.failures){
+		for(ft in ftas){
+			if(ft.name = f.id + " failure of " + p.name + " in " + p.owner.name){
+				if(firstelement = true){
+					if(f.id.contains("noFailure")=false){
+						e.name = f.id + " failure of " + p.name + " in " + p.owner.name;
+						e.type = emfta!EventType#Intermediate;
+						var gate : new emfta!Gate;
+						e.gate = gate;
+						e.gate.type = emfta!GateType#OR;
+						ft.events.add(e);
+						firstelement=false;
+						for(con in p.connectedPorts){
+							for(fail in con.failures){
+								if(fail.id = f.id){
+									parents.clear();
+									con.createRoot(fail,ft,e);
+								}
+							}
+						}
+					}
+				}else{
+					if(f.id.contains("noFailure")=false){
+						var ev : new emfta!Event;
+						ev.name = f.id + " failure of " + p.name + " in " + p.owner.name;
+						ev.type = emfta!EventType#Intermediate;
+						var gate : new emfta!Gate;
+						ev.gate = gate;
+						ev.gate.type = emfta!GateType#OR;
+						ft.events.add(ev);
+						for(con in p.connectedPorts){
+							for(fail in con.failures){
+								if(fail.id = f.id){
+									parents.clear();
+									con.createRoot(fail,ft,ev);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+}
+	operation flamm!Port createRoot(failure : flamm!Failure, ft : emfta!FTAModel, evp : emfta!Event) : Sequence{
+	
+	var port : flamm!Port;	
+	port=self;
+	//If the analyzed port is simple and of input type, look in the rules that contain it and actualize the analyzed port to the output of the rule. Do this iteratively until the analyzed port is the output port of the composite component.
+	if(port.owner.parent.isDefined() and port.owner.outputPorts.includes(port)){
+		for(f in port.failures){
+			if(f.id.contains("noFailure")=false and f.id = failure.id ){
+				var ev : new emfta!Event;
+				ev.name = f.id + " failure of " + port.name + " in " + port.owner.name;
+				if(f.previousFailures.isEmpty()){
+					ev.type = emfta!EventType#Basic;
+					ft.events.add(ev);
+					evp.gate.events.add(ev);
+					parents.add(ev);
+				}else{
+					ev.type = emfta!EventType#Intermediate;
+					var gate : new emfta!Gate;
+					ev.gate = gate;
+					//new functionalities
+					if(f.specialization->isDefined()){
+					var attackPort;
+							for(rul in port.owner.rules){
+								var contador : Integer = 0;
+								for(outexp in rul.outputExpression){
+									for(f in outexp.failures){
+										if((outexp.port = port) and (f.id = failure.id)){
+											for(iexp in rul.inputExpression){
+												contador = contador + 1;
+												}
+											if(contador > 1){
+										}else{
+											for(iexp in rul.inputExpression){
+												attackPort = iexp.port.name;
+												}
+									}
+								}
+							}
+						}
+					}
+					
+					//------------------------------------
+					var eventSp : new emfta!Event;
+					eventSp.name= f.specialization + " at port " + port.name + " in " + port.owner.name + " component";
+					eventSp.type = emfta!EventType#Intermediate;
+					var gate : new emfta!Gate;
+					eventSp.gate = gate;
+					eventSp.gate.type = emfta!GateType#AND;
+					ft.events.add(eventSp);
+					evp.gate.events.add(eventSp);
+					var eventVu : new emfta!Event;
+					eventVu.name= f.vulnerability + " vulnerability in " + port.owner.name + " component";
+					eventSp.gate.events.add(eventVu);
+					ft.events.add(eventVu);
+					var eventAtt : new emfta!Event;
+					eventAtt.name= f.attack + " at port " + attackPort + " in " + port.owner.name + " component";
+					eventSp.gate.events.add(eventAtt);
+					ft.events.add(eventAtt);
+ 					}
+					
+					for(rul in port.owner.rules){
+						var contador : Integer = 0;
+						for(outexp in rul.outputExpression){
+							for(f in outexp.failures){
+								if((outexp.port = port) and (f.id = failure.id)){
+									for(iexp in rul.inputExpression){
+										contador = contador + 1;
+									}
+									if(contador > 1){
+										ev.gate.type = emfta!GateType#AND;
+									}else{
+										ev.gate.type = emfta!GateType#OR;
+									}
+								}
+							}
+						}
+					}
+					ft.events.add(ev);
+					evp.gate.events.add(ev);
+					parents.add(ev);
+					for(rul in port.owner.rules){
+						for(outexp in rul.outputExpression){
+							for(f in outexp.failures){
+								if((outexp.port = port) and (f.id = failure.id)){
+									for(iexp in rul.inputExpression){
+										for(f in iexp.failures){
+											iexp.port.createRoot(f,ft,ev);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}else{
+		if(port.owner.parent.isDefined() and port.owner.inputPorts.includes(port)){
+			for(f in port.failures){
+				if(f.id.contains("noFailure")=false and (f.id = failure.id)){
+					var ev : new emfta!Event;
+					ev.name = f.id + " failure of " + port.name + " in " + port.owner.name;
+					if(f.previousFailures.isEmpty()){
+						ev.type = emfta!EventType#Basic;
+						ft.events.add(ev);
+						evp.gate.events.add(ev);
+						parents.add(ev);
+					}else{
+						ev.type = emfta!EventType#Intermediate;
+						var gate : new emfta!Gate;
+						ev.gate = gate;
+						ev.gate.type = emfta!GateType#OR;
+						ft.events.add(ev);
+						evp.gate.events.add(ev);
+						parents.add(ev);
+						for(con in port.connectedPorts){
+							for(fa in con.failures){
+								if(fa.id = failure.id){
+									con.createRoot(fa,ft,ev);
+								}
+							}
+						}
+					}
+				}
+			}
+		}else{
+			if(port.owner.parent.isUndefined() and port.owner.inputPorts.includes(port)){
+				for(f in port.failures){
+					if(f.id.contains("noFailure")=false and f.id = failure.id){
+						var ev : new emfta!Event;
+						ev.name = f.id + " failure of " + port.name + " in " + port.owner.name;
+						if(f.previousFailures.isEmpty()){
+							ev.type = emfta!EventType#Basic;
+							ft.events.add(ev);
+							evp.gate.events.add(ev);
+							parents.add(ev);
+						}else{
+							ev.type = emfta!EventType#External;
+							ft.events.add(ev);
+							evp.gate.events.add(ev);
+							parents.add(ev);
+						}
+					}
+				}
+			}
+		}
+	}
+	return parents;
+}
+

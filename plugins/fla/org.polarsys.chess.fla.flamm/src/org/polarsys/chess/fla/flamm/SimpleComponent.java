@@ -22,7 +22,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.BasicInternalEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.polarsys.chess.fla.flamm.analysis.FlaSystem;
 
@@ -35,11 +35,13 @@ import com.google.common.collect.Sets;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.fla.flamm.SimpleComponent#getRules <em>Rules</em>}</li>
  * </ul>
- * </p>
  *
+ * @see org.polarsys.chess.fla.flamm.FlammPackage#getSimpleComponent()
+ * @model kind="class"
  * @generated
  */
 public class SimpleComponent extends Component {
@@ -84,11 +86,13 @@ public class SimpleComponent extends Component {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Rules</em>' containment reference list.
+	 * @see org.polarsys.chess.fla.flamm.FlammPackage#getSimpleComponent_Rules()
+	 * @model containment="true"
 	 * @generated
 	 */
 	public List<Rule> getRules() {
 		if (rules == null) {
-			rules = new BasicInternalEList<Rule>(Rule.class);
+			rules = new EObjectContainmentEList<Rule>(Rule.class, this, FlammPackage.SIMPLE_COMPONENT__RULES);
 		}
 		return rules;
 	}
@@ -101,16 +105,10 @@ public class SimpleComponent extends Component {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case FlammPackage.SIMPLE_COMPONENT__INPUT_PORTS:
-				return ((InternalEList<?>)getInputPorts()).basicRemove(otherEnd, msgs);
-			case FlammPackage.SIMPLE_COMPONENT__OUTPUT_PORTS:
-				return ((InternalEList<?>)getOutputPorts()).basicRemove(otherEnd, msgs);
-			case FlammPackage.SIMPLE_COMPONENT__PARENT:
-				return basicSetParent(null, msgs);
 			case FlammPackage.SIMPLE_COMPONENT__RULES:
 				return ((InternalEList<?>)getRules()).basicRemove(otherEnd, msgs);
 		}
-		return eDynamicInverseRemove(otherEnd, featureID, msgs);
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	private List<Set<PortFailureTuple>> getPropagatedInputPortFailures() {
@@ -259,20 +257,10 @@ public class SimpleComponent extends Component {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case FlammPackage.SIMPLE_COMPONENT__ID:
-				return getId();
-			case FlammPackage.SIMPLE_COMPONENT__NAME:
-				return getName();
-			case FlammPackage.SIMPLE_COMPONENT__INPUT_PORTS:
-				return getInputPorts();
-			case FlammPackage.SIMPLE_COMPONENT__OUTPUT_PORTS:
-				return getOutputPorts();
-			case FlammPackage.SIMPLE_COMPONENT__PARENT:
-				return getParent();
 			case FlammPackage.SIMPLE_COMPONENT__RULES:
 				return getRules();
 		}
-		return eDynamicGet(featureID, resolve, coreType);
+		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
@@ -284,29 +272,12 @@ public class SimpleComponent extends Component {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case FlammPackage.SIMPLE_COMPONENT__ID:
-				setId((String)newValue);
-				return;
-			case FlammPackage.SIMPLE_COMPONENT__NAME:
-				setName((String)newValue);
-				return;
-			case FlammPackage.SIMPLE_COMPONENT__INPUT_PORTS:
-				getInputPorts().clear();
-				getInputPorts().addAll((Collection<? extends Port>)newValue);
-				return;
-			case FlammPackage.SIMPLE_COMPONENT__OUTPUT_PORTS:
-				getOutputPorts().clear();
-				getOutputPorts().addAll((Collection<? extends Port>)newValue);
-				return;
-			case FlammPackage.SIMPLE_COMPONENT__PARENT:
-				setParent((CompositeComponent)newValue);
-				return;
 			case FlammPackage.SIMPLE_COMPONENT__RULES:
 				getRules().clear();
 				getRules().addAll((Collection<? extends Rule>)newValue);
 				return;
 		}
-		eDynamicSet(featureID, newValue);
+		super.eSet(featureID, newValue);
 	}
 
 	/**
@@ -317,26 +288,11 @@ public class SimpleComponent extends Component {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case FlammPackage.SIMPLE_COMPONENT__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case FlammPackage.SIMPLE_COMPONENT__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case FlammPackage.SIMPLE_COMPONENT__INPUT_PORTS:
-				getInputPorts().clear();
-				return;
-			case FlammPackage.SIMPLE_COMPONENT__OUTPUT_PORTS:
-				getOutputPorts().clear();
-				return;
-			case FlammPackage.SIMPLE_COMPONENT__PARENT:
-				setParent((CompositeComponent)null);
-				return;
 			case FlammPackage.SIMPLE_COMPONENT__RULES:
 				getRules().clear();
 				return;
 		}
-		eDynamicUnset(featureID);
+		super.eUnset(featureID);
 	}
 
 	/**
@@ -347,20 +303,10 @@ public class SimpleComponent extends Component {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case FlammPackage.SIMPLE_COMPONENT__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case FlammPackage.SIMPLE_COMPONENT__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case FlammPackage.SIMPLE_COMPONENT__INPUT_PORTS:
-				return inputPorts != null && !inputPorts.isEmpty();
-			case FlammPackage.SIMPLE_COMPONENT__OUTPUT_PORTS:
-				return outputPorts != null && !outputPorts.isEmpty();
-			case FlammPackage.SIMPLE_COMPONENT__PARENT:
-				return getParent() != null;
 			case FlammPackage.SIMPLE_COMPONENT__RULES:
 				return rules != null && !rules.isEmpty();
 		}
-		return eDynamicIsSet(featureID);
+		return super.eIsSet(featureID);
 	}
 
 } // SimpleComponent

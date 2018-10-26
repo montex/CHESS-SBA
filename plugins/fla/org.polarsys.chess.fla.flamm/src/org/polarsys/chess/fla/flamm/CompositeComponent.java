@@ -31,11 +31,11 @@ import org.polarsys.chess.fla.flamm.analysis.FlaSystem;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.polarsys.chess.fla.flamm.CompositeComponent#getComponents <em>Components</em>}</li>
  *   <li>{@link org.polarsys.chess.fla.flamm.CompositeComponent#getConnections <em>Connections</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.polarsys.chess.fla.flamm.FlammPackage#getCompositeComponent()
  * @model kind="class"

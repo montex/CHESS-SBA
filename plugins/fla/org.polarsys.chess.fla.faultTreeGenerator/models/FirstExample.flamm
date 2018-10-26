@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="ASCII"?>
+<flamm:CompositeComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flamm="http://www.polarsys.org/chess/fla/flamm" id="model::modelComponentView::ACSComposite" name="ACSComposite">
+  <inputPorts id="model::modelComponentView::ACSComposite::gyroDistTorques" name="gyroDistTorques" connectedPorts="//@components.2/@inputPorts.0" owner="/">
+    <failures id="noFailure"/>
+    <failures type="failure" id="valueSubtle"/>
+    <failures type="failure" id="valueCoarse"/>
+  </inputPorts>
+  <inputPorts id="model::modelComponentView::ACSComposite::sunEstVec" name="sunEstVec" connectedPorts="//@components.0/@inputPorts.3 //@components.1/@inputPorts.0 //@components.3/@inputPorts.0" owner="/">
+    <failures id="noFailure"/>
+    <failures type="failure" id="valueSubtle"/>
+    <failures type="failure" id="valueCoarse"/>
+  </inputPorts>
+  <inputPorts id="model::modelComponentView::ACSComposite::angVelocity" name="angVelocity" connectedPorts="//@components.3/@inputPorts.1" owner="/">
+    <failures id="noFailure"/>
+    <failures type="failure" id="valueSubtle"/>
+    <failures type="failure" id="valueCoarse"/>
+  </inputPorts>
+  <outputPorts id="model::modelComponentView::ACSComposite::ctrlTorque" name="ctrlTorque" connectedPorts="//@components.0/@outputPorts.0" owner="/">
+    <failures id="noFailure" previousFailures="//@components.0/@outputPorts.0/@failures.0"/>
+    <failures type="failure" id="valueCoarse" previousFailures="//@components.0/@outputPorts.0/@failures.1"/>
+    <failures type="failure" id="valueSubtle" previousFailures="//@components.0/@outputPorts.0/@failures.2"/>
+  </outputPorts>
+  <outputPorts id="model::modelComponentView::ACSComposite::feedforwardTorque" name="feedforwardTorque" connectedPorts="//@components.2/@outputPorts.0" owner="/">
+    <failures id="noFailure" previousFailures="//@components.2/@outputPorts.0/@failures.0"/>
+    <failures type="failure" id="valueCoarse" previousFailures="//@components.2/@outputPorts.0/@failures.1"/>
+  </outputPorts>
+  <outputPorts id="model::modelComponentView::ACSComposite::propTorque" name="propTorque" connectedPorts="//@components.3/@outputPorts.0" owner="/">
+    <failures id="noFailure" previousFailures="//@components.3/@outputPorts.0/@failures.0"/>
+    <failures type="failure" id="valueSubtle" previousFailures="//@components.3/@outputPorts.0/@failures.1"/>
+    <failures type="failure" id="valueCoarse" previousFailures="//@components.3/@outputPorts.0/@failures.2"/>
+  </outputPorts>
+  <components xsi:type="flamm:SimpleComponent" id="model::modelComponentView::ACSComposite::torqueSelectorImpl" name="torqueSelectorImpl">
+    <inputPorts id="model::modelComponentView::TorqueSelectorImpl::propTorque" name="propTorque" connectedPorts="//@components.3/@outputPorts.0" owner="//@components.0">
+      <failures id="noFailure" previousFailures="//@components.3/@outputPorts.0/@failures.0"/>
+      <failures type="failure" id="valueSubtle" previousFailures="//@components.3/@outputPorts.0/@failures.1"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@components.3/@outputPorts.0/@failures.2"/>
+    </inputPorts>
+    <inputPorts id="model::modelComponentView::TorqueSelectorImpl::feedforwardTorque" name="feedforwardTorque" connectedPorts="//@components.2/@outputPorts.0" owner="//@components.0">
+      <failures id="noFailure" previousFailures="//@components.2/@outputPorts.0/@failures.0"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@components.2/@outputPorts.0/@failures.1"/>
+    </inputPorts>
+    <inputPorts id="model::modelComponentView::TorqueSelectorImpl::specTorque" name="specTorque" connectedPorts="//@components.1/@outputPorts.0" owner="//@components.0">
+      <failures id="noFailure" previousFailures="//@components.1/@outputPorts.0/@failures.0"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@components.1/@outputPorts.0/@failures.1"/>
+      <failures type="failure" id="valueSubtle" previousFailures="//@components.1/@outputPorts.0/@failures.2"/>
+    </inputPorts>
+    <inputPorts id="model::modelComponentView::TorqueSelectorImpl::sunEstVec" name="sunEstVec" connectedPorts="//@inputPorts.1" owner="//@components.0">
+      <failures id="noFailure" previousFailures="//@inputPorts.1/@failures.0"/>
+      <failures type="failure" id="valueSubtle" previousFailures="//@inputPorts.1/@failures.1"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@inputPorts.1/@failures.2"/>
+    </inputPorts>
+    <outputPorts id="model::modelComponentView::TorqueSelectorImpl::ctrlTorque" name="ctrlTorque" connectedPorts="//@outputPorts.0" owner="//@components.0">
+      <failures id="noFailure" previousFailures="//@components.0/@inputPorts.0/@failures.0 //@components.0/@inputPorts.1/@failures.0 //@components.0/@inputPorts.2/@failures.0 //@components.0/@inputPorts.3/@failures.0"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@components.0/@inputPorts.3/@failures.2 //@components.0/@inputPorts.0/@failures.2 //@components.0/@inputPorts.1/@failures.1 //@components.0/@inputPorts.2/@failures.1"/>
+      <failures type="failure" id="valueSubtle" previousFailures="//@components.0/@inputPorts.3/@failures.1 //@components.0/@inputPorts.0/@failures.1 //@components.0/@inputPorts.2/@failures.2 //@components.0/@inputPorts.1/@failures.1"/>
+    </outputPorts>
+    <rules>
+      <inputExpression port="//@components.0/@inputPorts.2">
+        <failures type="failure" id="valueSubtle"/>
+      </inputExpression>
+      <inputExpression port="//@components.0/@inputPorts.3">
+        <failures type="failure" id="valueSubtle"/>
+      </inputExpression>
+      <inputExpression port="//@components.0/@inputPorts.0">
+        <failures type="failure" id="valueSubtle"/>
+      </inputExpression>
+      <inputExpression port="//@components.0/@inputPorts.1">
+        <failures type="failure" id="valueCoarse"/>
+      </inputExpression>
+      <outputExpression port="//@components.0/@outputPorts.0">
+        <failures type="failure" id="valueSubtle"/>
+      </outputExpression>
+    </rules>
+    <rules>
+      <inputExpression port="//@components.0/@inputPorts.2">
+        <failures type="failure" id="valueCoarse"/>
+      </inputExpression>
+      <inputExpression port="//@components.0/@inputPorts.3">
+        <failures type="failure" id="valueCoarse"/>
+      </inputExpression>
+      <inputExpression port="//@components.0/@inputPorts.0">
+        <failures type="failure" id="valueCoarse"/>
+      </inputExpression>
+      <inputExpression port="//@components.0/@inputPorts.1">
+        <failures type="failure" id="valueCoarse"/>
+      </inputExpression>
+      <outputExpression port="//@components.0/@outputPorts.0">
+        <failures type="failure" id="valueCoarse"/>
+      </outputExpression>
+    </rules>
+  </components>
+  <components xsi:type="flamm:SimpleComponent" id="model::modelComponentView::ACSComposite::steerControllerImpl" name="steerControllerImpl">
+    <inputPorts id="model::modelComponentView::SteerControllerImpl::sunEstVec" name="sunEstVec" connectedPorts="//@inputPorts.1" owner="//@components.1">
+      <failures id="noFailure" previousFailures="//@inputPorts.1/@failures.0"/>
+      <failures type="failure" id="valueSubtle" previousFailures="//@inputPorts.1/@failures.1"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@inputPorts.1/@failures.2"/>
+    </inputPorts>
+    <outputPorts id="model::modelComponentView::SteerControllerImpl::specTorque" name="specTorque" connectedPorts="//@components.0/@inputPorts.2" owner="//@components.1">
+      <failures id="noFailure" previousFailures="//@components.1/@inputPorts.0/@failures.0"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@components.1/@inputPorts.0/@failures.2"/>
+      <failures type="failure" id="valueSubtle" previousFailures="//@components.1/@inputPorts.0/@failures.1"/>
+    </outputPorts>
+    <rules>
+      <inputExpression port="//@components.1/@inputPorts.0">
+        <failures type="failure" id="valueSubtle"/>
+      </inputExpression>
+      <outputExpression port="//@components.1/@outputPorts.0">
+        <failures type="failure" id="valueSubtle"/>
+      </outputExpression>
+    </rules>
+    <rules>
+      <inputExpression port="//@components.1/@inputPorts.0">
+        <failures type="failure" id="valueCoarse"/>
+      </inputExpression>
+      <outputExpression port="//@components.1/@outputPorts.0">
+        <failures type="failure" id="valueCoarse"/>
+      </outputExpression>
+    </rules>
+  </components>
+  <components xsi:type="flamm:SimpleComponent" id="model::modelComponentView::ACSComposite::feedforwControllerImpl" name="feedforwControllerImpl">
+    <inputPorts id="model::modelComponentView::FeedforwControllerImpl::gyroDistTorques" name="gyroDistTorques" connectedPorts="//@inputPorts.0" owner="//@components.2">
+      <failures id="noFailure" previousFailures="//@inputPorts.0/@failures.0"/>
+      <failures type="failure" id="valueSubtle" previousFailures="//@inputPorts.0/@failures.1"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@inputPorts.0/@failures.2"/>
+    </inputPorts>
+    <outputPorts id="model::modelComponentView::FeedforwControllerImpl::feedforwardTorque" name="feedforwardTorque" connectedPorts="//@outputPorts.1 //@components.0/@inputPorts.1" owner="//@components.2">
+      <failures id="noFailure" previousFailures="//@components.2/@inputPorts.0/@failures.0 //@components.2/@inputPorts.0/@failures.1"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@components.2/@inputPorts.0/@failures.2"/>
+    </outputPorts>
+    <rules>
+      <inputExpression port="//@components.2/@inputPorts.0">
+        <failures type="failure" id="valueSubtle"/>
+      </inputExpression>
+      <outputExpression port="//@components.2/@outputPorts.0">
+        <failures id="noFailure"/>
+      </outputExpression>
+    </rules>
+    <rules>
+      <inputExpression port="//@components.2/@inputPorts.0">
+        <failures type="failure" id="valueCoarse"/>
+      </inputExpression>
+      <outputExpression port="//@components.2/@outputPorts.0">
+        <failures type="failure" id="valueCoarse"/>
+      </outputExpression>
+    </rules>
+  </components>
+  <components xsi:type="flamm:SimpleComponent" id="model::modelComponentView::ACSComposite::pDControllerImpl" name="pDControllerImpl">
+    <inputPorts id="model::modelComponentView::PDControllerImpl::sunEstVec" name="sunEstVec" connectedPorts="//@inputPorts.1" owner="//@components.3">
+      <failures id="noFailure" previousFailures="//@inputPorts.1/@failures.0"/>
+      <failures type="failure" id="valueSubtle" previousFailures="//@inputPorts.1/@failures.1"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@inputPorts.1/@failures.2"/>
+    </inputPorts>
+    <inputPorts id="model::modelComponentView::PDControllerImpl::angVelocity" name="angVelocity" connectedPorts="//@inputPorts.2" owner="//@components.3">
+      <failures id="noFailure" previousFailures="//@inputPorts.2/@failures.0"/>
+      <failures type="failure" id="valueSubtle" previousFailures="//@inputPorts.2/@failures.1"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@inputPorts.2/@failures.2"/>
+    </inputPorts>
+    <outputPorts id="model::modelComponentView::PDControllerImpl::propTorque" name="propTorque" connectedPorts="//@components.0/@inputPorts.0 //@outputPorts.2" owner="//@components.3">
+      <failures id="noFailure" previousFailures="//@components.3/@inputPorts.1/@failures.0 //@components.3/@inputPorts.0/@failures.0"/>
+      <failures type="failure" id="valueSubtle" previousFailures="//@components.3/@inputPorts.0/@failures.1 //@components.3/@inputPorts.1/@failures.1"/>
+      <failures type="failure" id="valueCoarse" previousFailures="//@components.3/@inputPorts.1/@failures.2 //@components.3/@inputPorts.0/@failures.2"/>
+    </outputPorts>
+    <rules>
+      <inputExpression port="//@components.3/@inputPorts.1">
+        <failures type="failure" id="valueSubtle"/>
+      </inputExpression>
+      <outputExpression port="//@components.3/@outputPorts.0">
+        <failures id="noFailure"/>
+      </outputExpression>
+    </rules>
+    <rules>
+      <inputExpression port="//@components.3/@inputPorts.1">
+        <failures type="failure" id="valueCoarse"/>
+      </inputExpression>
+      <outputExpression port="//@components.3/@outputPorts.0">
+        <failures type="failure" id="valueCoarse"/>
+      </outputExpression>
+    </rules>
+    <rules>
+      <inputExpression port="//@components.3/@inputPorts.0">
+        <failures type="failure" id="valueSubtle"/>
+      </inputExpression>
+      <outputExpression port="//@components.3/@outputPorts.0">
+        <failures type="failure" id="valueSubtle"/>
+      </outputExpression>
+    </rules>
+    <rules>
+      <inputExpression port="//@components.3/@inputPorts.0">
+        <failures type="failure" id="valueCoarse"/>
+      </inputExpression>
+      <outputExpression port="//@components.3/@outputPorts.0">
+        <failures type="failure" id="valueCoarse"/>
+      </outputExpression>
+    </rules>
+  </components>
+</flamm:CompositeComponent>

@@ -808,13 +808,40 @@ public class FlammPackage extends EPackageImpl {
 	public static final int FAILURE__PREVIOUS_FAILURES = 4;
 
 	/**
+	 * The feature id for the '<em><b>Specialization</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FAILURE__SPECIALIZATION = 5;
+
+	/**
+	 * The feature id for the '<em><b>Vulnerability</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FAILURE__VULNERABILITY = 6;
+
+	/**
+	 * The feature id for the '<em><b>Attack</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FAILURE__ATTACK = 7;
+
+	/**
 	 * The number of structural features of the '<em>Failure</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	public static final int FAILURE_FEATURE_COUNT = 5;
+	public static final int FAILURE_FEATURE_COUNT = 8;
 
 	/**
 	 * The number of operations of the '<em>Failure</em>' class.
@@ -1637,6 +1664,48 @@ public class FlammPackage extends EPackageImpl {
 
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.fla.flamm.Failure#getSpecialization <em>Specialization</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Specialization</em>'.
+	 * @see org.polarsys.chess.fla.flamm.Failure#getSpecialization()
+	 * @see #getFailure()
+	 * @generated
+	 */
+	public EAttribute getFailure_Specialization() {
+		return (EAttribute)failureEClass.getEStructuralFeatures().get(5);
+	}
+
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.fla.flamm.Failure#getVulnerability <em>Vulnerability</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Vulnerability</em>'.
+	 * @see org.polarsys.chess.fla.flamm.Failure#getVulnerability()
+	 * @see #getFailure()
+	 * @generated
+	 */
+	public EAttribute getFailure_Vulnerability() {
+		return (EAttribute)failureEClass.getEStructuralFeatures().get(6);
+	}
+
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.polarsys.chess.fla.flamm.Failure#getAttack <em>Attack</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Attack</em>'.
+	 * @see org.polarsys.chess.fla.flamm.Failure#getAttack()
+	 * @see #getFailure()
+	 * @generated
+	 */
+	public EAttribute getFailure_Attack() {
+		return (EAttribute)failureEClass.getEStructuralFeatures().get(7);
+	}
+
+
+	/**
 	 * Returns the meta object for class '{@link org.polarsys.chess.fla.flamm.ACIDavoidable <em>ACI Davoidable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1844,6 +1913,9 @@ public class FlammPackage extends EPackageImpl {
 		createEReference(failureEClass, FAILURE__ACID_AVOIDABLE);
 		createEReference(failureEClass, FAILURE__ACID_MITIGATION);
 		createEReference(failureEClass, FAILURE__PREVIOUS_FAILURES);
+		createEAttribute(failureEClass, FAILURE__SPECIALIZATION);
+		createEAttribute(failureEClass, FAILURE__VULNERABILITY);
+		createEAttribute(failureEClass, FAILURE__ATTACK);
 
 		aciDavoidableEClass = createEClass(ACI_DAVOIDABLE);
 		createEAttribute(aciDavoidableEClass, ACI_DAVOIDABLE__A);
@@ -1955,6 +2027,9 @@ public class FlammPackage extends EPackageImpl {
 		initEReference(getFailure_AcidAvoidable(), this.getACIDavoidable(), null, "acidAvoidable", null, 0, 1, Failure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFailure_AcidMitigation(), this.getACIDmitigation(), null, "acidMitigation", null, 0, 1, Failure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFailure_PreviousFailures(), this.getFailure(), null, "previousFailures", null, 0, -1, Failure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFailure_Specialization(), ecorePackage.getEString(), "specialization", null, 0, 1, Failure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFailure_Vulnerability(), ecorePackage.getEString(), "vulnerability", null, 0, 1, Failure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFailure_Attack(), ecorePackage.getEString(), "attack", null, 0, 1, Failure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(aciDavoidableEClass, ACIDavoidable.class, "ACIDavoidable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getACIDavoidable_A(), theFailureTypesPackage.getA_avoidable(), "a", null, 0, 1, ACIDavoidable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2332,6 +2407,30 @@ public class FlammPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EReference FAILURE__PREVIOUS_FAILURES = eINSTANCE.getFailure_PreviousFailures();
+
+		/**
+		 * The meta object literal for the '<em><b>Specialization</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EAttribute FAILURE__SPECIALIZATION = eINSTANCE.getFailure_Specialization();
+
+		/**
+		 * The meta object literal for the '<em><b>Vulnerability</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EAttribute FAILURE__VULNERABILITY = eINSTANCE.getFailure_Vulnerability();
+
+		/**
+		 * The meta object literal for the '<em><b>Attack</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EAttribute FAILURE__ATTACK = eINSTANCE.getFailure_Attack();
 
 		/**
 		 * The meta object literal for the '{@link org.polarsys.chess.fla.flamm.ACIDavoidable <em>ACI Davoidable</em>}' class.

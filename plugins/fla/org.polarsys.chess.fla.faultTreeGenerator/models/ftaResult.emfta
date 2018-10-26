@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ASCII"?>
+<emfta:FTAModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:emfta="http://cmu.edu/emfta" xsi:schemaLocation="http://cmu.edu/emfta models/emfta.ecore">
+  <events name="System failure" referenceCount="0">
+    <gate events="//@events.5 //@events.6 //@events.7 //@events.8 //@events.9"/>
+  </events>
+  <events name="valueCoarse failure of gyroDistTorques in ACSComposite" referenceCount="0"/>
+  <events name="valueSubtle failure of sunEstVec in ACSComposite" referenceCount="0"/>
+  <events name="valueCoarse failure of sunEstVec in ACSComposite" referenceCount="0"/>
+  <events name="valueCoarse failure of angVelocity in ACSComposite" referenceCount="0"/>
+  <events type="Intermediate" name="valueCoarse failure of ctrlTorque in ACSComposite" referenceCount="0">
+    <gate description="Gate connecting torqueSelectorImpl to ACSComposite" events="//@events.17"/>
+  </events>
+  <events type="Intermediate" name="valueSubtle failure of ctrlTorque in ACSComposite" referenceCount="0">
+    <gate description="Gate connecting torqueSelectorImpl to ACSComposite" events="//@events.18"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of feedforwardTorque in ACSComposite" referenceCount="0">
+    <gate description="Gate connecting feedforwControllerImpl to ACSComposite" events="//@events.24"/>
+  </events>
+  <events type="Intermediate" name="valueSubtle failure of propTorque in ACSComposite" referenceCount="0">
+    <gate description="Gate connecting pDControllerImpl to ACSComposite" events="//@events.28"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of propTorque in ACSComposite" referenceCount="0">
+    <gate description="Gate connecting pDControllerImpl to ACSComposite" events="//@events.29"/>
+  </events>
+  <events type="Intermediate" name="valueSubtle failure of propTorque in torqueSelectorImpl" referenceCount="0">
+    <gate events="//@events.28"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of propTorque in torqueSelectorImpl" referenceCount="0">
+    <gate events="//@events.29"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of feedforwardTorque in torqueSelectorImpl" referenceCount="0">
+    <gate events="//@events.24"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of specTorque in torqueSelectorImpl" referenceCount="0">
+    <gate events="//@events.21"/>
+  </events>
+  <events type="Intermediate" name="valueSubtle failure of specTorque in torqueSelectorImpl" referenceCount="0">
+    <gate events="//@events.22"/>
+  </events>
+  <events type="Intermediate" name="valueSubtle failure of sunEstVec in torqueSelectorImpl" referenceCount="0">
+    <gate events="//@events.2"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of sunEstVec in torqueSelectorImpl" referenceCount="0">
+    <gate events="//@events.3"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of ctrlTorque in torqueSelectorImpl" referenceCount="0">
+    <gate type="AND" events="//@events.11 //@events.12 //@events.13 //@events.16"/>
+  </events>
+  <events type="Intermediate" name="valueSubtle failure of ctrlTorque in torqueSelectorImpl" referenceCount="0">
+    <gate type="AND" events="//@events.10 //@events.12 //@events.14 //@events.15"/>
+  </events>
+  <events type="Intermediate" name="valueSubtle failure of sunEstVec in steerControllerImpl" referenceCount="0">
+    <gate events="//@events.2"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of sunEstVec in steerControllerImpl" referenceCount="0">
+    <gate events="//@events.3"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of specTorque in steerControllerImpl" referenceCount="0">
+    <gate events="//@events.20"/>
+  </events>
+  <events type="Intermediate" name="valueSubtle failure of specTorque in steerControllerImpl" referenceCount="0">
+    <gate events="//@events.19"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of gyroDistTorques in feedforwControllerImpl" referenceCount="0">
+    <gate events="//@events.1"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of feedforwardTorque in feedforwControllerImpl" referenceCount="0">
+    <gate events="//@events.23"/>
+  </events>
+  <events type="Intermediate" name="valueSubtle failure of sunEstVec in pDControllerImpl" referenceCount="0">
+    <gate events="//@events.2"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of sunEstVec in pDControllerImpl" referenceCount="0">
+    <gate events="//@events.3"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of angVelocity in pDControllerImpl" referenceCount="0">
+    <gate events="//@events.4"/>
+  </events>
+  <events type="Intermediate" name="valueSubtle failure of propTorque in pDControllerImpl" referenceCount="0">
+    <gate events="//@events.25"/>
+  </events>
+  <events type="Intermediate" name="valueCoarse failure of propTorque in pDControllerImpl" referenceCount="0">
+    <gate events="//@events.26 //@events.27"/>
+  </events>
+</emfta:FTAModel>
