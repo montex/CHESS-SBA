@@ -18,5 +18,8 @@
    <feature url="features/org.polarsys.chess.xtext.feature_0.10.0.201610211519.jar" id="org.polarsys.chess.xtext.feature" version="0.10.0.201610211519">
       <category name="org.polarsys.chess.category"/>
    </feature>
+   <feature url="features/org.polarsys.chess.cdo.feature_0.9.0.qualifier.jar" id="org.polarsys.chess.cdo.feature" version="0.9.0.qualifier">
+      <category name="org.polarsys.chess.category"/>
+   </feature>
    <category-def name="org.polarsys.chess.category" label="polarsys.chess"/>
 </site>
