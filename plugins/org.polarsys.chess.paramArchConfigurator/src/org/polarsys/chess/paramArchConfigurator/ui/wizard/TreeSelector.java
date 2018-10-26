@@ -10,11 +10,12 @@
  ******************************************************************************/
 package org.polarsys.chess.paramArchConfigurator.ui.wizard;
 
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.log4j.Logger;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -32,10 +33,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-
+import org.polarsys.chess.paramArchConfigurator.ui.wizard.page.LastPage;
 
 public class TreeSelector {
 
+	private static final Logger logger = Logger.getLogger(TreeSelector.class);
+	
 	private ILabelProvider labelProvider;
 
 	private ITreeContentProvider contentProvider;
@@ -47,21 +50,25 @@ public class TreeSelector {
 	private Object input = null;
 
 	// the final collection of selected elements, or null if this dialog was
-		// canceled
-		private Object[] result;
+	// canceled
+	private Object[] result;
 
-	
+	LastPage lastPage;
+
 	private final Set<ICommitListener> commitListeners = new HashSet<ICommitListener>();
 
 	/**
 	 *
 	 * Constructor.
+	 * 
+	 * @param lastPage
 	 *
 	 * @param parentShell
 	 *            The parent shell in which this dialog will be opened
 	 */
-	public TreeSelector(Composite composite) {
+	public TreeSelector(Composite composite, LastPage lastPage) {
 		this.composite = composite;
+		this.lastPage = lastPage;
 	}
 
 	/**
@@ -69,7 +76,7 @@ public class TreeSelector {
 	 *
 	 * @param provider
 	 */
-	
+
 	public void setLabelProvider(ILabelProvider provider) {
 		labelProvider = provider;
 		if (treeViewer != null) {
@@ -78,13 +85,14 @@ public class TreeSelector {
 	}
 
 	/**
-	 * Sets the ContentProvider for this dialog
-	 * The ContentProvider may be a {@link IHierarchicContentProvider}
+	 * Sets the ContentProvider for this dialog The ContentProvider may be a
+	 * {@link IHierarchicContentProvider}
 	 *
 	 * @param provider
-	 *            The content provider for this dialog. May be a {@link IHierarchicContentProvider}
+	 *            The content provider for this dialog. May be a
+	 *            {@link IHierarchicContentProvider}
 	 */
-	
+
 	public void setContentProvider(ITreeContentProvider provider) {
 		contentProvider = provider;
 		if (treeViewer != null) {
@@ -102,16 +110,12 @@ public class TreeSelector {
 		}
 	}
 
-	
 	protected Composite getDialogArea() {
 		return (Composite) composite;
 	}
 
-	
 	public void create() {
-	
 
-	
 		treeViewer = new TreeViewer(getDialogArea(), SWT.BORDER);
 		// treeViewer.setFilters(new ViewerFilter[]{ new PatternFilter() });
 
@@ -137,14 +141,18 @@ public class TreeSelector {
 				if (contentProvider instanceof IHierarchicContentProvider) {
 					boolean isValidValue = ((IHierarchicContentProvider) contentProvider).isValidValue(selectedElement);
 					if (contentProvider instanceof IAdaptableContentProvider) {
-						selectedElement = ((IAdaptableContentProvider) contentProvider).getAdaptedValue(selectedElement);
+						selectedElement = ((IAdaptableContentProvider) contentProvider)
+								.getAdaptedValue(selectedElement);
 					}
-				if (isValidValue) {
-						setResult(Collections.singletonList(selectedElement));
+					if(lastPage.importArchitecture()){
+					if (isValidValue) {
+						setResult(Collections.singletonList(selectedElement));										
 					} else {
 						setResult(Collections.emptyList());
-					}
-					//getOkButton().setEnabled(isValidValue);*/
+					}	
+					lastPage.setPageComplete(isValidValue);		
+				}
+					// getOkButton().setEnabled(isValidValue);*/
 				}
 			}
 		});
@@ -153,9 +161,9 @@ public class TreeSelector {
 
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
-			/*	if (getOkButton().isEnabled()) {
-					okPressed();
-				}*/
+				/*
+				 * if (getOkButton().isEnabled()) { okPressed(); }
+				 */
 			}
 
 		});
@@ -175,29 +183,30 @@ public class TreeSelector {
 
 			beforeTreeComposite.moveAbove(treeViewer.getTree());
 
-			//Composite afterTreeComposite = new Composite(getDialogArea(), SWT.NONE);
-			//afterTreeComposite.setLayout(new FillLayout());
-			//afterTreeComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-			//graphicalContentProvider.createAfter(afterTreeComposite);
+			// Composite afterTreeComposite = new Composite(getDialogArea(),
+			// SWT.NONE);
+			// afterTreeComposite.setLayout(new FillLayout());
+			// afterTreeComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
+			// true, false));
+			// graphicalContentProvider.createAfter(afterTreeComposite);
 		}
 
-	/*	List<?> initialSelection = new ArrayList<String>();
-		if (contentProvider instanceof IRevealSemanticElement) {
-			((IRevealSemanticElement) contentProvider).revealSemanticElement(initialSelection);
-		} else if (!initialSelection.isEmpty()) {
-			// even if the encapsulated provider is not a IRevealSemanticElement
-			treeViewer.setSelection(new StructuredSelection(initialSelection.get(0)), true);
-		}*/
+		/*
+		 * List<?> initialSelection = new ArrayList<String>(); if
+		 * (contentProvider instanceof IRevealSemanticElement) {
+		 * ((IRevealSemanticElement)
+		 * contentProvider).revealSemanticElement(initialSelection); } else if
+		 * (!initialSelection.isEmpty()) { // even if the encapsulated provider
+		 * is not a IRevealSemanticElement treeViewer.setSelection(new
+		 * StructuredSelection(initialSelection.get(0)), true); }
+		 */
 
-		
 	}
-
 
 	/**
 	 * Get the TreeViewer used by this dialog
 	 *
-	 * @return
-	 *         The TreeViewer associated to this dialog
+	 * @return The TreeViewer associated to this dialog
 	 */
 	protected TreeViewer getViewer() {
 		return treeViewer;
@@ -215,14 +224,14 @@ public class TreeSelector {
 
 	private void doSetInput() {
 		if (input == null) {
-			// Default non-null input for IStaticContentProvider (input-independent)
+			// Default non-null input for IStaticContentProvider
+			// (input-independent)
 			treeViewer.setInput(""); //$NON-NLS-1$
 		} else {
 			treeViewer.setInput(input);
 		}
 	}
 
-	
 	protected void setResult(List<Object> newResult) {
 		if (newResult == null) {
 			result = null;
@@ -236,6 +245,4 @@ public class TreeSelector {
 		return result;
 	}
 
-	
-	
 }

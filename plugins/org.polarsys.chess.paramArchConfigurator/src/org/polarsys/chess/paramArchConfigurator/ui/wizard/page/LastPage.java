@@ -14,11 +14,15 @@ import java.io.File;
 import java.util.ArrayList;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.papyrus.uml.tools.providers.UMLContentProvider;
 import org.eclipse.papyrus.uml.tools.providers.UMLLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -46,7 +50,9 @@ public class LastPage extends BasicWizardPage {
 	private TreeSelector treeSelector;
 	private Button checkCreatePackage;
 	private Button checkImport;
-	
+
+	private static final Logger logger = Logger.getLogger(LastPage.class);
+
 	public LastPage(EObject selectedElement, File newOssFile, ArrayList<ArrayList<String>> prevParametersList)
 			throws Exception {
 		super("Arctitecture Instantiated", prevParametersList);
@@ -73,7 +79,7 @@ public class LastPage extends BasicWizardPage {
 		container.redraw();
 		// required to avoid an error in the system
 		setControl(container);
-		setPageComplete(true);
+		setPageComplete(false);
 
 	}
 
@@ -93,6 +99,12 @@ public class LastPage extends BasicWizardPage {
 		labelImport.setText("Import the instantiated architecture.");
 		checkImport = new Button(importArchComposite, SWT.CHECK);
 		checkImport.setSelection(true);
+		checkImport.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setPageComplete(!checkImport.getSelection());
+			}
+		});
 		Label labelCheck = new Label(scrolledContent, SWT.NONE);
 		labelCheck.setText("Select the destination package of the instantiated architecture.");
 		Composite createPackageComposite = new Composite(scrolledContent, SWT.NONE);
@@ -111,8 +123,8 @@ public class LastPage extends BasicWizardPage {
 	}
 
 	public Package getSelectedPackage() {
-		if((treeSelector!=null)&&(treeSelector.getResult()!=null)){
-			return (Package) treeSelector.getResult()[0];	
+		if ((treeSelector != null) && (treeSelector.getResult() != null)) {
+			return (Package) treeSelector.getResult()[0];
 		}
 		return null;
 	}
@@ -121,10 +133,10 @@ public class LastPage extends BasicWizardPage {
 		return checkCreatePackage.getSelection();
 	}
 
-	public boolean ImportArchitecture() {
+	public boolean importArchitecture() {
 		return checkImport.getSelection();
 	}
-	
+
 	public String getNestedPackageName() {
 		return FilenameUtils.removeExtension(newOssFile.getName());
 	}
@@ -138,7 +150,7 @@ public class LastPage extends BasicWizardPage {
 	}
 
 	private void createTreeSelector(Composite scrolledContent) {
-		treeSelector = new TreeSelector(scrolledContent);
+		treeSelector = new TreeSelector(scrolledContent, this);
 		Package pkg = EntityUtil.getInstance().getToPackage((Element) selectedElement);
 		UMLContentProvider provider = new UMLContentProvider(pkg, UMLPackage.eINSTANCE.getPackage_PackagedElement());
 		treeSelector.setContentProvider(provider);

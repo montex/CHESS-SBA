@@ -406,7 +406,7 @@ public class ImportOSSFileAction {
 	}
 
 	private void parseRefinedBy(RefinedBy refinedBy, HashMap<String, Boolean> mapContractRefinementsToKeep,
-			Class owner) {
+			Class owner) throws ImportException {
 
 		// REFINEDBY processing
 		// final RefinedBy refinement = dslRefInstance.getRefinedby();
@@ -427,8 +427,10 @@ public class ImportOSSFileAction {
 		final EList<FullContractIdList> refiningContractIds = refinedBy.getFullContractIds();
 		for (FullContractIdList refiningContractId : refiningContractIds) {
 
-			String componentInstanceName = ossModelUtil
-					.getNearestComponentInstanceNameFromFullContractId(refiningContractId);
+			
+			
+			String componentInstanceName = getComponentNameCheckingOwnerSubComponents(refiningContractId,owner);
+			
 			String[] componentInstanceRange = ossModelUtil
 					.getNearestComponentInstanceRangeFromFullContractId(refiningContractId, validateSerializedElements);
 			String componentInstanceIndex = ossModelUtil
@@ -482,6 +484,22 @@ public class ImportOSSFileAction {
 			}
 		}
 
+	}
+
+	private String getComponentNameCheckingOwnerSubComponents(FullContractIdList refiningContractId,Class owner) throws ImportException {
+		String componentInstanceName = ossModelUtil
+				.getNearestComponentInstanceNameFromFullContractId(refiningContractId);
+		String componentInstanceId = ossModelUtil
+				.getNearestComponentInstanceIdFromFullContractId(refiningContractId,validateSerializedElements);
+		
+		final Property possiblePropertyFromComponentInstanceName = entityUtil.getUmlComponentInstance(owner, componentInstanceName);
+		final Property possiblePropertyFromComponentInstanceId = entityUtil.getUmlComponentInstance(owner, componentInstanceId);
+		
+		if(possiblePropertyFromComponentInstanceName!=null){
+			return componentInstanceName;
+		}else if(possiblePropertyFromComponentInstanceId!=null){
+			return componentInstanceId;
+		}else throw new ImportException("No subcomponent with name "+componentInstanceName+" is found in "+owner.getName());
 	}
 
 	private String getRefiningContractPropertyName(String componentInstanceName, Class owner,
