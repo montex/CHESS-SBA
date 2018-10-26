@@ -30,6 +30,8 @@ import org.polarsys.chess.service.core.model.ChessSystemModel;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
+
 import eu.fbk.eclipse.standardtools.ModelTranslatorToOcra.core.services.OSSTranslatorServiceAPI;
 import eu.fbk.eclipse.standardtools.xtextService.core.utils.XTextResourceUtil;
 import eu.fbk.eclipse.standardtools.xtextService.core.utils.XTextValidation;
@@ -111,11 +113,8 @@ private final int timeout = 1000*60*5;
 		
 		try
 		{
-			final Pair<String, String> output = runner.runTool(timeout);
-			Assert.assertNotNull(output);
-			Assert.assertTrue(!output.getLeft().isEmpty());
-			Assert.assertTrue(output.getRight().isEmpty());
-
+			final Triple<Integer, String, String> output = runner.runTool(timeout);
+			
 			final CheckContractResultBuilder resultBuilder = new CheckContractResultBuilder();
 			Assert.assertNotNull(resultBuilder.unmarshalResult(runner.getResultFile()));
 
