@@ -376,7 +376,7 @@ private ArrayList<TableEditor> parameterValueEditor = new ArrayList<TableEditor>
 		ArrayList<String> parList = new ArrayList<String>();
 
 		for (Entry<String, String> parameterEntry : parametersList.entrySet()) {
-			if (parameterEntry.getValue() != "") {
+			if (!parameterEntry.getValue().equals("")) {
 				logger.debug("prepareParameterValuesAsArrayList. "+parameterEntry.getKey()+" , "+parameterEntry.getValue());
 				parList.add(parameterEntry.getKey() + "=" + parameterEntry.getValue());
 			}
