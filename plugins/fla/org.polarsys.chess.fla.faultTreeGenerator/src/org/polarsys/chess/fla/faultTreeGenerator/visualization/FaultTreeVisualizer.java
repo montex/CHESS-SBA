@@ -59,6 +59,8 @@ import eu.fbk.eclipse.standardtools.faultTreeViewer.emfta.FTAModel;
 import eu.fbk.eclipse.standardtools.faultTreeViewer.emfta.impl.EmftaFactoryImpl;
 import eu.fbk.eclipse.standardtools.faultTreeViewer.xSAP.FaultTreeBuilder;
 import eu.fbk.eclipse.standardtools.faultTreeViewer.xSAP.generated.FaultTree;
+//import eu.fbk.eclipse.standardtools.faultTreeViewer.xSAP.FaultTreeBuilder;
+//import eu.fbk.eclipse.standardtools.faultTreeViewer.xSAP.generated.FaultTree;
 import eu.fbk.eclipse.standardtools.logger.Console;
 //import eu.fbk.eclipse.standardtools.utils.core.utils.DirectoryUtil;
 import eu.fbk.eclipse.standardtools.utils.ui.utils.*;
