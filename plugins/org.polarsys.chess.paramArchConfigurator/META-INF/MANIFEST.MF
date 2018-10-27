@@ -22,3 +22,5 @@ Import-Package: org.apache.commons.lang3.tuple,
  org.eclipse.emf.ecore.resource,
  org.polarsys.chess.chessmlprofile.ParameterizedArchitecture
 Bundle-Vendor: Fondazione Bruno Kessler
+Bundle-ClassPath: lib/org.apache.commons.io_2.2.0.v201405211200.jar,
+ .
