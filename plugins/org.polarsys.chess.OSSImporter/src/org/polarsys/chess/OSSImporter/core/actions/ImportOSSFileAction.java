@@ -631,11 +631,6 @@ public class ImportOSSFileAction {
 	private boolean connectorEndsExists(Class portOwnerOfConstraint, String constraintPortName,
 			Class portOwnerOfVariable, String variablePortName) {
 
-		logger.debug("portOwnerOfConstraint: " + portOwnerOfConstraint.getName());
-		logger.debug("constraintPortName: " + constraintPortName);
-		logger.debug("portOwnerOfVariable: " + portOwnerOfVariable.getName());
-		logger.debug("variablePortName: " + variablePortName);
-
 		return (portOwnerOfConstraint != null) && (constraintPortName != null) && (portOwnerOfVariable != null)
 				&& (variablePortName != null) && (portOwnerOfConstraint.getOwnedPort(constraintPortName, null) != null)
 				&& (portOwnerOfVariable.getOwnedPort(variablePortName, null) != null);
