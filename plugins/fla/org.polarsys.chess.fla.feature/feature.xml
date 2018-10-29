@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.polarsys.chess.fla.feature"
-      label="CHESS FLA feature (Incubation)"
+      label="CHESS FLA (Incubation)"
       version="0.10.0.qualifier">
 
    <description>
