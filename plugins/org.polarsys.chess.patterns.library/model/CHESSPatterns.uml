@@ -166,7 +166,13 @@ will be considered as identical as long as |A − B| &lt; δ</implementation>
     <patternAssumptions>The voter is a simple component that is carefull designed with reliability ~ 1</patternAssumptions>
     <patternGuarantees>R = 3Rchannel^2 - 2Rchannel^3</patternGuarantees>
   </PatternsProfile:Pattern>
-  <PatternsProfile:Pattern xmi:id="_fgjMwMvCEeid6c5J8m41ew" base_Collaboration="_dKGSwMvCEeid6c5J8m41ew" patternName="Monitor-Actuator Pattern" intent="" problem="" solution="" preview="org.polarsys.chess.patterns.library/preview/MAPattern.png"/>
+  <PatternsProfile:Pattern xmi:id="_fgjMwMvCEeid6c5J8m41ew" base_Collaboration="_dKGSwMvCEeid6c5J8m41ew" patternName="Monitor-Actuator Pattern" intent="Developing an embedded system with a given fail-safe state and low availability requirements, where some level of redundancy is acceptable." problem="How to improve the safety of an embedded system in the presence of a singlepoint of failure in a system that includes a fail-safe state and low availability requirements at reasonable cost" solution="One channel is responsible for performing the end-to-end actuation, while the monitor channel compares the output of the actuator channel against the expected value and shuts the actuator off, if a discrepancy is found" preview="org.polarsys.chess.patterns.library/preview/MAPattern.png">
+    <consequences>If a failure in the monitoring channel occurs, no result may be observed in the system until a second failure occurs in the actuation channel</consequences>
+    <implementation>The monitor channel usually contains a reduced version of the actuation algorithm and is driven by a separate set of sensors.</implementation>
+    <implementation>The same set of sensors may be used, but this introduces a common mode failure into the system</implementation>
+    <implementation>Latent failure must be avoided through periodic maintenance checks and/or specific built-in-tests</implementation>
+    <patternGuarantees>There is no influence on the execution time of the actuation channel</patternGuarantees>
+  </PatternsProfile:Pattern>
   <PortAndFlows:FlowPort xmi:id="_afEywMvJEeiG7qFbiuwNbA" base_Port="_Rnz3IMvJEeiG7qFbiuwNbA" direction="out"/>
   <PortAndFlows:FlowPort xmi:id="_pQA3gMvJEeiG7qFbiuwNbA" base_Port="_pQAQcMvJEeiG7qFbiuwNbA" direction="out"/>
   <PortAndFlows:FlowPort xmi:id="_Hk0dUMvLEeiG7qFbiuwNbA" base_Port="_E4JbsMvLEeiG7qFbiuwNbA" direction="in"/>
