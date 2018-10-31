@@ -434,7 +434,7 @@ public class ImportOSSFileAction {
 			String[] componentInstanceRange = ossModelUtil
 					.getNearestComponentInstanceRangeFromFullContractId(refiningContractId, validateSerializedElements);
 			String componentInstanceIndex = ossModelUtil
-					.getNearestComponentInstanceIndexFromFullContractId(refiningContractId, validateSerializedElements);
+					.getNearestComponentInstanceIndexFromFullContractId(refiningContractId, componentInstanceName, validateSerializedElements);
 
 			String refinementNameOptSuffix = "";
 			if (!StringArrayUtil.isUndefined(componentInstanceRange)) {
