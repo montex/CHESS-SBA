@@ -70,6 +70,7 @@ public class TradeoffCommand extends AbstractJobCommand {
 	private EList<InstantiatedArchitecture> configurations;
 	private boolean isDiscreteTime;
 	private File ossFile;
+	private boolean goAhead;
 	
 	public TradeoffCommand() {
 		super("Trade-off Analysis");
@@ -100,6 +101,7 @@ public class TradeoffCommand extends AbstractJobCommand {
 	@Override
 	public void execPreJobOperations(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 		umlSelectedComponent = selectionUtil.getUmlComponentFromSelectedObject(event);
+		goAhead = false;
 		
 		// The command should be executed only on root components
 		if (!EntityUtil.getInstance().isSystem(umlSelectedComponent)) {
@@ -116,7 +118,8 @@ public class TradeoffCommand extends AbstractJobCommand {
 			}
 		});
 
-		if (!configurationSelectionDialog.goAhead()) {
+		goAhead = configurationSelectionDialog.goAhead();
+		if (!goAhead) {
 			return;
 		}
 		checkType = configurationSelectionDialog.getCheckType();
@@ -297,7 +300,7 @@ public class TradeoffCommand extends AbstractJobCommand {
 	@Override
 	public void execJobCommand(ExecutionEvent event, IProgressMonitor monitor) throws Exception {
 
-		if (!configurationSelectionDialog.goAhead() || ossFile == null) {
+		if (!goAhead || ossFile == null) {
 			return;
 		}
 		
