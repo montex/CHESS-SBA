@@ -18,6 +18,8 @@
 package org.polarsys.chess.fla.faultTreeGenerator.handlers;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 import javax.swing.JFileChooser;
 
@@ -27,11 +29,14 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.osgi.framework.Bundle;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 
@@ -48,7 +53,7 @@ public class Transformation {
 	private Object result;
 
 	/**
-	 * Contructor of the class.
+	 * Constructor of the class.
 	 * @param event - event generated when the button is clicked.
 	 */
 	public Transformation(ExecutionEvent event){
@@ -60,6 +65,18 @@ public class Transformation {
 	 * @return - a path that contains the location of the output model.
 	 */
 	public IPath execute(JFileChooser chooser){
+		Bundle bundle= Platform.getBundle("org.polarsys.chess.fla.faultTreeGenerator");
+		
+		String pathETLFile="";
+		Path pathETL= new Path("epsilon/FLA2FTA.etl");
+		URL ETLURL = FileLocator.find(bundle,pathETL,null);
+		try {
+			pathETLFile= FileLocator.toFileURL(ETLURL).getPath();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		
 		try {
 			IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
@@ -74,7 +91,7 @@ public class Transformation {
 	
 		/*First, we need to parse the file that contains the transformation rules and add this to our EtlModule*/
 		try {
-			module.parse(new File("org.polarsys.chess.fla.faultTreeGenerator/epsilon/FLA2FTA.etl"));
+			module.parse(new File(pathETLFile));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,22 +99,47 @@ public class Transformation {
 		
 		IPath pat = ResourcesPlugin.getWorkspace().getRoot().getLocation();
 	    
-	    /*If the file selected by the user doen't have the proper extension, the plug-in will notify this and won't perform any action.*/
+	    /*If the file selected by the user doesn't have the proper extension, the plug-in will notify this and won't perform any action.*/
 	    String name = chooser.getSelectedFile().getName();
 	    if(name.contains(".flamm")){
 	    	
+	    	//Path settings for the model which needs to be transformed and selected through file chooser
 	    	String pathFlamm = chooser.getSelectedFile().getAbsolutePath();
 	    	String flaName = chooser.getSelectedFile().getName();
 	    	String flaName2 = flaName.replaceAll(".flamm", "");
 	    	String pathFta = chooser.getCurrentDirectory().getAbsolutePath();
 	    	
 	    	
-	    	/*We create are source and target model by calling a private method that receives all need parameter to do this.*/
-	    	EmfModel flammModel = setEmfModel("flamm", true, false, "org.polarsys.chess.fla.faultTreeGenerator/models/flamm.ecore", pathFlamm);
+	    	// path settings for the meta-models which are embedded in the plugin and used as source and target
+	    	String pathFLAMMFile="";
+	    	String pathEMFTAMMFile= "";
+	    	Path pathFLAMM= new Path("models/flamm.ecore");
+	    	Path pathEMFTAMM= new Path("models/emfta.ecore");
+	    	URL fLAMMURL = FileLocator.find(bundle,pathFLAMM,null);
+	    	URL eMFTAURL = FileLocator.find(bundle, pathEMFTAMM,null);
 	    	
-	    	EmfModel emftaModel = setEmfModel("emfta",false, true, "org.polarsys.chess.fla.faultTreeGenerator/models/emfta.ecore", pathFta + "/" + flaName2 + ".emfta");
+	    	//generating absolute path from the ecore URL 
+	    	try {
+				pathFLAMMFile= FileLocator.toFileURL(fLAMMURL).getPath();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	    	
+	    	try {
+				pathEMFTAMMFile= FileLocator.toFileURL(eMFTAURL).getPath();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	    	
+	    	
+	    	/*We create are source and target model by calling a private method that receives all need parameter to do this.*/
+	    	EmfModel flammModel = setEmfModel("flamm", true, false, pathFLAMMFile, pathFlamm);
+	    	
+	    	EmfModel emftaModel = setEmfModel("emfta",false, true, pathEMFTAMMFile, pathFta + "/" + flaName2 + ".emfta");
 	
-	    	/*Finally, we add to the EtlModule all the rules and created models so it can be excuted.*/
+	    	/*Finally, we add to the EtlModule all the rules and created models so it can be executed.*/
 	    	module.getDeclaredPre();
 	    	module.getTransformationRules();
 	    	module.getDeclaredPost();
