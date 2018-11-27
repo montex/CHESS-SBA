@@ -63,15 +63,15 @@ property e2eOperations : Set(Operation) = null;
 property instSpecPackage : Package = null;
 //property instSpecFullPackage : Package = null;
 
-property currentConcurRes : MARTE::SRM::SW_Concurrency::SwSchedulableResource = null;
+property currentConcurRes : MARTE::MARTE_DesignModel::SRM::SW_Concurrency::SwSchedulableResource = null;
 property currentSlot : Slot = null;
 /*Global variable for partition processing*/
 property currentProcessor : InstanceSpecification = null;
 property currentCore : String = null;
-property currentHost : MARTE::SAM::SaExecHost = null;
+property currentHost : MARTE::MARTE_AnalysisModel::SAM::SaExecHost = null;
 
 property slotinAssigns = false;
-//property currentSharedRes : MARTE::SAM::SaSharedResource = null;
+//property currentSharedRes : MARTE::MARTE_AnalysisModel::SAM::SaSharedResource = null;
 	
 main() {
 	
@@ -99,7 +99,7 @@ mapping inout Model::psmModel() {
 		depView := self.getView("DeploymentView");
 			
 		var saAnalysisClass := self.allOwnedElements()[Class]->selectOne(qualifiedName=saAnalysis);
-		var saAnalysisCtx := saAnalysisClass.getMetaclass(SaAnalysisContextQN).oclAsType(MARTE::SAM::SaAnalysisContext);
+		var saAnalysisCtx := saAnalysisClass.getMetaclass(SaAnalysisContextQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext);
 		
 		//var platforms := saAnalysisCtx.platform->asSequence();
 		//instSpecPackage := platforms->first().oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package;
@@ -117,7 +117,7 @@ mapping inout Model::psmModel() {
 }
 
 //maps the Package of the SW instances to an AnalysisContext
-mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::SAM::SaAnalysisContext) : Class {
+mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext) : Class {
 	init{
 		log("Generating <<SaAnalysisContext>> and necessary packages.");
 		
@@ -169,7 +169,7 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 	result.name := model.name + "_analysisContext";
 	analysisContextPackage.packagedElement += result;	
 	// Apply the stereotype <<saAnalysisContext>>
-	var analysisC := result.applyStereotype(getMARTEStereotype("SaAnalysisContext")).oclAsType(MARTE::SAM::SaAnalysisContext);
+	var analysisC := result.applyStereotype(getMARTEStereotype("SaAnalysisContext")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext);
 	analysisC.context += "(tool=mast,options=(invoke=true,recoverResults=true,overwriteResults=true,overwriteOutputModel=true,modeID=''))";
 	
 	end{
@@ -232,7 +232,7 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 	*/
 	
 	assigns->forEach(ass){
-		var asg := ass.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+		var asg := ass.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 
 		//TODO assumption: one annotatedElement per Assign	
 		var list := ass.getInstances(instSpecPackage);
@@ -290,7 +290,7 @@ mapping Package::CHGaResourcePlatform2SaAnalysisContext(saAnalysisCtx : MARTE::S
 			currentProcessor := partitionInst.getAssignedProcessor();
 			currentCore := partitionInst.getAssignedCore();
 			var partition := partitionInst.map Partition2PSM();
-			currentHost := partition.getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
+			currentHost := partition.getMetaclass(SaExecHostQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaExecHost);
 			
 			partitionInst.getComponentsOfPartition()->forEach(componentInst){
 				log("Analysing classifier" + componentInst.classifier![Classifier].name +" mapped on partition " +p.name);
@@ -511,11 +511,11 @@ mapping Interaction::Interaction2EndToEndWorkFlow(context : Class, pimContext : 
 	result.edge += controlFlowInit;
 	
 	//Apply stereotype <<gaLatencyObs>> and specify the deadline for the end to end flow
-	var gaLatencyObs := actConstraint.applyStereotype(getMARTEStereotype("GaLatencyObs")).oclAsType(MARTE::GQAM::GaLatencyObs);
+	var gaLatencyObs := actConstraint.applyStereotype(getMARTEStereotype("GaLatencyObs")).oclAsType(MARTE::MARTE_AnalysisModel::GQAM::GaLatencyObs);
 	gaLatencyObs.latency += deadline.parseNFPDuration("value");
 	
 	//Apply stereotype <<gaWorkloadEvent>> and specify the release pattern of the end-to-end flow
-	var gaWorkloadEvent := actInitialNode.applyStereotype(getMARTEStereotype("GaWorkloadEvent")).oclAsType(MARTE::GQAM::GaWorkloadEvent);
+	var gaWorkloadEvent := actInitialNode.applyStereotype(getMARTEStereotype("GaWorkloadEvent")).oclAsType(MARTE::MARTE_AnalysisModel::GQAM::GaWorkloadEvent);
 	gaWorkloadEvent.pattern := startChrts.occKind;
 	
 	//create end2end action sequence 
@@ -557,7 +557,7 @@ helper createSaStepNode(in currentCHRts: chessmlprofile::RTComponentModel::CHRtS
 	var opNode := createOpaqueAction(actionname, EndToEndWorkFlow, currentNode);
 	
 
-	var opSaStep := opNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var opSaStep := opNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	//log("Slot [createSaStepNode]: " + currentSlot.definingFeature.name);
 	// Set the <<SwSchedulableResource>> that executes the <<saStep>>
 	var concurRes := currentConcurRes;
@@ -574,7 +574,7 @@ helper createSaStepNode(in currentCHRts: chessmlprofile::RTComponentModel::CHRtS
 	
 	opSaStep.concurRes := concurRes;
     // Retrieve the <<SaStep>> to use for the subusage
-	var saStep := currentCHRts.base_Comment.resolve2SaStep().getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	var saStep := currentCHRts.base_Comment.resolve2SaStep().getMetaclass(SaStepQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	
 	log("********createSaStepNode in endToEnd Activity:  subUsage is " + saStep.toString());
 	
@@ -626,10 +626,10 @@ mapping InstanceSpecification::Partition2PSM() : Class {
 	result.name := self.classifier![Classifier].name;
 	var package := self.resolveoneIn(InstanceSpecification::Partition2Package, Package);
 	package.packagedElement += result;
-	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::SAM::SaExecHost);
+	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaExecHost);
 	stHost.host := currentProcessor.getHost(currentCore);
 	stHost.otherSchedPolicy := "IMA";
-	var sr := result.applyStereotype(getMARTEStereotype("SwSchedulableResource")).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);	
+	var sr := result.applyStereotype(getMARTEStereotype("SwSchedulableResource")).oclAsType(MARTE::MARTE_DesignModel::SRM::SW_Concurrency::SwSchedulableResource);	
 	var par := self.classifier![Classifier].getMetaclass("CHESS::ComponentModel::FunctionalPartition").oclAsType(CHESS::ComponentModel::FunctionalPartition);
 	log("MAF");
 	log(par.MAF);	
@@ -650,7 +650,7 @@ mapping InstanceSpecification::Slot2SwSchedulableResource(chrtComment : Comment,
 	
 	taskPackage.packagedElement += result;
 	
-	var sr := result.applyStereotype(getMARTEStereotype("SwSchedulableResource")).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);		
+	var sr := result.applyStereotype(getMARTEStereotype("SwSchedulableResource")).oclAsType(MARTE::MARTE_DesignModel::SRM::SW_Concurrency::SwSchedulableResource);		
 	sr.isProtected := false;
 	var schedParams := "fp(priority=(value=" + chrts.relativePriority.normalizeNFPInteger() +", source=meas))";
 	
@@ -689,7 +689,7 @@ mapping InstanceSpecification::Instance2SwSchedulableResource(chrtComment : Comm
 	
 	taskPackage.packagedElement += result;
 	
-	var sr := result.applyStereotype(getMARTEStereotype("SwSchedulableResource")).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);		
+	var sr := result.applyStereotype(getMARTEStereotype("SwSchedulableResource")).oclAsType(MARTE::MARTE_DesignModel::SRM::SW_Concurrency::SwSchedulableResource);		
 	sr.isProtected := false;
 	var schedParams := "fp(priority=(value=" + chrts.relativePriority.normalizeNFPInteger() +", source=meas))";
 	
@@ -722,9 +722,9 @@ mapping InstanceSpecification::Instance2SwSchedulableResource(chrtComment : Comm
   Given a InstanceSpecification representing a Processor/ComputingResource,
   return the already generated SaExecHost
 */
-query InstanceSpecification::getHost(core: String) : MARTE::SAM::SaExecHost {
+query InstanceSpecification::getHost(core: String) : MARTE::MARTE_AnalysisModel::SAM::SaExecHost {
 	if(core<>null) {
-			var ress := self.resolveIn(InstanceSpecification::HwProcessor2SaExecHost, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
+			var ress := self.resolveIn(InstanceSpecification::HwProcessor2SaExecHost, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaExecHost);
 			
 			if(ress->size() = 1){
 				var cpu := ress->selectOne(base_Classifier.name=self.name);
@@ -740,11 +740,11 @@ query InstanceSpecification::getHost(core: String) : MARTE::SAM::SaExecHost {
 				return res;
 			};
 	};
-	var res := self.resolveoneIn(InstanceSpecification::HwProcessor2SaExecHost, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
+	var res := self.resolveoneIn(InstanceSpecification::HwProcessor2SaExecHost, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaExecHost);
 	
 	//TODO the following lines should be removed
 	if res.oclIsInvalid() or res = null then
-		return self.resolveoneIn(InstanceSpecification::HwComputingResource2SaExecHost, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost)
+		return self.resolveoneIn(InstanceSpecification::HwComputingResource2SaExecHost, Class).getMetaclass(SaExecHostQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaExecHost)
 	endif;
 	return res;	
 }
@@ -754,9 +754,9 @@ helper createSubUsage(in sourceCHRtComment: Comment, in sourceSlot : Slot, owner
 	var chrts := sourceCHRtComment.CHRtSpec();
 	
 	//log(" ***********WARNING 3 : createSubUsage, chrt = " + chrts.toString() + " sourceSlot = "+sourceSlot.owningInstance.toString());
-	var owningSaStep := sourceSlot.resolveoneIn(Comment::CHRTCommentProtected2SaStep, Operation).getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	var owningSaStep := sourceSlot.resolveoneIn(Comment::CHRTCommentProtected2SaStep, Operation).getMetaclass(SaStepQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	//log("createSubUsage, owningSaStep = " + owningSaStep.toString());
-	owningSaStep.subUsage += sourceCHRtComment.resolve2SaStep().getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep); 
+	owningSaStep.subUsage += sourceCHRtComment.resolve2SaStep().getMetaclass(SaStepQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep); 
 	
 }
 
@@ -778,8 +778,8 @@ helper createSubUsage(in reqCHRtSpec: chessmlprofile::RTComponentModel::CHRtSpec
 	var piPSMOperation = provCHRtSpec.base_Comment.resolve2SaStep();
 	
 	log("usedPSMOperation = " + piPSMOperation.toString());	        			
-	var reqSaStep = requiringPSMOperation.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep); 		
-	var provSaStep = piPSMOperation.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);  			
+	var reqSaStep = requiringPSMOperation.getMetaclass(SaStepQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep); 		
+	var provSaStep = piPSMOperation.getMetaclass(SaStepQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);  			
 	log("usedStep = " + provSaStep.toString());
 	reqSaStep.subUsage += provSaStep;
 }
@@ -788,19 +788,19 @@ helper createSubUsage(in reqCHRtSpec: chessmlprofile::RTComponentModel::CHRtSpec
 /*
   Given a comment related to a CHRtSlot return  the corresponding schedulable resource  
 */
-query Comment::getConcurRes(slot : Slot) : MARTE::SRM::SW_Concurrency::SwSchedulableResource {
+query Comment::getConcurRes(slot : Slot) : MARTE::MARTE_DesignModel::SRM::SW_Concurrency::SwSchedulableResource {
 	
 	var chrtportslot := slot.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot);
 	var classResource := slot.resolveIn(Slot::CHRtSlot2SwSchedulableResource, Class)->selectOne(
 	    name=self.CHRtSpec().schedulableResourceName(chrtportslot));
-	return classResource.getMetaclass(SwSchedulableResourceQN).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);
+	return classResource.getMetaclass(SwSchedulableResourceQN).oclAsType(MARTE::MARTE_DesignModel::SRM::SW_Concurrency::SwSchedulableResource);
 }
 
 
 /*
   Given an instance decorated with a CHRTSPecification returns  the corresponding schedulable resource  
 */
-query Comment::getConcurRes(instance : InstanceSpecification) : MARTE::SRM::SW_Concurrency::SwSchedulableResource {
+query Comment::getConcurRes(instance : InstanceSpecification) : MARTE::MARTE_DesignModel::SRM::SW_Concurrency::SwSchedulableResource {
 	
 	var chrtportslot := instance.getMetaclass(CHRtPortSlotQN).oclAsType(chessmlprofile::RTComponentModel::CHRtPortSlot);
 	
@@ -814,7 +814,7 @@ query Comment::getConcurRes(instance : InstanceSpecification) : MARTE::SRM::SW_C
 	log("FOUND "+classResource.toString());
 	log("");    
 	    
-	return classResource.getMetaclass(SwSchedulableResourceQN).oclAsType(MARTE::SRM::SW_Concurrency::SwSchedulableResource);
+	return classResource.getMetaclass(SwSchedulableResourceQN).oclAsType(MARTE::MARTE_DesignModel::SRM::SW_Concurrency::SwSchedulableResource);
 }
 
 /*
@@ -1007,11 +1007,11 @@ helper createPutOp(in sourceCHRtComment : Comment, in sourceSlot : Slot, inout e
 	sourceSlot.owningInstance.resolveoneIn(InstanceSpecification::SporadicOperation2SwMutualExclusionResource, Class).ownedOperation->selectOne(name="put");
 	
 	var putNode := createOpaqueAction(sourceSlot.owningInstance.name + "_" + putOp.name, e2eActivity, prevE2ENode);
-	var opSaStep := putNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var opSaStep := putNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	// Set the <<SwSchedulableResource>> that executes the <<saStep>>
 	opSaStep.concurRes := currentConcurRes;//sourceCHRtComment.getConcurRes(sourceSlot);
     // Retrieve the <<SaStep>> to use for the subusage
-	var saStep := putOp.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	var saStep := putOp.getMetaclass(SaStepQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	//Add the newly created operation as subUsage of the OpaqueAction(<<saStep>>)
 	opSaStep.subUsage += saStep;
 	return putNode;
@@ -1023,12 +1023,12 @@ helper createGetOp(in sourceCHRtComment : Comment, in sourceSlot : Slot, inout e
 	sourceSlot.owningInstance.resolveoneIn(InstanceSpecification::SporadicOperation2SwMutualExclusionResource, Class).ownedOperation->selectOne(name="get");
 	
 	var getNode := createOpaqueAction(sourceSlot.owningInstance.name + "_" + getOp.name, e2eActivity, prevE2ENode);
-	var opSaStep := getNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var opSaStep := getNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	// Set the <<SchedulableResource>> that executes the <<saStep>>
 	//var classResource : Class := currentCHRtComment.resolveIn(Comment::CHRtSlot2SchedulableResource, Class)->selectOne(name=getSpec.genResourceName());
 	opSaStep.concurRes := sourceCHRtComment.getConcurRes(sourceSlot);//classResource.getMetaclass(SchedulableResourceQN).oclAsType(MARTE::GRM::SchedulableResource);
     // Retrieve the <<SaStep>> to use for the subusage
-	var saStep := getOp.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	var saStep := getOp.getMetaclass(SaStepQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	//Add the newly created operation as subUsage of the OpaqueAction(<<saStep>>)
 	opSaStep.subUsage += saStep;
 	return getNode;
@@ -1047,14 +1047,14 @@ helper createBusOp(in connectingBus : InstanceSpecification, in opType : String,
 	log("  Attaching '"+ opType +"' operation for communication channel '" + connectingBus.name + "'.");
 	
 	var sendNode := createOpaqueAction(connectingBus.name + "_" + opType, e2eActivity, prevE2ENode);
-	var sendSaStep := sendNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var sendSaStep := sendNode.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
                        
 	//var gaCommChannel := getAssignToFrom(sourceSlot.CHRtSpec().partWithPort.property2InstanceSpec()).resolveoneIn(InstanceSpecification::BusProperty2GaCommChannel, Class).getMetaclass(GaCommChannelQN).oclAsType(MARTE::GQAM::GaCommChannel);                     
-	var gaCommChannel := getAssignToFrom_MemoryPartition(sourceSlot.owningInstance).resolveoneIn(InstanceSpecification::BusProperty2GaCommChannel, Class).getMetaclass(GaCommChannelQN).oclAsType(MARTE::GQAM::GaCommChannel);
+	var gaCommChannel := getAssignToFrom_MemoryPartition(sourceSlot.owningInstance).resolveoneIn(InstanceSpecification::BusProperty2GaCommChannel, Class).getMetaclass(GaCommChannelQN).oclAsType(MARTE::MARTE_AnalysisModel::GQAM::GaCommChannel);
 	sendSaStep.concurRes := gaCommChannel;
 	//TODO Assumption: send operation unique for each HwBus
 	var sendOp : Operation := connectingBus.resolveoneIn(InstanceSpecification::HwBus2OperationClass, Class).ownedOperation->selectOne(name.endsWith("_" + opType));
-	sendSaStep.subUsage += sendOp.getMetaclass(SaStepQN).oclAsType(MARTE::SAM::SaStep);
+	sendSaStep.subUsage += sendOp.getMetaclass(SaStepQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	return sendNode;
 }
 
@@ -1151,7 +1151,7 @@ mapping InstanceSpecification::UnprotectedOperation2SaStep(chrt : Comment, slot 
 
 	owner.ownedOperation += result;
 	// Convert the newly created operation to a <<saStep>>
-	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	saStep.execTime += chrt.getWCET();//chrts.localWCET;
 	
 	//createSubUsageForPSMOperation(selfOperation, result, slot.owningInstance)
@@ -1177,7 +1177,7 @@ mapping InstanceSpecification::InstanceUnprotected2SaStep(chrt : Comment, instan
 
 	owner.ownedOperation += result;
 	// Convert the newly created operation to a <<saStep>>
-	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	saStep.execTime += chrt.getWCET();//chrts.localWCET;
 	
 	//createSubUsageForPSMOperation(selfOperation, result, slot.owningInstance)
@@ -1232,11 +1232,11 @@ mapping InstanceSpecification::InstanceProtected2SaStepStrict(chrt : Comment, sl
 
 	var saMutualExRes := owner.getMetaclass("MARTE::MARTE_DesignModel::SRM::SW_Interaction::SwMutualExclusionResource").oclAsType(MARTE::SRM::SW_Interaction::SwMutualExclusionResource);
 	//apply also a SaSharedResource in order to add it to sastep.sharedres
-	var saSharedRes := owner.getMetaclass("MARTE::MARTE_AnalysisModel::SAM::SaSharedResource").oclAsType(MARTE::SAM::SaSharedResource);
+	var saSharedRes := owner.getMetaclass("MARTE::MARTE_AnalysisModel::SAM::SaSharedResource").oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaSharedResource);
 
 	owner.ownedOperation += result;
 	// Convert the newly created operation to a <<saStep>>
-	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	saStep.execTime += chrt.getWCET();//chrts.localWCET;	
 	// The sharedRes will be set on the SaStep of the end to end workflow
 	saStep.sharedRes += saSharedRes;
@@ -1264,13 +1264,13 @@ mapping InstanceSpecification::InstanceProtected2SaStep(chrt : Comment, slot : S
 		result := new Operation(selfOperation);
 	}
 	
-	var saMutualExRes := owner.getMetaclass("MARTE::MARTE_DesignModel::SRM::SW_Interaction::SwMutualExclusionResource").oclAsType(MARTE::SRM::SW_Interaction::SwMutualExclusionResource);
+	var saMutualExRes := owner.getMetaclass("MARTE::MARTE_DesignModel::SRM::SW_Interaction::SwMutualExclusionResource").oclAsType(MARTE::MARTE_DesignModel::SRM::SW_Interaction::SwMutualExclusionResource);
 	//apply also a SaSharedResource in order to add it to sastep.sharedres
-	var saSharedRes := owner.getMetaclass("MARTE::MARTE_AnalysisModel::SAM::SaSharedResource").oclAsType(MARTE::SAM::SaSharedResource);
+	var saSharedRes := owner.getMetaclass("MARTE::MARTE_AnalysisModel::SAM::SaSharedResource").oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaSharedResource);
 
 	owner.ownedOperation += result;
 	// Convert the newly created operation to a <<saStep>>
-	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var saStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	saStep.execTime += chrt.getWCET();//chrts.localWCET;
 	// The sharedRes will be set on the SaStep of the end to end workflow
 	saStep.sharedRes += saSharedRes;
@@ -1283,9 +1283,9 @@ mapping InstanceSpecification::ProtectedOperation2SwMutualExclusionResource(anno
 	
 	result.name := name;
 	operationPackage.packagedElement += result;
-	var mutualExRes := result.applyStereotype(getMARTEStereotype("SwMutualExclusionResource")).oclAsType(MARTE::SRM::SW_Interaction::SwMutualExclusionResource);
+	var mutualExRes := result.applyStereotype(getMARTEStereotype("SwMutualExclusionResource")).oclAsType(MARTE::MARTE_DesignModel::SRM::SW_Interaction::SwMutualExclusionResource);
 	
-	var saSharedRes := result.applyStereotype(getMARTEStereotype("SaSharedResource")).oclAsType(MARTE::SAM::SaSharedResource);
+	var saSharedRes := result.applyStereotype(getMARTEStereotype("SaSharedResource")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaSharedResource);
 	//saSharedRes.ceiling := "(value="+ self.CHRtSpec().ceiling +", source=req)";
 	//saSharedRes.ceiling := annotation.CHRtSpec().ceiling;
 	result.setCeiling2(annotation.CHRtSpec().ceiling);
@@ -1361,7 +1361,7 @@ mapping Comment::InstanceSporadic2SaStep(slot : Slot, ownerInstance:InstanceSpec
 
 	owner.ownedOperation += result;
 	// Convert the newly created operation to a <<saStep>>
-	var localSaStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var localSaStep := result.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	localSaStep.execTime += self.getWCET();//chrts.localWCET;
 	
 	//createSubUsageForPSMOperation(selfOperation, result, slot.owningInstance)
@@ -1390,9 +1390,9 @@ mapping InstanceSpecification::SporadicOperation2SwMutualExclusionResource(chrt 
 	result.name := name;
 	operationPackage.packagedElement += result;
 	
-	var swMutualExRes := result.applyStereotype(getMARTEStereotype("SwMutualExclusionResource")).oclAsType(MARTE::SRM::SW_Interaction::SwMutualExclusionResource);	
+	var swMutualExRes := result.applyStereotype(getMARTEStereotype("SwMutualExclusionResource")).oclAsType(MARTE::MARTE_DesignModel::SRM::SW_Interaction::SwMutualExclusionResource);	
 	//apply also a SaSharedResource in order to add it to sastep.sharedres
-	var saSharedRes := result.applyStereotype(getMARTEStereotype("SaSharedResource")).oclAsType(MARTE::SAM::SaSharedResource);
+	var saSharedRes := result.applyStereotype(getMARTEStereotype("SaSharedResource")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaSharedResource);
 	
 	result.setCeiling2(chrt.CHRtSpec().ceiling);
 	result.setProtectKind2("PriorityCeiling");
@@ -1400,9 +1400,9 @@ mapping InstanceSpecification::SporadicOperation2SwMutualExclusionResource(chrt 
 	result.ownedOperation += putOp;
 	result.ownedOperation += getOp;
 		
-	var saPutOp  := putOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var saPutOp  := putOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	saPutOp.sharedRes += saSharedRes;
-	var saGetOp := getOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var saGetOp := getOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	saGetOp.sharedRes += saSharedRes;
 	
 	saPutOp.execTime := "(worst=0.0,value=0.0,best=0.0,unit=ms)";
@@ -1424,8 +1424,8 @@ mapping InstanceSpecification::HwBus2OperationClass() : Class {
 	result.ownedOperation += sendOp;
 	result.ownedOperation += receiveOp;
 		
-	var stsendOp  := sendOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
-	var streceiveOp := receiveOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::SAM::SaStep);
+	var stsendOp  := sendOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
+	var streceiveOp := receiveOp.applyStereotype(getMARTEStereotype("SaStep")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaStep);
 	
 	//TODO for the moment exec time is hardcoded
 	stsendOp.execTime := "(worst=0.0,value=0.0,best=0.0,unit=ms)";
@@ -1451,7 +1451,7 @@ mapping InstanceSpecification::HwBus2SaCommHost() : Class {
 	result.name := self.name;
 	hostPackage.packagedElement += result;
 	
-	var stHost := result.applyStereotype(getMARTEStereotype("SaCommHost")).oclAsType(MARTE::SAM::SaCommHost);
+	var stHost := result.applyStereotype(getMARTEStereotype("SaCommHost")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaCommHost);
 	stHost.speedFactor := hwBus.speedFactor;//DEF"";
 	if stHost.speedFactor = null or stHost.speedFactor = "" then
 		stHost.speedFactor := "(value=1.0)"
@@ -1480,9 +1480,9 @@ mapping InstanceSpecification::BusProperty2GaCommChannel(in host : InstanceSpeci
 	result.name := self.name + "_" + host.name + "_server";
 	hostPackage.packagedElement += result;
 	
-	var stCommChannel := result.applyStereotype(getMARTEStereotype("GaCommChannel")).oclAsType(MARTE::GQAM::GaCommChannel);
+	var stCommChannel := result.applyStereotype(getMARTEStereotype("GaCommChannel")).oclAsType(MARTE::MARTE_AnalysisModel::GQAM::GaCommChannel);
 	
-	stCommChannel.host := host.resolveoneIn(InstanceSpecification::HwBus2SaCommHost, Class).getMetaclass(SaCommHostQN).oclAsType(MARTE::SAM::SaCommHost);
+	stCommChannel.host := host.resolveoneIn(InstanceSpecification::HwBus2SaCommHost, Class).getMetaclass(SaCommHostQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaCommHost);
 	//TODO schedParams?
 	stCommChannel.schedParams := "fp(priority=(value=24,source=meas))";
 }
@@ -1501,7 +1501,7 @@ mapping InstanceSpecification::HwComputingResource2SaExecHost() : Class {
     var hcr := self.getMetaclass(CHHwComputingResourceQN).oclAsType(chessmlprofile::HardwareBaseline::CH_HwComputingResource);
 	result.name := self.name;
 	hostPackage.packagedElement += result;
-	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::SAM::SaExecHost);
+	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaExecHost);
 	
 	stHost.schedPriRange := "[1..256]";
 	stHost.speedFactor := hcr.speedFactor;//"(value=1.0)";
@@ -1515,7 +1515,7 @@ helper InstanceSpecification::HwProcessor2SaExecHostHelper() : OclVoid {
 	log("number of cores "+n.toString());
 	
 	var p := self.map HwProcessor2SaExecHost(null);
-	var pHost := p.getMetaclass("SaExecHost").oclAsType(MARTE::SAM::SaExecHost);
+	var pHost := p.getMetaclass("SaExecHost").oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaExecHost);
 	pHost.otherSchedPolicy := "partitioned";//or global
 	//Generate cores and assign the processor as the host for each core
 	while(n>1 and i < n) {
@@ -1526,7 +1526,7 @@ helper InstanceSpecification::HwProcessor2SaExecHostHelper() : OclVoid {
 			name := c.name;
 		};
 		p.nestedClassifier +=cc;
-		c.getMetaclass("SaExecHost").oclAsType(MARTE::SAM::SaExecHost).host := pHost;
+		c.getMetaclass("SaExecHost").oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaExecHost).host := pHost;
 		i := i + 1;
 	}
 }
@@ -1539,12 +1539,12 @@ mapping InstanceSpecification::HwProcessor2SaExecHost(core : String) : Class {
 		name := name + core;
 	};
 	var host := self.resolveoneIn(InstanceSpecification::HwProcessor2SaExecHost, Class);
-	var saHost := host.getMetaclass(SaExecHostQN).oclAsType(MARTE::SAM::SaExecHost);
+	var saHost := host.getMetaclass(SaExecHostQN).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaExecHost);
 	log("Generating <<SaExecHost>> from instanceSpecification '"+self.name+"' corresponding to <<CH_HwProcessor>> '" + self.classifier().name + message);
     var hcr := self.getMetaclass(CHHwProcessorQN).oclAsType(chessmlprofile::HardwareBaseline::CH_HwProcessor);
 	result.name := name;
 	hostPackage.packagedElement += result;
-	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::SAM::SaExecHost);
+	var stHost := result.applyStereotype(getMARTEStereotype("SaExecHost")).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaExecHost);
 	stHost.schedPriRange := "[1..256]";
 	stHost.speedFactor := hcr.speedFactor;
 	stHost.host := saHost;
@@ -1604,7 +1604,7 @@ mapping Comment::Instance2EndToEndWorkFlow(slot : Slot, inst : InstanceSpecifica
 	result.precondition += actConstraint;
 	//we need to have the original deadline in a field not overritten by the MAST analysis
 	var e2estereo : Stereotype := result.getApplicableStereotype("MARTE::MARTE_AnalysisModel::SAM::SaEndtoEndFlow");
-	var e2eflow : MARTE::SAM::SaEndtoEndFlow = result.getStereotypeApplication(e2estereo).oclAsType(MARTE::SAM::SaEndtoEndFlow);
+	var e2eflow : MARTE::MARTE_AnalysisModel::SAM::SaEndtoEndFlow = result.getStereotypeApplication(e2estereo).oclAsType(MARTE::MARTE_AnalysisModel::SAM::SaEndtoEndFlow);
 	e2eflow.end2EndD += chrts.rlDl;
 	
 	var actInitialNode := result.createInitialNode();
@@ -1612,7 +1612,7 @@ mapping Comment::Instance2EndToEndWorkFlow(slot : Slot, inst : InstanceSpecifica
 	
 	result.edge += controlFlowInit;
     //Apply stereotype <<gaLatencyObs>> and specify the deadline for the end to end flow
-	var gaLatencyObs := actConstraint.applyStereotype(getMARTEStereotype("GaLatencyObs")).oclAsType(MARTE::GQAM::GaLatencyObs);
+	var gaLatencyObs := actConstraint.applyStereotype(getMARTEStereotype("GaLatencyObs")).oclAsType(MARTE::MARTE_AnalysisModel::GQAM::GaLatencyObs);
 	//var relativeDeadline : String := "(value=" + CHRtRlDl + ",unit=ms)";
 	gaLatencyObs.latency += chrts.rlDl;
 	
@@ -1626,7 +1626,7 @@ mapping Comment::Instance2EndToEndWorkFlow(slot : Slot, inst : InstanceSpecifica
 	
 	//Apply stereotype <<gaWorkloadEvent>> and specify the release pattern
 	//of the end-to-end flow
-	var gaWorkloadEvent := actInitialNode.applyStereotype(getMARTEStereotype("GaWorkloadEvent")).oclAsType(MARTE::GQAM::GaWorkloadEvent);
+	var gaWorkloadEvent := actInitialNode.applyStereotype(getMARTEStereotype("GaWorkloadEvent")).oclAsType(MARTE::MARTE_AnalysisModel::GQAM::GaWorkloadEvent);
 	gaWorkloadEvent.pattern := chrts.occKind;
 	
 	var resultNode := createOpaqueActionsChainFull(chrts.isProtected(), self, slot, result, actInitialNode, inst);
@@ -1660,7 +1660,7 @@ query chessmlprofile::RTComponentModel::CHRtSpecification::isSporadic() : Boolea
 }
 
 query chessmlprofile::RTComponentModel::CHRtSpecification::isProtected() : Boolean { 
-	return (not self.isDeferred()) and self.protection = MARTE::HLAM::CallConcurrencyKind::guarded;
+	return (not self.isDeferred()) and self.protection = MARTE::MARTE_DesignModel::HLAM::CallConcurrencyKind::guarded;
 }
 
 query Port::getCHrtSpecComment() : Comment {
@@ -1829,24 +1829,24 @@ query Slot::getCorrespondingSlotFull() : Slot {
 */
 
 query Comment::getTo() : InstanceSpecification{
-	var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 	return 	asg.to![InstanceSpecification];
 }
 
-query getAssignForInstance(p : InstanceSpecification) : MARTE::Alloc::Assign {
-	return assigns->selectOne(isAssignForInstance(p)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+query getAssignForInstance(p : InstanceSpecification) : MARTE::MARTE_Foundations::Alloc::Assign {
+	return assigns->selectOne(isAssignForInstance(p)).getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 }
 
-query getAssignForInstance(p : Slot, c : Comment) : MARTE::Alloc::Assign {
-	return assigns->selectOne(isAssignForInstance(p, c)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+query getAssignForInstance(p : Slot, c : Comment) : MARTE::MARTE_Foundations::Alloc::Assign {
+	return assigns->selectOne(isAssignForInstance(p, c)).getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 }
 
 query InstanceSpecification::getComponentsOfPartition() : Set(InstanceSpecification) {
-	return partitionAssigns->select(isAssignForPartition(self)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign)._from.oclAsType(InstanceSpecification)->asSet();
+	return partitionAssigns->select(isAssignForPartition(self)).getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign)._from.oclAsType(InstanceSpecification)->asSet();
 }
 
 query Classifier::getPartitionInstance() : InstanceSpecification {
-	return partitionAssigns->selectOne(isAssignForPartition(self)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign).to![InstanceSpecification].oclAsType(InstanceSpecification);
+	return partitionAssigns->selectOne(isAssignForPartition(self)).getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign).to![InstanceSpecification].oclAsType(InstanceSpecification);
 }
 
 query InstanceSpecification::getAssignedCore() : String {	
@@ -1855,36 +1855,36 @@ query InstanceSpecification::getAssignedCore() : String {
 }
 
 query InstanceSpecification::getAssignedProcessor() : InstanceSpecification {	
-	var c : MARTE::Alloc::Assign := assigns->selectOne(isAssignFromPartitionInstance(self)).getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	var c : MARTE::MARTE_Foundations::Alloc::Assign := assigns->selectOne(isAssignFromPartitionInstance(self)).getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 	return c.to![InstanceSpecification];
 }
 
 query Comment::isAssignFromPartitionInstance(p : InstanceSpecification) : Boolean {
-	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 	return ass._from![InstanceSpecification] = p;
 }
 
 
 query Comment::isAssignForInstance(spec : InstanceSpecification) : Boolean {
-	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 	//return ass._from![InstanceSpecification] = spec.getSourceInstanceSpec() and self.isReferringId(spec.getId());
 	return ass._from![InstanceSpecification] = spec;
 }
 
 query Comment::isAssignForInstance(spec : Slot, chrt : Comment) : Boolean {
-	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 	var context := self.getContextFromContraint();
 	
 	return ass._from![Slot].definingFeature = spec.definingFeature and context = chrt.CHRtSpec().context.name;
 }
 
 query Comment::isAssignForPartition(p : InstanceSpecification) : Boolean {
-	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 	return ass.to![InstanceSpecification] = p;
 }
 
 query Comment::isAssignForPartition(p : Classifier) : Boolean {
-	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	var ass := self.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 	return ass.to![InstanceSpecification].classifier![Classifier] = p;
 }
 
@@ -1894,7 +1894,7 @@ query getAssignToFrom_MemoryPartition(p : Slot, c : Comment) : InstanceSpecifica
 	var toClass := toInstance.classifier![Classifier];
 	if toClass.isStereotyped(MemoryPartitionQN) then {
 		var a := assigns -> selectOne(isAssignedFrom(toInstance));
-		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 		return 	asg.to![InstanceSpecification];
 	} else //it is an hardware component
 		return 	ass.to![InstanceSpecification]
@@ -1911,7 +1911,7 @@ query getAssignedCoreFrom_MemoryPartition(p : Slot, c : Comment) : String {
 	var toClass := toInstance.classifier![Classifier];
 	if toClass.isStereotyped(MemoryPartitionQN) then {
 		var a := assigns -> selectOne(isAssignedFrom(toInstance));
-		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 		return 	asg.base_Comment.getCoreFromContraint();
 	} else //it is an hardware component
 		return 	ass.base_Comment.getCoreFromContraint()
@@ -1926,7 +1926,7 @@ query getAssignToFrom_MemoryPartition(p : InstanceSpecification) : InstanceSpeci
 	var toClass := toInstance.classifier![Classifier];
 	if toClass.isStereotyped(MemoryPartitionQN) then {
 		var a := assigns -> selectOne(isAssignedFrom(toInstance));
-		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 		return 	asg.to![InstanceSpecification];
 	} else //it is an hardware component
 		return 	ass.to![InstanceSpecification]
@@ -1944,7 +1944,7 @@ query getAssignedCoreFrom_MemoryPartition(p : InstanceSpecification) : String {
 	var toClass := toInstance.classifier![Classifier];
 	if toClass.isStereotyped(MemoryPartitionQN) then {
 		var a := assigns -> selectOne(isAssignedFrom(toInstance));
-		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+		var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 		return 	asg.base_Comment.getCoreFromContraint();
 	} else //it is an hardware component
 		return 	ass.base_Comment.getCoreFromContraint()
@@ -1955,23 +1955,23 @@ query getAssignedCoreFrom_MemoryPartition(p : InstanceSpecification) : String {
 
 //query getAssignToFrom(p : InstanceSpecification) : InstanceSpecification {
 //	var a := assigns -> selectOne(isAssignedFrom(p));
-//	var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+//	var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 //	return 	asg.to![InstanceSpecification];
 //}
 
 //query getAssignFromTo(p : InstanceSpecification) : InstanceSpecification {
 //	var a := assigns -> selectOne(isAssignedTo(p));
-//	var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+//	var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 //	return 	asg._from![InstanceSpecification];
 //}
 
 query Comment::isAssignedFrom(p : InstanceSpecification) : Boolean {
-    var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+    var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
     return asg._from![InstanceSpecification] = p;
 }
 
 query Comment::isAssignedTo(p : InstanceSpecification) : Boolean {
-    var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+    var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
     return asg.to![InstanceSpecification] = p;
 }
 
@@ -2063,9 +2063,9 @@ helper Message::getMsgReceiver() : InstanceSpecification {
 
 //assumption: the SaAnalysisContext.platform owns the reference to the package of the HW instances (to be considered for the analysis) available in the DeploymentView.
 //returns the component which types the root HW instance stored in the package of the HW instances available in the DeploymentView.
-query MARTE::SAM::SaAnalysisContext::getSystem() : Component {
+query MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext::getSystem() : Component {
 	
-	var platforms : Set(MARTE::GQAM::GaResourcesPlatform) := self.platform->asSet();
+	var platforms : Set(MARTE::MARTE_AnalysisModel::GQAM::GaResourcesPlatform) := self.platform->asSet();
 	platforms->forEach (plat){
 		var package : Element := plat.oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package;
 		var found : Boolean = false;
@@ -2099,9 +2099,9 @@ query MARTE::SAM::SaAnalysisContext::getSystem() : Component {
 //assumption: the SaAnalysisContext.platform owns the reference to the package of the SW instances (to be considered for the analysis) available in the ComponentView.
 //returns the packages of the SW instances referred by SaAnalysisContext.platform 
 	
-query MARTE::SAM::SaAnalysisContext::getSwSystemInstPackage() : Package {
+query MARTE::MARTE_AnalysisModel::SAM::SaAnalysisContext::getSwSystemInstPackage() : Package {
 	
-	var platforms : Set(MARTE::GQAM::GaResourcesPlatform) := self.platform->asSet();
+	var platforms : Set(MARTE::MARTE_AnalysisModel::GQAM::GaResourcesPlatform) := self.platform->asSet();
 	platforms->forEach (plat){
 		var package : Element := plat.oclAsType(CHESS::Core::CHGaResourcePlatform).base_Package;
 		var found : Boolean = false;

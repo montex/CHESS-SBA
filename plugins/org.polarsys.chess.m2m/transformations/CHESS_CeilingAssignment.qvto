@@ -231,7 +231,7 @@ query InstanceSpecification::isDeployedOnSameProcesor(is : InstanceSpecification
 
 query getDeploymentProcessor(p : InstanceSpecification) : InstanceSpecification {
 	var a := assigns -> selectOne(isAssignedFrom(p));
-	var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+	var asg := a.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
 	return 	asg.to![InstanceSpecification];
 }
 
@@ -279,7 +279,7 @@ query chessmlprofile::RTComponentModel::CHRtSpecification::isSporadic() : Boolea
 }
 
 query chessmlprofile::RTComponentModel::CHRtSpecification::isProtected() : Boolean { 
-	return (not self.isDeferred()) and self.protection = MARTE::HLAM::CallConcurrencyKind::guarded;
+	return (not self.isDeferred()) and self.protection = MARTE::MARTE_DesignModel::HLAM::CallConcurrencyKind::guarded;
 }
 
 query Port::getConnectedPort() : Port {
@@ -290,6 +290,6 @@ query Port::getConnectedPort() : Port {
 
 
 query Comment::isAssignedFrom(p : InstanceSpecification) : Boolean {
-    var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::Alloc::Assign);
+    var asg := self.getMetaclass(AssignQN).oclAsType(MARTE::MARTE_Foundations::Alloc::Assign);
     return asg._from![InstanceSpecification] = p;
 }
