@@ -334,7 +334,8 @@
                   <!--failure propagation-->
                  <perm st="FLABehavior" owner="true" write="true" visible="true"/>   
                  <perm st="StochasticFailureBehaviour" owner="true" write="true" visible="true"/>  
-                 <perm st="SimpleStochasticBehavior" owner="true" write="true" visible="true"/>  
+                 <perm st="SimpleStochasticBehavior" owner="true" write="true" visible="true"/> 
+                 <perm st="ErrorModelBehavior" owner="true" write="true" visible="true"/>
                  
                  <perm st="RunTimeSupport" owner="true" write="true" visible="true"/>                           
             </diagram>
