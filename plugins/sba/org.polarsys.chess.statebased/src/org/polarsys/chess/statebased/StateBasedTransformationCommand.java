@@ -210,7 +210,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			
 			Resource inResource = ResourceUtils.getUMLResource(editor.getServicesRegistry());
 			IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
-			IFile inputCopy = CHESSProjectSupport.copyFile(inputFile, SBANALYSIS_DIR, UML);
+			IFile inputCopy = CHESSProjectSupport.copyFile(inputFile, SBANALYSIS_DIR, inputFile.getName());
 			
 			chessModelPath = inputCopy.getFullPath().toString();
 			
