@@ -44,8 +44,8 @@ For any question, info, or suggestion feel free to contact us:
 * Paolo Lollini <lollini@unifi.it>
 
 ## Publications
-* L. Bressan, A. L. de Oliveira, L. Montecchi, B. Gallina. "A Systematic Process for Applying the CHESS Methodology in the Creation of Certifiable Evidence".
-In: 14th European Dependable Computing Conference (EDCC 2018). Iasi, Romania, September 10-14, 2018. _To appear_
+* L. Bressan, A. L. de Oliveira, L. Montecchi, B. Gallina. "[A Systematic Process for Applying the CHESS Methodology in the Creation of Certifiable Evidence](https://ieeexplore.ieee.org/document/8530760)".
+In: 14th European Dependable Computing Conference (EDCC 2018). Iași, Romania, September 10-14, 2018. pp. 49-56.
 
 * L. Montecchi, B. Gallina. "[SafeConcert: a Metamodel for a Concerted Safety Modeling of Socio-Technical Systems](https://link.springer.com/chapter/10.1007/978-3-319-64119-5_9)".
 In: 5th International Symposium on Model-Based Safety and Assessment (IMBSA 2017). Trento, Italy, September 11, 2017. pp. 129-144.
