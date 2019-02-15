@@ -2,7 +2,7 @@
 <feature
       id="org.polarsys.chess.statebased.feature"
       label="CHESS Polarsys - State Based Analysis Extensions"
-      version="0.9.0.qualifier"
+      version="0.10.0.qualifier"
       provider-name="UNIFI-Intecs">
 
    <description>

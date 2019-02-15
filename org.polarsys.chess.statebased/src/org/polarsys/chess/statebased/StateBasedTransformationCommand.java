@@ -38,7 +38,7 @@ import org.polarsys.chess.chessmlprofile.chessmlprofilePackage;
 import org.polarsys.chess.chessmlprofile.Core.CHESS;
 import org.polarsys.chess.core.util.CHESSProjectSupport;
 import org.polarsys.chess.core.util.uml.ResourceUtils;
-import org.polarsys.chess.service.utils.CHESSEditorUtils;
+import org.polarsys.chess.service.gui.utils.CHESSEditorUtils;
 import org.polarsys.chess.statebased.daemon.ParameterList;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -210,7 +210,7 @@ public class StateBasedTransformationCommand extends AbstractHandler {
 			
 			Resource inResource = ResourceUtils.getUMLResource(editor.getServicesRegistry());
 			IFile inputFile = CHESSProjectSupport.resourceToFile(inResource);
-			IFile inputCopy = CHESSProjectSupport.copyFile(inputFile, SBANALYSIS_DIR, UML);
+			IFile inputCopy = CHESSProjectSupport.copyFile(inputFile, SBANALYSIS_DIR, inputFile.getName());
 			
 			chessModelPath = inputCopy.getFullPath().toString();
 			
