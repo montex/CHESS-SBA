@@ -196,15 +196,18 @@ rule SimpleStochasticBehaviorToComponent(inst : UML!InstanceSpecification) {
 	do {
 		c.Faults = c.Faults.including(fault);
 		
-		for(slot in inst.getPortSlots()->select(p | p.hasOutputFlow())) {
-			tmpFailures <- myFailureModes.parseFailureModesForPort(slot.name);
+		for(p in inst.getPortSlots()
+				->collect(sl | sl.definingFeature)
+				->union(inst.classifier->first().ownedAttribute->select(op | op.oclIsKindOf(UML!Port)))
+				->select(p | p.hasOutputFlow())->asSet()) {
+			tmpFailures <- myFailureModes.parseFailureModesForPort(p.name);
 				
-			tmpError <- thisModule.AddError('e_' + slot.name, c);
+			tmpError <- thisModule.AddError('e_' + p.name, c);
 			eSeq <- eSeq.including(tmpError);
 			for(fmSpec in tmpFailures) {
 				thisModule.AddEPF(
 					tmpError,
-					thisModule.AddFailureMode(slot.name + '.' + fmSpec.fm, c),
+					thisModule.AddFailureMode(p.name + '.' + fmSpec.fm, c),
 					thisModule.Deterministic(0),
 					1,
 					fmSpec.p
@@ -821,7 +824,7 @@ rule FindTargetFailureModes(sba : CHESS!StateBasedAnalysis) {
 		--Process possibly existing downward delegations
 		targetSlots <- targetSlots->collect(sl | sl.getSBADelegationsDownwards())->flatten();
 		
-		--Find failure all failure modes related to the selected ports
+		--Find all failure modes related to the selected ports
 		fmSelected <-
 			 targetSlots->collect(sl | thisModule.InstanceToComponent(sl.refImmediateComposite()).FailureModes->select(fm | fm.getPortName() = sl.name))
 						->flatten()->asSet();
@@ -1673,19 +1676,25 @@ helper context UML!Slot def: hasOutputFlow() : Boolean = self.definingFeature.ha
 helper context UML!Port def: hasInputFlow() : Boolean =
 	let clientserverport : MARTE!ClientServerPort = MARTE!ClientServerPort.allInstances()->select(c | c.base_Port = self)->first() in
 	let flowport : SYSML!FlowPort = SYSML!FlowPort.allInstances()->select(c | c.base_Port = self)->first() in
+	let flowportmarte : MARTE!FlowPort = MARTE!FlowPort.allInstances()->select(c | c.base_Port = self)->first() in
 	if clientserverport <> OclUndefined then clientserverport.hasInputFlow() else
 		if flowport <> OclUndefined then flowport.hasInputFlow() else
-			false
-	endif endif;
+			if flowportmarte <> OclUndefined then flowportmarte.hasInputFlowMarte() else
+				false
+	endif endif endif;
 helper context UML!Port def: hasOutputFlow() : Boolean =
 	let clientserverport : MARTE!ClientServerPort = MARTE!ClientServerPort.allInstances()->select(c | c.base_Port = self)->first() in
 	let flowport : SYSML!FlowPort = SYSML!FlowPort.allInstances()->select(c | c.base_Port = self)->first() in
+	let flowportmarte : MARTE!FlowPort = MARTE!FlowPort.allInstances()->select(c | c.base_Port = self)->first() in
 	if clientserverport <> OclUndefined then clientserverport.hasOutputFlow() else
 		if flowport <> OclUndefined then flowport.hasOutputFlow() else
-			false
-	endif endif;
+			if flowportmarte <> OclUndefined then flowportmarte.hasOutputFlowMarte() else
+				false
+	endif endif endif;
 helper context SYSML!FlowPort def: hasInputFlow() : Boolean = self.direction <> #out;
 helper context SYSML!FlowPort def: hasOutputFlow() : Boolean = self.direction = #out or self.direction = #inout;
+helper context MARTE!FlowPort def: hasInputFlowMarte() : Boolean = self.direction <> #out;
+helper context MARTE!FlowPort def: hasOutputFlowMarte() : Boolean = self.direction = #out or self.direction = #inout;
 helper context MARTE!ClientServerPort def: hasInputFlow() : Boolean = self.kind <> #provided;
 helper context MARTE!ClientServerPort def: hasOutputFlow() : Boolean = self.kind <> #required;
 
