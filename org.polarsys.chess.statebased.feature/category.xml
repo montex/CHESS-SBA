@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.polarsys.chess.statebased.feature_0.10.0.qualifier.jar" id="org.polarsys.chess.statebased.feature" version="0.10.0.qualifier">
+      <category name="CHESS"/>
+   </feature>
+   <category-def name="CHESS" label="Polarsys CHESS">
+      <description>
+         Plugins of the Polarsys CHESS framework
+      </description>
+   </category-def>
+</site>
