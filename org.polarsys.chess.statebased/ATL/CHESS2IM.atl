@@ -1134,7 +1134,14 @@ rule FEXP_ParseString(exp : String, inst : UML!InstanceSpecification) {
 						collect(ft | thisModule.FEXP_Fault(ft))
 					);
 				}else {
-					expRet <- thisModule.FEXP_Fault(tmpSplit->first());
+					expRet <-
+					thisModule.FEXP_Fault(
+						tmpSplit->collect(
+							s | c.Faults->select(ft | ft.localName = s.trim())
+						)->
+						flatten()->
+						first()
+					);
 				}
 			}
 		}
