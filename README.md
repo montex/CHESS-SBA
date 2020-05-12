@@ -50,10 +50,10 @@ In: 14th European Dependable Computing Conference (EDCC 2018). Iași, Romania, S
 * L. Montecchi, B. Gallina. "[SafeConcert: a Metamodel for a Concerted Safety Modeling of Socio-Technical Systems](https://link.springer.com/chapter/10.1007/978-3-319-64119-5_9)".
 In: 5th International Symposium on Model-Based Safety and Assessment (IMBSA 2017). Trento, Italy, September 11, 2017. pp. 129-144.
 
-* A. Bondavalli, P. Lollini, L. Montecchi. "[A Reusable Modular Toolchain for Automated Dependability Evaluation](https://dl.acm.org/citation.cfm?id=2631882)".
+* L. Montecchi, P. Lollini, A. Bondavalli. "[A Reusable Modular Toolchain for Automated Dependability Evaluation](https://dl.acm.org/citation.cfm?id=2631882)".
 In: 7th International Conference on Performance Evaluation Methodologies and Tools (VALUETOOLS 2013). Torino, Italy, December 10, 2013. pp. 298-303. 
 
-* A. Bondavalli, P. Lollini, L. Montecchi. "[Towards a MDE Transformation Workflow for Dependability Analysis](http://ieeexplore.ieee.org/document/5773390/)".
+* L. Montecchi, P. Lollini, A. Bondavalli. "[Towards a MDE Transformation Workflow for Dependability Analysis](http://ieeexplore.ieee.org/document/5773390/)".
 In: 16th IEEE International Conference on Engineering of Complex Computer Systems (ICECCS 2011). Las Vegas, NV, USA, April 29, 2011. pp. 157-166. 
 
-* A. Bondavalli, P. Lollini, L. Montecchi. "[Dependability Concerns in Model-Driven Engineering](http://ieeexplore.ieee.org/document/5753535/)". In: 2nd IEEE International Workshop on Object/Component/Service-Oriented Real-Time Networked Ultra-Dependable Systems (WORNUS 2011). Newport Beach, CA, USA, March 28, 2011. pp. 254-263.
+* L. Montecchi, P. Lollini, A. Bondavalli. "[Dependability Concerns in Model-Driven Engineering](http://ieeexplore.ieee.org/document/5753535/)". In: 2nd IEEE International Workshop on Object/Component/Service-Oriented Real-Time Networked Ultra-Dependable Systems (WORNUS 2011). Newport Beach, CA, USA, March 28, 2011. pp. 254-263.
