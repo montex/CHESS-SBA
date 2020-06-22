@@ -8,7 +8,7 @@ The toolset, which was formerly known as _"The CHESS Framework"_, is an integrat
 
 [PolarSys](http://polarsys.org/) is an Eclipse Working Group focusing on the creation and support of open source tools for the development of embedded systems.
 Most of the original CHESS Framework has been released as open source within the PolarSys umbrella, constituting the *PolarSys CHESS Eclipse Project*.
-Further information can be found on the [Official Website](http://polarsys.org/chess/) and on the [Eclipse Project Page](https://www.polarsys.org/projects/polarsys.chess/).
+Further information can be found on the [Official Website](http://polarsys.org/chess/) and on the [Eclipse Project Page](https://projects.eclipse.org/projects/polarsys.chess).
 
 ## Usage
 
