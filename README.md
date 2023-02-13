@@ -36,7 +36,7 @@ _Deliverable 3.2.2 of the CHESS project, contains technical details on the imple
 
 ## Contributors
 
-The tool has been developed at the [Resilient Computing Lab](http://rcl.dsi.unifi.it), University of Firenze, Italy, and it is released under the EPL license.
+The CHESS-SBA plugin has been developed at the [Resilient Computing Lab](http://rcl.dsi.unifi.it), University of Firenze, Italy, and it is released under the EPL license.
 Please see the [LICENSE](LICENSE) and [COPYRIGHT](COPYRIGHT) files for more information.
 
 For any question, info, or suggestion feel free to contact us:
@@ -44,11 +44,8 @@ For any question, info, or suggestion feel free to contact us:
 * Paolo Lollini <lollini@unifi.it>
 
 ## Publications
-* L. Bressan, A. L. de Oliveira, L. Montecchi, B. Gallina. "[A Systematic Process for Applying the CHESS Methodology in the Creation of Certifiable Evidence](https://ieeexplore.ieee.org/document/8530760)".
-In: 14th European Dependable Computing Conference (EDCC 2018). Iași, Romania, September 10-14, 2018. pp. 49-56.
 
-* L. Montecchi, B. Gallina. "[SafeConcert: a Metamodel for a Concerted Safety Modeling of Socio-Technical Systems](https://link.springer.com/chapter/10.1007/978-3-319-64119-5_9)".
-In: 5th International Symposium on Model-Based Safety and Assessment (IMBSA 2017). Trento, Italy, September 11, 2017. pp. 129-144.
+The publications related to the original design and development of the tool are listed below. A complete list of publications, covering also the application and the extension of the tool is available [in the wiki](https://github.com/montex/CHESS-SBA/wiki/Documents#publications).
 
 * L. Montecchi, P. Lollini, A. Bondavalli. "[A Reusable Modular Toolchain for Automated Dependability Evaluation](https://dl.acm.org/citation.cfm?id=2631882)".
 In: 7th International Conference on Performance Evaluation Methodologies and Tools (VALUETOOLS 2013). Torino, Italy, December 10, 2013. pp. 298-303. 
