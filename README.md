@@ -40,7 +40,7 @@ The tool has been developed at the [Resilient Computing Lab](http://rcl.dsi.unif
 Please see the [LICENSE](LICENSE) and [COPYRIGHT](COPYRIGHT) files for more information.
 
 For any question, info, or suggestion feel free to contact us:
-* Leonardo Montecchi <leonardo@ic.unicamp.br>
+* Leonardo Montecchi <leonardo.montecchi@ntnu.no>
 * Paolo Lollini <lollini@unifi.it>
 
 ## Publications
